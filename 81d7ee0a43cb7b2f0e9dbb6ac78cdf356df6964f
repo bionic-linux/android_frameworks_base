@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4110fc4_ba3671f8",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-15T20:12:32Z",
+      "side": 1,
+      "message": "typo ?",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d601cc5f_e266dc54",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-15T20:12:32Z",
+      "side": 1,
+      "message": "i like the over all idea and the API :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
