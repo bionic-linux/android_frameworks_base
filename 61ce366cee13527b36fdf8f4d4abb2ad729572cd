@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e54a24e9_5000face",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-15T19:38:47Z",
+      "side": 1,
+      "message": "In a later patch this variable is used in both Zygote.java and ZygoteConnection.java.  I have attempted to move things that are common to both files into Zygote.java.",
+      "parentUuid": "97b563dd_6cff9963",
+      "range": {
+        "startLine": 105,
+        "startChar": 35,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "61ce366cee13527b36fdf8f4d4abb2ad729572cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cf31437_1695d730",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "61ce366cee13527b36fdf8f4d4abb2ad729572cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81035e61_ad1da627",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-15T19:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf31437_1695d730",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "61ce366cee13527b36fdf8f4d4abb2ad729572cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
