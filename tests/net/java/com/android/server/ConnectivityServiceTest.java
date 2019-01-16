@@ -17,10 +17,10 @@
 package com.android.server;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
-import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -3652,6 +3652,15 @@ public class ConnectivityServiceTest {
         public void expectError(int error) {
             expectCallback(new CallbackValue(CallbackType.ON_ERROR, error));
         }
+
+        public void expectNoCallback() {
+            try {
+                final CallbackValue cv = mCallbacks.poll(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+                assertNull("Unexpected callback " + cv, cv);
+            } catch (InterruptedException e) {
+                // Expected;
+            }
+        }
     }
 
     private Network connectKeepaliveNetwork(LinkProperties lp) {
@@ -3753,19 +3762,6 @@ public class ConnectivityServiceTest {
         final Network myNetAlias = myNet;
         assertNull(mCm.getNetworkCapabilities(myNetAlias));
         ka.stop();
-
-        // Reconnect.
-        myNet = connectKeepaliveNetwork(lp);
-        mWiFiNetworkAgent.setStartKeepaliveError(PacketKeepalive.SUCCESS);
-
-        // Check things work as expected when the keepalive is stopped and the network disconnects.
-        ka = mCm.startNattKeepalive(myNet, validKaInterval, callback, myIPv4, 12345, dstIPv4);
-        callback.expectStarted();
-        ka.stop();
-        mWiFiNetworkAgent.disconnect();
-        waitFor(mWiFiNetworkAgent.getDisconnectedCV());
-        waitForIdle();
-        callback.expectStopped();
 
         // Reconnect.
         myNet = connectKeepaliveNetwork(lp);
@@ -3882,6 +3878,22 @@ public class ConnectivityServiceTest {
         ka.stop();
         callback.expectStopped();
 
+        // Check that keepalive could be restarted.
+        ka.start(validKaInterval);
+        callback.expectStarted();
+        ka.stop();
+        callback.expectStopped();
+
+        // Check that keepalive can be restarted without waiting for callback.
+        ka.start(validKaInterval);
+        callback.expectStarted();
+        ka.stop();
+        ka.start(validKaInterval);
+        callback.expectStopped();
+        callback.expectStarted();
+        ka.stop();
+        callback.expectStopped();
+
         // Check that deleting the IP address stops the keepalive.
         LinkProperties bogusLp = new LinkProperties(lp);
         ka = mCm.createSocketKeepalive(myNet, testSocket, myIPv4, dstIPv4, executor, callback);
@@ -3906,20 +3918,7 @@ public class ConnectivityServiceTest {
         final Network myNetAlias = myNet;
         assertNull(mCm.getNetworkCapabilities(myNetAlias));
         ka.stop();
-
-        // Reconnect.
-        myNet = connectKeepaliveNetwork(lp);
-        mWiFiNetworkAgent.setStartKeepaliveError(SocketKeepalive.SUCCESS);
-
-        // Check things work as expected when the keepalive is stopped and the network disconnects.
-        ka = mCm.createSocketKeepalive(myNet, testSocket, myIPv4, dstIPv4, executor, callback);
-        ka.start(validKaInterval);
-        callback.expectStarted();
-        ka.stop();
-        mWiFiNetworkAgent.disconnect();
-        waitFor(mWiFiNetworkAgent.getDisconnectedCV());
-        waitForIdle();
-        callback.expectStopped();
+        callback.expectNoCallback();
 
         // Reconnect.
         myNet = connectKeepaliveNetwork(lp);
