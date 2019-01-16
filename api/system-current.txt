@@ -3062,9 +3062,10 @@ package android.net {
   public class ConnectivityManager {
     method public boolean getAvoidBadWifi();
     method @RequiresPermission(android.Manifest.permission.LOCAL_MAC_ADDRESS) public String getCaptivePortalServerUrl();
+    method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void getLatestTetheringEntitlementValue(android.net.ConnectivityManager.EntitlementValueCallback, boolean, android.os.Handler);
     method @RequiresPermission(anyOf={android.Manifest.permission.TETHER_PRIVILEGED, android.Manifest.permission.WRITE_SETTINGS}) public boolean isTetheringSupported();
     method @RequiresPermission(anyOf={"android.permission.NETWORK_SETTINGS", android.Manifest.permission.NETWORK_SETUP_WIZARD, "android.permission.NETWORK_STACK"}) public void setAirplaneMode(boolean);
-    method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback);
+    method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void getLatestTetheringEntitlementValue(android.net.ConnectivityManager.EntitlementValueCallback, boolean);
     method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler);
     method @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void stopTethering(int);
     field public static final String EXTRA_CAPTIVE_PORTAL_PROBE_SPEC = "android.net.extra.CAPTIVE_PORTAL_PROBE_SPEC";
@@ -3074,10 +3075,17 @@ package android.net {
     field public static final int TETHERING_WIFI = 0; // 0x0
   }
 
+  public static abstract class ConnectivityManager.EntitlementValueCallback {
+    ctor public ConnectivityManager.EntitlementValueCallback();
+    method public void onEntitlementFailedOrUnknown();
+    method public void onEntitlementSucceeded();
+  }
+
   public abstract static class ConnectivityManager.OnStartTetheringCallback {
     ctor public ConnectivityManager.OnStartTetheringCallback();
     method public void onTetheringFailed();
     method public void onTetheringStarted();
+    method public void onUpstreamChanged(android.net.Network);
   }
 
   public class LinkAddress implements android.os.Parcelable {
