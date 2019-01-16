@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e585dd84_d1b9a0aa",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-16T18:17:54Z",
+      "side": 1,
+      "message": "Good suggestion but for this logic, I want to know whether this key is found or not. Therefore, I need to know 3 states: true, false, not found and this SystemProperties.getBoolean() does not give me this information.",
+      "parentUuid": "6e624ad1_eba9caea",
+      "revId": "8445e61f139ce4c1568ff625a64052b56f90ca91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b723ae0_0ec4ff20",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "06bcc818_9422a41b",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-16T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b723ae0_0ec4ff20",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 62
+      },
+      "revId": "8445e61f139ce4c1568ff625a64052b56f90ca91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38ea7270_98f078aa",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "8445e61f139ce4c1568ff625a64052b56f90ca91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bdfdef_f72bd22b",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-16T18:17:54Z",
+      "side": 1,
+      "message": "Unsure of your question.\n1) If Feature Flag is changed after the BluetoothManager has started, then the instructions for this feature flag asked user to reboot.\n2) When the Feature Flag is false at this point during BluetoothManager start, we don\u0027t want to start Hearing Aid profile. This is the logic of this feature flag.",
+      "parentUuid": "38ea7270_98f078aa",
+      "revId": "8445e61f139ce4c1568ff625a64052b56f90ca91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
