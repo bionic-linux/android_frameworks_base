@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01bb312e_0d5de212",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "If handler cannot be null, this is not necessary, we can just post directly to handler",
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54bbbaba_b46b2ada",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3153,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "Add: \"The same {@link BluetoothDevice} and {@link MetadataListner} pair can only be registered once. \n\nThrow RuntimeException when error is due to developer\u0027s programming error, e.g.:\n- listener, device, or handler is null\n- double registration\n- unregistration without registration\n\nReturn false on valid errors such as app cannot register for certain metadata or certain device.\n\nAlso add:\n\"Registration must be done when Bluetooth is ON and will last until {@link unregistrationXXXX} is called.",
+      "range": {
+        "startLine": 3153,
+        "startChar": 0,
+        "endLine": 3153,
+        "endChar": 75
+      },
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086c9776_d9538c71",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "just device should be good",
+      "range": {
+        "startLine": 3165,
+        "startChar": 12,
+        "endLine": 3165,
+        "endChar": 41
+      },
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc64326_6782c468",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3199,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "This may have NPE when BT is being turned off at the same time. A safe way of doing this is:\n\nfinal IBluetooth service \u003d mService;\nif (service \u003d\u003d null) {\n  return true;\n}\nservice.registerMetadataListener()\n\n1. Argument check\n2. Add to list\n3. Try registration\n4. If failed, remove from list",
+      "range": {
+        "startLine": 3193,
+        "startChar": 8,
+        "endLine": 3199,
+        "endChar": 9
+      },
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db634b3_3bad0572",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3205,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "Unregister all {@link MetadataListener} from this device",
+      "range": {
+        "startLine": 3205,
+        "startChar": 6,
+        "endLine": 3205,
+        "endChar": 61
+      },
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20576fa6_ee10a246",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3213,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T02:21:30Z",
+      "side": 1,
+      "message": "BluetoothDevice device",
+      "range": {
+        "startLine": 3213,
+        "startChar": 46,
+        "endLine": 3213,
+        "endChar": 75
+      },
+      "revId": "f98ee99dd4de3282f31ece53cae9ddcc131fd962",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
