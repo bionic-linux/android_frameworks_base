@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a8d6f56_7d05a862",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:16:27Z",
+      "side": 1,
+      "message": "I was under the impression that I need SystemApi to freeze it, but it appears that I don\u0027t. Will update this CL.",
+      "parentUuid": "d73c556d_81924e56",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af8a2126_3644e58b",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "55209b7d_c77a14bf",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:16:27Z",
+      "side": 1,
+      "message": "Yes; although, CTS only needs it for reporting purposes, and doesn\u0027t consume the data at all. So I think it is okay to keep it as a String.\n\n(Plus CTS is already using it; see other CL in the topic. I can\u0027t change the signature any more)",
+      "parentUuid": "af8a2126_3644e58b",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ae352fd_05eb53a5",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2019-01-16T21:11:15Z",
       "side": 1,
       "message": "Does this string have a well-defined format?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 53
+      },
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0aa548c_6bdc1bd3",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:16:27Z",
+      "side": 1,
+      "message": "Yes (it will be major.minor). See reason above for keeping it as a string.",
+      "parentUuid": "3ae352fd_05eb53a5",
       "range": {
         "startLine": 85,
         "startChar": 0,
