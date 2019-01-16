@@ -26,6 +26,7 @@ import android.os.Parcelable;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +47,7 @@ public final class DataCallResponse implements Parcelable {
     private final List<InetAddress> mDnses;
     private final List<InetAddress> mGateways;
     private final List<String> mPcscfs;
+    private final List<DedicatedEpsBearer> mDedicatedEpsBearers;
     private final int mMtu;
 
     /**
@@ -76,7 +78,9 @@ public final class DataCallResponse implements Parcelable {
                             @Nullable List<LinkAddress> addresses,
                             @Nullable List<InetAddress> dnses,
                             @Nullable List<InetAddress> gateways,
-                            @Nullable List<String> pcscfs, int mtu) {
+                            @Nullable List<String> pcscfs,
+                            @Nullable List<DedicatedEpsBearer> dedicatedEpsBearers,
+                            int mtu) {
         mStatus = status;
         mSuggestedRetryTime = suggestedRetryTime;
         mCid = cid;
@@ -87,6 +91,8 @@ public final class DataCallResponse implements Parcelable {
         mDnses = (dnses == null) ? new ArrayList<>() : dnses;
         mGateways = (gateways == null) ? new ArrayList<>() : gateways;
         mPcscfs = (pcscfs == null) ? new ArrayList<>() : pcscfs;
+        mDedicatedEpsBearers = (dedicatedEpsBearers == null)
+                ? new ArrayList<>() : dedicatedEpsBearers;
         mMtu = mtu;
     }
 
@@ -106,6 +112,8 @@ public final class DataCallResponse implements Parcelable {
         mPcscfs = new ArrayList<>();
         source.readList(mPcscfs, InetAddress.class.getClassLoader());
         mMtu = source.readInt();
+        mDedicatedEpsBearers = new ArrayList<>();
+        source.readList(mDedicatedEpsBearers, DedicatedEpsBearer.class.getClassLoader());
     }
 
     /**
@@ -169,6 +177,15 @@ public final class DataCallResponse implements Parcelable {
     public List<String> getPcscfs() { return mPcscfs; }
 
     /**
+     * @return A list of objects describing the dedicated EPS bearers associated with this
+     * data call.
+     */
+    @NonNull
+    public List<DedicatedEpsBearer> getDedicatedEpsBearers() {
+        return Collections.unmodifiableList(mDedicatedEpsBearers);
+    }
+
+    /**
      * @return MTU received from network Value <= 0 means network has either not sent a value or
      * sent an invalid value
      */
@@ -216,13 +233,15 @@ public final class DataCallResponse implements Parcelable {
                 && mGateways.containsAll(other.mGateways)
                 && mPcscfs.size() == other.mPcscfs.size()
                 && mPcscfs.containsAll(other.mPcscfs)
+                && mDedicatedEpsBearers.size() == other.mDedicatedEpsBearers.size()
+                && mDedicatedEpsBearers.containsAll(other.mDedicatedEpsBearers)
                 && mMtu == other.mMtu;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mStatus, mSuggestedRetryTime, mCid, mActive, mType, mIfname, mAddresses,
-                mDnses, mGateways, mPcscfs, mMtu);
+                mDnses, mGateways, mPcscfs, mDedicatedEpsBearers, mMtu);
     }
 
     @Override
@@ -243,6 +262,7 @@ public final class DataCallResponse implements Parcelable {
         dest.writeList(mGateways);
         dest.writeList(mPcscfs);
         dest.writeInt(mMtu);
+        dest.writeList(mDedicatedEpsBearers);
     }
 
     public static final Parcelable.Creator<DataCallResponse> CREATOR =
