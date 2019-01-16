@@ -1662,6 +1662,15 @@ public class Tethering extends BaseNetworkObserver {
         mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest());
     }
 
+    /** Get the latest value of the tethering entitlement check. */
+    public void getLatestTetheringEntitlementValue(int type, ResultReceiver receiver,
+            boolean showEntitlementUi) {
+        if (receiver != null) {
+            // TODO: implement this method
+            receiver.send(TETHER_ERROR_NO_ERROR, null);
+        }
+    }
+
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         // Binder.java closes the resource for us.
