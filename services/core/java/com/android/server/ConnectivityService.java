@@ -70,6 +70,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITetheringUpstreamListener;
 import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
 import android.net.MatchAllNetworkSpecifier;
@@ -3622,6 +3623,36 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void stopTethering(int type, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
         mTethering.stopTethering(type);
+    }
+
+    /**
+     * Get the latest value of the tethering entitlement check.
+     *
+     * Note: Allow privileged apps who have TETHER_PRIVILEGED permission to access. If it turns
+     * out some such apps are observed to abuse this API, change to per-UID limits on this API
+     * if it's really needed.
+     */
+    @Override
+    public void getLatestTetheringEntitlementValue(int type, ResultReceiver receiver,
+            boolean showEntitlementUi, String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
+        mTethering.getLatestTetheringEntitlementValue(type, receiver, showEntitlementUi);
+    }
+
+    /** Register tethering upstream listener. */
+    @Override
+    public void registerTetheringUpstreamListener(ITetheringUpstreamListener listener,
+            String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
+        mTethering.registerTetheringUpstreamListener(listener);
+    }
+
+    /** Unregister tethering upstream listener. */
+    @Override
+    public void unregisterTetheringUpstreamListener(ITetheringUpstreamListener listener,
+            String callerPkg) {
+        ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
+        mTethering.unregisterTetheringUpstreamListener(listener);
     }
 
     // Called when we lose the default network and have no replacement yet.

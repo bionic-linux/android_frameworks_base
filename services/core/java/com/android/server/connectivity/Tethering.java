@@ -62,6 +62,7 @@ import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITetheringUpstreamListener;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -82,6 +83,7 @@ import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.UserHandle;
@@ -120,7 +122,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * @hide
@@ -183,6 +184,8 @@ public class Tethering extends BaseNetworkObserver {
     private final VersionedBroadcastListener mCarrierConfigChange;
     private final TetheringDependencies mDeps;
     private final EntitlementManager mEntitlementMgr;
+    private final RemoteCallbackList<ITetheringUpstreamListener> mTetheringUpstreamListeners =
+            new RemoteCallbackList<>();
 
     private volatile TetheringConfiguration mConfig;
     private InterfaceSet mCurrentUpstreamIfaceSet;
@@ -1660,6 +1663,40 @@ public class Tethering extends BaseNetworkObserver {
 
     public void systemReady() {
         mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest());
+    }
+
+    /** Get the latest value of the tethering entitlement check. */
+    public void getLatestTetheringEntitlementValue(int type, ResultReceiver receiver,
+            boolean showEntitlementUi) {
+        if (receiver != null) {
+            // TODO: implement this method
+            receiver.send(TETHER_ERROR_NO_ERROR, null);
+        }
+    }
+
+    /** Register tethering upstream listener */
+    public void registerTetheringUpstreamListener(ITetheringUpstreamListener listener) {
+        mTetheringUpstreamListeners.register(listener);
+        // TODO: update last upstream right way after register listener.
+    }
+
+    /** Unregister tethering upstream listener */
+    public void unregisterTetheringUpstreamListener(ITetheringUpstreamListener listener) {
+        mTetheringUpstreamListeners.unregister(listener);
+    }
+
+    private void reportUpstreamChanged(Network network) {
+        final int length = mTetheringUpstreamListeners.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringUpstreamListeners.getBroadcastItem(i).onUpstreamChanged(network);
+                } catch (RemoteException | RuntimeException e) {
+                }
+            }
+        } finally {
+            mTetheringUpstreamListeners.finishBroadcast();
+        }
     }
 
     @Override

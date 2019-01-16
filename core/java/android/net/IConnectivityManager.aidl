@@ -19,6 +19,7 @@ package android.net;
 import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.LinkProperties;
+import android.net.ITetheringUpstreamListener;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -194,4 +195,10 @@ interface IConnectivityManager
     int getConnectionOwnerUid(in ConnectionInfo connectionInfo);
     boolean isCallerCurrentAlwaysOnVpnApp();
     boolean isCallerCurrentAlwaysOnVpnLockdownApp();
+
+    void registerTetheringUpstreamListener(ITetheringUpstreamListener listener, String callerPkg);
+    void unregisterTetheringUpstreamListener(ITetheringUpstreamListener listener,
+            String callerPkg);
+    void getLatestTetheringEntitlementValue(int type, in ResultReceiver receiver,
+            boolean showEntitlementUi, String callerPkg);
 }
