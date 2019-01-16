@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,12 +133,14 @@ public class IpMemoryStoreDatabase {
         }
 
         /** Called when the database is created */
+        @Override
         public void onCreate(@NonNull final SQLiteDatabase db) {
             db.execSQL(NetworkAttributesContract.CREATE_TABLE);
             db.execSQL(PrivateDataContract.CREATE_TABLE);
         }
 
         /** Called when the database is upgraded */
+        @Override
         public void onUpgrade(@NonNull final SQLiteDatabase db, final int oldVersion,
                 final int newVersion) {
             // No upgrade supported yet.
@@ -148,6 +150,7 @@ public class IpMemoryStoreDatabase {
         }
 
         /** Called when the database is downgraded */
+        @Override
         public void onDowngrade(@NonNull final SQLiteDatabase db, final int oldVersion,
                 final int newVersion) {
             // Downgrades always nuke all data and recreate an empty table.
