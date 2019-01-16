@@ -2300,6 +2300,12 @@ public class ConnectivityManager {
          * Called when starting tethering failed.
          */
         public void onTetheringFailed() {}
+
+        /**
+         * Called when entitlement failed. This can be called multiple times and can be called
+         * any time after tethering has been started if tethering want to use mobile as upstream.
+         */
+        public void onEntitlementFailed() {}
     }
 
     /**
