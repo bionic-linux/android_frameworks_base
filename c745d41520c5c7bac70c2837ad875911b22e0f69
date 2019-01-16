@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8e20b00a_2ffd909c",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a8d6f56_7d05a862",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af8a2126_3644e58b",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 4
@@ -159,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "eab845d1_36f5060a",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:32:40Z",
+      "side": 1,
+      "message": "I expanded the abbreviation. The definition is right after it: \"a number specified in the device manifest...\"",
+      "parentUuid": "9814b45c_9011a0e5",
+      "range": {
+        "startLine": 105,
+        "startChar": 22,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcab4989_eaf4d8bc",
         "filename": "core/java/android/os/VintfRuntimeInfo.java",
         "patchSetId": 4
@@ -173,6 +215,24 @@
       "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c890a27c_1d281260",
+        "filename": "core/java/android/os/VintfRuntimeInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcab4989_eaf4d8bc",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
