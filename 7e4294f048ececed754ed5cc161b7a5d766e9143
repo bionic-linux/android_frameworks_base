@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f964e3b_d8784194",
+        "filename": "api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 27283,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-16T08:22:52Z",
+      "side": 1,
+      "message": "This should be mentioned in the commit description.",
+      "range": {
+        "startLine": 27283,
+        "startChar": 30,
+        "endLine": 27283,
+        "endChar": 40
+      },
+      "revId": "7e4294f048ececed754ed5cc161b7a5d766e9143",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8f73c4_634a568a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-16T08:22:52Z",
+      "side": 1,
+      "message": "We probably want to cite here that this method is confusing because it returns non-null LinkProperties for a network that is blocked and thus the caller cannot use.",
+      "range": {
+        "startLine": 1202,
+        "startChar": 63,
+        "endLine": 1202,
+        "endChar": 64
+      },
+      "revId": "7e4294f048ececed754ed5cc161b7a5d766e9143",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
