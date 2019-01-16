@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "861f601d_2eef0833",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3b8ae6_db4b33ea",
+      "range": {
+        "startLine": 3147,
+        "startChar": 43,
+        "endLine": 3148,
+        "endChar": 36
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13e89a3c_60580418",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a1a656_cb546341",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3198,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e89a3c_60580418",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8d599b7f_17220bce",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09e3782c_806ec387",
+      "range": {
+        "startLine": 3211,
+        "startChar": 34,
+        "endLine": 3211,
+        "endChar": 62
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7672a9ee_d6b3c33f",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 9
@@ -79,6 +145,24 @@
       "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49aa9fc_888cf3b9",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3213,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7672a9ee_d6b3c33f",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "eb96da9c_c3405c49",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d94a357_336863b4",
+      "range": {
+        "startLine": 3214,
+        "startChar": 7,
+        "endLine": 3214,
+        "endChar": 17
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741a28d6_ea6edb3a",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 9
@@ -125,6 +233,30 @@
       "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b35063e_1dfca293",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3220,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741a28d6_ea6edb3a",
+      "range": {
+        "startLine": 3220,
+        "startChar": 58,
+        "endLine": 3220,
+        "endChar": 75
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "5fe90757_93f65f71",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5a1d1b_e46a332d",
+      "range": {
+        "startLine": 2143,
+        "startChar": 7,
+        "endLine": 2143,
+        "endChar": 72
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74eab309_396d2610",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 9
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "9c1526dc_c63f778e",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2150,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74eab309_396d2610",
+      "range": {
+        "startLine": 2150,
+        "startChar": 43,
+        "endLine": 2150,
+        "endChar": 45
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08fe9e58_e50e8e4f",
         "filename": "core/java/android/bluetooth/BluetoothDevice.java",
         "patchSetId": 9
@@ -188,6 +368,24 @@
       "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191d5261_d67ca879",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08fe9e58_e50e8e4f",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +409,30 @@
       "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7a4d9e_0a8ddb6c",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T23:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be152bb_bd42e0be",
+      "range": {
+        "startLine": 2177,
+        "startChar": 7,
+        "endLine": 2177,
+        "endChar": 84
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
