@@ -582,6 +582,29 @@
     },
     {
       "key": {
+        "uuid": "f8ad23cc_a3508552",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:29:32Z",
+      "side": 1,
+      "message": "You\u0027re not using this constructor. Might as well remove it, especially because it\u0027s already bitten you (look at my comment in line 227)",
+      "range": {
+        "startLine": 201,
+        "startChar": 15,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8412f15e_dc1b171c",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 4
@@ -644,6 +667,29 @@
         "startChar": 12,
         "endLine": 219,
         "endChar": 15
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013ce539_a48a6d44",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:29:32Z",
+      "side": 1,
+      "message": "This is not going to crash in the way you think it is.\nThis will call ParseException#ParseException(String msg, Object... args), and that ends up calling :\n\nString.format(\"Parse section fail\", new Object[]{ e });\n\n...which will fail with an IllegalArgumentException because there is no specifier for that array.",
+      "range": {
+        "startLine": 227,
+        "startChar": 30,
+        "endLine": 227,
+        "endChar": 44
       },
       "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
