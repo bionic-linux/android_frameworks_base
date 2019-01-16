@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55e141b9_13e621d1",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T00:22:21Z",
+      "side": 1,
+      "message": "These should go into BluetoothDevice",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 721,
+        "endChar": 67
+      },
+      "revId": "ac3d28117c8150e78202d9eebf1c9cc8d6e5e9a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98cff5d_404247bb",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3367,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T00:22:21Z",
+      "side": 1,
+      "message": "These should go to BluetoothDevice",
+      "range": {
+        "startLine": 3342,
+        "startChar": 0,
+        "endLine": 3367,
+        "endChar": 5
+      },
+      "revId": "ac3d28117c8150e78202d9eebf1c9cc8d6e5e9a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ddfc8f_1af0c55b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T00:22:21Z",
+      "side": 1,
+      "message": "This should go to BluetoothDevice",
+      "range": {
+        "startLine": 3369,
+        "startChar": 3,
+        "endLine": 3386,
+        "endChar": 5
+      },
+      "revId": "ac3d28117c8150e78202d9eebf1c9cc8d6e5e9a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
