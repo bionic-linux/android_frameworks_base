@@ -2305,6 +2305,12 @@ public class ConnectivityManager {
          * Called when starting tethering failed.
          */
         public void onTetheringFailed() {}
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time after tethering has been started.
+         */
+        public void onUpstreamChanged(Network network) {}
     }
 
     /**
@@ -2350,6 +2356,14 @@ public class ConnectivityManager {
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == TETHER_ERROR_NO_ERROR) {
                     callback.onTetheringStarted();
+                } else if (resultCode == TETHER_ERROR_UPSTREAM_CHANGED) {
+                    if (resultData == null) {
+                        callback.onUpstreamChanged(null);
+                    } else {
+                        final Network network = resultData.getParcelable(
+                                TETHER_UPSTREAM_CHANGED);
+                        callback.onUpstreamChanged(network);
+                    }
                 } else {
                     callback.onTetheringFailed();
                 }
@@ -2502,6 +2516,12 @@ public class ConnectivityManager {
     public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
     /** {@hide} */
     public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
+    /** {@hide} */
+    public static final int TETHER_ERROR_UPSTREAM_CHANGED     = 13;
+    /** {@hide} */
+    public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN  = 14;
+    /** {@hide} */
+    public static final String TETHER_UPSTREAM_CHANGED  = "tetherUpstreamChanged";
 
     /**
      * Get a more detailed error code after a Tethering or Untethering
@@ -2518,6 +2538,23 @@ public class ConnectivityManager {
     public int getLastTetherError(String iface) {
         try {
             return mService.getLastTetherError(iface);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the cache value of the entitlement check. This method never triggers a new
+     * entitlement check.
+     *
+     * @return a int value of latest the entitlement check.
+     * e.g. {@link #TETHER_ERROR_NO_ERROR}, {@link #TETHER_ERROR_PROVISION_FAILED} and
+     * {@link #TETHER_ERROR_ENTITLEMENT_UNKONWN}.
+     * {@hide}
+     */
+    public int getLatestEntitlementValue() {
+        try {
+            return mService.getLatestEntitlementValue();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
