@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b54a2b04_3decee24",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3275,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-16T18:51:44Z",
+      "side": 1,
+      "message": "Thanks for the info.\nAfter reviewed we think use list here would make Bluetooth framework logic too complicate.\nIt is changed to a single BluetoothDevice after patch#6.",
+      "parentUuid": "53797620_bfd2eaec",
+      "range": {
+        "startLine": 3275,
+        "startChar": 12,
+        "endLine": 3275,
+        "endChar": 41
+      },
+      "revId": "ac3d28117c8150e78202d9eebf1c9cc8d6e5e9a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98cff5d_404247bb",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 4
