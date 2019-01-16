@@ -2372,6 +2372,15 @@ public class ConnectivityManager {
          * Called when starting tethering failed.
          */
         public void onTetheringFailed() {}
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time after tethering has been started.
+         *
+         * @param network the {@link Network} of tethering upstream. This can be null and null
+         * means tethering doesn't have any upstream.
+         */
+        public void onUpstreamChanged(@Nullable Network network) {}
     }
 
     /**
@@ -2411,14 +2420,24 @@ public class ConnectivityManager {
     public void startTethering(int type, boolean showProvisioningUi,
             final OnStartTetheringCallback callback, Handler handler) {
         Preconditions.checkNotNull(callback, "OnStartTetheringCallback cannot be null.");
-
         ResultReceiver wrappedCallback = new ResultReceiver(handler) {
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
-                if (resultCode == TETHER_ERROR_NO_ERROR) {
-                    callback.onTetheringStarted();
-                } else {
-                    callback.onTetheringFailed();
+                switch (resultCode) {
+                    case TETHER_ERROR_NO_ERROR:
+                        callback.onTetheringStarted();
+                        break;
+                    case TETHER_EVENT_UPSTREAM_CHANGED:
+                        if (resultData == null) {
+                            callback.onUpstreamChanged(null);
+                        } else {
+                            final Network network = resultData.getParcelable(
+                                    TETHER_EXTRA_NEW_UPSTREAM);
+                            callback.onUpstreamChanged(network);
+                        }
+                        break;
+                    default:
+                        callback.onTetheringFailed();
                 }
             }
         };
@@ -2544,6 +2563,7 @@ public class ConnectivityManager {
     }
 
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_NO_ERROR           = 0;
     /** {@hide} */
     public static final int TETHER_ERROR_UNKNOWN_IFACE      = 1;
@@ -2566,9 +2586,17 @@ public class ConnectivityManager {
     /** {@hide} */
     public static final int TETHER_ERROR_IFACE_CFG_ERROR      = 10;
     /** {@hide} */
+    @SystemApi
     public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
     /** {@hide} */
     public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
+    /** {@hide} */
+    public static final int TETHER_EVENT_UPSTREAM_CHANGED     = 13;
+    /** {@hide} */
+    @SystemApi
+    public static final int TETHER_EVENT_ENTITLEMENT_UNKONWN  = 14;
+    /** {@hide} */
+    public static final String TETHER_EXTRA_NEW_UPSTREAM = "tetherUpstreamChanged";
 
     /**
      * Get a more detailed error code after a Tethering or Untethering
@@ -2585,6 +2613,62 @@ public class ConnectivityManager {
     public int getLastTetherError(String iface) {
         try {
             return mService.getLastTetherError(iface);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Callback for use with {@link #getLatestTetheringEntitlementValue} to find out whether
+     * entitlement succeeded.
+     * @hide
+     */
+    @SystemApi
+    public abstract static class EntitlementValueCallback {
+        /**
+         * Called to notify entitlement result.
+         *
+         * @param resultCode a int value of entitlement result. It may be one of
+         *         {@link #TETHER_ERROR_NO_ERROR},
+         *         {@link #TETHER_ERROR_PROVISION_FAILED}, or
+         *         {@link #TETHER_EVENT_ENTITLEMENT_UNKONWN}.
+         */
+        public void onEntitlementResult(int resultCode) {}
+    }
+
+    /**
+     * Get the last value of the entitlement check. If last value is {@link #TETHER_ERROR_NO_ERROR},
+     * it just return this cache value. Otherwise, showEntitlementUi argument would indicate whether
+     * to run UI-based entitlement check. Any entitlement check the platform performs for any reason
+     * will update the cached value.
+     *
+     * @param type the downstream type of tethering. Must be one of
+     *         {@link #TETHERING_WIFI},
+     *         {@link #TETHERING_USB}, or
+     *         {@link #TETHERING_BLUETOOTH}.
+     * @param showEntitlementUi a boolean indicating whether to run UI-based entitlement check.
+     * @param callback an {@link EntitlementValueCallback} which will be called to notify the
+     *         caller of the result of entitlement check.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * {@hide}
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    public void getLatestTetheringEntitlementValue(int type, boolean showEntitlementUi,
+            @NonNull final EntitlementValueCallback callback, @Nullable Handler handler) {
+        Preconditions.checkNotNull(callback, "EntitlementValueCallback cannot be null.");
+        ResultReceiver wrappedCallback = new ResultReceiver(handler) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                callback.onEntitlementResult(resultCode);
+            }
+        };
+
+        try {
+            String pkgName = mContext.getOpPackageName();
+            Log.i(TAG, "getLatestTetheringEntitlementValue:" + pkgName);
+            mService.getLatestTetheringEntitlementValue(type, wrappedCallback,
+                    showEntitlementUi, pkgName);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
