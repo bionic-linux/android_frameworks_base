@@ -22,6 +22,30 @@
       "revId": "240a462186e6f1e4effee027063e86f174e68730",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c70473_cd5d9146",
+        "filename": "telephony/java/android/telephony/PcoData.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-16T22:32:32Z",
+      "side": 1,
+      "message": "OK, but not changing the underlying field because opaque vendor binaries may be using it",
+      "parentUuid": "75bb81fb_2291d637",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "240a462186e6f1e4effee027063e86f174e68730",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
