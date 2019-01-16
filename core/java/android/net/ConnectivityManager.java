@@ -2300,6 +2300,11 @@ public class ConnectivityManager {
          * Called when starting tethering failed.
          */
         public void onTetheringFailed() {}
+
+        /**
+         * Called when entitlement failed.
+         */
+        public void onEntitlementFailed() {}
     }
 
     /**
