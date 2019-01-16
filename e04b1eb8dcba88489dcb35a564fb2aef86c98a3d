@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df3b8ae6_db4b33ea",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "the same A and B pair are registered twice",
+      "range": {
+        "startLine": 3147,
+        "startChar": 43,
+        "endLine": 3148,
+        "endChar": 36
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e89a3c_60580418",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3198,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "please remove",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e3782c_806ec387",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "when Bluetooth is either ON or OFF",
+      "range": {
+        "startLine": 3211,
+        "startChar": 34,
+        "endLine": 3211,
+        "endChar": 62
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7672a9ee_d6b3c33f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3213,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "unregistration.",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d94a357_336863b4",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Unregistering",
+      "range": {
+        "startLine": 3214,
+        "startChar": 7,
+        "endLine": 3214,
+        "endChar": 17
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741a28d6_ea6edb3a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3220,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "has not been registered before",
+      "range": {
+        "startLine": 3220,
+        "startChar": 58,
+        "endLine": 3220,
+        "endChar": 75
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5a1d1b_e46a332d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Set a keyed metadata of this {@link BluetoothDevice} to a {@link String} value.",
+      "range": {
+        "startLine": 2143,
+        "startChar": 7,
+        "endLine": 2143,
+        "endChar": 72
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74eab309_396d2610",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2150,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "for",
+      "range": {
+        "startLine": 2150,
+        "startChar": 43,
+        "endLine": 2150,
+        "endChar": 45
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fe9e58_e50e8e4f",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be152bb_bd42e0be",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-01-16T22:32:57Z",
+      "side": 1,
+      "message": "Get a keyed metadata for this {@link BluetoothDevice} as {@link String}",
+      "range": {
+        "startLine": 2177,
+        "startChar": 7,
+        "endLine": 2177,
+        "endChar": 84
+      },
+      "revId": "e04b1eb8dcba88489dcb35a564fb2aef86c98a3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
