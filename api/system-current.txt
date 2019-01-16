@@ -3036,6 +3036,7 @@ package android.net {
 
   public static abstract class ConnectivityManager.OnStartTetheringCallback {
     ctor public ConnectivityManager.OnStartTetheringCallback();
+    method public void onEntitlementFailed();
     method public void onTetheringFailed();
     method public void onTetheringStarted();
   }
