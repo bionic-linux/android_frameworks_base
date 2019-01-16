@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2554ae1f_3777e092",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-01-16T06:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6305ec_07dee437",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8132e9dd_5930d348",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b09fbfe6_301ad9da",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-01-16T06:50:36Z",
+      "side": 1,
+      "message": "Done. Much simpler - thanks!",
+      "parentUuid": "8132e9dd_5930d348",
+      "range": {
+        "startLine": 1573,
+        "startChar": 35,
+        "endLine": 1573,
+        "endChar": 61
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "803c25cb_b8f48465",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-01-15T00:47:43Z",
       "side": 1,
       "message": "Hm, it kind of looks like the test in MixInCapabilities might be at fault. It assumes the one-way match between NC needs to be transitive and that property is not guaranteed for specifiers AFAICT.\nAt this moment the specifier is considered a mutable capability by NC but does have the concrete issue that it can cause a request to be dropped when changed which is what we try to avoid with immutable capabilities...\n\nI don\u0027t have a very good answer for you here, so unless either of us thinks of one let\u0027s go with your plan of just having this comment here.",
+      "range": {
+        "startLine": 2555,
+        "startChar": 2,
+        "endLine": 2556,
+        "endChar": 78
+      },
+      "revId": "f5776ff6189b6b0d06c153bec9efa3338365c261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11ee66c6_608fa05b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-01-16T06:50:36Z",
+      "side": 1,
+      "message": "Yep - no solution for now (except one day dealing with that restriction or writing a different test). But for now I wanted to make this issue explicit (in case funnier behaviors start appearing).",
+      "parentUuid": "803c25cb_b8f48465",
       "range": {
         "startLine": 2555,
         "startChar": 2,
