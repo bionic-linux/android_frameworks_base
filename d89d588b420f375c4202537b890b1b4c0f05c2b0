@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c66ee9a7_e9e9b2ad",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-01-16T21:55:48Z",
+      "side": 1,
+      "message": "Change the original ImsConfig to point to this instead of having both be magically 26",
+      "range": {
+        "startLine": 85,
+        "startChar": 75,
+        "endLine": 85,
+        "endChar": 77
+      },
+      "revId": "d89d588b420f375c4202537b890b1b4c0f05c2b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
