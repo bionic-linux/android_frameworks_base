@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f01c04_1370957c",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-16T22:16:30Z",
+      "side": 1,
+      "message": "I believe you have to add your event to this list or else it will not check READ_PRECISE_PHONE_STATE when registering.",
+      "range": {
+        "startLine": 2068,
+        "startChar": 20,
+        "endLine": 2068,
+        "endChar": 43
+      },
+      "revId": "fd228597bde7bb5da168f000b8fd088645ab503c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
