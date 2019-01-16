@@ -2305,6 +2305,14 @@ public class ConnectivityManager {
          * Called when starting tethering failed.
          */
         public void onTetheringFailed() {}
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time after tethering has been started.
+         *
+         * @param network the {@link Network} of tethering upstream.
+         */
+        public void onUpstreamChanged(Network network) {}
     }
 
     /**
@@ -2350,6 +2358,14 @@ public class ConnectivityManager {
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == TETHER_ERROR_NO_ERROR) {
                     callback.onTetheringStarted();
+                } else if (resultCode == TETHER_EVENT_UPSTREAM_CHANGED) {
+                    if (resultData == null) {
+                        callback.onUpstreamChanged(null);
+                    } else {
+                        final Network network = resultData.getParcelable(
+                                TETHER_UPSTREAM_CHANGED);
+                        callback.onUpstreamChanged(network);
+                    }
                 } else {
                     callback.onTetheringFailed();
                 }
@@ -2502,6 +2518,12 @@ public class ConnectivityManager {
     public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
     /** {@hide} */
     public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
+    /** {@hide} */
+    public static final int TETHER_EVENT_UPSTREAM_CHANGED     = 13;
+    /** {@hide} */
+    public static final int TETHER_EVENT_ENTITLEMENT_UNKONWN  = 14;
+    /** {@hide} */
+    public static final String TETHER_UPSTREAM_CHANGED  = "tetherUpstreamChanged";
 
     /**
      * Get a more detailed error code after a Tethering or Untethering
@@ -2518,6 +2540,61 @@ public class ConnectivityManager {
     public int getLastTetherError(String iface) {
         try {
             return mService.getLastTetherError(iface);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Callback for use with {@link #getLatestTetheringEntitlementValue} to find out whether
+     * entitlment succeeded.
+     * @hide
+     */
+    @SystemApi
+    public abstract static class EntitlementValueCallback {
+        /**
+         * Called when entitlement successded or don't run entitlement check.
+         */
+        public void onEntitlementSucceeded() {}
+
+        /**
+         * Called when entitlement failed or result is unknown.
+         */
+        public void onEntitlementFailedOrUnknown() {}
+    }
+
+    /**
+     * Get the last value of the entitlement check. If last vale is {@link #TETHER_ERROR_NO_ERROR},
+     * this just fire {@link EntitlementValueCallback#onEntitlementSucceeded}. Otherwise,
+     * showEntitlementUi argument would indicate whether run UI-based entitlement check. Any
+     * entitlement check the platform performs for any reason will update the cached value.
+     *
+     * @param callback an {@link EntitlementValueCallback} which will be called to notify the
+     *         caller of the result of entitlement check.
+     * @param showEntitlementUi a boolean indicating whether run UI-based entitlement check.
+     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * {@hide}
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    public void getLatestTetheringEntitlementValue(@NonNull EntitlementValueCallback callback,
+            boolean showEntitlementUi, @Nullable Handler handler) {
+        ResultReceiver wrappedCallback = new ResultReceiver(handler) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                if (resultCode == TETHER_ERROR_NO_ERROR) {
+                    callback.onEntitlementSucceeded();
+                } else {
+                    callback.onEntitlementFailedOrUnknown();
+                }
+            }
+        };
+
+        try {
+            String pkgName = mContext.getOpPackageName();
+            Log.i(TAG, "getLatestTetheringEntitlementValue:" + pkgName);
+            mService.getLatestTetheringEntitlementValue(wrappedCallback,
+                    showEntitlementUi, pkgName);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
