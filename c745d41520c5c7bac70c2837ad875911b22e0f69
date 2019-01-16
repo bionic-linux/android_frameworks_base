@@ -255,6 +255,24 @@
       "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c21845_d590c092",
+        "filename": "core/java/android/os/VintfRuntimeInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:29:38Z",
+      "side": 1,
+      "message": "Also, basically VintfRuntimeInfo *is* the class that contains all this data. It just happens that the data is stable, so all methods are \"static native\". I could change this to the following if you really want to, but I think it is similar to the current design:\n\nclass VintfRuntimeInfo {\n    private VintfRuntimeInfo();\n    public static VintfRuntimeInfo getInstance();\n    public String getFoo();\n}",
+      "parentUuid": "905f5051_7cec1786",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
