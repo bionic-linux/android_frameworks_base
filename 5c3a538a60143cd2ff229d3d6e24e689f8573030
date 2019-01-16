@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "346df404_f2e755e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-01-16T20:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba490318_fe0e72b3",
+      "revId": "5c3a538a60143cd2ff229d3d6e24e689f8573030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b3376e_d96051f2",
         "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
         "patchSetId": 16
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-16T03:37:40Z",
       "side": 1,
       "message": "It looks like that we\u0027ll depend on this variable to get correct stats.\nIs there any case that services will restart without reboot? e.g. ANR, stability test case",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "5c3a538a60143cd2ff229d3d6e24e689f8573030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25db2ddf_e30b0f2d",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1121354
+      },
+      "writtenOn": "2019-01-16T20:02:41Z",
+      "side": 1,
+      "message": "I think the only case is system_server crashed and restart. It will cause the snapshot cleaned and we will lose some stats between the last stats poll and the last time we write stats to disk (which is no more then 2MB if I understand it correctly). After it restart we will be back to normal since NetworkStatsService actually record the stats delta in NetworkStatsRecorder so we won\u0027t mess up the stats we already have.",
+      "parentUuid": "a3b3376e_d96051f2",
       "range": {
         "startLine": 68,
         "startChar": 4,
