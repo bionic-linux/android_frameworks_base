@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74406184_2f062a53",
+        "filename": "core/java/android/net/INetworkManagementEventObserver.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T12:43:15Z",
+      "side": 1,
+      "message": "Not sure, but I kind of seem to recall this changes the way the interface is actually treated. Can you please make sure we are not changing the logic here ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "6ee6b402f6185bf84eb05c316c737c26dd3163c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21ad3b3_b22c9821",
+        "filename": "core/java/android/net/NetworkStack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T12:43:15Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "6ee6b402f6185bf84eb05c316c737c26dd3163c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7c7078_e609aaf2",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T12:43:15Z",
+      "side": 1,
+      "message": "So how about.\n\nprivate interface RERunnable {\n    public void run() throws RemoteException;\n}\nprivate void nore(RERunnable r) {\n  try {\n    r.run();\n  } catch (RemoteException e) {\n    // This is a failure case anyway and everything is going to hell, the system is\n    // restarting and nasal demons may happen, so who cares about performance at this point\n    final StackTraceElement[] callStack \u003d Thread.currentThread().getStackTrace();\n    log(\"Failed to call \" + callStack[1].getMethodName(), e);\n  }\n}\n\n\npublic void onPreDhcpAction() {\n  log(\"onPreDhcpAction()\");\n  nore(() -\u003e mCallback.onPreDhcpAction());\n}\n\n\nYou could even use that same technique to implement the log, if you were not concerned about performance of this (but I think you should be).",
+      "range": {
+        "startLine": 177,
+        "startChar": 21,
+        "endLine": 177,
+        "endChar": 36
+      },
+      "revId": "6ee6b402f6185bf84eb05c316c737c26dd3163c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceef76a4_61ac76d5",
+        "filename": "packages/NetworkStack/src/android/net/util/ConnectivityPacketSummary.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T12:43:15Z",
+      "side": 1,
+      "message": "Let\u0027s kill this with fire",
+      "range": {
+        "startLine": 418,
+        "startChar": 25,
+        "endLine": 418,
+        "endChar": 33
+      },
+      "revId": "6ee6b402f6185bf84eb05c316c737c26dd3163c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcfacd1e_08ae6fb8",
+        "filename": "packages/NetworkStack/tests/jni/apf_jni.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T12:43:15Z",
+      "side": 1,
+      "message": "Make sure the network stack app holds all permissions necessary for apf to work correctly, in particular selinux",
+      "revId": "6ee6b402f6185bf84eb05c316c737c26dd3163c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
