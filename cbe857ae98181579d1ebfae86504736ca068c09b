@@ -1,0 +1,1268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de313c41_02cc3c54",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5773907c_a22b987c",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Usually methods that take a ByteBuffer try to be idempotent or document how they use it. In this case it looks to me like it is explicitly part of the design that this is not idempotent (which is fine), but then you should document this. For example :\n\n   /**\n    * Create a new DnsHeader from a positioned ByteBuffer.\n    *\n    * Reads the passed ByteBuffer from its current position and decodes a DNS header.\n    * When this constructor returns, the reading position of the ByteBuffer has been\n    * advanced to the end of the DNS header record.\n    * This is meant to chain with other methods reading a DNS response in sequence.\n    */",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bd4b66_809d93a0",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "This bytebuffer has been filled with data from the network right ? Then you should document that the bytebuffer must be set to the network byte order. It\u0027s the default for byte buffers, but it should still be documented. E.g. add to the previous comment :\n\n  * The ByteBuffer must be in network byte order (which is the default).",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61540260_f867078c",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "What\u0027s the point of these accessors ? The members are final anyway and this represents a packet with RFC backing so they won\u0027t change meaning any time soon. Please just make the fields public final.",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb6495a_901ca865",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 81,
+        "startChar": 36,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe9e87c_6caefbbe",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Same comments as above about documentation.",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98db5933_c79a884e",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1162b643_1cacef2b",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "You can just say buf.get(mRR).\n\nFrom the doc : of ByteBuffer#get(byte[]) :\n\"src.get(a) behaves in exactly the same way as the invocation src.get(a, 0, a.length)\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4641632_0cae8992",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Likewise, these accessors are unidiomatic and not useful",
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6204631f_f931cc54",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Keep in mind this makes the contents of the array mutable by clients. If this is fine, please remove the accessor and make the field public final. If this is not fine, please give a method that takes an int like you did for DnsHeader#getSectionCount.",
+      "range": {
+        "startLine": 114,
+        "startChar": 22,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5ca080_ece0e1e3",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "This needs comments to explain what it\u0027s doing.",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 36
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c36ecac_68cffd96",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398d75be_78243d47",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "You are printing \\ then a *decimal* number. This is quite unidiomatic. In Java \\0 + octal is still used, though it\u0027s inconvenient and all new languages give it up, but you can also say something like \\u + codepoint or 0x + hex.",
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49548ff0_e822c0ee",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Can you avoid creating a new instance of this class every time ?",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283165d1_9a15a450",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Please use format(Object, StringBuffer, pos) to conserve performance, as you already have a StringBuffer here.",
+      "range": {
+        "startLine": 124,
+        "startChar": 50,
+        "endLine": 124,
+        "endChar": 56
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2aad40_836a213c",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Few people know their ascii by rote, please add comments explaining which are these characters",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 36
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4ac967_5638c0cc",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Same comments as above (@NonNull, comments)",
+      "range": {
+        "startLine": 136,
+        "startChar": 33,
+        "endLine": 136,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96701ff4_7637c180",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33aa7aab_89c131f9",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cf0f39_1a0a3fc5",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final, and remove extra space",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 25
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86253c9_121e8d0b",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "get(label)",
+      "range": {
+        "startLine": 158,
+        "startChar": 24,
+        "endLine": 158,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359b6ae6_f6817892",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Can you add a one-line comment reference to the chapter where this compression scheme is described in the relevant in the RFC ?",
+      "range": {
+        "startLine": 163,
+        "startChar": 35,
+        "endLine": 163,
+        "endChar": 51
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230a4c41_6f94271a",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand well what this does (I\u0027ll take another look when you have a ref to the relevant RFC chapter) but this code looks very suspicious to me on two accounts :\n- You are comparing a value that ultimately is coming from the buffer to the absolute offset since the start of the buffer. I see very few cases where this can be legitimate.\n- You never write to the stringbuffer in this branch of the if.\n\nIt also seems to me like there is no coverage for this branch in tests.",
+      "range": {
+        "startLine": 167,
+        "startChar": 35,
+        "endLine": 167,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9ebda8_07ae4051",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Are you using this boolean at all ? If not remove it.",
+      "range": {
+        "startLine": 194,
+        "startChar": 33,
+        "endLine": 194,
+        "endChar": 36
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88aa90f_03cc1e9e",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "It looks like this is final in practice, so please do add the modifier.",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 42
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a19b07a_8915348f",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Do you need to keep this in a member ? It looks to me like this could just be a local.",
+      "range": {
+        "startLine": 198,
+        "startChar": 25,
+        "endLine": 198,
+        "endChar": 32
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8412f15e_dc1b171c",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "You are losing all the details of the exception you painstakenly built in the lower layers. Can you please just add it to the constructor of this ? This will cause it to bubble up :\n\n  throw new ParseException(\"Parse header failed, bad input data\", e);",
+      "range": {
+        "startLine": 211,
+        "startChar": 72,
+        "endLine": 211,
+        "endChar": 73
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16b3704_62f822be",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Please don\u0027t catch NPE, this would mask programming errors. I think it\u0027s fine to just leave things alone completely and let the NPE crash the program as is, but if you really want this message you can just go ahead and say at the top :\n\n  if (null \u003d\u003d data) throw new ParseException(\"Parse header failed, null input data\");\n\nsince IIUC any other cause of NPE would be a programming error.",
+      "range": {
+        "startLine": 212,
+        "startChar": 17,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b1a25f_6649abb5",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 219,
+        "startChar": 12,
+        "endLine": 219,
+        "endChar": 15
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719cd06c_cd87f99e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "\"RawAnswer\" sounds like a data class. Can this be called \"RawAnswerListener\" or \"RawAnswerCallback\" ?",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1527ec3d_f299b9f2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Since this can be null, @Nullable",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746153ad_71bebbcc",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 102,
+        "startChar": 21,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f5bfb4_9a46ecc6",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "instance",
+      "range": {
+        "startLine": 111,
+        "startChar": 11,
+        "endLine": 111,
+        "endChar": 19
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ab4674_93a4ba5e",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "flags as a combination of the FLAGS_* constants",
+      "range": {
+        "startLine": 126,
+        "startChar": 21,
+        "endLine": 126,
+        "endChar": 63
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98115d4_7f40675d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 29
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4926f82f_dc9fac29",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fde2f71_e63ccff2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "dns class as one of the CLASS_* constants",
+      "range": {
+        "startLine": 146,
+        "startChar": 22,
+        "endLine": 146,
+        "endChar": 44
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0567d224_21a77c06",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "dns resource record (RR) type as one of the TYPE_* constants",
+      "range": {
+        "startLine": 147,
+        "startChar": 14,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8025611_e2f770f8",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 148,
+        "startChar": 20,
+        "endLine": 148,
+        "endChar": 63
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ea229c_160d7961",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d44b70_d3108a17",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Same comments as above",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45de3fe_c69d6b71",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 175,
+        "startChar": 22,
+        "endLine": 175,
+        "endChar": 29
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4b4230_be78a939",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 23
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca36bda_5b5ea005",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "nullability annotations for all those params please",
+      "range": {
+        "startLine": 189,
+        "startChar": 36,
+        "endLine": 189,
+        "endChar": 48
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de404e0d_b470dbc4",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 210,
+        "startChar": 36,
+        "endLine": 210,
+        "endChar": 51
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41af46b7_9ed4f0d6",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 241,
+        "startChar": 25,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a8a4f8_4071b250",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 244,
+        "startChar": 46,
+        "endLine": 244,
+        "endChar": 47
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb1d574_62396d79",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment",
+      "range": {
+        "startLine": 255,
+        "startChar": 15,
+        "endLine": 255,
+        "endChar": 33
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690aaa77_f18cc372",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "@NonNull, since you never return null.",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10aaab5a_0a9cc95d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bade66_847e299d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "TYPE_AAAA",
+      "range": {
+        "startLine": 264,
+        "startChar": 45,
+        "endLine": 264,
+        "endChar": 47
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba11aca4_82d7c3c5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "TYPE_A",
+      "range": {
+        "startLine": 264,
+        "startChar": 30,
+        "endLine": 264,
+        "endChar": 31
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae47c3f_f4aa0128",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 283,
+        "startChar": 16,
+        "endLine": 283,
+        "endChar": 20
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c789d8_a0bc59b4",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "Nullability annotations for all the arguments of the methods of this class",
+      "range": {
+        "startLine": 286,
+        "startChar": 24,
+        "endLine": 286,
+        "endChar": 30
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0e2a62_1fc51a2a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "must",
+      "range": {
+        "startLine": 294,
+        "startChar": 29,
+        "endLine": 294,
+        "endChar": 35
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd7886d_ec023aa2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-16T06:13:38Z",
+      "side": 1,
+      "message": "While this is probably fine, do you want to improve robustness by storing an A answer and an AAAA answer separately instead of the list ? That would mean you always return the addresses in the same order, and it would make this test easier to understand than the \u003d\u003d 2.",
+      "range": {
+        "startLine": 309,
+        "startChar": 24,
+        "endLine": 309,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
