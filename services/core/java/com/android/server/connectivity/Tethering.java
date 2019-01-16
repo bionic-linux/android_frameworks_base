@@ -32,6 +32,7 @@ import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
+import static android.net.ConnectivityManager.TETHER_ERROR_PROVISION_FAILED;
 import static android.net.ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNAVAIL_IFACE;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
@@ -120,7 +121,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * @hide
@@ -223,7 +223,8 @@ public class Tethering extends BaseNetworkObserver {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
-        mEntitlementMgr = mDeps.getEntitlementManager(mContext, mLog, systemProperties);
+        mEntitlementMgr = mDeps.getEntitlementManager(mContext, mTetherMasterSM,
+                mLog, systemProperties);
         mCarrierConfigChange = new VersionedBroadcastListener(
                 "CarrierConfigChangeListener", mContext, smHandler, filter,
                 (Intent ignored) -> {
@@ -467,8 +468,11 @@ public class Tethering extends BaseNetworkObserver {
                 // If provisioning is successful, enable tethering, otherwise just send the error.
                 if (resultCode == TETHER_ERROR_NO_ERROR) {
                     enableTetheringInternal(type, true, receiver);
+                    mEntitlementMgr.updateEntitlementCacheValue(type, TETHER_ERROR_NO_ERROR);
                 } else {
                     sendTetherResult(receiver, resultCode);
+                    mEntitlementMgr.updateEntitlementCacheValue(
+                            type, TETHER_ERROR_PROVISION_FAILED);
                 }
             }
         };
@@ -1660,6 +1664,14 @@ public class Tethering extends BaseNetworkObserver {
 
     public void systemReady() {
         mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest());
+    }
+
+    /** Get the latest value of the tethering entitlement check. */
+    public void getLatestTetheringEntitlementValue(int type, ResultReceiver receiver,
+            boolean showEntitlementUi) {
+        if (receiver != null) {
+            mEntitlementMgr.getLatestTetheringEntitlementValue(type, receiver, showEntitlementUi);
+        }
     }
 
     @Override
