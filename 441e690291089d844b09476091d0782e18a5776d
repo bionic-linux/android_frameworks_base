@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1428ee6_75b5bafa",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2305,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-16T15:10:43Z",
+      "side": 1,
+      "message": "Please add a note that this can be called multiple times and can be called any time after tethering has been started if the upstream changes to cellular data.",
+      "range": {
+        "startLine": 2305,
+        "startChar": 0,
+        "endLine": 2305,
+        "endChar": 42
+      },
+      "revId": "441e690291089d844b09476091d0782e18a5776d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
