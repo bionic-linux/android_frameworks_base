@@ -3579,6 +3579,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mTethering.stopTethering(type);
     }
 
+    /** Get the latest value of the entitlement check. */
+    @Override
+    public int getLatestEntitlementValue() {
+        return mTethering.getLatestEntitlementValue();
+    }
+
     // Called when we lose the default network and have no replacement yet.
     // This will automatically be cleared after X seconds or a new default network
     // becomes CONNECTED, whichever happens first.  The timer is started by the
