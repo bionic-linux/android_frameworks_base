@@ -639,6 +639,7 @@ package android.net {
     ctor public LinkProperties(@Nullable android.net.LinkProperties);
     method public boolean addDnsServer(@NonNull java.net.InetAddress);
     method public boolean addLinkAddress(@NonNull android.net.LinkAddress);
+    method @NonNull public java.util.List<android.telephony.data.DedicatedEpsBearer> getDedicatedEpsBearers();
     method @Nullable public android.net.IpPrefix getNat64Prefix();
     method @NonNull public java.util.List<java.net.InetAddress> getPcscfServers();
     method @Nullable public String getTcpBufferSizes();
@@ -1521,6 +1522,15 @@ package android.telephony {
     method @NonNull public android.telephony.NetworkRegistrationInfo.Builder setTransportType(int);
   }
 
+  public final class PcoData implements android.os.Parcelable {
+    method public int describeContents();
+    method public String getBearerProtocol();
+    method public int getCid();
+    method public byte[] getContents();
+    method @IntRange(from=android.telephony.PcoData.PCO_ID_LOWER_BOUND, to=android.telephony.PcoData.PCO_ID_UPPER_BOUND) public int getPcoId();
+    method public void writeToParcel(android.os.Parcel, int);
+  }
+
   public class ServiceState implements android.os.Parcelable {
     method public void addNetworkRegistrationInfo(android.telephony.NetworkRegistrationInfo);
     method public void setCdmaSystemAndNetworkId(int, int);
@@ -1539,6 +1549,60 @@ package android.telephony {
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public void refreshUiccProfile();
     method public void setCarrierTestOverride(String, String, String, String, String, String, String);
     field public static final int UNKNOWN_CARRIER_ID_LIST_VERSION = -1; // 0xffffffff
+  }
+
+}
+
+package android.telephony.data {
+
+  public final class DataCallResponse implements android.os.Parcelable {
+    method public int describeContents();
+    method @NonNull public java.util.List<android.net.LinkAddress> getAddresses();
+    method public int getCause();
+    method @NonNull public java.util.List<android.telephony.data.DedicatedEpsBearer> getDedicatedEpsBearers();
+    method @NonNull public java.util.List<java.net.InetAddress> getDnsAddresses();
+    method @NonNull public java.util.List<java.net.InetAddress> getGatewayAddresses();
+    method public int getId();
+    method @NonNull public String getInterfaceName();
+    method public int getLinkStatus();
+    method public int getMtu();
+    method @NonNull public java.util.List<java.net.InetAddress> getPcscfAddresses();
+    method public int getProtocolType();
+    method public int getSuggestedRetryTime();
+    method public void writeToParcel(android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.data.DataCallResponse> CREATOR;
+    field public static final int LINK_STATUS_ACTIVE = 2; // 0x2
+    field public static final int LINK_STATUS_DORMANT = 1; // 0x1
+    field public static final int LINK_STATUS_INACTIVE = 0; // 0x0
+    field public static final int LINK_STATUS_UNKNOWN = -1; // 0xffffffff
+  }
+
+  public static final class DataCallResponse.Builder {
+    ctor public DataCallResponse.Builder();
+    method @NonNull public android.telephony.data.DataCallResponse build();
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setAddresses(@NonNull java.util.List<android.net.LinkAddress>);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setCause(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setDedicatedEpsBearers(@NonNull java.util.List<android.telephony.data.DedicatedEpsBearer>);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setDnsAddresses(@NonNull java.util.List<java.net.InetAddress>);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setGatewayAddresses(@NonNull java.util.List<java.net.InetAddress>);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setId(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setInterfaceName(@NonNull String);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setLinkStatus(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setMtu(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setPcscfAddresses(@NonNull java.util.List<java.net.InetAddress>);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setProtocolType(int);
+    method @NonNull public android.telephony.data.DataCallResponse.Builder setSuggestedRetryTime(int);
+  }
+
+  public final class DedicatedEpsBearer implements android.os.Parcelable {
+    ctor protected DedicatedEpsBearer(android.os.Parcel);
+    method public int describeContents();
+    method public int getBearerId();
+    method public java.util.List<android.telephony.PcoData> getPcoElements();
+    method public byte[] getQosData();
+    method public byte[] getTft();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.telephony.data.DedicatedEpsBearer> CREATOR;
   }
 
 }

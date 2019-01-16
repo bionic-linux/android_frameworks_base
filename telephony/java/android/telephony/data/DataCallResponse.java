@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.net.LinkAddress;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -34,6 +35,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +45,7 @@ import java.util.Objects;
  * @hide
  */
 @SystemApi
+@TestApi
 public final class DataCallResponse implements Parcelable {
 
     /** {@hide} */
@@ -77,6 +80,7 @@ public final class DataCallResponse implements Parcelable {
     private final List<InetAddress> mDnsAddresses;
     private final List<InetAddress> mGatewayAddresses;
     private final List<InetAddress> mPcscfAddresses;
+    private final List<DedicatedEpsBearer> mDedicatedEpsBearers;
     private final int mMtu;
 
     /**
@@ -109,7 +113,9 @@ public final class DataCallResponse implements Parcelable {
                             @Nullable List<LinkAddress> addresses,
                             @Nullable List<InetAddress> dnsAddresses,
                             @Nullable List<InetAddress> gatewayAddresses,
-                            @Nullable List<InetAddress> pcscfAddresses, int mtu) {
+                            @Nullable List<InetAddress> pcscfAddresses,
+                            @Nullable List<DedicatedEpsBearer> dedicatedEpsBearers,
+                            int mtu) {
         mCause = cause;
         mSuggestedRetryTime = suggestedRetryTime;
         mId = id;
@@ -124,6 +130,8 @@ public final class DataCallResponse implements Parcelable {
                 ? new ArrayList<>() : new ArrayList<>(gatewayAddresses);
         mPcscfAddresses = (pcscfAddresses == null)
                 ? new ArrayList<>() : new ArrayList<>(pcscfAddresses);
+        mDedicatedEpsBearers = (dedicatedEpsBearers == null)
+                ? new ArrayList<>() : dedicatedEpsBearers;
         mMtu = mtu;
     }
 
@@ -145,6 +153,8 @@ public final class DataCallResponse implements Parcelable {
         mPcscfAddresses = new ArrayList<>();
         source.readList(mPcscfAddresses, InetAddress.class.getClassLoader());
         mMtu = source.readInt();
+        mDedicatedEpsBearers = new ArrayList<>();
+        source.readList(mDedicatedEpsBearers, DedicatedEpsBearer.class.getClassLoader());
     }
 
     /**
@@ -208,6 +218,15 @@ public final class DataCallResponse implements Parcelable {
     public List<InetAddress> getPcscfAddresses() { return mPcscfAddresses; }
 
     /**
+     * @return A list of objects describing the dedicated EPS bearers associated with this
+     * data call.
+     */
+    @NonNull
+    public List<DedicatedEpsBearer> getDedicatedEpsBearers() {
+        return Collections.unmodifiableList(mDedicatedEpsBearers);
+    }
+
+    /**
      * @return MTU (maximum transmission unit) in bytes received from network. Zero or negative
      * values means network has either not sent a value or sent an invalid value.
      */
@@ -255,6 +274,7 @@ public final class DataCallResponse implements Parcelable {
                 && mGatewayAddresses.containsAll(other.mGatewayAddresses)
                 && mPcscfAddresses.size() == other.mPcscfAddresses.size()
                 && mPcscfAddresses.containsAll(other.mPcscfAddresses)
+                && mDedicatedEpsBearers.containsAll(other.mDedicatedEpsBearers)
                 && mMtu == other.mMtu;
     }
 
@@ -262,7 +282,7 @@ public final class DataCallResponse implements Parcelable {
     public int hashCode() {
         return Objects.hash(mCause, mSuggestedRetryTime, mId, mLinkStatus, mProtocolType,
                 mInterfaceName, mAddresses, mDnsAddresses, mGatewayAddresses, mPcscfAddresses,
-                mMtu);
+                mDedicatedEpsBearers, mMtu);
     }
 
     @Override
@@ -283,6 +303,7 @@ public final class DataCallResponse implements Parcelable {
         dest.writeList(mGatewayAddresses);
         dest.writeList(mPcscfAddresses);
         dest.writeInt(mMtu);
+        dest.writeList(mDedicatedEpsBearers);
     }
 
     public static final @NonNull Parcelable.Creator<DataCallResponse> CREATOR =
@@ -332,6 +353,8 @@ public final class DataCallResponse implements Parcelable {
         private List<InetAddress> mGatewayAddresses;
 
         private List<InetAddress> mPcscfAddresses;
+
+        private List<DedicatedEpsBearer> mDedicatedEpsBearers;
 
         private int mMtu;
 
@@ -452,6 +475,19 @@ public final class DataCallResponse implements Parcelable {
             return this;
         }
 
+
+        /**
+         * Set the dedicated EPS bearers on the data connection. Meant for use by the IMS client.
+         *
+         * @param dedicatedEpsBearers List of bearers associated with the connection.
+         * @return The same instance of the builder.
+         */
+        public @NonNull Builder setDedicatedEpsBearers(
+                @NonNull List<DedicatedEpsBearer> dedicatedEpsBearers) {
+            mDedicatedEpsBearers = dedicatedEpsBearers;
+            return this;
+        }
+
         /**
          * Set maximum transmission unit of the data connection.
          *
@@ -473,7 +509,7 @@ public final class DataCallResponse implements Parcelable {
         public @NonNull DataCallResponse build() {
             return new DataCallResponse(mCause, mSuggestedRetryTime, mId, mLinkStatus,
                     mProtocolType, mInterfaceName, mAddresses, mDnsAddresses, mGatewayAddresses,
-                    mPcscfAddresses, mMtu);
+                    mPcscfAddresses, mDedicatedEpsBearers, mMtu);
         }
     }
 }

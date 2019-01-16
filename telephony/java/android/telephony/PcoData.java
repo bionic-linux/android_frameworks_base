@@ -16,8 +16,14 @@
 
 package android.telephony;
 
+import android.annotation.IntRange;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Contains Carrier-specific (and opaque) Protocol configuration Option
@@ -26,13 +32,23 @@ import android.os.Parcelable;
  *
  * @hide
  */
-public class PcoData implements Parcelable {
-
+@SystemApi
+@TestApi
+public final class PcoData implements Parcelable {
+    private static final int PCO_ID_LOWER_BOUND = 0xFF00;
+    private static final int PCO_ID_UPPER_BOUND = 0xFFFF;
+    /** @hide */
     public final int cid;
+    /** @hide */
     public final String bearerProto;
+    /** @hide */
     public final int pcoId;
+    /** @hide */
     public final byte[] contents;
 
+    /**
+     * @hide
+     */
     public PcoData(int cid, String bearerProto, int pcoId, byte[]contents) {
         this.cid = cid;
         this.bearerProto = bearerProto;
@@ -40,11 +56,42 @@ public class PcoData implements Parcelable {
         this.contents = contents;
     }
 
-    public PcoData(Parcel in) {
+    private PcoData(Parcel in) {
         cid = in.readInt();
         bearerProto = in.readString();
         pcoId = in.readInt();
         contents = in.createByteArray();
+    }
+
+    /**
+     * @return Context ID for this PCO element
+     */
+    public int getCid() {
+        return cid;
+    }
+
+    /**
+     * @return One of the PDP_type values in TS 27.007 section 10.1.1. For example,
+     * "IP", "IPV6", "IPV4V6"
+     */
+    public String getBearerProtocol() {
+        return bearerProto;
+    }
+
+    /**
+     * @return The protocol ID for this box. Note that only IDs from 0xFF00 - 0xFFFF
+     *         (the operator-specific IDs) are valid return values.
+     */
+    @IntRange(from = PCO_ID_LOWER_BOUND, to = PCO_ID_UPPER_BOUND)
+    public int getPcoId() {
+        return pcoId;
+    }
+
+    /**
+     * @return Data contents of this PCO element.
+     */
+    public byte[] getContents() {
+        return contents;
     }
 
     /**
@@ -83,5 +130,23 @@ public class PcoData implements Parcelable {
     public String toString() {
         return "PcoData(" + cid + ", " + bearerProto + ", " + pcoId + ", contents[" +
                 contents.length + "])";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PcoData pcoData = (PcoData) o;
+        return cid == pcoData.cid
+                && pcoId == pcoData.pcoId
+                && Objects.equals(bearerProto, pcoData.bearerProto)
+                && Arrays.equals(contents, pcoData.contents);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(cid, bearerProto, pcoId);
+        result = 31 * result + Arrays.hashCode(contents);
+        return result;
     }
 }

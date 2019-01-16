@@ -24,6 +24,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.data.DedicatedEpsBearer;
 import android.text.TextUtils;
 
 import java.net.Inet4Address;
@@ -59,6 +60,7 @@ public final class LinkProperties implements Parcelable {
     // PCSCF addresses are addresses of SIP proxies that only exist for the IMS core service.
     private final ArrayList<InetAddress> mPcscfs = new ArrayList<InetAddress>();
     private final ArrayList<InetAddress> mValidatedPrivateDnses = new ArrayList<>();
+    private final ArrayList<DedicatedEpsBearer> mDedicatedEpsBearers = new ArrayList<>();
     private boolean mUsePrivateDns;
     private String mPrivateDnsServerName;
     private String mDomains;
@@ -184,6 +186,7 @@ public final class LinkProperties implements Parcelable {
             mUsePrivateDns = source.mUsePrivateDns;
             mPrivateDnsServerName = source.mPrivateDnsServerName;
             mPcscfs.addAll(source.mPcscfs);
+            mDedicatedEpsBearers.addAll(source.mDedicatedEpsBearers);
             mDomains = source.mDomains;
             mRoutes.addAll(source.mRoutes);
             mHttpProxy = (source.mHttpProxy == null) ? null : new ProxyInfo(source.mHttpProxy);
@@ -584,6 +587,28 @@ public final class LinkProperties implements Parcelable {
     @TestApi
     public @NonNull List<InetAddress> getPcscfServers() {
         return Collections.unmodifiableList(mPcscfs);
+    }
+
+    /**
+     * Set the collection of dedicated bearers provided by the cell network for this link.
+     * @param dedicatedEpsBearers
+     * @hide
+     */
+    public void setDedicatedEpsBearers(Collection<DedicatedEpsBearer> dedicatedEpsBearers) {
+        mDedicatedEpsBearers.clear();
+        mDedicatedEpsBearers.addAll(dedicatedEpsBearers);
+    }
+
+    /**
+     * @return A list of the current dedicated EPS bearers associated with this link. These bearers
+     * contain information about higher-QoS guarantees available to certain
+     * IP ranges and port ranges.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public @NonNull List<DedicatedEpsBearer> getDedicatedEpsBearers() {
+        return Collections.unmodifiableList(mDedicatedEpsBearers);
     }
 
     /**
@@ -1343,6 +1368,19 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Compares this {@code LinkProperties}'s dedicated EPS bearers against the target
+     *
+     * @param target LinkProperties to compare.
+     * @return {@code true} if both are identical, {@code false} otherwise.
+     * @hide
+     */
+    public boolean isIdenticalDedicatedEpsBearers(LinkProperties target) {
+        Collection<DedicatedEpsBearer> targetBearers = target.mDedicatedEpsBearers;
+        return mDedicatedEpsBearers.size() == targetBearers.size()
+                && mDedicatedEpsBearers.containsAll(targetBearers);
+    }
+
+    /**
      * Compares this {@code LinkProperties} Routes against the target
      *
      * @param target LinkProperties to compare.
@@ -1456,6 +1494,7 @@ public final class LinkProperties implements Parcelable {
                 && isIdenticalPrivateDns(target)
                 && isIdenticalValidatedPrivateDnses(target)
                 && isIdenticalPcscfs(target)
+                && isIdenticalDedicatedEpsBearers(target)
                 && isIdenticalRoutes(target)
                 && isIdenticalHttpProxy(target)
                 && isIdenticalStackedLinks(target)
@@ -1577,7 +1616,8 @@ public final class LinkProperties implements Parcelable {
                 + (mUsePrivateDns ? 57 : 0)
                 + mPcscfs.size() * 67
                 + ((null == mPrivateDnsServerName) ? 0 : mPrivateDnsServerName.hashCode())
-                + Objects.hash(mNat64Prefix);
+                + Objects.hash(mNat64Prefix)
+                + mDedicatedEpsBearers.hashCode() * 61;
     }
 
     /**
@@ -1622,6 +1662,7 @@ public final class LinkProperties implements Parcelable {
 
         ArrayList<LinkProperties> stackedLinks = new ArrayList<>(mStackedLinks.values());
         dest.writeList(stackedLinks);
+        dest.writeParcelableList(mDedicatedEpsBearers, flags);
     }
 
     /**
@@ -1677,6 +1718,9 @@ public final class LinkProperties implements Parcelable {
                 for (LinkProperties stackedLink: stackedLinks) {
                     netProp.addStackedLink(stackedLink);
                 }
+                ArrayList<DedicatedEpsBearer> dedicatedEpsBearers = new ArrayList<>();
+                netProp.setDedicatedEpsBearers(in.readParcelableList(dedicatedEpsBearers,
+                        DedicatedEpsBearer.class.getClassLoader()));
                 return netProp;
             }
 
