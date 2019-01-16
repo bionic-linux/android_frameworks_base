@@ -30,6 +30,7 @@ import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
 import static android.net.ConnectivityManager.TETHERING_INVALID;
 import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
+import static android.net.ConnectivityManager.TETHER_ERROR_ENTITLEMENT_UNKONWN;
 import static android.net.ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL;
@@ -1660,6 +1661,11 @@ public class Tethering extends BaseNetworkObserver {
 
     public void systemReady() {
         mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest());
+    }
+
+    /** Get the latest value of the entitlement check. */
+    public int getLatestEntitlementValue() {
+        return TETHER_ERROR_ENTITLEMENT_UNKONWN;
     }
 
     @Override

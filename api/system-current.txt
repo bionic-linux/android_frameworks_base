@@ -3038,6 +3038,7 @@ package android.net {
     ctor public ConnectivityManager.OnStartTetheringCallback();
     method public void onTetheringFailed();
     method public void onTetheringStarted();
+    method public void onUpstreamChanged(android.net.Network);
   }
 
   public class LinkAddress implements android.os.Parcelable {

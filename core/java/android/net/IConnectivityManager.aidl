@@ -187,4 +187,6 @@ interface IConnectivityManager
     byte[] getNetworkWatchlistConfigHash();
 
     int getConnectionOwnerUid(in ConnectionInfo connectionInfo);
+
+    int getLatestEntitlementValue();
 }
