@@ -199,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "070662fa_cf0664b8",
+        "filename": "core/java/android/os/VintfRuntimeInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:19:28Z",
+      "side": 1,
+      "message": "This is device-specific and CTS only reports this string as is.",
+      "parentUuid": "40795c29_85e46ef9",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 45
+      },
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d3b89e0_dab86b9d",
         "filename": "core/java/android/os/VintfRuntimeInfo.java",
         "patchSetId": 4
@@ -210,6 +234,24 @@
       "writtenOn": "2019-01-16T21:11:15Z",
       "side": 1,
       "message": "Is all of this info obtainable with a single uname call? If so, can we just have a class that contains all this data and a single method to return a populated instance of said class?\n\nAlso, if they contain data that the caller is supposed to do something with other than just print or compare for equality, please define the format of the data.",
+      "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905f5051_7cec1786",
+        "filename": "core/java/android/os/VintfRuntimeInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2019-01-16T21:19:28Z",
+      "side": 1,
+      "message": "Internally, there are only one uname call. The result of the call is cached.\n\nAgain, this is already used by CTS tests, so I don\u0027t think I can change the signature here... It\u0027s just for reporting.",
+      "parentUuid": "5d3b89e0_dab86b9d",
       "revId": "c745d41520c5c7bac70c2837ad875911b22e0f69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
