@@ -683,6 +683,24 @@
     },
     {
       "key": {
+        "uuid": "86c97c7c_034a5f58",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T09:14:59Z",
+      "side": 1,
+      "message": "Hm, no, you should do the same thing as the native implementation does. Thanks.",
+      "parentUuid": "70bff02f_16aa36ee",
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2aad40_836a213c",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 4

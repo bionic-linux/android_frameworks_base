@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1234dd8_38e050bb",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T09:14:59Z",
+      "side": 1,
+      "message": "Just FYI : what you wrote here is fine, but it\u0027s also common to say DnsSection.class.getSimpleName(). The advantage of this is that you can\u0027t forget to rename the tag when you rename the class.",
+      "range": {
+        "startLine": 81,
+        "startChar": 43,
+        "endLine": 81,
+        "endChar": 53
+      },
+      "revId": "6a03d33d16093aff3728c9a102bee320b97e682c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f36ec6e3_b534c038",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T09:14:59Z",
+      "side": 1,
+      "message": "Think you meant to swap l.132 and 133",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "6a03d33d16093aff3728c9a102bee320b97e682c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9313680e_55747846",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T09:14:59Z",
+      "side": 1,
+      "message": "This loop is horribly complex, especially with the compression scheme.\nCould you please cut out methods, encapsulate the positioning for compression, and have a clearer exit condition ?\n\nYou\u0027d have something like this (untested) :\n\n  private String parseName(@NonNull ByteBuffer buf) throws ... {\n    final StringJoiner sj \u003d new StringJoiner(\".\");\n    String nameSection \u003d readNameSection(buffer);\n    int labelCount \u003d 0;\n    while (null !\u003d nameSection) {\n      if (++labelCount \u003e MAX) throw;\n      sj.add(nameSection);\n      nameSection \u003d readNameSection(buffer);\n    }\n    return sj.toString();\n  }\n\n  private String readNameSection(@NonNull ByteBuffer buf) {\n    final int len \u003d BitUtils.uint8(buf.get);\n    if (len \u003d\u003d 0) return null;\n    final int mask \u003d len \u0026 NAME_COMPRESSION;\n    if (mask \u003d\u003d NAME_NORMAL) {\n      return readString(buf, len);\n    } else if (mask \u003d\u003d NAME_COMPRESSION) {\n      // Name compression based on RFC 1035 - 4.1.4 Message compression\n      final int offset \u003d (len \u0026 ~NAME_COMPRESSION) \u003c\u003c 8 + BitUtils.uint8(buf.get());\n      return readCompressedName(buf, offset);\n    }\n  }\n\n  private String readString(@NonNull ByteBuffer buf, int len) {\n    if (len \u003e MAX) throw;\n    final byte[] label \u003d new byte[len];\n    buf.get(label);\n    return labelToString(label);\n  }\n\n  private String readCompressedName(@NonNull ByteBuffer buf, int offset) {\n    final int savedPos \u003d buf.position();\n    buf.position(offset);\n    final String name \u003d readNameSection(buf);\n// Or, here you can also say instead :\n// final int len \u003d BitUtils.uint8(bug.get());\n// if (NAME_NORMAL !\u003d len \u0026 NAME_COMPRESSION) throw\n// final String name \u003d readString(buf, len);\n// ... this is less risky for infinite loops but it does not support reference to compressed names, which may or may not be an issue, I don\u0027t know.\n    buf.position(savedPos);\n    return name;\n  }\n\nI think this is vastly easier to understand and a lot less risky with infinite loops.\nWhat do you think ?",
+      "range": {
+        "startLine": 153,
+        "startChar": 12,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "6a03d33d16093aff3728c9a102bee320b97e682c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
