@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485df8e1_e8fba4f8",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-17T00:25:44Z",
+      "side": 1,
+      "message": "Wondering if bearers are identical in the list itself？\nE.g. a list of [A, A, B] does contains all the elements of [A, B, B].",
+      "revId": "880fa53d3b0b768bd9720fe48272cfd0b7cac109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcaeba0_bc0743b0",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-01-17T00:25:44Z",
+      "side": 1,
+      "message": "btw are there any guidelines for using magic numbers for hash codes?\ne.g. 61 is also used for collection mValidatedPrivateDnses.",
+      "range": {
+        "startLine": 1533,
+        "startChar": 52,
+        "endLine": 1533,
+        "endChar": 54
+      },
+      "revId": "880fa53d3b0b768bd9720fe48272cfd0b7cac109",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
