@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eab3215_d315e0d7",
+        "filename": "core/java/android/net/NetworkSpecifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T02:24:34Z",
+      "side": 1,
+      "message": "once all platform NetworkSpecifiers implement this method.\n\n?",
+      "range": {
+        "startLine": 73,
+        "startChar": 54,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbebf5f_86336203",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T02:24:34Z",
+      "side": 1,
+      "message": "// A NetworkSpecifier subclass that matches all networks but must not be visible to apps.",
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b620000_8117c76a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T02:24:34Z",
+      "side": 1,
+      "message": "Add a comment explaining the purpose of this class?\n\n// A network specifier that matches either another LocalNetworkSpecifier with the same string\n// or a ConfidentialMatchAllNetworkSpecifier, and can be passed to apps as is.",
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074a252b_2cb04d68",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2667,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-17T02:24:34Z",
+      "side": 1,
+      "message": "Can this actually happen? We don\u0027t send onCapabilitiesChanged callbacks without a NetworkCapabilities object in them, do we? I think that would NPE inside networkCapabilitiesRestrictedForCallerPermissions. If it can\u0027t happen, let\u0027s remove the if in these methods.",
+      "range": {
+        "startLine": 2667,
+        "startChar": 12,
+        "endLine": 2667,
+        "endChar": 75
+      },
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
