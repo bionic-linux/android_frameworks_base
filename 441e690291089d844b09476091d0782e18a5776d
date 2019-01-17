@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62743247_5cd31b25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-17T06:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f2164fc_7b9542ee",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 46
+      },
+      "revId": "441e690291089d844b09476091d0782e18a5776d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1428ee6_75b5bafa",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "441e690291089d844b09476091d0782e18a5776d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7907a796_4e272238",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2305,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-17T06:25:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1428ee6_75b5bafa",
+      "range": {
+        "startLine": 2305,
+        "startChar": 0,
+        "endLine": 2305,
+        "endChar": 42
+      },
+      "revId": "441e690291089d844b09476091d0782e18a5776d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
