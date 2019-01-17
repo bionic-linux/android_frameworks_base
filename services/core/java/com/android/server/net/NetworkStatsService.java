@@ -66,6 +66,7 @@ import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
+import static com.android.internal.telephony.TelephonyIntents.ACTION_BACKGROUND_MOBILE_DATA_USAGE;
 import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.server.NetworkManagementService.LIMIT_GLOBAL_ALERT;
 import static com.android.server.NetworkManagementSocketTagger.resetKernelUidStats;
@@ -405,6 +406,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         // listen for periodic polling events
         final IntentFilter pollFilter = new IntentFilter(ACTION_NETWORK_STATS_POLL);
+        // M: { [ALPS04668496] Add extra data usage
+        pollFilter.addAction(ACTION_BACKGROUND_MOBILE_DATA_USAGE);
+        // } end
         mContext.registerReceiver(mPollReceiver, pollFilter, READ_NETWORK_USAGE_HISTORY, mHandler);
 
         // listen for uid removal to clean stats
@@ -1023,6 +1027,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private BroadcastReceiver mPollReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            // M: { [ALPS04668496] Add extra data usage
+            if (ACTION_BACKGROUND_MOBILE_DATA_USAGE.equals(intent.getAction())) {
+                Slog.i(TAG, "mPollReceiver, update LatencyStats");
+                updateLatencyStats();
+            }
+            // } end
+
             // on background handler thread, and verified UPDATE_DEVICE_STATS
             // permission above.
             performPoll(FLAG_PERSIST_ALL);
@@ -1218,6 +1229,44 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             map.put(key, ident);
         }
         return ident;
+    }
+
+    private NetworkStats mLatencyStats;
+    // M: [ALPS04668496] Add extra data usage
+    protected NetworkStats getLatencyStats() {
+        return mLatencyStats;
+    }
+
+    protected void updateLatencyStats() {
+        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+        int phoneId = SubscriptionManager.getPhoneId(subId);
+        NetworkStats stats = MtkTelephonyManagerEx.getDefault().getMobileDataUsage(phoneId);
+
+        if (mLatencyStats != null) {
+            for (int i=0; i<stats.size(); i++) {
+                NetworkStats.Entry entry = stats.getValues(i, null);
+                int index = mLatencyStats.findIndex(entry.iface, entry.uid, entry.set, entry.tag,
+                        entry.metered, entry.roaming, entry.defaultNetwork);
+                if (index == -1) {
+                    continue;
+                }
+                NetworkStats.Entry hentry = mLatencyStats.getValues(index, null);
+
+                if (entry.txBytes < hentry.txBytes) {
+                    Slog.e(TAG, "updateLatencyStats found nagative netstats!"
+                                + "iface = " + entry.iface
+                                + "entry.txBytes = " + entry.txBytes
+                                + "hentry.txBytes = " + hentry.txBytes);
+                    MtkTelephonyManagerEx.getDefault().setMobileDataUsageSum(phoneId,
+                            hentry.txBytes, hentry.txPackets, hentry.rxBytes,
+                            hentry.rxPackets);
+                    stats = MtkTelephonyManagerEx.getDefault().getMobileDataUsage(phoneId);
+                }
+            }
+        }
+        Slog.i(TAG, "updateLatencyStats subId:" + subId + ", phoneId:" + phoneId
+                    + ", NetworkStats : " + stats);
+        mLatencyStats = stats;
     }
 
     @GuardedBy("mStatsLock")
@@ -1680,8 +1729,17 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             uidSnapshot.combineAllValues(vtStats);
         }
 
-        uidSnapshot.combineAllValues(mUidOperations);
+        // M: { [ALPS04668496] Add extra data usage
+        final NetworkStats latencyStats = getLatencyStats();
+        if (latencyStats != null) {
+            latencyStats.filter(UID_ALL, ifaces, TAG_ALL);
+            NetworkStatsFactory.apply464xlatAdjustments(uidSnapshot, latencyStats,
+                    mUseBpfTrafficStats);
+            uidSnapshot.combineAllValues(latencyStats);
+        }
+        // } end
 
+        uidSnapshot.combineAllValues(mUidOperations);
         return uidSnapshot;
     }
 
@@ -1699,6 +1757,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         if (vtSnapshot != null) {
             xtSnapshot.combineAllValues(vtSnapshot);
         }
+
+        // M: { [ALPS04668496] Add extra data usage
+        final NetworkStats latencyStats = getLatencyStats();
+        if (latencyStats != null) {
+            xtSnapshot.combineAllValues(latencyStats);
+        }
+        // } end
 
         return xtSnapshot;
     }
