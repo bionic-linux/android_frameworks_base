@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf47a7a6_74dd6dab",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthGsm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "what is UNAVAILABLE? if its a well-defined API please add a {@link}",
+      "range": {
+        "startLine": 152,
+        "startChar": 75,
+        "endLine": 152,
+        "endChar": 86
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1ec423_6c490968",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "is this the right indentation?\nAlso, should we mention how to get CellSignalStrengthGsm?",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 53
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cb643d_1d27cd15",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "Do we need @Deprecated for a hidden API?",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 15
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa82a4c_ad437c8c",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "should we mention use CellSignalStrengthGsm#getDbm() instead?",
+      "range": {
+        "startLine": 500,
+        "startChar": 5,
+        "endLine": 504,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947aad0a_b3a9641f",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "same, should we mention CellSignalStrengthGsm#getLevel()",
+      "range": {
+        "startLine": 510,
+        "startChar": 1,
+        "endLine": 514,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e19984f_6f021870",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 520,
+        "startChar": 2,
+        "endLine": 524,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ea3b67_192d9022",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-01-17T07:28:01Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
