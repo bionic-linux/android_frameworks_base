@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78148d00_e8fdf3a3",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1395292
+      },
+      "writtenOn": "2019-01-17T19:39:42Z",
+      "side": 1,
+      "message": "Sorry for coming in late here, but I just remembered that we need a value for whether or not each item is charging as well (I think we discussed this during meetings if I remember right, but it seems to have gotten dropped here). Can we add those 3 metadata keys?",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 443,
+        "endChar": 67
+      },
+      "revId": "9dbc01451f344bfefb2573034095a61fdd520967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
