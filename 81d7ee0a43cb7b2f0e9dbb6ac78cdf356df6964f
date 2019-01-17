@@ -96,6 +96,52 @@
     },
     {
       "key": {
+        "uuid": "d777dc8c_ad1b4b79",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-17T22:20:53Z",
+      "side": 1,
+      "message": "This can be used for filtering in case the issue repeats multiple times.",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 47
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7cb027_49a4bf80",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-17T22:20:53Z",
+      "side": 1,
+      "message": "What is the length of this ? How this is supposed to be used ?\n\nNote: we will need a title (Max 30 chars) to display in the bugreport.\nAnother option is to use a static title something like \"Telephony issue detected\" but it will be difficult to triage every time if there are different types of issues are added by developers.",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c7dee4_2fe424c9",
         "filename": "telephony/java/android/telephony/TelephonyDebug.java",
         "patchSetId": 4
@@ -125,6 +171,24 @@
       "side": 1,
       "message": "I wasn\u0027t thinking about using this in user builds, but we *could*. Then it\u0027s not so much a debug monitor (or well, it could be both). At that point I think we might want to consider using a bound metrics collection service or something instead for performance reasons. I\u0027ve been thinking about this though, and maybe in R we could move to a different model for the metrics collection that behaves something like this? I dunno... it\u0027s an interesting question.",
       "parentUuid": "49c7dee4_2fe424c9",
+      "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c42c50d_cad3daf3",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-17T22:20:53Z",
+      "side": 1,
+      "message": "ConnectivityMonitor by design does the following two things\n\n1) Triggers a bugreport (if gservice is enabled for this particular type of issue) on USERDEBUG build only.\n2) Checks-in metric that this issue happened with usual telephony info like RAT, carrier, signal strength and cause .. some of them are optional depending on the issue type. This happens on both USER and USERDEBUG build.\n\nDo you see any issue if you remove the android.os.Build.IS_USER check here and let the debug app (if there is one) decide what to do ?",
+      "parentUuid": "856ac466_eba26e90",
       "revId": "81d7ee0a43cb7b2f0e9dbb6ac78cdf356df6964f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
