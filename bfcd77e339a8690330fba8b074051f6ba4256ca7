@@ -46,6 +46,30 @@
       "revId": "bfcd77e339a8690330fba8b074051f6ba4256ca7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d704a5_d294c6c4",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-17T17:07:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3a622f3_fd4546c6",
+      "range": {
+        "startLine": 1060,
+        "startChar": 12,
+        "endLine": 1060,
+        "endChar": 45
+      },
+      "revId": "bfcd77e339a8690330fba8b074051f6ba4256ca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

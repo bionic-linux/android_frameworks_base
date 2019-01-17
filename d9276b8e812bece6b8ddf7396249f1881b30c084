@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "42d12b5e_f2c3212d",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-17T17:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc7b55ca_1b01665e",
+      "range": {
+        "startLine": 78,
+        "startChar": 63,
+        "endLine": 78,
+        "endChar": 81
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274c2680_25f7a584",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -295,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "d9fa6d05_d2509b7b",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-17T17:07:02Z",
+      "side": 1,
+      "message": "I\u0027ve opened http://b/122845440 to look at improving this.",
+      "parentUuid": "fe56f43d_0c2f7671",
+      "range": {
+        "startLine": 489,
+        "startChar": 36,
+        "endLine": 489,
+        "endChar": 45
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a013b7_090368b2",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 6
@@ -433,6 +481,30 @@
       "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e53e7c_8e412815",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-01-17T17:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a404537_29f1d0b2",
+      "range": {
+        "startLine": 1058,
+        "startChar": 55,
+        "endLine": 1058,
+        "endChar": 71
+      },
+      "revId": "d9276b8e812bece6b8ddf7396249f1881b30c084",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
