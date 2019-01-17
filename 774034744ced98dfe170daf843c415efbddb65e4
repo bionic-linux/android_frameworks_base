@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9c10e00_dd2b67dd",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthGsm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf47a7a6_74dd6dab",
+      "range": {
+        "startLine": 152,
+        "startChar": 75,
+        "endLine": 152,
+        "endChar": 86
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca1ec423_6c490968",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-17T07:28:01Z",
       "side": 1,
       "message": "is this the right indentation?\nAlso, should we mention how to get CellSignalStrengthGsm?",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 53
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab8248e_6b012993",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "WRT to the indentation there\u0027s no consistency whatsoever. I see a lot of instances of both.\n1) no indendation\n2) align with the earlier paragraph\n\nBut I don\u0027t see many people using an indent like this. I\u0027ll just randomly pick align with above paragraph.\n\nWRT to how to get CellSignalStrengthGsm... I don\u0027t want to put something redundant in each method, but I think it\u0027s appropriate to add an @see tag to point to getCellSignalStrengths(). If people can\u0027t figure it out from there, they have no business using this API.\n\nDone.",
+      "parentUuid": "ca1ec423_6c490968",
       "range": {
         "startLine": 306,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "42f754d7_02c5836f",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "If I add a deprecated comment, then the linter complains if I don\u0027t add the tag as well. Since I think we should have the explanation in the comment, yes... we do need this here.",
+      "parentUuid": "84cb643d_1d27cd15",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 15
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa82a4c_ad437c8c",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "774034744ced98dfe170daf843c415efbddb65e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc9d434_c9756348",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa82a4c_ad437c8c",
+      "range": {
+        "startLine": 500,
+        "startChar": 5,
+        "endLine": 504,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "173e6a64_ec40c710",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "947aad0a_b3a9641f",
+      "range": {
+        "startLine": 510,
+        "startChar": 1,
+        "endLine": 514,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e19984f_6f021870",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3dd1ca2c_ddf0c321",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e19984f_6f021870",
+      "range": {
+        "startLine": 520,
+        "startChar": 2,
+        "endLine": 524,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0ea3b67_192d9022",
         "filename": "telephony/java/android/telephony/SignalStrength.java",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "774034744ced98dfe170daf843c415efbddb65e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460c3d26_c74f40e7",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-17T23:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0ea3b67_192d9022",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 7
+      },
+      "revId": "774034744ced98dfe170daf843c415efbddb65e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
