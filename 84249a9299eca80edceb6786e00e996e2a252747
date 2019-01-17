@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "8358f07e_fd920e48",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T06:21:43Z",
+      "side": 1,
+      "message": "Use expectCapabilitiesLike instead of expectCallbackLike and both this and the cast are done for you. FTW.\n\n  Predicate\u003cNetworkCapabilities\u003e fooNsPredicate \u003d (caps) -\u003e caps.getNetworkSpecifier().equals(nsFoo);\n\nIt\u0027s simple enough that you may want to inline it, though I don\u0027t mind either way",
+      "range": {
+        "startLine": 2666,
+        "startChar": 11,
+        "endLine": 2666,
+        "endChar": 81
+      },
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "074a252b_2cb04d68",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -70,6 +93,30 @@
       "writtenOn": "2019-01-17T02:24:34Z",
       "side": 1,
       "message": "Can this actually happen? We don\u0027t send onCapabilitiesChanged callbacks without a NetworkCapabilities object in them, do we? I think that would NPE inside networkCapabilitiesRestrictedForCallerPermissions. If it can\u0027t happen, let\u0027s remove the if in these methods.",
+      "range": {
+        "startLine": 2667,
+        "startChar": 12,
+        "endLine": 2667,
+        "endChar": 75
+      },
+      "revId": "84249a9299eca80edceb6786e00e996e2a252747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b05fe4_b5f3f09c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2667,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-17T06:21:43Z",
+      "side": 1,
+      "message": "Also I think the point of having this is to fail the test if this is not true, but the next line will crash if it\u0027s not, so it\u0027s not really useful. This is expected to be an exceptional case and while I\u0027m happy it\u0027s caught I don\u0027t think the improvement in test result legibility is worth maintaining the extra three lines of code considering how essentially unlikely this is.",
+      "parentUuid": "074a252b_2cb04d68",
       "range": {
         "startLine": 2667,
         "startChar": 12,
