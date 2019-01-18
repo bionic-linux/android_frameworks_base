@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10ebe603_9ef073be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1332872
+      },
+      "writtenOn": "2019-01-18T05:43:52Z",
+      "side": 1,
+      "message": "socket",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "a724f048e1ce2ed9baebc6106d8ca0a542468506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e589abc_4aa82a2f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 12
