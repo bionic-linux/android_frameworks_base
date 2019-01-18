@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b2bd89b_752966e1",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-18T05:50:01Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 275,
+        "startChar": 13,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "d51bd5754ee8c49b8a32bb93fcd38e22fb90a245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
