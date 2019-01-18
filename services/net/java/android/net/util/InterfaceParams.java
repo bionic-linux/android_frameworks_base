@@ -19,6 +19,7 @@ package android.net.util;
 import static android.net.MacAddress.ALL_ZEROS_ADDRESS;
 import static android.net.util.NetworkConstants.ETHER_MTU;
 import static android.net.util.NetworkConstants.IPV6_MIN_MTU;
+
 import static com.android.internal.util.Preconditions.checkArgument;
 
 import android.net.MacAddress;
