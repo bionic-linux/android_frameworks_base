@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b2fcaa8_7ddb016a",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-18T13:01:46Z",
+      "side": 1,
+      "message": "arguably these could just be methods on ZygoteArguments to not clutter op Zygote.java too much, but I guess that can wait.",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 256,
+        "endChar": 48
+      },
+      "revId": "1ad089dcba9d97e43da2d2e2715de5c081d23e97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
