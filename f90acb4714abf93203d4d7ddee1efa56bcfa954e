@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2593d6a_64dc1826",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-01-18T15:27:12Z",
+      "side": 1,
+      "message": "This will overwrite any PRIVATE_FLAGS_INPUTS that were added by Android.mk modules before frameworks/base/Android.mk was read.",
+      "revId": "f90acb4714abf93203d4d7ddee1efa56bcfa954e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
