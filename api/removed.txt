@@ -321,7 +321,7 @@ package android.net {
   public static abstract class NetworkBadging.Badging implements java.lang.annotation.Annotation {
   }
 
-  public class SSLCertificateSocketFactory extends javax.net.ssl.SSLSocketFactory {
+  public deprecated class SSLCertificateSocketFactory extends javax.net.ssl.SSLSocketFactory {
     method public static deprecated org.apache.http.conn.ssl.SSLSocketFactory getHttpSocketFactory(int, android.net.SSLSessionCache);
   }
 
