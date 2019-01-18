@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd73947e_dcd0c453",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "The code that uses this value isn\u0027t called from a running context in this patch, but I\u0027ve changed it to false here and true in the next patch just to be safe.",
+      "parentUuid": "25736d40_f7af5189",
+      "range": {
+        "startLine": 109,
+        "startChar": 56,
+        "endLine": 109,
+        "endChar": 60
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd207ba_f7c11cfb",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-18T14:54:27Z",
       "side": 1,
       "message": "how are these new statics protected? Does the caller take care of making these thread safe?",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0718d6f7_6b9ddc3a",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "The Zygote is a single-threaded server (minus the runtime threads), and as such synchronization shouldn\u0027t be necessary.  Is there a corner case that I\u0027m missing?",
+      "parentUuid": "1fd207ba_f7c11cfb",
       "range": {
         "startLine": 115,
         "startChar": 36,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e97ed25_fc580a4e",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a173e46_a9e7a121",
+      "range": {
+        "startLine": 151,
+        "startChar": 48,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ea48d7_6c1d2f2b",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0d3da4_08a85387",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Done.  I agree that the name could be clearer, but I can\u0027t think of a better name at the moment.  I\u0027m open to any suggestions.",
+      "parentUuid": "e9ea48d7_6c1d2f2b",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 42
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "53f9b296_c8c8b7f4",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "This value is used in a later CL and was accidentally selected for this one when I broke up my original commit.  I\u0027ve moved it into the following patch set.",
+      "parentUuid": "5dc26667_81aca723",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 53
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152abace_1897cfbc",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf39072_d0b36238",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "This was placed here to be consistent with the existing code paths for forkAndSpecialize.  I\u0027m planning on looking into moving this earlier in a later patch.  I\u0027ve added a comment concerning this and left a TODO for moving it.",
+      "parentUuid": "152abace_1897cfbc",
+      "range": {
+        "startLine": 265,
+        "startChar": 17,
+        "endLine": 265,
+        "endChar": 31
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0e599848_6fc5deaa",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a47a7c_731d3d21",
+      "range": {
+        "startLine": 392,
+        "startChar": 33,
+        "endLine": 392,
+        "endChar": 45
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4571d4c0_aa04496e",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9469d382_71a18735",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4571d4c0_aa04496e",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 45
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6d820a66_fb1b4d46",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "The logging tags across all of the Zygote/Blastula infrastructure need to be cleaned up.  This is currently planned for a separate CL to prevent scope creep here.",
+      "parentUuid": "4ed544d8_7522cbc3",
+      "range": {
+        "startLine": 493,
+        "startChar": 26,
+        "endLine": 493,
+        "endChar": 36
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca443b21_3908a0c6",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d605cf7_667cd484",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "This value is used to fill in a Process.ProcessStartResult object in ZygoteProcess.java.  I don\u0027t know exactly what the Frameworks code uses this information for, but I suspect it is to keep an package-to-process mapping.",
+      "parentUuid": "ca443b21_3908a0c6",
+      "range": {
+        "startLine": 516,
+        "startChar": 9,
+        "endLine": 519,
+        "endChar": 47
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c18ce0ed_bf5dbbe8",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Yes.  In the next patch set it allows two different cases to be unified in ZygoteServer.runSelectLoop.  I\u0027ve added a comment explaining this.",
+      "parentUuid": "8a5ff821_4347b3ee",
+      "range": {
+        "startLine": 532,
+        "startChar": 25,
+        "endLine": 532,
+        "endChar": 34
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97807e95_e53385aa",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -275,6 +539,30 @@
       "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1ebce6_fa42ef9f",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-18T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97807e95_e53385aa",
+      "range": {
+        "startLine": 577,
+        "startChar": 75,
+        "endLine": 577,
+        "endChar": 92
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
