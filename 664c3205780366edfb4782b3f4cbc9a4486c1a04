@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14417903_940b1a78",
+        "filename": "core/java/com/android/internal/net/NetworkStatsFactory.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-18T01:33:07Z",
+      "side": 1,
+      "message": "Per VC conversation: if there are no callers that pass in lastStats, add a TODO to delete the parameter?",
+      "range": {
+        "startLine": 279,
+        "startChar": 16,
+        "endLine": 279,
+        "endChar": 25
+      },
+      "revId": "664c3205780366edfb4782b3f4cbc9a4486c1a04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
