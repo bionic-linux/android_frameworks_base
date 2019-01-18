@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "089c5b1b_fc1289b2",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-01-18T16:02:21Z",
+      "side": 1,
+      "message": "I think only one $",
+      "revId": "7355605ec1ad1036b5868d35947c04c3b22f6424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
