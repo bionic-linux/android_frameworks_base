@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27dfa01e_e4c6d8fc",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c0c105_4e9f241f",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd0a2252_dfc8b557",
         "filename": "core/java/android/os/ZygoteProcess.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c820d98_2c969f9d",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "TODO added.",
+      "parentUuid": "bd0a2252_dfc8b557",
+      "range": {
+        "startLine": 385,
+        "startChar": 0,
+        "endLine": 385,
+        "endChar": 94
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3dedcdde_dca5ff07",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c60556d_0b496d37",
+      "range": {
+        "startLine": 413,
+        "startChar": 51,
+        "endLine": 413,
+        "endChar": 65
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57a2a0d4_161e3cab",
         "filename": "core/java/android/os/ZygoteProcess.java",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26166d0_5e0ff69d",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a2a0d4_161e3cab",
+      "range": {
+        "startLine": 438,
+        "startChar": 47,
+        "endLine": 438,
+        "endChar": 61
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5c503972_0f743d71",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b32ae150_515b4616",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 28
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a4a87d_24616e5e",
         "filename": "core/java/com/android/internal/os/ZygoteInit.java",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607f97f7_f792f264",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a4a87d_24616e5e",
+      "range": {
+        "startLine": 791,
+        "startChar": 39,
+        "endLine": 791,
+        "endChar": 45
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1e16b416_49c5610e",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4059b689_0be16655",
+      "range": {
+        "startLine": 796,
+        "startChar": 51,
+        "endLine": 796,
+        "endChar": 57
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d6d23ce_f10ddedf",
         "filename": "core/java/com/android/internal/os/ZygoteServer.java",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "94c6b0f6_e538c6c7",
+        "filename": "core/java/com/android/internal/os/ZygoteServer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6d23ce_f10ddedf",
+      "range": {
+        "startLine": 45,
+        "startChar": 86,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ffbc6a_dd01c940",
         "filename": "core/java/com/android/internal/os/ZygoteServer.java",
         "patchSetId": 12
@@ -200,6 +392,24 @@
       "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7b5ed5_a12783e5",
+        "filename": "core/java/com/android/internal/os/ZygoteServer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-01-19T01:48:01Z",
+      "side": 1,
+      "message": "I did originally intend that as an optimization, but after further thought I realized there is an edge case I didn\u0027t consider before.  I\u0027m going to switch this to build the array for each ready poll element, and then re-optimize it in a later patch.",
+      "parentUuid": "75ffbc6a_dd01c940",
+      "revId": "2a483559e907389dcaa9c609d469517550d8d79f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
