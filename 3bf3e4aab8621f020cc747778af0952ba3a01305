@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e49ddae_1c191cd3",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-01-19T16:31:57Z",
+      "side": 1,
+      "message": "Don\u0027t we need try and catch here to handle exception case like retrieveNetworkAttributes method?",
+      "range": {
+        "startLine": 281,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 85
+      },
+      "revId": "3bf3e4aab8621f020cc747778af0952ba3a01305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
