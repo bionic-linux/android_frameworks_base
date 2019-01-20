@@ -19,6 +19,7 @@ package android.net;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -109,6 +110,7 @@ public final class LinkProperties implements Parcelable {
     /**
      * @hide
      */
+    @SystemApi
     public enum ProvisioningChange {
         @UnsupportedAppUsage
         STILL_NOT_PROVISIONED,
@@ -126,6 +128,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public static ProvisioningChange compareProvisioning(
             LinkProperties before, LinkProperties after) {
         if (before.isProvisioned() && after.isProvisioned()) {
@@ -369,6 +373,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean addDnsServer(InetAddress dnsServer) {
         if (dnsServer != null && !mDnses.contains(dnsServer)) {
             mDnses.add(dnsServer);
@@ -385,6 +391,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean removeDnsServer(InetAddress dnsServer) {
         if (dnsServer != null) {
             return mDnses.remove(dnsServer);
@@ -423,6 +431,8 @@ public final class LinkProperties implements Parcelable {
      * @param usePrivateDns The private DNS state.
      * @hide
      */
+    @TestApi
+    @SystemApi
     public void setUsePrivateDns(boolean usePrivateDns) {
         mUsePrivateDns = usePrivateDns;
     }
@@ -448,6 +458,8 @@ public final class LinkProperties implements Parcelable {
      * @param privateDnsServerName The private DNS server name.
      * @hide
      */
+    @TestApi
+    @SystemApi
     public void setPrivateDnsServerName(@Nullable String privateDnsServerName) {
         mPrivateDnsServerName = privateDnsServerName;
     }
@@ -510,6 +522,8 @@ public final class LinkProperties implements Parcelable {
      *        object.
      * @hide
      */
+    @TestApi
+    @SystemApi
     public void setValidatedPrivateDnsServers(Collection<InetAddress> dnsServers) {
         mValidatedPrivateDnses.clear();
         for (InetAddress dnsServer: dnsServers) {
@@ -525,6 +539,8 @@ public final class LinkProperties implements Parcelable {
      *         DNS servers on this link.
      * @hide
      */
+    @TestApi
+    @SystemApi
     public List<InetAddress> getValidatedPrivateDnsServers() {
         return Collections.unmodifiableList(mValidatedPrivateDnses);
     }
@@ -637,6 +653,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public void setTcpBufferSizes(String tcpBufferSizes) {
         mTcpBufferSizes = tcpBufferSizes;
     }
@@ -649,6 +667,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public String getTcpBufferSizes() {
         return mTcpBufferSizes;
     }
@@ -700,6 +720,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean removeRoute(RouteInfo route) {
         return route != null &&
                 Objects.equals(mIfaceName, route.getInterface()) &&
@@ -799,6 +821,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean addStackedLink(LinkProperties link) {
         if (link != null && link.getInterfaceName() != null) {
             mStackedLinks.put(link.getInterfaceName(), link);
@@ -830,6 +854,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public @NonNull List<LinkProperties> getStackedLinks() {
         if (mStackedLinks.isEmpty()) {
             return Collections.emptyList();
@@ -961,6 +987,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean hasIPv4Address() {
         for (LinkAddress address : mLinkAddresses) {
             if (address.getAddress() instanceof Inet4Address) {
@@ -989,6 +1017,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean hasGlobalIPv6Address() {
         for (LinkAddress address : mLinkAddresses) {
           if (address.getAddress() instanceof Inet6Address && address.isGlobalPreferred()) {
@@ -1021,6 +1051,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean hasIPv6DefaultRoute() {
         for (RouteInfo r : mRoutes) {
             if (r.isIPv6Default()) {
@@ -1113,6 +1145,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean isIPv6Provisioned() {
         return (hasGlobalIPv6Address() &&
                 hasIPv6DefaultRoute() &&
@@ -1127,6 +1161,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean isProvisioned() {
         return (isIPv4Provisioned() || isIPv6Provisioned());
     }
@@ -1139,6 +1175,8 @@ public final class LinkProperties implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean isReachable(InetAddress ip) {
         final List<RouteInfo> allRoutes = getAllRoutes();
         // If we don't have a route to this IP address, it's not reachable.

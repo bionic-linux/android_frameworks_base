@@ -3047,18 +3047,47 @@ package android.net {
 
   public final class LinkProperties implements android.os.Parcelable {
     ctor public LinkProperties();
+    method public boolean addDnsServer(java.net.InetAddress);
     method public boolean addRoute(android.net.RouteInfo);
+    method public boolean addStackedLink(android.net.LinkProperties);
     method public void clear();
+    method public static android.net.LinkProperties.ProvisioningChange compareProvisioning(android.net.LinkProperties, android.net.LinkProperties);
+    method public java.util.List<android.net.LinkProperties> getStackedLinks();
+    method public java.lang.String getTcpBufferSizes();
+    method public java.util.List<java.net.InetAddress> getValidatedPrivateDnsServers();
+    method public boolean hasGlobalIPv6Address();
+    method public boolean hasIPv4Address();
+    method public boolean hasIPv6DefaultRoute();
+    method public boolean isIPv6Provisioned();
+    method public boolean isProvisioned();
+    method public boolean isReachable(java.net.InetAddress);
+    method public boolean removeDnsServer(java.net.InetAddress);
+    method public boolean removeRoute(android.net.RouteInfo);
     method public void setDnsServers(java.util.Collection<java.net.InetAddress>);
     method public void setDomains(java.lang.String);
     method public void setHttpProxy(android.net.ProxyInfo);
     method public void setInterfaceName(java.lang.String);
     method public void setLinkAddresses(java.util.Collection<android.net.LinkAddress>);
     method public void setMtu(int);
+    method public void setPrivateDnsServerName(java.lang.String);
+    method public void setTcpBufferSizes(java.lang.String);
+    method public void setUsePrivateDns(boolean);
+    method public void setValidatedPrivateDnsServers(java.util.Collection<java.net.InetAddress>);
+  }
+
+  public static final class LinkProperties.ProvisioningChange extends java.lang.Enum {
+    method public static android.net.LinkProperties.ProvisioningChange valueOf(java.lang.String);
+    method public static final android.net.LinkProperties.ProvisioningChange[] values();
+    enum_constant public static final android.net.LinkProperties.ProvisioningChange GAINED_PROVISIONING;
+    enum_constant public static final android.net.LinkProperties.ProvisioningChange LOST_PROVISIONING;
+    enum_constant public static final android.net.LinkProperties.ProvisioningChange STILL_NOT_PROVISIONED;
+    enum_constant public static final android.net.LinkProperties.ProvisioningChange STILL_PROVISIONED;
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
     method public int getSignalStrength();
+    method public int[] getTransportTypes();
+    method public boolean satisfiedByNetworkCapabilities(android.net.NetworkCapabilities);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
   }
 
