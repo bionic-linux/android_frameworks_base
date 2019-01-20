@@ -16,11 +16,10 @@
 
 package android.net.ip;
 
+import static android.net.LinkProperties.PROV_CHANGE_LOST_PROVISIONING;
+
 import android.content.Context;
-import android.net.LinkAddress;
 import android.net.LinkProperties;
-import android.net.LinkProperties.ProvisioningChange;
-import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.ip.IpNeighborMonitor.NeighborEvent;
 import android.net.metrics.IpConnectivityLog;
@@ -33,28 +32,19 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
-import android.system.ErrnoException;
-import android.system.OsConstants;
 import android.util.Log;
 
-import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.DumpUtils.Dump;
 
-import java.io.InterruptedIOException;
 import java.io.PrintWriter;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -314,10 +304,10 @@ public class IpReachabilityMonitor {
             }
         }
 
-        final ProvisioningChange delta = LinkProperties.compareProvisioning(
+        final int delta = LinkProperties.compareProvisioning(
                 mLinkProperties, whatIfLp);
 
-        if (delta == ProvisioningChange.LOST_PROVISIONING) {
+        if (delta == PROV_CHANGE_LOST_PROVISIONING) {
             final String logMsg = "FAILURE: LOST_PROVISIONING, " + event;
             Log.w(TAG, logMsg);
             if (mCallback != null) {
@@ -376,10 +366,10 @@ public class IpReachabilityMonitor {
         mMetricsLog.log(mInterfaceParams.name, new IpReachabilityEvent(eventType));
     }
 
-    private void logNudFailed(ProvisioningChange delta) {
+    private void logNudFailed(int delta) {
         long duration = SystemClock.elapsedRealtime() - mLastProbeTimeMs;
         boolean isFromProbe = (duration < getProbeWakeLockDuration());
-        boolean isProvisioningLost = (delta == ProvisioningChange.LOST_PROVISIONING);
+        boolean isProvisioningLost = (delta == PROV_CHANGE_LOST_PROVISIONING);
         int eventType = IpReachabilityEvent.nudFailureEventType(isFromProbe, isProvisioningLost);
         mMetricsLog.log(mInterfaceParams.name, new IpReachabilityEvent(eventType));
     }

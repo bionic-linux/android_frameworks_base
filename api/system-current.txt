@@ -3047,18 +3047,42 @@ package android.net {
 
   public final class LinkProperties implements android.os.Parcelable {
     ctor public LinkProperties();
+    method public boolean addDnsServer(java.net.InetAddress);
     method public boolean addRoute(android.net.RouteInfo);
+    method public boolean addStackedLink(android.net.LinkProperties);
     method public void clear();
+    method public static int compareProvisioning(android.net.LinkProperties, android.net.LinkProperties);
+    method public java.util.List<android.net.LinkProperties> getStackedLinks();
+    method public java.lang.String getTcpBufferSizes();
+    method public java.util.List<java.net.InetAddress> getValidatedPrivateDnsServers();
+    method public boolean hasGlobalIPv6Address();
+    method public boolean hasIPv4Address();
+    method public boolean hasIPv6DefaultRoute();
+    method public boolean isIPv6Provisioned();
+    method public boolean isProvisioned();
+    method public boolean isReachable(java.net.InetAddress);
+    method public boolean removeDnsServer(java.net.InetAddress);
+    method public boolean removeRoute(android.net.RouteInfo);
     method public void setDnsServers(java.util.Collection<java.net.InetAddress>);
     method public void setDomains(java.lang.String);
     method public void setHttpProxy(android.net.ProxyInfo);
     method public void setInterfaceName(java.lang.String);
     method public void setLinkAddresses(java.util.Collection<android.net.LinkAddress>);
     method public void setMtu(int);
+    method public void setPrivateDnsServerName(java.lang.String);
+    method public void setTcpBufferSizes(java.lang.String);
+    method public void setUsePrivateDns(boolean);
+    method public void setValidatedPrivateDnsServers(java.util.Collection<java.net.InetAddress>);
+    field public static final int PROV_CHANGE_GAINED_PROVISIONING = 3; // 0x3
+    field public static final int PROV_CHANGE_LOST_PROVISIONING = 2; // 0x2
+    field public static final int PROV_CHANGE_STILL_NOT_PROVISIONED = 1; // 0x1
+    field public static final int PROV_CHANGE_STILL_PROVISIONED = 4; // 0x4
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
     method public int getSignalStrength();
+    method public int[] getTransportTypes();
+    method public boolean satisfiedByNetworkCapabilities(android.net.NetworkCapabilities);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
   }
 
