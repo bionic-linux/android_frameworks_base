@@ -16,18 +16,18 @@
 
 package android.net;
 
+import static android.net.LinkProperties.PROV_CHANGE_GAINED_PROVISIONING;
+import static android.net.LinkProperties.PROV_CHANGE_LOST_PROVISIONING;
+import static android.net.LinkProperties.PROV_CHANGE_STILL_NOT_PROVISIONED;
+import static android.net.LinkProperties.PROV_CHANGE_STILL_PROVISIONED;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import android.net.IpPrefix;
-import android.net.LinkAddress;
-import android.net.LinkProperties;
 import android.net.LinkProperties.CompareResult;
-import android.net.LinkProperties.ProvisioningChange;
-import android.net.RouteInfo;
 import android.os.Parcel;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
@@ -604,13 +604,13 @@ public class LinkPropertiesTest {
         v4r.removeDnsServer(DNS1);
         assertFalse(v4r.isProvisioned());
 
-        assertEquals(ProvisioningChange.STILL_NOT_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_NOT_PROVISIONED,
                 LinkProperties.compareProvisioning(v4r, v4r));
-        assertEquals(ProvisioningChange.LOST_PROVISIONING,
+        assertEquals(PROV_CHANGE_LOST_PROVISIONING,
                 LinkProperties.compareProvisioning(v4lp, v4r));
-        assertEquals(ProvisioningChange.GAINED_PROVISIONING,
+        assertEquals(PROV_CHANGE_GAINED_PROVISIONING,
                 LinkProperties.compareProvisioning(v4r, v4lp));
-        assertEquals(ProvisioningChange.STILL_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_PROVISIONED,
                 LinkProperties.compareProvisioning(v4lp, v4lp));
 
         // Check that losing IPv4 provisioning on a dualstack network is
@@ -631,13 +631,13 @@ public class LinkPropertiesTest {
         assertTrue(v46lp.isIPv6Provisioned());
         assertTrue(v46lp.isProvisioned());
 
-        assertEquals(ProvisioningChange.STILL_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_PROVISIONED,
                 LinkProperties.compareProvisioning(v4lp, v46lp));
-        assertEquals(ProvisioningChange.STILL_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_PROVISIONED,
                 LinkProperties.compareProvisioning(v6lp, v46lp));
-        assertEquals(ProvisioningChange.LOST_PROVISIONING,
+        assertEquals(PROV_CHANGE_LOST_PROVISIONING,
                 LinkProperties.compareProvisioning(v46lp, v6lp));
-        assertEquals(ProvisioningChange.LOST_PROVISIONING,
+        assertEquals(PROV_CHANGE_LOST_PROVISIONING,
                 LinkProperties.compareProvisioning(v46lp, v4lp));
 
         // Check that losing and gaining a secondary router does not change
@@ -646,9 +646,9 @@ public class LinkPropertiesTest {
         v6lp2.addRoute(new RouteInfo(GATEWAY62));
         assertTrue(v6lp2.isProvisioned());
 
-        assertEquals(ProvisioningChange.STILL_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_PROVISIONED,
                 LinkProperties.compareProvisioning(v6lp2, v6lp));
-        assertEquals(ProvisioningChange.STILL_PROVISIONED,
+        assertEquals(PROV_CHANGE_STILL_PROVISIONED,
                 LinkProperties.compareProvisioning(v6lp, v6lp2));
     }
 
