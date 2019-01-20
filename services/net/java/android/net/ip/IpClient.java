@@ -16,16 +16,16 @@
 
 package android.net.ip;
 
-import com.android.internal.util.HexDump;
-import com.android.internal.util.MessageUtils;
-import com.android.internal.util.WakeupMessage;
+import static android.net.LinkProperties.PROV_CHANGE_GAINED_PROVISIONING;
+import static android.net.LinkProperties.PROV_CHANGE_LOST_PROVISIONING;
+import static android.net.LinkProperties.PROV_CHANGE_STILL_NOT_PROVISIONED;
+import static android.net.LinkProperties.PROV_CHANGE_STILL_PROVISIONED;
 
 import android.content.Context;
 import android.net.DhcpResults;
 import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
-import android.net.LinkProperties.ProvisioningChange;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.ProxyInfo;
@@ -52,14 +52,16 @@ import android.util.LocalLog;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.R;
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.IState;
+import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.internal.util.WakeupMessage;
 import com.android.server.net.NetlinkTracker;
 
 import java.io.FileDescriptor;
@@ -67,12 +69,10 @@ import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1086,18 +1086,19 @@ public class IpClient extends StateMachine {
     // object that is a correct and complete assessment of what changed, taking
     // account of the asymmetries described in the comments in this function.
     // Then switch to using it everywhere (IpReachabilityMonitor, etc.).
-    private ProvisioningChange compareProvisioning(LinkProperties oldLp, LinkProperties newLp) {
-        ProvisioningChange delta;
+    private int compareProvisioning(
+            LinkProperties oldLp, LinkProperties newLp) {
+        int delta;
         InitialConfiguration config = mConfiguration != null ? mConfiguration.mInitialConfig : null;
         final boolean wasProvisioned = isProvisioned(oldLp, config);
         final boolean isProvisioned = isProvisioned(newLp, config);
 
         if (!wasProvisioned && isProvisioned) {
-            delta = ProvisioningChange.GAINED_PROVISIONING;
+            delta = PROV_CHANGE_GAINED_PROVISIONING;
         } else if (wasProvisioned && isProvisioned) {
-            delta = ProvisioningChange.STILL_PROVISIONED;
+            delta = PROV_CHANGE_STILL_PROVISIONED;
         } else if (!wasProvisioned && !isProvisioned) {
-            delta = ProvisioningChange.STILL_NOT_PROVISIONED;
+            delta = PROV_CHANGE_STILL_NOT_PROVISIONED;
         } else {
             // (wasProvisioned && !isProvisioned)
             //
@@ -1109,7 +1110,7 @@ public class IpClient extends StateMachine {
             // that to be a network without DNS servers and connect anyway.
             //
             // See the comment below.
-            delta = ProvisioningChange.LOST_PROVISIONING;
+            delta = PROV_CHANGE_LOST_PROVISIONING;
         }
 
         final boolean lostIPv6 = oldLp.isIPv6Provisioned() && !newLp.isIPv6Provisioned();
@@ -1145,7 +1146,7 @@ public class IpClient extends StateMachine {
         // delta will never be LOST_PROVISIONING. So check for loss of
         // provisioning here too.
         if (lostIPv4Address || (lostIPv6 && !ignoreIPv6ProvisioningLoss)) {
-            delta = ProvisioningChange.LOST_PROVISIONING;
+            delta = PROV_CHANGE_LOST_PROVISIONING;
         }
 
         // Additionally:
@@ -1154,21 +1155,21 @@ public class IpClient extends StateMachine {
         // IPv6 default route then also consider the loss of that default route
         // to be a loss of provisioning. See b/27962810.
         if (oldLp.hasGlobalIPv6Address() && (lostIPv6Router && !ignoreIPv6ProvisioningLoss)) {
-            delta = ProvisioningChange.LOST_PROVISIONING;
+            delta = PROV_CHANGE_LOST_PROVISIONING;
         }
 
         return delta;
     }
 
-    private void dispatchCallback(ProvisioningChange delta, LinkProperties newLp) {
+    private void dispatchCallback(int delta, LinkProperties newLp) {
         switch (delta) {
-            case GAINED_PROVISIONING:
+            case PROV_CHANGE_GAINED_PROVISIONING:
                 if (DBG) { Log.d(mTag, "onProvisioningSuccess()"); }
                 recordMetric(IpManagerEvent.PROVISIONING_OK);
                 mCallback.onProvisioningSuccess(newLp);
                 break;
 
-            case LOST_PROVISIONING:
+            case PROV_CHANGE_LOST_PROVISIONING:
                 if (DBG) { Log.d(mTag, "onProvisioningFailure()"); }
                 recordMetric(IpManagerEvent.PROVISIONING_FAIL);
                 mCallback.onProvisioningFailure(newLp);
@@ -1184,7 +1185,7 @@ public class IpClient extends StateMachine {
     // Updates all IpClient-related state concerned with LinkProperties.
     // Returns a ProvisioningChange for possibly notifying other interested
     // parties that are not fronted by IpClient.
-    private ProvisioningChange setLinkProperties(LinkProperties newLp) {
+    private int setLinkProperties(LinkProperties newLp) {
         if (mApfFilter != null) {
             mApfFilter.setLinkProperties(newLp);
         }
@@ -1192,10 +1193,10 @@ public class IpClient extends StateMachine {
             mIpReachabilityMonitor.updateLinkProperties(newLp);
         }
 
-        ProvisioningChange delta = compareProvisioning(mLinkProperties, newLp);
+        int delta = compareProvisioning(mLinkProperties, newLp);
         mLinkProperties = new LinkProperties(newLp);
 
-        if (delta == ProvisioningChange.GAINED_PROVISIONING) {
+        if (delta == PROV_CHANGE_GAINED_PROVISIONING) {
             // TODO: Add a proper ProvisionedState and cancel the alarm in
             // its enter() method.
             mProvisioningTimeoutAlarm.cancel();
@@ -1291,17 +1292,17 @@ public class IpClient extends StateMachine {
         if (Objects.equals(newLp, mLinkProperties)) {
             return true;
         }
-        final ProvisioningChange delta = setLinkProperties(newLp);
+        final int delta = setLinkProperties(newLp);
         if (sendCallbacks) {
             dispatchCallback(delta, newLp);
         }
-        return (delta != ProvisioningChange.LOST_PROVISIONING);
+        return (delta != PROV_CHANGE_LOST_PROVISIONING);
     }
 
     private void handleIPv4Success(DhcpResults dhcpResults) {
         mDhcpResults = new DhcpResults(dhcpResults);
         final LinkProperties newLp = assembleLinkProperties();
-        final ProvisioningChange delta = setLinkProperties(newLp);
+        final int delta = setLinkProperties(newLp);
 
         if (DBG) {
             Log.d(mTag, "onNewDhcpResults(" + Objects.toString(dhcpResults) + ")");
@@ -1327,7 +1328,7 @@ public class IpClient extends StateMachine {
 
     private void handleProvisioningFailure() {
         final LinkProperties newLp = assembleLinkProperties();
-        ProvisioningChange delta = setLinkProperties(newLp);
+        int delta = setLinkProperties(newLp);
         // If we've gotten here and we're still not provisioned treat that as
         // a total loss of provisioning.
         //
@@ -1336,12 +1337,12 @@ public class IpClient extends StateMachine {
         // timeout expired.
         //
         // Regardless: GAME OVER.
-        if (delta == ProvisioningChange.STILL_NOT_PROVISIONED) {
-            delta = ProvisioningChange.LOST_PROVISIONING;
+        if (delta == PROV_CHANGE_STILL_NOT_PROVISIONED) {
+            delta = PROV_CHANGE_LOST_PROVISIONING;
         }
 
         dispatchCallback(delta, newLp);
-        if (delta == ProvisioningChange.LOST_PROVISIONING) {
+        if (delta == PROV_CHANGE_LOST_PROVISIONING) {
             transitionTo(mStoppingState);
         }
     }
@@ -1814,7 +1815,7 @@ public class IpClient extends StateMachine {
                         mDhcpClient.sendMessage(DhcpClient.EVENT_LINKADDRESS_CONFIGURED);
                     } else {
                         logError("Failed to set IPv4 address.");
-                        dispatchCallback(ProvisioningChange.LOST_PROVISIONING,
+                        dispatchCallback(PROV_CHANGE_LOST_PROVISIONING,
                                 new LinkProperties(mLinkProperties));
                         transitionTo(mStoppingState);
                     }
