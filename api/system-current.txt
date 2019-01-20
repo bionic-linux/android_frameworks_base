@@ -3043,6 +3043,10 @@ package android.net {
   public class LinkAddress implements android.os.Parcelable {
     ctor public LinkAddress(java.net.InetAddress, int);
     ctor public LinkAddress(java.lang.String);
+    method public boolean isGlobalPreferred();
+    method public boolean isIPv4();
+    method public boolean isIPv6();
+    method public boolean isSameAddressAs(android.net.LinkAddress);
   }
 
   public final class LinkProperties implements android.os.Parcelable {
@@ -3055,6 +3059,10 @@ package android.net {
     method public void setInterfaceName(java.lang.String);
     method public void setLinkAddresses(java.util.Collection<android.net.LinkAddress>);
     method public void setMtu(int);
+  }
+
+  public class Network implements android.os.Parcelable {
+    method public android.net.Network getPrivateDnsBypassingCopy();
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
@@ -3096,6 +3104,11 @@ package android.net {
     field public static final java.lang.String EXTRA_NETWORKS_TO_SCORE = "networksToScore";
     field public static final java.lang.String EXTRA_NEW_SCORER = "newScorer";
     field public static final java.lang.String EXTRA_PACKAGE_NAME = "packageName";
+  }
+
+  public final class RouteInfo implements android.os.Parcelable {
+    method public int getType();
+    method public boolean hasGateway();
   }
 
   public class RssiCurve implements android.os.Parcelable {

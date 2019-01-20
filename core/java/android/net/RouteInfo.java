@@ -16,16 +16,17 @@
 
 package android.net;
 
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.net.UnknownHostException;
-import java.net.InetAddress;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
-
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -317,6 +318,8 @@ public final class RouteInfo implements Parcelable {
      *
      * @hide
      */
+    @TestApi
+    @SystemApi
     public int getType() {
         return mType;
     }
@@ -364,7 +367,8 @@ public final class RouteInfo implements Parcelable {
      * @return {@code true} if a gateway is specified
      * @hide
      */
-    @UnsupportedAppUsage
+    @TestApi
+    @SystemApi
     public boolean hasGateway() {
         return mHasGateway;
     }

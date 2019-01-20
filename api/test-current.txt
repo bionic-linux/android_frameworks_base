@@ -601,9 +601,25 @@ package android.net {
     field public static final int INVALID_SECURITY_PARAMETER_INDEX = 0; // 0x0
   }
 
+  public class LinkAddress implements android.os.Parcelable {
+    method public boolean isGlobalPreferred();
+    method public boolean isIPv4();
+    method public boolean isIPv6();
+    method public boolean isSameAddressAs(android.net.LinkAddress);
+  }
+
+  public class Network implements android.os.Parcelable {
+    method public android.net.Network getPrivateDnsBypassingCopy();
+  }
+
   public final class NetworkCapabilities implements android.os.Parcelable {
     method public int[] getCapabilities();
     method public int[] getTransportTypes();
+  }
+
+  public final class RouteInfo implements android.os.Parcelable {
+    method public int getType();
+    method public boolean hasGateway();
   }
 
   public class TrafficStats {
