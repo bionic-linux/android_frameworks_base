@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92122db7_b9f5d46b",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:40:12Z",
+      "side": 1,
+      "message": "I find the \"res\" prefix not explicit enough. Either make it clearer or document it in comments.",
+      "range": {
+        "startLine": 142,
+        "startChar": 40,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d909641_f86482cb",
+        "filename": "core/java/android/net/NetworkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:40:12Z",
+      "side": 1,
+      "message": "nit : you have two spaces here",
+      "range": {
+        "startLine": 151,
+        "startChar": 24,
+        "endLine": 151,
+        "endChar": 26
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d9cdb5_9371fba5",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:40:12Z",
+      "side": 1,
+      "message": "MAXCMDLENGTH or MAXCMDSIZE maybe ? This looks like the maximum value of a command code or something.",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 20
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2e9c20_7043eb92",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:40:12Z",
+      "side": 1,
+      "message": "These names are extremely confusing. GetStringLength returns the number of two-bytes characters in the string : in no possible meaning of the term is this the length of anything UTF-16.\nGetStringUTFLength returns the number of bytes in the UTF-8 representation of the same string, which might possibly be called lengthUTF8 in some situation.\nImportantly these are completely heterogeneous, but you make them sound like they are a similar measure for the different encodings.\n\nI suggest calling these respectively javaCharsCount and byteCountUTF8.",
+      "range": {
+        "startLine": 406,
+        "startChar": 16,
+        "endLine": 406,
+        "endChar": 26
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24384f7_f9ef8860",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T04:40:12Z",
+      "side": 1,
+      "message": "Are you trying to test for ASCII-only strings here ? This is massively counter-intuitive and it\u0027s very difficult to make sure this works actually as expected (I had to write a script iterating on all unicode codepoints).\n\nAt the very least, you need to write comments to explain what this does and why it\u0027s correct.\n\nMore to the point, I think this is a DNS query right ? If I understand the RFC correctly the only characters allowed in the packet are letters and digits, and everything else needs to be punycode-encoded. In this context I don\u0027t see the consistency of your implementation. You should either :\n・Reject everything that can\u0027t go into the packet (including control characters, symbols included in ASCII)\nor\n・Accept everything (do the punycode encoding).\n...but arbitrarily accepting all ASCII and nothing else doesn\u0027t make sense I think.\n\nThe latter is a lot of fiddly work if we don\u0027t already have an implementation for it so I suggest you just limit the charset to what can go into the packet.",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
