@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f32c2561_9d43eb0f",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T13:18:37Z",
+      "side": 1,
+      "message": "Thanks. I don\u0027t see what use you have in mind for it. Let\u0027s add it back if it\u0027s needed when it is.",
+      "parentUuid": "fd997e78_0533b487",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce8abc9_e20579cb",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 13
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The pointer might point to a position which followed by labels(\u003e\u003d0) and pointer( 0 or 1).\nWe couldn\u0027t use readCompressedName which only read label once.\nWithout the member mCompressedPos, we might need to use much recursive logic to implement it.\nBesides, we might need this information(mCompressedPos) to convert DnsSection to wire format back.\nI wonder if we have other simple way, any idea?",
       "parentUuid": "0ce8abc9_e20579cb",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 51
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7da938_3b5199a9",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T13:18:37Z",
+      "side": 1,
+      "message": "Generally speaking recursion with locals is much easier to understand than storing in a member stuff that is used across functions inside a conceptual loop. I\u0027m not sure what kind of complicated recursive logic you have in mind but I have trouble imagining a recursion in this case that\u0027s harder to understand than this member.\n\nAnyway, what about simply calling parseName instead of readString in my example ? I did miss that the pointer means we should read the entire sequence, but we already have parseName doing this, and recursive calling is good exactly at this.\nFor what it\u0027s worth, it actually makes things simpler. Because we actually don\u0027t have to try and get individual labels, we can inline back readString and readCompressedName.\n\nHere is what I\u0027m imagining from your work :\n\n  private String parseName(@NonNull ByteBuffer buf) throws\n          BufferUnderflowException, ParseException {\n    final StringJoiner sj \u003d new StringJoiner(\".\");\n    String nameSection \u003d readNameSection(buf);\n    int labelCount \u003d 0;\n    while (null !\u003d nameSection) {\n      if (++labelCount \u003e MAXLABELCOUNT) {\n        throw new ParseException(\"Parse name fail, too many labels\");\n      }\n      sj.add(nameSection);\n      nameSection \u003d readNameSection(buf);\n    }\n    return sj.toString();\n  }\n\n  private String readNameSection(@NonNull ByteBuffer buf) throws\n          BufferUnderflowException, ParseException {\n    final int len \u003d BitUtils.uint8(buf.get());\n    if (len \u003d\u003d 0) return null;\n    final int mask \u003d len \u0026 NAME_COMPRESSION;\n    if (mask !\u003d NAME_NORMAL \u0026\u0026 mask !\u003d NAME_COMPRESSION) {\n      throw new ParseException(\"Parse name fail, bad label type\");\n    }\n    if (mask \u003d\u003d NAME_NORMAL) {\n      if (len \u003e MAXLABELSIZE) {\n        throw new ParseException(\"Parse normal name fail, invalid label length\");\n      }\n      final byte[] label \u003d new byte[len];\n      buf.get(label);\n      return labelToString(label); // maybe even optimize the array out here by reworking labelToString\n    } else {\n      // Name compression based on RFC 1035 - 4.1.4 Message compression\n      final int offset \u003d ((len \u0026 ~NAME_COMPRESSION) \u003c\u003c 8) + BitUtils.uint8(buf.get());\n      final int oldPos \u003d buf.position();\n      if (offset \u003e\u003d (oldPos - 2)) {\n        throw new ParseException(\"Parse compression name fail, invalid compression\");\n      }\n      buf.position(offset);\n      final int len \u003d BitUtils.uint8(buf.get());\n      if (NAME_NORMAL !\u003d (len \u0026 NAME_COMPRESSION)) {\n        throw new ParseException(\"Parse compression name fail, invalid offset\");\n      }\n      final String name \u003d parseName(buf);\n      buf.position(oldPosition);\n      return name;\n    }\n  }\n\nI think this is simpler and easier to understand than anything storing the position in a member.\n\nYour worries about an infinite loop are well founded. It seems to me like the test for the offset being strictly inferior to the start of the pointer is protection enough against it, but I\u0027ll think a bit more about this tomorrow.",
+      "parentUuid": "69201d77_ddce79a6",
       "range": {
         "startLine": 206,
         "startChar": 12,
