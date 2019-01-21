@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3cd99b_05b5c256",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Per in-person: consider renaming \"Callbacks\" to \"Callback\". Notnecessarily in this CL.",
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59ccd8f_695429c7",
+        "filename": "packages/NetworkStack/tests/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Why did you need this? Was it in order to use a signature permission? If so, can you file a bug to ensure that the mainline module doesn\u0027t need these permissions?",
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f85d12_77d98c88",
+        "filename": "packages/NetworkStack/tests/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Out of curiosity, do we actually need this?",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6061f722_004fa5f4",
+        "filename": "packages/NetworkStack/tests/Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b28917f_6108067f",
+        "filename": "packages/NetworkStack/tests/AndroidManifest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Some of these don\u0027t seem to make sense, like MANAGE_APP_TOKENS, GET_DETAILED_TASKS, .... Maybe add a TODO to clean these up?",
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ae2db6_6682c71e",
+        "filename": "services/net/java/android/net/ip/IpClientUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:07:30Z",
+      "side": 1,
+      "message": "Instead of having client code extend something called *Proxy, maybe rename IIpClientCallbacks to IIpClientCallbacksInternal?",
+      "range": {
+        "startLine": 86,
+        "startChar": 25,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "0d8d9e268acdc2335151f5163f4835abe50e6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
