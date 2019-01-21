@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45821a8e_63364e4e",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3049,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:12:25Z",
+      "side": 1,
+      "message": "Nit: these could be public as well. Don\u0027t bother respinning a new patchset just for this though.",
+      "range": {
+        "startLine": 3048,
+        "startChar": 0,
+        "endLine": 3049,
+        "endChar": 35
+      },
+      "revId": "31f1d0cd8dcf092b3bfcdf51bdde125b4a03c012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ba5cb8_85d2826c",
+        "filename": "services/net/java/android/net/util/InterfaceParams.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:12:25Z",
+      "side": 1,
+      "message": "Generally I\u0027d be a lot more comfortable with saying that if an interface does not have a mac address, we leave this null. This is because there may be code that thinks that 02:00:00:00:00:00 is the actual MAC address of the interface.\n\nIf there is no MAC address, then there is no MAC address, and null is the best value to represent that. But we don\u0027t need to fix that in this CL.",
+      "range": {
+        "startLine": 70,
+        "startChar": 43,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "31f1d0cd8dcf092b3bfcdf51bdde125b4a03c012",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
