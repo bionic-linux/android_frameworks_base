@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1011f3d5_62c895bc",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509d74a4_3f4099e1",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "91cf2d1fa27c526f8504d7744e95a681ed85f142",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e128784_6e28d370",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-08T07:08:26Z",
       "side": 1,
       "message": "Just curious because I need to learn about nat64 since that\u0027s missing on Chrome OS: in which scenarios can there be a NAT64 prefix but the device also did DHCP and has an IPv4 address ? Some kind of network in the middle of migrating from dual stack to IPv6 only ?\n\nWhat if an app forced a static ipv4 config on a WifiConfiguration for an IPv6 only network ? It looks like this would prevent the framework from starting clatd.",
+      "range": {
+        "startLine": 101,
+        "startChar": 19,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "91cf2d1fa27c526f8504d7744e95a681ed85f142",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dfa373_3762a671",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:01:17Z",
+      "side": 1,
+      "message": "That sort of configuration is technically feasible but not very meaningful. If it encounters such a network, Android will disable 464xlat and prefer native IPv4.",
+      "parentUuid": "5e128784_6e28d370",
       "range": {
         "startLine": 101,
         "startChar": 19,
