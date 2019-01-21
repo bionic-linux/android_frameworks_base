@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd997e78_0533b487",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-21T11:21:18Z",
+      "side": 1,
+      "message": "We might need this information to convert DnsSection back to byte array format.\nAnyway, it might be the further CL.\nI will remove it first.",
+      "parentUuid": "0c8347ed_b25a61da",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce8abc9_e20579cb",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-21T05:58:00Z",
       "side": 1,
       "message": "The member makes this extremely difficult to follow (generally speaking members in recursive code are a nightmare to track). Why not simply encapsulate the position in this function ?\n\nreadCompressedName(offset) {\n  oldPosition \u003d buf.position();\n  buf.position(offset);\n  len \u003d ...\n  name \u003d readString\n  buf.position(oldPosition);\n  return name;\n}\n\n...and remove the member.",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 51
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69201d77_ddce79a6",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-21T11:21:18Z",
+      "side": 1,
+      "message": "The pointer might point to a position which followed by labels(\u003e\u003d0) and pointer( 0 or 1).\nWe couldn\u0027t use readCompressedName which only read label once.\nWithout the member mCompressedPos, we might need to use much recursive logic to implement it.\nBesides, we might need this information(mCompressedPos) to convert DnsSection to wire format back.\nI wonder if we have other simple way, any idea?",
+      "parentUuid": "0ce8abc9_e20579cb",
       "range": {
         "startLine": 206,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee8fc287_bc11f32d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-21T11:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be0ee87_c42c43cf",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "906173d3_8d4c6b5f",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "a90feb978ffb35289176812f84999a3333afd107",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f772f7_b339a8d5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-21T11:21:18Z",
+      "side": 1,
+      "message": "If we query something in AAAA(mQueryType \u003d AAAA), but response is in A (nsType \u003d A)\nWe might not parse this answer.",
+      "parentUuid": "906173d3_8d4c6b5f",
+      "range": {
+        "startLine": 262,
+        "startChar": 63,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
