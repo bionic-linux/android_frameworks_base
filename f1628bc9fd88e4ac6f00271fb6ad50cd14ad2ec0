@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92463b2d_d08c6d58",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27383,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-21T14:04:33Z",
+      "side": 1,
+      "message": "Done - directly using 02:00... in InterfaceParams.",
+      "parentUuid": "21816fe1_bedd7320",
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e086fb9b_e9bf594c",
         "filename": "api/system-current.txt",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8fb3f01f_c7087a88",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3111,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-21T14:04:33Z",
+      "side": 1,
+      "message": "Added the constants as well. Current code only does parceling/unparceling so it did not use them, but it may be useful in the future.",
+      "parentUuid": "e086fb9b_e9bf594c",
+      "range": {
+        "startLine": 3111,
+        "startChar": 22,
+        "endLine": 3111,
+        "endChar": 29
+      },
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a23dc03_0ca70601",
         "filename": "api/system-current.txt",
         "patchSetId": 2
@@ -62,6 +104,30 @@
       "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2ea8b9_02ee07fe",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-21T14:04:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a23dc03_0ca70601",
+      "range": {
+        "startLine": 3112,
+        "startChar": 26,
+        "endLine": 3112,
+        "endChar": 38
+      },
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
