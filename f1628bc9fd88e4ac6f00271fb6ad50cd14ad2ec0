@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21816fe1_bedd7320",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27383,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T08:45:57Z",
+      "side": 1,
+      "message": "Not sure this is OK for public API. IIRC last time we looked at there was disagreement on whether the all zeros address was meaningful, because officially all MAC addresses starting with 00:00:00 are registered to Xerox.\n\nWe might want to use 02:00:00:00:00:00 instead, or maybe even just use null in InterfaceParams?",
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e086fb9b_e9bf594c",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3111,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T08:45:57Z",
+      "side": 1,
+      "message": "What can callers do with this? It looks like the RTN_xxx constants are still @hide.",
+      "range": {
+        "startLine": 3111,
+        "startChar": 22,
+        "endLine": 3111,
+        "endChar": 29
+      },
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a23dc03_0ca70601",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T08:45:57Z",
+      "side": 1,
+      "message": "Make public instead?",
+      "range": {
+        "startLine": 3112,
+        "startChar": 26,
+        "endLine": 3112,
+        "endChar": 38
+      },
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c21f20_9d0cc645",
+        "filename": "core/java/android/net/MacAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T08:45:57Z",
+      "side": 1,
+      "message": "Might want to mention that this is not publicly exposed or treated specially because technically the OUI 00:00:00 is registered.",
+      "revId": "f1628bc9fd88e4ac6f00271fb6ad50cd14ad2ec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
