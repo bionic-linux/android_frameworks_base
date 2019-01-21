@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773fc454_2c785ec2",
+        "filename": "core/java/android/net/SSLCertificateSocketFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-01-21T11:55:30Z",
+      "side": 1,
+      "message": "Worth a reference to https://developer.android.com/training/articles/security-gms-provider ? That talks about not using this class.\n\nAny other / out of date docs that might need to be updated?",
+      "range": {
+        "startLine": 96,
+        "startChar": 42,
+        "endLine": 96,
+        "endChar": 56
+      },
+      "revId": "6caa816a63cf287b20483741326dc2e9c0253d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
