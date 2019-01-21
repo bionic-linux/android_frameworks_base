@@ -22,6 +22,30 @@
       "revId": "5e9acbbfeb2c3848c794ddb4ffb9a6ae87065814",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fa4722_7b1cd049",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-21T23:25:14Z",
+      "side": 1,
+      "message": "I did run the tests too - updated",
+      "parentUuid": "cccf3234_5fb6f956",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "5e9acbbfeb2c3848c794ddb4ffb9a6ae87065814",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
