@@ -235,6 +235,30 @@
       "revId": "a90feb978ffb35289176812f84999a3333afd107",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29e9bbbf_fed6d386",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T13:57:20Z",
+      "side": 1,
+      "message": "I see. Then don\u0027t you mean\n\n  if ((nsType !\u003d TYPE_A \u0026\u0026 nsType !\u003d TYPE_AAAA) || nsType !\u003d mQueryType) {\n    continue;\n  }\n\n?",
+      "parentUuid": "54f772f7_b339a8d5",
+      "range": {
+        "startLine": 262,
+        "startChar": 63,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
