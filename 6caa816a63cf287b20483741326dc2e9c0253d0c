@@ -22,6 +22,30 @@
       "revId": "6caa816a63cf287b20483741326dc2e9c0253d0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b457cd_09a2059e",
+        "filename": "core/java/android/net/SSLCertificateSocketFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2019-01-21T12:24:26Z",
+      "side": 1,
+      "message": "\u003e Worth a reference to https://developer.android.com/training/articles/security-gms-provider ? That talks about not using this class.\n\nI don\u0027t think so, since that page doesn\u0027t give you any advice on what to do to get rid of your use of this class, it just says why you shouldn\u0027t use it.  I think it\u0027s best to just point to the replacements for what a developer might be using this class to do.\n\n\u003e Any other / out of date docs that might need to be updated?\n\nNone that I could find with a quick search, we haven\u0027t been recommending using this for a while.",
+      "parentUuid": "773fc454_2c785ec2",
+      "range": {
+        "startLine": 96,
+        "startChar": 42,
+        "endLine": 96,
+        "endChar": 56
+      },
+      "revId": "6caa816a63cf287b20483741326dc2e9c0253d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
