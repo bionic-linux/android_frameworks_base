@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b0a005_077eafe2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3055,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:47:21Z",
+      "side": 1,
+      "message": "This is not necessary if we make IpClient.compareProvisioning into a static.",
+      "range": {
+        "startLine": 3055,
+        "startChar": 29,
+        "endLine": 3055,
+        "endChar": 48
+      },
+      "revId": "9f69e28325b4a282b775a781fc0e4b2fc5af751b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15639607_3e0cfeb3",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:47:21Z",
+      "side": 1,
+      "message": "Let\u0027s remove stacked links from system API and the parceling utils. We don\u0027t need them in the app, and they\u0027re only used in ConnectivityService. Current thoughts around stacked links are not to have them be public or system API at all and instead add the 464xlat IP addresses (v4 and/or v6) directly to LinkProperties.",
+      "range": {
+        "startLine": 3056,
+        "startChar": 70,
+        "endLine": 3056,
+        "endChar": 85
+      },
+      "revId": "9f69e28325b4a282b775a781fc0e4b2fc5af751b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b9310a_308693ed",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3064,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:47:21Z",
+      "side": 1,
+      "message": "These should probably be statics in android.net.shared.* that take a LinkProperties object.",
+      "range": {
+        "startLine": 3059,
+        "startChar": 0,
+        "endLine": 3064,
+        "endChar": 60
+      },
+      "revId": "9f69e28325b4a282b775a781fc0e4b2fc5af751b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e204d4d_f5799f7d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3080,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T07:47:21Z",
+      "side": 1,
+      "message": "Ditto, this should probably be wherever the compareProvisioning method ends up being (probably only in the network stack APK).",
+      "range": {
+        "startLine": 3077,
+        "startChar": 0,
+        "endLine": 3080,
+        "endChar": 75
+      },
+      "revId": "9f69e28325b4a282b775a781fc0e4b2fc5af751b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
