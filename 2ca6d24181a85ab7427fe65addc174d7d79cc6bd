@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d348c9db_fcc35d09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68130359_ce400456",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc297e0_0a5ec97e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5ad076bc_0bd4e2a1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39713d6_ce715b91",
+      "range": {
+        "startLine": 573,
+        "startChar": 27,
+        "endLine": 573,
+        "endChar": 57
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1bb4c90_3f913f6f",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5fb03d_d6242504",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1bb4c90_3f913f6f",
+      "range": {
+        "startLine": 582,
+        "startChar": 31,
+        "endLine": 582,
+        "endChar": 61
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "abc0d35e_e8f53941",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "69840de1_c390575e",
+      "range": {
+        "startLine": 583,
+        "startChar": 18,
+        "endLine": 583,
+        "endChar": 27
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c053e2e4_2c100e4f",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 1
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "57e6b838_6aca0e25",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "The call in ConnectivityService is made after nai.networkInfo has its state changed to DISCONNECTED, so I\u0027ve replaced it with a call to updateClat.",
+      "parentUuid": "c053e2e4_2c100e4f",
+      "range": {
+        "startLine": 591,
+        "startChar": 19,
+        "endLine": 591,
+        "endChar": 28
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a840908_e1ae2e1e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 1
@@ -176,6 +296,30 @@
       "writtenOn": "2019-01-11T06:47:33Z",
       "side": 1,
       "message": "So, because calling stop() will send clatd to the STOPPED state and !clatd.isStarted() is a test for it being in the IDLE state and maybeStartClatd() can be called soon before clatd is in the IDLE state, you can get a double stop() that will raise an IllegalStateException (and catch it for a benign log message).\n\nBut there is worse.\nIf a start() message comes while clatd is in the STOPPING state, then it goes into the STARTING state. When netd invokes clatd#handleInterfaceRemoved, that method exits in line 307 because the state is neither RUNNING nor STOPPING, so clatd won\u0027t remove the stacked links or (ever) unregister itself as a netd event listener.",
+      "range": {
+        "startLine": 594,
+        "startChar": 8,
+        "endLine": 594,
+        "endChar": 13
+      },
+      "revId": "2ca6d24181a85ab7427fe65addc174d7d79cc6bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fa1091_ae69287c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-21T14:13:04Z",
+      "side": 1,
+      "message": "STOPPING is gone and stop() goes directly into IDLE. If at this point start() is called, I think the code should be correct regardless of whether handleInterfaceRemoved arrives before or after the start():\n\n- If handleInterfaceRemoved arrives before start(), then it will do nothing because mIface is null.\n- If handleInterfaceRemoved arrives after start(), but before the new interface created by start() causes handleInterfaceLinkStateChanged(..., true) to be called, it will do nothing because isRunning() will return false.\n- handleInterfaceRemoved cannot arrive after the new interface created by start() causes handleInterfaceLinkStateChanged(..., true) to be called, because the two events are fired in order on the same thread.\n\nAdded a unit test for the two cases that can happen.",
+      "parentUuid": "3a840908_e1ae2e1e",
       "range": {
         "startLine": 594,
         "startChar": 8,
