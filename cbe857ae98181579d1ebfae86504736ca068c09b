@@ -1065,6 +1065,30 @@
     },
     {
       "key": {
+        "uuid": "31f0c51e_35274258",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "Ah sorry I missed that.\n\nAs for more coverage, not necessarily for IC5. It would be nice to have coverage for invalid packets to avoid obvious buffer overflow mistakes, and possibly to have a good number of real-life packets. But for now I think it\u0027s fine, thanks.",
+      "parentUuid": "092f79e2_b45e9bd4",
+      "range": {
+        "startLine": 167,
+        "startChar": 35,
+        "endLine": 167,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9ebda8_07ae4051",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 4
@@ -2686,6 +2710,30 @@
       "side": 1,
       "message": "Sounds good, I think it could be done together in other CL with Lorenzo\u0027s suggestion -\u003e \"should query for IPv4 and/or IPv6 only if the network we\u0027re on provides those protocols\".",
       "parentUuid": "9fd7886d_ec023aa2",
+      "range": {
+        "startLine": 309,
+        "startChar": 24,
+        "endLine": 309,
+        "endChar": 43
+      },
+      "revId": "cbe857ae98181579d1ebfae86504736ca068c09b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d311a96_fb51dd7a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "Makes sense thanks.",
+      "parentUuid": "1771afcc_6236d3e9",
       "range": {
         "startLine": 309,
         "startChar": 24,

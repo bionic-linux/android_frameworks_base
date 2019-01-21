@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8347ed_b25a61da",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "Write-only member. You can remove.",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce8abc9_e20579cb",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "The member makes this extremely difficult to follow (generally speaking members in recursive code are a nightmare to track). Why not simply encapsulate the position in this function ?\n\nreadCompressedName(offset) {\n  oldPosition \u003d buf.position();\n  buf.position(offset);\n  len \u003d ...\n  name \u003d readString\n  buf.position(oldPosition);\n  return name;\n}\n\n...and remove the member.",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 51
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be0ee87_c42c43cf",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "Can you factorize these two methods ?",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 5
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906173d3_8d4c6b5f",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-21T05:58:00Z",
+      "side": 1,
+      "message": "I might be lacking knowledge of the protocol, but if this is the same type as the query but neither A or AAAA, will your code be able to parse it ? Or should we simply remove this third clause ?",
+      "range": {
+        "startLine": 262,
+        "startChar": 63,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
