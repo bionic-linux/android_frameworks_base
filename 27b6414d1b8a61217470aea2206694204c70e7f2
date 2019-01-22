@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddfeb992_50877d7b",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-22T18:56:36Z",
+      "side": 1,
+      "message": "Can Add @WorkerThread annotation to make this more explicit.",
+      "range": {
+        "startLine": 246,
+        "startChar": 3,
+        "endLine": 246,
+        "endChar": 24
+      },
+      "revId": "27b6414d1b8a61217470aea2206694204c70e7f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acb7b64_4a0fdfd4",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-22T18:56:36Z",
+      "side": 1,
+      "message": "@WorkerThread",
+      "revId": "27b6414d1b8a61217470aea2206694204c70e7f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd44091_b9647ef0",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-22T18:56:36Z",
+      "side": 1,
+      "message": "@WorkerThread",
+      "revId": "27b6414d1b8a61217470aea2206694204c70e7f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3122bcf_de232383",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-01-22T18:56:36Z",
+      "side": 1,
+      "message": "@WorkerThread",
+      "range": {
+        "startLine": 298,
+        "startChar": 10,
+        "endLine": 301,
+        "endChar": 11
+      },
+      "revId": "27b6414d1b8a61217470aea2206694204c70e7f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
