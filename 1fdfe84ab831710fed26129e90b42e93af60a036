@@ -282,6 +282,30 @@
       "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d504979_fc4f375a",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T10:38:07Z",
+      "side": 1,
+      "message": "Well yes, because you\u0027re passing the wrong argument to getStringUTFRegion.\n\nThe doc says :\nGetStringUTFRegion\n\u003c void GetStringUTFRegion(JNIEnv *env, jstring str, jsize start, jsize len, char *buf);\n\nTranslates len number of Unicode characters beginning at offset start into modified UTF-8 encoding and place the result in the given buffer buf.\n\n\n\"len number of Unicode characters\", as in java chars. You should pass javaCharsCount as the third argument. The buffer should have lengthUTF8 bytes as you already did.\nThese jni APIs are so confusing \u003c.\u003c",
+      "parentUuid": "5c36578c_713018a3",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
