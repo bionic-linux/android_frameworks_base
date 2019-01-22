@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a532050_8dc36406",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1876,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-01-22T22:51:10Z",
+      "side": 1,
+      "message": "is it Asha or Android Hearing Aids profile? let\u0027s be consistent either way",
+      "range": {
+        "startLine": 1876,
+        "startChar": 22,
+        "endLine": 1876,
+        "endChar": 50
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce7f27d_614bd4da",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-01-22T22:51:10Z",
+      "side": 1,
+      "message": "should be consistent in naming",
+      "range": {
+        "startLine": 1882,
+        "startChar": 35,
+        "endLine": 1882,
+        "endChar": 60
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd68294_40546117",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2525,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-01-22T22:51:10Z",
+      "side": 1,
+      "message": "nit: just return false outside of a separate else branch, since there is a return in the true case.\n\nif (xyz) {\n  return true\n}\n\nreturn false",
+      "range": {
+        "startLine": 2523,
+        "startChar": 14,
+        "endLine": 2525,
+        "endChar": 13
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad85216_0aa5d1ca",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-01-22T22:51:10Z",
+      "side": 1,
+      "message": "consistency in naming here too",
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
