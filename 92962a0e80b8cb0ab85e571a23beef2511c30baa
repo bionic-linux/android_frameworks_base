@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18fff797_391c62ef",
+        "filename": "services/net/java/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T09:19:43Z",
+      "side": 1,
+      "message": "Any reason you changed all of these to ints instead of defining a local ProvisioningChange enum in this class?",
+      "revId": "92962a0e80b8cb0ab85e571a23beef2511c30baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0eba69_b5a854eb",
+        "filename": "tests/net/java/android/net/shared/LinkPropertiesParcelableUtilTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T09:19:43Z",
+      "side": 1,
+      "message": "I assume this didn\u0027t need to change?",
+      "range": {
+        "startLine": 96,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "92962a0e80b8cb0ab85e571a23beef2511c30baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
