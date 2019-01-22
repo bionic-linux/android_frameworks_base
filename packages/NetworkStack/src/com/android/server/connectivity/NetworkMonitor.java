@@ -1308,6 +1308,7 @@ public class NetworkMonitor extends StateMachine {
             if (mCaptivePortalUserAgent != null) {
                 urlConnection.setRequestProperty("User-Agent", mCaptivePortalUserAgent);
             }
+            urlConnection.setRequestProperty("Connection", "Close");
             // cannot read request header after connection
             String requestHeader = urlConnection.getRequestProperties().toString();
 
