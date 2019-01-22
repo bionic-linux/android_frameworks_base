@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a293dc4_a2596ca8",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-22T18:58:13Z",
+      "side": 1,
+      "message": "The other issue here is that addr contains sensitive info. If we want to print out the address, then we should remove the address in non-testing builds. Can we use Rlog.pii to wrap the address in the toString of CdmaSmsAddress?",
+      "parentUuid": "bc4a09bb_5f7c550f",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 627,
+        "endChar": 25
+      },
+      "revId": "d2581914b30a3fe9b94aae9e74395176c7d6eb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7cd2055_c68c75e8",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
