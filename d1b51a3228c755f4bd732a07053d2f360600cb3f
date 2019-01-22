@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf8082e_cd9b25a8",
+        "filename": "services/net/java/android/net/ip/InterfaceController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T11:39:48Z",
+      "side": 1,
+      "message": "Nit: !address.isIPv4()",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "d1b51a3228c755f4bd732a07053d2f360600cb3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
