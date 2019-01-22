@@ -71,7 +71,15 @@ bool FileDescriptorWhitelist::IsAllowed(const std::string& path) const {
       return true;
   }
 
+  // Framework jars are allowed.
   static const char* kFrameworksPrefix = "/system/framework/";
+  if (android::base::StartsWith(path, kFrameworksPrefix)
+      && android::base::EndsWith(path, kJarSuffix)) {
+    return true;
+  }
+
+  // Jars from the runtime apex are allowed.
+  static const char* kRuntimeApexPrefix = "/apex/com.android.runtime/javalib/";
   static const char* kJarSuffix = ".jar";
   if (android::base::StartsWith(path, kFrameworksPrefix)
       && android::base::EndsWith(path, kJarSuffix)) {
