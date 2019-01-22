@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275bbe8f_a7f5cd0a",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T12:00:19Z",
+      "side": 1,
+      "message": "Nopes, as I said on patchset 7 this must be lengthUTF8 bytes.\nOtherwise you\u0027ll SIGSEGV when a char is passed that is 2 bytes in UTF-16 but 3 in UTF-8 ; most Japanese characters are an example of that. E.g. if you try with \"あああああああああああああああ\" you\u0027ll be missing one byte for each character\n\nYes these jni APIs are really too hard to use \u003c.\u003c",
+      "range": {
+        "startLine": 409,
+        "startChar": 32,
+        "endLine": 409,
+        "endChar": 46
+      },
+      "revId": "236e72caf0da58ba4678bdf3e40b2a81bf26b79b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
