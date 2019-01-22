@@ -306,6 +306,30 @@
       "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822dc9a_d6c902c9",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T11:33:21Z",
+      "side": 1,
+      "message": "You are right, sorry for that.",
+      "parentUuid": "0d504979_fc4f375a",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
