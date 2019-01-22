@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53275a7f_eede37b8",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-22T10:46:12Z",
+      "side": 1,
+      "message": "Is this the most appropriate error code ?",
+      "range": {
+        "startLine": 278,
+        "startChar": 62,
+        "endLine": 278,
+        "endChar": 84
+      },
+      "revId": "3879b316aeb11abd28c3075fff9770535d1c7ec9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57abc15_d8669c1a",
+        "filename": "services/ipmemorystore/java/com/android/server/net/ipmemorystore/IpMemoryStoreService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-01-22T10:46:12Z",
+      "side": 1,
+      "message": "Nit: I\u0027m thinking having a constant or a makeNeverConnectedResponse() static in SameL3NetworkResponse might be clearer, since this relies on SameL3NetworkResponse considering confidence outside of [0..1] as never connected.",
+      "range": {
+        "startLine": 289,
+        "startChar": 40,
+        "endLine": 289,
+        "endChar": 65
+      },
+      "revId": "3879b316aeb11abd28c3075fff9770535d1c7ec9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
