@@ -258,6 +258,30 @@
       "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c36578c_713018a3",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T09:03:58Z",
+      "side": 1,
+      "message": "Without it, we will get StringIndexOutOfBoundsException with some input like \"www.©google.com\"",
+      "parentUuid": "555aac29_f69f80b8",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
