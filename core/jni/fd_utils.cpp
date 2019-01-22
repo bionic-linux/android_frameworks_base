@@ -33,6 +33,11 @@
 
 // Static whitelist of open paths that the zygote is allowed to keep open.
 static const char* kPathWhitelist[] = {
+  "/apex/com.android.runtime/javalib/core-libart.jar",
+  "/apex/com.android.runtime/javalib/core-oj.jar",
+  "/apex/com.android.runtime/javalib/okhttp.jar",
+  "/apex/com.android.runtime/javalib/bouncycastle.jar",
+  "/apex/com.android.runtime/javalib/apache-xml.jar",
   "/apex/com.android.conscrypt/javalib/conscrypt.jar",
   "/dev/null",
   "/dev/socket/zygote",
