@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4e3d70_5bbce783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-01-22T21:45:20Z",
+      "side": 1,
+      "message": "Can you add a comment to why that is the case? What\u0027s changed that requires this over the previous setup?",
+      "revId": "4d21d240091fde4b05b102b8dc5d571e0621f261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
