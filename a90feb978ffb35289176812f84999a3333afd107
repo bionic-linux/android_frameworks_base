@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "9161658e_eea6148f",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T10:36:10Z",
+      "side": 1,
+      "message": "Thanks for writing the parsing function in recursive way.\nIt is really helpful.\nThe parsing function become simpler.\nI just add some checking condition based on rfc1035",
+      "parentUuid": "ee7da938_3b5199a9",
+      "range": {
+        "startLine": 206,
+        "startChar": 12,
+        "endLine": 206,
+        "endChar": 51
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be0ee87_c42c43cf",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 13
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "I see. Then don\u0027t you mean\n\n  if ((nsType !\u003d TYPE_A \u0026\u0026 nsType !\u003d TYPE_AAAA) || nsType !\u003d mQueryType) {\n    continue;\n  }\n\n?",
       "parentUuid": "54f772f7_b339a8d5",
+      "range": {
+        "startLine": 262,
+        "startChar": 63,
+        "endLine": 262,
+        "endChar": 83
+      },
+      "revId": "a90feb978ffb35289176812f84999a3333afd107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "665530a4_311ce8b0",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-22T10:36:10Z",
+      "side": 1,
+      "message": "Thanks. I should be more careful to avoid this kind of mistake.",
+      "parentUuid": "29e9bbbf_fed6d386",
       "range": {
         "startLine": 262,
         "startChar": 63,
