@@ -234,6 +234,30 @@
       "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555aac29_f69f80b8",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-22T08:42:41Z",
+      "side": 1,
+      "message": "If all we need to ensure is that the name is valid UTF8, then you can just remove this test. getStringUTFRegion is guaranteed to return valid UTF8, this test would arbitrarily reject some instead.",
+      "parentUuid": "aed33f0d_abd205d7",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1fdfe84ab831710fed26129e90b42e93af60a036",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
