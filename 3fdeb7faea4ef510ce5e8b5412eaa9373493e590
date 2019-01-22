@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "149dd2d5_1ba484dd",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-22T09:41:04Z",
+      "side": 1,
+      "message": "I don\u0027t think so, it\u0027s just that the class didn\u0027t have any state and it does now, so single-threaded access now is an invariant that needs to be maintained; maybe add a comment here? Don\u0027t feel strongly either way if you think this is obvious.",
+      "parentUuid": "0718d6f7_6b9ddc3a",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a173e46_a9e7a121",
         "filename": "core/java/com/android/internal/os/Zygote.java",
         "patchSetId": 10
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Done.  I agree that the name could be clearer, but I can\u0027t think of a better name at the moment.  I\u0027m open to any suggestions.",
       "parentUuid": "e9ea48d7_6c1d2f2b",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 42
+      },
+      "revId": "3fdeb7faea4ef510ce5e8b5412eaa9373493e590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c70d018_f25781a2",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-22T09:41:04Z",
+      "side": 1,
+      "message": "I\u0027m ok with the name, the comment you added helped.",
+      "parentUuid": "1f0d3da4_08a85387",
       "range": {
         "startLine": 155,
         "startChar": 15,
