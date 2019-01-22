@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7125f074_87b7b447",
+        "filename": "services/net/java/android/net/ip/InterfaceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T08:06:14Z",
+      "side": 1,
+      "message": "Given that you\u0027re losing the difference between \"IPv4 configuration failed\" and \"Failed to clear IPv4 address\", can you provide more detail in the error message? Maybe the following?\n\n\"Setting IPv4 address to %s/%d failed: %s\", cfgParcel.ipv4Addr, cfgParcel.prefixLength, e",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "af25e29e80787c94b3a5edf9a410f4844cf6a049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7130a33b_06ced5fc",
+        "filename": "services/net/java/android/net/ip/InterfaceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T08:06:14Z",
+      "side": 1,
+      "message": "Should we check that address instanceof Inet4Address?",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "af25e29e80787c94b3a5edf9a410f4844cf6a049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5213ae6a_61af124a",
+        "filename": "services/net/java/android/net/ip/InterfaceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T08:06:14Z",
+      "side": 1,
+      "message": "\"%s IPv6 failed: %s\", (enabled ? \"enabling\" : \"disabling\"), e",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 50
+      },
+      "revId": "af25e29e80787c94b3a5edf9a410f4844cf6a049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a02029_53f77199",
+        "filename": "services/net/java/android/net/ip/InterfaceController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-22T08:06:14Z",
+      "side": 1,
+      "message": "\"error %s IPv6 privacy extensions: %s\", (enabled ? \"enabling\" : \"disabling\"), e",
+      "range": {
+        "startLine": 113,
+        "startChar": 21,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "af25e29e80787c94b3a5edf9a410f4844cf6a049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
