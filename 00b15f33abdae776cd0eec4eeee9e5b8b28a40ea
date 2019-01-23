@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14447374_d10fa5d1",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Looks like this is used to represent either an entire section (like the question section) or a resource record. Maybe add a comment to clarify that?\n\nI think the code would be clearer if we renamed this to DnsRecord, and add a comment to explain that it\u0027s used both for DNS questions (which don\u0027t have a TTL or RDATA) and DNS resource records (which do).",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54c5fa4_b44983f9",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "FWIW RFC 1035 says that this is a 32-bit signed integer, so int might be OK.",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d310ce62_47f64ac2",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Should this be called Rdata?",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc305ae2_54fba52d",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": ": \" + dName.length()",
+      "range": {
+        "startLine": 106,
+        "startChar": 80,
+        "endLine": 106,
+        "endChar": 81
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22810c1_dc913063",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Add a comment to explain what this does? Something like:\n\n    // Append the byte as an escaped decimal number, e.g., \"\\19\" for 0x13.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 50
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e752914_5244ac5c",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "// Append the byte as an escaped character, e.g., \"\\:\" for 0x3a.",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3bda41_6dfc1e88",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Append the byte as a character, e.g., \"a\" for 0x61.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4079ebee_808fafe1",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "recursion too deep\n\nIs it legal to have a compressed name refer to another compressed name? If so, then we should warn/throw on depth \u003e 1 and not depth \u003e MAXLABELCOUNT.",
+      "range": {
+        "startLine": 157,
+        "startChar": 83,
+        "endLine": 157,
+        "endChar": 98
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0572f7_91c4b2f9",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Nit: long line.",
+      "range": {
+        "startLine": 157,
+        "startChar": 100,
+        "endLine": 157,
+        "endChar": 101
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb4ffbe_23bbaf22",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Aren\u0027t empty labels invalid?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd10c38_82ae4ac1",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "Actually RFC 1035 says that QDCOUNT is \"usually\" 1. But this class is only used for methods where the app passed in class and qtype and we create the query ourselves, right? In those cases, we will only send one question in the question section, and in the answer, there will only be one question in the question section unless there is a bug in the server. So there is no need to parse past the first question.\n\nUnrelated to this line: For the methods where the app sends a raw query and gets a raw answer, if the app sends N \u003e 1 queries and the server correctly responds with N answers, does the code work correctly? We might want to add a a comment somewhere about this.",
+      "range": {
+        "startLine": 235,
+        "startChar": 60,
+        "endLine": 235,
+        "endChar": 67
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43790f63_5f7f1842",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T02:14:07Z",
+      "side": 1,
+      "message": "We should sort the answers as getaddrinfo would sort them. Can you file a bug for that?",
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
