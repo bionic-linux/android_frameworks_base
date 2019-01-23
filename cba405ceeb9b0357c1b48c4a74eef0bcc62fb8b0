@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcf5dc04_6aecfc6f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "nit: Do you mind adding an @param annotation for the network parameter here to describe that it can be null and when that should be expected?",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06795c6_21b39c6c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "note: It seems a bit weird for this to be an \"ERROR\" code, but I can see why you needed it to be. I\u0027m not sure I have an actual suggestion here, but just wanted to note that it feels strange.",
+      "range": {
+        "startLine": 2522,
+        "startChar": 28,
+        "endLine": 2522,
+        "endChar": 40
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e58fcf95_94db1e81",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2548,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "... unless entitlement has never been run?",
+      "range": {
+        "startLine": 2547,
+        "startChar": 65,
+        "endLine": 2548,
+        "endChar": 25
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac57240a_9684877a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2553,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "This function needs:\n\n@SystemApi\n@RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)\n\nand should be guarded by the TETHER_PRIVILEGED permission.",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35719c18_fa7b2ac7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "Should this function name contain the word \"Tethering\"? Is there any other time of entitlement check that would be confusing here besides tethering?",
+      "range": {
+        "startLine": 2555,
+        "startChar": 15,
+        "endLine": 2555,
+        "endChar": 40
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c501b42_02c2428d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-23T16:14:59Z",
+      "side": 1,
+      "message": "It seems to me that we probably need a \"boolean showEntitlementUi\" param here. See my latest email about caching that for our first run flow.",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
