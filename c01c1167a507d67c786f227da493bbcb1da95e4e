@@ -22,6 +22,30 @@
       "revId": "c01c1167a507d67c786f227da493bbcb1da95e4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3dab9c_5107c790",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2019-01-23T10:09:14Z",
+      "side": 1,
+      "message": "It\u0027s not true that only app calling cancelBugrport will shutdown the service. It\u0027s native service calling onFinished that will shutdown the service in the normal course (cancelBugreport is meant for user initiated cancel), and that should happen independent of the app\u0027s behavior as long as it goes through BugreportManager. But you are right, the app may directly call into system service, so we can add a listener there. I\u0027ll leave a TODO.\n\nDid I misread your comment?",
+      "parentUuid": "b6d576d5_70caa6f9",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "c01c1167a507d67c786f227da493bbcb1da95e4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
