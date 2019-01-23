@@ -34,6 +34,24 @@
       "revId": "4d21d240091fde4b05b102b8dc5d571e0621f261",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8a04d18_2f78ddb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-01-23T16:40:07Z",
+      "side": 1,
+      "message": "That doesn\u0027t really answer the question. What I meant was: why is there an open fd now that wasn\u0027t there for the /system/framework versions?\n\nLooking around, the answer seems to be in lines 77ff. Maybe we should consider mirroring that?",
+      "parentUuid": "0975d8c2_d0a08958",
+      "revId": "4d21d240091fde4b05b102b8dc5d571e0621f261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
