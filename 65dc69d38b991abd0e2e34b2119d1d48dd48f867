@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23861907_c1b0253c",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-23T18:23:36Z",
+      "side": 1,
+      "message": "do we really need this as you have another check below that will prevent this event being broadcasted in case there is no debug package. ?  \n\nIf there is a package which is interested in the events no matter its user / userdebug then it would be good to send it to the package and let package decide.\n\nThis will align with connectivtymonitor as it already checks for userdebug before triggering a bugreport. It will check-in only metric in case of user build.",
+      "revId": "65dc69d38b991abd0e2e34b2119d1d48dd48f867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
