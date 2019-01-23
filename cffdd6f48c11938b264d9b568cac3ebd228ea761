@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e2a1a835_802fae96",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T21:27:33Z",
+      "side": 1,
+      "message": "Basically, send an event, and a debug monitor (such as ConnectivityMonitor) can log it and trigger a BR the first time (or whatever).\n\nI can move this to TM. That has the downside of splitting it up, and I still want a global instance so that it\u0027s usable without performing package resolution multiple times. But first, it sounds like it needs more discussion.",
+      "parentUuid": "dd293a1e_e42b3c88",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 89
+      },
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8916ec7_4edcde36",
         "filename": "telephony/java/android/telephony/TelephonyDebug.java",
         "patchSetId": 7
@@ -71,6 +95,30 @@
       "writtenOn": "2019-01-23T20:54:32Z",
       "side": 1,
       "message": "Is this okay?  It feels like we have the potential to leak a Context.",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bebb4d_cbab7cdf",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T21:27:33Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s a leak. I\u0027m no Android app expert, so the question would be: can the Context object ever be deleted and re-recreated during the lifetime of an app? If so, then yes... this would hold a reference to an old context which would be a leak, but I was of the impression that the only way the Context could be deleted is if the app shut down, which would also clean up this static reference. We keep a lot of global references to the Context (for instance, PhoneGlobals keeps a static instance which keeps a Context). This object is actually a reference to PhoneGlobals (which is a ContextWrapper extends Context).",
+      "parentUuid": "b8916ec7_4edcde36",
       "range": {
         "startLine": 74,
         "startChar": 5,
