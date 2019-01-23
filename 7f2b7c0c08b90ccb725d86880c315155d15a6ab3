@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1c93ce2_baf5eace",
+        "filename": "core/java/android/os/AndroidOnTapManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-23T09:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99845060_f0d349d5",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 13
+      },
+      "revId": "7f2b7c0c08b90ccb725d86880c315155d15a6ab3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f7d81a_e54dc7c6",
         "filename": "core/java/android/os/AndroidOnTapManager.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "7f2b7c0c08b90ccb725d86880c315155d15a6ab3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625e1846_6d4af530",
+        "filename": "core/java/android/os/AndroidOnTapManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-01-23T09:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f7d81a_e54dc7c6",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 29
+      },
+      "revId": "7f2b7c0c08b90ccb725d86880c315155d15a6ab3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
