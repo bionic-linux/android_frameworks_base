@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3715c969_41c6990e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-23T03:01:23Z",
+      "side": 1,
+      "message": "I\u0027d probably write this as:\n\nif (a) {\n  if (b) ...\n} else { /* !a */\n  if (!b) ...\n}\n\nbut that\u0027s personal preference.",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 593,
+        "endChar": 10
+      },
+      "revId": "557d2e9452b32e804115d8e2066be4d28d9a862a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
