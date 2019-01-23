@@ -209,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "b089f737_03c57947",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:21:27Z",
+      "side": 1,
+      "message": "Yes it is legal.",
+      "parentUuid": "4079ebee_808fafe1",
+      "range": {
+        "startLine": 157,
+        "startChar": 83,
+        "endLine": 157,
+        "endChar": 98
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cb4ffbe_23bbaf22",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 19
@@ -220,6 +244,30 @@
       "writtenOn": "2019-01-23T02:14:07Z",
       "side": 1,
       "message": "Aren\u0027t empty labels invalid?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "00b15f33abdae776cd0eec4eeee9e5b8b28a40ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a97d22c_1e95ae13",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:21:27Z",
+      "side": 1,
+      "message": "On their own, but a length of 0 signals the end of a string of labels.",
+      "parentUuid": "0cb4ffbe_23bbaf22",
       "range": {
         "startLine": 160,
         "startChar": 0,
