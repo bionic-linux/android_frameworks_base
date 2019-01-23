@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab2004b_2226c756",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-01-23T09:36:35Z",
+      "side": 1,
+      "message": "Boot tested too?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "b0205ef4b5ddf010380071516bd32c5cab8e6794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
