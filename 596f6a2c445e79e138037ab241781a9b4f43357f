@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dcb2377_199cef60",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1876,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-23T01:01:09Z",
+      "side": 1,
+      "message": "Done. Use \"Hearing Aid Profile\"",
+      "parentUuid": "8a532050_8dc36406",
+      "range": {
+        "startLine": 1876,
+        "startChar": 22,
+        "endLine": 1876,
+        "endChar": 50
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cce7f27d_614bd4da",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b6dfdd_8fbd2215",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-23T01:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce7f27d_614bd4da",
+      "range": {
+        "startLine": 1882,
+        "startChar": 35,
+        "endLine": 1882,
+        "endChar": 60
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5815736e_f057c9d8",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2525,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-23T01:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bd68294_40546117",
+      "range": {
+        "startLine": 2523,
+        "startChar": 14,
+        "endLine": 2525,
+        "endChar": 13
+      },
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad85216_0aa5d1ca",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b471ed1c_c2c71ff2",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1152864
+      },
+      "writtenOn": "2019-01-23T01:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad85216_0aa5d1ca",
+      "revId": "596f6a2c445e79e138037ab241781a9b4f43357f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
