@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ab5d049_82132943",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T04:33:02Z",
+      "side": 1,
+      "message": "Which code is responsible for rejecting names that cannot be formatted as UTF-8? Is that guaranteed by the fact that the input is a java String?",
+      "range": {
+        "startLine": 408,
+        "startChar": 7,
+        "endLine": 408,
+        "endChar": 23
+      },
+      "revId": "92ae35ec9f1b771b2607df7196bb1dead4337771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af78ddfa_1a43213e",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-23T04:33:02Z",
+      "side": 1,
+      "message": "Should you release this reason once the method returns? Should this code be using ScopedUTFChars?",
+      "range": {
+        "startLine": 412,
+        "startChar": 9,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "92ae35ec9f1b771b2607df7196bb1dead4337771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
