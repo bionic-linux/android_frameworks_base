@@ -1962,7 +1962,7 @@ public class BugreportProgressService extends Service {
         }
 
         @Override
-        public void onFinished(long durationMs, String title, String description)
+        public void onFinished()
                 throws RemoteException {
             // TODO(b/111441001): implement
         }

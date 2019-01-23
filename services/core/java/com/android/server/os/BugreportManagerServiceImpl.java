@@ -84,6 +84,14 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
                 bugreportFd, screenshotFd, bugreportMode, listener);
     }
 
+    @Override
+    @RequiresPermission(android.Manifest.permission.DUMP)
+    public void cancelBugreport() throws RemoteException {
+        // This tells init to cancel bugreportd service.
+        SystemProperties.set("ctl.start", "bugreportd");
+        mDs = null;
+    }
+
     private boolean validate(@BugreportParams.BugreportMode int mode) {
         if (mode != BugreportParams.BUGREPORT_MODE_FULL
                 && mode != BugreportParams.BUGREPORT_MODE_INTERACTIVE
@@ -107,7 +115,7 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
      */
     private IDumpstate getDumpstateService() {
         // Start bugreport service.
-        SystemProperties.set("ctl.start", "bugreport");
+        SystemProperties.set("ctl.start", "bugreportd");
 
         IDumpstate ds = null;
         boolean timedOut = false;
