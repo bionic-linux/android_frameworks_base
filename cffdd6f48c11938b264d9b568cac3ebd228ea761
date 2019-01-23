@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8501f0f_7ad9e422",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-23T18:47:18Z",
+      "side": 1,
+      "message": "just a question...\n\nDo we need this ? my understanding is that this class will be used by telephony and not by debug apps like connectivity monitor so it can very well be hide@ instead of SystemApi ?",
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
