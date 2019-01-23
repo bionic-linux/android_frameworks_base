@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d576d5_70caa6f9",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-23T10:00:44Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t depend on the app calling cancelBugreport() to have the service shut down. In the worst case, an app could connect to the java service directly (instead of using this class), and start a bugreport but never call cancel(); this would leave the service around forever. Do you agree? One way to fix it could be to have the system_server instantiate its own listener, which can act as an intermediate between dumpstate and the app (ie when it receives a callback from the native service, it calls the same callback on the app listener). That can be a TODO, as I think we can implement it with the current API.",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "c01c1167a507d67c786f227da493bbcb1da95e4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
