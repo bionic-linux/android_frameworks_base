@@ -16,6 +16,24 @@
       "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30c80f7_f54bd69a",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T18:48:50Z",
+      "side": 1,
+      "message": "You need this so that you can access the intent names. Otherwise you\u0027d have to hard-code them. It\u0027s not an API unless both sides can access it. :-)",
+      "parentUuid": "e8501f0f_7ad9e422",
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
