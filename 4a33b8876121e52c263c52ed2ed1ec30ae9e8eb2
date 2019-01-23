@@ -22,6 +22,30 @@
       "revId": "4a33b8876121e52c263c52ed2ed1ec30ae9e8eb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3b8ade_b54c3952",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-01-23T23:02:13Z",
+      "side": 1,
+      "message": "It is non-static in order to let the app developers to define different listeners for different devices if they need.",
+      "parentUuid": "1dd89b97_8062bbcc",
+      "range": {
+        "startLine": 3256,
+        "startChar": 26,
+        "endLine": 3256,
+        "endChar": 42
+      },
+      "revId": "4a33b8876121e52c263c52ed2ed1ec30ae9e8eb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
