@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3737d0bb_b31effe1",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-23T07:18:17Z",
+      "side": 1,
+      "message": "Short answer is : that can\u0027t happen.\n\nUTF-16 can represent any theoretical code point in the union of [0,D7FF, E000,10FFFF] (that is, the entirety of the valid unicode code points, including unassigned code points).\nUTF-8 can represent any theoretical code point in the range [0,7FFFFFFF] (that\u0027s a superset of the valid unicode code points).\n\nIt is possible that a Java string contains a code point in [D800, DFFF], with some limitations. These are defined by the unicode standard as invalid code points. These are defined as illegal in UTF-8 as in UTF-16 but in UTF-8 they are unambiguously representable without limitations.\n\n\nOr said in other words : all binary string with an even number of bytes (which this is guaranteed to be by the fact it\u0027s Java string) code for an int in an image set. Some of these are invalid in Unicode, but they are valid ints. UTF-8 can represent a superset of the image set, though if the string contains any invalid unicode code points, you\u0027ll have a perfectly well formed UTF-8 string containing code points that are defined as invalid. It\u0027s never going to be binary broken.",
+      "parentUuid": "0ab5d049_82132943",
+      "range": {
+        "startLine": 408,
+        "startChar": 7,
+        "endLine": 408,
+        "endChar": 23
+      },
+      "revId": "92ae35ec9f1b771b2607df7196bb1dead4337771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af78ddfa_1a43213e",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 11
