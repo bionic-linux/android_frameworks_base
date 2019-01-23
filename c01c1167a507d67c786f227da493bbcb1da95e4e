@@ -46,6 +46,30 @@
       "revId": "c01c1167a507d67c786f227da493bbcb1da95e4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f033733a_79c499f4",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2019-01-23T10:18:38Z",
+      "side": 1,
+      "message": "Yeah what you describe is the scenario I worried about - you depend on this particular code being executed in the app process to clean up the native process. In general we try to avoid such dependencies. Adding a TODO sgtm.",
+      "parentUuid": "fc3dab9c_5107c790",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "c01c1167a507d67c786f227da493bbcb1da95e4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
