@@ -16,6 +16,24 @@
       "revId": "65dc69d38b991abd0e2e34b2119d1d48dd48f867",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c2a53_ee155a34",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-23T18:40:56Z",
+      "side": 1,
+      "message": "I\u0027ll remove it for now.",
+      "parentUuid": "23861907_c1b0253c",
+      "revId": "65dc69d38b991abd0e2e34b2119d1d48dd48f867",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
