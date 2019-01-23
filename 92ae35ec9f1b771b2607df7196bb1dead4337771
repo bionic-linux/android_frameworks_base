@@ -69,6 +69,30 @@
       "revId": "92ae35ec9f1b771b2607df7196bb1dead4337771",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a0d392_785d8586",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-01-23T08:46:32Z",
+      "side": 1,
+      "message": "If we specify the length, create buffer (like our vector\u003cchar\u003e) and use ReleaseStringUTFChars, we won\u0027t need to call release function.\nIf we use GetStringUTFChars, we must need to call ReleaseStringUTFChars before return.\nScopedUTFChars looks good. \nMaybe at refine CL.",
+      "parentUuid": "af78ddfa_1a43213e",
+      "range": {
+        "startLine": 412,
+        "startChar": 9,
+        "endLine": 412,
+        "endChar": 27
+      },
+      "revId": "92ae35ec9f1b771b2607df7196bb1dead4337771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
