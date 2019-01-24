@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c135a883_0de9e8d8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bcf5dc04_6aecfc6f",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06795c6_21b39c6c",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2019-01-23T16:14:59Z",
       "side": 1,
       "message": "note: It seems a bit weird for this to be an \"ERROR\" code, but I can see why you needed it to be. I\u0027m not sure I have an actual suggestion here, but just wanted to note that it feels strange.",
+      "range": {
+        "startLine": 2522,
+        "startChar": 28,
+        "endLine": 2522,
+        "endChar": 40
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "876be0b1_6ff562cb",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f06795c6_21b39c6c",
       "range": {
         "startLine": 2522,
         "startChar": 28,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "08156a7f_44523c92",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2548,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e58fcf95_94db1e81",
+      "range": {
+        "startLine": 2547,
+        "startChar": 65,
+        "endLine": 2548,
+        "endChar": 25
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac57240a_9684877a",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 7
@@ -79,6 +145,24 @@
       "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77591015_514b032b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2553,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac57240a_9684877a",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +203,48 @@
       "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7e5a2e_64777854",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35719c18_fa7b2ac7",
+      "range": {
+        "startLine": 2555,
+        "startChar": 15,
+        "endLine": 2555,
+        "endChar": 40
+      },
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f2bccd4_13538c62",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T07:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c501b42_02c2428d",
+      "revId": "cba405ceeb9b0357c1b48c4a74eef0bcc62fb8b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
