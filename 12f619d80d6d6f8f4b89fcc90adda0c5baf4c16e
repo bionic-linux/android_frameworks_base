@@ -22,6 +22,29 @@
       "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc634090_edf86e30",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-01-24T19:03:18Z",
+      "side": 1,
+      "message": "btw, @agampe, any idea why threads forked by libhwbinder from hidl_test_java don\u0027t need this attach:\napp_process /data/framework com.android.commands.hidl_test_java.HidlTestJava\n\n(with repro https://android-review.googlesource.com/c/platform/system/tools/hidl/+/870816)\n\n\nHowever, when using a binder service in an app (startService/bindService) which then talks over hwbinder, the threads don\u0027t get attached.",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
