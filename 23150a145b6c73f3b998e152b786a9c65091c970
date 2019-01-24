@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd72c913_d26b5c13",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T09:00:31Z",
+      "side": 1,
+      "message": "I understand this is no worse than what we are doing for CARRIER_CONFIG_CHANGED, but what about we start fixing this while we are at it. The problem with this scheme is the race conditions, and we can work at removing them one at a time.\n\nHere is what I suggest :\n\n(Intent subChangedIntent) -\u003e {\n    log(...);\n    updateConfiguration(subChangedEvent.getInt(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX));\n    reevaluateSimCardProvisioning(...)\n  }\n\nprivate void updateConfiguration() {\n  updateConfiguration(mDeps.getDefaultDataSubscriptionId());\n}\n\nprivate void updateConfiguration(int subId) {\n  ... new TetheringConfiguration(mContext, mLog, subId);\n  ...\n}",
+      "range": {
+        "startLine": 241,
+        "startChar": 24,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f4afd1_dc3bb3e1",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T09:00:31Z",
+      "side": 1,
+      "message": "Is there anything wrong with doing this in setUp and have these settings apply to all tests ?",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 29
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
