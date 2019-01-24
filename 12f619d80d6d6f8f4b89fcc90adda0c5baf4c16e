@@ -92,6 +92,30 @@
       "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a497aa03_12b32789",
+        "filename": "core/jni/include/android_runtime/AndroidRuntime.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-01-24T22:38:06Z",
+      "side": 1,
+      "message": "In general, if we assume there can be Java interactions, should we run the threads in a javaThreadShell proactively, anyways?\n\nFor this function, the docs should warn about the pitfall, at least.",
+      "parentUuid": "8168929c_1be67091",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 71
+      },
+      "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
