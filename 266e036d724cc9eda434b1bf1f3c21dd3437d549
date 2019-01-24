@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57690b70_6977e0c7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-24T19:40:16Z",
+      "side": 1,
+      "message": "doesn\u0027t",
+      "range": {
+        "startLine": 2314,
+        "startChar": 27,
+        "endLine": 2314,
+        "endChar": 32
+      },
+      "revId": "266e036d724cc9eda434b1bf1f3c21dd3437d549",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c844f05_950f0439",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2566,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-24T19:40:16Z",
+      "side": 1,
+      "message": "Is there a strong reason not to distinguish between these two cases in the callback? I *think* we can be ok with the state you have here, but I could see reasons we might want to differentiate in terms of later retries, changing UX in some cases if we know the carrier doesn\u0027t allow tethering, etc. It seems to me like a more flexible interface might be onEntitlementResult(int resultCode).\n\nI\u0027m mostly noting this because I regret the inflexibility of the OnStartTetheringCallback and wish I would have added an error code param in the first place.",
+      "range": {
+        "startLine": 2566,
+        "startChar": 20,
+        "endLine": 2566,
+        "endChar": 48
+      },
+      "revId": "266e036d724cc9eda434b1bf1f3c21dd3437d549",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba04d97_b4ba08a6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-24T19:40:16Z",
+      "side": 1,
+      "message": "Preconditions.checkNotNull(callback, \"EntitlementValueCallback cannot be null.\");",
+      "revId": "266e036d724cc9eda434b1bf1f3c21dd3437d549",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
