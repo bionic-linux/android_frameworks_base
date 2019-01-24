@@ -68,6 +68,30 @@
       "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8168929c_1be67091",
+        "filename": "core/jni/include/android_runtime/AndroidRuntime.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-01-24T21:34:49Z",
+      "side": 1,
+      "message": "Binder threads are alive for the duration of a process. Should we avoid exposing this and just attach the thread in HIDL-specific code then?",
+      "parentUuid": "8f9d63c8_e1178d7c",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 71
+      },
+      "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
