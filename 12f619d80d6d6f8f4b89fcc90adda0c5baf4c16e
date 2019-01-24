@@ -45,6 +45,29 @@
       "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9d63c8_e1178d7c",
+        "filename": "core/jni/include/android_runtime/AndroidRuntime.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-01-24T20:59:21Z",
+      "side": 1,
+      "message": "This is problematic. The javaThreadShell exists because threads must detach before they exit. So this is somewhat unsafe...",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 71
+      },
+      "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
