@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5ed6aad_965eb7ae",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T12:22:14Z",
+      "side": 1,
+      "message": "I don\u0027t think we should get subId from subChangedIntent\u0027s extra.\n1. obtain subId by different way (mDeps.getDefaultDataSubscriptionId() and get from subChangedIntent directly) in different place may increase timing issue risk. Although it is fine in current design, but we should avoid it.\n2. Intent may be delay. Its better to just treat intent broadcast as the trigger point, then query the newest value when we receive the intent.",
+      "parentUuid": "fd72c913_d26b5c13",
+      "range": {
+        "startLine": 241,
+        "startChar": 24,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95f4afd1_dc3bb3e1",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-24T09:00:31Z",
       "side": 1,
       "message": "Is there anything wrong with doing this in setUp and have these settings apply to all tests ?",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 29
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14e579a_6ba4fac0",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-24T12:22:14Z",
+      "side": 1,
+      "message": "By default, it would build non-entitlement needed resource in setup. setUpResourceForSubId() would build entitlement needed resource. I don\u0027t want apply entitlement needed resource as default resource.",
+      "parentUuid": "95f4afd1_dc3bb3e1",
       "range": {
         "startLine": 257,
         "startChar": 8,
