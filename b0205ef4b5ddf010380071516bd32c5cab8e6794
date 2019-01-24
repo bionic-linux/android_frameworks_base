@@ -46,6 +46,30 @@
       "revId": "b0205ef4b5ddf010380071516bd32c5cab8e6794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c8ee9bf_66c2d462",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-01-24T09:07:48Z",
+      "side": 1,
+      "message": "Sorry to nit, but can you add \"\u0026 boots on \u003cdevice\u003e\"",
+      "parentUuid": "51b807f8_a5f0c099",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "b0205ef4b5ddf010380071516bd32c5cab8e6794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
