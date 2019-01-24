@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c2b4515_d0114a8a",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-01-24T21:18:13Z",
+      "side": 1,
+      "message": "use class level constants.",
+      "range": {
+        "startLine": 499,
+        "startChar": 12,
+        "endLine": 499,
+        "endChar": 88
+      },
+      "revId": "928bbac9c55b4155ebe0aaf4517a1e3f5b7d55e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
