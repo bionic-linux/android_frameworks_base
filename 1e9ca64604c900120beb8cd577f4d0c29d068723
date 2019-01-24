@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4f6a60_a29b871c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2313,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "As Jeremy requested, can you add here that this can be null and that means there is no current upstream ?",
+      "range": {
+        "startLine": 2313,
+        "startChar": 12,
+        "endLine": 2313,
+        "endChar": 68
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f107561_0aea13d7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "Additionally, @Nullable.",
+      "range": {
+        "startLine": 2315,
+        "startChar": 38,
+        "endLine": 2315,
+        "endChar": 45
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f49838c_85f569c6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "Nit : This would probable be better expressed with a switch() statement.\n\nJust a nit, you don\u0027t have to address in this patch.",
+      "range": {
+        "startLine": 2359,
+        "startChar": 16,
+        "endLine": 2359,
+        "endChar": 58
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d785ad29_b71062b6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2526,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "I suppose this is for an extra right ? Then maybe TEHER_EXTRA_NEW_UPSTREAM, as this extra will contain the new upstream itself.",
+      "range": {
+        "startLine": 2526,
+        "startChar": 31,
+        "endLine": 2526,
+        "endChar": 54
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80da576_6b0ab575",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2550,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "entitlement",
+      "range": {
+        "startLine": 2550,
+        "startChar": 7,
+        "endLine": 2550,
+        "endChar": 17
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17f96d3_7ac0962c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "I think \"when the entitlement check succeeded.\" is enough.\n\nIt\u0027s also possible the last value was false and the showEntitlementUi was false, in this case the check is not run but this is not called.",
+      "range": {
+        "startLine": 2556,
+        "startChar": 23,
+        "endLine": 2556,
+        "endChar": 77
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40825f94_e8627a08",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "value",
+      "range": {
+        "startLine": 2567,
+        "startChar": 60,
+        "endLine": 2567,
+        "endChar": 64
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101f9f8b_0d6a7112",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "to run",
+      "range": {
+        "startLine": 2569,
+        "startChar": 57,
+        "endLine": 2569,
+        "endChar": 60
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87762a8e_3141c4a2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2574,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "to run",
+      "range": {
+        "startLine": 2574,
+        "startChar": 61,
+        "endLine": 2574,
+        "endChar": 64
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae408344_af4be4c2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "Is it difficult to pass the network here ? I\u0027m thinking of a complex case where you have DSDS and we are trying to find an upstream and run both entitlement checks.\n\nIf this should cause any difficulty please don\u0027t address. We can address this in the future if it becomes problematic by adding a callback and having the default call the old value.",
+      "range": {
+        "startLine": 2586,
+        "startChar": 29,
+        "endLine": 2586,
+        "endChar": 51
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24affcb3_582d1d29",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3585,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "built-in",
+      "range": {
+        "startLine": 3585,
+        "startChar": 23,
+        "endLine": 3585,
+        "endChar": 28
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788d8207_b9ea3ed6",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T08:07:09Z",
+      "side": 1,
+      "message": "Maybe // TODO : implement this method ?",
+      "range": {
+        "startLine": 1668,
+        "startChar": 8,
+        "endLine": 1668,
+        "endChar": 31
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
