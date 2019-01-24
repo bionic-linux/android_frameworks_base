@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf60057_f8bbe71c",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3264,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2019-01-24T20:05:04Z",
+      "side": 1,
+      "message": "this is not needed because the loop below will find the mode handler at the top of the stack if the current mode is IN_CALL.",
+      "range": {
+        "startLine": 3260,
+        "startChar": 12,
+        "endLine": 3264,
+        "endChar": 13
+      },
+      "revId": "d0d35bb27edf1ae5aa4e5ad8e62e132a30b3ac05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
