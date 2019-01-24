@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bee46fb_0d5f1d38",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-01-24T18:59:32Z",
+      "side": 1,
+      "message": "hmmm, any thoughts on exposing this as well for parity? I\u0027m thinking YAGNI.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 11,
+        "endLine": 1205,
+        "endChar": 27
+      },
+      "revId": "12f619d80d6d6f8f4b89fcc90adda0c5baf4c16e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
