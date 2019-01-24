@@ -424,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "7bc0c9ea_10691058",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-24T09:03:51Z",
+      "side": 1,
+      "message": "I see. Let\u0027s proceed without this then, thanks.",
+      "parentUuid": "909a698c_15e95c85",
+      "range": {
+        "startLine": 2586,
+        "startChar": 29,
+        "endLine": 2586,
+        "endChar": 51
+      },
+      "revId": "1e9ca64604c900120beb8cd577f4d0c29d068723",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24affcb3_582d1d29",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 9
