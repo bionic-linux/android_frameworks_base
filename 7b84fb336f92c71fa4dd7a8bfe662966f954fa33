@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f735b13_1d50a24b",
+        "filename": "core/java/android/net/metrics/ValidationProbeEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-01-25T06:32:54Z",
+      "side": 1,
+      "message": "ValidationProbeEvent?",
+      "range": {
+        "startLine": 82,
+        "startChar": 47,
+        "endLine": 82,
+        "endChar": 62
+      },
+      "revId": "7b84fb336f92c71fa4dd7a8bfe662966f954fa33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
