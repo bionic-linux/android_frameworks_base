@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1425b795_a660be3a",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-25T05:42:13Z",
+      "side": 1,
+      "message": "Fair enough. Thanks.",
+      "parentUuid": "dd951f31_017efb59",
+      "range": {
+        "startLine": 241,
+        "startChar": 24,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f4afd1_dc3bb3e1",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
         "patchSetId": 2
