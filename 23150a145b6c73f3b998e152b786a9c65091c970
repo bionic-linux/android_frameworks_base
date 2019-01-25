@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dd951f31_017efb59",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-25T04:11:30Z",
+      "side": 1,
+      "message": "Thank you raise up the potential problem here. I prefer to keep my original design according to below reasons.\n1. I want to keep consistent way that get subId via mDeps.getDefaultDataSubscriptionId()\n2. In telephony part, they also just threat subChangeIntent as trigger point which don\u0027t get subId via intent\u0027s extra. PhoeSwitcher.java is a example.\nThey receive intent in here first.\nhttps://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneSwitcher.java?q\u003dphoneswitcher.java\u0026dr\u0026l\u003d262\nThen, query subId instead of using extra value directly.\nhttps://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneSwitcher.java?q\u003dphoneswitcher.java\u0026dr\u0026l\u003d394\n\nThe timing gap between b and c is what I want to avoid:\na, someone trigger updateConfiguration e.g. ACTION_CARRIER_CONFIG_CHANGED. mDeps.getDefaultDataSubscriptionId() return subId2\nb, tethering receive subId change intent with old value(sbuId1) due to intent delay\nc, tethering receive subId change intent again with subId2",
+      "parentUuid": "0860bfc7_8937b752",
+      "range": {
+        "startLine": 241,
+        "startChar": 24,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f4afd1_dc3bb3e1",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
         "patchSetId": 2
