@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015ba185_879d978f",
+        "filename": "services/core/java/com/android/server/location/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060529
+      },
+      "writtenOn": "2019-01-25T20:10:53Z",
+      "side": 1,
+      "message": "nit: sort alphabetically.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "f211a56be36058542d0c77d9f3790ef1d938db83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
