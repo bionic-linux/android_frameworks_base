@@ -275,7 +275,12 @@ public class RouterAdvertisementDaemon {
 
     public void stop() {
         closeSocket();
-        mMulticastTransmitter = null;
+        if (mMulticastTransmitter != null) {
+            // Wake up mMulticastTransmitter thread to interrupt a potential 1 day sleep before
+            // the thread's termination.
+            mMulticastTransmitter.hup();
+            mMulticastTransmitter = null;
+        }
         mUnicastResponder = null;
     }
 
