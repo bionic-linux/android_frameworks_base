@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0860bfc7_8937b752",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-25T01:35:24Z",
+      "side": 1,
+      "message": "I see. I\u0027ll defer to your judgement on this, but let me just put out there that this is a typical anti-pattern. You can\u0027t prove there is no race condition where you\u0027re getting an old value out of the synchronous call.\n\nThe reason for this is that it is typically impossible for the sender of the intent to make sure you\u0027ll get an up-to-date value. Under this scheme, it\u0027s guaranteed impossible that you won\u0027t get a future value from the synchronous method (which is sometimes wasteful but fine for your uses), but it\u0027s typically also very difficult for the sender to guarantee you will never get an *old* value (because it requires correct locking, which is a notoriously hard problem). I don\u0027t know if telephony has this right in this case, but even if it does it\u0027s at least risky for the future. By contrast, reading values from the intents (or callbacks) is guaranteed to be ordered no matter how late, which at least lets you write correct implementations.\n\nBut with that said, I\u0027ll leave the decision up to you.",
+      "parentUuid": "c5ed6aad_965eb7ae",
+      "range": {
+        "startLine": 241,
+        "startChar": 24,
+        "endLine": 241,
+        "endChar": 31
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f4afd1_dc3bb3e1",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfd2e2e_a755b91f",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-25T01:35:24Z",
+      "side": 1,
+      "message": "Point taken. Thanks.",
+      "parentUuid": "d14e579a_6ba4fac0",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 29
+      },
+      "revId": "23150a145b6c73f3b998e152b786a9c65091c970",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
