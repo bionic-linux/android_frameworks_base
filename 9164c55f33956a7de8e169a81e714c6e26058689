@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd985da_e6b7f65f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2631,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-26T00:26:53Z",
+      "side": 1,
+      "message": "I just realized that if you\u0027re going to expose these through this callback, the constants should also be @SystemApi. Alternatively, you could have new @SystemApi constants specifically for this use case, but I\u0027m ok with either.",
+      "range": {
+        "startLine": 2629,
+        "startChar": 19,
+        "endLine": 2631,
+        "endChar": 61
+      },
+      "revId": "9164c55f33956a7de8e169a81e714c6e26058689",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
