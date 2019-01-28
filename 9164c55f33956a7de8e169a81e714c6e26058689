@@ -22,6 +22,30 @@
       "revId": "9164c55f33956a7de8e169a81e714c6e26058689",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617ec815_8041f8ad",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2631,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-28T02:39:15Z",
+      "side": 1,
+      "message": "Ack, thanks noticing. I prefer add @SystemAPi to these exiting constants. Some of these constants already be exposed to Settings which used to callback entitlement result to tethering.",
+      "parentUuid": "afd985da_e6b7f65f",
+      "range": {
+        "startLine": 2629,
+        "startChar": 19,
+        "endLine": 2631,
+        "endChar": 61
+      },
+      "revId": "9164c55f33956a7de8e169a81e714c6e26058689",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
