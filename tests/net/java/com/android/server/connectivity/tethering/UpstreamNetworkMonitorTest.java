@@ -699,6 +699,17 @@ public class UpstreamNetworkMonitorTest {
             assertFalse(listening.containsKey(cb));
             assertFalse(requested.containsKey(cb));
         }
+
+        @Override
+        public NetworkInfo getNetworkInfo(Network network) {
+            /**
+             * To make sure @findFirstAvailableUpstreamByType() can find connected network.
+             */
+            NetworkInfo ni = new NetworkInfo(ConnectivityManager.TYPE_MOBILE,
+                    ConnectivityManager.TYPE_MOBILE_DUN, "MOBILE", "TEST");
+            ni.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
+            return ni;
+        }
     }
 
     public static class TestNetworkAgent {
