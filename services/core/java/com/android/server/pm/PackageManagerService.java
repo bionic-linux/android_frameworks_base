@@ -10358,6 +10358,16 @@ public class PackageManagerService extends IPackageManager.Stub
             }
         } else {
             try {
+                if((scanFlags & SCAN_AS_SYSTEM) == 0 && signatureCheckPs.sharedUser != null &&
+                    (signatureCheckPs.sharedUser.pkgFlags & ApplicationInfo.FLAG_SYSTEM) != 0 &&
+                    compareSignatures(
+                        signatureCheckPs.sharedUser.signatures.mSigningDetails.signatures,
+                        pkg.mSigningDetails.signatures) != PackageManager.SIGNATURE_MATCH) {
+                    throw new PackageManagerException(INSTALL_FAILED_SHARED_USER_INCOMPATIBLE,
+                        "Not Allow Package in Data " + pkg.packageName
+                        + " share same uid with system sharedUserId "
+                        + signatureCheckPs.sharedUser.name + " unless signature matching exactly");
+                }
                 final boolean compareCompat = isCompatSignatureUpdateNeeded(pkg);
                 final boolean compareRecover = isRecoverSignatureUpdateNeeded(pkg);
                 final boolean compatMatch = verifySignatures(signatureCheckPs, disabledPkgSetting,
@@ -10998,7 +11008,8 @@ public class PackageManagerService extends IPackageManager.Stub
         if (PLATFORM_PACKAGE_NAME.equals(pkg.packageName) ||
                 (platformPkg != null && compareSignatures(
                         platformPkg.mSigningDetails.signatures,
-                        pkg.mSigningDetails.signatures) == PackageManager.SIGNATURE_MATCH)) {
+                        pkg.mSigningDetails.signatures) == PackageManager.SIGNATURE_MATCH) ||
+                (platformPkg != null && pkg.mSigningDetails.hasAncestor(platformPkg.mSigningDetails))) {
             pkg.applicationInfo.privateFlags |=
                 ApplicationInfo.PRIVATE_FLAG_SIGNED_WITH_PLATFORM_KEY;
         }
