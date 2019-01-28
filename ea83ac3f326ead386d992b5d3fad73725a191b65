@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddbe3d62_ffc8d6f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-28T21:24:00Z",
+      "side": 1,
+      "message": "nit: OnTetheringUpstreamChangedListener",
+      "range": {
+        "startLine": 2603,
+        "startChar": 33,
+        "endLine": 2603,
+        "endChar": 60
+      },
+      "revId": "ea83ac3f326ead386d992b5d3fad73725a191b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4e89fd_10fd4eff",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-28T21:24:00Z",
+      "side": 1,
+      "message": "nit: It seems a bit strange that it\u0027s add/remove here, but register/unregister on the listener interface. It should probably be add/remove in both places to follow the api guidelines.",
+      "range": {
+        "startLine": 2629,
+        "startChar": 16,
+        "endLine": 2629,
+        "endChar": 19
+      },
+      "revId": "ea83ac3f326ead386d992b5d3fad73725a191b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b929f0_e5f31932",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1080048
+      },
+      "writtenOn": "2019-01-28T21:24:00Z",
+      "side": 1,
+      "message": "Should this also take a Handler or @CallbackExecuter to determine the thread on which to run the listener?",
+      "revId": "ea83ac3f326ead386d992b5d3fad73725a191b65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
