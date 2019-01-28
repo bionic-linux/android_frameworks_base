@@ -35,6 +35,8 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.util.NetworkConstants;
@@ -210,7 +212,7 @@ public class UpstreamNetworkMonitor {
     // Next TODO: return NetworkState instead of just the type.
     public NetworkState selectPreferredUpstreamType(Iterable<Integer> preferredTypes) {
         final TypeStatePair typeStatePair = findFirstAvailableUpstreamByType(
-                mNetworkMap.values(), preferredTypes);
+                mNetworkMap.values(), preferredTypes, cm());
 
         mLog.log("preferred upstream type: " + getNetworkTypeName(typeStatePair.type));
 
@@ -454,7 +456,8 @@ public class UpstreamNetworkMonitor {
     }
 
     private static TypeStatePair findFirstAvailableUpstreamByType(
-            Iterable<NetworkState> netStates, Iterable<Integer> preferredTypes) {
+            Iterable<NetworkState> netStates, Iterable<Integer> preferredTypes,
+            ConnectivityManager cm) {
         final TypeStatePair result = new TypeStatePair();
 
         for (int type : preferredTypes) {
@@ -470,6 +473,16 @@ public class UpstreamNetworkMonitor {
 
             for (NetworkState value : netStates) {
                 if (!nc.satisfiedByNetworkCapabilities(value.networkCapabilities)) {
+                    continue;
+                }
+
+                // CONNECTIVITY_CHANGE broadcast may arrive before NetworkCallback.onLost().
+                NetworkInfo ni = cm.getNetworkInfo(value.network);
+                DetailedState ds = (ni == null) ? null : ni.getDetailedState();
+                if (ds == null || ds != DetailedState.CONNECTED) {
+                    Log.w(TAG, "Network " + value.network + " is invalid in state " + ds);
+                    // Just ignore it since it will be cleaned up later in
+                    // UpstreamNetworkCallback().
                     continue;
                 }
 
