@@ -427,15 +427,24 @@ public class Tethering extends BaseNetworkObserver {
         final long ident = Binder.clearCallingIdentity();
         try {
             synchronized (mPublicSync) {
-                mWifiTetherRequested = enable;
                 final WifiManager mgr = getWifiManager();
+                if (mgr == null) {
+                    mLog.e("setWifiTethering: failed to get WifiManager!");
+                    return TETHER_ERROR_SERVICE_UNAVAIL;
+                }
                 if ((enable && mgr.startSoftAp(null /* use existing wifi config */)) ||
                     (!enable && mgr.stopSoftAp())) {
-                    rval = TETHER_ERROR_NO_ERROR;
+                    mWifiTetherRequested = enable;
+                    return TETHER_ERROR_NO_ERROR;
                 }
+                return TETHER_ERROR_MASTER_ERRROR;
             }
         } finally {
             Binder.restoreCallingIdentity(ident);
+        }
+
+        if (rval != TETHER_ERROR_NO_ERROR) {
+            mWifiTetherRequested = false;
         }
         return rval;
     }
@@ -989,6 +998,11 @@ public class Tethering extends BaseNetworkObserver {
     public int setUsbTethering(boolean enable) {
         if (VDBG) Log.d(TAG, "setUsbTethering(" + enable + ")");
         UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+        if (usbManager == null) {
+            mLog.e("setUsbTethering: failed to get UsbManager!");
+            return TETHER_ERROR_SERVICE_UNAVAIL;
+        }
+
         synchronized (mPublicSync) {
             usbManager.setCurrentFunctions(enable ? UsbManager.FUNCTION_RNDIS
                     : UsbManager.FUNCTION_NONE);
