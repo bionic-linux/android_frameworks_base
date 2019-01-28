@@ -31,6 +31,8 @@ import android.net.IpPrefix;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.util.PrefixUtils;
@@ -491,7 +493,7 @@ public class UpstreamNetworkMonitor {
         public NetworkState ns = null;
     }
 
-    private static TypeStatePair findFirstAvailableUpstreamByType(
+    private TypeStatePair findFirstAvailableUpstreamByType(
             Iterable<NetworkState> netStates, Iterable<Integer> preferredTypes,
             boolean isCellularUpstreamPermitted) {
         final TypeStatePair result = new TypeStatePair();
@@ -513,6 +515,16 @@ public class UpstreamNetworkMonitor {
 
             for (NetworkState value : netStates) {
                 if (!nc.satisfiedByNetworkCapabilities(value.networkCapabilities)) {
+                    continue;
+                }
+
+                // CONNECTIVITY_CHANGE broadcast may arrive before NetworkCallback.onLost().
+                NetworkInfo ni = cm().getNetworkInfo(value.network);
+                DetailedState ds = (ni == null) ? null : ni.getDetailedState();
+                if (ds == null || ds != DetailedState.CONNECTED) {
+                    Log.w(TAG, "Network " + value.network + " is invalid in state " + ds);
+                    // Just ignore it since it will be cleaned up later in
+                    // UpstreamNetworkCallback().
                     continue;
                 }
 
