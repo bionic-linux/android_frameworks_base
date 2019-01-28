@@ -146,6 +146,10 @@ public class SystemConfig {
     // Package names that are exempted from private API blacklisting
     final ArraySet<String> mHiddenApiPackageWhitelist = new ArraySet<>();
 
+    // Package names targetting < P that get HIDL core Java libraries
+    // (android.hidl.base-V1.0-java and android.hidl.manager-V1.0-java).
+    final ArraySet<String> mLegacyHidlApiApps = new ArraySet<>();
+
     // The list of carrier applications which should be disabled until used.
     // This function suppresses update notifications for these pre-installed apps.
     // In SubscriptionInfoUpdater, the listed applications are disabled until used when all of the
@@ -238,6 +242,10 @@ public class SystemConfig {
 
     public ArraySet<String> getHiddenApiWhitelistedApps() {
         return mHiddenApiPackageWhitelist;
+    }
+
+    public ArraySet<String> getLegacyHidlApiApps() {
+        return mLegacyHidlApiApps;
     }
 
     public ArraySet<ComponentName> getDefaultVrComponents() {
@@ -663,6 +671,14 @@ public class SystemConfig {
                         associatedPkgs.add(pkgname);
                     }
                     XmlUtils.skipCurrentTag(parser);
+                } else if ("legacy-hidl-api-app".equals(name) && allowLibs) {
+                    String pkgname = parser.getAttributeValue(null, "package");
+                    if (pkgname == null) {
+                        Slog.w(TAG, "<" + name + "> without package in "
+                                + permFile + " at " + parser.getPositionDescription());
+                    } else {
+                        mLegacyHidlApiApps.add(pkgname);
+                    }
                 } else if ("disabled-until-used-preinstalled-carrier-app".equals(name)
                         && allowAppConfigs) {
                     String pkgname = parser.getAttributeValue(null, "package");

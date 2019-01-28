@@ -20,8 +20,10 @@ import static android.content.pm.SharedLibraryNames.ANDROID_HIDL_MANAGER;
 
 import android.content.pm.PackageParser.Package;
 import android.os.Build;
+import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.server.SystemConfig;
 
 /**
  * Updates a package to ensure that if it targets <= P that the android.hidl.base-V1.0-java
@@ -34,11 +36,15 @@ public class AndroidHidlUpdater extends PackageSharedLibraryUpdater {
 
     @Override
     public void updatePackage(Package pkg) {
+        ArraySet<String> whitelist = SystemConfig.getInstance().getLegacyHidlApiApps();
+        boolean inWhitelist = whitelist.isEmpty() || whitelist.contains(pkg.packageName);
+
         // This was the default <= P and is maintained for backwards compatibility.
-        if (pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P) {
+        if (inWhitelist && pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P) {
             prefixRequiredLibrary(pkg, ANDROID_HIDL_BASE);
             prefixRequiredLibrary(pkg, ANDROID_HIDL_MANAGER);
         } else {
+            // In case the app manually requests it (e.g. using old build system)
             removeLibrary(pkg, ANDROID_HIDL_BASE);
             removeLibrary(pkg, ANDROID_HIDL_MANAGER);
         }
