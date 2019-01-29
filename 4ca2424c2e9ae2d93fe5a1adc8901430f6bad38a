@@ -675,6 +675,30 @@
     },
     {
       "key": {
+        "uuid": "5623691e_48d5a7d9",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-29T07:54:26Z",
+      "side": 1,
+      "message": "yes. 3 is fine.  And yes consistency totally matters and often trumps all other considerations.\n\nbtw. \u0027maintain mode\u0027 isn\u0027t English (unless you mean maintain the verb, as in to maintain a mode).",
+      "parentUuid": "fdb7e5e7_5a782d4a",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "229f500d_3283bf20",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 14
