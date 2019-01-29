@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "8076eb4e_7c463c8e",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-29T07:27:21Z",
+      "side": 1,
+      "message": "These 2 are defined in KA02, should not be redefined here.\nFor naming, I\u0027ll vote for current style.\nBut no strong opinion.\n+jchalard@ for input.",
+      "parentUuid": "adaeaa34_25c7333e",
+      "range": {
+        "startLine": 46,
+        "startChar": 50,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba741a54_dcb9d783",
         "filename": "core/java/android/net/TcpKeepalivePacketData.java",
         "patchSetId": 14
