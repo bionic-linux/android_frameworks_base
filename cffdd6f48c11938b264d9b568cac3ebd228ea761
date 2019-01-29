@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "79f9e4cb_3b44e869",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-29T03:12:25Z",
+      "side": 1,
+      "message": "DebugEventReporter?",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd293a1e_e42b3c88",
         "filename": "telephony/java/android/telephony/TelephonyDebug.java",
         "patchSetId": 7
@@ -77,6 +100,52 @@
         "startChar": 2,
         "endLine": 63,
         "endChar": 89
+      },
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b7ded8_2e46d543",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-29T03:12:25Z",
+      "side": 1,
+      "message": "shorter?",
+      "range": {
+        "startLine": 68,
+        "startChar": 82,
+        "endLine": 68,
+        "endChar": 84
+      },
+      "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae0d5bb_e6ab0882",
+        "filename": "telephony/java/android/telephony/TelephonyDebug.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-29T03:12:25Z",
+      "side": 1,
+      "message": "Add text to explain that this should be static PII-free text.",
+      "range": {
+        "startLine": 69,
+        "startChar": 71,
+        "endLine": 69,
+        "endChar": 76
       },
       "revId": "cffdd6f48c11938b264d9b568cac3ebd228ea761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
