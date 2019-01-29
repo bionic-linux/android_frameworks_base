@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e594dedf_36295bbe",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-29T07:28:59Z",
+      "side": 1,
+      "message": "Per in-person: this is changing the ordering of events - previously, NetlinkTracker would just run the callback and send the message inline, but now we take a trip round the handler loop before we send the message.\n\nI don\u0027t know if that could break anything, but to be safe it\u0027s probably worth changing NetworkObserverRegistry so that clients can pass in a null Handler, and if they do, run their callbacks inline.\n\nObviously this allows callers to block the incoming binder threads, which is risky. We could perhaps ensure that only callers that are StateMachines can do this, by having an overload of registerObserver that takes a StateMachine; you\u0027d accept a null handler iff that overload was used.\n\nThat probably shouldn\u0027t block this change though.",
+      "range": {
+        "startLine": 418,
+        "startChar": 16,
+        "endLine": 418,
+        "endChar": 74
+      },
+      "revId": "31d7447e04100f91dc28aed40e3eecb40464233a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
