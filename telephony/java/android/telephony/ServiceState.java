@@ -540,7 +540,6 @@ public class ServiceState implements Parcelable {
      *
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public int getDataRegState() {
         return mDataRegState;
     }
