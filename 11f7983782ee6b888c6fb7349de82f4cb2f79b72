@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1139ad_9e999d00",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "I think this is a generally much cleaner and sustainable approach than what we have. And therefore I think we should enrich this in the future, with stuff like onDownstreamStarted and the like. Of course this would be for the future, R and beyond.\n\nWhich would mean this would get more methods in the future, so I think this should probably be called OnTetheringEventCallback or something :)",
+      "range": {
+        "startLine": 2605,
+        "startChar": 33,
+        "endLine": 2605,
+        "endChar": 67
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71edd3a9_2c23bce3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the braces because it\u0027s a single statement.\n\nhandler.post(() -\u003e listener.onUpstreamChanged(network));",
+      "range": {
+        "startLine": 2639,
+        "startChar": 39,
+        "endLine": 2639,
+        "endChar": 40
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71068a3_8694221d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "the cached",
+      "range": {
+        "startLine": 2700,
+        "startChar": 74,
+        "endLine": 2700,
+        "endChar": 79
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca12718_ed6a7287",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2701,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "the cached",
+      "range": {
+        "startLine": 2701,
+        "startChar": 93,
+        "endLine": 2701,
+        "endChar": 98
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195ab777_ff1b2123",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "\"a UI\" (it\u0027s an exception in English for \"a\" before the sound \"yu\")",
+      "range": {
+        "startLine": 2702,
+        "startChar": 25,
+        "endLine": 2702,
+        "endChar": 30
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d50538_5c58d2d1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 2702,
+        "startChar": 55,
+        "endLine": 2702,
+        "endChar": 60
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb388837_4aed9f61",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "Let\u0027s describe this as :\n\nOtherwise, an entitlement check will be performed, with the showEntitlementUi boolean dictating whether to use a silent or UI-based check.",
+      "range": {
+        "startLine": 2702,
+        "startChar": 14,
+        "endLine": 2702,
+        "endChar": 54
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883a1046_cdba031b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T06:01:02Z",
+      "side": 1,
+      "message": "I think you can remove \"UI-based\", because while this is true, it\u0027s also not guaranteed that the silent check will complete in any specific time period.",
+      "range": {
+        "startLine": 2703,
+        "startChar": 15,
+        "endLine": 2703,
+        "endChar": 24
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
