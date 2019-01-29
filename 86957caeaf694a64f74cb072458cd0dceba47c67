@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4630b934_9dba39c1",
+        "filename": "core/java/android/content/pm/AndroidHidlUpdater.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-01-29T09:39:11Z",
+      "side": 1,
+      "message": "That\u0027s in case the app requests it right? Can you add a comment?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 53
+      },
+      "revId": "86957caeaf694a64f74cb072458cd0dceba47c67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
