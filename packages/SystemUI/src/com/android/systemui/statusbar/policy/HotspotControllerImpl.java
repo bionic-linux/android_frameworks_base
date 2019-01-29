@@ -89,7 +89,9 @@ public class HotspotControllerImpl implements HotspotController, WifiManager.Sof
             if (DEBUG) Log.d(TAG, "addCallback " + callback);
             mCallbacks.add(callback);
 
-            updateWifiStateListeners(!mCallbacks.isEmpty());
+            if (mCallbacks.size() == 1) {
+                updateWifiStateListeners(true);
+            }
         }
     }
 
@@ -100,7 +102,9 @@ public class HotspotControllerImpl implements HotspotController, WifiManager.Sof
         synchronized (mCallbacks) {
             mCallbacks.remove(callback);
 
-            updateWifiStateListeners(!mCallbacks.isEmpty());
+            if (mCallbacks.size() == 0) {
+                updateWifiStateListeners(false);
+            }
         }
     }
 
