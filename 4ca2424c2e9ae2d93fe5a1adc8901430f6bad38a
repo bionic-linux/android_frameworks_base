@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3741057e_56472583",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-01-29T08:35:13Z",
+      "side": 1,
+      "message": "That\u0027s a very good question.\nProbably someone on netdev was having a particularly good day.\n\nThe only use case for TCP_REPAIR I\u0027m aware of (till now) is for mitrating socket state from one network namespace (container/vm/machine) to another to implement task migration.\n\nIt\u0027s basically meant to allow you save/restore tcp state, but yeah \u0027repair\u0027 isn\u0027t a terribly good name.",
+      "parentUuid": "1a5a3418_f362205c",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ac8ece7_2017bd20",
         "filename": "/COMMIT_MSG",
         "patchSetId": 14
