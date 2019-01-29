@@ -250,6 +250,7 @@ bool Reader::readLine(std::string* line) {
 
     char* buf = NULL;
     size_t len = 0;
+    errno = 0;
     ssize_t read = getline(&buf, &len, mFile);
     if (read != -1) {
         std::string s(buf);
