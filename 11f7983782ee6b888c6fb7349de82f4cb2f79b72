@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "56885bf6_eb592345",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Ack, thanks your suggestion.",
+      "parentUuid": "71edd3a9_2c23bce3",
+      "range": {
+        "startLine": 2639,
+        "startChar": 39,
+        "endLine": 2639,
+        "endChar": 40
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71068a3_8694221d",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 17
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "66c2da94_955107e2",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d71068a3_8694221d",
+      "range": {
+        "startLine": 2700,
+        "startChar": 74,
+        "endLine": 2700,
+        "endChar": 79
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca12718_ed6a7287",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 17
@@ -91,6 +139,30 @@
       "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46b0b64_f0df8550",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2701,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4ca12718_ed6a7287",
+      "range": {
+        "startLine": 2701,
+        "startChar": 93,
+        "endLine": 2701,
+        "endChar": 98
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +235,78 @@
     },
     {
       "key": {
+        "uuid": "e4727fa0_e68d1964",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32d50538_5c58d2d1",
+      "range": {
+        "startLine": 2702,
+        "startChar": 55,
+        "endLine": 2702,
+        "endChar": 60
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "290a15fc_a8d00417",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "195ab777_ff1b2123",
+      "range": {
+        "startLine": 2702,
+        "startChar": 25,
+        "endLine": 2702,
+        "endChar": 30
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00ad013f_d0da68a8",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "Should we run silent check ?? In current design, it would just return cached value if showEntitlementUi is false.",
+      "parentUuid": "cb388837_4aed9f61",
+      "range": {
+        "startLine": 2702,
+        "startChar": 14,
+        "endLine": 2702,
+        "endChar": 54
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "883a1046_cdba031b",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 17
@@ -174,6 +318,30 @@
       "writtenOn": "2019-01-29T06:01:02Z",
       "side": 1,
       "message": "I think you can remove \"UI-based\", because while this is true, it\u0027s also not guaranteed that the silent check will complete in any specific time period.",
+      "range": {
+        "startLine": 2703,
+        "startChar": 15,
+        "endLine": 2703,
+        "endChar": 24
+      },
+      "revId": "11f7983782ee6b888c6fb7349de82f4cb2f79b72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e57014_0adca0b5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-29T06:50:35Z",
+      "side": 1,
+      "message": "This API would not perform silent provisioning, this is why I emphasize UI-base.",
+      "parentUuid": "883a1046_cdba031b",
       "range": {
         "startLine": 2703,
         "startChar": 15,
