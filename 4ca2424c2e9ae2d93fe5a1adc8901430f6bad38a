@@ -907,6 +907,30 @@
     },
     {
       "key": {
+        "uuid": "e7a7657f_c05db3fc",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T12:51:55Z",
+      "side": 1,
+      "message": "It\u0027s been moved again in place where you can use it :\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/888853\n\nJust call it android.net.shared.FdEventsReader.",
+      "parentUuid": "2bd2850b_37c205be",
+      "range": {
+        "startLine": 27,
+        "startChar": 24,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30adc276_8035f0eb",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 14
@@ -1705,6 +1729,29 @@
     },
     {
       "key": {
+        "uuid": "f61d6b19_9545978c",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T12:51:55Z",
+      "side": 1,
+      "message": "Final for these three members. Also private or protected according to their use",
+      "range": {
+        "startLine": 254,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 22
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dac32cf_20ce4d8b",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 14
@@ -1721,6 +1768,29 @@
         "startChar": 35,
         "endLine": 279,
         "endChar": 41
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ade0cc_efe8f0a9",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-29T12:51:55Z",
+      "side": 1,
+      "message": "A very soon incoming patch to FdEventsReader will require the socket is non-blocking\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/888854/6/core/java/android/net/shared/FdEventsReader.java#143\n\nIn principle you could do this here with\nIoUtils.setBlocking(mFd, false);\nYou can also call it somewhere else.\n\nHowever IIUC, this must be done after switching the socket to repair mode so that it\u0027s correctly restored after offload is turned off. Concretely createFd is called by FdEventsReader upon calling start(). I\u0027m not sure how you envision the timing of calling switchToMaintainMode with respect to this.\nSo you could have this set to nonblocking immediately before calling start, or immediately after calling switchToMaintainMode, or have it here, but I think have it here is simplest.\nBut what you can\u0027t get out of is : you must call start() only after calling switchToMaintainMode.\n\nAt least if I\u0027m understanding this correctly. Maybe Maze knows more.",
+      "range": {
+        "startLine": 292,
+        "startChar": 22,
+        "endLine": 292,
+        "endChar": 23
       },
       "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
