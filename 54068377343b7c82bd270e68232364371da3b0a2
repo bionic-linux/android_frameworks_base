@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5439a4_91f15176",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-01-30T19:32:26Z",
+      "side": 1,
+      "message": "We usually call initialize before the device unlocks... If this doesn\u0027t return non-boot-aware broadcastreceivers as well, then the query will return empty.",
+      "range": {
+        "startLine": 117,
+        "startChar": 80,
+        "endLine": 117,
+        "endChar": 97
+      },
+      "revId": "54068377343b7c82bd270e68232364371da3b0a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
