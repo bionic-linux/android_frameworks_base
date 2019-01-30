@@ -6011,7 +6011,7 @@ package android.telephony {
   public abstract class NetworkService.NetworkServiceProvider implements java.lang.AutoCloseable {
     ctor public NetworkService.NetworkServiceProvider(int);
     method public abstract void close();
-    method public void getNetworkRegistrationState(int, android.telephony.NetworkServiceCallback);
+    method public void getNetworkRegistrationState(int, @NonNull android.telephony.NetworkServiceCallback);
     method public final int getSlotId();
     method public final void notifyNetworkRegistrationStateChanged();
   }
