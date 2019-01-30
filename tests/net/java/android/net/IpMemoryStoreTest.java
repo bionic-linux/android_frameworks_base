@@ -32,13 +32,13 @@ public class IpMemoryStoreTest {
     @Mock
     Context mMockContext;
     @Mock
-    IIpMemoryStore mMockService;
+    //IIpMemoryStore mMockService;
     IpMemoryStore mStore;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mStore = new IpMemoryStore(mMockContext, mMockService);
+        mStore = new IpMemoryStore(mMockContext);
     }
 
     @Test

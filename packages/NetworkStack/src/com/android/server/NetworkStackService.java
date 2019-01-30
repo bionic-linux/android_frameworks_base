@@ -30,6 +30,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.IIpMemoryStoreCallbacks;
 import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
@@ -51,6 +52,7 @@ import android.os.RemoteException;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -82,6 +84,10 @@ public class NetworkStackService extends Service {
         return sConnector;
     }
 
+    public static synchronized IpMemoryStoreService getIpMemoryStore() {
+        return sConnector.mIpMemoryStoreService;
+    }
+
     @NonNull
     @Override
     public IBinder onBind(Intent intent) {
@@ -96,6 +102,7 @@ public class NetworkStackService extends Service {
         private final ConnectivityManager mCm;
         @GuardedBy("mIpClients")
         private final ArrayList<WeakReference<IpClient>> mIpClients = new ArrayList<>();
+        private final IpMemoryStoreService mIpMemoryStoreService;
 
         private static final int MAX_VALIDATION_LOGS = 10;
         @GuardedBy("mValidationLogs")
@@ -118,6 +125,7 @@ public class NetworkStackService extends Service {
                     (IBinder) context.getSystemService(Context.NETD_SERVICE));
             mObserverRegistry = new NetworkObserverRegistry();
             mCm = context.getSystemService(ConnectivityManager.class);
+            mIpMemoryStoreService = new IpMemoryStoreService(context);
 
             try {
                 mObserverRegistry.register(mNetd);
@@ -177,6 +185,12 @@ public class NetworkStackService extends Service {
             }
 
             cb.onIpClientCreated(ipClient.makeConnector());
+        }
+
+        @Override
+        public void fetchIpMemoryStore(@NonNull final IIpMemoryStoreCallbacks cb)
+                throws RemoteException {
+            cb.onIpMemoryStoreFetched(mIpMemoryStoreService);
         }
 
         @Override

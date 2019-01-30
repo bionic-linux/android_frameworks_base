@@ -3522,7 +3522,7 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
-     * {@link android.net.IpMemoryStore} to store and read information about
+     * {@link IpMemoryStoreClient} to store and read information about
      * known networks.
      * @hide
      */
