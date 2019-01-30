@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a382844c_e2f7025c",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-30T12:16:31Z",
+      "side": 1,
+      "message": "Ack, thanks.",
+      "parentUuid": "fb19ff3f_50060022",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "9b79b84e894d4e18bac89f5fd590eacb8c61a492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05dac41_7ee0419b",
         "filename": "core/java/android/net/TcpKeepalivePacketData.java",
         "patchSetId": 17
@@ -39,6 +63,24 @@
       "revId": "9b79b84e894d4e18bac89f5fd590eacb8c61a492",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e06e60_bab1f929",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-30T12:16:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b05dac41_7ee0419b",
+      "revId": "9b79b84e894d4e18bac89f5fd590eacb8c61a492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
