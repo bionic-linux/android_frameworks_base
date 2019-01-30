@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2b5dfc_6175f6cb",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2019-01-30T01:07:53Z",
+      "side": 1,
+      "message": "RECEIVER_PERMISSION?",
+      "range": {
+        "startLine": 49,
+        "startChar": 32,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3fee21_612bf45b",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2019-01-30T01:07:53Z",
+      "side": 1,
+      "message": "lock or block?  I\u0027d prefer \"Do\u0027t lock since..\" as \"here\" suggests we should lock elsewhere",
+      "range": {
+        "startLine": 76,
+        "startChar": 17,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b59668_f57f9d17",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2019-01-30T01:07:53Z",
+      "side": 1,
+      "message": "throw illegalargument to fail fast, or do you expect somebody may want to call with null",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dc6de1_45a82cd8",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2019-01-30T01:07:53Z",
+      "side": 1,
+      "message": "should we fail fast in that case?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 45
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
