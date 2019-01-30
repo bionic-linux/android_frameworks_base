@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6c5925_458d670c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-01-30T17:13:37Z",
+      "side": 1,
+      "message": "Is there a way to make this consistent so that we can query to find frequency of an issue ? \n\nIt may be buganizer query or metrics query but in many situations we wanted to query like this. eg. When MMSSMS db corruption was reported, the management wanted to know which releases were impacted and how many occurrences were reported so far.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "ca37a402d3096d10bcda49c1fe26bb7879ced008",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
