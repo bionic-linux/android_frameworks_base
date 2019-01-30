@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dba84bf4_39c222b4",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-30T02:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a2b5dfc_6175f6cb",
+      "range": {
+        "startLine": 49,
+        "startChar": 32,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c3fee21_612bf45b",
         "filename": "telephony/java/android/telephony/DebugEventReporter.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b60017_c80c4109",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-30T02:12:50Z",
+      "side": 1,
+      "message": "Normally, we\u0027d lock to ensure that if another thread is initializing we don\u0027t hit a weird in-between state. Since that seems to not be obvious or helpful, I\u0027ll remove the comment.",
+      "parentUuid": "4c3fee21_612bf45b",
+      "range": {
+        "startLine": 76,
+        "startChar": 17,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "33b2791e_bf5faca8",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-30T02:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b59668_f57f9d17",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8dc6de1_45a82cd8",
         "filename": "telephony/java/android/telephony/DebugEventReporter.java",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2019-01-30T01:07:53Z",
       "side": 1,
       "message": "should we fail fast in that case?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 45
+      },
+      "revId": "793c9527833fe7f6bd20129e1766f4717b22dc70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77825c75_0a5e41d0",
+        "filename": "telephony/java/android/telephony/DebugEventReporter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-01-30T02:12:50Z",
+      "side": 1,
+      "message": "That would mean if someone else mis-configured the system, then telephony would go into a crash loop. Telephony crash loops bad. I\u0027ve added a log error line so that it will be conspicuous.",
+      "parentUuid": "a8dc6de1_45a82cd8",
       "range": {
         "startLine": 118,
         "startChar": 0,
