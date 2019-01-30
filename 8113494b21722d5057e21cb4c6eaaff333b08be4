@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3c4ba62_c0d3e433",
+        "filename": "core/java/android/net/ICaptivePortal.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-30T12:32:08Z",
+      "side": 1,
+      "message": "Can this take the package name as well?",
+      "range": {
+        "startLine": 25,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "8113494b21722d5057e21cb4c6eaaff333b08be4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad63c7c1_6b8cbf66",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-30T12:32:08Z",
+      "side": 1,
+      "message": "Can we avoid the need for this code by having ICaptivePortal#logEvent take a package name as well?",
+      "range": {
+        "startLine": 699,
+        "startChar": 0,
+        "endLine": 704,
+        "endChar": 99
+      },
+      "revId": "8113494b21722d5057e21cb4c6eaaff333b08be4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
