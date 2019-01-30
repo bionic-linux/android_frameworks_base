@@ -26,6 +26,7 @@ java_library {
         ":services-networkstack-shared-srcs",
     ],
     static_libs: [
+        "ipmemorystore-client",
         "netd_aidl_interface-java",
         "networkstack-aidl-interfaces-java",
         "datastallprotosnano",

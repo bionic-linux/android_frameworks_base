@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.annotation.SystemService;
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
@@ -27,23 +26,40 @@ import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
 import android.net.ipmemorystore.IOnSameNetworkResponseListener;
 import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.Status;
+import android.net.ipmemorystore.StatusParcelable;
 import android.os.RemoteException;
 
-import com.android.internal.util.Preconditions;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
- * The interface for system components to access the IP memory store.
- * @see com.android.server.net.ipmemorystore.IpMemoryStoreService
+ * service used to communicate with the ip memory store service in network stack,
+ * which is running in a separate module.
  * @hide
  */
-@SystemService(Context.IP_MEMORY_STORE_SERVICE)
-public class IpMemoryStore {
+public abstract class IpMemoryStoreClient extends IIpMemoryStoreCallbacks.Stub {
     @NonNull final Context mContext;
-    @NonNull final IIpMemoryStore mService;
+    @NonNull final CompletableFuture<IIpMemoryStore> mService;
 
-    public IpMemoryStore(@NonNull final Context context, @NonNull final IIpMemoryStore service) {
-        mContext = Preconditions.checkNotNull(context, "missing context");
-        mService = Preconditions.checkNotNull(service, "missing IIpMemoryStore");
+    public IpMemoryStoreClient(@NonNull final Context context) {
+        if (context == null) throw new IllegalArgumentException("missing context");
+        mContext = context;
+        mService = new CompletableFuture<>();
+        fetchIpMemoryStore(this);
+    }
+
+    protected abstract void fetchIpMemoryStore(IIpMemoryStoreCallbacks cb);
+
+    @Override
+    public void onIpMemoryStoreFetched(final IIpMemoryStore memoryStore) {
+        mService.complete(memoryStore);
+    }
+
+    protected StatusParcelable internalErrorStatus() {
+        final StatusParcelable error = new StatusParcelable();
+        error.resultCode = Status.ERROR_GENERIC;
+        return error;
     }
 
     /**
@@ -64,11 +80,11 @@ public class IpMemoryStore {
      */
     public void storeNetworkAttributes(@NonNull final String l2Key,
             @NonNull final NetworkAttributes attributes,
-            @Nullable final IOnStatusListener listener) {
+            @Nullable final IOnStatusListener listener) throws RemoteException {
         try {
-            mService.storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onComplete(internalErrorStatus());
         }
     }
 
@@ -85,11 +101,11 @@ public class IpMemoryStore {
      */
     public void storeBlob(@NonNull final String l2Key, @NonNull final String clientId,
             @NonNull final String name, @NonNull final Blob data,
-            @Nullable final IOnStatusListener listener) {
+            @Nullable final IOnStatusListener listener) throws RemoteException {
         try {
-            mService.storeBlob(l2Key, clientId, name, data, listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().storeBlob(l2Key, clientId, name, data, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onComplete(internalErrorStatus());
         }
     }
 
@@ -108,11 +124,11 @@ public class IpMemoryStore {
      * Through the listener, returns the L2 key if one matched, or null.
      */
     public void findL2Key(@NonNull final NetworkAttributes attributes,
-            @NonNull final IOnL2KeyResponseListener listener) {
+            @NonNull final IOnL2KeyResponseListener listener) throws RemoteException {
         try {
-            mService.findL2Key(attributes.toParcelable(), listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().findL2Key(attributes.toParcelable(), listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onL2KeyResponse(internalErrorStatus(), null);
         }
     }
 
@@ -126,11 +142,11 @@ public class IpMemoryStore {
      * Through the listener, a SameL3NetworkResponse containing the answer and confidence.
      */
     public void isSameNetwork(@NonNull final String l2Key1, @NonNull final String l2Key2,
-            @NonNull final IOnSameNetworkResponseListener listener) {
+            @NonNull final IOnSameNetworkResponseListener listener) throws RemoteException {
         try {
-            mService.isSameNetwork(l2Key1, l2Key2, listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().isSameNetwork(l2Key1, l2Key2, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onSameNetworkResponse(internalErrorStatus(), null);
         }
     }
 
@@ -144,11 +160,11 @@ public class IpMemoryStore {
      *         the query.
      */
     public void retrieveNetworkAttributes(@NonNull final String l2Key,
-            @NonNull final IOnNetworkAttributesRetrieved listener) {
+            @NonNull final IOnNetworkAttributesRetrieved listener) throws RemoteException {
         try {
-            mService.retrieveNetworkAttributes(l2Key, listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().retrieveNetworkAttributes(l2Key, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onNetworkAttributesRetrieved(internalErrorStatus(), null, null);
         }
     }
 
@@ -164,11 +180,12 @@ public class IpMemoryStore {
      *         and the name of the data associated with the query.
      */
     public void retrieveBlob(@NonNull final String l2Key, @NonNull final String clientId,
-            @NonNull final String name, @NonNull final IOnBlobRetrievedListener listener) {
+            @NonNull final String name, @NonNull final IOnBlobRetrievedListener listener)
+            throws RemoteException {
         try {
-            mService.retrieveBlob(l2Key, clientId, name, listener);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+            mService.get().retrieveBlob(l2Key, clientId, name, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            listener.onBlobRetrieved(internalErrorStatus(), null, null, null);
         }
     }
 }
