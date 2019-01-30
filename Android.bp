@@ -816,6 +816,8 @@ aidl_interface {
     srcs: [
         "core/java/android/net/ApfCapabilitiesParcelable.aidl",
         "core/java/android/net/DhcpResultsParcelable.aidl",
+        "core/java/android/net/IIpMemoryStore.aidl",
+        "core/java/android/net/IIpMemoryStoreCallbacks.aidl",
         "core/java/android/net/INetworkMonitor.aidl",
         "core/java/android/net/INetworkMonitorCallbacks.aidl",
         "core/java/android/net/INetworkStackConnector.aidl",
@@ -861,6 +863,9 @@ filegroup {
         "core/java/android/annotation/IntRange.java",
         "core/java/android/annotation/UnsupportedAppUsage.java",
         "core/java/android/net/DhcpResults.java",
+        "core/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "core/java/android/net/ipmemorystore/SameL3NetworkResponse.java",
+        "core/java/android/net/ipmemorystore/Status.java",
         "core/java/android/util/LocalLog.java",
         "core/java/com/android/internal/annotations/GuardedBy.java",
         "core/java/com/android/internal/annotations/VisibleForTesting.java",

@@ -43,6 +43,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

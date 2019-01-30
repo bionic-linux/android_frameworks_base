@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package android.net;
 
-/**
- *
- * Constants for client code communicating with the network stack service.
- * @hide
- */
-@SystemApi
-@TestApi
-public class NetworkStack {
-    /**
-     * Permission granted only to the NetworkStack APK, defined in NetworkStackStub with signature
-     * protection level.
-     * @hide
-     */
+import android.net.IIpMemoryStore;
 
-    @SystemApi
-    @TestApi
-    public static final String PERMISSION_MAINLINE_NETWORK_STACK =
-            "android.permission.MAINLINE_NETWORK_STACK";
-
-    private NetworkStack() {}
+/** @hide */
+oneway interface IIpMemoryStoreCallbacks {
+    void onIpMemoryStoreFetched(in IIpMemoryStore ipMemoryStore);
 }

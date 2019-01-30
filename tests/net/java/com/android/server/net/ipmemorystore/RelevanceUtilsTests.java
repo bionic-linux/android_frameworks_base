@@ -16,7 +16,7 @@
 
 package com.android.server.net.ipmemorystore;
 
-import static com.android.server.net.ipmemorystore.RelevanceUtils.CAPPED_RELEVANCE;
+import static com.android.server.connectivity.ipmemorystore.RelevanceUtils.CAPPED_RELEVANCE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +24,8 @@ import static org.junit.Assert.fail;
 
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.android.server.connectivity.ipmemorystore.RelevanceUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
