@@ -459,6 +459,29 @@
     },
     {
       "key": {
+        "uuid": "b26eb269_814ca6bb",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-30T05:05:58Z",
+      "side": 1,
+      "message": "Is it better that pass tcpInfo(or whatever its name is) into this function, instead of specifying all it\u0027s members.",
+      "range": {
+        "startLine": 73,
+        "startChar": 21,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bced8b07_01928a52",
         "filename": "core/java/android/net/TcpKeepalivePacketData.java",
         "patchSetId": 14
@@ -493,6 +516,30 @@
       "writtenOn": "2019-01-29T08:00:04Z",
       "side": 1,
       "message": "I find this structure a bit strange where the static method creates the outbound packet but the constructor for the packet data creates the inbound packet. Is there any reason those are not done in the same place ?\n\nIf the only reason is that you need super() to be the first statement of the constructor, then I think instead of passing the data[] array to it you should have it call inline a function that creates it. After all you have all data available there. Something like :\n\nsuper(srcAddress, srcPort, dstAddress, dstPort,\n        makeTcpKeepalivePacket(srcAddress, srcPort, dstAddress, dstPort, sequence, ack));\nmApfPacket \u003d makeTcpKeepalivePacket(dstAddress, dstPort, srcAddress, srcPort, ack, sequence + 1);\ntcpSequence \u003d sequence;\ntcpAck \u003d ack;\n\n\nprivate static byte[] makeTcpKeepalivePacket(...) {\n  if instanceof Inet4\n    return buildV4Packet\n  else if instanceof Inet6\n    return buildV6Packet\n  else\n    throw\n}\n\npublic static TcpKeepalivePacketData createTcpKeepalivePacketData(TcpSocketInfo info) {\n  return new TcpKeepalivePacketData(...);\n}\n\nWhat do you think ?",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 41
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3396e9_d04409c3",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-01-30T05:05:58Z",
+      "side": 1,
+      "message": "After offline discuss with aaron \u0026 mark.\nmApfPacket should be removed, and instead, fields of tcpInfo (or entire structure) should be stored and pass to ApfFilter to assemble filter.\nThus, we can just simplify it by passing the entire structure to it.\n\ne.g.\nTcpKeepalivePacketData(tcpInfo)\nsuper(srcAddress, srcPort, dstAddress, dstPort,\ntcpSequence \u003d sequence;\ntcpAck \u003d ack;\n if instanceof Inet4\n    mPacket \u003d buildV4Packet(tcpInfo)\n  else if instanceof Inet6\n    mPacket \u003d buildV6Packet(tcpInfo)\n  else\n    throw\n\npublic static TcpKeepalivePacketData createTcpKeepalivePacketData(TcpSocketInfo info) {\n  return new TcpKeepalivePacketData(...);\n}",
+      "parentUuid": "f68e0b0e_c170f6dd",
       "range": {
         "startLine": 88,
         "startChar": 19,
