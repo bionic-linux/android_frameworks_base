@@ -27,23 +27,41 @@ import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
 import android.net.ipmemorystore.IOnSameNetworkResponseListener;
 import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.Status;
+import android.net.ipmemorystore.StatusParcelable;
 import android.os.RemoteException;
 
 import com.android.internal.util.Preconditions;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 /**
  * The interface for system components to access the IP memory store.
- * @see com.android.server.net.ipmemorystore.IpMemoryStoreService
+ * @see IpMemoryStoreService
  * @hide
  */
 @SystemService(Context.IP_MEMORY_STORE_SERVICE)
-public class IpMemoryStore {
+public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
     @NonNull final Context mContext;
-    @NonNull final IIpMemoryStore mService;
+    @NonNull final CompletableFuture<IIpMemoryStore> mService;
 
-    public IpMemoryStore(@NonNull final Context context, @NonNull final IIpMemoryStore service) {
+    public IpMemoryStore(@NonNull final Context context) {
         mContext = Preconditions.checkNotNull(context, "missing context");
-        mService = Preconditions.checkNotNull(service, "missing IIpMemoryStore");
+        mService = new CompletableFuture<>();
+        final NetworkStack stack = mContext.getSystemService(NetworkStack.class);
+        stack.fetchIpMemoryStore(this);
+    }
+
+    @Override
+    public void onIpMemoryStoreFetched(final IIpMemoryStore memoryStore) {
+        mService.complete(memoryStore);
+    }
+
+    private StatusParcelable internalErrorStatus() {
+        final StatusParcelable error = new StatusParcelable();
+        error.resultCode = Status.ERROR_ILLEGAL_ARGUMENT;
+        return error;
     }
 
     /**
@@ -66,7 +84,13 @@ public class IpMemoryStore {
             @NonNull final NetworkAttributes attributes,
             @Nullable final IOnStatusListener listener) {
         try {
-            mService.storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);
+            mService.get().storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onComplete(internalErrorStatus());
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -87,7 +111,13 @@ public class IpMemoryStore {
             @NonNull final String name, @NonNull final Blob data,
             @Nullable final IOnStatusListener listener) {
         try {
-            mService.storeBlob(l2Key, clientId, name, data, listener);
+            mService.get().storeBlob(l2Key, clientId, name, data, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onComplete(internalErrorStatus());
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -110,7 +140,13 @@ public class IpMemoryStore {
     public void findL2Key(@NonNull final NetworkAttributes attributes,
             @NonNull final IOnL2KeyResponseListener listener) {
         try {
-            mService.findL2Key(attributes.toParcelable(), listener);
+            mService.get().findL2Key(attributes.toParcelable(), listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onL2KeyResponse(internalErrorStatus(), null);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -128,7 +164,13 @@ public class IpMemoryStore {
     public void isSameNetwork(@NonNull final String l2Key1, @NonNull final String l2Key2,
             @NonNull final IOnSameNetworkResponseListener listener) {
         try {
-            mService.isSameNetwork(l2Key1, l2Key2, listener);
+            mService.get().isSameNetwork(l2Key1, l2Key2, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onSameNetworkResponse(internalErrorStatus(), null);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -146,7 +188,13 @@ public class IpMemoryStore {
     public void retrieveNetworkAttributes(@NonNull final String l2Key,
             @NonNull final IOnNetworkAttributesRetrieved listener) {
         try {
-            mService.retrieveNetworkAttributes(l2Key, listener);
+            mService.get().retrieveNetworkAttributes(l2Key, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onNetworkAttributesRetrieved(internalErrorStatus(), null, null);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -166,7 +214,13 @@ public class IpMemoryStore {
     public void retrieveBlob(@NonNull final String l2Key, @NonNull final String clientId,
             @NonNull final String name, @NonNull final IOnBlobRetrievedListener listener) {
         try {
-            mService.retrieveBlob(l2Key, clientId, name, listener);
+            mService.get().retrieveBlob(l2Key, clientId, name, listener);
+        } catch (InterruptedException | ExecutionException m) {
+            try {
+                listener.onBlobRetrieved(internalErrorStatus(), null, null, null);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
