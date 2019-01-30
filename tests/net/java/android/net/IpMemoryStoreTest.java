@@ -39,7 +39,6 @@ public class IpMemoryStoreTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mStore = new IpMemoryStore(mMockContext, mMockService);
     }
 
     @Test
