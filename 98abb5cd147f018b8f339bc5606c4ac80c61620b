@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43123f39_54073180",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6014,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-01-30T00:32:49Z",
+      "side": 1,
+      "message": "this API was hidden on P",
+      "range": {
+        "startLine": 6014,
+        "startChar": 0,
+        "endLine": 6014,
+        "endChar": 107
+      },
+      "revId": "98abb5cd147f018b8f339bc5606c4ac80c61620b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
