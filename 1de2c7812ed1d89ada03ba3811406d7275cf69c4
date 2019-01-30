@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "12fd919c_9433eeef",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T08:38:07Z",
+      "side": 1,
+      "message": "Sounds good. Then let\u0027s leave it as is here (possibly write a TODO) and move on in the interest of expediency.",
+      "parentUuid": "40260705_3b294dc8",
+      "range": {
+        "startLine": 475,
+        "startChar": 34,
+        "endLine": 475,
+        "endChar": 62
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c904aed_ea48e015",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 20
@@ -93,6 +117,30 @@
       "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c3b014_ff8ccaa4",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T08:38:07Z",
+      "side": 1,
+      "message": "Ah I see, so it\u0027s an opportunistic cleanup inflight ? Generally speaking we try to avoid doing this at the same time as functionality but considering it\u0027s small I don\u0027t mind too much",
+      "parentUuid": "383a730b_dae87870",
+      "range": {
+        "startLine": 199,
+        "startChar": 19,
+        "endLine": 199,
+        "endChar": 42
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
