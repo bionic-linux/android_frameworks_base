@@ -18,8 +18,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     mockito-target-minus-junit4 \
     platform-test-annotations \
     services.core \
-    services.ipmemorystore \
-    services.net
+    services.net \
+    NetworkStackLib
 
 LOCAL_JAVA_LIBRARIES := \
     android.test.runner \

@@ -30,6 +30,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.IIpMemoryStoreCallbacks;
 import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
@@ -45,12 +46,14 @@ import android.net.ip.IIpClientCallbacks;
 import android.net.ip.IpClient;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.SharedLog;
+import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.NetworkMonitor;
+import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -68,6 +71,7 @@ import java.util.Iterator;
 public class NetworkStackService extends Service {
     private static final String TAG = NetworkStackService.class.getSimpleName();
     private static NetworkStackConnector sConnector;
+    private static final ConditionVariable sCv = new ConditionVariable();
 
     /**
      * Create a binder connector for the system server to communicate with the network stack.
@@ -79,7 +83,17 @@ public class NetworkStackService extends Service {
         if (sConnector == null) {
             sConnector = new NetworkStackConnector(context);
         }
+        sCv.open();
         return sConnector;
+    }
+
+    /**
+     * Get Ip Memory Store Service instance.
+     *
+     */
+    public static synchronized IpMemoryStoreService getIpMemoryStore() {
+        sCv.block();
+        return sConnector.mIpMemoryStoreService;
     }
 
     @NonNull
@@ -96,6 +110,7 @@ public class NetworkStackService extends Service {
         private final ConnectivityManager mCm;
         @GuardedBy("mIpClients")
         private final ArrayList<WeakReference<IpClient>> mIpClients = new ArrayList<>();
+        private final IpMemoryStoreService mIpMemoryStoreService;
 
         private static final int MAX_VALIDATION_LOGS = 10;
         @GuardedBy("mValidationLogs")
@@ -118,6 +133,7 @@ public class NetworkStackService extends Service {
                     (IBinder) context.getSystemService(Context.NETD_SERVICE));
             mObserverRegistry = new NetworkObserverRegistry();
             mCm = context.getSystemService(ConnectivityManager.class);
+            mIpMemoryStoreService = new IpMemoryStoreService(context);
 
             try {
                 mObserverRegistry.register(mNetd);
@@ -177,6 +193,12 @@ public class NetworkStackService extends Service {
             }
 
             cb.onIpClientCreated(ipClient.makeConnector());
+        }
+
+        @Override
+        public void fetchIpMemoryStore(@NonNull final IIpMemoryStoreCallbacks cb)
+                throws RemoteException {
+            cb.onIpMemoryStoreFetched(mIpMemoryStoreService);
         }
 
         @Override
