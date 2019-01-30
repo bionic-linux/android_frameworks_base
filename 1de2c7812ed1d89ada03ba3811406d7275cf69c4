@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0202fb22_a5a332eb",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "This seems inconsistent with what the proxy in EntitlementManager does. This one here collapses all errors to PROVISION_FAILED, while the one in EntitlementManager will store whatever error is returned from the UI-based check (see my comment on that in EntitlementManager.java).\n\nI think it\u0027s both safer and simpler to have updateEntitlementCacheValue do the collapsing. That way, you can call this only once with whatever value was returned instead of splitting according to the branch of the if.\n\nIdeally I would like to unify the proxy broadcast receivers in only one place if it\u0027s feasible, but if it\u0027s difficult maybe you can wrap one inside the other. It seems dangerous to have two proxies in two files but both must update the cached value.",
+      "range": {
+        "startLine": 475,
+        "startChar": 34,
+        "endLine": 475,
+        "endChar": 62
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c904aed_ea48e015",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure why you need this. Can\u0027t you just call the public method in l.297 and override it in EntitlementManagerTest.java:116 ?\n\nAlso, it does look kind of strange that there is no functional difference between a method called \"runUiTetherProvisioning\" and another called \"runUiTetherProvisioningAndEnable\". I would expect the latter to run the former... and then enable tethering.",
+      "range": {
+        "startLine": 199,
+        "startChar": 19,
+        "endLine": 199,
+        "endChar": 42
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac5182f_8ddd34c0",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Do we have any guarantee this will always be ERROR_NO_ERROR or ERROR_PROVISION_FAILED ? If it\u0027s not, you\u0027ll violate the contract in ConnectivityManager.java:2624~2627 in this patch. (also see my comment on this in Tethering.java). I suggest you have updateEntitlementCacheValue collapse this value to either NO_ERROR or PROVISION_FAILED.",
+      "range": {
+        "startLine": 251,
+        "startChar": 50,
+        "endLine": 251,
+        "endChar": 60
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd14464_6da63071",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Parcel",
+      "range": {
+        "startLine": 259,
+        "startChar": 34,
+        "endLine": 259,
+        "endChar": 41
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc25a6a_9db27864",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "This is obscure. Can you at least comment why you need to do this ?",
+      "range": {
+        "startLine": 259,
+        "startChar": 27,
+        "endLine": 259,
+        "endChar": 40
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b821eca_cdc1e7b1",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Extraneous blank line",
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3b87c6_6dcf96be",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Maybe you can move this below the next if() clause to avoid doing the synchronized lookup if it\u0027s not needed.",
+      "range": {
+        "startLine": 283,
+        "startChar": 8,
+        "endLine": 287,
+        "endChar": 0
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d2d05d_e6f99edd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "I think if provisioning is not required that means we should send NO_ERROR ? If it\u0027s not required we\u0027ll be happy to start tethering to mobile right ?",
+      "range": {
+        "startLine": 289,
+        "startChar": 39,
+        "endLine": 289,
+        "endChar": 58
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf10b97b_539cb0e9",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Remove if you\u0027re not using this any more.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 45
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949e47c3_3acfb5ed",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Maybe WrappedEntitlementManager, as this is not a mock",
+      "range": {
+        "startLine": 106,
+        "startChar": 17,
+        "endLine": 106,
+        "endChar": 39
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83ce9ca_f1635f3b",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "As observed on EntitlementManager.java I think this should be NO_ERROR",
+      "range": {
+        "startLine": 217,
+        "startChar": 29,
+        "endLine": 217,
+        "endChar": 61
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7da83cb_91b0d0e8",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "receive",
+      "range": {
+        "startLine": 240,
+        "startChar": 34,
+        "endLine": 240,
+        "endChar": 41
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c1bd0c_77fd84f6",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Optional : you may want a helper method for this (and other repeating code)",
+      "range": {
+        "startLine": 255,
+        "startChar": 7,
+        "endLine": 257,
+        "endChar": 9
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957c06ec_cf0945a4",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Maybe add a last test where you check for TETHERING_USB to make sure the value of the cache for Wifi is not used.",
+      "range": {
+        "startLine": 305,
+        "startChar": 4,
+        "endLine": 305,
+        "endChar": 5
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183b52ad_ed2d8186",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-01-30T04:17:38Z",
+      "side": 1,
+      "message": "Normally break before the \u003d sign instead",
+      "range": {
+        "startLine": 310,
+        "startChar": 16,
+        "endLine": 310,
+        "endChar": 29
+      },
+      "revId": "1de2c7812ed1d89ada03ba3811406d7275cf69c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
