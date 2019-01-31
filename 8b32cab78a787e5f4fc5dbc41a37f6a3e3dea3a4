@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf856959_0d86ceaf",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-31T07:50:59Z",
+      "side": 1,
+      "message": "Sorry, this can\u0027t pass to be window size value directly. This value must be divided with window scaling factor first.",
+      "range": {
+        "startLine": 190,
+        "startChar": 89,
+        "endLine": 190,
+        "endChar": 96
+      },
+      "revId": "8b32cab78a787e5f4fc5dbc41a37f6a3e3dea3a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
