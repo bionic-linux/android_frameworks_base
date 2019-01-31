@@ -3267,6 +3267,30 @@
     },
     {
       "key": {
+        "uuid": "22d30b4c_769dfb5f",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-31T06:24:55Z",
+      "side": 1,
+      "message": "I think my use case is fine for blocking socket. Tcp keepalive offload just need one way event callback, no matter what event the keepalive would be stop. And it don\u0027t call socket read in readPacket() override function. But I only verify blocked socket can receive read/error event by poll() in kernel test. I haven\u0027t verify FdEventsReader yet, lets keep this comment open, I would verify later when I am back :)",
+      "parentUuid": "53553dda_6c51d9dc",
+      "range": {
+        "startLine": 292,
+        "startChar": 22,
+        "endLine": 292,
+        "endChar": 23
+      },
+      "revId": "4ca2424c2e9ae2d93fe5a1adc8901430f6bad38a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae811528_65554660",
         "filename": "tests/net/java/android/net/TcpKeepalivePacketDataTest.java",
         "patchSetId": 14
