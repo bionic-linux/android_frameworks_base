@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d629566_86c3a081",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-01-31T03:52:03Z",
+      "side": 1,
+      "message": "TetheringEntitlementResultListener? TetheringEntitlementValueListener?",
+      "range": {
+        "startLine": 2604,
+        "startChar": 33,
+        "endLine": 2604,
+        "endChar": 57
+      },
+      "revId": "7cb4e84d3c11447789ae2a39d435a8fc06ab1d27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
