@@ -360,7 +360,15 @@ public class NetworkRegistrationState implements Parcelable {
         return 0;
     }
 
-    private static String regStateToString(int regState) {
+    /**
+     * Convert registration state to string
+     *
+     * @hide
+     *
+     * @param regState The registration state
+     * @return The reg state in string
+     */
+    public static String regStateToString(@RegState int regState) {
         switch (regState) {
             case REG_STATE_NOT_REG_NOT_SEARCHING: return "NOT_REG_NOT_SEARCHING";
             case REG_STATE_HOME: return "HOME";
