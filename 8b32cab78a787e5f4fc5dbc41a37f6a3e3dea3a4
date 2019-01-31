@@ -22,6 +22,30 @@
       "revId": "8b32cab78a787e5f4fc5dbc41a37f6a3e3dea3a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6870fdc9_3ff91329",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-01-31T09:18:16Z",
+      "side": 1,
+      "message": "Here is my ugly workaround to get correct value.\nhttps://paste.googleplex.com/6451315802636288\nI have observed the log and tcpdump, this patch seems work.",
+      "parentUuid": "bf856959_0d86ceaf",
+      "range": {
+        "startLine": 190,
+        "startChar": 89,
+        "endLine": 190,
+        "endChar": 96
+      },
+      "revId": "8b32cab78a787e5f4fc5dbc41a37f6a3e3dea3a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
