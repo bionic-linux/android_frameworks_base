@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9389eb0d_d48e2440",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-02-01T22:30:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be done when the number is eventually passed to PhoneNumberUtils?\n\nWhat issue do you see without this change? Can you please file a bug describing it, and would be good to file bugs for other contributions too.",
+      "revId": "08964c68e49fa8b60e45706cec62e6f6b5a30da8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
