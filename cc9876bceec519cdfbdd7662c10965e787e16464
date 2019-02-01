@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95973352_a177ce18",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-01T14:50:47Z",
+      "side": 1,
+      "message": "+Maze, I did what Mark did in his patch. I do not know if this gives the correct values. Can you please take a look ?",
+      "range": {
+        "startLine": 509,
+        "startChar": 7,
+        "endLine": 521,
+        "endChar": 0
+      },
+      "revId": "cc9876bceec519cdfbdd7662c10965e787e16464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
