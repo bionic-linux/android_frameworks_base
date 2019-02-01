@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6001c08a_01d9d593",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-01T19:04:08Z",
+      "side": 1,
+      "message": "Figured out the problem, this needs to be \"/**\", it is not javadoc :)\n\n\nAlso please move this definition up a few constants so we can avoid the merge conflict down stream",
+      "range": {
+        "startLine": 2422,
+        "startChar": 4,
+        "endLine": 2422,
+        "endChar": 6
+      },
+      "revId": "0e84840b2647c35e72179b5ab8419a0654230864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76115f3a_a435e5cc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-02-01T19:04:08Z",
+      "side": 1,
+      "message": "Move up a few to avoid merge conflicts.",
+      "range": {
+        "startLine": 2805,
+        "startChar": 8,
+        "endLine": 2805,
+        "endChar": 83
+      },
+      "revId": "0e84840b2647c35e72179b5ab8419a0654230864",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
