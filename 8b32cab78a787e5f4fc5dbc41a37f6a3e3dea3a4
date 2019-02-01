@@ -46,6 +46,30 @@
       "revId": "8b32cab78a787e5f4fc5dbc41a37f6a3e3dea3a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa47a466_b100b296",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-01T14:49:57Z",
+      "side": 1,
+      "message": "I think prescaling is a much simpler option. It also seems like the linux kernel is prescaling ? So I don\u0027t understand why this is necessary.\nIn any case, I based my new version of the patch on your paste, simply apply prescaling in the C++ code before it\u0027s returned by the JNI call.\n\nIn any case, I\u0027m surprised you find your patch working as it shifts the window value to the *right*. I found that strange and checked, and the spec says it should be shifted to the left.",
+      "parentUuid": "6870fdc9_3ff91329",
+      "range": {
+        "startLine": 190,
+        "startChar": 89,
+        "endLine": 190,
+        "endChar": 96
+      },
+      "revId": "8b32cab78a787e5f4fc5dbc41a37f6a3e3dea3a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
