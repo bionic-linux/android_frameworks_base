@@ -20,10 +20,10 @@ import android.net.ipmemorystore.SameL3NetworkResponseParcelable;
 import android.net.ipmemorystore.StatusParcelable;
 
 /** {@hide} */
-oneway interface IOnSameNetworkResponseListener {
+oneway interface IOnSameL3NetworkResponseListener {
     /**
      * The memory store has come up with the answer to a query that was sent.
      */
-     void onSameNetworkResponse(in StatusParcelable status,
+     void onSameL3NetworkResponse(in StatusParcelable status,
              in SameL3NetworkResponseParcelable response);
 }
