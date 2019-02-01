@@ -4084,7 +4084,9 @@ public class ConnectivityManager {
         if (!NetworkUtils.bindProcessToNetwork(netId)) {
             return false;
         }
-
+        if (netId != NETID_UNSET) {
+            netId = network.getNetIdForResolv();
+        }
         if (!isSameNetId) {
             // Set HTTP proxy system properties to match network.
             // TODO: Deprecate this static method and replace it with a non-static version.

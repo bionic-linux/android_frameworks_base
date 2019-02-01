@@ -21,14 +21,13 @@ import android.annotation.Nullable;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.net.ipmemorystore.Blob;
-import android.net.ipmemorystore.IOnBlobRetrievedListener;
-import android.net.ipmemorystore.IOnL2KeyResponseListener;
-import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
-import android.net.ipmemorystore.IOnSameNetworkResponseListener;
-import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.OnBlobRetrievedListener;
+import android.net.ipmemorystore.OnL2KeyResponseListener;
+import android.net.ipmemorystore.OnNetworkAttributesRetrievedListener;
+import android.net.ipmemorystore.OnSameL3NetworkResponseListener;
+import android.net.ipmemorystore.OnStatusListener;
 import android.net.ipmemorystore.Status;
-import android.net.ipmemorystore.StatusParcelable;
 import android.os.RemoteException;
 
 import com.android.internal.util.Preconditions;
@@ -58,12 +57,6 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
         mService.complete(memoryStore);
     }
 
-    private StatusParcelable internalErrorStatus() {
-        final StatusParcelable error = new StatusParcelable();
-        error.resultCode = Status.ERROR_ILLEGAL_ARGUMENT;
-        return error;
-    }
-
     /**
      * Store network attributes for a given L2 key.
      * If L2Key is null, choose automatically from the attributes ; passing null is equivalent to
@@ -82,15 +75,12 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      */
     public void storeNetworkAttributes(@NonNull final String l2Key,
             @NonNull final NetworkAttributes attributes,
-            @Nullable final IOnStatusListener listener) {
+            @Nullable final OnStatusListener listener) {
         try {
-            mService.get().storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);
+            mService.get().storeNetworkAttributes(l2Key, attributes.toParcelable(),
+                    listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onComplete(internalErrorStatus());
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onComplete(new Status(Status.ERROR_ILLEGAL_ARGUMENT));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -109,15 +99,11 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      */
     public void storeBlob(@NonNull final String l2Key, @NonNull final String clientId,
             @NonNull final String name, @NonNull final Blob data,
-            @Nullable final IOnStatusListener listener) {
+            @Nullable final OnStatusListener listener) {
         try {
-            mService.get().storeBlob(l2Key, clientId, name, data, listener);
+            mService.get().storeBlob(l2Key, clientId, name, data, listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onComplete(internalErrorStatus());
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onComplete(new Status(Status.ERROR_ILLEGAL_ARGUMENT));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -138,15 +124,11 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      * Through the listener, returns the L2 key if one matched, or null.
      */
     public void findL2Key(@NonNull final NetworkAttributes attributes,
-            @NonNull final IOnL2KeyResponseListener listener) {
+            @NonNull final OnL2KeyResponseListener listener) {
         try {
-            mService.get().findL2Key(attributes.toParcelable(), listener);
+            mService.get().findL2Key(attributes.toParcelable(), listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onL2KeyResponse(internalErrorStatus(), null);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onL2KeyResponse(new Status(Status.ERROR_ILLEGAL_ARGUMENT), null);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -162,15 +144,11 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      * Through the listener, a SameL3NetworkResponse containing the answer and confidence.
      */
     public void isSameNetwork(@NonNull final String l2Key1, @NonNull final String l2Key2,
-            @NonNull final IOnSameNetworkResponseListener listener) {
+            @NonNull final OnSameL3NetworkResponseListener listener) {
         try {
-            mService.get().isSameNetwork(l2Key1, l2Key2, listener);
+            mService.get().isSameNetwork(l2Key1, l2Key2, listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onSameNetworkResponse(internalErrorStatus(), null);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onSameL3NetworkResponse(new Status(Status.ERROR_ILLEGAL_ARGUMENT), null);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -186,15 +164,12 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      *         the query.
      */
     public void retrieveNetworkAttributes(@NonNull final String l2Key,
-            @NonNull final IOnNetworkAttributesRetrieved listener) {
+            @NonNull final OnNetworkAttributesRetrievedListener listener) {
         try {
-            mService.get().retrieveNetworkAttributes(l2Key, listener);
+            mService.get().retrieveNetworkAttributes(l2Key, listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onNetworkAttributesRetrieved(internalErrorStatus(), null, null);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onNetworkAttributesRetrieved(new Status(Status.ERROR_ILLEGAL_ARGUMENT), null,
+                    null);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -212,15 +187,11 @@ public class IpMemoryStore extends IIpMemoryStoreCallbacks.Stub {
      *         and the name of the data associated with the query.
      */
     public void retrieveBlob(@NonNull final String l2Key, @NonNull final String clientId,
-            @NonNull final String name, @NonNull final IOnBlobRetrievedListener listener) {
+            @NonNull final String name, @NonNull final OnBlobRetrievedListener listener) {
         try {
-            mService.get().retrieveBlob(l2Key, clientId, name, listener);
+            mService.get().retrieveBlob(l2Key, clientId, name, listener.toParcelable());
         } catch (InterruptedException | ExecutionException m) {
-            try {
-                listener.onBlobRetrieved(internalErrorStatus(), null, null, null);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
+            listener.onBlobRetrieved(new Status(Status.ERROR_ILLEGAL_ARGUMENT), null, null, null);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

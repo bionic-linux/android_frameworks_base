@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.net.ipmemorystore;
+package com.android.server.connectivity.ipmemorystore;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,8 +28,8 @@ import android.content.Context;
 import android.net.ipmemorystore.Blob;
 import android.net.ipmemorystore.IOnBlobRetrievedListener;
 import android.net.ipmemorystore.IOnL2KeyResponseListener;
-import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
-import android.net.ipmemorystore.IOnSameNetworkResponseListener;
+import android.net.ipmemorystore.IOnNetworkAttributesRetrievedListener;
+import android.net.ipmemorystore.IOnSameL3NetworkResponseListener;
 import android.net.ipmemorystore.IOnStatusListener;
 import android.net.ipmemorystore.NetworkAttributes;
 import android.net.ipmemorystore.NetworkAttributesParcelable;
@@ -42,8 +42,6 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
-
-import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
 
 import org.junit.After;
 import org.junit.Before;
@@ -140,9 +138,9 @@ public class IpMemoryStoreServiceTest {
     private interface OnNetworkAttributesRetrievedListener  {
         void onNetworkAttributesRetrieved(Status status, String l2Key, NetworkAttributes attr);
     }
-    private IOnNetworkAttributesRetrieved onNetworkAttributesRetrieved(
+    private IOnNetworkAttributesRetrievedListener onNetworkAttributesRetrieved(
             final OnNetworkAttributesRetrievedListener functor) {
-        return new IOnNetworkAttributesRetrieved() {
+        return new IOnNetworkAttributesRetrievedListener() {
             @Override
             public void onNetworkAttributesRetrieved(final StatusParcelable status,
                     final String l2Key, final NetworkAttributesParcelable attributes)
@@ -159,17 +157,17 @@ public class IpMemoryStoreServiceTest {
     }
 
     /** Helper method to make an IOnSameNetworkResponseListener */
-    private interface OnSameNetworkResponseListener {
-        void onSameNetworkResponse(Status status, SameL3NetworkResponse answer);
+    private interface OnSameL3NetworkResponseListener {
+        void onSameL3NetworkResponse(Status status, SameL3NetworkResponse answer);
     }
-    private IOnSameNetworkResponseListener onSameResponse(
-            final OnSameNetworkResponseListener functor) {
-        return new IOnSameNetworkResponseListener() {
+    private IOnSameL3NetworkResponseListener onSameResponse(
+            final OnSameL3NetworkResponseListener functor) {
+        return new IOnSameL3NetworkResponseListener() {
             @Override
-            public void onSameNetworkResponse(final StatusParcelable status,
+            public void onSameL3NetworkResponse(final StatusParcelable status,
                     final SameL3NetworkResponseParcelable sameL3Network)
                     throws RemoteException {
-                functor.onSameNetworkResponse(new Status(status),
+                functor.onSameL3NetworkResponse(new Status(status),
                         null == sameL3Network ? null : new SameL3NetworkResponse(sameL3Network));
             }
 
