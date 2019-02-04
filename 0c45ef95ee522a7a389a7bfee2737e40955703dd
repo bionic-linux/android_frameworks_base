@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "045d0771_7392e8d9",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Looks a lot like ErrnoException, although that one seems to be documented as specific for Os.* calls",
+      "range": {
+        "startLine": 116,
+        "startChar": 24,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fdbe73a_5c516781",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s more common to use Throwable here. Not very important.",
+      "range": {
+        "startLine": 133,
+        "startChar": 61,
+        "endLine": 133,
+        "endChar": 70
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f0de29a_ec45c34f",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: I\u0027d rather use\nif (!...) {\n  throw ...\n}\n\n...\n\nShould not be a blocker though.",
+      "range": {
+        "startLine": 76,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 71
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24ff344_6acda0b8",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Note: if this code is ever moved to the NetworkStack, some constants could be refactored with DhcpPacket constants. A TODO might be helpful in that case.",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9288db5a_abe10a56",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "0x4000 ?",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5180ce76_17c5bc14",
+        "filename": "core/java/android/net/TcpKeepalivePacketData.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: a comment saying that URG is all 0 and does not need to be appended explicitly might be nice",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 67
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16970cfc_745479fa",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: could we just use \" \u003d {}\" here ? (also below for tcpinfo)",
+      "range": {
+        "startLine": 497,
+        "startChar": 32,
+        "endLine": 499,
+        "endChar": 26
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a9f40c_2d0fa494",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "errno ?",
+      "range": {
+        "startLine": 516,
+        "startChar": 56,
+        "endLine": 516,
+        "endChar": 58
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e3387f_0282cefe",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: long line",
+      "range": {
+        "startLine": 525,
+        "startChar": 100,
+        "endLine": 525,
+        "endChar": 123
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7e1c84_5be075b8",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: information (also infromation below)",
+      "range": {
+        "startLine": 97,
+        "startChar": 65,
+        "endLine": 97,
+        "endChar": 76
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5910242_3ea6ad21",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: I\u0027d rather define those closer to the actual assignment, and I think most of them can be final",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdee5e9_a9535704",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "I\u0027d prefer having a InvalidSocketException(String msg, int errno, Throwable cause) constructor rather than separate logging",
+      "range": {
+        "startLine": 122,
+        "startChar": 24,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df7be4_e8e7488f",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": ", e);",
+      "range": {
+        "startLine": 123,
+        "startChar": 65,
+        "endLine": 123,
+        "endChar": 67
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4d361a_e637e88d",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "It would be better to have a message saying what it was doing since the logged exception will be an ErrnoException anyway",
+      "range": {
+        "startLine": 173,
+        "startChar": 24,
+        "endLine": 173,
+        "endChar": 39
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d739d66b_f03433e7",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Is this not equivalent to seq-- in both cases ?",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 9
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344ece2b_118a9245",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: might want to mention in comments that the class is not thread-safe and is intended to be used by X",
+      "range": {
+        "startLine": 202,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 39
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019e4ab4_0f87c7c4",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: I\u0027d rather have this called \"checkReceiveQueueEmpty\" and throw an exception, to avoid the double logging",
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3407ddf0_0834d7f0",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Does this need to be public ?",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 10
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdcb616_9199cc98",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "How about \"Unexpected packet received in handlePacket\"",
+      "range": {
+        "startLine": 292,
+        "startChar": 40,
+        "endLine": 292,
+        "endChar": 63
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ea9f5b_c4e62ff8",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Maybe \"Received packet on PacketListener\" or something similar ?",
+      "range": {
+        "startLine": 298,
+        "startChar": 33,
+        "endLine": 298,
+        "endChar": 55
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b33e368_cbf25dd9",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "I could not find where the listener is stopped, is it done by the caller ? Is it fine if this method is called several times ?",
+      "range": {
+        "startLine": 306,
+        "startChar": 12,
+        "endLine": 306,
+        "endChar": 37
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a11dcf4_1a243dca",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Can this be private ?",
+      "range": {
+        "startLine": 315,
+        "startChar": 8,
+        "endLine": 315,
+        "endChar": 12
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e613e7_cfdaf72e",
+        "filename": "tests/net/java/android/net/TcpKeepalivePacketDataTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-04T10:06:08Z",
+      "side": 1,
+      "message": "Nit: no space here",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
