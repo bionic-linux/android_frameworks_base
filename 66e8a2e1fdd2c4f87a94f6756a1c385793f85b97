@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "233824e6_f9d94df5",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-02-05T09:05:23Z",
+      "side": 1,
+      "message": "please do this in Java... not in C/C++, let\u0027s make the fields mean the same as the kernel interface.\n\nalso at a glance at kernel code... sounds like we need:\n\nhttps://cs.corp.google.com/kernel/net/ipv6/tcp_ipv6.c?rcl\u003d2930fb74d36f5b4be707fd08f07c5408a6626c4e\u0026l\u003d892 - looks to be one spot where it\u0027s stored in packet\n\nhttps://cs.corp.google.com/kernel/net/ipv6/tcp_ipv6.c?rcl\u003d2930fb74d36f5b4be707fd08f07c5408a6626c4e\u0026l\u003d1049\nhas win :\u003d tcptw-\u003etw_rcv_wnd \u003e\u003e tw-\u003etw_rcv_wscale\n\nso sounds like htons(rcv_wnd \u003e\u003e rcv_wscale)",
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c304bee0_3ccc98b7",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 26
