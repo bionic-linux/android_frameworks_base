@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58fb5978_000c0d98",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-05T11:42:43Z",
+      "side": 1,
+      "message": "Thanks to your guidance I understand this better now, and I agree this should be done in Java in this case.\n(I don\u0027t agree with the general point that it should be a goal to have fields mean the same as the kernel interface).\n\nBut done. Moved this into the Java structure, and carried all the way to the point where it\u0027s written into the packet.",
+      "parentUuid": "233824e6_f9d94df5",
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c304bee0_3ccc98b7",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 26
