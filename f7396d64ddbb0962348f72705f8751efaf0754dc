@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95692873_efd1cdfc",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T09:37:47Z",
+      "side": 1,
+      "message": "I think this does not cause the keepalive to be stopped, it only sends a notification to the app.\nThis could be replaced by passing KeepaliveInfo in startSocketMonitor() (making startSocketMonitor package-private ?), and just calling kai.stop(result), which will take care of both stopping keepalive and sending the same notification. It will call stopSocketMonitor() one extra time though, but it\u0027s fine as long as kai.stop() is done outside of a synchronized(mListeners) block.",
+      "range": {
+        "startLine": 241,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "f7396d64ddbb0962348f72705f8751efaf0754dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
