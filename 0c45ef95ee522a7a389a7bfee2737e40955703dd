@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "758a7025_b5ebb876",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T01:23:44Z",
+      "side": 1,
+      "message": "No I think this looks fine",
+      "parentUuid": "e2d682a3_a5c0d713",
+      "range": {
+        "startLine": 116,
+        "startChar": 24,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fdbe73a_5c516781",
         "filename": "core/java/android/net/SocketKeepalive.java",
         "patchSetId": 23
@@ -519,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "708ba088_dff7bb64",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T01:23:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8514930_0b607f47",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bdee5e9_a9535704",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 23
@@ -783,6 +831,24 @@
       "side": 1,
       "message": "I disagree for multiple reasons.\n- Same as above, the log is useful for debugging because the exception gets collapsed to an error code.\n- This method is used in two separate places, below to determine the error code where an exception would be very unhelpful, and above in isSocketIdle ; in turn, isSocketIdle is used in two places to throw different exceptions. I think having it throw an exception would make things much more complex.",
       "parentUuid": "019e4ab4_0f87c7c4",
+      "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50e222cb_1236821e",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T01:23:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "990f0de0_4a69b44d",
       "revId": "0c45ef95ee522a7a389a7bfee2737e40955703dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false

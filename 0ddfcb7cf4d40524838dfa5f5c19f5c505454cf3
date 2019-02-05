@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70bba257_8b89348f",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T01:23:44Z",
+      "side": 1,
+      "message": "Reading your comment above about handlePacket, I see that the FdEventsReader would stop when this method returns, so it\u0027s actually not necessary to stop it explicitly. But when stopped it calls SocketUtils.closeSocket(fd): is that fine ?\nIf not you might want to make FdEventsReader#closeFd non-static and override it.",
+      "range": {
+        "startLine": 305,
+        "startChar": 12,
+        "endLine": 305,
+        "endChar": 21
+      },
+      "revId": "0ddfcb7cf4d40524838dfa5f5c19f5c505454cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
