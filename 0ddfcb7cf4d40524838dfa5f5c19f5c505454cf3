@@ -22,6 +22,30 @@
       "revId": "0ddfcb7cf4d40524838dfa5f5c19f5c505454cf3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d797a672_4ccc71ff",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-05T08:09:45Z",
+      "side": 1,
+      "message": "Done. Abandoned use of FdEventsReader, reimplemented in a simpler and more correct way on top of the primitive. The issue you correctly detected is now gone.",
+      "parentUuid": "70bba257_8b89348f",
+      "range": {
+        "startLine": 305,
+        "startChar": 12,
+        "endLine": 305,
+        "endChar": 21
+      },
+      "revId": "0ddfcb7cf4d40524838dfa5f5c19f5c505454cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
