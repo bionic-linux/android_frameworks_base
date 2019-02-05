@@ -22,6 +22,30 @@
       "revId": "f7396d64ddbb0962348f72705f8751efaf0754dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aea428_6b4f8daa",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T10:44:13Z",
+      "side": 1,
+      "message": "Actually what you need is KeepaliveTracker.handleStopKeepalive(), so it might be best to have a onPacketReceived() method in KeepaliveInfo that calls KeepaliveTracker.handleStopKeepalive, and call that from the socket monitor",
+      "parentUuid": "95692873_efd1cdfc",
+      "range": {
+        "startLine": 241,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "f7396d64ddbb0962348f72705f8751efaf0754dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
