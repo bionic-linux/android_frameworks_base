@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c304bee0_3ccc98b7",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T08:25:49Z",
+      "side": 1,
+      "message": "Nit: I think either this does not need to be synchronized, or the class comment should be updated",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 35
+      },
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75108b32_2c28958a",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T08:25:49Z",
+      "side": 1,
+      "message": "Is it possible that when the handler queue gets to this event, 2+ have been queued already ? If yes you might want to check: \nif (mListeners.get(slot) \u003d\u003d null) return;\n\nFdEventsReader handled this by setting mFd \u003d null (so isRunning() \u003d\u003d false) when readPacket returns 0, so readPacket is never called again",
+      "range": {
+        "startLine": 213,
+        "startChar": 16,
+        "endLine": 213,
+        "endChar": 27
+      },
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddceb359_475ae27c",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T08:25:49Z",
+      "side": 1,
+      "message": "Nit: .d or .i ?",
+      "range": {
+        "startLine": 216,
+        "startChar": 32,
+        "endLine": 216,
+        "endChar": 34
+      },
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4336f566_dd64106e",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-05T08:25:49Z",
+      "side": 1,
+      "message": "Nit: .d or .i ?",
+      "range": {
+        "startLine": 257,
+        "startChar": 24,
+        "endLine": 257,
+        "endChar": 26
+      },
+      "revId": "66e8a2e1fdd2c4f87a94f6756a1c385793f85b97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
