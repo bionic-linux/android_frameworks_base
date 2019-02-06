@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3428bd60_b769b9e2",
+        "filename": "packages/NetworkStack/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-06T06:25:44Z",
+      "side": 1,
+      "message": "Rémi is not even in there (maybe he should)\n\nRegardless I\u0027m not sure netd ownership is the best proxy for connectivity stack.",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "37d0f1bb9657148be33601a8cc9728bd24617e0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
