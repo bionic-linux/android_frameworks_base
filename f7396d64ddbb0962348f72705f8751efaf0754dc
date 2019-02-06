@@ -70,6 +70,30 @@
       "revId": "f7396d64ddbb0962348f72705f8751efaf0754dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2d15d9_3aefa0d4",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-06T02:18:06Z",
+      "side": 1,
+      "message": "Note: fix is in child patch KA04",
+      "parentUuid": "fd817be8_93248d6d",
+      "range": {
+        "startLine": 241,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "f7396d64ddbb0962348f72705f8751efaf0754dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
