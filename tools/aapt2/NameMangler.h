@@ -42,7 +42,8 @@ struct NameManglerPolicy {
 
 class NameMangler {
  public:
-  explicit NameMangler(NameManglerPolicy policy) : policy_(policy) {}
+  explicit NameMangler(NameManglerPolicy policy) : policy_(policy) {
+  }
 
   Maybe<ResourceName> MangleName(const ResourceName& name) {
     if (policy_.target_package_name == name.package ||
@@ -51,8 +52,7 @@ class NameMangler {
     }
 
     std::string mangled_entry_name = MangleEntry(name.package, name.entry);
-    return ResourceName(policy_.target_package_name, name.type,
-                        mangled_entry_name);
+    return ResourceName(policy_.target_package_name, name.type, mangled_entry_name);
   }
 
   bool ShouldMangle(const std::string& package) const {
@@ -62,7 +62,9 @@ class NameMangler {
     return policy_.packages_to_mangle.count(package) != 0;
   }
 
-  const std::string& GetTargetPackageName() const { return policy_.target_package_name; }
+  const std::string& GetTargetPackageName() const {
+    return policy_.target_package_name;
+  }
 
   /**
    * Returns a mangled name that is a combination of `name` and `package`.

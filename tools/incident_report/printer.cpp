@@ -16,33 +16,28 @@
 
 #include "printer.h"
 
-#include <unistd.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
+#include <unistd.h>
 
-#define INITIAL_BUF_SIZE (16*1024)
+#define INITIAL_BUF_SIZE (16 * 1024)
 
 char const* SPACES = "                                                            ";
 const int SPACE_COUNT = strlen(SPACES);
 
 Out::Out(int fd)
-    :mOut(fd == STDOUT_FILENO ? stdout : fdopen(fd, "w")),
-     mBufSize(INITIAL_BUF_SIZE),
-     mBuf((char*)malloc(INITIAL_BUF_SIZE)),
-     mIndent(0),
-     mPendingIndent(false)
-{
-}
+    : mOut(fd == STDOUT_FILENO ? stdout : fdopen(fd, "w")),
+      mBufSize(INITIAL_BUF_SIZE),
+      mBuf((char*)malloc(INITIAL_BUF_SIZE)),
+      mIndent(0),
+      mPendingIndent(false) {}
 
-Out::~Out()
-{
+Out::~Out() {
     fclose(mOut);
 }
 
-int
-Out::reallocate(int size)
-{
+int Out::reallocate(int size) {
     if (size > mBufSize) {
         char* p = (char*)malloc(size);
         if (p != NULL) {
@@ -55,9 +50,7 @@ Out::reallocate(int size)
     return mBufSize;
 }
 
-void
-Out::printf(const char* format, ...)
-{
+void Out::printf(const char* format, ...) {
     if (mPendingIndent) {
         print_indent();
         mPendingIndent = false;
@@ -92,30 +85,24 @@ Out::printf(const char* format, ...)
                         print_indent();
                     }
                 }
-                last = p+1;
+                last = p + 1;
             } while (p != NULL);
         }
     }
 }
 
-void
-Out::indent()
-{
+void Out::indent() {
     mPendingIndent = true;
     mIndent += 2;
 }
 
-void
-Out::dedent()
-{
+void Out::dedent() {
     if (mIndent > 0) {
         mIndent -= 2;
     }
 }
 
-void
-Out::print_indent()
-{
+void Out::print_indent() {
 #if 0
     fprintf(mOut, "[%d]", mIndent);
 #else

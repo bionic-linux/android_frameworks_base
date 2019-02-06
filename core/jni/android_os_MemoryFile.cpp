@@ -18,16 +18,15 @@
 #include <utils/Log.h>
 
 #include <cutils/ashmem.h>
-#include "core_jni_helpers.h"
 #include <nativehelper/JNIHelp.h>
-#include <unistd.h>
 #include <sys/mman.h>
-
+#include <unistd.h>
+#include "core_jni_helpers.h"
 
 namespace android {
 
 static jboolean android_os_MemoryFile_pin(JNIEnv* env, jobject clazz, jobject fileDescriptor,
-        jboolean pin) {
+                                          jboolean pin) {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     int result = (pin ? ashmem_pin_region(fd, 0, 0) : ashmem_unpin_region(fd, 0, 0));
     if (result < 0) {
@@ -36,8 +35,7 @@ static jboolean android_os_MemoryFile_pin(JNIEnv* env, jobject clazz, jobject fi
     return result == ASHMEM_WAS_PURGED;
 }
 
-static jint android_os_MemoryFile_get_size(JNIEnv* env, jobject clazz,
-        jobject fileDescriptor) {
+static jint android_os_MemoryFile_get_size(JNIEnv* env, jobject clazz, jobject fileDescriptor) {
     int fd = jniGetFDFromFileDescriptor(env, fileDescriptor);
     // Use ASHMEM_GET_SIZE to find out if the fd refers to an ashmem region.
     // ASHMEM_GET_SIZE should succeed for all ashmem regions, and the kernel
@@ -47,23 +45,21 @@ static jint android_os_MemoryFile_get_size(JNIEnv* env, jobject clazz,
         if (errno == ENOTTY) {
             // ENOTTY means that the ioctl does not apply to this object,
             // i.e., it is not an ashmem region.
-            return (jint) -1;
+            return (jint)-1;
         }
         // Some other error, throw exception
         jniThrowIOException(env, errno);
-        return (jint) -1;
+        return (jint)-1;
     }
-    return (jint) result;
+    return (jint)result;
 }
 
 static const JNINativeMethod methods[] = {
-    {"native_pin",   "(Ljava/io/FileDescriptor;Z)Z", (void*)android_os_MemoryFile_pin},
-    {"native_get_size", "(Ljava/io/FileDescriptor;)I",
-            (void*)android_os_MemoryFile_get_size}
-};
+        {"native_pin", "(Ljava/io/FileDescriptor;Z)Z", (void*)android_os_MemoryFile_pin},
+        {"native_get_size", "(Ljava/io/FileDescriptor;)I", (void*)android_os_MemoryFile_get_size}};
 
 int register_android_os_MemoryFile(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/os/MemoryFile", methods, NELEM(methods));
 }
 
-}
+}  // namespace android

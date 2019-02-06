@@ -37,27 +37,23 @@ struct ManifestFixerTest : public ::testing::Test {
             .SetCompilationPackage("android")
             .SetPackageId(0x01)
             .SetNameManglerPolicy(NameManglerPolicy{"android"})
-            .AddSymbolSource(
-                test::StaticSymbolSourceBuilder()
-                    .AddSymbol(
-                        "android:attr/package", ResourceId(0x01010000),
-                        test::AttributeBuilder()
-                            .SetTypeMask(android::ResTable_map::TYPE_STRING)
-                            .Build())
-                    .AddSymbol(
-                        "android:attr/minSdkVersion", ResourceId(0x01010001),
-                        test::AttributeBuilder()
-                            .SetTypeMask(android::ResTable_map::TYPE_STRING |
-                                         android::ResTable_map::TYPE_INTEGER)
-                            .Build())
-                    .AddSymbol(
-                        "android:attr/targetSdkVersion", ResourceId(0x01010002),
-                        test::AttributeBuilder()
-                            .SetTypeMask(android::ResTable_map::TYPE_STRING |
-                                         android::ResTable_map::TYPE_INTEGER)
-                            .Build())
-                    .AddSymbol("android:string/str", ResourceId(0x01060000))
-                    .Build())
+            .AddSymbolSource(test::StaticSymbolSourceBuilder()
+                                 .AddSymbol("android:attr/package", ResourceId(0x01010000),
+                                            test::AttributeBuilder()
+                                                .SetTypeMask(android::ResTable_map::TYPE_STRING)
+                                                .Build())
+                                 .AddSymbol("android:attr/minSdkVersion", ResourceId(0x01010001),
+                                            test::AttributeBuilder()
+                                                .SetTypeMask(android::ResTable_map::TYPE_STRING |
+                                                             android::ResTable_map::TYPE_INTEGER)
+                                                .Build())
+                                 .AddSymbol("android:attr/targetSdkVersion", ResourceId(0x01010002),
+                                            test::AttributeBuilder()
+                                                .SetTypeMask(android::ResTable_map::TYPE_STRING |
+                                                             android::ResTable_map::TYPE_INTEGER)
+                                                .Build())
+                                 .AddSymbol("android:string/str", ResourceId(0x01060000))
+                                 .Build())
             .Build();
   }
 
@@ -65,8 +61,8 @@ struct ManifestFixerTest : public ::testing::Test {
     return VerifyWithOptions(str, {});
   }
 
-  std::unique_ptr<xml::XmlResource> VerifyWithOptions(
-      const StringPiece& str, const ManifestFixerOptions& options) {
+  std::unique_ptr<xml::XmlResource> VerifyWithOptions(const StringPiece& str,
+                                                      const ManifestFixerOptions& options) {
     std::unique_ptr<xml::XmlResource> doc = test::BuildXmlDom(str);
     ManifestFixer fixer(options);
     if (fixer.Consume(mContext.get(), doc.get())) {
@@ -220,17 +216,13 @@ TEST_F(ManifestFixerTest, UsesSdkMustComeBeforeApplication) {
   // vector.
   // Since there are no namespaces here, these children are direct descendants
   // of manifest.
-  auto uses_sdk_iter =
-      std::find_if(manifest_el->children.begin(), manifest_el->children.end(),
-                   [&](const std::unique_ptr<xml::Node>& child) {
-                     return child.get() == uses_sdk_el;
-                   });
+  auto uses_sdk_iter = std::find_if(
+      manifest_el->children.begin(), manifest_el->children.end(),
+      [&](const std::unique_ptr<xml::Node>& child) { return child.get() == uses_sdk_el; });
 
-  auto application_iter =
-      std::find_if(manifest_el->children.begin(), manifest_el->children.end(),
-                   [&](const std::unique_ptr<xml::Node>& child) {
-                     return child.get() == application_el;
-                   });
+  auto application_iter = std::find_if(
+      manifest_el->children.begin(), manifest_el->children.end(),
+      [&](const std::unique_ptr<xml::Node>& child) { return child.get() == application_el; });
 
   ASSERT_THAT(uses_sdk_iter, Ne(manifest_el->children.end()));
   ASSERT_THAT(application_iter, Ne(manifest_el->children.end()));
@@ -299,8 +291,7 @@ TEST_F(ManifestFixerTest, RenameManifestPackageAndFullyQualifyClasses) {
   EXPECT_THAT(attr->value, StrEq("com.google.android.Receiver"));
 }
 
-TEST_F(ManifestFixerTest,
-       RenameManifestInstrumentationPackageAndFullyQualifyTarget) {
+TEST_F(ManifestFixerTest, RenameManifestInstrumentationPackageAndFullyQualifyTarget) {
   ManifestFixerOptions options;
   options.rename_instrumentation_target_package = std::string("com.android");
 
@@ -315,12 +306,10 @@ TEST_F(ManifestFixerTest,
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Element* instrumentation_el =
-      manifest_el->FindChild({}, "instrumentation");
+  xml::Element* instrumentation_el = manifest_el->FindChild({}, "instrumentation");
   ASSERT_THAT(instrumentation_el, NotNull());
 
-  xml::Attribute* attr =
-      instrumentation_el->FindAttribute(xml::kSchemaAndroid, "targetPackage");
+  xml::Attribute* attr = instrumentation_el->FindAttribute(xml::kSchemaAndroid, "targetPackage");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("com.android"));
 }
@@ -339,8 +328,7 @@ TEST_F(ManifestFixerTest, UseDefaultVersionNameAndCode) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Beta"));
 
@@ -365,8 +353,7 @@ TEST_F(ManifestFixerTest, DontUseDefaultVersionNameAndCode) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Alpha"));
 
@@ -392,8 +379,7 @@ TEST_F(ManifestFixerTest, ReplaceVersionNameAndCode) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Beta"));
 
@@ -418,8 +404,7 @@ TEST_F(ManifestFixerTest, ReplaceVersionName) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Beta"));
 
@@ -444,8 +429,7 @@ TEST_F(ManifestFixerTest, ReplaceVersionCode) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Alpha"));
 
@@ -469,8 +453,7 @@ TEST_F(ManifestFixerTest, DontReplaceVersionNameOrCode) {
   xml::Element* manifest_el = doc->root.get();
   ASSERT_THAT(manifest_el, NotNull());
 
-  xml::Attribute* attr =
-      manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
+  xml::Attribute* attr = manifest_el->FindAttribute(xml::kSchemaAndroid, "versionName");
   ASSERT_THAT(attr, NotNull());
   EXPECT_THAT(attr->value, StrEq("Alpha"));
 
@@ -574,39 +557,44 @@ TEST_F(ManifestFixerTest, ApplicationInjectDebuggable) {
   // Inject the debuggable attribute when the attribute is not present and the
   // flag is present
   std::unique_ptr<xml::XmlResource> manifest = VerifyWithOptions(no_d, options);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), NotNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              NotNull());
 
   // Set the debuggable flag to true if the attribute is false and the flag is
   // present
   manifest = VerifyWithOptions(false_d, options);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), NotNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              NotNull());
 
   // Keep debuggable flag true if the attribute is true and the flag is present
   manifest = VerifyWithOptions(true_d, options);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), NotNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              NotNull());
 
   // Do not inject the debuggable attribute when the attribute is not present
   // and the flag is not present
   manifest = Verify(no_d);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), IsNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              IsNull());
 
   // Do not set the debuggable flag to true if the attribute is false and the
   // flag is not present
   manifest = Verify(false_d);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), IsNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              IsNull());
 
   // Keep debuggable flag true if the attribute is true and the flag is not
   // present
   manifest = Verify(true_d);
-  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute(
-      {}, "application", xml::kSchemaAndroid, "debuggable", "true"), NotNull());
+  EXPECT_THAT(manifest->root.get()->FindChildWithAttribute({}, "application", xml::kSchemaAndroid,
+                                                           "debuggable", "true"),
+              NotNull());
 }
-
 
 TEST_F(ManifestFixerTest, IgnoreNamespacedElements) {
   std::string input = R"EOF(
@@ -673,8 +661,7 @@ TEST_F(ManifestFixerTest, UnexpectedElementsInManifest) {
   options.warn_validation = true;
 
   // Unexpected element should result in a warning if the flag is set to 'true'.
-  std::unique_ptr<xml::XmlResource> manifest =
-      VerifyWithOptions(input, options);
+  std::unique_ptr<xml::XmlResource> manifest = VerifyWithOptions(input, options);
   ASSERT_THAT(manifest, NotNull());
 
   // Unexpected element should result in an error if the flag is set to 'false'.

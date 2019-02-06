@@ -26,9 +26,7 @@ using namespace android;
 
 namespace split {
 
-SplitDescription::SplitDescription()
-: abi(abi::Variant_none) {
-}
+SplitDescription::SplitDescription() : abi(abi::Variant_none) {}
 
 int SplitDescription::compare(const SplitDescription& rhs) const {
     int cmp;
@@ -37,7 +35,8 @@ int SplitDescription::compare(const SplitDescription& rhs) const {
     return config.compareLogical(rhs.config);
 }
 
-bool SplitDescription::isBetterThan(const SplitDescription& o, const SplitDescription& target) const {
+bool SplitDescription::isBetterThan(const SplitDescription& o,
+                                    const SplitDescription& target) const {
     if (abi != abi::Variant_none || o.abi != abi::Variant_none) {
         abi::Family family = abi::getFamily(abi);
         abi::Family oFamily = abi::getFamily(o.abi);
@@ -82,8 +81,7 @@ String8 SplitDescription::toString() const {
     return str;
 }
 
-ssize_t parseAbi(const Vector<String8>& parts, const ssize_t index,
-        SplitDescription* outSplit) {
+ssize_t parseAbi(const Vector<String8>& parts, const ssize_t index, SplitDescription* outSplit) {
     const ssize_t N = parts.size();
     abi::Variant abi = abi::Variant_none;
     ssize_t endIndex = index;
@@ -172,4 +170,4 @@ success:
     return true;
 }
 
-} // namespace split
+}  // namespace split

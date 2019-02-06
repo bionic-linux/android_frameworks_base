@@ -27,17 +27,17 @@ using ::android::StringPiece;
 namespace aapt {
 namespace io {
 
-ZipFile::ZipFile(ZipArchiveHandle handle, const ZipEntry& entry,
-                 const Source& source)
-    : zip_handle_(handle), zip_entry_(entry), source_(source) {}
+ZipFile::ZipFile(ZipArchiveHandle handle, const ZipEntry& entry, const Source& source)
+    : zip_handle_(handle), zip_entry_(entry), source_(source) {
+}
 
 std::unique_ptr<IData> ZipFile::OpenAsData() {
   if (zip_entry_.method == kCompressStored) {
     int fd = GetFileDescriptor(zip_handle_);
 
     android::FileMap file_map;
-    bool result = file_map.create(nullptr, fd, zip_entry_.offset,
-                                  zip_entry_.uncompressed_length, true);
+    bool result =
+        file_map.create(nullptr, fd, zip_entry_.offset, zip_entry_.uncompressed_length, true);
     if (!result) {
       return {};
     }
@@ -46,14 +46,12 @@ std::unique_ptr<IData> ZipFile::OpenAsData() {
   } else {
     std::unique_ptr<uint8_t[]> data =
         std::unique_ptr<uint8_t[]>(new uint8_t[zip_entry_.uncompressed_length]);
-    int32_t result =
-        ExtractToMemory(zip_handle_, &zip_entry_, data.get(),
-                        static_cast<uint32_t>(zip_entry_.uncompressed_length));
+    int32_t result = ExtractToMemory(zip_handle_, &zip_entry_, data.get(),
+                                     static_cast<uint32_t>(zip_entry_.uncompressed_length));
     if (result != 0) {
       return {};
     }
-    return util::make_unique<MallocData>(std::move(data),
-                                         zip_entry_.uncompressed_length);
+    return util::make_unique<MallocData>(std::move(data), zip_entry_.uncompressed_length);
   }
 }
 
@@ -69,9 +67,9 @@ bool ZipFile::WasCompressed() {
   return zip_entry_.method != kCompressStored;
 }
 
-ZipFileCollectionIterator::ZipFileCollectionIterator(
-    ZipFileCollection* collection)
-    : current_(collection->files_.begin()), end_(collection->files_.end()) {}
+ZipFileCollectionIterator::ZipFileCollectionIterator(ZipFileCollection* collection)
+    : current_(collection->files_.begin()), end_(collection->files_.end()) {
+}
 
 bool ZipFileCollectionIterator::HasNext() {
   return current_ != end_;
@@ -83,10 +81,11 @@ IFile* ZipFileCollectionIterator::Next() {
   return result;
 }
 
-ZipFileCollection::ZipFileCollection() : handle_(nullptr) {}
+ZipFileCollection::ZipFileCollection() : handle_(nullptr) {
+}
 
-std::unique_ptr<ZipFileCollection> ZipFileCollection::Create(
-    const StringPiece& path, std::string* out_error) {
+std::unique_ptr<ZipFileCollection> ZipFileCollection::Create(const StringPiece& path,
+                                                             std::string* out_error) {
   constexpr static const int32_t kEmptyArchive = -6;
 
   std::unique_ptr<ZipFileCollection> collection =
@@ -119,8 +118,7 @@ std::unique_ptr<ZipFileCollection> ZipFileCollection::Create(
   ZipEntry zip_data;
   while ((result = Next(cookie, &zip_data, &zip_entry_name)) == 0) {
     std::string zip_entry_path =
-        std::string(reinterpret_cast<const char*>(zip_entry_name.name),
-                    zip_entry_name.name_length);
+        std::string(reinterpret_cast<const char*>(zip_entry_name.name), zip_entry_name.name_length);
     std::string nested_path = path.to_string() + "@" + zip_entry_path;
     std::unique_ptr<IFile> file =
         util::make_unique<ZipFile>(collection->handle_, zip_data, Source(nested_path));

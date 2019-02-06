@@ -37,24 +37,32 @@ namespace android {
 
 template <log_id_t LogID, const char* EventClassDescriptor>
 class EventLogHelper {
-public:
+  public:
     static void Init(JNIEnv* env) {
-        struct { const char *name; jclass *clazz; } gClasses[] = {
-                { EventClassDescriptor, &gEventClass },
-                { "java/lang/Integer", &gIntegerClass },
-                { "java/lang/Long", &gLongClass },
-                { "java/lang/Float", &gFloatClass },
-                { "java/lang/String", &gStringClass },
-                { "java/util/Collection", &gCollectionClass },
+        struct {
+            const char* name;
+            jclass* clazz;
+        } gClasses[] = {
+                {EventClassDescriptor, &gEventClass}, {"java/lang/Integer", &gIntegerClass},
+                {"java/lang/Long", &gLongClass},      {"java/lang/Float", &gFloatClass},
+                {"java/lang/String", &gStringClass},  {"java/util/Collection", &gCollectionClass},
         };
-        struct { jclass *c; const char *name, *ft; jfieldID *id; } gFields[] = {
-                { &gIntegerClass, "value", "I", &gIntegerValueID },
-                { &gLongClass, "value", "J", &gLongValueID },
-                { &gFloatClass, "value", "F", &gFloatValueID },
+        struct {
+            jclass* c;
+            const char *name, *ft;
+            jfieldID* id;
+        } gFields[] = {
+                {&gIntegerClass, "value", "I", &gIntegerValueID},
+                {&gLongClass, "value", "J", &gLongValueID},
+                {&gFloatClass, "value", "F", &gFloatValueID},
         };
-        struct { jclass *c; const char *name, *mt; jmethodID *id; } gMethods[] = {
-                { &gEventClass, "<init>", "([B)V", &gEventInitID },
-                { &gCollectionClass, "add", "(Ljava/lang/Object;)Z", &gCollectionAddID },
+        struct {
+            jclass* c;
+            const char *name, *mt;
+            jmethodID* id;
+        } gMethods[] = {
+                {&gEventClass, "<init>", "([B)V", &gEventInitID},
+                {&gCollectionClass, "add", "(Ljava/lang/Object;)Z", &gCollectionAddID},
         };
 
         for (size_t i = 0; i < NELEM(gClasses); ++i) {
@@ -62,36 +70,35 @@ public:
             *gClasses[i].clazz = MakeGlobalRefOrDie(env, clazz.get());
         }
         for (size_t i = 0; i < NELEM(gFields); ++i) {
-            *gFields[i].id = GetFieldIDOrDie(env,
-                    *gFields[i].c, gFields[i].name, gFields[i].ft);
+            *gFields[i].id = GetFieldIDOrDie(env, *gFields[i].c, gFields[i].name, gFields[i].ft);
         }
 
         for (size_t i = 0; i < NELEM(gMethods); ++i) {
-            *gMethods[i].id = GetMethodIDOrDie(env,
-                    *gMethods[i].c, gMethods[i].name, gMethods[i].mt);
+            *gMethods[i].id =
+                    GetMethodIDOrDie(env, *gMethods[i].c, gMethods[i].name, gMethods[i].mt);
         }
     }
 
     static jint writeEventInteger(JNIEnv* env ATTRIBUTE_UNUSED, jobject clazz ATTRIBUTE_UNUSED,
-            jint tag, jint value) {
+                                  jint tag, jint value) {
         android_log_event_list ctx(tag);
         ctx << (int32_t)value;
         return ctx.write(LogID);
     }
     static jint writeEventLong(JNIEnv* env ATTRIBUTE_UNUSED, jobject clazz ATTRIBUTE_UNUSED,
-            jint tag, jlong value) {
+                               jint tag, jlong value) {
         android_log_event_list ctx(tag);
         ctx << (int64_t)value;
         return ctx.write(LogID);
     }
     static jint writeEventFloat(JNIEnv* env ATTRIBUTE_UNUSED, jobject clazz ATTRIBUTE_UNUSED,
-            jint tag, jfloat value) {
+                                jint tag, jfloat value) {
         android_log_event_list ctx(tag);
         ctx << (float)value;
         return ctx.write(LogID);
     }
     static jint writeEventString(JNIEnv* env, jobject clazz ATTRIBUTE_UNUSED, jint tag,
-            jstring value) {
+                                 jstring value) {
         android_log_event_list ctx(tag);
         // Don't throw NPE -- I feel like it's sort of mean for a logging function
         // to be all crashy if you pass in NULL -- but make the NULL value explicit.
@@ -99,7 +106,7 @@ public:
         return ctx.write(LogID);
     }
     static jint writeEventArray(JNIEnv* env, jobject clazz ATTRIBUTE_UNUSED, jint tag,
-            jobjectArray value) {
+                                jobjectArray value) {
         android_log_event_list ctx(tag);
 
         if (value == nullptr) {
@@ -114,7 +121,7 @@ public:
             if (item == nullptr) {
                 ctx << "NULL";
             } else if (env->IsInstanceOf(item.get(), gStringClass)) {
-                ctx << ScopedUtfChars(env, (jstring) item.get()).c_str();
+                ctx << ScopedUtfChars(env, (jstring)item.get()).c_str();
             } else if (env->IsInstanceOf(item.get(), gIntegerClass)) {
                 ctx << (int32_t)env->GetIntField(item.get(), gIntegerValueID);
             } else if (env->IsInstanceOf(item.get(), gLongClass)) {
@@ -122,9 +129,8 @@ public:
             } else if (env->IsInstanceOf(item.get(), gFloatClass)) {
                 ctx << (float)env->GetFloatField(item.get(), gFloatValueID);
             } else {
-                jniThrowException(env,
-                        "java/lang/IllegalArgumentException",
-                        "Invalid payload item type");
+                jniThrowException(env, "java/lang/IllegalArgumentException",
+                                  "Invalid payload item type");
                 return -1;
             }
         }
@@ -136,12 +142,12 @@ public:
     }
 
     static void readEvents(JNIEnv* env, int loggerMode, jintArray jTags, jlong startTime,
-            jobject out) {
+                           jobject out) {
         std::unique_ptr<struct logger_list, decltype(&android_logger_list_close)> logger_list(
                 nullptr, android_logger_list_close);
         if (startTime) {
-            logger_list.reset(android_logger_list_alloc_time(loggerMode,
-                    log_time(startTime / NS_PER_SEC, startTime % NS_PER_SEC), 0));
+            logger_list.reset(android_logger_list_alloc_time(
+                    loggerMode, log_time(startTime / NS_PER_SEC, startTime % NS_PER_SEC), 0));
         } else {
             logger_list.reset(android_logger_list_alloc(loggerMode, 0, 0));
         }
@@ -183,7 +189,7 @@ public:
                 continue;
             }
 
-            int32_t tag = * (int32_t *) log_msg.msg();
+            int32_t tag = *(int32_t*)log_msg.msg();
 
             if (jTags != nullptr) {
                 bool found = false;
@@ -207,7 +213,7 @@ public:
             }
 
             ScopedLocalRef<jobject> event(env,
-                    env->NewObject(gEventClass, gEventInitID, array.get()));
+                                          env->NewObject(gEventClass, gEventInitID, array.get()));
             if (event == nullptr) {
                 return;
             }
@@ -219,7 +225,7 @@ public:
         }
     }
 
-private:
+  private:
     static jclass gCollectionClass;
     static jmethodID gCollectionAddID;
 

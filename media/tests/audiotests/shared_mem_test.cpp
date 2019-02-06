@@ -16,19 +16,18 @@
 #define LOG_NDEBUG 0
 #define LOG_TAG "shared_mem_test"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <cutils/properties.h>
+#include <math.h>
 #include <media/AudioSystem.h>
 #include <media/AudioTrack.h>
-#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "shared_mem_test.h"
+#include <binder/MemoryBase.h>
 #include <binder/MemoryDealer.h>
 #include <binder/MemoryHeapBase.h>
-#include <binder/MemoryBase.h>
 #include <binder/ProcessState.h>
-
+#include "shared_mem_test.h"
 
 #include <utils/Log.h>
 
@@ -37,21 +36,18 @@
 namespace android {
 
 /************************************************************
-*
-*    Constructor
-*
-************************************************************/
+ *
+ *    Constructor
+ *
+ ************************************************************/
 AudioTrackTest::AudioTrackTest(void) {
-
-    InitSine();         // init sine table
-
+    InitSine();  // init sine table
 }
 
-
 /************************************************************
-*
-*
-************************************************************/
+ *
+ *
+ ************************************************************/
 void AudioTrackTest::Execute(void) {
     if (Test01() == 0) {
         ALOGD("01 passed\n");
@@ -61,14 +57,13 @@ void AudioTrackTest::Execute(void) {
 }
 
 /************************************************************
-*
-*    Shared memory test
-*
-************************************************************/
+ *
+ *    Shared memory test
+ *
+ ************************************************************/
 #define BUF_SZ 44100
 
 int AudioTrackTest::Test01() {
-
     sp<MemoryDealer> heap;
     sp<IMemory> iMem;
     uint8_t* p;
@@ -88,21 +83,20 @@ int AudioTrackTest::Test01() {
     Generate(smpBuf, BUF_SZ, amplitude, phi, dPhi);  // fill buffer
 
     for (int i = 0; i < 1024; i++) {
-        heap = new MemoryDealer(1024*1024, "AudioTrack Heap Base");
+        heap = new MemoryDealer(1024 * 1024, "AudioTrack Heap Base");
 
-        iMem = heap->allocate(BUF_SZ*sizeof(short));
+        iMem = heap->allocate(BUF_SZ * sizeof(short));
 
         p = static_cast<uint8_t*>(iMem->pointer());
-        memcpy(p, smpBuf, BUF_SZ*sizeof(short));
+        memcpy(p, smpBuf, BUF_SZ * sizeof(short));
 
-        sp<AudioTrack> track = new AudioTrack(AUDIO_STREAM_MUSIC,// stream type
-               rate,
-               AUDIO_FORMAT_PCM_16_BIT,// word length, PCM
-               AUDIO_CHANNEL_OUT_MONO,
-               iMem);
+        sp<AudioTrack> track = new AudioTrack(AUDIO_STREAM_MUSIC,  // stream type
+                                              rate,
+                                              AUDIO_FORMAT_PCM_16_BIT,  // word length, PCM
+                                              AUDIO_CHANNEL_OUT_MONO, iMem);
 
         status_t status = track->initCheck();
-        if(status != NO_ERROR) {
+        if (status != NO_ERROR) {
             track.clear();
             ALOGD("Failed for initCheck()");
             return -1;
@@ -122,40 +116,38 @@ int AudioTrackTest::Test01() {
     }
 
     return 0;
-
 }
 
 /************************************************************
-*
-*    Generate a mono buffer
-*    Error is less than 3lsb
-*
-************************************************************/
-void AudioTrackTest::Generate(short *buffer, long bufferSz, long amplitude, unsigned long &phi, long dPhi)
-{
+ *
+ *    Generate a mono buffer
+ *    Error is less than 3lsb
+ *
+ ************************************************************/
+void AudioTrackTest::Generate(short* buffer, long bufferSz, long amplitude, unsigned long& phi,
+                              long dPhi) {
     // fill buffer
-    for(int i0=0; i0<bufferSz; i0++) {
-        buffer[i0] = ComputeSine( amplitude, phi);
+    for (int i0 = 0; i0 < bufferSz; i0++) {
+        buffer[i0] = ComputeSine(amplitude, phi);
         phi += dPhi;
     }
 }
 
 /************************************************************
-*
-*    Generate a sine
-*    Error is less than 3lsb
-*
-************************************************************/
-short AudioTrackTest::ComputeSine(long amplitude, long phi)
-{
-    long pi13 = 25736;   // 2^13*pi
+ *
+ *    Generate a sine
+ *    Error is less than 3lsb
+ *
+ ************************************************************/
+short AudioTrackTest::ComputeSine(long amplitude, long phi) {
+    long pi13 = 25736;  // 2^13*pi
     long sample;
     long l0, l1;
 
-    sample = (amplitude*sin1024[(phi>>22) & 0x3ff]) >> 15;
+    sample = (amplitude * sin1024[(phi >> 22) & 0x3ff]) >> 15;
     // correct with interpolation
-    l0 = (phi>>12) & 0x3ff;         // 2^20 * x / (2*pi)
-    l1 = (amplitude*sin1024[((phi>>22) + 256) & 0x3ff]) >> 15;    // 2^15*cosine
+    l0 = (phi >> 12) & 0x3ff;                                       // 2^20 * x / (2*pi)
+    l1 = (amplitude * sin1024[((phi >> 22) + 256) & 0x3ff]) >> 15;  // 2^15*cosine
     l0 = (l0 * l1) >> 10;
     l0 = (l0 * pi13) >> 22;
     sample = sample + l0;
@@ -163,34 +155,33 @@ short AudioTrackTest::ComputeSine(long amplitude, long phi)
     return (short)sample;
 }
 
-
 /************************************************************
-*
-*    init sine table
-*
-************************************************************/
+ *
+ *    init sine table
+ *
+ ************************************************************/
 void AudioTrackTest::InitSine(void) {
     double phi = 0;
     double dPhi = 2 * M_PI / SIN_SZ;
-    for(int i0 = 0; i0<SIN_SZ; i0++) {
+    for (int i0 = 0; i0 < SIN_SZ; i0++) {
         long d0;
 
         d0 = 32768. * sin(phi);
         phi += dPhi;
-        if(d0 >= 32767) d0 = 32767;
-        if(d0 <= -32768) d0 = -32768;
+        if (d0 >= 32767) d0 = 32767;
+        if (d0 <= -32768) d0 = -32768;
         sin1024[i0] = (short)d0;
     }
 }
 
 /************************************************************
-*
-*    main in name space
-*
-************************************************************/
+ *
+ *    main in name space
+ *
+ ************************************************************/
 int main() {
     ProcessState::self()->startThreadPool();
-    AudioTrackTest *test;
+    AudioTrackTest* test;
 
     test = new AudioTrackTest();
     test->Execute();
@@ -199,14 +190,13 @@ int main() {
     return 0;
 }
 
-}
+}  // namespace android
 
 /************************************************************
-*
-*    global main
-*
-************************************************************/
+ *
+ *    global main
+ *
+ ************************************************************/
 int main() {
-
     return android::main();
 }

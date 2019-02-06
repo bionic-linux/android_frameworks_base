@@ -28,6 +28,6 @@ inline std::ostream& operator<<(std::ostream& stream, const String8& str) {
     return stream << str.string();
 }
 
-}
+}  // namespace android
 
 #endif

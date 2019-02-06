@@ -17,8 +17,8 @@
 #ifndef __AAPT_CONFIG_H
 #define __AAPT_CONFIG_H
 
-#include <set>
 #include <utils/String8.h>
+#include <set>
 
 #include "ConfigDescription.h"
 
@@ -81,7 +81,8 @@ android::String8 getVersion(const android::ResTable_config& config);
  * Returns true if the two configurations only differ by the specified axis.
  * The axis mask is a bitmask of CONFIG_* constants.
  */
-bool isSameExcept(const android::ResTable_config& a, const android::ResTable_config& b, int configMask);
+bool isSameExcept(const android::ResTable_config& a, const android::ResTable_config& b,
+                  int configMask);
 
 /**
  * Returns true if the configuration only has the density specified. In the case
@@ -89,6 +90,6 @@ bool isSameExcept(const android::ResTable_config& a, const android::ResTable_con
  */
 bool isDensityOnly(const android::ResTable_config& config);
 
-} // namespace AaptConfig
+}  // namespace AaptConfig
 
-#endif // __AAPT_CONFIG_H
+#endif  // __AAPT_CONFIG_H

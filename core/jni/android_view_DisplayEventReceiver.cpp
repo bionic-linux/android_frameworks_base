@@ -24,10 +24,10 @@
 
 #include <android_runtime/AndroidRuntime.h>
 #include <androidfw/DisplayEventDispatcher.h>
+#include <gui/DisplayEventReceiver.h>
 #include <utils/Log.h>
 #include <utils/Looper.h>
 #include <utils/threads.h>
-#include <gui/DisplayEventReceiver.h>
 #include "android_os_MessageQueue.h"
 
 #include <nativehelper/ScopedLocalRef.h>
@@ -43,18 +43,17 @@ static struct {
     jmethodID dispatchHotplug;
 } gDisplayEventReceiverClassInfo;
 
-
 class NativeDisplayEventReceiver : public DisplayEventDispatcher {
-public:
-    NativeDisplayEventReceiver(JNIEnv* env,
-            jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource);
+  public:
+    NativeDisplayEventReceiver(JNIEnv* env, jobject receiverWeak,
+                               const sp<MessageQueue>& messageQueue, jint vsyncSource);
 
     void dispose();
 
-protected:
+  protected:
     virtual ~NativeDisplayEventReceiver();
 
-private:
+  private:
     jobject mReceiverWeakGlobal;
     sp<MessageQueue> mMessageQueue;
     DisplayEventReceiver mReceiver;
@@ -63,13 +62,13 @@ private:
     virtual void dispatchHotplug(nsecs_t timestamp, int32_t id, bool connected);
 };
 
-
-NativeDisplayEventReceiver::NativeDisplayEventReceiver(JNIEnv* env,
-        jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource) :
-        DisplayEventDispatcher(messageQueue->getLooper(),
-                static_cast<ISurfaceComposer::VsyncSource>(vsyncSource)),
-        mReceiverWeakGlobal(env->NewGlobalRef(receiverWeak)),
-        mMessageQueue(messageQueue) {
+NativeDisplayEventReceiver::NativeDisplayEventReceiver(JNIEnv* env, jobject receiverWeak,
+                                                       const sp<MessageQueue>& messageQueue,
+                                                       jint vsyncSource)
+    : DisplayEventDispatcher(messageQueue->getLooper(),
+                             static_cast<ISurfaceComposer::VsyncSource>(vsyncSource)),
+      mReceiverWeakGlobal(env->NewGlobalRef(receiverWeak)),
+      mMessageQueue(messageQueue) {
     ALOGV("receiver %p ~ Initializing display event receiver.", this);
 }
 
@@ -90,8 +89,8 @@ void NativeDisplayEventReceiver::dispatchVsync(nsecs_t timestamp, int32_t id, ui
     ScopedLocalRef<jobject> receiverObj(env, jniGetReferent(env, mReceiverWeakGlobal));
     if (receiverObj.get()) {
         ALOGV("receiver %p ~ Invoking vsync handler.", this);
-        env->CallVoidMethod(receiverObj.get(),
-                gDisplayEventReceiverClassInfo.dispatchVsync, timestamp, id, count);
+        env->CallVoidMethod(receiverObj.get(), gDisplayEventReceiverClassInfo.dispatchVsync,
+                            timestamp, id, count);
         ALOGV("receiver %p ~ Returned from vsync handler.", this);
     }
 
@@ -104,25 +103,24 @@ void NativeDisplayEventReceiver::dispatchHotplug(nsecs_t timestamp, int32_t id, 
     ScopedLocalRef<jobject> receiverObj(env, jniGetReferent(env, mReceiverWeakGlobal));
     if (receiverObj.get()) {
         ALOGV("receiver %p ~ Invoking hotplug handler.", this);
-        env->CallVoidMethod(receiverObj.get(),
-                gDisplayEventReceiverClassInfo.dispatchHotplug, timestamp, id, connected);
+        env->CallVoidMethod(receiverObj.get(), gDisplayEventReceiverClassInfo.dispatchHotplug,
+                            timestamp, id, connected);
         ALOGV("receiver %p ~ Returned from hotplug handler.", this);
     }
 
     mMessageQueue->raiseAndClearException(env, "dispatchHotplug");
 }
 
-
-static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
-        jobject messageQueueObj, jint vsyncSource) {
+static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak, jobject messageQueueObj,
+                        jint vsyncSource) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
     if (messageQueue == NULL) {
         jniThrowRuntimeException(env, "MessageQueue is not initialized.");
         return 0;
     }
 
-    sp<NativeDisplayEventReceiver> receiver = new NativeDisplayEventReceiver(env,
-            receiverWeak, messageQueue, vsyncSource);
+    sp<NativeDisplayEventReceiver> receiver =
+            new NativeDisplayEventReceiver(env, receiverWeak, messageQueue, vsyncSource);
     status_t status = receiver->initialize();
     if (status) {
         String8 message;
@@ -131,7 +129,7 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
         return 0;
     }
 
-    receiver->incStrong(gDisplayEventReceiverClassInfo.clazz); // retain a reference for the object
+    receiver->incStrong(gDisplayEventReceiverClassInfo.clazz);  // retain a reference for the object
     return reinterpret_cast<jlong>(receiver.get());
 }
 
@@ -139,7 +137,7 @@ static void nativeDispose(JNIEnv* env, jclass clazz, jlong receiverPtr) {
     NativeDisplayEventReceiver* receiver =
             reinterpret_cast<NativeDisplayEventReceiver*>(receiverPtr);
     receiver->dispose();
-    receiver->decStrong(gDisplayEventReceiverClassInfo.clazz); // drop reference held by the object
+    receiver->decStrong(gDisplayEventReceiverClassInfo.clazz);  // drop reference held by the object
 }
 
 static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jlong receiverPtr) {
@@ -153,19 +151,13 @@ static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jlong receiverPtr) {
     }
 }
 
-
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeInit",
-            "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;I)J",
-            (void*)nativeInit },
-    { "nativeDispose",
-            "(J)V",
-            (void*)nativeDispose },
-    // @FastNative
-    { "nativeScheduleVsync", "(J)V",
-            (void*)nativeScheduleVsync }
-};
+        /* name, signature, funcPtr */
+        {"nativeInit", "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;I)J",
+         (void*)nativeInit},
+        {"nativeDispose", "(J)V", (void*)nativeDispose},
+        // @FastNative
+        {"nativeScheduleVsync", "(J)V", (void*)nativeScheduleVsync}};
 
 int register_android_view_DisplayEventReceiver(JNIEnv* env) {
     int res = RegisterMethodsOrDie(env, "android/view/DisplayEventReceiver", gMethods,
@@ -174,12 +166,12 @@ int register_android_view_DisplayEventReceiver(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/view/DisplayEventReceiver");
     gDisplayEventReceiverClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
 
-    gDisplayEventReceiverClassInfo.dispatchVsync = GetMethodIDOrDie(env,
-            gDisplayEventReceiverClassInfo.clazz, "dispatchVsync", "(JII)V");
-    gDisplayEventReceiverClassInfo.dispatchHotplug = GetMethodIDOrDie(env,
-            gDisplayEventReceiverClassInfo.clazz, "dispatchHotplug", "(JIZ)V");
+    gDisplayEventReceiverClassInfo.dispatchVsync =
+            GetMethodIDOrDie(env, gDisplayEventReceiverClassInfo.clazz, "dispatchVsync", "(JII)V");
+    gDisplayEventReceiverClassInfo.dispatchHotplug = GetMethodIDOrDie(
+            env, gDisplayEventReceiverClassInfo.clazz, "dispatchHotplug", "(JIZ)V");
 
     return res;
 }
 
-} // namespace android
+}  // namespace android

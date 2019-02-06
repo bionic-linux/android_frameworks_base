@@ -25,9 +25,7 @@ namespace split {
 namespace test {
 
 struct AndRule : public Rule {
-    AndRule() {
-        op = Rule::AND_SUBRULES;
-    }
+    AndRule() { op = Rule::AND_SUBRULES; }
 
     AndRule& add(const Rule& rhs) {
         subrules.add(new Rule(rhs));
@@ -36,9 +34,7 @@ struct AndRule : public Rule {
 };
 
 struct OrRule : public Rule {
-    OrRule() {
-        op = Rule::OR_SUBRULES;
-    }
+    OrRule() { op = Rule::OR_SUBRULES; }
 
     OrRule& add(const Rule& rhs) {
         subrules.add(new Rule(rhs));
@@ -53,14 +49,13 @@ const Rule ContainsAnyRule(Rule::Key key, const char* str1);
 const Rule ContainsAnyRule(Rule::Key key, const char* str1, const char* str2);
 const Rule AlwaysTrue();
 
-::testing::AssertionResult RulePredFormat(
-        const char* actualExpr, const char* expectedExpr,
-        const android::sp<Rule>& actual, const Rule& expected);
+::testing::AssertionResult RulePredFormat(const char* actualExpr, const char* expectedExpr,
+                                          const android::sp<Rule>& actual, const Rule& expected);
 
 #define EXPECT_RULES_EQ(actual, expected) \
-        EXPECT_PRED_FORMAT2(::split::test::RulePredFormat, actual, expected)
+    EXPECT_PRED_FORMAT2(::split::test::RulePredFormat, actual, expected)
 
-} // namespace test
-} // namespace split
+}  // namespace test
+}  // namespace split
 
-#endif // H_AAPT_SPLIT_TEST_RULES
+#endif  // H_AAPT_SPLIT_TEST_RULES

@@ -16,8 +16,8 @@
 
 #include "PdfUtils.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
 #include "fpdfview.h"
 
@@ -28,8 +28,7 @@ namespace android {
 
 static int sUnmatchedPdfiumInitRequestCount = 0;
 
-int getBlock(void* param, unsigned long position, unsigned char* outBuffer,
-        unsigned long size) {
+int getBlock(void* param, unsigned long position, unsigned char* outBuffer, unsigned long size) {
     const int fd = reinterpret_cast<intptr_t>(param);
     const int readCount = pread(fd, outBuffer, size, position);
     if (readCount < 0) {
@@ -54,7 +53,7 @@ bool forwardPdfiumError(JNIEnv* env) {
             break;
         case FPDF_ERR_PASSWORD:
             jniThrowException(env, "java/lang/SecurityException",
-                    "password required or incorrect password");
+                              "password required or incorrect password");
             break;
         case FPDF_ERR_SECURITY:
             jniThrowException(env, "java/lang/SecurityException", "unsupported security scheme");
@@ -132,4 +131,4 @@ jboolean nativeScaleForPrinting(JNIEnv* env, jclass thiz, jlong documentPtr) {
     return printScaling ? JNI_TRUE : JNI_FALSE;
 }
 
-};
+};  // namespace android

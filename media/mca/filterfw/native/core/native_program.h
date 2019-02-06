@@ -17,8 +17,8 @@
 #ifndef ANDROID_FILTERFW_CORE_NATIVE_PROGRAM_H
 #define ANDROID_FILTERFW_CORE_NATIVE_PROGRAM_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "base/utilities.h"
 
@@ -53,10 +53,8 @@ class NativeProgram {
     bool CallInit();
     bool CallSetValue(const std::string& key, const std::string& value);
     std::string CallGetValue(const std::string& key);
-    bool CallProcess(const std::vector<const char*>& inputs,
-                     const std::vector<int>& input_sizes,
-                     char* output,
-                     int output_size);
+    bool CallProcess(const std::vector<const char*>& inputs, const std::vector<int>& input_sizes,
+                     char* output, int output_size);
     bool CallReset();
     bool CallTeardown();
 
@@ -79,7 +77,7 @@ class NativeProgram {
     NativeProgram& operator=(const NativeProgram&) = delete;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_NATIVE_PROGRAM_H

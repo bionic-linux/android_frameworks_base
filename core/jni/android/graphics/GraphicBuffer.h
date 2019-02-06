@@ -26,4 +26,4 @@ extern sp<GraphicBuffer> graphicBufferForJavaObject(JNIEnv* env, jobject obj);
 
 jobject createJavaGraphicBuffer(JNIEnv* env, const sp<GraphicBuffer>& buffer);
 
-}
+}  // namespace android

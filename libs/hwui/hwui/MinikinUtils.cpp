@@ -60,7 +60,7 @@ minikin::Layout MinikinUtils::doLayout(const Paint* paint, minikin::Bidi bidiFla
     const minikin::EndHyphenEdit endHyphen = minikin::endHyphenEdit(hyphenEdit);
 
     if (mt == nullptr) {
-        layout.doLayout(textBuf,range, bidiFlags, minikinPaint, startHyphen, endHyphen);
+        layout.doLayout(textBuf, range, bidiFlags, minikinPaint, startHyphen, endHyphen);
     } else {
         mt->buildLayout(textBuf, range, minikinPaint, bidiFlags, startHyphen, endHyphen, &layout);
     }

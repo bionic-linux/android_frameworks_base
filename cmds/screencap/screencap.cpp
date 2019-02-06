@@ -15,11 +15,11 @@
  */
 
 #include <errno.h>
-#include <unistd.h>
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <linux/fb.h>
 #include <sys/ioctl.h>
@@ -27,8 +27,8 @@
 
 #include <binder/ProcessState.h>
 
-#include <gui/SurfaceComposerClient.h>
 #include <gui/ISurfaceComposer.h>
+#include <gui/SurfaceComposerClient.h>
 
 #include <ui/DisplayInfo.h>
 #include <ui/PixelFormat.h>
@@ -38,21 +38,20 @@
 // TODO: Fix Skia.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-#include <SkImageEncoder.h>
-#include <SkData.h>
 #include <SkColorSpace.h>
+#include <SkData.h>
+#include <SkImageEncoder.h>
 #pragma GCC diagnostic pop
 
 using namespace android;
 
 static uint32_t DEFAULT_DISPLAY_ID = ISurfaceComposer::eDisplayIdMain;
 
-#define COLORSPACE_UNKNOWN    0
-#define COLORSPACE_SRGB       1
+#define COLORSPACE_UNKNOWN 0
+#define COLORSPACE_SRGB 1
 #define COLORSPACE_DISPLAY_P3 2
 
-static void usage(const char* pname)
-{
+static void usage(const char* pname) {
     fprintf(stderr,
             "usage: %s [-hp] [-d display-id] [FILENAME]\n"
             "   -h: this message\n"
@@ -60,12 +59,10 @@ static void usage(const char* pname)
             "   -d: specify the display id to capture, default %d.\n"
             "If FILENAME ends with .png it will be saved as a png.\n"
             "If FILENAME is not given, the results will be printed to stdout.\n",
-            pname, DEFAULT_DISPLAY_ID
-    );
+            pname, DEFAULT_DISPLAY_ID);
 }
 
-static SkColorType flinger2skia(PixelFormat f)
-{
+static SkColorType flinger2skia(PixelFormat f) {
     switch (f) {
         case PIXEL_FORMAT_RGB_565:
             return kRGB_565_SkColorType;
@@ -74,21 +71,19 @@ static SkColorType flinger2skia(PixelFormat f)
     }
 }
 
-static sk_sp<SkColorSpace> dataSpaceToColorSpace(android_dataspace d)
-{
+static sk_sp<SkColorSpace> dataSpaceToColorSpace(android_dataspace d) {
     switch (d) {
         case HAL_DATASPACE_V0_SRGB:
             return SkColorSpace::MakeSRGB();
         case HAL_DATASPACE_DISPLAY_P3:
-            return SkColorSpace::MakeRGB(
-                    SkColorSpace::kSRGB_RenderTargetGamma, SkColorSpace::kDCIP3_D65_Gamut);
+            return SkColorSpace::MakeRGB(SkColorSpace::kSRGB_RenderTargetGamma,
+                                         SkColorSpace::kDCIP3_D65_Gamut);
         default:
             return nullptr;
     }
 }
 
-static uint32_t dataSpaceToInt(android_dataspace d)
-{
+static uint32_t dataSpaceToInt(android_dataspace d) {
     switch (d) {
         case HAL_DATASPACE_V0_SRGB:
             return COLORSPACE_SRGB;
@@ -111,8 +106,7 @@ static status_t notifyMediaScanner(const char* fileName) {
     return NO_ERROR;
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     const char* pname = argv[0];
     bool png = false;
     int32_t displayId = DEFAULT_DISPLAY_ID;
@@ -146,7 +140,7 @@ int main(int argc, char** argv)
             return 1;
         }
         const int len = strlen(fn);
-        if (len >= 4 && 0 == strcmp(fn+len-4, ".png")) {
+        if (len >= 4 && 0 == strcmp(fn + len - 4, ".png")) {
             png = true;
         }
     }
@@ -166,10 +160,10 @@ int main(int argc, char** argv)
 
     // Maps orientations from DisplayInfo to ISurfaceComposer
     static const uint32_t ORIENTATION_MAP[] = {
-        ISurfaceComposer::eRotateNone, // 0 == DISPLAY_ORIENTATION_0
-        ISurfaceComposer::eRotate270, // 1 == DISPLAY_ORIENTATION_90
-        ISurfaceComposer::eRotate180, // 2 == DISPLAY_ORIENTATION_180
-        ISurfaceComposer::eRotate90, // 3 == DISPLAY_ORIENTATION_270
+            ISurfaceComposer::eRotateNone,  // 0 == DISPLAY_ORIENTATION_0
+            ISurfaceComposer::eRotate270,   // 1 == DISPLAY_ORIENTATION_90
+            ISurfaceComposer::eRotate180,   // 2 == DISPLAY_ORIENTATION_180
+            ISurfaceComposer::eRotate90,    // 3 == DISPLAY_ORIENTATION_270
     };
 
     // setThreadPoolMaxThreadCount(0) actually tells the kernel it's
@@ -189,17 +183,17 @@ int main(int argc, char** argv)
     SurfaceComposerClient::getDisplayConfigs(display, &configs);
     int activeConfig = SurfaceComposerClient::getActiveConfig(display);
     if (static_cast<size_t>(activeConfig) >= configs.size()) {
-        fprintf(stderr, "Active config %d not inside configs (size %zu)\n",
-                activeConfig, configs.size());
+        fprintf(stderr, "Active config %d not inside configs (size %zu)\n", activeConfig,
+                configs.size());
         return 1;
     }
     uint8_t displayOrientation = configs[activeConfig].orientation;
     uint32_t captureOrientation = ORIENTATION_MAP[displayOrientation];
 
     sp<GraphicBuffer> outBuffer;
-    status_t result = ScreenshotClient::capture(display, Rect(), 0 /* reqWidth */,
-            0 /* reqHeight */, INT32_MIN, INT32_MAX, /* all layers */ false, captureOrientation,
-            &outBuffer);
+    status_t result = ScreenshotClient::capture(
+            display, Rect(), 0 /* reqWidth */, 0 /* reqHeight */, INT32_MIN, INT32_MAX,
+            /* all layers */ false, captureOrientation, &outBuffer);
     if (result != NO_ERROR) {
         close(fd);
         return 1;
@@ -220,18 +214,18 @@ int main(int argc, char** argv)
     size = s * h * bytesPerPixel(f);
 
     if (png) {
-        const SkImageInfo info =
-            SkImageInfo::Make(w, h, flinger2skia(f), kPremul_SkAlphaType, dataSpaceToColorSpace(d));
+        const SkImageInfo info = SkImageInfo::Make(w, h, flinger2skia(f), kPremul_SkAlphaType,
+                                                   dataSpaceToColorSpace(d));
         SkPixmap pixmap(info, base, s * bytesPerPixel(f));
         struct FDWStream final : public SkWStream {
-          size_t fBytesWritten = 0;
-          int fFd;
-          FDWStream(int f) : fFd(f) {}
-          size_t bytesWritten() const override { return fBytesWritten; }
-          bool write(const void* buffer, size_t size) override {
-            fBytesWritten += size;
-            return size == 0 || ::write(fFd, buffer, size) > 0;
-          }
+            size_t fBytesWritten = 0;
+            int fFd;
+            FDWStream(int f) : fFd(f) {}
+            size_t bytesWritten() const override { return fBytesWritten; }
+            bool write(const void* buffer, size_t size) override {
+                fBytesWritten += size;
+                return size == 0 || ::write(fFd, buffer, size) > 0;
+            }
         } fdStream(fd);
         (void)SkEncodeImage(&fdStream, pixmap, SkEncodedImageFormat::kPNG, 100);
         if (fn != NULL) {
@@ -244,14 +238,14 @@ int main(int argc, char** argv)
         write(fd, &f, 4);
         write(fd, &c, 4);
         size_t Bpp = bytesPerPixel(f);
-        for (size_t y=0 ; y<h ; y++) {
-            write(fd, base, w*Bpp);
-            base = (void *)((char *)base + s*Bpp);
+        for (size_t y = 0; y < h; y++) {
+            write(fd, base, w * Bpp);
+            base = (void*)((char*)base + s * Bpp);
         }
     }
     close(fd);
     if (mapbase != MAP_FAILED) {
-        munmap((void *)mapbase, mapsize);
+        munmap((void*)mapbase, mapsize);
     }
 
     return 0;

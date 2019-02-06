@@ -266,17 +266,16 @@ void Debug::PrintTable(const ResourceTable& table, const DebugPrintTableOptions&
 
       std::vector<const ResourceEntry*> sorted_entries;
       for (const auto& entry : type->entries) {
-        auto iter = std::lower_bound(
-            sorted_entries.begin(), sorted_entries.end(), entry.get(),
-            [](const ResourceEntry* a, const ResourceEntry* b) -> bool {
-              if (a->id && b->id) {
-                return a->id.value() < b->id.value();
-              } else if (a->id) {
-                return true;
-              } else {
-                return false;
-              }
-            });
+        auto iter = std::lower_bound(sorted_entries.begin(), sorted_entries.end(), entry.get(),
+                                     [](const ResourceEntry* a, const ResourceEntry* b) -> bool {
+                                       if (a->id && b->id) {
+                                         return a->id.value() < b->id.value();
+                                       } else if (a->id) {
+                                         return true;
+                                       } else {
+                                         return false;
+                                       }
+                                     });
         sorted_entries.insert(iter, entry.get());
       }
 

@@ -1,7 +1,7 @@
 #include "GraphicsJNI.h"
-#include "SkMaskFilter.h"
 #include "SkBlurMask.h"
 #include "SkBlurMaskFilter.h"
+#include "SkMaskFilter.h"
 #include "SkTableMaskFilter.h"
 
 #include "core_jni_helpers.h"
@@ -15,9 +15,9 @@ static void ThrowIAE_IfNull(JNIEnv* env, void* ptr) {
 }
 
 class SkMaskFilterGlue {
-public:
+  public:
     static void destructor(JNIEnv* env, jobject, jlong filterHandle) {
-        SkMaskFilter* filter = reinterpret_cast<SkMaskFilter *>(filterHandle);
+        SkMaskFilter* filter = reinterpret_cast<SkMaskFilter*>(filterHandle);
         SkSafeUnref(filter);
     }
 
@@ -28,7 +28,8 @@ public:
         return reinterpret_cast<jlong>(filter);
     }
 
-    static jlong createEmboss(JNIEnv* env, jobject, jfloatArray dirArray, jfloat ambient, jfloat specular, jfloat radius) {
+    static jlong createEmboss(JNIEnv* env, jobject, jfloatArray dirArray, jfloat ambient,
+                              jfloat specular, jfloat radius) {
         SkScalar direction[3];
 
         AutoJavaFloatArray autoDir(env, dirArray, 3);
@@ -38,8 +39,8 @@ public:
         }
 
         SkScalar sigma = SkBlurMask::ConvertRadiusToSigma(radius);
-        SkMaskFilter* filter =  SkBlurMaskFilter::MakeEmboss(sigma,
-                direction, ambient, specular).release();
+        SkMaskFilter* filter =
+                SkBlurMaskFilter::MakeEmboss(sigma, direction, ambient, specular).release();
         ThrowIAE_IfNull(env, filter);
         return reinterpret_cast<jlong>(filter);
     }
@@ -62,25 +63,20 @@ public:
 };
 
 static const JNINativeMethod gMaskFilterMethods[] = {
-    { "nativeDestructor",   "(J)V",     (void*)SkMaskFilterGlue::destructor      }
-};
+        {"nativeDestructor", "(J)V", (void*)SkMaskFilterGlue::destructor}};
 
 static const JNINativeMethod gBlurMaskFilterMethods[] = {
-    { "nativeConstructor",  "(FI)J",    (void*)SkMaskFilterGlue::createBlur      }
-};
+        {"nativeConstructor", "(FI)J", (void*)SkMaskFilterGlue::createBlur}};
 
 static const JNINativeMethod gEmbossMaskFilterMethods[] = {
-    { "nativeConstructor",  "([FFFF)J", (void*)SkMaskFilterGlue::createEmboss    }
-};
+        {"nativeConstructor", "([FFFF)J", (void*)SkMaskFilterGlue::createEmboss}};
 
 static const JNINativeMethod gTableMaskFilterMethods[] = {
-    { "nativeNewTable", "([B)J", (void*)SkMaskFilterGlue::createTable    },
-    { "nativeNewClip",  "(II)J", (void*)SkMaskFilterGlue::createClipTable    },
-    { "nativeNewGamma", "(F)J", (void*)SkMaskFilterGlue::createGammaTable    }
-};
+        {"nativeNewTable", "([B)J", (void*)SkMaskFilterGlue::createTable},
+        {"nativeNewClip", "(II)J", (void*)SkMaskFilterGlue::createClipTable},
+        {"nativeNewGamma", "(F)J", (void*)SkMaskFilterGlue::createGammaTable}};
 
-int register_android_graphics_MaskFilter(JNIEnv* env)
-{
+int register_android_graphics_MaskFilter(JNIEnv* env) {
     android::RegisterMethodsOrDie(env, "android/graphics/MaskFilter", gMaskFilterMethods,
                                   NELEM(gMaskFilterMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/BlurMaskFilter", gBlurMaskFilterMethods,

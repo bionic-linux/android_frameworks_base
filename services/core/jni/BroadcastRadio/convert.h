@@ -26,7 +26,7 @@
 
 namespace android {
 
-void register_android_server_broadcastradio_convert(JNIEnv *env);
+void register_android_server_broadcastradio_convert(JNIEnv* env);
 
 namespace server {
 namespace BroadcastRadio {
@@ -35,51 +35,51 @@ namespace convert {
 namespace V1_0 = hardware::broadcastradio::V1_0;
 namespace V1_1 = hardware::broadcastradio::V1_1;
 
-hardware::hidl_vec<hardware::hidl_string> StringListToHal(JNIEnv *env, jobject jList);
+hardware::hidl_vec<hardware::hidl_string> StringListToHal(JNIEnv* env, jobject jList);
 
-JavaRef<jobject> VendorInfoFromHal(JNIEnv *env, const hardware::hidl_vec<V1_1::VendorKeyValue> &info);
-hardware::hidl_vec<V1_1::VendorKeyValue> VendorInfoToHal(JNIEnv *env, jobject jInfo);
+JavaRef<jobject> VendorInfoFromHal(JNIEnv* env,
+                                   const hardware::hidl_vec<V1_1::VendorKeyValue>& info);
+hardware::hidl_vec<V1_1::VendorKeyValue> VendorInfoToHal(JNIEnv* env, jobject jInfo);
 
-JavaRef<jobject> ModulePropertiesFromHal(JNIEnv *env, const V1_0::Properties &properties,
-        jint moduleId, const std::string& serviceName);
-JavaRef<jobject> ModulePropertiesFromHal(JNIEnv *env, const V1_1::Properties &properties,
-        jint moduleId, const std::string& serviceName);
+JavaRef<jobject> ModulePropertiesFromHal(JNIEnv* env, const V1_0::Properties& properties,
+                                         jint moduleId, const std::string& serviceName);
+JavaRef<jobject> ModulePropertiesFromHal(JNIEnv* env, const V1_1::Properties& properties,
+                                         jint moduleId, const std::string& serviceName);
 
-JavaRef<jobject> BandConfigFromHal(JNIEnv *env, const V1_0::BandConfig &config, Region region);
-V1_0::BandConfig BandConfigToHal(JNIEnv *env, jobject jConfig, Region &region);
+JavaRef<jobject> BandConfigFromHal(JNIEnv* env, const V1_0::BandConfig& config, Region region);
+V1_0::BandConfig BandConfigToHal(JNIEnv* env, jobject jConfig, Region& region);
 
 V1_0::Direction DirectionToHal(bool directionDown);
 
-JavaRef<jobject> MetadataFromHal(JNIEnv *env, const hardware::hidl_vec<V1_0::MetaData> &metadata);
-JavaRef<jobject> ProgramInfoFromHal(JNIEnv *env, const V1_0::ProgramInfo &info, V1_0::Band band);
-JavaRef<jobject> ProgramInfoFromHal(JNIEnv *env, const V1_1::ProgramInfo &info);
+JavaRef<jobject> MetadataFromHal(JNIEnv* env, const hardware::hidl_vec<V1_0::MetaData>& metadata);
+JavaRef<jobject> ProgramInfoFromHal(JNIEnv* env, const V1_0::ProgramInfo& info, V1_0::Band band);
+JavaRef<jobject> ProgramInfoFromHal(JNIEnv* env, const V1_1::ProgramInfo& info);
 
-V1_1::ProgramSelector ProgramSelectorToHal(JNIEnv *env, jobject jSelector);
+V1_1::ProgramSelector ProgramSelectorToHal(JNIEnv* env, jobject jSelector);
 
-void ThrowParcelableRuntimeException(JNIEnv *env, const std::string& msg);
+void ThrowParcelableRuntimeException(JNIEnv* env, const std::string& msg);
 
 // These three are only for internal use by template functions below.
-bool __ThrowIfFailedHidl(JNIEnv *env,
-        const hardware::details::return_status &hidlResult);
-bool __ThrowIfFailed(JNIEnv *env, const V1_0::Result halResult);
-bool __ThrowIfFailed(JNIEnv *env, const V1_1::ProgramListResult halResult);
+bool __ThrowIfFailedHidl(JNIEnv* env, const hardware::details::return_status& hidlResult);
+bool __ThrowIfFailed(JNIEnv* env, const V1_0::Result halResult);
+bool __ThrowIfFailed(JNIEnv* env, const V1_1::ProgramListResult halResult);
 
 template <typename T>
-bool ThrowIfFailed(JNIEnv *env, const hardware::Return<void> &hidlResult, const T halResult) {
+bool ThrowIfFailed(JNIEnv* env, const hardware::Return<void>& hidlResult, const T halResult) {
     return __ThrowIfFailedHidl(env, hidlResult) || __ThrowIfFailed(env, halResult);
 }
 
 template <typename T>
-bool ThrowIfFailed(JNIEnv *env, const hardware::Return<T> &hidlResult) {
+bool ThrowIfFailed(JNIEnv* env, const hardware::Return<T>& hidlResult) {
     return __ThrowIfFailedHidl(env, hidlResult) || __ThrowIfFailed(env, static_cast<T>(hidlResult));
 }
 
 template <>
-bool ThrowIfFailed(JNIEnv *env, const hardware::Return<void> &hidlResult);
+bool ThrowIfFailed(JNIEnv* env, const hardware::Return<void>& hidlResult);
 
-} // namespace convert
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace convert
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android
 
-#endif // _ANDROID_SERVER_BROADCASTRADIO_CONVERT_H
+#endif  // _ANDROID_SERVER_BROADCASTRADIO_CONVERT_H

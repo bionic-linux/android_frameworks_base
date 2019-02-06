@@ -78,7 +78,7 @@ public:
 
     // Init the AlarmMonitor which is shared across anomaly trackers.
     virtual void setAlarmMonitor(const sp<AlarmMonitor>& alarmMonitor) {
-        return; // Base AnomalyTracker class has no need for the AlarmMonitor.
+        return;  // Base AnomalyTracker class has no need for the AlarmMonitor.
     }
 
     // Returns the sum of all past bucket values for the given dimension key.
@@ -107,9 +107,10 @@ public:
 
     // Declares an anomaly for each alarm in firedAlarms that belongs to this AnomalyTracker,
     // and removes it from firedAlarms. Does NOT remove the alarm from the AlarmMonitor.
-    virtual void informAlarmsFired(const int64_t& timestampNs,
+    virtual void informAlarmsFired(
+            const int64_t& timestampNs,
             unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& firedAlarms) {
-        return; // The base AnomalyTracker class doesn't have alarms.
+        return;  // The base AnomalyTracker class doesn't have alarms.
     }
 
 protected:
@@ -117,7 +118,7 @@ protected:
     // Returns the alarm timestamp in seconds for the query dimension if it exists. Otherwise
     // returns 0.
     virtual uint32_t getAlarmTimestampSec(const MetricDimensionKey& dimensionKey) const {
-        return 0;   // The base AnomalyTracker class doesn't have alarms.
+        return 0;  // The base AnomalyTracker class doesn't have alarms.
     }
 
     // statsd_config.proto Alert message that defines this tracker.

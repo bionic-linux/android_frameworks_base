@@ -21,23 +21,23 @@
 
 namespace android {
 
-#define ARRAY_TRAITS(ARRAY_TYPE, POINTER_TYPE, NAME)                                  \
-class NAME ## ArrayTraits {                                                           \
-public:                                                                               \
-    static constexpr void getArrayRegion(JNIEnv* env, ARRAY_TYPE array, size_t start, \
-                                         size_t len, POINTER_TYPE out) {              \
-        env->Get ## NAME ## ArrayRegion(array, start, len, out);                      \
-    }                                                                                 \
-                                                                                      \
-    static constexpr POINTER_TYPE getArrayElements(JNIEnv* env, ARRAY_TYPE array) {   \
-        return env->Get ## NAME ## ArrayElements(array, nullptr);                     \
-    }                                                                                 \
-                                                                                      \
-    static constexpr void releaseArrayElements(JNIEnv* env, ARRAY_TYPE array,         \
-                                               POINTER_TYPE buffer, jint mode) {      \
-        env->Release ## NAME ## ArrayElements(array, buffer, mode);                   \
-    }                                                                                 \
-};                                                                                    \
+#define ARRAY_TRAITS(ARRAY_TYPE, POINTER_TYPE, NAME)                                      \
+    class NAME##ArrayTraits {                                                             \
+      public:                                                                             \
+        static constexpr void getArrayRegion(JNIEnv* env, ARRAY_TYPE array, size_t start, \
+                                             size_t len, POINTER_TYPE out) {              \
+            env->Get##NAME##ArrayRegion(array, start, len, out);                          \
+        }                                                                                 \
+                                                                                          \
+        static constexpr POINTER_TYPE getArrayElements(JNIEnv* env, ARRAY_TYPE array) {   \
+            return env->Get##NAME##ArrayElements(array, nullptr);                         \
+        }                                                                                 \
+                                                                                          \
+        static constexpr void releaseArrayElements(JNIEnv* env, ARRAY_TYPE array,         \
+                                                   POINTER_TYPE buffer, jint mode) {      \
+            env->Release##NAME##ArrayElements(array, buffer, mode);                       \
+        }                                                                                 \
+    };
 
 ARRAY_TRAITS(jbooleanArray, jboolean*, Boolean)
 ARRAY_TRAITS(jbyteArray, jbyte*, Byte)
@@ -50,9 +50,9 @@ ARRAY_TRAITS(jshortArray, jshort*, Short)
 
 #undef ARRAY_TRAITS
 
-template<typename JavaArrayType, typename PrimitiveType, class Traits, size_t preallocSize = 10>
+template <typename JavaArrayType, typename PrimitiveType, class Traits, size_t preallocSize = 10>
 class ScopedArrayRO {
-public:
+  public:
     ScopedArrayRO(JNIEnv* env, JavaArrayType javaArray) : mEnv(env), mJavaArray(javaArray) {
         if (mJavaArray == nullptr) {
             mSize = 0;
@@ -78,7 +78,7 @@ public:
     const PrimitiveType& operator[](size_t n) const { return mRawArray[n]; }
     size_t size() const { return mSize; }
 
-private:
+  private:
     JNIEnv* const mEnv;
     JavaArrayType mJavaArray;
     PrimitiveType* mRawArray;

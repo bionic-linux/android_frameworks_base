@@ -17,17 +17,19 @@
 // #define LOG_NDEBUG 0
 #define LOG_TAG "WorkQueue"
 
-#include <utils/Log.h>
 #include "WorkQueue.h"
+#include <utils/Log.h>
 
 namespace android {
 
 // --- WorkQueue ---
 
-WorkQueue::WorkQueue(size_t maxThreads, bool canCallJava) :
-        mMaxThreads(maxThreads), mCanCallJava(canCallJava),
-        mCanceled(false), mFinished(false), mIdleThreads(0) {
-}
+WorkQueue::WorkQueue(size_t maxThreads, bool canCallJava)
+    : mMaxThreads(maxThreads),
+      mCanCallJava(canCallJava),
+      mCanceled(false),
+      mFinished(false),
+      mIdleThreads(0) {}
 
 WorkQueue::~WorkQueue() {
     if (!cancel()) {
@@ -42,8 +44,7 @@ status_t WorkQueue::schedule(WorkUnit* workUnit, size_t backlog) {
         return INVALID_OPERATION;
     }
 
-    if (mWorkThreads.size() < mMaxThreads
-            && mIdleThreads < mWorkUnits.size() + 1) {
+    if (mWorkThreads.size() < mMaxThreads && mIdleThreads < mWorkUnits.size() + 1) {
         sp<WorkThread> workThread = new WorkThread(this, mCanCallJava);
         status_t status = workThread->run("WorkQueue::WorkThread");
         if (status) {
@@ -91,7 +92,7 @@ status_t WorkQueue::cancelLocked() {
 }
 
 status_t WorkQueue::finish() {
-    { // acquire lock
+    {  // acquire lock
         AutoMutex _l(mLock);
 
         if (mFinished) {
@@ -100,7 +101,7 @@ status_t WorkQueue::finish() {
 
         mFinished = true;
         mWorkChangedCondition.broadcast();
-    } // release lock
+    }  // release lock
 
     // It is not possible for the list of work threads to change once the mFinished
     // flag has been set, so we can access mWorkThreads outside of the lock here.
@@ -114,7 +115,7 @@ status_t WorkQueue::finish() {
 
 bool WorkQueue::threadLoop() {
     WorkUnit* workUnit;
-    { // acquire lock
+    {  // acquire lock
         AutoMutex _l(mLock);
 
         for (;;) {
@@ -136,12 +137,12 @@ bool WorkQueue::threadLoop() {
 
             mWorkChangedCondition.wait(mLock);
         }
-    } // release lock
+    }  // release lock
 
     bool shouldContinue = workUnit->run();
     delete workUnit;
 
-    { // acquire lock
+    {  // acquire lock
         AutoMutex _l(mLock);
 
         mIdleThreads += 1;
@@ -150,19 +151,17 @@ bool WorkQueue::threadLoop() {
             cancelLocked();
             return false;
         }
-    } // release lock
+    }  // release lock
 
     return true;
 }
 
 // --- WorkQueue::WorkThread ---
 
-WorkQueue::WorkThread::WorkThread(WorkQueue* workQueue, bool canCallJava) :
-        Thread(canCallJava), mWorkQueue(workQueue) {
-}
+WorkQueue::WorkThread::WorkThread(WorkQueue* workQueue, bool canCallJava)
+    : Thread(canCallJava), mWorkQueue(workQueue) {}
 
-WorkQueue::WorkThread::~WorkThread() {
-}
+WorkQueue::WorkThread::~WorkThread() {}
 
 bool WorkQueue::WorkThread::threadLoop() {
     return mWorkQueue->threadLoop();

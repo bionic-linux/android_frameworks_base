@@ -44,7 +44,7 @@ Family getFamily(Variant variant);
 const android::Vector<Variant>& getVariants(Family family);
 const char* toString(Variant variant);
 
-} // namespace abi
-} // namespace split
+}  // namespace abi
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_ABI
+#endif  // H_ANDROID_SPLIT_ABI

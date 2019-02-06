@@ -182,5 +182,5 @@ void PropertyAnimator::setFraction(float fraction, long iteration) {
 void PropertyAnimatorSetListener::onAnimationFinished(BaseRenderNodeAnimator* animator) {
     mSet->onFinished(animator);
 }
-}
-}
+}  // namespace uirenderer
+}  // namespace android

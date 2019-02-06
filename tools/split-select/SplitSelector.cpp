@@ -27,15 +27,14 @@ namespace split {
 
 using namespace android;
 
-SplitSelector::SplitSelector() {
-}
+SplitSelector::SplitSelector() {}
 
 SplitSelector::SplitSelector(const Vector<SplitDescription>& splits)
-    : mGroups(groupByMutualExclusivity(splits)) {
-}
+    : mGroups(groupByMutualExclusivity(splits)) {}
 
 static void selectBestFromGroup(const SortedVector<SplitDescription>& splits,
-        const SplitDescription& target, Vector<SplitDescription>& splitsOut) {
+                                const SplitDescription& target,
+                                Vector<SplitDescription>& splitsOut) {
     SplitDescription bestSplit;
     bool isSet = false;
     const size_t splitCount = splits.size();
@@ -82,4 +81,4 @@ KeyedVector<SplitDescription, sp<Rule> > SplitSelector::getRules() const {
     return rules;
 }
 
-} // namespace split
+}  // namespace split

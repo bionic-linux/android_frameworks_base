@@ -33,8 +33,8 @@ extern jobject newParcelFileDescriptor(JNIEnv* env, jobject fileDesc);
 extern void set_dalvik_blockguard_policy(JNIEnv* env, jint strict_policy);
 
 extern void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
-        bool canThrowRemoteException = false, int parcelSize = 0);
+                                    bool canThrowRemoteException = false, int parcelSize = 0);
 
-}
+}  // namespace android
 
 #endif

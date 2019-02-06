@@ -82,7 +82,9 @@ struct LocaleValue {
 // Implementation
 //
 
-LocaleValue::LocaleValue() { memset(this, 0, sizeof(LocaleValue)); }
+LocaleValue::LocaleValue() {
+  memset(this, 0, sizeof(LocaleValue));
+}
 
 int LocaleValue::compare(const LocaleValue& other) const {
   return memcmp(this, &other, sizeof(LocaleValue));

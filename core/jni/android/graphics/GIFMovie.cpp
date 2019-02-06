@@ -5,7 +5,6 @@
  * found in the LICENSE file.
  */
 
-
 #include "Movie.h"
 #include "SkColor.h"
 #include "SkColorPriv.h"
@@ -20,16 +19,16 @@
 #endif
 
 class GIFMovie : public Movie {
-public:
+  public:
     explicit GIFMovie(SkStream* stream);
     virtual ~GIFMovie();
 
-protected:
+  protected:
     virtual bool onGetInfo(Info*);
     virtual bool onSetTime(SkMSec);
     virtual bool onGetBitmap(SkBitmap*);
 
-private:
+  private:
     GifFileType* fGIF;
     int fCurrIndex;
     int fLastDrawIndex;
@@ -38,22 +37,19 @@ private:
 };
 
 static int Decode(GifFileType* fileType, GifByteType* out, int size) {
-    SkStream* stream = (SkStream*) fileType->UserData;
-    return (int) stream->read(out, size);
+    SkStream* stream = (SkStream*)fileType->UserData;
+    return (int)stream->read(out, size);
 }
 
-GIFMovie::GIFMovie(SkStream* stream)
-{
+GIFMovie::GIFMovie(SkStream* stream) {
 #if GIFLIB_MAJOR < 5
-    fGIF = DGifOpen( stream, Decode );
+    fGIF = DGifOpen(stream, Decode);
 #else
-    fGIF = DGifOpen( stream, Decode, nullptr );
+    fGIF = DGifOpen(stream, Decode, nullptr);
 #endif
-    if (nullptr == fGIF)
-        return;
+    if (nullptr == fGIF) return;
 
-    if (DGifSlurp(fGIF) != GIF_OK)
-    {
+    if (DGifSlurp(fGIF) != GIF_OK) {
         DGifCloseFile(fGIF, nullptr);
         fGIF = nullptr;
     }
@@ -62,18 +58,13 @@ GIFMovie::GIFMovie(SkStream* stream)
     fPaintingColor = SkPackARGB32(0, 0, 0, 0);
 }
 
-GIFMovie::~GIFMovie()
-{
-    if (fGIF)
-        DGifCloseFile(fGIF, nullptr);
+GIFMovie::~GIFMovie() {
+    if (fGIF) DGifCloseFile(fGIF, nullptr);
 }
 
-static SkMSec savedimage_duration(const SavedImage* image)
-{
-    for (int j = 0; j < image->ExtensionBlockCount; j++)
-    {
-        if (image->ExtensionBlocks[j].Function == GRAPHICS_EXT_FUNC_CODE)
-        {
+static SkMSec savedimage_duration(const SavedImage* image) {
+    for (int j = 0; j < image->ExtensionBlockCount; j++) {
+        if (image->ExtensionBlocks[j].Function == GRAPHICS_EXT_FUNC_CODE) {
             SkASSERT(image->ExtensionBlocks[j].ByteCount >= 4);
             const uint8_t* b = (const uint8_t*)image->ExtensionBlocks[j].Bytes;
             return ((b[2] << 8) | b[1]) * 10;
@@ -82,33 +73,26 @@ static SkMSec savedimage_duration(const SavedImage* image)
     return 0;
 }
 
-bool GIFMovie::onGetInfo(Info* info)
-{
-    if (nullptr == fGIF)
-        return false;
+bool GIFMovie::onGetInfo(Info* info) {
+    if (nullptr == fGIF) return false;
 
     SkMSec dur = 0;
-    for (int i = 0; i < fGIF->ImageCount; i++)
-        dur += savedimage_duration(&fGIF->SavedImages[i]);
+    for (int i = 0; i < fGIF->ImageCount; i++) dur += savedimage_duration(&fGIF->SavedImages[i]);
 
     info->fDuration = dur;
     info->fWidth = fGIF->SWidth;
     info->fHeight = fGIF->SHeight;
-    info->fIsOpaque = false;    // how to compute?
+    info->fIsOpaque = false;  // how to compute?
     return true;
 }
 
-bool GIFMovie::onSetTime(SkMSec time)
-{
-    if (nullptr == fGIF)
-        return false;
+bool GIFMovie::onSetTime(SkMSec time) {
+    if (nullptr == fGIF) return false;
 
     SkMSec dur = 0;
-    for (int i = 0; i < fGIF->ImageCount; i++)
-    {
+    for (int i = 0; i < fGIF->ImageCount; i++) {
         dur += savedimage_duration(&fGIF->SavedImages[i]);
-        if (dur >= time)
-        {
+        if (dur >= time) {
             fCurrIndex = i;
             return fLastDrawIndex != fCurrIndex;
         }
@@ -118,8 +102,7 @@ bool GIFMovie::onSetTime(SkMSec time)
 }
 
 static void copyLine(uint32_t* dst, const unsigned char* src, const ColorMapObject* cmap,
-                     int transparent, int width)
-{
+                     int transparent, int width) {
     for (; width > 0; width--, src++, dst++) {
         if (*src != transparent && *src < cmap->ColorCount) {
             const GifColorType& col = cmap->Colors[*src];
@@ -129,11 +112,9 @@ static void copyLine(uint32_t* dst, const unsigned char* src, const ColorMapObje
 }
 
 #if GIFLIB_MAJOR < 5
-static void copyInterlaceGroup(SkBitmap* bm, const unsigned char*& src,
-                               const ColorMapObject* cmap, int transparent, int copyWidth,
-                               int copyHeight, const GifImageDesc& imageDesc, int rowStep,
-                               int startRow)
-{
+static void copyInterlaceGroup(SkBitmap* bm, const unsigned char*& src, const ColorMapObject* cmap,
+                               int transparent, int copyWidth, int copyHeight,
+                               const GifImageDesc& imageDesc, int rowStep, int startRow) {
     int row;
     // every 'rowStep'th row, starting with row 'startRow'
     for (row = startRow; row < copyHeight; row += rowStep) {
@@ -147,8 +128,7 @@ static void copyInterlaceGroup(SkBitmap* bm, const unsigned char*& src,
 }
 
 static void blitInterlace(SkBitmap* bm, const SavedImage* frame, const ColorMapObject* cmap,
-                          int transparent)
-{
+                          int transparent) {
     int width = bm->width();
     int height = bm->height();
     GifWord copyWidth = frame->ImageDesc.Width;
@@ -178,8 +158,7 @@ static void blitInterlace(SkBitmap* bm, const SavedImage* frame, const ColorMapO
 #endif
 
 static void blitNormal(SkBitmap* bm, const SavedImage* frame, const ColorMapObject* cmap,
-                       int transparent)
-{
+                       int transparent) {
     int width = bm->width();
     int height = bm->height();
     const unsigned char* src = (unsigned char*)frame->RasterBits;
@@ -202,8 +181,7 @@ static void blitNormal(SkBitmap* bm, const SavedImage* frame, const ColorMapObje
 }
 
 static void fillRect(SkBitmap* bm, GifWord left, GifWord top, GifWord width, GifWord height,
-                     uint32_t col)
-{
+                     uint32_t col) {
     int bmWidth = bm->width();
     int bmHeight = bm->height();
     uint32_t* dst = bm->getAddr32(left, top);
@@ -223,14 +201,12 @@ static void fillRect(SkBitmap* bm, GifWord left, GifWord top, GifWord width, Gif
     }
 }
 
-static void drawFrame(SkBitmap* bm, const SavedImage* frame, const ColorMapObject* cmap)
-{
+static void drawFrame(SkBitmap* bm, const SavedImage* frame, const ColorMapObject* cmap) {
     int transparent = -1;
 
     for (int i = 0; i < frame->ExtensionBlockCount; ++i) {
         ExtensionBlock* eb = frame->ExtensionBlocks + i;
-        if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-            eb->ByteCount == 4) {
+        if (eb->Function == GRAPHICS_EXT_FUNC_CODE && eb->ByteCount == 4) {
             bool has_transparency = ((eb->Bytes[0] & 1) == 1);
             if (has_transparency) {
                 transparent = (unsigned char)eb->Bytes[3];
@@ -259,12 +235,10 @@ static void drawFrame(SkBitmap* bm, const SavedImage* frame, const ColorMapObjec
     blitNormal(bm, frame, cmap, transparent);
 }
 
-static bool checkIfWillBeCleared(const SavedImage* frame)
-{
+static bool checkIfWillBeCleared(const SavedImage* frame) {
     for (int i = 0; i < frame->ExtensionBlockCount; ++i) {
         ExtensionBlock* eb = frame->ExtensionBlocks + i;
-        if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-            eb->ByteCount == 4) {
+        if (eb->Function == GRAPHICS_EXT_FUNC_CODE && eb->ByteCount == 4) {
             // check disposal method
             int disposal = ((eb->Bytes[0] >> 2) & 7);
             if (disposal == 2 || disposal == 3) {
@@ -275,14 +249,12 @@ static bool checkIfWillBeCleared(const SavedImage* frame)
     return false;
 }
 
-static void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
-{
+static void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal) {
     *trans = false;
     *disposal = 0;
     for (int i = 0; i < frame->ExtensionBlockCount; ++i) {
         ExtensionBlock* eb = frame->ExtensionBlocks + i;
-        if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
-            eb->ByteCount == 4) {
+        if (eb->Function == GRAPHICS_EXT_FUNC_CODE && eb->ByteCount == 4) {
             *trans = ((eb->Bytes[0] & 1) == 1);
             *disposal = ((eb->Bytes[0] >> 2) & 7);
         }
@@ -290,22 +262,20 @@ static void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* tran
 }
 
 // return true if area of 'target' is completely covers area of 'covered'
-static bool checkIfCover(const SavedImage* target, const SavedImage* covered)
-{
-    if (target->ImageDesc.Left <= covered->ImageDesc.Left
-        && covered->ImageDesc.Left + covered->ImageDesc.Width <=
-               target->ImageDesc.Left + target->ImageDesc.Width
-        && target->ImageDesc.Top <= covered->ImageDesc.Top
-        && covered->ImageDesc.Top + covered->ImageDesc.Height <=
-               target->ImageDesc.Top + target->ImageDesc.Height) {
+static bool checkIfCover(const SavedImage* target, const SavedImage* covered) {
+    if (target->ImageDesc.Left <= covered->ImageDesc.Left &&
+        covered->ImageDesc.Left + covered->ImageDesc.Width <=
+                target->ImageDesc.Left + target->ImageDesc.Width &&
+        target->ImageDesc.Top <= covered->ImageDesc.Top &&
+        covered->ImageDesc.Top + covered->ImageDesc.Height <=
+                target->ImageDesc.Top + target->ImageDesc.Height) {
         return true;
     }
     return false;
 }
 
 static void disposeFrameIfNeeded(SkBitmap* bm, const SavedImage* cur, const SavedImage* next,
-                                 SkBitmap* backup, SkColor color)
-{
+                                 SkBitmap* backup, SkColor color) {
     // We can skip disposal process if next frame is not transparent
     // and completely covers current area
     bool curTrans;
@@ -314,21 +284,19 @@ static void disposeFrameIfNeeded(SkBitmap* bm, const SavedImage* cur, const Save
     bool nextTrans;
     int nextDisposal;
     getTransparencyAndDisposalMethod(next, &nextTrans, &nextDisposal);
-    if ((curDisposal == 2 || curDisposal == 3)
-        && (nextTrans || !checkIfCover(next, cur))) {
+    if ((curDisposal == 2 || curDisposal == 3) && (nextTrans || !checkIfCover(next, cur))) {
         switch (curDisposal) {
-        // restore to background color
-        // -> 'background' means background under this image.
-        case 2:
-            fillRect(bm, cur->ImageDesc.Left, cur->ImageDesc.Top,
-                     cur->ImageDesc.Width, cur->ImageDesc.Height,
-                     color);
-            break;
+            // restore to background color
+            // -> 'background' means background under this image.
+            case 2:
+                fillRect(bm, cur->ImageDesc.Left, cur->ImageDesc.Top, cur->ImageDesc.Width,
+                         cur->ImageDesc.Height, color);
+                break;
 
-        // restore to previous
-        case 3:
-            bm->swap(*backup);
-            break;
+            // restore to previous
+            case 3:
+                bm->swap(*backup);
+                break;
         }
     }
 
@@ -337,15 +305,13 @@ static void disposeFrameIfNeeded(SkBitmap* bm, const SavedImage* cur, const Save
         const uint32_t* src = bm->getAddr32(0, 0);
         uint32_t* dst = backup->getAddr32(0, 0);
         int cnt = bm->width() * bm->height();
-        memcpy(dst, src, cnt*sizeof(uint32_t));
+        memcpy(dst, src, cnt * sizeof(uint32_t));
     }
 }
 
-bool GIFMovie::onGetBitmap(SkBitmap* bm)
-{
+bool GIFMovie::onGetBitmap(SkBitmap* bm) {
     const GifFileType* gif = fGIF;
-    if (nullptr == gif)
-        return false;
+    if (nullptr == gif) return false;
 
     if (gif->ImageCount < 1) {
         return false;
@@ -413,7 +379,7 @@ bool GIFMovie::onGetBitmap(SkBitmap* bm)
             fBackup.eraseColor(fPaintingColor);
         } else {
             // Dispose previous frame before move to next frame.
-            const SavedImage* prev = &fGIF->SavedImages[i-1];
+            const SavedImage* prev = &fGIF->SavedImages[i - 1];
             disposeFrameIfNeeded(bm, prev, cur, &fBackup, fPaintingColor);
         }
 
@@ -435,9 +401,9 @@ bool GIFMovie::onGetBitmap(SkBitmap* bm)
 Movie* Movie::DecodeStream(SkStreamRewindable* stream) {
     char buf[GIF_STAMP_LEN];
     if (stream->read(buf, GIF_STAMP_LEN) == GIF_STAMP_LEN) {
-        if (memcmp(GIF_STAMP,   buf, GIF_STAMP_LEN) == 0 ||
-                memcmp(GIF87_STAMP, buf, GIF_STAMP_LEN) == 0 ||
-                memcmp(GIF89_STAMP, buf, GIF_STAMP_LEN) == 0) {
+        if (memcmp(GIF_STAMP, buf, GIF_STAMP_LEN) == 0 ||
+            memcmp(GIF87_STAMP, buf, GIF_STAMP_LEN) == 0 ||
+            memcmp(GIF89_STAMP, buf, GIF_STAMP_LEN) == 0) {
             // must rewind here, since our construct wants to re-read the data
             stream->rewind();
             return new GIFMovie(stream);

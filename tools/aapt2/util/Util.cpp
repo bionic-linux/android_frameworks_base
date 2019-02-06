@@ -36,8 +36,8 @@ using ::android::StringPiece16;
 namespace aapt {
 namespace util {
 
-static std::vector<std::string> SplitAndTransform(
-    const StringPiece& str, char sep, const std::function<char(char)>& f) {
+static std::vector<std::string> SplitAndTransform(const StringPiece& str, char sep,
+                                                  const std::function<char(char)>& f) {
   std::vector<std::string> parts;
   const StringPiece::const_iterator end = std::end(str);
   StringPiece::const_iterator start = std::begin(str);
@@ -154,9 +154,8 @@ static int IsAndroidNameImpl(const StringPiece& str) {
       return -1;
     }
 
-    bool valid = std::all_of(piece.begin() + 1, piece.end(), [](const char c) -> bool {
-      return ::isalnum(c) || c == '_';
-    });
+    bool valid = std::all_of(piece.begin() + 1, piece.end(),
+                             [](const char c) -> bool { return ::isalnum(c) || c == '_'; });
 
     if (!valid) {
       return -1;
@@ -247,8 +246,8 @@ bool VerifyJavaStringFormat(const StringPiece& str) {
       }
 
       // Ignore size, width, flags, etc.
-      while (c != end && (*c == '-' || *c == '#' || *c == '+' || *c == ' ' ||
-                          *c == ',' || *c == '(' || (*c >= '0' && *c <= '9'))) {
+      while (c != end && (*c == '-' || *c == '#' || *c == '+' || *c == ' ' || *c == ',' ||
+                          *c == '(' || (*c >= '0' && *c <= '9'))) {
         c++;
       }
 
@@ -298,16 +297,16 @@ bool VerifyJavaStringFormat(const StringPiece& str) {
 }
 
 std::u16string Utf8ToUtf16(const StringPiece& utf8) {
-  ssize_t utf16_length = utf8_to_utf16_length(
-      reinterpret_cast<const uint8_t*>(utf8.data()), utf8.length());
+  ssize_t utf16_length =
+      utf8_to_utf16_length(reinterpret_cast<const uint8_t*>(utf8.data()), utf8.length());
   if (utf16_length <= 0) {
     return {};
   }
 
   std::u16string utf16;
   utf16.resize(utf16_length);
-  utf8_to_utf16(reinterpret_cast<const uint8_t*>(utf8.data()), utf8.length(),
-                &*utf16.begin(), utf16_length + 1);
+  utf8_to_utf16(reinterpret_cast<const uint8_t*>(utf8.data()), utf8.length(), &*utf16.begin(),
+                utf16_length + 1);
   return utf16;
 }
 
@@ -333,8 +332,7 @@ bool WriteAll(std::ostream& out, const BigBuffer& buffer) {
 }
 
 std::unique_ptr<uint8_t[]> Copy(const BigBuffer& buffer) {
-  std::unique_ptr<uint8_t[]> data =
-      std::unique_ptr<uint8_t[]>(new uint8_t[buffer.size()]);
+  std::unique_ptr<uint8_t[]> data = std::unique_ptr<uint8_t[]>(new uint8_t[buffer.size()]);
   uint8_t* p = data.get();
   for (const auto& block : buffer) {
     memcpy(p, block.buffer.get(), block.size);
@@ -368,8 +366,8 @@ typename Tokenizer::iterator& Tokenizer::iterator::operator++() {
 bool Tokenizer::iterator::operator==(const iterator& rhs) const {
   // We check equality here a bit differently.
   // We need to know that the addresses are the same.
-  return token_.begin() == rhs.token_.begin() &&
-         token_.end() == rhs.token_.end() && end_ == rhs.end_;
+  return token_.begin() == rhs.token_.begin() && token_.end() == rhs.token_.end() &&
+         end_ == rhs.end_;
 }
 
 bool Tokenizer::iterator::operator!=(const iterator& rhs) const {
@@ -377,11 +375,13 @@ bool Tokenizer::iterator::operator!=(const iterator& rhs) const {
 }
 
 Tokenizer::iterator::iterator(const StringPiece& s, char sep, const StringPiece& tok, bool end)
-    : str_(s), separator_(sep), token_(tok), end_(end) {}
+    : str_(s), separator_(sep), token_(tok), end_(end) {
+}
 
 Tokenizer::Tokenizer(const StringPiece& str, char sep)
     : begin_(++iterator(str, sep, StringPiece(str.begin() - 1, 0), false)),
-      end_(str, sep, StringPiece(str.end(), 0), true) {}
+      end_(str, sep, StringPiece(str.end(), 0), true) {
+}
 
 bool ExtractResFilePathParts(const StringPiece& path, StringPiece* out_prefix,
                              StringPiece* out_entry, StringPiece* out_suffix) {
@@ -391,8 +391,7 @@ bool ExtractResFilePathParts(const StringPiece& path, StringPiece* out_prefix,
   }
 
   StringPiece::const_iterator last_occurence = path.end();
-  for (auto iter = path.begin() + res_prefix.size(); iter != path.end();
-       ++iter) {
+  for (auto iter = path.begin() + res_prefix.size(); iter != path.end(); ++iter) {
     if (*iter == '/') {
       last_occurence = iter;
     }

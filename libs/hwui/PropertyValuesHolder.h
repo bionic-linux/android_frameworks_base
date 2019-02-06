@@ -157,5 +157,5 @@ public:
 private:
     VectorDrawable::Tree* mTree;
 };
-}
-}
+}  // namespace uirenderer
+}  // namespace android

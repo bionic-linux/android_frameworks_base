@@ -16,25 +16,24 @@
 
 #define LOG_TAG "Fingerprint-JNI"
 
-#include <nativehelper/JNIHelp.h>
 #include <inttypes.h>
+#include <nativehelper/JNIHelp.h>
 
+#include <android_os_MessageQueue.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/Log.h>
-#include <android_os_MessageQueue.h>
 #include <binder/IServiceManager.h>
-#include <utils/String16.h>
-#include <utils/Looper.h>
 #include <keystore/IKeystoreService.h>
-#include <keystore/keystore.h> // for error code
+#include <keystore/keystore.h>  // for error code
+#include <utils/Looper.h>
+#include <utils/String16.h>
 
-#include <hardware/hardware.h>
 #include <hardware/fingerprint.h>
+#include <hardware/hardware.h>
 #include <hardware/hw_auth_token.h>
 
 #include <utils/Log.h>
 #include "core_jni_helpers.h"
-
 
 namespace android {
 
@@ -48,7 +47,7 @@ static struct {
 
 static struct {
     fingerprint_module_t const* module;
-    fingerprint_device_t *device;
+    fingerprint_device_t* device;
 } gContext;
 
 static sp<Looper> gLooper;
@@ -57,18 +56,20 @@ static jobject gCallback;
 class CallbackHandler : public MessageHandler {
     int type;
     int arg1, arg2, arg3;
-public:
+
+  public:
     CallbackHandler(int type, int arg1, int arg2, int arg3)
-        : type(type), arg1(arg1), arg2(arg2), arg3(arg3) { }
+        : type(type), arg1(arg1), arg2(arg2), arg3(arg3) {}
 
     virtual void handleMessage(const Message& message) {
-        //ALOG(LOG_VERBOSE, LOG_TAG, "hal_notify(msg=%d, arg1=%d, arg2=%d)\n", msg.type, arg1, arg2);
+        // ALOG(LOG_VERBOSE, LOG_TAG, "hal_notify(msg=%d, arg1=%d, arg2=%d)\n", msg.type, arg1,
+        // arg2);
         JNIEnv* env = AndroidRuntime::getJNIEnv();
         env->CallVoidMethod(gCallback, gFingerprintServiceClassInfo.notify, type, arg1, arg2, arg3);
     }
 };
 
-static void notifyKeystore(uint8_t *auth_token, size_t auth_token_length) {
+static void notifyKeystore(uint8_t* auth_token, size_t auth_token_length) {
     if (auth_token != NULL && auth_token_length > 0) {
         // TODO: cache service?
         sp<IServiceManager> sm = defaultServiceManager();
@@ -101,8 +102,8 @@ static void hal_notify_callback(fingerprint_msg_t msg) {
             arg1 = msg.data.authenticated.finger.fid;
             arg2 = msg.data.authenticated.finger.gid;
             if (arg1 != 0) {
-                notifyKeystore(reinterpret_cast<uint8_t *>(&msg.data.authenticated.hat),
-                        sizeof(msg.data.authenticated.hat));
+                notifyKeystore(reinterpret_cast<uint8_t*>(&msg.data.authenticated.hat),
+                               sizeof(msg.data.authenticated.hat));
             }
             break;
         case FINGERPRINT_TEMPLATE_ENROLLING:
@@ -124,7 +125,7 @@ static void hal_notify_callback(fingerprint_msg_t msg) {
     gLooper->sendMessage(new CallbackHandler(msg.type, arg1, arg2, arg3), Message());
 }
 
-static void nativeInit(JNIEnv *env, jobject clazz, jobject mQueue, jobject callbackObj) {
+static void nativeInit(JNIEnv* env, jobject clazz, jobject mQueue, jobject callbackObj) {
     ALOG(LOG_VERBOSE, LOG_TAG, "nativeInit()\n");
     gCallback = MakeGlobalRefOrDie(env, callbackObj);
     gLooper = android_os_MessageQueue_getMessageQueue(env, mQueue)->getLooper();
@@ -138,8 +139,8 @@ static jint nativeEnroll(JNIEnv* env, jobject clazz, jbyteArray token, jint grou
         ALOG(LOG_VERBOSE, LOG_TAG, "nativeEnroll() : invalid token size %d\n", tokenSize);
         return -1;
     }
-    int ret = gContext.device->enroll(gContext.device,
-            reinterpret_cast<const hw_auth_token_t*>(tokenData), groupId, timeout);
+    int ret = gContext.device->enroll(
+            gContext.device, reinterpret_cast<const hw_auth_token_t*>(tokenData), groupId, timeout);
     env->ReleaseByteArrayElements(token, tokenData, 0);
     return reinterpret_cast<jint>(ret);
 }
@@ -177,15 +178,15 @@ static jint nativeRemove(JNIEnv* env, jobject clazz, jint fingerId, jint groupId
     return reinterpret_cast<jint>(ret);
 }
 
-static jlong nativeGetAuthenticatorId(JNIEnv *, jobject clazz) {
+static jlong nativeGetAuthenticatorId(JNIEnv*, jobject clazz) {
     return gContext.device->get_authenticator_id(gContext.device);
 }
 
-static jint nativeSetActiveGroup(JNIEnv *env, jobject clazz, jint gid, jbyteArray path) {
+static jint nativeSetActiveGroup(JNIEnv* env, jobject clazz, jint gid, jbyteArray path) {
     const int pathSize = env->GetArrayLength(path);
     jbyte* pathData = env->GetByteArrayElements(path, 0);
     if (pathSize >= PATH_MAX) {
-	ALOGE("Path name is too long\n");
+        ALOGE("Path name is too long\n");
         return -1;
     }
     char path_name[PATH_MAX] = {0};
@@ -199,7 +200,7 @@ static jint nativeSetActiveGroup(JNIEnv *env, jobject clazz, jint gid, jbyteArra
 static jint nativeOpenHal(JNIEnv* env, jobject clazz) {
     ALOG(LOG_VERBOSE, LOG_TAG, "nativeOpenHal()\n");
     int err;
-    const hw_module_t *hw_module = NULL;
+    const hw_module_t* hw_module = NULL;
     if (0 != (err = hw_get_module(FINGERPRINT_HARDWARE_MODULE_ID, &hw_module))) {
         ALOGE("Can't open fingerprint HW Module, error: %d", err);
         return 0;
@@ -216,7 +217,7 @@ static jint nativeOpenHal(JNIEnv* env, jobject clazz) {
         return 0;
     }
 
-    hw_device_t *device = NULL;
+    hw_device_t* device = NULL;
 
     if (0 != (err = gContext.module->common.methods->open(hw_module, NULL, &device))) {
         ALOGE("Can't open fingerprint methods, error: %d", err);
@@ -245,37 +246,36 @@ static jint nativeOpenHal(JNIEnv* env, jobject clazz) {
 }
 
 static jint nativeCloseHal(JNIEnv* env, jobject clazz) {
-    return -ENOSYS; // TODO
+    return -ENOSYS;  // TODO
 }
-
 
 // ----------------------------------------------------------------------------
 
-
 // TODO: clean up void methods
 static const JNINativeMethod g_methods[] = {
-    { "nativeAuthenticate", "(JI)I", (void*)nativeAuthenticate },
-    { "nativeStopAuthentication", "()I", (void*)nativeStopAuthentication },
-    { "nativeEnroll", "([BII)I", (void*)nativeEnroll },
-    { "nativeSetActiveGroup", "(I[B)I", (void*)nativeSetActiveGroup },
-    { "nativePreEnroll", "()J", (void*)nativePreEnroll },
-    { "nativeStopEnrollment", "()I", (void*)nativeStopEnrollment },
-    { "nativeRemove", "(II)I", (void*)nativeRemove },
-    { "nativeGetAuthenticatorId", "()J", (void*)nativeGetAuthenticatorId },
-    { "nativeOpenHal", "()I", (void*)nativeOpenHal },
-    { "nativeCloseHal", "()I", (void*)nativeCloseHal },
-    { "nativeInit","(Landroid/os/MessageQueue;"
-            "Lcom/android/server/fingerprint/FingerprintService;)V", (void*)nativeInit }
-};
+        {"nativeAuthenticate", "(JI)I", (void*)nativeAuthenticate},
+        {"nativeStopAuthentication", "()I", (void*)nativeStopAuthentication},
+        {"nativeEnroll", "([BII)I", (void*)nativeEnroll},
+        {"nativeSetActiveGroup", "(I[B)I", (void*)nativeSetActiveGroup},
+        {"nativePreEnroll", "()J", (void*)nativePreEnroll},
+        {"nativeStopEnrollment", "()I", (void*)nativeStopEnrollment},
+        {"nativeRemove", "(II)I", (void*)nativeRemove},
+        {"nativeGetAuthenticatorId", "()J", (void*)nativeGetAuthenticatorId},
+        {"nativeOpenHal", "()I", (void*)nativeOpenHal},
+        {"nativeCloseHal", "()I", (void*)nativeCloseHal},
+        {"nativeInit",
+         "(Landroid/os/MessageQueue;"
+         "Lcom/android/server/fingerprint/FingerprintService;)V",
+         (void*)nativeInit}};
 
 int register_android_server_fingerprint_FingerprintService(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, FINGERPRINT_SERVICE);
     gFingerprintServiceClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
     gFingerprintServiceClassInfo.notify =
-            GetMethodIDOrDie(env, gFingerprintServiceClassInfo.clazz,"notify", "(IIII)V");
+            GetMethodIDOrDie(env, gFingerprintServiceClassInfo.clazz, "notify", "(IIII)V");
     int result = RegisterMethodsOrDie(env, FINGERPRINT_SERVICE, g_methods, NELEM(g_methods));
     ALOG(LOG_VERBOSE, LOG_TAG, "FingerprintManager JNI ready.\n");
     return result;
 }
 
-} // namespace android
+}  // namespace android

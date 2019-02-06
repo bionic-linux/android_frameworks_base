@@ -17,8 +17,8 @@
 #include "Picture.h"
 #include "SkStream.h"
 
-#include <memory>
 #include <hwui/Canvas.h>
+#include <memory>
 
 namespace android {
 
@@ -109,4 +109,4 @@ sk_sp<SkPicture> Picture::makePartialCopy() const {
     return reRecorder.finishRecordingAsPicture();
 }
 
-}; // namespace android
+};  // namespace android

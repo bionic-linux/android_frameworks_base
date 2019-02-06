@@ -16,10 +16,10 @@
 #include "StatsLogProcessor.h"
 #include "config/ConfigKey.h"
 #include "guardrail/StatsdStats.h"
-#include "logd/LogEvent.h"
 #include "hash.h"
-#include "statslog.h"
+#include "logd/LogEvent.h"
 #include "statsd_test_util.h"
+#include "statslog.h"
 
 #include <android/util/ProtoOutputStream.h>
 #include <gtest/gtest.h>
@@ -44,7 +44,7 @@ TEST(UidMapTest, TestIsolatedUID) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     // Construct the processor with a dummy sendBroadcast function that does nothing.
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-        [](const ConfigKey& key) {return true;});
+                        [](const ConfigKey& key) { return true; });
     LogEvent addEvent(android::util::ISOLATED_UID_CHANGED, 1);
     addEvent.write(100);  // parent UID
     addEvent.write(101);  // isolated UID
@@ -373,7 +373,7 @@ TEST(UidMapTest, TestMemoryGuardrail) {
     EXPECT_EQ(1U, m.mChanges.size());
 
     // Now force deletion by limiting the memory to hold one delta change.
-    m.maxBytesOverride = 80; // Since the app string alone requires >45 characters.
+    m.maxBytesOverride = 80;  // Since the app string alone requires >45 characters.
     m.updateApp(5, String16("EXTREMELY_LONG_STRING_FOR_APP_TO_WASTE_MEMORY.0"), 1000, 4);
     EXPECT_EQ(1U, m.mChanges.size());
 }

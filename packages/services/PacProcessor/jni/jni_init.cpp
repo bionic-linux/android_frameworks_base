@@ -20,13 +20,13 @@
 #include "jni.h"
 
 namespace android {
-    extern int register_com_android_pacprocessor_PacNative(JNIEnv *env);
+extern int register_com_android_pacprocessor_PacNative(JNIEnv* env);
 }
 
 using namespace android;
 
 extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
-    JNIEnv *env;
+    JNIEnv* env;
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
         ALOGE("ERROR: GetEnv failed");
         return -1;

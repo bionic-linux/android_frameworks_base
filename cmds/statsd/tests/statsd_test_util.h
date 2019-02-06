@@ -18,8 +18,8 @@
 #include "frameworks/base/cmds/statsd/src/stats_log.pb.h"
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"
 #include "src/StatsLogProcessor.h"
-#include "src/logd/LogEvent.h"
 #include "src/hash.h"
+#include "src/logd/LogEvent.h"
 #include "src/stats_log_util.h"
 #include "statslog.h"
 
@@ -60,7 +60,7 @@ AtomMatcher CreateUidProcessStateChangedAtomMatcher();
 AtomMatcher CreateAcquireWakelockAtomMatcher();
 
 // Create AtomMatcher proto for releasing wakelock.
-AtomMatcher CreateReleaseWakelockAtomMatcher() ;
+AtomMatcher CreateReleaseWakelockAtomMatcher();
 
 // Create AtomMatcher proto for screen turned on.
 AtomMatcher CreateScreenTurnedOnAtomMatcher();
@@ -81,7 +81,7 @@ AtomMatcher CreateMoveToBackgroundAtomMatcher();
 AtomMatcher CreateMoveToForegroundAtomMatcher();
 
 // Create AtomMatcher proto for process crashes
-AtomMatcher CreateProcessCrashAtomMatcher() ;
+AtomMatcher CreateProcessCrashAtomMatcher();
 
 // Create Predicate proto for screen is on.
 Predicate CreateScreenIsOnPredicate();
@@ -119,22 +119,21 @@ FieldMatcher CreateAttributionUidDimensions(const int atomId,
                                             const std::vector<Position>& positions);
 
 // Create log event for screen state changed.
-std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(
-    const android::view::DisplayStateEnum state, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(const android::view::DisplayStateEnum state,
+                                                        uint64_t timestampNs);
 
 // Create log event for screen brightness state changed.
-std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(
-   int level, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(int level, uint64_t timestampNs);
 
 // Create log event when scheduled job starts.
 std::unique_ptr<LogEvent> CreateStartScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs);
 
 // Create log event when scheduled job finishes.
 std::unique_ptr<LogEvent> CreateFinishScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs);
 
 // Create log event when battery saver starts.
 std::unique_ptr<LogEvent> CreateBatterySaverOnEvent(uint64_t timestampNs);
@@ -158,8 +157,7 @@ std::unique_ptr<LogEvent> CreateSyncEndEvent(
         uint64_t timestampNs);
 
 // Create log event when the app sync ends.
-std::unique_ptr<LogEvent> CreateAppCrashEvent(
-    const int uid, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateAppCrashEvent(const int uid, uint64_t timestampNs);
 
 // Create log event for acquiring wakelock.
 std::unique_ptr<LogEvent> CreateAcquireWakelockEvent(
@@ -172,28 +170,27 @@ std::unique_ptr<LogEvent> CreateReleaseWakelockEvent(
         uint64_t timestampNs);
 
 // Create log event for releasing wakelock.
-std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(
-    int isolatedUid, int hostUid, bool is_create, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(int isolatedUid, int hostUid,
+                                                        bool is_create, uint64_t timestampNs);
 
 // Helper function to create an AttributionNodeInternal proto.
 AttributionNodeInternal CreateAttribution(const int& uid, const string& tag);
 
 // Create a statsd log event processor upon the start time in seconds, config and key.
-sp<StatsLogProcessor> CreateStatsLogProcessor(const int64_t timeBaseNs,
-                                              const int64_t currentTimeNs,
+sp<StatsLogProcessor> CreateStatsLogProcessor(const int64_t timeBaseNs, const int64_t currentTimeNs,
                                               const StatsdConfig& config, const ConfigKey& key);
 
 // Util function to sort the log events by timestamp.
-void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>> *events);
+void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>>* events);
 
 int64_t StringToId(const string& str);
 
 void ValidateUidDimension(const DimensionsValue& value, int node_idx, int atomId, int uid);
 void ValidateAttributionUidDimension(const DimensionsValue& value, int atomId, int uid);
-void ValidateAttributionUidAndTagDimension(
-    const DimensionsValue& value, int atomId, int uid, const std::string& tag);
-void ValidateAttributionUidAndTagDimension(
-    const DimensionsValue& value, int node_idx, int atomId, int uid, const std::string& tag);
+void ValidateAttributionUidAndTagDimension(const DimensionsValue& value, int atomId, int uid,
+                                           const std::string& tag);
+void ValidateAttributionUidAndTagDimension(const DimensionsValue& value, int node_idx, int atomId,
+                                           int uid, const std::string& tag);
 
 struct DimensionsPair {
     DimensionsPair(DimensionsValue m1, DimensionsValue m2) : dimInWhat(m1), dimInCondition(m2){};
@@ -205,17 +202,15 @@ struct DimensionsPair {
 bool LessThan(const DimensionsValue& s1, const DimensionsValue& s2);
 bool LessThan(const DimensionsPair& s1, const DimensionsPair& s2);
 
+void backfillStartEndTimestamp(ConfigMetricsReport* config_report);
+void backfillStartEndTimestamp(ConfigMetricsReportList* config_report_list);
 
-void backfillStartEndTimestamp(ConfigMetricsReport *config_report);
-void backfillStartEndTimestamp(ConfigMetricsReportList *config_report_list);
-
-void backfillStringInReport(ConfigMetricsReportList *config_report_list);
+void backfillStringInReport(ConfigMetricsReportList* config_report_list);
 void backfillStringInDimension(const std::map<uint64_t, string>& str_map,
                                DimensionsValue* dimension);
 
 template <typename T>
-void backfillStringInDimension(const std::map<uint64_t, string>& str_map,
-                               T* metrics) {
+void backfillStringInDimension(const std::map<uint64_t, string>& str_map, T* metrics) {
     for (int i = 0; i < metrics->data_size(); ++i) {
         auto data = metrics->mutable_data(i);
         if (data->has_dimensions_in_what()) {
@@ -234,8 +229,7 @@ bool backfillDimensionPath(const DimensionsValue& path,
                            DimensionsValue* dimension);
 
 template <typename T>
-void backfillDimensionPath(const DimensionsValue& whatPath,
-                           const DimensionsValue& conditionPath,
+void backfillDimensionPath(const DimensionsValue& whatPath, const DimensionsValue& conditionPath,
                            T* metricData) {
     for (int i = 0; i < metricData->data_size(); ++i) {
         auto data = metricData->mutable_data(i);
@@ -273,24 +267,22 @@ void sortMetricDataByDimensionsValue(const T& metricData, T* sortedMetricData) {
 }
 
 template <typename T>
-void backfillStartEndTimestampForFullBucket(
-    const int64_t timeBaseNs, const int64_t bucketSizeNs, T* bucket) {
+void backfillStartEndTimestampForFullBucket(const int64_t timeBaseNs, const int64_t bucketSizeNs,
+                                            T* bucket) {
     bucket->set_start_bucket_elapsed_nanos(timeBaseNs + bucketSizeNs * bucket->bucket_num());
-    bucket->set_end_bucket_elapsed_nanos(
-        timeBaseNs + bucketSizeNs * bucket->bucket_num() + bucketSizeNs);
+    bucket->set_end_bucket_elapsed_nanos(timeBaseNs + bucketSizeNs * bucket->bucket_num() +
+                                         bucketSizeNs);
     bucket->clear_bucket_num();
 }
 
 template <typename T>
 void backfillStartEndTimestampForPartialBucket(const int64_t timeBaseNs, T* bucket) {
     if (bucket->has_start_bucket_elapsed_millis()) {
-        bucket->set_start_bucket_elapsed_nanos(
-            MillisToNano(bucket->start_bucket_elapsed_millis()));
+        bucket->set_start_bucket_elapsed_nanos(MillisToNano(bucket->start_bucket_elapsed_millis()));
         bucket->clear_start_bucket_elapsed_millis();
     }
     if (bucket->has_end_bucket_elapsed_millis()) {
-        bucket->set_end_bucket_elapsed_nanos(
-            MillisToNano(bucket->end_bucket_elapsed_millis()));
+        bucket->set_end_bucket_elapsed_nanos(MillisToNano(bucket->end_bucket_elapsed_millis()));
         bucket->clear_end_bucket_elapsed_millis();
     }
 }

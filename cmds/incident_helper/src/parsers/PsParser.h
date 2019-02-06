@@ -23,9 +23,9 @@
  * PS parser, parses output of 'ps' command to protobuf.
  */
 class PsParser : public TextParserBase {
-public:
-    PsParser() : TextParserBase(String8("Ps")) {};
-    ~PsParser() {};
+  public:
+    PsParser() : TextParserBase(String8("Ps")){};
+    ~PsParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

@@ -29,7 +29,9 @@ struct SingleReferenceVisitor : public DescendingValueVisitor {
 
   Reference* visited = nullptr;
 
-  void Visit(Reference* ref) override { visited = ref; }
+  void Visit(Reference* ref) override {
+    visited = ref;
+  }
 };
 
 struct StyleVisitor : public DescendingValueVisitor {
@@ -38,7 +40,9 @@ struct StyleVisitor : public DescendingValueVisitor {
   std::list<Reference*> visited_refs;
   Style* visited_style = nullptr;
 
-  void Visit(Reference* ref) override { visited_refs.push_back(ref); }
+  void Visit(Reference* ref) override {
+    visited_refs.push_back(ref);
+  }
 
   void Visit(Style* style) override {
     visited_style = style;
@@ -77,8 +81,7 @@ TEST(ValueVisitorTest, ValueCast) {
 
   std::unique_ptr<Style> style =
       test::StyleBuilder()
-          .AddItem("android:attr/foo",
-                   test::BuildReference("android:color/black"))
+          .AddItem("android:attr/foo", test::BuildReference("android:color/black"))
           .Build();
   EXPECT_NE(ValueCast<Style>(style.get()), nullptr);
   EXPECT_EQ(ValueCast<Reference>(style.get()), nullptr);

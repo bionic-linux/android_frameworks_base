@@ -93,7 +93,7 @@ class ApkAssets {
 
   ApkAssets(ZipArchiveHandle unmanaged_handle, const std::string& path);
 
-  using ZipArchivePtr = std::unique_ptr<ZipArchive, void(*)(ZipArchiveHandle)>;
+  using ZipArchivePtr = std::unique_ptr<ZipArchive, void (*)(ZipArchiveHandle)>;
 
   ZipArchivePtr zip_handle_;
   const std::string path_;

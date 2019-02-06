@@ -28,44 +28,25 @@ using std::vector;
 namespace android {
 namespace os {
 
-StatsDimensionsValue::StatsDimensionsValue() {};
+StatsDimensionsValue::StatsDimensionsValue(){};
 
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, String16 value) :
-    mField(field),
-    mValueType(kStrValueType),
-    mStrValue(value) {
-}
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, int32_t value) :
-    mField(field),
-    mValueType(kIntValueType),
-    mIntValue(value) {
-}
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, int64_t value) :
-    mField(field),
-    mValueType(kLongValueType),
-    mLongValue(value) {
-}
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, bool value) :
-    mField(field),
-    mValueType(kBoolValueType),
-    mBoolValue(value) {
-}
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, float value) :
-    mField(field),
-    mValueType(kFloatValueType),
-    mFloatValue(value) {
-}
-StatsDimensionsValue::StatsDimensionsValue(int32_t field, vector<StatsDimensionsValue> value) :
-    mField(field),
-    mValueType(kTupleValueType),
-    mTupleValue(value) {
-}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, String16 value)
+    : mField(field), mValueType(kStrValueType), mStrValue(value) {}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, int32_t value)
+    : mField(field), mValueType(kIntValueType), mIntValue(value) {}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, int64_t value)
+    : mField(field), mValueType(kLongValueType), mLongValue(value) {}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, bool value)
+    : mField(field), mValueType(kBoolValueType), mBoolValue(value) {}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, float value)
+    : mField(field), mValueType(kFloatValueType), mFloatValue(value) {}
+StatsDimensionsValue::StatsDimensionsValue(int32_t field, vector<StatsDimensionsValue> value)
+    : mField(field), mValueType(kTupleValueType), mTupleValue(value) {}
 
 StatsDimensionsValue::~StatsDimensionsValue() {}
 
-status_t
-StatsDimensionsValue::writeToParcel(Parcel* out) const {
-    status_t err ;
+status_t StatsDimensionsValue::writeToParcel(Parcel* out) const {
+    status_t err;
 
     err = out->writeInt32(mField);
     if (err != NO_ERROR) {
@@ -91,21 +72,19 @@ StatsDimensionsValue::writeToParcel(Parcel* out) const {
         case kFloatValueType:
             err = out->writeFloat(mFloatValue);
             break;
-        case kTupleValueType:
-            {
-                int sz = mTupleValue.size();
-                err = out->writeInt32(sz);
+        case kTupleValueType: {
+            int sz = mTupleValue.size();
+            err = out->writeInt32(sz);
+            if (err != NO_ERROR) {
+                return err;
+            }
+            for (int i = 0; i < sz; ++i) {
+                err = mTupleValue[i].writeToParcel(out);
                 if (err != NO_ERROR) {
                     return err;
                 }
-                for (int i = 0; i < sz; ++i) {
-                    err = mTupleValue[i].writeToParcel(out);
-                    if (err != NO_ERROR) {
-                        return err;
-                    }
-                }
             }
-            break;
+        } break;
         default:
             err = UNKNOWN_ERROR;
             break;
@@ -113,12 +92,10 @@ StatsDimensionsValue::writeToParcel(Parcel* out) const {
     return err;
 }
 
-status_t
-StatsDimensionsValue::readFromParcel(const Parcel* in)
-{
+status_t StatsDimensionsValue::readFromParcel(const Parcel* in) {
     // Implement me if desired. We don't currently use this.
     ALOGE("Cannot do c++ StatsDimensionsValue.readFromParcel(); it is not implemented.");
-    (void)in; // To prevent compile error of unused parameter 'in'
+    (void)in;  // To prevent compile error of unused parameter 'in'
     return UNKNOWN_ERROR;
 }
 

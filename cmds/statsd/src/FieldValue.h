@@ -84,7 +84,8 @@ private:
     int32_t mField;
 
 public:
-    Field() {}
+    Field() {
+    }
 
     Field(int32_t tag, int32_t pos[], int32_t depth) : mTag(tag) {
         mField = getEncodedField(pos, depth, true);
@@ -266,7 +267,8 @@ inline Matcher getSimpleMatcher(int32_t tag, size_t field) {
  *
  */
 struct Value {
-    Value() : type(UNKNOWN) {}
+    Value() : type(UNKNOWN) {
+    }
 
     Value(int32_t v) {
         int_value = v;
@@ -325,7 +327,8 @@ struct Value {
  * Represents a log item, or a dimension item (They are essentially the same).
  */
 struct FieldValue {
-    FieldValue() {}
+    FieldValue() {
+    }
     FieldValue(const Field& field, const Value& value) : mField(field), mValue(value) {
     }
     bool operator==(const FieldValue& that) const {

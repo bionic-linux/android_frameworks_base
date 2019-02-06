@@ -16,12 +16,12 @@
 
 #include <openssl/evp.h>
 
-#include <sys/types.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 /**
@@ -34,8 +34,7 @@
 #define ROUNDS 1024
 #define KEY_BITS 128
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <password>\n", argv[0]);
         exit(1);
@@ -59,8 +58,8 @@ int main(int argc, char* argv[])
 
     unsigned char rawKey[KEY_BITS];
 
-    if (PKCS5_PBKDF2_HMAC_SHA1(argv[1], strlen(argv[1]), salt, SALT_LEN,
-            ROUNDS, KEY_BITS, rawKey) != 1) {
+    if (PKCS5_PBKDF2_HMAC_SHA1(argv[1], strlen(argv[1]), salt, SALT_LEN, ROUNDS, KEY_BITS,
+                               rawKey) != 1) {
         fprintf(stderr, "Could not generate PBKDF2 output: %s\n", strerror(errno));
         exit(1);
     }

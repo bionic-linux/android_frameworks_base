@@ -32,13 +32,12 @@ static uint32_t ApkAssetsCookieToJavaCookie(ApkAssetsCookie cookie) {
   return cookie != kInvalidCookie ? static_cast<uint32_t>(cookie + 1) : static_cast<uint32_t>(-1);
 }
 
-class XmlAttributeFinder
-    : public BackTrackingAttributeFinder<XmlAttributeFinder, size_t> {
+class XmlAttributeFinder : public BackTrackingAttributeFinder<XmlAttributeFinder, size_t> {
  public:
   explicit XmlAttributeFinder(const ResXMLParser* parser)
-      : BackTrackingAttributeFinder(
-            0, parser != nullptr ? parser->getAttributeCount() : 0),
-        parser_(parser) {}
+      : BackTrackingAttributeFinder(0, parser != nullptr ? parser->getAttributeCount() : 0),
+        parser_(parser) {
+  }
 
   inline uint32_t GetAttribute(size_t index) const {
     return parser_->getAttributeNameResID(index);
@@ -65,8 +64,8 @@ bool ResolveAttrs(Theme* theme, uint32_t def_style_attr, uint32_t def_style_res,
                   uint32_t* src_values, size_t src_values_length, uint32_t* attrs,
                   size_t attrs_length, uint32_t* out_values, uint32_t* out_indices) {
   if (kDebugStyles) {
-    ALOGI("APPLY STYLE: theme=0x%p defStyleAttr=0x%x defStyleRes=0x%x", theme,
-          def_style_attr, def_style_res);
+    ALOGI("APPLY STYLE: theme=0x%p defStyleAttr=0x%x defStyleRes=0x%x", theme, def_style_attr,
+          def_style_res);
   }
 
   AssetManager2* assetmanager = theme->GetAssetManager();

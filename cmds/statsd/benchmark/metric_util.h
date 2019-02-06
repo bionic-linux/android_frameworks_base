@@ -43,7 +43,7 @@ AtomMatcher CreateScreenBrightnessChangedAtomMatcher();
 AtomMatcher CreateAcquireWakelockAtomMatcher();
 
 // Create AtomMatcher proto for releasing wakelock.
-AtomMatcher CreateReleaseWakelockAtomMatcher() ;
+AtomMatcher CreateReleaseWakelockAtomMatcher();
 
 // Create AtomMatcher proto for screen turned on.
 AtomMatcher CreateScreenTurnedOnAtomMatcher();
@@ -93,22 +93,21 @@ FieldMatcher CreateAttributionUidDimensions(const int atomId,
                                             const std::vector<Position>& positions);
 
 // Create log event for screen state changed.
-std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(
-    const android::view::DisplayStateEnum state, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(const android::view::DisplayStateEnum state,
+                                                        uint64_t timestampNs);
 
 // Create log event for screen brightness state changed.
-std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(
-   int level, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(int level, uint64_t timestampNs);
 
 // Create log event when scheduled job starts.
 std::unique_ptr<LogEvent> CreateStartScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs);
 
 // Create log event when scheduled job finishes.
 std::unique_ptr<LogEvent> CreateFinishScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs);
 
 // Create log event for app moving to background.
 std::unique_ptr<LogEvent> CreateMoveToBackgroundEvent(const int uid, uint64_t timestampNs);
@@ -127,8 +126,7 @@ std::unique_ptr<LogEvent> CreateSyncEndEvent(
         uint64_t timestampNs);
 
 // Create log event when the app sync ends.
-std::unique_ptr<LogEvent> CreateAppCrashEvent(
-    const int uid, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateAppCrashEvent(const int uid, uint64_t timestampNs);
 
 // Create log event for acquiring wakelock.
 std::unique_ptr<LogEvent> CreateAcquireWakelockEvent(
@@ -141,8 +139,8 @@ std::unique_ptr<LogEvent> CreateReleaseWakelockEvent(
         uint64_t timestampNs);
 
 // Create log event for releasing wakelock.
-std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(
-    int isolatedUid, int hostUid, bool is_create, uint64_t timestampNs);
+std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(int isolatedUid, int hostUid,
+                                                        bool is_create, uint64_t timestampNs);
 
 // Helper function to create an AttributionNodeInternal proto.
 AttributionNodeInternal CreateAttribution(const int& uid, const string& tag);
@@ -152,7 +150,7 @@ sp<StatsLogProcessor> CreateStatsLogProcessor(const long timeBaseSec, const Stat
                                               const ConfigKey& key);
 
 // Util function to sort the log events by timestamp.
-void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>> *events);
+void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>>* events);
 
 int64_t StringToId(const string& str);
 

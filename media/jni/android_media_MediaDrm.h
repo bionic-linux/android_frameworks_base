@@ -19,9 +19,9 @@
 
 #include "jni.h"
 
-#include <media/stagefright/foundation/ABase.h>
 #include <media/IDrm.h>
 #include <media/IDrmClient.h>
+#include <media/stagefright/foundation/ABase.h>
 #include <utils/Errors.h>
 #include <utils/RefBase.h>
 
@@ -29,30 +29,28 @@ namespace android {
 
 struct IDrm;
 
-class DrmListener: virtual public RefBase
-{
-public:
-    virtual void notify(DrmPlugin::EventType eventType, int extra,
-                        const Parcel *obj) = 0;
+class DrmListener : virtual public RefBase {
+  public:
+    virtual void notify(DrmPlugin::EventType eventType, int extra, const Parcel* obj) = 0;
 };
 
 struct JDrm : public BnDrmClient {
-    static bool IsCryptoSchemeSupported(const uint8_t uuid[16], const String8 &mimeType);
+    static bool IsCryptoSchemeSupported(const uint8_t uuid[16], const String8& mimeType);
 
-    JDrm(JNIEnv *env, jobject thiz, const uint8_t uuid[16], const String8 &appPackageName);
+    JDrm(JNIEnv* env, jobject thiz, const uint8_t uuid[16], const String8& appPackageName);
 
     status_t initCheck() const;
     sp<IDrm> getDrm() { return mDrm; }
 
-    void notify(DrmPlugin::EventType, int extra, const Parcel *obj);
+    void notify(DrmPlugin::EventType, int extra, const Parcel* obj);
     status_t setListener(const sp<DrmListener>& listener);
 
     void disconnect();
 
-protected:
+  protected:
     virtual ~JDrm();
 
-private:
+  private:
     jweak mObject;
     sp<IDrm> mDrm;
 
@@ -61,7 +59,7 @@ private:
     Mutex mLock;
 
     static sp<IDrm> MakeDrm();
-    static sp<IDrm> MakeDrm(const uint8_t uuid[16], const String8 &appPackageName);
+    static sp<IDrm> MakeDrm(const uint8_t uuid[16], const String8& appPackageName);
 
     DISALLOW_EVIL_CONSTRUCTORS(JDrm);
 };

@@ -23,9 +23,9 @@
 // STATUST: mingw does seem to redefine UNKNOWN_ERROR from our enum value, so a cast is necessary.
 
 #if !defined(_WIN32)
-#  define STATUST(x) x
+#define STATUST(x) x
 #else
-#  define STATUST(x) (status_t)x
+#define STATUST(x) (status_t) x
 #endif
 
 // Set to true for noisy debug output.
@@ -38,15 +38,10 @@ static const size_t MAX_THREADS = 4;
 // ==========================================================================
 // ==========================================================================
 
-class PackageInfo
-{
-public:
-    PackageInfo()
-    {
-    }
-    ~PackageInfo()
-    {
-    }
+class PackageInfo {
+  public:
+    PackageInfo() {}
+    ~PackageInfo() {}
 
     status_t parsePackage(const sp<AaptGroup>& grp);
 };
@@ -55,36 +50,25 @@ public:
 // ==========================================================================
 // ==========================================================================
 
-String8 parseResourceName(const String8& leaf)
-{
+String8 parseResourceName(const String8& leaf) {
     const char* firstDot = strchr(leaf.string(), '.');
     const char* str = leaf.string();
 
     if (firstDot) {
-        return String8(str, firstDot-str);
+        return String8(str, firstDot - str);
     } else {
         return String8(str);
     }
 }
 
-ResourceTypeSet::ResourceTypeSet()
-    :RefBase(),
-     KeyedVector<String8,sp<AaptGroup> >()
-{
-}
+ResourceTypeSet::ResourceTypeSet() : RefBase(), KeyedVector<String8, sp<AaptGroup>>() {}
 
-FilePathStore::FilePathStore()
-    :RefBase(),
-     Vector<String8>()
-{
-}
+FilePathStore::FilePathStore() : RefBase(), Vector<String8>() {}
 
-class ResourceDirIterator
-{
-public:
+class ResourceDirIterator {
+  public:
     ResourceDirIterator(const sp<ResourceTypeSet>& set, const String8& resType)
-        : mResType(resType), mSet(set), mSetPos(0), mGroupPos(0)
-    {
+        : mResType(resType), mSet(set), mSetPos(0), mGroupPos(0) {
         memset(&mParams, 0, sizeof(ResTable_config));
     }
 
@@ -96,12 +80,9 @@ public:
     inline String8 getPath() const { return mPath; }
     inline const ResTable_config& getParams() const { return mParams; }
 
-    enum {
-        EOD = 1
-    };
+    enum { EOD = 1 };
 
-    ssize_t next()
-    {
+    ssize_t next() {
         while (true) {
             sp<AaptGroup> group;
             sp<AaptFile> file;
@@ -111,7 +92,7 @@ public:
                 group = mGroup;
                 file = group->getFiles().valueAt(mGroupPos++);
 
-            // Try to get the next group/file in this directory
+                // Try to get the next group/file in this directory
             } else if (mSetPos < mSet->size()) {
                 mGroup = group = mSet->valueAt(mSetPos++);
                 if (group->getFiles().size() < 1) {
@@ -120,7 +101,7 @@ public:
                 file = group->getFiles().valueAt(0);
                 mGroupPos = 1;
 
-            // All done!
+                // All done!
             } else {
                 return EOD;
             }
@@ -131,15 +112,15 @@ public:
             mLeafName = String8(leaf);
             mParams = file->getGroupEntry().toParams();
             if (kIsDebug) {
-                printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d ui=%d density=%d touch=%d key=%d inp=%d nav=%d\n",
-                        group->getPath().string(), mParams.mcc, mParams.mnc,
-                        mParams.language[0] ? mParams.language[0] : '-',
-                        mParams.language[1] ? mParams.language[1] : '-',
-                        mParams.country[0] ? mParams.country[0] : '-',
-                        mParams.country[1] ? mParams.country[1] : '-',
-                        mParams.orientation, mParams.uiMode,
-                        mParams.density, mParams.touchscreen, mParams.keyboard,
-                        mParams.inputFlags, mParams.navigation);
+                printf("Dir %s: mcc=%d mnc=%d lang=%c%c cnt=%c%c orient=%d ui=%d density=%d "
+                       "touch=%d key=%d inp=%d nav=%d\n",
+                       group->getPath().string(), mParams.mcc, mParams.mnc,
+                       mParams.language[0] ? mParams.language[0] : '-',
+                       mParams.language[1] ? mParams.language[1] : '-',
+                       mParams.country[0] ? mParams.country[0] : '-',
+                       mParams.country[1] ? mParams.country[1] : '-', mParams.orientation,
+                       mParams.uiMode, mParams.density, mParams.touchscreen, mParams.keyboard,
+                       mParams.inputFlags, mParams.navigation);
             }
             mPath = "res";
             mPath.appendPath(file->getGroupEntry().toDirName(mResType));
@@ -159,7 +140,7 @@ public:
         }
     }
 
-private:
+  private:
     String8 mResType;
 
     const sp<ResourceTypeSet> mSet;
@@ -176,8 +157,8 @@ private:
 };
 
 class AnnotationProcessor {
-public:
-    AnnotationProcessor() : mDeprecated(false), mSystemApi(false) { }
+  public:
+    AnnotationProcessor() : mDeprecated(false), mSystemApi(false) {}
 
     void preprocessComment(String8& comment) {
         if (comment.size() > 0) {
@@ -199,7 +180,7 @@ public:
         }
     }
 
-private:
+  private:
     bool mDeprecated;
     bool mSystemApi;
 };
@@ -208,18 +189,14 @@ private:
 // ==========================================================================
 // ==========================================================================
 
-bool isValidResourceType(const String8& type)
-{
-    return type == "anim" || type == "animator" || type == "interpolator"
-        || type == "transition" || type == "font"
-        || type == "drawable" || type == "layout"
-        || type == "values" || type == "xml" || type == "raw"
-        || type == "color" || type == "menu" || type == "mipmap";
+bool isValidResourceType(const String8& type) {
+    return type == "anim" || type == "animator" || type == "interpolator" || type == "transition" ||
+           type == "font" || type == "drawable" || type == "layout" || type == "values" ||
+           type == "xml" || type == "raw" || type == "color" || type == "menu" || type == "mipmap";
 }
 
 static status_t parsePackage(Bundle* bundle, const sp<AaptAssets>& assets,
-    const sp<AaptGroup>& grp)
-{
+                             const sp<AaptGroup>& grp) {
     if (grp->getFiles().size() != 1) {
         fprintf(stderr, "warning: Multiple AndroidManifest.xml files found, using %s\n",
                 grp->getFiles().valueAt(0)->getPrintableSource().string());
@@ -232,18 +209,17 @@ static status_t parsePackage(Bundle* bundle, const sp<AaptAssets>& assets,
     if (err != NO_ERROR) {
         return err;
     }
-    //printXMLBlock(&block);
+    // printXMLBlock(&block);
 
     ResXMLTree::event_code_t code;
-    while ((code=block.next()) != ResXMLTree::START_TAG
-           && code != ResXMLTree::END_DOCUMENT
-           && code != ResXMLTree::BAD_DOCUMENT) {
+    while ((code = block.next()) != ResXMLTree::START_TAG && code != ResXMLTree::END_DOCUMENT &&
+           code != ResXMLTree::BAD_DOCUMENT) {
     }
 
     size_t len;
     if (code != ResXMLTree::START_TAG) {
-        fprintf(stderr, "%s:%d: No start tag found\n",
-                file->getPrintableSource().string(), block.getLineNumber());
+        fprintf(stderr, "%s:%d: No start tag found\n", file->getPrintableSource().string(),
+                block.getLineNumber());
         return UNKNOWN_ERROR;
     }
     if (strcmp16(block.getElementName(&len), String16("manifest").string()) != 0) {
@@ -264,16 +240,16 @@ static status_t parsePackage(Bundle* bundle, const sp<AaptAssets>& assets,
 
     ssize_t revisionCodeIndex = block.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "revisionCode");
     if (revisionCodeIndex >= 0) {
-        bundle->setRevisionCode(String8(block.getAttributeStringValue(revisionCodeIndex, &len)).string());
+        bundle->setRevisionCode(
+                String8(block.getAttributeStringValue(revisionCodeIndex, &len)).string());
     }
 
     String16 uses_sdk16("uses-sdk");
-    while ((code=block.next()) != ResXMLTree::END_DOCUMENT
-           && code != ResXMLTree::BAD_DOCUMENT) {
+    while ((code = block.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
         if (code == ResXMLTree::START_TAG) {
             if (strcmp16(block.getElementName(&len), uses_sdk16.string()) == 0) {
-                ssize_t minSdkIndex = block.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE,
-                                                             "minSdkVersion");
+                ssize_t minSdkIndex =
+                        block.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "minSdkVersion");
                 if (minSdkIndex >= 0) {
                     const char16_t* minSdk16 = block.getAttributeStringValue(minSdkIndex, &len);
                     const char* minSdk8 = strdup(String8(minSdk16).string());
@@ -291,10 +267,8 @@ static status_t parsePackage(Bundle* bundle, const sp<AaptAssets>& assets,
 // ==========================================================================
 
 static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
-                                  ResourceTable* table,
-                                  const sp<ResourceTypeSet>& set,
-                                  const char* resType)
-{
+                                  ResourceTable* table, const sp<ResourceTypeSet>& set,
+                                  const char* resType) {
     String8 type8(resType);
     String16 type16(resType);
 
@@ -302,18 +276,17 @@ static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
 
     ResourceDirIterator it(set, String8(resType));
     ssize_t res;
-    while ((res=it.next()) == NO_ERROR) {
+    while ((res = it.next()) == NO_ERROR) {
         if (bundle->getVerbose()) {
-            printf("    (new resource id %s from %s)\n",
-                   it.getBaseName().string(), it.getFile()->getPrintableSource().string());
+            printf("    (new resource id %s from %s)\n", it.getBaseName().string(),
+                   it.getFile()->getPrintableSource().string());
         }
         String16 baseName(it.getBaseName());
         const char16_t* str = baseName.string();
         const char16_t* const end = str + baseName.size();
         while (str < end) {
-            if (!((*str >= 'a' && *str <= 'z')
-                    || (*str >= '0' && *str <= '9')
-                    || *str == '_' || *str == '.')) {
+            if (!((*str >= 'a' && *str <= 'z') || (*str >= '0' && *str <= '9') || *str == '_' ||
+                  *str == '.')) {
                 fprintf(stderr, "%s: Invalid file name: must contain only [a-z0-9_.]\n",
                         it.getPath().string());
                 hasErrors = true;
@@ -322,13 +295,9 @@ static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
         }
         String8 resPath = it.getPath();
         resPath.convertToResPath();
-        status_t result = table->addEntry(SourcePos(it.getPath(), 0),
-                        String16(assets->getPackage()),
-                        type16,
-                        baseName,
-                        String16(resPath),
-                        NULL,
-                        &it.getParams());
+        status_t result =
+                table->addEntry(SourcePos(it.getPath(), 0), String16(assets->getPackage()), type16,
+                                baseName, String16(resPath), NULL, &it.getParams());
         if (result != NO_ERROR) {
             hasErrors = true;
         } else {
@@ -340,21 +309,20 @@ static status_t makeFileResources(Bundle* bundle, const sp<AaptAssets>& assets,
 }
 
 class PreProcessImageWorkUnit : public WorkQueue::WorkUnit {
-public:
+  public:
     PreProcessImageWorkUnit(const Bundle* bundle, const sp<AaptAssets>& assets,
-            const sp<AaptFile>& file, volatile bool* hasErrors) :
-            mBundle(bundle), mAssets(assets), mFile(file), mHasErrors(hasErrors) {
-    }
+                            const sp<AaptFile>& file, volatile bool* hasErrors)
+        : mBundle(bundle), mAssets(assets), mFile(file), mHasErrors(hasErrors) {}
 
     virtual bool run() {
         status_t status = preProcessImage(mBundle, mAssets, mFile, NULL);
         if (status) {
             *mHasErrors = true;
         }
-        return true; // continue even if there are errors
+        return true;  // continue even if there are errors
     }
 
-private:
+  private:
     const Bundle* mBundle;
     sp<AaptAssets> mAssets;
     sp<AaptFile> mFile;
@@ -362,16 +330,15 @@ private:
 };
 
 static status_t preProcessImages(const Bundle* bundle, const sp<AaptAssets>& assets,
-                          const sp<ResourceTypeSet>& set, const char* type)
-{
+                                 const sp<ResourceTypeSet>& set, const char* type) {
     volatile bool hasErrors = false;
     ssize_t res = NO_ERROR;
     if (bundle->getUseCrunchCache() == false) {
         WorkQueue wq(MAX_THREADS, false);
         ResourceDirIterator it(set, String8(type));
-        while ((res=it.next()) == NO_ERROR) {
-            PreProcessImageWorkUnit* w = new PreProcessImageWorkUnit(
-                    bundle, assets, it.getFile(), &hasErrors);
+        while ((res = it.next()) == NO_ERROR) {
+            PreProcessImageWorkUnit* w =
+                    new PreProcessImageWorkUnit(bundle, assets, it.getFile(), &hasErrors);
             status_t status = wq.schedule(w);
             if (status) {
                 fprintf(stderr, "preProcessImages failed: schedule() returned %d\n", status);
@@ -390,16 +357,14 @@ static status_t preProcessImages(const Bundle* bundle, const sp<AaptAssets>& ass
 }
 
 static void collect_files(const sp<AaptDir>& dir,
-        KeyedVector<String8, sp<ResourceTypeSet> >* resources)
-{
-    const DefaultKeyedVector<String8, sp<AaptGroup> >& groups = dir->getFiles();
+                          KeyedVector<String8, sp<ResourceTypeSet>>* resources) {
+    const DefaultKeyedVector<String8, sp<AaptGroup>>& groups = dir->getFiles();
     int N = groups.size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const String8& leafName = groups.keyAt(i);
         const sp<AaptGroup>& group = groups.valueAt(i);
 
-        const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> >& files
-                = group->getFiles();
+        const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile>>& files = group->getFiles();
 
         if (files.size() == 0) {
             continue;
@@ -413,7 +378,7 @@ static void collect_files(const sp<AaptDir>& dir,
             sp<ResourceTypeSet> set = new ResourceTypeSet();
             if (kIsDebug) {
                 printf("Creating new resource type set for leaf %s with group %s (%p)\n",
-                        leafName.string(), group->getPath().string(), group.get());
+                       leafName.string(), group->getPath().string(), group.get());
             }
             set->add(leafName, group);
             resources->add(resType, set);
@@ -423,21 +388,20 @@ static void collect_files(const sp<AaptDir>& dir,
             if (index < 0) {
                 if (kIsDebug) {
                     printf("Adding to resource type set for leaf %s group %s (%p)\n",
-                            leafName.string(), group->getPath().string(), group.get());
+                           leafName.string(), group->getPath().string(), group.get());
                 }
                 set->add(leafName, group);
             } else {
                 sp<AaptGroup> existingGroup = set->valueAt(index);
                 if (kIsDebug) {
                     printf("Extending to resource type set for leaf %s group %s (%p)\n",
-                            leafName.string(), group->getPath().string(), group.get());
+                           leafName.string(), group->getPath().string(), group.get());
                 }
-                for (size_t j=0; j<files.size(); j++) {
+                for (size_t j = 0; j < files.size(); j++) {
                     if (kIsDebug) {
                         printf("Adding file %s in group %s resType %s\n",
-                                files.valueAt(j)->getSourceFile().string(),
-                                files.keyAt(j).toDirName(String8()).string(),
-                                resType.string());
+                               files.valueAt(j)->getSourceFile().string(),
+                               files.keyAt(j).toDirName(String8()).string(), resType.string());
                     }
                     existingGroup->addFile(files.valueAt(j));
                 }
@@ -447,16 +411,15 @@ static void collect_files(const sp<AaptDir>& dir,
 }
 
 static void collect_files(const sp<AaptAssets>& ass,
-        KeyedVector<String8, sp<ResourceTypeSet> >* resources)
-{
-    const Vector<sp<AaptDir> >& dirs = ass->resDirs();
+                          KeyedVector<String8, sp<ResourceTypeSet>>* resources) {
+    const Vector<sp<AaptDir>>& dirs = ass->resDirs();
     int N = dirs.size();
 
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const sp<AaptDir>& d = dirs.itemAt(i);
         if (kIsDebug) {
             printf("Collecting dir #%d %p: %s, leaf %s\n", i, d.get(), d->getPath().string(),
-                    d->getLeaf().string());
+                   d->getLeaf().string());
         }
         collect_files(d, resources);
 
@@ -468,16 +431,9 @@ static void collect_files(const sp<AaptAssets>& ass,
     }
 }
 
-enum {
-    ATTR_OKAY = -1,
-    ATTR_NOT_FOUND = -2,
-    ATTR_LEADING_SPACES = -3,
-    ATTR_TRAILING_SPACES = -4
-};
-static int validateAttr(const String8& path, const ResTable& table,
-        const ResXMLParser& parser,
-        const char* ns, const char* attr, const char* validChars, bool required)
-{
+enum { ATTR_OKAY = -1, ATTR_NOT_FOUND = -2, ATTR_LEADING_SPACES = -3, ATTR_TRAILING_SPACES = -4 };
+static int validateAttr(const String8& path, const ResTable& table, const ResXMLParser& parser,
+                        const char* ns, const char* attr, const char* validChars, bool required) {
     size_t len;
 
     ssize_t index = parser.indexOfAttribute(ns, attr);
@@ -488,27 +444,25 @@ static int validateAttr(const String8& path, const ResTable& table,
         if (value.dataType == Res_value::TYPE_REFERENCE) {
             uint32_t specFlags = 0;
             int strIdx;
-            if ((strIdx=table.resolveReference(&value, 0x10000000, NULL, &specFlags)) < 0) {
+            if ((strIdx = table.resolveReference(&value, 0x10000000, NULL, &specFlags)) < 0) {
                 fprintf(stderr, "%s:%d: Tag <%s> attribute %s references unknown resid 0x%08x.\n",
                         path.string(), parser.getLineNumber(),
-                        String8(parser.getElementName(&len)).string(), attr,
-                        value.data);
+                        String8(parser.getElementName(&len)).string(), attr, value.data);
                 return ATTR_NOT_FOUND;
             }
-            
+
             pool = table.getTableStringBlock(strIdx);
-            #if 0
+#if 0
             if (pool != NULL) {
                 str = pool->stringAt(value.data, &len);
             }
             printf("***** RES ATTR: %s specFlags=0x%x strIdx=%d: %s\n", attr,
                     specFlags, strIdx, str != NULL ? String8(str).string() : "???");
-            #endif
-            if ((specFlags&~ResTable_typeSpec::SPEC_PUBLIC) != 0 && false) {
+#endif
+            if ((specFlags & ~ResTable_typeSpec::SPEC_PUBLIC) != 0 && false) {
                 fprintf(stderr, "%s:%d: Tag <%s> attribute %s varies by configurations 0x%x.\n",
                         path.string(), parser.getLineNumber(),
-                        String8(parser.getElementName(&len)).string(), attr,
-                        specFlags);
+                        String8(parser.getElementName(&len)).string(), attr, specFlags);
                 return ATTR_NOT_FOUND;
             }
         }
@@ -519,21 +473,20 @@ static int validateAttr(const String8& path, const ResTable& table,
                         String8(parser.getElementName(&len)).string(), attr);
                 return ATTR_NOT_FOUND;
             }
-            if ((str=pool->stringAt(value.data, &len)) == NULL) {
+            if ((str = pool->stringAt(value.data, &len)) == NULL) {
                 fprintf(stderr, "%s:%d: Tag <%s> attribute %s has corrupt string value.\n",
                         path.string(), parser.getLineNumber(),
                         String8(parser.getElementName(&len)).string(), attr);
                 return ATTR_NOT_FOUND;
             }
         } else {
-            fprintf(stderr, "%s:%d: Tag <%s> attribute %s has invalid type %d.\n",
-                    path.string(), parser.getLineNumber(),
-                    String8(parser.getElementName(&len)).string(), attr,
+            fprintf(stderr, "%s:%d: Tag <%s> attribute %s has invalid type %d.\n", path.string(),
+                    parser.getLineNumber(), String8(parser.getElementName(&len)).string(), attr,
                     value.dataType);
             return ATTR_NOT_FOUND;
         }
         if (validChars) {
-            for (size_t i=0; i<len; i++) {
+            for (size_t i = 0; i < len; i++) {
                 char16_t c = str[i];
                 const char* p = validChars;
                 bool okay = false;
@@ -558,7 +511,7 @@ static int validateAttr(const String8& path, const ResTable& table,
                     String8(parser.getElementName(&len)).string(), attr);
             return ATTR_LEADING_SPACES;
         }
-        if (len != 0 && str[len-1] == ' ') {
+        if (len != 0 && str[len - 1] == ' ') {
             fprintf(stderr, "%s:%d: Tag <%s> attribute %s can not end with a space.\n",
                     path.string(), parser.getLineNumber(),
                     String8(parser.getElementName(&len)).string(), attr);
@@ -567,34 +520,30 @@ static int validateAttr(const String8& path, const ResTable& table,
         return ATTR_OKAY;
     }
     if (required) {
-        fprintf(stderr, "%s:%d: Tag <%s> missing required attribute %s.\n",
-                path.string(), parser.getLineNumber(),
-                String8(parser.getElementName(&len)).string(), attr);
+        fprintf(stderr, "%s:%d: Tag <%s> missing required attribute %s.\n", path.string(),
+                parser.getLineNumber(), String8(parser.getElementName(&len)).string(), attr);
         return ATTR_NOT_FOUND;
     }
     return ATTR_OKAY;
 }
 
-static void checkForIds(const String8& path, ResXMLParser& parser)
-{
+static void checkForIds(const String8& path, ResXMLParser& parser) {
     ResXMLTree::event_code_t code;
-    while ((code=parser.next()) != ResXMLTree::END_DOCUMENT
-           && code > ResXMLTree::BAD_DOCUMENT) {
+    while ((code = parser.next()) != ResXMLTree::END_DOCUMENT && code > ResXMLTree::BAD_DOCUMENT) {
         if (code == ResXMLTree::START_TAG) {
             ssize_t index = parser.indexOfAttribute(NULL, "id");
             if (index >= 0) {
-                fprintf(stderr, "%s:%d: warning: found plain 'id' attribute; did you mean the new 'android:id' name?\n",
+                fprintf(stderr,
+                        "%s:%d: warning: found plain 'id' attribute; did you mean the new "
+                        "'android:id' name?\n",
                         path.string(), parser.getLineNumber());
             }
         }
     }
 }
 
-static bool applyFileOverlay(Bundle *bundle,
-                             const sp<AaptAssets>& assets,
-                             sp<ResourceTypeSet> *baseSet,
-                             const char *resType)
-{
+static bool applyFileOverlay(Bundle* bundle, const sp<AaptAssets>& assets,
+                             sp<ResourceTypeSet>* baseSet, const char* resType) {
     if (bundle->getVerbose()) {
         printf("applyFileOverlay for %s\n", resType);
     }
@@ -606,7 +555,7 @@ static bool applyFileOverlay(Bundle *bundle,
 
     // work through the linked list of overlays
     while (overlay.get()) {
-        KeyedVector<String8, sp<ResourceTypeSet> >* overlayRes = overlay->getResources();
+        KeyedVector<String8, sp<ResourceTypeSet>>* overlayRes = overlay->getResources();
 
         // get the overlay resources of the requested type
         ssize_t index = overlayRes->indexOfKey(resTypeString);
@@ -616,9 +565,9 @@ static bool applyFileOverlay(Bundle *bundle,
             // for each of the resources, check for a match in the previously built
             // non-overlay "baseset".
             size_t overlayCount = overlaySet->size();
-            for (size_t overlayIndex=0; overlayIndex<overlayCount; overlayIndex++) {
+            for (size_t overlayIndex = 0; overlayIndex < overlayCount; overlayIndex++) {
                 if (bundle->getVerbose()) {
-                    printf("trying overlaySet Key=%s\n",overlaySet->keyAt(overlayIndex).string());
+                    printf("trying overlaySet Key=%s\n", overlaySet->keyAt(overlayIndex).string());
                 }
                 ssize_t baseIndex = -1;
                 if (baseSet->get() != NULL) {
@@ -631,42 +580,40 @@ static bool applyFileOverlay(Bundle *bundle,
                     sp<AaptGroup> overlayGroup = overlaySet->valueAt(overlayIndex);
                     sp<AaptGroup> baseGroup = (*baseSet)->valueAt(baseIndex);
 
-                    DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> > overlayFiles =
+                    DefaultKeyedVector<AaptGroupEntry, sp<AaptFile>> overlayFiles =
                             overlayGroup->getFiles();
                     if (bundle->getVerbose()) {
-                        DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> > baseFiles =
+                        DefaultKeyedVector<AaptGroupEntry, sp<AaptFile>> baseFiles =
                                 baseGroup->getFiles();
-                        for (size_t i=0; i < baseFiles.size(); i++) {
-                            printf("baseFile " ZD " has flavor %s\n", (ZD_TYPE) i,
-                                    baseFiles.keyAt(i).toString().string());
+                        for (size_t i = 0; i < baseFiles.size(); i++) {
+                            printf("baseFile " ZD " has flavor %s\n", (ZD_TYPE)i,
+                                   baseFiles.keyAt(i).toString().string());
                         }
-                        for (size_t i=0; i < overlayFiles.size(); i++) {
-                            printf("overlayFile " ZD " has flavor %s\n", (ZD_TYPE) i,
-                                    overlayFiles.keyAt(i).toString().string());
+                        for (size_t i = 0; i < overlayFiles.size(); i++) {
+                            printf("overlayFile " ZD " has flavor %s\n", (ZD_TYPE)i,
+                                   overlayFiles.keyAt(i).toString().string());
                         }
                     }
 
                     size_t overlayGroupSize = overlayFiles.size();
-                    for (size_t overlayGroupIndex = 0;
-                            overlayGroupIndex<overlayGroupSize;
-                            overlayGroupIndex++) {
-                        ssize_t baseFileIndex =
-                                baseGroup->getFiles().indexOfKey(overlayFiles.
-                                keyAt(overlayGroupIndex));
+                    for (size_t overlayGroupIndex = 0; overlayGroupIndex < overlayGroupSize;
+                         overlayGroupIndex++) {
+                        ssize_t baseFileIndex = baseGroup->getFiles().indexOfKey(
+                                overlayFiles.keyAt(overlayGroupIndex));
                         if (baseFileIndex >= 0) {
                             if (bundle->getVerbose()) {
-                                printf("found a match (" ZD ") for overlay file %s, for flavor %s\n",
-                                        (ZD_TYPE) baseFileIndex,
-                                        overlayGroup->getLeaf().string(),
-                                        overlayFiles.keyAt(overlayGroupIndex).toString().string());
+                                printf("found a match (" ZD
+                                       ") for overlay file %s, for flavor %s\n",
+                                       (ZD_TYPE)baseFileIndex, overlayGroup->getLeaf().string(),
+                                       overlayFiles.keyAt(overlayGroupIndex).toString().string());
                             }
                             baseGroup->removeFile(baseFileIndex);
                         } else {
                             // didn't find a match fall through and add it..
                             if (true || bundle->getVerbose()) {
                                 printf("nothing matches overlay file %s, for flavor %s\n",
-                                        overlayGroup->getLeaf().string(),
-                                        overlayFiles.keyAt(overlayGroupIndex).toString().string());
+                                       overlayGroup->getLeaf().string(),
+                                       overlayFiles.keyAt(overlayGroupIndex).toString().string());
                             }
                         }
                         baseGroup->addFile(overlayFiles.valueAt(overlayGroupIndex));
@@ -679,15 +626,14 @@ static bool applyFileOverlay(Bundle *bundle,
                     }
                     // this group doesn't exist (a file that's only in the overlay)
                     (*baseSet)->add(overlaySet->keyAt(overlayIndex),
-                            overlaySet->valueAt(overlayIndex));
+                                    overlaySet->valueAt(overlayIndex));
                     // make sure all flavors are defined in the resources.
                     sp<AaptGroup> overlayGroup = overlaySet->valueAt(overlayIndex);
-                    DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> > overlayFiles =
+                    DefaultKeyedVector<AaptGroupEntry, sp<AaptFile>> overlayFiles =
                             overlayGroup->getFiles();
                     size_t overlayGroupSize = overlayFiles.size();
-                    for (size_t overlayGroupIndex = 0;
-                            overlayGroupIndex<overlayGroupSize;
-                            overlayGroupIndex++) {
+                    for (size_t overlayGroupIndex = 0; overlayGroupIndex < overlayGroupSize;
+                         overlayGroupIndex++) {
                         assets->addGroupEntry(overlayFiles.keyAt(overlayGroupIndex));
                     }
                 }
@@ -707,10 +653,8 @@ static bool applyFileOverlay(Bundle *bundle,
  * Returns true otherwise, even if the attribute already exists, and does not modify
  * the existing attribute's value.
  */
-bool addTagAttribute(const sp<XMLNode>& node, const char* ns8,
-        const char* attr8, const char* value, bool errorOnFailedInsert,
-        bool replaceExisting)
-{
+bool addTagAttribute(const sp<XMLNode>& node, const char* ns8, const char* attr8, const char* value,
+                     bool errorOnFailedInsert, bool replaceExisting) {
     if (value == NULL) {
         return true;
     }
@@ -726,8 +670,9 @@ bool addTagAttribute(const sp<XMLNode>& node, const char* ns8,
         }
 
         if (errorOnFailedInsert) {
-            fprintf(stderr, "Error: AndroidManifest.xml already defines %s (in %s);"
-                            " cannot insert new value %s.\n",
+            fprintf(stderr,
+                    "Error: AndroidManifest.xml already defines %s (in %s);"
+                    " cannot insert new value %s.\n",
                     String8(attr).string(), String8(ns).string(), value);
             return false;
         }
@@ -735,7 +680,7 @@ bool addTagAttribute(const sp<XMLNode>& node, const char* ns8,
         // don't stop the build.
         return true;
     }
-    
+
     node->addAttribute(ns, attr, String16(value));
     return true;
 }
@@ -746,16 +691,15 @@ bool addTagAttribute(const sp<XMLNode>& node, const char* ns8,
  * If errorOnFailedInsert is true, and the attribute already exists, returns false.
  * Returns true otherwise, even if the attribute already exists.
  */
-bool addTagAttribute(const sp<XMLNode>& node, const char* ns8,
-        const char* attr8, const char* value, bool errorOnFailedInsert)
-{
+bool addTagAttribute(const sp<XMLNode>& node, const char* ns8, const char* attr8, const char* value,
+                     bool errorOnFailedInsert) {
     return addTagAttribute(node, ns8, attr8, value, errorOnFailedInsert, false);
 }
 
 static void fullyQualifyClassName(const String8& package, const sp<XMLNode>& node,
-        const String16& attrName) {
-    XMLNode::attribute_entry* attr = node->editAttribute(
-            String16("http://schemas.android.com/apk/res/android"), attrName);
+                                  const String16& attrName) {
+    XMLNode::attribute_entry* attr =
+            node->editAttribute(String16("http://schemas.android.com/apk/res/android"), attrName);
     if (attr != NULL) {
         String8 name(attr->string);
 
@@ -784,78 +728,77 @@ static void fullyQualifyClassName(const String8& package, const sp<XMLNode>& nod
 
 static sp<ResourceTable::ConfigList> findEntry(const String16& packageStr, const String16& typeStr,
                                                const String16& nameStr, ResourceTable* table) {
-  sp<ResourceTable::Package> pkg = table->getPackage(packageStr);
-  if (pkg != NULL) {
-      sp<ResourceTable::Type> type = pkg->getTypes().valueFor(typeStr);
-      if (type != NULL) {
-          return type->getConfigs().valueFor(nameStr);
-      }
-  }
-  return NULL;
+    sp<ResourceTable::Package> pkg = table->getPackage(packageStr);
+    if (pkg != NULL) {
+        sp<ResourceTable::Type> type = pkg->getTypes().valueFor(typeStr);
+        if (type != NULL) {
+            return type->getConfigs().valueFor(nameStr);
+        }
+    }
+    return NULL;
 }
 
 static uint16_t getMaxSdkVersion(const sp<ResourceTable::ConfigList>& configList) {
-  const DefaultKeyedVector<ConfigDescription, sp<ResourceTable::Entry>>& entries =
-          configList->getEntries();
-  uint16_t maxSdkVersion = 0u;
-  for (size_t i = 0; i < entries.size(); i++) {
-    maxSdkVersion = std::max(maxSdkVersion, entries.keyAt(i).sdkVersion);
-  }
-  return maxSdkVersion;
+    const DefaultKeyedVector<ConfigDescription, sp<ResourceTable::Entry>>& entries =
+            configList->getEntries();
+    uint16_t maxSdkVersion = 0u;
+    for (size_t i = 0; i < entries.size(); i++) {
+        maxSdkVersion = std::max(maxSdkVersion, entries.keyAt(i).sdkVersion);
+    }
+    return maxSdkVersion;
 }
 
 static void massageRoundIconSupport(const String16& iconRef, const String16& roundIconRef,
                                     ResourceTable* table) {
-  bool publicOnly = false;
-  const char* err;
+    bool publicOnly = false;
+    const char* err;
 
-  String16 iconPackage, iconType, iconName;
-  if (!ResTable::expandResourceRef(iconRef.string(), iconRef.size(), &iconPackage, &iconType,
-                                   &iconName, NULL, &table->getAssetsPackage(), &err,
-                                   &publicOnly)) {
-      // Errors will be raised in later XML compilation.
-      return;
-  }
+    String16 iconPackage, iconType, iconName;
+    if (!ResTable::expandResourceRef(iconRef.string(), iconRef.size(), &iconPackage, &iconType,
+                                     &iconName, NULL, &table->getAssetsPackage(), &err,
+                                     &publicOnly)) {
+        // Errors will be raised in later XML compilation.
+        return;
+    }
 
-  sp<ResourceTable::ConfigList> iconEntry = findEntry(iconPackage, iconType, iconName, table);
-  if (iconEntry == NULL || getMaxSdkVersion(iconEntry) < SDK_O) {
-      // The icon is not adaptive, so nothing to massage.
-      return;
-  }
+    sp<ResourceTable::ConfigList> iconEntry = findEntry(iconPackage, iconType, iconName, table);
+    if (iconEntry == NULL || getMaxSdkVersion(iconEntry) < SDK_O) {
+        // The icon is not adaptive, so nothing to massage.
+        return;
+    }
 
-  String16 roundIconPackage, roundIconType, roundIconName;
-  if (!ResTable::expandResourceRef(roundIconRef.string(), roundIconRef.size(), &roundIconPackage,
-                                   &roundIconType, &roundIconName, NULL, &table->getAssetsPackage(),
-                                   &err, &publicOnly)) {
-      // Errors will be raised in later XML compilation.
-      return;
-  }
+    String16 roundIconPackage, roundIconType, roundIconName;
+    if (!ResTable::expandResourceRef(roundIconRef.string(), roundIconRef.size(), &roundIconPackage,
+                                     &roundIconType, &roundIconName, NULL,
+                                     &table->getAssetsPackage(), &err, &publicOnly)) {
+        // Errors will be raised in later XML compilation.
+        return;
+    }
 
-  sp<ResourceTable::ConfigList> roundIconEntry = findEntry(roundIconPackage, roundIconType,
-                                                           roundIconName, table);
-  if (roundIconEntry == NULL || getMaxSdkVersion(roundIconEntry) >= SDK_O) {
-      // The developer explicitly used a v26 compatible drawable as the roundIcon, meaning we should
-      // not generate an alias to the icon drawable.
-      return;
-  }
+    sp<ResourceTable::ConfigList> roundIconEntry =
+            findEntry(roundIconPackage, roundIconType, roundIconName, table);
+    if (roundIconEntry == NULL || getMaxSdkVersion(roundIconEntry) >= SDK_O) {
+        // The developer explicitly used a v26 compatible drawable as the roundIcon, meaning we
+        // should not generate an alias to the icon drawable.
+        return;
+    }
 
-  String16 aliasValue = String16(String8::format("@%s:%s/%s", String8(iconPackage).string(),
-                                                 String8(iconType).string(),
-                                                 String8(iconName).string()));
+    String16 aliasValue =
+            String16(String8::format("@%s:%s/%s", String8(iconPackage).string(),
+                                     String8(iconType).string(), String8(iconName).string()));
 
-  // Add an equivalent v26 entry to the roundIcon for each v26 variant of the regular icon.
-  const DefaultKeyedVector<ConfigDescription, sp<ResourceTable::Entry>>& configList =
-          iconEntry->getEntries();
-  for (size_t i = 0; i < configList.size(); i++) {
-      if (configList.keyAt(i).sdkVersion >= SDK_O) {
-          table->addEntry(SourcePos(), roundIconPackage, roundIconType, roundIconName, aliasValue,
-                          NULL, &configList.keyAt(i));
-      }
-  }
+    // Add an equivalent v26 entry to the roundIcon for each v26 variant of the regular icon.
+    const DefaultKeyedVector<ConfigDescription, sp<ResourceTable::Entry>>& configList =
+            iconEntry->getEntries();
+    for (size_t i = 0; i < configList.size(); i++) {
+        if (configList.keyAt(i).sdkVersion >= SDK_O) {
+            table->addEntry(SourcePos(), roundIconPackage, roundIconType, roundIconName, aliasValue,
+                            NULL, &configList.keyAt(i));
+        }
+    }
 }
 
-status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
-{
+status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root) {
     root = root->searchElement(String16(), String16("manifest"));
     if (root == NULL) {
         fprintf(stderr, "No <manifest> tag.\n");
@@ -865,47 +808,46 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
     bool errorOnFailedInsert = bundle->getErrorOnFailedInsert();
     bool replaceVersion = bundle->getReplaceVersion();
 
-    if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "versionCode",
-            bundle->getVersionCode(), errorOnFailedInsert, replaceVersion)) {
+    if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "versionCode", bundle->getVersionCode(),
+                         errorOnFailedInsert, replaceVersion)) {
         return UNKNOWN_ERROR;
     } else {
-        const XMLNode::attribute_entry* attr = root->getAttribute(
-                String16(RESOURCES_ANDROID_NAMESPACE), String16("versionCode"));
+        const XMLNode::attribute_entry* attr =
+                root->getAttribute(String16(RESOURCES_ANDROID_NAMESPACE), String16("versionCode"));
         if (attr != NULL) {
             bundle->setVersionCode(strdup(String8(attr->string).string()));
         }
     }
 
-    if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "versionName",
-            bundle->getVersionName(), errorOnFailedInsert, replaceVersion)) {
+    if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "versionName", bundle->getVersionName(),
+                         errorOnFailedInsert, replaceVersion)) {
         return UNKNOWN_ERROR;
     } else {
-        const XMLNode::attribute_entry* attr = root->getAttribute(
-                String16(RESOURCES_ANDROID_NAMESPACE), String16("versionName"));
+        const XMLNode::attribute_entry* attr =
+                root->getAttribute(String16(RESOURCES_ANDROID_NAMESPACE), String16("versionName"));
         if (attr != NULL) {
             bundle->setVersionName(strdup(String8(attr->string).string()));
         }
     }
-    
+
     sp<XMLNode> vers = root->getChildElement(String16(), String16("uses-sdk"));
-    if (bundle->getMinSdkVersion() != NULL
-            || bundle->getTargetSdkVersion() != NULL
-            || bundle->getMaxSdkVersion() != NULL) {
+    if (bundle->getMinSdkVersion() != NULL || bundle->getTargetSdkVersion() != NULL ||
+        bundle->getMaxSdkVersion() != NULL) {
         if (vers == NULL) {
             vers = XMLNode::newElement(root->getFilename(), String16(), String16("uses-sdk"));
             root->insertChildAt(vers, 0);
         }
-        
+
         if (!addTagAttribute(vers, RESOURCES_ANDROID_NAMESPACE, "minSdkVersion",
-                bundle->getMinSdkVersion(), errorOnFailedInsert)) {
+                             bundle->getMinSdkVersion(), errorOnFailedInsert)) {
             return UNKNOWN_ERROR;
         }
         if (!addTagAttribute(vers, RESOURCES_ANDROID_NAMESPACE, "targetSdkVersion",
-                bundle->getTargetSdkVersion(), errorOnFailedInsert)) {
+                             bundle->getTargetSdkVersion(), errorOnFailedInsert)) {
             return UNKNOWN_ERROR;
         }
         if (!addTagAttribute(vers, RESOURCES_ANDROID_NAMESPACE, "maxSdkVersion",
-                bundle->getMaxSdkVersion(), errorOnFailedInsert)) {
+                             bundle->getMaxSdkVersion(), errorOnFailedInsert)) {
             return UNKNOWN_ERROR;
         }
     }
@@ -918,32 +860,31 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
         }
     }
 
-
     if (bundle->getCompileSdkVersion() != 0) {
         if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "compileSdkVersion",
-                    String8::format("%d", bundle->getCompileSdkVersion()),
-                    errorOnFailedInsert, true)) {
+                             String8::format("%d", bundle->getCompileSdkVersion()),
+                             errorOnFailedInsert, true)) {
             return UNKNOWN_ERROR;
         }
     }
 
     if (bundle->getCompileSdkVersionCodename() != "") {
         if (!addTagAttribute(root, RESOURCES_ANDROID_NAMESPACE, "compileSdkVersionCodename",
-                    bundle->getCompileSdkVersionCodename(), errorOnFailedInsert, true)) {
+                             bundle->getCompileSdkVersionCodename(), errorOnFailedInsert, true)) {
             return UNKNOWN_ERROR;
         }
     }
 
     if (bundle->getPlatformBuildVersionCode() != "") {
         if (!addTagAttribute(root, "", "platformBuildVersionCode",
-                    bundle->getPlatformBuildVersionCode(), errorOnFailedInsert, true)) {
+                             bundle->getPlatformBuildVersionCode(), errorOnFailedInsert, true)) {
             return UNKNOWN_ERROR;
         }
     }
 
     if (bundle->getPlatformBuildVersionName() != "") {
         if (!addTagAttribute(root, "", "platformBuildVersionName",
-                    bundle->getPlatformBuildVersionName(), errorOnFailedInsert, true)) {
+                             bundle->getPlatformBuildVersionName(), errorOnFailedInsert, true)) {
             return UNKNOWN_ERROR;
         }
     }
@@ -952,7 +893,7 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
         sp<XMLNode> application = root->getChildElement(String16(), String16("application"));
         if (application != NULL) {
             if (!addTagAttribute(application, RESOURCES_ANDROID_NAMESPACE, "debuggable", "true",
-                    errorOnFailedInsert)) {
+                                 errorOnFailedInsert)) {
                 return UNKNOWN_ERROR;
             }
         }
@@ -971,7 +912,7 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
         attr->string.setTo(String16(manifestPackageNameOverride));
         if (kIsDebug) {
             printf("Overriding package '%s' to be '%s'\n", origPackage.string(),
-                    manifestPackageNameOverride);
+                   manifestPackageNameOverride);
         }
 
         // Make class names fully qualified
@@ -980,11 +921,13 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
             fullyQualifyClassName(origPackage, application, String16("name"));
             fullyQualifyClassName(origPackage, application, String16("backupAgent"));
 
-            Vector<sp<XMLNode> >& children = const_cast<Vector<sp<XMLNode> >&>(application->getChildren());
+            Vector<sp<XMLNode>>& children =
+                    const_cast<Vector<sp<XMLNode>>&>(application->getChildren());
             for (size_t i = 0; i < children.size(); i++) {
                 sp<XMLNode> child = children.editItemAt(i);
                 String8 tag(child->getElementName());
-                if (tag == "activity" || tag == "service" || tag == "receiver" || tag == "provider") {
+                if (tag == "activity" || tag == "service" || tag == "receiver" ||
+                    tag == "provider") {
                     fullyQualifyClassName(origPackage, child, String16("name"));
                 } else if (tag == "activity-alias") {
                     fullyQualifyClassName(origPackage, child, String16("name"));
@@ -995,10 +938,11 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
     }
 
     // Deal with manifest package name overrides
-    const char* instrumentationPackageNameOverride = bundle->getInstrumentationPackageNameOverride();
+    const char* instrumentationPackageNameOverride =
+            bundle->getInstrumentationPackageNameOverride();
     if (instrumentationPackageNameOverride != NULL) {
         // Fix up instrumentation targets.
-        Vector<sp<XMLNode> >& children = const_cast<Vector<sp<XMLNode> >&>(root->getChildren());
+        Vector<sp<XMLNode>>& children = const_cast<Vector<sp<XMLNode>>&>(root->getChildren());
         for (size_t i = 0; i < children.size(); i++) {
             sp<XMLNode> child = children.editItemAt(i);
             String8 tag(child->getElementName());
@@ -1011,11 +955,11 @@ status_t massageManifest(Bundle* bundle, ResourceTable* table, sp<XMLNode> root)
             }
         }
     }
-    
+
     sp<XMLNode> application = root->getChildElement(String16(), String16("application"));
     if (application != NULL) {
-        XMLNode::attribute_entry* icon_attr = application->editAttribute(
-                String16(RESOURCES_ANDROID_NAMESPACE), String16("icon"));
+        XMLNode::attribute_entry* icon_attr =
+                application->editAttribute(String16(RESOURCES_ANDROID_NAMESPACE), String16("icon"));
         if (icon_attr != NULL) {
             XMLNode::attribute_entry* round_icon_attr = application->editAttribute(
                     String16(RESOURCES_ANDROID_NAMESPACE), String16("roundIcon"));
@@ -1068,7 +1012,8 @@ enum {
     VERSION_NAME_ATTR = 0x0101021c,
 };
 
-static ssize_t extractPlatformBuildVersion(const ResTable& table, ResXMLTree& tree, Bundle* bundle) {
+static ssize_t extractPlatformBuildVersion(const ResTable& table, ResXMLTree& tree,
+                                           Bundle* bundle) {
     // First check if we should be recording the compileSdkVersion* attributes.
     static const String16 compileSdkVersionName("android:attr/compileSdkVersion");
     const bool useCompileSdkVersion = table.identifierForName(compileSdkVersionName.string(),
@@ -1117,8 +1062,8 @@ static ssize_t extractPlatformBuildVersion(const ResTable& table, ResXMLTree& tr
             bundle->setPlatformBuildVersionName(versionName);
         }
 
-        if (useCompileSdkVersion && versionName != ""
-                && bundle->getCompileSdkVersionCodename() == "") {
+        if (useCompileSdkVersion && versionName != "" &&
+            bundle->getCompileSdkVersionCodename() == "") {
             bundle->setCompileSdkVersionCodename(versionName);
         }
         return NO_ERROR;
@@ -1159,26 +1104,25 @@ static ssize_t extractPlatformBuildVersion(AssetManager& assets, Bundle* bundle)
     return result;
 }
 
-#define ASSIGN_IT(n) \
-        do { \
-            ssize_t index = resources->indexOfKey(String8(#n)); \
-            if (index >= 0) { \
-                n ## s = resources->valueAt(index); \
-            } \
-        } while (0)
+#define ASSIGN_IT(n)                                        \
+    do {                                                    \
+        ssize_t index = resources->indexOfKey(String8(#n)); \
+        if (index >= 0) {                                   \
+            n##s = resources->valueAt(index);               \
+        }                                                   \
+    } while (0)
 
-status_t updatePreProcessedCache(Bundle* bundle)
-{
-    #if BENCHMARK
+status_t updatePreProcessedCache(Bundle* bundle) {
+#if BENCHMARK
     fprintf(stdout, "BENCHMARK: Starting PNG PreProcessing \n");
     long startPNGTime = clock();
-    #endif /* BENCHMARK */
+#endif /* BENCHMARK */
 
     String8 source(bundle->getResourceSourceDirs()[0]);
     String8 dest(bundle->getCrunchedOutputDir());
 
     FileFinder* ff = new SystemFileFinder();
-    CrunchCache cc(source,dest,ff);
+    CrunchCache cc(source, dest, ff);
 
     CacheUpdater* cu = new SystemCacheUpdater(bundle);
     size_t numFiles = cc.crunch(cu);
@@ -1189,15 +1133,16 @@ status_t updatePreProcessedCache(Bundle* bundle)
     delete ff;
     delete cu;
 
-    #if BENCHMARK
-    fprintf(stdout, "BENCHMARK: End PNG PreProcessing. Time Elapsed: %f ms \n"
-            ,(clock() - startPNGTime)/1000.0);
-    #endif /* BENCHMARK */
+#if BENCHMARK
+    fprintf(stdout, "BENCHMARK: End PNG PreProcessing. Time Elapsed: %f ms \n",
+            (clock() - startPNGTime) / 1000.0);
+#endif /* BENCHMARK */
     return 0;
 }
 
 status_t generateAndroidManifestForSplit(Bundle* bundle, const sp<AaptAssets>& assets,
-        const sp<ApkSplit>& split, sp<AaptFile>& outFile, ResourceTable* table) {
+                                         const sp<ApkSplit>& split, sp<AaptFile>& outFile,
+                                         ResourceTable* table) {
     const String8 filename("AndroidManifest.xml");
     const String16 androidPrefix("android");
     const String16 androidNSUri("http://schemas.android.com/apk/res/android");
@@ -1216,14 +1161,14 @@ status_t generateAndroidManifestForSplit(Bundle* bundle, const sp<AaptAssets>& a
 
     // Add the 'versionCode' attribute which is set to the original version code.
     if (!addTagAttribute(manifest, RESOURCES_ANDROID_NAMESPACE, "versionCode",
-            bundle->getVersionCode(), true, true)) {
+                         bundle->getVersionCode(), true, true)) {
         return UNKNOWN_ERROR;
     }
 
     // Add the 'revisionCode' attribute, which is set to the original revisionCode.
     if (bundle->getRevisionCode().size() > 0) {
         if (!addTagAttribute(manifest, RESOURCES_ANDROID_NAMESPACE, "revisionCode",
-                    bundle->getRevisionCode().string(), true, true)) {
+                             bundle->getRevisionCode().string(), true, true)) {
             return UNKNOWN_ERROR;
         }
     }
@@ -1237,8 +1182,7 @@ status_t generateAndroidManifestForSplit(Bundle* bundle, const sp<AaptAssets>& a
     sp<XMLNode> app = XMLNode::newElement(filename, String16(), String16("application"));
 
     // Add the 'hasCode' attribute which is never true for resource splits.
-    if (!addTagAttribute(app, RESOURCES_ANDROID_NAMESPACE, "hasCode",
-            "false", true, true)) {
+    if (!addTagAttribute(app, RESOURCES_ANDROID_NAMESPACE, "hasCode", "false", true, true)) {
         return UNKNOWN_ERROR;
     }
 
@@ -1253,12 +1197,10 @@ status_t generateAndroidManifestForSplit(Bundle* bundle, const sp<AaptAssets>& a
     return NO_ERROR;
 }
 
-status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuilder>& builder)
-{
+status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuilder>& builder) {
     // First, look for a package file to parse.  This is required to
     // be able to generate the resource information.
-    sp<AaptGroup> androidManifestFile =
-            assets->getFiles().valueFor(String8("AndroidManifest.xml"));
+    sp<AaptGroup> androidManifestFile = assets->getFiles().valueFor(String8("AndroidManifest.xml"));
     if (androidManifestFile == NULL) {
         fprintf(stderr, "ERROR: No AndroidManifest.xml file found.\n");
         return UNKNOWN_ERROR;
@@ -1314,8 +1256,8 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     // --------------------------------------------------------------
 
     // resType -> leafName -> group
-    KeyedVector<String8, sp<ResourceTypeSet> > *resources = 
-            new KeyedVector<String8, sp<ResourceTypeSet> >;
+    KeyedVector<String8, sp<ResourceTypeSet>>* resources =
+            new KeyedVector<String8, sp<ResourceTypeSet>>;
     collect_files(assets, resources);
 
     sp<ResourceTypeSet> drawables;
@@ -1347,26 +1289,26 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     assets->setResources(resources);
     // now go through any resource overlays and collect their files
     sp<AaptAssets> current = assets->getOverlay();
-    while(current.get()) {
-        KeyedVector<String8, sp<ResourceTypeSet> > *resources = 
-                new KeyedVector<String8, sp<ResourceTypeSet> >;
+    while (current.get()) {
+        KeyedVector<String8, sp<ResourceTypeSet>>* resources =
+                new KeyedVector<String8, sp<ResourceTypeSet>>;
         current->setResources(resources);
         collect_files(current, resources);
         current = current->getOverlay();
     }
     // apply the overlay files to the base set
     if (!applyFileOverlay(bundle, assets, &drawables, "drawable") ||
-            !applyFileOverlay(bundle, assets, &layouts, "layout") ||
-            !applyFileOverlay(bundle, assets, &anims, "anim") ||
-            !applyFileOverlay(bundle, assets, &animators, "animator") ||
-            !applyFileOverlay(bundle, assets, &interpolators, "interpolator") ||
-            !applyFileOverlay(bundle, assets, &transitions, "transition") ||
-            !applyFileOverlay(bundle, assets, &xmls, "xml") ||
-            !applyFileOverlay(bundle, assets, &raws, "raw") ||
-            !applyFileOverlay(bundle, assets, &colors, "color") ||
-            !applyFileOverlay(bundle, assets, &menus, "menu") ||
-            !applyFileOverlay(bundle, assets, &fonts, "font") ||
-            !applyFileOverlay(bundle, assets, &mipmaps, "mipmap")) {
+        !applyFileOverlay(bundle, assets, &layouts, "layout") ||
+        !applyFileOverlay(bundle, assets, &anims, "anim") ||
+        !applyFileOverlay(bundle, assets, &animators, "animator") ||
+        !applyFileOverlay(bundle, assets, &interpolators, "interpolator") ||
+        !applyFileOverlay(bundle, assets, &transitions, "transition") ||
+        !applyFileOverlay(bundle, assets, &xmls, "xml") ||
+        !applyFileOverlay(bundle, assets, &raws, "raw") ||
+        !applyFileOverlay(bundle, assets, &colors, "color") ||
+        !applyFileOverlay(bundle, assets, &menus, "menu") ||
+        !applyFileOverlay(bundle, assets, &fonts, "font") ||
+        !applyFileOverlay(bundle, assets, &mipmaps, "mipmap")) {
         return UNKNOWN_ERROR;
     }
 
@@ -1458,18 +1400,17 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     // compile resources
     current = assets;
-    while(current.get()) {
-        KeyedVector<String8, sp<ResourceTypeSet> > *resources = 
-                current->getResources();
+    while (current.get()) {
+        KeyedVector<String8, sp<ResourceTypeSet>>* resources = current->getResources();
 
         ssize_t index = resources->indexOfKey(String8("values"));
         if (index >= 0) {
             ResourceDirIterator it(resources->valueAt(index), String8("values"));
             ssize_t res;
-            while ((res=it.next()) == NO_ERROR) {
+            while ((res = it.next()) == NO_ERROR) {
                 const sp<AaptFile>& file = it.getFile();
-                res = compileResourceFile(bundle, assets, file, it.getParams(), 
-                                          (current!=assets), &table);
+                res = compileResourceFile(bundle, assets, file, it.getParams(), (current != assets),
+                                          &table);
                 if (res != NO_ERROR) {
                     hasErrors = true;
                 }
@@ -1514,10 +1455,10 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (layouts != NULL) {
         ResourceDirIterator it(layouts, String8("layout"));
-        while ((err=it.next()) == NO_ERROR) {
+        while ((err = it.next()) == NO_ERROR) {
             String8 src = it.getFile()->getPrintableSource();
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             // Only verify IDs if there was no error and the file is non-empty.
             if (err == NO_ERROR && it.getFile()->hasData()) {
                 ResXMLTree block;
@@ -1536,9 +1477,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (anims != NULL) {
         ResourceDirIterator it(anims, String8("anim"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1552,9 +1493,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (animators != NULL) {
         ResourceDirIterator it(animators, String8("animator"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1568,9 +1509,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (interpolators != NULL) {
         ResourceDirIterator it(interpolators, String8("interpolator"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1584,9 +1525,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (transitions != NULL) {
         ResourceDirIterator it(transitions, String8("transition"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1600,9 +1541,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (xmls != NULL) {
         ResourceDirIterator it(xmls, String8("xml"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1616,7 +1557,7 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (drawables != NULL) {
         ResourceDirIterator it(drawables, String8("drawable"));
-        while ((err=it.next()) == NO_ERROR) {
+        while ((err = it.next()) == NO_ERROR) {
             err = postProcessImage(bundle, assets, &table, it.getFile());
             if (err != NO_ERROR) {
                 hasErrors = true;
@@ -1631,7 +1572,7 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (mipmaps != NULL) {
         ResourceDirIterator it(mipmaps, String8("mipmap"));
-        while ((err=it.next()) == NO_ERROR) {
+        while ((err = it.next()) == NO_ERROR) {
             err = postProcessImage(bundle, assets, &table, it.getFile());
             if (err != NO_ERROR) {
                 hasErrors = true;
@@ -1646,9 +1587,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (colors != NULL) {
         ResourceDirIterator it(colors, String8("color"));
-        while ((err=it.next()) == NO_ERROR) {
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+        while ((err = it.next()) == NO_ERROR) {
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err != NO_ERROR) {
                 hasErrors = true;
             }
@@ -1662,10 +1603,10 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (menus != NULL) {
         ResourceDirIterator it(menus, String8("menu"));
-        while ((err=it.next()) == NO_ERROR) {
+        while ((err = it.next()) == NO_ERROR) {
             String8 src = it.getFile()->getPrintableSource();
-            err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                    it.getFile(), &table, xmlFlags);
+            err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(), &table,
+                                 xmlFlags);
             if (err == NO_ERROR && it.getFile()->hasData()) {
                 ResXMLTree block;
                 block.setTo(it.getFile()->getData(), it.getFile()->getSize(), true);
@@ -1683,12 +1624,12 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
 
     if (fonts != NULL) {
         ResourceDirIterator it(fonts, String8("font"));
-        while ((err=it.next()) == NO_ERROR) {
+        while ((err = it.next()) == NO_ERROR) {
             // fonts can be resources other than xml.
             if (it.getFile()->getPath().getPathExtension() == ".xml") {
                 String8 src = it.getFile()->getPrintableSource();
-                err = compileXmlFile(bundle, assets, String16(it.getBaseName()),
-                        it.getFile(), &table, xmlFlags);
+                err = compileXmlFile(bundle, assets, String16(it.getBaseName()), it.getFile(),
+                                     &table, xmlFlags);
                 if (err != NO_ERROR) {
                     hasErrors = true;
                 }
@@ -1705,19 +1646,17 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     std::queue<CompileResourceWorkItem>& workQueue = table.getWorkQueue();
     while (!workQueue.empty()) {
         CompileResourceWorkItem& workItem = workQueue.front();
-        int xmlCompilationFlags = xmlFlags | XML_COMPILE_PARSE_VALUES
-                | XML_COMPILE_ASSIGN_ATTRIBUTE_IDS;
+        int xmlCompilationFlags =
+                xmlFlags | XML_COMPILE_PARSE_VALUES | XML_COMPILE_ASSIGN_ATTRIBUTE_IDS;
         if (!workItem.needsCompiling) {
             xmlCompilationFlags &= ~XML_COMPILE_ASSIGN_ATTRIBUTE_IDS;
             xmlCompilationFlags &= ~XML_COMPILE_PARSE_VALUES;
         }
-        err = compileXmlFile(bundle, assets, workItem.resourceName, workItem.xmlRoot,
-                             workItem.file, &table, xmlCompilationFlags);
+        err = compileXmlFile(bundle, assets, workItem.resourceName, workItem.xmlRoot, workItem.file,
+                             &table, xmlCompilationFlags);
 
         if (err == NO_ERROR && workItem.file->hasData()) {
-            assets->addResource(workItem.resPath.getPathLeaf(),
-                                workItem.resPath,
-                                workItem.file,
+            assets->addResource(workItem.resPath.getPathLeaf(), workItem.resPath, workItem.file,
                                 workItem.file->getResourceType());
         } else {
             hasErrors = true;
@@ -1728,7 +1667,7 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     if (table.validateLocalizations()) {
         hasErrors = true;
     }
-    
+
     if (hasErrors) {
         return UNKNOWN_ERROR;
     }
@@ -1736,10 +1675,9 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     // If we're not overriding the platform build versions,
     // extract them from the platform APK.
     if (packageType != ResourceTable::System &&
-            (bundle->getPlatformBuildVersionCode() == "" ||
-            bundle->getPlatformBuildVersionName() == "" ||
-            bundle->getCompileSdkVersion() == 0 ||
-            bundle->getCompileSdkVersionCodename() == "")) {
+        (bundle->getPlatformBuildVersionCode() == "" ||
+         bundle->getPlatformBuildVersionName() == "" || bundle->getCompileSdkVersion() == 0 ||
+         bundle->getCompileSdkVersionCodename() == "")) {
         err = extractPlatformBuildVersion(assets->getAssetManager(), bundle);
         if (err != NO_ERROR) {
             return UNKNOWN_ERROR;
@@ -1768,18 +1706,17 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
         return UNKNOWN_ERROR;
     }
 
-    //block.restart();
-    //printXMLBlock(&block);
+    // block.restart();
+    // printXMLBlock(&block);
 
     // --------------------------------------------------------------
     // Generate the final resource table.
     // Re-flatten because we may have added new resource IDs
     // --------------------------------------------------------------
 
-
     ResTable finalResTable;
     sp<AaptFile> resFile;
-    
+
     if (table.hasResources()) {
         sp<AaptSymbols> symbols = assets->getSymbolsFor(String8("R"));
         err = table.addSymbols(symbols, bundle->getSkipSymbolsWithoutDefaultLocalization());
@@ -1787,21 +1724,21 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
             return err;
         }
 
-        KeyedVector<Symbol, Vector<SymbolDefinition> > densityVaryingResources;
+        KeyedVector<Symbol, Vector<SymbolDefinition>> densityVaryingResources;
         if (builder->getSplits().size() > 1) {
             // Only look for density varying resources if we're generating
             // splits.
             table.getDensityVaryingResources(densityVaryingResources);
         }
 
-        Vector<sp<ApkSplit> >& splits = builder->getSplits();
+        Vector<sp<ApkSplit>>& splits = builder->getSplits();
         const size_t numSplits = splits.size();
         for (size_t i = 0; i < numSplits; i++) {
             sp<ApkSplit>& split = splits.editItemAt(i);
-            sp<AaptFile> flattenedTable = new AaptFile(String8("resources.arsc"),
-                    AaptGroupEntry(), String8());
-            err = table.flatten(bundle, split->getResourceFilter(),
-                    flattenedTable, split->isBase());
+            sp<AaptFile> flattenedTable =
+                    new AaptFile(String8("resources.arsc"), AaptGroupEntry(), String8());
+            err = table.flatten(bundle, split->getResourceFilter(), flattenedTable,
+                                split->isBase());
             if (err != NO_ERROR) {
                 fprintf(stderr, "Failed to generate resource table for split '%s'\n",
                         split->getPrintableName().string());
@@ -1828,8 +1765,7 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                 bool hasError = false;
                 const std::set<ConfigDescription>& splitConfigs = split->getConfigs();
                 for (std::set<ConfigDescription>::const_iterator iter = splitConfigs.begin();
-                        iter != splitConfigs.end();
-                        ++iter) {
+                     iter != splitConfigs.end(); ++iter) {
                     const ConfigDescription& config = *iter;
                     if (AaptConfig::isDensityOnly(config)) {
                         // Each density only split must contain all
@@ -1849,19 +1785,23 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                             if (block < 0) {
                                 hasError = true;
                                 SourcePos().error("%s has no definition for density split '%s'",
-                                        symbol.toString().string(), config.toString().string());
+                                                  symbol.toString().string(),
+                                                  config.toString().string());
 
                                 if (bundle->getVerbose()) {
-                                    const Vector<SymbolDefinition>& defs = densityVaryingResources[k];
+                                    const Vector<SymbolDefinition>& defs =
+                                            densityVaryingResources[k];
                                     const size_t defCount = std::min(size_t(5), defs.size());
                                     for (size_t d = 0; d < defCount; d++) {
                                         const SymbolDefinition& def = defs[d];
                                         def.source.error("%s has definition for %s",
-                                                symbol.toString().string(), def.config.toString().string());
+                                                         symbol.toString().string(),
+                                                         def.config.toString().string());
                                     }
 
                                     if (defCount < defs.size()) {
-                                        SourcePos().error("and %d more ...", (int) (defs.size() - defCount));
+                                        SourcePos().error("and %d more ...",
+                                                          (int)(defs.size() - defCount));
                                     }
                                 }
                             }
@@ -1874,10 +1814,10 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                 }
 
                 // Generate the AndroidManifest for this split.
-                sp<AaptFile> generatedManifest = new AaptFile(String8("AndroidManifest.xml"),
-                        AaptGroupEntry(), String8());
-                err = generateAndroidManifestForSplit(bundle, assets, split,
-                        generatedManifest, &table);
+                sp<AaptFile> generatedManifest =
+                        new AaptFile(String8("AndroidManifest.xml"), AaptGroupEntry(), String8());
+                err = generateAndroidManifestForSplit(bundle, assets, split, generatedManifest,
+                                                      &table);
                 if (err != NO_ERROR) {
                     fprintf(stderr, "Failed to generate AndroidManifest.xml for split '%s'\n",
                             split->getPrintableName().string());
@@ -1911,11 +1851,11 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     // parse it with the comments intact, so that we can use them to
     // generate java docs...  so we are not going to write this one
     // back out to the final manifest data.
-    sp<AaptFile> outManifestFile = new AaptFile(manifestFile->getSourceFile(),
-            manifestFile->getGroupEntry(),
-            manifestFile->getResourceType());
-    err = compileXmlFile(bundle, assets, String16(), manifestFile,
-            outManifestFile, &table, XML_COMPILE_STANDARD_RESOURCE & ~XML_COMPILE_STRIP_COMMENTS);
+    sp<AaptFile> outManifestFile =
+            new AaptFile(manifestFile->getSourceFile(), manifestFile->getGroupEntry(),
+                         manifestFile->getResourceType());
+    err = compileXmlFile(bundle, assets, String16(), manifestFile, outManifestFile, &table,
+                         XML_COMPILE_STANDARD_RESOURCE & ~XML_COMPILE_STRIP_COMMENTS);
     if (err < NO_ERROR) {
         return err;
     }
@@ -1936,25 +1876,31 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
     String16 data16("scheme");
     String16 feature_group16("feature-group");
     String16 uses_feature16("uses-feature");
-    const char* packageIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789";
-    const char* packageIdentCharsWithTheStupid = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-";
-    const char* classIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789$";
-    const char* processIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789:";
-    const char* authoritiesIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-:;";
-    const char* typeIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789:-/*+";
-    const char* schemeIdentChars = "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-";
+    const char* packageIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789";
+    const char* packageIdentCharsWithTheStupid =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-";
+    const char* classIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789$";
+    const char* processIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789:";
+    const char* authoritiesIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-:;";
+    const char* typeIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789:-/*+";
+    const char* schemeIdentChars =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789-";
     ResXMLTree::event_code_t code;
     sp<AaptSymbols> permissionSymbols;
     sp<AaptSymbols> permissionGroupSymbols;
-    while ((code=block.next()) != ResXMLTree::END_DOCUMENT
-           && code > ResXMLTree::BAD_DOCUMENT) {
+    while ((code = block.next()) != ResXMLTree::END_DOCUMENT && code > ResXMLTree::BAD_DOCUMENT) {
         if (code == ResXMLTree::START_TAG) {
             size_t len;
             if (block.getElementNamespace(&len) != NULL) {
@@ -1969,13 +1915,14 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                                  "sharedUserId", packageIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-            } else if (strcmp16(block.getElementName(&len), permission16.string()) == 0
-                    || strcmp16(block.getElementName(&len), permission_group16.string()) == 0) {
-                const bool isGroup = strcmp16(block.getElementName(&len),
-                        permission_group16.string()) == 0;
+            } else if (strcmp16(block.getElementName(&len), permission16.string()) == 0 ||
+                       strcmp16(block.getElementName(&len), permission_group16.string()) == 0) {
+                const bool isGroup =
+                        strcmp16(block.getElementName(&len), permission_group16.string()) == 0;
                 if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
-                                 "name", isGroup ? packageIdentCharsWithTheStupid
-                                 : packageIdentChars, true) != ATTR_OKAY) {
+                                 "name",
+                                 isGroup ? packageIdentCharsWithTheStupid : packageIdentChars,
+                                 true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
                 SourcePos srcPos(manifestPath, block.getLineNumber());
@@ -1983,25 +1930,23 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                 if (!isGroup) {
                     syms = permissionSymbols;
                     if (syms == NULL) {
-                        sp<AaptSymbols> symbols =
-                                assets->getSymbolsFor(String8("Manifest"));
-                        syms = permissionSymbols = symbols->addNestedSymbol(
-                                String8("permission"), srcPos);
+                        sp<AaptSymbols> symbols = assets->getSymbolsFor(String8("Manifest"));
+                        syms = permissionSymbols =
+                                symbols->addNestedSymbol(String8("permission"), srcPos);
                     }
                 } else {
                     syms = permissionGroupSymbols;
                     if (syms == NULL) {
-                        sp<AaptSymbols> symbols =
-                                assets->getSymbolsFor(String8("Manifest"));
-                        syms = permissionGroupSymbols = symbols->addNestedSymbol(
-                                String8("permission_group"), srcPos);
+                        sp<AaptSymbols> symbols = assets->getSymbolsFor(String8("Manifest"));
+                        syms = permissionGroupSymbols =
+                                symbols->addNestedSymbol(String8("permission_group"), srcPos);
                     }
                 }
                 size_t len;
                 ssize_t index = block.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "name");
                 const char16_t* id = block.getAttributeStringValue(index, &len);
                 if (id == NULL) {
-                    fprintf(stderr, "%s:%d: missing name attribute in element <%s>.\n", 
+                    fprintf(stderr, "%s:%d: missing name attribute in element <%s>.\n",
                             manifestPath.string(), block.getLineNumber(),
                             String8(block.getElementName(&len)).string());
                     hasErrors = true;
@@ -2014,14 +1959,12 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                 while (e > p) {
                     e--;
                     if (*e >= '0' && *e <= '9') {
-                      begins_with_digit = true;
-                      continue;
+                        begins_with_digit = true;
+                        continue;
                     }
-                    if ((*e >= 'a' && *e <= 'z') ||
-                        (*e >= 'A' && *e <= 'Z') ||
-                        (*e == '_')) {
-                      begins_with_digit = false;
-                      continue;
+                    if ((*e >= 'a' && *e <= 'z') || (*e >= 'A' && *e <= 'Z') || (*e == '_')) {
+                        begins_with_digit = false;
+                        continue;
                     }
                     if (isGroup && (*e == '-')) {
                         *e = '_';
@@ -2035,16 +1978,15 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                 // verify that we stopped because we hit a period or
                 // the beginning of the string, and that the
                 // identifier didn't begin with a digit.
-                if (begins_with_digit || (e != p && *(e-1) != '.')) {
-                  fprintf(stderr,
-                          "%s:%d: Permission name <%s> is not a valid Java symbol\n",
-                          manifestPath.string(), block.getLineNumber(), idStr.string());
-                  hasErrors = true;
+                if (begins_with_digit || (e != p && *(e - 1) != '.')) {
+                    fprintf(stderr, "%s:%d: Permission name <%s> is not a valid Java symbol\n",
+                            manifestPath.string(), block.getLineNumber(), idStr.string());
+                    hasErrors = true;
                 }
                 syms->addStringSymbol(String8(e), idStr, srcPos);
                 const char16_t* cmt = block.getComment(&len);
                 if (cmt != NULL && *cmt != 0) {
-                    //printf("Comment of %s: %s\n", String8(e).string(),
+                    // printf("Comment of %s: %s\n", String8(e).string(),
                     //        String8(cmt).string());
                     syms->appendComment(String8(e), String16(cmt), srcPos);
                 }
@@ -2059,9 +2001,8 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                                  "name", classIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "targetPackage",
-                                 packageIdentChars, true) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "targetPackage", packageIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
             } else if (strcmp16(block.getElementName(&len), application16.string()) == 0) {
@@ -2069,19 +2010,16 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                                  "name", classIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "permission",
-                                 packageIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "permission", packageIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "process",
-                                 processIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "process", processIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "taskAffinity",
-                                 processIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "taskAffinity", processIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
             } else if (strcmp16(block.getElementName(&len), provider16.string()) == 0) {
@@ -2089,77 +2027,69 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
                                  "name", classIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "authorities",
-                                 authoritiesIdentChars, true) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "authorities", authoritiesIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "permission",
-                                 packageIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "permission", packageIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "process",
-                                 processIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "process", processIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-            } else if (strcmp16(block.getElementName(&len), service16.string()) == 0
-                       || strcmp16(block.getElementName(&len), receiver16.string()) == 0
-                       || strcmp16(block.getElementName(&len), activity16.string()) == 0) {
+            } else if (strcmp16(block.getElementName(&len), service16.string()) == 0 ||
+                       strcmp16(block.getElementName(&len), receiver16.string()) == 0 ||
+                       strcmp16(block.getElementName(&len), activity16.string()) == 0) {
                 if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
                                  "name", classIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "permission",
-                                 packageIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "permission", packageIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "process",
-                                 processIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "process", processIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "taskAffinity",
-                                 processIdentChars, false) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "taskAffinity", processIdentChars, false) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-            } else if (strcmp16(block.getElementName(&len), action16.string()) == 0
-                       || strcmp16(block.getElementName(&len), category16.string()) == 0) {
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "name",
-                                 packageIdentChars, true) != ATTR_OKAY) {
+            } else if (strcmp16(block.getElementName(&len), action16.string()) == 0 ||
+                       strcmp16(block.getElementName(&len), category16.string()) == 0) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "name", packageIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
             } else if (strcmp16(block.getElementName(&len), data16.string()) == 0) {
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "mimeType",
-                                 typeIdentChars, true) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "mimeType", typeIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
-                if (validateAttr(manifestPath, finalResTable, block,
-                                 RESOURCES_ANDROID_NAMESPACE, "scheme",
-                                 schemeIdentChars, true) != ATTR_OKAY) {
+                if (validateAttr(manifestPath, finalResTable, block, RESOURCES_ANDROID_NAMESPACE,
+                                 "scheme", schemeIdentChars, true) != ATTR_OKAY) {
                     hasErrors = true;
                 }
             } else if (strcmp16(block.getElementName(&len), feature_group16.string()) == 0) {
                 int depth = 1;
-                while ((code=block.next()) != ResXMLTree::END_DOCUMENT
-                       && code > ResXMLTree::BAD_DOCUMENT) {
+                while ((code = block.next()) != ResXMLTree::END_DOCUMENT &&
+                       code > ResXMLTree::BAD_DOCUMENT) {
                     if (code == ResXMLTree::START_TAG) {
                         depth++;
                         if (strcmp16(block.getElementName(&len), uses_feature16.string()) == 0) {
-                            ssize_t idx = block.indexOfAttribute(
-                                    RESOURCES_ANDROID_NAMESPACE, "required");
+                            ssize_t idx =
+                                    block.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "required");
                             if (idx < 0) {
                                 continue;
                             }
 
                             int32_t data = block.getAttributeData(idx);
                             if (data == 0) {
-                                fprintf(stderr, "%s:%d: Tag <uses-feature> can not have "
+                                fprintf(stderr,
+                                        "%s:%d: Tag <uses-feature> can not have "
                                         "android:required=\"false\" when inside a "
                                         "<feature-group> tag.\n",
                                         manifestPath.string(), block.getLineNumber());
@@ -2190,23 +2120,22 @@ status_t buildResources(Bundle* bundle, const sp<AaptAssets>& assets, sp<ApkBuil
             return err;
         }
     }
-    
+
     return err;
 }
 
-static const char* getIndentSpace(int indent)
-{
-static const char whitespace[] =
-"                                                                                       ";
+static const char* getIndentSpace(int indent) {
+    static const char whitespace[] =
+            "                                                                                      "
+            " ";
 
-    return whitespace + sizeof(whitespace) - 1 - indent*4;
+    return whitespace + sizeof(whitespace) - 1 - indent * 4;
 }
 
 static String8 flattenSymbol(const String8& symbol) {
     String8 result(symbol);
     ssize_t first;
-    if ((first = symbol.find(":", 0)) >= 0
-            || (first = symbol.find(".", 0)) >= 0) {
+    if ((first = symbol.find(":", 0)) >= 0 || (first = symbol.find(".", 0)) >= 0) {
         size_t size = symbol.size();
         char* buf = result.lockBuffer(size);
         for (size_t i = first; i < size; i++) {
@@ -2235,16 +2164,14 @@ static String8 getSymbolName(const String8& symbol) {
     return symbol;
 }
 
-static String16 getAttributeComment(const sp<AaptAssets>& assets,
-                                    const String8& name,
-                                    String16* outTypeComment = NULL)
-{
+static String16 getAttributeComment(const sp<AaptAssets>& assets, const String8& name,
+                                    String16* outTypeComment = NULL) {
     sp<AaptSymbols> asym = assets->getSymbolsFor(String8("R"));
     if (asym != NULL) {
-        //printf("Got R symbols!\n");
+        // printf("Got R symbols!\n");
         asym = asym->getNestedSymbols().valueFor(String8("attr"));
         if (asym != NULL) {
-            //printf("Got attrs symbols! comment %s=%s\n",
+            // printf("Got attrs symbols! comment %s=%s\n",
             //     name.string(), String8(asym->getComment(name)).string());
             if (outTypeComment != NULL) {
                 *outTypeComment = asym->getTypeComment(name);
@@ -2255,10 +2182,9 @@ static String16 getAttributeComment(const sp<AaptAssets>& assets,
     return String16();
 }
 
-static status_t writeResourceLoadedCallbackForLayoutClasses(
-    FILE* fp, const sp<AaptAssets>& assets,
-    const sp<AaptSymbols>& symbols, int indent, bool /* includePrivate */)
-{
+static status_t writeResourceLoadedCallbackForLayoutClasses(FILE* fp, const sp<AaptAssets>& assets,
+                                                            const sp<AaptSymbols>& symbols,
+                                                            int indent, bool /* includePrivate */) {
     String16 attr16("attr");
     String16 package16(assets->getPackage());
 
@@ -2267,7 +2193,7 @@ static status_t writeResourceLoadedCallbackForLayoutClasses(
 
     size_t i;
     size_t N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 realClassName(symbols->getNestedSymbols().keyAt(i));
         String8 nclassName(flattenSymbol(realClassName));
@@ -2276,23 +2202,21 @@ static status_t writeResourceLoadedCallbackForLayoutClasses(
                 "%sfor(int i = 0; i < styleable.%s.length; ++i) {\n"
                 "%sstyleable.%s[i] = (styleable.%s[i] & 0x00ffffff) | (packageId << 24);\n"
                 "%s}\n",
-                indentStr, nclassName.string(),
-                getIndentSpace(indent+1), nclassName.string(), nclassName.string(),
-                indentStr);
+                indentStr, nclassName.string(), getIndentSpace(indent + 1), nclassName.string(),
+                nclassName.string(), indentStr);
     }
 
     return hasErrors ? STATUST(UNKNOWN_ERROR) : NO_ERROR;
 }
 
-static status_t writeResourceLoadedCallback(
-    FILE* fp, const sp<AaptAssets>& assets, bool includePrivate,
-    const sp<AaptSymbols>& symbols, const String8& className, int indent)
-{
+static status_t writeResourceLoadedCallback(FILE* fp, const sp<AaptAssets>& assets,
+                                            bool includePrivate, const sp<AaptSymbols>& symbols,
+                                            const String8& className, int indent) {
     size_t i;
     status_t err = NO_ERROR;
 
     size_t N = symbols->getSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         const AaptSymbolEntry& sym = symbols->getSymbols().valueAt(i);
         if (sym.typeCode != AaptSymbolEntry::TYPE_INT32) {
             continue;
@@ -2301,22 +2225,20 @@ static status_t writeResourceLoadedCallback(
             continue;
         }
         String8 flat_name(flattenSymbol(sym.name));
-        fprintf(fp,
-                "%s%s.%s = (%s.%s & 0x00ffffff) | (packageId << 24);\n",
-                getIndentSpace(indent), className.string(), flat_name.string(),
-                className.string(), flat_name.string());
+        fprintf(fp, "%s%s.%s = (%s.%s & 0x00ffffff) | (packageId << 24);\n", getIndentSpace(indent),
+                className.string(), flat_name.string(), className.string(), flat_name.string());
     }
 
     N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 nclassName(symbols->getNestedSymbols().keyAt(i));
         if (nclassName == "styleable") {
-            err = writeResourceLoadedCallbackForLayoutClasses(
-                    fp, assets, nsymbols, indent, includePrivate);
+            err = writeResourceLoadedCallbackForLayoutClasses(fp, assets, nsymbols, indent,
+                                                              includePrivate);
         } else {
-            err = writeResourceLoadedCallback(fp, assets, includePrivate, nsymbols,
-                    nclassName, indent);
+            err = writeResourceLoadedCallback(fp, assets, includePrivate, nsymbols, nclassName,
+                                              indent);
         }
         if (err != NO_ERROR) {
             return err;
@@ -2326,10 +2248,9 @@ static status_t writeResourceLoadedCallback(
     return NO_ERROR;
 }
 
-static status_t writeLayoutClasses(
-    FILE* fp, const sp<AaptAssets>& assets,
-    const sp<AaptSymbols>& symbols, int indent, bool includePrivate, bool nonConstantId)
-{
+static status_t writeLayoutClasses(FILE* fp, const sp<AaptAssets>& assets,
+                                   const sp<AaptSymbols>& symbols, int indent, bool includePrivate,
+                                   bool nonConstantId) {
     const char* indentStr = getIndentSpace(indent);
     if (!includePrivate) {
         fprintf(fp, "%s/** @doconly */\n", indentStr);
@@ -2345,7 +2266,7 @@ static status_t writeLayoutClasses(
 
     size_t i;
     size_t N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 realClassName(symbols->getNestedSymbols().keyAt(i));
         String8 nclassName(flattenSymbol(realClassName));
@@ -2356,24 +2277,23 @@ static status_t writeLayoutClasses(
 
         size_t a;
         size_t NA = nsymbols->getSymbols().size();
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             const AaptSymbolEntry& sym(nsymbols->getSymbols().valueAt(a));
-            int32_t code = sym.typeCode == AaptSymbolEntry::TYPE_INT32
-                    ? sym.int32Val : 0;
+            int32_t code = sym.typeCode == AaptSymbolEntry::TYPE_INT32 ? sym.int32Val : 0;
             bool isPublic = true;
             if (code == 0) {
                 String16 name16(sym.name);
                 uint32_t typeSpecFlags;
                 code = assets->getIncludedResources().identifierForName(
-                    name16.string(), name16.size(),
-                    attr16.string(), attr16.size(),
-                    package16.string(), package16.size(), &typeSpecFlags);
+                        name16.string(), name16.size(), attr16.string(), attr16.size(),
+                        package16.string(), package16.size(), &typeSpecFlags);
                 if (code == 0) {
-                    fprintf(stderr, "ERROR: In <declare-styleable> %s, unable to find attribute %s\n",
+                    fprintf(stderr,
+                            "ERROR: In <declare-styleable> %s, unable to find attribute %s\n",
                             nclassName.string(), sym.name.string());
                     hasErrors = true;
                 }
-                isPublic = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
+                isPublic = (typeSpecFlags & ResTable_typeSpec::SPEC_PUBLIC) != 0;
             }
             idents.add(code);
             origOrder.add(code);
@@ -2393,7 +2313,7 @@ static status_t writeLayoutClasses(
             fprintf(fp, "Attributes that can be used with a %s.\n", nclassName.string());
         }
         bool hasTable = false;
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             ssize_t pos = idents.indexOf(origOrder.itemAt(a));
             if (pos >= 0) {
                 if (!hasTable) {
@@ -2404,11 +2324,7 @@ static status_t writeLayoutClasses(
                             "%s   <colgroup align=\"left\" />\n"
                             "%s   <colgroup align=\"left\" />\n"
                             "%s   <tr><th>Attribute</th><th>Description</th></tr>\n",
-                            indentStr,
-                            indentStr,
-                            indentStr,
-                            indentStr,
-                            indentStr);
+                            indentStr, indentStr, indentStr, indentStr, indentStr);
                 }
                 const AaptSymbolEntry& sym = nsymbols->getSymbols().valueAt(a);
                 if (!publicFlags.itemAt(a) && !includePrivate) {
@@ -2436,45 +2352,41 @@ static status_t writeLayoutClasses(
                     if (*p == '.') {
                         p++;
                     }
-                    comment = String16(comment.string(), p-comment.string());
+                    comment = String16(comment.string(), p - comment.string());
                 }
                 fprintf(fp, "%s   <tr><td><code>{@link #%s_%s %s:%s}</code></td><td>%s</td></tr>\n",
-                        indentStr, nclassName.string(),
-                        flattenSymbol(name8).string(),
+                        indentStr, nclassName.string(), flattenSymbol(name8).string(),
                         getSymbolPackage(name8, assets, true).string(),
-                        getSymbolName(name8).string(),
-                        String8(comment).string());
+                        getSymbolName(name8).string(), String8(comment).string());
             }
         }
         if (hasTable) {
             fprintf(fp, "%s   </table>\n", indentStr);
         }
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             ssize_t pos = idents.indexOf(origOrder.itemAt(a));
             if (pos >= 0) {
                 const AaptSymbolEntry& sym = nsymbols->getSymbols().valueAt(a);
                 if (!publicFlags.itemAt(a) && !includePrivate) {
                     continue;
                 }
-                fprintf(fp, "%s   @see #%s_%s\n",
-                        indentStr, nclassName.string(),
+                fprintf(fp, "%s   @see #%s_%s\n", indentStr, nclassName.string(),
                         flattenSymbol(sym.name).string());
             }
         }
         fprintf(fp, "%s */\n", getIndentSpace(indent));
 
         ann.printAnnotations(fp, indentStr);
-        
+
         fprintf(fp,
                 "%spublic static final int[] %s = {\n"
                 "%s",
-                indentStr, nclassName.string(),
-                getIndentSpace(indent+1));
+                indentStr, nclassName.string(), getIndentSpace(indent + 1));
 
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             if (a != 0) {
-                if ((a&3) == 0) {
-                    fprintf(fp, ",\n%s", getIndentSpace(indent+1));
+                if ((a & 3) == 0) {
+                    fprintf(fp, ",\n%s", getIndentSpace(indent + 1));
                 } else {
                     fprintf(fp, ", ");
                 }
@@ -2484,7 +2396,7 @@ static status_t writeLayoutClasses(
 
         fprintf(fp, "\n%s};\n", indentStr);
 
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             ssize_t pos = idents.indexOf(origOrder.itemAt(a));
             if (pos >= 0) {
                 const AaptSymbolEntry& sym = nsymbols->getSymbols().valueAt(a);
@@ -2503,12 +2415,11 @@ static status_t writeLayoutClasses(
                 uint32_t typeSpecFlags = 0;
                 String16 name16(sym.name);
                 assets->getIncludedResources().identifierForName(
-                    name16.string(), name16.size(),
-                    attr16.string(), attr16.size(),
-                    package16.string(), package16.size(), &typeSpecFlags);
-                //printf("%s:%s/%s: 0x%08x\n", String8(package16).string(),
+                        name16.string(), name16.size(), attr16.string(), attr16.size(),
+                        package16.string(), package16.size(), &typeSpecFlags);
+                // printf("%s:%s/%s: 0x%08x\n", String8(package16).string(),
                 //    String8(attr16).string(), String8(name16).string(), typeSpecFlags);
-                const bool pub = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
+                const bool pub = (typeSpecFlags & ResTable_typeSpec::SPEC_PUBLIC) != 0;
 
                 AnnotationProcessor ann;
                 fprintf(fp, "%s/**\n", indentStr);
@@ -2521,10 +2432,8 @@ static status_t writeLayoutClasses(
                     fprintf(fp,
                             "%s  <p>This symbol is the offset where the {@link %s.R.attr#%s}\n"
                             "%s  attribute's value can be found in the {@link #%s} array.\n",
-                            indentStr,
-                            getSymbolPackage(name8, assets, pub).string(),
-                            getSymbolName(name8).string(),
-                            indentStr, nclassName.string());
+                            indentStr, getSymbolPackage(name8, assets, pub).string(),
+                            getSymbolName(name8).string(), indentStr, nclassName.string());
                 }
                 if (typeComment.size() > 0) {
                     String8 cmt(typeComment);
@@ -2540,8 +2449,7 @@ static status_t writeLayoutClasses(
                                 getSymbolPackage(name8, assets, true).string(),
                                 getSymbolName(name8).string());
                     } else {
-                        fprintf(fp,
-                                "%s  <p>This is a private symbol.\n", indentStr);
+                        fprintf(fp, "%s  <p>This is a private symbol.\n", indentStr);
                     }
                 }
                 fprintf(fp, "%s  @attr name %s:%s\n", indentStr,
@@ -2550,13 +2458,10 @@ static status_t writeLayoutClasses(
                 fprintf(fp, "%s*/\n", indentStr);
                 ann.printAnnotations(fp, indentStr);
 
-                const char * id_format = nonConstantId ?
-                        "%spublic static int %s_%s = %d;\n" :
-                        "%spublic static final int %s_%s = %d;\n";
+                const char* id_format = nonConstantId ? "%spublic static int %s_%s = %d;\n"
+                                                      : "%spublic static final int %s_%s = %d;\n";
 
-                fprintf(fp,
-                        id_format,
-                        indentStr, nclassName.string(),
+                fprintf(fp, id_format, indentStr, nclassName.string(),
                         flattenSymbol(name8).string(), (int)pos);
             }
         }
@@ -2567,10 +2472,8 @@ static status_t writeLayoutClasses(
     return hasErrors ? STATUST(UNKNOWN_ERROR) : NO_ERROR;
 }
 
-static status_t writeTextLayoutClasses(
-    FILE* fp, const sp<AaptAssets>& assets,
-    const sp<AaptSymbols>& symbols, bool includePrivate)
-{
+static status_t writeTextLayoutClasses(FILE* fp, const sp<AaptAssets>& assets,
+                                       const sp<AaptSymbols>& symbols, bool includePrivate) {
     String16 attr16("attr");
     String16 package16(assets->getPackage());
 
@@ -2578,7 +2481,7 @@ static status_t writeTextLayoutClasses(
 
     size_t i;
     size_t N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 realClassName(symbols->getNestedSymbols().keyAt(i));
         String8 nclassName(flattenSymbol(realClassName));
@@ -2589,24 +2492,23 @@ static status_t writeTextLayoutClasses(
 
         size_t a;
         size_t NA = nsymbols->getSymbols().size();
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             const AaptSymbolEntry& sym(nsymbols->getSymbols().valueAt(a));
-            int32_t code = sym.typeCode == AaptSymbolEntry::TYPE_INT32
-                    ? sym.int32Val : 0;
+            int32_t code = sym.typeCode == AaptSymbolEntry::TYPE_INT32 ? sym.int32Val : 0;
             bool isPublic = true;
             if (code == 0) {
                 String16 name16(sym.name);
                 uint32_t typeSpecFlags;
                 code = assets->getIncludedResources().identifierForName(
-                    name16.string(), name16.size(),
-                    attr16.string(), attr16.size(),
-                    package16.string(), package16.size(), &typeSpecFlags);
+                        name16.string(), name16.size(), attr16.string(), attr16.size(),
+                        package16.string(), package16.size(), &typeSpecFlags);
                 if (code == 0) {
-                    fprintf(stderr, "ERROR: In <declare-styleable> %s, unable to find attribute %s\n",
+                    fprintf(stderr,
+                            "ERROR: In <declare-styleable> %s, unable to find attribute %s\n",
                             nclassName.string(), sym.name.string());
                     hasErrors = true;
                 }
-                isPublic = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
+                isPublic = (typeSpecFlags & ResTable_typeSpec::SPEC_PUBLIC) != 0;
             }
             idents.add(code);
             origOrder.add(code);
@@ -2617,7 +2519,7 @@ static status_t writeTextLayoutClasses(
 
         fprintf(fp, "int[] styleable %s {", nclassName.string());
 
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             if (a != 0) {
                 fprintf(fp, ",");
             }
@@ -2626,7 +2528,7 @@ static status_t writeTextLayoutClasses(
 
         fprintf(fp, " }\n");
 
-        for (a=0; a<NA; a++) {
+        for (a = 0; a < NA; a++) {
             ssize_t pos = idents.indexOf(origOrder.itemAt(a));
             if (pos >= 0) {
                 const AaptSymbolEntry& sym = nsymbols->getSymbols().valueAt(a);
@@ -2645,16 +2547,13 @@ static status_t writeTextLayoutClasses(
                 uint32_t typeSpecFlags = 0;
                 String16 name16(sym.name);
                 assets->getIncludedResources().identifierForName(
-                    name16.string(), name16.size(),
-                    attr16.string(), attr16.size(),
-                    package16.string(), package16.size(), &typeSpecFlags);
-                //printf("%s:%s/%s: 0x%08x\n", String8(package16).string(),
+                        name16.string(), name16.size(), attr16.string(), attr16.size(),
+                        package16.string(), package16.size(), &typeSpecFlags);
+                // printf("%s:%s/%s: 0x%08x\n", String8(package16).string(),
                 //    String8(attr16).string(), String8(name16).string(), typeSpecFlags);
-                //const bool pub = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
+                // const bool pub = (typeSpecFlags&ResTable_typeSpec::SPEC_PUBLIC) != 0;
 
-                fprintf(fp,
-                        "int styleable %s_%s %d\n",
-                        nclassName.string(),
+                fprintf(fp, "int styleable %s_%s %d\n", nclassName.string(),
                         flattenSymbol(name8).string(), (int)pos);
             }
         }
@@ -2663,25 +2562,21 @@ static status_t writeTextLayoutClasses(
     return hasErrors ? STATUST(UNKNOWN_ERROR) : NO_ERROR;
 }
 
-static status_t writeSymbolClass(
-    FILE* fp, const sp<AaptAssets>& assets, bool includePrivate,
-    const sp<AaptSymbols>& symbols, const String8& className, int indent,
-    bool nonConstantId, bool emitCallback)
-{
-    fprintf(fp, "%spublic %sfinal class %s {\n",
-            getIndentSpace(indent),
+static status_t writeSymbolClass(FILE* fp, const sp<AaptAssets>& assets, bool includePrivate,
+                                 const sp<AaptSymbols>& symbols, const String8& className,
+                                 int indent, bool nonConstantId, bool emitCallback) {
+    fprintf(fp, "%spublic %sfinal class %s {\n", getIndentSpace(indent),
             indent != 0 ? "static " : "", className.string());
     indent++;
 
     size_t i;
     status_t err = NO_ERROR;
 
-    const char * id_format = nonConstantId ?
-            "%spublic static int %s=0x%08x;\n" :
-            "%spublic static final int %s=0x%08x;\n";
+    const char* id_format = nonConstantId ? "%spublic static int %s=0x%08x;\n"
+                                          : "%spublic static final int %s=0x%08x;\n";
 
     size_t N = symbols->getSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         const AaptSymbolEntry& sym = symbols->getSymbols().valueAt(i);
         if (sym.typeCode != AaptSymbolEntry::TYPE_INT32) {
             continue;
@@ -2697,9 +2592,7 @@ static status_t writeSymbolClass(
             haveComment = true;
             String8 cmt(comment);
             ann.preprocessComment(cmt);
-            fprintf(fp,
-                    "%s/** %s\n",
-                    getIndentSpace(indent), cmt.string());
+            fprintf(fp, "%s/** %s\n", getIndentSpace(indent), cmt.string());
         }
         String16 typeComment(sym.typeComment);
         if (typeComment.size() > 0) {
@@ -2707,23 +2600,20 @@ static status_t writeSymbolClass(
             ann.preprocessComment(cmt);
             if (!haveComment) {
                 haveComment = true;
-                fprintf(fp,
-                        "%s/** %s\n", getIndentSpace(indent), cmt.string());
+                fprintf(fp, "%s/** %s\n", getIndentSpace(indent), cmt.string());
             } else {
-                fprintf(fp,
-                        "%s %s\n", getIndentSpace(indent), cmt.string());
+                fprintf(fp, "%s %s\n", getIndentSpace(indent), cmt.string());
             }
         }
         if (haveComment) {
-            fprintf(fp,"%s */\n", getIndentSpace(indent));
+            fprintf(fp, "%s */\n", getIndentSpace(indent));
         }
         ann.printAnnotations(fp, getIndentSpace(indent));
-        fprintf(fp, id_format,
-                getIndentSpace(indent),
-                flattenSymbol(name8).string(), (int)sym.int32Val);
+        fprintf(fp, id_format, getIndentSpace(indent), flattenSymbol(name8).string(),
+                (int)sym.int32Val);
     }
 
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         const AaptSymbolEntry& sym = symbols->getSymbols().valueAt(i);
         if (sym.typeCode != AaptSymbolEntry::TYPE_STRING) {
             continue;
@@ -2739,27 +2629,25 @@ static status_t writeSymbolClass(
             ann.preprocessComment(cmt);
             fprintf(fp,
                     "%s/** %s\n"
-                     "%s */\n",
-                    getIndentSpace(indent), cmt.string(),
-                    getIndentSpace(indent));
+                    "%s */\n",
+                    getIndentSpace(indent), cmt.string(), getIndentSpace(indent));
         }
         ann.printAnnotations(fp, getIndentSpace(indent));
-        fprintf(fp, "%spublic static final String %s=\"%s\";\n",
-                getIndentSpace(indent),
+        fprintf(fp, "%spublic static final String %s=\"%s\";\n", getIndentSpace(indent),
                 flattenSymbol(name8).string(), sym.stringVal.string());
     }
 
     sp<AaptSymbols> styleableSymbols;
 
     N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 nclassName(symbols->getNestedSymbols().keyAt(i));
         if (nclassName == "styleable") {
             styleableSymbols = nsymbols;
         } else {
-            err = writeSymbolClass(fp, assets, includePrivate, nsymbols, nclassName,
-                    indent, nonConstantId, false);
+            err = writeSymbolClass(fp, assets, includePrivate, nsymbols, nclassName, indent,
+                                   nonConstantId, false);
         }
         if (err != NO_ERROR) {
             return err;
@@ -2767,7 +2655,8 @@ static status_t writeSymbolClass(
     }
 
     if (styleableSymbols != NULL) {
-        err = writeLayoutClasses(fp, assets, styleableSymbols, indent, includePrivate, nonConstantId);
+        err = writeLayoutClasses(fp, assets, styleableSymbols, indent, includePrivate,
+                                 nonConstantId);
         if (err != NO_ERROR) {
             return err;
         }
@@ -2785,15 +2674,13 @@ static status_t writeSymbolClass(
     return NO_ERROR;
 }
 
-static status_t writeTextSymbolClass(
-    FILE* fp, const sp<AaptAssets>& assets, bool includePrivate,
-    const sp<AaptSymbols>& symbols, const String8& className)
-{
+static status_t writeTextSymbolClass(FILE* fp, const sp<AaptAssets>& assets, bool includePrivate,
+                                     const sp<AaptSymbols>& symbols, const String8& className) {
     size_t i;
     status_t err = NO_ERROR;
 
     size_t N = symbols->getSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         const AaptSymbolEntry& sym = symbols->getSymbols().valueAt(i);
         if (sym.typeCode != AaptSymbolEntry::TYPE_INT32) {
             continue;
@@ -2804,13 +2691,12 @@ static status_t writeTextSymbolClass(
         }
 
         String8 name8(sym.name);
-        fprintf(fp, "int %s %s 0x%08x\n",
-                className.string(),
-                flattenSymbol(name8).string(), (int)sym.int32Val);
+        fprintf(fp, "int %s %s 0x%08x\n", className.string(), flattenSymbol(name8).string(),
+                (int)sym.int32Val);
     }
 
     N = symbols->getNestedSymbols().size();
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptSymbols> nsymbols = symbols->getNestedSymbols().valueAt(i);
         String8 nclassName(symbols->getNestedSymbols().keyAt(i));
         if (nclassName == "styleable") {
@@ -2826,9 +2712,8 @@ static status_t writeTextSymbolClass(
     return NO_ERROR;
 }
 
-status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
-    const String8& package, bool includePrivate, bool emitCallback)
-{
+status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets, const String8& package,
+                              bool includePrivate, bool emitCallback) {
     if (!bundle->getRClassDir()) {
         return NO_ERROR;
     }
@@ -2837,7 +2722,7 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
 
     String8 R("R");
     const size_t N = assets->getSymbols().size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         sp<AaptSymbols> symbols = assets->getSymbols().valueAt(i);
         String8 className(assets->getSymbols().keyAt(i));
         String8 dest(bundle->getRClassDir());
@@ -2845,18 +2730,18 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
         if (bundle->getMakePackageDirs()) {
             const String8& pkg(package);
             const char* last = pkg.string();
-            const char* s = last-1;
+            const char* s = last - 1;
             do {
                 s++;
                 if (s > last && (*s == '.' || *s == 0)) {
-                    String8 part(last, s-last);
+                    String8 part(last, s - last);
                     dest.appendPath(part);
 #ifdef _WIN32
                     _mkdir(dest.string());
 #else
-                    mkdir(dest.string(), S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP);
+                    mkdir(dest.string(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP);
 #endif
-                    last = s+1;
+                    last = s + 1;
                 }
             } while (*s);
         }
@@ -2864,8 +2749,8 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
         dest.append(".java");
         FILE* fp = fopen(dest.string(), "w+");
         if (fp == NULL) {
-            fprintf(stderr, "ERROR: Unable to open class file %s: %s\n",
-                    dest.string(), strerror(errno));
+            fprintf(stderr, "ERROR: Unable to open class file %s: %s\n", dest.string(),
+                    strerror(errno));
             return UNKNOWN_ERROR;
         }
         if (bundle->getVerbose()) {
@@ -2873,17 +2758,18 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
         }
 
         fprintf(fp,
-            "/* AUTO-GENERATED FILE.  DO NOT MODIFY.\n"
-            " *\n"
-            " * This class was automatically generated by the\n"
-            " * aapt tool from the resource data it found.  It\n"
-            " * should not be modified by hand.\n"
-            " */\n"
-            "\n"
-            "package %s;\n\n", package.string());
+                "/* AUTO-GENERATED FILE.  DO NOT MODIFY.\n"
+                " *\n"
+                " * This class was automatically generated by the\n"
+                " * aapt tool from the resource data it found.  It\n"
+                " * should not be modified by hand.\n"
+                " */\n"
+                "\n"
+                "package %s;\n\n",
+                package.string());
 
-        status_t err = writeSymbolClass(fp, assets, includePrivate, symbols,
-                className, 0, bundle->getNonConstantId(), emitCallback);
+        status_t err = writeSymbolClass(fp, assets, includePrivate, symbols, className, 0,
+                                        bundle->getNonConstantId(), emitCallback);
         fclose(fp);
         if (err != NO_ERROR) {
             return err;
@@ -2904,8 +2790,7 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
                 printf("  Writing text symbols for class %s.\n", className.string());
             }
 
-            status_t err = writeTextSymbolClass(fp, assets, includePrivate, symbols,
-                    className);
+            status_t err = writeTextSymbolClass(fp, assets, includePrivate, symbols, className);
             fclose(fp);
             if (err != NO_ERROR) {
                 return err;
@@ -2919,8 +2804,8 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
             String8 dependencyFile(bundle->getRClassDir());
             dependencyFile.appendPath("R.java.d");
 
-            FILE *fp = fopen(dependencyFile.string(), "a");
-            fprintf(fp,"%s \\\n", dest.string());
+            FILE* fp = fopen(dependencyFile.string(), "a");
+            fprintf(fp, "%s \\\n", dest.string());
             fclose(fp);
         }
     }
@@ -2928,18 +2813,15 @@ status_t writeResourceSymbols(Bundle* bundle, const sp<AaptAssets>& assets,
     return NO_ERROR;
 }
 
-
-class ProguardKeepSet
-{
-public:
+class ProguardKeepSet {
+  public:
     // { rule --> { file locations } }
-    KeyedVector<String8, SortedVector<String8> > rules;
+    KeyedVector<String8, SortedVector<String8>> rules;
 
     void add(const String8& rule, const String8& where);
 };
 
-void ProguardKeepSet::add(const String8& rule, const String8& where)
-{
+void ProguardKeepSet::add(const String8& rule, const String8& where) {
     ssize_t index = rules.indexOfKey(rule);
     if (index < 0) {
         index = rules.add(rule, SortedVector<String8>());
@@ -2947,10 +2829,8 @@ void ProguardKeepSet::add(const String8& rule, const String8& where)
     rules.editValueAt(index).add(where);
 }
 
-void
-addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName,
-        const char* pkg, const String8& srcName, int line)
-{
+void addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName, const char* pkg,
+                         const String8& srcName, int line) {
     String8 className(inClassName);
     if (pkg != NULL) {
         // asdf     --> package.asdf
@@ -2981,10 +2861,8 @@ addProguardKeepRule(ProguardKeepSet* keep, const String8& inClassName,
     keep->add(rule, location);
 }
 
-void
-addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
-        const char* /* pkg */, const String8& srcName, int line)
-{
+void addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
+                               const char* /* pkg */, const String8& srcName, int line) {
     String8 rule("-keepclassmembers class * { *** ");
     rule += memberName;
     rule += "(...); }";
@@ -2998,9 +2876,8 @@ addProguardKeepMethodRule(ProguardKeepSet* keep, const String8& memberName,
     keep->add(rule, location);
 }
 
-status_t
-writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& assets, bool mainDex)
-{
+status_t writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& assets,
+                                         bool mainDex) {
     status_t err;
     ResXMLTree tree;
     size_t len;
@@ -3035,7 +2912,7 @@ writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& ass
 
     tree.restart();
 
-    while ((code=tree.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
+    while ((code = tree.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
         if (code == ResXMLTree::END_TAG) {
             if (/* name == "Application" && */ depth == 2) {
                 inApplication = false;
@@ -3061,17 +2938,16 @@ writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& ass
                 inApplication = true;
                 keepTag = true;
 
-                String8 agent = AaptXml::getAttribute(tree,
-                        "http://schemas.android.com/apk/res/android",
-                        "backupAgent", &error);
+                String8 agent = AaptXml::getAttribute(
+                        tree, "http://schemas.android.com/apk/res/android", "backupAgent", &error);
                 if (agent.length() > 0) {
-                    addProguardKeepRule(keep, agent, pkg.string(),
-                            assFile->getPrintableSource(), tree.getLineNumber());
+                    addProguardKeepRule(keep, agent, pkg.string(), assFile->getPrintableSource(),
+                                        tree.getLineNumber());
                 }
 
                 if (mainDex) {
-                    defaultProcess = AaptXml::getAttribute(tree,
-                            "http://schemas.android.com/apk/res/android", "process", &error);
+                    defaultProcess = AaptXml::getAttribute(
+                            tree, "http://schemas.android.com/apk/res/android", "process", &error);
                     if (error != "") {
                         fprintf(stderr, "ERROR: %s\n", error.string());
                         return -1;
@@ -3086,8 +2962,8 @@ writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& ass
                 keepTag = true;
 
                 if (mainDex) {
-                    String8 componentProcess = AaptXml::getAttribute(tree,
-                            "http://schemas.android.com/apk/res/android", "process", &error);
+                    String8 componentProcess = AaptXml::getAttribute(
+                            tree, "http://schemas.android.com/apk/res/android", "process", &error);
                     if (error != "") {
                         fprintf(stderr, "ERROR: %s\n", error.string());
                         return -1;
@@ -3100,8 +2976,8 @@ writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& ass
             }
         }
         if (keepTag) {
-            String8 name = AaptXml::getAttribute(tree,
-                    "http://schemas.android.com/apk/res/android", "name", &error);
+            String8 name = AaptXml::getAttribute(tree, "http://schemas.android.com/apk/res/android",
+                                                 "name", &error);
             if (error != "") {
                 fprintf(stderr, "ERROR: %s\n", error.string());
                 return -1;
@@ -3110,8 +2986,8 @@ writeProguardForAndroidManifest(ProguardKeepSet* keep, const sp<AaptAssets>& ass
             keepTag = name.length() > 0;
 
             if (keepTag) {
-                addProguardKeepRule(keep, name, pkg.string(),
-                        assFile->getPrintableSource(), tree.getLineNumber());
+                addProguardKeepRule(keep, name, pkg.string(), assFile->getPrintableSource(),
+                                    tree.getLineNumber());
             }
         }
     }
@@ -3127,10 +3003,9 @@ struct NamespaceAttributePair {
     NamespaceAttributePair() : ns(NULL), attr(NULL) {}
 };
 
-status_t
-writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
-        const Vector<String8>& startTags, const KeyedVector<String8, Vector<NamespaceAttributePair> >* tagAttrPairs)
-{
+status_t writeProguardForXml(
+        ProguardKeepSet* keep, const sp<AaptFile>& layoutFile, const Vector<String8>& startTags,
+        const KeyedVector<String8, Vector<NamespaceAttributePair>>* tagAttrPairs) {
     status_t err;
     ResXMLTree tree;
     size_t len;
@@ -3145,7 +3020,8 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
 
     if (!startTags.isEmpty()) {
         bool haveStart = false;
-        while ((code=tree.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
+        while ((code = tree.next()) != ResXMLTree::END_DOCUMENT &&
+               code != ResXMLTree::BAD_DOCUMENT) {
             if (code != ResXMLTree::START_TAG) {
                 continue;
             }
@@ -3163,7 +3039,7 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
         }
     }
 
-    while ((code=tree.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
+    while ((code = tree.next()) != ResXMLTree::END_DOCUMENT && code != ResXMLTree::BAD_DOCUMENT) {
         if (code != ResXMLTree::START_TAG) {
             continue;
         }
@@ -3171,12 +3047,13 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
 
         // If there is no '.', we'll assume that it's one of the built in names.
         if (strchr(tag.string(), '.')) {
-            addProguardKeepRule(keep, tag, NULL,
-                    layoutFile->getPrintableSource(), tree.getLineNumber());
+            addProguardKeepRule(keep, tag, NULL, layoutFile->getPrintableSource(),
+                                tree.getLineNumber());
         } else if (tagAttrPairs != NULL) {
             ssize_t tagIndex = tagAttrPairs->indexOfKey(tag);
             if (tagIndex >= 0) {
-                const Vector<NamespaceAttributePair>& nsAttrVector = tagAttrPairs->valueAt(tagIndex);
+                const Vector<NamespaceAttributePair>& nsAttrVector =
+                        tagAttrPairs->valueAt(tagIndex);
                 for (size_t i = 0; i < nsAttrVector.size(); i++) {
                     const NamespaceAttributePair& nsAttr = nsAttrVector[i];
 
@@ -3187,9 +3064,9 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
                         //        tag.string(), nsAttr.ns, nsAttr.attr);
                     } else {
                         size_t len;
-                        addProguardKeepRule(keep,
-                                            String8(tree.getAttributeStringValue(attrIndex, &len)), NULL,
-                                            layoutFile->getPrintableSource(), tree.getLineNumber());
+                        addProguardKeepRule(
+                                keep, String8(tree.getAttributeStringValue(attrIndex, &len)), NULL,
+                                layoutFile->getPrintableSource(), tree.getLineNumber());
                     }
                 }
             }
@@ -3197,17 +3074,16 @@ writeProguardForXml(ProguardKeepSet* keep, const sp<AaptFile>& layoutFile,
         ssize_t attrIndex = tree.indexOfAttribute(RESOURCES_ANDROID_NAMESPACE, "onClick");
         if (attrIndex >= 0) {
             size_t len;
-            addProguardKeepMethodRule(keep,
-                                String8(tree.getAttributeStringValue(attrIndex, &len)), NULL,
-                                layoutFile->getPrintableSource(), tree.getLineNumber());
+            addProguardKeepMethodRule(keep, String8(tree.getAttributeStringValue(attrIndex, &len)),
+                                      NULL, layoutFile->getPrintableSource(), tree.getLineNumber());
         }
     }
 
     return NO_ERROR;
 }
 
-static void addTagAttrPair(KeyedVector<String8, Vector<NamespaceAttributePair> >* dest,
-        const char* tag, const char* ns, const char* attr) {
+static void addTagAttrPair(KeyedVector<String8, Vector<NamespaceAttributePair>>* dest,
+                           const char* tag, const char* ns, const char* attr) {
     String8 tagStr(tag);
     ssize_t index = dest->indexOfKey(tagStr);
 
@@ -3220,9 +3096,7 @@ static void addTagAttrPair(KeyedVector<String8, Vector<NamespaceAttributePair> >
     }
 }
 
-status_t
-writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
-{
+status_t writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets) {
     status_t err;
     const char* kClass = "class";
     const char* kFragment = "fragment";
@@ -3230,28 +3104,28 @@ writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
     const String8 kTransitionPrefix("transition-");
 
     // tag:attribute pairs that should be checked in layout files.
-    KeyedVector<String8, Vector<NamespaceAttributePair> > kLayoutTagAttrPairs;
+    KeyedVector<String8, Vector<NamespaceAttributePair>> kLayoutTagAttrPairs;
     addTagAttrPair(&kLayoutTagAttrPairs, "view", NULL, kClass);
     addTagAttrPair(&kLayoutTagAttrPairs, kFragment, NULL, kClass);
     addTagAttrPair(&kLayoutTagAttrPairs, kFragment, RESOURCES_ANDROID_NAMESPACE, "name");
 
     // tag:attribute pairs that should be checked in xml files.
-    KeyedVector<String8, Vector<NamespaceAttributePair> > kXmlTagAttrPairs;
+    KeyedVector<String8, Vector<NamespaceAttributePair>> kXmlTagAttrPairs;
     addTagAttrPair(&kXmlTagAttrPairs, "PreferenceScreen", RESOURCES_ANDROID_NAMESPACE, kFragment);
     addTagAttrPair(&kXmlTagAttrPairs, "header", RESOURCES_ANDROID_NAMESPACE, kFragment);
 
     // tag:attribute pairs that should be checked in transition files.
-    KeyedVector<String8, Vector<NamespaceAttributePair> > kTransitionTagAttrPairs;
+    KeyedVector<String8, Vector<NamespaceAttributePair>> kTransitionTagAttrPairs;
     addTagAttrPair(&kTransitionTagAttrPairs, kTransition.string(), NULL, kClass);
     addTagAttrPair(&kTransitionTagAttrPairs, "pathMotion", NULL, kClass);
 
-    const Vector<sp<AaptDir> >& dirs = assets->resDirs();
+    const Vector<sp<AaptDir>>& dirs = assets->resDirs();
     const size_t K = dirs.size();
-    for (size_t k=0; k<K; k++) {
+    for (size_t k = 0; k < K; k++) {
         const sp<AaptDir>& d = dirs.itemAt(k);
         const String8& dirName = d->getLeaf();
         Vector<String8> startTags;
-        const KeyedVector<String8, Vector<NamespaceAttributePair> >* tagAttrPairs = NULL;
+        const KeyedVector<String8, Vector<NamespaceAttributePair>>* tagAttrPairs = NULL;
         if ((dirName == String8("layout")) || (strncmp(dirName.string(), "layout-", 7) == 0)) {
             tagAttrPairs = &kLayoutTagAttrPairs;
         } else if ((dirName == String8("xml")) || (strncmp(dirName.string(), "xml-", 4) == 0)) {
@@ -3262,19 +3136,19 @@ writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
             startTags.add(String8("menu"));
             tagAttrPairs = NULL;
         } else if (dirName == kTransition || (strncmp(dirName.string(), kTransitionPrefix.string(),
-                        kTransitionPrefix.size()) == 0)) {
+                                                      kTransitionPrefix.size()) == 0)) {
             tagAttrPairs = &kTransitionTagAttrPairs;
         } else {
             continue;
         }
 
-        const KeyedVector<String8,sp<AaptGroup> > groups = d->getFiles();
+        const KeyedVector<String8, sp<AaptGroup>> groups = d->getFiles();
         const size_t N = groups.size();
-        for (size_t i=0; i<N; i++) {
+        for (size_t i = 0; i < N; i++) {
             const sp<AaptGroup>& group = groups.valueAt(i);
-            const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> >& files = group->getFiles();
+            const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile>>& files = group->getFiles();
             const size_t M = files.size();
-            for (size_t j=0; j<M; j++) {
+            for (size_t j = 0; j < M; j++) {
                 err = writeProguardForXml(keep, files.valueAt(j), startTags, tagAttrPairs);
                 if (err < 0) {
                     return err;
@@ -3291,22 +3165,19 @@ writeProguardForLayouts(ProguardKeepSet* keep, const sp<AaptAssets>& assets)
     return NO_ERROR;
 }
 
-status_t
-writeProguardSpec(const char* filename, const ProguardKeepSet& keep, status_t err)
-{
+status_t writeProguardSpec(const char* filename, const ProguardKeepSet& keep, status_t err) {
     FILE* fp = fopen(filename, "w+");
     if (fp == NULL) {
-        fprintf(stderr, "ERROR: Unable to open class file %s: %s\n",
-                filename, strerror(errno));
+        fprintf(stderr, "ERROR: Unable to open class file %s: %s\n", filename, strerror(errno));
         return UNKNOWN_ERROR;
     }
 
-    const KeyedVector<String8, SortedVector<String8> >& rules = keep.rules;
+    const KeyedVector<String8, SortedVector<String8>>& rules = keep.rules;
     const size_t N = rules.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const SortedVector<String8>& locations = rules.valueAt(i);
         const size_t M = locations.size();
-        for (size_t j=0; j<M; j++) {
+        for (size_t j = 0; j < M; j++) {
             fprintf(fp, "# %s\n", locations.itemAt(j).string());
         }
         fprintf(fp, "%s\n\n", rules.keyAt(i).string());
@@ -3316,9 +3187,7 @@ writeProguardSpec(const char* filename, const ProguardKeepSet& keep, status_t er
     return err;
 }
 
-status_t
-writeProguardFile(Bundle* bundle, const sp<AaptAssets>& assets)
-{
+status_t writeProguardFile(Bundle* bundle, const sp<AaptAssets>& assets) {
     status_t err = -1;
 
     if (!bundle->getProguardFile()) {
@@ -3340,9 +3209,7 @@ writeProguardFile(Bundle* bundle, const sp<AaptAssets>& assets)
     return writeProguardSpec(bundle->getProguardFile(), keep, err);
 }
 
-status_t
-writeMainDexProguardFile(Bundle* bundle, const sp<AaptAssets>& assets)
-{
+status_t writeMainDexProguardFile(Bundle* bundle, const sp<AaptAssets>& assets) {
     status_t err = -1;
 
     if (!bundle->getMainDexProguardFile()) {
@@ -3361,8 +3228,7 @@ writeMainDexProguardFile(Bundle* bundle, const sp<AaptAssets>& assets)
 
 // Loops through the string paths and writes them to the file pointer
 // Each file path is written on its own line with a terminating backslash.
-status_t writePathsToFile(const sp<FilePathStore>& files, FILE* fp)
-{
+status_t writePathsToFile(const sp<FilePathStore>& files, FILE* fp) {
     status_t deps = -1;
     for (size_t file_i = 0; file_i < files->size(); ++file_i) {
         // Add the full file path to the dependency file
@@ -3372,9 +3238,8 @@ status_t writePathsToFile(const sp<FilePathStore>& files, FILE* fp)
     return deps;
 }
 
-status_t
-writeDependencyPreReqs(Bundle* /* bundle */, const sp<AaptAssets>& assets, FILE* fp, bool includeRaw)
-{
+status_t writeDependencyPreReqs(Bundle* /* bundle */, const sp<AaptAssets>& assets, FILE* fp,
+                                bool includeRaw) {
     status_t deps = -1;
     deps += writePathsToFile(assets->getFullResPaths(), fp);
     if (includeRaw) {

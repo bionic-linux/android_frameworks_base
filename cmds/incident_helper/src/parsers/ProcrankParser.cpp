@@ -17,15 +17,13 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "ProcrankParser.h"
 #include "frameworks/base/core/proto/android/os/procrank.proto.h"
 #include "ih_util.h"
-#include "ProcrankParser.h"
 
 using namespace android::os;
 
-status_t
-ProcrankParser::Parse(const int in, const int out) const
-{
+status_t ProcrankParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
     header_t header;  // the header of /d/wakeup_sources
@@ -33,7 +31,8 @@ ProcrankParser::Parse(const int in, const int out) const
     int nline = 0;
 
     ProtoOutputStream proto;
-    Table table(ProcrankProto::Process::_FIELD_NAMES, ProcrankProto::Process::_FIELD_IDS, ProcrankProto::Process::_FIELD_COUNT);
+    Table table(ProcrankProto::Process::_FIELD_NAMES, ProcrankProto::Process::_FIELD_IDS,
+                ProcrankProto::Process::_FIELD_COUNT);
     string zram, ram, total;
 
     // parse line by line
@@ -57,20 +56,20 @@ ProcrankParser::Parse(const int in, const int out) const
 
         record = parseRecord(line);
         if (record.size() != header.size()) {
-            if (record[record.size() - 1] == "TOTAL") { // TOTAL record
+            if (record[record.size() - 1] == "TOTAL") {  // TOTAL record
                 total = line;
             } else {
                 fprintf(stderr, "[%s]Line %d has missing fields\n%s\n", this->name.string(), nline,
-                    line.c_str());
+                        line.c_str());
             }
             continue;
         }
 
         uint64_t token = proto.start(ProcrankProto::PROCESSES);
-        for (int i=0; i<(int)record.size(); i++) {
+        for (int i = 0; i < (int)record.size(); i++) {
             if (!table.insertField(&proto, header[i], record[i])) {
-                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n",
-                        this->name.string(), nline, header[i].c_str(), record[i].c_str());
+                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n", this->name.string(), nline,
+                        header[i].c_str(), record[i].c_str());
             }
         }
         proto.end(token);
@@ -81,8 +80,9 @@ ProcrankParser::Parse(const int in, const int out) const
     if (!total.empty()) {
         record = parseRecord(total);
         uint64_t token = proto.start(ProcrankProto::Summary::TOTAL);
-        for (int i=(int)record.size(); i>0; i--) {
-            table.insertField(&proto, header[header.size() - i].c_str(), record[record.size() - i].c_str());
+        for (int i = (int)record.size(); i > 0; i--) {
+            table.insertField(&proto, header[header.size() - i].c_str(),
+                              record[record.size() - i].c_str());
         }
         proto.end(token);
     }

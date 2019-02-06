@@ -54,14 +54,12 @@ static bool NameIsJavaClassName(xml::Element* el, xml::Attribute* attr,
   Maybe<std::string> fully_qualified_class_name =
       util::GetFullyQualifiedClassName("a", attr->value);
 
-  StringPiece qualified_class_name = fully_qualified_class_name
-                                         ? fully_qualified_class_name.value()
-                                         : attr->value;
+  StringPiece qualified_class_name =
+      fully_qualified_class_name ? fully_qualified_class_name.value() : attr->value;
 
   if (!util::IsJavaClassName(qualified_class_name)) {
-    diag->Error(DiagMessage(el->line_number)
-                << "attribute 'android:name' in <" << el->name
-                << "> tag must be a valid Java class name");
+    diag->Error(DiagMessage(el->line_number) << "attribute 'android:name' in <" << el->name
+                                             << "> tag must be a valid Java class name");
     return false;
   }
   return true;
@@ -144,8 +142,7 @@ static bool AutoGenerateIsFeatureSplit(xml::Element* el, SourcePathDiagnostics* 
 static bool VerifyManifest(xml::Element* el, SourcePathDiagnostics* diag) {
   xml::Attribute* attr = el->FindAttribute({}, "package");
   if (!attr) {
-    diag->Error(DiagMessage(el->line_number)
-                << "<manifest> tag is missing 'package' attribute");
+    diag->Error(DiagMessage(el->line_number) << "<manifest> tag is missing 'package' attribute");
     return false;
   } else if (ResourceUtils::IsReference(attr->value)) {
     diag->Error(DiagMessage(el->line_number)
@@ -213,24 +210,20 @@ static bool VerifyUsesFeature(xml::Element* el, SourcePathDiagnostics* diag) {
   return true;
 }
 
-bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
-                               IDiagnostics* diag) {
+bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor, IDiagnostics* diag) {
   // First verify some options.
   if (options_.rename_manifest_package) {
     if (!util::IsJavaPackageName(options_.rename_manifest_package.value())) {
       diag->Error(DiagMessage() << "invalid manifest package override '"
-                                << options_.rename_manifest_package.value()
-                                << "'");
+                                << options_.rename_manifest_package.value() << "'");
       return false;
     }
   }
 
   if (options_.rename_instrumentation_target_package) {
     if (!util::IsJavaPackageName(options_.rename_instrumentation_target_package.value())) {
-      diag->Error(DiagMessage()
-                  << "invalid instrumentation target package override '"
-                  << options_.rename_instrumentation_target_package.value()
-                  << "'");
+      diag->Error(DiagMessage() << "invalid instrumentation target package override '"
+                                << options_.rename_instrumentation_target_package.value() << "'");
       return false;
     }
   }
@@ -266,9 +259,8 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
         el->RemoveAttribute(xml::kSchemaAndroid, "versionName");
       }
       if (el->FindAttribute(xml::kSchemaAndroid, "versionName") == nullptr) {
-        el->attributes.push_back(
-            xml::Attribute{xml::kSchemaAndroid, "versionName",
-                           options_.version_name_default.value()});
+        el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "versionName",
+                                                options_.version_name_default.value()});
       }
     }
 
@@ -277,25 +269,24 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
         el->RemoveAttribute(xml::kSchemaAndroid, "versionCode");
       }
       if (el->FindAttribute(xml::kSchemaAndroid, "versionCode") == nullptr) {
-        el->attributes.push_back(
-            xml::Attribute{xml::kSchemaAndroid, "versionCode",
-                           options_.version_code_default.value()});
+        el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "versionCode",
+                                                options_.version_code_default.value()});
       }
     }
 
     if (el->FindAttribute("", "platformBuildVersionCode") == nullptr) {
       auto versionCode = el->FindAttribute(xml::kSchemaAndroid, "versionCode");
       if (versionCode != nullptr) {
-        el->attributes.push_back(xml::Attribute{"", "platformBuildVersionCode",
-                                                versionCode->value});
+        el->attributes.push_back(
+            xml::Attribute{"", "platformBuildVersionCode", versionCode->value});
       }
     }
 
     if (el->FindAttribute("", "platformBuildVersionName") == nullptr) {
       auto versionName = el->FindAttribute(xml::kSchemaAndroid, "versionName");
       if (versionName != nullptr) {
-        el->attributes.push_back(xml::Attribute{"", "platformBuildVersionName",
-                                                versionName->value});
+        el->attributes.push_back(
+            xml::Attribute{"", "platformBuildVersionName", versionName->value});
       }
     }
 
@@ -310,17 +301,15 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
     if (options_.min_sdk_version_default &&
         el->FindAttribute(xml::kSchemaAndroid, "minSdkVersion") == nullptr) {
       // There was no minSdkVersion defined and we have a default to assign.
-      el->attributes.push_back(
-          xml::Attribute{xml::kSchemaAndroid, "minSdkVersion",
-                         options_.min_sdk_version_default.value()});
+      el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "minSdkVersion",
+                                              options_.min_sdk_version_default.value()});
     }
 
     if (options_.target_sdk_version_default &&
         el->FindAttribute(xml::kSchemaAndroid, "targetSdkVersion") == nullptr) {
       // There was no targetSdkVersion defined and we have a default to assign.
-      el->attributes.push_back(
-          xml::Attribute{xml::kSchemaAndroid, "targetSdkVersion",
-                         options_.target_sdk_version_default.value()});
+      el->attributes.push_back(xml::Attribute{xml::kSchemaAndroid, "targetSdkVersion",
+                                              options_.target_sdk_version_default.value()});
     }
     return true;
   });
@@ -332,8 +321,7 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
       return true;
     }
 
-    if (xml::Attribute* attr =
-            el->FindAttribute(xml::kSchemaAndroid, "targetPackage")) {
+    if (xml::Attribute* attr = el->FindAttribute(xml::kSchemaAndroid, "targetPackage")) {
       attr->value = options_.rename_instrumentation_target_package.value();
     }
     return true;
@@ -384,7 +372,7 @@ bool ManifestFixer::BuildRules(xml::XmlActionExecutor* executor,
 
   if (options_.debug_mode) {
     application_action.Action([&](xml::Element* el) -> bool {
-      xml::Attribute *attr = el->FindOrCreateAttribute(xml::kSchemaAndroid, "debuggable");
+      xml::Attribute* attr = el->FindOrCreateAttribute(xml::kSchemaAndroid, "debuggable");
       attr->value = "true";
       return true;
     });

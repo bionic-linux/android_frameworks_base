@@ -16,10 +16,10 @@
 
 #define LOG_TAG "InputApplicationHandle"
 
-#include <nativehelper/JNIHelp.h>
-#include "jni.h"
 #include <android_runtime/AndroidRuntime.h>
+#include <nativehelper/JNIHelp.h>
 #include <utils/threads.h>
+#include "jni.h"
 
 #include "com_android_server_input_InputApplicationHandle.h"
 
@@ -33,12 +33,9 @@ static struct {
 
 static Mutex gHandleMutex;
 
-
 // --- NativeInputApplicationHandle ---
 
-NativeInputApplicationHandle::NativeInputApplicationHandle(jweak objWeak) :
-        mObjWeak(objWeak) {
-}
+NativeInputApplicationHandle::NativeInputApplicationHandle(jweak objWeak) : mObjWeak(objWeak) {}
 
 NativeInputApplicationHandle::~NativeInputApplicationHandle() {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
@@ -61,8 +58,7 @@ bool NativeInputApplicationHandle::updateInfo() {
         mInfo = new InputApplicationInfo();
     }
 
-    jstring nameObj = jstring(env->GetObjectField(obj,
-            gInputApplicationHandleClassInfo.name));
+    jstring nameObj = jstring(env->GetObjectField(obj, gInputApplicationHandleClassInfo.name));
     if (nameObj) {
         const char* nameStr = env->GetStringUTFChars(nameObj, NULL);
         mInfo->name = nameStr;
@@ -72,13 +68,12 @@ bool NativeInputApplicationHandle::updateInfo() {
         mInfo->name = "<null>";
     }
 
-    mInfo->dispatchingTimeout = env->GetLongField(obj,
-            gInputApplicationHandleClassInfo.dispatchingTimeoutNanos);
+    mInfo->dispatchingTimeout =
+            env->GetLongField(obj, gInputApplicationHandleClassInfo.dispatchingTimeoutNanos);
 
     env->DeleteLocalRef(obj);
     return true;
 }
-
 
 // --- Global functions ---
 
@@ -99,11 +94,10 @@ sp<InputApplicationHandle> android_server_InputApplicationHandle_getHandle(
         handle = new NativeInputApplicationHandle(objWeak);
         handle->incStrong((void*)android_server_InputApplicationHandle_getHandle);
         env->SetLongField(inputApplicationHandleObj, gInputApplicationHandleClassInfo.ptr,
-                reinterpret_cast<jlong>(handle));
+                          reinterpret_cast<jlong>(handle));
     }
     return handle;
 }
-
 
 // --- JNI ---
 
@@ -119,39 +113,35 @@ static void android_server_InputApplicationHandle_nativeDispose(JNIEnv* env, job
     }
 }
 
-
 static const JNINativeMethod gInputApplicationHandleMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeDispose", "()V",
-            (void*) android_server_InputApplicationHandle_nativeDispose },
+        /* name, signature, funcPtr */
+        {"nativeDispose", "()V", (void*)android_server_InputApplicationHandle_nativeDispose},
 };
 
-#define FIND_CLASS(var, className) \
-        var = env->FindClass(className); \
-        LOG_FATAL_IF(! (var), "Unable to find class " className);
+#define FIND_CLASS(var, className)   \
+    var = env->FindClass(className); \
+    LOG_FATAL_IF(!(var), "Unable to find class " className);
 
-#define GET_FIELD_ID(var, clazz, fieldName, fieldDescriptor) \
-        var = env->GetFieldID(clazz, fieldName, fieldDescriptor); \
-        LOG_FATAL_IF(! (var), "Unable to find field " fieldName);
+#define GET_FIELD_ID(var, clazz, fieldName, fieldDescriptor)  \
+    var = env->GetFieldID(clazz, fieldName, fieldDescriptor); \
+    LOG_FATAL_IF(!(var), "Unable to find field " fieldName);
 
 int register_android_server_InputApplicationHandle(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/input/InputApplicationHandle",
-            gInputApplicationHandleMethods, NELEM(gInputApplicationHandleMethods));
-    (void) res;  // Faked use when LOG_NDEBUG.
+                                       gInputApplicationHandleMethods,
+                                       NELEM(gInputApplicationHandleMethods));
+    (void)res;  // Faked use when LOG_NDEBUG.
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 
     jclass clazz;
     FIND_CLASS(clazz, "com/android/server/input/InputApplicationHandle");
 
-    GET_FIELD_ID(gInputApplicationHandleClassInfo.ptr, clazz,
-            "ptr", "J");
+    GET_FIELD_ID(gInputApplicationHandleClassInfo.ptr, clazz, "ptr", "J");
 
-    GET_FIELD_ID(gInputApplicationHandleClassInfo.name, clazz,
-            "name", "Ljava/lang/String;");
+    GET_FIELD_ID(gInputApplicationHandleClassInfo.name, clazz, "name", "Ljava/lang/String;");
 
-    GET_FIELD_ID(gInputApplicationHandleClassInfo.dispatchingTimeoutNanos,
-            clazz,
-            "dispatchingTimeoutNanos", "J");
+    GET_FIELD_ID(gInputApplicationHandleClassInfo.dispatchingTimeoutNanos, clazz,
+                 "dispatchingTimeoutNanos", "J");
 
     return 0;
 }

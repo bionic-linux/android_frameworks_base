@@ -15,8 +15,8 @@
  */
 
 #define DEBUG false  // STOPSHIP if true
-#include "config/ConfigKey.h"
 #include "Log.h"
+#include "config/ConfigKey.h"
 
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"  // Alert
 
@@ -38,8 +38,7 @@ namespace android {
 namespace os {
 namespace statsd {
 
-bool CollectPerfettoTraceAndUploadToDropbox(const PerfettoDetails& config,
-                                            int64_t alert_id,
+bool CollectPerfettoTraceAndUploadToDropbox(const PerfettoDetails& config, int64_t alert_id,
                                             const ConfigKey& configKey) {
     VLOG("Starting trace collection through perfetto");
 

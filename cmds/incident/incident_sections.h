@@ -17,8 +17,7 @@
 #ifndef INCIDENT_SECTIONS_H
 #define INCIDENT_SECTIONS_H
 
-struct IncidentSection
-{
+struct IncidentSection {
     int id;
     char const* name;
 };
@@ -26,4 +25,4 @@ struct IncidentSection
 extern IncidentSection const INCIDENT_SECTIONS[];
 extern const int INCIDENT_SECTION_COUNT;
 
-#endif // INCIDENT_SECTIONS_H
+#endif  // INCIDENT_SECTIONS_H

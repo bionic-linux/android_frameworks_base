@@ -15,9 +15,9 @@
  *
  */
 
-#include <atomic>
 #include <stdio.h>
 #include <string.h>
+#include <atomic>
 
 #include "messagequeue.h"
 
@@ -27,13 +27,12 @@ static const int messageBufferSize = 64 * 1024;
 static char messageBuffer[messageBufferSize];
 static std::atomic_ullong messagesLastWritePosition;
 
-void writeMessage(const char* message)
-{
+void writeMessage(const char* message) {
     static unsigned long long lastWritePos = 0;
     size_t messageLen = strlen(message);
     if (messageLen == 0) return;
 
-    messageLen += 1; // Also count in the null terminator.
+    messageLen += 1;  // Also count in the null terminator.
     char buffer[1024];
     if (messageLen >= messageBufferSize) {
         snprintf(buffer, sizeof(buffer), "!!! Message too long: %zu bytes !!!", messageLen);
@@ -56,8 +55,7 @@ void writeMessage(const char* message)
 
 static char messageBufferCopy[messageBufferSize];
 
-jobjectArray getRecentMessagesForJava(JNIEnv* env, jobject)
-{
+jobjectArray getRecentMessagesForJava(JNIEnv* env, jobject) {
     static unsigned long long lastReadPos = 0;
     const char* overrunMessage = "";
     size_t messagesCount = 0;
@@ -77,29 +75,27 @@ jobjectArray getRecentMessagesForJava(JNIEnv* env, jobject)
     if (lastWritePos == lastReadPos) return result;
     if (lastWritePos / messageBufferSize == lastReadPos / messageBufferSize) {
         size_t wrappedReadPos = lastReadPos % messageBufferSize;
-        memcpy(messageBufferCopy + wrappedReadPos,
-                messageBuffer + wrappedReadPos,
-                lastWritePos % messageBufferSize - wrappedReadPos);
+        memcpy(messageBufferCopy + wrappedReadPos, messageBuffer + wrappedReadPos,
+               lastWritePos % messageBufferSize - wrappedReadPos);
     } else {
         size_t wrappedReadPos = lastReadPos % messageBufferSize;
         memcpy(messageBufferCopy, messageBuffer, lastWritePos % messageBufferSize);
-        memcpy(messageBufferCopy + wrappedReadPos,
-                messageBuffer + wrappedReadPos,
-                messageBufferSize - wrappedReadPos);
+        memcpy(messageBufferCopy + wrappedReadPos, messageBuffer + wrappedReadPos,
+               messageBufferSize - wrappedReadPos);
     }
     {
-    unsigned long long newLastWritePos = messagesLastWritePosition.load();
-    if (newLastWritePos - lastReadPos > messageBufferSize) {
-        overrunMessage = "!!! Message buffer overrun !!!";
-        messagesCount = 1;
-        lastReadPos = lastWritePos = newLastWritePos;
-        goto create_array;
-    }
+        unsigned long long newLastWritePos = messagesLastWritePosition.load();
+        if (newLastWritePos - lastReadPos > messageBufferSize) {
+            overrunMessage = "!!! Message buffer overrun !!!";
+            messagesCount = 1;
+            lastReadPos = lastWritePos = newLastWritePos;
+            goto create_array;
+        }
     }
     // Otherwise we ignore newLastWritePos, since we only have a copy of the buffer
     // up to lastWritePos.
 
-    for (unsigned long long readPos = lastReadPos; readPos < lastWritePos; ) {
+    for (unsigned long long readPos = lastReadPos; readPos < lastWritePos;) {
         size_t messageLen = strlen(messageBufferCopy + (readPos % messageBufferSize));
         if (messageLen != 0) {
             readPos += messageLen + 1;
@@ -115,8 +111,8 @@ jobjectArray getRecentMessagesForJava(JNIEnv* env, jobject)
     }
 
 create_array:
-    result = env->NewObjectArray(
-            messagesCount, env->FindClass("java/lang/String"), env->NewStringUTF(overrunMessage));
+    result = env->NewObjectArray(messagesCount, env->FindClass("java/lang/String"),
+                                 env->NewStringUTF(overrunMessage));
     if (lastWritePos == lastReadPos) return result;
 
     jsize arrayIndex = 0;
@@ -135,4 +131,4 @@ create_array:
     return result;
 }
 
-} // namespace nativemididemo
+}  // namespace nativemididemo

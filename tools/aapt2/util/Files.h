@@ -85,7 +85,8 @@ bool AppendArgsFromFile(const android::StringPiece& path, std::vector<std::strin
 // Pattern format is specified in the FileFilter::SetPattern() method.
 class FileFilter {
  public:
-  explicit FileFilter(IDiagnostics* diag) : diag_(diag) {}
+  explicit FileFilter(IDiagnostics* diag) : diag_(diag) {
+  }
 
   // Patterns syntax:
   // - Delimiter is :

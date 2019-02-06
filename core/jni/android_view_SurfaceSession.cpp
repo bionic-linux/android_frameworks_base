@@ -23,22 +23,18 @@
 #include <utils/Log.h>
 #include <utils/RefBase.h>
 
-#include <gui/SurfaceComposerClient.h>
 #include <gui/Surface.h>
+#include <gui/SurfaceComposerClient.h>
 
 namespace android {
 
-static struct {
-    jfieldID mNativeClient;
-} gSurfaceSessionClassInfo;
+static struct { jfieldID mNativeClient; } gSurfaceSessionClassInfo;
 
-
-sp<SurfaceComposerClient> android_view_SurfaceSession_getClient(
-        JNIEnv* env, jobject surfaceSessionObj) {
+sp<SurfaceComposerClient> android_view_SurfaceSession_getClient(JNIEnv* env,
+                                                                jobject surfaceSessionObj) {
     return reinterpret_cast<SurfaceComposerClient*>(
             env->GetLongField(surfaceSessionObj, gSurfaceSessionClassInfo.mNativeClient));
 }
-
 
 static jlong nativeCreate(JNIEnv* env, jclass clazz) {
     SurfaceComposerClient* client = new SurfaceComposerClient();
@@ -47,7 +43,7 @@ static jlong nativeCreate(JNIEnv* env, jclass clazz) {
 }
 
 static jlong nativeCreateScoped(JNIEnv* env, jclass clazz, jlong surfaceObject) {
-    Surface *parent = reinterpret_cast<Surface*>(surfaceObject);
+    Surface* parent = reinterpret_cast<Surface*>(surfaceObject);
     SurfaceComposerClient* client = new SurfaceComposerClient(parent->getIGraphicBufferProducer());
     client->incStrong((void*)nativeCreate);
     return reinterpret_cast<jlong>(client);
@@ -64,20 +60,15 @@ static void nativeKill(JNIEnv* env, jclass clazz, jlong ptr) {
 }
 
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeCreate", "()J",
-            (void*)nativeCreate },
-    { "nativeCreateScoped", "(J)J",
-            (void*)nativeCreateScoped },
-    { "nativeDestroy", "(J)V",
-            (void*)nativeDestroy },
-    { "nativeKill", "(J)V",
-            (void*)nativeKill }
-};
+        /* name, signature, funcPtr */
+        {"nativeCreate", "()J", (void*)nativeCreate},
+        {"nativeCreateScoped", "(J)J", (void*)nativeCreateScoped},
+        {"nativeDestroy", "(J)V", (void*)nativeDestroy},
+        {"nativeKill", "(J)V", (void*)nativeKill}};
 
 int register_android_view_SurfaceSession(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, "android/view/SurfaceSession",
-            gMethods, NELEM(gMethods));
+    int res =
+            jniRegisterNativeMethods(env, "android/view/SurfaceSession", gMethods, NELEM(gMethods));
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 
     jclass clazz = env->FindClass("android/view/SurfaceSession");
@@ -85,4 +76,4 @@ int register_android_view_SurfaceSession(JNIEnv* env) {
     return 0;
 }
 
-} // namespace android
+}  // namespace android

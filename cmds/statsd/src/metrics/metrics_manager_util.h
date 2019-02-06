@@ -45,8 +45,7 @@ namespace statsd {
 // [logTrackerMap]: this map should contain matcher name to index mapping
 // [allAtomMatchers]: should store the sp to all the LogMatchingTracker
 // [allTagIds]: contains the set of all interesting tag ids to this config.
-bool initLogTrackers(const StatsdConfig& config,
-                     const UidMap& uidMap,
+bool initLogTrackers(const StatsdConfig& config, const UidMap& uidMap,
                      std::unordered_map<int64_t, int>& logTrackerMap,
                      std::vector<sp<LogMatchingTracker>>& allAtomMatchers,
                      std::set<int>& allTagIds);
@@ -81,9 +80,8 @@ bool initConditions(const ConfigKey& key, const StatsdConfig& config,
 //                          the list of MetricProducer index
 // [trackerToMetricMap]: contains the mapping from log tracker to MetricProducer index.
 bool initMetrics(
-        const ConfigKey& key, const StatsdConfig& config,
-        const int64_t timeBaseTimeNs, const int64_t currentTimeNs,
-        UidMap& uidMap,
+        const ConfigKey& key, const StatsdConfig& config, const int64_t timeBaseTimeNs,
+        const int64_t currentTimeNs, UidMap& uidMap,
         const std::unordered_map<int64_t, int>& logTrackerMap,
         const std::unordered_map<int64_t, int>& conditionTrackerMap,
         const std::unordered_map<int, std::vector<MetricConditionLink>>& eventConditionLinks,
@@ -98,9 +96,8 @@ bool initMetrics(
 // Parameters are the members of MetricsManager. See MetricsManager for declaration.
 bool initStatsdConfig(const ConfigKey& key, const StatsdConfig& config, UidMap& uidMap,
                       const sp<AlarmMonitor>& anomalyAlarmMonitor,
-                      const sp<AlarmMonitor>& periodicAlarmMonitor,
-                      const int64_t timeBaseNs, const int64_t currentTimeNs,
-                      std::set<int>& allTagIds,
+                      const sp<AlarmMonitor>& periodicAlarmMonitor, const int64_t timeBaseNs,
+                      const int64_t currentTimeNs, std::set<int>& allTagIds,
                       std::vector<sp<LogMatchingTracker>>& allAtomMatchers,
                       std::vector<sp<ConditionTracker>>& allConditionTrackers,
                       std::vector<sp<MetricProducer>>& allMetricProducers,

@@ -12,8 +12,7 @@ extern "C" {
  * Method:    ping
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_android_tools_aapt2_Aapt2Jni_ping
-  (JNIEnv *, jclass);
+JNIEXPORT void JNICALL Java_com_android_tools_aapt2_Aapt2Jni_ping(JNIEnv*, jclass);
 
 /*
  * Class:     com_android_tools_aapt2_Aapt2Jni

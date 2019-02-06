@@ -101,7 +101,7 @@ class AssetManager2 {
   // configurations (including incompatible ones) such as when constructing an
   // idmap.
   bool SetApkAssets(const std::vector<const ApkAssets*>& apk_assets, bool invalidate_caches = true,
-          bool filter_incompatible_configs = true);
+                    bool filter_incompatible_configs = true);
 
   inline const std::vector<const ApkAssets*> GetApkAssets() const {
     return apk_assets_;

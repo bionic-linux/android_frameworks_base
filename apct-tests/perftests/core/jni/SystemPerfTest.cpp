@@ -16,10 +16,9 @@
 
 #include <jni.h>
 
-#define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
+#define NELEM(x) ((int)(sizeof(x) / sizeof((x)[0])))
 
-static void jintarrayArgumentNoop(JNIEnv*, jclass, jintArray, jint) {
-}
+static void jintarrayArgumentNoop(JNIEnv*, jclass, jintArray, jint) {}
 
 static jint jintarrayGetLength(JNIEnv* env, jclass, jintArray jarray) {
     const jsize len = env->GetArrayLength(jarray);
@@ -31,7 +30,7 @@ static jint jintarrayCriticalAccess(JNIEnv* env, jclass, jintArray jarray, jint 
     if (index < 0 || index >= len) {
         return -1;
     }
-    jint* data = (jint*) env->GetPrimitiveArrayCritical(jarray, 0);
+    jint* data = (jint*)env->GetPrimitiveArrayCritical(jarray, 0);
     jint ret = data[index];
     env->ReleasePrimitiveArrayCritical(jarray, data, 0);
     return ret;
@@ -49,14 +48,14 @@ static jint jintarrayBasicAccess(JNIEnv* env, jclass, jintArray jarray, jint ind
 }
 
 static const JNINativeMethod sMethods[] = {
-    {"jintarrayArgumentNoop", "([II)V", (void *) jintarrayArgumentNoop},
-    {"jintarrayGetLength", "([I)I", (void *) jintarrayGetLength},
-    {"jintarrayCriticalAccess", "([II)I", (void *) jintarrayCriticalAccess},
-    {"jintarrayBasicAccess", "([II)I", (void *) jintarrayBasicAccess},
+        {"jintarrayArgumentNoop", "([II)V", (void*)jintarrayArgumentNoop},
+        {"jintarrayGetLength", "([I)I", (void*)jintarrayGetLength},
+        {"jintarrayCriticalAccess", "([II)I", (void*)jintarrayCriticalAccess},
+        {"jintarrayBasicAccess", "([II)I", (void*)jintarrayBasicAccess},
 };
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
-        const JNINativeMethod* gMethods, int numMethods) {
+                                 const JNINativeMethod* gMethods, int numMethods) {
     jclass clazz = env->FindClass(className);
     if (clazz == NULL) {
         return JNI_FALSE;
@@ -68,13 +67,13 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
 }
 
 jint JNI_OnLoad(JavaVM* jvm, void*) {
-    JNIEnv *env = NULL;
-    if (jvm->GetEnv((void**) &env, JNI_VERSION_1_6)) {
+    JNIEnv* env = NULL;
+    if (jvm->GetEnv((void**)&env, JNI_VERSION_1_6)) {
         return JNI_ERR;
     }
 
-    if (registerNativeMethods(env, "android/perftests/SystemPerfTest",
-            sMethods, NELEM(sMethods)) == -1) {
+    if (registerNativeMethods(env, "android/perftests/SystemPerfTest", sMethods, NELEM(sMethods)) ==
+        -1) {
         return JNI_ERR;
     }
 

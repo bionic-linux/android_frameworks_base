@@ -18,17 +18,16 @@
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 
-#include "android_media_MediaMetricsJNI.h"
 #include <media/MediaAnalyticsItem.h>
-
+#include "android_media_MediaMetricsJNI.h"
 
 namespace android {
 
 // place the attributes into a java PersistableBundle object
-jobject MediaMetricsJNI::writeMetricsToBundle(JNIEnv* env, MediaAnalyticsItem *item, jobject mybundle) {
-
+jobject MediaMetricsJNI::writeMetricsToBundle(JNIEnv* env, MediaAnalyticsItem* item,
+                                              jobject mybundle) {
     jclass clazzBundle = env->FindClass("android/os/PersistableBundle");
-    if (clazzBundle==NULL) {
+    if (clazzBundle == NULL) {
         ALOGD("can't find android/os/PersistableBundle");
         return NULL;
     }
@@ -46,45 +45,41 @@ jobject MediaMetricsJNI::writeMetricsToBundle(JNIEnv* env, MediaAnalyticsItem *i
     jmethodID setIntID = env->GetMethodID(clazzBundle, "putInt", "(Ljava/lang/String;I)V");
     jmethodID setLongID = env->GetMethodID(clazzBundle, "putLong", "(Ljava/lang/String;J)V");
     jmethodID setDoubleID = env->GetMethodID(clazzBundle, "putDouble", "(Ljava/lang/String;D)V");
-    jmethodID setStringID = env->GetMethodID(clazzBundle, "putString", "(Ljava/lang/String;Ljava/lang/String;)V");
+    jmethodID setStringID =
+            env->GetMethodID(clazzBundle, "putString", "(Ljava/lang/String;Ljava/lang/String;)V");
 
     // env, class, method, {parms}
-    //env->CallVoidMethod(env, mybundle, setIntID, jstr, jint);
+    // env->CallVoidMethod(env, mybundle, setIntID, jstr, jint);
 
     // iterate through my attributes
     // -- get name, get type, get value
     // -- insert appropriately into the bundle
-    for (size_t i = 0 ; i < item->mPropCount; i++ ) {
-            MediaAnalyticsItem::Prop *prop = &item->mProps[i];
-            // build the key parameter from prop->mName
-            jstring keyName = env->NewStringUTF(prop->mName);
-            // invoke the appropriate method to insert
-            switch (prop->mType) {
-                case MediaAnalyticsItem::kTypeInt32:
-                    env->CallVoidMethod(mybundle, setIntID,
-                                        keyName, (jint) prop->u.int32Value);
-                    break;
-                case MediaAnalyticsItem::kTypeInt64:
-                    env->CallVoidMethod(mybundle, setLongID,
-                                        keyName, (jlong) prop->u.int64Value);
-                    break;
-                case MediaAnalyticsItem::kTypeDouble:
-                    env->CallVoidMethod(mybundle, setDoubleID,
-                                        keyName, (jdouble) prop->u.doubleValue);
-                    break;
-                case MediaAnalyticsItem::kTypeCString:
-                    env->CallVoidMethod(mybundle, setStringID, keyName,
-                                        env->NewStringUTF(prop->u.CStringValue));
-                    break;
-                default:
-                        ALOGE("to_String bad item type: %d for %s",
-                              prop->mType, prop->mName);
-                        break;
-            }
+    for (size_t i = 0; i < item->mPropCount; i++) {
+        MediaAnalyticsItem::Prop* prop = &item->mProps[i];
+        // build the key parameter from prop->mName
+        jstring keyName = env->NewStringUTF(prop->mName);
+        // invoke the appropriate method to insert
+        switch (prop->mType) {
+            case MediaAnalyticsItem::kTypeInt32:
+                env->CallVoidMethod(mybundle, setIntID, keyName, (jint)prop->u.int32Value);
+                break;
+            case MediaAnalyticsItem::kTypeInt64:
+                env->CallVoidMethod(mybundle, setLongID, keyName, (jlong)prop->u.int64Value);
+                break;
+            case MediaAnalyticsItem::kTypeDouble:
+                env->CallVoidMethod(mybundle, setDoubleID, keyName, (jdouble)prop->u.doubleValue);
+                break;
+            case MediaAnalyticsItem::kTypeCString:
+                env->CallVoidMethod(mybundle, setStringID, keyName,
+                                    env->NewStringUTF(prop->u.CStringValue));
+                break;
+            default:
+                ALOGE("to_String bad item type: %d for %s", prop->mType, prop->mName);
+                break;
+        }
     }
 
     return mybundle;
 }
 
 };  // namespace android
-

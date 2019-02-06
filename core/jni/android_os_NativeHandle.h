@@ -25,12 +25,11 @@
 namespace android {
 
 struct JNativeHandle {
-
     /**
      * Returns a Java NativeHandle object representing the parameterized
      * native_handle_t instance.
      */
-    static jobject MakeJavaNativeHandleObj(JNIEnv *env, const native_handle_t *handle);
+    static jobject MakeJavaNativeHandleObj(JNIEnv* env, const native_handle_t* handle);
 
     /**
      * Returns a heap-allocated native_handle_t instance representing the
@@ -38,15 +37,15 @@ struct JNativeHandle {
      * parameter is supplied (storage is nullptr), the return value must
      * be explicitly deallocated (using native_handle_delete).
      */
-    static native_handle_t* MakeCppNativeHandle(JNIEnv *env, jobject jHandle,
-            EphemeralStorage *storage);
+    static native_handle_t* MakeCppNativeHandle(JNIEnv* env, jobject jHandle,
+                                                EphemeralStorage* storage);
 
     /**
      * Returns an (uninitialized) array of Java NativeHandle objects.
      */
-    static jobjectArray AllocJavaNativeHandleObjArray(JNIEnv *env, jsize length);
+    static jobjectArray AllocJavaNativeHandleObjArray(JNIEnv* env, jsize length);
 };
 
-}
+}  // namespace android
 
 #endif  // ANDROID_OS_NATIVE_HANDLE_H

@@ -26,7 +26,7 @@ using namespace google::protobuf;
 using namespace std;
 
 class InstrumentationCallbacks {
-public:
+  public:
     virtual void OnTestStatus(TestStatus& status) = 0;
     virtual void OnSessionStatus(SessionStatus& status) = 0;
 };
@@ -36,7 +36,7 @@ int run_adb(const char* first, ...);
 string get_system_property(const string& name, int* err);
 
 int run_instrumentation_test(const string& packageName, const string& runner,
-        const string& className, InstrumentationCallbacks* callbacks);
+                             const string& className, InstrumentationCallbacks* callbacks);
 
 string get_bundle_string(const ResultsBundle& bundle, bool* found, ...);
 int32_t get_bundle_int(const ResultsBundle& bundle, bool* found, ...);
@@ -44,4 +44,4 @@ float get_bundle_float(const ResultsBundle& bundle, bool* found, ...);
 double get_bundle_double(const ResultsBundle& bundle, bool* found, ...);
 int64_t get_bundle_long(const ResultsBundle& bundle, bool* found, ...);
 
-#endif // ADB_H
+#endif  // ADB_H

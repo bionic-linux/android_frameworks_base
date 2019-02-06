@@ -17,33 +17,30 @@
 #define LOG_TAG "UsbDeviceManagerJNI"
 #include "utils/Log.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "MtpDescriptors.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
-#include "MtpDescriptors.h"
+#include "jni.h"
 
-#include <stdio.h>
 #include <asm/byteorder.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <sys/ioctl.h>
 #include <linux/usb/f_accessory.h>
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #define DRIVER_NAME "/dev/usb_accessory"
 
-namespace android
-{
+namespace android {
 
-static struct parcel_file_descriptor_offsets_t
-{
+static struct parcel_file_descriptor_offsets_t {
     jclass mClass;
     jmethodID mConstructor;
 } gParcelFileDescriptorOffsets;
 
-static void set_accessory_string(JNIEnv *env, int fd, int cmd, jobjectArray strArray, int index)
-{
+static void set_accessory_string(JNIEnv* env, int fd, int cmd, jobjectArray strArray, int index) {
     char buffer[256];
 
     buffer[0] = 0;
@@ -55,10 +52,8 @@ static void set_accessory_string(JNIEnv *env, int fd, int cmd, jobjectArray strA
     }
 }
 
-
-static jobjectArray android_server_UsbDeviceManager_getAccessoryStrings(JNIEnv *env,
-                                                                        jobject /* thiz */)
-{
+static jobjectArray android_server_UsbDeviceManager_getAccessoryStrings(JNIEnv* env,
+                                                                        jobject /* thiz */) {
     int fd = open(DRIVER_NAME, O_RDWR);
     if (fd < 0) {
         ALOGE("could not open %s", DRIVER_NAME);
@@ -79,8 +74,7 @@ out:
     return strArray;
 }
 
-static jobject android_server_UsbDeviceManager_openAccessory(JNIEnv *env, jobject /* thiz */)
-{
+static jobject android_server_UsbDeviceManager_openAccessory(JNIEnv* env, jobject /* thiz */) {
     int fd = open(DRIVER_NAME, O_RDWR);
     if (fd < 0) {
         ALOGE("could not open %s", DRIVER_NAME);
@@ -91,12 +85,11 @@ static jobject android_server_UsbDeviceManager_openAccessory(JNIEnv *env, jobjec
         return NULL;
     }
     return env->NewObject(gParcelFileDescriptorOffsets.mClass,
-        gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
+                          gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
 }
 
 static jboolean android_server_UsbDeviceManager_isStartRequested(JNIEnv* /* env */,
-                                                                 jobject /* thiz */)
-{
+                                                                 jobject /* thiz */) {
     int fd = open(DRIVER_NAME, O_RDWR);
     if (fd < 0) {
         ALOGE("could not open %s", DRIVER_NAME);
@@ -107,8 +100,7 @@ static jboolean android_server_UsbDeviceManager_isStartRequested(JNIEnv* /* env 
     return (result == 1);
 }
 
-static jint android_server_UsbDeviceManager_getAudioMode(JNIEnv* /* env */, jobject /* thiz */)
-{
+static jint android_server_UsbDeviceManager_getAudioMode(JNIEnv* /* env */, jobject /* thiz */) {
     int fd = open(DRIVER_NAME, O_RDWR);
     if (fd < 0) {
         ALOGE("could not open %s", DRIVER_NAME);
@@ -119,8 +111,9 @@ static jint android_server_UsbDeviceManager_getAudioMode(JNIEnv* /* env */, jobj
     return result;
 }
 
-static jobject android_server_UsbDeviceManager_openControl(JNIEnv *env, jobject /* thiz */, jstring jFunction) {
-    const char *function = env->GetStringUTFChars(jFunction, NULL);
+static jobject android_server_UsbDeviceManager_openControl(JNIEnv* env, jobject /* thiz */,
+                                                           jstring jFunction) {
+    const char* function = env->GetStringUTFChars(jFunction, NULL);
     bool ptp = false;
     int fd = -1;
     if (!strcmp(function, "ptp")) {
@@ -152,20 +145,17 @@ error:
 }
 
 static const JNINativeMethod method_table[] = {
-    { "nativeGetAccessoryStrings",  "()[Ljava/lang/String;",
-                                    (void*)android_server_UsbDeviceManager_getAccessoryStrings },
-    { "nativeOpenAccessory",        "()Landroid/os/ParcelFileDescriptor;",
-                                    (void*)android_server_UsbDeviceManager_openAccessory },
-    { "nativeIsStartRequested",     "()Z",
-                                    (void*)android_server_UsbDeviceManager_isStartRequested },
-    { "nativeGetAudioMode",         "()I",
-                                    (void*)android_server_UsbDeviceManager_getAudioMode },
-    { "nativeOpenControl",          "(Ljava/lang/String;)Ljava/io/FileDescriptor;",
-                                    (void*)android_server_UsbDeviceManager_openControl },
+        {"nativeGetAccessoryStrings", "()[Ljava/lang/String;",
+         (void*)android_server_UsbDeviceManager_getAccessoryStrings},
+        {"nativeOpenAccessory", "()Landroid/os/ParcelFileDescriptor;",
+         (void*)android_server_UsbDeviceManager_openAccessory},
+        {"nativeIsStartRequested", "()Z", (void*)android_server_UsbDeviceManager_isStartRequested},
+        {"nativeGetAudioMode", "()I", (void*)android_server_UsbDeviceManager_getAudioMode},
+        {"nativeOpenControl", "(Ljava/lang/String;)Ljava/io/FileDescriptor;",
+         (void*)android_server_UsbDeviceManager_openControl},
 };
 
-int register_android_server_UsbDeviceManager(JNIEnv *env)
-{
+int register_android_server_UsbDeviceManager(JNIEnv* env) {
     jclass clazz = env->FindClass("com/android/server/usb/UsbDeviceManager");
     if (clazz == NULL) {
         ALOGE("Can't find com/android/server/usb/UsbDeviceManager");
@@ -174,13 +164,14 @@ int register_android_server_UsbDeviceManager(JNIEnv *env)
 
     clazz = env->FindClass("android/os/ParcelFileDescriptor");
     LOG_FATAL_IF(clazz == NULL, "Unable to find class android.os.ParcelFileDescriptor");
-    gParcelFileDescriptorOffsets.mClass = (jclass) env->NewGlobalRef(clazz);
-    gParcelFileDescriptorOffsets.mConstructor = env->GetMethodID(clazz, "<init>", "(Ljava/io/FileDescriptor;)V");
+    gParcelFileDescriptorOffsets.mClass = (jclass)env->NewGlobalRef(clazz);
+    gParcelFileDescriptorOffsets.mConstructor =
+            env->GetMethodID(clazz, "<init>", "(Ljava/io/FileDescriptor;)V");
     LOG_FATAL_IF(gParcelFileDescriptorOffsets.mConstructor == NULL,
                  "Unable to find constructor for android.os.ParcelFileDescriptor");
 
-    return jniRegisterNativeMethods(env, "com/android/server/usb/UsbDeviceManager",
-            method_table, NELEM(method_table));
+    return jniRegisterNativeMethods(env, "com/android/server/usb/UsbDeviceManager", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

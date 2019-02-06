@@ -24,9 +24,9 @@
 #include <core_jni_helpers.h>
 #include <jni.h>
 
-#include <nativehelper/ScopedUtfChars.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
+#include <nativehelper/ScopedUtfChars.h>
 
 #include <utils/Log.h>
 #include <utils/misc.h>
@@ -59,8 +59,8 @@ static struct {
     jfieldID operations;
 } gNetworkStatsClassInfo;
 
-static jobjectArray get_string_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow)
-{
+static jobjectArray get_string_array(JNIEnv* env, jobject obj, jfieldID field, int size,
+                                     bool grow) {
     if (!grow) {
         jobjectArray array = (jobjectArray)env->GetObjectField(obj, field);
         if (array != NULL) {
@@ -70,8 +70,7 @@ static jobjectArray get_string_array(JNIEnv* env, jobject obj, jfieldID field, i
     return env->NewObjectArray(size, gStringClass, NULL);
 }
 
-static jintArray get_int_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow)
-{
+static jintArray get_int_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow) {
     if (!grow) {
         jintArray array = (jintArray)env->GetObjectField(obj, field);
         if (array != NULL) {
@@ -81,8 +80,7 @@ static jintArray get_int_array(JNIEnv* env, jobject obj, jfieldID field, int siz
     return env->NewIntArray(size);
 }
 
-static jlongArray get_long_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow)
-{
+static jlongArray get_long_array(JNIEnv* env, jobject obj, jfieldID field, int size, bool grow) {
     if (!grow) {
         jlongArray array = (jlongArray)env->GetObjectField(obj, field);
         if (array != NULL) {
@@ -93,8 +91,8 @@ static jlongArray get_long_array(JNIEnv* env, jobject obj, jfieldID field, int s
 }
 
 static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
-                                        const std::vector<std::string>& limitIfaces,
-                                        int limitTag, int limitUid, const char* path) {
+                                        const std::vector<std::string>& limitIfaces, int limitTag,
+                                        int limitUid, const char* path) {
     FILE* fp = fopen(path, "re");
     if (fp == NULL) {
         return -1;
@@ -110,7 +108,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
         char* endPos;
         // First field is the index.
         idx = (int)strtol(pos, &endPos, 10);
-        //ALOGI("Index #%d: %s", idx, buffer);
+        // ALOGI("Index #%d: %s", idx, buffer);
         if (pos == endPos) {
             // Skip lines that don't start with in index.  In particular,
             // this will skip the initial header line.
@@ -129,7 +127,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
         }
         // Next field is iface.
         int ifaceIdx = 0;
-        while (*pos != ' ' && *pos != 0 && ifaceIdx < (int)(sizeof(s.iface)-1)) {
+        while (*pos != ' ' && *pos != 0 && ifaceIdx < (int)(sizeof(s.iface) - 1)) {
             s.iface[ifaceIdx] = *pos;
             ifaceIdx++;
             pos++;
@@ -151,7 +149,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
             }
             if (i >= (int)limitIfaces.size()) {
                 // Nothing matched; skip this line.
-                //ALOGI("skipping due to iface: %s", buffer);
+                // ALOGI("skipping due to iface: %s", buffer);
                 continue;
             }
         }
@@ -175,7 +173,7 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
         }
         s.tag = rawTag >> 32;
         if (limitTag != -1 && s.tag != static_cast<uint32_t>(limitTag)) {
-            //ALOGI("skipping due to tag: %s", buffer);
+            // ALOGI("skipping due to tag: %s", buffer);
             continue;
         }
         pos = endPos;
@@ -184,16 +182,15 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
         while (*pos == ' ') pos++;
 
         // Parse remaining fields.
-        if (sscanf(pos, "%u %u %" PRIu64 " %" PRIu64 " %" PRIu64 " %" PRIu64,
-                &s.uid, &s.set, &s.rxBytes, &s.rxPackets,
-                &s.txBytes, &s.txPackets) == 6) {
+        if (sscanf(pos, "%u %u %" PRIu64 " %" PRIu64 " %" PRIu64 " %" PRIu64, &s.uid, &s.set,
+                   &s.rxBytes, &s.rxPackets, &s.txBytes, &s.txPackets) == 6) {
             if (limitUid != -1 && static_cast<uint32_t>(limitUid) != s.uid) {
-                //ALOGI("skipping due to uid: %s", buffer);
+                // ALOGI("skipping due to uid: %s", buffer);
                 continue;
             }
             lines->push_back(s);
         } else {
-            //ALOGI("skipping due to bad remaining fields: %s", pos);
+            // ALOGI("skipping due to bad remaining fields: %s", pos);
         }
     }
 
@@ -205,46 +202,43 @@ static int legacyReadNetworkStatsDetail(std::vector<stats_line>* lines,
 }
 
 static int statsLinesToNetworkStats(JNIEnv* env, jclass clazz, jobject stats,
-                            std::vector<stats_line>& lines) {
+                                    std::vector<stats_line>& lines) {
     int size = lines.size();
 
     bool grow = size > env->GetIntField(stats, gNetworkStatsClassInfo.capacity);
 
-    ScopedLocalRef<jobjectArray> iface(env, get_string_array(env, stats,
-            gNetworkStatsClassInfo.iface, size, grow));
+    ScopedLocalRef<jobjectArray> iface(
+            env, get_string_array(env, stats, gNetworkStatsClassInfo.iface, size, grow));
     if (iface.get() == NULL) return -1;
-    ScopedIntArrayRW uid(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.uid, size, grow));
+    ScopedIntArrayRW uid(env, get_int_array(env, stats, gNetworkStatsClassInfo.uid, size, grow));
     if (uid.get() == NULL) return -1;
-    ScopedIntArrayRW set(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.set, size, grow));
+    ScopedIntArrayRW set(env, get_int_array(env, stats, gNetworkStatsClassInfo.set, size, grow));
     if (set.get() == NULL) return -1;
-    ScopedIntArrayRW tag(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.tag, size, grow));
+    ScopedIntArrayRW tag(env, get_int_array(env, stats, gNetworkStatsClassInfo.tag, size, grow));
     if (tag.get() == NULL) return -1;
-    ScopedIntArrayRW metered(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.metered, size, grow));
+    ScopedIntArrayRW metered(env,
+                             get_int_array(env, stats, gNetworkStatsClassInfo.metered, size, grow));
     if (metered.get() == NULL) return -1;
-    ScopedIntArrayRW roaming(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.roaming, size, grow));
+    ScopedIntArrayRW roaming(env,
+                             get_int_array(env, stats, gNetworkStatsClassInfo.roaming, size, grow));
     if (roaming.get() == NULL) return -1;
-    ScopedIntArrayRW defaultNetwork(env, get_int_array(env, stats,
-            gNetworkStatsClassInfo.defaultNetwork, size, grow));
+    ScopedIntArrayRW defaultNetwork(
+            env, get_int_array(env, stats, gNetworkStatsClassInfo.defaultNetwork, size, grow));
     if (defaultNetwork.get() == NULL) return -1;
-    ScopedLongArrayRW rxBytes(env, get_long_array(env, stats,
-            gNetworkStatsClassInfo.rxBytes, size, grow));
+    ScopedLongArrayRW rxBytes(
+            env, get_long_array(env, stats, gNetworkStatsClassInfo.rxBytes, size, grow));
     if (rxBytes.get() == NULL) return -1;
-    ScopedLongArrayRW rxPackets(env, get_long_array(env, stats,
-            gNetworkStatsClassInfo.rxPackets, size, grow));
+    ScopedLongArrayRW rxPackets(
+            env, get_long_array(env, stats, gNetworkStatsClassInfo.rxPackets, size, grow));
     if (rxPackets.get() == NULL) return -1;
-    ScopedLongArrayRW txBytes(env, get_long_array(env, stats,
-            gNetworkStatsClassInfo.txBytes, size, grow));
+    ScopedLongArrayRW txBytes(
+            env, get_long_array(env, stats, gNetworkStatsClassInfo.txBytes, size, grow));
     if (txBytes.get() == NULL) return -1;
-    ScopedLongArrayRW txPackets(env, get_long_array(env, stats,
-            gNetworkStatsClassInfo.txPackets, size, grow));
+    ScopedLongArrayRW txPackets(
+            env, get_long_array(env, stats, gNetworkStatsClassInfo.txPackets, size, grow));
     if (txPackets.get() == NULL) return -1;
-    ScopedLongArrayRW operations(env, get_long_array(env, stats,
-            gNetworkStatsClassInfo.operations, size, grow));
+    ScopedLongArrayRW operations(
+            env, get_long_array(env, stats, gNetworkStatsClassInfo.operations, size, grow));
     if (operations.get() == NULL) return -1;
 
     for (int i = 0; i < size; i++) {
@@ -271,7 +265,7 @@ static int statsLinesToNetworkStats(JNIEnv* env, jclass clazz, jobject stats,
         env->SetObjectField(stats, gNetworkStatsClassInfo.metered, metered.getJavaArray());
         env->SetObjectField(stats, gNetworkStatsClassInfo.roaming, roaming.getJavaArray());
         env->SetObjectField(stats, gNetworkStatsClassInfo.defaultNetwork,
-                defaultNetwork.getJavaArray());
+                            defaultNetwork.getJavaArray());
         env->SetObjectField(stats, gNetworkStatsClassInfo.rxBytes, rxBytes.getJavaArray());
         env->SetObjectField(stats, gNetworkStatsClassInfo.rxPackets, rxPackets.getJavaArray());
         env->SetObjectField(stats, gNetworkStatsClassInfo.txBytes, txBytes.getJavaArray());
@@ -284,7 +278,6 @@ static int statsLinesToNetworkStats(JNIEnv* env, jclass clazz, jobject stats,
 static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats, jstring path,
                                   jint limitUid, jobjectArray limitIfacesObj, jint limitTag,
                                   jboolean useBpfStats) {
-
     std::vector<std::string> limitIfaces;
     if (limitIfacesObj != NULL && env->GetArrayLength(limitIfacesObj) > 0) {
         int num = env->GetArrayLength(limitIfacesObj);
@@ -298,18 +291,16 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats, jstr
     }
     std::vector<stats_line> lines;
 
-
     if (useBpfStats) {
-        if (parseBpfNetworkStatsDetail(&lines, limitIfaces, limitTag, limitUid) < 0)
-            return -1;
+        if (parseBpfNetworkStatsDetail(&lines, limitIfaces, limitTag, limitUid) < 0) return -1;
     } else {
         ScopedUtfChars path8(env, path);
         if (path8.c_str() == NULL) {
             ALOGE("the qtaguid legacy path is invalid: %s", path8.c_str());
             return -1;
         }
-        if (legacyReadNetworkStatsDetail(&lines, limitIfaces, limitTag,
-                                         limitUid, path8.c_str()) < 0)
+        if (legacyReadNetworkStatsDetail(&lines, limitIfaces, limitTag, limitUid, path8.c_str()) <
+            0)
             return -1;
     }
 
@@ -319,24 +310,21 @@ static int readNetworkStatsDetail(JNIEnv* env, jclass clazz, jobject stats, jstr
 static int readNetworkStatsDev(JNIEnv* env, jclass clazz, jobject stats) {
     std::vector<stats_line> lines;
 
-    if (parseBpfNetworkStatsDev(&lines) < 0)
-            return -1;
+    if (parseBpfNetworkStatsDev(&lines) < 0) return -1;
 
     return statsLinesToNetworkStats(env, clazz, stats, lines);
 }
 
 static const JNINativeMethod gMethods[] = {
-        { "nativeReadNetworkStatsDetail",
-                "(Landroid/net/NetworkStats;Ljava/lang/String;I[Ljava/lang/String;IZ)I",
-                (void*) readNetworkStatsDetail },
-        { "nativeReadNetworkStatsDev", "(Landroid/net/NetworkStats;)I",
-                (void*) readNetworkStatsDev },
+        {"nativeReadNetworkStatsDetail",
+         "(Landroid/net/NetworkStats;Ljava/lang/String;I[Ljava/lang/String;IZ)I",
+         (void*)readNetworkStatsDetail},
+        {"nativeReadNetworkStatsDev", "(Landroid/net/NetworkStats;)I", (void*)readNetworkStatsDev},
 };
 
 int register_com_android_internal_net_NetworkStatsFactory(JNIEnv* env) {
-    int err = RegisterMethodsOrDie(env,
-            "com/android/internal/net/NetworkStatsFactory", gMethods,
-            NELEM(gMethods));
+    int err = RegisterMethodsOrDie(env, "com/android/internal/net/NetworkStatsFactory", gMethods,
+                                   NELEM(gMethods));
 
     gStringClass = FindClassOrDie(env, "java/lang/String");
     gStringClass = MakeGlobalRefOrDie(env, gStringClass);
@@ -360,4 +348,4 @@ int register_com_android_internal_net_NetworkStatsFactory(JNIEnv* env) {
     return err;
 }
 
-}
+}  // namespace android

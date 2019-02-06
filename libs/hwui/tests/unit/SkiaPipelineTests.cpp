@@ -252,7 +252,7 @@ public:
     void onCopyOnWrite(ContentChangeMode) override {}
     void onWritePixels(const SkPixmap&, int x, int y) override {}
 };
-}
+}  // namespace
 
 RENDERTHREAD_SKIA_PIPELINE_TEST(SkiaPipeline, deferRenderNodeScene) {
     class DeferTestCanvas : public SkCanvas {

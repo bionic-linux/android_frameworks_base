@@ -287,8 +287,8 @@ void StatsdStats::noteMetricDimensionSize(const ConfigKey& key, const int64_t& i
     }
 }
 
-void StatsdStats::noteMetricDimensionInConditionSize(
-        const ConfigKey& key, const int64_t& id, int size) {
+void StatsdStats::noteMetricDimensionInConditionSize(const ConfigKey& key, const int64_t& id,
+                                                     int size) {
     lock_guard<std::mutex> lock(mLock);
     // if name doesn't exist before, it will create the key with count 0.
     auto statsIt = mConfigStats.find(key);
@@ -424,9 +424,8 @@ void StatsdStats::dumpStats(FILE* out) const {
                 "#matcher=%d, #alert=%d,  valid=%d\n",
                 configStats->uid, (long long)configStats->id, configStats->creation_time_sec,
                 configStats->deletion_time_sec, configStats->reset_time_sec,
-                configStats->metric_count,
-                configStats->condition_count, configStats->matcher_count, configStats->alert_count,
-                configStats->is_valid);
+                configStats->metric_count, configStats->condition_count, configStats->matcher_count,
+                configStats->alert_count, configStats->is_valid);
 
         for (const auto& broadcastTime : configStats->broadcast_sent_time_sec) {
             fprintf(out, "\tbroadcast time: %d\n", broadcastTime);
@@ -452,13 +451,13 @@ void StatsdStats::dumpStats(FILE* out) const {
         }
 
         for (const auto& broadcastTime : configStats->broadcast_sent_time_sec) {
-            fprintf(out, "\tbroadcast time: %s(%lld)\n",
-                    buildTimeString(broadcastTime).c_str(), (long long)broadcastTime);
+            fprintf(out, "\tbroadcast time: %s(%lld)\n", buildTimeString(broadcastTime).c_str(),
+                    (long long)broadcastTime);
         }
 
         for (const auto& dataDropTime : configStats->data_drop_time_sec) {
-            fprintf(out, "\tdata drop time: %s(%lld)\n",
-                    buildTimeString(dataDropTime).c_str(), (long long)dataDropTime);
+            fprintf(out, "\tdata drop time: %s(%lld)\n", buildTimeString(dataDropTime).c_str(),
+                    (long long)dataDropTime);
         }
 
         for (const auto& dump : configStats->dump_report_stats) {
@@ -524,8 +523,8 @@ void StatsdStats::dumpStats(FILE* out) const {
     }
 
     for (const auto& restart : mSystemServerRestartSec) {
-        fprintf(out, "System server restarts at %s(%lld)\n",
-            buildTimeString(restart).c_str(), (long long)restart);
+        fprintf(out, "System server restarts at %s(%lld)\n", buildTimeString(restart).c_str(),
+                (long long)restart);
     }
 
     for (const auto& loss : mLogLossTimestampNs) {
@@ -564,15 +563,15 @@ void addConfigStatsToProto(const ConfigStats& configStats, ProtoOutputStream* pr
     }
 
     for (const auto& dump : configStats.dump_report_stats) {
-        proto->write(FIELD_TYPE_INT32 | FIELD_ID_CONFIG_STATS_DUMP_REPORT_TIME |
-                     FIELD_COUNT_REPEATED,
-                     dump.first);
+        proto->write(
+                FIELD_TYPE_INT32 | FIELD_ID_CONFIG_STATS_DUMP_REPORT_TIME | FIELD_COUNT_REPEATED,
+                dump.first);
     }
 
     for (const auto& dump : configStats.dump_report_stats) {
-        proto->write(FIELD_TYPE_INT64 | FIELD_ID_CONFIG_STATS_DUMP_REPORT_BYTES |
-                     FIELD_COUNT_REPEATED,
-                     (long long)dump.second);
+        proto->write(
+                FIELD_TYPE_INT64 | FIELD_ID_CONFIG_STATS_DUMP_REPORT_BYTES | FIELD_COUNT_REPEATED,
+                (long long)dump.second);
     }
 
     for (const auto& annotation : configStats.annotations) {
@@ -586,7 +585,7 @@ void addConfigStatsToProto(const ConfigStats& configStats, ProtoOutputStream* pr
 
     for (const auto& pair : configStats.matcher_stats) {
         uint64_t tmpToken = proto->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
-                                          FIELD_ID_CONFIG_STATS_MATCHER_STATS);
+                                         FIELD_ID_CONFIG_STATS_MATCHER_STATS);
         proto->write(FIELD_TYPE_INT64 | FIELD_ID_MATCHER_STATS_ID, (long long)pair.first);
         proto->write(FIELD_TYPE_INT32 | FIELD_ID_MATCHER_STATS_COUNT, pair.second);
         proto->end(tmpToken);
@@ -594,7 +593,7 @@ void addConfigStatsToProto(const ConfigStats& configStats, ProtoOutputStream* pr
 
     for (const auto& pair : configStats.condition_stats) {
         uint64_t tmpToken = proto->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
-                                          FIELD_ID_CONFIG_STATS_CONDITION_STATS);
+                                         FIELD_ID_CONFIG_STATS_CONDITION_STATS);
         proto->write(FIELD_TYPE_INT64 | FIELD_ID_CONDITION_STATS_ID, (long long)pair.first);
         proto->write(FIELD_TYPE_INT32 | FIELD_ID_CONDITION_STATS_COUNT, pair.second);
         proto->end(tmpToken);
@@ -602,7 +601,7 @@ void addConfigStatsToProto(const ConfigStats& configStats, ProtoOutputStream* pr
 
     for (const auto& pair : configStats.metric_stats) {
         uint64_t tmpToken = proto->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
-                                          FIELD_ID_CONFIG_STATS_METRIC_STATS);
+                                         FIELD_ID_CONFIG_STATS_METRIC_STATS);
         proto->write(FIELD_TYPE_INT64 | FIELD_ID_METRIC_STATS_ID, (long long)pair.first);
         proto->write(FIELD_TYPE_INT32 | FIELD_ID_METRIC_STATS_COUNT, pair.second);
         proto->end(tmpToken);
@@ -617,7 +616,7 @@ void addConfigStatsToProto(const ConfigStats& configStats, ProtoOutputStream* pr
 
     for (const auto& pair : configStats.alert_stats) {
         uint64_t tmpToken = proto->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
-                                          FIELD_ID_CONFIG_STATS_ALERT_STATS);
+                                         FIELD_ID_CONFIG_STATS_ALERT_STATS);
         proto->write(FIELD_TYPE_INT64 | FIELD_ID_ALERT_STATS_ID, (long long)pair.first);
         proto->write(FIELD_TYPE_INT32 | FIELD_ID_ALERT_STATS_COUNT, pair.second);
         proto->end(tmpToken);
@@ -679,7 +678,7 @@ void StatsdStats::dumpStats(std::vector<uint8_t>* output, bool reset) {
 
     for (const auto& error : mLoggerErrors) {
         uint64_t token = proto.start(FIELD_TYPE_MESSAGE | FIELD_ID_LOGGER_ERROR_STATS |
-                                      FIELD_COUNT_REPEATED);
+                                     FIELD_COUNT_REPEATED);
         proto.write(FIELD_TYPE_INT32 | FIELD_ID_LOGGER_STATS_TIME, error.first);
         proto.write(FIELD_TYPE_INT32 | FIELD_ID_LOGGER_STATS_ERROR_CODE, error.second);
         proto.end(token);

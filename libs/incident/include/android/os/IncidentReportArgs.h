@@ -36,9 +36,8 @@ const uint8_t DEST_LOCAL = 0;
 const uint8_t DEST_EXPLICIT = 100;
 const uint8_t DEST_AUTOMATIC = 200;
 
-
 class IncidentReportArgs : public Parcelable {
-public:
+  public:
     IncidentReportArgs();
     IncidentReportArgs(const IncidentReportArgs& that);
     virtual ~IncidentReportArgs();
@@ -59,14 +58,14 @@ public:
 
     void merge(const IncidentReportArgs& that);
 
-private:
+  private:
     set<int> mSections;
     vector<vector<uint8_t>> mHeaders;
     bool mAll;
     int mDest;
 };
 
-}
-}
+}  // namespace os
+}  // namespace android
 
-#endif // ANDROID_OS_DUMPSTATE_ARGS_H_
+#endif  // ANDROID_OS_DUMPSTATE_ARGS_H_

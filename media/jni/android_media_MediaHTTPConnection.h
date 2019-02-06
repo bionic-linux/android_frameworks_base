@@ -32,16 +32,16 @@ struct JMediaHTTPConnection : public RefBase {
         kBufferSize = 32768,
     };
 
-    JMediaHTTPConnection(JNIEnv *env, jobject thiz);
+    JMediaHTTPConnection(JNIEnv* env, jobject thiz);
 
     sp<IMemory> getIMemory();
 
     jbyteArray getByteArrayObj();
 
-protected:
+  protected:
     virtual ~JMediaHTTPConnection();
 
-private:
+  private:
     jclass mClass;
     jweak mObject;
     jbyteArray mByteArrayObj;

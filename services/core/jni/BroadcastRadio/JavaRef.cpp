@@ -20,8 +20,8 @@
 
 namespace android {
 
-JavaRef<jstring> make_javastr(JNIEnv *env, const std::string &str) {
+JavaRef<jstring> make_javastr(JNIEnv* env, const std::string& str) {
     return make_javaref(env, env->NewStringUTF(str.c_str()));
 }
 
-} // namespace android
+}  // namespace android

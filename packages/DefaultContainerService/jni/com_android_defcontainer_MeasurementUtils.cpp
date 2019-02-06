@@ -21,11 +21,11 @@
 #include <diskusage/dirsize.h>
 #include <utils/Log.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 namespace android {
 
@@ -51,22 +51,22 @@ static jlong native_measureDirectory(JNIEnv* env, jobject /* clazz */, jstring d
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "native_measureDirectory", "(Ljava/lang/String;)J", (void*)native_measureDirectory },
+        {"native_measureDirectory", "(Ljava/lang/String;)J", (void*)native_measureDirectory},
 };
 
-int register_com_android_defcontainer(JNIEnv *env) {
-    if (jniRegisterNativeMethods(
-            env, "com/android/defcontainer/MeasurementUtils", g_methods, NELEM(g_methods)) < 0) {
+int register_com_android_defcontainer(JNIEnv* env) {
+    if (jniRegisterNativeMethods(env, "com/android/defcontainer/MeasurementUtils", g_methods,
+                                 NELEM(g_methods)) < 0) {
         return JNI_ERR;
     }
 
     return JNI_VERSION_1_6;
 }
 
-} // namespace android
+}  // namespace android
 
-int JNI_OnLoad(JavaVM *jvm, void* /* reserved */) {
-    JNIEnv *env;
+int JNI_OnLoad(JavaVM* jvm, void* /* reserved */) {
+    JNIEnv* env;
 
     if (jvm->GetEnv((void**)&env, JNI_VERSION_1_6)) {
         return JNI_ERR;

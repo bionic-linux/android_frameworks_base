@@ -27,7 +27,7 @@ struct R {
   struct string {
     enum : uint32_t {
       LibraryString = 0x02020000,  // default
-      foo = 0x02020001, // default
+      foo = 0x02020001,            // default
     };
   };
 };

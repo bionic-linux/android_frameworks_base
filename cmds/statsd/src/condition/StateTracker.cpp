@@ -103,11 +103,12 @@ bool StateTracker::hitGuardRail(const HashableDimensionKey& newKey) {
     // 1. Report the tuple count if the tuple count > soft limit
     if (mSlicedState.size() > StatsdStats::kDimensionKeySizeSoftLimit - 1) {
         size_t newTupleCount = mSlicedState.size() + 1;
-        StatsdStats::getInstance().noteConditionDimensionSize(mConfigKey, mConditionId, newTupleCount);
+        StatsdStats::getInstance().noteConditionDimensionSize(mConfigKey, mConditionId,
+                                                              newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > StatsdStats::kDimensionKeySizeHardLimit) {
-            ALOGE("Predicate %lld dropping data for dimension key %s",
-                (long long)mConditionId, newKey.toString().c_str());
+            ALOGE("Predicate %lld dropping data for dimension key %s", (long long)mConditionId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -178,10 +179,8 @@ void StateTracker::evaluateCondition(const LogEvent& event,
 
 void StateTracker::isConditionMet(
         const ConditionKey& conditionParameters, const vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensionFields,
-        const bool isSubOutputDimensionFields,
-        const bool isPartialLink,
-        vector<ConditionState>& conditionCache,
+        const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
+        const bool isPartialLink, vector<ConditionState>& conditionCache,
         std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const {
     if (conditionCache[mIndex] != ConditionState::kNotEvaluated) {
         // it has been evaluated.
@@ -214,8 +213,7 @@ void StateTracker::isConditionMet(
 
 ConditionState StateTracker::getMetConditionDimension(
         const std::vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensionFields,
-        const bool isSubOutputDimensionFields,
+        const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
         std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const {
     if (mSlicedState.size() > 0) {
         for (const auto& state : mSlicedState) {

@@ -36,17 +36,24 @@ namespace android {
 // of the chunk.
 class Chunk {
  public:
-  explicit Chunk(const ResChunk_header* chunk) : device_chunk_(chunk) {}
+  explicit Chunk(const ResChunk_header* chunk) : device_chunk_(chunk) {
+  }
 
   // Returns the type of the chunk. Caller need not worry about endianness.
-  inline int type() const { return dtohs(device_chunk_->type); }
+  inline int type() const {
+    return dtohs(device_chunk_->type);
+  }
 
   // Returns the size of the entire chunk. This can be useful for skipping
   // over the entire chunk. Caller need not worry about endianness.
-  inline size_t size() const { return dtohl(device_chunk_->size); }
+  inline size_t size() const {
+    return dtohl(device_chunk_->size);
+  }
 
   // Returns the size of the header. Caller need not worry about endianness.
-  inline size_t header_size() const { return dtohs(device_chunk_->headerSize); }
+  inline size_t header_size() const {
+    return dtohs(device_chunk_->headerSize);
+  }
 
   template <typename T, size_t MinSize = sizeof(T)>
   inline const T* header() const {
@@ -60,7 +67,9 @@ class Chunk {
     return reinterpret_cast<const uint8_t*>(device_chunk_) + header_size();
   }
 
-  inline size_t data_size() const { return size() - header_size(); }
+  inline size_t data_size() const {
+    return size() - header_size();
+  }
 
  private:
   const ResChunk_header* device_chunk_;
@@ -93,15 +102,23 @@ class ChunkIterator {
   }
 
   Chunk Next();
-  inline bool HasNext() const { return !HadError() && len_ != 0; };
+  inline bool HasNext() const {
+    return !HadError() && len_ != 0;
+  };
   // Returns whether there was an error and processing should stop
-  inline bool HadError() const { return last_error_ != nullptr; }
-  inline std::string GetLastError() const { return last_error_; }
+  inline bool HadError() const {
+    return last_error_ != nullptr;
+  }
+  inline std::string GetLastError() const {
+    return last_error_;
+  }
   // Returns whether there was an error and processing should stop. For legacy purposes,
   // some errors are considered "non fatal". Fatal errors stop processing new chunks and
   // throw away any chunks already processed. Non fatal errors also stop processing new
   // chunks, but, will retain and use any valid chunks already processed.
-  inline bool HadFatalError() const { return HadError() && last_error_was_fatal_; }
+  inline bool HadFatalError() const {
+    return HadError() && last_error_was_fatal_;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ChunkIterator);

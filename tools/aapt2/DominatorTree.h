@@ -47,19 +47,25 @@ namespace aapt {
  */
 class DominatorTree {
  public:
-  explicit DominatorTree(
-      const std::vector<std::unique_ptr<ResourceConfigValue>>& configs);
+  explicit DominatorTree(const std::vector<std::unique_ptr<ResourceConfigValue>>& configs);
 
   class Node {
    public:
     explicit Node(ResourceConfigValue* value = nullptr, Node* parent = nullptr)
-        : value_(value), parent_(parent) {}
+        : value_(value), parent_(parent) {
+    }
 
-    inline ResourceConfigValue* value() const { return value_; }
+    inline ResourceConfigValue* value() const {
+      return value_;
+    }
 
-    inline Node* parent() const { return parent_; }
+    inline Node* parent() const {
+      return parent_;
+    }
 
-    inline bool is_root_node() const { return !value_; }
+    inline bool is_root_node() const {
+      return !value_;
+    }
 
     inline const std::vector<std::unique_ptr<Node>>& children() const {
       return children_;

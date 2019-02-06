@@ -9,12 +9,12 @@
 #include <androidfw/AssetManager.h>
 #include <androidfw/ResourceTypes.h>
 #include <stdlib.h>
-#include <set>
 #include <utils/KeyedVector.h>
 #include <utils/RefBase.h>
 #include <utils/SortedVector.h>
 #include <utils/String8.h>
 #include <utils/Vector.h>
+#include <set>
 
 #include "AaptConfig.h"
 #include "Bundle.h"
@@ -24,8 +24,8 @@
 
 using namespace android;
 
-extern const char * const gDefaultIgnoreAssets;
-extern const char * gUserIgnoreAssets;
+extern const char* const gDefaultIgnoreAssets;
+extern const char* gUserIgnoreAssets;
 
 bool valid_symbol_name(const String8& str);
 
@@ -59,49 +59,47 @@ enum {
 };
 
 struct AaptLocaleValue {
-     char language[4];
-     char region[4];
-     char script[4];
-     char variant[8];
+    char language[4];
+    char region[4];
+    char script[4];
+    char variant[8];
 
-     AaptLocaleValue() {
-         memset(this, 0, sizeof(AaptLocaleValue));
-     }
+    AaptLocaleValue() { memset(this, 0, sizeof(AaptLocaleValue)); }
 
-     // Initialize this AaptLocaleValue from a config string.
-     bool initFromFilterString(const String8& config);
+    // Initialize this AaptLocaleValue from a config string.
+    bool initFromFilterString(const String8& config);
 
-     int initFromDirName(const Vector<String8>& parts, const int startIndex);
+    int initFromDirName(const Vector<String8>& parts, const int startIndex);
 
-     // Initialize this AaptLocaleValue from a ResTable_config.
-     void initFromResTable(const ResTable_config& config);
+    // Initialize this AaptLocaleValue from a ResTable_config.
+    void initFromResTable(const ResTable_config& config);
 
-     void writeTo(ResTable_config* out) const;
+    void writeTo(ResTable_config* out) const;
 
-     int compare(const AaptLocaleValue& other) const {
-         return memcmp(this, &other, sizeof(AaptLocaleValue));
-     }
+    int compare(const AaptLocaleValue& other) const {
+        return memcmp(this, &other, sizeof(AaptLocaleValue));
+    }
 
-     inline bool operator<(const AaptLocaleValue& o) const { return compare(o) < 0; }
-     inline bool operator<=(const AaptLocaleValue& o) const { return compare(o) <= 0; }
-     inline bool operator==(const AaptLocaleValue& o) const { return compare(o) == 0; }
-     inline bool operator!=(const AaptLocaleValue& o) const { return compare(o) != 0; }
-     inline bool operator>=(const AaptLocaleValue& o) const { return compare(o) >= 0; }
-     inline bool operator>(const AaptLocaleValue& o) const { return compare(o) > 0; }
-private:
-     void setLanguage(const char* language);
-     void setRegion(const char* language);
-     void setScript(const char* script);
-     void setVariant(const char* variant);
+    inline bool operator<(const AaptLocaleValue& o) const { return compare(o) < 0; }
+    inline bool operator<=(const AaptLocaleValue& o) const { return compare(o) <= 0; }
+    inline bool operator==(const AaptLocaleValue& o) const { return compare(o) == 0; }
+    inline bool operator!=(const AaptLocaleValue& o) const { return compare(o) != 0; }
+    inline bool operator>=(const AaptLocaleValue& o) const { return compare(o) >= 0; }
+    inline bool operator>(const AaptLocaleValue& o) const { return compare(o) > 0; }
+
+  private:
+    void setLanguage(const char* language);
+    void setRegion(const char* language);
+    void setScript(const char* script);
+    void setVariant(const char* variant);
 };
 
 /**
  * This structure contains a specific variation of a single file out
  * of all the variations it can have that we can have.
  */
-struct AaptGroupEntry
-{
-public:
+struct AaptGroupEntry {
+  public:
     AaptGroupEntry() {}
     explicit AaptGroupEntry(const ConfigDescription& config) : mParams(config) {}
 
@@ -122,17 +120,15 @@ public:
 
     const String8 getVersionString() const { return AaptConfig::getVersion(mParams); }
 
-private:
+  private:
     ConfigDescription mParams;
 };
 
-inline int compare_type(const AaptGroupEntry& lhs, const AaptGroupEntry& rhs)
-{
+inline int compare_type(const AaptGroupEntry& lhs, const AaptGroupEntry& rhs) {
     return lhs.compare(rhs);
 }
 
-inline int strictly_order_type(const AaptGroupEntry& lhs, const AaptGroupEntry& rhs)
-{
+inline int strictly_order_type(const AaptGroupEntry& lhs, const AaptGroupEntry& rhs) {
     return compare_type(lhs, rhs) < 0;
 }
 
@@ -142,24 +138,19 @@ class FilePathStore;
 /**
  * A single asset file we know about.
  */
-class AaptFile : public RefBase
-{
-public:
-    AaptFile(const String8& sourceFile, const AaptGroupEntry& groupEntry,
-             const String8& resType)
-        : mGroupEntry(groupEntry)
-        , mResourceType(resType)
-        , mSourceFile(sourceFile)
-        , mData(NULL)
-        , mDataSize(0)
-        , mBufferSize(0)
-        , mCompression(ZipEntry::kCompressStored)
-        {
-            //printf("new AaptFile created %s\n", (const char*)sourceFile);
-        }
-    virtual ~AaptFile() {
-        free(mData);
+class AaptFile : public RefBase {
+  public:
+    AaptFile(const String8& sourceFile, const AaptGroupEntry& groupEntry, const String8& resType)
+        : mGroupEntry(groupEntry),
+          mResourceType(resType),
+          mSourceFile(sourceFile),
+          mData(NULL),
+          mDataSize(0),
+          mBufferSize(0),
+          mCompression(ZipEntry::kCompressStored) {
+        // printf("new AaptFile created %s\n", (const char*)sourceFile);
     }
+    virtual ~AaptFile() { free(mData); }
 
     const String8& getPath() const { return mPath; }
     const AaptGroupEntry& getGroupEntry() const { return mGroupEntry; }
@@ -188,7 +179,8 @@ public:
     // no compression is ZipEntry::kCompressStored.
     int getCompressionMethod() const { return mCompression; }
     void setCompressionMethod(int c) { mCompression = c; }
-private:
+
+  private:
     friend class AaptGroup;
 
     String8 mPath;
@@ -205,29 +197,26 @@ private:
  * A group of related files (the same file, with different
  * vendor/locale variations).
  */
-class AaptGroup : public RefBase
-{
-public:
-    AaptGroup(const String8& leaf, const String8& path)
-        : mLeaf(leaf), mPath(path) { }
-    virtual ~AaptGroup() { }
+class AaptGroup : public RefBase {
+  public:
+    AaptGroup(const String8& leaf, const String8& path) : mLeaf(leaf), mPath(path) {}
+    virtual ~AaptGroup() {}
 
     const String8& getLeaf() const { return mLeaf; }
 
     // Returns the relative path after the AaptGroupEntry dirs.
     const String8& getPath() const { return mPath; }
 
-    const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> >& getFiles() const
-        { return mFiles; }
+    const DefaultKeyedVector<AaptGroupEntry, sp<AaptFile> >& getFiles() const { return mFiles; }
 
-    status_t addFile(const sp<AaptFile>& file, const bool overwriteDuplicate=false);
+    status_t addFile(const sp<AaptFile>& file, const bool overwriteDuplicate = false);
     void removeFile(size_t index);
 
     void print(const String8& prefix) const;
 
     String8 getPrintableSource() const;
 
-private:
+  private:
     String8 mLeaf;
     String8 mPath;
 
@@ -238,12 +227,10 @@ private:
  * A single directory of assets, which can contain files and other
  * sub-directories.
  */
-class AaptDir : public RefBase
-{
-public:
-    AaptDir(const String8& leaf, const String8& path)
-        : mLeaf(leaf), mPath(path) { }
-    virtual ~AaptDir() { }
+class AaptDir : public RefBase {
+  public:
+    AaptDir(const String8& leaf, const String8& path) : mLeaf(leaf), mPath(path) {}
+    virtual ~AaptDir() {}
 
     const String8& getLeaf() const { return mLeaf; }
 
@@ -280,20 +267,16 @@ public:
 
     String8 getPrintableSource() const;
 
-private:
+  private:
     friend class AaptAssets;
 
     status_t addDir(const String8& name, const sp<AaptDir>& dir);
     sp<AaptDir> makeDir(const String8& name);
-    status_t addLeafFile(const String8& leafName,
-                         const sp<AaptFile>& file,
-                         const bool overwrite=false);
-    virtual ssize_t slurpFullTree(Bundle* bundle,
-                                  const String8& srcDir,
-                                  const AaptGroupEntry& kind,
-                                  const String8& resType,
-                                  sp<FilePathStore>& fullResPaths,
-                                  const bool overwrite=false);
+    status_t addLeafFile(const String8& leafName, const sp<AaptFile>& file,
+                         const bool overwrite = false);
+    virtual ssize_t slurpFullTree(Bundle* bundle, const String8& srcDir, const AaptGroupEntry& kind,
+                                  const String8& resType, sp<FilePathStore>& fullResPaths,
+                                  const bool overwrite = false);
 
     String8 mLeaf;
     String8 mPath;
@@ -305,25 +288,22 @@ private:
 /**
  * All information we know about a particular symbol.
  */
-class AaptSymbolEntry
-{
-public:
-    AaptSymbolEntry()
-        : isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN)
-    {
-    }
+class AaptSymbolEntry {
+  public:
+    AaptSymbolEntry() : isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN) {}
     explicit AaptSymbolEntry(const String8& _name)
-        : name(_name), isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN)
-    {
-    }
+        : name(_name), isPublic(false), isJavaSymbol(false), typeCode(TYPE_UNKNOWN) {}
     AaptSymbolEntry(const AaptSymbolEntry& o)
-        : name(o.name), sourcePos(o.sourcePos), isPublic(o.isPublic)
-        , isJavaSymbol(o.isJavaSymbol), comment(o.comment), typeComment(o.typeComment)
-        , typeCode(o.typeCode), int32Val(o.int32Val), stringVal(o.stringVal)
-    {
-    }
-    AaptSymbolEntry operator=(const AaptSymbolEntry& o)
-    {
+        : name(o.name),
+          sourcePos(o.sourcePos),
+          isPublic(o.isPublic),
+          isJavaSymbol(o.isJavaSymbol),
+          comment(o.comment),
+          typeComment(o.typeComment),
+          typeCode(o.typeCode),
+          int32Val(o.int32Val),
+          stringVal(o.stringVal) {}
+    AaptSymbolEntry operator=(const AaptSymbolEntry& o) {
         sourcePos = o.sourcePos;
         isPublic = o.isPublic;
         isJavaSymbol = o.isJavaSymbol;
@@ -334,24 +314,20 @@ public:
         stringVal = o.stringVal;
         return *this;
     }
-    
+
     const String8 name;
-    
+
     SourcePos sourcePos;
     bool isPublic;
     bool isJavaSymbol;
-    
+
     String16 comment;
     String16 typeComment;
-    
-    enum {
-        TYPE_UNKNOWN = 0,
-        TYPE_INT32,
-        TYPE_STRING
-    };
-    
+
+    enum { TYPE_UNKNOWN = 0, TYPE_INT32, TYPE_STRING };
+
     int typeCode;
-    
+
     // Value.  May be one of these.
     int32_t int32Val;
     String8 stringVal;
@@ -361,11 +337,10 @@ public:
  * A group of related symbols (such as indices into a string block)
  * that have been generated from the assets.
  */
-class AaptSymbols : public RefBase
-{
-public:
-    AaptSymbols() { }
-    virtual ~AaptSymbols() { }
+class AaptSymbols : public RefBase {
+  public:
+    AaptSymbols() {}
+    virtual ~AaptSymbols() {}
 
     status_t addSymbol(const String8& name, int32_t value, const SourcePos& pos) {
         if (!check_valid_symbol_name(name, pos, "symbol")) {
@@ -377,8 +352,7 @@ public:
         return NO_ERROR;
     }
 
-    status_t addStringSymbol(const String8& name, const String8& value,
-            const SourcePos& pos) {
+    status_t addStringSymbol(const String8& name, const String8& value, const SourcePos& pos) {
         if (!check_valid_symbol_name(name, pos, "symbol")) {
             return BAD_VALUE;
         }
@@ -431,12 +405,12 @@ public:
             sym.typeComment.append(comment);
         }
     }
-    
+
     sp<AaptSymbols> addNestedSymbol(const String8& name, const SourcePos& pos) {
         if (!check_valid_symbol_name(name, pos, "nested symbol")) {
             return NULL;
         }
-        
+
         sp<AaptSymbols> sym = mNestedSymbols.valueFor(name);
         if (sym == NULL) {
             sym = new AaptSymbols();
@@ -448,17 +422,17 @@ public:
 
     status_t applyJavaSymbols(const sp<AaptSymbols>& javaSymbols);
 
-    const KeyedVector<String8, AaptSymbolEntry>& getSymbols() const
-        { return mSymbols; }
-    const DefaultKeyedVector<String8, sp<AaptSymbols> >& getNestedSymbols() const
-        { return mNestedSymbols; }
+    const KeyedVector<String8, AaptSymbolEntry>& getSymbols() const { return mSymbols; }
+    const DefaultKeyedVector<String8, sp<AaptSymbols> >& getNestedSymbols() const {
+        return mNestedSymbols;
+    }
 
-    const String16& getComment(const String8& name) const
-        { return get_symbol(name).comment; }
-    const String16& getTypeComment(const String8& name) const
-        { return get_symbol(name).typeComment; }
+    const String16& getComment(const String8& name) const { return get_symbol(name).comment; }
+    const String16& getTypeComment(const String8& name) const {
+        return get_symbol(name).typeComment;
+    }
 
-private:
+  private:
     bool check_valid_symbol_name(const String8& symbol, const SourcePos& pos, const char* label) {
         if (valid_symbol_name(symbol)) {
             return true;
@@ -485,33 +459,28 @@ private:
         return mDefSymbol;
     }
 
-    KeyedVector<String8, AaptSymbolEntry>           mSymbols;
-    DefaultKeyedVector<String8, sp<AaptSymbols> >   mNestedSymbols;
-    AaptSymbolEntry                                 mDefSymbol;
+    KeyedVector<String8, AaptSymbolEntry> mSymbols;
+    DefaultKeyedVector<String8, sp<AaptSymbols> > mNestedSymbols;
+    AaptSymbolEntry mDefSymbol;
 };
 
-class ResourceTypeSet : public RefBase,
-                        public KeyedVector<String8,sp<AaptGroup> >
-{
-public:
+class ResourceTypeSet : public RefBase, public KeyedVector<String8, sp<AaptGroup> > {
+  public:
     ResourceTypeSet();
 };
 
 // Storage for lists of fully qualified paths for
 // resources encountered during slurping.
-class FilePathStore : public RefBase,
-                      public Vector<String8>
-{
-public:
+class FilePathStore : public RefBase, public Vector<String8> {
+  public:
     FilePathStore();
 };
 
 /**
  * Asset hierarchy being operated on.
  */
-class AaptAssets : public AaptDir
-{
-public:
+class AaptAssets : public AaptDir {
+  public:
     AaptAssets();
     virtual ~AaptAssets() { delete mRes; }
 
@@ -526,19 +495,14 @@ public:
 
     virtual status_t addFile(const String8& name, const sp<AaptGroup>& file);
 
-    sp<AaptFile> addFile(const String8& filePath,
-                         const AaptGroupEntry& entry,
-                         const String8& srcDir,
-                         sp<AaptGroup>* outGroup,
-                         const String8& resType);
+    sp<AaptFile> addFile(const String8& filePath, const AaptGroupEntry& entry,
+                         const String8& srcDir, sp<AaptGroup>* outGroup, const String8& resType);
 
-    void addResource(const String8& leafName,
-                     const String8& path,
-                     const sp<AaptFile>& file,
+    void addResource(const String8& leafName, const String8& path, const sp<AaptFile>& file,
                      const String8& resType);
 
     void addGroupEntry(const AaptGroupEntry& entry) { mGroupEntries.add(entry); }
-    
+
     ssize_t slurpFromArgs(Bundle* bundle);
 
     sp<AaptSymbols> getSymbolsFor(const String8& name);
@@ -571,26 +535,23 @@ public:
 
     inline sp<AaptAssets> getOverlay() { return mOverlay; }
     inline void setOverlay(sp<AaptAssets>& overlay) { mOverlay = overlay; }
-    
+
     inline KeyedVector<String8, sp<ResourceTypeSet> >* getResources() { return mRes; }
-    inline void 
-        setResources(KeyedVector<String8, sp<ResourceTypeSet> >* res) { delete mRes; mRes = res; }
+    inline void setResources(KeyedVector<String8, sp<ResourceTypeSet> >* res) {
+        delete mRes;
+        mRes = res;
+    }
 
     inline sp<FilePathStore>& getFullResPaths() { return mFullResPaths; }
-    inline void
-        setFullResPaths(sp<FilePathStore>& res) { mFullResPaths = res; }
+    inline void setFullResPaths(sp<FilePathStore>& res) { mFullResPaths = res; }
 
     inline sp<FilePathStore>& getFullAssetPaths() { return mFullAssetPaths; }
-    inline void
-        setFullAssetPaths(sp<FilePathStore>& res) { mFullAssetPaths = res; }
+    inline void setFullAssetPaths(sp<FilePathStore>& res) { mFullAssetPaths = res; }
 
-private:
-    virtual ssize_t slurpFullTree(Bundle* bundle,
-                                  const String8& srcDir,
-                                  const AaptGroupEntry& kind,
-                                  const String8& resType,
-                                  sp<FilePathStore>& fullResPaths,
-                                  const bool overwrite=false);
+  private:
+    virtual ssize_t slurpFullTree(Bundle* bundle, const String8& srcDir, const AaptGroupEntry& kind,
+                                  const String8& resType, sp<FilePathStore>& fullResPaths,
+                                  const bool overwrite = false);
 
     ssize_t slurpResourceTree(Bundle* bundle, const String8& srcDir);
     ssize_t slurpResourceZip(Bundle* bundle, const char* filename);
@@ -618,5 +579,4 @@ private:
     sp<FilePathStore> mFullAssetPaths;
 };
 
-#endif // __AAPT_ASSETS_H
-
+#endif  // __AAPT_ASSETS_H

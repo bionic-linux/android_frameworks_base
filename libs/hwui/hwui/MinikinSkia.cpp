@@ -156,4 +156,4 @@ void MinikinFontSkia::populateSkPaint(SkPaint* paint, const MinikinFont* font,
         paint->setTextSkewX(paint->getTextSkewX() - 0.25f);
     }
 }
-}
+}  // namespace android

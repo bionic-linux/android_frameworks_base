@@ -97,20 +97,17 @@ static bool parseLayoutDirection(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) |
-          ResTable_config::LAYOUTDIR_ANY;
+          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) | ResTable_config::LAYOUTDIR_ANY;
     return true;
   } else if (strcmp(name, "ldltr") == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) |
-          ResTable_config::LAYOUTDIR_LTR;
+          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) | ResTable_config::LAYOUTDIR_LTR;
     return true;
   } else if (strcmp(name, "ldrtl") == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) |
-          ResTable_config::LAYOUTDIR_RTL;
+          (out->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) | ResTable_config::LAYOUTDIR_RTL;
     return true;
   }
 
@@ -121,32 +118,27 @@ static bool parseScreenLayoutSize(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
-          ResTable_config::SCREENSIZE_ANY;
+          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) | ResTable_config::SCREENSIZE_ANY;
     return true;
   } else if (strcmp(name, "small") == 0) {
     if (out)
-      out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
-          ResTable_config::SCREENSIZE_SMALL;
+      out->screenLayout = (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
+                          ResTable_config::SCREENSIZE_SMALL;
     return true;
   } else if (strcmp(name, "normal") == 0) {
     if (out)
-      out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
-          ResTable_config::SCREENSIZE_NORMAL;
+      out->screenLayout = (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
+                          ResTable_config::SCREENSIZE_NORMAL;
     return true;
   } else if (strcmp(name, "large") == 0) {
     if (out)
-      out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
-          ResTable_config::SCREENSIZE_LARGE;
+      out->screenLayout = (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
+                          ResTable_config::SCREENSIZE_LARGE;
     return true;
   } else if (strcmp(name, "xlarge") == 0) {
     if (out)
-      out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
-          ResTable_config::SCREENSIZE_XLARGE;
+      out->screenLayout = (out->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
+                          ResTable_config::SCREENSIZE_XLARGE;
     return true;
   }
 
@@ -157,20 +149,17 @@ static bool parseScreenLayoutLong(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) |
-          ResTable_config::SCREENLONG_ANY;
+          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) | ResTable_config::SCREENLONG_ANY;
     return true;
   } else if (strcmp(name, "long") == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) |
-          ResTable_config::SCREENLONG_YES;
+          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) | ResTable_config::SCREENLONG_YES;
     return true;
   } else if (strcmp(name, "notlong") == 0) {
     if (out)
       out->screenLayout =
-          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) |
-          ResTable_config::SCREENLONG_NO;
+          (out->screenLayout & ~ResTable_config::MASK_SCREENLONG) | ResTable_config::SCREENLONG_NO;
     return true;
   }
 
@@ -180,21 +169,18 @@ static bool parseScreenLayoutLong(const char* name, ResTable_config* out) {
 static bool parseScreenRound(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
-      out->screenLayout2 =
-          (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
-          ResTable_config::SCREENROUND_ANY;
+      out->screenLayout2 = (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
+                           ResTable_config::SCREENROUND_ANY;
     return true;
   } else if (strcmp(name, "round") == 0) {
     if (out)
-      out->screenLayout2 =
-          (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
-          ResTable_config::SCREENROUND_YES;
+      out->screenLayout2 = (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
+                           ResTable_config::SCREENROUND_YES;
     return true;
   } else if (strcmp(name, "notround") == 0) {
     if (out)
-      out->screenLayout2 =
-          (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
-          ResTable_config::SCREENROUND_NO;
+      out->screenLayout2 = (out->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
+                           ResTable_config::SCREENROUND_NO;
     return true;
   }
   return false;
@@ -203,21 +189,18 @@ static bool parseScreenRound(const char* name, ResTable_config* out) {
 static bool parseWideColorGamut(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
-          ResTable_config::WIDE_COLOR_GAMUT_ANY;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
+                       ResTable_config::WIDE_COLOR_GAMUT_ANY;
     return true;
   } else if (strcmp(name, "widecg") == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
-          ResTable_config::WIDE_COLOR_GAMUT_YES;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
+                       ResTable_config::WIDE_COLOR_GAMUT_YES;
     return true;
   } else if (strcmp(name, "nowidecg") == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
-          ResTable_config::WIDE_COLOR_GAMUT_NO;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_WIDE_COLOR_GAMUT) |
+                       ResTable_config::WIDE_COLOR_GAMUT_NO;
     return true;
   }
   return false;
@@ -226,21 +209,15 @@ static bool parseWideColorGamut(const char* name, ResTable_config* out) {
 static bool parseHdr(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_HDR) |
-          ResTable_config::HDR_ANY;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_HDR) | ResTable_config::HDR_ANY;
     return true;
   } else if (strcmp(name, "highdr") == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_HDR) |
-          ResTable_config::HDR_YES;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_HDR) | ResTable_config::HDR_YES;
     return true;
   } else if (strcmp(name, "lowdr") == 0) {
     if (out)
-      out->colorMode =
-          (out->colorMode & ~ResTable_config::MASK_HDR) |
-          ResTable_config::HDR_NO;
+      out->colorMode = (out->colorMode & ~ResTable_config::MASK_HDR) | ResTable_config::HDR_NO;
     return true;
   }
   return false;
@@ -267,18 +244,18 @@ static bool parseOrientation(const char* name, ResTable_config* out) {
 static bool parseUiModeType(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) |
-                    ResTable_config::UI_MODE_TYPE_ANY;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) | ResTable_config::UI_MODE_TYPE_ANY;
     return true;
   } else if (strcmp(name, "desk") == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) |
-                    ResTable_config::UI_MODE_TYPE_DESK;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) | ResTable_config::UI_MODE_TYPE_DESK;
     return true;
   } else if (strcmp(name, "car") == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) |
-                    ResTable_config::UI_MODE_TYPE_CAR;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) | ResTable_config::UI_MODE_TYPE_CAR;
     return true;
   } else if (strcmp(name, "television") == 0) {
     if (out)
@@ -292,8 +269,8 @@ static bool parseUiModeType(const char* name, ResTable_config* out) {
     return true;
   } else if (strcmp(name, "watch") == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) |
-                    ResTable_config::UI_MODE_TYPE_WATCH;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) | ResTable_config::UI_MODE_TYPE_WATCH;
     return true;
   } else if (strcmp(name, "vrheadset") == 0) {
     if (out)
@@ -308,18 +285,18 @@ static bool parseUiModeType(const char* name, ResTable_config* out) {
 static bool parseUiModeNight(const char* name, ResTable_config* out) {
   if (strcmp(name, kWildcardName) == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) |
-                    ResTable_config::UI_MODE_NIGHT_ANY;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) | ResTable_config::UI_MODE_NIGHT_ANY;
     return true;
   } else if (strcmp(name, "night") == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) |
-                    ResTable_config::UI_MODE_NIGHT_YES;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) | ResTable_config::UI_MODE_NIGHT_YES;
     return true;
   } else if (strcmp(name, "notnight") == 0) {
     if (out)
-      out->uiMode = (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) |
-                    ResTable_config::UI_MODE_NIGHT_NO;
+      out->uiMode =
+          (out->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) | ResTable_config::UI_MODE_NIGHT_NO;
     return true;
   }
 
@@ -383,8 +360,7 @@ static bool parseDensity(const char* name, ResTable_config* out) {
   }
 
   // check that we have 'dpi' after the last digit.
-  if (toupper(c[0]) != 'D' || toupper(c[1]) != 'P' || toupper(c[2]) != 'I' ||
-      c[3] != 0) {
+  if (toupper(c[0]) != 'D' || toupper(c[1]) != 'P' || toupper(c[2]) != 'I' || c[3] != 0) {
     return false;
   }
 
@@ -829,20 +805,18 @@ success:
   return true;
 }
 
-void ConfigDescription::ApplyVersionForCompatibility(
-    ConfigDescription* config) {
+void ConfigDescription::ApplyVersionForCompatibility(ConfigDescription* config) {
   uint16_t min_sdk = 0;
-  if ((config->uiMode & ResTable_config::MASK_UI_MODE_TYPE)
-                == ResTable_config::UI_MODE_TYPE_VR_HEADSET ||
-            config->colorMode & ResTable_config::MASK_WIDE_COLOR_GAMUT ||
-            config->colorMode & ResTable_config::MASK_HDR) {
-        min_sdk = SDK_O;
+  if ((config->uiMode & ResTable_config::MASK_UI_MODE_TYPE) ==
+          ResTable_config::UI_MODE_TYPE_VR_HEADSET ||
+      config->colorMode & ResTable_config::MASK_WIDE_COLOR_GAMUT ||
+      config->colorMode & ResTable_config::MASK_HDR) {
+    min_sdk = SDK_O;
   } else if (config->screenLayout2 & ResTable_config::MASK_SCREENROUND) {
     min_sdk = SDK_MARSHMALLOW;
   } else if (config->density == ResTable_config::DENSITY_ANY) {
     min_sdk = SDK_LOLLIPOP;
-  } else if (config->smallestScreenWidthDp !=
-                 ResTable_config::SCREENWIDTH_ANY ||
+  } else if (config->smallestScreenWidthDp != ResTable_config::SCREENWIDTH_ANY ||
              config->screenWidthDp != ResTable_config::SCREENWIDTH_ANY ||
              config->screenHeightDp != ResTable_config::SCREENHEIGHT_ANY) {
     min_sdk = SDK_HONEYCOMB_MR2;
@@ -894,12 +868,11 @@ bool ConfigDescription::Dominates(const ConfigDescription& o) const {
   if (*this == DefaultConfig()) {
     return true;
   }
-  return MatchWithDensity(o) && !o.MatchWithDensity(*this) &&
-         !isMoreSpecificThan(o) && !o.HasHigherPrecedenceThan(*this);
+  return MatchWithDensity(o) && !o.MatchWithDensity(*this) && !isMoreSpecificThan(o) &&
+         !o.HasHigherPrecedenceThan(*this);
 }
 
-bool ConfigDescription::HasHigherPrecedenceThan(
-    const ConfigDescription& o) const {
+bool ConfigDescription::HasHigherPrecedenceThan(const ConfigDescription& o) const {
   // The order of the following tests defines the importance of one
   // configuration parameter over another. Those tests first are more
   // important, trumping any values in those following them.
@@ -913,8 +886,7 @@ bool ConfigDescription::HasHigherPrecedenceThan(
   if ((screenLayout | o.screenLayout) & MASK_LAYOUTDIR) {
     return !(o.screenLayout & MASK_LAYOUTDIR);
   }
-  if (smallestScreenWidthDp || o.smallestScreenWidthDp)
-    return (!o.smallestScreenWidthDp);
+  if (smallestScreenWidthDp || o.smallestScreenWidthDp) return (!o.smallestScreenWidthDp);
   if (screenWidthDp || o.screenWidthDp) return (!o.screenWidthDp);
   if (screenHeightDp || o.screenHeightDp) return (!o.screenHeightDp);
   if ((screenLayout | o.screenLayout) & MASK_SCREENSIZE) {
@@ -962,25 +934,18 @@ bool ConfigDescription::HasHigherPrecedenceThan(
 bool ConfigDescription::ConflictsWith(const ConfigDescription& o) const {
   // This method should be updated as new configuration parameters are
   // introduced (e.g. screenConfig2).
-  auto pred = [](const uint32_t a, const uint32_t b) -> bool {
-    return a == 0 || b == 0 || a == b;
-  };
+  auto pred = [](const uint32_t a, const uint32_t b) -> bool { return a == 0 || b == 0 || a == b; };
   // The values here can be found in ResTable_config#match. Density and range
   // values can't lead to conflicts, and are ignored.
   return !pred(mcc, o.mcc) || !pred(mnc, o.mnc) || !pred(locale, o.locale) ||
-         !pred(screenLayout & MASK_LAYOUTDIR,
-               o.screenLayout & MASK_LAYOUTDIR) ||
-         !pred(screenLayout & MASK_SCREENLONG,
-               o.screenLayout & MASK_SCREENLONG) ||
+         !pred(screenLayout & MASK_LAYOUTDIR, o.screenLayout & MASK_LAYOUTDIR) ||
+         !pred(screenLayout & MASK_SCREENLONG, o.screenLayout & MASK_SCREENLONG) ||
          !pred(uiMode & MASK_UI_MODE_TYPE, o.uiMode & MASK_UI_MODE_TYPE) ||
          !pred(uiMode & MASK_UI_MODE_NIGHT, o.uiMode & MASK_UI_MODE_NIGHT) ||
-         !pred(screenLayout2 & MASK_SCREENROUND,
-               o.screenLayout2 & MASK_SCREENROUND) ||
+         !pred(screenLayout2 & MASK_SCREENROUND, o.screenLayout2 & MASK_SCREENROUND) ||
          !pred(colorMode & MASK_HDR, o.colorMode & MASK_HDR) ||
-         !pred(colorMode & MASK_WIDE_COLOR_GAMUT,
-               o.colorMode & MASK_WIDE_COLOR_GAMUT) ||
-         !pred(orientation, o.orientation) ||
-         !pred(touchscreen, o.touchscreen) ||
+         !pred(colorMode & MASK_WIDE_COLOR_GAMUT, o.colorMode & MASK_WIDE_COLOR_GAMUT) ||
+         !pred(orientation, o.orientation) || !pred(touchscreen, o.touchscreen) ||
          !pred(inputFlags & MASK_KEYSHIDDEN, o.inputFlags & MASK_KEYSHIDDEN) ||
          !pred(inputFlags & MASK_NAVHIDDEN, o.inputFlags & MASK_NAVHIDDEN) ||
          !pred(keyboard, o.keyboard) || !pred(navigation, o.navigation);

@@ -49,15 +49,13 @@ public:
     void isConditionMet(const ConditionKey& conditionParameters,
                         const std::vector<sp<ConditionTracker>>& allConditions,
                         const vector<Matcher>& dimensionFields,
-                        const bool isSubOutputDimensionFields,
-                        const bool isPartialLink,
+                        const bool isSubOutputDimensionFields, const bool isPartialLink,
                         std::vector<ConditionState>& conditionCache,
                         std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const override;
 
     ConditionState getMetConditionDimension(
             const std::vector<sp<ConditionTracker>>& allConditions,
-            const vector<Matcher>& dimensionFields,
-            const bool isSubOutputDimensionFields,
+            const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
             std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const override;
 
     virtual const std::set<HashableDimensionKey>* getChangedToTrueDimensions(
@@ -78,9 +76,8 @@ public:
         }
     }
 
-    void getTrueSlicedDimensions(
-            const std::vector<sp<ConditionTracker>>& allConditions,
-            std::set<HashableDimensionKey>* dimensions) const override {
+    void getTrueSlicedDimensions(const std::vector<sp<ConditionTracker>>& allConditions,
+                                 std::set<HashableDimensionKey>* dimensions) const override {
         for (const auto& itr : mSlicedConditionState) {
             if (itr.second > 0) {
                 dimensions->insert(itr.first);
@@ -88,14 +85,17 @@ public:
         }
     }
 
-    bool IsChangedDimensionTrackable() const  override { return true; }
+    bool IsChangedDimensionTrackable() const override {
+        return true;
+    }
 
-    bool IsSimpleCondition() const  override { return true; }
+    bool IsSimpleCondition() const override {
+        return true;
+    }
 
-    bool equalOutputDimensions(
-        const std::vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensions) const override {
-            return equalDimensions(mOutputDimensions, dimensions);
+    bool equalOutputDimensions(const std::vector<sp<ConditionTracker>>& allConditions,
+                               const vector<Matcher>& dimensions) const override {
+        return equalDimensions(mOutputDimensions, dimensions);
     }
 
 private:

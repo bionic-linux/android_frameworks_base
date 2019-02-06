@@ -147,10 +147,10 @@ static xml::NamespaceDecl CreateAndroidNamespaceDecl() {
 //
 // See frameworks/base/core/java/android/content/pm/PackageParser.java which
 // checks this at runtime.
-static std::string MakePackageSafeName(const std::string &name) {
+static std::string MakePackageSafeName(const std::string& name) {
   std::string result(name);
   bool first = true;
-  for (char &c : result) {
+  for (char& c : result) {
     if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
       first = false;
       continue;
@@ -199,7 +199,7 @@ std::unique_ptr<xml::XmlResource> GenerateSplitManifest(const AppInfo& app_info,
     split_name << app_info.split_name.value() << ".";
   }
   std::vector<std::string> sanitized_config_names;
-  for (const auto &config : constraints.configs) {
+  for (const auto& config : constraints.configs) {
     sanitized_config_names.push_back(MakePackageSafeName(config.toString().string()));
   }
   split_name << "config." << util::Joiner(sanitized_config_names, "_");

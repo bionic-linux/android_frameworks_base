@@ -24,73 +24,56 @@
 #include "android_media_Media2HTTPConnection.h"
 #include "android_util_Binder.h"
 
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "jni.h"
-#include <nativehelper/JNIHelp.h>
 
 namespace android {
 
 static const size_t kBufferSize = 32768;
 
-JMedia2HTTPConnection::JMedia2HTTPConnection(JNIEnv *env, jobject thiz) {
+JMedia2HTTPConnection::JMedia2HTTPConnection(JNIEnv* env, jobject thiz) {
     mMedia2HTTPConnectionObj = env->NewGlobalRef(thiz);
     CHECK(mMedia2HTTPConnectionObj != NULL);
 
-    ScopedLocalRef<jclass> media2HTTPConnectionClass(
-            env, env->GetObjectClass(mMedia2HTTPConnectionObj));
+    ScopedLocalRef<jclass> media2HTTPConnectionClass(env,
+                                                     env->GetObjectClass(mMedia2HTTPConnectionObj));
     CHECK(media2HTTPConnectionClass.get() != NULL);
 
-    mConnectMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "connect",
-            "(Ljava/lang/String;Ljava/lang/String;)Z");
+    mConnectMethod = env->GetMethodID(media2HTTPConnectionClass.get(), "connect",
+                                      "(Ljava/lang/String;Ljava/lang/String;)Z");
     CHECK(mConnectMethod != NULL);
 
-    mDisconnectMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "disconnect",
-            "()V");
+    mDisconnectMethod = env->GetMethodID(media2HTTPConnectionClass.get(), "disconnect", "()V");
     CHECK(mDisconnectMethod != NULL);
 
-    mReadAtMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "readAt",
-            "(J[BI)I");
+    mReadAtMethod = env->GetMethodID(media2HTTPConnectionClass.get(), "readAt", "(J[BI)I");
     CHECK(mReadAtMethod != NULL);
 
-    mGetSizeMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "getSize",
-            "()J");
+    mGetSizeMethod = env->GetMethodID(media2HTTPConnectionClass.get(), "getSize", "()J");
     CHECK(mGetSizeMethod != NULL);
 
-    mGetMIMETypeMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "getMIMEType",
-            "()Ljava/lang/String;");
+    mGetMIMETypeMethod = env->GetMethodID(media2HTTPConnectionClass.get(), "getMIMEType",
+                                          "()Ljava/lang/String;");
     CHECK(mGetMIMETypeMethod != NULL);
 
-    mGetUriMethod = env->GetMethodID(
-            media2HTTPConnectionClass.get(),
-            "getUri",
-            "()Ljava/lang/String;");
+    mGetUriMethod =
+            env->GetMethodID(media2HTTPConnectionClass.get(), "getUri", "()Ljava/lang/String;");
     CHECK(mGetUriMethod != NULL);
 
-    ScopedLocalRef<jbyteArray> tmp(
-        env, env->NewByteArray(kBufferSize));
+    ScopedLocalRef<jbyteArray> tmp(env, env->NewByteArray(kBufferSize));
     mByteArrayObj = (jbyteArray)env->NewGlobalRef(tmp.get());
     CHECK(mByteArrayObj != NULL);
 }
 
 JMedia2HTTPConnection::~JMedia2HTTPConnection() {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
     env->DeleteGlobalRef(mMedia2HTTPConnectionObj);
     env->DeleteGlobalRef(mByteArrayObj);
 }
 
-bool JMedia2HTTPConnection::connect(
-        const char *uri, const KeyedVector<String8, String8> *headers) {
+bool JMedia2HTTPConnection::connect(const char* uri, const KeyedVector<String8, String8>* headers) {
     String8 tmp("");
     if (headers != NULL) {
         for (size_t i = 0; i < headers->size(); ++i) {
@@ -105,8 +88,7 @@ bool JMedia2HTTPConnection::connect(
     jstring juri = env->NewStringUTF(uri);
     jstring jheaders = env->NewStringUTF(tmp.string());
 
-    jboolean ret =
-        env->CallBooleanMethod(mMedia2HTTPConnectionObj, mConnectMethod, juri, jheaders);
+    jboolean ret = env->CallBooleanMethod(mMedia2HTTPConnectionObj, mConnectMethod, juri, jheaders);
 
     env->DeleteLocalRef(juri);
     env->DeleteLocalRef(jheaders);
@@ -119,22 +101,18 @@ void JMedia2HTTPConnection::disconnect() {
     env->CallVoidMethod(mMedia2HTTPConnectionObj, mDisconnectMethod);
 }
 
-ssize_t JMedia2HTTPConnection::readAt(off64_t offset, void *data, size_t size) {
+ssize_t JMedia2HTTPConnection::readAt(off64_t offset, void* data, size_t size) {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
 
     if (size > kBufferSize) {
         size = kBufferSize;
     }
 
-    jint n = env->CallIntMethod(
-            mMedia2HTTPConnectionObj, mReadAtMethod, (jlong)offset, mByteArrayObj, (jint)size);
+    jint n = env->CallIntMethod(mMedia2HTTPConnectionObj, mReadAtMethod, (jlong)offset,
+                                mByteArrayObj, (jint)size);
 
     if (n > 0) {
-        env->GetByteArrayRegion(
-                mByteArrayObj,
-                0,
-                n,
-                (jbyte *)data);
+        env->GetByteArrayRegion(mByteArrayObj, 0, n, (jbyte*)data);
     }
 
     return n;
@@ -145,7 +123,7 @@ off64_t JMedia2HTTPConnection::getSize() {
     return (off64_t)(env->CallLongMethod(mMedia2HTTPConnectionObj, mGetSizeMethod));
 }
 
-status_t JMedia2HTTPConnection::getMIMEType(String8 *mimeType) {
+status_t JMedia2HTTPConnection::getMIMEType(String8* mimeType) {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     jstring jmime = (jstring)env->CallObjectMethod(mMedia2HTTPConnectionObj, mGetMIMETypeMethod);
     jboolean flag = env->ExceptionCheck();
@@ -154,7 +132,7 @@ status_t JMedia2HTTPConnection::getMIMEType(String8 *mimeType) {
         return UNKNOWN_ERROR;
     }
 
-    const char *str = env->GetStringUTFChars(jmime, 0);
+    const char* str = env->GetStringUTFChars(jmime, 0);
     if (str != NULL) {
         *mimeType = String8(str);
     } else {
@@ -164,7 +142,7 @@ status_t JMedia2HTTPConnection::getMIMEType(String8 *mimeType) {
     return OK;
 }
 
-status_t JMedia2HTTPConnection::getUri(String8 *uri) {
+status_t JMedia2HTTPConnection::getUri(String8* uri) {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     jstring juri = (jstring)env->CallObjectMethod(mMedia2HTTPConnectionObj, mGetUriMethod);
     jboolean flag = env->ExceptionCheck();
@@ -173,7 +151,7 @@ status_t JMedia2HTTPConnection::getUri(String8 *uri) {
         return UNKNOWN_ERROR;
     }
 
-    const char *str = env->GetStringUTFChars(juri, 0);
+    const char* str = env->GetStringUTFChars(juri, 0);
     *uri = String8(str);
     env->ReleaseStringUTFChars(juri, str);
     return OK;

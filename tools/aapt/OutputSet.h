@@ -17,40 +17,36 @@
 #ifndef __OUTPUT_SET_H
 #define __OUTPUT_SET_H
 
-#include <set>
 #include <utils/Errors.h>
 #include <utils/String8.h>
 #include <utils/StrongPointer.h>
+#include <set>
 
 class AaptFile;
 
 class OutputEntry {
-public:
+  public:
     OutputEntry() {}
     OutputEntry(const android::String8& path, const android::sp<const AaptFile>& file)
         : mPath(path), mFile(file) {}
 
-    inline const android::sp<const AaptFile>& getFile() const {
-        return mFile;
-    }
+    inline const android::sp<const AaptFile>& getFile() const { return mFile; }
 
-    inline const android::String8& getPath() const {
-        return mPath;
-    }
+    inline const android::String8& getPath() const { return mPath; }
 
     bool operator<(const OutputEntry& o) const { return getPath() < o.mPath; }
     bool operator==(const OutputEntry& o) const { return getPath() == o.mPath; }
 
-private:
+  private:
     android::String8 mPath;
     android::sp<const AaptFile> mFile;
 };
 
 class OutputSet : public virtual android::RefBase {
-public:
+  public:
     virtual const std::set<OutputEntry>& getEntries() const = 0;
 
     virtual ~OutputSet() {}
 };
 
-#endif // __OUTPUT_SET_H
+#endif  // __OUTPUT_SET_H

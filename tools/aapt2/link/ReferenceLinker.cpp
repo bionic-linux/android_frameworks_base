@@ -53,7 +53,8 @@ class ReferenceLinkerVisitor : public DescendingValueVisitor {
         context_(context),
         symbols_(symbols),
         package_decls_(decl),
-        string_pool_(string_pool) {}
+        string_pool_(string_pool) {
+  }
 
   void Visit(Reference* ref) override {
     if (!ReferenceLinker::LinkReference(callsite_, ref, context_, symbols_, package_decls_)) {

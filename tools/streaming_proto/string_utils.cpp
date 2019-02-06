@@ -7,14 +7,12 @@ namespace stream_proto {
 
 using namespace std;
 
-string
-to_camel_case(const string& str)
-{
+string to_camel_case(const string& str) {
     string result;
     const int N = str.size();
     result.reserve(N);
     bool capitalize_next = true;
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         char c = str[i];
         if (c == '_') {
             capitalize_next = true;
@@ -36,13 +34,11 @@ to_camel_case(const string& str)
     return result;
 }
 
-string
-make_constant_name(const string& str)
-{
+string make_constant_name(const string& str) {
     string result;
     const int N = str.size();
     bool underscore_next = false;
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         char c = str[i];
         if (c >= 'A' && c <= 'Z') {
             if (underscore_next) {
@@ -60,9 +56,7 @@ make_constant_name(const string& str)
     return result;
 }
 
-string
-file_base_name(const string& str)
-{
+string file_base_name(const string& str) {
     size_t start = str.rfind('/');
     if (start == string::npos) {
         start = 0;
@@ -73,15 +67,13 @@ file_base_name(const string& str)
     if (end == string::npos) {
         end = str.size();
     }
-    return str.substr(start, end-start);
+    return str.substr(start, end - start);
 }
 
-string
-replace_string(const string& str, const char replace, const char with)
-{
+string replace_string(const string& str, const char replace, const char with) {
     string result(str);
     const int N = result.size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         if (result[i] == replace) {
             result[i] = with;
         }
@@ -89,9 +81,7 @@ replace_string(const string& str, const char replace, const char with)
     return result;
 }
 
-vector<string>
-split(const string& str, const char delimiter)
-{
+vector<string> split(const string& str, const char delimiter) {
     vector<string> result;
     size_t base = 0, found = 0;
     while (true) {
@@ -108,18 +98,14 @@ split(const string& str, const char delimiter)
     return result;
 }
 
-string
-stripPrefix(const string& str, const string& prefix)
-{
+string stripPrefix(const string& str, const string& prefix) {
     if (str.size() <= prefix.size()) return str;
     size_t i = 0, len = prefix.size();
-    for (; i<len; i++) {
+    for (; i < len; i++) {
         if (str[i] != prefix[i]) return str;
     }
     return str.substr(i);
 }
 
-} // namespace stream_proto
-} // namespace android
-
-
+}  // namespace stream_proto
+}  // namespace android

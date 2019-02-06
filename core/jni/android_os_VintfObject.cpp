@@ -18,8 +18,8 @@
 //#define LOG_NDEBUG 0
 #include <android-base/logging.h>
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include <nativehelper/JNIHelp.h>
 #include <vintf/VintfObject.h>
@@ -37,17 +37,17 @@ static jmethodID gLongValueOf;
 
 namespace android {
 
+using vintf::gCompatibilityMatrixConverter;
+using vintf::gHalManifestConverter;
 using vintf::HalManifest;
 using vintf::Level;
 using vintf::SchemaType;
-using vintf::VintfObject;
-using vintf::XmlConverter;
-using vintf::Vndk;
-using vintf::gHalManifestConverter;
-using vintf::gCompatibilityMatrixConverter;
 using vintf::to_string;
+using vintf::VintfObject;
+using vintf::Vndk;
+using vintf::XmlConverter;
 
-template<typename V>
+template <typename V>
 static inline jobjectArray toJavaStringArray(JNIEnv* env, const V& v) {
     size_t i;
     typename V::const_iterator it;
@@ -58,10 +58,9 @@ static inline jobjectArray toJavaStringArray(JNIEnv* env, const V& v) {
     return ret;
 }
 
-template<typename T>
+template <typename T>
 static void tryAddSchema(const std::shared_ptr<const T>& object, const XmlConverter<T>& converter,
-        const std::string& description,
-        std::vector<std::string>* cStrings) {
+                         const std::string& description, std::vector<std::string>* cStrings) {
     if (object == nullptr) {
         LOG(WARNING) << __FUNCTION__ << "Cannot get " << description;
     } else {
@@ -70,8 +69,8 @@ static void tryAddSchema(const std::shared_ptr<const T>& object, const XmlConver
 }
 
 static void tryAddHalNamesAndVersions(const std::shared_ptr<const HalManifest>& manifest,
-        const std::string& description,
-        std::set<std::string> *output) {
+                                      const std::string& description,
+                                      std::set<std::string>* output) {
     if (manifest == nullptr) {
         LOG(WARNING) << __FUNCTION__ << "Cannot get " << description;
     } else {
@@ -80,18 +79,17 @@ static void tryAddHalNamesAndVersions(const std::shared_ptr<const HalManifest>& 
     }
 }
 
-static jobjectArray android_os_VintfObject_report(JNIEnv* env, jclass)
-{
+static jobjectArray android_os_VintfObject_report(JNIEnv* env, jclass) {
     std::vector<std::string> cStrings;
 
-    tryAddSchema(VintfObject::GetDeviceHalManifest(), gHalManifestConverter,
-            "device manifest", &cStrings);
+    tryAddSchema(VintfObject::GetDeviceHalManifest(), gHalManifestConverter, "device manifest",
+                 &cStrings);
     tryAddSchema(VintfObject::GetFrameworkHalManifest(), gHalManifestConverter,
-            "framework manifest", &cStrings);
+                 "framework manifest", &cStrings);
     tryAddSchema(VintfObject::GetDeviceCompatibilityMatrix(), gCompatibilityMatrixConverter,
-            "device compatibility matrix", &cStrings);
+                 "device compatibility matrix", &cStrings);
     tryAddSchema(VintfObject::GetFrameworkCompatibilityMatrix(), gCompatibilityMatrixConverter,
-            "framework compatibility matrix", &cStrings);
+                 "framework compatibility matrix", &cStrings);
 
     return toJavaStringArray(env, cStrings);
 }
@@ -103,22 +101,21 @@ static jint android_os_VintfObject_verify(JNIEnv* env, jclass, jobjectArray pack
         cPackageInfo.resize(count);
         for (size_t i = 0; i < count; ++i) {
             jstring element = (jstring)env->GetObjectArrayElement(packageInfo, i);
-            const char *cString = env->GetStringUTFChars(element, NULL /* isCopy */);
+            const char* cString = env->GetStringUTFChars(element, NULL /* isCopy */);
             cPackageInfo[i] = cString;
             env->ReleaseStringUTFChars(element, cString);
         }
     }
     std::string error;
     int32_t status = VintfObject::CheckCompatibility(cPackageInfo, &error);
-    if (status)
-        LOG(WARNING) << "VintfObject.verify() returns " << status << ": " << error;
+    if (status) LOG(WARNING) << "VintfObject.verify() returns " << status << ": " << error;
     return status;
 }
 
 static jint android_os_VintfObject_verifyWithoutAvb(JNIEnv* env, jclass) {
     std::string error;
-    int32_t status = VintfObject::CheckCompatibility({}, &error,
-            ::android::vintf::CheckFlags::DISABLE_AVB_CHECK);
+    int32_t status = VintfObject::CheckCompatibility(
+            {}, &error, ::android::vintf::CheckFlags::DISABLE_AVB_CHECK);
     if (status)
         LOG(WARNING) << "VintfObject.verifyWithoutAvb() returns " << status << ": " << error;
     return status;
@@ -126,10 +123,9 @@ static jint android_os_VintfObject_verifyWithoutAvb(JNIEnv* env, jclass) {
 
 static jobjectArray android_os_VintfObject_getHalNamesAndVersions(JNIEnv* env, jclass) {
     std::set<std::string> halNames;
-    tryAddHalNamesAndVersions(VintfObject::GetDeviceHalManifest(),
-            "device manifest", &halNames);
-    tryAddHalNamesAndVersions(VintfObject::GetFrameworkHalManifest(),
-            "framework manifest", &halNames);
+    tryAddHalNamesAndVersions(VintfObject::GetDeviceHalManifest(), "device manifest", &halNames);
+    tryAddHalNamesAndVersions(VintfObject::GetFrameworkHalManifest(), "framework manifest",
+                              &halNames);
     return toJavaStringArray(env, halNames);
 }
 
@@ -150,49 +146,52 @@ static jobject android_os_VintfObject_getVndkSnapshots(JNIEnv* env, jclass) {
         return nullptr;
     }
     jobject jMap = env->NewObject(gHashMapClazz, gHashMapInit);
-    for (const auto &vndk : manifest->vendorNdks()) {
+    for (const auto& vndk : manifest->vendorNdks()) {
         const std::string& key = vndk.version();
-        env->CallObjectMethod(jMap, gHashMapPut,
-                env->NewStringUTF(key.c_str()), toJavaStringArray(env, vndk.libraries()));
+        env->CallObjectMethod(jMap, gHashMapPut, env->NewStringUTF(key.c_str()),
+                              toJavaStringArray(env, vndk.libraries()));
     }
     return jMap;
 }
 
-static jobject android_os_VintfObject_getTargetFrameworkCompatibilityMatrixVersion(JNIEnv* env, jclass) {
+static jobject android_os_VintfObject_getTargetFrameworkCompatibilityMatrixVersion(JNIEnv* env,
+                                                                                   jclass) {
     std::shared_ptr<const HalManifest> manifest = VintfObject::GetDeviceHalManifest();
     if (manifest == nullptr || manifest->level() == Level::UNSPECIFIED) {
         return nullptr;
     }
-    return env->CallStaticObjectMethod(gLongClazz, gLongValueOf, static_cast<jlong>(manifest->level()));
+    return env->CallStaticObjectMethod(gLongClazz, gLongValueOf,
+                                       static_cast<jlong>(manifest->level()));
 }
 
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gVintfObjectMethods[] = {
-    {"report", "()[Ljava/lang/String;", (void*)android_os_VintfObject_report},
-    {"verify", "([Ljava/lang/String;)I", (void*)android_os_VintfObject_verify},
-    {"verifyWithoutAvb", "()I", (void*)android_os_VintfObject_verifyWithoutAvb},
-    {"getHalNamesAndVersions", "()[Ljava/lang/String;", (void*)android_os_VintfObject_getHalNamesAndVersions},
-    {"getSepolicyVersion", "()Ljava/lang/String;", (void*)android_os_VintfObject_getSepolicyVersion},
-    {"getVndkSnapshots", "()Ljava/util/Map;", (void*)android_os_VintfObject_getVndkSnapshots},
-    {"getTargetFrameworkCompatibilityMatrixVersion", "()Ljava/lang/Long;", (void*)android_os_VintfObject_getTargetFrameworkCompatibilityMatrixVersion},
+        {"report", "()[Ljava/lang/String;", (void*)android_os_VintfObject_report},
+        {"verify", "([Ljava/lang/String;)I", (void*)android_os_VintfObject_verify},
+        {"verifyWithoutAvb", "()I", (void*)android_os_VintfObject_verifyWithoutAvb},
+        {"getHalNamesAndVersions", "()[Ljava/lang/String;",
+         (void*)android_os_VintfObject_getHalNamesAndVersions},
+        {"getSepolicyVersion", "()Ljava/lang/String;",
+         (void*)android_os_VintfObject_getSepolicyVersion},
+        {"getVndkSnapshots", "()Ljava/util/Map;", (void*)android_os_VintfObject_getVndkSnapshots},
+        {"getTargetFrameworkCompatibilityMatrixVersion", "()Ljava/lang/Long;",
+         (void*)android_os_VintfObject_getTargetFrameworkCompatibilityMatrixVersion},
 };
 
 const char* const kVintfObjectPathName = "android/os/VintfObject";
 
-int register_android_os_VintfObject(JNIEnv* env)
-{
-
+int register_android_os_VintfObject(JNIEnv* env) {
     gString = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/lang/String"));
     gHashMapClazz = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/util/HashMap"));
     gHashMapInit = GetMethodIDOrDie(env, gHashMapClazz, "<init>", "()V");
-    gHashMapPut = GetMethodIDOrDie(env, gHashMapClazz,
-            "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+    gHashMapPut = GetMethodIDOrDie(env, gHashMapClazz, "put",
+                                   "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
     gLongClazz = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/lang/Long"));
     gLongValueOf = GetStaticMethodIDOrDie(env, gLongClazz, "valueOf", "(J)Ljava/lang/Long;");
 
     return RegisterMethodsOrDie(env, kVintfObjectPathName, gVintfObjectMethods,
-            NELEM(gVintfObjectMethods));
+                                NELEM(gVintfObjectMethods));
 }
 
-};
+};  // namespace android

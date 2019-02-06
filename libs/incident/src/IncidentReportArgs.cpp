@@ -23,28 +23,14 @@
 namespace android {
 namespace os {
 
-IncidentReportArgs::IncidentReportArgs()
-    :mSections(),
-     mAll(false),
-     mDest(-1)
-{
-}
+IncidentReportArgs::IncidentReportArgs() : mSections(), mAll(false), mDest(-1) {}
 
 IncidentReportArgs::IncidentReportArgs(const IncidentReportArgs& that)
-    :mSections(that.mSections),
-     mHeaders(that.mHeaders),
-     mAll(that.mAll),
-     mDest(that.mDest)
-{
-}
+    : mSections(that.mSections), mHeaders(that.mHeaders), mAll(that.mAll), mDest(that.mDest) {}
 
-IncidentReportArgs::~IncidentReportArgs()
-{
-}
+IncidentReportArgs::~IncidentReportArgs() {}
 
-status_t
-IncidentReportArgs::writeToParcel(Parcel* out) const
-{
+status_t IncidentReportArgs::writeToParcel(Parcel* out) const {
     status_t err;
 
     err = out->writeInt32(mAll);
@@ -57,7 +43,7 @@ IncidentReportArgs::writeToParcel(Parcel* out) const
         return err;
     }
 
-    for (set<int>::const_iterator it=mSections.begin(); it!=mSections.end(); it++) {
+    for (set<int>::const_iterator it = mSections.begin(); it != mSections.end(); it++) {
         err = out->writeInt32(*it);
         if (err != NO_ERROR) {
             return err;
@@ -69,7 +55,8 @@ IncidentReportArgs::writeToParcel(Parcel* out) const
         return err;
     }
 
-    for (vector<vector<uint8_t>>::const_iterator it = mHeaders.begin(); it != mHeaders.end(); it++) {
+    for (vector<vector<uint8_t>>::const_iterator it = mHeaders.begin(); it != mHeaders.end();
+         it++) {
         err = out->writeByteVector(*it);
         if (err != NO_ERROR) {
             return err;
@@ -84,9 +71,7 @@ IncidentReportArgs::writeToParcel(Parcel* out) const
     return NO_ERROR;
 }
 
-status_t
-IncidentReportArgs::readFromParcel(const Parcel* in)
-{
+status_t IncidentReportArgs::readFromParcel(const Parcel* in) {
     status_t err;
 
     int32_t all;
@@ -104,7 +89,7 @@ IncidentReportArgs::readFromParcel(const Parcel* in)
     if (err != NO_ERROR) {
         return err;
     }
-    for (int i=0; i<sectionCount; i++) {
+    for (int i = 0; i < sectionCount; i++) {
         int32_t section;
         err = in->readInt32(&section);
         if (err != NO_ERROR) {
@@ -120,7 +105,7 @@ IncidentReportArgs::readFromParcel(const Parcel* in)
         return err;
     }
     mHeaders.resize(headerCount);
-    for (int i=0; i<headerCount; i++) {
+    for (int i = 0; i < headerCount; i++) {
         err = in->readByteVector(&mHeaders[i]);
         if (err != NO_ERROR) {
             return err;
@@ -137,32 +122,24 @@ IncidentReportArgs::readFromParcel(const Parcel* in)
     return OK;
 }
 
-void
-IncidentReportArgs::setAll(bool all)
-{
+void IncidentReportArgs::setAll(bool all) {
     mAll = all;
     if (all) {
         mSections.clear();
     }
 }
 
-void
-IncidentReportArgs::setDest(int dest)
-{
+void IncidentReportArgs::setDest(int dest) {
     mDest = dest;
 }
 
-void
-IncidentReportArgs::addSection(int section)
-{
+void IncidentReportArgs::addSection(int section) {
     if (!mAll) {
         mSections.insert(section);
     }
 }
 
-void
-IncidentReportArgs::addHeader(const IncidentHeaderProto& headerProto)
-{
+void IncidentReportArgs::addHeader(const IncidentHeaderProto& headerProto) {
     vector<uint8_t> header;
     auto serialized = headerProto.SerializeAsString();
     if (serialized.empty()) return;
@@ -172,27 +149,23 @@ IncidentReportArgs::addHeader(const IncidentHeaderProto& headerProto)
     mHeaders.push_back(header);
 }
 
-bool
-IncidentReportArgs::containsSection(int section) const
-{
-     return mAll || mSections.find(section) != mSections.end();
+bool IncidentReportArgs::containsSection(int section) const {
+    return mAll || mSections.find(section) != mSections.end();
 }
 
-void
-IncidentReportArgs::merge(const IncidentReportArgs& that)
-{
+void IncidentReportArgs::merge(const IncidentReportArgs& that) {
     if (mAll) {
         return;
     } else if (that.mAll) {
         mAll = true;
         mSections.clear();
     } else {
-        for (set<int>::const_iterator it=that.mSections.begin();
-                it!=that.mSections.end(); it++) {
+        for (set<int>::const_iterator it = that.mSections.begin(); it != that.mSections.end();
+             it++) {
             mSections.insert(*it);
         }
     }
 }
 
-}
-}
+}  // namespace os
+}  // namespace android

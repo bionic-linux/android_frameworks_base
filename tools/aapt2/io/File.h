@@ -70,7 +70,8 @@ class IFile {
 class FileSegment : public IFile {
  public:
   explicit FileSegment(IFile* file, size_t offset, size_t len)
-      : file_(file), offset_(offset), len_(len) {}
+      : file_(file), offset_(offset), len_(len) {
+  }
 
   std::unique_ptr<IData> OpenAsData() override;
   std::unique_ptr<io::InputStream> OpenInputStream() override;

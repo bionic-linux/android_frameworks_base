@@ -17,9 +17,9 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "SystemPropertiesParser.h"
 #include "frameworks/base/core/proto/android/os/system_properties.proto.h"
 #include "ih_util.h"
-#include "SystemPropertiesParser.h"
 
 using namespace android::os;
 
@@ -38,140 +38,134 @@ static string convertToFieldName(const string& name) {
     return string(cstr);
 }
 
-status_t
-SystemPropertiesParser::Parse(const int in, const int out) const
-{
+status_t SystemPropertiesParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
-    string name;  // the name of the property
-    string value; // the string value of the property
+    string name;   // the name of the property
+    string value;  // the string value of the property
     ProtoOutputStream proto;
     vector<pair<string, string>> extras;
 
-    Table sysPropTable(SystemPropertiesProto::_FIELD_NAMES,
-                SystemPropertiesProto::_FIELD_IDS,
-                SystemPropertiesProto::_FIELD_COUNT);
+    Table sysPropTable(SystemPropertiesProto::_FIELD_NAMES, SystemPropertiesProto::_FIELD_IDS,
+                       SystemPropertiesProto::_FIELD_COUNT);
     Message sysProp(&sysPropTable);
 
     Table aacDrcTable(SystemPropertiesProto::AacDrc::_FIELD_NAMES,
-            SystemPropertiesProto::AacDrc::_FIELD_IDS,
-            SystemPropertiesProto::AacDrc::_FIELD_COUNT);
+                      SystemPropertiesProto::AacDrc::_FIELD_IDS,
+                      SystemPropertiesProto::AacDrc::_FIELD_COUNT);
     Message aacDrc(&aacDrcTable);
     sysProp.addSubMessage(SystemPropertiesProto::AAC_DRC, &aacDrc);
 
     Table aaudioTable(SystemPropertiesProto::Aaudio::_FIELD_NAMES,
-            SystemPropertiesProto::Aaudio::_FIELD_IDS,
-            SystemPropertiesProto::Aaudio::_FIELD_COUNT);
+                      SystemPropertiesProto::Aaudio::_FIELD_IDS,
+                      SystemPropertiesProto::Aaudio::_FIELD_COUNT);
     Message aaudio(&aaudioTable);
     sysProp.addSubMessage(SystemPropertiesProto::AAUDIO, &aaudio);
 
     Table cameraTable(SystemPropertiesProto::Camera::_FIELD_NAMES,
-            SystemPropertiesProto::Camera::_FIELD_IDS,
-            SystemPropertiesProto::Camera::_FIELD_COUNT);
+                      SystemPropertiesProto::Camera::_FIELD_IDS,
+                      SystemPropertiesProto::Camera::_FIELD_COUNT);
     Message camera(&cameraTable);
     sysProp.addSubMessage(SystemPropertiesProto::CAMERA, &camera);
 
     Table dalvikVmTable(SystemPropertiesProto::DalvikVm::_FIELD_NAMES,
-            SystemPropertiesProto::DalvikVm::_FIELD_IDS,
-            SystemPropertiesProto::DalvikVm::_FIELD_COUNT);
+                        SystemPropertiesProto::DalvikVm::_FIELD_IDS,
+                        SystemPropertiesProto::DalvikVm::_FIELD_COUNT);
     Message dalvikVm(&dalvikVmTable);
     sysProp.addSubMessage(SystemPropertiesProto::DALVIK_VM, &dalvikVm);
 
     Table initSvcTable(SystemPropertiesProto::InitSvc::_FIELD_NAMES,
-            SystemPropertiesProto::InitSvc::_FIELD_IDS,
-            SystemPropertiesProto::InitSvc::_FIELD_COUNT);
+                       SystemPropertiesProto::InitSvc::_FIELD_IDS,
+                       SystemPropertiesProto::InitSvc::_FIELD_COUNT);
     initSvcTable.addEnumNameToValue("running", SystemPropertiesProto::InitSvc::STATUS_RUNNING);
     initSvcTable.addEnumNameToValue("stopped", SystemPropertiesProto::InitSvc::STATUS_STOPPED);
     Message initSvc(&initSvcTable);
     sysProp.addSubMessage(SystemPropertiesProto::INIT_SVC, &initSvc);
 
-    Table logTable(SystemPropertiesProto::Log::_FIELD_NAMES,
-            SystemPropertiesProto::Log::_FIELD_IDS,
-            SystemPropertiesProto::Log::_FIELD_COUNT);
+    Table logTable(SystemPropertiesProto::Log::_FIELD_NAMES, SystemPropertiesProto::Log::_FIELD_IDS,
+                   SystemPropertiesProto::Log::_FIELD_COUNT);
     Message logMsg(&logTable);
     sysProp.addSubMessage(SystemPropertiesProto::LOG, &logMsg);
 
     Table persistTable(SystemPropertiesProto::Persist::_FIELD_NAMES,
-            SystemPropertiesProto::Persist::_FIELD_IDS,
-            SystemPropertiesProto::Persist::_FIELD_COUNT);
+                       SystemPropertiesProto::Persist::_FIELD_IDS,
+                       SystemPropertiesProto::Persist::_FIELD_COUNT);
     Message persist(&persistTable);
     sysProp.addSubMessage(SystemPropertiesProto::PERSIST, &persist);
 
     Table pmDexoptTable(SystemPropertiesProto::PmDexopt::_FIELD_NAMES,
-            SystemPropertiesProto::PmDexopt::_FIELD_IDS,
-            SystemPropertiesProto::PmDexopt::_FIELD_COUNT);
+                        SystemPropertiesProto::PmDexopt::_FIELD_IDS,
+                        SystemPropertiesProto::PmDexopt::_FIELD_COUNT);
     Message pmDexopt(&pmDexoptTable);
     sysProp.addSubMessage(SystemPropertiesProto::PM_DEXOPT, &pmDexopt);
 
-    Table roTable(SystemPropertiesProto::Ro::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::_FIELD_IDS,
-            SystemPropertiesProto::Ro::_FIELD_COUNT);
+    Table roTable(SystemPropertiesProto::Ro::_FIELD_NAMES, SystemPropertiesProto::Ro::_FIELD_IDS,
+                  SystemPropertiesProto::Ro::_FIELD_COUNT);
     Message ro(&roTable);
 
     Table bootTable(SystemPropertiesProto::Ro::Boot::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::Boot::_FIELD_IDS,
-            SystemPropertiesProto::Ro::Boot::_FIELD_COUNT);
+                    SystemPropertiesProto::Ro::Boot::_FIELD_IDS,
+                    SystemPropertiesProto::Ro::Boot::_FIELD_COUNT);
     Message boot(&bootTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::BOOT, &boot);
 
     Table bootimageTable(SystemPropertiesProto::Ro::BootImage::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::BootImage::_FIELD_IDS,
-            SystemPropertiesProto::Ro::BootImage::_FIELD_COUNT);
+                         SystemPropertiesProto::Ro::BootImage::_FIELD_IDS,
+                         SystemPropertiesProto::Ro::BootImage::_FIELD_COUNT);
     Message bootimage(&bootimageTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::BOOTIMAGE, &bootimage);
 
     Table buildTable(SystemPropertiesProto::Ro::Build::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::Build::_FIELD_IDS,
-            SystemPropertiesProto::Ro::Build::_FIELD_COUNT);
+                     SystemPropertiesProto::Ro::Build::_FIELD_IDS,
+                     SystemPropertiesProto::Ro::Build::_FIELD_COUNT);
     Message build(&buildTable);
 
     Table versionTable(SystemPropertiesProto::Ro::Build::Version::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::Build::Version::_FIELD_IDS,
-            SystemPropertiesProto::Ro::Build::Version::_FIELD_COUNT);
+                       SystemPropertiesProto::Ro::Build::Version::_FIELD_IDS,
+                       SystemPropertiesProto::Ro::Build::Version::_FIELD_COUNT);
     Message version(&versionTable);
     build.addSubMessage(SystemPropertiesProto::Ro::Build::VERSION, &version);
     ro.addSubMessage(SystemPropertiesProto::Ro::BUILD, &build);
 
     Table configTable(SystemPropertiesProto::Ro::Config::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::Config::_FIELD_IDS,
-            SystemPropertiesProto::Ro::Config::_FIELD_COUNT);
+                      SystemPropertiesProto::Ro::Config::_FIELD_IDS,
+                      SystemPropertiesProto::Ro::Config::_FIELD_COUNT);
     Message config(&configTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::CONFIG, &config);
 
     Table hardwareTable(SystemPropertiesProto::Ro::Hardware::_FIELD_NAMES,
-                   SystemPropertiesProto::Ro::Hardware::_FIELD_IDS,
-                   SystemPropertiesProto::Ro::Hardware::_FIELD_COUNT);
+                        SystemPropertiesProto::Ro::Hardware::_FIELD_IDS,
+                        SystemPropertiesProto::Ro::Hardware::_FIELD_COUNT);
     Message hardware(&hardwareTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::HARDWARE, &hardware);
 
     Table productTable(SystemPropertiesProto::Ro::Product::_FIELD_NAMES,
-                   SystemPropertiesProto::Ro::Product::_FIELD_IDS,
-                   SystemPropertiesProto::Ro::Product::_FIELD_COUNT);
+                       SystemPropertiesProto::Ro::Product::_FIELD_IDS,
+                       SystemPropertiesProto::Ro::Product::_FIELD_COUNT);
     Message product(&productTable);
 
     Table pVendorTable(SystemPropertiesProto::Ro::Product::Vendor::_FIELD_NAMES,
-            SystemPropertiesProto::Ro::Product::Vendor::_FIELD_IDS,
-            SystemPropertiesProto::Ro::Product::Vendor::_FIELD_COUNT);
+                       SystemPropertiesProto::Ro::Product::Vendor::_FIELD_IDS,
+                       SystemPropertiesProto::Ro::Product::Vendor::_FIELD_COUNT);
     Message pVendor(&pVendorTable);
     product.addSubMessage(SystemPropertiesProto::Ro::Product::VENDOR, &pVendor);
     ro.addSubMessage(SystemPropertiesProto::Ro::PRODUCT, &product);
 
     Table telephonyTable(SystemPropertiesProto::Ro::Telephony::_FIELD_NAMES,
-                   SystemPropertiesProto::Ro::Telephony::_FIELD_IDS,
-                   SystemPropertiesProto::Ro::Telephony::_FIELD_COUNT);
+                         SystemPropertiesProto::Ro::Telephony::_FIELD_IDS,
+                         SystemPropertiesProto::Ro::Telephony::_FIELD_COUNT);
     Message telephony(&telephonyTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::TELEPHONY, &telephony);
 
     Table vendorTable(SystemPropertiesProto::Ro::Vendor::_FIELD_NAMES,
-                   SystemPropertiesProto::Ro::Vendor::_FIELD_IDS,
-                   SystemPropertiesProto::Ro::Vendor::_FIELD_COUNT);
+                      SystemPropertiesProto::Ro::Vendor::_FIELD_IDS,
+                      SystemPropertiesProto::Ro::Vendor::_FIELD_COUNT);
     Message vendor(&vendorTable);
     ro.addSubMessage(SystemPropertiesProto::Ro::VENDOR, &vendor);
 
     sysProp.addSubMessage(SystemPropertiesProto::RO, &ro);
 
-    Table sysTable(SystemPropertiesProto::Sys::_FIELD_NAMES,
-                   SystemPropertiesProto::Sys::_FIELD_IDS,
+    Table sysTable(SystemPropertiesProto::Sys::_FIELD_NAMES, SystemPropertiesProto::Sys::_FIELD_IDS,
                    SystemPropertiesProto::Sys::_FIELD_COUNT);
     Message sys(&sysTable);
 
@@ -187,8 +181,8 @@ SystemPropertiesParser::Parse(const int in, const int out) const
     while (reader.readLine(&line)) {
         if (line.empty()) continue;
 
-        line = line.substr(1, line.size() - 2); // trim []
-        size_t index = line.find(LINE_DELIMITER); // split by "]: ["
+        line = line.substr(1, line.size() - 2);    // trim []
+        size_t index = line.find(LINE_DELIMITER);  // split by "]: ["
         if (index == string::npos) {
             fprintf(stderr, "Bad Line %s\n", line.c_str());
             continue;

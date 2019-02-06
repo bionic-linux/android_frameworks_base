@@ -18,20 +18,20 @@
 #undef LOG_TAG
 #define LOG_TAG "DdmHandleNativeHeap"
 
-#include <nativehelper/JNIHelp.h>
 #include <jni.h>
+#include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
 
 #include <utils/Log.h>
 #include <utils/String8.h>
 
-#include <fcntl.h>
 #include <errno.h>
-#include <sys/types.h>
+#include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
-extern "C" void get_malloc_leak_info(uint8_t** info, size_t* overallSize,
-                                     size_t* infoSize, size_t* totalMemory, size_t* backtraceSize);
+extern "C" void get_malloc_leak_info(uint8_t** info, size_t* overallSize, size_t* infoSize,
+                                     size_t* totalMemory, size_t* backtraceSize);
 
 extern "C" void free_malloc_leak_info(uint8_t* info);
 
@@ -79,11 +79,11 @@ static jbyteArray DdmHandleNativeHeap_getLeakInfo(JNIEnv* env, jobject) {
     header.mapSize = maps.size();
 
     uint8_t* allocBytes;
-    get_malloc_leak_info(&allocBytes, &header.allocSize, &header.allocInfoSize,
-                         &header.totalMemory, &header.backtraceSize);
+    get_malloc_leak_info(&allocBytes, &header.allocSize, &header.allocInfoSize, &header.totalMemory,
+                         &header.backtraceSize);
 
-    ALOGD("*** mapSize: %zu allocSize: %zu allocInfoSize: %zu totalMemory: %zu",
-          header.mapSize, header.allocSize, header.allocInfoSize, header.totalMemory);
+    ALOGD("*** mapSize: %zu allocSize: %zu allocInfoSize: %zu totalMemory: %zu", header.mapSize,
+          header.allocSize, header.allocInfoSize, header.totalMemory);
 
 #if defined(__LP64__)
     header.signature = DDMS_HEADER_SIGNATURE;
@@ -93,12 +93,11 @@ static jbyteArray DdmHandleNativeHeap_getLeakInfo(JNIEnv* env, jobject) {
 
     jbyteArray array = env->NewByteArray(sizeof(Header) + header.mapSize + header.allocSize);
     if (array != NULL) {
-        env->SetByteArrayRegion(array, 0,
-                                sizeof(header), reinterpret_cast<jbyte*>(&header));
-        env->SetByteArrayRegion(array, sizeof(header),
-                                maps.size(), reinterpret_cast<const jbyte*>(maps.string()));
-        env->SetByteArrayRegion(array, sizeof(header) + maps.size(),
-                                header.allocSize, reinterpret_cast<jbyte*>(allocBytes));
+        env->SetByteArrayRegion(array, 0, sizeof(header), reinterpret_cast<jbyte*>(&header));
+        env->SetByteArrayRegion(array, sizeof(header), maps.size(),
+                                reinterpret_cast<const jbyte*>(maps.string()));
+        env->SetByteArrayRegion(array, sizeof(header) + maps.size(), header.allocSize,
+                                reinterpret_cast<jbyte*>(allocBytes));
     }
 
     free_malloc_leak_info(allocBytes);
@@ -106,7 +105,7 @@ static jbyteArray DdmHandleNativeHeap_getLeakInfo(JNIEnv* env, jobject) {
 }
 
 static const JNINativeMethod method_table[] = {
-    { "getLeakInfo", "()[B", (void*) DdmHandleNativeHeap_getLeakInfo },
+        {"getLeakInfo", "()[B", (void*)DdmHandleNativeHeap_getLeakInfo},
 };
 
 int register_android_ddm_DdmHandleNativeHeap(JNIEnv* env) {
@@ -114,4 +113,4 @@ int register_android_ddm_DdmHandleNativeHeap(JNIEnv* env) {
                                 NELEM(method_table));
 }
 
-};
+};  // namespace android

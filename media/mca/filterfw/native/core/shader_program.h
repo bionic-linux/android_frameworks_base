@@ -17,13 +17,13 @@
 #ifndef ANDROID_FILTERFW_CORE_SHADER_PROGRAM_H
 #define ANDROID_FILTERFW_CORE_SHADER_PROGRAM_H
 
-#include <vector>
 #include <map>
 #include <string>
+#include <vector>
 
+#include <EGL/egl.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include <EGL/egl.h>
 
 #include "core/gl_env.h"
 #include "core/value.h"
@@ -85,8 +85,7 @@ class ShaderProgram {
     // Note, that the ShaderProgram does NOT take ownership of the GLEnv. The
     // caller must make sure the GLEnv stays valid as long as the GLFrame is
     // alive.
-    ShaderProgram(GLEnv* gl_env,
-                  const std::string& vertex_shader,
+    ShaderProgram(GLEnv* gl_env, const std::string& vertex_shader,
                   const std::string& fragment_shader);
 
     // Destructor.
@@ -99,8 +98,7 @@ class ShaderProgram {
     // Same as above, but pass GL interfaces rather than frame objects. Use this
     // only if you are not working on Frame objects, but rather directly on GL
     // textures and FBOs.
-    bool Process(const std::vector<const GLTextureHandle*>& input,
-                 GLFrameBufferHandle* output);
+    bool Process(const std::vector<const GLTextureHandle*>& input, GLFrameBufferHandle* output);
 
     // Compile and link the shader source code. Returns true if compilation
     // and linkage was successful. Compilation and linking error messages are
@@ -108,9 +106,7 @@ class ShaderProgram {
     bool CompileAndLink();
 
     // Returns true if this Program has been compiled and linked successfully.
-    bool IsExecutable() const {
-      return program_ != 0;
-    }
+    bool IsExecutable() const { return program_ != 0; }
 
     // Returns true if the shader program variable is valid.
     static bool IsVarValid(ProgramVar var);
@@ -132,7 +128,7 @@ class ShaderProgram {
     // the origin (x, y) and dimensions (width, height). Values are considered
     // normalized between 0.0 and 1.0. If this region exceeds the input frame
     // dimensions the results are undefined.
-    void SetSourceRect(float x, float y, float width, float height) ;
+    void SetSourceRect(float x, float y, float width, float height);
 
     // Set the program to read from a subregion of the input frame, given by
     // the passed Quad. Values are considered normalized between 0.0 and 1.0.
@@ -255,13 +251,8 @@ class ShaderProgram {
     //   normalize: True, if not float values should be normalized to the range
     //              0-1, when converted to a float.
     // Returns true, if the assignment was successful.
-    bool SetAttributeValues(ProgramVar var,
-                            const VertexFrame* data,
-                            GLenum type,
-                            int components,
-                            int stride,
-                            int offset,
-                            bool normalize);
+    bool SetAttributeValues(ProgramVar var, const VertexFrame* data, GLenum type, int components,
+                            int stride, int offset, bool normalize);
 
     // Set attribute values that differ across vertexes, using a data buffer.
     // This is the recommended method of specifying vertex data, if your data
@@ -270,13 +261,8 @@ class ShaderProgram {
     // parameters.
     // Note: The data passed here MUST be valid until all executions of this
     // Program instance have been completed!
-    bool SetAttributeValues(ProgramVar var,
-                            const uint8_t* data,
-                            GLenum type,
-                            int components,
-                            int stride,
-                            int offset,
-                            bool normalize);
+    bool SetAttributeValues(ProgramVar var, const uint8_t* data, GLenum type, int components,
+                            int stride, int offset, bool normalize);
 
     // Convenience method for setting vertex values using a vector of floats.
     // The components parameter specifies how many elements per variable should
@@ -285,16 +271,11 @@ class ShaderProgram {
     // While this method is not as flexible as the methods above, this can be
     // used when more advanced methods are not necessary. Note, that if your
     // vertex data does not change, it is recommended to use a VertexFrame.
-    bool SetAttributeValues(ProgramVar var,
-                            const std::vector<float>& data,
-                            int components);
+    bool SetAttributeValues(ProgramVar var, const std::vector<float>& data, int components);
 
     // Same as above, but using a float pointer instead of vector. Pass the
     // total number of elements in total.
-    bool SetAttributeValues(ProgramVar var,
-                            const float* data,
-                            int total,
-                            int components);
+    bool SetAttributeValues(ProgramVar var, const float* data, int total, int components);
 
     // By default, rendering only uses the first 4 vertices. You should only
     // adjust this value if you are providing your own vertex attributes with
@@ -305,16 +286,16 @@ class ShaderProgram {
     // coordinates. Use this when you need to access the texture coordinate
     // attribute of the shader's default vertex shader.
     static const std::string& TexCoordAttributeName() {
-      static std::string s_texcoord("a_texcoord");
-      return s_texcoord;
+        static std::string s_texcoord("a_texcoord");
+        return s_texcoord;
     }
 
     // Returns the default name of the attribute used to hold the output
     // coordinates. Use this when you need to access the output coordinate
     // attribute of the shader's default vertex shader.
     static const std::string& PositionAttributeName() {
-      static std::string s_position("a_position");
-      return s_position;
+        static std::string s_position("a_position");
+        return s_position;
     }
 
     // Rendering ///////////////////////////////////////////////////////////////
@@ -338,8 +319,7 @@ class ShaderProgram {
     //   - Bind the given textures
     //   - Bind vertex attributes
     //   - Draw
-    bool RenderFrame(const std::vector<GLuint>& textures,
-                     const std::vector<GLenum>& targets);
+    bool RenderFrame(const std::vector<GLuint>& textures, const std::vector<GLenum>& targets);
 
     // Pass true to clear the output frame before rendering. The color used
     // to clear is set in SetClearColor().
@@ -356,9 +336,7 @@ class ShaderProgram {
 
     // Enable or Disable Blending
     // Set to true to enable, false to disable.
-    void SetBlendEnabled(bool enable) {
-      blending_ = enable;
-    }
+    void SetBlendEnabled(bool enable) { blending_ = enable; }
 
     // Specify pixel arithmetic for blending
     // The values of sfactor and dfactor can be:
@@ -369,8 +347,8 @@ class ShaderProgram {
     //  sfactor = GL_SRC_ALPHA
     //  dfactor = GL_ONE_MINUS_SRC_ALPHA
     void SetBlendFunc(int sfactor, int dfactor) {
-      sfactor_ = sfactor;
-      dfactor_ = dfactor;
+        sfactor_ = sfactor;
+        dfactor_ = dfactor;
     }
 
     // Accessing the Compiled Program //////////////////////////////////////////
@@ -395,42 +373,37 @@ class ShaderProgram {
     static GLuint LinkProgram(GLuint* shaders, GLuint count);
 
     // Returns the lowest texture unit that will be used to bind textures.
-    GLuint BaseTextureUnit() const {
-      return base_texture_unit_;
-    }
+    GLuint BaseTextureUnit() const { return base_texture_unit_; }
 
     // Sets the lowest texture unit that will be used to bind textures. The
     // default value is GL_TEXTURE0.
-    void SetBaseTextureUnit(GLuint texture_unit) {
-      base_texture_unit_ = texture_unit;
-    }
+    void SetBaseTextureUnit(GLuint texture_unit) { base_texture_unit_ = texture_unit; }
 
   private:
     // Structure to store vertex attribute data.
     struct VertexAttrib {
-      bool          is_const;
-      int           index;
-      bool          normalized;
-      int           stride;
-      int           components;
-      int           offset;
-      GLenum        type;
-      GLuint        vbo;
-      const void*   values;
-      float*        owned_data;
+        bool is_const;
+        int index;
+        bool normalized;
+        int stride;
+        int components;
+        int offset;
+        GLenum type;
+        GLuint vbo;
+        const void* values;
+        float* owned_data;
 
-      VertexAttrib();
+        VertexAttrib();
     };
     typedef std::map<ProgramVar, VertexAttrib> VertexAttribMap;
 
     struct RGBAColor {
-      float red;
-      float green;
-      float blue;
-      float alpha;
+        float red;
+        float green;
+        float blue;
+        float alpha;
 
-      RGBAColor() : red(0), green(0), blue(0), alpha(1) {
-      }
+        RGBAColor() : red(0), green(0), blue(0), alpha(1) {}
     };
 
     // Scans for all uniforms in the shader and creates index -> id map.
@@ -441,8 +414,7 @@ class ShaderProgram {
     GLuint IndexOfUniform(ProgramVar var);
 
     // Binds the given input textures.
-    bool BindInputTextures(const std::vector<GLuint>& textures,
-                           const std::vector<GLenum>& targets);
+    bool BindInputTextures(const std::vector<GLuint>& textures, const std::vector<GLenum>& targets);
 
     // Sets the default source and target coordinates.
     void SetDefaultCoords();
@@ -467,18 +439,13 @@ class ShaderProgram {
 
     // Helper method to assert that the variable value passed has the correct
     // total size.
-    static bool CheckValueCount(const std::string& var_type,
-                                const std::string& var_name,
-                                int expected_count,
-                                int components,
-                                int value_size);
+    static bool CheckValueCount(const std::string& var_type, const std::string& var_name,
+                                int expected_count, int components, int value_size);
 
     // Helper method to assert that the variable value passed has a size, that
     // is compatible with the type size (must be divisible).
-    static bool CheckValueMult(const std::string& var_type,
-                               const std::string& var_name,
-                               int components,
-                               int value_size);
+    static bool CheckValueMult(const std::string& var_type, const std::string& var_name,
+                               int components, int value_size);
 
     // Checks that the variable is valid. Logs an error and returns false if
     // not.
@@ -547,7 +514,7 @@ class ShaderProgram {
     std::map<ProgramVar, GLuint> uniform_indices_;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_SHADER_PROGRAM_H

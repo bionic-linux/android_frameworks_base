@@ -25,34 +25,34 @@
 
 #include <cstring>
 
-#include <nativehelper/JNIHelp.h>
-#include <android/hidl/manager/1.0/IServiceManager.h>
-#include <android/hidl/base/1.0/IBase.h>
 #include <android/hidl/base/1.0/BpHwBase.h>
+#include <android/hidl/base/1.0/IBase.h>
+#include <android/hidl/manager/1.0/IServiceManager.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <hidl/HidlTransportSupport.h>
 #include <hidl/ServiceManagement.h>
 #include <hidl/Status.h>
-#include <hidl/HidlTransportSupport.h>
 #include <hwbinder/IPCThreadState.h>
 #include <hwbinder/ProcessState.h>
+#include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include <vintf/parse_string.h>
 #include <utils/misc.h>
+#include <vintf/parse_string.h>
 
 #include "core_jni_helpers.h"
 
 using android::AndroidRuntime;
-using android::hardware::hidl_vec;
 using android::hardware::hidl_string;
+using android::hardware::hidl_vec;
 using android::hardware::IPCThreadState;
 using android::hardware::ProcessState;
-template<typename T>
+template <typename T>
 using Return = android::hardware::Return<T>;
 
-#define PACKAGE_PATH    "android/os"
-#define CLASS_NAME      "HwBinder"
-#define CLASS_PATH      PACKAGE_PATH "/" CLASS_NAME
+#define PACKAGE_PATH "android/os"
+#define CLASS_NAME "HwBinder"
+#define CLASS_PATH PACKAGE_PATH "/" CLASS_NAME
 
 namespace android {
 
@@ -66,7 +66,7 @@ static struct fields_t {
 struct JHwBinderHolder : public RefBase {
     JHwBinderHolder() {}
 
-    sp<JHwBinder> get(JNIEnv *env, jobject obj) {
+    sp<JHwBinder> get(JNIEnv* env, jobject obj) {
         Mutex::Autolock autoLock(mLock);
 
         sp<JHwBinder> binder = mBinder.promote();
@@ -79,7 +79,7 @@ struct JHwBinderHolder : public RefBase {
         return binder;
     }
 
-private:
+  private:
     Mutex mLock;
     wp<JHwBinder> mBinder;
 
@@ -87,26 +87,20 @@ private:
 };
 
 // static
-void JHwBinder::InitClass(JNIEnv *env) {
-    ScopedLocalRef<jclass> clazz(
-            env, FindClassOrDie(env, CLASS_PATH));
+void JHwBinder::InitClass(JNIEnv* env) {
+    ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, CLASS_PATH));
 
-    gFields.contextID =
-        GetFieldIDOrDie(env, clazz.get(), "mNativeContext", "J");
+    gFields.contextID = GetFieldIDOrDie(env, clazz.get(), "mNativeContext", "J");
 
     gFields.onTransactID =
-        GetMethodIDOrDie(
-                env,
-                clazz.get(),
-                "onTransact",
-                "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V");
+            GetMethodIDOrDie(env, clazz.get(), "onTransact",
+                             "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V");
 }
 
 // static
-sp<JHwBinderHolder> JHwBinder::SetNativeContext(
-        JNIEnv *env, jobject thiz, const sp<JHwBinderHolder> &context) {
-    sp<JHwBinderHolder> old =
-        (JHwBinderHolder *)env->GetLongField(thiz, gFields.contextID);
+sp<JHwBinderHolder> JHwBinder::SetNativeContext(JNIEnv* env, jobject thiz,
+                                                const sp<JHwBinderHolder>& context) {
+    sp<JHwBinderHolder> old = (JHwBinderHolder*)env->GetLongField(thiz, gFields.contextID);
 
     if (context != NULL) {
         context->incStrong(NULL /* id */);
@@ -122,16 +116,14 @@ sp<JHwBinderHolder> JHwBinder::SetNativeContext(
 }
 
 // static
-sp<JHwBinder> JHwBinder::GetNativeBinder(
-        JNIEnv *env, jobject thiz) {
-    JHwBinderHolder *holder =
-        reinterpret_cast<JHwBinderHolder *>(
-                env->GetLongField(thiz, gFields.contextID));
+sp<JHwBinder> JHwBinder::GetNativeBinder(JNIEnv* env, jobject thiz) {
+    JHwBinderHolder* holder =
+            reinterpret_cast<JHwBinderHolder*>(env->GetLongField(thiz, gFields.contextID));
 
     return holder->get(env, thiz);
 }
 
-JHwBinder::JHwBinder(JNIEnv *env, jobject thiz) {
+JHwBinder::JHwBinder(JNIEnv* env, jobject thiz) {
     jclass clazz = env->GetObjectClass(thiz);
     CHECK(clazz != NULL);
 
@@ -139,27 +131,22 @@ JHwBinder::JHwBinder(JNIEnv *env, jobject thiz) {
 }
 
 JHwBinder::~JHwBinder() {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
 
     env->DeleteGlobalRef(mObject);
     mObject = NULL;
 }
 
-status_t JHwBinder::onTransact(
-        uint32_t code,
-        const hardware::Parcel &data,
-        hardware::Parcel *reply,
-        uint32_t flags,
-        TransactCallback callback) {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+status_t JHwBinder::onTransact(uint32_t code, const hardware::Parcel& data, hardware::Parcel* reply,
+                               uint32_t flags, TransactCallback callback) {
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
     bool isOneway = (flags & TF_ONE_WAY) != 0;
     ScopedLocalRef<jobject> replyObj(env, nullptr);
     sp<JHwParcel> replyContext = nullptr;
 
     ScopedLocalRef<jobject> requestObj(env, JHwParcel::NewObject(env));
-    JHwParcel::GetNativeContext(env, requestObj.get())->setParcel(
-            const_cast<hardware::Parcel *>(&data), false /* assumeOwnership */);
-
+    JHwParcel::GetNativeContext(env, requestObj.get())
+            ->setParcel(const_cast<hardware::Parcel*>(&data), false /* assumeOwnership */);
 
     if (!isOneway) {
         replyObj.reset(JHwParcel::NewObject(env));
@@ -170,13 +157,8 @@ status_t JHwBinder::onTransact(
         replyContext->setTransactCallback(callback);
     }
 
-    env->CallVoidMethod(
-            mObject,
-            gFields.onTransactID,
-            code,
-            requestObj.get(),
-            replyObj.get(),
-            flags);
+    env->CallVoidMethod(mObject, gFields.onTransactID, code, requestObj.get(), replyObj.get(),
+                        flags);
 
     if (env->ExceptionCheck()) {
         jthrowable excep = env->ExceptionOccurred();
@@ -213,13 +195,11 @@ status_t JHwBinder::onTransact(
 
         // We cannot permanently pass ownership of "data" and "reply" over to their
         // Java object wrappers (we don't own them ourselves).
-        replyContext->setParcel(
-                NULL /* parcel */, false /* assumeOwnership */);
-
+        replyContext->setParcel(NULL /* parcel */, false /* assumeOwnership */);
     }
 
-    JHwParcel::GetNativeContext(env, requestObj.get())->setParcel(
-            NULL /* parcel */, false /* assumeOwnership */);
+    JHwParcel::GetNativeContext(env, requestObj.get())
+            ->setParcel(NULL /* parcel */, false /* assumeOwnership */);
 
     return err;
 }
@@ -230,39 +210,32 @@ status_t JHwBinder::onTransact(
 
 using namespace android;
 
-static void releaseNativeContext(void *nativeContext) {
-    sp<JHwBinderHolder> context = static_cast<JHwBinderHolder *>(nativeContext);
+static void releaseNativeContext(void* nativeContext) {
+    sp<JHwBinderHolder> context = static_cast<JHwBinderHolder*>(nativeContext);
 
     if (context != NULL) {
         context->decStrong(NULL /* id */);
     }
 }
 
-static jlong JHwBinder_native_init(JNIEnv *env) {
+static jlong JHwBinder_native_init(JNIEnv* env) {
     JHwBinder::InitClass(env);
 
     return reinterpret_cast<jlong>(&releaseNativeContext);
 }
 
-static void JHwBinder_native_setup(JNIEnv *env, jobject thiz) {
+static void JHwBinder_native_setup(JNIEnv* env, jobject thiz) {
     sp<JHwBinderHolder> context = new JHwBinderHolder;
     JHwBinder::SetNativeContext(env, thiz, context);
 }
 
-static void JHwBinder_native_transact(
-        JNIEnv * /* env */,
-        jobject /* thiz */,
-        jint /* code */,
-        jobject /* requestObj */,
-        jobject /* replyObj */,
-        jint /* flags */) {
+static void JHwBinder_native_transact(JNIEnv* /* env */, jobject /* thiz */, jint /* code */,
+                                      jobject /* requestObj */, jobject /* replyObj */,
+                                      jint /* flags */) {
     CHECK(!"Should not be here");
 }
 
-static void JHwBinder_native_registerService(
-        JNIEnv *env,
-        jobject thiz,
-        jstring serviceNameObj) {
+static void JHwBinder_native_registerService(JNIEnv* env, jobject thiz, jstring serviceNameObj) {
     ScopedUtfChars str(env, serviceNameObj);
     if (str.c_str() == nullptr) {
         return;  // NPE will be pending.
@@ -293,15 +266,10 @@ static void JHwBinder_native_registerService(
     signalExceptionForError(env, (ok ? OK : UNKNOWN_ERROR), true /* canThrowRemoteException */);
 }
 
-static jobject JHwBinder_native_getService(
-        JNIEnv *env,
-        jclass /* clazzObj */,
-        jstring ifaceNameObj,
-        jstring serviceNameObj,
-        jboolean retry) {
-
-    using ::android::hidl::base::V1_0::IBase;
+static jobject JHwBinder_native_getService(JNIEnv* env, jclass /* clazzObj */, jstring ifaceNameObj,
+                                           jstring serviceNameObj, jboolean retry) {
     using ::android::hardware::details::getRawServiceInternal;
+    using ::android::hidl::base::V1_0::IBase;
 
     std::string ifaceName;
     {
@@ -321,7 +289,8 @@ static jobject JHwBinder_native_getService(
         serviceName = str.c_str();
     }
 
-    sp<IBase> ret = getRawServiceInternal(ifaceName, serviceName, retry /* retry */, false /* getStub */);
+    sp<IBase> ret =
+            getRawServiceInternal(ifaceName, serviceName, retry /* retry */, false /* getStub */);
     sp<hardware::IBinder> service = hardware::toBinder<hidl::base::V1_0::IBase>(ret);
 
     if (service == NULL) {
@@ -335,48 +304,43 @@ static jobject JHwBinder_native_getService(
     return JHwRemoteBinder::NewObject(env, service);
 }
 
-void JHwBinder_native_configureRpcThreadpool(JNIEnv *, jclass,
-        jlong maxThreads, jboolean callerWillJoin) {
+void JHwBinder_native_configureRpcThreadpool(JNIEnv*, jclass, jlong maxThreads,
+                                             jboolean callerWillJoin) {
     CHECK(maxThreads > 0);
-    ProcessState::self()->setThreadPoolConfiguration(maxThreads, callerWillJoin /*callerJoinsPool*/);
+    ProcessState::self()->setThreadPoolConfiguration(maxThreads,
+                                                     callerWillJoin /*callerJoinsPool*/);
 }
 
 void JHwBinder_native_joinRpcThreadpool() {
     IPCThreadState::self()->joinThreadPool();
 }
 
-static void JHwBinder_report_sysprop_change(JNIEnv * /*env*/, jclass /*clazz*/)
-{
+static void JHwBinder_report_sysprop_change(JNIEnv* /*env*/, jclass /*clazz*/) {
     report_sysprop_change();
 }
 
 static JNINativeMethod gMethods[] = {
-    { "native_init", "()J", (void *)JHwBinder_native_init },
-    { "native_setup", "()V", (void *)JHwBinder_native_setup },
+        {"native_init", "()J", (void*)JHwBinder_native_init},
+        {"native_setup", "()V", (void*)JHwBinder_native_setup},
 
-    { "transact",
-        "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V",
-        (void *)JHwBinder_native_transact },
+        {"transact", "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V",
+         (void*)JHwBinder_native_transact},
 
-    { "registerService", "(Ljava/lang/String;)V",
-        (void *)JHwBinder_native_registerService },
+        {"registerService", "(Ljava/lang/String;)V", (void*)JHwBinder_native_registerService},
 
-    { "getService", "(Ljava/lang/String;Ljava/lang/String;Z)L" PACKAGE_PATH "/IHwBinder;",
-        (void *)JHwBinder_native_getService },
+        {"getService", "(Ljava/lang/String;Ljava/lang/String;Z)L" PACKAGE_PATH "/IHwBinder;",
+         (void*)JHwBinder_native_getService},
 
-    { "configureRpcThreadpool", "(JZ)V",
-        (void *)JHwBinder_native_configureRpcThreadpool },
+        {"configureRpcThreadpool", "(JZ)V", (void*)JHwBinder_native_configureRpcThreadpool},
 
-    { "joinRpcThreadpool", "()V",
-        (void *)JHwBinder_native_joinRpcThreadpool },
+        {"joinRpcThreadpool", "()V", (void*)JHwBinder_native_joinRpcThreadpool},
 
-    { "native_report_sysprop_change", "()V",
-        (void *)JHwBinder_report_sysprop_change },
+        {"native_report_sysprop_change", "()V", (void*)JHwBinder_report_sysprop_change},
 };
 
 namespace android {
 
-int register_android_os_HwBinder(JNIEnv *env) {
+int register_android_os_HwBinder(JNIEnv* env) {
     jclass errorClass = FindClassOrDie(env, "java/lang/Error");
     gErrorClass = MakeGlobalRefOrDie(env, errorClass);
 

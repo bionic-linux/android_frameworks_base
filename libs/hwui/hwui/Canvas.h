@@ -36,7 +36,7 @@ namespace minikin {
 class Layout;
 class MeasuredText;
 enum class Bidi : uint8_t;
-}
+}  // namespace minikin
 
 namespace android {
 
@@ -46,7 +46,7 @@ class CanvasPropertyPrimitive;
 class DeferredLayerUpdater;
 class DisplayList;
 class RenderNode;
-}
+}  // namespace uirenderer
 
 namespace SaveFlags {
 
@@ -69,7 +69,7 @@ class SkiaCanvasProxy;
 namespace VectorDrawable {
 class Tree;
 };
-};
+};  // namespace uirenderer
 typedef uirenderer::VectorDrawable::Tree VectorDrawableRoot;
 
 typedef std::function<void(uint16_t* text, float* positions)> ReadGlyphFunc;

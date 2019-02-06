@@ -127,8 +127,8 @@ public:
     // Gets all snapshots and changes that have occurred since the last output.
     // If every config key has received a change or snapshot record, then this
     // record is deleted.
-    void appendUidMap(const int64_t& timestamp, const ConfigKey& key,
-                      std::set<string> *str_set, util::ProtoOutputStream* proto);
+    void appendUidMap(const int64_t& timestamp, const ConfigKey& key, std::set<string>* str_set,
+                      util::ProtoOutputStream* proto);
 
     // Forces the output to be cleared. We still generate a snapshot based on the current state.
     // This results in extra data uploaded but helps us reconstruct the uid mapping on the server

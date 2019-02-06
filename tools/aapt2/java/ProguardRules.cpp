@@ -95,7 +95,6 @@ class BaseVisitor : public xml::Visitor {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BaseVisitor);
-
 };
 
 class LayoutVisitor : public BaseVisitor {
@@ -120,11 +119,10 @@ class LayoutVisitor : public BaseVisitor {
       if (check_class && attr.namespace_uri.empty() && attr.name == "class" &&
           util::IsJavaClassName(attr.value)) {
         AddClass(node->line_number, attr.value);
-      } else if (check_name && attr.namespace_uri == xml::kSchemaAndroid &&
-                 attr.name == "name" && util::IsJavaClassName(attr.value)) {
+      } else if (check_name && attr.namespace_uri == xml::kSchemaAndroid && attr.name == "name" &&
+                 util::IsJavaClassName(attr.value)) {
         AddClass(node->line_number, attr.value);
-      } else if (attr.namespace_uri == xml::kSchemaAndroid &&
-                 attr.name == "onClick") {
+      } else if (attr.namespace_uri == xml::kSchemaAndroid && attr.name == "onClick") {
         AddMethod(node->line_number, attr.value);
       }
     }
@@ -170,13 +168,11 @@ class XmlResourceVisitor : public BaseVisitor {
   void Visit(xml::Element* node) override {
     bool check_fragment = false;
     if (node->namespace_uri.empty()) {
-      check_fragment =
-          node->name == "PreferenceScreen" || node->name == "header";
+      check_fragment = node->name == "PreferenceScreen" || node->name == "header";
     }
 
     if (check_fragment) {
-      xml::Attribute* attr =
-          node->FindAttribute(xml::kSchemaAndroid, "fragment");
+      xml::Attribute* attr = node->FindAttribute(xml::kSchemaAndroid, "fragment");
       if (attr && util::IsJavaClassName(attr->value)) {
         AddClass(node->line_number, attr->value);
       }
@@ -240,8 +236,8 @@ class ManifestVisitor : public BaseVisitor {
             default_process_ = default_process->value;
           }
         }
-      } else if (node->name == "activity" || node->name == "service" ||
-                 node->name == "receiver" || node->name == "provider") {
+      } else if (node->name == "activity" || node->name == "service" || node->name == "receiver" ||
+                 node->name == "provider") {
         get_name = true;
 
         if (main_dex_only_) {

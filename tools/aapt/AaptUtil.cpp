@@ -16,8 +16,8 @@
 
 #include "AaptUtil.h"
 
-using android::Vector;
 using android::String8;
+using android::Vector;
 
 namespace AaptUtil {
 
@@ -33,7 +33,7 @@ Vector<String8> split(const String8& str, const char sep) {
             return parts;
         }
 
-        parts.add(String8(p, q-p));
+        parts.add(String8(p, q - p));
         p = q + 1;
     }
     return parts;
@@ -53,7 +53,7 @@ Vector<String8> splitAndLowerCase(const String8& str, const char sep) {
             return parts;
         }
 
-        String8 val(p, q-p);
+        String8 val(p, q - p);
         val.toLower();
         parts.add(val);
         p = q + 1;
@@ -61,4 +61,4 @@ Vector<String8> splitAndLowerCase(const String8& str, const char sep) {
     return parts;
 }
 
-} // namespace AaptUtil
+}  // namespace AaptUtil

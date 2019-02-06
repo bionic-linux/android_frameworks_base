@@ -23,8 +23,7 @@
 
 using namespace std;
 
-struct FileInfo
-{
+struct FileInfo {
     bool exists;
     time_t mtime;
     time_t ctime;
@@ -38,7 +37,6 @@ struct FileInfo
     bool operator==(const FileInfo& that) const;
     bool operator!=(const FileInfo& that) const;
 };
-
 
 /**
  * Record for a file that we are watching
@@ -60,10 +58,10 @@ struct TrackedFile {
  * Get FileInfo structures recursively for all the files and symlinks in a directory.
  * Does not traverse symlinks, but it does record them.
  */
-void get_directory_contents(const string& dir, map<string,FileInfo>* results);
+void get_directory_contents(const string& dir, map<string, FileInfo>* results);
 
-bool directory_contents_differ(const map<string,FileInfo>& before,
-        const map<string,FileInfo>& after);
+bool directory_contents_differ(const map<string, FileInfo>& before,
+                               const map<string, FileInfo>& after);
 
 string escape_quotes(const char* str);
 
@@ -79,5 +77,4 @@ void split_lines(vector<string>* result, const string& str);
 
 string read_file(const string& filename);
 
-#endif // UTIL_H
-
+#endif  // UTIL_H

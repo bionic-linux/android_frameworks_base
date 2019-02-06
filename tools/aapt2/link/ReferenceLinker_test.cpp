@@ -33,11 +33,9 @@ TEST(ReferenceLinkerTest, LinkSimpleReferences) {
                         "com.app.test:string/bar")
 
           // Test use of local reference (w/o package name).
-          .AddReference("com.app.test:string/bar", ResourceId(0x7f020001),
-                        "string/baz")
+          .AddReference("com.app.test:string/bar", ResourceId(0x7f020001), "string/baz")
 
-          .AddReference("com.app.test:string/baz", ResourceId(0x7f020002),
-                        "android:string/ok")
+          .AddReference("com.app.test:string/baz", ResourceId(0x7f020002), "android:string/ok")
           .Build();
 
   std::unique_ptr<IAaptContext> context =
@@ -45,12 +43,10 @@ TEST(ReferenceLinkerTest, LinkSimpleReferences) {
           .SetCompilationPackage("com.app.test")
           .SetPackageId(0x7f)
           .SetNameManglerPolicy(NameManglerPolicy{"com.app.test"})
-          .AddSymbolSource(
-              util::make_unique<ResourceTableSymbolSource>(table.get()))
-          .AddSymbolSource(
-              test::StaticSymbolSourceBuilder()
-                  .AddPublicSymbol("android:string/ok", ResourceId(0x01040034))
-                  .Build())
+          .AddSymbolSource(util::make_unique<ResourceTableSymbolSource>(table.get()))
+          .AddSymbolSource(test::StaticSymbolSourceBuilder()
+                               .AddPublicSymbol("android:string/ok", ResourceId(0x01040034))
+                               .Build())
           .Build();
 
   ReferenceLinker linker;
@@ -79,8 +75,7 @@ TEST(ReferenceLinkerTest, LinkStyleAttributes) {
           .AddValue("com.app.test:style/Theme",
                     test::StyleBuilder()
                         .SetParent("android:style/Theme.Material")
-                        .AddItem("android:attr/foo",
-                                 ResourceUtils::TryParseColor("#ff00ff"))
+                        .AddItem("android:attr/foo", ResourceUtils::TryParseColor("#ff00ff"))
                         .AddItem("android:attr/bar", {} /* placeholder */)
                         .Build())
           .Build();
@@ -101,12 +96,10 @@ TEST(ReferenceLinkerTest, LinkStyleAttributes) {
           .SetNameManglerPolicy(NameManglerPolicy{"com.app.test"})
           .AddSymbolSource(
               test::StaticSymbolSourceBuilder()
-                  .AddPublicSymbol("android:style/Theme.Material",
-                                   ResourceId(0x01060000))
-                  .AddPublicSymbol("android:attr/foo", ResourceId(0x01010001),
-                                   test::AttributeBuilder()
-                                       .SetTypeMask(ResTable_map::TYPE_COLOR)
-                                       .Build())
+                  .AddPublicSymbol("android:style/Theme.Material", ResourceId(0x01060000))
+                  .AddPublicSymbol(
+                      "android:attr/foo", ResourceId(0x01010001),
+                      test::AttributeBuilder().SetTypeMask(ResTable_map::TYPE_COLOR).Build())
                   .AddPublicSymbol("android:attr/bar", ResourceId(0x01010002),
                                    test::AttributeBuilder()
                                        .SetTypeMask(ResTable_map::TYPE_FLAGS)
@@ -141,26 +134,23 @@ TEST(ReferenceLinkerTest, LinkMangledReferencesAndAttributes) {
       test::ContextBuilder()
           .SetCompilationPackage("com.app.test")
           .SetPackageId(0x7f)
-          .SetNameManglerPolicy(
-              NameManglerPolicy{"com.app.test", {"com.android.support"}})
+          .SetNameManglerPolicy(NameManglerPolicy{"com.app.test", {"com.android.support"}})
           .AddSymbolSource(
               test::StaticSymbolSourceBuilder()
-                  .AddPublicSymbol("com.app.test:attr/com.android.support$foo",
-                                   ResourceId(0x7f010000),
-                                   test::AttributeBuilder()
-                                       .SetTypeMask(ResTable_map::TYPE_COLOR)
-                                       .Build())
+                  .AddPublicSymbol(
+                      "com.app.test:attr/com.android.support$foo", ResourceId(0x7f010000),
+                      test::AttributeBuilder().SetTypeMask(ResTable_map::TYPE_COLOR).Build())
                   .Build())
           .Build();
 
   std::unique_ptr<ResourceTable> table =
       test::ResourceTableBuilder()
           .SetPackageId("com.app.test", 0x7f)
-          .AddValue("com.app.test:style/Theme", ResourceId(0x7f020000),
-                    test::StyleBuilder()
-                        .AddItem("com.android.support:attr/foo",
-                                 ResourceUtils::TryParseColor("#ff0000"))
-                        .Build())
+          .AddValue(
+              "com.app.test:style/Theme", ResourceId(0x7f020000),
+              test::StyleBuilder()
+                  .AddItem("com.android.support:attr/foo", ResourceUtils::TryParseColor("#ff0000"))
+                  .Build())
           .Build();
 
   ReferenceLinker linker;
@@ -177,8 +167,7 @@ TEST(ReferenceLinkerTest, FailToLinkPrivateSymbols) {
   std::unique_ptr<ResourceTable> table =
       test::ResourceTableBuilder()
           .SetPackageId("com.app.test", 0x7f)
-          .AddReference("com.app.test:string/foo", ResourceId(0x7f020000),
-                        "android:string/hidden")
+          .AddReference("com.app.test:string/foo", ResourceId(0x7f020000), "android:string/hidden")
           .Build();
 
   std::unique_ptr<IAaptContext> context =
@@ -186,12 +175,10 @@ TEST(ReferenceLinkerTest, FailToLinkPrivateSymbols) {
           .SetCompilationPackage("com.app.test")
           .SetPackageId(0x7f)
           .SetNameManglerPolicy(NameManglerPolicy{"com.app.test"})
-          .AddSymbolSource(
-              util::make_unique<ResourceTableSymbolSource>(table.get()))
-          .AddSymbolSource(
-              test::StaticSymbolSourceBuilder()
-                  .AddSymbol("android:string/hidden", ResourceId(0x01040034))
-                  .Build())
+          .AddSymbolSource(util::make_unique<ResourceTableSymbolSource>(table.get()))
+          .AddSymbolSource(test::StaticSymbolSourceBuilder()
+                               .AddSymbol("android:string/hidden", ResourceId(0x01040034))
+                               .Build())
           .Build();
 
   ReferenceLinker linker;
@@ -210,14 +197,11 @@ TEST(ReferenceLinkerTest, FailToLinkPrivateMangledSymbols) {
       test::ContextBuilder()
           .SetCompilationPackage("com.app.test")
           .SetPackageId(0x7f)
-          .SetNameManglerPolicy(
-              NameManglerPolicy{"com.app.test", {"com.app.lib"}})
-          .AddSymbolSource(
-              util::make_unique<ResourceTableSymbolSource>(table.get()))
+          .SetNameManglerPolicy(NameManglerPolicy{"com.app.test", {"com.app.lib"}})
+          .AddSymbolSource(util::make_unique<ResourceTableSymbolSource>(table.get()))
           .AddSymbolSource(
               test::StaticSymbolSourceBuilder()
-                  .AddSymbol("com.app.test:string/com.app.lib$hidden",
-                             ResourceId(0x7f040034))
+                  .AddSymbol("com.app.test:string/com.app.lib$hidden", ResourceId(0x7f040034))
                   .Build())
 
           .Build();
@@ -232,8 +216,7 @@ TEST(ReferenceLinkerTest, FailToLinkPrivateStyleAttributes) {
           .SetPackageId("com.app.test", 0x7f)
           .AddValue("com.app.test:style/Theme",
                     test::StyleBuilder()
-                        .AddItem("android:attr/hidden",
-                                 ResourceUtils::TryParseColor("#ff00ff"))
+                        .AddItem("android:attr/hidden", ResourceUtils::TryParseColor("#ff00ff"))
                         .Build())
           .Build();
 
@@ -242,15 +225,13 @@ TEST(ReferenceLinkerTest, FailToLinkPrivateStyleAttributes) {
           .SetCompilationPackage("com.app.test")
           .SetPackageId(0x7f)
           .SetNameManglerPolicy(NameManglerPolicy{"com.app.test"})
-          .AddSymbolSource(
-              util::make_unique<ResourceTableSymbolSource>(table.get()))
-          .AddSymbolSource(
-              test::StaticSymbolSourceBuilder()
-                  .AddSymbol("android:attr/hidden", ResourceId(0x01010001),
-                             test::AttributeBuilder()
-                                 .SetTypeMask(android::ResTable_map::TYPE_COLOR)
-                                 .Build())
-                  .Build())
+          .AddSymbolSource(util::make_unique<ResourceTableSymbolSource>(table.get()))
+          .AddSymbolSource(test::StaticSymbolSourceBuilder()
+                               .AddSymbol("android:attr/hidden", ResourceId(0x01010001),
+                                          test::AttributeBuilder()
+                                              .SetTypeMask(android::ResTable_map::TYPE_COLOR)
+                                              .Build())
+                               .Build())
           .Build();
 
   ReferenceLinker linker;
@@ -285,8 +266,8 @@ TEST(ReferenceLinkerTest, AppsWithDifferentPackageCanNotUseEachOthersAttribute) 
   std::string error;
   const CallSite call_site{"com.app.ext"};
 
-  EXPECT_FALSE(ReferenceLinker::CompileXmlAttribute(
-      *test::BuildReference("com.app.test:attr/foo"), call_site, &table, &error));
+  EXPECT_FALSE(ReferenceLinker::CompileXmlAttribute(*test::BuildReference("com.app.test:attr/foo"),
+                                                    call_site, &table, &error));
   EXPECT_FALSE(error.empty());
 
   error = "";

@@ -33,27 +33,20 @@ static int wantVersion = 0;
 #define SALT_LEN 8
 
 #define ADD_OPTS "n:v:os:"
-static const struct option longopts[] = {
-    {"help",       no_argument, &wantUsage,   1},
-    {"version",    no_argument, &wantVersion, 1},
+static const struct option longopts[] = {{"help", no_argument, &wantUsage, 1},
+                                         {"version", no_argument, &wantVersion, 1},
 
-    /* Args for "add" */
-    {"name",       required_argument, NULL, 'n'},
-    {"version",    required_argument, NULL, 'v'},
-    {"overlay",    optional_argument, NULL, 'o'},
-    {"salt",       required_argument, NULL, 's'},
+                                         /* Args for "add" */
+                                         {"name", required_argument, NULL, 'n'},
+                                         {"version", required_argument, NULL, 'v'},
+                                         {"overlay", optional_argument, NULL, 'o'},
+                                         {"salt", required_argument, NULL, 's'},
 
-    {NULL, 0, NULL, '\0'}
-};
+                                         {NULL, 0, NULL, '\0'}};
 
 class PackageInfo {
-public:
-    PackageInfo()
-            : packageName(NULL)
-            , packageVersion(-1)
-            , overlay(false)
-            , salted(false)
-    {
+  public:
+    PackageInfo() : packageName(NULL), packageVersion(-1), overlay(false), salted(false) {
         memset(&salt, 0, sizeof(salt));
     }
 
@@ -67,30 +60,32 @@ public:
 /*
  * Print usage info.
  */
-void usage(void)
-{
+void usage(void) {
     fprintf(stderr, "Opaque Binary Blob (OBB) Tool\n\n");
     fprintf(stderr, "Usage:\n");
     fprintf(stderr,
-        " %s a[dd] [ OPTIONS ] FILENAME\n"
-        "   Adds an OBB signature to the file.\n\n", gProgName);
+            " %s a[dd] [ OPTIONS ] FILENAME\n"
+            "   Adds an OBB signature to the file.\n\n",
+            gProgName);
     fprintf(stderr,
-        "   Options:\n"
-        "     -n <package name>      sets the OBB package name (required)\n"
-        "     -v <OBB version>       sets the OBB version (required)\n"
-        "     -o                     sets the OBB overlay flag\n"
-        "     -s <8 byte hex salt>   sets the crypto key salt (if encrypted)\n"
-        "\n");
+            "   Options:\n"
+            "     -n <package name>      sets the OBB package name (required)\n"
+            "     -v <OBB version>       sets the OBB version (required)\n"
+            "     -o                     sets the OBB overlay flag\n"
+            "     -s <8 byte hex salt>   sets the crypto key salt (if encrypted)\n"
+            "\n");
     fprintf(stderr,
-        " %s r[emove] FILENAME\n"
-        "   Removes the OBB signature from the file.\n\n", gProgName);
+            " %s r[emove] FILENAME\n"
+            "   Removes the OBB signature from the file.\n\n",
+            gProgName);
     fprintf(stderr,
-        " %s i[nfo] FILENAME\n"
-        "   Prints the OBB signature information of a file.\n\n", gProgName);
+            " %s i[nfo] FILENAME\n"
+            "   Prints the OBB signature information of a file.\n\n",
+            gProgName);
 }
 
 void doAdd(const char* filename, PackageInfo* info) {
-    ObbFile *obb = new ObbFile();
+    ObbFile* obb = new ObbFile();
     if (obb->readFrom(filename)) {
         fprintf(stderr, "ERROR: %s: OBB signature already present\n", filename);
         return;
@@ -104,8 +99,7 @@ void doAdd(const char* filename, PackageInfo* info) {
     }
 
     if (!obb->writeTo(filename)) {
-        fprintf(stderr, "ERROR: %s: couldn't write OBB signature: %s\n",
-                filename, strerror(errno));
+        fprintf(stderr, "ERROR: %s: couldn't write OBB signature: %s\n", filename, strerror(errno));
         return;
     }
 
@@ -113,7 +107,7 @@ void doAdd(const char* filename, PackageInfo* info) {
 }
 
 void doRemove(const char* filename) {
-    ObbFile *obb = new ObbFile();
+    ObbFile* obb = new ObbFile();
     if (!obb->readFrom(filename)) {
         fprintf(stderr, "ERROR: %s: no OBB signature present\n", filename);
         return;
@@ -128,7 +122,7 @@ void doRemove(const char* filename) {
 }
 
 void doInfo(const char* filename) {
-    ObbFile *obb = new ObbFile();
+    ObbFile* obb = new ObbFile();
     if (!obb->readFrom(filename)) {
         fprintf(stderr, "ERROR: %s: couldn't read OBB signature\n", filename);
         return;
@@ -153,7 +147,7 @@ void doInfo(const char* filename) {
     }
 }
 
-bool fromHex(char h, unsigned char *b) {
+bool fromHex(char h, unsigned char* b) {
     if (h >= '0' && h <= '9') {
         *b = h - '0';
         return true;
@@ -178,13 +172,12 @@ bool hexToByte(char h1, char h2, unsigned char* b) {
 /*
  * Parse args.
  */
-int main(int argc, char* const argv[])
-{
+int main(int argc, char* const argv[]) {
     int opt;
     int option_index = 0;
     PackageInfo package_info;
 
-    int result = 1;    // pessimistically assume an error.
+    int result = 1;  // pessimistically assume an error.
 
     if (argc < 2) {
         wantUsage = 1;
@@ -193,50 +186,50 @@ int main(int argc, char* const argv[])
 
     while ((opt = getopt_long(argc, argv, ADD_OPTS, longopts, &option_index)) != -1) {
         switch (opt) {
-        case 0:
-            if (longopts[option_index].flag)
+            case 0:
+                if (longopts[option_index].flag) break;
+                fprintf(stderr, "'%s' requires an argument\n", longopts[option_index].name);
+                wantUsage = 1;
+                goto bail;
+            case 'n':
+                package_info.packageName = optarg;
                 break;
-            fprintf(stderr, "'%s' requires an argument\n", longopts[option_index].name);
-            wantUsage = 1;
-            goto bail;
-        case 'n':
-            package_info.packageName = optarg;
-            break;
-        case 'v': {
-            char* end;
-            package_info.packageVersion = strtol(optarg, &end, 10);
-            if (*optarg == '\0' || *end != '\0') {
-                fprintf(stderr, "ERROR: invalid version; should be integer!\n\n");
-                wantUsage = 1;
-                goto bail;
-            }
-            break;
-        }
-        case 'o':
-            package_info.overlay = true;
-            break;
-        case 's':
-            if (strlen(optarg) != SALT_LEN * 2) {
-                fprintf(stderr, "ERROR: salt must be 8 bytes in hex (e.g., ABCD65031337D00D)\n\n");
-                wantUsage = 1;
-                goto bail;
-            }
-
-            package_info.salted = true;
-
-            unsigned char b;
-            for (int i = 0, j = 0; i < SALT_LEN; i++, j+=2) {
-                if (!hexToByte(optarg[j], optarg[j+1], &b)) {
-                    fprintf(stderr, "ERROR: salt must be in hex (e.g., ABCD65031337D00D)\n");
+            case 'v': {
+                char* end;
+                package_info.packageVersion = strtol(optarg, &end, 10);
+                if (*optarg == '\0' || *end != '\0') {
+                    fprintf(stderr, "ERROR: invalid version; should be integer!\n\n");
                     wantUsage = 1;
                     goto bail;
                 }
-                package_info.salt[i] = b;
+                break;
             }
-            break;
-        case '?':
-            wantUsage = 1;
-            goto bail;
+            case 'o':
+                package_info.overlay = true;
+                break;
+            case 's':
+                if (strlen(optarg) != SALT_LEN * 2) {
+                    fprintf(stderr,
+                            "ERROR: salt must be 8 bytes in hex (e.g., ABCD65031337D00D)\n\n");
+                    wantUsage = 1;
+                    goto bail;
+                }
+
+                package_info.salted = true;
+
+                unsigned char b;
+                for (int i = 0, j = 0; i < SALT_LEN; i++, j += 2) {
+                    if (!hexToByte(optarg[j], optarg[j + 1], &b)) {
+                        fprintf(stderr, "ERROR: salt must be in hex (e.g., ABCD65031337D00D)\n");
+                        wantUsage = 1;
+                        goto bail;
+                    }
+                    package_info.salt[i] = b;
+                }
+                break;
+            case '?':
+                wantUsage = 1;
+                goto bail;
         }
     }
 
@@ -248,11 +241,11 @@ int main(int argc, char* const argv[])
         goto bail;
     }
 
-#define CHECK_OP(name) \
-    if (strncmp(op, name, opsize)) { \
+#define CHECK_OP(name)                                            \
+    if (strncmp(op, name, opsize)) {                              \
         fprintf(stderr, "ERROR: unknown function '%s'!\n\n", op); \
-        wantUsage = 1; \
-        goto bail; \
+        wantUsage = 1;                                            \
+        goto bail;                                                \
     }
 
     if (optind < argc) {
@@ -268,26 +261,26 @@ int main(int argc, char* const argv[])
         const char* filename = argv[optind++];
 
         switch (op[0]) {
-        case 'a':
-            CHECK_OP("add");
-            if (package_info.packageName == NULL) {
-                fprintf(stderr, "ERROR: arguments required 'packageName' and 'version'\n");
+            case 'a':
+                CHECK_OP("add");
+                if (package_info.packageName == NULL) {
+                    fprintf(stderr, "ERROR: arguments required 'packageName' and 'version'\n");
+                    goto bail;
+                }
+                doAdd(filename, &package_info);
+                break;
+            case 'r':
+                CHECK_OP("remove");
+                doRemove(filename);
+                break;
+            case 'i':
+                CHECK_OP("info");
+                doInfo(filename);
+                break;
+            default:
+                fprintf(stderr, "ERROR: unknown command '%s'!\n\n", op);
+                wantUsage = 1;
                 goto bail;
-            }
-            doAdd(filename, &package_info);
-            break;
-        case 'r':
-            CHECK_OP("remove");
-            doRemove(filename);
-            break;
-        case 'i':
-            CHECK_OP("info");
-            doInfo(filename);
-            break;
-        default:
-            fprintf(stderr, "ERROR: unknown command '%s'!\n\n", op);
-            wantUsage = 1;
-            goto bail;
         }
     }
 

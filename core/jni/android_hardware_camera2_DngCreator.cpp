@@ -19,26 +19,26 @@
 #include <inttypes.h>
 #include <string.h>
 #include <algorithm>
+#include <cmath>
 #include <memory>
 #include <vector>
-#include <cmath>
 
 #include <android-base/properties.h>
-#include <utils/Log.h>
-#include <utils/Errors.h>
-#include <utils/StrongPointer.h>
-#include <utils/RefBase.h>
-#include <utils/Vector.h>
-#include <utils/String8.h>
-#include <system/camera_metadata.h>
 #include <camera/CameraMetadata.h>
 #include <img_utils/DngUtils.h>
+#include <img_utils/Input.h>
+#include <img_utils/Output.h>
+#include <img_utils/StripSource.h>
 #include <img_utils/TagDefinitions.h>
 #include <img_utils/TiffIfd.h>
 #include <img_utils/TiffWriter.h>
-#include <img_utils/Output.h>
-#include <img_utils/Input.h>
-#include <img_utils/StripSource.h>
+#include <system/camera_metadata.h>
+#include <utils/Errors.h>
+#include <utils/Log.h>
+#include <utils/RefBase.h>
+#include <utils/String8.h>
+#include <utils/StrongPointer.h>
+#include <utils/Vector.h>
 
 #include "core_jni_helpers.h"
 
@@ -52,62 +52,58 @@ using namespace android;
 using namespace img_utils;
 using android::base::GetProperty;
 
-#define BAIL_IF_INVALID_RET_BOOL(expr, jnienv, tagId, writer) \
-    if ((expr) != OK) { \
-        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException", \
-                "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), (tagId)); \
-        return false; \
+#define BAIL_IF_INVALID_RET_BOOL(expr, jnienv, tagId, writer)                                 \
+    if ((expr) != OK) {                                                                       \
+        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException",                    \
+                             "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), \
+                             (tagId));                                                        \
+        return false;                                                                         \
     }
 
-
-#define BAIL_IF_INVALID_RET_NULL_SP(expr, jnienv, tagId, writer) \
-    if ((expr) != OK) { \
-        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException", \
-                "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), (tagId)); \
-        return nullptr; \
+#define BAIL_IF_INVALID_RET_NULL_SP(expr, jnienv, tagId, writer)                              \
+    if ((expr) != OK) {                                                                       \
+        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException",                    \
+                             "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), \
+                             (tagId));                                                        \
+        return nullptr;                                                                       \
     }
 
-
-#define BAIL_IF_INVALID_R(expr, jnienv, tagId, writer) \
-    if ((expr) != OK) { \
-        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException", \
-                "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), (tagId)); \
-        return -1; \
+#define BAIL_IF_INVALID_R(expr, jnienv, tagId, writer)                                        \
+    if ((expr) != OK) {                                                                       \
+        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException",                    \
+                             "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), \
+                             (tagId));                                                        \
+        return -1;                                                                            \
     }
 
-#define BAIL_IF_EMPTY_RET_NULL_SP(entry, jnienv, tagId, writer) \
-    if ((entry).count == 0) { \
+#define BAIL_IF_EMPTY_RET_NULL_SP(entry, jnienv, tagId, writer)            \
+    if ((entry).count == 0) {                                              \
         jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException", \
-                "Missing metadata fields for tag %s (%x)", (writer)->getTagName(tagId), (tagId)); \
-        return nullptr; \
+                             "Missing metadata fields for tag %s (%x)",    \
+                             (writer)->getTagName(tagId), (tagId));        \
+        return nullptr;                                                    \
     }
 
-#define BAIL_IF_EXPR_RET_NULL_SP(expr, jnienv, tagId, writer) \
-    if (expr) { \
-        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException", \
-                "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), (tagId)); \
-        return nullptr; \
+#define BAIL_IF_EXPR_RET_NULL_SP(expr, jnienv, tagId, writer)                                 \
+    if (expr) {                                                                               \
+        jniThrowExceptionFmt(jnienv, "java/lang/IllegalArgumentException",                    \
+                             "Invalid metadata for tag %s (%x)", (writer)->getTagName(tagId), \
+                             (tagId));                                                        \
+        return nullptr;                                                                       \
     }
 
+#define ANDROID_DNGCREATOR_CTX_JNI_ID "mNativeContext"
 
-#define ANDROID_DNGCREATOR_CTX_JNI_ID     "mNativeContext"
+static struct { jfieldID mNativeContext; } gDngCreatorClassInfo;
 
-static struct {
-    jfieldID mNativeContext;
-} gDngCreatorClassInfo;
-
-static struct {
-    jmethodID mWriteMethod;
-} gOutputStreamClassInfo;
+static struct { jmethodID mWriteMethod; } gOutputStreamClassInfo;
 
 static struct {
     jmethodID mReadMethod;
     jmethodID mSkipMethod;
 } gInputStreamClassInfo;
 
-static struct {
-    jmethodID mGetMethod;
-} gInputByteBufferClassInfo;
+static struct { jmethodID mGetMethod; } gInputByteBufferClassInfo;
 
 enum {
     BITS_PER_SAMPLE = 16,
@@ -122,12 +118,11 @@ enum {
     TIFF_IFD_GPSINFO = 2,
 };
 
-
 /**
  * POD container class for GPS tag data.
  */
 class GpsData {
-public:
+  public:
     enum {
         GPS_VALUE_LENGTH = 6,
         GPS_REF_LENGTH = 2,
@@ -149,7 +144,7 @@ public:
  */
 
 class NativeContext : public LightRefBase<NativeContext> {
-public:
+  public:
     enum {
         DATETIME_COUNT = 20,
     };
@@ -184,7 +179,7 @@ public:
     String8 getCaptureTime() const;
     bool hasCaptureTime() const;
 
-private:
+  private:
     Vector<uint8_t> mCurrentThumbnail;
     TiffWriter mWriter;
     std::shared_ptr<CameraMetadata> mCharacteristics;
@@ -201,11 +196,16 @@ private:
     String8 mFormattedCaptureTime;
 };
 
-NativeContext::NativeContext(const CameraMetadata& characteristics, const CameraMetadata& result) :
-        mCharacteristics(std::make_shared<CameraMetadata>(characteristics)),
-        mResult(std::make_shared<CameraMetadata>(result)), mThumbnailWidth(0),
-        mThumbnailHeight(0), mOrientation(TAG_ORIENTATION_UNKNOWN), mThumbnailSet(false),
-        mGpsSet(false), mDescriptionSet(false), mCaptureTimeSet(false) {}
+NativeContext::NativeContext(const CameraMetadata& characteristics, const CameraMetadata& result)
+    : mCharacteristics(std::make_shared<CameraMetadata>(characteristics)),
+      mResult(std::make_shared<CameraMetadata>(result)),
+      mThumbnailWidth(0),
+      mThumbnailHeight(0),
+      mOrientation(TAG_ORIENTATION_UNKNOWN),
+      mThumbnailSet(false),
+      mGpsSet(false),
+      mDescriptionSet(false),
+      mCaptureTimeSet(false) {}
 
 NativeContext::~NativeContext() {}
 
@@ -309,7 +309,7 @@ bool NativeContext::hasCaptureTime() const {
  * This class is not intended to be used across JNI calls.
  */
 class JniOutputStream : public Output, public LightRefBase<JniOutputStream> {
-public:
+  public:
     JniOutputStream(JNIEnv* env, jobject outStream);
 
     virtual ~JniOutputStream();
@@ -319,17 +319,16 @@ public:
     status_t write(const uint8_t* buf, size_t offset, size_t count);
 
     status_t close();
-private:
-    enum {
-        BYTE_ARRAY_LENGTH = 4096
-    };
+
+  private:
+    enum { BYTE_ARRAY_LENGTH = 4096 };
     jobject mOutputStream;
     JNIEnv* mEnv;
     jbyteArray mByteArray;
 };
 
-JniOutputStream::JniOutputStream(JNIEnv* env, jobject outStream) : mOutputStream(outStream),
-        mEnv(env) {
+JniOutputStream::JniOutputStream(JNIEnv* env, jobject outStream)
+    : mOutputStream(outStream), mEnv(env) {
     mByteArray = env->NewByteArray(BYTE_ARRAY_LENGTH);
     if (mByteArray == nullptr) {
         jniThrowException(env, "java/lang/OutOfMemoryError", "Could not allocate byte array.");
@@ -346,7 +345,7 @@ status_t JniOutputStream::open() {
 }
 
 status_t JniOutputStream::write(const uint8_t* buf, size_t offset, size_t count) {
-    while(count > 0) {
+    while (count > 0) {
         size_t len = BYTE_ARRAY_LENGTH;
         len = (count > len) ? len : count;
         mEnv->SetByteArrayRegion(mByteArray, 0, len, reinterpret_cast<const jbyte*>(buf + offset));
@@ -355,8 +354,8 @@ status_t JniOutputStream::write(const uint8_t* buf, size_t offset, size_t count)
             return BAD_VALUE;
         }
 
-        mEnv->CallVoidMethod(mOutputStream, gOutputStreamClassInfo.mWriteMethod, mByteArray,
-                0, len);
+        mEnv->CallVoidMethod(mOutputStream, gOutputStreamClassInfo.mWriteMethod, mByteArray, 0,
+                             len);
 
         if (mEnv->ExceptionCheck()) {
             return BAD_VALUE;
@@ -382,7 +381,7 @@ status_t JniOutputStream::close() {
  * This class is not intended to be used across JNI calls.
  */
 class JniInputStream : public Input, public LightRefBase<JniInputStream> {
-public:
+  public:
     JniInputStream(JNIEnv* env, jobject inStream);
 
     status_t open();
@@ -394,14 +393,12 @@ public:
     ssize_t skip(size_t count);
 
     virtual ~JniInputStream();
-private:
-    enum {
-        BYTE_ARRAY_LENGTH = 4096
-    };
+
+  private:
+    enum { BYTE_ARRAY_LENGTH = 4096 };
     jobject mInStream;
     JNIEnv* mEnv;
     jbyteArray mByteArray;
-
 };
 
 JniInputStream::JniInputStream(JNIEnv* env, jobject inStream) : mInStream(inStream), mEnv(env) {
@@ -416,13 +413,12 @@ JniInputStream::~JniInputStream() {
 }
 
 ssize_t JniInputStream::read(uint8_t* buf, size_t offset, size_t count) {
-
     jint realCount = BYTE_ARRAY_LENGTH;
     if (count < BYTE_ARRAY_LENGTH) {
         realCount = count;
     }
     jint actual = mEnv->CallIntMethod(mInStream, gInputStreamClassInfo.mReadMethod, mByteArray, 0,
-            realCount);
+                                      realCount);
 
     if (actual < 0) {
         return NOT_ENOUGH_DATA;
@@ -441,7 +437,7 @@ ssize_t JniInputStream::read(uint8_t* buf, size_t offset, size_t count) {
 
 ssize_t JniInputStream::skip(size_t count) {
     jlong actual = mEnv->CallLongMethod(mInStream, gInputStreamClassInfo.mSkipMethod,
-            static_cast<jlong>(count));
+                                        static_cast<jlong>(count));
 
     if (mEnv->ExceptionCheck()) {
         return BAD_VALUE;
@@ -471,7 +467,7 @@ status_t JniInputStream::close() {
  * This class is not intended to be used across JNI calls.
  */
 class JniInputByteBuffer : public Input, public LightRefBase<JniInputByteBuffer> {
-public:
+  public:
     JniInputByteBuffer(JNIEnv* env, jobject inBuf);
 
     status_t open();
@@ -481,10 +477,9 @@ public:
     ssize_t read(uint8_t* buf, size_t offset, size_t count);
 
     virtual ~JniInputByteBuffer();
-private:
-    enum {
-        BYTE_ARRAY_LENGTH = 4096
-    };
+
+  private:
+    enum { BYTE_ARRAY_LENGTH = 4096 };
     jobject mInBuf;
     JNIEnv* mEnv;
     jbyteArray mByteArray;
@@ -508,7 +503,7 @@ ssize_t JniInputByteBuffer::read(uint8_t* buf, size_t offset, size_t count) {
     }
 
     jobject chainingBuf = mEnv->CallObjectMethod(mInBuf, gInputByteBufferClassInfo.mGetMethod,
-            mByteArray, 0, realCount);
+                                                 mByteArray, 0, realCount);
     mEnv->DeleteLocalRef(chainingBuf);
 
     if (mEnv->ExceptionCheck()) {
@@ -544,17 +539,18 @@ status_t JniInputByteBuffer::close() {
  */
 
 class InputStripSource : public StripSource, public LightRefBase<InputStripSource> {
-public:
+  public:
     InputStripSource(JNIEnv* env, Input& input, uint32_t ifd, uint32_t width, uint32_t height,
-            uint32_t pixStride, uint32_t rowStride, uint64_t offset, uint32_t bytesPerSample,
-            uint32_t samplesPerPixel);
+                     uint32_t pixStride, uint32_t rowStride, uint64_t offset,
+                     uint32_t bytesPerSample, uint32_t samplesPerPixel);
 
     virtual ~InputStripSource();
 
     virtual status_t writeToStream(Output& stream, uint32_t count);
 
     virtual uint32_t getIfd() const;
-protected:
+
+  protected:
     uint32_t mIfd;
     Input* mInput;
     uint32_t mWidth;
@@ -568,11 +564,19 @@ protected:
 };
 
 InputStripSource::InputStripSource(JNIEnv* env, Input& input, uint32_t ifd, uint32_t width,
-        uint32_t height, uint32_t pixStride, uint32_t rowStride, uint64_t offset,
-        uint32_t bytesPerSample, uint32_t samplesPerPixel) : mIfd(ifd), mInput(&input),
-        mWidth(width), mHeight(height), mPixStride(pixStride), mRowStride(rowStride),
-        mOffset(offset), mEnv(env), mBytesPerSample(bytesPerSample),
-        mSamplesPerPixel(samplesPerPixel) {}
+                                   uint32_t height, uint32_t pixStride, uint32_t rowStride,
+                                   uint64_t offset, uint32_t bytesPerSample,
+                                   uint32_t samplesPerPixel)
+    : mIfd(ifd),
+      mInput(&input),
+      mWidth(width),
+      mHeight(height),
+      mPixStride(pixStride),
+      mRowStride(rowStride),
+      mOffset(offset),
+      mEnv(env),
+      mBytesPerSample(bytesPerSample),
+      mSamplesPerPixel(samplesPerPixel) {}
 
 InputStripSource::~InputStripSource() {}
 
@@ -581,8 +585,7 @@ status_t InputStripSource::writeToStream(Output& stream, uint32_t count) {
     jlong offset = mOffset;
 
     if (fullSize != count) {
-        ALOGE("%s: Amount to write %u doesn't match image size %u", __FUNCTION__, count,
-                fullSize);
+        ALOGE("%s: Amount to write %u doesn't match image size %u", __FUNCTION__, count, fullSize);
         jniThrowException(mEnv, "java/lang/IllegalStateException", "Not enough data to write");
         return BAD_VALUE;
     }
@@ -592,14 +595,15 @@ status_t InputStripSource::writeToStream(Output& stream, uint32_t count) {
         ssize_t skipped = mInput->skip(offset);
         if (skipped <= 0) {
             if (skipped == NOT_ENOUGH_DATA || skipped == 0) {
-                jniThrowExceptionFmt(mEnv, "java/io/IOException",
+                jniThrowExceptionFmt(
+                        mEnv, "java/io/IOException",
                         "Early EOF encountered in skip, not enough pixel data for image of size %u",
                         fullSize);
                 skipped = NOT_ENOUGH_DATA;
             } else {
                 if (!mEnv->ExceptionCheck()) {
                     jniThrowException(mEnv, "java/io/IOException",
-                            "Error encountered while skip bytes in input stream.");
+                                      "Error encountered while skip bytes in input stream.");
                 }
             }
 
@@ -624,16 +628,17 @@ status_t InputStripSource::writeToStream(Output& stream, uint32_t count) {
             ssize_t bytesRead = mInput->read(rowBytes, rowFillAmt, rowSize);
             if (bytesRead <= 0) {
                 if (bytesRead == NOT_ENOUGH_DATA || bytesRead == 0) {
-                    ALOGE("%s: Early EOF on row %" PRIu32 ", received bytesRead %zd",
-                            __FUNCTION__, i, bytesRead);
+                    ALOGE("%s: Early EOF on row %" PRIu32 ", received bytesRead %zd", __FUNCTION__,
+                          i, bytesRead);
                     jniThrowExceptionFmt(mEnv, "java/io/IOException",
-                            "Early EOF encountered, not enough pixel data for image of size %"
-                            PRIu32, fullSize);
+                                         "Early EOF encountered, not enough pixel data for image "
+                                         "of size %" PRIu32,
+                                         fullSize);
                     bytesRead = NOT_ENOUGH_DATA;
                 } else {
                     if (!mEnv->ExceptionCheck()) {
                         jniThrowException(mEnv, "java/io/IOException",
-                                "Error encountered while reading");
+                                          "Error encountered while reading");
                     }
                 }
                 return bytesRead;
@@ -646,7 +651,7 @@ status_t InputStripSource::writeToStream(Output& stream, uint32_t count) {
             ALOGV("%s: Using stream per-row write for strip.", __FUNCTION__);
 
             if (stream.write(rowBytes, 0, mBytesPerSample * mSamplesPerPixel * mWidth) != OK ||
-                    mEnv->ExceptionCheck()) {
+                mEnv->ExceptionCheck()) {
                 if (!mEnv->ExceptionCheck()) {
                     jniThrowException(mEnv, "java/io/IOException", "Failed to write pixel data");
                 }
@@ -654,7 +659,8 @@ status_t InputStripSource::writeToStream(Output& stream, uint32_t count) {
             }
         } else {
             ALOGV("%s: Using stream per-pixel write for strip.", __FUNCTION__);
-            jniThrowException(mEnv, "java/lang/IllegalStateException",
+            jniThrowException(
+                    mEnv, "java/lang/IllegalStateException",
                     "Per-pixel strides are not supported for RAW16 -- pixels must be contiguous");
             return BAD_VALUE;
 
@@ -678,17 +684,18 @@ uint32_t InputStripSource::getIfd() const {
  */
 
 class DirectStripSource : public StripSource, public LightRefBase<DirectStripSource> {
-public:
+  public:
     DirectStripSource(JNIEnv* env, const uint8_t* pixelBytes, uint32_t ifd, uint32_t width,
-            uint32_t height, uint32_t pixStride, uint32_t rowStride, uint64_t offset,
-            uint32_t bytesPerSample, uint32_t samplesPerPixel);
+                      uint32_t height, uint32_t pixStride, uint32_t rowStride, uint64_t offset,
+                      uint32_t bytesPerSample, uint32_t samplesPerPixel);
 
     virtual ~DirectStripSource();
 
     virtual status_t writeToStream(Output& stream, uint32_t count);
 
     virtual uint32_t getIfd() const;
-protected:
+
+  protected:
     uint32_t mIfd;
     const uint8_t* mPixelBytes;
     uint32_t mWidth;
@@ -702,11 +709,19 @@ protected:
 };
 
 DirectStripSource::DirectStripSource(JNIEnv* env, const uint8_t* pixelBytes, uint32_t ifd,
-            uint32_t width, uint32_t height, uint32_t pixStride, uint32_t rowStride,
-            uint64_t offset, uint32_t bytesPerSample, uint32_t samplesPerPixel) : mIfd(ifd),
-            mPixelBytes(pixelBytes), mWidth(width), mHeight(height), mPixStride(pixStride),
-            mRowStride(rowStride), mOffset(offset), mEnv(env), mBytesPerSample(bytesPerSample),
-            mSamplesPerPixel(samplesPerPixel) {}
+                                     uint32_t width, uint32_t height, uint32_t pixStride,
+                                     uint32_t rowStride, uint64_t offset, uint32_t bytesPerSample,
+                                     uint32_t samplesPerPixel)
+    : mIfd(ifd),
+      mPixelBytes(pixelBytes),
+      mWidth(width),
+      mHeight(height),
+      mPixStride(pixStride),
+      mRowStride(rowStride),
+      mOffset(offset),
+      mEnv(env),
+      mBytesPerSample(bytesPerSample),
+      mSamplesPerPixel(samplesPerPixel) {}
 
 DirectStripSource::~DirectStripSource() {}
 
@@ -714,15 +729,13 @@ status_t DirectStripSource::writeToStream(Output& stream, uint32_t count) {
     uint32_t fullSize = mWidth * mHeight * mBytesPerSample * mSamplesPerPixel;
 
     if (fullSize != count) {
-        ALOGE("%s: Amount to write %u doesn't match image size %u", __FUNCTION__, count,
-                fullSize);
+        ALOGE("%s: Amount to write %u doesn't match image size %u", __FUNCTION__, count, fullSize);
         jniThrowException(mEnv, "java/lang/IllegalStateException", "Not enough data to write");
         return BAD_VALUE;
     }
 
-
-    if (mPixStride == mBytesPerSample * mSamplesPerPixel
-            && mRowStride == mWidth * mBytesPerSample * mSamplesPerPixel) {
+    if (mPixStride == mBytesPerSample * mSamplesPerPixel &&
+        mRowStride == mWidth * mBytesPerSample * mSamplesPerPixel) {
         ALOGV("%s: Using direct single-pass write for strip.", __FUNCTION__);
 
         if (stream.write(mPixelBytes, mOffset, fullSize) != OK || mEnv->ExceptionCheck()) {
@@ -736,7 +749,7 @@ status_t DirectStripSource::writeToStream(Output& stream, uint32_t count) {
 
         for (size_t i = 0; i < mHeight; ++i) {
             if (stream.write(mPixelBytes, mOffset + i * mRowStride, mPixStride * mWidth) != OK ||
-                        mEnv->ExceptionCheck()) {
+                mEnv->ExceptionCheck()) {
                 if (!mEnv->ExceptionCheck()) {
                     jniThrowException(mEnv, "java/io/IOException", "Failed to write pixel data");
                 }
@@ -746,14 +759,14 @@ status_t DirectStripSource::writeToStream(Output& stream, uint32_t count) {
     } else {
         ALOGV("%s: Using direct per-pixel write for strip.", __FUNCTION__);
 
-        jniThrowException(mEnv, "java/lang/IllegalStateException",
+        jniThrowException(
+                mEnv, "java/lang/IllegalStateException",
                 "Per-pixel strides are not supported for RAW16 -- pixels must be contiguous");
         return BAD_VALUE;
 
         // TODO: Add support for non-contiguous pixels if needed.
     }
     return OK;
-
 }
 
 uint32_t DirectStripSource::getIfd() const {
@@ -768,20 +781,20 @@ uint32_t DirectStripSource::getIfd() const {
  * will always be the pre-correction active area rectangle), and set this.
  */
 static status_t calculateAndSetCrop(JNIEnv* env, const CameraMetadata& characteristics,
-        sp<TiffWriter> writer) {
-
+                                    sp<TiffWriter> writer) {
     camera_metadata_ro_entry entry =
             characteristics.find(ANDROID_SENSOR_INFO_PRE_CORRECTION_ACTIVE_ARRAY_SIZE);
     uint32_t width = static_cast<uint32_t>(entry.data.i32[2]);
     uint32_t height = static_cast<uint32_t>(entry.data.i32[3]);
 
-    const uint32_t margin = 8; // Default margin recommended by Adobe for interpolation.
+    const uint32_t margin = 8;  // Default margin recommended by Adobe for interpolation.
 
     if (width < margin * 2 || height < margin * 2) {
         ALOGE("%s: Cannot calculate default crop for image, pre-correction active area is too"
-                "small: h=%" PRIu32 ", w=%" PRIu32, __FUNCTION__, height, width);
+              "small: h=%" PRIu32 ", w=%" PRIu32,
+              __FUNCTION__, height, width);
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Pre-correction active area is too small.");
+                          "Pre-correction active area is too small.");
         return BAD_VALUE;
     }
 
@@ -789,25 +802,25 @@ static status_t calculateAndSetCrop(JNIEnv* env, const CameraMetadata& character
     uint32_t defaultCropSize[] = {width - defaultCropOrigin[0] - margin,
                                   height - defaultCropOrigin[1] - margin};
 
-    BAIL_IF_INVALID_R(writer->addEntry(TAG_DEFAULTCROPORIGIN, 2, defaultCropOrigin,
-            TIFF_IFD_0), env, TAG_DEFAULTCROPORIGIN, writer);
-    BAIL_IF_INVALID_R(writer->addEntry(TAG_DEFAULTCROPSIZE, 2, defaultCropSize,
-            TIFF_IFD_0), env, TAG_DEFAULTCROPSIZE, writer);
+    BAIL_IF_INVALID_R(writer->addEntry(TAG_DEFAULTCROPORIGIN, 2, defaultCropOrigin, TIFF_IFD_0),
+                      env, TAG_DEFAULTCROPORIGIN, writer);
+    BAIL_IF_INVALID_R(writer->addEntry(TAG_DEFAULTCROPSIZE, 2, defaultCropSize, TIFF_IFD_0), env,
+                      TAG_DEFAULTCROPSIZE, writer);
 
     return OK;
 }
 
 static bool validateDngHeader(JNIEnv* env, sp<TiffWriter> writer,
-        const CameraMetadata& characteristics, jint width, jint height) {
+                              const CameraMetadata& characteristics, jint width, jint height) {
     if (width <= 0) {
-        jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", \
-                        "Image width %d is invalid", width);
+        jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", "Image width %d is invalid",
+                             width);
         return false;
     }
 
     if (height <= 0) {
-        jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", \
-                        "Image height %d is invalid", height);
+        jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
+                             "Image height %d is invalid", height);
         return false;
     }
 
@@ -825,10 +838,11 @@ static bool validateDngHeader(JNIEnv* env, sp<TiffWriter> writer,
     bool matchesPreCorrectionArray = (cWidth == width && cHeight == height);
 
     if (!(matchesPixelArray || matchesPreCorrectionArray)) {
-        jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", \
-                        "Image dimensions (w=%d,h=%d) are invalid, must match either the pixel "
-                        "array size (w=%d, h=%d) or the pre-correction array size (w=%d, h=%d)",
-                        width, height, pWidth, pHeight, cWidth, cHeight);
+        jniThrowExceptionFmt(
+                env, "java/lang/IllegalArgumentException",
+                "Image dimensions (w=%d,h=%d) are invalid, must match either the pixel "
+                "array size (w=%d, h=%d) or the pre-correction array size (w=%d, h=%d)",
+                width, height, pWidth, pHeight, cWidth, cHeight);
         return false;
     }
 
@@ -836,18 +850,18 @@ static bool validateDngHeader(JNIEnv* env, sp<TiffWriter> writer,
 }
 
 static status_t moveEntries(sp<TiffWriter> writer, uint32_t ifdFrom, uint32_t ifdTo,
-        const Vector<uint16_t>& entries) {
+                            const Vector<uint16_t>& entries) {
     for (size_t i = 0; i < entries.size(); ++i) {
         uint16_t tagId = entries[i];
         sp<TiffEntry> entry = writer->getEntry(tagId, ifdFrom);
         if (entry.get() == nullptr) {
             ALOGE("%s: moveEntries failed, entry %u not found in IFD %u", __FUNCTION__, tagId,
-                    ifdFrom);
+                  ifdFrom);
             return BAD_VALUE;
         }
         if (writer->addEntry(entry, ifdTo) != OK) {
             ALOGE("%s: moveEntries failed, could not add entry %u to IFD %u", __FUNCTION__, tagId,
-                    ifdFrom);
+                  ifdFrom);
             return BAD_VALUE;
         }
         writer->removeEntry(tagId, ifdFrom);
@@ -859,11 +873,11 @@ static status_t moveEntries(sp<TiffWriter> writer, uint32_t ifdFrom, uint32_t if
  * Write CFA pattern for given CFA enum into cfaOut.  cfaOut must have length >= 4.
  * Returns OK on success, or a negative error code if the CFA enum was invalid.
  */
-static status_t convertCFA(uint8_t cfaEnum, /*out*/uint8_t* cfaOut) {
+static status_t convertCFA(uint8_t cfaEnum, /*out*/ uint8_t* cfaOut) {
     camera_metadata_enum_android_sensor_info_color_filter_arrangement_t cfa =
             static_cast<camera_metadata_enum_android_sensor_info_color_filter_arrangement_t>(
-            cfaEnum);
-    switch(cfa) {
+                    cfaEnum);
+    switch (cfa) {
         case ANDROID_SENSOR_INFO_COLOR_FILTER_ARRANGEMENT_RGGB: {
             cfaOut[0] = 0;
             cfaOut[1] = 1;
@@ -906,8 +920,8 @@ static status_t convertCFA(uint8_t cfaEnum, /*out*/uint8_t* cfaOut) {
 static OpcodeListBuilder::CfaLayout convertCFAEnumToOpcodeLayout(uint8_t cfaEnum) {
     camera_metadata_enum_android_sensor_info_color_filter_arrangement_t cfa =
             static_cast<camera_metadata_enum_android_sensor_info_color_filter_arrangement_t>(
-            cfaEnum);
-    switch(cfa) {
+                    cfaEnum);
+    switch (cfa) {
         case ANDROID_SENSOR_INFO_COLOR_FILTER_ARRANGEMENT_RGGB: {
             return OpcodeListBuilder::CFA_RGGB;
         }
@@ -943,9 +957,9 @@ static OpcodeListBuilder::CfaLayout convertCFAEnumToOpcodeLayout(uint8_t cfaEnum
  * returns OK, or a negative error code on failure.
  */
 static status_t generateNoiseProfile(const double* perChannelNoiseProfile, uint8_t* cfa,
-        size_t numChannels, const uint8_t* planeColors, size_t numPlanes,
-        /*out*/double* noiseProfile) {
-
+                                     size_t numChannels, const uint8_t* planeColors,
+                                     size_t numPlanes,
+                                     /*out*/ double* noiseProfile) {
     for (size_t p = 0; p < numPlanes; ++p) {
         size_t S = p * 2;
         size_t O = p * 2 + 1;
@@ -961,8 +975,7 @@ static status_t generateNoiseProfile(const double* perChannelNoiseProfile, uint8
             }
         }
         if (uninitialized) {
-            ALOGE("%s: No valid NoiseProfile coefficients for color plane %zu",
-                  __FUNCTION__, p);
+            ALOGE("%s: No valid NoiseProfile coefficients for color plane %zu", __FUNCTION__, p);
             return BAD_VALUE;
         }
     }
@@ -974,8 +987,8 @@ extern "C" {
 
 static NativeContext* DngCreator_getNativeContext(JNIEnv* env, jobject thiz) {
     ALOGV("%s:", __FUNCTION__);
-    return reinterpret_cast<NativeContext*>(env->GetLongField(thiz,
-            gDngCreatorClassInfo.mNativeContext));
+    return reinterpret_cast<NativeContext*>(
+            env->GetLongField(thiz, gDngCreatorClassInfo.mNativeContext));
 }
 
 static void DngCreator_setNativeContext(JNIEnv* env, jobject thiz, sp<NativeContext> context) {
@@ -983,49 +996,49 @@ static void DngCreator_setNativeContext(JNIEnv* env, jobject thiz, sp<NativeCont
     NativeContext* current = DngCreator_getNativeContext(env, thiz);
 
     if (context != nullptr) {
-        context->incStrong((void*) DngCreator_setNativeContext);
+        context->incStrong((void*)DngCreator_setNativeContext);
     }
 
     if (current) {
-        current->decStrong((void*) DngCreator_setNativeContext);
+        current->decStrong((void*)DngCreator_setNativeContext);
     }
 
     env->SetLongField(thiz, gDngCreatorClassInfo.mNativeContext,
-            reinterpret_cast<jlong>(context.get()));
+                      reinterpret_cast<jlong>(context.get()));
 }
 
 static void DngCreator_nativeClassInit(JNIEnv* env, jclass clazz) {
     ALOGV("%s:", __FUNCTION__);
 
-    gDngCreatorClassInfo.mNativeContext = GetFieldIDOrDie(env,
-            clazz, ANDROID_DNGCREATOR_CTX_JNI_ID, "J");
+    gDngCreatorClassInfo.mNativeContext =
+            GetFieldIDOrDie(env, clazz, ANDROID_DNGCREATOR_CTX_JNI_ID, "J");
 
     jclass outputStreamClazz = FindClassOrDie(env, "java/io/OutputStream");
-    gOutputStreamClassInfo.mWriteMethod = GetMethodIDOrDie(env,
-            outputStreamClazz, "write", "([BII)V");
+    gOutputStreamClassInfo.mWriteMethod =
+            GetMethodIDOrDie(env, outputStreamClazz, "write", "([BII)V");
 
     jclass inputStreamClazz = FindClassOrDie(env, "java/io/InputStream");
     gInputStreamClassInfo.mReadMethod = GetMethodIDOrDie(env, inputStreamClazz, "read", "([BII)I");
     gInputStreamClassInfo.mSkipMethod = GetMethodIDOrDie(env, inputStreamClazz, "skip", "(J)J");
 
     jclass inputBufferClazz = FindClassOrDie(env, "java/nio/ByteBuffer");
-    gInputByteBufferClassInfo.mGetMethod = GetMethodIDOrDie(env,
-            inputBufferClazz, "get", "([BII)Ljava/nio/ByteBuffer;");
+    gInputByteBufferClassInfo.mGetMethod =
+            GetMethodIDOrDie(env, inputBufferClazz, "get", "([BII)Ljava/nio/ByteBuffer;");
 }
 
 static void DngCreator_init(JNIEnv* env, jobject thiz, jobject characteristicsPtr,
-        jobject resultsPtr, jstring formattedCaptureTime) {
+                            jobject resultsPtr, jstring formattedCaptureTime) {
     ALOGV("%s:", __FUNCTION__);
     CameraMetadata characteristics;
     CameraMetadata results;
     if (CameraMetadata_getNativeMetadata(env, characteristicsPtr, &characteristics) != OK) {
-         jniThrowException(env, "java/lang/AssertionError",
-                "No native metadata defined for camera characteristics.");
-         return;
+        jniThrowException(env, "java/lang/AssertionError",
+                          "No native metadata defined for camera characteristics.");
+        return;
     }
     if (CameraMetadata_getNativeMetadata(env, resultsPtr, &results) != OK) {
         jniThrowException(env, "java/lang/AssertionError",
-                "No native metadata defined for capture results.");
+                          "No native metadata defined for capture results.");
         return;
     }
 
@@ -1036,7 +1049,7 @@ static void DngCreator_init(JNIEnv* env, jobject thiz, jobject characteristicsPt
     size_t len = strlen(captureTime) + 1;
     if (len != NativeContext::DATETIME_COUNT) {
         jniThrowException(env, "java/lang/IllegalArgumentException",
-                "Formatted capture time string length is not required 20 characters");
+                          "Formatted capture time string length is not required 20 characters");
         return;
     }
 
@@ -1046,13 +1059,12 @@ static void DngCreator_init(JNIEnv* env, jobject thiz, jobject characteristicsPt
 }
 
 static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t imageWidth,
-        uint32_t imageHeight) {
-
+                                       uint32_t imageHeight) {
     NativeContext* nativeContext = DngCreator_getNativeContext(env, thiz);
 
     if (nativeContext == nullptr) {
         jniThrowException(env, "java/lang/AssertionError",
-                "No native context, must call init before other operations.");
+                          "No native context, must call init before other operations.");
         return nullptr;
     }
 
@@ -1077,15 +1089,13 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         uint32_t pixHeight = static_cast<uint32_t>(pixelArrayEntry.data.i32[1]);
 
         if (!((imageWidth == preWidth && imageHeight == preHeight) ||
-            (imageWidth == pixWidth && imageHeight == pixHeight))) {
+              (imageWidth == pixWidth && imageHeight == pixHeight))) {
             jniThrowException(env, "java/lang/AssertionError",
-                    "Height and width of imate buffer did not match height and width of"
-                    "either the preCorrectionActiveArraySize or the pixelArraySize.");
+                              "Height and width of imate buffer did not match height and width of"
+                              "either the preCorrectionActiveArraySize or the pixelArraySize.");
             return nullptr;
         }
     }
-
-
 
     writer->addIfd(TIFF_IFD_0);
 
@@ -1107,49 +1117,50 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         // Set orientation
         uint16_t orientation = TAG_ORIENTATION_NORMAL;
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ORIENTATION, 1, &orientation, TIFF_IFD_0),
-                env, TAG_ORIENTATION, writer);
+                                    env, TAG_ORIENTATION, writer);
     }
 
     {
         // Set subfiletype
-        uint32_t subfileType = 0; // Main image
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_NEWSUBFILETYPE, 1, &subfileType,
-                TIFF_IFD_0), env, TAG_NEWSUBFILETYPE, writer);
+        uint32_t subfileType = 0;  // Main image
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_NEWSUBFILETYPE, 1, &subfileType, TIFF_IFD_0), env,
+                TAG_NEWSUBFILETYPE, writer);
     }
 
     {
         // Set bits per sample
         uint16_t bits = static_cast<uint16_t>(bitsPerSample);
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_BITSPERSAMPLE, 1, &bits, TIFF_IFD_0), env,
-                TAG_BITSPERSAMPLE, writer);
+                                    TAG_BITSPERSAMPLE, writer);
     }
 
     {
         // Set compression
-        uint16_t compression = 1; // None
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COMPRESSION, 1, &compression,
-                TIFF_IFD_0), env, TAG_COMPRESSION, writer);
+        uint16_t compression = 1;  // None
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COMPRESSION, 1, &compression, TIFF_IFD_0),
+                                    env, TAG_COMPRESSION, writer);
     }
 
     {
         // Set dimensions
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_IMAGEWIDTH, 1, &imageWidth, TIFF_IFD_0),
-                env, TAG_IMAGEWIDTH, writer);
+                                    env, TAG_IMAGEWIDTH, writer);
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_IMAGELENGTH, 1, &imageHeight, TIFF_IFD_0),
-                env, TAG_IMAGELENGTH, writer);
+                                    env, TAG_IMAGELENGTH, writer);
     }
 
     {
         // Set photometric interpretation
-        uint16_t interpretation = 32803; // CFA
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_PHOTOMETRICINTERPRETATION, 1,
-                &interpretation, TIFF_IFD_0), env, TAG_PHOTOMETRICINTERPRETATION, writer);
+        uint16_t interpretation = 32803;  // CFA
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_PHOTOMETRICINTERPRETATION, 1, &interpretation, TIFF_IFD_0),
+                env, TAG_PHOTOMETRICINTERPRETATION, writer);
     }
 
     {
         // Set blacklevel tags, using dynamic black level if available
-        camera_metadata_entry entry =
-                results.find(ANDROID_SENSOR_DYNAMIC_BLACK_LEVEL);
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_DYNAMIC_BLACK_LEVEL);
         uint32_t blackLevelRational[8] = {0};
         if (entry.count != 0) {
             BAIL_IF_EXPR_RET_NULL_SP(entry.count != 4, env, TAG_BLACKLEVEL, writer);
@@ -1165,75 +1176,80 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
                 blackLevelRational[i * 2] = static_cast<uint32_t>(entry.data.i32[i]);
                 blackLevelRational[i * 2 + 1] = 1;
             }
-
         }
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_BLACKLEVEL, 4, blackLevelRational,
-                TIFF_IFD_0), env, TAG_BLACKLEVEL, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_BLACKLEVEL, 4, blackLevelRational, TIFF_IFD_0), env,
+                TAG_BLACKLEVEL, writer);
 
         uint16_t repeatDim[2] = {2, 2};
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_BLACKLEVELREPEATDIM, 2, repeatDim,
-                TIFF_IFD_0), env, TAG_BLACKLEVELREPEATDIM, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_BLACKLEVELREPEATDIM, 2, repeatDim, TIFF_IFD_0), env,
+                TAG_BLACKLEVELREPEATDIM, writer);
     }
 
     {
         // Set samples per pixel
         uint16_t samples = static_cast<uint16_t>(samplesPerPixel);
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_SAMPLESPERPIXEL, 1, &samples, TIFF_IFD_0),
-                env, TAG_SAMPLESPERPIXEL, writer);
+                                    env, TAG_SAMPLESPERPIXEL, writer);
     }
 
     {
         // Set planar configuration
-        uint16_t config = 1; // Chunky
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_PLANARCONFIGURATION, 1, &config,
-                TIFF_IFD_0), env, TAG_PLANARCONFIGURATION, writer);
+        uint16_t config = 1;  // Chunky
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_PLANARCONFIGURATION, 1, &config, TIFF_IFD_0), env,
+                TAG_PLANARCONFIGURATION, writer);
     }
 
     {
         // Set CFA pattern dimensions
         uint16_t repeatDim[2] = {2, 2};
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CFAREPEATPATTERNDIM, 2, repeatDim,
-                TIFF_IFD_0), env, TAG_CFAREPEATPATTERNDIM, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_CFAREPEATPATTERNDIM, 2, repeatDim, TIFF_IFD_0), env,
+                TAG_CFAREPEATPATTERNDIM, writer);
     }
 
     {
         // Set CFA pattern
         camera_metadata_entry entry =
-                        characteristics.find(ANDROID_SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
+                characteristics.find(ANDROID_SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_CFAPATTERN, writer);
 
         const int cfaLength = 4;
         cfaEnum = entry.data.u8[0];
         uint8_t cfa[cfaLength];
-        if ((err = convertCFA(cfaEnum, /*out*/cfa)) != OK) {
+        if ((err = convertCFA(cfaEnum, /*out*/ cfa)) != OK) {
             jniThrowExceptionFmt(env, "java/lang/IllegalStateException",
-                        "Invalid metadata for tag %d", TAG_CFAPATTERN);
+                                 "Invalid metadata for tag %d", TAG_CFAPATTERN);
         }
 
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CFAPATTERN, cfaLength, cfa, TIFF_IFD_0),
-                env, TAG_CFAPATTERN, writer);
+                                    env, TAG_CFAPATTERN, writer);
 
         opcodeCfaLayout = convertCFAEnumToOpcodeLayout(cfaEnum);
     }
 
     {
         // Set CFA plane color
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CFAPLANECOLOR, 3, cfaPlaneColor,
-                TIFF_IFD_0), env, TAG_CFAPLANECOLOR, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_CFAPLANECOLOR, 3, cfaPlaneColor, TIFF_IFD_0), env,
+                TAG_CFAPLANECOLOR, writer);
     }
 
     {
         // Set CFA layout
         uint16_t cfaLayout = 1;
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CFALAYOUT, 1, &cfaLayout, TIFF_IFD_0),
-                env, TAG_CFALAYOUT, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CFALAYOUT, 1, &cfaLayout, TIFF_IFD_0), env,
+                                    TAG_CFALAYOUT, writer);
     }
 
     {
         // image description
-        uint8_t imageDescription = '\0'; // empty
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_IMAGEDESCRIPTION, 1, &imageDescription,
-                TIFF_IFD_0), env, TAG_IMAGEDESCRIPTION, writer);
+        uint8_t imageDescription = '\0';  // empty
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_IMAGEDESCRIPTION, 1, &imageDescription, TIFF_IFD_0), env,
+                TAG_IMAGEDESCRIPTION, writer);
     }
 
     {
@@ -1242,9 +1258,11 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         std::string manufacturer = GetProperty("ro.product.manufacturer", "");
         uint32_t count = static_cast<uint32_t>(manufacturer.size()) + 1;
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_MAKE, count,
-                reinterpret_cast<const uint8_t*>(manufacturer.c_str()), TIFF_IFD_0), env, TAG_MAKE,
-                writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_MAKE, count,
+                                 reinterpret_cast<const uint8_t*>(manufacturer.c_str()),
+                                 TIFF_IFD_0),
+                env, TAG_MAKE, writer);
     }
 
     {
@@ -1253,34 +1271,36 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         std::string model = GetProperty("ro.product.model", "");
         uint32_t count = static_cast<uint32_t>(model.size()) + 1;
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_MODEL, count,
-                reinterpret_cast<const uint8_t*>(model.c_str()), TIFF_IFD_0), env, TAG_MODEL,
-                writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_MODEL, count, reinterpret_cast<const uint8_t*>(model.c_str()),
+                                 TIFF_IFD_0),
+                env, TAG_MODEL, writer);
     }
 
     {
         // x resolution
-        uint32_t xres[] = { 72, 1 }; // default 72 ppi
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_XRESOLUTION, 1, xres, TIFF_IFD_0),
-                env, TAG_XRESOLUTION, writer);
+        uint32_t xres[] = {72, 1};  // default 72 ppi
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_XRESOLUTION, 1, xres, TIFF_IFD_0), env,
+                                    TAG_XRESOLUTION, writer);
 
         // y resolution
-        uint32_t yres[] = { 72, 1 }; // default 72 ppi
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_YRESOLUTION, 1, yres, TIFF_IFD_0),
-                env, TAG_YRESOLUTION, writer);
+        uint32_t yres[] = {72, 1};  // default 72 ppi
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_YRESOLUTION, 1, yres, TIFF_IFD_0), env,
+                                    TAG_YRESOLUTION, writer);
 
-        uint16_t unit = 2; // inches
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_RESOLUTIONUNIT, 1, &unit, TIFF_IFD_0),
-                env, TAG_RESOLUTIONUNIT, writer);
+        uint16_t unit = 2;  // inches
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_RESOLUTIONUNIT, 1, &unit, TIFF_IFD_0), env,
+                                    TAG_RESOLUTIONUNIT, writer);
     }
 
     {
         // software
         std::string software = GetProperty("ro.build.fingerprint", "");
         uint32_t count = static_cast<uint32_t>(software.size()) + 1;
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_SOFTWARE, count,
-                reinterpret_cast<const uint8_t*>(software.c_str()), TIFF_IFD_0), env, TAG_SOFTWARE,
-                writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_SOFTWARE, count,
+                                 reinterpret_cast<const uint8_t*>(software.c_str()), TIFF_IFD_0),
+                env, TAG_SOFTWARE, writer);
     }
 
     if (nativeContext->hasCaptureTime()) {
@@ -1288,39 +1308,41 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         String8 captureTime = nativeContext->getCaptureTime();
 
         if (writer->addEntry(TAG_DATETIME, NativeContext::DATETIME_COUNT,
-                reinterpret_cast<const uint8_t*>(captureTime.string()), TIFF_IFD_0) != OK) {
+                             reinterpret_cast<const uint8_t*>(captureTime.string()),
+                             TIFF_IFD_0) != OK) {
             jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                    "Invalid metadata for tag %x", TAG_DATETIME);
+                                 "Invalid metadata for tag %x", TAG_DATETIME);
             return nullptr;
         }
 
         // datetime original
         if (writer->addEntry(TAG_DATETIMEORIGINAL, NativeContext::DATETIME_COUNT,
-                reinterpret_cast<const uint8_t*>(captureTime.string()), TIFF_IFD_0) != OK) {
+                             reinterpret_cast<const uint8_t*>(captureTime.string()),
+                             TIFF_IFD_0) != OK) {
             jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                    "Invalid metadata for tag %x", TAG_DATETIMEORIGINAL);
+                                 "Invalid metadata for tag %x", TAG_DATETIMEORIGINAL);
             return nullptr;
         }
     }
 
     {
         // TIFF/EP standard id
-        uint8_t standardId[] = { 1, 0, 0, 0 };
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_TIFFEPSTANDARDID, 4, standardId,
-                TIFF_IFD_0), env, TAG_TIFFEPSTANDARDID, writer);
+        uint8_t standardId[] = {1, 0, 0, 0};
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_TIFFEPSTANDARDID, 4, standardId, TIFF_IFD_0), env,
+                TAG_TIFFEPSTANDARDID, writer);
     }
 
     {
         // copyright
-        uint8_t copyright = '\0'; // empty
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COPYRIGHT, 1, &copyright,
-                TIFF_IFD_0), env, TAG_COPYRIGHT, writer);
+        uint8_t copyright = '\0';  // empty
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COPYRIGHT, 1, &copyright, TIFF_IFD_0), env,
+                                    TAG_COPYRIGHT, writer);
     }
 
     {
         // exposure time
-        camera_metadata_entry entry =
-            results.find(ANDROID_SENSOR_EXPOSURE_TIME);
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_EXPOSURE_TIME);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_EXPOSURETIME, writer);
 
         int64_t exposureTime = *(entry.data.i64);
@@ -1328,7 +1350,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         if (exposureTime < 0) {
             // Should be unreachable
             jniThrowException(env, "java/lang/IllegalArgumentException",
-                    "Negative exposure time in metadata");
+                              "Negative exposure time in metadata");
             return nullptr;
         }
 
@@ -1340,27 +1362,24 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             if (denominator == 0) {
                 // Should be unreachable
                 jniThrowException(env, "java/lang/IllegalArgumentException",
-                        "Exposure time too long");
+                                  "Exposure time too long");
                 return nullptr;
             }
         }
 
-        uint32_t exposure[] = { static_cast<uint32_t>(exposureTime), denominator };
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_EXPOSURETIME, 1, exposure,
-                TIFF_IFD_0), env, TAG_EXPOSURETIME, writer);
-
+        uint32_t exposure[] = {static_cast<uint32_t>(exposureTime), denominator};
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_EXPOSURETIME, 1, exposure, TIFF_IFD_0),
+                                    env, TAG_EXPOSURETIME, writer);
     }
 
     {
         // ISO speed ratings
-        camera_metadata_entry entry =
-            results.find(ANDROID_SENSOR_SENSITIVITY);
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_SENSITIVITY);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_ISOSPEEDRATINGS, writer);
 
         int32_t tempIso = *(entry.data.i32);
         if (tempIso < 0) {
-            jniThrowException(env, "java/lang/IllegalArgumentException",
-                                    "Negative ISO value");
+            jniThrowException(env, "java/lang/IllegalArgumentException", "Negative ISO value");
             return nullptr;
         }
 
@@ -1370,116 +1389,113 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         }
 
         uint16_t iso = static_cast<uint16_t>(tempIso);
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ISOSPEEDRATINGS, 1, &iso,
-                TIFF_IFD_0), env, TAG_ISOSPEEDRATINGS, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ISOSPEEDRATINGS, 1, &iso, TIFF_IFD_0), env,
+                                    TAG_ISOSPEEDRATINGS, writer);
     }
 
     {
         // Baseline exposure
-        camera_metadata_entry entry =
-                results.find(ANDROID_CONTROL_POST_RAW_SENSITIVITY_BOOST);
+        camera_metadata_entry entry = results.find(ANDROID_CONTROL_POST_RAW_SENSITIVITY_BOOST);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_BASELINEEXPOSURE, writer);
 
         // post RAW gain should be boostValue / 100
-        double postRAWGain = static_cast<double> (entry.data.i32[0]) / 100.f;
+        double postRAWGain = static_cast<double>(entry.data.i32[0]) / 100.f;
         // Baseline exposure should be in EV units so log2(gain) =
         // log10(gain)/log10(2)
         double baselineExposure = std::log(postRAWGain) / std::log(2.0f);
-        int32_t baseExposureSRat[] = { static_cast<int32_t> (baselineExposure * 100),
-                100 };
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_BASELINEEXPOSURE, 1,
-                baseExposureSRat, TIFF_IFD_0), env, TAG_BASELINEEXPOSURE, writer);
+        int32_t baseExposureSRat[] = {static_cast<int32_t>(baselineExposure * 100), 100};
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_BASELINEEXPOSURE, 1, baseExposureSRat, TIFF_IFD_0), env,
+                TAG_BASELINEEXPOSURE, writer);
     }
 
     {
         // focal length
-        camera_metadata_entry entry =
-            results.find(ANDROID_LENS_FOCAL_LENGTH);
+        camera_metadata_entry entry = results.find(ANDROID_LENS_FOCAL_LENGTH);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_FOCALLENGTH, writer);
 
-        uint32_t focalLength[] = { static_cast<uint32_t>(*(entry.data.f) * 100), 100 };
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FOCALLENGTH, 1, focalLength,
-                TIFF_IFD_0), env, TAG_FOCALLENGTH, writer);
+        uint32_t focalLength[] = {static_cast<uint32_t>(*(entry.data.f) * 100), 100};
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FOCALLENGTH, 1, focalLength, TIFF_IFD_0),
+                                    env, TAG_FOCALLENGTH, writer);
     }
 
     {
         // f number
-        camera_metadata_entry entry =
-            results.find(ANDROID_LENS_APERTURE);
+        camera_metadata_entry entry = results.find(ANDROID_LENS_APERTURE);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_FNUMBER, writer);
 
-        uint32_t fnum[] = { static_cast<uint32_t>(*(entry.data.f) * 100), 100 };
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FNUMBER, 1, fnum,
-                TIFF_IFD_0), env, TAG_FNUMBER, writer);
+        uint32_t fnum[] = {static_cast<uint32_t>(*(entry.data.f) * 100), 100};
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FNUMBER, 1, fnum, TIFF_IFD_0), env,
+                                    TAG_FNUMBER, writer);
     }
 
     {
         // Set DNG version information
         uint8_t version[4] = {1, 4, 0, 0};
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DNGVERSION, 4, version, TIFF_IFD_0),
-                env, TAG_DNGVERSION, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DNGVERSION, 4, version, TIFF_IFD_0), env,
+                                    TAG_DNGVERSION, writer);
 
         uint8_t backwardVersion[4] = {1, 1, 0, 0};
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DNGBACKWARDVERSION, 4, backwardVersion,
-                TIFF_IFD_0), env, TAG_DNGBACKWARDVERSION, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_DNGBACKWARDVERSION, 4, backwardVersion, TIFF_IFD_0), env,
+                TAG_DNGBACKWARDVERSION, writer);
     }
 
     {
         // Set whitelevel
-        camera_metadata_entry entry =
-                characteristics.find(ANDROID_SENSOR_INFO_WHITE_LEVEL);
+        camera_metadata_entry entry = characteristics.find(ANDROID_SENSOR_INFO_WHITE_LEVEL);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_WHITELEVEL, writer);
         uint32_t whiteLevel = static_cast<uint32_t>(entry.data.i32[0]);
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_WHITELEVEL, 1, &whiteLevel, TIFF_IFD_0),
-                env, TAG_WHITELEVEL, writer);
+                                    env, TAG_WHITELEVEL, writer);
     }
 
     {
         // Set default scale
         uint32_t defaultScale[4] = {1, 1, 1, 1};
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DEFAULTSCALE, 2, defaultScale,
-                TIFF_IFD_0), env, TAG_DEFAULTSCALE, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DEFAULTSCALE, 2, defaultScale, TIFF_IFD_0),
+                                    env, TAG_DEFAULTSCALE, writer);
     }
 
     bool singleIlluminant = false;
     {
         // Set calibration illuminants
-        camera_metadata_entry entry1 =
-            characteristics.find(ANDROID_SENSOR_REFERENCE_ILLUMINANT1);
+        camera_metadata_entry entry1 = characteristics.find(ANDROID_SENSOR_REFERENCE_ILLUMINANT1);
         BAIL_IF_EMPTY_RET_NULL_SP(entry1, env, TAG_CALIBRATIONILLUMINANT1, writer);
-        camera_metadata_entry entry2 =
-            characteristics.find(ANDROID_SENSOR_REFERENCE_ILLUMINANT2);
+        camera_metadata_entry entry2 = characteristics.find(ANDROID_SENSOR_REFERENCE_ILLUMINANT2);
         if (entry2.count == 0) {
             singleIlluminant = true;
         }
         uint16_t ref1 = entry1.data.u8[0];
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CALIBRATIONILLUMINANT1, 1, &ref1,
-                TIFF_IFD_0), env, TAG_CALIBRATIONILLUMINANT1, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_CALIBRATIONILLUMINANT1, 1, &ref1, TIFF_IFD_0), env,
+                TAG_CALIBRATIONILLUMINANT1, writer);
 
         if (!singleIlluminant) {
             uint16_t ref2 = entry2.data.u8[0];
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CALIBRATIONILLUMINANT2, 1, &ref2,
-                    TIFF_IFD_0), env, TAG_CALIBRATIONILLUMINANT2, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_CALIBRATIONILLUMINANT2, 1, &ref2, TIFF_IFD_0), env,
+                    TAG_CALIBRATIONILLUMINANT2, writer);
         }
     }
 
     {
         // Set color transforms
-        camera_metadata_entry entry1 =
-            characteristics.find(ANDROID_SENSOR_COLOR_TRANSFORM1);
+        camera_metadata_entry entry1 = characteristics.find(ANDROID_SENSOR_COLOR_TRANSFORM1);
         BAIL_IF_EMPTY_RET_NULL_SP(entry1, env, TAG_COLORMATRIX1, writer);
 
         int32_t colorTransform1[entry1.count * 2];
 
         size_t ctr = 0;
-        for(size_t i = 0; i < entry1.count; ++i) {
+        for (size_t i = 0; i < entry1.count; ++i) {
             colorTransform1[ctr++] = entry1.data.r[i].numerator;
             colorTransform1[ctr++] = entry1.data.r[i].denominator;
         }
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COLORMATRIX1, entry1.count,
-                colorTransform1, TIFF_IFD_0), env, TAG_COLORMATRIX1, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_COLORMATRIX1, entry1.count, colorTransform1, TIFF_IFD_0), env,
+                TAG_COLORMATRIX1, writer);
 
         if (!singleIlluminant) {
             camera_metadata_entry entry2 = characteristics.find(ANDROID_SENSOR_COLOR_TRANSFORM2);
@@ -1487,103 +1503,102 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             int32_t colorTransform2[entry2.count * 2];
 
             ctr = 0;
-            for(size_t i = 0; i < entry2.count; ++i) {
+            for (size_t i = 0; i < entry2.count; ++i) {
                 colorTransform2[ctr++] = entry2.data.r[i].numerator;
                 colorTransform2[ctr++] = entry2.data.r[i].denominator;
             }
 
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COLORMATRIX2, entry2.count,
-                    colorTransform2, TIFF_IFD_0), env, TAG_COLORMATRIX2, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_COLORMATRIX2, entry2.count, colorTransform2, TIFF_IFD_0),
+                    env, TAG_COLORMATRIX2, writer);
         }
     }
 
     {
         // Set calibration transforms
-        camera_metadata_entry entry1 =
-            characteristics.find(ANDROID_SENSOR_CALIBRATION_TRANSFORM1);
+        camera_metadata_entry entry1 = characteristics.find(ANDROID_SENSOR_CALIBRATION_TRANSFORM1);
         BAIL_IF_EMPTY_RET_NULL_SP(entry1, env, TAG_CAMERACALIBRATION1, writer);
 
         int32_t calibrationTransform1[entry1.count * 2];
 
         size_t ctr = 0;
-        for(size_t i = 0; i < entry1.count; ++i) {
+        for (size_t i = 0; i < entry1.count; ++i) {
             calibrationTransform1[ctr++] = entry1.data.r[i].numerator;
             calibrationTransform1[ctr++] = entry1.data.r[i].denominator;
         }
 
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CAMERACALIBRATION1, entry1.count,
-                calibrationTransform1, TIFF_IFD_0), env, TAG_CAMERACALIBRATION1, writer);
+                                                     calibrationTransform1, TIFF_IFD_0),
+                                    env, TAG_CAMERACALIBRATION1, writer);
 
         if (!singleIlluminant) {
             camera_metadata_entry entry2 =
-                characteristics.find(ANDROID_SENSOR_CALIBRATION_TRANSFORM2);
+                    characteristics.find(ANDROID_SENSOR_CALIBRATION_TRANSFORM2);
             BAIL_IF_EMPTY_RET_NULL_SP(entry2, env, TAG_CAMERACALIBRATION2, writer);
             int32_t calibrationTransform2[entry2.count * 2];
 
             ctr = 0;
-            for(size_t i = 0; i < entry2.count; ++i) {
+            for (size_t i = 0; i < entry2.count; ++i) {
                 calibrationTransform2[ctr++] = entry2.data.r[i].numerator;
                 calibrationTransform2[ctr++] = entry2.data.r[i].denominator;
             }
 
             BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_CAMERACALIBRATION2, entry2.count,
-                    calibrationTransform2, TIFF_IFD_0),  env, TAG_CAMERACALIBRATION2, writer);
+                                                         calibrationTransform2, TIFF_IFD_0),
+                                        env, TAG_CAMERACALIBRATION2, writer);
         }
     }
 
     {
         // Set forward transforms
-        camera_metadata_entry entry1 =
-            characteristics.find(ANDROID_SENSOR_FORWARD_MATRIX1);
+        camera_metadata_entry entry1 = characteristics.find(ANDROID_SENSOR_FORWARD_MATRIX1);
         BAIL_IF_EMPTY_RET_NULL_SP(entry1, env, TAG_FORWARDMATRIX1, writer);
 
         int32_t forwardTransform1[entry1.count * 2];
 
         size_t ctr = 0;
-        for(size_t i = 0; i < entry1.count; ++i) {
+        for (size_t i = 0; i < entry1.count; ++i) {
             forwardTransform1[ctr++] = entry1.data.r[i].numerator;
             forwardTransform1[ctr++] = entry1.data.r[i].denominator;
         }
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FORWARDMATRIX1, entry1.count,
-                forwardTransform1, TIFF_IFD_0), env, TAG_FORWARDMATRIX1, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_FORWARDMATRIX1, entry1.count, forwardTransform1, TIFF_IFD_0),
+                env, TAG_FORWARDMATRIX1, writer);
 
         if (!singleIlluminant) {
-            camera_metadata_entry entry2 =
-                characteristics.find(ANDROID_SENSOR_FORWARD_MATRIX2);
+            camera_metadata_entry entry2 = characteristics.find(ANDROID_SENSOR_FORWARD_MATRIX2);
             BAIL_IF_EMPTY_RET_NULL_SP(entry2, env, TAG_FORWARDMATRIX2, writer);
             int32_t forwardTransform2[entry2.count * 2];
 
             ctr = 0;
-            for(size_t i = 0; i < entry2.count; ++i) {
+            for (size_t i = 0; i < entry2.count; ++i) {
                 forwardTransform2[ctr++] = entry2.data.r[i].numerator;
                 forwardTransform2[ctr++] = entry2.data.r[i].denominator;
             }
 
             BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_FORWARDMATRIX2, entry2.count,
-                    forwardTransform2, TIFF_IFD_0),  env, TAG_FORWARDMATRIX2, writer);
+                                                         forwardTransform2, TIFF_IFD_0),
+                                        env, TAG_FORWARDMATRIX2, writer);
         }
     }
 
     {
         // Set camera neutral
-        camera_metadata_entry entry =
-            results.find(ANDROID_SENSOR_NEUTRAL_COLOR_POINT);
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_NEUTRAL_COLOR_POINT);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_ASSHOTNEUTRAL, writer);
         uint32_t cameraNeutral[entry.count * 2];
 
         size_t ctr = 0;
-        for(size_t i = 0; i < entry.count; ++i) {
-            cameraNeutral[ctr++] =
-                    static_cast<uint32_t>(entry.data.r[i].numerator);
-            cameraNeutral[ctr++] =
-                    static_cast<uint32_t>(entry.data.r[i].denominator);
+        for (size_t i = 0; i < entry.count; ++i) {
+            cameraNeutral[ctr++] = static_cast<uint32_t>(entry.data.r[i].numerator);
+            cameraNeutral[ctr++] = static_cast<uint32_t>(entry.data.r[i].denominator);
         }
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ASSHOTNEUTRAL, entry.count, cameraNeutral,
-                TIFF_IFD_0), env, TAG_ASSHOTNEUTRAL, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_ASSHOTNEUTRAL, entry.count, cameraNeutral, TIFF_IFD_0), env,
+                TAG_ASSHOTNEUTRAL, writer);
     }
-
 
     {
         // Set dimensions
@@ -1607,7 +1622,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
 
         uint32_t activeArea[] = {ymin, xmin, ymin + height, xmin + width};
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ACTIVEAREA, 4, activeArea, TIFF_IFD_0),
-                env, TAG_ACTIVEAREA, writer);
+                                    env, TAG_ACTIVEAREA, writer);
     }
 
     {
@@ -1622,23 +1637,24 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         cameraModel += "-";
         cameraModel += brand.c_str();
 
-        BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_UNIQUECAMERAMODEL, cameraModel.size() + 1,
-                reinterpret_cast<const uint8_t*>(cameraModel.string()), TIFF_IFD_0), env,
-                TAG_UNIQUECAMERAMODEL, writer);
+        BAIL_IF_INVALID_RET_NULL_SP(
+                writer->addEntry(TAG_UNIQUECAMERAMODEL, cameraModel.size() + 1,
+                                 reinterpret_cast<const uint8_t*>(cameraModel.string()),
+                                 TIFF_IFD_0),
+                env, TAG_UNIQUECAMERAMODEL, writer);
     }
 
     {
         // Setup sensor noise model
-        camera_metadata_entry entry =
-            results.find(ANDROID_SENSOR_NOISE_PROFILE);
+        camera_metadata_entry entry = results.find(ANDROID_SENSOR_NOISE_PROFILE);
 
         const status_t numPlaneColors = 3;
         const status_t numCfaChannels = 4;
 
         uint8_t cfaOut[numCfaChannels];
-        if ((err = convertCFA(cfaEnum, /*out*/cfaOut)) != OK) {
+        if ((err = convertCFA(cfaEnum, /*out*/ cfaOut)) != OK) {
             jniThrowException(env, "java/lang/IllegalArgumentException",
-                    "Invalid CFA from camera characteristics");
+                              "Invalid CFA from camera characteristics");
             return nullptr;
         }
 
@@ -1650,20 +1666,21 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
                       "in characteristics, no noise profile tag written...",
                       __FUNCTION__, entry.count);
             } else {
-                if ((err = generateNoiseProfile(entry.data.d, cfaOut, numCfaChannels,
-                        cfaPlaneColor, numPlaneColors, /*out*/ noiseProfile)) == OK) {
-
-                    BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_NOISEPROFILE,
-                            numPlaneColors * 2, noiseProfile, TIFF_IFD_0), env, TAG_NOISEPROFILE,
-                            writer);
+                if ((err = generateNoiseProfile(entry.data.d, cfaOut, numCfaChannels, cfaPlaneColor,
+                                                numPlaneColors, /*out*/ noiseProfile)) == OK) {
+                    BAIL_IF_INVALID_RET_NULL_SP(
+                            writer->addEntry(TAG_NOISEPROFILE, numPlaneColors * 2, noiseProfile,
+                                             TIFF_IFD_0),
+                            env, TAG_NOISEPROFILE, writer);
                 } else {
                     ALOGW("%s: Error converting coefficients for noise profile, no noise profile"
-                            " tag written...", __FUNCTION__);
+                          " tag written...",
+                          __FUNCTION__);
                 }
             }
         } else {
             ALOGW("%s: No noise profile found in result metadata.  Image quality may be reduced.",
-                    __FUNCTION__);
+                  __FUNCTION__);
         }
     }
 
@@ -1673,8 +1690,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         status_t err = OK;
 
         // Set up lens shading map
-        camera_metadata_entry entry1 =
-                characteristics.find(ANDROID_LENS_INFO_SHADING_MAP_SIZE);
+        camera_metadata_entry entry1 = characteristics.find(ANDROID_LENS_INFO_SHADING_MAP_SIZE);
 
         uint32_t lsmWidth = 0;
         uint32_t lsmHeight = 0;
@@ -1695,14 +1711,8 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         uint32_t height = static_cast<uint32_t>(entry.data.i32[3]);
         if (entry2.count > 0 && entry2.count == lsmWidth * lsmHeight * 4) {
             // GainMap rectangle is relative to the active area origin.
-            err = builder.addGainMapsForMetadata(lsmWidth,
-                                                 lsmHeight,
-                                                 0,
-                                                 0,
-                                                 height,
-                                                 width,
-                                                 opcodeCfaLayout,
-                                                 entry2.data.f);
+            err = builder.addGainMapsForMetadata(lsmWidth, lsmHeight, 0, 0, height, width,
+                                                 opcodeCfaLayout, entry2.data.f);
             if (err != OK) {
                 ALOGE("%s: Could not add Lens shading map.", __FUNCTION__);
                 jniThrowRuntimeException(env, "failed to add lens shading map.");
@@ -1710,13 +1720,12 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             }
         }
 
-
         // Set up bad pixel correction list
         camera_metadata_entry entry3 = characteristics.find(ANDROID_STATISTICS_HOT_PIXEL_MAP);
 
         if ((entry3.count % 2) != 0) {
             ALOGE("%s: Hot pixel map contains odd number of values, cannot map to pairs!",
-                    __FUNCTION__);
+                  __FUNCTION__);
             jniThrowRuntimeException(env, "failed to add hotpixel map.");
             return nullptr;
         }
@@ -1729,7 +1738,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             x -= static_cast<int32_t>(xmin);
             y -= static_cast<int32_t>(ymin);
             if (x < 0 || y < 0 || static_cast<uint32_t>(x) >= width ||
-                    static_cast<uint32_t>(y) >= height) {
+                static_cast<uint32_t>(y) >= height) {
                 continue;
             }
             v.push_back(x);
@@ -1748,18 +1757,20 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             }
         }
 
-
         size_t listSize = builder.getSize();
         uint8_t opcodeListBuf[listSize];
         err = builder.buildOpList(opcodeListBuf);
         if (err == OK) {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_OPCODELIST2, listSize, opcodeListBuf,
-                    TIFF_IFD_0), env, TAG_OPCODELIST2, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_OPCODELIST2, listSize, opcodeListBuf, TIFF_IFD_0), env,
+                    TAG_OPCODELIST2, writer);
         } else {
             ALOGE("%s: Could not build list of opcodes for distortion correction and lens shading"
-                    "map.", __FUNCTION__);
-            jniThrowRuntimeException(env, "failed to construct opcode list for distortion"
-                    " correction and lens shading map");
+                  "map.",
+                  __FUNCTION__);
+            jniThrowRuntimeException(env,
+                                     "failed to construct opcode list for distortion"
+                                     " correction and lens shading map");
             return nullptr;
         }
     }
@@ -1770,27 +1781,25 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         status_t err = OK;
 
         // Set up rectilinear distortion correction
-        float distortion[6] {1.f, 0.f, 0.f, 0.f, 0.f, 0.f};
+        float distortion[6]{1.f, 0.f, 0.f, 0.f, 0.f, 0.f};
         bool gotDistortion = false;
 
-        camera_metadata_entry entry4 =
-                results.find(ANDROID_LENS_INTRINSIC_CALIBRATION);
+        camera_metadata_entry entry4 = results.find(ANDROID_LENS_INTRINSIC_CALIBRATION);
 
         if (entry4.count == 5) {
-            float cx = entry4.data.f[/*c_x*/2];
-            float cy = entry4.data.f[/*c_y*/3];
+            float cx = entry4.data.f[/*c_x*/ 2];
+            float cy = entry4.data.f[/*c_y*/ 3];
             // Assuming f_x = f_y, or at least close enough.
             // Also assuming s = 0, or at least close enough.
-            float f = entry4.data.f[/*f_x*/0];
+            float f = entry4.data.f[/*f_x*/ 0];
 
-            camera_metadata_entry entry3 =
-                    results.find(ANDROID_LENS_DISTORTION);
+            camera_metadata_entry entry3 = results.find(ANDROID_LENS_DISTORTION);
             if (entry3.count == 5) {
                 gotDistortion = true;
-                float m_x = std::fmaxf(preWidth-1 - cx, cx);
-                float m_y = std::fmaxf(preHeight-1 - cy, cy);
-                float m_sq = m_x*m_x + m_y*m_y;
-                float m = sqrtf(m_sq); // distance to farthest corner from optical center
+                float m_x = std::fmaxf(preWidth - 1 - cx, cx);
+                float m_y = std::fmaxf(preHeight - 1 - cy, cy);
+                float m_sq = m_x * m_x + m_y * m_y;
+                float m = sqrtf(m_sq);  // distance to farthest corner from optical center
                 float f_sq = f * f;
                 // Conversion factors from Camera2 K factors for new LENS_DISTORTION field
                 // to DNG spec.
@@ -1800,15 +1809,10 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
                 //       from optical center to the farthest corner is 1.
                 //       Scale from camera2 to DNG spec accordingly.
                 //       distortion[0] is always 1 with the new LENS_DISTORTION field.
-                const double convCoeff[5] = {
-                    m_sq / f_sq,
-                    pow(m_sq, 2) / pow(f_sq, 2),
-                    pow(m_sq, 3) / pow(f_sq, 3),
-                    m / f,
-                    m / f
-                };
+                const double convCoeff[5] = {m_sq / f_sq, pow(m_sq, 2) / pow(f_sq, 2),
+                                             pow(m_sq, 3) / pow(f_sq, 3), m / f, m / f};
                 for (size_t i = 0; i < entry3.count; i++) {
-                    distortion[i+1] = convCoeff[i] * entry3.data.f[i];
+                    distortion[i + 1] = convCoeff[i] * entry3.data.f[i];
                 }
             } else {
                 entry3 = results.find(ANDROID_LENS_RADIAL_DISTORTION);
@@ -1822,14 +1826,8 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
                     //      Thus, each K coefficient must include the domain scaling
                     //      factor (the DNG domain is scaled by sqrt(2) to emulate the
                     //      domain used by the Camera2 specification).
-                    const double convCoeff[6] = {
-                        sqrt(2),
-                        2 * sqrt(2),
-                        4 * sqrt(2),
-                        8 * sqrt(2),
-                        2,
-                        2
-                    };
+                    const double convCoeff[6] = {sqrt(2),     2 * sqrt(2), 4 * sqrt(2),
+                                                 8 * sqrt(2), 2,           2};
                     for (size_t i = 0; i < entry3.count; i++) {
                         distortion[i] = entry3.data.f[i] * convCoeff[i];
                     }
@@ -1837,7 +1835,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             }
             if (gotDistortion) {
                 err = builder.addWarpRectilinearForMetadata(distortion, preWidth, preHeight, cx,
-                        cy);
+                                                            cy);
                 if (err != OK) {
                     ALOGE("%s: Could not add distortion correction.", __FUNCTION__);
                     jniThrowRuntimeException(env, "failed to add distortion correction.");
@@ -1850,13 +1848,16 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         uint8_t opcodeListBuf[listSize];
         err = builder.buildOpList(opcodeListBuf);
         if (err == OK) {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_OPCODELIST3, listSize, opcodeListBuf,
-                    TIFF_IFD_0), env, TAG_OPCODELIST3, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_OPCODELIST3, listSize, opcodeListBuf, TIFF_IFD_0), env,
+                    TAG_OPCODELIST3, writer);
         } else {
             ALOGE("%s: Could not build list of opcodes for distortion correction and lens shading"
-                    "map.", __FUNCTION__);
-            jniThrowRuntimeException(env, "failed to construct opcode list for distortion"
-                    " correction and lens shading map");
+                  "map.",
+                  __FUNCTION__);
+            jniThrowRuntimeException(env,
+                                     "failed to construct opcode list for distortion"
+                                     " correction and lens shading map");
             return nullptr;
         }
     }
@@ -1867,18 +1868,18 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         // The main image and any thumbnails therefore have the same orientation.
         uint16_t orientation = nativeContext->getOrientation();
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_ORIENTATION, 1, &orientation, TIFF_IFD_0),
-                env, TAG_ORIENTATION, writer);
-
+                                    env, TAG_ORIENTATION, writer);
     }
 
-    if (nativeContext->hasDescription()){
+    if (nativeContext->hasDescription()) {
         // Set Description
         String8 description = nativeContext->getDescription();
         size_t len = description.bytes() + 1;
         if (writer->addEntry(TAG_IMAGEDESCRIPTION, len,
-                reinterpret_cast<const uint8_t*>(description.string()), TIFF_IFD_0) != OK) {
+                             reinterpret_cast<const uint8_t*>(description.string()),
+                             TIFF_IFD_0) != OK) {
             jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                    "Invalid metadata for tag %x", TAG_IMAGEDESCRIPTION);
+                                 "Invalid metadata for tag %x", TAG_IMAGEDESCRIPTION);
         }
     }
 
@@ -1888,7 +1889,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         if (!writer->hasIfd(TIFF_IFD_GPSINFO)) {
             if (writer->addSubIfd(TIFF_IFD_0, TIFF_IFD_GPSINFO, TiffWriter::GPSINFO) != OK) {
                 ALOGE("%s: Failed to add GpsInfo IFD %u to IFD %u", __FUNCTION__, TIFF_IFD_GPSINFO,
-                        TIFF_IFD_0);
+                      TIFF_IFD_0);
                 jniThrowException(env, "java/lang/IllegalStateException", "Failed to add GPSINFO");
                 return nullptr;
             }
@@ -1896,50 +1897,55 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
 
         {
             uint8_t version[] = {2, 3, 0, 0};
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSVERSIONID, 4, version,
-                    TIFF_IFD_GPSINFO), env, TAG_GPSVERSIONID, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSVERSIONID, 4, version, TIFF_IFD_GPSINFO), env,
+                    TAG_GPSVERSIONID, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSLATITUDEREF,
-                    GpsData::GPS_REF_LENGTH, gpsData.mLatitudeRef, TIFF_IFD_GPSINFO), env,
-                    TAG_GPSLATITUDEREF, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSLATITUDEREF, GpsData::GPS_REF_LENGTH,
+                                     gpsData.mLatitudeRef, TIFF_IFD_GPSINFO),
+                    env, TAG_GPSLATITUDEREF, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSLONGITUDEREF,
-                    GpsData::GPS_REF_LENGTH, gpsData.mLongitudeRef, TIFF_IFD_GPSINFO), env,
-                    TAG_GPSLONGITUDEREF, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSLONGITUDEREF, GpsData::GPS_REF_LENGTH,
+                                     gpsData.mLongitudeRef, TIFF_IFD_GPSINFO),
+                    env, TAG_GPSLONGITUDEREF, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSLATITUDE, 3, gpsData.mLatitude,
-                    TIFF_IFD_GPSINFO), env, TAG_GPSLATITUDE, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSLATITUDE, 3, gpsData.mLatitude, TIFF_IFD_GPSINFO), env,
+                    TAG_GPSLATITUDE, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSLONGITUDE, 3, gpsData.mLongitude,
-                    TIFF_IFD_GPSINFO), env, TAG_GPSLONGITUDE, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSLONGITUDE, 3, gpsData.mLongitude, TIFF_IFD_GPSINFO),
+                    env, TAG_GPSLONGITUDE, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSTIMESTAMP, 3, gpsData.mTimestamp,
-                    TIFF_IFD_GPSINFO), env, TAG_GPSTIMESTAMP, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_GPSTIMESTAMP, 3, gpsData.mTimestamp, TIFF_IFD_GPSINFO),
+                    env, TAG_GPSTIMESTAMP, writer);
         }
 
         {
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSDATESTAMP,
-                    GpsData::GPS_DATE_LENGTH, gpsData.mDate, TIFF_IFD_GPSINFO), env,
-                    TAG_GPSDATESTAMP, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_GPSDATESTAMP, GpsData::GPS_DATE_LENGTH,
+                                                         gpsData.mDate, TIFF_IFD_GPSINFO),
+                                        env, TAG_GPSDATESTAMP, writer);
         }
     }
-
 
     if (nativeContext->hasThumbnail()) {
         if (!writer->hasIfd(TIFF_IFD_SUB1)) {
             if (writer->addSubIfd(TIFF_IFD_0, TIFF_IFD_SUB1) != OK) {
                 ALOGE("%s: Failed to add SubIFD %u to IFD %u", __FUNCTION__, TIFF_IFD_SUB1,
-                        TIFF_IFD_0);
+                      TIFF_IFD_0);
                 jniThrowException(env, "java/lang/IllegalStateException", "Failed to add SubIFD");
                 return nullptr;
             }
@@ -1980,23 +1986,26 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
 
         {
             // Set photometric interpretation
-            uint16_t interpretation = 2; // RGB
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_PHOTOMETRICINTERPRETATION, 1,
-                    &interpretation, TIFF_IFD_0), env, TAG_PHOTOMETRICINTERPRETATION, writer);
+            uint16_t interpretation = 2;  // RGB
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_PHOTOMETRICINTERPRETATION, 1, &interpretation, TIFF_IFD_0),
+                    env, TAG_PHOTOMETRICINTERPRETATION, writer);
         }
 
         {
             // Set planar configuration
-            uint16_t config = 1; // Chunky
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_PLANARCONFIGURATION, 1, &config,
-                    TIFF_IFD_0), env, TAG_PLANARCONFIGURATION, writer);
+            uint16_t config = 1;  // Chunky
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_PLANARCONFIGURATION, 1, &config, TIFF_IFD_0), env,
+                    TAG_PLANARCONFIGURATION, writer);
         }
 
         {
             // Set samples per pixel
             uint16_t samples = SAMPLES_PER_RGB_PIXEL;
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_SAMPLESPERPIXEL, 1, &samples,
-                    TIFF_IFD_0), env, TAG_SAMPLESPERPIXEL, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_SAMPLESPERPIXEL, 1, &samples, TIFF_IFD_0), env,
+                    TAG_SAMPLESPERPIXEL, writer);
         }
 
         {
@@ -2010,16 +2019,18 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
 
         {
             // Set subfiletype
-            uint32_t subfileType = 1; // Thumbnail image
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_NEWSUBFILETYPE, 1, &subfileType,
-                    TIFF_IFD_0), env, TAG_NEWSUBFILETYPE, writer);
+            uint32_t subfileType = 1;  // Thumbnail image
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_NEWSUBFILETYPE, 1, &subfileType, TIFF_IFD_0), env,
+                    TAG_NEWSUBFILETYPE, writer);
         }
 
         {
             // Set compression
-            uint16_t compression = 1; // None
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_COMPRESSION, 1, &compression,
-                    TIFF_IFD_0), env, TAG_COMPRESSION, writer);
+            uint16_t compression = 1;  // None
+            BAIL_IF_INVALID_RET_NULL_SP(
+                    writer->addEntry(TAG_COMPRESSION, 1, &compression, TIFF_IFD_0), env,
+                    TAG_COMPRESSION, writer);
         }
 
         {
@@ -2027,32 +2038,32 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
             uint32_t uWidth = nativeContext->getThumbnailWidth();
             uint32_t uHeight = nativeContext->getThumbnailHeight();
             BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_IMAGEWIDTH, 1, &uWidth, TIFF_IFD_0),
-                    env, TAG_IMAGEWIDTH, writer);
+                                        env, TAG_IMAGEWIDTH, writer);
             BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_IMAGELENGTH, 1, &uHeight, TIFF_IFD_0),
-                    env, TAG_IMAGELENGTH, writer);
+                                        env, TAG_IMAGELENGTH, writer);
         }
 
         {
             // x resolution
-            uint32_t xres[] = { 72, 1 }; // default 72 ppi
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_XRESOLUTION, 1, xres, TIFF_IFD_0),
-                    env, TAG_XRESOLUTION, writer);
+            uint32_t xres[] = {72, 1};  // default 72 ppi
+            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_XRESOLUTION, 1, xres, TIFF_IFD_0), env,
+                                        TAG_XRESOLUTION, writer);
 
             // y resolution
-            uint32_t yres[] = { 72, 1 }; // default 72 ppi
-            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_YRESOLUTION, 1, yres, TIFF_IFD_0),
-                    env, TAG_YRESOLUTION, writer);
+            uint32_t yres[] = {72, 1};  // default 72 ppi
+            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_YRESOLUTION, 1, yres, TIFF_IFD_0), env,
+                                        TAG_YRESOLUTION, writer);
 
-            uint16_t unit = 2; // inches
+            uint16_t unit = 2;  // inches
             BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_RESOLUTIONUNIT, 1, &unit, TIFF_IFD_0),
-                    env, TAG_RESOLUTIONUNIT, writer);
+                                        env, TAG_RESOLUTIONUNIT, writer);
         }
     }
 
     if (writer->addStrip(TIFF_IFD_0) != OK) {
         ALOGE("%s: Could not setup thumbnail strip tags.", __FUNCTION__);
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Failed to setup thumbnail strip tags.");
+                          "Failed to setup thumbnail strip tags.");
         return nullptr;
     }
 
@@ -2060,7 +2071,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         if (writer->addStrip(TIFF_IFD_SUB1) != OK) {
             ALOGE("%s: Could not main image strip tags.", __FUNCTION__);
             jniThrowException(env, "java/lang/IllegalStateException",
-                    "Failed to setup main image strip tags.");
+                              "Failed to setup main image strip tags.");
             return nullptr;
         }
     }
@@ -2079,7 +2090,7 @@ static void DngCreator_nativeSetOrientation(JNIEnv* env, jobject thiz, jint orie
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "setOrientation called with uninitialized DngCreator");
+                          "setOrientation called with uninitialized DngCreator");
         return;
     }
 
@@ -2094,7 +2105,7 @@ static void DngCreator_nativeSetDescription(JNIEnv* env, jobject thiz, jstring d
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "setDescription called with uninitialized DngCreator");
+                          "setDescription called with uninitialized DngCreator");
         return;
     }
 
@@ -2103,15 +2114,16 @@ static void DngCreator_nativeSetDescription(JNIEnv* env, jobject thiz, jstring d
     env->ReleaseStringUTFChars(description, desc);
 }
 
-static void DngCreator_nativeSetGpsTags(JNIEnv* env, jobject thiz, jintArray latTag,
-        jstring latRef, jintArray longTag, jstring longRef, jstring dateTag, jintArray timeTag) {
+static void DngCreator_nativeSetGpsTags(JNIEnv* env, jobject thiz, jintArray latTag, jstring latRef,
+                                        jintArray longTag, jstring longRef, jstring dateTag,
+                                        jintArray timeTag) {
     ALOGV("%s:", __FUNCTION__);
 
     NativeContext* context = DngCreator_getNativeContext(env, thiz);
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "setGpsTags called with uninitialized DngCreator");
+                          "setGpsTags called with uninitialized DngCreator");
         return;
     }
 
@@ -2121,47 +2133,44 @@ static void DngCreator_nativeSetGpsTags(JNIEnv* env, jobject thiz, jintArray lat
     jsize longLen = env->GetArrayLength(longTag);
     jsize timeLen = env->GetArrayLength(timeTag);
     if (latLen != GpsData::GPS_VALUE_LENGTH) {
-        jniThrowException(env, "java/lang/IllegalArgumentException",
-                "invalid latitude tag length");
+        jniThrowException(env, "java/lang/IllegalArgumentException", "invalid latitude tag length");
         return;
     } else if (longLen != GpsData::GPS_VALUE_LENGTH) {
         jniThrowException(env, "java/lang/IllegalArgumentException",
-                "invalid longitude tag length");
+                          "invalid longitude tag length");
         return;
     } else if (timeLen != GpsData::GPS_VALUE_LENGTH) {
-        jniThrowException(env, "java/lang/IllegalArgumentException",
-                "invalid time tag length");
+        jniThrowException(env, "java/lang/IllegalArgumentException", "invalid time tag length");
         return;
     }
 
     env->GetIntArrayRegion(latTag, 0, static_cast<jsize>(GpsData::GPS_VALUE_LENGTH),
-            reinterpret_cast<jint*>(&data.mLatitude));
+                           reinterpret_cast<jint*>(&data.mLatitude));
     env->GetIntArrayRegion(longTag, 0, static_cast<jsize>(GpsData::GPS_VALUE_LENGTH),
-            reinterpret_cast<jint*>(&data.mLongitude));
+                           reinterpret_cast<jint*>(&data.mLongitude));
     env->GetIntArrayRegion(timeTag, 0, static_cast<jsize>(GpsData::GPS_VALUE_LENGTH),
-            reinterpret_cast<jint*>(&data.mTimestamp));
-
+                           reinterpret_cast<jint*>(&data.mTimestamp));
 
     env->GetStringUTFRegion(latRef, 0, 1, reinterpret_cast<char*>(&data.mLatitudeRef));
     data.mLatitudeRef[GpsData::GPS_REF_LENGTH - 1] = '\0';
     env->GetStringUTFRegion(longRef, 0, 1, reinterpret_cast<char*>(&data.mLongitudeRef));
     data.mLongitudeRef[GpsData::GPS_REF_LENGTH - 1] = '\0';
     env->GetStringUTFRegion(dateTag, 0, GpsData::GPS_DATE_LENGTH - 1,
-            reinterpret_cast<char*>(&data.mDate));
+                            reinterpret_cast<char*>(&data.mDate));
     data.mDate[GpsData::GPS_DATE_LENGTH - 1] = '\0';
 
     context->setGpsData(data);
 }
 
 static void DngCreator_nativeSetThumbnail(JNIEnv* env, jobject thiz, jobject buffer, jint width,
-        jint height) {
+                                          jint height) {
     ALOGV("%s:", __FUNCTION__);
 
     NativeContext* context = DngCreator_getNativeContext(env, thiz);
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "setThumbnail called with uninitialized DngCreator");
+                          "setThumbnail called with uninitialized DngCreator");
         return;
     }
 
@@ -2169,8 +2178,8 @@ static void DngCreator_nativeSetThumbnail(JNIEnv* env, jobject thiz, jobject buf
     jlong capacity = env->GetDirectBufferCapacity(buffer);
     if (static_cast<uint64_t>(capacity) != static_cast<uint64_t>(fullSize)) {
         jniThrowExceptionFmt(env, "java/lang/AssertionError",
-                "Invalid size %d for thumbnail, expected size was %d",
-                capacity, fullSize);
+                             "Invalid size %d for thumbnail, expected size was %d", capacity,
+                             fullSize);
         return;
     }
 
@@ -2182,20 +2191,19 @@ static void DngCreator_nativeSetThumbnail(JNIEnv* env, jobject thiz, jobject buf
     }
 
     if (!context->setThumbnail(pixelBytes, width, height)) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Failed to set thumbnail.");
+        jniThrowException(env, "java/lang/IllegalStateException", "Failed to set thumbnail.");
         return;
     }
 }
 
 // TODO: Refactor out common preamble for the two nativeWrite methods.
 static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outStream, jint width,
-        jint height, jobject inBuffer, jint rowStride, jint pixStride, jlong offset,
-        jboolean isDirect) {
+                                        jint height, jobject inBuffer, jint rowStride,
+                                        jint pixStride, jlong offset, jboolean isDirect) {
     ALOGV("%s:", __FUNCTION__);
     ALOGV("%s: nativeWriteImage called with: width=%d, height=%d, "
-          "rowStride=%d, pixStride=%d, offset=%" PRId64, __FUNCTION__, width,
-          height, rowStride, pixStride, offset);
+          "rowStride=%d, pixStride=%d, offset=%" PRId64,
+          __FUNCTION__, width, height, rowStride, pixStride, offset);
     uint32_t rStride = static_cast<uint32_t>(rowStride);
     uint32_t pStride = static_cast<uint32_t>(pixStride);
     uint32_t uWidth = static_cast<uint32_t>(width);
@@ -2203,7 +2211,7 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
     uint64_t uOffset = static_cast<uint64_t>(offset);
 
     sp<JniOutputStream> out = new JniOutputStream(env, outStream);
-    if(env->ExceptionCheck()) {
+    if (env->ExceptionCheck()) {
         ALOGE("%s: Could not allocate buffers for output stream", __FUNCTION__);
         return;
     }
@@ -2212,7 +2220,7 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "Write called with uninitialized DngCreator");
+                          "Write called with uninitialized DngCreator");
         return;
     }
     sp<TiffWriter> writer = DngCreator_setup(env, thiz, uWidth, uHeight);
@@ -2237,9 +2245,9 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
         ALOGV("%s: Adding thumbnail strip sources.", __FUNCTION__);
         uint32_t bytesPerPixel = SAMPLES_PER_RGB_PIXEL * BYTES_PER_RGB_SAMPLE;
         uint32_t thumbWidth = context->getThumbnailWidth();
-        thumbnailSource = new DirectStripSource(env, context->getThumbnail(), TIFF_IFD_0,
-                thumbWidth, context->getThumbnailHeight(), bytesPerPixel,
-                bytesPerPixel * thumbWidth, /*offset*/0, BYTES_PER_RGB_SAMPLE,
+        thumbnailSource = new DirectStripSource(
+                env, context->getThumbnail(), TIFF_IFD_0, thumbWidth, context->getThumbnailHeight(),
+                bytesPerPixel, bytesPerPixel * thumbWidth, /*offset*/ 0, BYTES_PER_RGB_SAMPLE,
                 SAMPLES_PER_RGB_PIXEL);
         sources.add(thumbnailSource.get());
         targetIfd = TIFF_IFD_SUB1;
@@ -2249,7 +2257,8 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
         size_t fullSize = rStride * uHeight;
         jlong capacity = env->GetDirectBufferCapacity(inBuffer);
         if (capacity < 0 || fullSize + uOffset > static_cast<uint64_t>(capacity)) {
-            jniThrowExceptionFmt(env, "java/lang/IllegalStateException",
+            jniThrowExceptionFmt(
+                    env, "java/lang/IllegalStateException",
                     "Invalid size %d for Image, size given in metadata is %d at current stride",
                     capacity, fullSize);
             return;
@@ -2263,8 +2272,8 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
         }
 
         ALOGV("%s: Using direct-type strip source.", __FUNCTION__);
-        DirectStripSource stripSource(env, pixelBytes, targetIfd, uWidth, uHeight, pStride,
-                rStride, uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
+        DirectStripSource stripSource(env, pixelBytes, targetIfd, uWidth, uHeight, pStride, rStride,
+                                      uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
         sources.add(&stripSource);
 
         status_t ret = OK;
@@ -2272,7 +2281,7 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
             ALOGE("%s: write failed with error %d.", __FUNCTION__, ret);
             if (!env->ExceptionCheck()) {
                 jniThrowExceptionFmt(env, "java/io/IOException",
-                        "Encountered error %d while writing file.", ret);
+                                     "Encountered error %d while writing file.", ret);
             }
             return;
         }
@@ -2280,8 +2289,8 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
         inBuf = new JniInputByteBuffer(env, inBuffer);
 
         ALOGV("%s: Using input-type strip source.", __FUNCTION__);
-        InputStripSource stripSource(env, *inBuf, targetIfd, uWidth, uHeight, pStride,
-                 rStride, uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
+        InputStripSource stripSource(env, *inBuf, targetIfd, uWidth, uHeight, pStride, rStride,
+                                     uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
         sources.add(&stripSource);
 
         status_t ret = OK;
@@ -2289,7 +2298,7 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
             ALOGE("%s: write failed with error %d.", __FUNCTION__, ret);
             if (!env->ExceptionCheck()) {
                 jniThrowExceptionFmt(env, "java/io/IOException",
-                        "Encountered error %d while writing file.", ret);
+                                     "Encountered error %d while writing file.", ret);
             }
             return;
         }
@@ -2297,7 +2306,8 @@ static void DngCreator_nativeWriteImage(JNIEnv* env, jobject thiz, jobject outSt
 }
 
 static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject outStream,
-        jobject inStream, jint width, jint height, jlong offset) {
+                                              jobject inStream, jint width, jint height,
+                                              jlong offset) {
     ALOGV("%s:", __FUNCTION__);
 
     uint32_t rowStride = width * BYTES_PER_SAMPLE;
@@ -2307,8 +2317,8 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
     uint64_t uOffset = static_cast<uint32_t>(offset);
 
     ALOGV("%s: nativeWriteInputStream called with: width=%d, height=%d, "
-          "rowStride=%d, pixStride=%d, offset=%" PRId64, __FUNCTION__, width,
-          height, rowStride, pixStride, offset);
+          "rowStride=%d, pixStride=%d, offset=%" PRId64,
+          __FUNCTION__, width, height, rowStride, pixStride, offset);
 
     sp<JniOutputStream> out = new JniOutputStream(env, outStream);
     if (env->ExceptionCheck()) {
@@ -2320,7 +2330,7 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
     if (context == nullptr) {
         ALOGE("%s: Failed to initialize DngCreator", __FUNCTION__);
         jniThrowException(env, "java/lang/AssertionError",
-                "Write called with uninitialized DngCreator");
+                          "Write called with uninitialized DngCreator");
         return;
     }
     sp<TiffWriter> writer = DngCreator_setup(env, thiz, uWidth, uHeight);
@@ -2343,10 +2353,10 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
         ALOGV("%s: Adding thumbnail strip sources.", __FUNCTION__);
         uint32_t bytesPerPixel = SAMPLES_PER_RGB_PIXEL * BYTES_PER_RGB_SAMPLE;
         uint32_t width = context->getThumbnailWidth();
-        thumbnailSource = new DirectStripSource(env, context->getThumbnail(), TIFF_IFD_0,
-                width, context->getThumbnailHeight(), bytesPerPixel,
-                bytesPerPixel * width, /*offset*/0, BYTES_PER_RGB_SAMPLE,
-                SAMPLES_PER_RGB_PIXEL);
+        thumbnailSource = new DirectStripSource(env, context->getThumbnail(), TIFF_IFD_0, width,
+                                                context->getThumbnailHeight(), bytesPerPixel,
+                                                bytesPerPixel * width, /*offset*/ 0,
+                                                BYTES_PER_RGB_SAMPLE, SAMPLES_PER_RGB_PIXEL);
         sources.add(thumbnailSource.get());
         targetIfd = TIFF_IFD_SUB1;
     }
@@ -2354,8 +2364,8 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
     sp<JniInputStream> in = new JniInputStream(env, inStream);
 
     ALOGV("%s: Using input-type strip source.", __FUNCTION__);
-    InputStripSource stripSource(env, *in, targetIfd, uWidth, uHeight, pixStride,
-             rowStride, uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
+    InputStripSource stripSource(env, *in, targetIfd, uWidth, uHeight, pixStride, rowStride,
+                                 uOffset, BYTES_PER_SAMPLE, SAMPLES_PER_RAW_PIXEL);
     sources.add(&stripSource);
 
     status_t ret = OK;
@@ -2363,7 +2373,7 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
         ALOGE("%s: write failed with error %d.", __FUNCTION__, ret);
         if (!env->ExceptionCheck()) {
             jniThrowExceptionFmt(env, "java/io/IOException",
-                    "Encountered error %d while writing file.", ret);
+                                 "Encountered error %d while writing file.", ret);
         }
         return;
     }
@@ -2372,23 +2382,24 @@ static void DngCreator_nativeWriteInputStream(JNIEnv* env, jobject thiz, jobject
 } /*extern "C" */
 
 static const JNINativeMethod gDngCreatorMethods[] = {
-    {"nativeClassInit",        "()V", (void*) DngCreator_nativeClassInit},
-    {"nativeInit", "(Landroid/hardware/camera2/impl/CameraMetadataNative;"
-            "Landroid/hardware/camera2/impl/CameraMetadataNative;Ljava/lang/String;)V",
-            (void*) DngCreator_init},
-    {"nativeDestroy",           "()V",      (void*) DngCreator_destroy},
-    {"nativeSetOrientation",    "(I)V",     (void*) DngCreator_nativeSetOrientation},
-    {"nativeSetDescription",    "(Ljava/lang/String;)V", (void*) DngCreator_nativeSetDescription},
-    {"nativeSetGpsTags",    "([ILjava/lang/String;[ILjava/lang/String;Ljava/lang/String;[I)V",
-            (void*) DngCreator_nativeSetGpsTags},
-    {"nativeSetThumbnail","(Ljava/nio/ByteBuffer;II)V", (void*) DngCreator_nativeSetThumbnail},
-    {"nativeWriteImage",        "(Ljava/io/OutputStream;IILjava/nio/ByteBuffer;IIJZ)V",
-            (void*) DngCreator_nativeWriteImage},
-    {"nativeWriteInputStream",    "(Ljava/io/OutputStream;Ljava/io/InputStream;IIJ)V",
-            (void*) DngCreator_nativeWriteInputStream},
+        {"nativeClassInit", "()V", (void*)DngCreator_nativeClassInit},
+        {"nativeInit",
+         "(Landroid/hardware/camera2/impl/CameraMetadataNative;"
+         "Landroid/hardware/camera2/impl/CameraMetadataNative;Ljava/lang/String;)V",
+         (void*)DngCreator_init},
+        {"nativeDestroy", "()V", (void*)DngCreator_destroy},
+        {"nativeSetOrientation", "(I)V", (void*)DngCreator_nativeSetOrientation},
+        {"nativeSetDescription", "(Ljava/lang/String;)V", (void*)DngCreator_nativeSetDescription},
+        {"nativeSetGpsTags", "([ILjava/lang/String;[ILjava/lang/String;Ljava/lang/String;[I)V",
+         (void*)DngCreator_nativeSetGpsTags},
+        {"nativeSetThumbnail", "(Ljava/nio/ByteBuffer;II)V", (void*)DngCreator_nativeSetThumbnail},
+        {"nativeWriteImage", "(Ljava/io/OutputStream;IILjava/nio/ByteBuffer;IIJZ)V",
+         (void*)DngCreator_nativeWriteImage},
+        {"nativeWriteInputStream", "(Ljava/io/OutputStream;Ljava/io/InputStream;IIJ)V",
+         (void*)DngCreator_nativeWriteInputStream},
 };
 
-int register_android_hardware_camera2_DngCreator(JNIEnv *env) {
-    return RegisterMethodsOrDie(env,
-            "android/hardware/camera2/DngCreator", gDngCreatorMethods, NELEM(gDngCreatorMethods));
+int register_android_hardware_camera2_DngCreator(JNIEnv* env) {
+    return RegisterMethodsOrDie(env, "android/hardware/camera2/DngCreator", gDngCreatorMethods,
+                                NELEM(gDngCreatorMethods));
 }

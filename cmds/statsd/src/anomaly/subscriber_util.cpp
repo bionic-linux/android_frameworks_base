@@ -30,8 +30,7 @@ namespace android {
 namespace os {
 namespace statsd {
 
-void triggerSubscribers(const int64_t rule_id,
-                        const MetricDimensionKey& dimensionKey,
+void triggerSubscribers(const int64_t rule_id, const MetricDimensionKey& dimensionKey,
                         const ConfigKey& configKey,
                         const std::vector<Subscription>& subscriptions) {
     VLOG("informSubscribers called.");
@@ -41,8 +40,8 @@ void triggerSubscribers(const int64_t rule_id,
     }
 
     for (const Subscription& subscription : subscriptions) {
-        if (subscription.probability_of_informing() < 1
-                && ((float)rand() / RAND_MAX) >= subscription.probability_of_informing()) {
+        if (subscription.probability_of_informing() < 1 &&
+            ((float)rand() / RAND_MAX) >= subscription.probability_of_informing()) {
             // Note that due to float imprecision, 0.0 and 1.0 might not truly mean never/always.
             // The config writer was advised to use -0.1 and 1.1 for never/always.
             ALOGI("Fate decided that a subscriber would not be informed.");
@@ -69,7 +68,6 @@ void triggerSubscribers(const int64_t rule_id,
         }
     }
 }
-
 
 }  // namespace statsd
 }  // namespace os

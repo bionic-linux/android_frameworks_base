@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 #include <vector>
-#include "benchmark/benchmark.h"
 #include "FieldValue.h"
 #include "HashableDimensionKey.h"
+#include "benchmark/benchmark.h"
 #include "logd/LogEvent.h"
-#include "stats_log_util.h"
 #include "metric_util.h"
+#include "stats_log_util.h"
 
 namespace android {
 namespace os {
@@ -87,14 +87,14 @@ static StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
 
     auto scheduledJobPredicate = CreateScheduledJobPredicate();
     auto dimensions = scheduledJobPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *dimensions = CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *dimensions = CreateAttributionUidDimensions(android::util::SCHEDULED_JOB_STATE_CHANGED,
+                                                 {Position::FIRST});
     dimensions->add_child()->set_field(2);  // job name field.
 
     auto isSyncingPredicate = CreateIsSyncingPredicate();
     auto syncDimension = isSyncingPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *syncDimension = CreateAttributionUidDimensions(
-            android::util::SYNC_STATE_CHANGED, {Position::FIRST});
+    *syncDimension =
+            CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     if (addExtraDimensionInCondition) {
         syncDimension->add_child()->set_field(2 /* name field*/);
     }
@@ -121,9 +121,8 @@ static StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
 
     auto links = metric->add_links();
     links->set_condition(isSyncingPredicate.id());
-    *links->mutable_fields_in_what() =
-            CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *links->mutable_fields_in_what() = CreateAttributionUidDimensions(
+            android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
     *links->mutable_fields_in_condition() =
             CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     return config;
@@ -131,27 +130,26 @@ static StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
 
 static void BM_DurationMetricNoLink(benchmark::State& state) {
     ConfigKey cfgKey;
-    auto config = CreateDurationMetricConfig_NoLink_AND_CombinationCondition(
-            DurationMetric::SUM, false);
+    auto config =
+            CreateDurationMetricConfig_NoLink_AND_CombinationCondition(DurationMetric::SUM, false);
     int64_t bucketStartTimeNs = 10000000000;
     int64_t bucketSizeNs =
             TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
+    std::vector<AttributionNodeInternal> attributions1 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(222, "GMSCoreModule2")};
 
-    std::vector<AttributionNodeInternal> attributions1 = {
-            CreateAttribution(111, "App1"), CreateAttribution(222, "GMSCoreModule1"),
-            CreateAttribution(222, "GMSCoreModule2")};
-
-    std::vector<AttributionNodeInternal> attributions2 = {
-            CreateAttribution(333, "App2"), CreateAttribution(222, "GMSCoreModule1"),
-            CreateAttribution(555, "GMSCoreModule2")};
+    std::vector<AttributionNodeInternal> attributions2 = {CreateAttribution(333, "App2"),
+                                                          CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(555, "GMSCoreModule2")};
 
     std::vector<std::unique_ptr<LogEvent>> events;
 
     events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_OFF,
                                                    bucketStartTimeNs + 11));
-    events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON,
-                                                   bucketStartTimeNs + 40));
+    events.push_back(
+            CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON, bucketStartTimeNs + 40));
 
     events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_OFF,
                                                    bucketStartTimeNs + 102));
@@ -168,51 +166,45 @@ static void BM_DurationMetricNoLink(benchmark::State& state) {
     events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON,
                                                    bucketStartTimeNs + bucketSizeNs + 650));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(9999, "")}, "job0", bucketStartTimeNs + 2));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(9999, "")}, "job0",bucketStartTimeNs + 101));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(9999, "")}, "job0",
+                                                  bucketStartTimeNs + 2));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(9999, "")}, "job0",
+                                                   bucketStartTimeNs + 101));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(9999, "")}, "job2", bucketStartTimeNs + 201));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(9999, "")}, "job2",bucketStartTimeNs + 500));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(9999, "")}, "job2",
+                                                  bucketStartTimeNs + 201));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(9999, "")}, "job2",
+                                                   bucketStartTimeNs + 500));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(8888, "")}, "job2", bucketStartTimeNs + 600));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(8888, "")}, "job2",bucketStartTimeNs + bucketSizeNs + 850));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(8888, "")}, "job2",
+                                                  bucketStartTimeNs + 600));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(8888, "")}, "job2",
+                                                   bucketStartTimeNs + bucketSizeNs + 850));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(8888, "")}, "job1", bucketStartTimeNs + bucketSizeNs + 600));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(8888, "")}, "job1", bucketStartTimeNs + bucketSizeNs + 900));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(8888, "")}, "job1",
+                                                  bucketStartTimeNs + bucketSizeNs + 600));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(8888, "")}, "job1",
+                                                   bucketStartTimeNs + bucketSizeNs + 900));
 
-    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                          bucketStartTimeNs + 10));
-    events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                        bucketStartTimeNs + 50));
+    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 10));
+    events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + 50));
 
-    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                          bucketStartTimeNs + 200));
-    events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                        bucketStartTimeNs + bucketSizeNs + 300));
+    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 200));
+    events.push_back(
+            CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + bucketSizeNs + 300));
 
-    events.push_back(CreateSyncStartEvent(attributions1, "ReadDoc",
-                                          bucketStartTimeNs + 400));
-    events.push_back(CreateSyncEndEvent(attributions1, "ReadDoc",
-                                        bucketStartTimeNs + bucketSizeNs - 1));
+    events.push_back(CreateSyncStartEvent(attributions1, "ReadDoc", bucketStartTimeNs + 400));
+    events.push_back(
+            CreateSyncEndEvent(attributions1, "ReadDoc", bucketStartTimeNs + bucketSizeNs - 1));
 
-    events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail",
-                                          bucketStartTimeNs + 401));
-    events.push_back(CreateSyncEndEvent(attributions2, "ReadEmail",
-                                        bucketStartTimeNs + bucketSizeNs + 700));
+    events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail", bucketStartTimeNs + 401));
+    events.push_back(
+            CreateSyncEndEvent(attributions2, "ReadEmail", bucketStartTimeNs + bucketSizeNs + 700));
 
     sortLogEventsByTimestamp(&events);
 
     while (state.KeepRunning()) {
-        auto processor = CreateStatsLogProcessor(
-                bucketStartTimeNs / NS_PER_SEC, config, cfgKey);
+        auto processor = CreateStatsLogProcessor(bucketStartTimeNs / NS_PER_SEC, config, cfgKey);
         for (const auto& event : events) {
             processor->OnLogEvent(event.get());
         }
@@ -221,26 +213,25 @@ static void BM_DurationMetricNoLink(benchmark::State& state) {
 
 BENCHMARK(BM_DurationMetricNoLink);
 
-
 static void BM_DurationMetricLink(benchmark::State& state) {
     ConfigKey cfgKey;
-    auto config = CreateDurationMetricConfig_Link_AND_CombinationCondition(
-        DurationMetric::SUM, false);
+    auto config =
+            CreateDurationMetricConfig_Link_AND_CombinationCondition(DurationMetric::SUM, false);
     int64_t bucketStartTimeNs = 10000000000;
     int64_t bucketSizeNs =
             TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
-    std::vector<AttributionNodeInternal> attributions1 = {
-            CreateAttribution(111, "App1"), CreateAttribution(222, "GMSCoreModule1"),
-            CreateAttribution(222, "GMSCoreModule2")};
+    std::vector<AttributionNodeInternal> attributions1 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(222, "GMSCoreModule2")};
 
-    std::vector<AttributionNodeInternal> attributions2 = {
-            CreateAttribution(333, "App2"), CreateAttribution(222, "GMSCoreModule1"),
-            CreateAttribution(555, "GMSCoreModule2")};
+    std::vector<AttributionNodeInternal> attributions2 = {CreateAttribution(333, "App2"),
+                                                          CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(555, "GMSCoreModule2")};
 
-    std::vector<AttributionNodeInternal> attributions3 = {
-            CreateAttribution(444, "App3"), CreateAttribution(222, "GMSCoreModule1"),
-            CreateAttribution(555, "GMSCoreModule2")};
+    std::vector<AttributionNodeInternal> attributions3 = {CreateAttribution(444, "App3"),
+                                                          CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(555, "GMSCoreModule2")};
 
     std::vector<std::unique_ptr<LogEvent>> events;
 
@@ -258,55 +249,45 @@ static void BM_DurationMetricLink(benchmark::State& state) {
     events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON,
                                                    bucketStartTimeNs + bucketSizeNs + 100));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(111, "App1")}, "job1", bucketStartTimeNs + 1));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(111, "App1")}, "job1",bucketStartTimeNs + 101));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                  bucketStartTimeNs + 1));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                   bucketStartTimeNs + 101));
 
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 201));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(333, "App2")}, "job2",bucketStartTimeNs + 500));
-    events.push_back(CreateStartScheduledJobEvent(
-            {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 600));
-    events.push_back(CreateFinishScheduledJobEvent(
-            {CreateAttribution(333, "App2")}, "job2",
-            bucketStartTimeNs + bucketSizeNs + 850));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                  bucketStartTimeNs + 201));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                   bucketStartTimeNs + 500));
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                  bucketStartTimeNs + 600));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                   bucketStartTimeNs + bucketSizeNs + 850));
 
+    events.push_back(CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                  bucketStartTimeNs + bucketSizeNs - 2));
+    events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                   bucketStartTimeNs + bucketSizeNs + 900));
+
+    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 50));
+    events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + 110));
+
+    events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail", bucketStartTimeNs + 300));
     events.push_back(
-        CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                     bucketStartTimeNs + bucketSizeNs - 2));
+            CreateSyncEndEvent(attributions2, "ReadEmail", bucketStartTimeNs + bucketSizeNs + 700));
+    events.push_back(CreateSyncStartEvent(attributions2, "ReadDoc", bucketStartTimeNs + 400));
     events.push_back(
-        CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                      bucketStartTimeNs + bucketSizeNs + 900));
+            CreateSyncEndEvent(attributions2, "ReadDoc", bucketStartTimeNs + bucketSizeNs - 1));
 
-    events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                          bucketStartTimeNs + 50));
-    events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                        bucketStartTimeNs + 110));
-
-    events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail",
-                                          bucketStartTimeNs + 300));
-    events.push_back(CreateSyncEndEvent(attributions2, "ReadEmail",
-                                        bucketStartTimeNs + bucketSizeNs + 700));
-    events.push_back(CreateSyncStartEvent(attributions2, "ReadDoc",
-                                          bucketStartTimeNs + 400));
-    events.push_back(CreateSyncEndEvent(attributions2, "ReadDoc",
-                                        bucketStartTimeNs + bucketSizeNs - 1));
-
-    events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
-                                          bucketStartTimeNs + 550));
-    events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
-                                        bucketStartTimeNs + 800));
-    events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
-                                          bucketStartTimeNs + bucketSizeNs - 1));
-    events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
-                                        bucketStartTimeNs + bucketSizeNs + 700));
+    events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc", bucketStartTimeNs + 550));
+    events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc", bucketStartTimeNs + 800));
+    events.push_back(
+            CreateSyncStartEvent(attributions3, "ReadDoc", bucketStartTimeNs + bucketSizeNs - 1));
+    events.push_back(
+            CreateSyncEndEvent(attributions3, "ReadDoc", bucketStartTimeNs + bucketSizeNs + 700));
     sortLogEventsByTimestamp(&events);
 
     while (state.KeepRunning()) {
-        auto processor = CreateStatsLogProcessor(
-                bucketStartTimeNs / NS_PER_SEC, config, cfgKey);
+        auto processor = CreateStatsLogProcessor(bucketStartTimeNs / NS_PER_SEC, config, cfgKey);
         for (const auto& event : events) {
             processor->OnLogEvent(event.get());
         }

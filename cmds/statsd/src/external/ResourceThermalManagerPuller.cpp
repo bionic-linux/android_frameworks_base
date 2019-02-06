@@ -23,26 +23,26 @@
 
 #include "ResourceThermalManagerPuller.h"
 #include "logd/LogEvent.h"
-#include "statslog.h"
 #include "stats_log_util.h"
+#include "statslog.h"
 
 #include <chrono>
 
 using android::hardware::hidl_death_recipient;
 using android::hardware::hidl_vec;
-using android::hidl::base::V1_0::IBase;
+using android::hardware::Return;
+using android::hardware::Void;
 using android::hardware::thermal::V1_0::IThermal;
 using android::hardware::thermal::V1_0::Temperature;
 using android::hardware::thermal::V1_0::ThermalStatus;
 using android::hardware::thermal::V1_0::ThermalStatusCode;
-using android::hardware::Return;
-using android::hardware::Void;
+using android::hidl::base::V1_0::IBase;
 
+using std::make_shared;
+using std::shared_ptr;
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
 using std::chrono::system_clock;
-using std::make_shared;
-using std::shared_ptr;
 
 namespace android {
 namespace os {
@@ -53,12 +53,12 @@ sp<android::hardware::thermal::V1_0::IThermal> gThermalHal = nullptr;
 std::mutex gThermalHalMutex;
 
 struct ThermalHalDeathRecipient : virtual public hidl_death_recipient {
-      virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override {
-          std::lock_guard<std::mutex> lock(gThermalHalMutex);
-          ALOGE("ThermalHAL just died");
-          gThermalHal = nullptr;
-          getThermalHalLocked();
-      }
+    virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override {
+        std::lock_guard<std::mutex> lock(gThermalHalMutex);
+        ALOGE("ThermalHAL just died");
+        gThermalHal = nullptr;
+        getThermalHalLocked();
+    }
 };
 
 sp<ThermalHalDeathRecipient> gThermalHalDeathRecipient = nullptr;
@@ -66,32 +66,32 @@ sp<ThermalHalDeathRecipient> gThermalHalDeathRecipient = nullptr;
 // The caller must be holding gThermalHalMutex.
 bool getThermalHalLocked() {
     if (gThermalHal == nullptr) {
-            gThermalHal = IThermal::getService();
-            if (gThermalHal == nullptr) {
-                ALOGE("Unable to get Thermal service.");
-            } else {
-                if (gThermalHalDeathRecipient == nullptr) {
-                    gThermalHalDeathRecipient = new ThermalHalDeathRecipient();
-                }
-                hardware::Return<bool> linked = gThermalHal->linkToDeath(
-                    gThermalHalDeathRecipient, 0x451F /* cookie */);
-                if (!linked.isOk()) {
-                    ALOGE("Transaction error in linking to ThermalHAL death: %s",
-                            linked.description().c_str());
-                    gThermalHal = nullptr;
-                } else if (!linked) {
-                    ALOGW("Unable to link to ThermalHal death notifications");
-                    gThermalHal = nullptr;
-                } else {
-                    ALOGD("Link to death notification successful");
-                }
+        gThermalHal = IThermal::getService();
+        if (gThermalHal == nullptr) {
+            ALOGE("Unable to get Thermal service.");
+        } else {
+            if (gThermalHalDeathRecipient == nullptr) {
+                gThermalHalDeathRecipient = new ThermalHalDeathRecipient();
             }
+            hardware::Return<bool> linked =
+                    gThermalHal->linkToDeath(gThermalHalDeathRecipient, 0x451F /* cookie */);
+            if (!linked.isOk()) {
+                ALOGE("Transaction error in linking to ThermalHAL death: %s",
+                      linked.description().c_str());
+                gThermalHal = nullptr;
+            } else if (!linked) {
+                ALOGW("Unable to link to ThermalHal death notifications");
+                gThermalHal = nullptr;
+            } else {
+                ALOGD("Link to death notification successful");
+            }
+        }
     }
     return gThermalHal != nullptr;
 }
 
-ResourceThermalManagerPuller::ResourceThermalManagerPuller() :
-        StatsPuller(android::util::TEMPERATURE) {
+ResourceThermalManagerPuller::ResourceThermalManagerPuller()
+    : StatsPuller(android::util::TEMPERATURE) {
 }
 
 bool ResourceThermalManagerPuller::PullInternal(vector<shared_ptr<LogEvent>>* data) {
@@ -109,30 +109,30 @@ bool ResourceThermalManagerPuller::PullInternal(vector<shared_ptr<LogEvent>>* da
 
     Return<void> ret = gThermalHal->getTemperatures(
             [&](ThermalStatus status, const hidl_vec<Temperature>& temps) {
-        if (status.code != ThermalStatusCode::SUCCESS) {
-            ALOGE("Failed to get temperatures from ThermalHAL. Status: %d", status.code);
-            resultSuccess = false;
-            return;
-        }
-        if (mTagId == android::util::TEMPERATURE) {
-            for (size_t i = 0; i < temps.size(); ++i) {
-                auto ptr = make_shared<LogEvent>(android::util::TEMPERATURE,
-                        wallClockTimestampNs, elapsedTimestampNs);
-                ptr->write((static_cast<int>(temps[i].type)));
-                ptr->write(temps[i].name);
-                // Convert the temperature to an int.
-                int32_t temp = static_cast<int>(temps[i].currentValue * 10);
-                ptr->write(temp);
-                ptr->init();
-                data->push_back(ptr);
-            }
-        } else {
-            ALOGE("Unsupported tag in ResourceThermalManagerPuller: %d", mTagId);
-        }
-    });
+                if (status.code != ThermalStatusCode::SUCCESS) {
+                    ALOGE("Failed to get temperatures from ThermalHAL. Status: %d", status.code);
+                    resultSuccess = false;
+                    return;
+                }
+                if (mTagId == android::util::TEMPERATURE) {
+                    for (size_t i = 0; i < temps.size(); ++i) {
+                        auto ptr = make_shared<LogEvent>(android::util::TEMPERATURE,
+                                                         wallClockTimestampNs, elapsedTimestampNs);
+                        ptr->write((static_cast<int>(temps[i].type)));
+                        ptr->write(temps[i].name);
+                        // Convert the temperature to an int.
+                        int32_t temp = static_cast<int>(temps[i].currentValue * 10);
+                        ptr->write(temp);
+                        ptr->init();
+                        data->push_back(ptr);
+                    }
+                } else {
+                    ALOGE("Unsupported tag in ResourceThermalManagerPuller: %d", mTagId);
+                }
+            });
     if (!ret.isOk()) {
         ALOGE("getThermalHalLocked() failed: thermal HAL service not available. Description: %s",
-                ret.description().c_str());
+              ret.description().c_str());
         if (ret.isDeadObject()) {
             gThermalHal = nullptr;
         }

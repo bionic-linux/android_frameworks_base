@@ -18,23 +18,22 @@
 
 #include "utils/Log.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
+#include "jni.h"
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <termios.h>
 
 using namespace android;
 
 static jfieldID field_context;
 
-static void
-android_hardware_SerialPort_open(JNIEnv *env, jobject thiz, jobject fileDescriptor, jint speed)
-{
+static void android_hardware_SerialPort_open(JNIEnv* env, jobject thiz, jobject fileDescriptor,
+                                             jint speed) {
     switch (speed) {
         case 50:
             speed = B50;
@@ -142,10 +141,9 @@ android_hardware_SerialPort_open(JNIEnv *env, jobject thiz, jobject fileDescript
     env->SetIntField(thiz, field_context, fd);
 
     struct termios tio;
-    if (tcgetattr(fd, &tio))
-        memset(&tio, 0, sizeof(tio));
+    if (tcgetattr(fd, &tio)) memset(&tio, 0, sizeof(tio));
 
-    tio.c_cflag =  speed | CS8 | CLOCAL | CREAD;
+    tio.c_cflag = speed | CS8 | CLOCAL | CREAD;
     // Disable output processing, including messing with end-of-line characters.
     tio.c_oflag &= ~OPOST;
     tio.c_iflag = IGNPAR;
@@ -157,19 +155,16 @@ android_hardware_SerialPort_open(JNIEnv *env, jobject thiz, jobject fileDescript
     tcflush(fd, TCIFLUSH);
 }
 
-static void
-android_hardware_SerialPort_close(JNIEnv *env, jobject thiz)
-{
+static void android_hardware_SerialPort_close(JNIEnv* env, jobject thiz) {
     int fd = env->GetIntField(thiz, field_context);
     close(fd);
     env->SetIntField(thiz, field_context, -1);
 }
 
-static jint
-android_hardware_SerialPort_read_array(JNIEnv *env, jobject thiz, jbyteArray buffer, jint length)
-{
+static jint android_hardware_SerialPort_read_array(JNIEnv* env, jobject thiz, jbyteArray buffer,
+                                                   jint length) {
     int fd = env->GetIntField(thiz, field_context);
-    jbyte* buf = (jbyte *)malloc(length);
+    jbyte* buf = (jbyte*)malloc(length);
     if (!buf) {
         jniThrowException(env, "java/lang/OutOfMemoryError", NULL);
         return -1;
@@ -182,33 +177,29 @@ android_hardware_SerialPort_read_array(JNIEnv *env, jobject thiz, jbyteArray buf
     }
 
     free(buf);
-    if (ret < 0)
-        jniThrowException(env, "java/io/IOException", NULL);
+    if (ret < 0) jniThrowException(env, "java/io/IOException", NULL);
     return ret;
 }
 
-static jint
-android_hardware_SerialPort_read_direct(JNIEnv *env, jobject thiz, jobject buffer, jint length)
-{
+static jint android_hardware_SerialPort_read_direct(JNIEnv* env, jobject thiz, jobject buffer,
+                                                    jint length) {
     int fd = env->GetIntField(thiz, field_context);
 
-    jbyte* buf = (jbyte *)env->GetDirectBufferAddress(buffer);
+    jbyte* buf = (jbyte*)env->GetDirectBufferAddress(buffer);
     if (!buf) {
         jniThrowException(env, "java/lang/IllegalArgumentException", "ByteBuffer not direct");
         return -1;
     }
 
     int ret = read(fd, buf, length);
-    if (ret < 0)
-        jniThrowException(env, "java/io/IOException", NULL);
+    if (ret < 0) jniThrowException(env, "java/io/IOException", NULL);
     return ret;
 }
 
-static void
-android_hardware_SerialPort_write_array(JNIEnv *env, jobject thiz, jbyteArray buffer, jint length)
-{
+static void android_hardware_SerialPort_write_array(JNIEnv* env, jobject thiz, jbyteArray buffer,
+                                                    jint length) {
     int fd = env->GetIntField(thiz, field_context);
-    jbyte* buf = (jbyte *)malloc(length);
+    jbyte* buf = (jbyte*)malloc(length);
     if (!buf) {
         jniThrowException(env, "java/lang/OutOfMemoryError", NULL);
         return;
@@ -217,52 +208,43 @@ android_hardware_SerialPort_write_array(JNIEnv *env, jobject thiz, jbyteArray bu
 
     jint ret = write(fd, buf, length);
     free(buf);
-    if (ret < 0)
-        jniThrowException(env, "java/io/IOException", NULL);
+    if (ret < 0) jniThrowException(env, "java/io/IOException", NULL);
 }
 
-static void
-android_hardware_SerialPort_write_direct(JNIEnv *env, jobject thiz, jobject buffer, jint length)
-{
+static void android_hardware_SerialPort_write_direct(JNIEnv* env, jobject thiz, jobject buffer,
+                                                     jint length) {
     int fd = env->GetIntField(thiz, field_context);
 
-    jbyte* buf = (jbyte *)env->GetDirectBufferAddress(buffer);
+    jbyte* buf = (jbyte*)env->GetDirectBufferAddress(buffer);
     if (!buf) {
         jniThrowException(env, "java/lang/IllegalArgumentException", "ByteBuffer not direct");
         return;
     }
     int ret = write(fd, buf, length);
-    if (ret < 0)
-        jniThrowException(env, "java/io/IOException", NULL);
+    if (ret < 0) jniThrowException(env, "java/io/IOException", NULL);
 }
 
-static void
-android_hardware_SerialPort_send_break(JNIEnv *env, jobject thiz)
-{
+static void android_hardware_SerialPort_send_break(JNIEnv* env, jobject thiz) {
     int fd = env->GetIntField(thiz, field_context);
     tcsendbreak(fd, 0);
 }
 
 static const JNINativeMethod method_table[] = {
-    {"native_open",             "(Ljava/io/FileDescriptor;I)V",
-                                        (void *)android_hardware_SerialPort_open},
-    {"native_close",            "()V",  (void *)android_hardware_SerialPort_close},
-    {"native_read_array",       "([BI)I",
-                                        (void *)android_hardware_SerialPort_read_array},
-    {"native_read_direct",      "(Ljava/nio/ByteBuffer;I)I",
-                                        (void *)android_hardware_SerialPort_read_direct},
-    {"native_write_array",      "([BI)V",
-                                        (void *)android_hardware_SerialPort_write_array},
-    {"native_write_direct",     "(Ljava/nio/ByteBuffer;I)V",
-                                        (void *)android_hardware_SerialPort_write_direct},
-    {"native_send_break",       "()V",  (void *)android_hardware_SerialPort_send_break},
+        {"native_open", "(Ljava/io/FileDescriptor;I)V", (void*)android_hardware_SerialPort_open},
+        {"native_close", "()V", (void*)android_hardware_SerialPort_close},
+        {"native_read_array", "([BI)I", (void*)android_hardware_SerialPort_read_array},
+        {"native_read_direct", "(Ljava/nio/ByteBuffer;I)I",
+         (void*)android_hardware_SerialPort_read_direct},
+        {"native_write_array", "([BI)V", (void*)android_hardware_SerialPort_write_array},
+        {"native_write_direct", "(Ljava/nio/ByteBuffer;I)V",
+         (void*)android_hardware_SerialPort_write_direct},
+        {"native_send_break", "()V", (void*)android_hardware_SerialPort_send_break},
 };
 
-int register_android_hardware_SerialPort(JNIEnv *env)
-{
+int register_android_hardware_SerialPort(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/hardware/SerialPort");
     field_context = GetFieldIDOrDie(env, clazz, "mNativeContext", "I");
 
-    return RegisterMethodsOrDie(env, "android/hardware/SerialPort",
-            method_table, NELEM(method_table));
+    return RegisterMethodsOrDie(env, "android/hardware/SerialPort", method_table,
+                                NELEM(method_table));
 }

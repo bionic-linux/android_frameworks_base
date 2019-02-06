@@ -23,15 +23,16 @@ namespace os {
 namespace statsd {
 
 class StatsPullerManager {
- public:
-    virtual ~StatsPullerManager() {}
+public:
+    virtual ~StatsPullerManager() {
+    }
 
     virtual void RegisterReceiver(int tagId, wp<PullDataReceiver> receiver, int64_t nextPullTimeNs,
                                   int64_t intervalNs) {
         mPullerManager.RegisterReceiver(tagId, receiver, nextPullTimeNs, intervalNs);
     };
 
-    virtual void UnRegisterReceiver(int tagId, wp <PullDataReceiver> receiver) {
+    virtual void UnRegisterReceiver(int tagId, wp<PullDataReceiver> receiver) {
         mPullerManager.UnRegisterReceiver(tagId, receiver);
     };
 
@@ -61,9 +62,8 @@ class StatsPullerManager {
         return mPullerManager.ClearPullerCacheIfNecessary(timestampNs);
     }
 
- private:
-    StatsPullerManagerImpl
-        & mPullerManager = StatsPullerManagerImpl::GetInstance();
+private:
+    StatsPullerManagerImpl& mPullerManager = StatsPullerManagerImpl::GetInstance();
 };
 
 }  // namespace statsd

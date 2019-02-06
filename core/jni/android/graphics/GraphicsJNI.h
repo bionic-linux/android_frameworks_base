@@ -1,19 +1,19 @@
 #ifndef _ANDROID_GRAPHICS_GRAPHICS_JNI_H_
 #define _ANDROID_GRAPHICS_GRAPHICS_JNI_H_
 
+#include <hwui/Bitmap.h>
+#include <hwui/Canvas.h>
+#include <jni.h>
 #include "Bitmap.h"
-#include "SkBitmap.h"
 #include "SkBRDAllocator.h"
+#include "SkBitmap.h"
 #include "SkCodec.h"
-#include "SkPixelRef.h"
+#include "SkColorSpace.h"
 #include "SkMallocPixelRef.h"
+#include "SkMatrix44.h"
+#include "SkPixelRef.h"
 #include "SkPoint.h"
 #include "SkRect.h"
-#include "SkColorSpace.h"
-#include "SkMatrix44.h"
-#include <jni.h>
-#include <hwui/Canvas.h>
-#include <hwui/Bitmap.h>
 
 class SkBitmapRegionDecoder;
 class SkCanvas;
@@ -21,21 +21,21 @@ class SkCanvas;
 namespace android {
 class Paint;
 struct Typeface;
-}
+}  // namespace android
 
 class GraphicsJNI {
-public:
+  public:
     // This enum must keep these int values, to match the int values
     // in the java Bitmap.Config enum.
     enum LegacyBitmapConfig {
-        kNo_LegacyBitmapConfig          = 0,
-        kA8_LegacyBitmapConfig          = 1,
-        kIndex8_LegacyBitmapConfig      = 2,
-        kRGB_565_LegacyBitmapConfig     = 3,
-        kARGB_4444_LegacyBitmapConfig   = 4,
-        kARGB_8888_LegacyBitmapConfig   = 5,
-        kRGBA_16F_LegacyBitmapConfig    = 6,
-        kHardware_LegacyBitmapConfig    = 7,
+        kNo_LegacyBitmapConfig = 0,
+        kA8_LegacyBitmapConfig = 1,
+        kIndex8_LegacyBitmapConfig = 2,
+        kRGB_565_LegacyBitmapConfig = 3,
+        kARGB_4444_LegacyBitmapConfig = 4,
+        kARGB_8888_LegacyBitmapConfig = 5,
+        kRGBA_16F_LegacyBitmapConfig = 6,
+        kHardware_LegacyBitmapConfig = 7,
 
         kLastEnum_LegacyBitmapConfig = kHardware_LegacyBitmapConfig
     };
@@ -86,8 +86,8 @@ public:
 
     static jobject createBitmapRegionDecoder(JNIEnv* env, SkBitmapRegionDecoder* bitmap);
 
-    static android::Bitmap* mapAshmemBitmap(JNIEnv* env, SkBitmap* bitmap,
-            int fd, void* addr, size_t size, bool readOnly);
+    static android::Bitmap* mapAshmemBitmap(JNIEnv* env, SkBitmap* bitmap, int fd, void* addr,
+                                            size_t size, bool readOnly);
 
     /**
      * Given a bitmap we natively allocate a memory block to store the contents
@@ -101,9 +101,8 @@ public:
         format along the way.
         Whether to use premultiplied pixels is determined by dstBitmap's alphaType.
     */
-    static bool SetPixels(JNIEnv* env, jintArray colors, int srcOffset,
-            int srcStride, int x, int y, int width, int height,
-            const SkBitmap& dstBitmap);
+    static bool SetPixels(JNIEnv* env, jintArray colors, int srcOffset, int srcStride, int x, int y,
+                          int width, int height, const SkBitmap& dstBitmap);
 
     static sk_sp<SkColorSpace> defaultColorSpace();
     static sk_sp<SkColorSpace> linearColorSpace();
@@ -115,25 +114,24 @@ public:
     static sk_sp<SkColorSpace> getNativeColorSpace(JNIEnv* env, jobject colorSpace);
 
     static jobject getColorSpace(JNIEnv* env, sk_sp<SkColorSpace>& decodeColorSpace,
-            SkColorType decodeColorType);
+                                 SkColorType decodeColorType);
 };
 
 class HeapAllocator : public SkBRDAllocator {
-public:
-   HeapAllocator() { };
-    ~HeapAllocator() { };
+  public:
+    HeapAllocator(){};
+    ~HeapAllocator(){};
 
     virtual bool allocPixelRef(SkBitmap* bitmap) override;
 
     /**
      * Fetches the backing allocation object. Must be called!
      */
-    android::Bitmap* getStorageObjAndReset() {
-        return mStorage.release();
-    };
+    android::Bitmap* getStorageObjAndReset() { return mStorage.release(); };
 
     SkCodec::ZeroInitialized zeroInit() const override { return SkCodec::kYes_ZeroInitialized; }
-private:
+
+  private:
     sk_sp<android::Bitmap> mStorage;
 };
 
@@ -165,10 +163,8 @@ private:
  *  first allocation.
  */
 class RecyclingClippingPixelAllocator : public SkBRDAllocator {
-public:
-
-    RecyclingClippingPixelAllocator(android::Bitmap* recycledBitmap,
-            size_t recycledBytes);
+  public:
+    RecyclingClippingPixelAllocator(android::Bitmap* recycledBitmap, size_t recycledBytes);
 
     ~RecyclingClippingPixelAllocator();
 
@@ -191,109 +187,113 @@ public:
      */
     SkCodec::ZeroInitialized zeroInit() const override { return SkCodec::kNo_ZeroInitialized; }
 
-private:
+  private:
     android::Bitmap* mRecycledBitmap;
-    const size_t     mRecycledBytes;
-    SkBitmap*        mSkiaBitmap;
-    bool             mNeedsCopy;
+    const size_t mRecycledBytes;
+    SkBitmap* mSkiaBitmap;
+    bool mNeedsCopy;
 };
 
 class AshmemPixelAllocator : public SkBitmap::Allocator {
-public:
+  public:
     explicit AshmemPixelAllocator(JNIEnv* env);
-    ~AshmemPixelAllocator() { };
+    ~AshmemPixelAllocator(){};
     virtual bool allocPixelRef(SkBitmap* bitmap);
-    android::Bitmap* getStorageObjAndReset() {
-        return mStorage.release();
-    };
+    android::Bitmap* getStorageObjAndReset() { return mStorage.release(); };
 
-private:
+  private:
     JavaVM* mJavaVM;
     sk_sp<android::Bitmap> mStorage;
 };
 
-
-enum JNIAccess {
-    kRO_JNIAccess,
-    kRW_JNIAccess
-};
+enum JNIAccess { kRO_JNIAccess, kRW_JNIAccess };
 
 class AutoJavaFloatArray {
-public:
-    AutoJavaFloatArray(JNIEnv* env, jfloatArray array,
-                       int minLength = 0, JNIAccess = kRW_JNIAccess);
+  public:
+    AutoJavaFloatArray(JNIEnv* env, jfloatArray array, int minLength = 0,
+                       JNIAccess = kRW_JNIAccess);
     ~AutoJavaFloatArray();
 
     float* ptr() const { return fPtr; }
-    int    length() const { return fLen; }
+    int length() const { return fLen; }
 
-private:
-    JNIEnv*     fEnv;
+  private:
+    JNIEnv* fEnv;
     jfloatArray fArray;
-    float*      fPtr;
-    int         fLen;
-    int         fReleaseMode;
+    float* fPtr;
+    int fLen;
+    int fReleaseMode;
 };
 
 class AutoJavaIntArray {
-public:
+  public:
     AutoJavaIntArray(JNIEnv* env, jintArray array, int minLength = 0);
     ~AutoJavaIntArray();
 
     jint* ptr() const { return fPtr; }
-    int    length() const { return fLen; }
+    int length() const { return fLen; }
 
-private:
-    JNIEnv*     fEnv;
+  private:
+    JNIEnv* fEnv;
     jintArray fArray;
-    jint*      fPtr;
-    int         fLen;
+    jint* fPtr;
+    int fLen;
 };
 
 class AutoJavaShortArray {
-public:
-    AutoJavaShortArray(JNIEnv* env, jshortArray array,
-                       int minLength = 0, JNIAccess = kRW_JNIAccess);
+  public:
+    AutoJavaShortArray(JNIEnv* env, jshortArray array, int minLength = 0,
+                       JNIAccess = kRW_JNIAccess);
     ~AutoJavaShortArray();
 
     jshort* ptr() const { return fPtr; }
-    int    length() const { return fLen; }
+    int length() const { return fLen; }
 
-private:
-    JNIEnv*     fEnv;
+  private:
+    JNIEnv* fEnv;
     jshortArray fArray;
-    jshort*      fPtr;
-    int         fLen;
-    int         fReleaseMode;
+    jshort* fPtr;
+    int fLen;
+    int fReleaseMode;
 };
 
 class AutoJavaByteArray {
-public:
+  public:
     AutoJavaByteArray(JNIEnv* env, jbyteArray array, int minLength = 0);
     ~AutoJavaByteArray();
 
     jbyte* ptr() const { return fPtr; }
-    int    length() const { return fLen; }
+    int length() const { return fLen; }
 
-private:
-    JNIEnv*     fEnv;
+  private:
+    JNIEnv* fEnv;
     jbyteArray fArray;
-    jbyte*      fPtr;
-    int         fLen;
+    jbyte* fPtr;
+    int fLen;
 };
 
 void doThrowNPE(JNIEnv* env);
-void doThrowAIOOBE(JNIEnv* env); // Array Index Out Of Bounds Exception
+void doThrowAIOOBE(JNIEnv* env);                        // Array Index Out Of Bounds Exception
 void doThrowIAE(JNIEnv* env, const char* msg = NULL);   // Illegal Argument
-void doThrowRE(JNIEnv* env, const char* msg = NULL);   // Runtime
+void doThrowRE(JNIEnv* env, const char* msg = NULL);    // Runtime
 void doThrowISE(JNIEnv* env, const char* msg = NULL);   // Illegal State
-void doThrowOOME(JNIEnv* env, const char* msg = NULL);   // Out of memory
+void doThrowOOME(JNIEnv* env, const char* msg = NULL);  // Out of memory
 void doThrowIOE(JNIEnv* env, const char* msg = NULL);   // IO Exception
 
-#define NPE_CHECK_RETURN_ZERO(env, object)    \
-    do { if (NULL == (object)) { doThrowNPE(env); return 0; } } while (0)
+#define NPE_CHECK_RETURN_ZERO(env, object) \
+    do {                                   \
+        if (NULL == (object)) {            \
+            doThrowNPE(env);               \
+            return 0;                      \
+        }                                  \
+    } while (0)
 
-#define NPE_CHECK_RETURN_VOID(env, object)    \
-    do { if (NULL == (object)) { doThrowNPE(env); return; } } while (0)
+#define NPE_CHECK_RETURN_VOID(env, object) \
+    do {                                   \
+        if (NULL == (object)) {            \
+            doThrowNPE(env);               \
+            return;                        \
+        }                                  \
+    } while (0)
 
 #endif  // _ANDROID_GRAPHICS_GRAPHICS_JNI_H_

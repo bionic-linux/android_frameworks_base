@@ -27,8 +27,8 @@ using std::lock_guard;
 using std::mutex;
 using std::unique_lock;
 
-NativeCallbackThread::NativeCallbackThread(JavaVM *vm) : mvm(vm), mExiting(false),
-        mThread(&NativeCallbackThread::threadLoop, this) {
+NativeCallbackThread::NativeCallbackThread(JavaVM* vm)
+    : mvm(vm), mExiting(false), mThread(&NativeCallbackThread::threadLoop, this) {
     ALOGD("Started native callback thread %p", this);
 }
 
@@ -40,7 +40,7 @@ NativeCallbackThread::~NativeCallbackThread() {
 void NativeCallbackThread::threadLoop() {
     ALOGV("%s", __func__);
 
-    JNIEnv *env = nullptr;
+    JNIEnv* env = nullptr;
     JavaVMAttachArgs aargs = {JNI_VERSION_1_4, "NativeCallbackThread", nullptr};
     if (mvm->AttachCurrentThread(&env, &aargs) != JNI_OK || env == nullptr) {
         ALOGE("Couldn't attach thread");
@@ -81,7 +81,7 @@ void NativeCallbackThread::threadLoop() {
     ALOGD_IF(!mQueue.empty(), "Skipped execution of %zu tasks", mQueue.size());
 }
 
-void NativeCallbackThread::enqueue(const Task &task) {
+void NativeCallbackThread::enqueue(const Task& task) {
     lock_guard<mutex> lk(mQueueMutex);
 
     if (mExiting) {
@@ -116,4 +116,4 @@ void NativeCallbackThread::stop() {
     }
 }
 
-} // namespace android
+}  // namespace android

@@ -17,24 +17,24 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+#include <asm-generic/mman.h>
+#include <cutils/memory.h>
+#include <errno.h>
 #include <fcntl.h>
-#include <sys/ioctl.h>
 #include <linux/fb.h>
 #include <linux/input.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
-#include <cutils/memory.h>
-#include <asm-generic/mman.h>
-#include <sys/mman.h>
-#include <utils/threads.h>
-#include <unistd.h>
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <utils/threads.h>
 
 using namespace android;
 
 #ifndef FBIO_WAITFORVSYNC
-#define FBIO_WAITFORVSYNC   _IOW('F', 0x20, __u32)
+#define FBIO_WAITFORVSYNC _IOW('F', 0x20, __u32)
 #endif
 
 struct Buffer {
@@ -52,67 +52,67 @@ void clearBuffer(Buffer* buf, uint32_t pixel) {
 }
 
 void drawTwoPixels(Buffer* buf, uint32_t pixel, ssize_t x, ssize_t y, size_t w) {
-    if (y>0 && y<ssize_t(buf->h)) {
+    if (y > 0 && y < ssize_t(buf->h)) {
         uint32_t* bits = buf->pixels + y * buf->s;
-        if (x>=0 && x<ssize_t(buf->w)) {
+        if (x >= 0 && x < ssize_t(buf->w)) {
             bits[x] = pixel;
         }
         ssize_t W(w);
-        if ((x+W)>=0 && (x+W)<ssize_t(buf->w)) {
-            bits[x+W] = pixel;
+        if ((x + W) >= 0 && (x + W) < ssize_t(buf->w)) {
+            bits[x + W] = pixel;
         }
     }
 }
 
 void drawHLine(Buffer* buf, uint32_t pixel, ssize_t x, ssize_t y, size_t w) {
-    if (y>0 && y<ssize_t(buf->h)) {
+    if (y > 0 && y < ssize_t(buf->h)) {
         ssize_t W(w);
-        if (x<0) {
+        if (x < 0) {
             W += x;
             x = 0;
         }
-        if (x+w > buf->w) {
+        if (x + w > buf->w) {
             W = buf->w - x;
         }
-        if (W>0) {
+        if (W > 0) {
             uint32_t* bits = buf->pixels + y * buf->s + x;
-            android_memset32(bits, pixel, W*4);
+            android_memset32(bits, pixel, W * 4);
         }
     }
 }
 
 void drawRect(Buffer* buf, uint32_t pixel, ssize_t x, ssize_t y, size_t w, size_t h) {
     ssize_t W(w), H(h);
-    if (x<0) {
+    if (x < 0) {
         w += x;
         x = 0;
     }
-    if (y<0) {
+    if (y < 0) {
         h += y;
         y = 0;
     }
-    if (x+w > buf->w)   W = buf->w - x;
-    if (y+h > buf->h)   H = buf->h - y;
-    if (W>0 && H>0) {
+    if (x + w > buf->w) W = buf->w - x;
+    if (y + h > buf->h) H = buf->h - y;
+    if (W > 0 && H > 0) {
         uint32_t* bits = buf->pixels + y * buf->s + x;
-        for (ssize_t i=0 ; i<H ; i++) {
-            android_memset32(bits, pixel, W*4);
+        for (ssize_t i = 0; i < H; i++) {
+            android_memset32(bits, pixel, W * 4);
             bits += buf->s;
         }
     }
 }
 
-void drawCircle(Buffer* buf, uint32_t pixel,
-        size_t x0, size_t y0, size_t radius, bool filled = false) {
+void drawCircle(Buffer* buf, uint32_t pixel, size_t x0, size_t y0, size_t radius,
+                bool filled = false) {
     ssize_t f = 1 - radius;
     ssize_t ddF_x = 1;
     ssize_t ddF_y = -2 * radius;
     ssize_t x = 0;
     ssize_t y = radius;
     if (filled) {
-        drawHLine(buf, pixel, x0-radius, y0, 2*radius);
+        drawHLine(buf, pixel, x0 - radius, y0, 2 * radius);
     } else {
-        drawTwoPixels(buf, pixel, x0-radius, y0, 2*radius);
+        drawTwoPixels(buf, pixel, x0 - radius, y0, 2 * radius);
     }
     while (x < y) {
         if (f >= 0) {
@@ -124,15 +124,15 @@ void drawCircle(Buffer* buf, uint32_t pixel,
         ddF_x += 2;
         f += ddF_x;
         if (filled) {
-            drawHLine(buf, pixel, x0-x, y0+y, 2*x);
-            drawHLine(buf, pixel, x0-x, y0-y, 2*x);
-            drawHLine(buf, pixel, x0-y, y0+x, 2*y);
-            drawHLine(buf, pixel, x0-y, y0-x, 2*y);
+            drawHLine(buf, pixel, x0 - x, y0 + y, 2 * x);
+            drawHLine(buf, pixel, x0 - x, y0 - y, 2 * x);
+            drawHLine(buf, pixel, x0 - y, y0 + x, 2 * y);
+            drawHLine(buf, pixel, x0 - y, y0 - x, 2 * y);
         } else {
-            drawTwoPixels(buf, pixel, x0-x, y0+y, 2*x);
-            drawTwoPixels(buf, pixel, x0-x, y0-y, 2*x);
-            drawTwoPixels(buf, pixel, x0-y, y0+x, 2*y);
-            drawTwoPixels(buf, pixel, x0-y, y0-x, 2*y);
+            drawTwoPixels(buf, pixel, x0 - x, y0 + y, 2 * x);
+            drawTwoPixels(buf, pixel, x0 - x, y0 - y, 2 * x);
+            drawTwoPixels(buf, pixel, x0 - y, y0 + x, 2 * y);
+            drawTwoPixels(buf, pixel, x0 - y, y0 - x, 2 * y);
         }
     }
 }
@@ -162,17 +162,15 @@ class TouchEvents {
             return true;
         }
 
-    public:
+      public:
         int x, y, down;
-        EventThread() : Thread(false),
-                x(0), y(0), down(0)
-        {
+        EventThread() : Thread(false), x(0), y(0), down(0) {
             fd = open("/dev/input/event1", O_RDONLY);
         }
-};
+    };
     sp<EventThread> thread;
 
-public:
+  public:
     TouchEvents() {
         thread = new EventThread();
         thread->run("EventThread", PRIORITY_URGENT_DISPLAY);
@@ -185,14 +183,13 @@ public:
     }
 };
 
-
 struct Queue {
     struct position {
         int x, y;
     };
     int index;
     position q[16];
-    Queue() : index(0) { }
+    Queue() : index(0) {}
     void push(int x, int y) {
         index++;
         index &= 0xF;
@@ -206,7 +203,7 @@ struct Queue {
     }
 };
 
-extern char *optarg;
+extern char* optarg;
 extern int optind;
 extern int optopt;
 extern int opterr;
@@ -246,13 +243,11 @@ int main(int argc, char** argv) {
     argc -= optind;
     argv += optind;
 
-
     TouchEvents touch;
     Queue queue;
 
-
-    int x=0, y=0;
-    int lag_x=0, lag_y=0;
+    int x = 0, y = 0;
+    int lag_x = 0, lag_y = 0;
 
     clearBuffer(&framebuffer, 0);
     while (true) {
@@ -260,7 +255,7 @@ int main(int argc, char** argv) {
         ioctl(fd, FBIO_WAITFORVSYNC, &crt);
 
         // draw beam marker
-        drawRect(&framebuffer, 0x400000, framebuffer.w-2, 0, 2, framebuffer.h);
+        drawRect(&framebuffer, 0x400000, framebuffer.w - 2, 0, 2, framebuffer.h);
         // erase screen
         if (lag) {
             drawCircle(&framebuffer, 0, lag_x, lag_y, 100);
@@ -286,7 +281,7 @@ int main(int argc, char** argv) {
         drawHLine(&framebuffer, 0xFFFFFF, 0, y, 32);
 
         // draw end of frame beam marker
-        drawRect(&framebuffer, 0x004000, framebuffer.w-2, 0, 2, framebuffer.h);
+        drawRect(&framebuffer, 0x004000, framebuffer.w - 2, 0, 2, framebuffer.h);
     }
 
     close(fd);

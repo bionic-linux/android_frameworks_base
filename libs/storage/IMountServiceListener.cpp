@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <storage/IMountServiceListener.h>
 #include <binder/Parcel.h>
+#include <storage/IMountServiceListener.h>
 
 namespace android {
 
@@ -24,24 +24,23 @@ enum {
     TRANSACTION_onStorageStateChanged,
 };
 
-class BpMountServiceListener: public BpInterface<IMountServiceListener> {
-public:
+class BpMountServiceListener : public BpInterface<IMountServiceListener> {
+  public:
     explicit BpMountServiceListener(const sp<IBinder>& impl)
-            : BpInterface<IMountServiceListener>(impl) { }
+        : BpInterface<IMountServiceListener>(impl) {}
 
-    virtual void onUsbMassStorageConnectionChanged(const bool /* connected */) { }
-    virtual void onStorageStateChanged(const String16& /* path */,
-            const String16& /* oldState */, const String16& /* newState */) { }
+    virtual void onUsbMassStorageConnectionChanged(const bool /* connected */) {}
+    virtual void onStorageStateChanged(const String16& /* path */, const String16& /* oldState */,
+                                       const String16& /* newState */) {}
 };
 
 IMPLEMENT_META_INTERFACE(MountServiceListener, "android.os.storage.IStorageEventListener")
 
 // ----------------------------------------------------------------------
 
-status_t BnMountServiceListener::onTransact(
-    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
-{
-    switch(code) {
+status_t BnMountServiceListener::onTransact(uint32_t code, const Parcel& data, Parcel* reply,
+                                            uint32_t flags) {
+    switch (code) {
         case TRANSACTION_onUsbMassStorageConnectionChanged: {
             CHECK_INTERFACE(IMountServiceListener, data, reply);
             bool connected = (data.readInt32() != 0);
@@ -64,4 +63,4 @@ status_t BnMountServiceListener::onTransact(
 }
 // ----------------------------------------------------------------------
 
-}
+}  // namespace android

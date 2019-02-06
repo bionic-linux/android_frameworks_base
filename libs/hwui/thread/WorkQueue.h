@@ -123,9 +123,9 @@ private:
         bool needsWakeup;
         {
             std::unique_lock _lock{mLock};
-            auto insertAt = std::find_if(
-                    std::begin(mWorkQueue), std::end(mWorkQueue),
-                    [time = item.runAt](WorkItem & item) { return item.runAt > time; });
+            auto insertAt =
+                    std::find_if(std::begin(mWorkQueue), std::end(mWorkQueue),
+                                 [time = item.runAt](WorkItem& item) { return item.runAt > time; });
             needsWakeup = std::begin(mWorkQueue) == insertAt;
             mWorkQueue.emplace(insertAt, std::move(item));
         }

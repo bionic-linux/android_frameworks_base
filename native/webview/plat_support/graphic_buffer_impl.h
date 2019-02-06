@@ -27,25 +27,25 @@
 namespace android {
 
 class GraphicBufferImpl {
- public:
-  ~GraphicBufferImpl();
+  public:
+    ~GraphicBufferImpl();
 
-  static long Create(int w, int h);
-  static void Release(long buffer_id);
-  static int MapStatic(long buffer_id, AwMapMode mode, void** vaddr);
-  static int UnmapStatic(long buffer_id);
-  static void* GetNativeBufferStatic(long buffer_id);
-  static uint32_t GetStrideStatic(long buffer_id);
+    static long Create(int w, int h);
+    static void Release(long buffer_id);
+    static int MapStatic(long buffer_id, AwMapMode mode, void** vaddr);
+    static int UnmapStatic(long buffer_id);
+    static void* GetNativeBufferStatic(long buffer_id);
+    static uint32_t GetStrideStatic(long buffer_id);
 
- private:
-  status_t Map(AwMapMode mode, void** vaddr);
-  status_t Unmap();
-  status_t InitCheck() const;
-  void* GetNativeBuffer() const;
-  uint32_t GetStride() const;
-  GraphicBufferImpl(uint32_t w, uint32_t h);
+  private:
+    status_t Map(AwMapMode mode, void** vaddr);
+    status_t Unmap();
+    status_t InitCheck() const;
+    void* GetNativeBuffer() const;
+    uint32_t GetStride() const;
+    GraphicBufferImpl(uint32_t w, uint32_t h);
 
-  sp<android::GraphicBuffer> mBuffer;
+    sp<android::GraphicBuffer> mBuffer;
 };
 
 }  // namespace android

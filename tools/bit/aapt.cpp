@@ -28,12 +28,10 @@ const regex ATTR_REGEX("( *)A: ([^\\(=]+)[^=]*=\"([^\"]+)\".*");
 
 const string ANDROID_NS("http://schemas.android.com/apk/res/android");
 
-bool
-Apk::HasActivity(const string& className)
-{
+bool Apk::HasActivity(const string& className) {
     string fullClassName = full_class_name(package, className);
     const size_t N = activities.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         if (activities[i] == fullClassName) {
             return true;
         }
@@ -66,26 +64,20 @@ struct Element {
 
     string GetAttr(const string& ns, const string& name) const;
     void FindElements(const string& ns, const string& name, vector<Element*>* result, bool recurse);
-    
 };
 
-Element::Element()
-{
-}
+Element::Element() {}
 
-Element::~Element()
-{
+Element::~Element() {
     const size_t N = children.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         delete children[i];
     }
 }
 
-string
-Element::GetAttr(const string& ns, const string& name) const
-{
+string Element::GetAttr(const string& ns, const string& name) const {
     const size_t N = attributes.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const Attribute& attr = attributes[i];
         if (attr.ns == ns && attr.name == name) {
             return attr.value;
@@ -94,11 +86,10 @@ Element::GetAttr(const string& ns, const string& name) const
     return string();
 }
 
-void
-Element::FindElements(const string& ns, const string& name, vector<Element*>* result, bool recurse)
-{
+void Element::FindElements(const string& ns, const string& name, vector<Element*>* result,
+                           bool recurse) {
     const size_t N = children.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         Element* child = children[i];
         if (child->ns == ns && child->name == name) {
             result->push_back(child);
@@ -112,24 +103,18 @@ Element::FindElements(const string& ns, const string& name, vector<Element*>* re
 struct Scope {
     Scope* parent;
     int depth;
-    map<string,string> namespaces;
+    map<string, string> namespaces;
 
     Scope(Scope* parent, int depth);
 };
 
-Scope::Scope(Scope* p, int d)
-    :parent(p),
-     depth(d)
-{
-     if (p != NULL) {
-         namespaces = p->namespaces;
-     }
+Scope::Scope(Scope* p, int d) : parent(p), depth(d) {
+    if (p != NULL) {
+        namespaces = p->namespaces;
+    }
 }
 
-
-string
-full_class_name(const string& packageName, const string& className)
-{
+string full_class_name(const string& packageName, const string& className) {
     if (className.length() == 0) {
         return "";
     }
@@ -142,9 +127,7 @@ full_class_name(const string& packageName, const string& className)
     return className;
 }
 
-string
-pretty_component_name(const string& packageName, const string& className)
-{
+string pretty_component_name(const string& packageName, const string& className) {
     if (starts_with(packageName, className)) {
         size_t pn = packageName.length();
         size_t cn = className.length();
@@ -155,9 +138,7 @@ pretty_component_name(const string& packageName, const string& className)
     return packageName + "/" + className;
 }
 
-int
-inspect_apk(Apk* apk, const string& filename)
-{
+int inspect_apk(Apk* apk, const string& filename) {
     // Load the manifest xml
     Command cmd("aapt");
     cmd.AddArg("dump");
@@ -176,7 +157,7 @@ inspect_apk(Apk* apk, const string& filename)
     Element* current = NULL;
     vector<string> lines;
     split_lines(&lines, output);
-    for (size_t i=0; i<lines.size(); i++) {
+    for (size_t i = 0; i < lines.size(); i++) {
         const string& line = lines[i];
         smatch match;
         if (regex_match(line, match, NS_REGEX)) {
@@ -197,7 +178,7 @@ inspect_apk(Apk* apk, const string& filename)
                 element->name = str;
             } else {
                 element->ns = scope->namespaces[string(str, 0, colon)];
-                element->name.assign(str, colon+1, string::npos);
+                element->name.assign(str, colon + 1, string::npos);
             }
             element->lineno = atoi(match[3].str().c_str());
             element->depth = match[1].length() / 2;
@@ -222,7 +203,7 @@ inspect_apk(Apk* apk, const string& filename)
                     attr.name = str;
                 } else {
                     attr.ns = scope->namespaces[string(str, 0, colon)];
-                    attr.name.assign(str, colon+1, string::npos);
+                    attr.name.assign(str, colon + 1, string::npos);
                 }
                 attr.value = match[3];
                 current->attributes.push_back(attr);
@@ -239,7 +220,7 @@ inspect_apk(Apk* apk, const string& filename)
     apk->package = root->GetAttr("", "package");
     if (apk->package.size() == 0) {
         print_error("%s:%d: Manifest root element doesn't contain a package attribute",
-                filename.c_str(), root->lineno);
+                    filename.c_str(), root->lineno);
         delete root;
         return 1;
     }
@@ -256,7 +237,7 @@ inspect_apk(Apk* apk, const string& filename)
     // Activities
     vector<Element*> activities;
     root->FindElements("", "activity", &activities, true);
-    for (size_t i=0; i<activities.size(); i++) {
+    for (size_t i = 0; i < activities.size(); i++) {
         string name = activities[i]->GetAttr(ANDROID_NS, "name");
         if (name.size() == 0) {
             continue;
@@ -267,4 +248,3 @@ inspect_apk(Apk* apk, const string& filename)
     delete root;
     return 0;
 }
-

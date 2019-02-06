@@ -85,12 +85,12 @@ int32_t AConfiguration_getNavigation(AConfiguration* config) {
 }
 
 int32_t AConfiguration_getKeysHidden(AConfiguration* config) {
-    return config->inputFlags&ResTable_config::MASK_KEYSHIDDEN;
+    return config->inputFlags & ResTable_config::MASK_KEYSHIDDEN;
 }
 
 int32_t AConfiguration_getNavHidden(AConfiguration* config) {
-    return (config->inputFlags&ResTable_config::MASK_NAVHIDDEN)
-            >> ResTable_config::SHIFT_NAVHIDDEN;
+    return (config->inputFlags & ResTable_config::MASK_NAVHIDDEN) >>
+           ResTable_config::SHIFT_NAVHIDDEN;
 }
 
 int32_t AConfiguration_getSdkVersion(AConfiguration* config) {
@@ -98,26 +98,25 @@ int32_t AConfiguration_getSdkVersion(AConfiguration* config) {
 }
 
 int32_t AConfiguration_getScreenSize(AConfiguration* config) {
-    return config->screenLayout&ResTable_config::MASK_SCREENSIZE;
+    return config->screenLayout & ResTable_config::MASK_SCREENSIZE;
 }
 
 int32_t AConfiguration_getScreenLong(AConfiguration* config) {
-    return (config->screenLayout&ResTable_config::MASK_SCREENLONG)
-            >> ResTable_config::SHIFT_SCREENLONG;
+    return (config->screenLayout & ResTable_config::MASK_SCREENLONG) >>
+           ResTable_config::SHIFT_SCREENLONG;
 }
 
 int32_t AConfiguration_getScreenRound(AConfiguration* config) {
-    return (config->screenLayout2&ResTable_config::MASK_SCREENROUND);
+    return (config->screenLayout2 & ResTable_config::MASK_SCREENROUND);
 }
 
 int32_t AConfiguration_getUiModeType(AConfiguration* config) {
-    return config->uiMode&ResTable_config::MASK_UI_MODE_TYPE;
+    return config->uiMode & ResTable_config::MASK_UI_MODE_TYPE;
 }
 
 int32_t AConfiguration_getUiModeNight(AConfiguration* config) {
-    return (config->uiMode&ResTable_config::MASK_UI_MODE_NIGHT)
-            >> ResTable_config::SHIFT_UI_MODE_NIGHT;
-
+    return (config->uiMode & ResTable_config::MASK_UI_MODE_NIGHT) >>
+           ResTable_config::SHIFT_UI_MODE_NIGHT;
 }
 
 int32_t AConfiguration_getScreenWidthDp(AConfiguration* config) {
@@ -133,8 +132,8 @@ int32_t AConfiguration_getSmallestScreenWidthDp(AConfiguration* config) {
 }
 
 int32_t AConfiguration_getLayoutDirection(AConfiguration* config) {
-    return (config->screenLayout&ResTable_config::MASK_LAYOUTDIR)
-            >> ResTable_config::SHIFT_LAYOUTDIR;
+    return (config->screenLayout & ResTable_config::MASK_LAYOUTDIR) >>
+           ResTable_config::SHIFT_LAYOUTDIR;
 }
 
 // ----------------------------------------------------------------------
@@ -178,13 +177,14 @@ void AConfiguration_setNavigation(AConfiguration* config, int32_t navigation) {
 }
 
 void AConfiguration_setKeysHidden(AConfiguration* config, int32_t keysHidden) {
-    config->inputFlags = (config->inputFlags&~ResTable_config::MASK_KEYSHIDDEN)
-            | (keysHidden&ResTable_config::MASK_KEYSHIDDEN);
+    config->inputFlags = (config->inputFlags & ~ResTable_config::MASK_KEYSHIDDEN) |
+                         (keysHidden & ResTable_config::MASK_KEYSHIDDEN);
 }
 
 void AConfiguration_setNavHidden(AConfiguration* config, int32_t navHidden) {
-    config->inputFlags = (config->inputFlags&~ResTable_config::MASK_NAVHIDDEN)
-            | ((navHidden<<ResTable_config::SHIFT_NAVHIDDEN)&ResTable_config::MASK_NAVHIDDEN);
+    config->inputFlags =
+            (config->inputFlags & ~ResTable_config::MASK_NAVHIDDEN) |
+            ((navHidden << ResTable_config::SHIFT_NAVHIDDEN) & ResTable_config::MASK_NAVHIDDEN);
 }
 
 void AConfiguration_setSdkVersion(AConfiguration* config, int32_t sdkVersion) {
@@ -192,29 +192,30 @@ void AConfiguration_setSdkVersion(AConfiguration* config, int32_t sdkVersion) {
 }
 
 void AConfiguration_setScreenSize(AConfiguration* config, int32_t screenSize) {
-    config->screenLayout = (config->screenLayout&~ResTable_config::MASK_SCREENSIZE)
-            | (screenSize&ResTable_config::MASK_SCREENSIZE);
+    config->screenLayout = (config->screenLayout & ~ResTable_config::MASK_SCREENSIZE) |
+                           (screenSize & ResTable_config::MASK_SCREENSIZE);
 }
 
 void AConfiguration_setScreenLong(AConfiguration* config, int32_t screenLong) {
-    config->screenLayout = (config->screenLayout&~ResTable_config::MASK_SCREENLONG)
-            | ((screenLong<<ResTable_config::SHIFT_SCREENLONG)&ResTable_config::MASK_SCREENLONG);
+    config->screenLayout =
+            (config->screenLayout & ~ResTable_config::MASK_SCREENLONG) |
+            ((screenLong << ResTable_config::SHIFT_SCREENLONG) & ResTable_config::MASK_SCREENLONG);
 }
 
 void AConfiguration_setScreenRound(AConfiguration* config, int32_t screenRound) {
-    config->screenLayout2 = (config->screenLayout2&~ResTable_config::MASK_SCREENROUND)
-            | (screenRound&ResTable_config::MASK_SCREENROUND);
+    config->screenLayout2 = (config->screenLayout2 & ~ResTable_config::MASK_SCREENROUND) |
+                            (screenRound & ResTable_config::MASK_SCREENROUND);
 }
 
 void AConfiguration_setUiModeType(AConfiguration* config, int32_t uiModeType) {
-    config->uiMode = (config->uiMode&~ResTable_config::MASK_UI_MODE_TYPE)
-            | (uiModeType&ResTable_config::MASK_UI_MODE_TYPE);
+    config->uiMode = (config->uiMode & ~ResTable_config::MASK_UI_MODE_TYPE) |
+                     (uiModeType & ResTable_config::MASK_UI_MODE_TYPE);
 }
 
 void AConfiguration_setUiModeNight(AConfiguration* config, int32_t uiModeNight) {
-    config->uiMode = (config->uiMode&~ResTable_config::MASK_UI_MODE_NIGHT)
-            | ((uiModeNight<<ResTable_config::SHIFT_UI_MODE_NIGHT)&ResTable_config::MASK_UI_MODE_NIGHT);
-
+    config->uiMode = (config->uiMode & ~ResTable_config::MASK_UI_MODE_NIGHT) |
+                     ((uiModeNight << ResTable_config::SHIFT_UI_MODE_NIGHT) &
+                      ResTable_config::MASK_UI_MODE_NIGHT);
 }
 
 void AConfiguration_setScreenWidthDp(AConfiguration* config, int32_t value) {
@@ -230,8 +231,9 @@ void AConfiguration_setSmallestScreenWidthDp(AConfiguration* config, int32_t val
 }
 
 void AConfiguration_setLayoutDirection(AConfiguration* config, int32_t value) {
-    config->screenLayout = (config->screenLayout&~ResTable_config::MASK_LAYOUTDIR)
-            | ((value<<ResTable_config::SHIFT_LAYOUTDIR)&ResTable_config::MASK_LAYOUTDIR);
+    config->screenLayout =
+            (config->screenLayout & ~ResTable_config::MASK_LAYOUTDIR) |
+            ((value << ResTable_config::SHIFT_LAYOUTDIR) & ResTable_config::MASK_LAYOUTDIR);
 }
 
 // ----------------------------------------------------------------------
@@ -245,6 +247,6 @@ int32_t AConfiguration_match(AConfiguration* base, AConfiguration* requested) {
 }
 
 int32_t AConfiguration_isBetterThan(AConfiguration* base, AConfiguration* test,
-        AConfiguration* requested) {
+                                    AConfiguration* requested) {
     return base->isBetterThan(*test, requested);
 }

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#include "jni.h"
-#include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/android_graphics_SurfaceTexture.h>
+#include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
-#include <ui/Region.h>
 #include <ui/Rect.h>
+#include <ui/Region.h>
 
 #include <gui/GLConsumer.h>
 #include <gui/Surface.h>
@@ -47,24 +47,17 @@ static struct {
     jfieldID bottom;
 } gRectClassInfo;
 
-static struct {
-    jfieldID nativeWindow;
-} gTextureViewClassInfo;
+static struct { jfieldID nativeWindow; } gTextureViewClassInfo;
 
-#define GET_INT(object, field) \
-    env->GetIntField(object, field)
+#define GET_INT(object, field) env->GetIntField(object, field)
 
-#define GET_LONG(object, field) \
-    env->GetLongField(object, field)
+#define GET_LONG(object, field) env->GetLongField(object, field)
 
-#define SET_INT(object, field, value) \
-    env->SetIntField(object, field, value)
+#define SET_INT(object, field, value) env->SetIntField(object, field, value)
 
-#define SET_LONG(object, field, value) \
-    env->SetLongField(object, field, value)
+#define SET_LONG(object, field, value) env->SetLongField(object, field, value)
 
-#define INVOKEV(object, method, ...) \
-    env->CallVoidMethod(object, method, __VA_ARGS__)
+#define INVOKEV(object, method, ...) env->CallVoidMethod(object, method, __VA_ARGS__)
 
 // ----------------------------------------------------------------------------
 // Native layer
@@ -95,7 +88,7 @@ static inline SkImageInfo convertPixelFormat(const ANativeWindow_Buffer& buffer)
             break;
     }
     return SkImageInfo::Make(buffer.width, buffer.height, colorType, alphaType,
-            GraphicsJNI::defaultColorSpace());
+                             GraphicsJNI::defaultColorSpace());
 }
 
 /**
@@ -104,7 +97,7 @@ static inline SkImageInfo convertPixelFormat(const ANativeWindow_Buffer& buffer)
  * NDK implementation would create a circular dependency between the libraries.
  */
 static int32_t native_window_lock(ANativeWindow* window, ANativeWindow_Buffer* outBuffer,
-        Rect* inOutDirtyBounds) {
+                                  Rect* inOutDirtyBounds) {
     return window->perform(window, NATIVE_WINDOW_LOCK, outBuffer, inOutDirtyBounds);
 }
 
@@ -113,8 +106,7 @@ static int32_t native_window_unlockAndPost(ANativeWindow* window) {
 }
 
 static void android_view_TextureView_createNativeWindow(JNIEnv* env, jobject textureView,
-        jobject surface) {
-
+                                                        jobject surface) {
     sp<IGraphicBufferProducer> producer(SurfaceTexture_getProducer(env, surface));
     sp<ANativeWindow> window = new Surface(producer, true);
 
@@ -123,20 +115,18 @@ static void android_view_TextureView_createNativeWindow(JNIEnv* env, jobject tex
 }
 
 static void android_view_TextureView_destroyNativeWindow(JNIEnv* env, jobject textureView) {
-
-    ANativeWindow* nativeWindow = (ANativeWindow*)
-            GET_LONG(textureView, gTextureViewClassInfo.nativeWindow);
+    ANativeWindow* nativeWindow =
+            (ANativeWindow*)GET_LONG(textureView, gTextureViewClassInfo.nativeWindow);
 
     if (nativeWindow) {
         sp<ANativeWindow> window(nativeWindow);
-            window->decStrong((void*)android_view_TextureView_createNativeWindow);
+        window->decStrong((void*)android_view_TextureView_createNativeWindow);
         SET_LONG(textureView, gTextureViewClassInfo.nativeWindow, 0);
     }
 }
 
-static jboolean android_view_TextureView_lockCanvas(JNIEnv* env, jobject,
-        jlong nativeWindow, jobject canvas, jobject dirtyRect) {
-
+static jboolean android_view_TextureView_lockCanvas(JNIEnv* env, jobject, jlong nativeWindow,
+                                                    jobject canvas, jobject dirtyRect) {
     if (!nativeWindow) {
         return JNI_FALSE;
     }
@@ -153,7 +143,7 @@ static jboolean android_view_TextureView_lockCanvas(JNIEnv* env, jobject,
         rect.set(Rect(0x3FFF, 0x3FFF));
     }
 
-    sp<ANativeWindow> window((ANativeWindow*) nativeWindow);
+    sp<ANativeWindow> window((ANativeWindow*)nativeWindow);
     int32_t status = native_window_lock(window.get(), &buffer, &rect);
     if (status) return JNI_FALSE;
 
@@ -170,25 +160,23 @@ static jboolean android_view_TextureView_lockCanvas(JNIEnv* env, jobject,
 
     Canvas* nativeCanvas = GraphicsJNI::getNativeCanvas(env, canvas);
     nativeCanvas->setBitmap(bitmap);
-    nativeCanvas->clipRect(rect.left, rect.top, rect.right, rect.bottom,
-            SkClipOp::kIntersect);
+    nativeCanvas->clipRect(rect.left, rect.top, rect.right, rect.bottom, SkClipOp::kIntersect);
 
     if (dirtyRect) {
-        INVOKEV(dirtyRect, gRectClassInfo.set,
-                int(rect.left), int(rect.top), int(rect.right), int(rect.bottom));
+        INVOKEV(dirtyRect, gRectClassInfo.set, int(rect.left), int(rect.top), int(rect.right),
+                int(rect.bottom));
     }
 
     return JNI_TRUE;
 }
 
-static void android_view_TextureView_unlockCanvasAndPost(JNIEnv* env, jobject,
-        jlong nativeWindow, jobject canvas) {
-
+static void android_view_TextureView_unlockCanvasAndPost(JNIEnv* env, jobject, jlong nativeWindow,
+                                                         jobject canvas) {
     Canvas* nativeCanvas = GraphicsJNI::getNativeCanvas(env, canvas);
     nativeCanvas->setBitmap(SkBitmap());
 
     if (nativeWindow) {
-        sp<ANativeWindow> window((ANativeWindow*) nativeWindow);
+        sp<ANativeWindow> window((ANativeWindow*)nativeWindow);
         native_window_unlockAndPost(window.get());
     }
 }
@@ -200,15 +188,14 @@ static void android_view_TextureView_unlockCanvasAndPost(JNIEnv* env, jobject,
 const char* const kClassPathName = "android/view/TextureView";
 
 static const JNINativeMethod gMethods[] = {
-    {   "nCreateNativeWindow", "(Landroid/graphics/SurfaceTexture;)V",
-            (void*) android_view_TextureView_createNativeWindow },
-    {   "nDestroyNativeWindow", "()V",
-            (void*) android_view_TextureView_destroyNativeWindow },
+        {"nCreateNativeWindow", "(Landroid/graphics/SurfaceTexture;)V",
+         (void*)android_view_TextureView_createNativeWindow},
+        {"nDestroyNativeWindow", "()V", (void*)android_view_TextureView_destroyNativeWindow},
 
-    {   "nLockCanvas", "(JLandroid/graphics/Canvas;Landroid/graphics/Rect;)Z",
-            (void*) android_view_TextureView_lockCanvas },
-    {   "nUnlockCanvasAndPost", "(JLandroid/graphics/Canvas;)V",
-            (void*) android_view_TextureView_unlockCanvasAndPost },
+        {"nLockCanvas", "(JLandroid/graphics/Canvas;Landroid/graphics/Rect;)Z",
+         (void*)android_view_TextureView_lockCanvas},
+        {"nUnlockCanvasAndPost", "(JLandroid/graphics/Canvas;)V",
+         (void*)android_view_TextureView_unlockCanvasAndPost},
 };
 
 int register_android_view_TextureView(JNIEnv* env) {
@@ -225,4 +212,4 @@ int register_android_view_TextureView(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-};
+};  // namespace android

@@ -17,26 +17,23 @@
 #define LOG_TAG "SerialServiceJNI"
 #include "utils/Log.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-namespace android
-{
+namespace android {
 
-static struct parcel_file_descriptor_offsets_t
-{
+static struct parcel_file_descriptor_offsets_t {
     jclass mClass;
     jmethodID mConstructor;
 } gParcelFileDescriptorOffsets;
 
-static jobject android_server_SerialService_open(JNIEnv *env, jobject /* thiz */, jstring path)
-{
-    const char *pathStr = env->GetStringUTFChars(path, NULL);
+static jobject android_server_SerialService_open(JNIEnv* env, jobject /* thiz */, jstring path) {
+    const char* pathStr = env->GetStringUTFChars(path, NULL);
 
     int fd = open(pathStr, O_RDWR | O_NOCTTY);
     if (fd < 0) {
@@ -51,17 +48,15 @@ static jobject android_server_SerialService_open(JNIEnv *env, jobject /* thiz */
         return NULL;
     }
     return env->NewObject(gParcelFileDescriptorOffsets.mClass,
-        gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
+                          gParcelFileDescriptorOffsets.mConstructor, fileDescriptor);
 }
 
-
 static const JNINativeMethod method_table[] = {
-    { "native_open",                "(Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;",
-                                    (void*)android_server_SerialService_open },
+        {"native_open", "(Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;",
+         (void*)android_server_SerialService_open},
 };
 
-int register_android_server_SerialService(JNIEnv *env)
-{
+int register_android_server_SerialService(JNIEnv* env) {
     jclass clazz = env->FindClass("com/android/server/SerialService");
     if (clazz == NULL) {
         ALOGE("Can't find com/android/server/SerialService");
@@ -70,13 +65,14 @@ int register_android_server_SerialService(JNIEnv *env)
 
     clazz = env->FindClass("android/os/ParcelFileDescriptor");
     LOG_FATAL_IF(clazz == NULL, "Unable to find class android.os.ParcelFileDescriptor");
-    gParcelFileDescriptorOffsets.mClass = (jclass) env->NewGlobalRef(clazz);
-    gParcelFileDescriptorOffsets.mConstructor = env->GetMethodID(clazz, "<init>", "(Ljava/io/FileDescriptor;)V");
+    gParcelFileDescriptorOffsets.mClass = (jclass)env->NewGlobalRef(clazz);
+    gParcelFileDescriptorOffsets.mConstructor =
+            env->GetMethodID(clazz, "<init>", "(Ljava/io/FileDescriptor;)V");
     LOG_FATAL_IF(gParcelFileDescriptorOffsets.mConstructor == NULL,
                  "Unable to find constructor for android.os.ParcelFileDescriptor");
 
-    return jniRegisterNativeMethods(env, "com/android/server/SerialService",
-            method_table, NELEM(method_table));
+    return jniRegisterNativeMethods(env, "com/android/server/SerialService", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

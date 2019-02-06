@@ -25,21 +25,17 @@
 
 namespace android {
 
-extern void android_NativeActivity_finish(
-        ANativeActivity* activity);
+extern void android_NativeActivity_finish(ANativeActivity* activity);
 
-extern void android_NativeActivity_setWindowFormat(
-        ANativeActivity* activity, int32_t format);
+extern void android_NativeActivity_setWindowFormat(ANativeActivity* activity, int32_t format);
 
-extern void android_NativeActivity_setWindowFlags(
-        ANativeActivity* activity, int32_t values, int32_t mask);
+extern void android_NativeActivity_setWindowFlags(ANativeActivity* activity, int32_t values,
+                                                  int32_t mask);
 
-extern void android_NativeActivity_showSoftInput(
-        ANativeActivity* activity, int32_t flags);
+extern void android_NativeActivity_showSoftInput(ANativeActivity* activity, int32_t flags);
 
-extern void android_NativeActivity_hideSoftInput(
-        ANativeActivity* activity, int32_t flags);
+extern void android_NativeActivity_hideSoftInput(ANativeActivity* activity, int32_t flags);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_APP_NATIVEACTIVITY_H
+#endif  // _ANDROID_APP_NATIVEACTIVITY_H

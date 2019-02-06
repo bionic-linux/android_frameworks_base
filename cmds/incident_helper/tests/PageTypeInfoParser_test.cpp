@@ -20,11 +20,11 @@
 
 #include <android-base/file.h>
 #include <android-base/test_utils.h>
+#include <fcntl.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/message_lite.h>
 #include <gtest/gtest.h>
 #include <string.h>
-#include <fcntl.h>
 
 using namespace android::base;
 using namespace android::os;
@@ -37,12 +37,10 @@ using ::testing::internal::GetCapturedStderr;
 using ::testing::internal::GetCapturedStdout;
 
 class PageTypeInfoParserTest : public Test {
-public:
-    virtual void SetUp() override {
-        ASSERT_TRUE(tf.fd != -1);
-    }
+  public:
+    virtual void SetUp() override { ASSERT_TRUE(tf.fd != -1); }
 
-protected:
+  protected:
     TemporaryFile tf;
 
     const string kTestPath = GetExecutableDirectory();
@@ -61,8 +59,8 @@ TEST_F(PageTypeInfoParserTest, Success) {
     mt1->set_node(0);
     mt1->set_zone("DMA");
     mt1->set_type("Unmovable");
-    int arr1[] = { 426, 279, 226, 1, 1, 1, 0, 0, 2, 2, 0};
-    for (auto i=0; i<11; i++) {
+    int arr1[] = {426, 279, 226, 1, 1, 1, 0, 0, 2, 2, 0};
+    for (auto i = 0; i < 11; i++) {
         mt1->add_free_pages_count(arr1[i]);
     }
 
@@ -70,8 +68,8 @@ TEST_F(PageTypeInfoParserTest, Success) {
     mt2->set_node(0);
     mt2->set_zone("Normal");
     mt2->set_type("Reclaimable");
-    int arr2[] = { 953, 773, 437, 154, 92, 26, 15, 14, 12, 7, 0};
-    for (auto i=0; i<11; i++) {
+    int arr2[] = {953, 773, 437, 154, 92, 26, 15, 14, 12, 7, 0};
+    for (auto i = 0; i < 11; i++) {
         mt2->add_free_pages_count(arr2[i]);
     }
 
@@ -84,7 +82,6 @@ TEST_F(PageTypeInfoParserTest, Success) {
     block1->set_cma(41);
     block1->set_reserve(1);
     block1->set_isolate(0);
-
 
     PageTypeInfoProto::Block* block2 = expected.add_blocks();
     block2->set_node(0);

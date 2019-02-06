@@ -32,7 +32,7 @@ StatsdConfig CreateDurationMetricConfig_NoLink_AND_CombinationCondition(
         DurationMetric::AggregationType aggregationType, bool addExtraDimensionInCondition,
         bool hashStringInReport) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateStartScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateFinishScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateSyncStartAtomMatcher();
@@ -82,8 +82,8 @@ StatsdConfig CreateDurationMetricConfig_NoLink_AND_CombinationCondition(
 }  // namespace
 
 TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondition) {
-    for (const bool hashStringInReport : { true, false }) {
-        for (bool isDimensionInConditionSubSetOfConditionTrackerDimension : { true, false }) {
+    for (const bool hashStringInReport : {true, false}) {
+        for (bool isDimensionInConditionSubSetOfConditionTrackerDimension : {true, false}) {
             for (auto aggregationType : {DurationMetric::MAX_SPARSE, DurationMetric::SUM}) {
                 ConfigKey cfgKey;
                 auto config = CreateDurationMetricConfig_NoLink_AND_CombinationCondition(
@@ -91,11 +91,11 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                         hashStringInReport);
                 int64_t bucketStartTimeNs = 10000000000;
                 int64_t bucketSizeNs =
-                        TimeUnitToBucketSizeInMillis(
-                            config.duration_metric(0).bucket()) * 1000000LL;
+                        TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) *
+                        1000000LL;
 
-                auto processor = CreateStatsLogProcessor(
-                        bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+                auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs,
+                                                         config, cfgKey);
                 EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
                 EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 
@@ -122,56 +122,53 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                 events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_OFF,
                                                                bucketStartTimeNs + 650));
                 events.push_back(CreateScreenStateChangedEvent(
-                                    android::view::DISPLAY_STATE_ON,
-                                    bucketStartTimeNs + bucketSizeNs + 100));
+                        android::view::DISPLAY_STATE_ON, bucketStartTimeNs + bucketSizeNs + 100));
 
                 events.push_back(CreateScreenStateChangedEvent(
-                                    android::view::DISPLAY_STATE_OFF,
-                                    bucketStartTimeNs + bucketSizeNs + 640));
+                        android::view::DISPLAY_STATE_OFF, bucketStartTimeNs + bucketSizeNs + 640));
                 events.push_back(CreateScreenStateChangedEvent(
-                                    android::view::DISPLAY_STATE_ON,
-                                    bucketStartTimeNs + bucketSizeNs + 650));
+                        android::view::DISPLAY_STATE_ON, bucketStartTimeNs + bucketSizeNs + 650));
 
-                events.push_back(CreateStartScheduledJobEvent(
-                        {CreateAttribution(9999, "")}, "job0", bucketStartTimeNs + 2));
-                events.push_back(CreateFinishScheduledJobEvent(
-                        {CreateAttribution(9999, "")}, "job0",bucketStartTimeNs + 101));
+                events.push_back(CreateStartScheduledJobEvent({CreateAttribution(9999, "")}, "job0",
+                                                              bucketStartTimeNs + 2));
+                events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(9999, "")},
+                                                               "job0", bucketStartTimeNs + 101));
 
-                events.push_back(CreateStartScheduledJobEvent(
-                        {CreateAttribution(9999, "")}, "job2", bucketStartTimeNs + 201));
-                events.push_back(CreateFinishScheduledJobEvent(
-                        {CreateAttribution(9999, "")}, "job2",bucketStartTimeNs + 500));
+                events.push_back(CreateStartScheduledJobEvent({CreateAttribution(9999, "")}, "job2",
+                                                              bucketStartTimeNs + 201));
+                events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(9999, "")},
+                                                               "job2", bucketStartTimeNs + 500));
 
-                events.push_back(CreateStartScheduledJobEvent(
-                        {CreateAttribution(8888, "")}, "job2", bucketStartTimeNs + 600));
-                events.push_back(CreateFinishScheduledJobEvent(
-                        {CreateAttribution(8888, "")}, "job2",
-                        bucketStartTimeNs + bucketSizeNs + 850));
+                events.push_back(CreateStartScheduledJobEvent({CreateAttribution(8888, "")}, "job2",
+                                                              bucketStartTimeNs + 600));
+                events.push_back(
+                        CreateFinishScheduledJobEvent({CreateAttribution(8888, "")}, "job2",
+                                                      bucketStartTimeNs + bucketSizeNs + 850));
 
-                events.push_back(CreateStartScheduledJobEvent(
-                        {CreateAttribution(8888, "")}, "job1",
-                        bucketStartTimeNs + bucketSizeNs + 600));
-                events.push_back(CreateFinishScheduledJobEvent(
-                        {CreateAttribution(8888, "")}, "job1",
-                        bucketStartTimeNs + bucketSizeNs + 900));
+                events.push_back(
+                        CreateStartScheduledJobEvent({CreateAttribution(8888, "")}, "job1",
+                                                     bucketStartTimeNs + bucketSizeNs + 600));
+                events.push_back(
+                        CreateFinishScheduledJobEvent({CreateAttribution(8888, "")}, "job1",
+                                                      bucketStartTimeNs + bucketSizeNs + 900));
 
-                events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                                      bucketStartTimeNs + 10));
-                events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                                    bucketStartTimeNs + 50));
+                events.push_back(
+                        CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 10));
+                events.push_back(
+                        CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + 50));
 
-                events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                                      bucketStartTimeNs + 200));
+                events.push_back(
+                        CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 200));
                 events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
                                                     bucketStartTimeNs + bucketSizeNs + 300));
 
-                events.push_back(CreateSyncStartEvent(attributions1, "ReadDoc",
-                                                      bucketStartTimeNs + 400));
+                events.push_back(
+                        CreateSyncStartEvent(attributions1, "ReadDoc", bucketStartTimeNs + 400));
                 events.push_back(CreateSyncEndEvent(attributions1, "ReadDoc",
                                                     bucketStartTimeNs + bucketSizeNs - 1));
 
-                events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail",
-                                                      bucketStartTimeNs + 401));
+                events.push_back(
+                        CreateSyncStartEvent(attributions2, "ReadEmail", bucketStartTimeNs + 401));
                 events.push_back(CreateSyncEndEvent(attributions2, "ReadEmail",
                                                     bucketStartTimeNs + bucketSizeNs + 700));
 
@@ -194,8 +191,8 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                 EXPECT_EQ(reports.reports_size(), 1);
                 EXPECT_EQ(reports.reports(0).metrics_size(), 1);
                 StatsLogReport::DurationMetricDataWrapper metrics;
-                sortMetricDataByDimensionsValue(
-                        reports.reports(0).metrics(0).duration_metrics(), &metrics);
+                sortMetricDataByDimensionsValue(reports.reports(0).metrics(0).duration_metrics(),
+                                                &metrics);
                 if (aggregationType == DurationMetric::SUM) {
                     EXPECT_EQ(metrics.data_size(), 4);
                     auto data = metrics.data(0);
@@ -203,49 +200,47 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job0");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 111, "App1");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job0");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 111,
+                                                          "App1");
                     EXPECT_EQ(data.bucket_info_size(), 1);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 40 - 11);
-                    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                              bucketStartTimeNs);
+                    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                        bucketStartTimeNs + bucketSizeNs);
-
+                              bucketStartTimeNs + bucketSizeNs);
 
                     data = metrics.data(1);
                     EXPECT_EQ(data.dimensions_in_what().field(),
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job1");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 333, "App2");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job1");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 333,
+                                                          "App2");
                     EXPECT_EQ(data.bucket_info_size(), 1);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 10);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
                               bucketStartTimeNs + bucketSizeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                        bucketStartTimeNs + 2 * bucketSizeNs);
+                              bucketStartTimeNs + 2 * bucketSizeNs);
 
                     data = metrics.data(2);
                     EXPECT_EQ(data.dimensions_in_what().field(),
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job2");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 111, "App1");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job2");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 111,
+                                                          "App1");
                     EXPECT_EQ(data.bucket_info_size(), 2);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -262,12 +257,12 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job2");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 333, "App2");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job2");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 333,
+                                                          "App2");
                     EXPECT_EQ(data.bucket_info_size(), 2);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 450 - 401 + bucketSizeNs - 600);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
@@ -285,47 +280,47 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job0");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 111, "App1");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job0");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 111,
+                                                          "App1");
                     EXPECT_EQ(data.bucket_info_size(), 1);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 40 - 11);
-                    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                              bucketStartTimeNs);
+                    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                        bucketStartTimeNs + bucketSizeNs);
+                              bucketStartTimeNs + bucketSizeNs);
 
                     data = metrics.data(1);
                     EXPECT_EQ(data.dimensions_in_what().field(),
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job1");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 333, "App2");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job1");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 333,
+                                                          "App2");
                     EXPECT_EQ(data.bucket_info_size(), 1);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 10);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
                               bucketStartTimeNs + bucketSizeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                        bucketStartTimeNs + 2 * bucketSizeNs);
+                              bucketStartTimeNs + 2 * bucketSizeNs);
 
                     data = metrics.data(2);
                     EXPECT_EQ(data.dimensions_in_what().field(),
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
-                              "job2");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 111, "App1");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job2");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 111,
+                                                          "App1");
                     EXPECT_EQ(data.bucket_info_size(), 2);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -342,12 +337,12 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondi
                               android::util::SCHEDULED_JOB_STATE_CHANGED);
                     EXPECT_EQ(data.dimensions_in_what().value_tuple().dimensions_value(0).field(),
                               2);  // job name field
-                    EXPECT_EQ(data.dimensions_in_what().value_tuple().
-                                    dimensions_value(0).value_str(),
-                              "job2");  // job name
-                    ValidateAttributionUidAndTagDimension(
-                            data.dimensions_in_condition(),
-                            android::util::SYNC_STATE_CHANGED, 333, "App2");
+                    EXPECT_EQ(
+                            data.dimensions_in_what().value_tuple().dimensions_value(0).value_str(),
+                            "job2");  // job name
+                    ValidateAttributionUidAndTagDimension(data.dimensions_in_condition(),
+                                                          android::util::SYNC_STATE_CHANGED, 333,
+                                                          "App2");
                     EXPECT_EQ(data.bucket_info_size(), 2);
                     EXPECT_EQ(data.bucket_info(0).duration_nanos(), 450 - 401);
                     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
@@ -369,7 +364,7 @@ namespace {
 StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
         DurationMetric::AggregationType aggregationType, bool addExtraDimensionInCondition) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateStartScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateFinishScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateSyncStartAtomMatcher();
@@ -379,14 +374,14 @@ StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
 
     auto scheduledJobPredicate = CreateScheduledJobPredicate();
     auto dimensions = scheduledJobPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *dimensions = CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *dimensions = CreateAttributionUidDimensions(android::util::SCHEDULED_JOB_STATE_CHANGED,
+                                                 {Position::FIRST});
     dimensions->add_child()->set_field(2);  // job name field.
 
     auto isSyncingPredicate = CreateIsSyncingPredicate();
     auto syncDimension = isSyncingPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *syncDimension = CreateAttributionUidDimensions(
-            android::util::SYNC_STATE_CHANGED, {Position::FIRST});
+    *syncDimension =
+            CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     if (addExtraDimensionInCondition) {
         syncDimension->add_child()->set_field(2 /* name field*/);
     }
@@ -413,9 +408,8 @@ StatsdConfig CreateDurationMetricConfig_Link_AND_CombinationCondition(
 
     auto links = metric->add_links();
     links->set_condition(isSyncingPredicate.id());
-    *links->mutable_fields_in_what() =
-            CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *links->mutable_fields_in_what() = CreateAttributionUidDimensions(
+            android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
     *links->mutable_fields_in_condition() =
             CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     return config;
@@ -427,14 +421,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
     for (bool isFullLink : {true, false}) {
         for (auto aggregationType : {DurationMetric::SUM, DurationMetric::MAX_SPARSE}) {
             ConfigKey cfgKey;
-            auto config = CreateDurationMetricConfig_Link_AND_CombinationCondition(
-                aggregationType, !isFullLink);
+            auto config = CreateDurationMetricConfig_Link_AND_CombinationCondition(aggregationType,
+                                                                                   !isFullLink);
             int64_t bucketStartTimeNs = 10000000000;
             int64_t bucketSizeNs =
                     TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
-            auto processor = CreateStatsLogProcessor(
-                    bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+            auto processor =
+                    CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
             EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
             EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 
@@ -466,46 +460,42 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
             events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON,
                                                            bucketStartTimeNs + bucketSizeNs + 100));
 
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(111, "App1")}, "job1", bucketStartTimeNs + 1));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(111, "App1")}, "job1",bucketStartTimeNs + 101));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                          bucketStartTimeNs + 1));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                           bucketStartTimeNs + 101));
 
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 201));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2",bucketStartTimeNs + 500));
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 600));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2",
-                    bucketStartTimeNs + bucketSizeNs + 850));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                          bucketStartTimeNs + 201));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                           bucketStartTimeNs + 500));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                          bucketStartTimeNs + 600));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                           bucketStartTimeNs + bucketSizeNs + 850));
+
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                          bucketStartTimeNs + bucketSizeNs - 2));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                           bucketStartTimeNs + bucketSizeNs + 900));
 
             events.push_back(
-                CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                             bucketStartTimeNs + bucketSizeNs - 2));
+                    CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 50));
             events.push_back(
-                CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                              bucketStartTimeNs + bucketSizeNs + 900));
+                    CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + 110));
 
-            events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                                  bucketStartTimeNs + 50));
-            events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                                bucketStartTimeNs + 110));
-
-            events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail",
-                                                  bucketStartTimeNs + 300));
+            events.push_back(
+                    CreateSyncStartEvent(attributions2, "ReadEmail", bucketStartTimeNs + 300));
             events.push_back(CreateSyncEndEvent(attributions2, "ReadEmail",
                                                 bucketStartTimeNs + bucketSizeNs + 700));
-            events.push_back(CreateSyncStartEvent(attributions2, "ReadDoc",
-                                                  bucketStartTimeNs + 400));
+            events.push_back(
+                    CreateSyncStartEvent(attributions2, "ReadDoc", bucketStartTimeNs + 400));
             events.push_back(CreateSyncEndEvent(attributions2, "ReadDoc",
                                                 bucketStartTimeNs + bucketSizeNs - 1));
 
-            events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
-                                                  bucketStartTimeNs + 550));
-            events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
-                                                bucketStartTimeNs + 800));
+            events.push_back(
+                    CreateSyncStartEvent(attributions3, "ReadDoc", bucketStartTimeNs + 550));
+            events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc", bucketStartTimeNs + 800));
             events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
                                                   bucketStartTimeNs + bucketSizeNs - 1));
             events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
@@ -530,24 +520,23 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
             EXPECT_EQ(reports.reports_size(), 1);
             EXPECT_EQ(reports.reports(0).metrics_size(), 1);
             StatsLogReport::DurationMetricDataWrapper metrics;
-            sortMetricDataByDimensionsValue(
-                    reports.reports(0).metrics(0).duration_metrics(), &metrics);
+            sortMetricDataByDimensionsValue(reports.reports(0).metrics(0).duration_metrics(),
+                                            &metrics);
 
             if (aggregationType == DurationMetric::SUM) {
                 EXPECT_EQ(metrics.data_size(), 3);
                 auto data = metrics.data(0);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101 - 55);
-                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                          bucketStartTimeNs);
+                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                    bucketStartTimeNs + bucketSizeNs);
+                          bucketStartTimeNs + bucketSizeNs);
 
                 data = metrics.data(1);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -560,8 +549,8 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
                           bucketStartTimeNs + 2 * bucketSizeNs);
 
                 data = metrics.data(2);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 1);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
@@ -575,18 +564,17 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
             } else {
                 EXPECT_EQ(metrics.data_size(), 3);
                 auto data = metrics.data(0);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101 - 55);
-                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                          bucketStartTimeNs);
+                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                    bucketStartTimeNs + bucketSizeNs);
+                          bucketStartTimeNs + bucketSizeNs);
 
                 data = metrics.data(1);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -599,8 +587,8 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationConditi
                           bucketStartTimeNs + 2 * bucketSizeNs);
 
                 data = metrics.data(2);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
@@ -617,7 +605,7 @@ namespace {
 StatsdConfig CreateDurationMetricConfig_PartialLink_AND_CombinationCondition(
         DurationMetric::AggregationType aggregationType, bool hashStringInReport) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateStartScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateFinishScheduledJobAtomMatcher();
     *config.add_atom_matcher() = CreateSyncStartAtomMatcher();
@@ -627,14 +615,14 @@ StatsdConfig CreateDurationMetricConfig_PartialLink_AND_CombinationCondition(
 
     auto scheduledJobPredicate = CreateScheduledJobPredicate();
     auto dimensions = scheduledJobPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *dimensions = CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *dimensions = CreateAttributionUidDimensions(android::util::SCHEDULED_JOB_STATE_CHANGED,
+                                                 {Position::FIRST});
     dimensions->add_child()->set_field(2);  // job name field.
 
     auto isSyncingPredicate = CreateIsSyncingPredicate();
     auto syncDimension = isSyncingPredicate.mutable_simple_predicate()->mutable_dimensions();
-    *syncDimension = CreateAttributionUidDimensions(
-            android::util::SYNC_STATE_CHANGED, {Position::FIRST});
+    *syncDimension =
+            CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     syncDimension->add_child()->set_field(2 /* name field*/);
 
     auto screenIsOffPredicate = CreateScreenIsOffPredicate();
@@ -659,12 +647,10 @@ StatsdConfig CreateDurationMetricConfig_PartialLink_AND_CombinationCondition(
             android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
     *metric->mutable_dimensions_in_condition() = *syncDimension;
 
-
     auto links = metric->add_links();
     links->set_condition(isSyncingPredicate.id());
-    *links->mutable_fields_in_what() =
-            CreateAttributionUidDimensions(
-                android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
+    *links->mutable_fields_in_what() = CreateAttributionUidDimensions(
+            android::util::SCHEDULED_JOB_STATE_CHANGED, {Position::FIRST});
     *links->mutable_fields_in_condition() =
             CreateAttributionUidDimensions(android::util::SYNC_STATE_CHANGED, {Position::FIRST});
     return config;
@@ -676,15 +662,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
     for (const bool hashStringInReport : {true, false}) {
         for (auto aggregationType : {DurationMetric::SUM, DurationMetric::MAX_SPARSE}) {
             ConfigKey cfgKey;
-            auto config =
-                    CreateDurationMetricConfig_PartialLink_AND_CombinationCondition(
-                            aggregationType, hashStringInReport);
+            auto config = CreateDurationMetricConfig_PartialLink_AND_CombinationCondition(
+                    aggregationType, hashStringInReport);
             int64_t bucketStartTimeNs = 10000000000;
             int64_t bucketSizeNs =
                     TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
-            auto processor = CreateStatsLogProcessor(
-                    bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+            auto processor =
+                    CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
             EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
             EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 
@@ -716,46 +701,42 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
             events.push_back(CreateScreenStateChangedEvent(android::view::DISPLAY_STATE_ON,
                                                            bucketStartTimeNs + bucketSizeNs + 100));
 
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(111, "App1")}, "job1", bucketStartTimeNs + 1));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(111, "App1")}, "job1",bucketStartTimeNs + 101));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                          bucketStartTimeNs + 1));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(111, "App1")}, "job1",
+                                                           bucketStartTimeNs + 101));
 
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 201));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2",bucketStartTimeNs + 500));
-            events.push_back(CreateStartScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2", bucketStartTimeNs + 600));
-            events.push_back(CreateFinishScheduledJobEvent(
-                    {CreateAttribution(333, "App2")}, "job2",
-                    bucketStartTimeNs + bucketSizeNs + 850));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                          bucketStartTimeNs + 201));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                           bucketStartTimeNs + 500));
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                          bucketStartTimeNs + 600));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(333, "App2")}, "job2",
+                                                           bucketStartTimeNs + bucketSizeNs + 850));
+
+            events.push_back(CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                          bucketStartTimeNs + bucketSizeNs - 2));
+            events.push_back(CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
+                                                           bucketStartTimeNs + bucketSizeNs + 900));
 
             events.push_back(
-                CreateStartScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                             bucketStartTimeNs + bucketSizeNs - 2));
+                    CreateSyncStartEvent(attributions1, "ReadEmail", bucketStartTimeNs + 50));
             events.push_back(
-                CreateFinishScheduledJobEvent({CreateAttribution(444, "App3")}, "job3",
-                                              bucketStartTimeNs + bucketSizeNs + 900));
+                    CreateSyncEndEvent(attributions1, "ReadEmail", bucketStartTimeNs + 110));
 
-            events.push_back(CreateSyncStartEvent(attributions1, "ReadEmail",
-                                                  bucketStartTimeNs + 50));
-            events.push_back(CreateSyncEndEvent(attributions1, "ReadEmail",
-                                                bucketStartTimeNs + 110));
-
-            events.push_back(CreateSyncStartEvent(attributions2, "ReadEmail",
-                                                  bucketStartTimeNs + 300));
+            events.push_back(
+                    CreateSyncStartEvent(attributions2, "ReadEmail", bucketStartTimeNs + 300));
             events.push_back(CreateSyncEndEvent(attributions2, "ReadEmail",
                                                 bucketStartTimeNs + bucketSizeNs + 700));
-            events.push_back(CreateSyncStartEvent(attributions2, "ReadDoc",
-                                                  bucketStartTimeNs + 400));
+            events.push_back(
+                    CreateSyncStartEvent(attributions2, "ReadDoc", bucketStartTimeNs + 400));
             events.push_back(CreateSyncEndEvent(attributions2, "ReadDoc",
                                                 bucketStartTimeNs + bucketSizeNs - 1));
 
-            events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
-                                                  bucketStartTimeNs + 550));
-            events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
-                                                bucketStartTimeNs + 800));
+            events.push_back(
+                    CreateSyncStartEvent(attributions3, "ReadDoc", bucketStartTimeNs + 550));
+            events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc", bucketStartTimeNs + 800));
             events.push_back(CreateSyncStartEvent(attributions3, "ReadDoc",
                                                   bucketStartTimeNs + bucketSizeNs - 1));
             events.push_back(CreateSyncEndEvent(attributions3, "ReadDoc",
@@ -780,33 +761,34 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
             EXPECT_EQ(reports.reports_size(), 1);
             EXPECT_EQ(reports.reports(0).metrics_size(), 1);
             StatsLogReport::DurationMetricDataWrapper metrics;
-            sortMetricDataByDimensionsValue(
-                    reports.reports(0).metrics(0).duration_metrics(), &metrics);
+            sortMetricDataByDimensionsValue(reports.reports(0).metrics(0).duration_metrics(),
+                                            &metrics);
             if (aggregationType == DurationMetric::SUM) {
                 EXPECT_EQ(metrics.data_size(), 4);
                 auto data = metrics.data(0);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 111);
-                EXPECT_EQ("ReadEmail",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 111);
+                EXPECT_EQ("ReadEmail", data.dimensions_in_condition()
+                                               .value_tuple()
+                                               .dimensions_value(1)
+                                               .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101 - 55);
-                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                          bucketStartTimeNs);
+                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
                           bucketStartTimeNs + bucketSizeNs);
 
                 data = metrics.data(1);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 333);
-                EXPECT_EQ("ReadDoc",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 333);
+                EXPECT_EQ("ReadDoc", data.dimensions_in_condition()
+                                             .value_tuple()
+                                             .dimensions_value(1)
+                                             .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -814,13 +796,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), bucketSizeNs - 1 - 600 + 50);
 
                 data = metrics.data(2);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 333);
-                EXPECT_EQ("ReadEmail",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 333);
+                EXPECT_EQ("ReadEmail", data.dimensions_in_condition()
+                                               .value_tuple()
+                                               .dimensions_value(1)
+                                               .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -833,13 +816,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
                           bucketStartTimeNs + 2 * bucketSizeNs);
 
                 data = metrics.data(3);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 444);
-                EXPECT_EQ("ReadDoc",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 444);
+                EXPECT_EQ("ReadDoc", data.dimensions_in_condition()
+                                             .value_tuple()
+                                             .dimensions_value(1)
+                                             .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 1);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
@@ -853,28 +837,29 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
             } else {
                 EXPECT_EQ(metrics.data_size(), 4);
                 auto data = metrics.data(0);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 111);
-                EXPECT_EQ("ReadEmail",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 111);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 111);
+                EXPECT_EQ("ReadEmail", data.dimensions_in_condition()
+                                               .value_tuple()
+                                               .dimensions_value(1)
+                                               .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101 - 55);
-                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
-                          bucketStartTimeNs);
+                EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                    bucketStartTimeNs + bucketSizeNs);
+                          bucketStartTimeNs + bucketSizeNs);
 
                 data = metrics.data(1);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 333);
-                EXPECT_EQ("ReadDoc",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 333);
+                EXPECT_EQ("ReadDoc", data.dimensions_in_condition()
+                                             .value_tuple()
+                                             .dimensions_value(1)
+                                             .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -887,13 +872,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
                           bucketStartTimeNs + 2 * bucketSizeNs);
 
                 data = metrics.data(2);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 333);
-                EXPECT_EQ("ReadEmail",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 333);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 333);
+                EXPECT_EQ("ReadEmail", data.dimensions_in_condition()
+                                               .value_tuple()
+                                               .dimensions_value(1)
+                                               .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 2);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
                 EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
@@ -906,13 +892,14 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_Combination
                           bucketStartTimeNs + 2 * bucketSizeNs);
 
                 data = metrics.data(3);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_what(), android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
-                ValidateAttributionUidDimension(
-                    data.dimensions_in_condition(), android::util::SYNC_STATE_CHANGED, 444);
-                EXPECT_EQ("ReadDoc",
-                          data.dimensions_in_condition().value_tuple().
-                                dimensions_value(1).value_str());
+                ValidateAttributionUidDimension(data.dimensions_in_what(),
+                                                android::util::SCHEDULED_JOB_STATE_CHANGED, 444);
+                ValidateAttributionUidDimension(data.dimensions_in_condition(),
+                                                android::util::SYNC_STATE_CHANGED, 444);
+                EXPECT_EQ("ReadDoc", data.dimensions_in_condition()
+                                             .value_tuple()
+                                             .dimensions_value(1)
+                                             .value_str());
                 EXPECT_EQ(data.bucket_info_size(), 1);
                 EXPECT_EQ(data.bucket_info(0).duration_nanos(), 101);
                 EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),

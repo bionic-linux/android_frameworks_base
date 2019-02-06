@@ -18,8 +18,8 @@
 
 #include "android-base/logging.h"
 #include "android-base/macros.h"
-#include "androidfw/ResourceTypes.h"
 #include "androidfw/Locale.h"
+#include "androidfw/ResourceTypes.h"
 
 #include "ResourceTable.h"
 #include "ResourceUtils.h"
@@ -782,11 +782,11 @@ std::unique_ptr<Item> DeserializeItemFromPb(const pb::Item& pb_item,
         } break;
         case pb::Primitive::kDimensionValue: {
           val.dataType = android::Res_value::TYPE_DIMENSION;
-          val.data  = pb_prim.dimension_value();
+          val.data = pb_prim.dimension_value();
         } break;
         case pb::Primitive::kFractionValue: {
           val.dataType = android::Res_value::TYPE_FRACTION;
-          val.data  = pb_prim.fraction_value();
+          val.data = pb_prim.fraction_value();
         } break;
         case pb::Primitive::kIntDecimalValue: {
           val.dataType = android::Res_value::TYPE_INT_DEC;

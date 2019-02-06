@@ -303,7 +303,6 @@ TEST(StringPoolTest, Flatten) {
   }
 }
 
-
 TEST(StringPoolTest, MaxEncodingLength) {
   StdErrDiagnostics diag;
   using namespace android;  // For NO_ERROR on Windows.

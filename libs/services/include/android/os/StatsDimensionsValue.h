@@ -27,7 +27,7 @@ namespace os {
 
 // Represents a parcelable object. Used to send data from statsd to StatsCompanionService.java.
 class StatsDimensionsValue : public android::Parcelable {
-public:
+  public:
     StatsDimensionsValue();
 
     StatsDimensionsValue(int32_t field, String16 value);
@@ -42,7 +42,7 @@ public:
     virtual android::status_t writeToParcel(android::Parcel* out) const override;
     virtual android::status_t readFromParcel(const android::Parcel* in) override;
 
-private:
+  private:
     // Keep constants in sync with android/os/StatsDimensionsValue.java
     // and stats_log.proto's DimensionValue.
     static const int kStrValueType = 2;
@@ -67,4 +67,4 @@ private:
 }  // namespace os
 }  // namespace android
 
-#endif // STATS_DIMENSIONS_VALUE_H
+#endif  // STATS_DIMENSIONS_VALUE_H

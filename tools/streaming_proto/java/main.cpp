@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 #include <map>
+#include <sstream>
 
 using namespace android::stream_proto;
 using namespace google::protobuf::io;
@@ -16,16 +16,14 @@ using namespace std;
  * If the descriptor gives us a class name, use that. Otherwise make one up from
  * the filename of the .proto file.
  */
-static string
-make_outer_class_name(const FileDescriptorProto& file_descriptor)
-{
+static string make_outer_class_name(const FileDescriptorProto& file_descriptor) {
     string name = file_descriptor.options().java_outer_classname();
     if (name.size() == 0) {
         name = to_camel_case(file_base_name(file_descriptor.name()));
         if (name.size() == 0) {
             ERRORS.Add(UNKNOWN_FILE, UNKNOWN_LINE,
-                    "Unable to make an outer class name for file: %s",
-                    file_descriptor.name().c_str());
+                       "Unable to make an outer class name for file: %s",
+                       file_descriptor.name().c_str());
             name = "Unknown";
         }
     }
@@ -35,8 +33,7 @@ make_outer_class_name(const FileDescriptorProto& file_descriptor)
 /**
  * Figure out the package name that we are generating.
  */
-static string
-make_java_package(const FileDescriptorProto& file_descriptor) {
+static string make_java_package(const FileDescriptorProto& file_descriptor) {
     if (file_descriptor.options().has_java_package()) {
         return file_descriptor.options().java_package();
     } else {
@@ -47,9 +44,7 @@ make_java_package(const FileDescriptorProto& file_descriptor) {
 /**
  * Figure out the name of the file we are generating.
  */
-static string
-make_file_name(const FileDescriptorProto& file_descriptor, const string& class_name)
-{
+static string make_file_name(const FileDescriptorProto& file_descriptor, const string& class_name) {
     string const package = make_java_package(file_descriptor);
     string result;
     if (package.size() > 0) {
@@ -63,25 +58,20 @@ make_file_name(const FileDescriptorProto& file_descriptor, const string& class_n
     return result;
 }
 
-static string
-indent_more(const string& indent)
-{
+static string indent_more(const string& indent) {
     return indent + INDENT;
 }
 
 /**
  * Write the constants for an enum.
  */
-static void
-write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& indent)
-{
+static void write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& indent) {
     const int N = enu.value_size();
     text << indent << "// enum " << enu.name() << endl;
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const EnumValueDescriptorProto& value = enu.value(i);
-        text << indent << "public static final int "
-                << make_constant_name(value.name())
-                << " = " << value.number() << ";" << endl;
+        text << indent << "public static final int " << make_constant_name(value.name()) << " = "
+             << value.number() << ";" << endl;
     }
     text << endl;
 }
@@ -89,18 +79,16 @@ write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& ind
 /**
  * Write a field.
  */
-static void
-write_field(stringstream& text, const FieldDescriptorProto& field, const string& indent)
-{
-    string optional_comment = field.label() == FieldDescriptorProto::LABEL_OPTIONAL
-            ? "optional " : "";
-    string repeated_comment = field.label() == FieldDescriptorProto::LABEL_REPEATED
-            ? "repeated " : "";
+static void write_field(stringstream& text, const FieldDescriptorProto& field,
+                        const string& indent) {
+    string optional_comment =
+            field.label() == FieldDescriptorProto::LABEL_OPTIONAL ? "optional " : "";
+    string repeated_comment =
+            field.label() == FieldDescriptorProto::LABEL_REPEATED ? "repeated " : "";
     string proto_type = get_proto_type(field);
-    string packed_comment = field.options().packed()
-            ? " [packed=true]" : "";
+    string packed_comment = field.options().packed() ? " [packed=true]" : "";
     text << indent << "// " << optional_comment << repeated_comment << proto_type << ' '
-            << field.name() << " = " << field.number() << packed_comment << ';' << endl;
+         << field.name() << " = " << field.number() << packed_comment << ';' << endl;
 
     text << indent << "public static final long " << make_constant_name(field.name()) << " = 0x";
 
@@ -116,9 +104,8 @@ write_field(stringstream& text, const FieldDescriptorProto& field, const string&
 /**
  * Write a Message constants class.
  */
-static void
-write_message(stringstream& text, const DescriptorProto& message, const string& indent)
-{
+static void write_message(stringstream& text, const DescriptorProto& message,
+                          const string& indent) {
     int N;
     const string indented = indent_more(indent);
 
@@ -128,19 +115,19 @@ write_message(stringstream& text, const DescriptorProto& message, const string& 
 
     // Enums
     N = message.enum_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_enum(text, message.enum_type(i), indented);
     }
 
     // Nested classes
     N = message.nested_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_message(text, message.nested_type(i), indented);
     }
 
     // Fields
     N = message.field_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_field(text, message.field(i), indented);
     }
 
@@ -153,11 +140,10 @@ write_message(stringstream& text, const DescriptorProto& message, const string& 
  *
  * If there are enums and generate_outer is false, invalid java code will be generated.
  */
-static void
-write_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor,
-        const string& filename, bool generate_outer,
-        const vector<EnumDescriptorProto>& enums, const vector<DescriptorProto>& messages)
-{
+static void write_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor,
+                       const string& filename, bool generate_outer,
+                       const vector<EnumDescriptorProto>& enums,
+                       const vector<DescriptorProto>& messages) {
     stringstream text;
 
     string const package_name = make_java_package(file_descriptor);
@@ -176,7 +162,7 @@ write_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_desc
     // This bit of policy is android api rules specific: Raw proto classes
     // must never be in the API
     text << "/** @hide */" << endl;
-//    text << "@android.annotation.TestApi" << endl;
+    //    text << "@android.annotation.TestApi" << endl;
 
     if (generate_outer) {
         text << "public final class " << outer_class_name << " {" << endl;
@@ -185,14 +171,14 @@ write_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_desc
 
     size_t N;
     const string indented = generate_outer ? indent_more("") : string();
-    
+
     N = enums.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         write_enum(text, enums[i], indented);
     }
 
     N = messages.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         write_message(text, messages[i], indented);
     }
 
@@ -208,66 +194,62 @@ write_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_desc
 /**
  * Write one file per class.  Put all of the enums into the "outer" class.
  */
-static void
-write_multiple_files(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor)
-{
+static void write_multiple_files(CodeGeneratorResponse* response,
+                                 const FileDescriptorProto& file_descriptor) {
     // If there is anything to put in the outer class file, create one
     if (file_descriptor.enum_type_size() > 0) {
         vector<EnumDescriptorProto> enums;
         int N = file_descriptor.enum_type_size();
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             enums.push_back(file_descriptor.enum_type(i));
         }
 
         vector<DescriptorProto> messages;
 
         write_file(response, file_descriptor,
-                make_file_name(file_descriptor, make_outer_class_name(file_descriptor)),
-                true, enums, messages);
+                   make_file_name(file_descriptor, make_outer_class_name(file_descriptor)), true,
+                   enums, messages);
     }
 
     // For each of the message types, make a file
     int N = file_descriptor.message_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         vector<EnumDescriptorProto> enums;
 
         vector<DescriptorProto> messages;
         messages.push_back(file_descriptor.message_type(i));
 
         write_file(response, file_descriptor,
-                make_file_name(file_descriptor, file_descriptor.message_type(i).name()),
-                false, enums, messages);
+                   make_file_name(file_descriptor, file_descriptor.message_type(i).name()), false,
+                   enums, messages);
     }
 }
 
-static void
-write_single_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor)
-{
+static void write_single_file(CodeGeneratorResponse* response,
+                              const FileDescriptorProto& file_descriptor) {
     int N;
 
     vector<EnumDescriptorProto> enums;
     N = file_descriptor.enum_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         enums.push_back(file_descriptor.enum_type(i));
     }
 
     vector<DescriptorProto> messages;
     N = file_descriptor.message_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         messages.push_back(file_descriptor.message_type(i));
     }
 
     write_file(response, file_descriptor,
-            make_file_name(file_descriptor, make_outer_class_name(file_descriptor)),
-            true, enums, messages);
+               make_file_name(file_descriptor, make_outer_class_name(file_descriptor)), true, enums,
+               messages);
 }
 
 /**
  * Main.
  */
-int
-main(int argc, char const*const* argv)
-{
+int main(int argc, char const* const* argv) {
     (void)argc;
     (void)argv;
 
@@ -281,7 +263,7 @@ main(int argc, char const*const* argv)
 
     // Build the files we need.
     const int N = request.proto_file_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const FileDescriptorProto& file_descriptor = request.proto_file(i);
         if (should_generate_for_file(request, file_descriptor.name())) {
             if (file_descriptor.options().java_multiple_files()) {

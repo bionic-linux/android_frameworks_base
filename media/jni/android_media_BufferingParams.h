@@ -26,13 +26,13 @@ struct BufferingParams {
     BufferingSettings settings;
 
     struct fields_t {
-        jclass      clazz;
-        jmethodID   constructID;
+        jclass clazz;
+        jmethodID constructID;
 
-        jfieldID    initial_mark_ms;
-        jfieldID    resume_playback_mark_ms;
+        jfieldID initial_mark_ms;
+        jfieldID resume_playback_mark_ms;
 
-        void init(JNIEnv *env) {
+        void init(JNIEnv* env) {
             jclass lclazz = env->FindClass("android/media/BufferingParams");
             if (lclazz == NULL) {
                 return;
@@ -51,26 +51,25 @@ struct BufferingParams {
             env->DeleteLocalRef(lclazz);
         }
 
-        void exit(JNIEnv *env) {
+        void exit(JNIEnv* env) {
             env->DeleteGlobalRef(clazz);
             clazz = NULL;
         }
     };
 
-    void fillFromJobject(JNIEnv *env, const fields_t& fields, jobject params) {
-        settings.mInitialMarkMs =
-            env->GetIntField(params, fields.initial_mark_ms);
-        settings.mResumePlaybackMarkMs =
-            env->GetIntField(params, fields.resume_playback_mark_ms);
+    void fillFromJobject(JNIEnv* env, const fields_t& fields, jobject params) {
+        settings.mInitialMarkMs = env->GetIntField(params, fields.initial_mark_ms);
+        settings.mResumePlaybackMarkMs = env->GetIntField(params, fields.resume_playback_mark_ms);
     }
 
-    jobject asJobject(JNIEnv *env, const fields_t& fields) {
+    jobject asJobject(JNIEnv* env, const fields_t& fields) {
         jobject params = env->NewObject(fields.clazz, fields.constructID);
         if (params == NULL) {
             return NULL;
         }
         env->SetIntField(params, fields.initial_mark_ms, (jint)settings.mInitialMarkMs);
-        env->SetIntField(params, fields.resume_playback_mark_ms, (jint)settings.mResumePlaybackMarkMs);
+        env->SetIntField(params, fields.resume_playback_mark_ms,
+                         (jint)settings.mResumePlaybackMarkMs);
 
         return params;
     }

@@ -17,15 +17,15 @@
 #ifndef ANDROID_FILTERFW_CORE_GL_ENV_H
 #define ANDROID_FILTERFW_CORE_GL_ENV_H
 
+#include <map>
 #include <string>
 #include <utility>
-#include <map>
 
 #include "base/logging.h"
 #include "base/utilities.h"
 
-#include <GLES2/gl2.h>
 #include <EGL/egl.h>
+#include <GLES2/gl2.h>
 
 #include <utils/StrongPointer.h>
 
@@ -42,13 +42,12 @@ class VertexFrame;
 
 class WindowHandle {
   public:
-    virtual ~WindowHandle() {
-    }
+    virtual ~WindowHandle() {}
 
     virtual void Destroy() = 0;
 
     virtual bool Equals(const WindowHandle* window) const {
-      return InternalHandle() == window->InternalHandle();
+        return InternalHandle() == window->InternalHandle();
     }
 
     virtual const void* InternalHandle() const = 0;
@@ -130,9 +129,7 @@ class GLEnv {
     int FindSurfaceIdForWindow(const WindowHandle* window_handle);
 
     // Obtain the environment's EGL surface.
-    const EGLSurface& surface() const {
-      return surfaces_.find(surface_id_)->second.first;
-    }
+    const EGLSurface& surface() const { return surfaces_.find(surface_id_)->second.first; }
 
     // Working with Contexts ///////////////////////////////////////////////////
 
@@ -151,16 +148,12 @@ class GLEnv {
     void ReleaseContextId(int context_id);
 
     // Obtain the environment's EGL context.
-    const EGLContext& context() const {
-      return contexts_.find(context_id_)->second;
-    }
+    const EGLContext& context() const { return contexts_.find(context_id_)->second; }
 
     // Working with the Display ////////////////////////////////////////////////
 
     // Obtain the environment's EGL display.
-    const EGLDisplay& display() const {
-      return display_;
-    }
+    const EGLDisplay& display() const { return display_; }
 
     // Inspecting the environment //////////////////////////////////////////////
     // Returns true if the environment is active in the current thread.
@@ -260,7 +253,7 @@ class GLEnv {
     GLEnv& operator=(const GLEnv&) = delete;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_GL_ENV_H

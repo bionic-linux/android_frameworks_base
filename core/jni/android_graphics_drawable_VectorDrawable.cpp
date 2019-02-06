@@ -15,8 +15,8 @@
  */
 
 #include "GraphicsJNI.h"
-#include "jni.h"
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include "PathParser.h"
 #include "VectorDrawable.h"
@@ -104,8 +104,8 @@ static void setAntiAlias(JNIEnv*, jobject, jlong treePtr, jboolean aa) {
 /**
  * Draw
  */
-static int draw(JNIEnv* env, jobject, jlong treePtr, jlong canvasPtr,
-        jlong colorFilterPtr, jobject jrect, jboolean needsMirroring, jboolean canReuseCache) {
+static int draw(JNIEnv* env, jobject, jlong treePtr, jlong canvasPtr, jlong colorFilterPtr,
+                jobject jrect, jboolean needsMirroring, jboolean canReuseCache) {
     VectorDrawable::Tree* tree = reinterpret_cast<VectorDrawable::Tree*>(treePtr);
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     SkRect rect;
@@ -117,8 +117,8 @@ static int draw(JNIEnv* env, jobject, jlong treePtr, jlong canvasPtr,
 /**
  * Setters and getters for updating staging properties that can happen both pre-draw and post draw.
  */
-static void setTreeViewportSize(JNIEnv*, jobject, jlong treePtr,
-        jfloat viewportWidth, jfloat viewportHeight) {
+static void setTreeViewportSize(JNIEnv*, jobject, jlong treePtr, jfloat viewportWidth,
+                                jfloat viewportHeight) {
     VectorDrawable::Tree* tree = reinterpret_cast<VectorDrawable::Tree*>(treePtr);
     tree->mutateStagingProperties()->setViewportSize(viewportWidth, viewportHeight);
 }
@@ -134,13 +134,16 @@ static jfloat getRootAlpha(JNIEnv*, jobject, jlong treePtr) {
 }
 
 static void updateFullPathPropertiesAndStrokeStyles(JNIEnv*, jobject, jlong fullPathPtr,
-        jfloat strokeWidth, jint strokeColor, jfloat strokeAlpha, jint fillColor, jfloat fillAlpha,
-        jfloat trimPathStart, jfloat trimPathEnd, jfloat trimPathOffset, jfloat strokeMiterLimit,
-        jint strokeLineCap, jint strokeLineJoin, jint fillType) {
+                                                    jfloat strokeWidth, jint strokeColor,
+                                                    jfloat strokeAlpha, jint fillColor,
+                                                    jfloat fillAlpha, jfloat trimPathStart,
+                                                    jfloat trimPathEnd, jfloat trimPathOffset,
+                                                    jfloat strokeMiterLimit, jint strokeLineCap,
+                                                    jint strokeLineJoin, jint fillType) {
     VectorDrawable::FullPath* fullPath = reinterpret_cast<VectorDrawable::FullPath*>(fullPathPtr);
-    fullPath->mutateStagingProperties()->updateProperties(strokeWidth, strokeColor, strokeAlpha,
-            fillColor, fillAlpha, trimPathStart, trimPathEnd, trimPathOffset, strokeMiterLimit,
-            strokeLineCap, strokeLineJoin, fillType);
+    fullPath->mutateStagingProperties()->updateProperties(
+            strokeWidth, strokeColor, strokeAlpha, fillColor, fillAlpha, trimPathStart, trimPathEnd,
+            trimPathOffset, strokeMiterLimit, strokeLineCap, strokeLineJoin, fillType);
 }
 
 static void updateFullPathFillGradient(JNIEnv*, jobject, jlong pathPtr, jlong fillGradientPtr) {
@@ -156,7 +159,7 @@ static void updateFullPathStrokeGradient(JNIEnv*, jobject, jlong pathPtr, jlong 
 }
 
 static jboolean getFullPathProperties(JNIEnv* env, jobject, jlong fullPathPtr,
-        jbyteArray outProperties, jint length) {
+                                      jbyteArray outProperties, jint length) {
     VectorDrawable::FullPath* fullPath = reinterpret_cast<VectorDrawable::FullPath*>(fullPathPtr);
     int8_t pathProperties[length];
     bool success = fullPath->stagingProperties()->copyProperties(pathProperties, length);
@@ -164,8 +167,8 @@ static jboolean getFullPathProperties(JNIEnv* env, jobject, jlong fullPathPtr,
     return success;
 }
 
-static jboolean getGroupProperties(JNIEnv* env, jobject, jlong groupPtr,
-        jfloatArray outProperties, jint length) {
+static jboolean getGroupProperties(JNIEnv* env, jobject, jlong groupPtr, jfloatArray outProperties,
+                                   jint length) {
     VectorDrawable::Group* group = reinterpret_cast<VectorDrawable::Group*>(groupPtr);
     float groupProperties[length];
     bool success = group->stagingProperties()->copyProperties(groupProperties, length);
@@ -174,14 +177,15 @@ static jboolean getGroupProperties(JNIEnv* env, jobject, jlong groupPtr,
 }
 
 static void updateGroupProperties(JNIEnv*, jobject, jlong groupPtr, jfloat rotate, jfloat pivotX,
-        jfloat pivotY, jfloat scaleX, jfloat scaleY, jfloat translateX, jfloat translateY) {
+                                  jfloat pivotY, jfloat scaleX, jfloat scaleY, jfloat translateX,
+                                  jfloat translateY) {
     VectorDrawable::Group* group = reinterpret_cast<VectorDrawable::Group*>(groupPtr);
     group->mutateStagingProperties()->updateProperties(rotate, pivotX, pivotY, scaleX, scaleY,
-            translateX, translateY);
+                                                       translateX, translateY);
 }
 
 static void setPathString(JNIEnv* env, jobject, jlong pathPtr, jstring inputStr,
-        jint stringLength) {
+                          jint stringLength) {
     VectorDrawable::Path* path = reinterpret_cast<VectorDrawable::Path*>(pathPtr);
     const char* pathString = env->GetStringUTFChars(inputStr, NULL);
 
@@ -373,7 +377,8 @@ static const JNINativeMethod gMethods[] = {
 
         {"nCreateFullPath", "()J", (void*)createEmptyFullPath},
         {"nCreateFullPath", "(J)J", (void*)createFullPath},
-        {"nUpdateFullPathProperties", "(JFIFIFFFFFIII)V", (void*)updateFullPathPropertiesAndStrokeStyles},
+        {"nUpdateFullPathProperties", "(JFIFIFFFFFIII)V",
+         (void*)updateFullPathPropertiesAndStrokeStyles},
         {"nUpdateFullPathFillGradient", "(JJ)V", (void*)updateFullPathFillGradient},
         {"nUpdateFullPathStrokeGradient", "(JJ)V", (void*)updateFullPathStrokeGradient},
 
@@ -419,7 +424,8 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_graphics_drawable_VectorDrawable(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/drawable/VectorDrawable", gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/drawable/VectorDrawable", gMethods,
+                                NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

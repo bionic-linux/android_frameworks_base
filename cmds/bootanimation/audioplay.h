@@ -32,6 +32,6 @@ bool playClip(const uint8_t* buf, int size);
 void setPlaying(bool isPlaying);
 void destroy();
 
-}
+}  // namespace audioplay
 
-#endif // AUDIOPLAY_H_
+#endif  // AUDIOPLAY_H_

@@ -30,21 +30,21 @@
 #include <android-base/chrono_utils.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/Log.h>
-#include <utils/Timers.h>
-#include <utils/misc.h>
-#include <utils/String8.h>
-#include <utils/Log.h>
 #include <hardware/power.h>
 #include <hardware_legacy/power.h>
 #include <hidl/ServiceManagement.h>
+#include <utils/Log.h>
+#include <utils/String8.h>
+#include <utils/Timers.h>
+#include <utils/misc.h>
 
 #include "com_android_server_power_PowerManagerService.h"
 
+using android::String8;
 using android::hardware::Return;
 using android::hardware::Void;
-using android::hardware::power::V1_0::PowerHint;
 using android::hardware::power::V1_0::Feature;
-using android::String8;
+using android::hardware::power::V1_0::PowerHint;
 using android::system::suspend::V1_0::ISystemSuspend;
 using android::system::suspend::V1_0::IWakeLock;
 using android::system::suspend::V1_0::WakeLockType;
@@ -55,9 +55,7 @@ namespace android {
 
 // ----------------------------------------------------------------------------
 
-static struct {
-    jmethodID userActivityFromNative;
-} gPowerManagerServiceClassInfo;
+static struct { jmethodID userActivityFromNative; } gPowerManagerServiceClassInfo;
 
 // ----------------------------------------------------------------------------
 
@@ -70,7 +68,7 @@ static std::mutex gPowerHalMutex;
 static nsecs_t gLastEventTime[USER_ACTIVITY_EVENT_LAST + 1];
 
 // Throttling interval for user activity calls.
-static const nsecs_t MIN_TIME_BETWEEN_USERACTIVITIES = 100 * 1000000L; // 100ms
+static const nsecs_t MIN_TIME_BETWEEN_USERACTIVITIES = 100 * 1000000L;  // 100ms
 
 // ----------------------------------------------------------------------------
 
@@ -92,7 +90,7 @@ static void connectPowerHalLocked() {
         if (gPowerHalV1_0_ != nullptr) {
             ALOGI("Loaded power HAL 1.0 service");
             // Try cast to powerHAL V1_1
-            gPowerHalV1_1_ =  IPowerV1_1::castFrom(gPowerHalV1_0_);
+            gPowerHalV1_1_ = IPowerV1_1::castFrom(gPowerHalV1_0_);
             if (gPowerHalV1_1_ == nullptr) {
             } else {
                 ALOGI("Loaded power HAL 1.1 service");
@@ -120,7 +118,7 @@ sp<IPowerV1_1> getPowerHalV1_1() {
 
 // Check if a call to a power HAL function failed; if so, log the failure and invalidate the
 // current handle to the power HAL service.
-bool processPowerHalReturn(const Return<void> &ret, const char* functionName) {
+bool processPowerHalReturn(const Return<void>& ret, const char* functionName) {
     if (!ret.isOk()) {
         ALOGE("%s() failed: power HAL service not available.", functionName);
         gPowerHalMutex.lock();
@@ -169,8 +167,8 @@ void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t 
         JNIEnv* env = AndroidRuntime::getJNIEnv();
 
         env->CallVoidMethod(gPowerManagerServiceObj,
-                gPowerManagerServiceClassInfo.userActivityFromNative,
-                nanoseconds_to_milliseconds(eventTime), eventType, 0);
+                            gPowerManagerServiceClassInfo.userActivityFromNative,
+                            nanoseconds_to_milliseconds(eventTime), eventType, 0);
         checkAndClearExceptionFromCallback(env, "userActivityFromNative");
     }
 }
@@ -183,7 +181,7 @@ static std::mutex gSuspendMutex;
 // TODO: Force device to restart if SystemSuspend HAL dies.
 sp<ISystemSuspend> getSuspendHal() {
     static std::once_flag suspendHalFlag;
-    std::call_once(suspendHalFlag, [](){
+    std::call_once(suspendHalFlag, []() {
         ::android::hardware::details::waitForHwService(ISystemSuspend::descriptor, "default");
         gSuspendHal = ISystemSuspend::getService();
         assert(gSuspendHal != nullptr);
@@ -210,8 +208,8 @@ void disableAutoSuspend() {
     std::lock_guard<std::mutex> lock(gSuspendMutex);
     if (!gSuspendBlocker) {
         sp<ISystemSuspend> suspendHal = getSuspendHal();
-        gSuspendBlocker = suspendHal->acquireWakeLock(WakeLockType::PARTIAL,
-                "PowerManager.SuspendLockout");
+        gSuspendBlocker =
+                suspendHal->acquireWakeLock(WakeLockType::PARTIAL, "PowerManager.SuspendLockout");
     }
 }
 
@@ -225,12 +223,12 @@ static void nativeInit(JNIEnv* env, jobject obj) {
     gPowerHalMutex.unlock();
 }
 
-static void nativeAcquireSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring nameStr) {
+static void nativeAcquireSuspendBlocker(JNIEnv* env, jclass /* clazz */, jstring nameStr) {
     ScopedUtfChars name(env, nameStr);
     acquire_wake_lock(PARTIAL_WAKE_LOCK, name.c_str());
 }
 
-static void nativeReleaseSuspendBlocker(JNIEnv *env, jclass /* clazz */, jstring nameStr) {
+static void nativeReleaseSuspendBlocker(JNIEnv* env, jclass /* clazz */, jstring nameStr) {
     ScopedUtfChars name(env, nameStr);
     release_wake_lock(name.c_str());
 }
@@ -279,39 +277,35 @@ static void nativeSetFeature(JNIEnv* /* env */, jclass /* clazz */, jint feature
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gPowerManagerServiceMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeInit", "()V",
-            (void*) nativeInit },
-    { "nativeAcquireSuspendBlocker", "(Ljava/lang/String;)V",
-            (void*) nativeAcquireSuspendBlocker },
-    { "nativeReleaseSuspendBlocker", "(Ljava/lang/String;)V",
-            (void*) nativeReleaseSuspendBlocker },
-    { "nativeSetInteractive", "(Z)V",
-            (void*) nativeSetInteractive },
-    { "nativeSetAutoSuspend", "(Z)V",
-            (void*) nativeSetAutoSuspend },
-    { "nativeSendPowerHint", "(II)V",
-            (void*) nativeSendPowerHint },
-    { "nativeSetFeature", "(II)V",
-            (void*) nativeSetFeature },
+        /* name, signature, funcPtr */
+        {"nativeInit", "()V", (void*)nativeInit},
+        {"nativeAcquireSuspendBlocker", "(Ljava/lang/String;)V",
+         (void*)nativeAcquireSuspendBlocker},
+        {"nativeReleaseSuspendBlocker", "(Ljava/lang/String;)V",
+         (void*)nativeReleaseSuspendBlocker},
+        {"nativeSetInteractive", "(Z)V", (void*)nativeSetInteractive},
+        {"nativeSetAutoSuspend", "(Z)V", (void*)nativeSetAutoSuspend},
+        {"nativeSendPowerHint", "(II)V", (void*)nativeSendPowerHint},
+        {"nativeSetFeature", "(II)V", (void*)nativeSetFeature},
 };
 
-#define FIND_CLASS(var, className) \
-        var = env->FindClass(className); \
-        LOG_FATAL_IF(! (var), "Unable to find class " className);
+#define FIND_CLASS(var, className)   \
+    var = env->FindClass(className); \
+    LOG_FATAL_IF(!(var), "Unable to find class " className);
 
-#define GET_METHOD_ID(var, clazz, methodName, methodDescriptor) \
-        var = env->GetMethodID(clazz, methodName, methodDescriptor); \
-        LOG_FATAL_IF(! (var), "Unable to find method " methodName);
+#define GET_METHOD_ID(var, clazz, methodName, methodDescriptor)  \
+    var = env->GetMethodID(clazz, methodName, methodDescriptor); \
+    LOG_FATAL_IF(!(var), "Unable to find method " methodName);
 
-#define GET_FIELD_ID(var, clazz, fieldName, fieldDescriptor) \
-        var = env->GetFieldID(clazz, fieldName, fieldDescriptor); \
-        LOG_FATAL_IF(! (var), "Unable to find field " fieldName);
+#define GET_FIELD_ID(var, clazz, fieldName, fieldDescriptor)  \
+    var = env->GetFieldID(clazz, fieldName, fieldDescriptor); \
+    LOG_FATAL_IF(!(var), "Unable to find field " fieldName);
 
 int register_android_server_PowerManagerService(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/power/PowerManagerService",
-            gPowerManagerServiceMethods, NELEM(gPowerManagerServiceMethods));
-    (void) res;  // Faked use when LOG_NDEBUG.
+                                       gPowerManagerServiceMethods,
+                                       NELEM(gPowerManagerServiceMethods));
+    (void)res;  // Faked use when LOG_NDEBUG.
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 
     // Callbacks
@@ -320,7 +314,7 @@ int register_android_server_PowerManagerService(JNIEnv* env) {
     FIND_CLASS(clazz, "com/android/server/power/PowerManagerService");
 
     GET_METHOD_ID(gPowerManagerServiceClassInfo.userActivityFromNative, clazz,
-            "userActivityFromNative", "(JII)V");
+                  "userActivityFromNative", "(JII)V");
 
     // Initialize
     for (int i = 0; i <= USER_ACTIVITY_EVENT_LAST; i++) {

@@ -162,9 +162,8 @@ void Canvas::drawText(const uint16_t* text, int start, int count, int contextCou
     // minikin may modify the original paint
     Paint paint(origPaint);
 
-    minikin::Layout layout =
-            MinikinUtils::doLayout(&paint, bidiFlags, typeface, text, start, count, contextCount,
-                                   mt);
+    minikin::Layout layout = MinikinUtils::doLayout(&paint, bidiFlags, typeface, text, start, count,
+                                                    contextCount, mt);
 
     x += MinikinUtils::xOffsetForTextAlign(&paint, layout);
 

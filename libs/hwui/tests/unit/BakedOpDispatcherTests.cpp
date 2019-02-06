@@ -78,8 +78,8 @@ static void testUnmergedGlopDispatch(renderthread::RenderThread& renderThread, R
     static TestBakedOpReceiver unmergedReceivers[] = BUILD_RENDERABLE_OP_LUT(X);
 #undef X
     unmergedReceivers[op->opId](renderer, *state);
-    ASSERT_EQ(expectedGlopCount, glopCount) << "Exactly " << expectedGlopCount
-                                            << "Glop(s) expected";
+    ASSERT_EQ(expectedGlopCount, glopCount)
+            << "Exactly " << expectedGlopCount << "Glop(s) expected";
 }
 
 RENDERTHREAD_OPENGL_PIPELINE_TEST(BakedOpDispatcher, pathTexture_positionOvalArc) {
@@ -161,7 +161,6 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(BakedOpDispatcher, offsetFlags) {
 RENDERTHREAD_OPENGL_PIPELINE_TEST(BakedOpDispatcher, renderTextWithShadow) {
     auto node = TestUtils::createNode<RecordingCanvas>(
             0, 0, 100, 100, [](RenderProperties& props, RecordingCanvas& canvas) {
-
                 android::Paint shadowPaint;
                 shadowPaint.setColor(SK_ColorRED);
 

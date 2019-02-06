@@ -17,18 +17,18 @@
 #ifndef _ANDROID_HARDWARE_DISPLAY_DISPLAYVIEWPORT_H
 #define _ANDROID_HARDWARE_DISPLAY_DISPLAYVIEWPORT_H
 
-#include "jni.h"
 #include <input/DisplayViewport.h>
 #include <utils/Errors.h>
 #include <utils/threads.h>
+#include "jni.h"
 
 namespace android {
 
 /* Copies the contents of a DVM DisplayViewport object to a native DisplayViewport instance.
  * Returns non-zero on error. */
 extern status_t android_hardware_display_DisplayViewport_toNative(JNIEnv* env, jobject eventObj,
-        DisplayViewport* viewport);
+                                                                  DisplayViewport* viewport);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_HARDWARE_DISPLAY_DISPLAYVIEWPORT_H
+#endif  // _ANDROID_HARDWARE_DISPLAY_DISPLAYVIEWPORT_H

@@ -19,10 +19,10 @@
 #include <android/os/IStatsCompanionService.h>
 #include <utils/RefBase.h>
 
+#include "HashableDimensionKey.h"
+#include "android/os/StatsDimensionsValue.h"
 #include "config/ConfigKey.h"
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"  // subscription
-#include "android/os/StatsDimensionsValue.h"
-#include "HashableDimensionKey.h"
 
 #include <mutex>
 #include <unordered_map>
@@ -61,8 +61,7 @@ public:
      * Stores the given intentSender, associating it with the given (configKey, subscriberId) pair.
      * intentSender must be convertible into an IntentSender (in Java) using IntentSender(IBinder).
      */
-    void setBroadcastSubscriber(const ConfigKey& configKey,
-                                int64_t subscriberId,
+    void setBroadcastSubscriber(const ConfigKey& configKey, int64_t subscriberId,
                                 const sp<android::IBinder>& intentSender);
 
     /**
@@ -78,14 +77,13 @@ public:
      * given (configKey, subscriberId) pair by setBroadcastSubscriber.
      * Information about the subscriber, as well as information extracted from the dimKey, is sent.
      */
-    void alertBroadcastSubscriber(const ConfigKey& configKey,
-                                  const Subscription& subscription,
+    void alertBroadcastSubscriber(const ConfigKey& configKey, const Subscription& subscription,
                                   const MetricDimensionKey& dimKey) const;
 
     static StatsDimensionsValue getStatsDimensionsValue(const HashableDimensionKey& dim);
 
 private:
-    SubscriberReporter() {};
+    SubscriberReporter(){};
 
     mutable std::mutex mLock;
 
@@ -93,17 +91,14 @@ private:
     sp<IStatsCompanionService> mStatsCompanionService = nullptr;
 
     /** Maps <ConfigKey, SubscriberId> -> IBinder (which represents an IIntentSender). */
-    std::unordered_map<ConfigKey,
-            std::unordered_map<int64_t, sp<android::IBinder>>> mIntentMap;
+    std::unordered_map<ConfigKey, std::unordered_map<int64_t, sp<android::IBinder>>> mIntentMap;
 
     /**
      * Sends a broadcast via the given intentSender (using mStatsCompanionService), along
      * with the information in the other parameters.
      */
-    void sendBroadcastLocked(const sp<android::IBinder>& intentSender,
-                             const ConfigKey& configKey,
-                             const Subscription& subscription,
-                             const std::vector<String16>& cookies,
+    void sendBroadcastLocked(const sp<android::IBinder>& intentSender, const ConfigKey& configKey,
+                             const Subscription& subscription, const std::vector<String16>& cookies,
                              const MetricDimensionKey& dimKey) const;
 };
 

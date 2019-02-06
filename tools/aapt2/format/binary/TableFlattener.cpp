@@ -590,8 +590,7 @@ bool TableFlattener::Consume(IAaptContext* context, ResourceTable* table) {
   table_header->packageCount = util::HostToDevice32(table->packages.size());
 
   // Flatten the values string pool.
-  StringPool::FlattenUtf8(table_writer.buffer(), table->string_pool,
-      context->GetDiagnostics());
+  StringPool::FlattenUtf8(table_writer.buffer(), table->string_pool, context->GetDiagnostics());
 
   BigBuffer package_buffer(1024);
 

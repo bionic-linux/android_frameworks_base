@@ -27,7 +27,7 @@
 namespace split {
 
 class SplitSelector {
-public:
+  public:
     SplitSelector();
     explicit SplitSelector(const android::Vector<SplitDescription>& splits);
 
@@ -35,10 +35,10 @@ public:
 
     android::KeyedVector<SplitDescription, android::sp<Rule> > getRules() const;
 
-private:
+  private:
     android::Vector<android::SortedVector<SplitDescription> > mGroups;
 };
 
-} // namespace split
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_SPLIT_SELECTOR
+#endif  // H_ANDROID_SPLIT_SPLIT_SELECTOR

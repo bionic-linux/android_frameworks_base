@@ -17,36 +17,35 @@
 #ifndef SOUNDPOOLTHREAD_H_
 #define SOUNDPOOLTHREAD_H_
 
-#include <utils/threads.h>
-#include <utils/Vector.h>
 #include <media/AudioTrack.h>
+#include <utils/Vector.h>
+#include <utils/threads.h>
 
 #include "SoundPool.h"
 
 namespace android {
 
 class SoundPoolMsg {
-public:
+  public:
     enum MessageType { INVALID, KILL, LOAD_SAMPLE };
     SoundPoolMsg() : mMessageType(INVALID), mData(0) {}
-    SoundPoolMsg(MessageType MessageType, int data) :
-        mMessageType(MessageType), mData(data) {}
-    uint16_t         mMessageType;
-    uint16_t         mData;
+    SoundPoolMsg(MessageType MessageType, int data) : mMessageType(MessageType), mData(data) {}
+    uint16_t mMessageType;
+    uint16_t mData;
 };
 
 /*
  * This class handles background requests from the SoundPool
  */
 class SoundPoolThread {
-public:
+  public:
     explicit SoundPoolThread(SoundPool* SoundPool);
     ~SoundPoolThread();
     void loadSample(int sampleID);
     void quit();
     void write(SoundPoolMsg msg);
 
-private:
+  private:
     static const size_t maxMessages = 128;
 
     static int beginThread(void* arg);
@@ -54,13 +53,13 @@ private:
     void doLoadSample(int sampleID);
     const SoundPoolMsg read();
 
-    Mutex                   mLock;
-    Condition               mCondition;
-    Vector<SoundPoolMsg>    mMsgQueue;
-    SoundPool*              mSoundPool;
-    bool                    mRunning;
+    Mutex mLock;
+    Condition mCondition;
+    Vector<SoundPoolMsg> mMsgQueue;
+    SoundPool* mSoundPool;
+    bool mRunning;
 };
 
-} // end namespace android
+}  // end namespace android
 
 #endif /*SOUNDPOOLTHREAD_H_*/

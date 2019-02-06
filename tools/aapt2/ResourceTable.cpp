@@ -317,10 +317,8 @@ static StringPiece SkipNameValidator(const StringPiece& /*name*/) {
   return {};
 }
 
-bool ResourceTable::AddResource(const ResourceNameRef& name,
-                                const ConfigDescription& config,
-                                const StringPiece& product,
-                                std::unique_ptr<Value> value,
+bool ResourceTable::AddResource(const ResourceNameRef& name, const ConfigDescription& config,
+                                const StringPiece& product, std::unique_ptr<Value> value,
                                 IDiagnostics* diag) {
   return AddResourceImpl(name, {}, config, product, std::move(value), ResourceNameValidator,
                          ResolveValueCollision, diag);
@@ -333,10 +331,8 @@ bool ResourceTable::AddResourceWithId(const ResourceNameRef& name, const Resourc
                          ResolveValueCollision, diag);
 }
 
-bool ResourceTable::AddFileReference(const ResourceNameRef& name,
-                                     const ConfigDescription& config,
-                                     const Source& source,
-                                     const StringPiece& path,
+bool ResourceTable::AddFileReference(const ResourceNameRef& name, const ConfigDescription& config,
+                                     const Source& source, const StringPiece& path,
                                      IDiagnostics* diag) {
   return AddFileReferenceImpl(name, config, source, path, nullptr, ResourceNameValidator, diag);
 }

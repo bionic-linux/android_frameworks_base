@@ -16,12 +16,12 @@
 
 #pragma once
 
+#include <GrContextOptions.h>
 #include <cutils/compiler.h>
 #include <memory>
 #include <mutex>
 #include <string>
 #include <vector>
-#include <GrContextOptions.h>
 
 namespace android {
 
@@ -122,7 +122,7 @@ private:
     /**
      *  "mObservedBlobValueSize" is the maximum value size observed by the cache reading function.
      */
-    size_t mObservedBlobValueSize = 20*1024;
+    size_t mObservedBlobValueSize = 20 * 1024;
 
     /**
      *  The time in seconds to wait before saving newly inserted cache entries.
@@ -140,7 +140,7 @@ private:
      */
     static ShaderCache sCache;
 
-    friend class ShaderCacheTestUtils; //used for unit testing
+    friend class ShaderCacheTestUtils;  // used for unit testing
 };
 
 } /* namespace skiapipeline */

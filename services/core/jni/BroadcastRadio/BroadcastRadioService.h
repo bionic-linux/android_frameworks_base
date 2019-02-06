@@ -21,8 +21,8 @@
 
 namespace android {
 
-void register_android_server_broadcastradio_BroadcastRadioService(JNIEnv *env);
+void register_android_server_broadcastradio_BroadcastRadioService(JNIEnv* env);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_SERVER_BROADCASTRADIO_BROADCASTRADIOSERVICE_H
+#endif  // _ANDROID_SERVER_BROADCASTRADIO_BROADCASTRADIOSERVICE_H

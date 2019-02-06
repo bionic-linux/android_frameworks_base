@@ -21,33 +21,32 @@
 
 namespace android {
 
-class MockAttributeFinder
-    : public BackTrackingAttributeFinder<MockAttributeFinder, int> {
+class MockAttributeFinder : public BackTrackingAttributeFinder<MockAttributeFinder, int> {
  public:
-  MockAttributeFinder(const uint32_t* attrs, int len)
-      : BackTrackingAttributeFinder(0, len) {
+  MockAttributeFinder(const uint32_t* attrs, int len) : BackTrackingAttributeFinder(0, len) {
     attrs_ = new uint32_t[len];
     memcpy(attrs_, attrs, sizeof(*attrs) * len);
   }
 
-  ~MockAttributeFinder() { delete attrs_; }
+  ~MockAttributeFinder() {
+    delete attrs_;
+  }
 
-  inline uint32_t GetAttribute(const int index) const { return attrs_[index]; }
+  inline uint32_t GetAttribute(const int index) const {
+    return attrs_[index];
+  }
 
  private:
   uint32_t* attrs_;
 };
 
-static const uint32_t kSortedAttributes[] = {0x01010000, 0x01010001, 0x01010002,
-                                             0x01010004, 0x02010001, 0x02010010,
-                                             0x7f010001};
+static const uint32_t kSortedAttributes[] = {0x01010000, 0x01010001, 0x01010002, 0x01010004,
+                                             0x02010001, 0x02010010, 0x7f010001};
 
 static const uint32_t kPackageUnsortedAttributes[] = {
-    0x02010001, 0x02010010, 0x01010000, 0x01010001,
-    0x01010002, 0x01010004, 0x7f010001};
+    0x02010001, 0x02010010, 0x01010000, 0x01010001, 0x01010002, 0x01010004, 0x7f010001};
 
-static const uint32_t kSinglePackageAttributes[] = {0x7f010007, 0x7f01000a,
-                                                    0x7f01000d, 0x00000000};
+static const uint32_t kSinglePackageAttributes[] = {0x7f010007, 0x7f01000a, 0x7f01000d, 0x00000000};
 
 TEST(AttributeFinderTest, IteratesSequentially) {
   const int end = arraysize(kSortedAttributes);

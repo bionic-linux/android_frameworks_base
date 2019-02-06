@@ -272,5 +272,4 @@ TEST_F(AttributeResolutionXmlTest, ThemeAndXmlParser) {
   EXPECT_EQ(expected_indices, indices);
 }
 
-} // namespace android
-
+}  // namespace android

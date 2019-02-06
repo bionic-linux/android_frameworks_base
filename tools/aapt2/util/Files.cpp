@@ -265,8 +265,7 @@ bool FileFilter::operator()(const std::string& filename, FileType type) const {
       token_str++;
       n--;
       if (n <= filename_len) {
-        ignore =
-            strncasecmp(token_str, filename.c_str() + filename_len - n, n) == 0;
+        ignore = strncasecmp(token_str, filename.c_str() + filename_len - n, n) == 0;
       }
     } else if (n > 1 && token_str[n - 1] == '*') {
       // Match prefix.
@@ -277,10 +276,9 @@ bool FileFilter::operator()(const std::string& filename, FileType type) const {
 
     if (ignore) {
       if (chatty) {
-        diag_->Warn(DiagMessage()
-                    << "skipping "
-                    << (type == FileType::kDirectory ? "dir '" : "file '")
-                    << filename << "' due to ignore pattern '" << token << "'");
+        diag_->Warn(DiagMessage() << "skipping "
+                                  << (type == FileType::kDirectory ? "dir '" : "file '") << filename
+                                  << "' due to ignore pattern '" << token << "'");
       }
       return false;
     }

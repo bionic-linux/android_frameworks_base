@@ -28,7 +28,7 @@ using namespace android::util;
 
 typedef std::vector<std::string> header_t;
 typedef std::vector<std::string> record_t;
-typedef std::string (*trans_func) (const std::string&);
+typedef std::string (*trans_func)(const std::string&);
 
 const std::string DEFAULT_WHITESPACE = " \t";
 const std::string DEFAULT_NEWLINE = "\r\n";
@@ -50,9 +50,9 @@ std::string trim(const std::string& s, const std::string& charset);
  * line 3: v11   v12   v13
  *
  * We want to parse the line in structure given the delimiter.
- * parseHeader is used to parse the firse line of the table and returns a list of strings in lower case
- * parseRecord is used to parse other lines and returns a list of strings
- * empty strings are skipped
+ * parseHeader is used to parse the firse line of the table and returns a list of strings in lower
+ * case parseRecord is used to parse other lines and returns a list of strings empty strings are
+ * skipped
  */
 header_t parseHeader(const std::string& line, const std::string& delimiters = DEFAULT_WHITESPACE);
 record_t parseRecord(const std::string& line, const std::string& delimiters = DEFAULT_WHITESPACE);
@@ -63,14 +63,17 @@ record_t parseRecord(const std::string& line, const std::string& delimiters = DE
  * Will return false if there was a problem getting the indices. headerNames
  * must be NULL terminated.
  */
-bool getColumnIndices(std::vector<int>& indices, const char* headerNames[], const std::string& line);
+bool getColumnIndices(std::vector<int>& indices, const char* headerNames[],
+                      const std::string& line);
 
 /**
- * When a text-format table aligns by its vertical position, it is not possible to split them by purely delimiters.
- * This function allows to parse record by its header's column position' indices, must in ascending order.
- * At the same time, it still looks at the char at index, if it doesn't belong to delimiters, moves forward to find the delimiters.
+ * When a text-format table aligns by its vertical position, it is not possible to split them by
+ * purely delimiters. This function allows to parse record by its header's column position' indices,
+ * must in ascending order. At the same time, it still looks at the char at index, if it doesn't
+ * belong to delimiters, moves forward to find the delimiters.
  */
-record_t parseRecordByColumns(const std::string& line, const std::vector<int>& indices, const std::string& delimiters = DEFAULT_WHITESPACE);
+record_t parseRecordByColumns(const std::string& line, const std::vector<int>& indices,
+                              const std::string& delimiters = DEFAULT_WHITESPACE);
 
 /** Prints record_t to stderr */
 void printRecord(const record_t& record);
@@ -83,9 +86,9 @@ void printRecord(const record_t& record);
  * otherwise the line is not changed.
  *
  * In order to prevent two values have same prefix which cause entering to incorrect conditions,
- * stripPrefix and stripSuffix can turn on a flag that requires the ending char in the line must not be a valid
- * character or digits, this feature is off by default.
- * i.e. ABC%some value, ABCD%other value
+ * stripPrefix and stripSuffix can turn on a flag that requires the ending char in the line must not
+ * be a valid character or digits, this feature is off by default. i.e. ABC%some value, ABCD%other
+ * value
  */
 bool stripPrefix(std::string* line, const char* key, bool endAtDelimiter = false);
 bool stripSuffix(std::string* line, const char* key, bool endAtDelimiter = false);
@@ -106,16 +109,15 @@ double toDouble(const std::string& s);
  * Reader class reads data from given fd in streaming fashion.
  * The buffer size is controlled by capacity parameter.
  */
-class Reader
-{
-public:
+class Reader {
+  public:
     explicit Reader(const int fd);
     ~Reader();
 
     bool readLine(std::string* line);
     bool ok(std::string* error);
 
-private:
+  private:
     FILE* mFile;
     std::string mStatus;
 };
@@ -132,15 +134,16 @@ private:
  * mapping from enum name string to its enum values.
  */
 class Message;
-class Table
-{
-friend class Message;
-public:
+class Table {
+    friend class Message;
+
+  public:
     Table(const char* names[], const uint64_t ids[], const int count);
     ~Table();
 
     // Add enum names to values for parsing purpose.
-    void addEnumTypeMap(const char* field, const char* enumNames[], const int enumValues[], const int enumSize);
+    void addEnumTypeMap(const char* field, const char* enumNames[], const int enumValues[],
+                        const int enumSize);
 
     // Manually add enum names to values mapping, useful when an Enum type is used by
     // a number of fields, there must not be any enum name conflicts.
@@ -149,7 +152,8 @@ public:
     // Based on given name, find the right field id, parse the text value and insert to proto.
     // Return false if the given name can't be found.
     bool insertField(ProtoOutputStream* proto, const std::string& name, const std::string& value);
-private:
+
+  private:
     std::map<std::string, uint64_t> mFields;
     std::map<std::string, std::map<std::string, int>> mEnums;
     std::map<std::string, int> mEnumValuesByName;
@@ -159,9 +163,8 @@ private:
  * Reconstructs a typical proto message given its message Table, adds submessage fields explicitly.
  * It allows user to insert nested proto values purely by the names. See insertField for detail.
  */
-class Message
-{
-public:
+class Message {
+  public:
     explicit Message(Table* table);
     ~Message();
 
@@ -183,7 +186,8 @@ public:
     //
     // Also value belongs to same submessage MUST be inserted contiguously.
     // For example, dalvik_vm_usejit must be inserted directly after dalvik_vm_heapsize, otherwise
-    // if hack_in attempts to be inserted before dalvik_vm_usejit, value of usejit isn't added as expected.
+    // if hack_in attempts to be inserted before dalvik_vm_usejit, value of usejit isn't added as
+    // expected.
     bool insertField(ProtoOutputStream* proto, const std::string& name, const std::string& value);
 
     // Starts a new message field proto session.
@@ -191,7 +195,8 @@ public:
 
     // Ends the previous message field proto session.
     void endSession(ProtoOutputStream* proto);
-private:
+
+  private:
     Table* mTable;
     std::string mPreviousField;
     std::stack<uint64_t> mTokens;

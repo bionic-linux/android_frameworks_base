@@ -24,17 +24,18 @@
 namespace android {
 
 typedef void (*InputChannelObjDisposeCallback)(JNIEnv* env, jobject inputChannelObj,
-        const sp<InputChannel>& inputChannel, void* data);
+                                               const sp<InputChannel>& inputChannel, void* data);
 
 extern sp<InputChannel> android_view_InputChannel_getInputChannel(JNIEnv* env,
-        jobject inputChannelObj);
+                                                                  jobject inputChannelObj);
 
 /* Sets a callback that is invoked when the InputChannel DVM object is disposed (or finalized).
  * This is used to automatically dispose of other native objects in the input dispatcher
  * and input queue to prevent memory leaks. */
 extern void android_view_InputChannel_setDisposeCallback(JNIEnv* env, jobject inputChannelObj,
-        InputChannelObjDisposeCallback callback, void* data = NULL);
+                                                         InputChannelObjDisposeCallback callback,
+                                                         void* data = NULL);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_OS_INPUTCHANNEL_H
+#endif  // _ANDROID_OS_INPUTCHANNEL_H

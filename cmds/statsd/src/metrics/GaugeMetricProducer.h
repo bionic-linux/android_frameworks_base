@@ -24,9 +24,9 @@
 #include "../external/PullDataReceiver.h"
 #include "../external/StatsPullerManager.h"
 #include "../matchers/matcher_util.h"
+#include "../stats_util.h"
 #include "MetricProducer.h"
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"
-#include "../stats_util.h"
 
 namespace android {
 namespace os {
@@ -47,8 +47,7 @@ struct GaugeBucket {
     std::vector<GaugeAtom> mGaugeAtoms;
 };
 
-typedef std::unordered_map<MetricDimensionKey, std::vector<GaugeAtom>>
-    DimToGaugeAtomsMap;
+typedef std::unordered_map<MetricDimensionKey, std::vector<GaugeAtom>> DimToGaugeAtomsMap;
 
 // This gauge metric producer first register the puller to automatically pull the gauge at the
 // beginning of each bucket. If the condition is met, insert it to the bucket info. Otherwise
@@ -82,23 +81,21 @@ public:
     };
 
 protected:
-    void onMatchedLogEventInternalLocked(
-            const size_t matcherIndex, const MetricDimensionKey& eventKey,
-            const ConditionKey& conditionKey, bool condition,
-            const LogEvent& event) override;
+    void onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                         const MetricDimensionKey& eventKey,
+                                         const ConditionKey& conditionKey, bool condition,
+                                         const LogEvent& event) override;
 
 private:
-    void onDumpReportLocked(const int64_t dumpTimeNs,
-                            const bool include_current_partial_bucket,
-                            std::set<string> *str_set,
+    void onDumpReportLocked(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                            std::set<string>* str_set,
                             android::util::ProtoOutputStream* protoOutput) override;
     void clearPastBucketsLocked(const int64_t dumpTimeNs) override;
 
     // for testing
     GaugeMetricProducer(const ConfigKey& key, const GaugeMetric& gaugeMetric,
                         const int conditionIndex, const sp<ConditionWizard>& wizard,
-                        const int pullTagId,
-                        const int64_t timeBaseNs, const int64_t startTimeNs,
+                        const int pullTagId, const int64_t timeBaseNs, const int64_t startTimeNs,
                         std::shared_ptr<StatsPullerManager> statsPullerManager);
 
     // Internal interface to handle condition change.

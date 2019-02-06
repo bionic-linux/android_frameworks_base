@@ -31,7 +31,9 @@ namespace android {
 template <typename T>
 class ByteBucketArray {
  public:
-  ByteBucketArray() : default_() { memset(buckets_, 0, sizeof(buckets_)); }
+  ByteBucketArray() : default_() {
+    memset(buckets_, 0, sizeof(buckets_));
+  }
 
   ~ByteBucketArray() {
     for (size_t i = 0; i < kNumBuckets; i++) {
@@ -42,9 +44,13 @@ class ByteBucketArray {
     memset(buckets_, 0, sizeof(buckets_));
   }
 
-  inline size_t size() const { return kNumBuckets * kBucketSize; }
+  inline size_t size() const {
+    return kNumBuckets * kBucketSize;
+  }
 
-  inline const T& get(size_t index) const { return (*this)[index]; }
+  inline const T& get(size_t index) const {
+    return (*this)[index];
+  }
 
   const T& operator[](size_t index) const {
     if (index >= size()) {

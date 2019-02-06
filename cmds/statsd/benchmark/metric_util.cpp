@@ -84,8 +84,8 @@ AtomMatcher CreateReleaseWakelockAtomMatcher() {
     return CreateWakelockStateChangedAtomMatcher("ReleaseWakelock", WakelockStateChanged::RELEASE);
 }
 
-AtomMatcher CreateScreenStateChangedAtomMatcher(
-    const string& name, android::view::DisplayStateEnum state) {
+AtomMatcher CreateScreenStateChangedAtomMatcher(const string& name,
+                                                android::view::DisplayStateEnum state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -98,16 +98,15 @@ AtomMatcher CreateScreenStateChangedAtomMatcher(
 
 AtomMatcher CreateScreenTurnedOnAtomMatcher() {
     return CreateScreenStateChangedAtomMatcher("ScreenTurnedOn",
-            android::view::DisplayStateEnum::DISPLAY_STATE_ON);
+                                               android::view::DisplayStateEnum::DISPLAY_STATE_ON);
 }
 
 AtomMatcher CreateScreenTurnedOffAtomMatcher() {
-    return CreateScreenStateChangedAtomMatcher("ScreenTurnedOff",
-            ::android::view::DisplayStateEnum::DISPLAY_STATE_OFF);
+    return CreateScreenStateChangedAtomMatcher(
+            "ScreenTurnedOff", ::android::view::DisplayStateEnum::DISPLAY_STATE_OFF);
 }
 
-AtomMatcher CreateSyncStateChangedAtomMatcher(
-    const string& name, SyncStateChanged::State state) {
+AtomMatcher CreateSyncStateChangedAtomMatcher(const string& name, SyncStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -127,7 +126,7 @@ AtomMatcher CreateSyncEndAtomMatcher() {
 }
 
 AtomMatcher CreateActivityForegroundStateChangedAtomMatcher(
-    const string& name, ActivityForegroundStateChanged::State state) {
+        const string& name, ActivityForegroundStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -140,12 +139,12 @@ AtomMatcher CreateActivityForegroundStateChangedAtomMatcher(
 
 AtomMatcher CreateMoveToBackgroundAtomMatcher() {
     return CreateActivityForegroundStateChangedAtomMatcher(
-        "MoveToBackground", ActivityForegroundStateChanged::BACKGROUND);
+            "MoveToBackground", ActivityForegroundStateChanged::BACKGROUND);
 }
 
 AtomMatcher CreateMoveToForegroundAtomMatcher() {
     return CreateActivityForegroundStateChangedAtomMatcher(
-        "MoveToForeground", ActivityForegroundStateChanged::FOREGROUND);
+            "MoveToForeground", ActivityForegroundStateChanged::FOREGROUND);
 }
 
 Predicate CreateScheduledJobPredicate() {
@@ -223,7 +222,7 @@ FieldMatcher CreateAttributionUidDimensions(const int atomId,
 }
 
 FieldMatcher CreateAttributionUidAndTagDimensions(const int atomId,
-                                                 const std::vector<Position>& positions) {
+                                                  const std::vector<Position>& positions) {
     FieldMatcher dimensions;
     dimensions.set_field(atomId);
     for (const auto position : positions) {
@@ -245,27 +244,26 @@ FieldMatcher CreateDimensions(const int atomId, const std::vector<int>& fields) 
     return dimensions;
 }
 
-std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(
-    const android::view::DisplayStateEnum state, uint64_t timestampNs) {
+std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(const android::view::DisplayStateEnum state,
+                                                        uint64_t timestampNs) {
     auto event = std::make_unique<LogEvent>(android::util::SCREEN_STATE_CHANGED, timestampNs);
     event->write(state);
     event->init();
     return event;
 }
 
-std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(
-    int level, uint64_t timestampNs) {
+std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(int level, uint64_t timestampNs) {
     auto event = std::make_unique<LogEvent>(android::util::SCREEN_BRIGHTNESS_CHANGED, timestampNs);
     (event->write(level));
     event->init();
     return event;
-
 }
 
 std::unique_ptr<LogEvent> CreateScheduledJobStateChangedEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& jobName,
         const ScheduledJobStateChanged::State state, uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(android::util::SCHEDULED_JOB_STATE_CHANGED, timestampNs);
+    auto event =
+            std::make_unique<LogEvent>(android::util::SCHEDULED_JOB_STATE_CHANGED, timestampNs);
     event->write(attributions);
     event->write(jobName);
     event->write(state);
@@ -274,18 +272,18 @@ std::unique_ptr<LogEvent> CreateScheduledJobStateChangedEvent(
 }
 
 std::unique_ptr<LogEvent> CreateStartScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs) {
-    return CreateScheduledJobStateChangedEvent(
-            attributions, name, ScheduledJobStateChanged::STARTED, timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs) {
+    return CreateScheduledJobStateChangedEvent(attributions, name,
+                                               ScheduledJobStateChanged::STARTED, timestampNs);
 }
 
 // Create log event when scheduled job finishes.
 std::unique_ptr<LogEvent> CreateFinishScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs) {
-    return CreateScheduledJobStateChangedEvent(
-            attributions, name, ScheduledJobStateChanged::FINISHED, timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs) {
+    return CreateScheduledJobStateChangedEvent(attributions, name,
+                                               ScheduledJobStateChanged::FINISHED, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateWakelockStateChangedEvent(
@@ -303,21 +301,21 @@ std::unique_ptr<LogEvent> CreateWakelockStateChangedEvent(
 std::unique_ptr<LogEvent> CreateAcquireWakelockEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& wakelockName,
         uint64_t timestampNs) {
-    return CreateWakelockStateChangedEvent(
-        attributions, wakelockName, WakelockStateChanged::ACQUIRE, timestampNs);
+    return CreateWakelockStateChangedEvent(attributions, wakelockName,
+                                           WakelockStateChanged::ACQUIRE, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateReleaseWakelockEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& wakelockName,
         uint64_t timestampNs) {
-    return CreateWakelockStateChangedEvent(
-        attributions, wakelockName, WakelockStateChanged::RELEASE, timestampNs);
+    return CreateWakelockStateChangedEvent(attributions, wakelockName,
+                                           WakelockStateChanged::RELEASE, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateActivityForegroundStateChangedEvent(
-    const int uid, const ActivityForegroundStateChanged::State state, uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(
-        android::util::ACTIVITY_FOREGROUND_STATE_CHANGED, timestampNs);
+        const int uid, const ActivityForegroundStateChanged::State state, uint64_t timestampNs) {
+    auto event = std::make_unique<LogEvent>(android::util::ACTIVITY_FOREGROUND_STATE_CHANGED,
+                                            timestampNs);
     event->write(uid);
     event->write("pkg_name");
     event->write("class_name");
@@ -328,12 +326,12 @@ std::unique_ptr<LogEvent> CreateActivityForegroundStateChangedEvent(
 
 std::unique_ptr<LogEvent> CreateMoveToBackgroundEvent(const int uid, uint64_t timestampNs) {
     return CreateActivityForegroundStateChangedEvent(
-        uid, ActivityForegroundStateChanged::BACKGROUND, timestampNs);
+            uid, ActivityForegroundStateChanged::BACKGROUND, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateMoveToForegroundEvent(const int uid, uint64_t timestampNs) {
     return CreateActivityForegroundStateChangedEvent(
-        uid, ActivityForegroundStateChanged::FOREGROUND, timestampNs);
+            uid, ActivityForegroundStateChanged::FOREGROUND, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateSyncStateChangedEvent(
@@ -364,9 +362,9 @@ sp<StatsLogProcessor> CreateStatsLogProcessor(const long timeBaseSec, const Stat
     sp<UidMap> uidMap = new UidMap();
     sp<AlarmMonitor> anomalyAlarmMonitor;
     sp<AlarmMonitor> periodicAlarmMonitor;
-    sp<StatsLogProcessor> processor = new StatsLogProcessor(
-        uidMap, anomalyAlarmMonitor, periodicAlarmMonitor, timeBaseSec * NS_PER_SEC,
-        [](const ConfigKey&){return true;});
+    sp<StatsLogProcessor> processor =
+            new StatsLogProcessor(uidMap, anomalyAlarmMonitor, periodicAlarmMonitor,
+                                  timeBaseSec * NS_PER_SEC, [](const ConfigKey&) { return true; });
     processor->OnConfigUpdated(timeBaseSec * NS_PER_SEC, key, config);
     return processor;
 }
@@ -378,17 +376,16 @@ AttributionNodeInternal CreateAttribution(const int& uid, const string& tag) {
     return attribution;
 }
 
-void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>> *events) {
-  std::sort(events->begin(), events->end(),
-            [](const std::unique_ptr<LogEvent>& a, const std::unique_ptr<LogEvent>& b) {
-              return a->GetElapsedTimestampNs() < b->GetElapsedTimestampNs();
-            });
+void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>>* events) {
+    std::sort(events->begin(), events->end(),
+              [](const std::unique_ptr<LogEvent>& a, const std::unique_ptr<LogEvent>& b) {
+                  return a->GetElapsedTimestampNs() < b->GetElapsedTimestampNs();
+              });
 }
 
 int64_t StringToId(const string& str) {
     return static_cast<int64_t>(std::hash<std::string>()(str));
 }
-
 
 }  // namespace statsd
 }  // namespace os

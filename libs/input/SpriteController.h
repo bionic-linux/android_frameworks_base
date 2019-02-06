@@ -17,8 +17,8 @@
 #ifndef _UI_SPRITES_H
 #define _UI_SPRITES_H
 
-#include <utils/RefBase.h>
 #include <utils/Looper.h>
+#include <utils/RefBase.h>
 
 #include <gui/SurfaceComposerClient.h>
 
@@ -30,34 +30,29 @@ namespace android {
  * Transformation matrix for a sprite.
  */
 struct SpriteTransformationMatrix {
-    inline SpriteTransformationMatrix() : dsdx(1.0f), dtdx(0.0f), dsdy(0.0f), dtdy(1.0f) { }
-    inline SpriteTransformationMatrix(float dsdx, float dtdx, float dsdy, float dtdy) :
-            dsdx(dsdx), dtdx(dtdx), dsdy(dsdy), dtdy(dtdy) { }
+    inline SpriteTransformationMatrix() : dsdx(1.0f), dtdx(0.0f), dsdy(0.0f), dtdy(1.0f) {}
+    inline SpriteTransformationMatrix(float dsdx, float dtdx, float dsdy, float dtdy)
+        : dsdx(dsdx), dtdx(dtdx), dsdy(dsdy), dtdy(dtdy) {}
 
     float dsdx;
     float dtdx;
     float dsdy;
     float dtdy;
 
-    inline bool operator== (const SpriteTransformationMatrix& other) {
-        return dsdx == other.dsdx
-                && dtdx == other.dtdx
-                && dsdy == other.dsdy
-                && dtdy == other.dtdy;
+    inline bool operator==(const SpriteTransformationMatrix& other) {
+        return dsdx == other.dsdx && dtdx == other.dtdx && dsdy == other.dsdy && dtdy == other.dtdy;
     }
 
-    inline bool operator!= (const SpriteTransformationMatrix& other) {
-        return !(*this == other);
-    }
+    inline bool operator!=(const SpriteTransformationMatrix& other) { return !(*this == other); }
 };
 
 /*
  * Icon that a sprite displays, including its hotspot.
  */
 struct SpriteIcon {
-    inline SpriteIcon() : hotSpotX(0), hotSpotY(0) { }
-    inline SpriteIcon(const SkBitmap& bitmap, float hotSpotX, float hotSpotY) :
-            bitmap(bitmap), hotSpotX(hotSpotX), hotSpotY(hotSpotY) { }
+    inline SpriteIcon() : hotSpotX(0), hotSpotY(0) {}
+    inline SpriteIcon(const SkBitmap& bitmap, float hotSpotX, float hotSpotY)
+        : bitmap(bitmap), hotSpotX(hotSpotX), hotSpotY(hotSpotY) {}
 
     SkBitmap bitmap;
     float hotSpotX;
@@ -66,8 +61,8 @@ struct SpriteIcon {
     inline SpriteIcon copy() const {
         SkBitmap bitmapCopy;
         if (bitmapCopy.tryAllocPixels(bitmap.info().makeColorType(kN32_SkColorType))) {
-            bitmap.readPixels(bitmapCopy.info(), bitmapCopy.getPixels(), bitmapCopy.rowBytes(),
-                    0, 0);
+            bitmap.readPixels(bitmapCopy.info(), bitmapCopy.getPixels(), bitmapCopy.rowBytes(), 0,
+                              0);
         }
         return SpriteIcon(bitmapCopy, hotSpotX, hotSpotY);
     }
@@ -78,9 +73,7 @@ struct SpriteIcon {
         hotSpotY = 0;
     }
 
-    inline bool isValid() const {
-        return !bitmap.isNull() && !bitmap.empty();
-    }
+    inline bool isValid() const { return !bitmap.isNull() && !bitmap.empty(); }
 };
 
 /*
@@ -89,26 +82,24 @@ struct SpriteIcon {
  * The implementation is provided by the sprite controller.
  */
 class Sprite : public RefBase {
-protected:
-    Sprite() { }
-    virtual ~Sprite() { }
+  protected:
+    Sprite() {}
+    virtual ~Sprite() {}
 
-public:
+  public:
     enum {
         // The base layer for pointer sprites.
-        BASE_LAYER_POINTER = 0, // reserve space for 1 pointer
+        BASE_LAYER_POINTER = 0,  // reserve space for 1 pointer
 
         // The base layer for spot sprites.
-        BASE_LAYER_SPOT = 1, // reserve space for MAX_POINTER_ID spots
+        BASE_LAYER_SPOT = 1,  // reserve space for MAX_POINTER_ID spots
     };
 
     /* Sets the bitmap that is drawn by the sprite.
      * The sprite retains a copy of the bitmap for subsequent rendering. */
     virtual void setIcon(const SpriteIcon& icon) = 0;
 
-    inline void clearIcon() {
-        setIcon(SpriteIcon());
-    }
+    inline void clearIcon() { setIcon(SpriteIcon()); }
 
     /* Sets whether the sprite is visible. */
     virtual void setVisible(bool visible) = 0;
@@ -139,10 +130,10 @@ public:
  * Clients are responsible for animating sprites by periodically updating their properties.
  */
 class SpriteController : public MessageHandler {
-protected:
+  protected:
     virtual ~SpriteController();
 
-public:
+  public:
     SpriteController(const sp<Looper>& looper, int32_t overlayLayer);
 
     /* Creates a new sprite, initially invisible. */
@@ -156,7 +147,7 @@ public:
     void openTransaction();
     void closeTransaction();
 
-private:
+  private:
     enum {
         MSG_UPDATE_SPRITES,
         MSG_DISPOSE_SURFACES,
@@ -178,11 +169,17 @@ private:
      * on the sprites for a long time.
      * Note that the SkBitmap holds a reference to a shared (and immutable) pixel ref. */
     struct SpriteState {
-        inline SpriteState() :
-                dirty(0), visible(false),
-                positionX(0), positionY(0), layer(0), alpha(1.0f),
-                surfaceWidth(0), surfaceHeight(0), surfaceDrawn(false), surfaceVisible(false) {
-        }
+        inline SpriteState()
+            : dirty(0),
+              visible(false),
+              positionX(0),
+              positionY(0),
+              layer(0),
+              alpha(1.0f),
+              surfaceWidth(0),
+              surfaceHeight(0),
+              surfaceDrawn(false),
+              surfaceVisible(false) {}
 
         uint32_t dirty;
 
@@ -200,9 +197,7 @@ private:
         bool surfaceDrawn;
         bool surfaceVisible;
 
-        inline bool wantSurfaceVisible() const {
-            return visible && alpha > 0.0f && icon.isValid();
-        }
+        inline bool wantSurfaceVisible() const { return visible && alpha > 0.0f && icon.isValid(); }
     };
 
     /* Client interface for a sprite.
@@ -213,10 +208,10 @@ private:
      * the sprite state before the work and update the sprite surface control afterwards.
      */
     class SpriteImpl : public Sprite {
-    protected:
+      protected:
         virtual ~SpriteImpl();
 
-    public:
+      public:
         explicit SpriteImpl(const sp<SpriteController> controller);
 
         virtual void setIcon(const SpriteIcon& icon);
@@ -226,16 +221,12 @@ private:
         virtual void setAlpha(float alpha);
         virtual void setTransformationMatrix(const SpriteTransformationMatrix& matrix);
 
-        inline const SpriteState& getStateLocked() const {
-            return mLocked.state;
-        }
+        inline const SpriteState& getStateLocked() const { return mLocked.state; }
 
-        inline void resetDirtyLocked() {
-            mLocked.state.dirty = 0;
-        }
+        inline void resetDirtyLocked() { mLocked.state.dirty = 0; }
 
-        inline void setSurfaceLocked(const sp<SurfaceControl>& surfaceControl,
-                int32_t width, int32_t height, bool drawn, bool visible) {
+        inline void setSurfaceLocked(const sp<SurfaceControl>& surfaceControl, int32_t width,
+                                     int32_t height, bool drawn, bool visible) {
             mLocked.state.surfaceControl = surfaceControl;
             mLocked.state.surfaceWidth = width;
             mLocked.state.surfaceHeight = height;
@@ -243,22 +234,21 @@ private:
             mLocked.state.surfaceVisible = visible;
         }
 
-    private:
+      private:
         sp<SpriteController> mController;
 
         struct Locked {
             SpriteState state;
-        } mLocked; // guarded by mController->mLock
+        } mLocked;  // guarded by mController->mLock
 
         void invalidateLocked(uint32_t dirty);
     };
 
     /* Stores temporary information collected during the sprite update cycle. */
     struct SpriteUpdate {
-        inline SpriteUpdate() : surfaceChanged(false) { }
-        inline SpriteUpdate(const sp<SpriteImpl> sprite, const SpriteState& state) :
-                sprite(sprite), state(state), surfaceChanged(false) {
-        }
+        inline SpriteUpdate() : surfaceChanged(false) {}
+        inline SpriteUpdate(const sp<SpriteImpl> sprite, const SpriteState& state)
+            : sprite(sprite), state(state), surfaceChanged(false) {}
 
         sp<SpriteImpl> sprite;
         SpriteState state;
@@ -278,7 +268,7 @@ private:
         Vector<sp<SurfaceControl> > disposedSurfaces;
         uint32_t transactionNestingCount;
         bool deferredSpriteUpdate;
-    } mLocked; // guarded by mLock
+    } mLocked;  // guarded by mLock
 
     void invalidateSpriteLocked(const sp<SpriteImpl>& sprite);
     void disposeSurfaceLocked(const sp<SurfaceControl>& surfaceControl);
@@ -291,6 +281,6 @@ private:
     sp<SurfaceControl> obtainSurface(int32_t width, int32_t height);
 };
 
-} // namespace android
+}  // namespace android
 
-#endif // _UI_SPRITES_H
+#endif  // _UI_SPRITES_H

@@ -18,20 +18,18 @@
 
 #include "brightness.h"
 
+#include <android/log.h>
+#include <jni.h>
 #include <math.h>
 #include <string.h>
-#include <jni.h>
 #include <unistd.h>
-#include <android/log.h>
 
-jfloat
-Java_androidx_media_filterfw_samples_simplecamera_AvgBrightnessFilter_brightnessOperator(
-    JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
-
+jfloat Java_androidx_media_filterfw_samples_simplecamera_AvgBrightnessFilter_brightnessOperator(
+        JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
     if (imageBuffer == 0) {
         return 0.0f;
     }
-    float pixelTotals[] = { 0.0f, 0.0f, 0.0f };
+    float pixelTotals[] = {0.0f, 0.0f, 0.0f};
     const int numPixels = width * height;
     unsigned char* srcPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     for (int i = 0; i < numPixels; i++) {
@@ -39,14 +37,14 @@ Java_androidx_media_filterfw_samples_simplecamera_AvgBrightnessFilter_brightness
         pixelTotals[1] += *(srcPtr + 4 * i + 1);
         pixelTotals[2] += *(srcPtr + 4 * i + 2);
     }
-    float avgPixels[] = { 0.0f, 0.0f, 0.0f };
+    float avgPixels[] = {0.0f, 0.0f, 0.0f};
 
     avgPixels[0] = pixelTotals[0] / numPixels;
     avgPixels[1] = pixelTotals[1] / numPixels;
     avgPixels[2] = pixelTotals[2] / numPixels;
-    float returnValue = sqrt(0.241f * avgPixels[0] * avgPixels[0] +
-                            0.691f * avgPixels[1] * avgPixels[1] +
-                            0.068f * avgPixels[2] * avgPixels[2]);
+    float returnValue =
+            sqrt(0.241f * avgPixels[0] * avgPixels[0] + 0.691f * avgPixels[1] * avgPixels[1] +
+                 0.068f * avgPixels[2] * avgPixels[2]);
 
     return returnValue / 255;
 }

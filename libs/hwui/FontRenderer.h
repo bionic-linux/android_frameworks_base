@@ -40,7 +40,7 @@ class Element;
 class RS;
 class ScriptIntrinsicBlur;
 class sp;
-}
+}  // namespace RSC
 
 namespace android {
 namespace uirenderer {

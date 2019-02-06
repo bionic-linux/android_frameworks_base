@@ -28,8 +28,8 @@ class PackageInfoListener : public virtual android::RefBase {
 public:
     // Uid map will notify this listener that the app with apk name and uid has been upgraded to
     // the specified version.
-    virtual void notifyAppUpgrade(const int64_t& eventTimeNs, const std::string& apk,
-                                  const int uid, const int64_t version) = 0;
+    virtual void notifyAppUpgrade(const int64_t& eventTimeNs, const std::string& apk, const int uid,
+                                  const int64_t version) = 0;
 
     // Notify interested listeners that the given apk and uid combination no longer exits.
     virtual void notifyAppRemoved(const int64_t& eventTimeNs, const std::string& apk,

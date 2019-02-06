@@ -104,13 +104,15 @@ TEST(EventMetricProducerTest, TestEventsWithSlicedCondition) {
     EXPECT_TRUE(event1.write("111"));
     event1.init();
     ConditionKey key1;
-    key1[StringToId("APP_IN_BACKGROUND_PER_UID")] = {getMockedDimensionKey(conditionTagId, 2, "111")};
+    key1[StringToId("APP_IN_BACKGROUND_PER_UID")] = {
+            getMockedDimensionKey(conditionTagId, 2, "111")};
 
     LogEvent event2(tagId, bucketStartTimeNs + 10);
     EXPECT_TRUE(event2.write("222"));
     event2.init();
     ConditionKey key2;
-    key2[StringToId("APP_IN_BACKGROUND_PER_UID")] = {getMockedDimensionKey(conditionTagId, 2, "222")};
+    key2[StringToId("APP_IN_BACKGROUND_PER_UID")] = {
+            getMockedDimensionKey(conditionTagId, 2, "222")};
 
     sp<MockConditionWizard> wizard = new NaggyMock<MockConditionWizard>();
     EXPECT_CALL(*wizard, query(_, key1, _, _, _, _)).WillOnce(Return(ConditionState::kFalse));

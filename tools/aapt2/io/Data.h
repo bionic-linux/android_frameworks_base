@@ -43,14 +43,17 @@ class IData : public KnownSizeInputStream {
 class DataSegment : public IData {
  public:
   explicit DataSegment(std::unique_ptr<IData> data, size_t offset, size_t len)
-      : data_(std::move(data)), offset_(offset), len_(len), next_read_(offset) {}
+      : data_(std::move(data)), offset_(offset), len_(len), next_read_(offset) {
+  }
   virtual ~DataSegment() = default;
 
   const void* data() const override {
     return static_cast<const uint8_t*>(data_->data()) + offset_;
   }
 
-  size_t size() const override { return len_; }
+  size_t size() const override {
+    return len_;
+  }
 
   bool Next(const void** data, size_t* size) override {
     if (next_read_ == offset_ + len_) {
@@ -70,16 +73,22 @@ class DataSegment : public IData {
     }
   }
 
-  bool CanRewind() const override { return true; }
+  bool CanRewind() const override {
+    return true;
+  }
 
   bool Rewind() override {
     next_read_ = offset_;
     return true;
   }
 
-  size_t ByteCount() const override { return next_read_ - offset_; }
+  size_t ByteCount() const override {
+    return next_read_ - offset_;
+  }
 
-  bool HadError() const override { return false; }
+  bool HadError() const override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DataSegment);
@@ -94,12 +103,17 @@ class DataSegment : public IData {
 // The mmapped file is owned by this object.
 class MmappedData : public IData {
  public:
-  explicit MmappedData(android::FileMap&& map) : map_(std::forward<android::FileMap>(map)) {}
+  explicit MmappedData(android::FileMap&& map) : map_(std::forward<android::FileMap>(map)) {
+  }
   virtual ~MmappedData() = default;
 
-  const void* data() const override { return map_.getDataPtr(); }
+  const void* data() const override {
+    return map_.getDataPtr();
+  }
 
-  size_t size() const override { return map_.getDataLength(); }
+  size_t size() const override {
+    return map_.getDataLength();
+  }
 
   bool Next(const void** data, size_t* size) override {
     if (next_read_ == map_.getDataLength()) {
@@ -119,16 +133,22 @@ class MmappedData : public IData {
     }
   }
 
-  bool CanRewind() const override { return true; }
+  bool CanRewind() const override {
+    return true;
+  }
 
   bool Rewind() override {
     next_read_ = 0;
     return true;
   }
 
-  size_t ByteCount() const override { return next_read_; }
+  size_t ByteCount() const override {
+    return next_read_;
+  }
 
-  bool HadError() const override { return false; }
+  bool HadError() const override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MmappedData);
@@ -142,12 +162,17 @@ class MmappedData : public IData {
 class MallocData : public IData {
  public:
   MallocData(std::unique_ptr<const uint8_t[]> data, size_t size)
-      : data_(std::move(data)), size_(size) {}
+      : data_(std::move(data)), size_(size) {
+  }
   virtual ~MallocData() = default;
 
-  const void* data() const override { return data_.get(); }
+  const void* data() const override {
+    return data_.get();
+  }
 
-  size_t size() const override { return size_; }
+  size_t size() const override {
+    return size_;
+  }
 
   bool Next(const void** data, size_t* size) override {
     if (next_read_ == size_) {
@@ -167,16 +192,22 @@ class MallocData : public IData {
     }
   }
 
-  bool CanRewind() const override { return true; }
+  bool CanRewind() const override {
+    return true;
+  }
 
   bool Rewind() override {
     next_read_ = 0;
     return true;
   }
 
-  size_t ByteCount() const override { return next_read_; }
+  size_t ByteCount() const override {
+    return next_read_;
+  }
 
-  bool HadError() const override { return false; }
+  bool HadError() const override {
+    return false;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MallocData);
@@ -196,19 +227,32 @@ class EmptyData : public IData {
     return &d;
   }
 
-  size_t size() const override { return 0u; }
+  size_t size() const override {
+    return 0u;
+  }
 
-  bool Next(const void** /*data*/, size_t* /*size*/) override { return false; }
+  bool Next(const void** /*data*/, size_t* /*size*/) override {
+    return false;
+  }
 
-  void BackUp(size_t /*count*/) override {}
+  void BackUp(size_t /*count*/) override {
+  }
 
-  bool CanRewind() const override { return true; }
+  bool CanRewind() const override {
+    return true;
+  }
 
-  bool Rewind() override { return true; }
+  bool Rewind() override {
+    return true;
+  }
 
-  size_t ByteCount() const override { return 0u; }
+  size_t ByteCount() const override {
+    return 0u;
+  }
 
-  bool HadError() const override { return false; }
+  bool HadError() const override {
+    return false;
+  }
 };
 
 }  // namespace io

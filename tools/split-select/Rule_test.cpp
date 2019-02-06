@@ -19,10 +19,10 @@
 #include "SplitDescription.h"
 #include "TestRules.h"
 
-#include <algorithm>
 #include <gtest/gtest.h>
-#include <string>
 #include <utils/String8.h>
+#include <algorithm>
+#include <string>
 
 using namespace android;
 using namespace split::test;
@@ -31,12 +31,9 @@ namespace split {
 
 TEST(RuleTest, generatesValidJson) {
     Rule rule(AndRule()
-        .add(EqRule(Rule::SDK_VERSION, 7))
-        .add(OrRule()
-                .add(GtRule(Rule::SCREEN_DENSITY, 10))
-                .add(LtRule(Rule::SCREEN_DENSITY, 5))
-        )
-    );
+                      .add(EqRule(Rule::SDK_VERSION, 7))
+                      .add(OrRule().add(GtRule(Rule::SCREEN_DENSITY, 10))
+                                   .add(LtRule(Rule::SCREEN_DENSITY, 5))));
 
     // Expected
     std::string expected(
@@ -75,26 +72,18 @@ TEST(RuleTest, generatesValidJson) {
 }
 
 TEST(RuleTest, simplifiesSingleSubruleRules) {
-    sp<Rule> rule = new Rule(AndRule()
-        .add(EqRule(Rule::SDK_VERSION, 7))
-    );
+    sp<Rule> rule = new Rule(AndRule().add(EqRule(Rule::SDK_VERSION, 7)));
 
     EXPECT_RULES_EQ(Rule::simplify(rule), EqRule(Rule::SDK_VERSION, 7));
 }
 
 TEST(RuleTest, simplifiesNestedSameOpSubrules) {
     sp<Rule> rule = new Rule(AndRule()
-        .add(AndRule()
-            .add(EqRule(Rule::SDK_VERSION, 7))
-        )
-        .add(EqRule(Rule::SDK_VERSION, 8))
-    );
+                                     .add(AndRule().add(EqRule(Rule::SDK_VERSION, 7)))
+                                     .add(EqRule(Rule::SDK_VERSION, 8)));
 
     EXPECT_RULES_EQ(Rule::simplify(rule),
-            AndRule()
-                .add(EqRule(Rule::SDK_VERSION, 7))
-                .add(EqRule(Rule::SDK_VERSION, 8))
-    );
+                    AndRule().add(EqRule(Rule::SDK_VERSION, 7)).add(EqRule(Rule::SDK_VERSION, 8)));
 }
 
-} // namespace split
+}  // namespace split

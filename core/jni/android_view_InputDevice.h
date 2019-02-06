@@ -26,6 +26,6 @@ namespace android {
 /* Creates an InputDevice object from the given information. */
 extern jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& deviceInfo);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_VIEW_INPUTDEVICE_H
+#endif  // _ANDROID_VIEW_INPUTDEVICE_H

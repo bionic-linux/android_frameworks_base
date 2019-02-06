@@ -33,12 +33,12 @@ namespace android {
 // will be considered to be in a broken state, and the only further call this
 // will make is to close().
 class JMediaDataSource : public BnDataSource {
-public:
+  public:
     enum {
         kBufferSize = 64 * 1024,
     };
 
-    JMediaDataSource(JNIEnv *env, jobject source);
+    JMediaDataSource(JNIEnv* env, jobject source);
     virtual ~JMediaDataSource();
 
     virtual sp<IMemory> getIMemory();
@@ -47,9 +47,9 @@ public:
     virtual void close();
     virtual uint32_t getFlags();
     virtual String8 toString();
-    virtual sp<DecryptHandle> DrmInitialization(const char *mime);
+    virtual sp<DecryptHandle> DrmInitialization(const char* mime);
 
-private:
+  private:
     // Protect all member variables with mLock because this object will be
     // accessed on different binder worker threads.
     Mutex mLock;

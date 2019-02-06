@@ -31,15 +31,15 @@ TEST(IhUtilTest, ParseHeader) {
     EXPECT_EQ(expected, result);
 
     result = parseHeader(" \t 100 00\tOpQ \t wqrw");
-    expected = { "100", "00", "opq", "wqrw" };
+    expected = {"100", "00", "opq", "wqrw"};
     EXPECT_EQ(expected, result);
 
     result = parseHeader(" \t 100 00\toooh \t wTF", "\t");
-    expected = { "100 00", "oooh", "wtf" };
+    expected = {"100 00", "oooh", "wtf"};
     EXPECT_EQ(expected, result);
 
     result = parseHeader("123,456,78_9", ",");
-    expected = { "123", "456", "78_9" };
+    expected = {"123", "456", "78_9"};
     EXPECT_EQ(expected, result);
 }
 
@@ -49,15 +49,15 @@ TEST(IhUtilTest, ParseRecord) {
     EXPECT_EQ(expected, result);
 
     result = parseRecord(" \t 100 00\toooh \t wqrw");
-    expected = { "100", "00", "oooh", "wqrw" };
+    expected = {"100", "00", "oooh", "wqrw"};
     EXPECT_EQ(expected, result);
 
     result = parseRecord(" \t 100 00\toooh \t wqrw", "\t");
-    expected = { "100 00", "oooh", "wqrw" };
+    expected = {"100 00", "oooh", "wqrw"};
     EXPECT_EQ(expected, result);
 
     result = parseRecord("123,456,78_9", ",");
-    expected = { "123", "456", "78_9" };
+    expected = {"123", "456", "78_9"};
     EXPECT_EQ(expected, result);
 
     result = parseRecord("", " ");
@@ -66,14 +66,14 @@ TEST(IhUtilTest, ParseRecord) {
 
 TEST(IhUtilTest, ParseRecordByColumns) {
     record_t result, expected;
-    std::vector<int> indices = { 3, 10 };
+    std::vector<int> indices = {3, 10};
 
     result = parseRecordByColumns("12345", indices);
     expected = {};
     EXPECT_EQ(expected, result);
 
     result = parseRecordByColumns("abc \t2345  6789 ", indices);
-    expected = { "abc", "2345  6789" };
+    expected = {"abc", "2345  6789"};
     EXPECT_EQ(expected, result);
 
     std::string extraColumn1 = "abc \t23456789 bob";
@@ -82,20 +82,20 @@ TEST(IhUtilTest, ParseRecordByColumns) {
     std::string lngFrstEmpty = "abcdefgt\t     bob";
 
     result = parseRecordByColumns(extraColumn1, indices);
-    expected = { "abc", "23456789 bob" };
+    expected = {"abc", "23456789 bob"};
     EXPECT_EQ(expected, result);
 
     // 2nd column should be treated as an empty entry.
     result = parseRecordByColumns(emptyMidColm, indices);
-    expected = { "abc", "bob" };
+    expected = {"abc", "bob"};
     EXPECT_EQ(expected, result);
 
     result = parseRecordByColumns(longFirstClm, indices);
-    expected = { "abcdefgt", "6789 bob" };
+    expected = {"abcdefgt", "6789 bob"};
     EXPECT_EQ(expected, result);
 
     result = parseRecordByColumns(lngFrstEmpty, indices);
-    expected = { "abcdefgt", "bob" };
+    expected = {"abcdefgt", "bob"};
     EXPECT_EQ(expected, result);
 }
 

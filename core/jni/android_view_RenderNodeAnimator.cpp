@@ -16,10 +16,10 @@
 
 #define LOG_TAG "OpenGLRenderer"
 
-#include "jni.h"
-#include "GraphicsJNI.h"
-#include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <nativehelper/JNIHelp.h>
+#include "GraphicsJNI.h"
+#include "jni.h"
 
 #include <Animator.h>
 #include <Interpolator.h>
@@ -46,7 +46,7 @@ static JNIEnv* getEnv(JavaVM* vm) {
 }
 
 class AnimationListenerLifecycleChecker : public AnimationListener {
-public:
+  public:
     virtual void onAnimationFinished(BaseRenderNodeAnimator* animator) {
         LOG_ALWAYS_FATAL("Lifecycle failure, nStart(%p) wasn't called", animator);
     }
@@ -55,7 +55,7 @@ public:
 static AnimationListenerLifecycleChecker sLifecycleChecker;
 
 class AnimationListenerBridge : public AnimationListener {
-public:
+  public:
     // This holds a strong reference to a Java WeakReference<T> object. This avoids
     // cyclic-references-of-doom. If you think "I know, just use NewWeakGlobalRef!"
     // then you end up with basically a PhantomReference, which is totally not
@@ -74,14 +74,12 @@ public:
     virtual void onAnimationFinished(BaseRenderNodeAnimator*) {
         LOG_ALWAYS_FATAL_IF(!mFinishListener, "Finished listener twice?");
         JNIEnv* env = getEnv(mJvm);
-        env->CallStaticVoidMethod(
-                gRenderNodeAnimatorClassInfo.clazz,
-                gRenderNodeAnimatorClassInfo.callOnFinished,
-                mFinishListener);
+        env->CallStaticVoidMethod(gRenderNodeAnimatorClassInfo.clazz,
+                                  gRenderNodeAnimatorClassInfo.callOnFinished, mFinishListener);
         releaseJavaObject();
     }
 
-private:
+  private:
     void releaseJavaObject() {
         JNIEnv* env = getEnv(mJvm);
         env->DeleteGlobalRef(mFinishListener);
@@ -94,49 +92,48 @@ private:
 
 static inline RenderPropertyAnimator::RenderProperty toRenderProperty(jint property) {
     LOG_ALWAYS_FATAL_IF(property < 0 || property > RenderPropertyAnimator::ALPHA,
-            "Invalid property %d", property);
+                        "Invalid property %d", property);
     return static_cast<RenderPropertyAnimator::RenderProperty>(property);
 }
 
 static inline CanvasPropertyPaintAnimator::PaintField toPaintField(jint field) {
-    LOG_ALWAYS_FATAL_IF(field < 0
-            || field > CanvasPropertyPaintAnimator::ALPHA,
-            "Invalid paint field %d", field);
+    LOG_ALWAYS_FATAL_IF(field < 0 || field > CanvasPropertyPaintAnimator::ALPHA,
+                        "Invalid paint field %d", field);
     return static_cast<CanvasPropertyPaintAnimator::PaintField>(field);
 }
 
-static jlong createAnimator(JNIEnv* env, jobject clazz,
-        jint propertyRaw, jfloat finalValue) {
+static jlong createAnimator(JNIEnv* env, jobject clazz, jint propertyRaw, jfloat finalValue) {
     RenderPropertyAnimator::RenderProperty property = toRenderProperty(propertyRaw);
     BaseRenderNodeAnimator* animator = new RenderPropertyAnimator(property, finalValue);
     animator->setListener(&sLifecycleChecker);
-    return reinterpret_cast<jlong>( animator );
+    return reinterpret_cast<jlong>(animator);
 }
 
-static jlong createCanvasPropertyFloatAnimator(JNIEnv* env, jobject clazz,
-        jlong canvasPropertyPtr, jfloat finalValue) {
-    CanvasPropertyPrimitive* canvasProperty = reinterpret_cast<CanvasPropertyPrimitive*>(canvasPropertyPtr);
-    BaseRenderNodeAnimator* animator = new CanvasPropertyPrimitiveAnimator(canvasProperty, finalValue);
+static jlong createCanvasPropertyFloatAnimator(JNIEnv* env, jobject clazz, jlong canvasPropertyPtr,
+                                               jfloat finalValue) {
+    CanvasPropertyPrimitive* canvasProperty =
+            reinterpret_cast<CanvasPropertyPrimitive*>(canvasPropertyPtr);
+    BaseRenderNodeAnimator* animator =
+            new CanvasPropertyPrimitiveAnimator(canvasProperty, finalValue);
     animator->setListener(&sLifecycleChecker);
-    return reinterpret_cast<jlong>( animator );
+    return reinterpret_cast<jlong>(animator);
 }
 
-static jlong createCanvasPropertyPaintAnimator(JNIEnv* env, jobject clazz,
-        jlong canvasPropertyPtr, jint paintFieldRaw,
-        jfloat finalValue) {
+static jlong createCanvasPropertyPaintAnimator(JNIEnv* env, jobject clazz, jlong canvasPropertyPtr,
+                                               jint paintFieldRaw, jfloat finalValue) {
     CanvasPropertyPaint* canvasProperty = reinterpret_cast<CanvasPropertyPaint*>(canvasPropertyPtr);
     CanvasPropertyPaintAnimator::PaintField paintField = toPaintField(paintFieldRaw);
-    BaseRenderNodeAnimator* animator = new CanvasPropertyPaintAnimator(
-            canvasProperty, paintField, finalValue);
+    BaseRenderNodeAnimator* animator =
+            new CanvasPropertyPaintAnimator(canvasProperty, paintField, finalValue);
     animator->setListener(&sLifecycleChecker);
-    return reinterpret_cast<jlong>( animator );
+    return reinterpret_cast<jlong>(animator);
 }
 
-static jlong createRevealAnimator(JNIEnv* env, jobject clazz,
-        jint centerX, jint centerY, jfloat startRadius, jfloat endRadius) {
+static jlong createRevealAnimator(JNIEnv* env, jobject clazz, jint centerX, jint centerY,
+                                  jfloat startRadius, jfloat endRadius) {
     BaseRenderNodeAnimator* animator = new RevealAnimator(centerX, centerY, startRadius, endRadius);
     animator->setListener(&sLifecycleChecker);
-    return reinterpret_cast<jlong>( animator );
+    return reinterpret_cast<jlong>(animator);
 }
 
 static void setStartValue(JNIEnv* env, jobject clazz, jlong animatorPtr, jfloat startValue) {
@@ -167,7 +164,8 @@ static void setInterpolator(JNIEnv* env, jobject clazz, jlong animatorPtr, jlong
     animator->setInterpolator(interpolator);
 }
 
-static void setAllowRunningAsync(JNIEnv* env, jobject clazz, jlong animatorPtr, jboolean mayRunAsync) {
+static void setAllowRunningAsync(JNIEnv* env, jobject clazz, jlong animatorPtr,
+                                 jboolean mayRunAsync) {
     BaseRenderNodeAnimator* animator = reinterpret_cast<BaseRenderNodeAnimator*>(animatorPtr);
     animator->setAllowRunningAsync(mayRunAsync);
 }
@@ -194,33 +192,32 @@ static void end(JNIEnv* env, jobject clazz, jlong animatorPtr) {
 const char* const kClassPathName = "android/view/RenderNodeAnimator";
 
 static const JNINativeMethod gMethods[] = {
-    { "nCreateAnimator", "(IF)J", (void*) createAnimator },
-    { "nCreateCanvasPropertyFloatAnimator", "(JF)J", (void*) createCanvasPropertyFloatAnimator },
-    { "nCreateCanvasPropertyPaintAnimator", "(JIF)J", (void*) createCanvasPropertyPaintAnimator },
-    { "nCreateRevealAnimator", "(IIFF)J", (void*) createRevealAnimator },
-    { "nSetStartValue", "(JF)V", (void*) setStartValue },
-    { "nSetDuration", "(JJ)V", (void*) setDuration },
-    { "nGetDuration", "(J)J", (void*) getDuration },
-    { "nSetStartDelay", "(JJ)V", (void*) setStartDelay },
-    { "nSetInterpolator", "(JJ)V", (void*) setInterpolator },
-    { "nSetAllowRunningAsync", "(JZ)V", (void*) setAllowRunningAsync },
-    { "nSetListener", "(JLandroid/view/RenderNodeAnimator;)V", (void*) setListener},
-    { "nStart", "(J)V", (void*) start},
-    { "nEnd", "(J)V", (void*) end },
+        {"nCreateAnimator", "(IF)J", (void*)createAnimator},
+        {"nCreateCanvasPropertyFloatAnimator", "(JF)J", (void*)createCanvasPropertyFloatAnimator},
+        {"nCreateCanvasPropertyPaintAnimator", "(JIF)J", (void*)createCanvasPropertyPaintAnimator},
+        {"nCreateRevealAnimator", "(IIFF)J", (void*)createRevealAnimator},
+        {"nSetStartValue", "(JF)V", (void*)setStartValue},
+        {"nSetDuration", "(JJ)V", (void*)setDuration},
+        {"nGetDuration", "(J)J", (void*)getDuration},
+        {"nSetStartDelay", "(JJ)V", (void*)setStartDelay},
+        {"nSetInterpolator", "(JJ)V", (void*)setInterpolator},
+        {"nSetAllowRunningAsync", "(JZ)V", (void*)setAllowRunningAsync},
+        {"nSetListener", "(JLandroid/view/RenderNodeAnimator;)V", (void*)setListener},
+        {"nStart", "(J)V", (void*)start},
+        {"nEnd", "(J)V", (void*)end},
 };
 
 int register_android_view_RenderNodeAnimator(JNIEnv* env) {
     sLifecycleChecker.incStrong(0);
     gRenderNodeAnimatorClassInfo.clazz = FindClassOrDie(env, kClassPathName);
-    gRenderNodeAnimatorClassInfo.clazz = MakeGlobalRefOrDie(env,
-                                                            gRenderNodeAnimatorClassInfo.clazz);
+    gRenderNodeAnimatorClassInfo.clazz =
+            MakeGlobalRefOrDie(env, gRenderNodeAnimatorClassInfo.clazz);
 
-    gRenderNodeAnimatorClassInfo.callOnFinished = GetStaticMethodIDOrDie(
-            env, gRenderNodeAnimatorClassInfo.clazz, "callOnFinished",
-            "(Landroid/view/RenderNodeAnimator;)V");
+    gRenderNodeAnimatorClassInfo.callOnFinished =
+            GetStaticMethodIDOrDie(env, gRenderNodeAnimatorClassInfo.clazz, "callOnFinished",
+                                   "(Landroid/view/RenderNodeAnimator;)V");
 
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-
-} // namespace android
+}  // namespace android

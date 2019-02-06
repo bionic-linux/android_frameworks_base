@@ -23,11 +23,11 @@
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
+#include <android_runtime/AndroidRuntime.h>
+#include <assert.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
 #include <utils/misc.h>
-#include <assert.h>
 
 static int initialized = 0;
 
@@ -40,35 +40,34 @@ static jfieldID positionID;
 static jfieldID limitID;
 static jfieldID elementSizeShiftID;
 
-
 /* special calls implemented in Android's GLES wrapper used to more
  * efficiently bound-check passed arrays */
 extern "C" {
 #ifdef GL_VERSION_ES_CM_1_1
 GL_API void GL_APIENTRY glColorPointerBounds(GLint size, GLenum type, GLsizei stride,
-        const GLvoid *ptr, GLsizei count);
-GL_API void GL_APIENTRY glNormalPointerBounds(GLenum type, GLsizei stride,
-        const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glTexCoordPointerBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glVertexPointerBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glPointSizePointerOESBounds(GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glMatrixIndexPointerOESBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
-GL_API void GL_APIENTRY glWeightPointerOESBounds(GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count);
+                                             const GLvoid* ptr, GLsizei count);
+GL_API void GL_APIENTRY glNormalPointerBounds(GLenum type, GLsizei stride, const GLvoid* pointer,
+                                              GLsizei count);
+GL_API void GL_APIENTRY glTexCoordPointerBounds(GLint size, GLenum type, GLsizei stride,
+                                                const GLvoid* pointer, GLsizei count);
+GL_API void GL_APIENTRY glVertexPointerBounds(GLint size, GLenum type, GLsizei stride,
+                                              const GLvoid* pointer, GLsizei count);
+GL_API void GL_APIENTRY glPointSizePointerOESBounds(GLenum type, GLsizei stride,
+                                                    const GLvoid* pointer, GLsizei count);
+GL_API void GL_APIENTRY glMatrixIndexPointerOESBounds(GLint size, GLenum type, GLsizei stride,
+                                                      const GLvoid* pointer, GLsizei count);
+GL_API void GL_APIENTRY glWeightPointerOESBounds(GLint size, GLenum type, GLsizei stride,
+                                                 const GLvoid* pointer, GLsizei count);
 #endif
 #ifdef GL_ES_VERSION_2_0
-static void glVertexAttribPointerBounds(GLuint indx, GLint size, GLenum type,
-        GLboolean normalized, GLsizei stride, const GLvoid *pointer, GLsizei count) {
+static void glVertexAttribPointerBounds(GLuint indx, GLint size, GLenum type, GLboolean normalized,
+                                        GLsizei stride, const GLvoid* pointer, GLsizei count) {
     glVertexAttribPointer(indx, size, type, normalized, stride, pointer);
 }
 #endif
 #ifdef GL_ES_VERSION_3_0
-static void glVertexAttribIPointerBounds(GLuint indx, GLint size, GLenum type,
-        GLsizei stride, const GLvoid *pointer, GLsizei count) {
+static void glVertexAttribIPointerBounds(GLuint indx, GLint size, GLenum type, GLsizei stride,
+                                         const GLvoid* pointer, GLsizei count) {
     glVertexAttribIPointer(indx, size, type, stride, pointer);
 }
 #endif
@@ -76,31 +75,27 @@ static void glVertexAttribIPointerBounds(GLuint indx, GLint size, GLenum type,
 
 /* Cache method IDs each time the class is loaded. */
 
-static void
-nativeClassInit(JNIEnv *_env, jclass glImplClass)
-{
+static void nativeClassInit(JNIEnv* _env, jclass glImplClass) {
     jclass nioAccessClassLocal = _env->FindClass("java/nio/NIOAccess");
-    nioAccessClass = (jclass) _env->NewGlobalRef(nioAccessClassLocal);
+    nioAccessClass = (jclass)_env->NewGlobalRef(nioAccessClassLocal);
 
     jclass bufferClassLocal = _env->FindClass("java/nio/Buffer");
-    bufferClass = (jclass) _env->NewGlobalRef(bufferClassLocal);
+    bufferClass = (jclass)_env->NewGlobalRef(bufferClassLocal);
 
-    getBasePointerID = _env->GetStaticMethodID(nioAccessClass,
-            "getBasePointer", "(Ljava/nio/Buffer;)J");
-    getBaseArrayID = _env->GetStaticMethodID(nioAccessClass,
-            "getBaseArray", "(Ljava/nio/Buffer;)Ljava/lang/Object;");
-    getBaseArrayOffsetID = _env->GetStaticMethodID(nioAccessClass,
-            "getBaseArrayOffset", "(Ljava/nio/Buffer;)I");
+    getBasePointerID =
+            _env->GetStaticMethodID(nioAccessClass, "getBasePointer", "(Ljava/nio/Buffer;)J");
+    getBaseArrayID = _env->GetStaticMethodID(nioAccessClass, "getBaseArray",
+                                             "(Ljava/nio/Buffer;)Ljava/lang/Object;");
+    getBaseArrayOffsetID =
+            _env->GetStaticMethodID(nioAccessClass, "getBaseArrayOffset", "(Ljava/nio/Buffer;)I");
 
     positionID = _env->GetFieldID(bufferClass, "position", "I");
     limitID = _env->GetFieldID(bufferClass, "limit", "I");
-    elementSizeShiftID =
-        _env->GetFieldID(bufferClass, "_elementSizeShift", "I");
+    elementSizeShiftID = _env->GetFieldID(bufferClass, "_elementSizeShift", "I");
 }
 
-static void *
-getPointer(JNIEnv *_env, jobject buffer, jarray *array, jint *remaining, jint *offset)
-{
+static void* getPointer(JNIEnv* _env, jobject buffer, jarray* array, jint* remaining,
+                        jint* offset) {
     jint position;
     jint limit;
     jint elementSizeShift;
@@ -110,141 +105,132 @@ getPointer(JNIEnv *_env, jobject buffer, jarray *array, jint *remaining, jint *o
     limit = _env->GetIntField(buffer, limitID);
     elementSizeShift = _env->GetIntField(buffer, elementSizeShiftID);
     *remaining = (limit - position) << elementSizeShift;
-    pointer = _env->CallStaticLongMethod(nioAccessClass,
-            getBasePointerID, buffer);
+    pointer = _env->CallStaticLongMethod(nioAccessClass, getBasePointerID, buffer);
     if (pointer != 0L) {
         *array = NULL;
         return reinterpret_cast<void*>(pointer);
     }
 
-    *array = (jarray) _env->CallStaticObjectMethod(nioAccessClass,
-            getBaseArrayID, buffer);
-    *offset = _env->CallStaticIntMethod(nioAccessClass,
-            getBaseArrayOffsetID, buffer);
+    *array = (jarray)_env->CallStaticObjectMethod(nioAccessClass, getBaseArrayID, buffer);
+    *offset = _env->CallStaticIntMethod(nioAccessClass, getBaseArrayOffsetID, buffer);
 
     return NULL;
 }
 
 class ByteArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jbyteArray array, jboolean* is_copy) {
         return _env->GetByteArrayElements(array, is_copy);
     }
 };
 class BooleanArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jbooleanArray array, jboolean* is_copy) {
         return _env->GetBooleanArrayElements(array, is_copy);
     }
 };
 class CharArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jcharArray array, jboolean* is_copy) {
         return _env->GetCharArrayElements(array, is_copy);
     }
 };
 class ShortArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jshortArray array, jboolean* is_copy) {
         return _env->GetShortArrayElements(array, is_copy);
     }
 };
 class IntArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jintArray array, jboolean* is_copy) {
         return _env->GetIntArrayElements(array, is_copy);
     }
 };
 class LongArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jlongArray array, jboolean* is_copy) {
         return _env->GetLongArrayElements(array, is_copy);
     }
 };
 class FloatArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jfloatArray array, jboolean* is_copy) {
         return _env->GetFloatArrayElements(array, is_copy);
     }
 };
 class DoubleArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jdoubleArray array, jboolean* is_copy) {
         return _env->GetDoubleArrayElements(array, is_copy);
     }
 };
 
-template<typename JTYPEARRAY, typename ARRAYGETTER>
-static void*
-getArrayPointer(JNIEnv *_env, JTYPEARRAY array, jboolean* is_copy) {
+template <typename JTYPEARRAY, typename ARRAYGETTER>
+static void* getArrayPointer(JNIEnv* _env, JTYPEARRAY array, jboolean* is_copy) {
     return ARRAYGETTER::Get(_env, array, is_copy);
 }
 
 class ByteArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jbyteArray array, jbyte* data, jboolean commit) {
         _env->ReleaseByteArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class BooleanArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jbooleanArray array, jboolean* data, jboolean commit) {
         _env->ReleaseBooleanArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class CharArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jcharArray array, jchar* data, jboolean commit) {
         _env->ReleaseCharArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class ShortArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jshortArray array, jshort* data, jboolean commit) {
         _env->ReleaseShortArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class IntArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jintArray array, jint* data, jboolean commit) {
         _env->ReleaseIntArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class LongArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jlongArray array, jlong* data, jboolean commit) {
         _env->ReleaseLongArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class FloatArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jfloatArray array, jfloat* data, jboolean commit) {
         _env->ReleaseFloatArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 class DoubleArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jdoubleArray array, jdouble* data, jboolean commit) {
         _env->ReleaseDoubleArrayElements(array, data, commit ? 0 : JNI_ABORT);
     }
 };
 
-template<typename JTYPEARRAY, typename NTYPEARRAY, typename ARRAYRELEASER>
-static void
-releaseArrayPointer(JNIEnv *_env, JTYPEARRAY array, NTYPEARRAY data, jboolean commit) {
+template <typename JTYPEARRAY, typename NTYPEARRAY, typename ARRAYRELEASER>
+static void releaseArrayPointer(JNIEnv* _env, JTYPEARRAY array, NTYPEARRAY data, jboolean commit) {
     ARRAYRELEASER::Release(_env, array, data, commit);
 }
 
-static void
-releasePointer(JNIEnv *_env, jarray array, void *data, jboolean commit)
-{
-    _env->ReleasePrimitiveArrayCritical(array, data,
-                       commit ? 0 : JNI_ABORT);
+static void releasePointer(JNIEnv* _env, jarray array, void* data, jboolean commit) {
+    _env->ReleasePrimitiveArrayCritical(array, data, commit ? 0 : JNI_ABORT);
 }
 
-static void *
-getDirectBufferPointer(JNIEnv *_env, jobject buffer) {
-    char* buf = (char*) _env->GetDirectBufferAddress(buffer);
+static void* getDirectBufferPointer(JNIEnv* _env, jobject buffer) {
+    char* buf = (char*)_env->GetDirectBufferAddress(buffer);
     if (buf) {
         jint position = _env->GetIntField(buffer, positionID);
         jint elementSizeShift = _env->GetIntField(buffer, elementSizeShiftID);
@@ -253,7 +239,7 @@ getDirectBufferPointer(JNIEnv *_env, jobject buffer) {
         jniThrowException(_env, "java/lang/IllegalArgumentException",
                           "Must use a native order direct Buffer");
     }
-    return (void*) buf;
+    return (void*)buf;
 }
 
 // --------------------------------------------------------------------------
@@ -351,17 +337,15 @@ static int getNeededCount(GLint pname) {
     return needed;
 }
 
-template <typename JTYPEARRAY, typename ARRAYGETTER, typename NTYPEARRAY,
-          typename ARRAYRELEASER, typename CTYPE, void GET(GLenum, CTYPE*)>
-static void
-get
-  (JNIEnv *_env, jobject _this, jint pname, JTYPEARRAY params_ref, jint offset) {
+template <typename JTYPEARRAY, typename ARRAYGETTER, typename NTYPEARRAY, typename ARRAYRELEASER,
+          typename CTYPE, void GET(GLenum, CTYPE*)>
+static void get(JNIEnv* _env, jobject _this, jint pname, JTYPEARRAY params_ref, jint offset) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
-    CTYPE *params_base = (CTYPE *) 0;
+    const char* _exceptionType;
+    const char* _exceptionMessage;
+    CTYPE* params_base = (CTYPE*)0;
     jint _remaining;
-    CTYPE *params = (CTYPE *) 0;
+    CTYPE* params = (CTYPE*)0;
     int _needed = 0;
 
     if (!params_ref) {
@@ -387,66 +371,56 @@ get
         _exceptionMessage = "length - offset < needed";
         goto exit;
     }
-    params_base = (CTYPE *) getArrayPointer<JTYPEARRAY, ARRAYGETTER>(
-        _env, params_ref, (jboolean *)0);
+    params_base = (CTYPE*)getArrayPointer<JTYPEARRAY, ARRAYGETTER>(_env, params_ref, (jboolean*)0);
     params = params_base + offset;
 
-    GET(
-        (GLenum)pname,
-        (CTYPE *)params
-    );
+    GET((GLenum)pname, (CTYPE*)params);
 
 exit:
     if (params_base) {
-        releaseArrayPointer<JTYPEARRAY, NTYPEARRAY, ARRAYRELEASER>(
-            _env, params_ref, params_base, !_exception);
+        releaseArrayPointer<JTYPEARRAY, NTYPEARRAY, ARRAYRELEASER>(_env, params_ref, params_base,
+                                                                   !_exception);
     }
     if (_exception) {
         jniThrowException(_env, _exceptionType, _exceptionMessage);
     }
 }
 
-
 template <typename CTYPE, typename JTYPEARRAY, typename ARRAYGETTER, typename NTYPEARRAY,
           typename ARRAYRELEASER, void GET(GLenum, CTYPE*)>
-static void
-getarray
-  (JNIEnv *_env, jobject _this, jint pname, jobject params_buf) {
+static void getarray(JNIEnv* _env, jobject _this, jint pname, jobject params_buf) {
     jint _exception = 0;
-    const char * _exceptionType;
-    const char * _exceptionMessage;
-    JTYPEARRAY _array = (JTYPEARRAY) 0;
-    jint _bufferOffset = (jint) 0;
+    const char* _exceptionType;
+    const char* _exceptionMessage;
+    JTYPEARRAY _array = (JTYPEARRAY)0;
+    jint _bufferOffset = (jint)0;
     jint _remaining;
-    CTYPE *params = (CTYPE *) 0;
+    CTYPE* params = (CTYPE*)0;
     int _needed = 0;
 
-    params = (CTYPE *)getPointer(_env, params_buf, (jarray*)&_array, &_remaining, &_bufferOffset);
-    _remaining /= sizeof(CTYPE);    // convert from bytes to item count
+    params = (CTYPE*)getPointer(_env, params_buf, (jarray*)&_array, &_remaining, &_bufferOffset);
+    _remaining /= sizeof(CTYPE);  // convert from bytes to item count
     _needed = getNeededCount(pname);
     // if we didn't find this pname, we just assume the user passed
     // an array of the right size -- this might happen with extensions
     // or if we forget an enum here.
-    if (_needed>0 && _remaining < _needed) {
+    if (_needed > 0 && _remaining < _needed) {
         _exception = 1;
         _exceptionType = "java/lang/IllegalArgumentException";
         _exceptionMessage = "remaining() < needed";
         goto exit;
     }
     if (params == NULL) {
-        char * _paramsBase = (char *) getArrayPointer<JTYPEARRAY, ARRAYGETTER>(
-            _env, _array, (jboolean *) 0);
-        params = (CTYPE *) (_paramsBase + _bufferOffset);
+        char* _paramsBase =
+                (char*)getArrayPointer<JTYPEARRAY, ARRAYGETTER>(_env, _array, (jboolean*)0);
+        params = (CTYPE*)(_paramsBase + _bufferOffset);
     }
-    GET(
-        (GLenum)pname,
-        (CTYPE *)params
-    );
+    GET((GLenum)pname, (CTYPE*)params);
 
 exit:
     if (_array) {
         releaseArrayPointer<JTYPEARRAY, NTYPEARRAY, ARRAYRELEASER>(
-            _env, _array, (NTYPEARRAY)params, _exception ? JNI_FALSE : JNI_TRUE);
+                _env, _array, (NTYPEARRAY)params, _exception ? JNI_FALSE : JNI_TRUE);
     }
     if (_exception) {
         jniThrowException(_env, _exceptionType, _exceptionMessage);
@@ -455,19 +429,19 @@ exit:
 
 // --------------------------------------------------------------------------
 /* GLbitfield glQueryMatrixxOES ( GLfixed *mantissa, GLint *exponent ) */
-static jint
-android_glQueryMatrixxOES___3II_3II
-  (JNIEnv *_env, jobject _this, jintArray mantissa_ref, jint mantissaOffset, jintArray exponent_ref, jint exponentOffset) {
+static jint android_glQueryMatrixxOES___3II_3II(JNIEnv* _env, jobject _this, jintArray mantissa_ref,
+                                                jint mantissaOffset, jintArray exponent_ref,
+                                                jint exponentOffset) {
     jint _exception = 0;
-    const char * _exceptionType = NULL;
-    const char * _exceptionMessage = NULL;
+    const char* _exceptionType = NULL;
+    const char* _exceptionMessage = NULL;
     GLbitfield _returnValue = -1;
-    GLfixed *mantissa_base = (GLfixed *) 0;
+    GLfixed* mantissa_base = (GLfixed*)0;
     jint _mantissaRemaining;
-    GLfixed *mantissa = (GLfixed *) 0;
-    GLint *exponent_base = (GLint *) 0;
+    GLfixed* mantissa = (GLfixed*)0;
+    GLint* exponent_base = (GLint*)0;
     jint _exponentRemaining;
-    GLint *exponent = (GLint *) 0;
+    GLint* exponent = (GLint*)0;
 
     if (!mantissa_ref) {
         _exception = 1;
@@ -488,8 +462,7 @@ android_glQueryMatrixxOES___3II_3II
         _exceptionMessage = "length - mantissaOffset < 16 < needed";
         goto exit;
     }
-    mantissa_base = (GLfixed *)
-        _env->GetIntArrayElements(mantissa_ref, (jboolean *)0);
+    mantissa_base = (GLfixed*)_env->GetIntArrayElements(mantissa_ref, (jboolean*)0);
     mantissa = mantissa_base + mantissaOffset;
 
     if (!exponent_ref) {
@@ -511,23 +484,19 @@ android_glQueryMatrixxOES___3II_3II
         _exceptionMessage = "length - exponentOffset < 16 < needed";
         goto exit;
     }
-    exponent_base = (GLint *)
-        _env->GetIntArrayElements(exponent_ref, (jboolean *)0);
+    exponent_base = (GLint*)_env->GetIntArrayElements(exponent_ref, (jboolean*)0);
     exponent = exponent_base + exponentOffset;
 
-    _returnValue = glQueryMatrixxOES(
-        (GLfixed *)mantissa,
-        (GLint *)exponent
-    );
+    _returnValue = glQueryMatrixxOES((GLfixed*)mantissa, (GLint*)exponent);
 
 exit:
     if (exponent_base) {
         _env->ReleaseIntArrayElements(exponent_ref, (jint*)exponent_base,
-            _exception ? JNI_ABORT: 0);
+                                      _exception ? JNI_ABORT : 0);
     }
     if (mantissa_base) {
         _env->ReleaseIntArrayElements(mantissa_ref, (jint*)mantissa_base,
-            _exception ? JNI_ABORT: 0);
+                                      _exception ? JNI_ABORT : 0);
     }
     if (_exception) {
         jniThrowException(_env, _exceptionType, _exceptionMessage);
@@ -536,21 +505,20 @@ exit:
 }
 
 /* GLbitfield glQueryMatrixxOES ( GLfixed *mantissa, GLint *exponent ) */
-static jint
-android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2
-  (JNIEnv *_env, jobject _this, jobject mantissa_buf, jobject exponent_buf) {
+static jint android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2(
+        JNIEnv* _env, jobject _this, jobject mantissa_buf, jobject exponent_buf) {
     jint _exception = 0;
-    const char * _exceptionType = NULL;
-    const char * _exceptionMessage = NULL;
-    jintArray _mantissaArray = (jintArray) 0;
-    jint _mantissaBufferOffset = (jint) 0;
-    jintArray _exponentArray = (jintArray) 0;
-    jint _exponentBufferOffset = (jint) 0;
+    const char* _exceptionType = NULL;
+    const char* _exceptionMessage = NULL;
+    jintArray _mantissaArray = (jintArray)0;
+    jint _mantissaBufferOffset = (jint)0;
+    jintArray _exponentArray = (jintArray)0;
+    jint _exponentBufferOffset = (jint)0;
     GLbitfield _returnValue = -1;
     jint _mantissaRemaining;
-    GLfixed *mantissa = (GLfixed *) 0;
+    GLfixed* mantissa = (GLfixed*)0;
     jint _exponentRemaining;
-    GLint *exponent = (GLint *) 0;
+    GLint* exponent = (GLint*)0;
 
     if (!mantissa_buf) {
         _exception = 1;
@@ -558,7 +526,8 @@ android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2
         _exceptionMessage = "mantissa == null";
         goto exit;
     }
-    mantissa = (GLfixed *)getPointer(_env, mantissa_buf, (jarray*)&_mantissaArray, &_mantissaRemaining, &_mantissaBufferOffset);
+    mantissa = (GLfixed*)getPointer(_env, mantissa_buf, (jarray*)&_mantissaArray,
+                                    &_mantissaRemaining, &_mantissaBufferOffset);
     if (_mantissaRemaining < 16) {
         _exception = 1;
         _exceptionType = "java/lang/IllegalArgumentException";
@@ -571,7 +540,8 @@ android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2
         _exceptionMessage = "exponent == null";
         goto exit;
     }
-    exponent = (GLint *)getPointer(_env, exponent_buf, (jarray*)&_exponentArray, &_exponentRemaining, &_exponentBufferOffset);
+    exponent = (GLint*)getPointer(_env, exponent_buf, (jarray*)&_exponentArray, &_exponentRemaining,
+                                  &_exponentBufferOffset);
     if (_exponentRemaining < 16) {
         _exception = 1;
         _exceptionType = "java/lang/IllegalArgumentException";
@@ -579,17 +549,14 @@ android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2
         goto exit;
     }
     if (mantissa == NULL) {
-        char * _mantissaBase = (char *)_env->GetIntArrayElements(_mantissaArray, (jboolean *) 0);
-        mantissa = (GLfixed *) (_mantissaBase + _mantissaBufferOffset);
+        char* _mantissaBase = (char*)_env->GetIntArrayElements(_mantissaArray, (jboolean*)0);
+        mantissa = (GLfixed*)(_mantissaBase + _mantissaBufferOffset);
     }
     if (exponent == NULL) {
-        char * _exponentBase = (char *)_env->GetIntArrayElements(_exponentArray, (jboolean *) 0);
-        exponent = (GLint *) (_exponentBase + _exponentBufferOffset);
+        char* _exponentBase = (char*)_env->GetIntArrayElements(_exponentArray, (jboolean*)0);
+        exponent = (GLint*)(_exponentBase + _exponentBufferOffset);
     }
-    _returnValue = glQueryMatrixxOES(
-        (GLfixed *)mantissa,
-        (GLint *)exponent
-    );
+    _returnValue = glQueryMatrixxOES((GLfixed*)mantissa, (GLint*)exponent);
 
 exit:
     if (_exponentArray) {
@@ -604,17 +571,18 @@ exit:
     return (jint)_returnValue;
 }
 
-static const char *classPathName = "android/opengl/GLES10Ext";
+static const char* classPathName = "android/opengl/GLES10Ext";
 
 static const JNINativeMethod methods[] = {
-{"_nativeClassInit", "()V", (void*)nativeClassInit },
-{"glQueryMatrixxOES", "([II[II)I", (void *) android_glQueryMatrixxOES___3II_3II },
-{"glQueryMatrixxOES", "(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;)I", (void *) android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2 },
+        {"_nativeClassInit", "()V", (void*)nativeClassInit},
+        {"glQueryMatrixxOES", "([II[II)I", (void*)android_glQueryMatrixxOES___3II_3II},
+        {"glQueryMatrixxOES", "(Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;)I",
+         (void*)android_glQueryMatrixxOES__Ljava_nio_IntBuffer_2Ljava_nio_IntBuffer_2},
 };
 
-int register_android_opengl_jni_GLES10Ext(JNIEnv *_env)
-{
+int register_android_opengl_jni_GLES10Ext(JNIEnv* _env) {
     int err;
-    err = android::AndroidRuntime::registerNativeMethods(_env, classPathName, methods, NELEM(methods));
+    err = android::AndroidRuntime::registerNativeMethods(_env, classPathName, methods,
+                                                         NELEM(methods));
     return err;
 }

@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "benchmark/benchmark.h"
 #include <statslog.h>
+#include "benchmark/benchmark.h"
 
 namespace android {
 namespace os {
@@ -27,9 +27,9 @@ static void BM_StatsWrite(benchmark::State& state) {
     int64_t bootloader_duration = 10;
     int64_t time_since_last_boot = 99999999;
     while (state.KeepRunning()) {
-        android::util::stats_write(
-                android::util::BOOT_SEQUENCE_REPORTED, reason, reason,
-                boot_end_time, total_duration, bootloader_duration, time_since_last_boot);
+        android::util::stats_write(android::util::BOOT_SEQUENCE_REPORTED, reason, reason,
+                                   boot_end_time, total_duration, bootloader_duration,
+                                   time_since_last_boot);
         total_duration++;
     }
 }

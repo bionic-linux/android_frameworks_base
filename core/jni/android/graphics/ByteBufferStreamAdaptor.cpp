@@ -1,6 +1,6 @@
 #include "ByteBufferStreamAdaptor.h"
-#include "core_jni_helpers.h"
 #include "Utils.h"
+#include "core_jni_helpers.h"
 
 #include <SkStream.h>
 
@@ -10,19 +10,19 @@ static jmethodID gByteBuffer_getMethodID;
 static jmethodID gByteBuffer_setPositionMethodID;
 
 class ByteBufferStream : public SkStreamAsset {
-private:
+  private:
     ByteBufferStream(JavaVM* jvm, jobject jbyteBuffer, size_t initialPosition, size_t length,
                      jbyteArray storage)
-            : mJvm(jvm)
-            , mByteBuffer(jbyteBuffer)
-            , mPosition(0)
-            , mInitialPosition(initialPosition)
-            , mLength(length)
-            , mStorage(storage) {}
+        : mJvm(jvm),
+          mByteBuffer(jbyteBuffer),
+          mPosition(0),
+          mInitialPosition(initialPosition),
+          mLength(length),
+          mStorage(storage) {}
 
-public:
-    static ByteBufferStream* Create(JavaVM* jvm, JNIEnv* env, jobject jbyteBuffer,
-                                    size_t position, size_t length) {
+  public:
+    static ByteBufferStream* Create(JavaVM* jvm, JNIEnv* env, jobject jbyteBuffer, size_t position,
+                                    size_t length) {
         // This object outlives its native method call.
         jbyteBuffer = env->NewGlobalRef(jbyteBuffer);
         if (!jbyteBuffer) {
@@ -133,16 +133,16 @@ public:
     // SkStreamAsset overrides
     size_t getLength() const override { return mLength; }
 
-private:
-    JavaVM*          mJvm;
-    jobject          mByteBuffer;
+  private:
+    JavaVM* mJvm;
+    jobject mByteBuffer;
     // Logical position of the SkStream, between 0 and mLength.
-    size_t           mPosition;
+    size_t mPosition;
     // Initial position of mByteBuffer, treated as mPosition 0.
-    const size_t     mInitialPosition;
+    const size_t mInitialPosition;
     // Logical length of the SkStream, from mInitialPosition to
     // mByteBuffer.limit().
-    const size_t     mLength;
+    const size_t mLength;
 
     // Range has already been checked by the caller.
     bool setPosition(size_t newPosition) {
@@ -169,11 +169,11 @@ private:
 };
 
 class ByteArrayStream : public SkStreamAsset {
-private:
+  private:
     ByteArrayStream(JavaVM* jvm, jbyteArray jarray, size_t offset, size_t length)
-            : mJvm(jvm), mByteArray(jarray), mOffset(offset), mPosition(0), mLength(length) {}
+        : mJvm(jvm), mByteArray(jarray), mOffset(offset), mPosition(0), mLength(length) {}
 
-public:
+  public:
     static ByteArrayStream* Create(JavaVM* jvm, JNIEnv* env, jbyteArray jarray, size_t offset,
                                    size_t length) {
         // This object outlives its native method call.
@@ -254,13 +254,13 @@ public:
     // SkStreamAsset overrides
     size_t getLength() const override { return mLength; }
 
-private:
-    JavaVM*      mJvm;
-    jbyteArray   mByteArray;
+  private:
+    JavaVM* mJvm;
+    jbyteArray mByteArray;
     // Offset in mByteArray. Only used when communicating with Java.
     const size_t mOffset;
     // Logical position of the SkStream, between 0 and mLength.
-    size_t       mPosition;
+    size_t mPosition;
     const size_t mLength;
 };
 
@@ -296,8 +296,8 @@ std::unique_ptr<SkStream> CreateByteBufferStreamAdaptor(JNIEnv* env, jobject jby
     }
 
     // Non-direct, or direct access is not supported.
-    return std::unique_ptr<SkStream>(ByteBufferStream::Create(jvm, env, jbyteBuffer, position,
-                                                              length));
+    return std::unique_ptr<SkStream>(
+            ByteBufferStream::Create(jvm, env, jbyteBuffer, position, length));
 }
 
 std::unique_ptr<SkStream> CreateByteArrayStreamAdaptor(JNIEnv* env, jbyteArray array, size_t offset,
@@ -310,7 +310,9 @@ std::unique_ptr<SkStream> CreateByteArrayStreamAdaptor(JNIEnv* env, jbyteArray a
 
 int register_android_graphics_ByteBufferStreamAdaptor(JNIEnv* env) {
     jclass byteBuffer_class = FindClassOrDie(env, "java/nio/ByteBuffer");
-    gByteBuffer_getMethodID         = GetMethodIDOrDie(env, byteBuffer_class, "get", "([BII)Ljava/nio/ByteBuffer;");
-    gByteBuffer_setPositionMethodID = GetMethodIDOrDie(env, byteBuffer_class, "position", "(I)Ljava/nio/Buffer;");
+    gByteBuffer_getMethodID =
+            GetMethodIDOrDie(env, byteBuffer_class, "get", "([BII)Ljava/nio/ByteBuffer;");
+    gByteBuffer_setPositionMethodID =
+            GetMethodIDOrDie(env, byteBuffer_class, "position", "(I)Ljava/nio/Buffer;");
     return true;
 }

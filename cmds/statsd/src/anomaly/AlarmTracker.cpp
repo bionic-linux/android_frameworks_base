@@ -17,9 +17,9 @@
 #define DEBUG false  // STOPSHIP if true
 #include "Log.h"
 
+#include "HashableDimensionKey.h"
 #include "anomaly/AlarmTracker.h"
 #include "anomaly/subscriber_util.h"
-#include "HashableDimensionKey.h"
 #include "stats_util.h"
 #include "storage/StorageManager.h"
 
@@ -30,13 +30,10 @@ namespace android {
 namespace os {
 namespace statsd {
 
-AlarmTracker::AlarmTracker(const int64_t startMillis,
-                           const int64_t currentMillis,
+AlarmTracker::AlarmTracker(const int64_t startMillis, const int64_t currentMillis,
                            const Alarm& alarm, const ConfigKey& configKey,
                            const sp<AlarmMonitor>& alarmMonitor)
-    : mAlarmConfig(alarm),
-      mConfigKey(configKey),
-      mAlarmMonitor(alarmMonitor) {
+    : mAlarmConfig(alarm), mConfigKey(configKey), mAlarmMonitor(alarmMonitor) {
     VLOG("AlarmTracker() called");
     mAlarmSec = (startMillis + mAlarmConfig.offset_millis()) / MS_PER_SEC;
     // startMillis is the time statsd is created. We need to find the 1st alarm timestamp after
@@ -65,7 +62,7 @@ int64_t AlarmTracker::findNextAlarmSec(int64_t currentTimeSec) {
         return mAlarmSec;
     }
     int64_t periodsForward =
-        ((currentTimeSec - mAlarmSec) * MS_PER_SEC - 1) / mAlarmConfig.period_millis() + 1;
+            ((currentTimeSec - mAlarmSec) * MS_PER_SEC - 1) / mAlarmConfig.period_millis() + 1;
     return mAlarmSec + periodsForward * mAlarmConfig.period_millis() / MS_PER_SEC;
 }
 
@@ -82,7 +79,7 @@ void AlarmTracker::informAlarmsFired(
                            mSubscriptions);
     }
     firedAlarms.erase(mInternalAlarm);
-    mAlarmSec = findNextAlarmSec((timestampNs-1) / NS_PER_SEC + 1); // round up
+    mAlarmSec = findNextAlarmSec((timestampNs - 1) / NS_PER_SEC + 1);  // round up
     mInternalAlarm = new InternalAlarm{static_cast<uint32_t>(mAlarmSec)};
     VLOG("AlarmTracker sets the periodic alarm at: %lld", (long long)mAlarmSec);
     if (mAlarmMonitor != nullptr) {

@@ -24,90 +24,88 @@
 namespace android {
 
 GraphicBufferImpl::GraphicBufferImpl(uint32_t w, uint32_t h)
-  : mBuffer(new android::GraphicBuffer(w, h, PIXEL_FORMAT_RGBA_8888,
-       android::GraphicBuffer::USAGE_HW_TEXTURE |
-       android::GraphicBuffer::USAGE_SW_READ_OFTEN |
-       android::GraphicBuffer::USAGE_SW_WRITE_OFTEN)) {
-}
+    : mBuffer(new android::GraphicBuffer(w, h, PIXEL_FORMAT_RGBA_8888,
+                                         android::GraphicBuffer::USAGE_HW_TEXTURE |
+                                                 android::GraphicBuffer::USAGE_SW_READ_OFTEN |
+                                                 android::GraphicBuffer::USAGE_SW_WRITE_OFTEN)) {}
 
-GraphicBufferImpl::~GraphicBufferImpl() {
-}
+GraphicBufferImpl::~GraphicBufferImpl() {}
 
 // static
 long GraphicBufferImpl::Create(int w, int h) {
-  GraphicBufferImpl* buffer = new GraphicBufferImpl(
-      static_cast<uint32_t>(w), static_cast<uint32_t>(h));
-  if (buffer->InitCheck() != NO_ERROR) {
-    delete buffer;
-    return 0;
-  }
-  return reinterpret_cast<intptr_t>(buffer);
+    GraphicBufferImpl* buffer =
+            new GraphicBufferImpl(static_cast<uint32_t>(w), static_cast<uint32_t>(h));
+    if (buffer->InitCheck() != NO_ERROR) {
+        delete buffer;
+        return 0;
+    }
+    return reinterpret_cast<intptr_t>(buffer);
 }
 
 // static
 void GraphicBufferImpl::Release(long buffer_id) {
-  GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
-  delete buffer;
+    GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
+    delete buffer;
 }
 
 // static
 int GraphicBufferImpl::MapStatic(long buffer_id, AwMapMode mode, void** vaddr) {
-  GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
-  return buffer->Map(mode, vaddr);
+    GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
+    return buffer->Map(mode, vaddr);
 }
 
 // static
 int GraphicBufferImpl::UnmapStatic(long buffer_id) {
-  GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
-  return buffer->Unmap();
+    GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
+    return buffer->Unmap();
 }
 
 // static
 void* GraphicBufferImpl::GetNativeBufferStatic(long buffer_id) {
-  GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
-  return buffer->GetNativeBuffer();
+    GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
+    return buffer->GetNativeBuffer();
 }
 
 // static
 uint32_t GraphicBufferImpl::GetStrideStatic(long buffer_id) {
-  GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
-  return buffer->GetStride();
+    GraphicBufferImpl* buffer = reinterpret_cast<GraphicBufferImpl*>(buffer_id);
+    return buffer->GetStride();
 }
 
 status_t GraphicBufferImpl::Map(AwMapMode mode, void** vaddr) {
-  int usage = 0;
-  switch (mode) {
-    case MAP_READ_ONLY:
-      usage = android::GraphicBuffer::USAGE_SW_READ_OFTEN;
-      break;
-    case MAP_WRITE_ONLY:
-      usage = android::GraphicBuffer::USAGE_SW_WRITE_OFTEN;
-      break;
-    case MAP_READ_WRITE:
-      usage = android::GraphicBuffer::USAGE_SW_READ_OFTEN |
-          android::GraphicBuffer::USAGE_SW_WRITE_OFTEN;
-      break;
-    default:
-      return INVALID_OPERATION;
-  }
-  return mBuffer->lock(usage, vaddr);
+    int usage = 0;
+    switch (mode) {
+        case MAP_READ_ONLY:
+            usage = android::GraphicBuffer::USAGE_SW_READ_OFTEN;
+            break;
+        case MAP_WRITE_ONLY:
+            usage = android::GraphicBuffer::USAGE_SW_WRITE_OFTEN;
+            break;
+        case MAP_READ_WRITE:
+            usage = android::GraphicBuffer::USAGE_SW_READ_OFTEN |
+                    android::GraphicBuffer::USAGE_SW_WRITE_OFTEN;
+            break;
+        default:
+            return INVALID_OPERATION;
+    }
+    return mBuffer->lock(usage, vaddr);
 }
 
 status_t GraphicBufferImpl::Unmap() {
-  return mBuffer->unlock();
+    return mBuffer->unlock();
 }
 
 status_t GraphicBufferImpl::InitCheck() const {
-  return mBuffer->initCheck();
+    return mBuffer->initCheck();
 }
 
 void* GraphicBufferImpl::GetNativeBuffer() const {
-  return mBuffer->getNativeBuffer();
+    return mBuffer->getNativeBuffer();
 }
 
 uint32_t GraphicBufferImpl::GetStride() const {
-  static const int kBytesPerPixel = 4;
-  return mBuffer->getStride() * kBytesPerPixel;
+    static const int kBytesPerPixel = 4;
+    return mBuffer->getStride() * kBytesPerPixel;
 }
 
-} // namespace android
+}  // namespace android

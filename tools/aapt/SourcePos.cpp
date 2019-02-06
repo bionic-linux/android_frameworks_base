@@ -5,16 +5,10 @@
 
 using namespace std;
 
-
 // ErrorPos
 // =============================================================================
-struct ErrorPos
-{
-    enum Level {
-        NOTE,
-        WARNING,
-        ERROR
-    };
+struct ErrorPos {
+    enum Level { NOTE, WARNING, ERROR };
 
     String8 file;
     int line;
@@ -31,30 +25,15 @@ struct ErrorPos
 
 static vector<ErrorPos> g_errors;
 
-ErrorPos::ErrorPos()
-    :line(-1), level(NOTE)
-{
-}
+ErrorPos::ErrorPos() : line(-1), level(NOTE) {}
 
 ErrorPos::ErrorPos(const ErrorPos& that)
-    :file(that.file),
-     line(that.line),
-     error(that.error),
-     level(that.level)
-{
-}
+    : file(that.file), line(that.line), error(that.error), level(that.level) {}
 
 ErrorPos::ErrorPos(const String8& f, int l, const String8& e, Level lev)
-    :file(f),
-     line(l),
-     error(e),
-     level(lev)
-{
-}
+    : file(f), line(l), error(e), level(lev) {}
 
-ErrorPos&
-ErrorPos::operator=(const ErrorPos& rhs)
-{
+ErrorPos& ErrorPos::operator=(const ErrorPos& rhs) {
     this->file = rhs.file;
     this->line = rhs.line;
     this->error = rhs.error;
@@ -62,25 +41,24 @@ ErrorPos::operator=(const ErrorPos& rhs)
     return *this;
 }
 
-void
-ErrorPos::print(FILE* to) const
-{
+void ErrorPos::print(FILE* to) const {
     const char* type = "";
     switch (level) {
-    case NOTE:
-        type = "note: ";
-        break;
-    case WARNING:
-        type = "warning: ";
-        break;
-    case ERROR:
-        type = "error: ";
-        break;
+        case NOTE:
+            type = "note: ";
+            break;
+        case WARNING:
+            type = "warning: ";
+            break;
+        case ERROR:
+            type = "error: ";
+            break;
     }
-    
+
     if (!this->file.isEmpty()) {
         if (this->line >= 0) {
-            fprintf(to, "%s:%d: %s%s\n", this->file.string(), this->line, type, this->error.string());
+            fprintf(to, "%s:%d: %s%s\n", this->file.string(), this->line, type,
+                    this->error.string());
         } else {
             fprintf(to, "%s: %s%s\n", this->file.string(), type, this->error.string());
         }
@@ -91,28 +69,15 @@ ErrorPos::print(FILE* to) const
 
 // SourcePos
 // =============================================================================
-SourcePos::SourcePos(const String8& f, int l)
-    : file(f), line(l)
-{
-}
+SourcePos::SourcePos(const String8& f, int l) : file(f), line(l) {}
 
-SourcePos::SourcePos(const SourcePos& that)
-    : file(that.file), line(that.line)
-{
-}
+SourcePos::SourcePos(const SourcePos& that) : file(that.file), line(that.line) {}
 
-SourcePos::SourcePos()
-    : file("???", 0), line(-1)
-{
-}
+SourcePos::SourcePos() : file("???", 0), line(-1) {}
 
-SourcePos::~SourcePos()
-{
-}
+SourcePos::~SourcePos() {}
 
-void
-SourcePos::error(const char* fmt, ...) const
-{
+void SourcePos::error(const char* fmt, ...) const {
     va_list ap;
     va_start(ap, fmt);
     String8 msg = String8::formatV(fmt, ap);
@@ -120,9 +85,7 @@ SourcePos::error(const char* fmt, ...) const
     g_errors.push_back(ErrorPos(this->file, this->line, msg, ErrorPos::ERROR));
 }
 
-void
-SourcePos::warning(const char* fmt, ...) const
-{
+void SourcePos::warning(const char* fmt, ...) const {
     va_list ap;
     va_start(ap, fmt);
     String8 msg = String8::formatV(fmt, ap);
@@ -130,9 +93,7 @@ SourcePos::warning(const char* fmt, ...) const
     ErrorPos(this->file, this->line, msg, ErrorPos::WARNING).print(stderr);
 }
 
-void
-SourcePos::printf(const char* fmt, ...) const
-{
+void SourcePos::printf(const char* fmt, ...) const {
     va_list ap;
     va_start(ap, fmt);
     String8 msg = String8::formatV(fmt, ap);
@@ -140,26 +101,17 @@ SourcePos::printf(const char* fmt, ...) const
     ErrorPos(this->file, this->line, msg, ErrorPos::NOTE).print(stderr);
 }
 
-bool
-SourcePos::operator<(const SourcePos& rhs) const
-{
+bool SourcePos::operator<(const SourcePos& rhs) const {
     return (file < rhs.file) || (line < rhs.line);
 }
 
-bool
-SourcePos::hasErrors()
-{
+bool SourcePos::hasErrors() {
     return g_errors.size() > 0;
 }
 
-void
-SourcePos::printErrors(FILE* to)
-{
+void SourcePos::printErrors(FILE* to) {
     vector<ErrorPos>::const_iterator it;
-    for (it=g_errors.begin(); it!=g_errors.end(); it++) {
+    for (it = g_errors.begin(); it != g_errors.end(); it++) {
         it->print(to);
     }
 }
-
-
-

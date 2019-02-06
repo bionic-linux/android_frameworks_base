@@ -42,8 +42,12 @@ static const char kArgEnd = '}';
 
 class PseudoMethodNone : public PseudoMethodImpl {
  public:
-  std::string Text(const StringPiece& text) override { return text.to_string(); }
-  std::string Placeholder(const StringPiece& text) override { return text.to_string(); }
+  std::string Text(const StringPiece& text) override {
+    return text.to_string();
+  }
+  std::string Placeholder(const StringPiece& text) override {
+    return text.to_string();
+  }
 };
 
 class PseudoMethodBidi : public PseudoMethodImpl {
@@ -54,7 +58,8 @@ class PseudoMethodBidi : public PseudoMethodImpl {
 
 class PseudoMethodAccent : public PseudoMethodImpl {
  public:
-  PseudoMethodAccent() : depth_(0), word_count_(0), length_(0) {}
+  PseudoMethodAccent() : depth_(0), word_count_(0), length_(0) {
+  }
   std::string Start() override;
   std::string End() override;
   std::string Text(const StringPiece& text) override;
@@ -395,8 +400,8 @@ std::string PseudoMethodAccent::Text(const StringPiece& source) {
               i = html_code_pos;
             }
             // Wrong html code
-            else if (!((c == '#' || (c >= 'a' && c <= 'z') ||
-                        (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')))) {
+            else if (!((c == '#' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                        (c >= '0' && c <= '9')))) {
               end = true;
             }
           }
@@ -464,7 +469,7 @@ std::string PseudoMethodBidi::Text(const StringPiece& source) {
     lastspace = space;
     if (escape) {
       result.append(&ESCAPE_CHAR, 1);
-      escape=false;
+      escape = false;
     }
     result.append(&c, 1);
   }

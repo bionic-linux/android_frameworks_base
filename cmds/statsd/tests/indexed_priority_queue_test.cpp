@@ -226,7 +226,7 @@ TEST(indexed_priority_queue, pop) {
     EXPECT_FALSE(ipq.contains(c));
     EXPECT_TRUE(ipq.empty());
 
-    ipq.pop(); // pop an empty queue
+    ipq.pop();  // pop an empty queue
     EXPECT_TRUE(ipq.empty());
 }
 

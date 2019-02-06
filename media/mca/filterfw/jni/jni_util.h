@@ -17,8 +17,8 @@
 #include <jni.h>
 
 #include <memory>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 #include "base/utilities.h"
 #include "core/value.h"
@@ -88,109 +88,94 @@ class JavaObject {
 // object, which is then mapped to the correct instance here. It should not be
 // necessary to use this class directly. Instead, the convenience functions
 // below can be used.
-template<class T>
+template <class T>
 class ObjectPool {
   public:
     // Create a new ObjectPool for a specific object type. Pass the path to the
     // Java equivalent class of the C++ class, and the name of the java member
     // field that will store the object's ID.
-    static void Setup(const std::string& jclass_name,
-                      const std::string& id_fld_name) {
-      instance_ = new ObjectPool<T>(jclass_name, id_fld_name);
+    static void Setup(const std::string& jclass_name, const std::string& id_fld_name) {
+        instance_ = new ObjectPool<T>(jclass_name, id_fld_name);
     }
 
     // Return the shared instance to this type's pool.
-    static ObjectPool* Instance() {
-      return instance_;
-    }
+    static ObjectPool* Instance() { return instance_; }
 
     // Delete this type's pool.
-    static void TearDown() {
-      delete instance_;
-    }
+    static void TearDown() { delete instance_; }
 
     // Register a new C++ object with the pool. This does not affect the Java
     // layer. Use WrapObject() instead to perform the necessary Java-side
     // assignments. Pass true to owns if the object pool owns the object.
     int RegisterObject(T* object, bool owns) {
-      const int id = next_id_;
-      objects_[id] = object;
-      owns_[id] = owns;
-      ++next_id_;
-      return id;
+        const int id = next_id_;
+        objects_[id] = object;
+        owns_[id] = owns;
+        ++next_id_;
+        return id;
     }
 
     // Return the object in the pool with the specified ID.
     T* ObjectWithID(int obj_id) const {
-      typename CObjMap::const_iterator iter = objects_.find(obj_id);
-      return iter == objects_.end() ? NULL : iter->second;
+        typename CObjMap::const_iterator iter = objects_.find(obj_id);
+        return iter == objects_.end() ? NULL : iter->second;
     }
 
     // Get the ID of a Java object. This ID can be used to look-up the C++
     // object.
     int GetObjectID(JNIEnv* env, jobject j_object) {
-      jclass cls = env->GetObjectClass(j_object);
-      jfieldID id_field = env->GetFieldID(cls, id_field_name_.c_str(), "I");
-      const int result = env->GetIntField(j_object, id_field);
-      env->DeleteLocalRef(cls);
-      return result;
+        jclass cls = env->GetObjectClass(j_object);
+        jfieldID id_field = env->GetFieldID(cls, id_field_name_.c_str(), "I");
+        const int result = env->GetIntField(j_object, id_field);
+        env->DeleteLocalRef(cls);
+        return result;
     }
 
     // Take a C++ object and wrap it with a given Java object. This will
     // essentially set the ID member of the Java object to the ID of the C++
     // object. Pass true to owns if the object pool owns the object.
     bool WrapObject(T* c_object, JNIEnv* env, jobject j_object, bool owns) {
-      const int id = RegisterObject(c_object, owns);
-      jclass cls = env->GetObjectClass(j_object);
-      jfieldID id_field = env->GetFieldID(cls, id_field_name_.c_str(), "I");
-      env->SetIntField(j_object, id_field, id);
-      env->DeleteLocalRef(cls);
-      return true;
+        const int id = RegisterObject(c_object, owns);
+        jclass cls = env->GetObjectClass(j_object);
+        jfieldID id_field = env->GetFieldID(cls, id_field_name_.c_str(), "I");
+        env->SetIntField(j_object, id_field, id);
+        env->DeleteLocalRef(cls);
+        return true;
     }
 
     // Remove the object with the given ID from this pool, and delete it. This
     // does not affect the Java layer.
     bool DeleteObjectWithID(int obj_id) {
-      typename CObjMap::iterator iter = objects_.find(obj_id);
-      const bool found = iter != objects_.end();
-      if (found) {
-        if (owns_[obj_id])
-          delete iter->second;
-        objects_.erase(iter);
-      }
-      return found;
+        typename CObjMap::iterator iter = objects_.find(obj_id);
+        const bool found = iter != objects_.end();
+        if (found) {
+            if (owns_[obj_id]) delete iter->second;
+            objects_.erase(iter);
+        }
+        return found;
     }
 
     // Instantiates a new java object for this class. The Java class must have
     // a default constructor for this to succeed.
     jobject CreateJavaObject(JNIEnv* env) {
-      jclass cls = env->FindClass(jclass_name_.c_str());
-      jmethodID constructor = env->GetMethodID(
-        cls,
-        "<init>",
-        "(Landroid/filterfw/core/NativeAllocatorTag;)V");
-      jobject result = env->NewObject(cls, constructor, JNI_NULL);
-      env->DeleteLocalRef(cls);
-      return result;
+        jclass cls = env->FindClass(jclass_name_.c_str());
+        jmethodID constructor =
+                env->GetMethodID(cls, "<init>", "(Landroid/filterfw/core/NativeAllocatorTag;)V");
+        jobject result = env->NewObject(cls, constructor, JNI_NULL);
+        env->DeleteLocalRef(cls);
+        return result;
     }
 
-    int GetObjectCount() const {
-      return objects_.size();
-    }
+    int GetObjectCount() const { return objects_.size(); }
 
-    const std::string& GetJavaClassName() const {
-      return jclass_name_;
-    }
+    const std::string& GetJavaClassName() const { return jclass_name_; }
 
   private:
-    explicit ObjectPool(const std::string& jclass_name,
-                        const std::string& id_fld_name)
-      : jclass_name_(jclass_name),
-        id_field_name_(id_fld_name),
-        next_id_(0) { }
+    explicit ObjectPool(const std::string& jclass_name, const std::string& id_fld_name)
+        : jclass_name_(jclass_name), id_field_name_(id_fld_name), next_id_(0) {}
 
-    typedef std::unordered_map<int, T*>    CObjMap;
-    typedef std::unordered_map<int, bool>  FlagMap;
+    typedef std::unordered_map<int, T*> CObjMap;
+    typedef std::unordered_map<int, bool> FlagMap;
     static ObjectPool* instance_;
     std::string jclass_name_;
     std::string id_field_name_;
@@ -202,7 +187,8 @@ class ObjectPool {
     ObjectPool& operator=(const ObjectPool&) = delete;
 };
 
-template<typename T> ObjectPool<T>* ObjectPool<T>::instance_ = NULL;
+template <typename T>
+ObjectPool<T>* ObjectPool<T>::instance_ = NULL;
 
 // Convenience Functions ///////////////////////////////////////////////////////
 
@@ -210,56 +196,49 @@ template<typename T> ObjectPool<T>* ObjectPool<T>::instance_ = NULL;
 // can be mapped to one another. This must be called for every C++ instance
 // which is wrapped by a Java front-end interface. Pass true to owns, if the
 // Java layer should own the object.
-template<typename T>
+template <typename T>
 bool WrapObjectInJava(T* c_object, JNIEnv* env, jobject j_object, bool owns) {
-  ObjectPool<T>* pool = ObjectPool<T>::Instance();
-  return pool ? pool->WrapObject(c_object, env, j_object, owns) : false;
+    ObjectPool<T>* pool = ObjectPool<T>::Instance();
+    return pool ? pool->WrapObject(c_object, env, j_object, owns) : false;
 }
 
 // Calls WrapObjectInJava, safely freeing c_object if object creation fails.
-template<typename T>
-bool WrapOwnedObjectInJava(std::unique_ptr<T> c_object, JNIEnv* env,
-                           jobject j_object, bool owns) {
-  if (!WrapObjectInJava<T>(c_object.get(), env, j_object, owns))
-    return false;
-  // If we succeeded, a Java object now owns our c object; don't free it.
-  c_object.release();
-  return true;
+template <typename T>
+bool WrapOwnedObjectInJava(std::unique_ptr<T> c_object, JNIEnv* env, jobject j_object, bool owns) {
+    if (!WrapObjectInJava<T>(c_object.get(), env, j_object, owns)) return false;
+    // If we succeeded, a Java object now owns our c object; don't free it.
+    c_object.release();
+    return true;
 }
 
 // Creates a new Java instance, which wraps the passed C++ instance. Returns
 // the wrapped object or JNI_NULL if there was an error. Pass true to owns, if
 // the Java layer should own the object.
-template<typename T>
+template <typename T>
 jobject WrapNewObjectInJava(T* c_object, JNIEnv* env, bool owns) {
-  ObjectPool<T>* pool = ObjectPool<T>::Instance();
-  if (pool) {
-    jobject result = pool->CreateJavaObject(env);
-    if (WrapObjectInJava(c_object, env, result, owns))
-      return result;
-  }
-  return JNI_NULL;
+    ObjectPool<T>* pool = ObjectPool<T>::Instance();
+    if (pool) {
+        jobject result = pool->CreateJavaObject(env);
+        if (WrapObjectInJava(c_object, env, result, owns)) return result;
+    }
+    return JNI_NULL;
 }
 
 // Use ConvertFromJava to obtain a C++ instance given a Java object. This
 // instance must have been wrapped in Java using the WrapObjectInJava()
 // function.
-template<typename T>
+template <typename T>
 T* ConvertFromJava(JNIEnv* env, jobject j_object) {
-  ObjectPool<T>* pool = ObjectPool<T>::Instance();
-  return pool && j_object
-    ? pool->ObjectWithID(pool->GetObjectID(env, j_object))
-    : NULL;
+    ObjectPool<T>* pool = ObjectPool<T>::Instance();
+    return pool && j_object ? pool->ObjectWithID(pool->GetObjectID(env, j_object)) : NULL;
 }
 
 // Delete the native object given a Java instance. This should be called from
 // the Java object's finalizer.
-template<typename T>
+template <typename T>
 bool DeleteNativeObject(JNIEnv* env, jobject j_object) {
-  ObjectPool<T>* pool = ObjectPool<T>::Instance();
-  return pool && j_object
-    ? pool->DeleteObjectWithID(pool->GetObjectID(env, j_object))
-    : false;
+    ObjectPool<T>* pool = ObjectPool<T>::Instance();
+    return pool && j_object ? pool->DeleteObjectWithID(pool->GetObjectID(env, j_object)) : false;
 }
 
 #if 0
@@ -290,7 +269,6 @@ jobject ToJObject(JNIEnv* env, const Value& value);
 
 // Returns true, iff the passed object is an instance of the class specified
 // by its fully qualified class name.
-bool IsJavaInstanceOf(JNIEnv* env, jobject object,
-                      const std::string& class_name);
+bool IsJavaInstanceOf(JNIEnv* env, jobject object, const std::string& class_name);
 
-#endif // ANDROID_FILTERFW_JNI_JNI_UTIL_H
+#endif  // ANDROID_FILTERFW_JNI_JNI_UTIL_H

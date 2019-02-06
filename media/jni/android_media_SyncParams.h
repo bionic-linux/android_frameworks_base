@@ -33,31 +33,31 @@ struct SyncParams {
     bool frameRateSet;
 
     struct fields_t {
-        jclass      clazz;
-        jmethodID   constructID;
+        jclass clazz;
+        jmethodID constructID;
 
-        jfieldID    sync_source;
-        jfieldID    audio_adjust_mode;
-        jfieldID    tolerance;
-        jfieldID    frame_rate;
-        jfieldID    set;
-        jint        set_sync_source;
-        jint        set_audio_adjust_mode;
-        jint        set_tolerance;
-        jint        set_frame_rate;
+        jfieldID sync_source;
+        jfieldID audio_adjust_mode;
+        jfieldID tolerance;
+        jfieldID frame_rate;
+        jfieldID set;
+        jint set_sync_source;
+        jint set_audio_adjust_mode;
+        jint set_tolerance;
+        jint set_frame_rate;
 
         // initializes fields
-        void init(JNIEnv *env);
+        void init(JNIEnv* env);
 
         // releases global references held
-        void exit(JNIEnv *env);
+        void exit(JNIEnv* env);
     };
 
     // fills this from an android.media.SyncParams object
-    void fillFromJobject(JNIEnv *env, const fields_t& fields, jobject params);
+    void fillFromJobject(JNIEnv* env, const fields_t& fields, jobject params);
 
     // returns this as a android.media.SyncParams object
-    jobject asJobject(JNIEnv *env, const fields_t& fields);
+    jobject asJobject(JNIEnv* env, const fields_t& fields);
 };
 
 }  // namespace android

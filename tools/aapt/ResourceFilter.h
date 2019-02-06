@@ -8,18 +8,18 @@
 #define RESOURCE_FILTER_H
 
 #include <androidfw/ResourceTypes.h>
-#include <set>
-#include <utility>
 #include <utils/Errors.h>
 #include <utils/String8.h>
 #include <utils/StrongPointer.h>
 #include <utils/Vector.h>
+#include <set>
+#include <utility>
 
 #include "AaptAssets.h"
 #include "ConfigDescription.h"
 
 class ResourceFilter : public virtual android::RefBase {
-public:
+  public:
     virtual bool match(const android::ResTable_config& config) const = 0;
 };
 
@@ -27,28 +27,20 @@ public:
  * Implements logic for parsing and handling "-c" options.
  */
 class WeakResourceFilter : public ResourceFilter {
-public:
-    WeakResourceFilter()
-        : mContainsPseudoAccented(false)
-        , mContainsPseudoBidi(false) {}
+  public:
+    WeakResourceFilter() : mContainsPseudoAccented(false), mContainsPseudoBidi(false) {}
 
     android::status_t parse(const android::String8& str);
 
     bool match(const android::ResTable_config& config) const;
 
-    inline bool isEmpty() const {
-        return mConfigMask == 0;
-    }
+    inline bool isEmpty() const { return mConfigMask == 0; }
 
-    inline bool containsPseudo() const {
-        return mContainsPseudoAccented;
-    }
+    inline bool containsPseudo() const { return mContainsPseudoAccented; }
 
-    inline bool containsPseudoBidi() const {
-        return mContainsPseudoBidi;
-    }
+    inline bool containsPseudoBidi() const { return mContainsPseudoBidi; }
 
-private:
+  private:
     ConfigDescription mDefault;
     uint32_t mConfigMask;
     android::Vector<std::pair<ConfigDescription, uint32_t> > mConfigs;
@@ -76,10 +68,9 @@ private:
  * (FAIL) sw600dp-land
  */
 class StrongResourceFilter : public ResourceFilter {
-public:
+  public:
     StrongResourceFilter() {}
-    explicit StrongResourceFilter(const std::set<ConfigDescription>& configs)
-        : mConfigs(configs) {}
+    explicit StrongResourceFilter(const std::set<ConfigDescription>& configs) : mConfigs(configs) {}
 
     android::status_t parse(const android::String8& str);
 
@@ -93,11 +84,9 @@ public:
         return false;
     }
 
-    inline const std::set<ConfigDescription>& getConfigs() const {
-        return mConfigs;
-    }
+    inline const std::set<ConfigDescription>& getConfigs() const { return mConfigs; }
 
-private:
+  private:
     std::set<ConfigDescription> mConfigs;
 };
 
@@ -105,15 +94,12 @@ private:
  * Negates the response of the target filter.
  */
 class InverseResourceFilter : public ResourceFilter {
-public:
-    explicit InverseResourceFilter(const android::sp<ResourceFilter>& filter)
-        : mFilter(filter) {}
+  public:
+    explicit InverseResourceFilter(const android::sp<ResourceFilter>& filter) : mFilter(filter) {}
 
-    bool match(const android::ResTable_config& config) const {
-        return !mFilter->match(config);
-    }
+    bool match(const android::ResTable_config& config) const { return !mFilter->match(config); }
 
-private:
+  private:
     const android::sp<ResourceFilter> mFilter;
 };
 
@@ -121,10 +107,8 @@ private:
  * A logical AND of all the added filters.
  */
 class AndResourceFilter : public ResourceFilter {
-public:
-    void addFilter(const android::sp<ResourceFilter>& filter) {
-        mFilters.add(filter);
-    }
+  public:
+    void addFilter(const android::sp<ResourceFilter>& filter) { mFilters.add(filter); }
 
     bool match(const android::ResTable_config& config) const {
         const size_t N = mFilters.size();
@@ -136,7 +120,7 @@ public:
         return true;
     }
 
-private:
+  private:
     android::Vector<android::sp<ResourceFilter> > mFilters;
 };
 #endif

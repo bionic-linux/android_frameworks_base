@@ -16,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-#include "frameworks/base/tools/stats_log_api_gen/test.pb.h"
 #include "Collation.h"
+#include "frameworks/base/tools/stats_log_api_gen/test.pb.h"
 
 #include <stdio.h>
 
@@ -31,14 +31,12 @@ using std::vector;
 /**
  * Return whether the set contains a vector of the elements provided.
  */
-static bool
-set_contains_vector(const set<vector<java_type_t>>& s, int count, ...)
-{
+static bool set_contains_vector(const set<vector<java_type_t>>& s, int count, ...) {
     va_list args;
     vector<java_type_t> v;
 
     va_start(args, count);
-    for (int i=0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
         v.push_back((java_type_t)va_arg(args, int));
     }
     va_end(args);
@@ -49,34 +47,33 @@ set_contains_vector(const set<vector<java_type_t>>& s, int count, ...)
 /**
  * Expect that the provided set contains the elements provided.
  */
-#define EXPECT_SET_CONTAINS_SIGNATURE(s, ...) \
-    do { \
-        int count = sizeof((int[]){__VA_ARGS__})/sizeof(int); \
+#define EXPECT_SET_CONTAINS_SIGNATURE(s, ...)                    \
+    do {                                                         \
+        int count = sizeof((int[]){__VA_ARGS__}) / sizeof(int);  \
         EXPECT_TRUE(set_contains_vector(s, count, __VA_ARGS__)); \
-    } while(0)
+    } while (0)
 
 /** Expects that the provided atom has no enum values for any field. */
-#define EXPECT_NO_ENUM_FIELD(atom) \
-    do { \
+#define EXPECT_NO_ENUM_FIELD(atom)                                           \
+    do {                                                                     \
         for (vector<AtomField>::const_iterator field = atom->fields.begin(); \
-             field != atom->fields.end(); field++) { \
-            EXPECT_TRUE(field->enumValues.empty()); \
-        } \
-    } while(0)
+             field != atom->fields.end(); field++) {                         \
+            EXPECT_TRUE(field->enumValues.empty());                          \
+        }                                                                    \
+    } while (0)
 
 /** Expects that exactly one specific field has expected enum values. */
-#define EXPECT_HAS_ENUM_FIELD(atom, field_name, values)        \
-    do { \
+#define EXPECT_HAS_ENUM_FIELD(atom, field_name, values)                      \
+    do {                                                                     \
         for (vector<AtomField>::const_iterator field = atom->fields.begin(); \
-             field != atom->fields.end(); field++) { \
-            if (field->name == field_name) { \
-                EXPECT_EQ(field->enumValues, values); \
-            } else { \
-                EXPECT_TRUE(field->enumValues.empty()); \
-            } \
-        } \
-    } while(0)
-
+             field != atom->fields.end(); field++) {                         \
+            if (field->name == field_name) {                                 \
+                EXPECT_EQ(field->enumValues, values);                        \
+            } else {                                                         \
+                EXPECT_TRUE(field->enumValues.empty());                      \
+            }                                                                \
+        }                                                                    \
+    } while (0)
 
 /**
  * Test a correct collation, with all the types.
@@ -95,24 +92,23 @@ TEST(CollationTest, CollateStats) {
     EXPECT_SET_CONTAINS_SIGNATURE(atoms.signatures, JAVA_TYPE_INT, JAVA_TYPE_INT);
 
     // AllTypesAtom
-    EXPECT_SET_CONTAINS_SIGNATURE(
-        atoms.signatures,
-        JAVA_TYPE_ATTRIBUTION_CHAIN, // AttributionChain
-        JAVA_TYPE_DOUBLE,            // double
-        JAVA_TYPE_FLOAT,             // float
-        JAVA_TYPE_LONG,              // int64
-        JAVA_TYPE_LONG,              // uint64
-        JAVA_TYPE_INT,               // int32
-        JAVA_TYPE_LONG,              // fixed64
-        JAVA_TYPE_INT,               // fixed32
-        JAVA_TYPE_BOOLEAN,           // bool
-        JAVA_TYPE_STRING,            // string
-        JAVA_TYPE_INT,               // uint32
-        JAVA_TYPE_INT,               // AnEnum
-        JAVA_TYPE_INT,               // sfixed32
-        JAVA_TYPE_LONG,              // sfixed64
-        JAVA_TYPE_INT,               // sint32
-        JAVA_TYPE_LONG               // sint64
+    EXPECT_SET_CONTAINS_SIGNATURE(atoms.signatures,
+                                  JAVA_TYPE_ATTRIBUTION_CHAIN,  // AttributionChain
+                                  JAVA_TYPE_DOUBLE,             // double
+                                  JAVA_TYPE_FLOAT,              // float
+                                  JAVA_TYPE_LONG,               // int64
+                                  JAVA_TYPE_LONG,               // uint64
+                                  JAVA_TYPE_INT,                // int32
+                                  JAVA_TYPE_LONG,               // fixed64
+                                  JAVA_TYPE_INT,                // fixed32
+                                  JAVA_TYPE_BOOLEAN,            // bool
+                                  JAVA_TYPE_STRING,             // string
+                                  JAVA_TYPE_INT,                // uint32
+                                  JAVA_TYPE_INT,                // AnEnum
+                                  JAVA_TYPE_INT,                // sfixed32
+                                  JAVA_TYPE_LONG,               // sfixed64
+                                  JAVA_TYPE_INT,                // sint32
+                                  JAVA_TYPE_LONG                // sint64
     );
 
     set<AtomDecl>::const_iterator atom = atoms.decls.begin();
@@ -192,11 +188,10 @@ TEST(CollationTest, FailOnSkippedFieldsMultiple) {
  * rejected.
  */
 TEST(CollationTest, FailBadAttributionNodePosition) {
-  Atoms atoms;
-  int errorCount =
-      collate_atoms(BadAttributionNodePosition::descriptor(), &atoms);
+    Atoms atoms;
+    int errorCount = collate_atoms(BadAttributionNodePosition::descriptor(), &atoms);
 
-  EXPECT_EQ(1, errorCount);
+    EXPECT_EQ(1, errorCount);
 }
 
 TEST(CollationTest, FailOnBadStateAtomOptions) {
@@ -214,15 +209,13 @@ TEST(CollationTest, PassOnGoodStateAtomOptions) {
 
 TEST(CollationTest, PassOnGoodBinaryFieldAtom) {
     Atoms atoms;
-    int errorCount =
-            collate_atoms(GoodEventWithBinaryFieldAtom::descriptor(), &atoms);
+    int errorCount = collate_atoms(GoodEventWithBinaryFieldAtom::descriptor(), &atoms);
     EXPECT_EQ(0, errorCount);
 }
 
 TEST(CollationTest, FailOnBadBinaryFieldAtom) {
     Atoms atoms;
-    int errorCount =
-            collate_atoms(BadEventWithBinaryFieldAtom::descriptor(), &atoms);
+    int errorCount = collate_atoms(BadEventWithBinaryFieldAtom::descriptor(), &atoms);
     EXPECT_TRUE(errorCount > 0);
 }
 

@@ -35,8 +35,8 @@ struct IdCollector : public xml::Visitor {
  public:
   using xml::Visitor::Visit;
 
-  explicit IdCollector(std::vector<SourcedResourceName>* out_symbols)
-      : out_symbols_(out_symbols) {}
+  explicit IdCollector(std::vector<SourcedResourceName>* out_symbols) : out_symbols_(out_symbols) {
+  }
 
   void Visit(xml::Element* element) override {
     for (xml::Attribute& attr : element->attributes) {
@@ -44,12 +44,10 @@ struct IdCollector : public xml::Visitor {
       bool create = false;
       if (ResourceUtils::ParseReference(attr.value, &name, &create, nullptr)) {
         if (create && name.type == ResourceType::kId) {
-          auto iter = std::lower_bound(out_symbols_->begin(),
-                                       out_symbols_->end(), name, cmp_name);
+          auto iter = std::lower_bound(out_symbols_->begin(), out_symbols_->end(), name, cmp_name);
           if (iter == out_symbols_->end() || iter->name != name) {
             out_symbols_->insert(iter,
-                                 SourcedResourceName{name.ToResourceName(),
-                                                     element->line_number});
+                                 SourcedResourceName{name.ToResourceName(), element->line_number});
           }
         }
       }

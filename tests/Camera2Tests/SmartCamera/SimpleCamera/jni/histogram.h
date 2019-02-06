@@ -27,20 +27,21 @@ extern "C" {
 
 JNIEXPORT void JNICALL
 Java_androidx_media_filterpacks_histogram_GrayHistogramFilter_extractHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject maskBuffer, jobject histogramBuffer );
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject maskBuffer,
+        jobject histogramBuffer);
 
 JNIEXPORT void JNICALL
 Java_androidx_media_filterpacks_histogram_ChromaHistogramFilter_extractChromaHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hBins, jint sBins);
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hBins,
+        jint sBins);
 
 JNIEXPORT void JNICALL
 Java_androidx_media_filterpacks_histogram_NewChromaHistogramFilter_extractChromaHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer,
-    jint hueBins, jint saturationBins, jint valueBins,
-    jint saturationThreshold, jint valueThreshold);
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hueBins,
+        jint saturationBins, jint valueBins, jint saturationThreshold, jint valueThreshold);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_HISTOGRAM_H
+#endif  // ANDROID_FILTERFW_JNI_HISTOGRAM_H

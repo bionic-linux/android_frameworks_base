@@ -25,10 +25,10 @@ namespace android {
 
 class AudioTrack;
 
-}; // namespace android
+};  // namespace android
 
 /* Gets the underlying AudioTrack from an AudioTrack Java object. */
 extern android::sp<android::AudioTrack> android_media_AudioTrack_getAudioTrack(
         JNIEnv* env, jobject audioTrackObj);
 
-#endif // ANDROID_MEDIA_AUDIOTRACK_H
+#endif  // ANDROID_MEDIA_AUDIOTRACK_H

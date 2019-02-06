@@ -27,7 +27,7 @@ using namespace android;
 namespace split {
 
 class GrouperTest : public ::testing::Test {
-protected:
+  protected:
     virtual void SetUp() {
         Vector<SplitDescription> splits;
         addSplit(splits, "en-rUS-sw600dp-hdpi");
@@ -121,7 +121,8 @@ void GrouperTest::expectHasGroupWithSplits(const char* a, const char* b, const c
     expectHasGroupWithSplits(expected);
 }
 
-void GrouperTest::expectHasGroupWithSplits(const char* a, const char* b, const char* c, const char* d) {
+void GrouperTest::expectHasGroupWithSplits(const char* a, const char* b, const char* c,
+                                           const char* d) {
     Vector<const char*> expected;
     expected.add(a);
     expected.add(b);
@@ -187,4 +188,4 @@ void GrouperTest::addSplit(Vector<SplitDescription>& splits, const char* str) {
     EXPECT_TRUE(SplitDescription::parse(String8(str), &splits.editTop()));
 }
 
-} // namespace split
+}  // namespace split

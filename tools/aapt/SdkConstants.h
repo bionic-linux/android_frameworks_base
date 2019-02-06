@@ -46,4 +46,4 @@ enum {
     SDK_P = 28,
 };
 
-#endif // H_AAPT_SDK_CONSTANTS
+#endif  // H_AAPT_SDK_CONSTANTS

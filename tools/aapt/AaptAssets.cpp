@@ -8,8 +8,8 @@
 #include "Main.h"
 #include "ResourceFilter.h"
 
-#include <utils/misc.h>
 #include <utils/SortedVector.h>
+#include <utils/misc.h>
 
 #include <ctype.h>
 #include <dirent.h>
@@ -34,36 +34,30 @@ static const String8 kResString(kResourceDir);
  *
  * Pass in just the filename, not the full path.
  */
-static bool validateFileName(const char* fileName)
-{
+static bool validateFileName(const char* fileName) {
     const char* cp = fileName;
     size_t len = 0;
 
     while (*cp != '\0') {
-        if ((*cp & 0x80) != 0)
-            return false;           // reject high ASCII
-        if (*cp < 0x20 || *cp >= 0x7f)
-            return false;           // reject control chars and 0x7f
-        if (strchr(kInvalidChars, *cp) != NULL)
-            return false;           // reject path sep chars
+        if ((*cp & 0x80) != 0) return false;                   // reject high ASCII
+        if (*cp < 0x20 || *cp >= 0x7f) return false;           // reject control chars and 0x7f
+        if (strchr(kInvalidChars, *cp) != NULL) return false;  // reject path sep chars
         cp++;
         len++;
     }
 
-    if (len < 1 || len > kMaxAssetFileName)
-        return false;               // reject empty or too long
+    if (len < 1 || len > kMaxAssetFileName) return false;  // reject empty or too long
 
     return true;
 }
 
 // The default to use if no other ignore pattern is defined.
-const char * const gDefaultIgnoreAssets =
-    "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~";
+const char* const gDefaultIgnoreAssets =
+        "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~";
 // The ignore pattern that can be passed via --ignore-assets in Main.cpp
-const char * gUserIgnoreAssets = NULL;
+const char* gUserIgnoreAssets = NULL;
 
-static bool isHidden(const char *root, const char *path)
-{
+static bool isHidden(const char* root, const char* path) {
     // Patterns syntax:
     // - Delimiter is :
     // - Entry can start with the flag ! to avoid printing a warning
@@ -81,19 +75,19 @@ static bool isHidden(const char *root, const char *path)
         return true;
     }
 
-    const char *delim = ":";
-    const char *p = gUserIgnoreAssets;
+    const char* delim = ":";
+    const char* p = gUserIgnoreAssets;
     if (!p || !p[0]) {
         p = getenv("ANDROID_AAPT_IGNORE");
     }
     if (!p || !p[0]) {
         p = gDefaultIgnoreAssets;
     }
-    char *patterns = strdup(p);
+    char* patterns = strdup(p);
 
     bool ignore = false;
     bool chatty = true;
-    char *matchedPattern = NULL;
+    char* matchedPattern = NULL;
 
     String8 fullPath(root);
     fullPath.appendPath(path);
@@ -102,12 +96,11 @@ static bool isHidden(const char *root, const char *path)
     int plen = strlen(path);
 
     // Note: we don't have strtok_r under mingw.
-    for(char *token = strtok(patterns, delim);
-            !ignore && token != NULL;
-            token = strtok(NULL, delim)) {
+    for (char* token = strtok(patterns, delim); !ignore && token != NULL;
+         token = strtok(NULL, delim)) {
         chatty = token[0] != '!';
-        if (!chatty) token++; // skip !
-        if (strncasecmp(token, "<dir>" , 5) == 0) {
+        if (!chatty) token++;  // skip !
+        if (strncasecmp(token, "<dir>", 5) == 0) {
             if (type != kFileTypeDirectory) continue;
             token += 5;
         }
@@ -136,8 +129,7 @@ static bool isHidden(const char *root, const char *path)
 
     if (ignore && chatty) {
         fprintf(stderr, "    (skipping %s '%s' due to ANDROID_AAPT_IGNORE pattern '%s')\n",
-                type == kFileTypeDirectory ? "dir" : "file",
-                path,
+                type == kFileTypeDirectory ? "dir" : "file", path,
                 matchedPattern ? matchedPattern : "");
     }
 
@@ -151,127 +143,126 @@ static bool isHidden(const char *root, const char *path)
 
 /* static */
 inline bool isAlpha(const String8& string) {
-     const size_t length = string.length();
-     for (size_t i = 0; i < length; ++i) {
-          if (!isalpha(string[i])) {
-              return false;
-          }
-     }
+    const size_t length = string.length();
+    for (size_t i = 0; i < length; ++i) {
+        if (!isalpha(string[i])) {
+            return false;
+        }
+    }
 
-     return true;
+    return true;
 }
 
 /* static */
 inline bool isNumber(const String8& string) {
-     const size_t length = string.length();
-     for (size_t i = 0; i < length; ++i) {
-          if (!isdigit(string[i])) {
-              return false;
-          }
-     }
+    const size_t length = string.length();
+    for (size_t i = 0; i < length; ++i) {
+        if (!isdigit(string[i])) {
+            return false;
+        }
+    }
 
-     return true;
+    return true;
 }
 
 void AaptLocaleValue::setLanguage(const char* languageChars) {
-     size_t i = 0;
-     while ((*languageChars) != '\0' && i < sizeof(language)/sizeof(language[0])) {
-          language[i++] = tolower(*languageChars);
-          languageChars++;
-     }
+    size_t i = 0;
+    while ((*languageChars) != '\0' && i < sizeof(language) / sizeof(language[0])) {
+        language[i++] = tolower(*languageChars);
+        languageChars++;
+    }
 }
 
 void AaptLocaleValue::setRegion(const char* regionChars) {
     size_t i = 0;
-    while ((*regionChars) != '\0' && i < sizeof(region)/sizeof(region[0])) {
-         region[i++] = toupper(*regionChars);
-         regionChars++;
+    while ((*regionChars) != '\0' && i < sizeof(region) / sizeof(region[0])) {
+        region[i++] = toupper(*regionChars);
+        regionChars++;
     }
 }
 
 void AaptLocaleValue::setScript(const char* scriptChars) {
     size_t i = 0;
-    while ((*scriptChars) != '\0' && i < sizeof(script)/sizeof(script[0])) {
-         if (i == 0) {
-             script[i++] = toupper(*scriptChars);
-         } else {
-             script[i++] = tolower(*scriptChars);
-         }
-         scriptChars++;
+    while ((*scriptChars) != '\0' && i < sizeof(script) / sizeof(script[0])) {
+        if (i == 0) {
+            script[i++] = toupper(*scriptChars);
+        } else {
+            script[i++] = tolower(*scriptChars);
+        }
+        scriptChars++;
     }
 }
 
 void AaptLocaleValue::setVariant(const char* variantChars) {
-     size_t i = 0;
-     while ((*variantChars) != '\0' && i < sizeof(variant)/sizeof(variant[0])) {
-          variant[i++] = *variantChars;
-          variantChars++;
-     }
+    size_t i = 0;
+    while ((*variantChars) != '\0' && i < sizeof(variant) / sizeof(variant[0])) {
+        variant[i++] = *variantChars;
+        variantChars++;
+    }
 }
 
 bool AaptLocaleValue::initFromFilterString(const String8& str) {
-     // A locale (as specified in the filter) is an underscore separated name such
-     // as "en_US", "en_Latn_US", or "en_US_POSIX".
-     Vector<String8> parts = AaptUtil::splitAndLowerCase(str, '_');
+    // A locale (as specified in the filter) is an underscore separated name such
+    // as "en_US", "en_Latn_US", or "en_US_POSIX".
+    Vector<String8> parts = AaptUtil::splitAndLowerCase(str, '_');
 
-     const int numTags = parts.size();
-     bool valid = false;
-     if (numTags >= 1) {
-         const String8& lang = parts[0];
-         if (isAlpha(lang) && (lang.length() == 2 || lang.length() == 3)) {
-             setLanguage(lang.string());
-             valid = true;
-         }
-     }
+    const int numTags = parts.size();
+    bool valid = false;
+    if (numTags >= 1) {
+        const String8& lang = parts[0];
+        if (isAlpha(lang) && (lang.length() == 2 || lang.length() == 3)) {
+            setLanguage(lang.string());
+            valid = true;
+        }
+    }
 
-     if (!valid || numTags == 1) {
-         return valid;
-     }
+    if (!valid || numTags == 1) {
+        return valid;
+    }
 
-     // At this point, valid == true && numTags > 1.
-     const String8& part2 = parts[1];
-     if ((part2.length() == 2 && isAlpha(part2)) ||
-         (part2.length() == 3 && isNumber(part2))) {
-         setRegion(part2.string());
-     } else if (part2.length() == 4 && isAlpha(part2)) {
-         setScript(part2.string());
-     } else if (part2.length() >= 4 && part2.length() <= 8) {
-         setVariant(part2.string());
-     } else {
-         valid = false;
-     }
+    // At this point, valid == true && numTags > 1.
+    const String8& part2 = parts[1];
+    if ((part2.length() == 2 && isAlpha(part2)) || (part2.length() == 3 && isNumber(part2))) {
+        setRegion(part2.string());
+    } else if (part2.length() == 4 && isAlpha(part2)) {
+        setScript(part2.string());
+    } else if (part2.length() >= 4 && part2.length() <= 8) {
+        setVariant(part2.string());
+    } else {
+        valid = false;
+    }
 
-     if (!valid || numTags == 2) {
-         return valid;
-     }
+    if (!valid || numTags == 2) {
+        return valid;
+    }
 
-     // At this point, valid == true && numTags > 1.
-     const String8& part3 = parts[2];
-     if (((part3.length() == 2 && isAlpha(part3)) ||
-         (part3.length() == 3 && isNumber(part3))) && script[0]) {
-         setRegion(part3.string());
-     } else if (part3.length() >= 4 && part3.length() <= 8) {
-         setVariant(part3.string());
-     } else {
-         valid = false;
-     }
+    // At this point, valid == true && numTags > 1.
+    const String8& part3 = parts[2];
+    if (((part3.length() == 2 && isAlpha(part3)) || (part3.length() == 3 && isNumber(part3))) &&
+        script[0]) {
+        setRegion(part3.string());
+    } else if (part3.length() >= 4 && part3.length() <= 8) {
+        setVariant(part3.string());
+    } else {
+        valid = false;
+    }
 
-     if (!valid || numTags == 3) {
-         return valid;
-     }
+    if (!valid || numTags == 3) {
+        return valid;
+    }
 
-     const String8& part4 = parts[3];
-     if (part4.length() >= 4 && part4.length() <= 8) {
-         setVariant(part4.string());
-     } else {
-         valid = false;
-     }
+    const String8& part4 = parts[3];
+    if (part4.length() >= 4 && part4.length() <= 8) {
+        setVariant(part4.string());
+    } else {
+        valid = false;
+    }
 
-     if (!valid || numTags > 4) {
-         return false;
-     }
+    if (!valid || numTags > 4) {
+        return false;
+    }
 
-     return true;
+    return true;
 }
 
 int AaptLocaleValue::initFromDirName(const Vector<String8>& parts, const int startIndex) {
@@ -348,8 +339,8 @@ int AaptLocaleValue::initFromDirName(const Vector<String8>& parts, const int sta
 
         return ++currentIndex;
     } else {
-        if ((part.length() == 2 || part.length() == 3)
-               && isAlpha(part) && strcmp("car", part.string())) {
+        if ((part.length() == 2 || part.length() == 3) && isAlpha(part) &&
+            strcmp("car", part.string())) {
             setLanguage(part);
             if (++currentIndex == size) {
                 return size;
@@ -395,9 +386,7 @@ void AaptLocaleValue::writeTo(ResTable_config* out) const {
     }
 }
 
-bool
-AaptGroupEntry::initFromDirName(const char* dir, String8* resType)
-{
+bool AaptGroupEntry::initFromDirName(const char* dir, String8* resType) {
     const char* q = strchr(dir, '-');
     size_t typeLen;
     if (q != NULL) {
@@ -421,9 +410,7 @@ AaptGroupEntry::initFromDirName(const char* dir, String8* resType)
     return true;
 }
 
-String8
-AaptGroupEntry::toDirName(const String8& resType) const
-{
+String8 AaptGroupEntry::toDirName(const String8& resType) const {
     String8 s = resType;
     String8 params = mParams.toString();
     if (params.length() > 0) {
@@ -435,18 +422,16 @@ AaptGroupEntry::toDirName(const String8& resType) const
     return s;
 }
 
-
 // =========================================================================
 // =========================================================================
 // =========================================================================
 
-void* AaptFile::editData(size_t size)
-{
+void* AaptFile::editData(size_t size) {
     if (size <= mBufferSize) {
         mDataSize = size;
         return mData;
     }
-    size_t allocSize = (size*3)/2;
+    size_t allocSize = (size * 3) / 2;
     void* buf = realloc(mData, allocSize);
     if (buf == NULL) {
         return NULL;
@@ -457,56 +442,50 @@ void* AaptFile::editData(size_t size)
     return buf;
 }
 
-void* AaptFile::editDataInRange(size_t offset, size_t size)
-{
-    return (void*)(((uint8_t*) editData(offset + size)) + offset);
+void* AaptFile::editDataInRange(size_t offset, size_t size) {
+    return (void*)(((uint8_t*)editData(offset + size)) + offset);
 }
 
-void* AaptFile::editData(size_t* outSize)
-{
+void* AaptFile::editData(size_t* outSize) {
     if (outSize) {
         *outSize = mDataSize;
     }
     return mData;
 }
 
-void* AaptFile::padData(size_t wordSize)
-{
-    const size_t extra = mDataSize%wordSize;
+void* AaptFile::padData(size_t wordSize) {
+    const size_t extra = mDataSize % wordSize;
     if (extra == 0) {
         return mData;
     }
 
     size_t initial = mDataSize;
-    void* data = editData(initial+(wordSize-extra));
+    void* data = editData(initial + (wordSize - extra));
     if (data != NULL) {
-        memset(((uint8_t*)data) + initial, 0, wordSize-extra);
+        memset(((uint8_t*)data) + initial, 0, wordSize - extra);
     }
     return data;
 }
 
-status_t AaptFile::writeData(const void* data, size_t size)
-{
+status_t AaptFile::writeData(const void* data, size_t size) {
     size_t end = mDataSize;
     size_t total = size + end;
     void* buf = editData(total);
     if (buf == NULL) {
         return UNKNOWN_ERROR;
     }
-    memcpy(((char*)buf)+end, data, size);
+    memcpy(((char*)buf) + end, data, size);
     return NO_ERROR;
 }
 
-void AaptFile::clearData()
-{
+void AaptFile::clearData() {
     if (mData != NULL) free(mData);
     mData = NULL;
     mDataSize = 0;
     mBufferSize = 0;
 }
 
-String8 AaptFile::getPrintableSource() const
-{
+String8 AaptFile::getPrintableSource() const {
     if (hasData()) {
         String8 name(mGroupEntry.toDirName(String8()));
         name.appendPath(mPath);
@@ -520,13 +499,11 @@ String8 AaptFile::getPrintableSource() const
 // =========================================================================
 // =========================================================================
 
-status_t AaptGroup::addFile(const sp<AaptFile>& file, const bool overwriteDuplicate)
-{
+status_t AaptGroup::addFile(const sp<AaptFile>& file, const bool overwriteDuplicate) {
     ssize_t index = mFiles.indexOfKey(file->getGroupEntry());
     if (index >= 0 && overwriteDuplicate) {
         fprintf(stderr, "warning: overwriting '%s' with '%s'\n",
-                mFiles[index]->getSourceFile().string(),
-                file->getSourceFile().string());
+                mFiles[index]->getSourceFile().string(), file->getSourceFile().string());
         removeFile(index);
         index = -1;
     }
@@ -551,33 +528,30 @@ status_t AaptGroup::addFile(const sp<AaptFile>& file, const bool overwriteDuplic
     return UNKNOWN_ERROR;
 }
 
-void AaptGroup::removeFile(size_t index)
-{
-	mFiles.removeItemsAt(index);
+void AaptGroup::removeFile(size_t index) {
+    mFiles.removeItemsAt(index);
 }
 
-void AaptGroup::print(const String8& prefix) const
-{
+void AaptGroup::print(const String8& prefix) const {
     printf("%s%s\n", prefix.string(), getPath().string());
-    const size_t N=mFiles.size();
+    const size_t N = mFiles.size();
     size_t i;
-    for (i=0; i<N; i++) {
+    for (i = 0; i < N; i++) {
         sp<AaptFile> file = mFiles.valueAt(i);
         const AaptGroupEntry& e = file->getGroupEntry();
         if (file->hasData()) {
             printf("%s  Gen: (%s) %d bytes\n", prefix.string(), e.toDirName(String8()).string(),
-                    (int)file->getSize());
+                   (int)file->getSize());
         } else {
             printf("%s  Src: (%s) %s\n", prefix.string(), e.toDirName(String8()).string(),
-                    file->getPrintableSource().string());
+                   file->getPrintableSource().string());
         }
-        //printf("%s  File Group Entry: %s\n", prefix.string(),
+        // printf("%s  File Group Entry: %s\n", prefix.string(),
         //        file->getGroupEntry().toDirName(String8()).string());
     }
 }
 
-String8 AaptGroup::getPrintableSource() const
-{
+String8 AaptGroup::getPrintableSource() const {
     if (mFiles.size() > 0) {
         // Arbitrarily pull the first source file out of the list.
         return mFiles.valueAt(0)->getPrintableSource();
@@ -585,15 +559,13 @@ String8 AaptGroup::getPrintableSource() const
 
     // Should never hit this case, but to be safe...
     return getPath();
-
 }
 
 // =========================================================================
 // =========================================================================
 // =========================================================================
 
-status_t AaptDir::addFile(const String8& name, const sp<AaptGroup>& file)
-{
+status_t AaptDir::addFile(const String8& name, const sp<AaptGroup>& file) {
     if (mFiles.indexOfKey(name) >= 0) {
         return ALREADY_EXISTS;
     }
@@ -601,8 +573,7 @@ status_t AaptDir::addFile(const String8& name, const sp<AaptGroup>& file)
     return NO_ERROR;
 }
 
-status_t AaptDir::addDir(const String8& name, const sp<AaptDir>& dir)
-{
+status_t AaptDir::addDir(const String8& name, const sp<AaptDir>& dir) {
     if (mDirs.indexOfKey(name) >= 0) {
         return ALREADY_EXISTS;
     }
@@ -610,8 +581,7 @@ status_t AaptDir::addDir(const String8& name, const sp<AaptDir>& dir)
     return NO_ERROR;
 }
 
-sp<AaptDir> AaptDir::makeDir(const String8& path)
-{
+sp<AaptDir> AaptDir::makeDir(const String8& path) {
     String8 name;
     String8 remain = path;
 
@@ -629,19 +599,16 @@ sp<AaptDir> AaptDir::makeDir(const String8& path)
     return dir;
 }
 
-void AaptDir::removeFile(const String8& name)
-{
+void AaptDir::removeFile(const String8& name) {
     mFiles.removeItem(name);
 }
 
-void AaptDir::removeDir(const String8& name)
-{
+void AaptDir::removeDir(const String8& name) {
     mDirs.removeItem(name);
 }
 
 status_t AaptDir::addLeafFile(const String8& leafName, const sp<AaptFile>& file,
-        const bool overwrite)
-{
+                              const bool overwrite) {
     sp<AaptGroup> group;
     if (mFiles.indexOfKey(leafName) >= 0) {
         group = mFiles.valueFor(leafName);
@@ -653,10 +620,9 @@ status_t AaptDir::addLeafFile(const String8& leafName, const sp<AaptFile>& file,
     return group->addFile(file, overwrite);
 }
 
-ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
-                            const AaptGroupEntry& kind, const String8& resType,
-                            sp<FilePathStore>& fullResPaths, const bool overwrite)
-{
+ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir, const AaptGroupEntry& kind,
+                               const String8& resType, sp<FilePathStore>& fullResPaths,
+                               const bool overwrite) {
     Vector<String8> fileNames;
     {
         DIR* dir = NULL;
@@ -674,11 +640,9 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
             struct dirent* entry;
 
             entry = readdir(dir);
-            if (entry == NULL)
-                break;
+            if (entry == NULL) break;
 
-            if (isHidden(srcDir.string(), entry->d_name))
-                continue;
+            if (isHidden(srcDir.string(), entry->d_name)) continue;
 
             String8 name(entry->d_name);
             fileNames.add(name);
@@ -713,8 +677,8 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
                 subdir = new AaptDir(fileNames[i], mPath.appendPathCopy(fileNames[i]));
                 notAdded = true;
             }
-            ssize_t res = subdir->slurpFullTree(bundle, pathName, kind,
-                                                resType, fullResPaths, overwrite);
+            ssize_t res =
+                    subdir->slurpFullTree(bundle, pathName, kind, resType, fullResPaths, overwrite);
             if (res < NO_ERROR) {
                 return res;
             }
@@ -740,25 +704,24 @@ ssize_t AaptDir::slurpFullTree(Bundle* bundle, const String8& srcDir,
     return count;
 }
 
-status_t AaptDir::validate() const
-{
+status_t AaptDir::validate() const {
     const size_t NF = mFiles.size();
     const size_t ND = mDirs.size();
     size_t i;
     for (i = 0; i < NF; i++) {
         if (!validateFileName(mFiles.valueAt(i)->getLeaf().string())) {
-            SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1).error(
-                    "Invalid filename.  Unable to add.");
+            SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1)
+                    .error("Invalid filename.  Unable to add.");
             return UNKNOWN_ERROR;
         }
 
         size_t j;
-        for (j = i+1; j < NF; j++) {
+        for (j = i + 1; j < NF; j++) {
             if (strcasecmp(mFiles.valueAt(i)->getLeaf().string(),
                            mFiles.valueAt(j)->getLeaf().string()) == 0) {
-                SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1).error(
-                        "File is case-insensitive equivalent to: %s",
-                        mFiles.valueAt(j)->getPrintableSource().string());
+                SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1)
+                        .error("File is case-insensitive equivalent to: %s",
+                               mFiles.valueAt(j)->getPrintableSource().string());
                 return UNKNOWN_ERROR;
             }
 
@@ -769,9 +732,9 @@ status_t AaptDir::validate() const
         for (j = 0; j < ND; j++) {
             if (strcasecmp(mFiles.valueAt(i)->getLeaf().string(),
                            mDirs.valueAt(j)->getLeaf().string()) == 0) {
-                SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1).error(
-                        "File conflicts with dir from: %s",
-                        mDirs.valueAt(j)->getPrintableSource().string());
+                SourcePos(mFiles.valueAt(i)->getPrintableSource(), -1)
+                        .error("File conflicts with dir from: %s",
+                               mDirs.valueAt(j)->getPrintableSource().string());
                 return UNKNOWN_ERROR;
             }
         }
@@ -779,18 +742,18 @@ status_t AaptDir::validate() const
 
     for (i = 0; i < ND; i++) {
         if (!validateFileName(mDirs.valueAt(i)->getLeaf().string())) {
-            SourcePos(mDirs.valueAt(i)->getPrintableSource(), -1).error(
-                    "Invalid directory name, unable to add.");
+            SourcePos(mDirs.valueAt(i)->getPrintableSource(), -1)
+                    .error("Invalid directory name, unable to add.");
             return UNKNOWN_ERROR;
         }
 
         size_t j;
-        for (j = i+1; j < ND; j++) {
+        for (j = i + 1; j < ND; j++) {
             if (strcasecmp(mDirs.valueAt(i)->getLeaf().string(),
                            mDirs.valueAt(j)->getLeaf().string()) == 0) {
-                SourcePos(mDirs.valueAt(i)->getPrintableSource(), -1).error(
-                        "Directory is case-insensitive equivalent to: %s",
-                        mDirs.valueAt(j)->getPrintableSource().string());
+                SourcePos(mDirs.valueAt(i)->getPrintableSource(), -1)
+                        .error("Directory is case-insensitive equivalent to: %s",
+                               mDirs.valueAt(j)->getPrintableSource().string());
                 return UNKNOWN_ERROR;
             }
         }
@@ -804,22 +767,20 @@ status_t AaptDir::validate() const
     return NO_ERROR;
 }
 
-void AaptDir::print(const String8& prefix) const
-{
-    const size_t ND=getDirs().size();
+void AaptDir::print(const String8& prefix) const {
+    const size_t ND = getDirs().size();
     size_t i;
-    for (i=0; i<ND; i++) {
+    for (i = 0; i < ND; i++) {
         getDirs().valueAt(i)->print(prefix);
     }
 
-    const size_t NF=getFiles().size();
-    for (i=0; i<NF; i++) {
+    const size_t NF = getFiles().size();
+    for (i = 0; i < NF; i++) {
         getFiles().valueAt(i)->print(prefix);
     }
 }
 
-String8 AaptDir::getPrintableSource() const
-{
+String8 AaptDir::getPrintableSource() const {
     if (mFiles.size() > 0) {
         // Arbitrarily pull the first file out of the list as the source dir.
         return mFiles.valueAt(0)->getPrintableSource().getPathDir();
@@ -831,33 +792,32 @@ String8 AaptDir::getPrintableSource() const
 
     // Should never hit this case, but to be safe...
     return mPath;
-
 }
 
 // =========================================================================
 // =========================================================================
 // =========================================================================
 
-status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols)
-{
+status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols) {
     status_t err = NO_ERROR;
     size_t N = javaSymbols->mSymbols.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const String8& name = javaSymbols->mSymbols.keyAt(i);
         const AaptSymbolEntry& entry = javaSymbols->mSymbols.valueAt(i);
         ssize_t pos = mSymbols.indexOfKey(name);
         if (pos < 0) {
-            entry.sourcePos.error("Symbol '%s' declared with <java-symbol> not defined\n", name.string());
+            entry.sourcePos.error("Symbol '%s' declared with <java-symbol> not defined\n",
+                                  name.string());
             err = UNKNOWN_ERROR;
             continue;
         }
-        //printf("**** setting symbol #%d/%d %s to isJavaSymbol=%d\n",
+        // printf("**** setting symbol #%d/%d %s to isJavaSymbol=%d\n",
         //        i, N, name.string(), entry.isJavaSymbol ? 1 : 0);
         mSymbols.editValueAt(pos).isJavaSymbol = entry.isJavaSymbol;
     }
 
     N = javaSymbols->mNestedSymbols.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const String8& name = javaSymbols->mNestedSymbols.keyAt(i);
         const sp<AaptSymbols>& symbols = javaSymbols->mNestedSymbols.valueAt(i);
         ssize_t pos = mNestedSymbols.indexOfKey(name);
@@ -867,7 +827,7 @@ status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols)
             err = UNKNOWN_ERROR;
             continue;
         }
-        //printf("**** applying java symbols in dir %s\n", name.string());
+        // printf("**** applying java symbols in dir %s\n", name.string());
         status_t myerr = mNestedSymbols.valueAt(pos)->applyJavaSymbols(symbols);
         if (myerr != NO_ERROR) {
             err = myerr;
@@ -884,7 +844,8 @@ status_t AaptSymbols::applyJavaSymbols(const sp<AaptSymbols>& javaSymbols)
 AaptAssets::AaptAssets()
     : AaptDir(String8(), String8()),
       mHavePrivateSymbols(false),
-      mChanged(false), mHaveIncludedAssets(false),
+      mChanged(false),
+      mHaveIncludedAssets(false),
       mRes(NULL) {}
 
 const SortedVector<AaptGroupEntry>& AaptAssets::getGroupEntries() const {
@@ -893,17 +854,14 @@ const SortedVector<AaptGroupEntry>& AaptAssets::getGroupEntries() const {
     return mGroupEntries;
 }
 
-status_t AaptAssets::addFile(const String8& name, const sp<AaptGroup>& file)
-{
+status_t AaptAssets::addFile(const String8& name, const sp<AaptGroup>& file) {
     mChanged = true;
     return AaptDir::addFile(name, file);
 }
 
-sp<AaptFile> AaptAssets::addFile(
-        const String8& filePath, const AaptGroupEntry& entry,
-        const String8& srcDir, sp<AaptGroup>* outGroup,
-        const String8& resType)
-{
+sp<AaptFile> AaptAssets::addFile(const String8& filePath, const AaptGroupEntry& entry,
+                                 const String8& srcDir, sp<AaptGroup>* outGroup,
+                                 const String8& resType) {
     sp<AaptDir> dir = this;
     sp<AaptGroup> group;
     sp<AaptFile> file;
@@ -952,9 +910,8 @@ sp<AaptFile> AaptAssets::addFile(
     return file;
 }
 
-void AaptAssets::addResource(const String8& leafName, const String8& path,
-                const sp<AaptFile>& file, const String8& resType)
-{
+void AaptAssets::addResource(const String8& leafName, const String8& path, const sp<AaptFile>& file,
+                             const String8& resType) {
     sp<AaptDir> res = AaptDir::makeDir(kResString);
     String8 dirname = file->getGroupEntry().toDirName(resType);
     sp<AaptDir> subdir = res->makeDir(dirname);
@@ -964,14 +921,12 @@ void AaptAssets::addResource(const String8& leafName, const String8& path,
     subdir->addFile(leafName, grr);
 }
 
-
-ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
-{
+ssize_t AaptAssets::slurpFromArgs(Bundle* bundle) {
     int count;
     int totalCount = 0;
     FileType type;
-    const Vector<const char *>& resDirs = bundle->getResourceSourceDirs();
-    const size_t dirCount =resDirs.size();
+    const Vector<const char*>& resDirs = bundle->getResourceSourceDirs();
+    const size_t dirCount = resDirs.size();
     sp<AaptAssets> current = this;
 
     const int N = bundle->getFileSpecCount();
@@ -982,8 +937,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
     if (bundle->getAndroidManifestFile() != NULL) {
         // place at root of zip.
         String8 srcFile(bundle->getAndroidManifestFile());
-        addFile(srcFile.getPathLeaf(), AaptGroupEntry(), srcFile.getPathDir(),
-                NULL, String8());
+        addFile(srcFile.getPathLeaf(), AaptGroupEntry(), srcFile.getPathDir(), NULL, String8());
         totalCount++;
     }
 
@@ -1006,8 +960,8 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
         String8 assetRoot(assetDirs[i]);
         sp<AaptDir> assetAaptDir = makeDir(String8(kAssetDir));
         AaptGroupEntry group;
-        count = assetAaptDir->slurpFullTree(bundle, assetRoot, group,
-                                            String8(), mFullAssetPaths, true);
+        count = assetAaptDir->slurpFullTree(bundle, assetRoot, group, String8(), mFullAssetPaths,
+                                            true);
         if (count < 0) {
             totalCount = count;
             goto bail;
@@ -1018,16 +972,16 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
         totalCount += count;
 
         if (bundle->getVerbose()) {
-            printf("Found %d custom asset file%s in %s\n",
-                   count, (count==1) ? "" : "s", assetDirs[i]);
+            printf("Found %d custom asset file%s in %s\n", count, (count == 1) ? "" : "s",
+                   assetDirs[i]);
         }
     }
 
     /*
      * If a directory of resource-specific assets was supplied, slurp 'em up.
      */
-    for (size_t i=0; i<dirCount; i++) {
-        const char *res = resDirs[i];
+    for (size_t i = 0; i < dirCount; i++) {
+        const char* res = resDirs[i];
         if (res) {
             type = getFileType(res);
             if (type == kFileTypeNonexistent) {
@@ -1035,7 +989,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
                 return UNKNOWN_ERROR;
             }
             if (type == kFileTypeDirectory) {
-                if (i>0) {
+                if (i > 0) {
                     sp<AaptAssets> nextOverlay = new AaptAssets();
                     current->setOverlay(nextOverlay);
                     current = nextOverlay;
@@ -1043,7 +997,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
                 }
                 count = current->slurpResourceTree(bundle, String8(res));
                 if (i > 0 && count > 0) {
-                  count = current->filter(bundle);
+                    count = current->filter(bundle);
                 }
 
                 if (count < 0) {
@@ -1051,18 +1005,16 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
                     goto bail;
                 }
                 totalCount += count;
-            }
-            else {
+            } else {
                 fprintf(stderr, "ERROR: '%s' is not a directory\n", res);
                 return UNKNOWN_ERROR;
             }
         }
-        
     }
     /*
      * Now do any additional raw files.
      */
-    for (int arg=0; arg<N; arg++) {
+    for (int arg = 0; arg < N; arg++) {
         const char* assetDir = bundle->getFileSpecEntry(arg);
 
         FileType type = getFileType(assetDir);
@@ -1077,8 +1029,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
 
         String8 assetRoot(assetDir);
 
-        if (bundle->getVerbose())
-            printf("Processing raw dir '%s'\n", (const char*) assetDir);
+        if (bundle->getVerbose()) printf("Processing raw dir '%s'\n", (const char*)assetDir);
 
         /*
          * Do a recursive traversal of subdir tree.  We don't make any
@@ -1094,8 +1045,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
         totalCount += count;
 
         if (bundle->getVerbose())
-            printf("Found %d asset file%s in %s\n",
-                   count, (count==1) ? "" : "s", assetDir);
+            printf("Found %d asset file%s in %s\n", count, (count == 1) ? "" : "s", assetDir);
     }
 
     count = validate();
@@ -1114,12 +1064,9 @@ bail:
     return totalCount;
 }
 
-ssize_t AaptAssets::slurpFullTree(Bundle* bundle, const String8& srcDir,
-                                    const AaptGroupEntry& kind,
-                                    const String8& resType,
-                                    sp<FilePathStore>& fullResPaths,
-                                    const bool overwrite)
-{
+ssize_t AaptAssets::slurpFullTree(Bundle* bundle, const String8& srcDir, const AaptGroupEntry& kind,
+                                  const String8& resType, sp<FilePathStore>& fullResPaths,
+                                  const bool overwrite) {
     ssize_t res = AaptDir::slurpFullTree(bundle, srcDir, kind, resType, fullResPaths, overwrite);
     if (res > 0) {
         mGroupEntries.add(kind);
@@ -1128,8 +1075,7 @@ ssize_t AaptAssets::slurpFullTree(Bundle* bundle, const String8& srcDir,
     return res;
 }
 
-ssize_t AaptAssets::slurpResourceTree(Bundle* bundle, const String8& srcDir)
-{
+ssize_t AaptAssets::slurpResourceTree(Bundle* bundle, const String8& srcDir) {
     ssize_t err = 0;
 
     DIR* dir = opendir(srcDir.string());
@@ -1169,11 +1115,11 @@ ssize_t AaptAssets::slurpResourceTree(Bundle* bundle, const String8& srcDir)
 
         if (bundle->getMaxResVersion() != NULL && group.getVersionString().length() != 0) {
             int maxResInt = atoi(bundle->getMaxResVersion());
-            const char *verString = group.getVersionString().string();
-            int dirVersionInt = atoi(verString + 1); // skip 'v' in version name
+            const char* verString = group.getVersionString().string();
+            int dirVersionInt = atoi(verString + 1);  // skip 'v' in version name
             if (dirVersionInt > maxResInt) {
-              fprintf(stderr, "max res %d, skipping %s\n", maxResInt, entry->d_name);
-              continue;
+                fprintf(stderr, "max res %d, skipping %s\n", maxResInt, entry->d_name);
+                continue;
             }
         }
 
@@ -1181,8 +1127,7 @@ ssize_t AaptAssets::slurpResourceTree(Bundle* bundle, const String8& srcDir)
 
         if (type == kFileTypeDirectory) {
             sp<AaptDir> dir = makeDir(resType);
-            ssize_t res = dir->slurpFullTree(bundle, subdirName, group,
-                                                resType, mFullResPaths);
+            ssize_t res = dir->slurpFullTree(bundle, subdirName, group, resType, mFullResPaths);
             if (res < 0) {
                 count = res;
                 goto bail;
@@ -1216,9 +1161,7 @@ bail:
     return count;
 }
 
-ssize_t
-AaptAssets::slurpResourceZip(Bundle* /* bundle */, const char* filename)
-{
+ssize_t AaptAssets::slurpResourceZip(Bundle* /* bundle */, const char* filename) {
     int count = 0;
     SortedVector<AaptGroupEntry> entries;
 
@@ -1232,7 +1175,7 @@ AaptAssets::slurpResourceZip(Bundle* /* bundle */, const char* filename)
     }
 
     const int N = zip->getNumEntries();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         ZipEntry* entry = zip->getEntryByIndex(i);
         if (entry->getDeleted()) {
             continue;
@@ -1307,8 +1250,7 @@ bail:
     return count;
 }
 
-status_t AaptAssets::filter(Bundle* bundle)
-{
+status_t AaptAssets::filter(Bundle* bundle) {
     sp<WeakResourceFilter> reqFilter(new WeakResourceFilter());
     status_t err = reqFilter->parse(bundle->getConfigurations());
     if (err != NO_ERROR) {
@@ -1332,18 +1274,17 @@ status_t AaptAssets::filter(Bundle* bundle)
 
     if (bundle->getVerbose()) {
         if (!reqFilter->isEmpty()) {
-            printf("Applying required filter: %s\n",
-                    bundle->getConfigurations().string());
+            printf("Applying required filter: %s\n", bundle->getConfigurations().string());
         }
         if (preferredDensity > 0) {
             printf("Applying preferred density filter: %s\n",
-                    bundle->getPreferredDensity().string());
+                   bundle->getPreferredDensity().string());
         }
     }
 
     const Vector<sp<AaptDir> >& resdirs = mResDirs;
     const size_t ND = resdirs.size();
-    for (size_t i=0; i<ND; i++) {
+    for (size_t i = 0; i < ND; i++) {
         const sp<AaptDir>& dir = resdirs.itemAt(i);
         if (dir->getLeaf() == kValuesDir) {
             // The "value" dir is special since a single file defines
@@ -1360,11 +1301,11 @@ status_t AaptAssets::filter(Bundle* bundle)
         }
 
         const size_t NG = dir->getFiles().size();
-        for (size_t j=0; j<NG; j++) {
+        for (size_t j = 0; j < NG; j++) {
             sp<AaptGroup> grp = dir->getFiles().valueAt(j);
 
             // First remove any configurations we know we don't need.
-            for (size_t k=0; k<grp->getFiles().size(); k++) {
+            for (size_t k = 0; k < grp->getFiles().size(); k++) {
                 sp<AaptFile> file = grp->getFiles().valueAt(k);
                 if (k == 0 && grp->getFiles().size() == 1) {
                     // If this is the only file left, we need to keep it.
@@ -1386,7 +1327,7 @@ status_t AaptAssets::filter(Bundle* bundle)
                 if (!reqFilter->match(config)) {
                     if (bundle->getVerbose()) {
                         printf("Pruning unneeded resource: %s\n",
-                                file->getPrintableSource().string());
+                               file->getPrintableSource().string());
                     }
                     grp->removeFile(k);
                     k--;
@@ -1401,7 +1342,7 @@ status_t AaptAssets::filter(Bundle* bundle)
             // Get the preferred density if there is one. We do not match exactly for density.
             // If our preferred density is hdpi but we only have mdpi and xhdpi resources, we
             // pick xhdpi.
-            for (size_t k=0; k<grp->getFiles().size(); k++) {
+            for (size_t k = 0; k < grp->getFiles().size(); k++) {
                 sp<AaptFile> file = grp->getFiles().valueAt(k);
                 if (k == 0 && grp->getFiles().size() == 1) {
                     // If this is the only file left, we need to keep it.
@@ -1426,23 +1367,24 @@ status_t AaptAssets::filter(Bundle* bundle)
                     // to have and, if so, we can drop it.
                     uint32_t bestDensity = config.density;
 
-                    for (size_t m=0; m<grp->getFiles().size(); m++) {
+                    for (size_t m = 0; m < grp->getFiles().size(); m++) {
                         if (m == k) {
                             continue;
                         }
 
                         sp<AaptFile> mfile = grp->getFiles().valueAt(m);
                         const ResTable_config& mconfig(mfile->getGroupEntry().toParams());
-                        if (AaptConfig::isSameExcept(config, mconfig, ResTable_config::CONFIG_DENSITY)) {
+                        if (AaptConfig::isSameExcept(config, mconfig,
+                                                     ResTable_config::CONFIG_DENSITY)) {
                             // See if there is a better density resource
                             if (mconfig.density < bestDensity &&
-                                    mconfig.density >= preferredDensity &&
-                                    bestDensity > preferredDensity) {
-                                // This density is our preferred density, or between our best density and
-                                // the preferred density, therefore it is better.
+                                mconfig.density >= preferredDensity &&
+                                bestDensity > preferredDensity) {
+                                // This density is our preferred density, or between our best
+                                // density and the preferred density, therefore it is better.
                                 bestDensity = mconfig.density;
                             } else if (mconfig.density > bestDensity &&
-                                    bestDensity < preferredDensity) {
+                                       bestDensity < preferredDensity) {
                                 // This density is better than our best density and
                                 // our best density was smaller than our preferred
                                 // density, so it is better.
@@ -1454,7 +1396,7 @@ status_t AaptAssets::filter(Bundle* bundle)
                     if (bestDensity != config.density) {
                         if (bundle->getVerbose()) {
                             printf("Pruning unneeded resource: %s\n",
-                                    file->getPrintableSource().string());
+                                   file->getPrintableSource().string());
                         }
                         grp->removeFile(k);
                         k--;
@@ -1467,8 +1409,7 @@ status_t AaptAssets::filter(Bundle* bundle)
     return NO_ERROR;
 }
 
-sp<AaptSymbols> AaptAssets::getSymbolsFor(const String8& name)
-{
+sp<AaptSymbols> AaptAssets::getSymbolsFor(const String8& name) {
     sp<AaptSymbols> sym = mSymbols.valueFor(name);
     if (sym == NULL) {
         sym = new AaptSymbols();
@@ -1477,8 +1418,7 @@ sp<AaptSymbols> AaptAssets::getSymbolsFor(const String8& name)
     return sym;
 }
 
-sp<AaptSymbols> AaptAssets::getJavaSymbolsFor(const String8& name)
-{
+sp<AaptSymbols> AaptAssets::getJavaSymbolsFor(const String8& name) {
     sp<AaptSymbols> sym = mJavaSymbols.valueFor(name);
     if (sym == NULL) {
         sym = new AaptSymbols();
@@ -1487,10 +1427,9 @@ sp<AaptSymbols> AaptAssets::getJavaSymbolsFor(const String8& name)
     return sym;
 }
 
-status_t AaptAssets::applyJavaSymbols()
-{
+status_t AaptAssets::applyJavaSymbols() {
     size_t N = mJavaSymbols.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const String8& name = mJavaSymbols.keyAt(i);
         const sp<AaptSymbols>& symbols = mJavaSymbols.valueAt(i);
         ssize_t pos = mSymbols.indexOfKey(name);
@@ -1499,7 +1438,7 @@ status_t AaptAssets::applyJavaSymbols()
             pos.error("Java symbol dir %s not defined\n", name.string());
             return UNKNOWN_ERROR;
         }
-        //printf("**** applying java symbols in dir %s\n", name.string());
+        // printf("**** applying java symbols in dir %s\n", name.string());
         status_t err = mSymbols.valueAt(pos)->applyJavaSymbols(symbols);
         if (err != NO_ERROR) {
             return err;
@@ -1510,7 +1449,7 @@ status_t AaptAssets::applyJavaSymbols()
 }
 
 bool AaptAssets::isJavaSymbol(const AaptSymbolEntry& sym, bool includePrivate) const {
-    //printf("isJavaSymbol %s: public=%d, includePrivate=%d, isJavaSymbol=%d\n",
+    // printf("isJavaSymbol %s: public=%d, includePrivate=%d, isJavaSymbol=%d\n",
     //        sym.name.string(), sym.isPublic ? 1 : 0, includePrivate ? 1 : 0,
     //        sym.isJavaSymbol ? 1 : 0);
     if (!mHavePrivateSymbols) return true;
@@ -1519,8 +1458,7 @@ bool AaptAssets::isJavaSymbol(const AaptSymbolEntry& sym, bool includePrivate) c
     return false;
 }
 
-status_t AaptAssets::buildIncludedResources(Bundle* bundle)
-{
+status_t AaptAssets::buildIncludedResources(Bundle* bundle) {
     if (mHaveIncludedAssets) {
         return NO_ERROR;
     }
@@ -1534,8 +1472,7 @@ status_t AaptAssets::buildIncludedResources(Bundle* bundle)
         }
 
         if (!mIncludedAssets.addAssetPath(includes[i], NULL)) {
-            fprintf(stderr, "ERROR: Asset package include '%s' not found.\n",
-                    includes[i].string());
+            fprintf(stderr, "ERROR: Asset package include '%s' not found.\n", includes[i].string());
             return UNKNOWN_ERROR;
         }
     }
@@ -1543,8 +1480,7 @@ status_t AaptAssets::buildIncludedResources(Bundle* bundle)
     const String8& featureOfBase = bundle->getFeatureOfPackage();
     if (!featureOfBase.isEmpty()) {
         if (bundle->getVerbose()) {
-            printf("Including base feature resources from package: %s\n",
-                    featureOfBase.string());
+            printf("Including base feature resources from package: %s\n", featureOfBase.string());
         }
 
         if (!mIncludedAssets.addAssetPath(featureOfBase, NULL)) {
@@ -1559,35 +1495,30 @@ status_t AaptAssets::buildIncludedResources(Bundle* bundle)
     return NO_ERROR;
 }
 
-status_t AaptAssets::addIncludedResources(const sp<AaptFile>& file)
-{
+status_t AaptAssets::addIncludedResources(const sp<AaptFile>& file) {
     const ResTable& res = getIncludedResources();
     // XXX dirty!
     return const_cast<ResTable&>(res).add(file->getData(), file->getSize());
 }
 
-const ResTable& AaptAssets::getIncludedResources() const
-{
+const ResTable& AaptAssets::getIncludedResources() const {
     return mIncludedAssets.getResources(false);
 }
 
-AssetManager& AaptAssets::getAssetManager()
-{
+AssetManager& AaptAssets::getAssetManager() {
     return mIncludedAssets;
 }
 
-void AaptAssets::print(const String8& prefix) const
-{
+void AaptAssets::print(const String8& prefix) const {
     String8 innerPrefix(prefix);
     innerPrefix.append("  ");
     String8 innerInnerPrefix(innerPrefix);
     innerInnerPrefix.append("  ");
     printf("%sConfigurations:\n", prefix.string());
-    const size_t N=mGroupEntries.size();
-    for (size_t i=0; i<N; i++) {
+    const size_t N = mGroupEntries.size();
+    for (size_t i = 0; i < N; i++) {
         String8 cname = mGroupEntries.itemAt(i).toDirName(String8());
-        printf("%s %s\n", prefix.string(),
-                cname != "" ? cname.string() : "(default)");
+        printf("%s %s\n", prefix.string(), cname != "" ? cname.string() : "(default)");
     }
 
     printf("\n%sFiles:\n", prefix.string());
@@ -1596,18 +1527,17 @@ void AaptAssets::print(const String8& prefix) const
     printf("\n%sResource Dirs:\n", prefix.string());
     const Vector<sp<AaptDir> >& resdirs = mResDirs;
     const size_t NR = resdirs.size();
-    for (size_t i=0; i<NR; i++) {
+    for (size_t i = 0; i < NR; i++) {
         const sp<AaptDir>& d = resdirs.itemAt(i);
         printf("%s  Type %s\n", prefix.string(), d->getLeaf().string());
         d->print(innerInnerPrefix);
     }
 }
 
-sp<AaptDir> AaptAssets::resDir(const String8& name) const
-{
+sp<AaptDir> AaptAssets::resDir(const String8& name) const {
     const Vector<sp<AaptDir> >& resdirs = mResDirs;
     const size_t N = resdirs.size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         const sp<AaptDir>& d = resdirs.itemAt(i);
         if (d->getLeaf() == name) {
             return d;
@@ -1616,23 +1546,19 @@ sp<AaptDir> AaptAssets::resDir(const String8& name) const
     return NULL;
 }
 
-bool
-valid_symbol_name(const String8& symbol)
-{
-    static char const * const KEYWORDS[] = {
-        "abstract", "assert", "boolean", "break",
-        "byte", "case", "catch", "char", "class", "const", "continue",
-        "default", "do", "double", "else", "enum", "extends", "final",
-        "finally", "float", "for", "goto", "if", "implements", "import",
-        "instanceof", "int", "interface", "long", "native", "new", "package",
-        "private", "protected", "public", "return", "short", "static",
-        "strictfp", "super", "switch", "synchronized", "this", "throw",
-        "throws", "transient", "try", "void", "volatile", "while",
-        "true", "false", "null",
-        NULL
-    };
-    const char*const* k = KEYWORDS;
-    const char*const s = symbol.string();
+bool valid_symbol_name(const String8& symbol) {
+    static char const* const KEYWORDS[] = {
+            "abstract", "assert",     "boolean",  "break",     "byte",     "case",
+            "catch",    "char",       "class",    "const",     "continue", "default",
+            "do",       "double",     "else",     "enum",      "extends",  "final",
+            "finally",  "float",      "for",      "goto",      "if",       "implements",
+            "import",   "instanceof", "int",      "interface", "long",     "native",
+            "new",      "package",    "private",  "protected", "public",   "return",
+            "short",    "static",     "strictfp", "super",     "switch",   "synchronized",
+            "this",     "throw",      "throws",   "transient", "try",      "void",
+            "volatile", "while",      "true",     "false",     "null",     NULL};
+    const char* const* k = KEYWORDS;
+    const char* const s = symbol.string();
     while (*k) {
         if (0 == strcmp(s, *k)) {
             return false;

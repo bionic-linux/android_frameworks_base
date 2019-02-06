@@ -153,7 +153,6 @@ private:
 
     // Callback function to cancel the alarm via StatsCompanionService.
     std::function<void(const sp<IStatsCompanionService>)> mCancelAlarm;
-
 };
 
 }  // namespace statsd

@@ -26,12 +26,11 @@
 namespace android {
 
 class BootAction : public RefBase {
-public:
+  public:
     ~BootAction();
 
     // libraryPath is a fully qualified path to the target .so library.
-    bool init(const std::string& libraryPath,
-              const std::vector<ABootActionParameter>& parameters);
+    bool init(const std::string& libraryPath, const std::vector<ABootActionParameter>& parameters);
 
     // The animation is going to start playing partNumber for the playCount'th
     // time, update the action as needed.
@@ -43,9 +42,8 @@ public:
     // process is shut down to allow time for cleanup.
     void shutdown();
 
-private:
-    typedef bool (*libInit)(const ABootActionParameter* parameters,
-                            size_t num_parameters);
+  private:
+    typedef bool (*libInit)(const ABootActionParameter* parameters, size_t num_parameters);
     typedef void (*libStartPart)(int partNumber, int playNumber);
     typedef void (*libShutdown)();
 
@@ -58,6 +56,5 @@ private:
 };
 
 }  // namespace android
-
 
 #endif  // _BOOTANIMATION_BOOTACTION_H

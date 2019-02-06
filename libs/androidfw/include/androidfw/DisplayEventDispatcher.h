@@ -21,26 +21,27 @@
 namespace android {
 
 class DisplayEventDispatcher : public LooperCallback {
-public:
-    explicit DisplayEventDispatcher(const sp<Looper>& looper,
-            ISurfaceComposer::VsyncSource vsyncSource = ISurfaceComposer::eVsyncSourceApp);
+ public:
+  explicit DisplayEventDispatcher(
+      const sp<Looper>& looper,
+      ISurfaceComposer::VsyncSource vsyncSource = ISurfaceComposer::eVsyncSourceApp);
 
-    status_t initialize();
-    void dispose();
-    status_t scheduleVsync();
+  status_t initialize();
+  void dispose();
+  status_t scheduleVsync();
 
-protected:
-    virtual ~DisplayEventDispatcher() = default;
+ protected:
+  virtual ~DisplayEventDispatcher() = default;
 
-private:
-    sp<Looper> mLooper;
-    DisplayEventReceiver mReceiver;
-    bool mWaitingForVsync;
+ private:
+  sp<Looper> mLooper;
+  DisplayEventReceiver mReceiver;
+  bool mWaitingForVsync;
 
-    virtual void dispatchVsync(nsecs_t timestamp, int32_t id, uint32_t count) = 0;
-    virtual void dispatchHotplug(nsecs_t timestamp, int32_t id, bool connected) = 0;
+  virtual void dispatchVsync(nsecs_t timestamp, int32_t id, uint32_t count) = 0;
+  virtual void dispatchHotplug(nsecs_t timestamp, int32_t id, bool connected) = 0;
 
-    virtual int handleEvent(int receiveFd, int events, void* data);
-    bool processPendingEvents(nsecs_t* outTimestamp, int32_t* id, uint32_t* outCount);
+  virtual int handleEvent(int receiveFd, int events, void* data);
+  bool processPendingEvents(nsecs_t* outTimestamp, int32_t* id, uint32_t* outCount);
 };
-}
+}  // namespace android

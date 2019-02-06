@@ -36,7 +36,6 @@ const int FIELD_ID_3 = 2;
 const int ATTRIBUTION_UID_FIELD_ID = 1;
 const int ATTRIBUTION_TAG_FIELD_ID = 2;
 
-
 #ifdef __ANDROID__
 TEST(AtomMatcherTest, TestSimpleMatcher) {
     UidMap uidMap;
@@ -91,8 +90,9 @@ TEST(AtomMatcherTest, TestAttributionMatcher) {
     attributionMatcher->set_field(FIELD_ID_1);
     attributionMatcher->set_position(Position::FIRST);
     attributionMatcher->mutable_matches_tuple()->add_field_value_matcher()->set_field(
-        ATTRIBUTION_TAG_FIELD_ID);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string("tag");
+            ATTRIBUTION_TAG_FIELD_ID);
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "tag");
 
     auto fieldMatcher = simpleMatcher->add_field_value_matcher();
     fieldMatcher->set_field(FIELD_ID_2);
@@ -100,40 +100,40 @@ TEST(AtomMatcherTest, TestAttributionMatcher) {
 
     // Tag not matched.
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location3");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
 
     // Match last node.
     attributionMatcher->set_position(Position::LAST);
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
 
     // Match any node.
     attributionMatcher->set_position(Position::ANY);
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location2");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location4");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location4");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
     // Attribution match but primitive field not match.
     attributionMatcher->set_position(Position::ANY);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("location2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "location2");
     fieldMatcher->set_eq_string("wrong value");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
@@ -142,8 +142,9 @@ TEST(AtomMatcherTest, TestAttributionMatcher) {
     // Uid match.
     attributionMatcher->set_position(Position::ANY);
     attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_field(
-        ATTRIBUTION_UID_FIELD_ID);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string("pkg0");
+            ATTRIBUTION_UID_FIELD_ID);
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
     uidMap.updateMap(
@@ -152,144 +153,144 @@ TEST(AtomMatcherTest, TestAttributionMatcher) {
              android::String16("Pkg2"), android::String16("PkG3")} /* package name list */);
 
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
 
     attributionMatcher->set_position(Position::FIRST);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
 
     attributionMatcher->set_position(Position::LAST);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
     // Uid + tag.
     attributionMatcher->set_position(Position::ANY);
     attributionMatcher->mutable_matches_tuple()->add_field_value_matcher()->set_field(
-        ATTRIBUTION_TAG_FIELD_ID);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+            ATTRIBUTION_TAG_FIELD_ID);
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location2");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
     attributionMatcher->set_position(Position::FIRST);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location2");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 
     attributionMatcher->set_position(Position::LAST);
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg0");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg0");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg1");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location2");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg2");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg2");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location3");
     EXPECT_TRUE(matchesSimple(uidMap, *simpleMatcher, event));
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)
-        ->set_eq_string("pkg3");
-    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)
-        ->set_eq_string("location1");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(0)->set_eq_string(
+            "pkg3");
+    attributionMatcher->mutable_matches_tuple()->mutable_field_value_matcher(1)->set_eq_string(
+            "location1");
     EXPECT_FALSE(matchesSimple(uidMap, *simpleMatcher, event));
 }
 

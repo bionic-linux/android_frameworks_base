@@ -42,15 +42,15 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
         return NULL;
     }
 
-    ScopedLocalRef<jstring> descriptorObj(env,
-            env->NewStringUTF(deviceInfo.getIdentifier().descriptor.string()));
+    ScopedLocalRef<jstring> descriptorObj(
+            env, env->NewStringUTF(deviceInfo.getIdentifier().descriptor.string()));
     if (!descriptorObj.get()) {
         return NULL;
     }
 
-    ScopedLocalRef<jobject> kcmObj(env,
-            android_view_KeyCharacterMap_create(env, deviceInfo.getId(),
-            deviceInfo.getKeyCharacterMap()));
+    ScopedLocalRef<jobject> kcmObj(
+            env, android_view_KeyCharacterMap_create(env, deviceInfo.getId(),
+                                                     deviceInfo.getKeyCharacterMap()));
     if (!kcmObj.get()) {
         return NULL;
     }
@@ -60,19 +60,22 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
     // Not sure why, but JNI is complaining when I pass this through directly.
     jboolean hasMic = deviceInfo.hasMic() ? JNI_TRUE : JNI_FALSE;
 
-    ScopedLocalRef<jobject> inputDeviceObj(env, env->NewObject(gInputDeviceClassInfo.clazz,
-                gInputDeviceClassInfo.ctor, deviceInfo.getId(), deviceInfo.getGeneration(),
-                deviceInfo.getControllerNumber(), nameObj.get(),
-                static_cast<int32_t>(ident.vendor), static_cast<int32_t>(ident.product),
-                descriptorObj.get(), deviceInfo.isExternal(), deviceInfo.getSources(),
-                deviceInfo.getKeyboardType(), kcmObj.get(), deviceInfo.hasVibrator(),
-                hasMic, deviceInfo.hasButtonUnderPad()));
+    ScopedLocalRef<jobject> inputDeviceObj(
+            env,
+            env->NewObject(gInputDeviceClassInfo.clazz, gInputDeviceClassInfo.ctor,
+                           deviceInfo.getId(), deviceInfo.getGeneration(),
+                           deviceInfo.getControllerNumber(), nameObj.get(),
+                           static_cast<int32_t>(ident.vendor), static_cast<int32_t>(ident.product),
+                           descriptorObj.get(), deviceInfo.isExternal(), deviceInfo.getSources(),
+                           deviceInfo.getKeyboardType(), kcmObj.get(), deviceInfo.hasVibrator(),
+                           hasMic, deviceInfo.hasButtonUnderPad()));
 
     const Vector<InputDeviceInfo::MotionRange>& ranges = deviceInfo.getMotionRanges();
     for (size_t i = 0; i < ranges.size(); i++) {
         const InputDeviceInfo::MotionRange& range = ranges.itemAt(i);
         env->CallVoidMethod(inputDeviceObj.get(), gInputDeviceClassInfo.addMotionRange, range.axis,
-                range.source, range.min, range.max, range.flat, range.fuzz, range.resolution);
+                            range.source, range.min, range.max, range.flat, range.fuzz,
+                            range.resolution);
         if (env->ExceptionCheck()) {
             return NULL;
         }
@@ -81,19 +84,18 @@ jobject android_view_InputDevice_create(JNIEnv* env, const InputDeviceInfo& devi
     return env->NewLocalRef(inputDeviceObj.get());
 }
 
-
-int register_android_view_InputDevice(JNIEnv* env)
-{
+int register_android_view_InputDevice(JNIEnv* env) {
     gInputDeviceClassInfo.clazz = FindClassOrDie(env, "android/view/InputDevice");
     gInputDeviceClassInfo.clazz = MakeGlobalRefOrDie(env, gInputDeviceClassInfo.clazz);
 
-    gInputDeviceClassInfo.ctor = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "<init>",
+    gInputDeviceClassInfo.ctor = GetMethodIDOrDie(
+            env, gInputDeviceClassInfo.clazz, "<init>",
             "(IIILjava/lang/String;IILjava/lang/String;ZIILandroid/view/KeyCharacterMap;ZZZ)V");
 
-    gInputDeviceClassInfo.addMotionRange = GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz,
-            "addMotionRange", "(IIFFFFF)V");
+    gInputDeviceClassInfo.addMotionRange =
+            GetMethodIDOrDie(env, gInputDeviceClassInfo.clazz, "addMotionRange", "(IIFFFFF)V");
 
     return 0;
 }
 
-}; // namespace android
+};  // namespace android

@@ -22,23 +22,23 @@ namespace android {
 namespace os {
 namespace statsd {
 
-extern uint32_t Hash32(const char *data, size_t n, uint32_t seed);
+extern uint32_t Hash32(const char* data, size_t n, uint32_t seed);
 extern uint64_t Hash64(const char* data, size_t n, uint64_t seed);
 
-inline uint32_t Hash32(const char *data, size_t n) {
-  return Hash32(data, n, 0xBEEF);
+inline uint32_t Hash32(const char* data, size_t n) {
+    return Hash32(data, n, 0xBEEF);
 }
 
-inline uint32_t Hash32(const std::string &input) {
-  return Hash32(input.data(), input.size());
+inline uint32_t Hash32(const std::string& input) {
+    return Hash32(input.data(), input.size());
 }
 
 inline uint64_t Hash64(const char* data, size_t n) {
-  return Hash64(data, n, 0xDECAFCAFFE);
+    return Hash64(data, n, 0xDECAFCAFFE);
 }
 
 inline uint64_t Hash64(const std::string& str) {
-  return Hash64(str.data(), str.size());
+    return Hash64(str.data(), str.size());
 }
 
 }  // namespace statsd

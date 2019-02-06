@@ -37,14 +37,14 @@ MaxDurationTracker::MaxDurationTracker(const ConfigKey& key, const int64_t& id,
                       conditionSliced, fullLink, anomalyTrackers) {
     if (mWizard != nullptr) {
         mSameConditionDimensionsInTracker =
-            mWizard->equalOutputDimensions(conditionIndex, mDimensionInCondition);
+                mWizard->equalOutputDimensions(conditionIndex, mDimensionInCondition);
     }
 }
 
 unique_ptr<DurationTracker> MaxDurationTracker::clone(const int64_t eventTime) {
     auto clonedTracker = make_unique<MaxDurationTracker>(*this);
     for (auto it = clonedTracker->mInfos.begin(); it != clonedTracker->mInfos.end();) {
-        if (it->second.state  != kStopped) {
+        if (it->second.state != kStopped) {
             it->second.lastStartTime = eventTime;
             it->second.lastDuration = 0;
             it++;
@@ -71,8 +71,8 @@ bool MaxDurationTracker::hitGuardRail(const HashableDimensionKey& newKey) {
         StatsdStats::getInstance().noteMetricDimensionSize(mConfigKey, mTrackerId, newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > StatsdStats::kDimensionKeySizeHardLimit) {
-            ALOGE("MaxDurTracker %lld dropping data for dimension key %s",
-                (long long)mTrackerId, newKey.toString().c_str());
+            ALOGE("MaxDurTracker %lld dropping data for dimension key %s", (long long)mTrackerId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -112,7 +112,6 @@ void MaxDurationTracker::noteStart(const HashableDimensionKey& key, bool conditi
             break;
     }
 }
-
 
 void MaxDurationTracker::noteStop(const HashableDimensionKey& key, const int64_t eventTime,
                                   bool forceStop) {
@@ -254,10 +253,9 @@ void MaxDurationTracker::onSlicedConditionMayChange(bool overallCondition,
         }
         std::unordered_set<HashableDimensionKey> conditionDimensionKeySet;
         ConditionState conditionState = mWizard->query(
-            mConditionTrackerIndex, pair.second.conditionKeys, mDimensionInCondition,
-            !mSameConditionDimensionsInTracker,
-            !mHasLinksToAllConditionDimensionsInTracker,
-            &conditionDimensionKeySet);
+                mConditionTrackerIndex, pair.second.conditionKeys, mDimensionInCondition,
+                !mSameConditionDimensionsInTracker, !mHasLinksToAllConditionDimensionsInTracker,
+                &conditionDimensionKeySet);
         bool conditionMet =
                 (conditionState == ConditionState::kTrue) &&
                 (mDimensionInCondition.size() == 0 ||

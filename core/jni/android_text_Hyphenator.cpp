@@ -15,8 +15,8 @@
  */
 
 #include <sys/mman.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #include <algorithm>
@@ -57,9 +57,9 @@ static const uint8_t* mmapPatternFile(const std::string& locale) {
 }
 
 static void addHyphenatorWithoutPatternFile(const std::string& locale, int minPrefix,
-        int minSuffix) {
-    minikin::addHyphenator(locale, minikin::Hyphenator::loadBinary(
-            nullptr, minPrefix, minSuffix, locale));
+                                            int minSuffix) {
+    minikin::addHyphenator(locale,
+                           minikin::Hyphenator::loadBinary(nullptr, minPrefix, minSuffix, locale));
 }
 
 static void addHyphenator(const std::string& locale, int minPrefix, int minSuffix) {
@@ -68,8 +68,8 @@ static void addHyphenator(const std::string& locale, int minPrefix, int minSuffi
         ALOGE("Unable to find pattern file or unable to map it for %s", locale.c_str());
         return;
     }
-    minikin::addHyphenator(locale, minikin::Hyphenator::loadBinary(
-            ptr, minPrefix, minSuffix, locale));
+    minikin::addHyphenator(locale,
+                           minikin::Hyphenator::loadBinary(ptr, minPrefix, minSuffix, locale));
 }
 
 static void addHyphenatorAlias(const std::string& from, const std::string& to) {
@@ -83,44 +83,44 @@ static void init() {
     constexpr int INDIC_MIN_SUFFIX = 2;
 
     addHyphenator("as", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Assamese
-    addHyphenator("be", 2, 2);  // Belarusian
-    addHyphenator("bg", 2, 2);  // Bulgarian
+    addHyphenator("be", 2, 2);                                // Belarusian
+    addHyphenator("bg", 2, 2);                                // Bulgarian
     addHyphenator("bn", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Bengali
-    addHyphenator("cu", 1, 2);  // Church Slavonic
-    addHyphenator("cy", 2, 3);  // Welsh
-    addHyphenator("da", 2, 2);  // Danish
-    addHyphenator("de-1901", 2, 2);  // German 1901 orthography
-    addHyphenator("de-1996", 2, 2);  // German 1996 orthography
-    addHyphenator("de-CH-1901", 2, 2);  // Swiss High German 1901 orthography
-    addHyphenator("en-GB", 2, 3);  // British English
-    addHyphenator("en-US", 2, 3);  // American English
-    addHyphenator("es", 2, 2);  // Spanish
-    addHyphenator("et", 2, 3);  // Estonian
-    addHyphenator("eu", 2, 2);  // Basque
-    addHyphenator("fr", 2, 3);  // French
-    addHyphenator("ga", 2, 3);  // Irish
+    addHyphenator("cu", 1, 2);                                // Church Slavonic
+    addHyphenator("cy", 2, 3);                                // Welsh
+    addHyphenator("da", 2, 2);                                // Danish
+    addHyphenator("de-1901", 2, 2);                           // German 1901 orthography
+    addHyphenator("de-1996", 2, 2);                           // German 1996 orthography
+    addHyphenator("de-CH-1901", 2, 2);                        // Swiss High German 1901 orthography
+    addHyphenator("en-GB", 2, 3);                             // British English
+    addHyphenator("en-US", 2, 3);                             // American English
+    addHyphenator("es", 2, 2);                                // Spanish
+    addHyphenator("et", 2, 3);                                // Estonian
+    addHyphenator("eu", 2, 2);                                // Basque
+    addHyphenator("fr", 2, 3);                                // French
+    addHyphenator("ga", 2, 3);                                // Irish
     addHyphenator("gu", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Gujarati
     addHyphenator("hi", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Hindi
-    addHyphenator("hr", 2, 2);  // Croatian
-    addHyphenator("hu", 2, 2);  // Hungarian
+    addHyphenator("hr", 2, 2);                                // Croatian
+    addHyphenator("hu", 2, 2);                                // Hungarian
     // texhyphen sources say Armenian may be (1, 2); but that it needs confirmation.
     // Going with a more conservative value of (2, 2) for now.
-    addHyphenator("hy", 2, 2);  // Armenian
+    addHyphenator("hy", 2, 2);                                // Armenian
     addHyphenator("kn", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Kannada
-    addHyphenator("la", 2, 2);  // Latin
+    addHyphenator("la", 2, 2);                                // Latin
     addHyphenator("ml", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Malayalam
-    addHyphenator("mn-Cyrl", 2, 2);  // Mongolian in Cyrillic script
+    addHyphenator("mn-Cyrl", 2, 2);                           // Mongolian in Cyrillic script
     addHyphenator("mr", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Marathi
-    addHyphenator("nb", 2, 2);  // Norwegian Bokmål
-    addHyphenator("nn", 2, 2);  // Norwegian Nynorsk
+    addHyphenator("nb", 2, 2);                                // Norwegian Bokmål
+    addHyphenator("nn", 2, 2);                                // Norwegian Nynorsk
     addHyphenator("or", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Oriya
     addHyphenator("pa", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Punjabi
-    addHyphenator("pt", 2, 3);  // Portuguese
-    addHyphenator("sl", 2, 2);  // Slovenian
+    addHyphenator("pt", 2, 3);                                // Portuguese
+    addHyphenator("sl", 2, 2);                                // Slovenian
     addHyphenator("ta", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Tamil
     addHyphenator("te", INDIC_MIN_PREFIX, INDIC_MIN_SUFFIX);  // Telugu
-    addHyphenator("tk", 2, 2);  // Turkmen
-    addHyphenator("und-Ethi", 1, 1);  // Any language in Ethiopic script
+    addHyphenator("tk", 2, 2);                                // Turkmen
+    addHyphenator("und-Ethi", 1, 1);                          // Any language in Ethiopic script
 
     // Following two hyphenators do not have pattern files but there is some special logic based on
     // language.
@@ -155,10 +155,10 @@ static void init() {
     // Fall back to Ethiopic script for languages likely to be written in Ethiopic.
     // Data is from CLDR's likelySubtags.xml.
     // TODO: Convert this to a mechanism using ICU4J's ULocale#addLikelySubtags().
-    addHyphenatorAlias("am", "und-Ethi");  // Amharic
+    addHyphenatorAlias("am", "und-Ethi");   // Amharic
     addHyphenatorAlias("byn", "und-Ethi");  // Blin
     addHyphenatorAlias("gez", "und-Ethi");  // Geʻez
-    addHyphenatorAlias("ti", "und-Ethi");  // Tigrinya
+    addHyphenatorAlias("ti", "und-Ethi");   // Tigrinya
     addHyphenatorAlias("wal", "und-Ethi");  // Wolaytta
 
     // Use Hindi as a fallback hyphenator for all languages written in Devanagari, etc. This makes
@@ -175,7 +175,7 @@ static void init() {
 }
 
 static const JNINativeMethod gMethods[] = {
-    {"nInit", "()V", (void*) init},
+        {"nInit", "()V", (void*)init},
 };
 
 int register_android_text_Hyphenator(JNIEnv* env) {

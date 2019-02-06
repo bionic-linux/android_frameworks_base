@@ -41,18 +41,24 @@ class InputStream {
   virtual void BackUp(size_t count) = 0;
 
   // Returns true if this InputStream can rewind. If so, Rewind() can be called.
-  virtual bool CanRewind() const { return false; };
+  virtual bool CanRewind() const {
+    return false;
+  };
 
   // Rewinds the stream to the beginning so it can be read again.
   // Returns true if the rewind succeeded.
   // This does nothing if CanRewind() returns false.
-  virtual bool Rewind() { return false; }
+  virtual bool Rewind() {
+    return false;
+  }
 
   // Returns the number of bytes that have been read from the stream.
   virtual size_t ByteCount() const = 0;
 
   // Returns an error message if HadError() returned true.
-  virtual std::string GetError() const { return {}; }
+  virtual std::string GetError() const {
+    return {};
+  }
 
   // Returns true if an error occurred. Errors are permanent.
   virtual bool HadError() const = 0;
@@ -87,7 +93,9 @@ class OutputStream {
   virtual size_t ByteCount() const = 0;
 
   // Returns an error message if HadError() returned true.
-  virtual std::string GetError() const { return {}; }
+  virtual std::string GetError() const {
+    return {};
+  }
 
   // Returns true if an error occurred. Errors are permanent.
   virtual bool HadError() const = 0;

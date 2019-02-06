@@ -20,10 +20,10 @@
 
 #include "android_media_MediaDataSource.h"
 
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "jni.h"
-#include <nativehelper/JNIHelp.h>
 
 #include <binder/MemoryDealer.h>
 #include <drm/drm_framework_common.h>
@@ -80,8 +80,8 @@ ssize_t JMediaDataSource::readAt(off64_t offset, size_t size) {
     }
 
     JNIEnv* env = AndroidRuntime::getJNIEnv();
-    jint numread = env->CallIntMethod(mMediaDataSourceObj, mReadMethod,
-            (jlong)offset, mByteArrayObj, (jint)0, (jint)size);
+    jint numread = env->CallIntMethod(mMediaDataSourceObj, mReadMethod, (jlong)offset,
+                                      mByteArrayObj, (jint)0, (jint)size);
     if (env->ExceptionCheck()) {
         ALOGW("An exception occurred in readAt()");
         LOGW_EX(env);
@@ -160,7 +160,7 @@ String8 JMediaDataSource::toString() {
     return String8::format("JMediaDataSource(pid %d, uid %d)", getpid(), getuid());
 }
 
-sp<DecryptHandle> JMediaDataSource::DrmInitialization(const char * /* mime */) {
+sp<DecryptHandle> JMediaDataSource::DrmInitialization(const char* /* mime */) {
     return NULL;
 }
 

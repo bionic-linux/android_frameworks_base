@@ -36,4 +36,4 @@ TEST(AssetTest, CompressedAssetRegistersItself) {
   EXPECT_EQ(count, Asset::getGlobalCount());
 }
 
-}  // nameapce android
+}  // namespace android

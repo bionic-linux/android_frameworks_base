@@ -34,129 +34,119 @@ NativeProgram::NativeProgram()
       process_function_(NULL),
       reset_function_(NULL),
       teardown_function_(NULL),
-      user_data_(NULL) {
-}
+      user_data_(NULL) {}
 
 NativeProgram::~NativeProgram() {
-  if (lib_handle_)
-    dlclose(lib_handle_);
+    if (lib_handle_) dlclose(lib_handle_);
 }
 
 bool NativeProgram::OpenLibrary(const std::string& lib_name) {
-  if (!lib_handle_) {
-    lib_handle_ = dlopen(lib_name.c_str(), RTLD_NOW);
     if (!lib_handle_) {
-      ALOGE("NativeProgram: Error opening library: '%s': %s", lib_name.c_str(), dlerror());
-      return false;
+        lib_handle_ = dlopen(lib_name.c_str(), RTLD_NOW);
+        if (!lib_handle_) {
+            ALOGE("NativeProgram: Error opening library: '%s': %s", lib_name.c_str(), dlerror());
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
-  return false;
+    return false;
 }
 
 bool NativeProgram::BindProcessFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  process_function_ = reinterpret_cast<ProcessFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  if (!process_function_) {
-    ALOGE("NativeProgram: Could not find process function symbol: '%s'!", func_name.c_str());
-    return false;
-  }
-  return true;
+    if (!lib_handle_) return false;
+    process_function_ = reinterpret_cast<ProcessFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    if (!process_function_) {
+        ALOGE("NativeProgram: Could not find process function symbol: '%s'!", func_name.c_str());
+        return false;
+    }
+    return true;
 }
 
 bool NativeProgram::BindInitFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  init_function_ = reinterpret_cast<InitFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  return init_function_ != NULL;
+    if (!lib_handle_) return false;
+    init_function_ = reinterpret_cast<InitFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    return init_function_ != NULL;
 }
 
 bool NativeProgram::BindSetValueFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  setvalue_function_ = reinterpret_cast<SetValueFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  return setvalue_function_ != NULL;
+    if (!lib_handle_) return false;
+    setvalue_function_ =
+            reinterpret_cast<SetValueFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    return setvalue_function_ != NULL;
 }
 
 bool NativeProgram::BindGetValueFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  getvalue_function_ = reinterpret_cast<GetValueFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  return getvalue_function_ != NULL;
+    if (!lib_handle_) return false;
+    getvalue_function_ =
+            reinterpret_cast<GetValueFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    return getvalue_function_ != NULL;
 }
 
 bool NativeProgram::BindResetFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  reset_function_ = reinterpret_cast<ResetFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  return reset_function_ != NULL;
+    if (!lib_handle_) return false;
+    reset_function_ = reinterpret_cast<ResetFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    return reset_function_ != NULL;
 }
 
 bool NativeProgram::BindTeardownFunction(const std::string& func_name) {
-  if (!lib_handle_)
-    return false;
-  teardown_function_ = reinterpret_cast<TeardownFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
-  return teardown_function_ != NULL;
+    if (!lib_handle_) return false;
+    teardown_function_ =
+            reinterpret_cast<TeardownFunctionPtr>(dlsym(lib_handle_, func_name.c_str()));
+    return teardown_function_ != NULL;
 }
 
 bool NativeProgram::CallProcess(const std::vector<const char*>& inputs,
-                                const std::vector<int>& input_sizes,
-                                char* output,
+                                const std::vector<int>& input_sizes, char* output,
                                 int output_size) {
-  if (process_function_) {
-    return process_function_(const_cast<const char**>(&inputs[0]),
-                             &input_sizes[0],
-                             inputs.size(),
-                             output,
-                             output_size,
-                             user_data_) == 1;
-  }
-  return false;
+    if (process_function_) {
+        return process_function_(const_cast<const char**>(&inputs[0]), &input_sizes[0],
+                                 inputs.size(), output, output_size, user_data_) == 1;
+    }
+    return false;
 }
 
 bool NativeProgram::CallInit() {
-  if (init_function_) {
-    init_function_(&user_data_);
-    return true;
-  }
-  return false;
+    if (init_function_) {
+        init_function_(&user_data_);
+        return true;
+    }
+    return false;
 }
 
 bool NativeProgram::CallSetValue(const std::string& key, const std::string& value) {
-  if (setvalue_function_) {
-    setvalue_function_(key.c_str(), value.c_str(), user_data_);
-    return true;
-  }
-  return false;
+    if (setvalue_function_) {
+        setvalue_function_(key.c_str(), value.c_str(), user_data_);
+        return true;
+    }
+    return false;
 }
 
 std::string NativeProgram::CallGetValue(const std::string& key) {
-  if (getvalue_function_) {
-    static const int buffer_size = 1024;
-    char result[buffer_size];
-    result[buffer_size - 1] = '\0';
-    getvalue_function_(key.c_str(), result, buffer_size, user_data_);
-    return std::string(result);
-  }
-  return std::string();
+    if (getvalue_function_) {
+        static const int buffer_size = 1024;
+        char result[buffer_size];
+        result[buffer_size - 1] = '\0';
+        getvalue_function_(key.c_str(), result, buffer_size, user_data_);
+        return std::string(result);
+    }
+    return std::string();
 }
 
 bool NativeProgram::CallReset() {
-  if (reset_function_) {
-    reset_function_(user_data_);
-    return true;
-  }
-  return false;
+    if (reset_function_) {
+        reset_function_(user_data_);
+        return true;
+    }
+    return false;
 }
 
 bool NativeProgram::CallTeardown() {
-  if (teardown_function_) {
-    teardown_function_(user_data_);
-    return true;
-  }
-  return false;
+    if (teardown_function_) {
+        teardown_function_(user_data_);
+        return true;
+    }
+    return false;
 }
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android

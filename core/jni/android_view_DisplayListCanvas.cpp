@@ -16,21 +16,21 @@
 
 #define LOG_TAG "OpenGLRenderer"
 
-#include "jni.h"
-#include "GraphicsJNI.h"
 #include <nativehelper/JNIHelp.h>
+#include "GraphicsJNI.h"
+#include "jni.h"
 
 #include <android_runtime/AndroidRuntime.h>
 
-#include <utils/Looper.h>
 #include <cutils/properties.h>
+#include <utils/Looper.h>
 
 #include <SkBitmap.h>
 #include <SkRegion.h>
 
+#include <CanvasProperty.h>
 #include <Rect.h>
 #include <RenderNode.h>
-#include <CanvasProperty.h>
 #include <hwui/Canvas.h>
 #include <hwui/Paint.h>
 #include <minikin/Layout.h>
@@ -53,27 +53,25 @@ static JNIEnv* jnienv(JavaVM* vm) {
 }
 
 class InvokeRunnableMessage : public MessageHandler {
-public:
+  public:
     InvokeRunnableMessage(JNIEnv* env, jobject runnable) {
         mRunnable = env->NewGlobalRef(runnable);
         env->GetJavaVM(&mVm);
     }
 
-    virtual ~InvokeRunnableMessage() {
-        jnienv(mVm)->DeleteGlobalRef(mRunnable);
-    }
+    virtual ~InvokeRunnableMessage() { jnienv(mVm)->DeleteGlobalRef(mRunnable); }
 
     virtual void handleMessage(const Message&) {
         jnienv(mVm)->CallVoidMethod(mRunnable, gRunnableMethodId);
     }
 
-private:
+  private:
     JavaVM* mVm;
     jobject mRunnable;
 };
 
 class GlFunctorReleasedCallbackBridge : public GlFunctorLifecycleListener {
-public:
+  public:
     GlFunctorReleasedCallbackBridge(JNIEnv* env, jobject javaCallback) {
         mLooper = Looper::getForThread();
         mMessage = new InvokeRunnableMessage(env, javaCallback);
@@ -83,7 +81,7 @@ public:
         mLooper->sendMessage(mMessage, 0);
     }
 
-private:
+  private:
     sp<Looper> mLooper;
     sp<InvokeRunnableMessage> mMessage;
 };
@@ -91,7 +89,8 @@ private:
 // ---------------- @FastNative -----------------------------
 
 static void android_view_DisplayListCanvas_callDrawGLFunction(JNIEnv* env, jobject clazz,
-        jlong canvasPtr, jlong functorPtr, jobject releasedCallback) {
+                                                              jlong canvasPtr, jlong functorPtr,
+                                                              jobject releasedCallback) {
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     Functor* functor = reinterpret_cast<Functor*>(functorPtr);
     sp<GlFunctorReleasedCallbackBridge> bridge;
@@ -101,17 +100,17 @@ static void android_view_DisplayListCanvas_callDrawGLFunction(JNIEnv* env, jobje
     canvas->callDrawGLFunction(functor, bridge.get());
 }
 
-
 // ---------------- @CriticalNative -------------------------
 
-static jlong android_view_DisplayListCanvas_createDisplayListCanvas(jlong renderNodePtr,
-        jint width, jint height) {
+static jlong android_view_DisplayListCanvas_createDisplayListCanvas(jlong renderNodePtr, jint width,
+                                                                    jint height) {
     RenderNode* renderNode = reinterpret_cast<RenderNode*>(renderNodePtr);
     return reinterpret_cast<jlong>(Canvas::create_recording_canvas(width, height, renderNode));
 }
 
 static void android_view_DisplayListCanvas_resetDisplayListCanvas(jlong canvasPtr,
-        jlong renderNodePtr, jint width, jint height) {
+                                                                  jlong renderNodePtr, jint width,
+                                                                  jint height) {
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     RenderNode* renderNode = reinterpret_cast<RenderNode*>(renderNodePtr);
     canvas->resetRecording(width, height, renderNode);
@@ -132,7 +131,7 @@ static jint android_view_DisplayListCanvas_getMaxTextureHeight() {
 }
 
 static void android_view_DisplayListCanvas_insertReorderBarrier(jlong canvasPtr,
-        jboolean reorderEnable) {
+                                                                jboolean reorderEnable) {
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     canvas->insertReorderBarrier(reorderEnable);
 }
@@ -154,9 +153,10 @@ static void android_view_DisplayListCanvas_drawTextureLayer(jlong canvasPtr, jlo
     canvas->drawLayer(layer);
 }
 
-static void android_view_DisplayListCanvas_drawRoundRectProps(jlong canvasPtr,
-        jlong leftPropPtr, jlong topPropPtr, jlong rightPropPtr, jlong bottomPropPtr,
-        jlong rxPropPtr, jlong ryPropPtr, jlong paintPropPtr) {
+static void android_view_DisplayListCanvas_drawRoundRectProps(jlong canvasPtr, jlong leftPropPtr,
+                                                              jlong topPropPtr, jlong rightPropPtr,
+                                                              jlong bottomPropPtr, jlong rxPropPtr,
+                                                              jlong ryPropPtr, jlong paintPropPtr) {
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     CanvasPropertyPrimitive* leftProp = reinterpret_cast<CanvasPropertyPrimitive*>(leftPropPtr);
     CanvasPropertyPrimitive* topProp = reinterpret_cast<CanvasPropertyPrimitive*>(topPropPtr);
@@ -168,8 +168,9 @@ static void android_view_DisplayListCanvas_drawRoundRectProps(jlong canvasPtr,
     canvas->drawRoundRect(leftProp, topProp, rightProp, bottomProp, rxProp, ryProp, paintProp);
 }
 
-static void android_view_DisplayListCanvas_drawCircleProps(jlong canvasPtr,
-        jlong xPropPtr, jlong yPropPtr, jlong radiusPropPtr, jlong paintPropPtr) {
+static void android_view_DisplayListCanvas_drawCircleProps(jlong canvasPtr, jlong xPropPtr,
+                                                           jlong yPropPtr, jlong radiusPropPtr,
+                                                           jlong paintPropPtr) {
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     CanvasPropertyPrimitive* xProp = reinterpret_cast<CanvasPropertyPrimitive*>(xPropPtr);
     CanvasPropertyPrimitive* yProp = reinterpret_cast<CanvasPropertyPrimitive*>(yPropPtr);
@@ -186,22 +187,27 @@ const char* const kClassPathName = "android/view/DisplayListCanvas";
 
 static JNINativeMethod gMethods[] = {
 
-    // ------------ @FastNative ------------------
+        // ------------ @FastNative ------------------
 
-    { "nCallDrawGLFunction", "(JJLjava/lang/Runnable;)V",
-            (void*) android_view_DisplayListCanvas_callDrawGLFunction },
+        {"nCallDrawGLFunction", "(JJLjava/lang/Runnable;)V",
+         (void*)android_view_DisplayListCanvas_callDrawGLFunction},
 
-    // ------------ @CriticalNative --------------
-    { "nCreateDisplayListCanvas", "(JII)J",     (void*) android_view_DisplayListCanvas_createDisplayListCanvas },
-    { "nResetDisplayListCanvas",  "(JJII)V",    (void*) android_view_DisplayListCanvas_resetDisplayListCanvas },
-    { "nGetMaximumTextureWidth",  "()I",        (void*) android_view_DisplayListCanvas_getMaxTextureWidth },
-    { "nGetMaximumTextureHeight", "()I",        (void*) android_view_DisplayListCanvas_getMaxTextureHeight },
-    { "nInsertReorderBarrier",    "(JZ)V",      (void*) android_view_DisplayListCanvas_insertReorderBarrier },
-    { "nFinishRecording",         "(J)J",       (void*) android_view_DisplayListCanvas_finishRecording },
-    { "nDrawRenderNode",          "(JJ)V",      (void*) android_view_DisplayListCanvas_drawRenderNode },
-    { "nDrawTextureLayer",        "(JJ)V",      (void*) android_view_DisplayListCanvas_drawTextureLayer },
-    { "nDrawCircle",              "(JJJJJ)V",   (void*) android_view_DisplayListCanvas_drawCircleProps },
-    { "nDrawRoundRect",           "(JJJJJJJJ)V",(void*) android_view_DisplayListCanvas_drawRoundRectProps },
+        // ------------ @CriticalNative --------------
+        {"nCreateDisplayListCanvas", "(JII)J",
+         (void*)android_view_DisplayListCanvas_createDisplayListCanvas},
+        {"nResetDisplayListCanvas", "(JJII)V",
+         (void*)android_view_DisplayListCanvas_resetDisplayListCanvas},
+        {"nGetMaximumTextureWidth", "()I",
+         (void*)android_view_DisplayListCanvas_getMaxTextureWidth},
+        {"nGetMaximumTextureHeight", "()I",
+         (void*)android_view_DisplayListCanvas_getMaxTextureHeight},
+        {"nInsertReorderBarrier", "(JZ)V",
+         (void*)android_view_DisplayListCanvas_insertReorderBarrier},
+        {"nFinishRecording", "(J)J", (void*)android_view_DisplayListCanvas_finishRecording},
+        {"nDrawRenderNode", "(JJ)V", (void*)android_view_DisplayListCanvas_drawRenderNode},
+        {"nDrawTextureLayer", "(JJ)V", (void*)android_view_DisplayListCanvas_drawTextureLayer},
+        {"nDrawCircle", "(JJJJJ)V", (void*)android_view_DisplayListCanvas_drawCircleProps},
+        {"nDrawRoundRect", "(JJJJJJJJ)V", (void*)android_view_DisplayListCanvas_drawRoundRectProps},
 };
 
 int register_android_view_DisplayListCanvas(JNIEnv* env) {
@@ -211,4 +217,4 @@ int register_android_view_DisplayListCanvas(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-};
+};  // namespace android

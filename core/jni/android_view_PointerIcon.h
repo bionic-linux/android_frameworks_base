@@ -21,8 +21,8 @@
 
 #include <vector>
 
-#include <utils/Errors.h>
 #include <SkBitmap.h>
+#include <utils/Errors.h>
 
 namespace android {
 
@@ -63,9 +63,7 @@ enum {
  * Describes a pointer icon.
  */
 struct PointerIcon {
-    inline PointerIcon() {
-        reset();
-    }
+    inline PointerIcon() { reset(); }
 
     int32_t style;
     SkBitmap bitmap;
@@ -74,9 +72,7 @@ struct PointerIcon {
     std::vector<SkBitmap> bitmapFrames;
     int32_t durationPerFrame;
 
-    inline bool isNullIcon() {
-        return style == POINTER_ICON_STYLE_NULL;
-    }
+    inline bool isNullIcon() { return style == POINTER_ICON_STYLE_NULL; }
 
     inline void reset() {
         style = POINTER_ICON_STYLE_NULL;
@@ -89,24 +85,23 @@ struct PointerIcon {
 };
 
 /* Gets a system pointer icon with the specified style. */
-extern jobject android_view_PointerIcon_getSystemIcon(JNIEnv* env,
-        jobject contextObj, int32_t style);
+extern jobject android_view_PointerIcon_getSystemIcon(JNIEnv* env, jobject contextObj,
+                                                      int32_t style);
 
 /* Loads the bitmap associated with a pointer icon.
  * If pointerIconObj is NULL, returns OK and a pointer icon with POINTER_ICON_STYLE_NULL. */
-extern status_t android_view_PointerIcon_load(JNIEnv* env,
-        jobject pointerIconObj, jobject contextObj, PointerIcon* outPointerIcon);
+extern status_t android_view_PointerIcon_load(JNIEnv* env, jobject pointerIconObj,
+                                              jobject contextObj, PointerIcon* outPointerIcon);
 
 /* Obtain the data of pointerIconObj and put to outPointerIcon. */
 extern status_t android_view_PointerIcon_getLoadedIcon(JNIEnv* env, jobject pointerIconObj,
-        PointerIcon* outPointerIcon);
-
+                                                       PointerIcon* outPointerIcon);
 
 /* Loads the bitmap associated with a pointer icon by style.
  * If pointerIconObj is NULL, returns OK and a pointer icon with POINTER_ICON_STYLE_NULL. */
-extern status_t android_view_PointerIcon_loadSystemIcon(JNIEnv* env,
-        jobject contextObj, int32_t style, PointerIcon* outPointerIcon);
+extern status_t android_view_PointerIcon_loadSystemIcon(JNIEnv* env, jobject contextObj,
+                                                        int32_t style, PointerIcon* outPointerIcon);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_OS_POINTER_ICON_H
+#endif  // _ANDROID_OS_POINTER_ICON_H

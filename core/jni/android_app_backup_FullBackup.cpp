@@ -20,8 +20,8 @@
 #include <utils/Log.h>
 #include <utils/String8.h>
 
-#include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <nativehelper/JNIHelp.h>
 
 #include <androidfw/BackupHelpers.h>
 
@@ -29,12 +29,11 @@
 
 #include <string.h>
 
-namespace android
-{
+namespace android {
 
 // android.app.backup.FullBackupDataOutput
 static struct {
-    jfieldID mData;         // type android.app.backup.BackupDataOutput
+    jfieldID mData;  // type android.app.backup.BackupDataOutput
     jmethodID addSize;
 } sFullBackupDataOutput;
 
@@ -80,11 +79,12 @@ static struct {
  * path:        absolute path to the file to be saved
  * dataOutput:  the FullBackupDataOutput object that we're saving into
  */
-static jint backupToTar(JNIEnv* env, jobject clazz, jstring packageNameObj,
-        jstring domainObj, jstring linkdomain,
-        jstring rootpathObj, jstring pathObj, jobject dataOutputObj) {
+static jint backupToTar(JNIEnv* env, jobject clazz, jstring packageNameObj, jstring domainObj,
+                        jstring linkdomain, jstring rootpathObj, jstring pathObj,
+                        jobject dataOutputObj) {
     // Extract the various strings, allowing for null object pointers
-    const char* packagenamechars = (packageNameObj) ? env->GetStringUTFChars(packageNameObj, NULL) : NULL;
+    const char* packagenamechars =
+            (packageNameObj) ? env->GetStringUTFChars(packageNameObj, NULL) : NULL;
     const char* rootchars = (rootpathObj) ? env->GetStringUTFChars(rootpathObj, NULL) : NULL;
     const char* pathchars = (pathObj) ? env->GetStringUTFChars(pathObj, NULL) : NULL;
     const char* domainchars = (domainObj) ? env->GetStringUTFChars(domainObj, NULL) : NULL;
@@ -101,36 +101,36 @@ static jint backupToTar(JNIEnv* env, jobject clazz, jstring packageNameObj,
 
     // Extract the data output fd.  'writer' ends up NULL in the measure-only case.
     jobject bdo = env->GetObjectField(dataOutputObj, sFullBackupDataOutput.mData);
-    BackupDataWriter* writer = (bdo != NULL)
-            ? (BackupDataWriter*) env->GetLongField(bdo, sBackupDataOutput.mBackupWriter)
-            : NULL;
+    BackupDataWriter* writer = (bdo != NULL) ? (BackupDataWriter*)env->GetLongField(
+                                                       bdo, sBackupDataOutput.mBackupWriter)
+                                             : NULL;
 
     if (path.length() < rootpath.length()) {
-        ALOGE("file path [%s] shorter than root path [%s]",
-                path.string(), rootpath.string());
-        return (jint) -1;
+        ALOGE("file path [%s] shorter than root path [%s]", path.string(), rootpath.string());
+        return (jint)-1;
     }
 
     off_t tarSize = 0;
     jint err = write_tarfile(packageName, domain, rootpath, path, &tarSize, writer);
     if (!err) {
-        //ALOGI("measured [%s] at %lld", path.string(), (long long) tarSize);
-        env->CallVoidMethod(dataOutputObj, sFullBackupDataOutput.addSize, (jlong) tarSize);
+        // ALOGI("measured [%s] at %lld", path.string(), (long long) tarSize);
+        env->CallVoidMethod(dataOutputObj, sFullBackupDataOutput.addSize, (jlong)tarSize);
     }
 
     return err;
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "backupToTar",
-            "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/backup/FullBackupDataOutput;)I",
-            (void*)backupToTar },
+        {"backupToTar",
+         "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
+         "String;Landroid/app/backup/FullBackupDataOutput;)I",
+         (void*)backupToTar},
 };
 
-int register_android_app_backup_FullBackup(JNIEnv* env)
-{
+int register_android_app_backup_FullBackup(JNIEnv* env) {
     jclass fbdoClazz = FindClassOrDie(env, "android/app/backup/FullBackupDataOutput");
-    sFullBackupDataOutput.mData = GetFieldIDOrDie(env, fbdoClazz, "mData", "Landroid/app/backup/BackupDataOutput;");
+    sFullBackupDataOutput.mData =
+            GetFieldIDOrDie(env, fbdoClazz, "mData", "Landroid/app/backup/BackupDataOutput;");
     sFullBackupDataOutput.addSize = GetMethodIDOrDie(env, fbdoClazz, "addSize", "(J)V");
 
     jclass bdoClazz = FindClassOrDie(env, "android/app/backup/BackupDataOutput");
@@ -139,4 +139,4 @@ int register_android_app_backup_FullBackup(JNIEnv* env)
     return RegisterMethodsOrDie(env, "android/app/backup/FullBackup", g_methods, NELEM(g_methods));
 }
 
-}
+}  // namespace android

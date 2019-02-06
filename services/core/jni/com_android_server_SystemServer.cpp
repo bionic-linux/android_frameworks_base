@@ -24,9 +24,9 @@
 #include <sensorservicehidl/SensorManager.h>
 
 #include <cutils/properties.h>
+#include <utils/AndroidThreads.h>
 #include <utils/Log.h>
 #include <utils/misc.h>
-#include <utils/AndroidThreads.h>
 
 namespace android {
 
@@ -36,7 +36,6 @@ static void android_server_SystemServer_startSensorService(JNIEnv* /* env */, jo
     if (strcmp(propBuf, "1") == 0) {
         SensorService::instantiate();
     }
-
 }
 
 static void android_server_SystemServer_startHidlServices(JNIEnv* env, jobject /* clazz */) {
@@ -50,7 +49,7 @@ static void android_server_SystemServer_startHidlServices(JNIEnv* env, jobject /
 
     configureRpcThreadpool(5, false /* callerWillJoin */);
 
-    JavaVM *vm;
+    JavaVM* vm;
     LOG_ALWAYS_FATAL_IF(env->GetJavaVM(&vm) != JNI_OK, "Cannot get Java VM");
 
     sp<ISensorManager> sensorService = new SensorManager(vm);
@@ -66,15 +65,14 @@ static void android_server_SystemServer_startHidlServices(JNIEnv* env, jobject /
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "startSensorService", "()V", (void*) android_server_SystemServer_startSensorService },
-    { "startHidlServices", "()V", (void*) android_server_SystemServer_startHidlServices },
+        /* name, signature, funcPtr */
+        {"startSensorService", "()V", (void*)android_server_SystemServer_startSensorService},
+        {"startHidlServices", "()V", (void*)android_server_SystemServer_startHidlServices},
 };
 
-int register_android_server_SystemServer(JNIEnv* env)
-{
-    return jniRegisterNativeMethods(env, "com/android/server/SystemServer",
-            gMethods, NELEM(gMethods));
+int register_android_server_SystemServer(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/SystemServer", gMethods,
+                                    NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

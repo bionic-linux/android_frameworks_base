@@ -74,13 +74,19 @@ public:
     /**
      * Get the timestamp associated with this event.
      */
-    inline int64_t GetLogdTimestampNs() const { return mLogdTimestampNs; }
-    inline int64_t GetElapsedTimestampNs() const { return mElapsedTimestampNs; }
+    inline int64_t GetLogdTimestampNs() const {
+        return mLogdTimestampNs;
+    }
+    inline int64_t GetElapsedTimestampNs() const {
+        return mElapsedTimestampNs;
+    }
 
     /**
      * Get the tag for this event.
      */
-    inline int GetTagId() const { return mTagId; }
+    inline int GetTagId() const {
+        return mTagId;
+    }
 
     inline uint32_t GetUid() const {
         return mLogUid;
@@ -188,4 +194,3 @@ private:
 }  // namespace statsd
 }  // namespace os
 }  // namespace android
-

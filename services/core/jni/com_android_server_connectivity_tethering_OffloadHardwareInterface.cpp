@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
+#include <android-base/unique_fd.h>
+#include <android/hardware/tetheroffload/config/1.0/IOffloadConfig.h>
 #include <errno.h>
 #include <error.h>
 #include <hidl/HidlSupport.h>
 #include <jni.h>
-#include <nativehelper/JNIHelp.h>
 #include <linux/netfilter/nfnetlink.h>
 #include <linux/netlink.h>
+#include <nativehelper/JNIHelp.h>
 #include <sys/socket.h>
-#include <android-base/unique_fd.h>
-#include <android/hardware/tetheroffload/config/1.0/IOffloadConfig.h>
 
 #define LOG_TAG "OffloadHardwareInterface"
 #include <utils/Log.h>
@@ -36,8 +36,8 @@ using hardware::tetheroffload::config::V1_0::IOffloadConfig;
 
 namespace {
 
-inline const sockaddr * asSockaddr(const sockaddr_nl *nladdr) {
-    return reinterpret_cast<const sockaddr *>(nladdr);
+inline const sockaddr* asSockaddr(const sockaddr_nl* nladdr) {
+    return reinterpret_cast<const sockaddr*>(nladdr);
 }
 
 int conntrackSocket(unsigned groups) {
@@ -45,20 +45,20 @@ int conntrackSocket(unsigned groups) {
     if (s.get() < 0) return -errno;
 
     const struct sockaddr_nl bind_addr = {
-        .nl_family = AF_NETLINK,
-        .nl_pad = 0,
-        .nl_pid = 0,
-        .nl_groups = groups,
+            .nl_family = AF_NETLINK,
+            .nl_pad = 0,
+            .nl_pid = 0,
+            .nl_groups = groups,
     };
     if (bind(s.get(), asSockaddr(&bind_addr), sizeof(bind_addr)) != 0) {
         return -errno;
     }
 
     const struct sockaddr_nl kernel_addr = {
-        .nl_family = AF_NETLINK,
-        .nl_pad = 0,
-        .nl_pid = 0,
-        .nl_groups = groups,
+            .nl_family = AF_NETLINK,
+            .nl_pad = 0,
+            .nl_pid = 0,
+            .nl_groups = groups,
     };
     if (connect(s.get(), asSockaddr(&kernel_addr), sizeof(kernel_addr)) != 0) {
         return -errno;
@@ -76,7 +76,7 @@ hidl_handle handleFromFileDescriptor(base::unique_fd fd) {
 
     static constexpr int kNumFds = 1;
     static constexpr int kNumInts = 0;
-    native_handle_t *nh = native_handle_create(kNumFds, kNumInts);
+    native_handle_t* nh = native_handle_create(kNumFds, kNumInts);
     nh->data[0] = fd.release();
 
     static constexpr bool kTakeOwnership = true;
@@ -102,8 +102,7 @@ static jboolean android_server_connectivity_tethering_OffloadHardwareInterface_c
     //
     // fd2   A file descriptor bound to the following netlink groups
     //       (NF_NETLINK_CONNTRACK_UPDATE | NF_NETLINK_CONNTRACK_DESTROY).
-    base::unique_fd
-            fd1(conntrackSocket(NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY)),
+    base::unique_fd fd1(conntrackSocket(NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY)),
             fd2(conntrackSocket(NF_NETLINK_CONNTRACK_UPDATE | NF_NETLINK_CONNTRACK_DESTROY));
     if (fd1.get() < 0 || fd2.get() < 0) {
         ALOGE("Unable to create conntrack handles: %d/%s", errno, strerror(errno));
@@ -111,18 +110,18 @@ static jboolean android_server_connectivity_tethering_OffloadHardwareInterface_c
     }
 
     hidl_handle h1(handleFromFileDescriptor(std::move(fd1))),
-                h2(handleFromFileDescriptor(std::move(fd2)));
+            h2(handleFromFileDescriptor(std::move(fd2)));
 
     bool rval(false);
     hidl_string msg;
-    const auto status = configInterface->setHandles(h1, h2,
-            [&rval, &msg](bool success, const hidl_string& errMsg) {
+    const auto status = configInterface->setHandles(
+            h1, h2, [&rval, &msg](bool success, const hidl_string& errMsg) {
                 rval = success;
                 msg = errMsg;
             });
     if (!status.isOk() || !rval) {
-        ALOGE("IOffloadConfig::setHandles() error: '%s' / '%s'",
-              status.description().c_str(), msg.c_str());
+        ALOGE("IOffloadConfig::setHandles() error: '%s' / '%s'", status.description().c_str(),
+              msg.c_str());
         // If status is somehow not ok, make sure rval captures this too.
         rval = false;
     }
@@ -134,15 +133,15 @@ static jboolean android_server_connectivity_tethering_OffloadHardwareInterface_c
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "configOffload", "()Z",
-      (void*) android_server_connectivity_tethering_OffloadHardwareInterface_configOffload },
+        /* name, signature, funcPtr */
+        {"configOffload", "()Z",
+         (void*)android_server_connectivity_tethering_OffloadHardwareInterface_configOffload},
 };
 
 int register_android_server_connectivity_tethering_OffloadHardwareInterface(JNIEnv* env) {
-    return jniRegisterNativeMethods(env,
-            "com/android/server/connectivity/tethering/OffloadHardwareInterface",
-            gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(
+            env, "com/android/server/connectivity/tethering/OffloadHardwareInterface", gMethods,
+            NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

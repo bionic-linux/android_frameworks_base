@@ -55,5 +55,5 @@ TEST_F(FilesTest, AppendPathWithLeadingOrTrailingSeparators) {
   EXPECT_EQ(expected_path_, base);
 }
 
-}  // namespace files
+}  // namespace file
 }  // namespace aapt

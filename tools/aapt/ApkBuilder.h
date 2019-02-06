@@ -17,11 +17,11 @@
 #ifndef __APK_BUILDER_H
 #define __APK_BUILDER_H
 
-#include <set>
 #include <utils/Errors.h>
 #include <utils/String8.h>
 #include <utils/StrongPointer.h>
 #include <utils/Vector.h>
+#include <set>
 
 #include "ConfigDescription.h"
 #include "OutputSet.h"
@@ -31,7 +31,7 @@ class ApkSplit;
 class AaptFile;
 
 class ApkBuilder : public android::RefBase {
-public:
+  public:
     explicit ApkBuilder(const sp<WeakResourceFilter>& configFilter);
 
     /**
@@ -51,64 +51,47 @@ public:
      */
     android::status_t addEntry(const String8& path, const android::sp<AaptFile>& file);
 
-    android::Vector<sp<ApkSplit> >& getSplits() {
-        return mSplits;
-    }
+    android::Vector<sp<ApkSplit> >& getSplits() { return mSplits; }
 
-    android::sp<ApkSplit> getBaseSplit() {
-        return mSplits[0];
-    }
+    android::sp<ApkSplit> getBaseSplit() { return mSplits[0]; }
 
     void print() const;
 
-private:
+  private:
     android::sp<ResourceFilter> mConfigFilter;
     android::sp<AndResourceFilter> mDefaultFilter;
     android::Vector<sp<ApkSplit> > mSplits;
 };
 
 class ApkSplit : public OutputSet {
-public:
+  public:
     android::status_t addEntry(const String8& path, const android::sp<AaptFile>& file);
 
-    const std::set<OutputEntry>& getEntries() const {
-        return mFiles;
-    }
+    const std::set<OutputEntry>& getEntries() const { return mFiles; }
 
-    const std::set<ConfigDescription>& getConfigs() const {
-        return mConfigs;
-    }
+    const std::set<ConfigDescription>& getConfigs() const { return mConfigs; }
 
     bool matches(const sp<AaptFile>& file) const {
         return mFilter->match(file->getGroupEntry().toParams());
     }
 
-    sp<ResourceFilter> getResourceFilter() const {
-        return mFilter;
-    }
+    sp<ResourceFilter> getResourceFilter() const { return mFilter; }
 
-    const android::String8& getPrintableName() const {
-        return mName;
-    }
+    const android::String8& getPrintableName() const { return mName; }
 
-    const android::String8& getDirectorySafeName() const {
-        return mDirName;
-    }
+    const android::String8& getDirectorySafeName() const { return mDirName; }
 
-    const android::String8& getPackageSafeName() const {
-        return mPackageSafeName;
-    }
+    const android::String8& getPackageSafeName() const { return mPackageSafeName; }
 
-    bool isBase() const {
-        return mIsBase;
-    }
+    bool isBase() const { return mIsBase; }
 
     void print() const;
 
-private:
+  private:
     friend class ApkBuilder;
 
-    ApkSplit(const std::set<ConfigDescription>& configs, const android::sp<ResourceFilter>& filter, bool isBase=false);
+    ApkSplit(const std::set<ConfigDescription>& configs, const android::sp<ResourceFilter>& filter,
+             bool isBase = false);
 
     std::set<ConfigDescription> mConfigs;
     const sp<ResourceFilter> mFilter;
@@ -119,4 +102,4 @@ private:
     std::set<OutputEntry> mFiles;
 };
 
-#endif // __APK_BUILDER_H
+#endif  // __APK_BUILDER_H

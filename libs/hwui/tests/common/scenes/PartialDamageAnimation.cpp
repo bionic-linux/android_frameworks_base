@@ -30,7 +30,10 @@ public:
     std::vector<sp<RenderNode> > cards;
     void createContent(int width, int height, Canvas& canvas) override {
         static SkColor COLORS[] = {
-                0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF4CAF50,
+                0xFFF44336,
+                0xFF9C27B0,
+                0xFF2196F3,
+                0xFF4CAF50,
         };
 
         canvas.drawColor(0xFFFFFFFF, SkBlendMode::kSrcOver);

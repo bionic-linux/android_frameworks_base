@@ -38,20 +38,19 @@ TEST(IdAssignerTest, AssignIds) {
 }
 
 TEST(IdAssignerTest, AssignIdsWithReservedIds) {
-  std::unique_ptr<ResourceTable> table =
-      test::ResourceTableBuilder()
-          .AddSimple("android:id/foo", ResourceId(0x01010000))
-          .AddSimple("android:dimen/two")
-          .AddSimple("android:integer/three")
-          .AddSimple("android:string/five")
-          .AddSimple("android:attr/fun", ResourceId(0x01040000))
-          .AddSimple("android:attr/foo", ResourceId(0x01040006))
-          .AddSimple("android:attr/bar")
-          .AddSimple("android:attr/baz")
-          .AddSimple("app:id/biz")
-          .SetPackageId("android", 0x01)
-          .SetPackageId("app", 0x7f)
-          .Build();
+  std::unique_ptr<ResourceTable> table = test::ResourceTableBuilder()
+                                             .AddSimple("android:id/foo", ResourceId(0x01010000))
+                                             .AddSimple("android:dimen/two")
+                                             .AddSimple("android:integer/three")
+                                             .AddSimple("android:string/five")
+                                             .AddSimple("android:attr/fun", ResourceId(0x01040000))
+                                             .AddSimple("android:attr/foo", ResourceId(0x01040006))
+                                             .AddSimple("android:attr/bar")
+                                             .AddSimple("android:attr/baz")
+                                             .AddSimple("app:id/biz")
+                                             .SetPackageId("android", 0x01)
+                                             .SetPackageId("app", 0x7f)
+                                             .Build();
 
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
   IdAssigner assigner;
@@ -67,16 +66,14 @@ TEST(IdAssignerTest, AssignIdsWithReservedIds) {
   ASSERT_TRUE(maybe_result);
   EXPECT_EQ(make_value<uint8_t>(2), maybe_result.value().type->id);
 
-  maybe_result =
-      table->FindResource(test::ParseNameOrDie("android:integer/three"));
+  maybe_result = table->FindResource(test::ParseNameOrDie("android:integer/three"));
   ASSERT_TRUE(maybe_result);
   EXPECT_EQ(make_value<uint8_t>(3), maybe_result.value().type->id);
 
   // Expect to bypass the reserved 0x0104XXXX IDs and use the next 0x0105XXXX
   // IDs.
 
-  maybe_result =
-      table->FindResource(test::ParseNameOrDie("android:string/five"));
+  maybe_result = table->FindResource(test::ParseNameOrDie("android:string/five"));
   ASSERT_TRUE(maybe_result);
   EXPECT_EQ(make_value<uint8_t>(5), maybe_result.value().type->id);
 
@@ -92,13 +89,12 @@ TEST(IdAssignerTest, AssignIdsWithReservedIds) {
 }
 
 TEST(IdAssignerTest, FailWhenNonUniqueIdsAssigned) {
-  std::unique_ptr<ResourceTable> table =
-      test::ResourceTableBuilder()
-          .AddSimple("android:attr/foo", ResourceId(0x01040006))
-          .AddSimple("android:attr/bar", ResourceId(0x01040006))
-          .SetPackageId("android", 0x01)
-          .SetPackageId("app", 0x7f)
-          .Build();
+  std::unique_ptr<ResourceTable> table = test::ResourceTableBuilder()
+                                             .AddSimple("android:attr/foo", ResourceId(0x01040006))
+                                             .AddSimple("android:attr/bar", ResourceId(0x01040006))
+                                             .SetPackageId("android", 0x01)
+                                             .SetPackageId("app", 0x7f)
+                                             .Build();
 
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
   IdAssigner assigner;
@@ -133,14 +129,12 @@ TEST(IdAssignerTest, AssignIdsWithIdMap) {
   std::set<uint8_t> package_ids;
   for (auto& package : table->packages) {
     if (!package->id) {
-      return ::testing::AssertionFailure() << "package " << package->name
-                                           << " has no ID";
+      return ::testing::AssertionFailure() << "package " << package->name << " has no ID";
     }
 
     if (!package_ids.insert(package->id.value()).second) {
-      return ::testing::AssertionFailure()
-             << "package " << package->name << " has non-unique ID " << std::hex
-             << (int)package->id.value() << std::dec;
+      return ::testing::AssertionFailure() << "package " << package->name << " has non-unique ID "
+                                           << std::hex << (int)package->id.value() << std::dec;
     }
   }
 
@@ -148,16 +142,14 @@ TEST(IdAssignerTest, AssignIdsWithIdMap) {
     std::set<uint8_t> type_ids;
     for (auto& type : package->types) {
       if (!type->id) {
-        return ::testing::AssertionFailure() << "type " << type->type
-                                             << " of package " << package->name
-                                             << " has no ID";
+        return ::testing::AssertionFailure()
+               << "type " << type->type << " of package " << package->name << " has no ID";
       }
 
       if (!type_ids.insert(type->id.value()).second) {
         return ::testing::AssertionFailure()
-               << "type " << type->type << " of package " << package->name
-               << " has non-unique ID " << std::hex << (int)type->id.value()
-               << std::dec;
+               << "type " << type->type << " of package " << package->name << " has non-unique ID "
+               << std::hex << (int)type->id.value() << std::dec;
       }
     }
 
@@ -166,15 +158,15 @@ TEST(IdAssignerTest, AssignIdsWithIdMap) {
       for (auto& entry : type->entries) {
         if (!entry->id) {
           return ::testing::AssertionFailure()
-                 << "entry " << entry->name << " of type " << type->type
-                 << " of package " << package->name << " has no ID";
+                 << "entry " << entry->name << " of type " << type->type << " of package "
+                 << package->name << " has no ID";
         }
 
         if (!entry_ids.insert(entry->id.value()).second) {
           return ::testing::AssertionFailure()
-                 << "entry " << entry->name << " of type " << type->type
-                 << " of package " << package->name << " has non-unique ID "
-                 << std::hex << (int)entry->id.value() << std::dec;
+                 << "entry " << entry->name << " of type " << type->type << " of package "
+                 << package->name << " has non-unique ID " << std::hex << (int)entry->id.value()
+                 << std::dec;
         }
       }
     }

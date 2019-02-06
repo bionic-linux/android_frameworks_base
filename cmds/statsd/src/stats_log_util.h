@@ -28,12 +28,11 @@ namespace statsd {
 
 void writeFieldValueTreeToStream(int tagId, const std::vector<FieldValue>& values,
                                  util::ProtoOutputStream* protoOutput);
-void writeDimensionToProto(const HashableDimensionKey& dimension, std::set<string> *str_set,
+void writeDimensionToProto(const HashableDimensionKey& dimension, std::set<string>* str_set,
                            util::ProtoOutputStream* protoOutput);
 
 void writeDimensionLeafNodesToProto(const HashableDimensionKey& dimension,
-                                    const int dimensionLeafFieldId,
-                                    std::set<string> *str_set,
+                                    const int dimensionLeafFieldId, std::set<string>* str_set,
                                     util::ProtoOutputStream* protoOutput);
 
 void writeDimensionPathToProto(const std::vector<Matcher>& fieldMatchers,
@@ -72,13 +71,13 @@ int64_t MillisToNano(const int64_t millis);
 void writePullerStatsToStream(const std::pair<int, StatsdStats::PulledAtomStats>& pair,
                               util::ProtoOutputStream* protoOutput);
 
-template<class T>
+template <class T>
 bool parseProtoOutputStream(util::ProtoOutputStream& protoOutput, T* message) {
     std::string pbBytes;
     auto iter = protoOutput.data();
     while (iter.readBuffer() != NULL) {
         size_t toRead = iter.currentToRead();
-         pbBytes.append(reinterpret_cast<const char*>(iter.readBuffer()), toRead);
+        pbBytes.append(reinterpret_cast<const char*>(iter.readBuffer()), toRead);
         iter.rp()->move(toRead);
     }
     return message->ParseFromArray(pbBytes.c_str(), pbBytes.size());

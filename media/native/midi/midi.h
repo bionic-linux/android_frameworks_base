@@ -38,24 +38,20 @@ struct AMIDI_OutputPort;
 enum {
     AMIDI_OPCODE_DATA = 1,
     AMIDI_OPCODE_FLUSH = 2,
-    AMIDI_PACKET_SIZE = 1024,  /* !!! Currently MidiPortImpl.MAX_PACKET_SIZE !!! */
+    AMIDI_PACKET_SIZE = 1024, /* !!! Currently MidiPortImpl.MAX_PACKET_SIZE !!! */
     AMIDI_PACKET_OVERHEAD = 9,
     AMIDI_BUFFER_SIZE = AMIDI_PACKET_SIZE - AMIDI_PACKET_OVERHEAD
-            /* !!! TBD, currently MidiPortImpl.MAX_PACKET_DATA_SIZE !!! */
+    /* !!! TBD, currently MidiPortImpl.MAX_PACKET_DATA_SIZE !!! */
 };
 
 typedef struct {
-    uint32_t    opcode;
-    uint8_t     buffer[AMIDI_BUFFER_SIZE];
-    size_t      len;
-    int64_t     timestamp;
+    uint32_t opcode;
+    uint8_t buffer[AMIDI_BUFFER_SIZE];
+    size_t len;
+    int64_t timestamp;
 } AMIDI_Message;
 
-enum {
-    AMIDI_DEVICE_TYPE_USB = 1,
-    AMIDI_DEVICE_TYPE_VIRTUAL = 2,
-    AMIDI_DEVICE_TYPE_BLUETOOTH = 3
-};
+enum { AMIDI_DEVICE_TYPE_USB = 1, AMIDI_DEVICE_TYPE_VIRTUAL = 2, AMIDI_DEVICE_TYPE_BLUETOOTH = 3 };
 
 typedef struct {
     int32_t type;
@@ -76,7 +72,7 @@ typedef struct {
  *
  * Returns OK or a (negative) error code.
  */
-status_t AMIDI_getDeviceInfo(AMIDI_Device *device, AMIDI_DeviceInfo *deviceInfoPtr);
+status_t AMIDI_getDeviceInfo(AMIDI_Device* device, AMIDI_DeviceInfo* deviceInfoPtr);
 
 /*
  * API for receiving data from the Output port of a device.
@@ -90,8 +86,8 @@ status_t AMIDI_getDeviceInfo(AMIDI_Device *device, AMIDI_DeviceInfo *deviceInfoP
  *
  * Returns OK, or a (negative) error code.
  */
-status_t AMIDI_openOutputPort(AMIDI_Device *device, int portNumber,
-        AMIDI_OutputPort **outputPortPtr);
+status_t AMIDI_openOutputPort(AMIDI_Device* device, int portNumber,
+                              AMIDI_OutputPort** outputPortPtr);
 
 /*
  * Receives any pending MIDI messages (up to the specified maximum number of messages).
@@ -102,7 +98,7 @@ status_t AMIDI_openOutputPort(AMIDI_Device *device, int portNumber,
  *
  * Returns the number of messages received, or a (negative) error code.
  */
-ssize_t AMIDI_receive(AMIDI_OutputPort *outputPort, AMIDI_Message *messages, ssize_t maxMessages);
+ssize_t AMIDI_receive(AMIDI_OutputPort* outputPort, AMIDI_Message* messages, ssize_t maxMessages);
 
 /*
  * Closes the output port.
@@ -111,7 +107,7 @@ ssize_t AMIDI_receive(AMIDI_OutputPort *outputPort, AMIDI_Message *messages, ssi
  *
  * Returns OK, or a (negative) error code.
  */
-status_t AMIDI_closeOutputPort(AMIDI_OutputPort *outputPort);
+status_t AMIDI_closeOutputPort(AMIDI_OutputPort* outputPort);
 
 /*
  * API for sending data to the Input port of a device.
@@ -125,12 +121,12 @@ status_t AMIDI_closeOutputPort(AMIDI_OutputPort *outputPort);
  *
  * Returns OK, or a (negative) error code.
  */
-status_t AMIDI_openInputPort(AMIDI_Device *device, int portNumber, AMIDI_InputPort **inputPortPtr);
+status_t AMIDI_openInputPort(AMIDI_Device* device, int portNumber, AMIDI_InputPort** inputPortPtr);
 
 /*
  * Returns the maximum number of bytes that can be received in a single MIDI message.
  */
-ssize_t AMIDI_getMaxMessageSizeInBytes(AMIDI_InputPort *inputPort);
+ssize_t AMIDI_getMaxMessageSizeInBytes(AMIDI_InputPort* inputPort);
 
 /*
  * Sends data to the specified input port.
@@ -141,7 +137,7 @@ ssize_t AMIDI_getMaxMessageSizeInBytes(AMIDI_InputPort *inputPort);
  *
  * Returns  The number of bytes sent or a (negative) error code.
  */
-ssize_t AMIDI_send(AMIDI_InputPort *inputPort, uint8_t *buffer, ssize_t numBytes);
+ssize_t AMIDI_send(AMIDI_InputPort* inputPort, uint8_t* buffer, ssize_t numBytes);
 
 /*
  * Sends data to the specified input port with a timestamp.
@@ -153,8 +149,8 @@ ssize_t AMIDI_send(AMIDI_InputPort *inputPort, uint8_t *buffer, ssize_t numBytes
  *
  * Returns  The number of bytes sent or a (negative) error code.
  */
-ssize_t AMIDI_sendWithTimestamp(AMIDI_InputPort *inputPort, uint8_t *buffer,
-        ssize_t numBytes, int64_t timestamp);
+ssize_t AMIDI_sendWithTimestamp(AMIDI_InputPort* inputPort, uint8_t* buffer, ssize_t numBytes,
+                                int64_t timestamp);
 
 /*
  * Sends a message with a 'MIDI flush command code' to the specified port.
@@ -163,7 +159,7 @@ ssize_t AMIDI_sendWithTimestamp(AMIDI_InputPort *inputPort, uint8_t *buffer,
  *
  * Returns OK, or a (negative) error code.
  */
-status_t AMIDI_flush(AMIDI_InputPort *inputPort);
+status_t AMIDI_flush(AMIDI_InputPort* inputPort);
 
 /*
  * Closes the input port.
@@ -173,7 +169,7 @@ status_t AMIDI_flush(AMIDI_InputPort *inputPort);
  *
  * Returns OK, or a (negative) error code.
  */
-status_t AMIDI_closeInputPort(AMIDI_InputPort *inputPort);
+status_t AMIDI_closeInputPort(AMIDI_InputPort* inputPort);
 
 #ifdef __cplusplus
 }

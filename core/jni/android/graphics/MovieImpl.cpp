@@ -12,52 +12,43 @@
 // 0-based. So we use it as a sentinal.
 #define UNINITIALIZED_MSEC ((SkMSec)-1)
 
-Movie::Movie()
-{
+Movie::Movie() {
     fInfo.fDuration = UNINITIALIZED_MSEC;  // uninitialized
-    fCurrTime = UNINITIALIZED_MSEC; // uninitialized
+    fCurrTime = UNINITIALIZED_MSEC;        // uninitialized
     fNeedBitmap = true;
 }
 
-void Movie::ensureInfo()
-{
+void Movie::ensureInfo() {
     if (fInfo.fDuration == UNINITIALIZED_MSEC && !this->onGetInfo(&fInfo))
-        memset(&fInfo, 0, sizeof(fInfo));   // failure
+        memset(&fInfo, 0, sizeof(fInfo));  // failure
 }
 
-SkMSec Movie::duration()
-{
+SkMSec Movie::duration() {
     this->ensureInfo();
     return fInfo.fDuration;
 }
 
-int Movie::width()
-{
+int Movie::width() {
     this->ensureInfo();
     return fInfo.fWidth;
 }
 
-int Movie::height()
-{
+int Movie::height() {
     this->ensureInfo();
     return fInfo.fHeight;
 }
 
-int Movie::isOpaque()
-{
+int Movie::isOpaque() {
     this->ensureInfo();
     return fInfo.fIsOpaque;
 }
 
-bool Movie::setTime(SkMSec time)
-{
+bool Movie::setTime(SkMSec time) {
     SkMSec dur = this->duration();
-    if (time > dur)
-        time = dur;
+    if (time > dur) time = dur;
 
     bool changed = false;
-    if (time != fCurrTime)
-    {
+    if (time != fCurrTime) {
         fCurrTime = time;
         changed = this->onSetTime(time);
         fNeedBitmap |= changed;
@@ -65,14 +56,12 @@ bool Movie::setTime(SkMSec time)
     return changed;
 }
 
-const SkBitmap& Movie::bitmap()
-{
-    if (fCurrTime == UNINITIALIZED_MSEC)    // uninitialized
+const SkBitmap& Movie::bitmap() {
+    if (fCurrTime == UNINITIALIZED_MSEC)  // uninitialized
         this->setTime(0);
 
-    if (fNeedBitmap)
-    {
-        if (!this->onGetBitmap(&fBitmap))   // failure
+    if (fNeedBitmap) {
+        if (!this->onGetBitmap(&fBitmap))  // failure
             fBitmap.reset();
         fNeedBitmap = false;
     }

@@ -27,9 +27,8 @@ namespace android {
 // This tests the app resources loaded as app.
 TEST(AppAsLibTest, LoadedAsApp) {
   std::string contents;
-  ASSERT_TRUE(
-      ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib.apk",
-                              "resources.arsc", &contents));
+  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib.apk",
+                                      "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -44,14 +43,12 @@ TEST(AppAsLibTest, LoadedAsApp) {
 // This tests the app resources loaded as shared-lib.
 TEST(AppAsLibTest, LoadedAsSharedLib) {
   std::string contents;
-  ASSERT_TRUE(
-      ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib.apk",
-                              "resources.arsc", &contents));
+  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib.apk",
+                                      "resources.arsc", &contents));
 
   ResTable table;
   // Load as shared library.
-  ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size(), NULL, 0, -1,
-                                false, true));
+  ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size(), NULL, 0, -1, false, true));
 
   Res_value val;
   ssize_t block = table.getResource(lib::R::integer::number1, &val);
@@ -63,14 +60,12 @@ TEST(AppAsLibTest, LoadedAsSharedLib) {
 // This tests the shared-lib loaded with appAsLib as true.
 TEST(AppAsLibTest, LoadedSharedLib) {
   std::string contents;
-  ASSERT_TRUE(
-      ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib_lib.apk",
-                              "resources.arsc", &contents));
+  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/appaslib/appaslib_lib.apk",
+                                      "resources.arsc", &contents));
 
   ResTable table;
   // Load shared library with appAsLib as true.
-  ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size(), NULL, 0, -1,
-                                false, true));
+  ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size(), NULL, 0, -1, false, true));
 
   Res_value val;
   ssize_t block = table.getResource(lib::R::integer::number1, &val);

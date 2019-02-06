@@ -35,7 +35,8 @@ class StatsPuller : public virtual RefBase {
 public:
     explicit StatsPuller(const int tagId);
 
-    virtual ~StatsPuller() {}
+    virtual ~StatsPuller() {
+    }
 
     bool Pull(const int64_t timeNs, std::vector<std::shared_ptr<LogEvent>>* data);
 

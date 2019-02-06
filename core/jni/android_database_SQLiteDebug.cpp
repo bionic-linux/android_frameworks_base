@@ -16,9 +16,9 @@
 
 #define LOG_TAG "SQLiteDebug"
 
+#include <android_runtime/AndroidRuntime.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,8 +38,7 @@ static struct {
     jfieldID largestMemAlloc;
 } gSQLiteDebugPagerStatsClassInfo;
 
-static void nativeGetPagerStats(JNIEnv *env, jobject clazz, jobject statsObj)
-{
+static void nativeGetPagerStats(JNIEnv* env, jobject clazz, jobject statsObj) {
     int memoryUsed;
     int pageCacheOverflow;
     int largestMemAlloc;
@@ -50,7 +49,7 @@ static void nativeGetPagerStats(JNIEnv *env, jobject clazz, jobject statsObj)
     sqlite3_status(SQLITE_STATUS_PAGECACHE_OVERFLOW, &pageCacheOverflow, &unused, 0);
     env->SetIntField(statsObj, gSQLiteDebugPagerStatsClassInfo.memoryUsed, memoryUsed);
     env->SetIntField(statsObj, gSQLiteDebugPagerStatsClassInfo.pageCacheOverflow,
-            pageCacheOverflow);
+                     pageCacheOverflow);
     env->SetIntField(statsObj, gSQLiteDebugPagerStatsClassInfo.largestMemAlloc, largestMemAlloc);
 }
 
@@ -58,24 +57,22 @@ static void nativeGetPagerStats(JNIEnv *env, jobject clazz, jobject statsObj)
  * JNI registration.
  */
 
-static const JNINativeMethod gMethods[] =
-{
-    { "nativeGetPagerStats", "(Landroid/database/sqlite/SQLiteDebug$PagerStats;)V",
-            (void*) nativeGetPagerStats },
+static const JNINativeMethod gMethods[] = {
+        {"nativeGetPagerStats", "(Landroid/database/sqlite/SQLiteDebug$PagerStats;)V",
+         (void*)nativeGetPagerStats},
 };
 
-int register_android_database_SQLiteDebug(JNIEnv *env)
-{
+int register_android_database_SQLiteDebug(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/database/sqlite/SQLiteDebug$PagerStats");
 
     gSQLiteDebugPagerStatsClassInfo.memoryUsed = GetFieldIDOrDie(env, clazz, "memoryUsed", "I");
-    gSQLiteDebugPagerStatsClassInfo.largestMemAlloc = GetFieldIDOrDie(env, clazz,
-            "largestMemAlloc", "I");
-    gSQLiteDebugPagerStatsClassInfo.pageCacheOverflow = GetFieldIDOrDie(env, clazz,
-            "pageCacheOverflow", "I");
+    gSQLiteDebugPagerStatsClassInfo.largestMemAlloc =
+            GetFieldIDOrDie(env, clazz, "largestMemAlloc", "I");
+    gSQLiteDebugPagerStatsClassInfo.pageCacheOverflow =
+            GetFieldIDOrDie(env, clazz, "pageCacheOverflow", "I");
 
-    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteDebug",
-            gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteDebug", gMethods,
+                                NELEM(gMethods));
 }
 
-} // namespace android
+}  // namespace android

@@ -103,8 +103,8 @@ static Maybe<ResourcePathData> ExtractResourcePathData(const std::string& path,
   StringPiece extension;
 
   const std::string kNinePng = ".9.png";
-  if (filename.size() > kNinePng.size()
-      && std::equal(kNinePng.rbegin(), kNinePng.rend(), filename.rbegin())) {
+  if (filename.size() > kNinePng.size() &&
+      std::equal(kNinePng.rbegin(), kNinePng.rend(), filename.rbegin())) {
     // Split on .9.png if this extension is present at the end of the file path
     name = name.substr(0, filename.size() - kNinePng.size());
     extension = "9.png";
@@ -285,10 +285,9 @@ static bool CompileTable(IAaptContext* context, const CompileOptions& options,
     io::FileOutputStream fout_text(options.generate_text_symbols_path.value());
 
     if (fout_text.HadError()) {
-      context->GetDiagnostics()->Error(DiagMessage()
-                                       << "failed writing to'"
-                                       << options.generate_text_symbols_path.value()
-                                       << "': " << fout_text.GetError());
+      context->GetDiagnostics()->Error(DiagMessage() << "failed writing to'"
+                                                     << options.generate_text_symbols_path.value()
+                                                     << "': " << fout_text.GetError());
       return false;
     }
 
@@ -297,14 +296,14 @@ static bool CompileTable(IAaptContext* context, const CompileOptions& options,
       for (const auto& type : package->types) {
         for (const auto& entry : type->entries) {
           // Check access modifiers.
-          switch(entry->visibility.level) {
-            case Visibility::Level::kUndefined :
+          switch (entry->visibility.level) {
+            case Visibility::Level::kUndefined:
               r_txt_printer.Print("default ");
               break;
-            case Visibility::Level::kPublic :
+            case Visibility::Level::kPublic:
               r_txt_printer.Print("public ");
               break;
-            case Visibility::Level::kPrivate :
+            case Visibility::Level::kPrivate:
               r_txt_printer.Print("private ");
           }
 
@@ -393,8 +392,7 @@ static bool IsValidFile(IAaptContext* context, const std::string& input_path) {
     } else if (file_type == file::FileType::kNonexistant) {
       context->GetDiagnostics()->Error(DiagMessage(input_path) << "file not found");
     } else {
-      context->GetDiagnostics()->Error(DiagMessage(input_path)
-                                       << "not a valid resource file");
+      context->GetDiagnostics()->Error(DiagMessage(input_path) << "not a valid resource file");
     }
     return false;
   }
@@ -478,10 +476,9 @@ static bool CompileXml(IAaptContext* context, const CompileOptions& options,
     io::FileOutputStream fout_text(options.generate_text_symbols_path.value());
 
     if (fout_text.HadError()) {
-      context->GetDiagnostics()->Error(DiagMessage()
-                                       << "failed writing to'"
-                                       << options.generate_text_symbols_path.value()
-                                       << "': " << fout_text.GetError());
+      context->GetDiagnostics()->Error(DiagMessage() << "failed writing to'"
+                                                     << options.generate_text_symbols_path.value()
+                                                     << "': " << fout_text.GetError());
       return false;
     }
 
@@ -558,8 +555,8 @@ static bool CompilePng(IAaptContext* context, const CompileOptions& options,
       }
 
       if (context->IsVerbose()) {
-        context->GetDiagnostics()->Note(DiagMessage(path_data.source) << "9-patch: "
-                                                                      << *nine_patch);
+        context->GetDiagnostics()->Note(DiagMessage(path_data.source)
+                                        << "9-patch: " << *nine_patch);
       }
     }
 
@@ -630,8 +627,8 @@ static bool CompileFile(IAaptContext* context, const CompileOptions& options,
   std::string error_str;
   Maybe<android::FileMap> f = file::MmapPath(path_data.source.path, &error_str);
   if (!f) {
-    context->GetDiagnostics()->Error(DiagMessage(path_data.source) << "failed to mmap file: "
-                                     << error_str);
+    context->GetDiagnostics()->Error(DiagMessage(path_data.source)
+                                     << "failed to mmap file: " << error_str);
     return false;
   }
 
@@ -784,8 +781,8 @@ int Compile(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
       if (*type != ResourceType::kRaw) {
         if (path_data.extension == "xml") {
           compile_func = &CompileXml;
-        } else if ((!options.no_png_crunch && path_data.extension == "png")
-            || path_data.extension == "9.png") {
+        } else if ((!options.no_png_crunch && path_data.extension == "png") ||
+                   path_data.extension == "9.png") {
           compile_func = &CompilePng;
         }
       }
@@ -798,8 +795,8 @@ int Compile(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
 
     // Treat periods as a reserved character that should not be present in a file name
     // Legacy support for AAPT which did not reserve periods
-    if (compile_func != &CompileFile && !options.legacy_mode
-        && std::count(path_data.name.begin(), path_data.name.end(), '.') != 0) {
+    if (compile_func != &CompileFile && !options.legacy_mode &&
+        std::count(path_data.name.begin(), path_data.name.end(), '.') != 0) {
       error = true;
       context.GetDiagnostics()->Error(DiagMessage() << "resource file '" << path_data.source.path
                                                     << "' name cannot contain '.' other than for"

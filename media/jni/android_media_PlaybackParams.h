@@ -30,20 +30,20 @@ struct PlaybackParams {
     bool audioStretchModeSet;
 
     struct fields_t {
-        jclass      clazz;
-        jmethodID   constructID;
+        jclass clazz;
+        jmethodID constructID;
 
-        jfieldID    speed;
-        jfieldID    pitch;
-        jfieldID    audio_fallback_mode;
-        jfieldID    audio_stretch_mode;
-        jfieldID    set;
-        jint        set_speed;
-        jint        set_pitch;
-        jint        set_audio_fallback_mode;
-        jint        set_audio_stretch_mode;
+        jfieldID speed;
+        jfieldID pitch;
+        jfieldID audio_fallback_mode;
+        jfieldID audio_stretch_mode;
+        jfieldID set;
+        jint set_speed;
+        jint set_pitch;
+        jint set_audio_fallback_mode;
+        jint set_audio_stretch_mode;
 
-        void init(JNIEnv *env) {
+        void init(JNIEnv* env) {
             jclass lclazz = env->FindClass("android/media/PlaybackParams");
             if (lclazz == NULL) {
                 return;
@@ -63,9 +63,9 @@ struct PlaybackParams {
             set = env->GetFieldID(clazz, "mSet", "I");
 
             set_speed =
-                env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_SPEED", "I"));
+                    env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_SPEED", "I"));
             set_pitch =
-                env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_PITCH", "I"));
+                    env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_PITCH", "I"));
             set_audio_fallback_mode = env->GetStaticIntField(
                     clazz, env->GetStaticFieldID(clazz, "SET_AUDIO_FALLBACK_MODE", "I"));
             set_audio_stretch_mode = env->GetStaticIntField(
@@ -74,19 +74,19 @@ struct PlaybackParams {
             env->DeleteLocalRef(lclazz);
         }
 
-        void exit(JNIEnv *env) {
+        void exit(JNIEnv* env) {
             env->DeleteGlobalRef(clazz);
             clazz = NULL;
         }
     };
 
-    void fillFromJobject(JNIEnv *env, const fields_t& fields, jobject params) {
+    void fillFromJobject(JNIEnv* env, const fields_t& fields, jobject params) {
         audioRate.mSpeed = env->GetFloatField(params, fields.speed);
         audioRate.mPitch = env->GetFloatField(params, fields.pitch);
         audioRate.mFallbackMode =
-            (AudioTimestretchFallbackMode)env->GetIntField(params, fields.audio_fallback_mode);
+                (AudioTimestretchFallbackMode)env->GetIntField(params, fields.audio_fallback_mode);
         audioRate.mStretchMode =
-            (AudioTimestretchStretchMode)env->GetIntField(params, fields.audio_stretch_mode);
+                (AudioTimestretchStretchMode)env->GetIntField(params, fields.audio_stretch_mode);
         int set = env->GetIntField(params, fields.set);
 
         speedSet = set & fields.set_speed;
@@ -95,7 +95,7 @@ struct PlaybackParams {
         audioStretchModeSet = set & fields.set_audio_stretch_mode;
     }
 
-    jobject asJobject(JNIEnv *env, const fields_t& fields) {
+    jobject asJobject(JNIEnv* env, const fields_t& fields) {
         jobject params = env->NewObject(fields.clazz, fields.constructID);
         if (params == NULL) {
             return NULL;
@@ -104,12 +104,10 @@ struct PlaybackParams {
         env->SetFloatField(params, fields.pitch, (jfloat)audioRate.mPitch);
         env->SetIntField(params, fields.audio_fallback_mode, (jint)audioRate.mFallbackMode);
         env->SetIntField(params, fields.audio_stretch_mode, (jint)audioRate.mStretchMode);
-        env->SetIntField(
-                params, fields.set,
-                (speedSet ? fields.set_speed : 0)
-                        | (pitchSet ? fields.set_pitch : 0)
-                        | (audioFallbackModeSet ? fields.set_audio_fallback_mode : 0)
-                        | (audioStretchModeSet  ? fields.set_audio_stretch_mode : 0));
+        env->SetIntField(params, fields.set,
+                         (speedSet ? fields.set_speed : 0) | (pitchSet ? fields.set_pitch : 0) |
+                                 (audioFallbackModeSet ? fields.set_audio_fallback_mode : 0) |
+                                 (audioStretchModeSet ? fields.set_audio_stretch_mode : 0));
 
         return params;
     }

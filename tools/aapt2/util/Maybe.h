@@ -109,7 +109,8 @@ class Maybe {
 };
 
 template <typename T>
-Maybe<T>::Maybe() : nothing_(true) {}
+Maybe<T>::Maybe() : nothing_(true) {
+}
 
 template <typename T>
 Maybe<T>::~Maybe() {
@@ -212,8 +213,7 @@ Maybe<T>& Maybe<T>::move(Maybe<U>&& rhs) {
   } else if (!nothing_ && !rhs.nothing_) {
     // We both are something, so move assign rhs to us.
     rhs.nothing_ = true;
-    reinterpret_cast<T&>(storage_) =
-        std::move(reinterpret_cast<U&>(rhs.storage_));
+    reinterpret_cast<T&>(storage_) = std::move(reinterpret_cast<U&>(rhs.storage_));
     rhs.destroy();
   } else if (nothing_) {
     // We are nothing but rhs is something.

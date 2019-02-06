@@ -67,7 +67,7 @@ CopyResult SkiaOpenGLReadback::copyImageInto(EGLImageKHR eglImage, const Matrix4
     }
 
     if (pixelConfig == kRGBA_half_GrPixelConfig &&
-            !grContext->caps()->isConfigRenderable(kRGBA_half_GrPixelConfig, false)) {
+        !grContext->caps()->isConfigRenderable(kRGBA_half_GrPixelConfig, false)) {
         ALOGW("Can't copy surface into bitmap, RGBA_F16 config is not supported");
         return CopyResult::DestinationInvalid;
     }
@@ -117,8 +117,8 @@ CopyResult SkiaOpenGLReadback::copyImageInto(EGLImageKHR eglImage, const Matrix4
             paint.setBlendMode(SkBlendMode::kSrc);
             // Apply a filter, which is matching OpenGL pipeline readback behaviour. Filter usage
             // is codified by tests using golden images like DecodeAccuracyTest.
-            bool disableFilter = MathUtils::areEqual(skiaSrcRect.width(), skiaDestRect.width())
-                    && MathUtils::areEqual(skiaSrcRect.height(), skiaDestRect.height());
+            bool disableFilter = MathUtils::areEqual(skiaSrcRect.width(), skiaDestRect.width()) &&
+                                 MathUtils::areEqual(skiaSrcRect.height(), skiaDestRect.height());
             if (!disableFilter) {
                 paint.setFilterQuality(kLow_SkFilterQuality);
             }

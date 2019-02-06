@@ -23,8 +23,8 @@
 #include <utils/Mutex.h>
 #include "android_runtime/AndroidRuntime.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
 #include "proxy_resolver_v8_wrapper.h"
 
@@ -35,8 +35,7 @@ bool pacSet = false;
 
 std::u16string jstringToString16(JNIEnv* env, jstring jstr) {
     const jchar* str = env->GetStringCritical(jstr, 0);
-    std::u16string str16(reinterpret_cast<const char16_t*>(str),
-                   env->GetStringLength(jstr));
+    std::u16string str16(reinterpret_cast<const char16_t*>(str), env->GetStringLength(jstr));
     env->ReleaseStringCritical(jstr, str);
     return str16;
 }
@@ -49,7 +48,7 @@ jstring string16ToJstring(JNIEnv* env, std::u16string string) {
 }
 
 static jboolean com_android_pacprocessor_PacNative_createV8ParserNativeLocked(JNIEnv* /* env */,
-        jobject) {
+                                                                              jobject) {
     if (proxyResolver == NULL) {
         proxyResolver = ProxyResolverV8Handle_new();
         pacSet = false;
@@ -59,7 +58,7 @@ static jboolean com_android_pacprocessor_PacNative_createV8ParserNativeLocked(JN
 }
 
 static jboolean com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked(JNIEnv* /* env */,
-        jobject) {
+                                                                               jobject) {
     if (proxyResolver != NULL) {
         ProxyResolverV8Handle_delete(proxyResolver);
         proxyResolver = NULL;
@@ -69,7 +68,7 @@ static jboolean com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked(J
 }
 
 static jboolean com_android_pacprocessor_PacNative_setProxyScriptNativeLocked(JNIEnv* env, jobject,
-        jstring script) {
+                                                                              jstring script) {
     std::u16string script16 = jstringToString16(env, script);
 
     if (proxyResolver == NULL) {
@@ -87,7 +86,8 @@ static jboolean com_android_pacprocessor_PacNative_setProxyScriptNativeLocked(JN
 }
 
 static jstring com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked(JNIEnv* env, jobject,
-        jstring url, jstring host) {
+                                                                               jstring url,
+                                                                               jstring host) {
     std::u16string url16 = jstringToString16(env, url);
     std::u16string host16 = jstringToString16(env, host);
 
@@ -102,7 +102,8 @@ static jstring com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked(J
     }
 
     std::unique_ptr<char16_t, decltype(&free)> result = std::unique_ptr<char16_t, decltype(&free)>(
-        ProxyResolverV8Handle_GetProxyForURL(proxyResolver, url16.data(), host16.data()), &free);
+            ProxyResolverV8Handle_GetProxyForURL(proxyResolver, url16.data(), host16.data()),
+            &free);
     if (result.get() == NULL) {
         ALOGE("Error Running PAC");
         return NULL;
@@ -115,19 +116,19 @@ static jstring com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked(J
 }
 
 static const JNINativeMethod gMethods[] = {
-    { "createV8ParserNativeLocked", "()Z",
-        (void*)com_android_pacprocessor_PacNative_createV8ParserNativeLocked},
-    { "destroyV8ParserNativeLocked", "()Z",
-        (void*)com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked},
-    { "setProxyScriptNativeLocked", "(Ljava/lang/String;)Z",
-        (void*)com_android_pacprocessor_PacNative_setProxyScriptNativeLocked},
-    { "makeProxyRequestNativeLocked", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
-        (void*)com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked},
+        {"createV8ParserNativeLocked", "()Z",
+         (void*)com_android_pacprocessor_PacNative_createV8ParserNativeLocked},
+        {"destroyV8ParserNativeLocked", "()Z",
+         (void*)com_android_pacprocessor_PacNative_destroyV8ParserNativeLocked},
+        {"setProxyScriptNativeLocked", "(Ljava/lang/String;)Z",
+         (void*)com_android_pacprocessor_PacNative_setProxyScriptNativeLocked},
+        {"makeProxyRequestNativeLocked", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+         (void*)com_android_pacprocessor_PacNative_makeProxyRequestNativeLocked},
 };
 
 int register_com_android_pacprocessor_PacNative(JNIEnv* env) {
-    return jniRegisterNativeMethods(env, "com/android/pacprocessor/PacNative",
-            gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "com/android/pacprocessor/PacNative", gMethods,
+                                    NELEM(gMethods));
 }
 
 } /* namespace android */

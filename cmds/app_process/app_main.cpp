@@ -14,43 +14,36 @@
 #include <unistd.h>
 
 #include <android-base/macros.h>
+#include <android_runtime/AndroidRuntime.h>
 #include <binder/IPCThreadState.h>
-#include <hwbinder/IPCThreadState.h>
-#include <utils/Log.h>
 #include <cutils/memory.h>
 #include <cutils/properties.h>
 #include <cutils/trace.h>
-#include <android_runtime/AndroidRuntime.h>
+#include <hwbinder/IPCThreadState.h>
 #include <private/android_filesystem_config.h>  // for AID_SYSTEM
+#include <utils/Log.h>
 
 namespace android {
 
-static void app_usage()
-{
-    fprintf(stderr,
-        "Usage: app_process [java-options] cmd-dir start-class-name [options]\n");
+static void app_usage() {
+    fprintf(stderr, "Usage: app_process [java-options] cmd-dir start-class-name [options]\n");
 }
 
-class AppRuntime : public AndroidRuntime
-{
-public:
+class AppRuntime : public AndroidRuntime {
+  public:
     AppRuntime(char* argBlockStart, const size_t argBlockLength)
-        : AndroidRuntime(argBlockStart, argBlockLength)
-        , mClass(NULL)
-    {
-    }
+        : AndroidRuntime(argBlockStart, argBlockLength), mClass(NULL) {}
 
-    void setClassNameAndArgs(const String8& className, int argc, char * const *argv) {
+    void setClassNameAndArgs(const String8& className, int argc, char* const* argv) {
         mClassName = className;
         for (int i = 0; i < argc; ++i) {
-             mArgs.add(String8(argv[i]));
+            mArgs.add(String8(argv[i]));
         }
     }
 
-    virtual void onVmCreated(JNIEnv* env)
-    {
+    virtual void onVmCreated(JNIEnv* env) {
         if (mClassName.isEmpty()) {
-            return; // Zygote. Nothing to do here.
+            return;  // Zygote. Nothing to do here.
         }
 
         /*
@@ -76,8 +69,7 @@ public:
         mClass = reinterpret_cast<jclass>(env->NewGlobalRef(mClass));
     }
 
-    virtual void onStarted()
-    {
+    virtual void onStarted() {
         sp<ProcessState> proc = ProcessState::self();
         ALOGV("App process: starting thread pool.\n");
         proc->startThreadPool();
@@ -89,15 +81,13 @@ public:
         hardware::IPCThreadState::self()->stopProcess();
     }
 
-    virtual void onZygoteInit()
-    {
+    virtual void onZygoteInit() {
         sp<ProcessState> proc = ProcessState::self();
         ALOGV("App process: starting thread pool.\n");
         proc->startThreadPool();
     }
 
-    virtual void onExit(int code)
-    {
+    virtual void onExit(int code) {
         if (mClassName.isEmpty()) {
             // if zygote
             IPCThreadState::self()->stopProcess();
@@ -107,13 +97,12 @@ public:
         AndroidRuntime::onExit(code);
     }
 
-
     String8 mClassName;
     Vector<String8> mArgs;
     jclass mClass;
 };
 
-}
+}  // namespace android
 
 using namespace android;
 
@@ -142,24 +131,25 @@ static void maybeCreateDalvikCache() {
     LOG_ALWAYS_FATAL_IF(androidRoot == NULL, "ANDROID_DATA environment variable unset");
 
     char dalvikCacheDir[PATH_MAX];
-    const int numChars = snprintf(dalvikCacheDir, PATH_MAX,
-            "%s/dalvik-cache/" ABI_STRING, androidRoot);
+    const int numChars =
+            snprintf(dalvikCacheDir, PATH_MAX, "%s/dalvik-cache/" ABI_STRING, androidRoot);
     LOG_ALWAYS_FATAL_IF((numChars >= PATH_MAX || numChars < 0),
-            "Error constructing dalvik cache : %s", strerror(errno));
+                        "Error constructing dalvik cache : %s", strerror(errno));
 
     int result = mkdir(dalvikCacheDir, 0711);
-    LOG_ALWAYS_FATAL_IF((result < 0 && errno != EEXIST),
-            "Error creating cache dir %s : %s", dalvikCacheDir, strerror(errno));
+    LOG_ALWAYS_FATAL_IF((result < 0 && errno != EEXIST), "Error creating cache dir %s : %s",
+                        dalvikCacheDir, strerror(errno));
 
     // We always perform these steps because the directory might
     // already exist, with wider permissions and a different owner
     // than we'd like.
     result = chown(dalvikCacheDir, AID_ROOT, AID_ROOT);
-    LOG_ALWAYS_FATAL_IF((result < 0), "Error changing dalvik-cache ownership : %s", strerror(errno));
+    LOG_ALWAYS_FATAL_IF((result < 0), "Error changing dalvik-cache ownership : %s",
+                        strerror(errno));
 
     result = chmod(dalvikCacheDir, 0711);
-    LOG_ALWAYS_FATAL_IF((result < 0),
-            "Error changing dalvik-cache permissions : %s", strerror(errno));
+    LOG_ALWAYS_FATAL_IF((result < 0), "Error changing dalvik-cache permissions : %s",
+                        strerror(errno));
 }
 
 #if defined(__LP64__)
@@ -170,16 +160,15 @@ static const char ABI_LIST_PROPERTY[] = "ro.product.cpu.abilist32";
 static const char ZYGOTE_NICE_NAME[] = "zygote";
 #endif
 
-int main(int argc, char* const argv[])
-{
+int main(int argc, char* const argv[]) {
     if (!LOG_NDEBUG) {
-      String8 argv_String;
-      for (int i = 0; i < argc; ++i) {
-        argv_String.append("\"");
-        argv_String.append(argv[i]);
-        argv_String.append("\" ");
-      }
-      ALOGV("app_process main with argv: %s", argv_String.string());
+        String8 argv_String;
+        for (int i = 0; i < argc; ++i) {
+            argv_String.append("\"");
+            argv_String.append(argv[i]);
+            argv_String.append("\" ");
+        }
+        ALOGV("app_process main with argv: %s", argv_String.string());
     }
 
     AppRuntime runtime(argv[0], computeArgBlockSize(argc, argv));
@@ -213,36 +202,35 @@ int main(int argc, char* const argv[])
     //
     // As an exception to the above rule, anything in "spaced commands"
     // goes to the vm even though it has a space in it.
-    const char* spaced_commands[] = { "-cp", "-classpath" };
+    const char* spaced_commands[] = {"-cp", "-classpath"};
     // Allow "spaced commands" to be succeeded by exactly 1 argument (regardless of -s).
     bool known_command = false;
 
     int i;
     for (i = 0; i < argc; i++) {
         if (known_command == true) {
-          runtime.addOption(strdup(argv[i]));
-          // The static analyzer gets upset that we don't ever free the above
-          // string. Since the allocation is from main, leaking it doesn't seem
-          // problematic. NOLINTNEXTLINE
-          ALOGV("app_process main add known option '%s'", argv[i]);
-          known_command = false;
-          continue;
+            runtime.addOption(strdup(argv[i]));
+            // The static analyzer gets upset that we don't ever free the above
+            // string. Since the allocation is from main, leaking it doesn't seem
+            // problematic. NOLINTNEXTLINE
+            ALOGV("app_process main add known option '%s'", argv[i]);
+            known_command = false;
+            continue;
         }
 
-        for (int j = 0;
-             j < static_cast<int>(sizeof(spaced_commands) / sizeof(spaced_commands[0]));
+        for (int j = 0; j < static_cast<int>(sizeof(spaced_commands) / sizeof(spaced_commands[0]));
              ++j) {
-          if (strcmp(argv[i], spaced_commands[j]) == 0) {
-            known_command = true;
-            ALOGV("app_process main found known command '%s'", argv[i]);
-          }
+            if (strcmp(argv[i], spaced_commands[j]) == 0) {
+                known_command = true;
+                ALOGV("app_process main found known command '%s'", argv[i]);
+            }
         }
 
         if (argv[i][0] != '-') {
             break;
         }
         if (argv[i][1] == '-' && argv[i][2] == 0) {
-            ++i; // Skip --.
+            ++i;  // Skip --.
             break;
         }
 
@@ -292,15 +280,15 @@ int main(int argc, char* const argv[])
         runtime.setClassNameAndArgs(className, argc - i, argv + i);
 
         if (!LOG_NDEBUG) {
-          String8 restOfArgs;
-          char* const* argv_new = argv + i;
-          int argc_new = argc - i;
-          for (int k = 0; k < argc_new; ++k) {
-            restOfArgs.append("\"");
-            restOfArgs.append(argv_new[k]);
-            restOfArgs.append("\" ");
-          }
-          ALOGV("Class name = %s, args = %s", className.string(), restOfArgs.string());
+            String8 restOfArgs;
+            char* const* argv_new = argv + i;
+            int argc_new = argc - i;
+            for (int k = 0; k < argc_new; ++k) {
+                restOfArgs.append("\"");
+                restOfArgs.append(argv_new[k]);
+                restOfArgs.append("\" ");
+            }
+            ALOGV("Class name = %s, args = %s", className.string(), restOfArgs.string());
         }
     } else {
         // We're in zygote mode.
@@ -313,7 +301,7 @@ int main(int argc, char* const argv[])
         char prop[PROP_VALUE_MAX];
         if (property_get(ABI_LIST_PROPERTY, prop, NULL) == 0) {
             LOG_ALWAYS_FATAL("app_process: Unable to determine ABI list from property %s.",
-                ABI_LIST_PROPERTY);
+                             ABI_LIST_PROPERTY);
             return 11;
         }
 

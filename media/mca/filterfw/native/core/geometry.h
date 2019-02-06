@@ -53,12 +53,11 @@ class Quad {
     Quad() : points_(4) {}
     virtual ~Quad() {}
 
-    Quad(const Point& p0, const Point& p1, const Point& p2, const Point& p3)
-        : points_(4) {
-      points_[0] = p0;
-      points_[1] = p1;
-      points_[2] = p2;
-      points_[3] = p3;
+    Quad(const Point& p0, const Point& p1, const Point& p2, const Point& p3) : points_(4) {
+        points_[0] = p0;
+        points_[1] = p1;
+        points_[2] = p2;
+        points_[3] = p3;
     }
 
     const std::vector<Point>& points() const { return points_; }
@@ -69,26 +68,26 @@ class Quad {
 };
 
 struct Rect {
-  float x, y, width, height;
+    float x, y, width, height;
 
-  Rect() {
-    x = y = 0.0f;
-    width = height = 1.0f;
-  }
+    Rect() {
+        x = y = 0.0f;
+        width = height = 1.0f;
+    }
 
-  Rect(float x, float y, float width, float height) {
-    this->x = x;
-    this->y = y;
-    this->width = width;
-    this->height = height;
-  }
+    Rect(float x, float y, float width, float height) {
+        this->x = x;
+        this->y = y;
+        this->width = width;
+        this->height = height;
+    }
 
-  bool ExpandToAspectRatio(float ratio);
-  bool ExpandToMinLength(float length);
-  bool ScaleWithLengthLimit(float factor, float max_length);
+    bool ExpandToAspectRatio(float ratio);
+    bool ExpandToMinLength(float length);
+    bool ScaleWithLengthLimit(float factor, float max_length);
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
-#endif // ANDROID_FILTERFW_CORE_GEOMETRY_H
+#endif  // ANDROID_FILTERFW_CORE_GEOMETRY_H

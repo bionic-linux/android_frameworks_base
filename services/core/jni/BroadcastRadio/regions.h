@@ -33,12 +33,11 @@ struct RegionalBandConfig {
     V1_0::BandConfig bandConfig;
 };
 
-std::vector<RegionalBandConfig>
-mapRegions(const hardware::hidl_vec<V1_0::BandConfig>& bands);
+std::vector<RegionalBandConfig> mapRegions(const hardware::hidl_vec<V1_0::BandConfig>& bands);
 
-} // namespace regions
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace regions
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android
 
-#endif // _ANDROID_SERVER_BROADCASTRADIO_REGIONS_H
+#endif  // _ANDROID_SERVER_BROADCASTRADIO_REGIONS_H

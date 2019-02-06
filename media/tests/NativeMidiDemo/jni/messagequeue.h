@@ -25,6 +25,6 @@ namespace nativemididemo {
 void writeMessage(const char* message);
 jobjectArray getRecentMessagesForJava(JNIEnv* env, jobject thiz);
 
-} // namespace nativemididemo
+}  // namespace nativemididemo
 
-#endif // NATIVEMIDIDEMO_MESSAGEQUEUE_H
+#endif  // NATIVEMIDIDEMO_MESSAGEQUEUE_H

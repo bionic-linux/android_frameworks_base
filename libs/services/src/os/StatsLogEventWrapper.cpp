@@ -41,5 +41,5 @@ status_t StatsLogEventWrapper::readFromParcel(const Parcel* in) {
     return ::android::NO_ERROR;
 };
 
-} // Namespace os
-} // Namespace android
+}  // Namespace os
+}  // Namespace android

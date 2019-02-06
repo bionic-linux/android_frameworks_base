@@ -21,8 +21,8 @@
 #include <utility>
 #include <vector>
 
-#include "android-base/logging.h"
 #include "ScopedUtfChars.h"
+#include "android-base/logging.h"
 
 #include "Diagnostics.h"
 #include "util/Util.h"
@@ -32,12 +32,12 @@ using android::StringPiece;
 namespace aapt {
 extern int Compile(const std::vector<StringPiece>& args, IDiagnostics* iDiagnostics);
 extern int Link(const std::vector<StringPiece>& args, IDiagnostics* iDiagnostics);
-}
+}  // namespace aapt
 
 /*
  * Converts a java List<String> into C++ vector<ScopedUtfChars>.
  */
-static std::vector<ScopedUtfChars> list_to_utfchars(JNIEnv *env, jobject obj) {
+static std::vector<ScopedUtfChars> list_to_utfchars(JNIEnv* env, jobject obj) {
   std::vector<ScopedUtfChars> converted;
 
   // Call size() method on the list to know how many elements there are.
@@ -68,12 +68,11 @@ static std::vector<ScopedUtfChars> list_to_utfchars(JNIEnv *env, jobject obj) {
  * The returned pieces can only be used while the original ones have not been
  * destroyed.
  */
-static std::vector<StringPiece> extract_pieces(const std::vector<ScopedUtfChars> &strings) {
+static std::vector<StringPiece> extract_pieces(const std::vector<ScopedUtfChars>& strings) {
   std::vector<StringPiece> pieces;
 
-  std::for_each(
-      strings.begin(), strings.end(),
-      [&pieces](const ScopedUtfChars &p) { pieces.push_back(p.c_str()); });
+  std::for_each(strings.begin(), strings.end(),
+                [&pieces](const ScopedUtfChars& p) { pieces.push_back(p.c_str()); });
 
   return pieces;
 }
@@ -122,8 +121,7 @@ class JniDiagnostics : public aapt::IDiagnostics {
 
 JNIEXPORT jint JNICALL Java_com_android_tools_aapt2_Aapt2Jni_nativeCompile(
     JNIEnv* env, jclass aapt_obj, jobject arguments_obj, jobject diagnostics_obj) {
-  std::vector<ScopedUtfChars> compile_args_jni =
-      list_to_utfchars(env, arguments_obj);
+  std::vector<ScopedUtfChars> compile_args_jni = list_to_utfchars(env, arguments_obj);
   std::vector<StringPiece> compile_args = extract_pieces(compile_args_jni);
   JniDiagnostics diagnostics(env, diagnostics_obj);
   return aapt::Compile(compile_args, &diagnostics);
@@ -133,14 +131,12 @@ JNIEXPORT jint JNICALL Java_com_android_tools_aapt2_Aapt2Jni_nativeLink(JNIEnv* 
                                                                         jclass aapt_obj,
                                                                         jobject arguments_obj,
                                                                         jobject diagnostics_obj) {
-  std::vector<ScopedUtfChars> link_args_jni =
-      list_to_utfchars(env, arguments_obj);
+  std::vector<ScopedUtfChars> link_args_jni = list_to_utfchars(env, arguments_obj);
   std::vector<StringPiece> link_args = extract_pieces(link_args_jni);
   JniDiagnostics diagnostics(env, diagnostics_obj);
   return aapt::Link(link_args, &diagnostics);
 }
 
-JNIEXPORT void JNICALL Java_com_android_tools_aapt2_Aapt2Jni_ping(
-        JNIEnv *env, jclass aapt_obj) {
+JNIEXPORT void JNICALL Java_com_android_tools_aapt2_Aapt2Jni_ping(JNIEnv* env, jclass aapt_obj) {
   // This is just a dummy method to see if the library has been loaded.
 }

@@ -23,72 +23,51 @@
 extern "C" {
 #endif
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_allocate(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_allocate(JNIEnv* env,
+                                                                             jobject thiz);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_deallocate(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_deallocate(JNIEnv* env,
+                                                                               jobject thiz);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_nativeInit(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_nativeInit(JNIEnv* env,
+                                                                               jobject thiz);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_openNativeLibrary(JNIEnv* env,
-                                                           jobject thiz,
-                                                           jstring lib_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_openNativeLibrary(
+        JNIEnv* env, jobject thiz, jstring lib_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindInitFunction(JNIEnv* env,
-                                                          jobject thiz,
-                                                          jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindInitFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindSetValueFunction(JNIEnv* env,
-                                                              jobject thiz,
-                                                              jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindSetValueFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindGetValueFunction(JNIEnv* env,
-                                                              jobject thiz,
-                                                              jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindGetValueFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindProcessFunction(JNIEnv* env,
-                                                             jobject thiz,
-                                                             jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindProcessFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindResetFunction(JNIEnv* env,
-                                                           jobject thiz,
-                                                           jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindResetFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_bindTeardownFunction(JNIEnv* env,
-                                                              jobject thiz,
-                                                              jstring func_name);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_bindTeardownFunction(
+        JNIEnv* env, jobject thiz, jstring func_name);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_callNativeInit(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_callNativeInit(JNIEnv* env,
+                                                                                   jobject thiz);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_callNativeSetValue(JNIEnv* env,
-                                                            jobject thiz,
-                                                            jstring key,
-                                                            jstring value);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_callNativeSetValue(
+        JNIEnv* env, jobject thiz, jstring key, jstring value);
 
-JNIEXPORT jstring JNICALL
-Java_android_filterfw_core_NativeProgram_callNativeGetValue(JNIEnv* env,
-                                                            jobject thiz,
-                                                            jstring key);
+JNIEXPORT jstring JNICALL Java_android_filterfw_core_NativeProgram_callNativeGetValue(JNIEnv* env,
+                                                                                      jobject thiz,
+                                                                                      jstring key);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_callNativeProcess(JNIEnv* env,
-                                                           jobject thiz,
-                                                           jobjectArray inputs,
-                                                           jobject output);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_callNativeProcess(
+        JNIEnv* env, jobject thiz, jobjectArray inputs, jobject output);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeProgram_callNativeReset(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeProgram_callNativeReset(JNIEnv* env,
+                                                                                    jobject thiz);
 
 JNIEXPORT jboolean JNICALL
 Java_android_filterfw_core_NativeProgram_callNativeTeardown(JNIEnv* env, jobject thiz);
@@ -97,4 +76,4 @@ Java_android_filterfw_core_NativeProgram_callNativeTeardown(JNIEnv* env, jobject
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_NATIVE_PROGRAM_H
+#endif  // ANDROID_FILTERFW_JNI_NATIVE_PROGRAM_H

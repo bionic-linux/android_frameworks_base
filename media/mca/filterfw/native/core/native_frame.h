@@ -40,28 +40,20 @@ class NativeFrame {
     bool WriteData(const uint8_t* data, int offset, int size);
 
     // Returns a pointer to the data, or NULL if no data was set.
-    const uint8_t* Data() const {
-      return data_;
-    }
+    const uint8_t* Data() const { return data_; }
 
     // Returns a non-const pointer to the data, or NULL if no data was set.
-    uint8_t* MutableData() {
-      return data_;
-    }
+    uint8_t* MutableData() { return data_; }
 
     // Resize the frame. You can only resize to a size that fits within the frame's capacity.
     // Returns true if the resize was successful.
     bool Resize(int newSize);
 
     // Returns the size of the frame in bytes.
-    int Size() {
-      return size_;
-    }
+    int Size() { return size_; }
 
     // Returns the capacity of the frame in bytes.
-    int Capacity() {
-      return capacity_;
-    }
+    int Capacity() { return capacity_; }
 
     // Returns a new native frame
     NativeFrame* Clone() const;
@@ -80,7 +72,7 @@ class NativeFrame {
     NativeFrame& operator=(const NativeFrame&) = delete;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_NATIVE_FRAME_H

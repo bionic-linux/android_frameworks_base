@@ -18,18 +18,17 @@
 
 #include <android/hardware/vibrator/1.0/IVibrator.h>
 #include <android/hardware/vibrator/1.0/types.h>
-#include <android/hardware/vibrator/1.0/IVibrator.h>
 #include <android/hardware/vibrator/1.1/types.h>
 #include <android/hardware/vibrator/1.2/IVibrator.h>
 #include <android/hardware/vibrator/1.2/types.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
 
-#include <utils/misc.h>
-#include <utils/Log.h>
 #include <hardware/vibrator.h>
+#include <utils/Log.h>
+#include <utils/misc.h>
 
 #include <inttypes.h>
 #include <stdio.h>
@@ -48,15 +47,15 @@ namespace android {
 static constexpr int NUM_TRIES = 2;
 
 // Creates a Return<R> with STATUS::EX_NULL_POINTER.
-template<class R>
+template <class R>
 inline Return<R> NullptrStatus() {
     using ::android::hardware::Status;
     return Return<R>{Status::fromExceptionCode(Status::EX_NULL_POINTER)};
 }
 
 // Helper used to transparently deal with the vibrator HAL becoming unavailable.
-template<class R, class I, class... Args0, class... Args1>
-Return<R> halCall(Return<R> (I::* fn)(Args0...), Args1&&... args1) {
+template <class R, class I, class... Args0, class... Args1>
+Return<R> halCall(Return<R> (I::*fn)(Args0...), Args1&&... args1) {
     // Assume that if getService returns a nullptr, HAL is not available on the
     // device.
     static sp<I> sHal = I::getService();
@@ -73,8 +72,7 @@ Return<R> halCall(Return<R> (I::* fn)(Args0...), Args1&&... args1) {
 
     // Note that ret is guaranteed to be changed after this loop.
     for (int i = 0; i < NUM_TRIES; ++i) {
-        ret = (sHal == nullptr) ? NullptrStatus<R>()
-                : (*sHal.*fn)(std::forward<Args1>(args1)...);
+        ret = (sHal == nullptr) ? NullptrStatus<R>() : (*sHal.*fn)(std::forward<Args1>(args1)...);
 
         if (ret.isOk()) {
             break;
@@ -87,7 +85,7 @@ Return<R> halCall(Return<R> (I::* fn)(Args0...), Args1&&... args1) {
     return ret;
 }
 
-template<class R>
+template <class R>
 bool isValidEffect(jlong effect) {
     if (effect < 0) {
         return false;
@@ -97,26 +95,22 @@ bool isValidEffect(jlong effect) {
     return val >= *iter.begin() && val < *std::prev(iter.end());
 }
 
-static void vibratorInit(JNIEnv /* env */, jobject /* clazz */)
-{
+static void vibratorInit(JNIEnv /* env */, jobject /* clazz */) {
     halCall(&V1_0::IVibrator::ping).isOk();
 }
 
-static jboolean vibratorExists(JNIEnv* /* env */, jobject /* clazz */)
-{
+static jboolean vibratorExists(JNIEnv* /* env */, jobject /* clazz */) {
     return halCall(&V1_0::IVibrator::ping).isOk() ? JNI_TRUE : JNI_FALSE;
 }
 
-static void vibratorOn(JNIEnv* /* env */, jobject /* clazz */, jlong timeout_ms)
-{
+static void vibratorOn(JNIEnv* /* env */, jobject /* clazz */, jlong timeout_ms) {
     Status retStatus = halCall(&V1_0::IVibrator::on, timeout_ms).withDefault(Status::UNKNOWN_ERROR);
     if (retStatus != Status::OK) {
         ALOGE("vibratorOn command failed (%" PRIu32 ").", static_cast<uint32_t>(retStatus));
     }
 }
 
-static void vibratorOff(JNIEnv* /* env */, jobject /* clazz */)
-{
+static void vibratorOff(JNIEnv* /* env */, jobject /* clazz */) {
     Status retStatus = halCall(&V1_0::IVibrator::off).withDefault(Status::UNKNOWN_ERROR);
     if (retStatus != Status::OK) {
         ALOGE("vibratorOff command failed (%" PRIu32 ").", static_cast<uint32_t>(retStatus));
@@ -129,10 +123,9 @@ static jlong vibratorSupportsAmplitudeControl(JNIEnv*, jobject) {
 
 static void vibratorSetAmplitude(JNIEnv*, jobject, jint amplitude) {
     Status status = halCall(&V1_0::IVibrator::setAmplitude, static_cast<uint32_t>(amplitude))
-        .withDefault(Status::UNKNOWN_ERROR);
+                            .withDefault(Status::UNKNOWN_ERROR);
     if (status != Status::OK) {
-      ALOGE("Failed to set vibrator amplitude (%" PRIu32 ").",
-            static_cast<uint32_t>(status));
+        ALOGE("Failed to set vibrator amplitude (%" PRIu32 ").", static_cast<uint32_t>(status));
     }
 }
 
@@ -147,17 +140,17 @@ static jlong vibratorPerformEffect(JNIEnv*, jobject, jlong effect, jint strength
 
     Return<void> ret;
     if (isValidEffect<V1_0::Effect>(effect)) {
-        ret = halCall(&V1_0::IVibrator::perform, static_cast<V1_0::Effect>(effect),
-                effectStrength, callback);
+        ret = halCall(&V1_0::IVibrator::perform, static_cast<V1_0::Effect>(effect), effectStrength,
+                      callback);
     } else if (isValidEffect<Effect_1_1>(effect)) {
         ret = halCall(&V1_1::IVibrator::perform_1_1, static_cast<Effect_1_1>(effect),
-                           effectStrength, callback);
+                      effectStrength, callback);
     } else if (isValidEffect<V1_2::Effect>(effect)) {
         ret = halCall(&V1_2::IVibrator::perform_1_2, static_cast<V1_2::Effect>(effect),
-                           effectStrength, callback);
+                      effectStrength, callback);
     } else {
         ALOGW("Unable to perform haptic effect, invalid effect ID (%" PRId32 ")",
-                static_cast<int32_t>(effect));
+              static_cast<int32_t>(effect));
         return -1;
     }
 
@@ -173,27 +166,26 @@ static jlong vibratorPerformEffect(JNIEnv*, jobject, jlong effect, jint strength
         // doesn't have a pre-defined waveform to perform for it, so we should just give the
         // opportunity to fall back to the framework waveforms.
         ALOGE("Failed to perform haptic effect: effect=%" PRId64 ", strength=%" PRId32
-                ", error=%" PRIu32 ").", static_cast<int64_t>(effect),
-                static_cast<int32_t>(strength), static_cast<uint32_t>(status));
+              ", error=%" PRIu32 ").",
+              static_cast<int64_t>(effect), static_cast<int32_t>(strength),
+              static_cast<uint32_t>(status));
     }
 
     return -1;
 }
 
 static const JNINativeMethod method_table[] = {
-    { "vibratorExists", "()Z", (void*)vibratorExists },
-    { "vibratorInit", "()V", (void*)vibratorInit },
-    { "vibratorOn", "(J)V", (void*)vibratorOn },
-    { "vibratorOff", "()V", (void*)vibratorOff },
-    { "vibratorSupportsAmplitudeControl", "()Z", (void*)vibratorSupportsAmplitudeControl},
-    { "vibratorSetAmplitude", "(I)V", (void*)vibratorSetAmplitude},
-    { "vibratorPerformEffect", "(JJ)J", (void*)vibratorPerformEffect}
-};
+        {"vibratorExists", "()Z", (void*)vibratorExists},
+        {"vibratorInit", "()V", (void*)vibratorInit},
+        {"vibratorOn", "(J)V", (void*)vibratorOn},
+        {"vibratorOff", "()V", (void*)vibratorOff},
+        {"vibratorSupportsAmplitudeControl", "()Z", (void*)vibratorSupportsAmplitudeControl},
+        {"vibratorSetAmplitude", "(I)V", (void*)vibratorSetAmplitude},
+        {"vibratorPerformEffect", "(JJ)J", (void*)vibratorPerformEffect}};
 
-int register_android_server_VibratorService(JNIEnv *env)
-{
-    return jniRegisterNativeMethods(env, "com/android/server/VibratorService",
-            method_table, NELEM(method_table));
+int register_android_server_VibratorService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/VibratorService", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

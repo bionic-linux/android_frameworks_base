@@ -31,13 +31,13 @@ static bool wrapper_two(XmlNodeAction::ActionFuncWithDiag& f, Element* el,
 }
 
 void XmlNodeAction::Action(XmlNodeAction::ActionFunc f) {
-  actions_.emplace_back(std::bind(
-      wrapper_one, std::move(f), std::placeholders::_1, std::placeholders::_2));
+  actions_.emplace_back(
+      std::bind(wrapper_one, std::move(f), std::placeholders::_1, std::placeholders::_2));
 }
 
 void XmlNodeAction::Action(XmlNodeAction::ActionFuncWithDiag f) {
-  actions_.emplace_back(std::bind(
-      wrapper_two, std::move(f), std::placeholders::_1, std::placeholders::_2));
+  actions_.emplace_back(
+      std::bind(wrapper_two, std::move(f), std::placeholders::_1, std::placeholders::_2));
 }
 
 static void PrintElementToDiagMessage(const Element* el, DiagMessage* msg) {

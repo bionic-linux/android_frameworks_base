@@ -46,7 +46,7 @@ inline ResourceName ParseNameOrDie(const android::StringPiece& str) {
 }
 
 inline android::ConfigDescription ParseConfigOrDie(const android::StringPiece& str) {
-    android::ConfigDescription config;
+  android::ConfigDescription config;
   CHECK(android::ConfigDescription::Parse(str, &config)) << "invalid configuration: " << str;
   return config;
 }
@@ -84,7 +84,8 @@ T* GetValue(ResourceTable* table, const android::StringPiece& res_name) {
 
 class TestFile : public io::IFile {
  public:
-  explicit TestFile(const android::StringPiece& path) : source_(path) {}
+  explicit TestFile(const android::StringPiece& path) : source_(path) {
+  }
 
   std::unique_ptr<io::IData> OpenAsData() override {
     return {};

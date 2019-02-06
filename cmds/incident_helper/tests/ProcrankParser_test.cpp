@@ -20,11 +20,11 @@
 
 #include <android-base/file.h>
 #include <android-base/test_utils.h>
+#include <fcntl.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/message_lite.h>
 #include <gtest/gtest.h>
 #include <string.h>
-#include <fcntl.h>
 
 using namespace android::base;
 using namespace android::os;
@@ -37,12 +37,10 @@ using ::testing::internal::GetCapturedStderr;
 using ::testing::internal::GetCapturedStdout;
 
 class ProcrankParserTest : public Test {
-public:
-    virtual void SetUp() override {
-        ASSERT_TRUE(tf.fd != -1);
-    }
+  public:
+    virtual void SetUp() override { ASSERT_TRUE(tf.fd != -1); }
 
-protected:
+  protected:
     TemporaryFile tf;
 
     const string kTestPath = GetExecutableDirectory();
@@ -87,10 +85,11 @@ TEST_F(ProcrankParserTest, HasSwapInfo) {
     total->set_zswap(6826);
     total->set_cmdline("TOTAL");
 
-    expected.mutable_summary()->mutable_zram()
-        ->set_raw_text("6828K physical used for 31076K in swap (524284K total swap)");
-    expected.mutable_summary()->mutable_ram()
-        ->set_raw_text("3843972K total, 281424K free, 116764K buffers, 1777452K cached, 1136K shmem, 217916K slab");
+    expected.mutable_summary()->mutable_zram()->set_raw_text(
+            "6828K physical used for 31076K in swap (524284K total swap)");
+    expected.mutable_summary()->mutable_ram()->set_raw_text(
+            "3843972K total, 281424K free, 116764K buffers, 1777452K cached, 1136K shmem, 217916K "
+            "slab");
 
     int fd = open(testFile.c_str(), O_RDONLY);
     ASSERT_TRUE(fd != -1);
@@ -127,8 +126,9 @@ TEST_F(ProcrankParserTest, NoSwapInfo) {
     total->set_uss(935300);
     total->set_cmdline("TOTAL");
 
-    expected.mutable_summary()->mutable_ram()
-        ->set_raw_text("3843972K total, 281424K free, 116764K buffers, 1777452K cached, 1136K shmem, 217916K slab");
+    expected.mutable_summary()->mutable_ram()->set_raw_text(
+            "3843972K total, 281424K free, 116764K buffers, 1777452K cached, 1136K shmem, 217916K "
+            "slab");
 
     int fd = open(testFile.c_str(), O_RDONLY);
     ASSERT_TRUE(fd != -1);

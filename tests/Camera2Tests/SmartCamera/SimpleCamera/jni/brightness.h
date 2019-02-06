@@ -24,13 +24,12 @@
 extern "C" {
 #endif
 
-    JNIEXPORT jfloat JNICALL
-    Java_androidx_media_filterfw_samples_simplecamera_AvgBrightnessFilter_brightnessOperator(
+JNIEXPORT jfloat JNICALL
+Java_androidx_media_filterfw_samples_simplecamera_AvgBrightnessFilter_brightnessOperator(
         JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_BRIGHTNESS_H
-
+#endif  // ANDROID_FILTERFW_JNI_BRIGHTNESS_H

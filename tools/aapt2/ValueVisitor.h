@@ -28,21 +28,48 @@ class ValueVisitor {
  public:
   virtual ~ValueVisitor() = default;
 
-  virtual void VisitAny(Value* value) {}
-  virtual void VisitItem(Item* value) { VisitAny(value); }
-  virtual void Visit(Reference* value) { VisitItem(value); }
-  virtual void Visit(RawString* value) { VisitItem(value); }
-  virtual void Visit(String* value) { VisitItem(value); }
-  virtual void Visit(StyledString* value) { VisitItem(value); }
-  virtual void Visit(FileReference* value) { VisitItem(value); }
-  virtual void Visit(Id* value) { VisitItem(value); }
-  virtual void Visit(BinaryPrimitive* value) { VisitItem(value); }
+  virtual void VisitAny(Value* value) {
+  }
+  virtual void VisitItem(Item* value) {
+    VisitAny(value);
+  }
+  virtual void Visit(Reference* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(RawString* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(String* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(StyledString* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(FileReference* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(Id* value) {
+    VisitItem(value);
+  }
+  virtual void Visit(BinaryPrimitive* value) {
+    VisitItem(value);
+  }
 
-  virtual void Visit(Attribute* value) { VisitAny(value); }
-  virtual void Visit(Style* value) { VisitAny(value); }
-  virtual void Visit(Array* value) { VisitAny(value); }
-  virtual void Visit(Plural* value) { VisitAny(value); }
-  virtual void Visit(Styleable* value) { VisitAny(value); }
+  virtual void Visit(Attribute* value) {
+    VisitAny(value);
+  }
+  virtual void Visit(Style* value) {
+    VisitAny(value);
+  }
+  virtual void Visit(Array* value) {
+    VisitAny(value);
+  }
+  virtual void Visit(Plural* value) {
+    VisitAny(value);
+  }
+  virtual void Visit(Styleable* value) {
+    VisitAny(value);
+  }
 };
 
 // Const version of ValueVisitor.

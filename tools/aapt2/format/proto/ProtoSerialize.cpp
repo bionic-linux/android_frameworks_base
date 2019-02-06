@@ -23,7 +23,8 @@ using android::ConfigDescription;
 
 namespace aapt {
 
-void SerializeStringPoolToPb(const StringPool& pool, pb::StringPool* out_pb_pool, IDiagnostics* diag) {
+void SerializeStringPoolToPb(const StringPool& pool, pb::StringPool* out_pb_pool,
+                             IDiagnostics* diag) {
   BigBuffer buffer(1024);
   StringPool::FlattenUtf8(&buffer, pool, diag);
 

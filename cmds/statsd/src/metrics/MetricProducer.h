@@ -80,7 +80,7 @@ public:
         // is a partial bucket and can merge it with the previous bucket.
     };
 
-    void notifyAppRemoved(const int64_t& eventTimeNs, const string& apk, const int uid) override{
+    void notifyAppRemoved(const int64_t& eventTimeNs, const string& apk, const int uid) override {
         // Force buckets to split on removal also.
         notifyAppUpgrade(eventTimeNs, apk, uid, 0);
     };
@@ -113,10 +113,8 @@ public:
 
     // Output the metrics data to [protoOutput]. All metrics reports end with the same timestamp.
     // This method clears all the past buckets.
-    void onDumpReport(const int64_t dumpTimeNs,
-                      const bool include_current_partial_bucket,
-                      std::set<string> *str_set,
-                      android::util::ProtoOutputStream* protoOutput) {
+    void onDumpReport(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                      std::set<string>* str_set, android::util::ProtoOutputStream* protoOutput) {
         std::lock_guard<std::mutex> lock(mMutex);
         return onDumpReportLocked(dumpTimeNs, include_current_partial_bucket, str_set, protoOutput);
     }
@@ -139,7 +137,7 @@ public:
     }
 
     /* If alert is valid, adds an AnomalyTracker and returns it. If invalid, returns nullptr. */
-    virtual sp<AnomalyTracker> addAnomalyTracker(const Alert &alert,
+    virtual sp<AnomalyTracker> addAnomalyTracker(const Alert& alert,
                                                  const sp<AlarmMonitor>& anomalyAlarmMonitor) {
         std::lock_guard<std::mutex> lock(mMutex);
         sp<AnomalyTracker> anomalyTracker = new AnomalyTracker(alert, mConfigKey);
@@ -183,7 +181,7 @@ protected:
                                                   const int64_t eventTime) = 0;
     virtual void onDumpReportLocked(const int64_t dumpTimeNs,
                                     const bool include_current_partial_bucket,
-                                    std::set<string> *str_set,
+                                    std::set<string>* str_set,
                                     android::util::ProtoOutputStream* protoOutput) = 0;
     virtual void clearPastBucketsLocked(const int64_t dumpTimeNs) = 0;
     virtual size_t byteSizeLocked() const = 0;
@@ -286,10 +284,10 @@ protected:
      *              nonSlicedCondition.
      * [event]: the log event, just in case the metric needs its data, e.g., EventMetric.
      */
-    virtual void onMatchedLogEventInternalLocked(
-            const size_t matcherIndex, const MetricDimensionKey& eventKey,
-            const ConditionKey& conditionKey, bool condition,
-            const LogEvent& event) = 0;
+    virtual void onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                                 const MetricDimensionKey& eventKey,
+                                                 const ConditionKey& conditionKey, bool condition,
+                                                 const LogEvent& event) = 0;
 
     // Consume the parsed stats log entry that already matched the "what" of the metric.
     virtual void onMatchedLogEventLocked(const size_t matcherIndex, const LogEvent& event);

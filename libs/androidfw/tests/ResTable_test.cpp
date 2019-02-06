@@ -34,8 +34,8 @@ namespace android {
 
 TEST(ResTableTest, ShouldLoadSuccessfully) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -71,8 +71,8 @@ TEST(ResTableTest, ShouldLoadSparseEntriesSuccessfully) {
 
 TEST(ResTableTest, SimpleTypeIsRetrievedCorrectly) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -82,25 +82,24 @@ TEST(ResTableTest, SimpleTypeIsRetrievedCorrectly) {
 
 TEST(ResTableTest, ResourceNameIsResolved) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
 
   String16 defPackage("com.android.basic");
   String16 testName("@string/test1");
-  uint32_t resID =
-      table.identifierForName(testName.string(), testName.size(), 0, 0,
-                              defPackage.string(), defPackage.size());
+  uint32_t resID = table.identifierForName(testName.string(), testName.size(), 0, 0,
+                                           defPackage.string(), defPackage.size());
   ASSERT_NE(uint32_t(0x00000000), resID);
   ASSERT_EQ(basic::R::string::test1, resID);
 }
 
 TEST(ResTableTest, NoParentThemeIsAppliedCorrectly) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -123,8 +122,8 @@ TEST(ResTableTest, NoParentThemeIsAppliedCorrectly) {
 
 TEST(ResTableTest, ParentThemeIsAppliedCorrectly) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -147,8 +146,8 @@ TEST(ResTableTest, ParentThemeIsAppliedCorrectly) {
 
 TEST(ResTableTest, LibraryThemeIsAppliedCorrectly) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/lib_one/lib_one.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/lib_one/lib_one.apk", "resources.arsc",
+                                      &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
@@ -171,15 +170,14 @@ TEST(ResTableTest, LibraryThemeIsAppliedCorrectly) {
 
 TEST(ResTableTest, ReferenceToBagIsNotResolved) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
 
   Res_value val;
-  ssize_t block =
-      table.getResource(basic::R::integer::number2, &val, MAY_NOT_BE_BAG);
+  ssize_t block = table.getResource(basic::R::integer::number2, &val, MAY_NOT_BE_BAG);
   ASSERT_GE(block, 0);
   ASSERT_EQ(Res_value::TYPE_REFERENCE, val.dataType);
   ASSERT_EQ(basic::R::array::integerArray1, val.data);
@@ -192,15 +190,14 @@ TEST(ResTableTest, ReferenceToBagIsNotResolved) {
 
 TEST(ResTableTest, ResourcesStillAccessibleAfterParameterChange) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
 
   Res_value val;
-  ssize_t block =
-      table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
+  ssize_t block = table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
   ASSERT_GE(block, 0);
   ASSERT_EQ(Res_value::TYPE_INT_DEC, val.dataType);
 
@@ -225,15 +222,14 @@ TEST(ResTableTest, ResourcesStillAccessibleAfterParameterChange) {
 
 TEST(ResTableTest, ResourceIsOverridenWithBetterConfig) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable table;
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
 
   Res_value val;
-  ssize_t block =
-      table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
+  ssize_t block = table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
   ASSERT_GE(block, 0);
   ASSERT_EQ(Res_value::TYPE_INT_DEC, val.dataType);
   ASSERT_EQ(uint32_t(200), val.data);
@@ -265,12 +261,11 @@ TEST(ResTableTest, emptyTableHasSensibleDefaults) {
   ASSERT_EQ(uint32_t(0), table.getBasePackageCount());
 
   Res_value val;
-  ASSERT_LT(table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG),
-            0);
+  ASSERT_LT(table.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG), 0);
 }
 
-void testU16StringToInt(const char16_t* str, uint32_t expectedValue,
-                        bool expectSuccess, bool expectHex) {
+void testU16StringToInt(const char16_t* str, uint32_t expectedValue, bool expectSuccess,
+                        bool expectHex) {
   size_t len = std::char_traits<char16_t>::length(str);
 
   // Gtest can't print UTF-16 strings, so we have to convert to UTF-8 :(
@@ -278,8 +273,7 @@ void testU16StringToInt(const char16_t* str, uint32_t expectedValue,
   std::string s = convert.to_bytes(std::u16string(str, len));
 
   Res_value out = {};
-  ASSERT_EQ(expectSuccess, U16StringToInt(str, len, &out)) << "Failed with "
-                                                           << s;
+  ASSERT_EQ(expectSuccess, U16StringToInt(str, len, &out)) << "Failed with " << s;
 
   if (!expectSuccess) {
     ASSERT_EQ(out.TYPE_NULL, out.dataType) << "Failed with " << s;
@@ -336,8 +330,7 @@ TEST(ResTableTest, U16StringToInt) {
 
   // Just before overflow cases:
   testU16StringToInt(u"2147483647", INT_MAX, true, false);
-  testU16StringToInt(u"-2147483648", static_cast<uint32_t>(INT_MIN), true,
-                     false);
+  testU16StringToInt(u"-2147483648", static_cast<uint32_t>(INT_MIN), true, false);
   testU16StringToInt(u"0xffffffff", UINT_MAX, true, true);
 
   // Overflow cases:
@@ -348,8 +341,8 @@ TEST(ResTableTest, U16StringToInt) {
 
 TEST(ResTableTest, ShareButDontModifyResTable) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   ResTable sharedTable;
   ASSERT_EQ(NO_ERROR, sharedTable.add(contents.data(), contents.size()));
@@ -362,8 +355,7 @@ TEST(ResTableTest, ShareButDontModifyResTable) {
 
   // Check that we get the default value for @integer:number1
   Res_value val;
-  ssize_t block =
-      sharedTable.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
+  ssize_t block = sharedTable.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
   ASSERT_GE(block, 0);
   ASSERT_EQ(Res_value::TYPE_INT_DEC, val.dataType);
   ASSERT_EQ(uint32_t(600), val.data);
@@ -387,8 +379,7 @@ TEST(ResTableTest, ShareButDontModifyResTable) {
   ASSERT_EQ(uint32_t(400), val.data);
 
   // Check that we still get the old value in the shared table.
-  block =
-      sharedTable.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
+  block = sharedTable.getResource(basic::R::integer::number1, &val, MAY_NOT_BE_BAG);
   ASSERT_GE(block, 0);
   ASSERT_EQ(Res_value::TYPE_INT_DEC, val.dataType);
   ASSERT_EQ(uint32_t(600), val.data);
@@ -396,16 +387,15 @@ TEST(ResTableTest, ShareButDontModifyResTable) {
 
 TEST(ResTableTest, GetConfigurationsReturnsUniqueList) {
   std::string contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk",
-                                      "resources.arsc", &contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/basic/basic.apk", "resources.arsc", &contents));
 
   std::string system_contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/system/system.apk",
-                                      "resources.arsc", &system_contents));
+  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/system/system.apk", "resources.arsc",
+                                      &system_contents));
 
   ResTable table;
-  ASSERT_EQ(NO_ERROR,
-            table.add(system_contents.data(), system_contents.size()));
+  ASSERT_EQ(NO_ERROR, table.add(system_contents.data(), system_contents.size()));
   ASSERT_EQ(NO_ERROR, table.add(contents.data(), contents.size()));
 
   ResTable_config configSv;
@@ -451,13 +441,14 @@ TEST(ResTableTest, TruncatedEncodeLength) {
   const char16_t* target_str16 = pool->stringAt(val.data, &str_len);
   ASSERT_TRUE(target_str16 != NULL);
   ASSERT_EQ(size_t(40076), String16(target_str16, str_len).size());
-  ASSERT_EQ(target_str8[40075], (char16_t) ']');
+  ASSERT_EQ(target_str8[40075], (char16_t)']');
 
   // Load an edited apk with the null terminator removed from the end of the
   // string
   std::string invalid_contents;
-  ASSERT_TRUE(ReadFileFromZipToString(GetTestDataPath() + "/length_decode/length_decode_invalid.apk",
-                                      "resources.arsc", &invalid_contents));
+  ASSERT_TRUE(
+      ReadFileFromZipToString(GetTestDataPath() + "/length_decode/length_decode_invalid.apk",
+                              "resources.arsc", &invalid_contents));
   ResTable invalid_table;
   ASSERT_EQ(NO_ERROR, invalid_table.add(invalid_contents.data(), invalid_contents.size()));
 

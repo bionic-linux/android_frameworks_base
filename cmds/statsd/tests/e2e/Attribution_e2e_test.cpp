@@ -31,10 +31,10 @@ namespace {
 
 StatsdConfig CreateStatsdConfig(const Position position) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     auto wakelockAcquireMatcher = CreateAcquireWakelockAtomMatcher();
     auto attributionNodeMatcher =
-        wakelockAcquireMatcher.mutable_simple_atom_matcher()->add_field_value_matcher();
+            wakelockAcquireMatcher.mutable_simple_atom_matcher()->add_field_value_matcher();
     attributionNodeMatcher->set_field(1);
     attributionNodeMatcher->set_position(Position::ANY);
     auto uidMatcher = attributionNodeMatcher->mutable_matches_tuple()->add_field_value_matcher();
@@ -47,8 +47,7 @@ StatsdConfig CreateStatsdConfig(const Position position) {
     countMetric->set_id(123456);
     countMetric->set_what(wakelockAcquireMatcher.id());
     *countMetric->mutable_dimensions_in_what() =
-        CreateAttributionUidAndTagDimensions(
-            android::util::WAKELOCK_STATE_CHANGED, {position});
+            CreateAttributionUidAndTagDimensions(android::util::WAKELOCK_STATE_CHANGED, {position});
     countMetric->set_bucket(FIVE_MINUTES);
     return config;
 }
@@ -58,8 +57,7 @@ StatsdConfig CreateStatsdConfig(const Position position) {
 TEST(AttributionE2eTest, TestAttributionMatchAndSliceByFirstUid) {
     auto config = CreateStatsdConfig(Position::FIRST);
     int64_t bucketStartTimeNs = 10000000000;
-    int64_t bucketSizeNs =
-        TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
+    int64_t bucketSizeNs = TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
 
     ConfigKey cfgKey;
     auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
@@ -110,32 +108,30 @@ TEST(AttributionE2eTest, TestAttributionMatchAndSliceByFirstUid) {
 
     std::vector<std::unique_ptr<LogEvent>> events;
     // Events 1~4 are in the 1st bucket.
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions1, "wl1", bucketStartTimeNs + 2));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions2, "wl1", bucketStartTimeNs + 200));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions3, "wl1", bucketStartTimeNs + bucketSizeNs - 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions4, "wl1", bucketStartTimeNs + bucketSizeNs));
+    events.push_back(CreateAcquireWakelockEvent(attributions1, "wl1", bucketStartTimeNs + 2));
+    events.push_back(CreateAcquireWakelockEvent(attributions2, "wl1", bucketStartTimeNs + 200));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions3, "wl1", bucketStartTimeNs + bucketSizeNs - 1));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions4, "wl1", bucketStartTimeNs + bucketSizeNs));
 
     // Events 5~8 are in the 3rd bucket.
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions5, "wl2", bucketStartTimeNs + 2 * bucketSizeNs + 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions6, "wl2", bucketStartTimeNs + 2 * bucketSizeNs + 100));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions7, "wl2", bucketStartTimeNs + 3 * bucketSizeNs - 2));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions8, "wl2", bucketStartTimeNs + 3 * bucketSizeNs));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions9, "wl2", bucketStartTimeNs + 3 * bucketSizeNs + 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions9, "wl2", bucketStartTimeNs + 3 * bucketSizeNs + 100));
-    events.push_back(CreateIsolatedUidChangedEvent(
-        isolatedUid, 222, true/* is_create*/, bucketStartTimeNs + 3 * bucketSizeNs - 1));
-    events.push_back(CreateIsolatedUidChangedEvent(
-        isolatedUid, 222, false/* is_create*/, bucketStartTimeNs + 3 * bucketSizeNs + 10));
+    events.push_back(CreateAcquireWakelockEvent(attributions5, "wl2",
+                                                bucketStartTimeNs + 2 * bucketSizeNs + 1));
+    events.push_back(CreateAcquireWakelockEvent(attributions6, "wl2",
+                                                bucketStartTimeNs + 2 * bucketSizeNs + 100));
+    events.push_back(CreateAcquireWakelockEvent(attributions7, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs - 2));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions8, "wl2", bucketStartTimeNs + 3 * bucketSizeNs));
+    events.push_back(CreateAcquireWakelockEvent(attributions9, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs + 1));
+    events.push_back(CreateAcquireWakelockEvent(attributions9, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs + 100));
+    events.push_back(CreateIsolatedUidChangedEvent(isolatedUid, 222, true /* is_create*/,
+                                                   bucketStartTimeNs + 3 * bucketSizeNs - 1));
+    events.push_back(CreateIsolatedUidChangedEvent(isolatedUid, 222, false /* is_create*/,
+                                                   bucketStartTimeNs + 3 * bucketSizeNs + 10));
 
     sortLogEventsByTimestamp(&events);
 
@@ -159,21 +155,21 @@ TEST(AttributionE2eTest, TestAttributionMatchAndSliceByFirstUid) {
     EXPECT_EQ(countMetrics.data_size(), 4);
 
     auto data = countMetrics.data(0);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), android::util::WAKELOCK_STATE_CHANGED, 111,
-            "App1");
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(),
+                                          android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
     EXPECT_EQ(data.bucket_info_size(), 2);
     EXPECT_EQ(data.bucket_info(0).count(), 2);
     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + bucketSizeNs);
     EXPECT_EQ(data.bucket_info(1).count(), 1);
-    EXPECT_EQ(data.bucket_info(1).start_bucket_elapsed_nanos(), bucketStartTimeNs + 2 * bucketSizeNs);
+    EXPECT_EQ(data.bucket_info(1).start_bucket_elapsed_nanos(),
+              bucketStartTimeNs + 2 * bucketSizeNs);
     EXPECT_EQ(data.bucket_info(1).end_bucket_elapsed_nanos(), bucketStartTimeNs + 3 * bucketSizeNs);
 
     data = countMetrics.data(1);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), android::util::WAKELOCK_STATE_CHANGED, 222,
-            "GMSCoreModule1");
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(),
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
     EXPECT_EQ(data.bucket_info_size(), 2);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
@@ -183,29 +179,30 @@ TEST(AttributionE2eTest, TestAttributionMatchAndSliceByFirstUid) {
     EXPECT_EQ(data.bucket_info(1).end_bucket_elapsed_nanos(), bucketStartTimeNs + 2 * bucketSizeNs);
 
     data = countMetrics.data(2);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), android::util::WAKELOCK_STATE_CHANGED, 222,
-            "GMSCoreModule3");
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(),
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule3");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
-    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs + 3 * bucketSizeNs);
+    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
+              bucketStartTimeNs + 3 * bucketSizeNs);
     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + 4 * bucketSizeNs);
 
     data = countMetrics.data(3);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), android::util::WAKELOCK_STATE_CHANGED, 444,
-            "GMSCoreModule2");
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(),
+                                          android::util::WAKELOCK_STATE_CHANGED, 444,
+                                          "GMSCoreModule2");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
-    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs + 2 * bucketSizeNs);
+    EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(),
+              bucketStartTimeNs + 2 * bucketSizeNs);
     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + 3 * bucketSizeNs);
 }
 
 TEST(AttributionE2eTest, TestAttributionMatchAndSliceByChain) {
     auto config = CreateStatsdConfig(Position::ALL);
     int64_t bucketStartTimeNs = 10000000000;
-    int64_t bucketSizeNs =
-        TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
+    int64_t bucketSizeNs = TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
 
     ConfigKey cfgKey;
     auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
@@ -256,32 +253,30 @@ TEST(AttributionE2eTest, TestAttributionMatchAndSliceByChain) {
 
     std::vector<std::unique_ptr<LogEvent>> events;
     // Events 1~4 are in the 1st bucket.
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions1, "wl1", bucketStartTimeNs + 2));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions2, "wl1", bucketStartTimeNs + 200));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions3, "wl1", bucketStartTimeNs + bucketSizeNs - 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions4, "wl1", bucketStartTimeNs + bucketSizeNs));
+    events.push_back(CreateAcquireWakelockEvent(attributions1, "wl1", bucketStartTimeNs + 2));
+    events.push_back(CreateAcquireWakelockEvent(attributions2, "wl1", bucketStartTimeNs + 200));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions3, "wl1", bucketStartTimeNs + bucketSizeNs - 1));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions4, "wl1", bucketStartTimeNs + bucketSizeNs));
 
     // Events 5~8 are in the 3rd bucket.
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions5, "wl2", bucketStartTimeNs + 2 * bucketSizeNs + 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions6, "wl2", bucketStartTimeNs + 2 * bucketSizeNs + 100));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions7, "wl2", bucketStartTimeNs + 3 * bucketSizeNs - 2));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions8, "wl2", bucketStartTimeNs + 3 * bucketSizeNs));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions9, "wl2", bucketStartTimeNs + 3 * bucketSizeNs + 1));
-    events.push_back(CreateAcquireWakelockEvent(
-        attributions9, "wl2", bucketStartTimeNs + 3 * bucketSizeNs + 100));
-    events.push_back(CreateIsolatedUidChangedEvent(
-        isolatedUid, 222, true/* is_create*/, bucketStartTimeNs + 3 * bucketSizeNs - 1));
-    events.push_back(CreateIsolatedUidChangedEvent(
-        isolatedUid, 222, false/* is_create*/, bucketStartTimeNs + 3 * bucketSizeNs + 10));
+    events.push_back(CreateAcquireWakelockEvent(attributions5, "wl2",
+                                                bucketStartTimeNs + 2 * bucketSizeNs + 1));
+    events.push_back(CreateAcquireWakelockEvent(attributions6, "wl2",
+                                                bucketStartTimeNs + 2 * bucketSizeNs + 100));
+    events.push_back(CreateAcquireWakelockEvent(attributions7, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs - 2));
+    events.push_back(
+            CreateAcquireWakelockEvent(attributions8, "wl2", bucketStartTimeNs + 3 * bucketSizeNs));
+    events.push_back(CreateAcquireWakelockEvent(attributions9, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs + 1));
+    events.push_back(CreateAcquireWakelockEvent(attributions9, "wl2",
+                                                bucketStartTimeNs + 3 * bucketSizeNs + 100));
+    events.push_back(CreateIsolatedUidChangedEvent(isolatedUid, 222, true /* is_create*/,
+                                                   bucketStartTimeNs + 3 * bucketSizeNs - 1));
+    events.push_back(CreateIsolatedUidChangedEvent(isolatedUid, 222, false /* is_create*/,
+                                                   bucketStartTimeNs + 3 * bucketSizeNs + 10));
 
     sortLogEventsByTimestamp(&events);
 
@@ -305,109 +300,94 @@ TEST(AttributionE2eTest, TestAttributionMatchAndSliceByChain) {
     EXPECT_EQ(countMetrics.data_size(), 6);
 
     auto data = countMetrics.data(0);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), android::util::WAKELOCK_STATE_CHANGED, 222, "GMSCoreModule1");
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(),
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
     EXPECT_EQ(2, data.bucket_info_size());
     EXPECT_EQ(1, data.bucket_info(0).count());
-    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs,
-              data.bucket_info(0).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + 2 * bucketSizeNs,
-              data.bucket_info(0).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs, data.bucket_info(0).start_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + 2 * bucketSizeNs, data.bucket_info(0).end_bucket_elapsed_nanos());
     EXPECT_EQ(1, data.bucket_info(1).count());
     EXPECT_EQ(bucketStartTimeNs + 3 * bucketSizeNs,
               data.bucket_info(1).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + 4 * bucketSizeNs,
-              data.bucket_info(1).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + 4 * bucketSizeNs, data.bucket_info(1).end_bucket_elapsed_nanos());
 
     data = countMetrics.data(1);
-    ValidateUidDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 222);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 222, "GMSCoreModule1");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
+    ValidateUidDimension(data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 222);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 0,
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
+    ValidateUidDimension(data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 1,
+                                          android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
     EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
     EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + bucketSizeNs);
 
     data = countMetrics.data(2);
-    ValidateUidDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 444);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 444, "GMSCoreModule2");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222, "GMSCoreModule1");
+    ValidateUidDimension(data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 444);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 0,
+                                          android::util::WAKELOCK_STATE_CHANGED, 444,
+                                          "GMSCoreModule2");
+    ValidateUidDimension(data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 1,
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
     EXPECT_EQ(bucketStartTimeNs + 2 * bucketSizeNs,
               data.bucket_info(0).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + 3 * bucketSizeNs,
-              data.bucket_info(0).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + 3 * bucketSizeNs, data.bucket_info(0).end_bucket_elapsed_nanos());
 
     data = countMetrics.data(3);
-    ValidateUidDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222, "GMSCoreModule1");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
+    ValidateUidDimension(data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 0,
+                                          android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
+    ValidateUidDimension(data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 222);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 1,
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
+    ValidateUidDimension(data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 2,
+                                          android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
-    EXPECT_EQ(bucketStartTimeNs,
-              data.bucket_info(0).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs,
-              data.bucket_info(0).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs, data.bucket_info(0).start_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs, data.bucket_info(0).end_bucket_elapsed_nanos());
 
     data = countMetrics.data(4);
-    ValidateUidDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 222);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 222, "GMSCoreModule1");
+    ValidateUidDimension(data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 0,
+                                          android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
+    ValidateUidDimension(data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 333);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 1,
+                                          android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
+    ValidateUidDimension(data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 222);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 2,
+                                          android::util::WAKELOCK_STATE_CHANGED, 222,
+                                          "GMSCoreModule1");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
-    EXPECT_EQ(bucketStartTimeNs,
-              data.bucket_info(0).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs,
-              data.bucket_info(0).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs, data.bucket_info(0).start_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + bucketSizeNs, data.bucket_info(0).end_bucket_elapsed_nanos());
 
     data = countMetrics.data(5);
-    ValidateUidDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 444);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 444, "GMSCoreModule2");
-    ValidateUidDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333);
-    ValidateAttributionUidAndTagDimension(
-        data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
+    ValidateUidDimension(data.dimensions_in_what(), 0, android::util::WAKELOCK_STATE_CHANGED, 111);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 0,
+                                          android::util::WAKELOCK_STATE_CHANGED, 111, "App1");
+    ValidateUidDimension(data.dimensions_in_what(), 1, android::util::WAKELOCK_STATE_CHANGED, 444);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 1,
+                                          android::util::WAKELOCK_STATE_CHANGED, 444,
+                                          "GMSCoreModule2");
+    ValidateUidDimension(data.dimensions_in_what(), 2, android::util::WAKELOCK_STATE_CHANGED, 333);
+    ValidateAttributionUidAndTagDimension(data.dimensions_in_what(), 2,
+                                          android::util::WAKELOCK_STATE_CHANGED, 333, "App3");
     EXPECT_EQ(data.bucket_info_size(), 1);
     EXPECT_EQ(data.bucket_info(0).count(), 1);
     EXPECT_EQ(bucketStartTimeNs + 2 * bucketSizeNs,
               data.bucket_info(0).start_bucket_elapsed_nanos());
-    EXPECT_EQ(bucketStartTimeNs + 3 * bucketSizeNs,
-              data.bucket_info(0).end_bucket_elapsed_nanos());
+    EXPECT_EQ(bucketStartTimeNs + 3 * bucketSizeNs, data.bucket_info(0).end_bucket_elapsed_nanos());
 }
 
 #else

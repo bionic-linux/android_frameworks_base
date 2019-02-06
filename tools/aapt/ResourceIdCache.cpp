@@ -5,9 +5,9 @@
 
 #define LOG_TAG "ResourceIdCache"
 
-#include <utils/String16.h>
-#include <utils/Log.h>
 #include "ResourceIdCache.h"
+#include <utils/Log.h>
+#include <utils/String16.h>
 #include <map>
 
 static size_t mHits = 0;
@@ -24,15 +24,14 @@ struct CacheEntry {
     uint32_t id;
 
     CacheEntry() {}
-    CacheEntry(const android::String16& name, uint32_t resId) : hashedName(name), id(resId) { }
+    CacheEntry(const android::String16& name, uint32_t resId) : hashedName(name), id(resId) {}
 };
 
-static std::map< uint32_t, CacheEntry > mIdMap;
-
+static std::map<uint32_t, CacheEntry> mIdMap;
 
 // djb2; reasonable choice for strings when collisions aren't particularly important
 static inline uint32_t hashround(uint32_t hash, int c) {
-    return ((hash << 5) + hash) + c;    /* hash * 33 + c */
+    return ((hash << 5) + hash) + c; /* hash * 33 + c */
 }
 
 static uint32_t hash(const android::String16& hashableString) {
@@ -45,9 +44,8 @@ static uint32_t hash(const android::String16& hashableString) {
 namespace android {
 
 static inline String16 makeHashableName(const android::String16& package,
-        const android::String16& type,
-        const android::String16& name,
-        bool onlyPublic) {
+                                        const android::String16& type,
+                                        const android::String16& name, bool onlyPublic) {
     String16 hashable = String16(name);
     hashable += type;
     hashable += package;
@@ -55,10 +53,8 @@ static inline String16 makeHashableName(const android::String16& package,
     return hashable;
 }
 
-uint32_t ResourceIdCache::lookup(const android::String16& package,
-        const android::String16& type,
-        const android::String16& name,
-        bool onlyPublic) {
+uint32_t ResourceIdCache::lookup(const android::String16& package, const android::String16& type,
+                                 const android::String16& name, bool onlyPublic) {
     const String16 hashedName = makeHashableName(package, type, name, onlyPublic);
     const uint32_t hashcode = hash(hashedName);
     std::map<uint32_t, CacheEntry>::iterator item = mIdMap.find(hashcode);
@@ -81,11 +77,8 @@ uint32_t ResourceIdCache::lookup(const android::String16& package,
 }
 
 // returns the resource ID being stored, for callsite convenience
-uint32_t ResourceIdCache::store(const android::String16& package,
-        const android::String16& type,
-        const android::String16& name,
-        bool onlyPublic,
-        uint32_t resId) {
+uint32_t ResourceIdCache::store(const android::String16& package, const android::String16& type,
+                                const android::String16& name, bool onlyPublic, uint32_t resId) {
     if (mIdMap.size() < MAX_CACHE_ENTRIES) {
         const String16 hashedName = makeHashableName(package, type, name, onlyPublic);
         const uint32_t hashcode = hash(hashedName);
@@ -102,4 +95,4 @@ void ResourceIdCache::dump() {
     printf("(Collisions: %zd)\n", mCollisions);
 }
 
-}
+}  // namespace android

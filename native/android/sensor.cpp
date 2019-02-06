@@ -22,8 +22,8 @@
 #include <android/sharedmem.h>
 #include <cutils/native_handle.h>
 #include <sensor/Sensor.h>
-#include <sensor/SensorManager.h>
 #include <sensor/SensorEventQueue.h>
+#include <sensor/SensorManager.h>
 #include <utils/Looper.h>
 #include <utils/RefBase.h>
 #include <utils/Timers.h>
@@ -31,34 +31,37 @@
 
 #include <poll.h>
 
-using android::sp;
 using android::Sensor;
-using android::SensorManager;
 using android::SensorEventQueue;
-using android::String8;
+using android::SensorManager;
+using android::sp;
 using android::String16;
+using android::String8;
 
 /*****************************************************************************/
 #define ERROR_INVALID_PARAMETER(message) ALOGE("%s: " message, __func__)
 
 // frequently used checks
-#define RETURN_IF_MANAGER_IS_NULL(retval) do {\
-        if (manager == nullptr) { \
+#define RETURN_IF_MANAGER_IS_NULL(retval)                      \
+    do {                                                       \
+        if (manager == nullptr) {                              \
             ERROR_INVALID_PARAMETER("manager cannot be NULL"); \
-            return retval; \
-        } \
+            return retval;                                     \
+        }                                                      \
     } while (false)
-#define RETURN_IF_SENSOR_IS_NULL(retval) do {\
-        if (sensor == nullptr) { \
+#define RETURN_IF_SENSOR_IS_NULL(retval)                      \
+    do {                                                      \
+        if (sensor == nullptr) {                              \
             ERROR_INVALID_PARAMETER("sensor cannot be NULL"); \
-            return retval; \
-        } \
+            return retval;                                    \
+        }                                                     \
     } while (false)
-#define RETURN_IF_QUEUE_IS_NULL(retval) do {\
-        if (queue == nullptr) { \
+#define RETURN_IF_QUEUE_IS_NULL(retval)                      \
+    do {                                                     \
+        if (queue == nullptr) {                              \
             ERROR_INVALID_PARAMETER("queue cannot be NULL"); \
-            return retval; \
-        } \
+            return retval;                                   \
+        }                                                    \
     } while (false)
 
 ASensorManager* ASensorManager_getInstance() {
@@ -95,14 +98,15 @@ ASensor const* ASensorManager_getDefaultSensorEx(ASensorManager* manager, int ty
     for (size_t i = 0; i < size; ++i) {
         if (ASensor_getType(sensorList[i]) == type &&
             ASensor_isWakeUpSensor(sensorList[i]) == wakeUp) {
-            return reinterpret_cast<ASensor const *>(sensorList[i]);
-       }
+            return reinterpret_cast<ASensor const*>(sensorList[i]);
+        }
     }
     return nullptr;
 }
 
-ASensorEventQueue* ASensorManager_createEventQueue(ASensorManager* manager,
-        ALooper* looper, int ident, ALooper_callbackFunc callback, void* data) {
+ASensorEventQueue* ASensorManager_createEventQueue(ASensorManager* manager, ALooper* looper,
+                                                   int ident, ALooper_callbackFunc callback,
+                                                   void* data) {
     RETURN_IF_MANAGER_IS_NULL(nullptr);
 
     if (looper == nullptr) {
@@ -110,8 +114,7 @@ ASensorEventQueue* ASensorManager_createEventQueue(ASensorManager* manager,
         return nullptr;
     }
 
-    sp<SensorEventQueue> queue =
-            static_cast<SensorManager*>(manager)->createEventQueue();
+    sp<SensorEventQueue> queue = static_cast<SensorManager*>(manager)->createEventQueue();
     if (queue != 0) {
         ALooper_addFd(looper, queue->getFd(), ident, ALOOPER_EVENT_INPUT, callback, data);
         queue->looper = looper;
@@ -130,7 +133,7 @@ int ASensorManager_destroyEventQueue(ASensorManager* manager, ASensorEventQueue*
     return 0;
 }
 
-int ASensorManager_createSharedMemoryDirectChannel(ASensorManager *manager, int fd, size_t size) {
+int ASensorManager_createSharedMemoryDirectChannel(ASensorManager* manager, int fd, size_t size) {
     RETURN_IF_MANAGER_IS_NULL(android::BAD_VALUE);
 
     if (fd < 0) {
@@ -143,20 +146,20 @@ int ASensorManager_createSharedMemoryDirectChannel(ASensorManager *manager, int 
         return android::BAD_VALUE;
     }
 
-    native_handle_t *resourceHandle = native_handle_create(1 /* nFd */, 0 /* nInt */);
+    native_handle_t* resourceHandle = native_handle_create(1 /* nFd */, 0 /* nInt */);
     if (!resourceHandle) {
         return android::NO_MEMORY;
     }
 
     resourceHandle->data[0] = fd;
-    int ret = static_cast<SensorManager *>(manager)->createDirectChannel(
+    int ret = static_cast<SensorManager*>(manager)->createDirectChannel(
             size, ASENSOR_DIRECT_CHANNEL_TYPE_SHARED_MEMORY, resourceHandle);
     native_handle_delete(resourceHandle);
     return ret;
 }
 
-int ASensorManager_createHardwareBufferDirectChannel(
-        ASensorManager *manager, AHardwareBuffer const *buffer, size_t size) {
+int ASensorManager_createHardwareBufferDirectChannel(ASensorManager* manager,
+                                                     AHardwareBuffer const* buffer, size_t size) {
     RETURN_IF_MANAGER_IS_NULL(android::BAD_VALUE);
 
     if (buffer == nullptr) {
@@ -169,44 +172,44 @@ int ASensorManager_createHardwareBufferDirectChannel(
         return android::BAD_VALUE;
     }
 
-    const native_handle_t *resourceHandle = AHardwareBuffer_getNativeHandle(buffer);
+    const native_handle_t* resourceHandle = AHardwareBuffer_getNativeHandle(buffer);
     if (!resourceHandle) {
         return android::NO_MEMORY;
     }
 
-    return static_cast<SensorManager *>(manager)->createDirectChannel(
+    return static_cast<SensorManager*>(manager)->createDirectChannel(
             size, ASENSOR_DIRECT_CHANNEL_TYPE_HARDWARE_BUFFER, resourceHandle);
 }
 
-void ASensorManager_destroyDirectChannel(ASensorManager *manager, int channelId) {
+void ASensorManager_destroyDirectChannel(ASensorManager* manager, int channelId) {
     RETURN_IF_MANAGER_IS_NULL(void());
 
-    static_cast<SensorManager *>(manager)->destroyDirectChannel(channelId);
+    static_cast<SensorManager*>(manager)->destroyDirectChannel(channelId);
 }
 
-int ASensorManager_configureDirectReport(
-        ASensorManager *manager, ASensor const *sensor, int channelId, int rate) {
+int ASensorManager_configureDirectReport(ASensorManager* manager, ASensor const* sensor,
+                                         int channelId, int rate) {
     RETURN_IF_MANAGER_IS_NULL(android::BAD_VALUE);
 
     int sensorHandle;
     if (sensor == nullptr) {
         if (rate != ASENSOR_DIRECT_RATE_STOP) {
             ERROR_INVALID_PARAMETER(
-                "sensor cannot be null when rate is not ASENSOR_DIRECT_RATE_STOP");
+                    "sensor cannot be null when rate is not ASENSOR_DIRECT_RATE_STOP");
             return android::BAD_VALUE;
         }
         sensorHandle = -1;
     } else {
-        sensorHandle = static_cast<Sensor const *>(sensor)->getHandle();
+        sensorHandle = static_cast<Sensor const*>(sensor)->getHandle();
     }
-    return static_cast<SensorManager *>(manager)->configureDirectChannel(
-            channelId, sensorHandle, rate);
+    return static_cast<SensorManager*>(manager)->configureDirectChannel(channelId, sensorHandle,
+                                                                        rate);
 }
 
 /*****************************************************************************/
 
 int ASensorEventQueue_registerSensor(ASensorEventQueue* queue, ASensor const* sensor,
-        int32_t samplingPeriodUs, int64_t maxBatchReportLatencyUs) {
+                                     int32_t samplingPeriodUs, int64_t maxBatchReportLatencyUs) {
     RETURN_IF_QUEUE_IS_NULL(android::BAD_VALUE);
     RETURN_IF_SENSOR_IS_NULL(android::BAD_VALUE);
     if (samplingPeriodUs < 0 || maxBatchReportLatencyUs < 0) {
@@ -216,23 +219,21 @@ int ASensorEventQueue_registerSensor(ASensorEventQueue* queue, ASensor const* se
 
     return static_cast<SensorEventQueue*>(queue)->enableSensor(
             static_cast<Sensor const*>(sensor)->getHandle(), samplingPeriodUs,
-                    maxBatchReportLatencyUs, 0);
+            maxBatchReportLatencyUs, 0);
 }
 
 int ASensorEventQueue_enableSensor(ASensorEventQueue* queue, ASensor const* sensor) {
     RETURN_IF_QUEUE_IS_NULL(android::BAD_VALUE);
     RETURN_IF_SENSOR_IS_NULL(android::BAD_VALUE);
 
-    return static_cast<SensorEventQueue*>(queue)->enableSensor(
-            static_cast<Sensor const*>(sensor));
+    return static_cast<SensorEventQueue*>(queue)->enableSensor(static_cast<Sensor const*>(sensor));
 }
 
 int ASensorEventQueue_disableSensor(ASensorEventQueue* queue, ASensor const* sensor) {
     RETURN_IF_QUEUE_IS_NULL(android::BAD_VALUE);
     RETURN_IF_SENSOR_IS_NULL(android::BAD_VALUE);
 
-    return static_cast<SensorEventQueue*>(queue)->disableSensor(
-            static_cast<Sensor const*>(sensor));
+    return static_cast<SensorEventQueue*>(queue)->disableSensor(static_cast<Sensor const*>(sensor));
 }
 
 int ASensorEventQueue_setEventRate(ASensorEventQueue* queue, ASensor const* sensor, int32_t usec) {
@@ -244,8 +245,8 @@ int ASensorEventQueue_setEventRate(ASensorEventQueue* queue, ASensor const* sens
         return android::BAD_VALUE;
     }
 
-    return static_cast<SensorEventQueue*>(queue)->setEventRate(
-            static_cast<Sensor const*>(sensor), us2ns(usec));
+    return static_cast<SensorEventQueue*>(queue)->setEventRate(static_cast<Sensor const*>(sensor),
+                                                               us2ns(usec));
 }
 
 int ASensorEventQueue_hasEvents(ASensorEventQueue* queue) {
@@ -258,11 +259,9 @@ int ASensorEventQueue_hasEvents(ASensorEventQueue* queue) {
 
     int nfd = poll(&pfd, 1, 0);
 
-    if (nfd < 0)
-        return -errno;
+    if (nfd < 0) return -errno;
 
-    if (pfd.revents != POLLIN)
-        return -1;
+    if (pfd.revents != POLLIN) return -1;
 
     return (nfd == 0) ? 0 : 1;
 }
@@ -333,12 +332,12 @@ bool ASensor_isWakeUpSensor(ASensor const* sensor) {
     return static_cast<Sensor const*>(sensor)->isWakeUpSensor();
 }
 
-bool ASensor_isDirectChannelTypeSupported(ASensor const *sensor, int channelType) {
+bool ASensor_isDirectChannelTypeSupported(ASensor const* sensor, int channelType) {
     RETURN_IF_SENSOR_IS_NULL(false);
-    return static_cast<Sensor const *>(sensor)->isDirectChannelTypeSupported(channelType);
+    return static_cast<Sensor const*>(sensor)->isDirectChannelTypeSupported(channelType);
 }
 
-int ASensor_getHighestDirectReportRateLevel(ASensor const *sensor) {
+int ASensor_getHighestDirectReportRateLevel(ASensor const* sensor) {
     RETURN_IF_SENSOR_IS_NULL(ASENSOR_DIRECT_RATE_STOP);
-    return static_cast<Sensor const *>(sensor)->getHighestDirectReportRateLevel();
+    return static_cast<Sensor const*>(sensor)->getHighestDirectReportRateLevel();
 }

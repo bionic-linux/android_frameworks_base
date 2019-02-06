@@ -18,15 +18,13 @@
 #include <android/util/ProtoOutputStream.h>
 #include <unistd.h>
 
+#include "CpuFreqParser.h"
 #include "frameworks/base/core/proto/android/os/cpufreq.proto.h"
 #include "ih_util.h"
-#include "CpuFreqParser.h"
 
 using namespace android::os;
 
-status_t
-CpuFreqParser::Parse(const int in, const int out) const
-{
+status_t CpuFreqParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
 
@@ -51,11 +49,11 @@ CpuFreqParser::Parse(const int in, const int out) const
         }
 
         int freq = toInt(record[0]);
-        for (int i=0; i<numCpus; i++) {
-            if (strcmp(record[i+1].c_str(), "N/A") == 0) {
+        for (int i = 0; i < numCpus; i++) {
+            if (strcmp(record[i + 1].c_str(), "N/A") == 0) {
                 continue;
             }
-            cpucores[i].push_back(make_pair(freq, toLongLong(record[i+1])));
+            cpucores[i].push_back(make_pair(freq, toLongLong(record[i + 1])));
         }
     }
 
@@ -64,10 +62,11 @@ CpuFreqParser::Parse(const int in, const int out) const
     long jiffyHz = sysconf(_SC_CLK_TCK);
     proto.write(CpuFreqProto::JIFFY_HZ, (int)jiffyHz);
 
-    for (int i=0; i<numCpus; i++) {
+    for (int i = 0; i < numCpus; i++) {
         uint64_t token = proto.start(CpuFreqProto::CPU_FREQS);
-        proto.write(CpuFreqProto::Stats::CPU_NAME, header[i+1]);
-        for (vector<pair<int, long long>>::iterator it = cpucores[i].begin(); it != cpucores[i].end(); it++) {
+        proto.write(CpuFreqProto::Stats::CPU_NAME, header[i + 1]);
+        for (vector<pair<int, long long>>::iterator it = cpucores[i].begin();
+             it != cpucores[i].end(); it++) {
             uint64_t stateToken = proto.start(CpuFreqProto::Stats::TIMES);
             proto.write(CpuFreqProto::Stats::TimeInState::STATE_KHZ, it->first);
             proto.write(CpuFreqProto::Stats::TimeInState::TIME_JIFFY, it->second);

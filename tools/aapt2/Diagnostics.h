@@ -38,11 +38,14 @@ struct DiagMessage {
  public:
   DiagMessage() = default;
 
-  explicit DiagMessage(const android::StringPiece& src) : source_(src) {}
+  explicit DiagMessage(const android::StringPiece& src) : source_(src) {
+  }
 
-  explicit DiagMessage(const Source& src) : source_(src) {}
+  explicit DiagMessage(const Source& src) : source_(src) {
+  }
 
-  explicit DiagMessage(size_t line) : source_(Source().WithLine(line)) {}
+  explicit DiagMessage(size_t line) : source_(Source().WithLine(line)) {
+  }
 
   template <typename T>
   DiagMessage& operator<<(const T& value) {
@@ -127,8 +130,8 @@ class StdErrDiagnostics : public IDiagnostics {
 
 class SourcePathDiagnostics : public IDiagnostics {
  public:
-  SourcePathDiagnostics(const Source& src, IDiagnostics* diag)
-      : source_(src), diag_(diag) {}
+  SourcePathDiagnostics(const Source& src, IDiagnostics* diag) : source_(src), diag_(diag) {
+  }
 
   void Log(Level level, DiagMessageActual& actual_msg) override {
     actual_msg.source.path = source_.path;

@@ -16,26 +16,26 @@
 
 #define LOG_TAG "StaticLayout"
 
-#include "utils/misc.h"
-#include "utils/Log.h"
-#include <nativehelper/ScopedStringChars.h>
-#include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedPrimitiveArray.h>
+#include <nativehelper/ScopedStringChars.h>
+#include <algorithm>
+#include <cstdint>
+#include <list>
+#include <vector>
 #include "core_jni_helpers.h"
 #include "scoped_nullable_primitive_array.h"
-#include <cstdint>
-#include <vector>
-#include <list>
-#include <algorithm>
+#include "utils/Log.h"
+#include "utils/misc.h"
 
-#include "SkPaint.h"
-#include "SkTypeface.h"
 #include <hwui/MinikinSkia.h>
 #include <hwui/MinikinUtils.h>
 #include <hwui/Paint.h>
-#include <minikin/FontCollection.h>
 #include <minikin/AndroidLineBreakerHelper.h>
+#include <minikin/FontCollection.h>
 #include <minikin/MinikinFont.h>
+#include "SkPaint.h"
+#include "SkTypeface.h"
 
 namespace android {
 
@@ -52,7 +52,7 @@ static JLineBreaksID gLineBreaks_fieldID;
 
 static inline std::vector<float> jintArrayToFloatVector(JNIEnv* env, jintArray javaArray) {
     if (javaArray == nullptr) {
-         return std::vector<float>();
+        return std::vector<float>();
     } else {
         ScopedIntArrayRO intArr(env, javaArray);
         return std::vector<float>(intArr.get(), intArr.get() + intArr.size());
@@ -65,15 +65,13 @@ static inline minikin::android::StaticLayoutNative* toNative(jlong ptr) {
 
 // set text and set a number of parameters for creating a layout (width, tabstops, strategy,
 // hyphenFrequency)
-static jlong nInit(JNIEnv* env, jclass /* unused */,
-        jint breakStrategy, jint hyphenationFrequency, jboolean isJustified,
-        jintArray indents, jintArray leftPaddings, jintArray rightPaddings) {
+static jlong nInit(JNIEnv* env, jclass /* unused */, jint breakStrategy, jint hyphenationFrequency,
+                   jboolean isJustified, jintArray indents, jintArray leftPaddings,
+                   jintArray rightPaddings) {
     return reinterpret_cast<jlong>(new minikin::android::StaticLayoutNative(
             static_cast<minikin::BreakStrategy>(breakStrategy),
-            static_cast<minikin::HyphenationFrequency>(hyphenationFrequency),
-            isJustified,
-            jintArrayToFloatVector(env, indents),
-            jintArrayToFloatVector(env, leftPaddings),
+            static_cast<minikin::HyphenationFrequency>(hyphenationFrequency), isJustified,
+            jintArrayToFloatVector(env, indents), jintArrayToFloatVector(env, leftPaddings),
             jintArrayToFloatVector(env, rightPaddings)));
 }
 
@@ -84,8 +82,8 @@ static void nFinish(jlong nativePtr) {
 
 static void recycleCopy(JNIEnv* env, jobject recycle, jintArray recycleBreaks,
                         jfloatArray recycleWidths, jfloatArray recycleAscents,
-                        jfloatArray recycleDescents, jintArray recycleFlags,
-                        jint recycleLength, const minikin::LineBreakResult& result) {
+                        jfloatArray recycleDescents, jintArray recycleFlags, jint recycleLength,
+                        const minikin::LineBreakResult& result) {
     const size_t nBreaks = result.breakPoints.size();
     if ((size_t)recycleLength < nBreaks) {
         // have to reallocate buffers
@@ -110,27 +108,16 @@ static void recycleCopy(JNIEnv* env, jobject recycle, jintArray recycleBreaks,
 }
 
 static jint nComputeLineBreaks(JNIEnv* env, jclass, jlong nativePtr,
-        // Inputs
-        jcharArray javaText,
-        jlong measuredTextPtr,
-        jint length,
-        jfloat firstWidth,
-        jint firstWidthLineCount,
-        jfloat restWidth,
-        jintArray variableTabStops,
-        jint defaultTabStop,
-        jint indentsOffset,
+                               // Inputs
+                               jcharArray javaText, jlong measuredTextPtr, jint length,
+                               jfloat firstWidth, jint firstWidthLineCount, jfloat restWidth,
+                               jintArray variableTabStops, jint defaultTabStop, jint indentsOffset,
 
-        // Outputs
-        jobject recycle,
-        jint recycleLength,
-        jintArray recycleBreaks,
-        jfloatArray recycleWidths,
-        jfloatArray recycleAscents,
-        jfloatArray recycleDescents,
-        jintArray recycleFlags,
-        jfloatArray charWidths) {
-
+                               // Outputs
+                               jobject recycle, jint recycleLength, jintArray recycleBreaks,
+                               jfloatArray recycleWidths, jfloatArray recycleAscents,
+                               jfloatArray recycleDescents, jintArray recycleFlags,
+                               jfloatArray charWidths) {
     minikin::android::StaticLayoutNative* builder = toNative(nativePtr);
 
     ScopedCharArrayRO text(env, javaText);
@@ -143,7 +130,7 @@ static jint nComputeLineBreaks(JNIEnv* env, jclass, jlong nativePtr,
             tabStops.get(), tabStops.size(), defaultTabStop);
 
     recycleCopy(env, recycle, recycleBreaks, recycleWidths, recycleAscents, recycleDescents,
-            recycleFlags, recycleLength, result);
+                recycleFlags, recycleLength, result);
 
     env->SetFloatArrayRegion(charWidths, 0, measuredText->widths.size(),
                              measuredText->widths.data());
@@ -152,50 +139,52 @@ static jint nComputeLineBreaks(JNIEnv* env, jclass, jlong nativePtr,
 }
 
 static const JNINativeMethod gMethods[] = {
-    // Fast Natives
-    {"nInit", "("
-        "I"  // breakStrategy
-        "I"  // hyphenationFrequency
-        "Z"  // isJustified
-        "[I"  // indents
-        "[I"  // left paddings
-        "[I"  // right paddings
-        ")J", (void*) nInit},
+        // Fast Natives
+        {"nInit",
+         "("
+         "I"   // breakStrategy
+         "I"   // hyphenationFrequency
+         "Z"   // isJustified
+         "[I"  // indents
+         "[I"  // left paddings
+         "[I"  // right paddings
+         ")J",
+         (void*)nInit},
 
-    // Critical Natives
-    {"nFinish", "(J)V", (void*) nFinish},
+        // Critical Natives
+        {"nFinish", "(J)V", (void*)nFinish},
 
-    // Regular JNI
-    {"nComputeLineBreaks", "("
-        "J"  // nativePtr
+        // Regular JNI
+        {"nComputeLineBreaks",
+         "("
+         "J"  // nativePtr
 
-        // Inputs
-        "[C"  // text
-        "J"  // MeasuredParagraph ptr.
-        "I"  // length
-        "F"  // firstWidth
-        "I"  // firstWidthLineCount
-        "F"  // restWidth
-        "[I"  // variableTabStops
-        "I"  // defaultTabStop
-        "I"  // indentsOffset
+         // Inputs
+         "[C"  // text
+         "J"   // MeasuredParagraph ptr.
+         "I"   // length
+         "F"   // firstWidth
+         "I"   // firstWidthLineCount
+         "F"   // restWidth
+         "[I"  // variableTabStops
+         "I"   // defaultTabStop
+         "I"   // indentsOffset
 
-        // Outputs
-        "Landroid/text/StaticLayout$LineBreaks;"  // recycle
-        "I"  // recycleLength
-        "[I"  // recycleBreaks
-        "[F"  // recycleWidths
-        "[F"  // recycleAscents
-        "[F"  // recycleDescents
-        "[I"  // recycleFlags
-        "[F"  // charWidths
-        ")I", (void*) nComputeLineBreaks}
-};
+         // Outputs
+         "Landroid/text/StaticLayout$LineBreaks;"  // recycle
+         "I"                                       // recycleLength
+         "[I"                                      // recycleBreaks
+         "[F"                                      // recycleWidths
+         "[F"                                      // recycleAscents
+         "[F"                                      // recycleDescents
+         "[I"                                      // recycleFlags
+         "[F"                                      // charWidths
+         ")I",
+         (void*)nComputeLineBreaks}};
 
-int register_android_text_StaticLayout(JNIEnv* env)
-{
-    gLineBreaks_class = MakeGlobalRefOrDie(env,
-            FindClassOrDie(env, "android/text/StaticLayout$LineBreaks"));
+int register_android_text_StaticLayout(JNIEnv* env) {
+    gLineBreaks_class =
+            MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/text/StaticLayout$LineBreaks"));
 
     gLineBreaks_fieldID.breaks = GetFieldIDOrDie(env, gLineBreaks_class, "breaks", "[I");
     gLineBreaks_fieldID.widths = GetFieldIDOrDie(env, gLineBreaks_class, "widths", "[F");
@@ -206,4 +195,4 @@ int register_android_text_StaticLayout(JNIEnv* env)
     return RegisterMethodsOrDie(env, "android/text/StaticLayout", gMethods, NELEM(gMethods));
 }
 
-}
+}  // namespace android

@@ -19,9 +19,9 @@
 #include <utils/Log.h>
 #include "utils/misc.h"
 
-#include "jni.h"
 #include <android_runtime/android_content_res_Configuration.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
 
 #include "core_jni_helpers.h"
 
@@ -45,8 +45,7 @@ static struct {
     jfieldID smallestScreenWidthDp;
 } gConfigurationClassInfo;
 
-void android_Configuration_getFromJava(
-        JNIEnv* env, jobject clazz, struct AConfiguration* out) {
+void android_Configuration_getFromJava(JNIEnv* env, jobject clazz, struct AConfiguration* out) {
     out->mcc = env->GetIntField(clazz, gConfigurationClassInfo.mcc);
     out->mnc = env->GetIntField(clazz, gConfigurationClassInfo.mnc);
     out->screenLayout = env->GetIntField(clazz, gConfigurationClassInfo.screenLayout);
@@ -56,24 +55,22 @@ void android_Configuration_getFromJava(
 
     out->inputFlags = env->GetIntField(clazz, gConfigurationClassInfo.keyboardHidden);
     int hardKeyboardHidden = env->GetIntField(clazz, gConfigurationClassInfo.hardKeyboardHidden);
-    if (out->inputFlags == ACONFIGURATION_KEYSHIDDEN_NO
-            && hardKeyboardHidden == 2) {
+    if (out->inputFlags == ACONFIGURATION_KEYSHIDDEN_NO && hardKeyboardHidden == 2) {
         out->inputFlags = ACONFIGURATION_KEYSHIDDEN_SOFT;
     }
     out->inputFlags |= env->GetIntField(clazz, gConfigurationClassInfo.navigationHidden)
-            << ResTable_config::SHIFT_NAVHIDDEN;
+                       << ResTable_config::SHIFT_NAVHIDDEN;
 
     out->orientation = env->GetIntField(clazz, gConfigurationClassInfo.orientation);
     out->uiMode = env->GetIntField(clazz, gConfigurationClassInfo.uiMode);
 
     out->screenWidthDp = env->GetIntField(clazz, gConfigurationClassInfo.screenWidthDp);
     out->screenHeightDp = env->GetIntField(clazz, gConfigurationClassInfo.screenHeightDp);
-    out->smallestScreenWidthDp = env->GetIntField(clazz,
-            gConfigurationClassInfo.smallestScreenWidthDp);
+    out->smallestScreenWidthDp =
+            env->GetIntField(clazz, gConfigurationClassInfo.smallestScreenWidthDp);
 }
 
-int register_android_content_res_Configuration(JNIEnv* env)
-{
+int register_android_content_res_Configuration(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/content/res/Configuration");
 
     gConfigurationClassInfo.mcc = GetFieldIDOrDie(env, clazz, "mcc", "I");
@@ -83,18 +80,18 @@ int register_android_content_res_Configuration(JNIEnv* env)
     gConfigurationClassInfo.touchscreen = GetFieldIDOrDie(env, clazz, "touchscreen", "I");
     gConfigurationClassInfo.keyboard = GetFieldIDOrDie(env, clazz, "keyboard", "I");
     gConfigurationClassInfo.keyboardHidden = GetFieldIDOrDie(env, clazz, "keyboardHidden", "I");
-    gConfigurationClassInfo.hardKeyboardHidden = GetFieldIDOrDie(env, clazz, "hardKeyboardHidden",
-                                                                 "I");
+    gConfigurationClassInfo.hardKeyboardHidden =
+            GetFieldIDOrDie(env, clazz, "hardKeyboardHidden", "I");
     gConfigurationClassInfo.navigation = GetFieldIDOrDie(env, clazz, "navigation", "I");
     gConfigurationClassInfo.navigationHidden = GetFieldIDOrDie(env, clazz, "navigationHidden", "I");
     gConfigurationClassInfo.orientation = GetFieldIDOrDie(env, clazz, "orientation", "I");
     gConfigurationClassInfo.uiMode = GetFieldIDOrDie(env, clazz, "uiMode", "I");
     gConfigurationClassInfo.screenWidthDp = GetFieldIDOrDie(env, clazz, "screenWidthDp", "I");
     gConfigurationClassInfo.screenHeightDp = GetFieldIDOrDie(env, clazz, "screenHeightDp", "I");
-    gConfigurationClassInfo.smallestScreenWidthDp = GetFieldIDOrDie(env, clazz,
-                                                                    "smallestScreenWidthDp", "I");
+    gConfigurationClassInfo.smallestScreenWidthDp =
+            GetFieldIDOrDie(env, clazz, "smallestScreenWidthDp", "I");
 
     return 0;
 }
 
-}; // namespace android
+};  // namespace android

@@ -25,9 +25,9 @@ using namespace android;
  * event.logtags parser, parse file in /system/etc/event-log-tags
  */
 class EventLogTagsParser : public TextParserBase {
-public:
-    EventLogTagsParser() : TextParserBase(String8("EventLogTagsParser")) {};
-    ~EventLogTagsParser() {};
+  public:
+    EventLogTagsParser() : TextParserBase(String8("EventLogTagsParser")){};
+    ~EventLogTagsParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

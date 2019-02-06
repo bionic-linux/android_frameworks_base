@@ -16,19 +16,19 @@
 
 #include <jni.h>
 
-extern "C" JNIEXPORT
-jint JNICALL Java_com_android_frameworks_coretests_JNITests_checkFunction(JNIEnv*, jclass) {
+extern "C" JNIEXPORT jint JNICALL
+Java_com_android_frameworks_coretests_JNITests_checkFunction(JNIEnv*, jclass) {
     return 1;
 }
 
 /*
  * JNI Initialization
  */
-jint JNI_OnLoad(JavaVM *jvm, void */* reserved */) {
-    JNIEnv *e;
+jint JNI_OnLoad(JavaVM* jvm, void* /* reserved */) {
+    JNIEnv* e;
 
     // Check JNI version
-    if (jvm->GetEnv((void **) &e, JNI_VERSION_1_6)) {
+    if (jvm->GetEnv((void**)&e, JNI_VERSION_1_6)) {
         return JNI_ERR;
     }
 

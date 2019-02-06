@@ -17,22 +17,20 @@
 #define LOG_TAG "SELinuxJNI"
 #include <utils/Log.h>
 
-#include <nativehelper/JNIHelp.h>
-#include "jni.h"
-#include "core_jni_helpers.h"
-#include "selinux/selinux.h"
-#include "selinux/android.h"
 #include <errno.h>
-#include <memory>
+#include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <memory>
+#include "core_jni_helpers.h"
+#include "jni.h"
+#include "selinux/android.h"
+#include "selinux/selinux.h"
 
 namespace android {
 
 struct SecurityContext_Delete {
-    void operator()(security_context_t p) const {
-        freecon(p);
-    }
+    void operator()(security_context_t p) const { freecon(p); }
 };
 typedef std::unique_ptr<char[], SecurityContext_Delete> Unique_SecurityContext;
 
@@ -45,7 +43,7 @@ static jboolean isSELinuxDisabled = true;
  * Return value : true (enabled) or false (disabled)
  * Exceptions: none
  */
-static jboolean isSELinuxEnabled(JNIEnv *env, jobject) {
+static jboolean isSELinuxEnabled(JNIEnv* env, jobject) {
     return !isSELinuxDisabled;
 }
 
@@ -56,18 +54,18 @@ static jboolean isSELinuxEnabled(JNIEnv *env, jobject) {
  * Return value: true (enforcing) or false (permissive)
  * Exceptions: none
  */
-static jboolean isSELinuxEnforced(JNIEnv *env, jobject) {
+static jboolean isSELinuxEnforced(JNIEnv* env, jobject) {
     return (security_getenforce() == 1) ? true : false;
 }
 
-static jstring getFdConInner(JNIEnv *env, jobject fileDescriptor, bool isSocket) {
+static jstring getFdConInner(JNIEnv* env, jobject fileDescriptor, bool isSocket) {
     if (isSELinuxDisabled) {
         return NULL;
     }
 
     if (fileDescriptor == NULL) {
         jniThrowNullPointerException(env,
-                "Trying to check security context of a null FileDescriptor.");
+                                     "Trying to check security context of a null FileDescriptor.");
         return NULL;
     }
 
@@ -81,7 +79,7 @@ static jstring getFdConInner(JNIEnv *env, jobject fileDescriptor, bool isSocket)
     int ret;
     if (isSocket) {
         ret = getpeercon(fd, &tmp);
-    } else{
+    } else {
         ret = fgetfilecon(fd, &tmp);
     }
     Unique_SecurityContext context(tmp);
@@ -103,7 +101,7 @@ static jstring getFdConInner(JNIEnv *env, jobject fileDescriptor, bool isSocket)
  * Returns: jstring representing the security_context of socket or NULL if error
  * Exceptions: NullPointerException if fileDescriptor object is NULL
  */
-static jstring getPeerCon(JNIEnv *env, jobject, jobject fileDescriptor) {
+static jstring getPeerCon(JNIEnv* env, jobject, jobject fileDescriptor) {
     return getFdConInner(env, fileDescriptor, true);
 }
 
@@ -115,7 +113,7 @@ static jstring getPeerCon(JNIEnv *env, jobject, jobject fileDescriptor) {
  * Returns: jstring representing the security_context of socket or NULL if error
  * Exceptions: NullPointerException if fileDescriptor object is NULL
  */
-static jstring getFdCon(JNIEnv *env, jobject, jobject fileDescriptor) {
+static jstring getFdCon(JNIEnv* env, jobject, jobject fileDescriptor) {
     return getFdConInner(env, fileDescriptor, false);
 }
 
@@ -128,7 +126,7 @@ static jstring getFdCon(JNIEnv *env, jobject, jobject fileDescriptor) {
  * Returns: true on success, false on error
  * Exception: none
  */
-static jboolean setFSCreateCon(JNIEnv *env, jobject, jstring contextStr) {
+static jboolean setFSCreateCon(JNIEnv* env, jobject, jstring contextStr) {
     if (isSELinuxDisabled) {
         return false;
     }
@@ -143,7 +141,7 @@ static jboolean setFSCreateCon(JNIEnv *env, jobject, jstring contextStr) {
         }
     }
 
-    int ret = setfscreatecon(const_cast<char *>(context_c_str));
+    int ret = setfscreatecon(const_cast<char*>(context_c_str));
 
     ALOGV("setFSCreateCon(%s) => %d", context_c_str, ret);
 
@@ -159,7 +157,7 @@ static jboolean setFSCreateCon(JNIEnv *env, jobject, jstring contextStr) {
  * Returns: true on success, false on error
  * Exception: NullPointerException is thrown if either path or context strign are NULL
  */
-static jboolean setFileCon(JNIEnv *env, jobject, jstring pathStr, jstring contextStr) {
+static jboolean setFileCon(JNIEnv* env, jobject, jstring pathStr, jstring contextStr) {
     if (isSELinuxDisabled) {
         return false;
     }
@@ -175,7 +173,7 @@ static jboolean setFileCon(JNIEnv *env, jobject, jstring pathStr, jstring contex
     }
 
     // GetStringUTFChars returns const char * yet setfilecon needs char *
-    char *tmp = const_cast<char *>(context.c_str());
+    char* tmp = const_cast<char*>(context.c_str());
     int ret = setfilecon(path.c_str(), tmp);
 
     ALOGV("setFileCon(%s, %s) => %d", path.c_str(), context.c_str(), ret);
@@ -192,7 +190,7 @@ static jboolean setFileCon(JNIEnv *env, jobject, jstring pathStr, jstring contex
  *        the string may be NULL if an error occured
  * Exceptions: NullPointerException if the path object is null
  */
-static jstring getFileCon(JNIEnv *env, jobject, jstring pathStr) {
+static jstring getFileCon(JNIEnv* env, jobject, jstring pathStr) {
     if (isSELinuxDisabled) {
         return NULL;
     }
@@ -223,7 +221,7 @@ static jstring getFileCon(JNIEnv *env, jobject, jstring pathStr) {
  *          the jstring may be NULL if there was an error
  * Exceptions: none
  */
-static jstring getCon(JNIEnv *env, jobject) {
+static jstring getCon(JNIEnv* env, jobject) {
     if (isSELinuxDisabled) {
         return NULL;
     }
@@ -250,7 +248,7 @@ static jstring getCon(JNIEnv *env, jobject) {
  *          the jstring may be NULL if there was an error
  * Exceptions: none
  */
-static jstring getPidCon(JNIEnv *env, jobject, jint pid) {
+static jstring getPidCon(JNIEnv* env, jobject, jint pid) {
     if (isSELinuxDisabled) {
         return NULL;
     }
@@ -278,8 +276,9 @@ static jstring getPidCon(JNIEnv *env, jobject, jint pid) {
  * Returns: boolean: (true) if permission was granted, (false) otherwise
  * Exceptions: None
  */
-static jboolean checkSELinuxAccess(JNIEnv *env, jobject, jstring subjectContextStr,
-        jstring objectContextStr, jstring objectClassStr, jstring permissionStr) {
+static jboolean checkSELinuxAccess(JNIEnv* env, jobject, jstring subjectContextStr,
+                                   jstring objectContextStr, jstring objectClassStr,
+                                   jstring permissionStr) {
     if (isSELinuxDisabled) {
         return true;
     }
@@ -304,13 +303,13 @@ static jboolean checkSELinuxAccess(JNIEnv *env, jobject, jstring subjectContextS
         return false;
     }
 
-    char *tmp1 = const_cast<char *>(subjectContext.c_str());
-    char *tmp2 = const_cast<char *>(objectContext.c_str());
-    int accessGranted = selinux_check_access(tmp1, tmp2, objectClass.c_str(), permission.c_str(),
-            NULL);
+    char* tmp1 = const_cast<char*>(subjectContext.c_str());
+    char* tmp2 = const_cast<char*>(objectContext.c_str());
+    int accessGranted =
+            selinux_check_access(tmp1, tmp2, objectClass.c_str(), permission.c_str(), NULL);
 
     ALOGV("checkSELinuxAccess(%s, %s, %s, %s) => %d", subjectContext.c_str(), objectContext.c_str(),
-            objectClass.c_str(), permission.c_str(), accessGranted);
+          objectClass.c_str(), permission.c_str(), accessGranted);
 
     return (accessGranted == 0) ? true : false;
 }
@@ -322,7 +321,7 @@ static jboolean checkSELinuxAccess(JNIEnv *env, jobject, jstring subjectContextS
  * Returns: boolean: (true) file label successfully restored, (false) otherwise
  * Exceptions: none
  */
-static jboolean native_restorecon(JNIEnv *env, jobject, jstring pathnameStr, jint flags) {
+static jboolean native_restorecon(JNIEnv* env, jobject, jstring pathnameStr, jint flags) {
     if (isSELinuxDisabled) {
         return true;
     }
@@ -342,34 +341,36 @@ static jboolean native_restorecon(JNIEnv *env, jobject, jstring pathnameStr, jin
  * JNI registration.
  */
 static const JNINativeMethod method_table[] = {
-    /* name,                     signature,                    funcPtr */
-    { "checkSELinuxAccess"       , "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z" , (void*)checkSELinuxAccess },
-    { "getContext"               , "()Ljava/lang/String;"                         , (void*)getCon           },
-    { "getFileContext"           , "(Ljava/lang/String;)Ljava/lang/String;"       , (void*)getFileCon       },
-    { "getPeerContext"           , "(Ljava/io/FileDescriptor;)Ljava/lang/String;" , (void*)getPeerCon       },
-    { "getFileContext"           , "(Ljava/io/FileDescriptor;)Ljava/lang/String;" , (void*)getFdCon         },
-    { "getPidContext"            , "(I)Ljava/lang/String;"                        , (void*)getPidCon        },
-    { "isSELinuxEnforced"        , "()Z"                                          , (void*)isSELinuxEnforced},
-    { "isSELinuxEnabled"         , "()Z"                                          , (void*)isSELinuxEnabled },
-    { "native_restorecon"        , "(Ljava/lang/String;I)Z"                       , (void*)native_restorecon},
-    { "setFileContext"           , "(Ljava/lang/String;Ljava/lang/String;)Z"      , (void*)setFileCon       },
-    { "setFSCreateContext"       , "(Ljava/lang/String;)Z"                        , (void*)setFSCreateCon   },
+        /* name,                     signature,                    funcPtr */
+        {"checkSELinuxAccess",
+         "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z",
+         (void*)checkSELinuxAccess},
+        {"getContext", "()Ljava/lang/String;", (void*)getCon},
+        {"getFileContext", "(Ljava/lang/String;)Ljava/lang/String;", (void*)getFileCon},
+        {"getPeerContext", "(Ljava/io/FileDescriptor;)Ljava/lang/String;", (void*)getPeerCon},
+        {"getFileContext", "(Ljava/io/FileDescriptor;)Ljava/lang/String;", (void*)getFdCon},
+        {"getPidContext", "(I)Ljava/lang/String;", (void*)getPidCon},
+        {"isSELinuxEnforced", "()Z", (void*)isSELinuxEnforced},
+        {"isSELinuxEnabled", "()Z", (void*)isSELinuxEnabled},
+        {"native_restorecon", "(Ljava/lang/String;I)Z", (void*)native_restorecon},
+        {"setFileContext", "(Ljava/lang/String;Ljava/lang/String;)Z", (void*)setFileCon},
+        {"setFSCreateContext", "(Ljava/lang/String;)Z", (void*)setFSCreateCon},
 };
 
-static int log_callback(int type, const char *fmt, ...) {
+static int log_callback(int type, const char* fmt, ...) {
     va_list ap;
     int priority;
 
     switch (type) {
-    case SELINUX_WARNING:
-        priority = ANDROID_LOG_WARN;
-        break;
-    case SELINUX_INFO:
-        priority = ANDROID_LOG_INFO;
-        break;
-    default:
-        priority = ANDROID_LOG_ERROR;
-        break;
+        case SELINUX_WARNING:
+            priority = ANDROID_LOG_WARN;
+            break;
+        case SELINUX_INFO:
+            priority = ANDROID_LOG_INFO;
+            break;
+        default:
+            priority = ANDROID_LOG_ERROR;
+            break;
     }
     va_start(ap, fmt);
     LOG_PRI_VA(priority, "SELinux", fmt, ap);
@@ -377,7 +378,7 @@ static int log_callback(int type, const char *fmt, ...) {
     return 0;
 }
 
-int register_android_os_SELinux(JNIEnv *env) {
+int register_android_os_SELinux(JNIEnv* env) {
     union selinux_callback cb;
     cb.func_log = log_callback;
     selinux_set_callback(SELINUX_CB_LOG, cb);
@@ -387,4 +388,4 @@ int register_android_os_SELinux(JNIEnv *env) {
     return RegisterMethodsOrDie(env, "android/os/SELinux", method_table, NELEM(method_table));
 }
 
-}
+}  // namespace android

@@ -129,7 +129,7 @@ TEST(ThreadBase, lifecyclePerf) {
     EventCount count;
     {
         Counter counter{&count};
-        queue().runSync([c = std::move(counter)](){});
+        queue().runSync([c = std::move(counter)]() {});
     }
     ASSERT_EQ(1, count.construct.load());
     ASSERT_EQ(1, count.destruct.load());
@@ -138,7 +138,7 @@ TEST(ThreadBase, lifecyclePerf) {
 }
 
 int lifecycleTestHelper(const sp<VirtualLightRefBase>& test) {
-    return queue().runSync([t = test]()->int { return t->getStrongCount(); });
+    return queue().runSync([t = test]() -> int { return t->getStrongCount(); });
 }
 
 TEST(ThreadBase, lifecycle) {

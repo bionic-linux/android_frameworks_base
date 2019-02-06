@@ -27,8 +27,8 @@ using std::pair;
 OringDurationTracker::OringDurationTracker(
         const ConfigKey& key, const int64_t& id, const MetricDimensionKey& eventKey,
         sp<ConditionWizard> wizard, int conditionIndex, const vector<Matcher>& dimensionInCondition,
-        bool nesting, int64_t currentBucketStartNs, int64_t currentBucketNum,
-        int64_t startTimeNs, int64_t bucketSizeNs, bool conditionSliced, bool fullLink,
+        bool nesting, int64_t currentBucketStartNs, int64_t currentBucketNum, int64_t startTimeNs,
+        int64_t bucketSizeNs, bool conditionSliced, bool fullLink,
         const vector<sp<DurationAnomalyTracker>>& anomalyTrackers)
     : DurationTracker(key, id, eventKey, wizard, conditionIndex, dimensionInCondition, nesting,
                       currentBucketStartNs, currentBucketNum, startTimeNs, bucketSizeNs,
@@ -38,7 +38,7 @@ OringDurationTracker::OringDurationTracker(
     mLastStartTime = 0;
     if (mWizard != nullptr) {
         mSameConditionDimensionsInTracker =
-            mWizard->equalOutputDimensions(conditionIndex, mDimensionInCondition);
+                mWizard->equalOutputDimensions(conditionIndex, mDimensionInCondition);
     }
 }
 
@@ -60,8 +60,8 @@ bool OringDurationTracker::hitGuardRail(const HashableDimensionKey& newKey) {
         StatsdStats::getInstance().noteMetricDimensionSize(mConfigKey, mTrackerId, newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > StatsdStats::kDimensionKeySizeHardLimit) {
-            ALOGE("OringDurTracker %lld dropping data for dimension key %s",
-                (long long)mTrackerId, newKey.toString().c_str());
+            ALOGE("OringDurTracker %lld dropping data for dimension key %s", (long long)mTrackerId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -228,12 +228,10 @@ void OringDurationTracker::onSlicedConditionMayChange(bool overallCondition,
                 continue;
             }
             std::unordered_set<HashableDimensionKey> conditionDimensionKeySet;
-            ConditionState conditionState =
-                mWizard->query(mConditionTrackerIndex, condIt->second,
-                               mDimensionInCondition,
-                               !mSameConditionDimensionsInTracker,
-                               !mHasLinksToAllConditionDimensionsInTracker,
-                               &conditionDimensionKeySet);
+            ConditionState conditionState = mWizard->query(
+                    mConditionTrackerIndex, condIt->second, mDimensionInCondition,
+                    !mSameConditionDimensionsInTracker, !mHasLinksToAllConditionDimensionsInTracker,
+                    &conditionDimensionKeySet);
             if (conditionState != ConditionState::kTrue ||
                 (mDimensionInCondition.size() != 0 &&
                  conditionDimensionKeySet.find(mEventKey.getDimensionKeyInCondition()) ==
@@ -263,12 +261,10 @@ void OringDurationTracker::onSlicedConditionMayChange(bool overallCondition,
                 continue;
             }
             std::unordered_set<HashableDimensionKey> conditionDimensionKeySet;
-            ConditionState conditionState =
-                mWizard->query(mConditionTrackerIndex, mConditionKeyMap[key],
-                               mDimensionInCondition,
-                               !mSameConditionDimensionsInTracker,
-                               !mHasLinksToAllConditionDimensionsInTracker,
-                               &conditionDimensionKeySet);
+            ConditionState conditionState = mWizard->query(
+                    mConditionTrackerIndex, mConditionKeyMap[key], mDimensionInCondition,
+                    !mSameConditionDimensionsInTracker, !mHasLinksToAllConditionDimensionsInTracker,
+                    &conditionDimensionKeySet);
             if (conditionState == ConditionState::kTrue &&
                 (mDimensionInCondition.size() == 0 ||
                  conditionDimensionKeySet.find(mEventKey.getDimensionKeyInCondition()) !=
@@ -348,7 +344,7 @@ int64_t OringDurationTracker::predictAnomalyTimestampNs(
     // The anomaly should happen when accumulated wakelock duration is above the threshold and
     // not within the refractory period.
     int64_t anomalyTimestampNs =
-        std::max(eventTimestampNs + thresholdNs - pastNs, refractoryPeriodEndNs);
+            std::max(eventTimestampNs + thresholdNs - pastNs, refractoryPeriodEndNs);
     // If the predicted the anomaly timestamp is within the current bucket, return it directly.
     if (anomalyTimestampNs <= currentBucketEndNs) {
         return std::max(eventTimestampNs, anomalyTimestampNs);
@@ -357,8 +353,7 @@ int64_t OringDurationTracker::predictAnomalyTimestampNs(
     // Remove the old bucket.
     if (anomalyTracker.getNumOfPastBuckets() > 0) {
         pastNs -= anomalyTracker.getPastBucketValue(
-                            mEventKey,
-                            mCurrentBucketNum - anomalyTracker.getNumOfPastBuckets());
+                mEventKey, mCurrentBucketNum - anomalyTracker.getNumOfPastBuckets());
         // Add the remaining of the current bucket to the accumulated wakelock duration.
         pastNs += (currentBucketEndNs - eventTimestampNs);
     } else {
@@ -369,7 +364,7 @@ int64_t OringDurationTracker::predictAnomalyTimestampNs(
     // The anomaly will not happen in the current bucket. We need to iterate over the future buckets
     // to predict the accumulated wakelock duration and determine the anomaly timestamp accordingly.
     for (int futureBucketIdx = 1; futureBucketIdx <= anomalyTracker.getNumOfPastBuckets() + 1;
-            futureBucketIdx++) {
+         futureBucketIdx++) {
         // The alarm candidate timestamp should meet two requirements:
         // 1. the accumulated wakelock duration is above the threshold.
         // 2. it is not within the refractory period.
@@ -377,7 +372,7 @@ int64_t OringDurationTracker::predictAnomalyTimestampNs(
         //    find the new alarm candidate timestamp and check these requirements again.
         const int64_t bucketEndNs = currentBucketEndNs + futureBucketIdx * mBucketSizeNs;
         int64_t anomalyTimestampNs =
-            std::max(bucketEndNs - mBucketSizeNs + thresholdNs - pastNs, refractoryPeriodEndNs);
+                std::max(bucketEndNs - mBucketSizeNs + thresholdNs - pastNs, refractoryPeriodEndNs);
         if (anomalyTimestampNs <= bucketEndNs) {
             return anomalyTimestampNs;
         }

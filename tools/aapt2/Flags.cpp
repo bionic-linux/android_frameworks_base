@@ -29,8 +29,8 @@ using android::StringPiece;
 
 namespace aapt {
 
-Flags& Flags::RequiredFlag(const StringPiece& name,
-                           const StringPiece& description, std::string* value) {
+Flags& Flags::RequiredFlag(const StringPiece& name, const StringPiece& description,
+                           std::string* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     *value = arg.to_string();
     return true;
@@ -40,8 +40,7 @@ Flags& Flags::RequiredFlag(const StringPiece& name,
   return *this;
 }
 
-Flags& Flags::RequiredFlagList(const StringPiece& name,
-                               const StringPiece& description,
+Flags& Flags::RequiredFlagList(const StringPiece& name, const StringPiece& description,
                                std::vector<std::string>* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     value->push_back(arg.to_string());
@@ -52,8 +51,7 @@ Flags& Flags::RequiredFlagList(const StringPiece& name,
   return *this;
 }
 
-Flags& Flags::OptionalFlag(const StringPiece& name,
-                           const StringPiece& description,
+Flags& Flags::OptionalFlag(const StringPiece& name, const StringPiece& description,
                            Maybe<std::string>* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     *value = arg.to_string();
@@ -64,8 +62,7 @@ Flags& Flags::OptionalFlag(const StringPiece& name,
   return *this;
 }
 
-Flags& Flags::OptionalFlagList(const StringPiece& name,
-                               const StringPiece& description,
+Flags& Flags::OptionalFlagList(const StringPiece& name, const StringPiece& description,
                                std::vector<std::string>* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     value->push_back(arg.to_string());
@@ -76,8 +73,7 @@ Flags& Flags::OptionalFlagList(const StringPiece& name,
   return *this;
 }
 
-Flags& Flags::OptionalFlagList(const StringPiece& name,
-                               const StringPiece& description,
+Flags& Flags::OptionalFlagList(const StringPiece& name, const StringPiece& description,
                                std::unordered_set<std::string>* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     value->insert(arg.to_string());
@@ -88,8 +84,7 @@ Flags& Flags::OptionalFlagList(const StringPiece& name,
   return *this;
 }
 
-Flags& Flags::OptionalSwitch(const StringPiece& name,
-                             const StringPiece& description, bool* value) {
+Flags& Flags::OptionalSwitch(const StringPiece& name, const StringPiece& description, bool* value) {
   auto func = [value](const StringPiece& arg) -> bool {
     *value = true;
     return true;
@@ -132,8 +127,7 @@ void Flags::Usage(const StringPiece& command, std::ostream* out) {
   out->flush();
 }
 
-bool Flags::Parse(const StringPiece& command,
-                  const std::vector<StringPiece>& args,
+bool Flags::Parse(const StringPiece& command, const std::vector<StringPiece>& args,
                   std::ostream* out_error) {
   for (size_t i = 0; i < args.size(); i++) {
     StringPiece arg = args[i];
@@ -184,6 +178,8 @@ bool Flags::Parse(const StringPiece& command,
   return true;
 }
 
-const std::vector<std::string>& Flags::GetArgs() { return args_; }
+const std::vector<std::string>& Flags::GetArgs() {
+  return args_;
+}
 
 }  // namespace aapt

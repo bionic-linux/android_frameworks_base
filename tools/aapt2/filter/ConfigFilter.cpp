@@ -106,8 +106,7 @@ bool AxisConfigFilter::Match(const ConfigDescription& config) const {
           config.language[1] == entry.first.language[1] && ScriptsMatch(config, entry.first)) {
         matched_axis |= android::ResTable_config::CONFIG_LOCALE;
       }
-    } else if ((diff & diff_mask) ==
-               android::ResTable_config::CONFIG_SMALLEST_SCREEN_SIZE) {
+    } else if ((diff & diff_mask) == android::ResTable_config::CONFIG_SMALLEST_SCREEN_SIZE) {
       // Special case if the smallest screen width doesn't match. We check that
       // the
       // config being matched has a smaller screen width than the filter

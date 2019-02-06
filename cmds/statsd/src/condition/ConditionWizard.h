@@ -41,8 +41,7 @@ public:
     // the conditionParameters contains the parameters for it's children SimpleConditionTrackers.
     virtual ConditionState query(const int conditionIndex, const ConditionKey& conditionParameters,
                                  const vector<Matcher>& dimensionFields,
-                                 const bool isSubOutputDimensionFields,
-                                 const bool isPartialLink,
+                                 const bool isSubOutputDimensionFields, const bool isPartialLink,
                                  std::unordered_set<HashableDimensionKey>* dimensionKeySet);
 
     virtual ConditionState getMetConditionDimension(
@@ -62,7 +61,7 @@ public:
         return mAllConditions[index]->getUnSlicedPartConditionState();
     }
     void getTrueSlicedDimensions(const int index,
-        std::set<HashableDimensionKey>* trueDimensions) const {
+                                 std::set<HashableDimensionKey>* trueDimensions) const {
         return mAllConditions[index]->getTrueSlicedDimensions(mAllConditions, trueDimensions);
     }
 

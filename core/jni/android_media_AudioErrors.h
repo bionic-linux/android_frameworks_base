@@ -25,35 +25,35 @@ namespace android {
 // must be kept in sync with values in
 // frameworks/base/media/java/android/media/AudioSystem.java.
 enum {
-    AUDIO_JAVA_SUCCESS            = 0,
-    AUDIO_JAVA_ERROR              = -1,
-    AUDIO_JAVA_BAD_VALUE          = -2,
-    AUDIO_JAVA_INVALID_OPERATION  = -3,
-    AUDIO_JAVA_PERMISSION_DENIED  = -4,
-    AUDIO_JAVA_NO_INIT            = -5,
-    AUDIO_JAVA_DEAD_OBJECT        = -6,
-    AUDIO_JAVA_WOULD_BLOCK        = -7,
+    AUDIO_JAVA_SUCCESS = 0,
+    AUDIO_JAVA_ERROR = -1,
+    AUDIO_JAVA_BAD_VALUE = -2,
+    AUDIO_JAVA_INVALID_OPERATION = -3,
+    AUDIO_JAVA_PERMISSION_DENIED = -4,
+    AUDIO_JAVA_NO_INIT = -5,
+    AUDIO_JAVA_DEAD_OBJECT = -6,
+    AUDIO_JAVA_WOULD_BLOCK = -7,
 };
 
 static inline jint nativeToJavaStatus(status_t status) {
     switch (status) {
-    case NO_ERROR:
-        return AUDIO_JAVA_SUCCESS;
-    case BAD_VALUE:
-        return AUDIO_JAVA_BAD_VALUE;
-    case INVALID_OPERATION:
-        return AUDIO_JAVA_INVALID_OPERATION;
-    case PERMISSION_DENIED:
-        return AUDIO_JAVA_PERMISSION_DENIED;
-    case NO_INIT:
-        return AUDIO_JAVA_NO_INIT;
-    case WOULD_BLOCK:
-        return AUDIO_JAVA_WOULD_BLOCK;
-    case DEAD_OBJECT:
-        return AUDIO_JAVA_DEAD_OBJECT;
-    default:
-        return AUDIO_JAVA_ERROR;
+        case NO_ERROR:
+            return AUDIO_JAVA_SUCCESS;
+        case BAD_VALUE:
+            return AUDIO_JAVA_BAD_VALUE;
+        case INVALID_OPERATION:
+            return AUDIO_JAVA_INVALID_OPERATION;
+        case PERMISSION_DENIED:
+            return AUDIO_JAVA_PERMISSION_DENIED;
+        case NO_INIT:
+            return AUDIO_JAVA_NO_INIT;
+        case WOULD_BLOCK:
+            return AUDIO_JAVA_WOULD_BLOCK;
+        case DEAD_OBJECT:
+            return AUDIO_JAVA_DEAD_OBJECT;
+        default:
+            return AUDIO_JAVA_ERROR;
     }
 }
-}; // namespace android
-#endif // ANDROID_MEDIA_AUDIOERRORS_H
+};      // namespace android
+#endif  // ANDROID_MEDIA_AUDIOERRORS_H

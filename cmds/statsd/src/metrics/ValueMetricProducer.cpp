@@ -17,9 +17,9 @@
 #define DEBUG false  // STOPSHIP if true
 #include "Log.h"
 
-#include "ValueMetricProducer.h"
 #include "../guardrail/StatsdStats.h"
 #include "../stats_log_util.h"
+#include "ValueMetricProducer.h"
 
 #include <cutils/log.h>
 #include <limits.h>
@@ -122,17 +122,17 @@ ValueMetricProducer::ValueMetricProducer(const ConfigKey& key, const ValueMetric
     }
     mConditionSliced = (metric.links().size() > 0) || (mDimensionsInCondition.size() > 0);
     mSliceByPositionALL = HasPositionALL(metric.dimensions_in_what()) ||
-            HasPositionALL(metric.dimensions_in_condition());
+                          HasPositionALL(metric.dimensions_in_condition());
 
     // Kicks off the puller immediately.
     flushIfNeededLocked(startTimestampNs);
     if (mPullTagId != -1) {
         mStatsPullerManager->RegisterReceiver(
-            mPullTagId, this, mCurrentBucketStartTimeNs + mBucketSizeNs, mBucketSizeNs);
+                mPullTagId, this, mCurrentBucketStartTimeNs + mBucketSizeNs, mBucketSizeNs);
     }
 
-    VLOG("value metric %lld created. bucket size %lld start_time: %lld",
-        (long long)metric.id(), (long long)mBucketSizeNs, (long long)mTimeBaseNs);
+    VLOG("value metric %lld created. bucket size %lld start_time: %lld", (long long)metric.id(),
+         (long long)mBucketSizeNs, (long long)mTimeBaseNs);
 }
 
 // for testing
@@ -169,7 +169,7 @@ void ValueMetricProducer::clearPastBucketsLocked(const int64_t dumpTimeNs) {
 
 void ValueMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                              const bool include_current_partial_bucket,
-                                             std::set<string> *str_set,
+                                             std::set<string>* str_set,
                                              ProtoOutputStream* protoOutput) {
     VLOG("metric %lld dump report now...", (long long)mMetricId);
     if (include_current_partial_bucket) {
@@ -186,14 +186,14 @@ void ValueMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
     // Fills the dimension path if not slicing by ALL.
     if (!mSliceByPositionALL) {
         if (!mDimensionsInWhat.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
             writeDimensionPathToProto(mDimensionsInWhat, protoOutput);
             protoOutput->end(dimenPathToken);
         }
         if (!mDimensionsInCondition.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
             writeDimensionPathToProto(mDimensionsInCondition, protoOutput);
             protoOutput->end(dimenPathToken);
         }
@@ -220,15 +220,15 @@ void ValueMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
 
         // First fill dimension.
         if (mSliceByPositionALL) {
-            uint64_t dimensionToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
+            uint64_t dimensionToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
             writeDimensionToProto(dimensionKey.getDimensionKeyInWhat(), str_set, protoOutput);
             protoOutput->end(dimensionToken);
             if (dimensionKey.hasDimensionKeyInCondition()) {
-                uint64_t dimensionInConditionToken = protoOutput->start(
-                        FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
-                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(),
-                                      str_set, protoOutput);
+                uint64_t dimensionInConditionToken =
+                        protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
+                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(), str_set,
+                                      protoOutput);
                 protoOutput->end(dimensionInConditionToken);
             }
         } else {
@@ -236,8 +236,8 @@ void ValueMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                            FIELD_ID_DIMENSION_LEAF_IN_WHAT, str_set, protoOutput);
             if (dimensionKey.hasDimensionKeyInCondition()) {
                 writeDimensionLeafNodesToProto(dimensionKey.getDimensionKeyInCondition(),
-                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION,
-                                               str_set, protoOutput);
+                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION, str_set,
+                                               protoOutput);
             }
         }
 
@@ -305,8 +305,8 @@ void ValueMetricProducer::onDataPulled(const std::vector<std::shared_ptr<LogEven
         // For scheduled pulled data, the effective event time is snap to the nearest
         // bucket boundary to make bucket finalize.
         int64_t realEventTime = allData.at(0)->GetElapsedTimestampNs();
-        int64_t eventTime = mTimeBaseNs +
-            ((realEventTime - mTimeBaseNs) / mBucketSizeNs) * mBucketSizeNs;
+        int64_t eventTime =
+                mTimeBaseNs + ((realEventTime - mTimeBaseNs) / mBucketSizeNs) * mBucketSizeNs;
 
         mCondition = false;
         for (const auto& data : allData) {
@@ -332,9 +332,9 @@ void ValueMetricProducer::dumpStatesLocked(FILE* out, bool verbose) const {
     if (verbose) {
         for (const auto& it : mCurrentSlicedBucket) {
             fprintf(out, "\t(what)%s\t(condition)%s  (value)%lld\n",
-                it.first.getDimensionKeyInWhat().toString().c_str(),
-                it.first.getDimensionKeyInCondition().toString().c_str(),
-                (unsigned long long)it.second.sum);
+                    it.first.getDimensionKeyInWhat().toString().c_str(),
+                    it.first.getDimensionKeyInCondition().toString().c_str(),
+                    (unsigned long long)it.second.sum);
         }
     }
 }
@@ -350,8 +350,8 @@ bool ValueMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
         StatsdStats::getInstance().noteMetricDimensionSize(mConfigKey, mMetricId, newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > mDimensionHardLimit) {
-            ALOGE("ValueMetric %lld dropping data for dimension key %s",
-                (long long)mMetricId, newKey.toString().c_str());
+            ALOGE("ValueMetric %lld dropping data for dimension key %s", (long long)mMetricId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -359,10 +359,10 @@ bool ValueMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
     return false;
 }
 
-void ValueMetricProducer::onMatchedLogEventInternalLocked(
-        const size_t matcherIndex, const MetricDimensionKey& eventKey,
-        const ConditionKey& conditionKey, bool condition,
-        const LogEvent& event) {
+void ValueMetricProducer::onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                                          const MetricDimensionKey& eventKey,
+                                                          const ConditionKey& conditionKey,
+                                                          bool condition, const LogEvent& event) {
     int64_t eventTimeNs = event.GetElapsedTimestampNs();
     if (eventTimeNs < mCurrentBucketStartTimeNs) {
         VLOG("Skip event due to late arrival: %lld vs %lld", (long long)eventTimeNs,
@@ -383,7 +383,7 @@ void ValueMetricProducer::onMatchedLogEventInternalLocked(
         return;
     }
 
-    if (mPullTagId != -1) { // for pulled events
+    if (mPullTagId != -1) {  // for pulled events
         if (mCondition == true) {
             if (!interval.startUpdated) {
                 interval.start = value;
@@ -414,7 +414,7 @@ void ValueMetricProducer::onMatchedLogEventInternalLocked(
                 interval.tainted += 1;
             }
         }
-    } else {    // for pushed events, only accumulate when condition is true
+    } else {  // for pushed events, only accumulate when condition is true
         if (mCondition == true || mConditionTrackerIndex < 0) {
             interval.sum += value;
             interval.hasValue = true;

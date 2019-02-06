@@ -24,25 +24,23 @@
 #define ALOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
-static jint
-add(JNIEnv */* env */, jobject /* thiz */, jint a, jint b) {
-int result = a + b;
+static jint add(JNIEnv* /* env */, jobject /* thiz */, jint a, jint b) {
+    int result = a + b;
     ALOGI("%d + %d = %d", a, b, result);
     return result;
 }
 
-static const char *classPathName = "com/framework/shareduid/bit64/Native";
+static const char* classPathName = "com/framework/shareduid/bit64/Native";
 
 static const JNINativeMethod methods[] = {
-  {"add", "(II)I", (void*)add },
+        {"add", "(II)I", (void*)add},
 };
 
 /*
  * Register several native methods for one class.
  */
 static int registerNativeMethods(JNIEnv* env, const char* className,
-    const JNINativeMethod* gMethods, int numMethods)
-{
+                                 const JNINativeMethod* gMethods, int numMethods) {
     jclass clazz;
 
     clazz = env->FindClass(className);
@@ -63,16 +61,13 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
  *
  * returns JNI_TRUE on success.
  */
-static int registerNatives(JNIEnv* env)
-{
-  if (!registerNativeMethods(env, classPathName,
-                 methods, sizeof(methods) / sizeof(methods[0]))) {
-    return JNI_FALSE;
-  }
+static int registerNatives(JNIEnv* env) {
+    if (!registerNativeMethods(env, classPathName, methods, sizeof(methods) / sizeof(methods[0]))) {
+        return JNI_FALSE;
+    }
 
-  return JNI_TRUE;
+    return JNI_TRUE;
 }
-
 
 // ----------------------------------------------------------------------------
 
@@ -85,8 +80,7 @@ typedef union {
     void* venv;
 } UnionJNIEnvToVoid;
 
-jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
-{
+jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
     UnionJNIEnvToVoid uenv;
     uenv.venv = NULL;
     jint result = -1;

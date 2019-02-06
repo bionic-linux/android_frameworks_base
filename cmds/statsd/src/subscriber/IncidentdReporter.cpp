@@ -32,7 +32,7 @@ bool GenerateIncidentReport(const IncidentdDetails& config, const int64_t& rule_
                             const ConfigKey& configKey) {
     if (config.section_size() == 0) {
         VLOG("The alert %lld contains zero section in config(%d,%lld)", (unsigned long long)rule_id,
-            configKey.GetUid(), (long long) configKey.GetId());
+             configKey.GetUid(), (long long)configKey.GetId());
         return false;
     }
 

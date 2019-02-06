@@ -18,8 +18,8 @@
 #define _ANDROID_JAVA_REF_H
 
 #include <android-base/macros.h>
-#include <functional>
 #include <jni.h>
+#include <functional>
 #include <memory>
 #include <type_traits>
 
@@ -29,7 +29,7 @@ template <typename T>
 using JavaRef = std::unique_ptr<typename std::remove_pointer<T>::type, std::function<void(T)>>;
 
 template <typename T>
-JavaRef<T> make_javaref(JNIEnv *env, T ref) {
+JavaRef<T> make_javaref(JNIEnv* env, T ref) {
     return JavaRef<T>(ref, [env](T ref) {
         if (env && ref) {
             env->DeleteLocalRef(ref);
@@ -37,8 +37,8 @@ JavaRef<T> make_javaref(JNIEnv *env, T ref) {
     });
 }
 
-JavaRef<jstring> make_javastr(JNIEnv *env, const std::string &str);
+JavaRef<jstring> make_javastr(JNIEnv* env, const std::string& str);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_JAVA_REF_H
+#endif  // _ANDROID_JAVA_REF_H

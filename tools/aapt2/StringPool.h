@@ -63,8 +63,10 @@ class StringPool {
     android::ConfigDescription config;
 
     Context() = default;
-    Context(uint32_t p, const android::ConfigDescription& c) : priority(p), config(c) {}
-    explicit Context(uint32_t p) : priority(p) {}
+    Context(uint32_t p, const android::ConfigDescription& c) : priority(p), config(c) {
+    }
+    explicit Context(uint32_t p) : priority(p) {
+    }
     explicit Context(const android::ConfigDescription& c) : priority(kNormalPriority), config(c) {
     }
   };

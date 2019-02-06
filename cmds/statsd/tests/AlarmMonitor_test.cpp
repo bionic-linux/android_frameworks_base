@@ -23,8 +23,8 @@ TEST(AlarmMonitor, popSoonerThan) {
     std::string emptyMetricId;
     std::string emptyDimensionId;
     unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>> set;
-    AlarmMonitor am(2, [](const sp<IStatsCompanionService>&, int64_t){},
-                    [](const sp<IStatsCompanionService>&){});
+    AlarmMonitor am(2, [](const sp<IStatsCompanionService>&, int64_t) {},
+                    [](const sp<IStatsCompanionService>&) {});
 
     set = am.popSoonerThan(5);
     EXPECT_TRUE(set.empty());

@@ -1,10 +1,10 @@
-#include "jni.h"
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include "SkCamera.h"
 
-#include "GraphicsJNI.h"
 #include <hwui/Canvas.h>
+#include "GraphicsJNI.h"
 
 static jfieldID gNativeInstanceFieldID;
 
@@ -31,8 +31,7 @@ static void Camera_restore(JNIEnv* env, jobject obj) {
     v->restore();
 }
 
-static void Camera_translate(JNIEnv* env, jobject obj,
-                             jfloat dx, jfloat dy, jfloat dz) {
+static void Camera_translate(JNIEnv* env, jobject obj, jfloat dx, jfloat dy, jfloat dz) {
     jlong viewHandle = env->GetLongField(obj, gNativeInstanceFieldID);
     Sk3DView* v = reinterpret_cast<Sk3DView*>(viewHandle);
     v->translate(dx, dy, dz);
@@ -89,7 +88,7 @@ static jfloat Camera_getLocationZ(JNIEnv* env, jobject obj) {
 }
 
 static void Camera_getMatrix(JNIEnv* env, jobject obj, jlong matrixHandle) {
-    SkMatrix* native_matrix =  reinterpret_cast<SkMatrix*>(matrixHandle);
+    SkMatrix* native_matrix = reinterpret_cast<SkMatrix*>(matrixHandle);
     jlong viewHandle = env->GetLongField(obj, gNativeInstanceFieldID);
     Sk3DView* v = reinterpret_cast<Sk3DView*>(viewHandle);
     v->getMatrix(native_matrix);
@@ -102,8 +101,7 @@ static void Camera_applyToCanvas(JNIEnv* env, jobject obj, jlong canvasHandle) {
     v->applyToCanvas(canvas);
 }
 
-static jfloat Camera_dotWithNormal(JNIEnv* env, jobject obj,
-                                  jfloat x, jfloat y, jfloat z) {
+static jfloat Camera_dotWithNormal(JNIEnv* env, jobject obj, jfloat x, jfloat y, jfloat z) {
     jlong viewHandle = env->GetLongField(obj, gNativeInstanceFieldID);
     Sk3DView* v = reinterpret_cast<Sk3DView*>(viewHandle);
     SkScalar dot = v->dotWithNormal(x, y, z);
@@ -116,25 +114,24 @@ static jfloat Camera_dotWithNormal(JNIEnv* env, jobject obj,
  * JNI registration.
  */
 static const JNINativeMethod gCameraMethods[] = {
-    /* name, signature, funcPtr */
+        /* name, signature, funcPtr */
 
-    { "nativeConstructor",   "()V",    (void*)Camera_constructor   },
-    { "nativeDestructor",    "()V",    (void*)Camera_destructor    },
-    { "save",                "()V",    (void*)Camera_save          },
-    { "restore",             "()V",    (void*)Camera_restore       },
-    { "translate",           "(FFF)V", (void*)Camera_translate     },
-    { "rotateX",             "(F)V",   (void*)Camera_rotateX       },
-    { "rotateY",             "(F)V",   (void*)Camera_rotateY       },
-    { "rotateZ",             "(F)V",   (void*)Camera_rotateZ       },
-    { "rotate",              "(FFF)V", (void*)Camera_rotate        },
-    { "setLocation",         "(FFF)V", (void*)Camera_setLocation   },
-    { "getLocationX",        "()F",    (void*)Camera_getLocationX  },
-    { "getLocationY",        "()F",    (void*)Camera_getLocationY  },
-    { "getLocationZ",        "()F",    (void*)Camera_getLocationZ  },
-    { "nativeGetMatrix",     "(J)V",   (void*)Camera_getMatrix     },
-    { "nativeApplyToCanvas", "(J)V",   (void*)Camera_applyToCanvas },
-    { "dotWithNormal",       "(FFF)F", (void*)Camera_dotWithNormal }
-};
+        {"nativeConstructor", "()V", (void*)Camera_constructor},
+        {"nativeDestructor", "()V", (void*)Camera_destructor},
+        {"save", "()V", (void*)Camera_save},
+        {"restore", "()V", (void*)Camera_restore},
+        {"translate", "(FFF)V", (void*)Camera_translate},
+        {"rotateX", "(F)V", (void*)Camera_rotateX},
+        {"rotateY", "(F)V", (void*)Camera_rotateY},
+        {"rotateZ", "(F)V", (void*)Camera_rotateZ},
+        {"rotate", "(FFF)V", (void*)Camera_rotate},
+        {"setLocation", "(FFF)V", (void*)Camera_setLocation},
+        {"getLocationX", "()F", (void*)Camera_getLocationX},
+        {"getLocationY", "()F", (void*)Camera_getLocationY},
+        {"getLocationZ", "()F", (void*)Camera_getLocationZ},
+        {"nativeGetMatrix", "(J)V", (void*)Camera_getMatrix},
+        {"nativeApplyToCanvas", "(J)V", (void*)Camera_applyToCanvas},
+        {"dotWithNormal", "(FFF)F", (void*)Camera_dotWithNormal}};
 
 int register_android_graphics_Camera(JNIEnv* env) {
     jclass clazz = android::FindClassOrDie(env, "android/graphics/Camera");

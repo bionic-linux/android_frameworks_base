@@ -52,7 +52,7 @@ static struct {
 // ----------------------------------------------------------------------------
 
 status_t android_hardware_display_DisplayViewport_toNative(JNIEnv* env, jobject viewportObj,
-        DisplayViewport* viewport) {
+                                                           DisplayViewport* viewport) {
     viewport->displayId = env->GetIntField(viewportObj, gDisplayViewportClassInfo.displayId);
     viewport->orientation = env->GetIntField(viewportObj, gDisplayViewportClassInfo.orientation);
     viewport->deviceWidth = env->GetIntField(viewportObj, gDisplayViewportClassInfo.deviceWidth);
@@ -87,26 +87,26 @@ int register_android_hardware_display_DisplayViewport(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/hardware/display/DisplayViewport");
     gDisplayViewportClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
 
-    gDisplayViewportClassInfo.displayId = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "displayId", "I");
+    gDisplayViewportClassInfo.displayId =
+            GetFieldIDOrDie(env, gDisplayViewportClassInfo.clazz, "displayId", "I");
 
-    gDisplayViewportClassInfo.orientation = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "orientation", "I");
+    gDisplayViewportClassInfo.orientation =
+            GetFieldIDOrDie(env, gDisplayViewportClassInfo.clazz, "orientation", "I");
 
-    gDisplayViewportClassInfo.deviceWidth = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "deviceWidth", "I");
+    gDisplayViewportClassInfo.deviceWidth =
+            GetFieldIDOrDie(env, gDisplayViewportClassInfo.clazz, "deviceWidth", "I");
 
-    gDisplayViewportClassInfo.deviceHeight = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "deviceHeight", "I");
+    gDisplayViewportClassInfo.deviceHeight =
+            GetFieldIDOrDie(env, gDisplayViewportClassInfo.clazz, "deviceHeight", "I");
 
-    gDisplayViewportClassInfo.logicalFrame = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "logicalFrame", "Landroid/graphics/Rect;");
+    gDisplayViewportClassInfo.logicalFrame = GetFieldIDOrDie(
+            env, gDisplayViewportClassInfo.clazz, "logicalFrame", "Landroid/graphics/Rect;");
 
-    gDisplayViewportClassInfo.physicalFrame = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "physicalFrame", "Landroid/graphics/Rect;");
+    gDisplayViewportClassInfo.physicalFrame = GetFieldIDOrDie(
+            env, gDisplayViewportClassInfo.clazz, "physicalFrame", "Landroid/graphics/Rect;");
 
-    gDisplayViewportClassInfo.uniqueId = GetFieldIDOrDie(env,
-            gDisplayViewportClassInfo.clazz, "uniqueId", "Ljava/lang/String;");
+    gDisplayViewportClassInfo.uniqueId =
+            GetFieldIDOrDie(env, gDisplayViewportClassInfo.clazz, "uniqueId", "Ljava/lang/String;");
 
     clazz = FindClassOrDie(env, "android/graphics/Rect");
     gRectClassInfo.left = GetFieldIDOrDie(env, clazz, "left", "I");
@@ -117,4 +117,4 @@ int register_android_hardware_display_DisplayViewport(JNIEnv* env) {
     return 0;
 }
 
-} // namespace android
+}  // namespace android

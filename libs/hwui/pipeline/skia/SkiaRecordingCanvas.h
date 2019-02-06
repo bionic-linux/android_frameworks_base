@@ -126,7 +126,6 @@ private:
             return origPaint;
         }
     }
-
 };
 
 };  // namespace skiapipeline

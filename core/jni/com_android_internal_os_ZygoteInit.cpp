@@ -37,13 +37,9 @@ struct ScopedSCSExit {
 #ifdef __aarch64__
     void* scs;
 
-    ScopedSCSExit() {
-        __asm__ __volatile__("str x18, [%0]" ::"r"(&scs));
-    }
+    ScopedSCSExit() { __asm__ __volatile__("str x18, [%0]" ::"r"(&scs)); }
 
-    ~ScopedSCSExit() {
-        __asm__ __volatile__("ldr x18, [%0]; str xzr, [%0]" ::"r"(&scs));
-    }
+    ~ScopedSCSExit() { __asm__ __volatile__("ldr x18, [%0]; str xzr, [%0]" ::"r"(&scs)); }
 #else
     // Silence unused variable warnings in non-SCS builds.
     ScopedSCSExit() {}
@@ -64,10 +60,9 @@ void android_internal_os_ZygoteInit_nativePreloadOpenGL(JNIEnv* env, jclass) {
 }
 
 const JNINativeMethod gMethods[] = {
-    { "nativePreloadAppProcessHALs", "()V",
-      (void*)android_internal_os_ZygoteInit_nativePreloadAppProcessHALs },
-    { "nativePreloadOpenGL", "()V",
-      (void*)android_internal_os_ZygoteInit_nativePreloadOpenGL },
+        {"nativePreloadAppProcessHALs", "()V",
+         (void*)android_internal_os_ZygoteInit_nativePreloadAppProcessHALs},
+        {"nativePreloadOpenGL", "()V", (void*)android_internal_os_ZygoteInit_nativePreloadOpenGL},
 };
 
 }  // anonymous namespace
@@ -75,8 +70,8 @@ const JNINativeMethod gMethods[] = {
 namespace android {
 
 int register_com_android_internal_os_ZygoteInit(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "com/android/internal/os/ZygoteInit",
-            gMethods, NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "com/android/internal/os/ZygoteInit", gMethods,
+                                NELEM(gMethods));
 }
 
 }  // namespace android

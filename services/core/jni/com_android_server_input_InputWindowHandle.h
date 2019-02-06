@@ -25,23 +25,22 @@
 namespace android {
 
 class NativeInputWindowHandle : public InputWindowHandle {
-public:
+  public:
     NativeInputWindowHandle(const sp<InputApplicationHandle>& inputApplicationHandle,
-            jweak objWeak);
+                            jweak objWeak);
     virtual ~NativeInputWindowHandle();
 
     jobject getInputWindowHandleObjLocalRef(JNIEnv* env);
 
     virtual bool updateInfo();
 
-private:
+  private:
     jweak mObjWeak;
 };
-
 
 extern sp<NativeInputWindowHandle> android_server_InputWindowHandle_getHandle(
         JNIEnv* env, jobject inputWindowHandleObj);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_SERVER_INPUT_WINDOW_HANDLE_H
+#endif  // _ANDROID_SERVER_INPUT_WINDOW_HANDLE_H

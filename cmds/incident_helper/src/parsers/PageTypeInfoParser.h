@@ -25,9 +25,9 @@ using namespace android;
  * PageTypeInfo parser, parses text to protobuf in /proc/pageinfotype
  */
 class PageTypeInfoParser : public TextParserBase {
-public:
-    PageTypeInfoParser() : TextParserBase(String8("PageTypeInfo")) {};
-    ~PageTypeInfoParser() {};
+  public:
+    PageTypeInfoParser() : TextParserBase(String8("PageTypeInfo")){};
+    ~PageTypeInfoParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

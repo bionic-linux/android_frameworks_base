@@ -30,7 +30,7 @@ namespace {
 
 StatsdConfig CreateStatsdConfig(int num_buckets, int threshold) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     auto wakelockAcquireMatcher = CreateAcquireWakelockAtomMatcher();
 
     *config.add_atom_matcher() = wakelockAcquireMatcher;
@@ -64,8 +64,7 @@ TEST(ConfigTtlE2eTest, TestCountMetric) {
     const uint32_t refractory_period_sec = config.alert(0).refractory_period_secs();
 
     int64_t bucketStartTimeNs = 10000000000;
-    int64_t bucketSizeNs =
-        TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
+    int64_t bucketSizeNs = TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
 
     ConfigKey cfgKey;
     auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
@@ -90,14 +89,13 @@ TEST(ConfigTtlE2eTest, TestCountMetric) {
     event = CreateAcquireWakelockEvent(attributions1, "wl2", bucketStartTimeNs + bucketSizeNs + 2);
     processor->OnLogEvent(event.get());
 
-    event = CreateAcquireWakelockEvent(
-        attributions1, "wl1", bucketStartTimeNs + 25 * bucketSizeNs + 2);
+    event = CreateAcquireWakelockEvent(attributions1, "wl1",
+                                       bucketStartTimeNs + 25 * bucketSizeNs + 2);
     processor->OnLogEvent(event.get());
 
     EXPECT_EQ((int64_t)(bucketStartTimeNs + 25 * bucketSizeNs + 2 + 2 * 3600 * NS_PER_SEC),
               processor->mMetricsManagers.begin()->second->getTtlEndNs());
 }
-
 
 #else
 GTEST_LOG_(INFO) << "This test does nothing.\n";

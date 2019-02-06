@@ -21,14 +21,14 @@
 #include <cutils/ashmem.h>
 #include <utils/Log.h>
 
-#include <nativehelper/jni_macros.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedLocalRef.h>
+#include <nativehelper/jni_macros.h>
 
-#include <algorithm>
 #include <errno.h>
-#include <limits>
 #include <unistd.h>
+#include <algorithm>
+#include <limits>
 
 namespace {
 
@@ -43,15 +43,12 @@ void throwErrnoException(JNIEnv* env, const char* functionName, int error) {
         env->ExceptionClear();
     }
 
-    jobject exception = env->NewObject(errnoExceptionClass,
-                                       errnoExceptionCtor,
-                                       detailMessage.get(),
-                                       error);
+    jobject exception =
+            env->NewObject(errnoExceptionClass, errnoExceptionCtor, detailMessage.get(), error);
     env->Throw(reinterpret_cast<jthrowable>(exception));
 }
 
 jobject SharedMemory_nCreate(JNIEnv* env, jobject, jstring jname, jint size) {
-
     // Name is optional so we can't use ScopedUtfChars for this as it throws NPE on null
     const char* name = jname ? env->GetStringUTFChars(jname, nullptr) : nullptr;
 
@@ -91,21 +88,20 @@ jint SharedMemory_nSetProt(JNIEnv* env, jobject, jobject fileDescriptor, jint pr
 }
 
 const JNINativeMethod methods[] = {
-  NATIVE_METHOD(SharedMemory, nCreate, "(Ljava/lang/String;I)Ljava/io/FileDescriptor;"),
-  NATIVE_METHOD(SharedMemory, nGetSize, "(Ljava/io/FileDescriptor;)I"),
-  NATIVE_METHOD(SharedMemory, nSetProt, "(Ljava/io/FileDescriptor;I)I")
-};
+        NATIVE_METHOD(SharedMemory, nCreate, "(Ljava/lang/String;I)Ljava/io/FileDescriptor;"),
+        NATIVE_METHOD(SharedMemory, nGetSize, "(Ljava/io/FileDescriptor;)I"),
+        NATIVE_METHOD(SharedMemory, nSetProt, "(Ljava/io/FileDescriptor;I)I")};
 
-} // anonymous namespace
+}  // anonymous namespace
 
 namespace android {
 
 int register_android_os_SharedMemory(JNIEnv* env) {
     errnoExceptionClass =
-        MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/system/ErrnoException"));
+            MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/system/ErrnoException"));
     errnoExceptionCtor =
-        GetMethodIDOrDie(env, errnoExceptionClass, "<init>", "(Ljava/lang/String;I)V");
+            GetMethodIDOrDie(env, errnoExceptionClass, "<init>", "(Ljava/lang/String;I)V");
     return RegisterMethodsOrDie(env, "android/os/SharedMemory", methods, NELEM(methods));
 }
 
-} // namespace android
+}  // namespace android

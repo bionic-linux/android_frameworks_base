@@ -84,9 +84,7 @@ class GLFrame : public GLBufferHandle {
     GLuint GetFboId() const;
 
     // Returns the texture target: GL_TEXTURE_2D or GL_TEXTURE_EXTERNAL_OES.
-    GLuint GetTextureTarget() const {
-      return texture_target_;
-    }
+    GLuint GetTextureTarget() const { return texture_target_; }
 
     // Set the viewport that will be used when focusing this frame for rendering. Defaults to
     // the dimensions of the frame.
@@ -120,10 +118,10 @@ class GLFrame : public GLBufferHandle {
   private:
     // Type to keep track of texture and FBO states
     enum GLObjectState {
-      kStateUnmanaged,      // We do not manage this object (externally managed)
-      kStateUninitialized,  // Not yet initialized
-      kStateGenerated,      // Tex/FBO id is generated
-      kStateComplete        // FBO has valid attachment / Tex has valid pixel data
+        kStateUnmanaged,      // We do not manage this object (externally managed)
+        kStateUninitialized,  // Not yet initialized
+        kStateGenerated,      // Tex/FBO id is generated
+        kStateComplete        // FBO has valid attachment / Tex has valid pixel data
     };
 
     // Sets the frame and viewport dimensions.
@@ -211,7 +209,7 @@ class GLFrame : public GLBufferHandle {
     bool owns_fbo_;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_GL_FRAME_H

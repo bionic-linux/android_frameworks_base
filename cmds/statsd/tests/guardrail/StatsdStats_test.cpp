@@ -242,7 +242,6 @@ TEST(StatsdStatsTest, TestAtomLog) {
     EXPECT_TRUE(sensorAtomGood);
 }
 
-
 TEST(StatsdStatsTest, TestAnomalyMonitor) {
     StatsdStats stats;
     stats.noteRegisteredAnomalyAlarmChanged();

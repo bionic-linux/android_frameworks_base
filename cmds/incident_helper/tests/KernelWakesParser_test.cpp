@@ -20,11 +20,11 @@
 
 #include <android-base/file.h>
 #include <android-base/test_utils.h>
+#include <fcntl.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/message_lite.h>
 #include <gtest/gtest.h>
 #include <string.h>
-#include <fcntl.h>
 
 using namespace android::base;
 using namespace android::os;
@@ -37,12 +37,10 @@ using ::testing::internal::GetCapturedStderr;
 using ::testing::internal::GetCapturedStdout;
 
 class KernelWakesParserTest : public Test {
-public:
-    virtual void SetUp() override {
-        ASSERT_TRUE(tf.fd != -1);
-    }
+  public:
+    virtual void SetUp() override { ASSERT_TRUE(tf.fd != -1); }
 
-protected:
+  protected:
     TemporaryFile tf;
 
     const string kTestPath = GetExecutableDirectory();

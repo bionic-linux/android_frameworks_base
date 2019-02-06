@@ -34,8 +34,7 @@ std::string BuildPackageNamespace(const StringPiece& package, bool private_refer
   return result;
 }
 
-Maybe<ExtractedPackage> ExtractPackageFromNamespace(
-    const std::string& namespace_uri) {
+Maybe<ExtractedPackage> ExtractPackageFromNamespace(const std::string& namespace_uri) {
   if (util::StartsWith(namespace_uri, kSchemaPublicPrefix)) {
     StringPiece schema_prefix = kSchemaPublicPrefix;
     StringPiece package = namespace_uri;

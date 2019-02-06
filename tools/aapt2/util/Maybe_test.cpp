@@ -26,8 +26,8 @@ struct Dummy {
   Dummy() {
     data = new int;
     *data = 1;
-    std::cerr << "Construct Dummy{0x" << (void*)this << "} with data=0x"
-              << (void*)data << std::endl;
+    std::cerr << "Construct Dummy{0x" << (void*)this << "} with data=0x" << (void*)data
+              << std::endl;
   }
 
   Dummy(const Dummy& rhs) {
@@ -36,15 +36,15 @@ struct Dummy {
       data = new int;
       *data = *rhs.data;
     }
-    std::cerr << "CopyConstruct Dummy{0x" << (void*)this << "} from Dummy{0x"
-              << (const void*)&rhs << "}" << std::endl;
+    std::cerr << "CopyConstruct Dummy{0x" << (void*)this << "} from Dummy{0x" << (const void*)&rhs
+              << "}" << std::endl;
   }
 
   Dummy(Dummy&& rhs) {
     data = rhs.data;
     rhs.data = nullptr;
-    std::cerr << "MoveConstruct Dummy{0x" << (void*)this << "} from Dummy{0x"
-              << (const void*)&rhs << "}" << std::endl;
+    std::cerr << "MoveConstruct Dummy{0x" << (void*)this << "} from Dummy{0x" << (const void*)&rhs
+              << "}" << std::endl;
   }
 
   Dummy& operator=(const Dummy& rhs) {
@@ -55,8 +55,8 @@ struct Dummy {
       data = new int;
       *data = *rhs.data;
     }
-    std::cerr << "CopyAssign Dummy{0x" << (void*)this << "} from Dummy{0x"
-              << (const void*)&rhs << "}" << std::endl;
+    std::cerr << "CopyAssign Dummy{0x" << (void*)this << "} from Dummy{0x" << (const void*)&rhs
+              << "}" << std::endl;
     return *this;
   }
 
@@ -64,14 +64,13 @@ struct Dummy {
     delete data;
     data = rhs.data;
     rhs.data = nullptr;
-    std::cerr << "MoveAssign Dummy{0x" << (void*)this << "} from Dummy{0x"
-              << (const void*)&rhs << "}" << std::endl;
+    std::cerr << "MoveAssign Dummy{0x" << (void*)this << "} from Dummy{0x" << (const void*)&rhs
+              << "}" << std::endl;
     return *this;
   }
 
   ~Dummy() {
-    std::cerr << "Destruct Dummy{0x" << (void*)this << "} with data=0x"
-              << (void*)data << std::endl;
+    std::cerr << "Destruct Dummy{0x" << (void*)this << "} with data=0x" << (void*)data << std::endl;
     delete data;
   }
 

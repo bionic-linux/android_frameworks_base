@@ -20,7 +20,7 @@
 #include <android_runtime/AndroidRuntime.h>
 
 namespace android {
-    
+
 /**
  * Given an nio.Buffer, return a pointer to it, beginning at its current
  * position. The returned pointer is only valid for the current JNI stack-frame.
@@ -37,7 +37,7 @@ namespace android {
  *                  nio_releasePointer.
  * @return The pointer to the memory in the buffer object
  */
-void* nio_getPointer(JNIEnv *env, jobject buffer, jarray *array);
+void* nio_getPointer(JNIEnv* env, jobject buffer, jarray* array);
 
 /**
  * Call this if android_nio_getPointer returned non-null in its array parameter.
@@ -51,23 +51,22 @@ void* nio_getPointer(JNIEnv *env, jobject buffer, jarray *array);
  * @param commit    JNI_FALSE if the pointer was just read, and JNI_TRUE if
  *                  the pointer was written to.
  */
-void nio_releasePointer(JNIEnv *env, jarray array, void *pointer,
-                                jboolean commit);
+void nio_releasePointer(JNIEnv* env, jarray array, void* pointer, jboolean commit);
 
 class AutoBufferPointer {
-public:
+  public:
     AutoBufferPointer(JNIEnv* env, jobject nioBuffer, jboolean commit);
     ~AutoBufferPointer();
 
     void* pointer() const { return fPointer; }
 
-private:
+  private:
     JNIEnv* fEnv;
-    void*   fPointer;
-    jarray  fArray;
+    void* fPointer;
+    jarray fArray;
     jboolean fCommit;
 };
 
-}   /* namespace android */
+} /* namespace android */
 
 #endif  // _ANDROID_NIO_UTILS_H_

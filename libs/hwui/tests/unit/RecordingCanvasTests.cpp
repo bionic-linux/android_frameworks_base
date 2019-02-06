@@ -838,7 +838,6 @@ OPENGL_PIPELINE_TEST(RecordingCanvas, drawTextInHighContrast) {
             EXPECT_EQ(SK_ColorWHITE, op.paint->getColor());
             EXPECT_EQ(SkPaint::kFill_Style, op.paint->getStyle());
         }
-
     });
     ASSERT_EQ(2, count);
 }

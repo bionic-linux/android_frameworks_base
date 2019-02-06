@@ -20,7 +20,7 @@
 
 namespace android {
 
-void SyncParams::fields_t::init(JNIEnv *env) {
+void SyncParams::fields_t::init(JNIEnv* env) {
     jclass lclazz = env->FindClass("android/media/SyncParams");
     if (lclazz == NULL) {
         return;
@@ -40,25 +40,26 @@ void SyncParams::fields_t::init(JNIEnv *env) {
     set = env->GetFieldID(clazz, "mSet", "I");
 
     set_sync_source =
-        env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_SYNC_SOURCE", "I"));
+            env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_SYNC_SOURCE", "I"));
     set_audio_adjust_mode = env->GetStaticIntField(
             clazz, env->GetStaticFieldID(clazz, "SET_AUDIO_ADJUST_MODE", "I"));
     set_tolerance =
-        env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_TOLERANCE", "I"));
+            env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_TOLERANCE", "I"));
     set_frame_rate =
-        env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_FRAME_RATE", "I"));
+            env->GetStaticIntField(clazz, env->GetStaticFieldID(clazz, "SET_FRAME_RATE", "I"));
 
     env->DeleteLocalRef(lclazz);
 }
 
-void SyncParams::fields_t::exit(JNIEnv *env) {
+void SyncParams::fields_t::exit(JNIEnv* env) {
     env->DeleteGlobalRef(clazz);
     clazz = NULL;
 }
 
-void SyncParams::fillFromJobject(JNIEnv *env, const fields_t& fields, jobject params) {
+void SyncParams::fillFromJobject(JNIEnv* env, const fields_t& fields, jobject params) {
     sync.mSource = (AVSyncSource)env->GetIntField(params, fields.sync_source);
-    sync.mAudioAdjustMode = (AVSyncAudioAdjustMode)env->GetIntField(params, fields.audio_adjust_mode);
+    sync.mAudioAdjustMode =
+            (AVSyncAudioAdjustMode)env->GetIntField(params, fields.audio_adjust_mode);
     sync.mTolerance = env->GetFloatField(params, fields.tolerance);
     frameRate = env->GetFloatField(params, fields.frame_rate);
     int set = env->GetIntField(params, fields.set);
@@ -69,7 +70,7 @@ void SyncParams::fillFromJobject(JNIEnv *env, const fields_t& fields, jobject pa
     frameRateSet = set & fields.set_frame_rate;
 }
 
-jobject SyncParams::asJobject(JNIEnv *env, const fields_t& fields) {
+jobject SyncParams::asJobject(JNIEnv* env, const fields_t& fields) {
     jobject params = env->NewObject(fields.clazz, fields.constructID);
     if (params == NULL) {
         return NULL;
@@ -78,12 +79,11 @@ jobject SyncParams::asJobject(JNIEnv *env, const fields_t& fields) {
     env->SetIntField(params, fields.audio_adjust_mode, (jint)sync.mAudioAdjustMode);
     env->SetFloatField(params, fields.tolerance, (jfloat)sync.mTolerance);
     env->SetFloatField(params, fields.frame_rate, (jfloat)frameRate);
-    env->SetIntField(
-            params, fields.set,
-            (syncSourceSet ? fields.set_sync_source : 0)
-                    | (audioAdjustModeSet ? fields.set_audio_adjust_mode : 0)
-                    | (toleranceSet ? fields.set_tolerance : 0)
-                    | (frameRateSet ? fields.set_frame_rate : 0));
+    env->SetIntField(params, fields.set,
+                     (syncSourceSet ? fields.set_sync_source : 0) |
+                             (audioAdjustModeSet ? fields.set_audio_adjust_mode : 0) |
+                             (toleranceSet ? fields.set_tolerance : 0) |
+                             (frameRateSet ? fields.set_frame_rate : 0));
 
     return params;
 }

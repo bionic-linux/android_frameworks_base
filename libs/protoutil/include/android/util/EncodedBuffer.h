@@ -34,15 +34,14 @@ namespace util {
  *      *Index:     Index of a buffer within the mBuffers list.
  *      *Offset:    Position within a buffer.
  */
-class EncodedBuffer
-{
-public:
+class EncodedBuffer {
+  public:
     EncodedBuffer();
     explicit EncodedBuffer(size_t chunkSize);
     ~EncodedBuffer();
 
     class Pointer {
-    public:
+      public:
         Pointer();
         explicit Pointer(size_t chunkSize);
 
@@ -56,7 +55,7 @@ public:
 
         Pointer copy() const;
 
-    private:
+      private:
         size_t mChunkSize;
         size_t mIndex;
         size_t mOffset;
@@ -80,8 +79,9 @@ public:
     Pointer* wp();
 
     /**
-     * Returns the current position of write pointer, if the write buffer is full, it will automatically
-     * rotate to a new buffer with given chunkSize. If NULL is returned, it means NO_MEMORY
+     * Returns the current position of write pointer, if the write buffer is full, it will
+     * automatically rotate to a new buffer with given chunkSize. If NULL is returned, it means
+     * NO_MEMORY
      */
     uint8_t* writeBuffer();
 
@@ -160,7 +160,7 @@ public:
     class iterator;
     friend class iterator;
     class iterator {
-    public:
+      public:
         explicit iterator(const EncodedBuffer& buffer);
 
         /**
@@ -179,7 +179,8 @@ public:
         Pointer* rp();
 
         /**
-         * Returns the current position of read pointer, if NULL is returned, it reaches end of buffer.
+         * Returns the current position of read pointer, if NULL is returned, it reaches end of
+         * buffer.
          */
         uint8_t const* readBuffer();
 
@@ -203,28 +204,28 @@ public:
          */
         uint64_t readRawVarint();
 
-    private:
+      private:
         const EncodedBuffer& mData;
         Pointer mRp;
     };
 
     /**
-     * Returns the iterator of EncodedBuffer so it guarantees consumers won't be able to modified the buffer.
+     * Returns the iterator of EncodedBuffer so it guarantees consumers won't be able to modified
+     * the buffer.
      */
     iterator begin() const;
 
-private:
+  private:
     size_t mChunkSize;
     std::vector<uint8_t*> mBuffers;
 
     Pointer mWp;
     Pointer mEp;
 
-    inline uint8_t* at(const Pointer& p) const; // helper function to get value
+    inline uint8_t* at(const Pointer& p) const;  // helper function to get value
 };
 
-} // util
-} // android
+}  // namespace util
+}  // namespace android
 
-#endif // ANDROID_UTIL_ENCODED_BUFFER_H
-
+#endif  // ANDROID_UTIL_ENCODED_BUFFER_H

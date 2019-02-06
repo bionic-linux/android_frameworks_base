@@ -32,7 +32,8 @@ class IdAssigner : public IResourceTableConsumer {
  public:
   IdAssigner() = default;
   explicit IdAssigner(const std::unordered_map<ResourceName, ResourceId>* map)
-      : assigned_id_map_(map) {}
+      : assigned_id_map_(map) {
+  }
 
   bool Consume(IAaptContext* context, ResourceTable* table) override;
 

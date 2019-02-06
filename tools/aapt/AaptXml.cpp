@@ -24,7 +24,7 @@ using namespace android;
 namespace AaptXml {
 
 static String8 getStringAttributeAtIndex(const ResXMLTree& tree, ssize_t attrIndex,
-        String8* outError) {
+                                         String8* outError) {
     Res_value value;
     if (tree.getAttributeValue(attrIndex, &value) < 0) {
         if (outError != NULL) {
@@ -46,7 +46,7 @@ static String8 getStringAttributeAtIndex(const ResXMLTree& tree, ssize_t attrInd
 }
 
 static int32_t getIntegerAttributeAtIndex(const ResXMLTree& tree, ssize_t attrIndex,
-    int32_t defValue, String8* outError) {
+                                          int32_t defValue, String8* outError) {
     Res_value value;
     if (tree.getAttributeValue(attrIndex, &value) < 0) {
         if (outError != NULL) {
@@ -55,8 +55,7 @@ static int32_t getIntegerAttributeAtIndex(const ResXMLTree& tree, ssize_t attrIn
         return defValue;
     }
 
-    if (value.dataType < Res_value::TYPE_FIRST_INT
-            || value.dataType > Res_value::TYPE_LAST_INT) {
+    if (value.dataType < Res_value::TYPE_FIRST_INT || value.dataType > Res_value::TYPE_LAST_INT) {
         if (outError != NULL) {
             *outError = "attribute is not an integer value";
         }
@@ -64,7 +63,6 @@ static int32_t getIntegerAttributeAtIndex(const ResXMLTree& tree, ssize_t attrIn
     }
     return value.data;
 }
-
 
 ssize_t indexOfAttribute(const ResXMLTree& tree, uint32_t attrRes) {
     size_t attrCount = tree.getAttributeCount();
@@ -76,8 +74,7 @@ ssize_t indexOfAttribute(const ResXMLTree& tree, uint32_t attrRes) {
     return -1;
 }
 
-String8 getAttribute(const ResXMLTree& tree, const char* ns,
-        const char* attr, String8* outError) {
+String8 getAttribute(const ResXMLTree& tree, const char* ns, const char* attr, String8* outError) {
     ssize_t idx = tree.indexOfAttribute(ns, attr);
     if (idx < 0) {
         return String8();
@@ -93,8 +90,8 @@ String8 getAttribute(const ResXMLTree& tree, uint32_t attrRes, String8* outError
     return getStringAttributeAtIndex(tree, idx, outError);
 }
 
-String8 getResolvedAttribute(const ResTable& resTable, const ResXMLTree& tree,
-        uint32_t attrRes, String8* outError) {
+String8 getResolvedAttribute(const ResTable& resTable, const ResXMLTree& tree, uint32_t attrRes,
+                             String8* outError) {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
         return String8();
@@ -136,8 +133,8 @@ String8 getResolvedAttribute(const ResTable& resTable, const ResXMLTree& tree,
     return str ? String8(str, len) : String8();
 }
 
-int32_t getIntegerAttribute(const ResXMLTree& tree, const char* ns,
-        const char* attr, int32_t defValue, String8* outError) {
+int32_t getIntegerAttribute(const ResXMLTree& tree, const char* ns, const char* attr,
+                            int32_t defValue, String8* outError) {
     ssize_t idx = tree.indexOfAttribute(ns, attr);
     if (idx < 0) {
         return defValue;
@@ -146,7 +143,7 @@ int32_t getIntegerAttribute(const ResXMLTree& tree, const char* ns,
 }
 
 int32_t getIntegerAttribute(const ResXMLTree& tree, uint32_t attrRes, int32_t defValue,
-        String8* outError) {
+                            String8* outError) {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
         return defValue;
@@ -155,7 +152,7 @@ int32_t getIntegerAttribute(const ResXMLTree& tree, uint32_t attrRes, int32_t de
 }
 
 int32_t getResolvedIntegerAttribute(const ResTable& resTable, const ResXMLTree& tree,
-        uint32_t attrRes, int32_t defValue, String8* outError) {
+                                    uint32_t attrRes, int32_t defValue, String8* outError) {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
         return defValue;
@@ -165,8 +162,8 @@ int32_t getResolvedIntegerAttribute(const ResTable& resTable, const ResXMLTree& 
         if (value.dataType == Res_value::TYPE_REFERENCE) {
             resTable.resolveReference(&value, 0);
         }
-        if (value.dataType < Res_value::TYPE_FIRST_INT
-                || value.dataType > Res_value::TYPE_LAST_INT) {
+        if (value.dataType < Res_value::TYPE_FIRST_INT ||
+            value.dataType > Res_value::TYPE_LAST_INT) {
             if (outError != NULL) {
                 *outError = "attribute is not an integer value";
             }
@@ -177,7 +174,7 @@ int32_t getResolvedIntegerAttribute(const ResTable& resTable, const ResXMLTree& 
 }
 
 void getResolvedResourceAttribute(const ResTable& resTable, const ResXMLTree& tree,
-        uint32_t attrRes, Res_value* outValue, String8* outError) {
+                                  uint32_t attrRes, Res_value* outValue, String8* outError) {
     ssize_t idx = indexOfAttribute(tree, attrRes);
     if (idx < 0) {
         if (outError != NULL) {
@@ -197,4 +194,4 @@ void getResolvedResourceAttribute(const ResTable& resTable, const ResXMLTree& tr
     }
 }
 
-} // namespace AaptXml
+}  // namespace AaptXml

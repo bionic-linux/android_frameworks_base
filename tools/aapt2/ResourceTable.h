@@ -75,7 +75,8 @@ class ResourceConfigValue {
   std::unique_ptr<Value> value;
 
   ResourceConfigValue(const android::ConfigDescription& config, const android::StringPiece& product)
-      : config(config), product(product.to_string()) {}
+      : config(config), product(product.to_string()) {
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ResourceConfigValue);
@@ -101,7 +102,8 @@ class ResourceEntry {
   // The resource's values for each configuration.
   std::vector<std::unique_ptr<ResourceConfigValue>> values;
 
-  explicit ResourceEntry(const android::StringPiece& name) : name(name.to_string()) {}
+  explicit ResourceEntry(const android::StringPiece& name) : name(name.to_string()) {
+  }
 
   ResourceConfigValue* FindValue(const android::ConfigDescription& config);
 
@@ -144,7 +146,8 @@ class ResourceTableType {
   // List of resources for this type.
   std::vector<std::unique_ptr<ResourceEntry>> entries;
 
-  explicit ResourceTableType(const ResourceType type) : type(type) {}
+  explicit ResourceTableType(const ResourceType type) : type(type) {
+  }
 
   ResourceEntry* FindEntry(const android::StringPiece& name);
   ResourceEntry* FindOrCreateEntry(const android::StringPiece& name);
@@ -194,9 +197,10 @@ class ResourceTable {
   bool AddFileReference(const ResourceNameRef& name, const android::ConfigDescription& config,
                         const Source& source, const android::StringPiece& path, IDiagnostics* diag);
 
-  bool AddFileReferenceMangled(const ResourceNameRef& name, const android::ConfigDescription& config,
-                               const Source& source, const android::StringPiece& path,
-                               io::IFile* file, IDiagnostics* diag);
+  bool AddFileReferenceMangled(const ResourceNameRef& name,
+                               const android::ConfigDescription& config, const Source& source,
+                               const android::StringPiece& path, io::IFile* file,
+                               IDiagnostics* diag);
 
   // Same as AddResource, but doesn't verify the validity of the name. This is used
   // when loading resources from an existing binary resource table that may have mangled names.

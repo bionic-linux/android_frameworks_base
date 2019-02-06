@@ -33,14 +33,9 @@ using namespace android::base;
 using namespace android::binder;
 using namespace std;
 
-class DropBoxManager : public virtual RefBase
-{
-public:
-    enum {
-        IS_EMPTY = 1,
-        IS_TEXT = 2,
-        IS_GZIPPED = 4
-    };
+class DropBoxManager : public virtual RefBase {
+  public:
+    enum { IS_EMPTY = 1, IS_TEXT = 2, IS_GZIPPED = 4 };
 
     DropBoxManager();
     virtual ~DropBoxManager();
@@ -63,7 +58,7 @@ public:
     Status addFile(const String16& tag, int fd, int flags);
 
     class Entry : public virtual RefBase, public Parcelable {
-    public:
+      public:
         Entry();
         virtual ~Entry();
 
@@ -75,7 +70,7 @@ public:
         int32_t getFlags() const;
         int64_t getTimestamp() const;
 
-    private:
+      private:
         Entry(const String16& tag, int32_t flags);
         Entry(const String16& tag, int32_t flags, int fd);
 
@@ -92,15 +87,13 @@ public:
     // Get the next entry from the drop box after the specified time.
     Status getNextEntry(const String16& tag, long msec, Entry* entry);
 
-private:
-    enum {
-        HAS_BYTE_ARRAY = 8
-    };
+  private:
+    enum { HAS_BYTE_ARRAY = 8 };
 
     Status add(const Entry& entry);
 };
 
-}} // namespace android::os
+}  // namespace os
+}  // namespace android
 
-#endif // _ANDROID_OS_DROPBOXMANAGER_H
-
+#endif  // _ANDROID_OS_DROPBOXMANAGER_H

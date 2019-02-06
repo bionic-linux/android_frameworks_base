@@ -14,21 +14,21 @@
  ** limitations under the License.
  */
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "GraphicsJNI.h"
+#include "jni.h"
 
+#include <assert.h>
+#include <dlfcn.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include <dlfcn.h>
 
+#include <ETC1/etc1.h>
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <GLES3/gl3.h>
-#include <ETC1/etc1.h>
 
 #include <SkBitmap.h>
 
@@ -43,8 +43,7 @@
 
 namespace android {
 
-static inline
-void mx4transform(float x, float y, float z, float w, const float* pM, float* pDest) {
+static inline void mx4transform(float x, float y, float z, float w, const float* pM, float* pDest) {
     pDest[0] = pM[0 + 4 * 0] * x + pM[0 + 4 * 1] * y + pM[0 + 4 * 2] * z + pM[0 + 4 * 3] * w;
     pDest[1] = pM[1 + 4 * 0] * x + pM[1 + 4 * 1] * y + pM[1 + 4 * 2] * z + pM[1 + 4 * 3] * w;
     pDest[2] = pM[2 + 4 * 0] * x + pM[2 + 4 * 1] * y + pM[2 + 4 * 2] * z + pM[2 + 4 * 3] * w;
@@ -63,12 +62,11 @@ print_poly(const char* label, Poly* pPoly) {
 }
 #endif
 
-static
-int visibilityTest(float* pWS, float* pPositions, int positionsLength,
-        unsigned short* pIndices, int indexCount) {
+static int visibilityTest(float* pWS, float* pPositions, int positionsLength,
+                          unsigned short* pIndices, int indexCount) {
     int result = POLY_CLIP_OUT;
 
-    if ( indexCount < 3 ) {
+    if (indexCount < 3) {
         return POLY_CLIP_OUT;
     }
 
@@ -80,17 +78,17 @@ int visibilityTest(float* pWS, float* pPositions, int positionsLength,
 
     int minIndex = 65536;
     int maxIndex = -1;
-    for(int i = 0; i < indexCount; i++) {
+    for (int i = 0; i < indexCount; i++) {
         int index = pIndices[i];
-        if ( index < minIndex ) {
+        if (index < minIndex) {
             minIndex = index;
         }
-        if ( index > maxIndex ) {
+        if (index > maxIndex) {
             maxIndex = index;
         }
     }
 
-    if ( maxIndex * 3 > positionsLength) {
+    if (maxIndex * 3 > positionsLength) {
         return -1;
     }
 
@@ -98,7 +96,7 @@ int visibilityTest(float* pWS, float* pPositions, int positionsLength,
     std::unique_ptr<float[]> holder{new float[transformedIndexCount * 4]};
     float* pTransformed = holder.get();
 
-    if (pTransformed == 0 ) {
+    if (pTransformed == 0) {
         return -2;
     }
 
@@ -107,21 +105,21 @@ int visibilityTest(float* pWS, float* pPositions, int positionsLength,
         const float* pSrc = pPositions + 3 * minIndex;
         float* pDst = pTransformed;
         for (int i = 0; i < transformedIndexCount; i++, pSrc += 3, pDst += 4) {
-            mx4transform(pSrc[0], pSrc[1], pSrc[2], 1.0f, pWS,  pDst);
+            mx4transform(pSrc[0], pSrc[1], pSrc[2], 1.0f, pWS, pDst);
         }
     }
 
     // Clip the triangles
 
     Poly poly;
-    float* pDest = & poly.vert[0].sx;
+    float* pDest = &poly.vert[0].sx;
     for (int i = 0; i < indexCount; i += 3) {
         poly.n = 3;
-        memcpy(pDest    , pTransformed + 4 * (pIndices[i    ] - minIndex), 4 * sizeof(float));
+        memcpy(pDest, pTransformed + 4 * (pIndices[i] - minIndex), 4 * sizeof(float));
         memcpy(pDest + 4, pTransformed + 4 * (pIndices[i + 1] - minIndex), 4 * sizeof(float));
         memcpy(pDest + 8, pTransformed + 4 * (pIndices[i + 2] - minIndex), 4 * sizeof(float));
         result = poly_clip_to_frustum(&poly);
-        if ( result != POLY_CLIP_OUT) {
+        if (result != POLY_CLIP_OUT) {
             return result;
         }
     }
@@ -130,106 +128,106 @@ int visibilityTest(float* pWS, float* pPositions, int positionsLength,
 }
 
 class ByteArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jbyteArray array, jboolean* is_copy) {
         return _env->GetByteArrayElements(array, is_copy);
     }
 };
 class BooleanArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jbooleanArray array, jboolean* is_copy) {
         return _env->GetBooleanArrayElements(array, is_copy);
     }
 };
 class CharArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jcharArray array, jboolean* is_copy) {
         return _env->GetCharArrayElements(array, is_copy);
     }
 };
 class ShortArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jshortArray array, jboolean* is_copy) {
         return _env->GetShortArrayElements(array, is_copy);
     }
 };
 class IntArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jintArray array, jboolean* is_copy) {
         return _env->GetIntArrayElements(array, is_copy);
     }
 };
 class LongArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jlongArray array, jboolean* is_copy) {
         return _env->GetLongArrayElements(array, is_copy);
     }
 };
 class FloatArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jfloatArray array, jboolean* is_copy) {
         return _env->GetFloatArrayElements(array, is_copy);
     }
 };
 class DoubleArrayGetter {
-public:
+  public:
     static void* Get(JNIEnv* _env, jdoubleArray array, jboolean* is_copy) {
         return _env->GetDoubleArrayElements(array, is_copy);
     }
 };
 
 class ByteArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jbyteArray array, jbyte* data, jint mode) {
         _env->ReleaseByteArrayElements(array, data, mode);
     }
 };
 class BooleanArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jbooleanArray array, jboolean* data, jint mode) {
         _env->ReleaseBooleanArrayElements(array, data, mode);
     }
 };
 class CharArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jcharArray array, jchar* data, jint mode) {
         _env->ReleaseCharArrayElements(array, data, mode);
     }
 };
 class ShortArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jshortArray array, jshort* data, jint mode) {
         _env->ReleaseShortArrayElements(array, data, mode);
     }
 };
 class IntArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jintArray array, jint* data, jint mode) {
         _env->ReleaseIntArrayElements(array, data, mode);
     }
 };
 class LongArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jlongArray array, jlong* data, jint mode) {
         _env->ReleaseLongArrayElements(array, data, mode);
     }
 };
 class FloatArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jfloatArray array, jfloat* data, jint mode) {
         _env->ReleaseFloatArrayElements(array, data, mode);
     }
 };
 class DoubleArrayReleaser {
-public:
+  public:
     static void Release(JNIEnv* _env, jdoubleArray array, jdouble* data, jint mode) {
         _env->ReleaseDoubleArrayElements(array, data, mode);
     }
 };
 
-template<class JArray, class T, class ArrayGetter, class ArrayReleaser>
+template <class JArray, class T, class ArrayGetter, class ArrayReleaser>
 class ArrayHelper {
-public:
+  public:
     ArrayHelper(JNIEnv* env, JArray ref, jint offset, jint minSize) {
         mEnv = env;
         mRef = ref;
@@ -253,16 +251,16 @@ public:
     // Else instruct the runtime to throw an exception
 
     bool check() {
-        if ( ! mRef) {
+        if (!mRef) {
             doThrowIAE(mEnv, "array == null");
             return false;
         }
-        if ( mOffset < 0) {
+        if (mOffset < 0) {
             doThrowIAE(mEnv, "offset < 0");
             return false;
         }
         mLength = mEnv->GetArrayLength(mRef) - mOffset;
-        if (mLength < mMinSize ) {
+        if (mLength < mMinSize) {
             doThrowIAE(mEnv, "length - offset < n");
             return false;
         }
@@ -272,18 +270,16 @@ public:
     // Bind the array.
 
     void bind() {
-        mBase = (T*) ArrayGetter::Get(mEnv, mRef, (jboolean *) 0);
+        mBase = (T*)ArrayGetter::Get(mEnv, mRef, (jboolean*)0);
         mData = mBase + mOffset;
     }
 
-    void commitChanges() {
-        mReleaseParam = 0;
-    }
+    void commitChanges() { mReleaseParam = 0; }
 
     T* mData;
     int mLength;
 
-private:
+  private:
     T* mBase;
     JNIEnv* mEnv;
     JArray mRef;
@@ -293,7 +289,8 @@ private:
 };
 
 typedef ArrayHelper<jfloatArray, float, FloatArrayGetter, FloatArrayReleaser> FloatArrayHelper;
-typedef ArrayHelper<jcharArray, unsigned short, CharArrayGetter, CharArrayReleaser> UnsignedShortArrayHelper;
+typedef ArrayHelper<jcharArray, unsigned short, CharArrayGetter, CharArrayReleaser>
+        UnsignedShortArrayHelper;
 typedef ArrayHelper<jintArray, int, IntArrayGetter, IntArrayReleaser> IntArrayHelper;
 typedef ArrayHelper<jbyteArray, unsigned char, ByteArrayGetter, ByteArrayReleaser> ByteArrayHelper;
 
@@ -305,22 +302,21 @@ inline float distance(float x, float y, float z) {
     return sqrtf(distance2(x, y, z));
 }
 
-static
-void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
-        jfloatArray positions_ref, jint positionsOffset, jint positionsCount,
-        jfloatArray sphere_ref, jint sphereOffset) {
+static void util_computeBoundingSphere(JNIEnv* env, jclass clazz, jfloatArray positions_ref,
+                                       jint positionsOffset, jint positionsCount,
+                                       jfloatArray sphere_ref, jint sphereOffset) {
     FloatArrayHelper positions(env, positions_ref, positionsOffset, 0);
     FloatArrayHelper sphere(env, sphere_ref, sphereOffset, 4);
 
     bool checkOK = positions.check() && sphere.check();
-        if (! checkOK) {
+    if (!checkOK) {
         return;
     }
 
     positions.bind();
     sphere.bind();
 
-    if ( positionsCount < 1 ) {
+    if (positionsCount < 1) {
         doThrowIAE(env, "positionsCount < 1");
         return;
     }
@@ -335,13 +331,12 @@ void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
     float z0 = *pSrc++;
     float z1 = z0;
 
-    for(int i = 1; i < positionsCount; i++) {
+    for (int i = 1; i < positionsCount; i++) {
         {
             float x = *pSrc++;
             if (x < x0) {
                 x0 = x;
-            }
-            else if (x > x1) {
+            } else if (x > x1) {
                 x1 = x;
             }
         }
@@ -349,8 +344,7 @@ void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
             float y = *pSrc++;
             if (y < y0) {
                 y0 = y;
-            }
-            else if (y > y1) {
+            } else if (y > y1) {
                 y1 = y;
             }
         }
@@ -358,8 +352,7 @@ void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
             float z = *pSrc++;
             if (z < z0) {
                 z0 = z;
-            }
-            else if (z > z1) {
+            } else if (z > z1) {
                 z1 = z;
             }
         }
@@ -381,7 +374,7 @@ void util_computeBoundingSphere(JNIEnv *env, jclass clazz,
 
 static void normalizePlane(float* p) {
     float rdist = 1.0f / distance(p[0], p[1], p[2]);
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         p[i] *= rdist;
     }
 }
@@ -415,59 +408,58 @@ static void computeFrustum(const float* m, float* f) {
     float m11 = m[11];
     float m15 = m[15];
     // right
-    f[0] = m3  - m[0];
-    f[1] = m7  - m[4];
+    f[0] = m3 - m[0];
+    f[1] = m7 - m[4];
     f[2] = m11 - m[8];
     f[3] = m15 - m[12];
     normalizePlane(f);
-    f+= 4;
+    f += 4;
 
     // left
-    f[0] = m3  + m[0];
-    f[1] = m7  + m[4];
+    f[0] = m3 + m[0];
+    f[1] = m7 + m[4];
     f[2] = m11 + m[8];
     f[3] = m15 + m[12];
     normalizePlane(f);
-    f+= 4;
+    f += 4;
 
     // top
-    f[0] = m3  - m[1];
-    f[1] = m7  - m[5];
+    f[0] = m3 - m[1];
+    f[1] = m7 - m[5];
     f[2] = m11 - m[9];
     f[3] = m15 - m[13];
     normalizePlane(f);
-    f+= 4;
+    f += 4;
 
     // bottom
-    f[0] = m3  + m[1];
-    f[1] = m7  + m[5];
+    f[0] = m3 + m[1];
+    f[1] = m7 + m[5];
     f[2] = m11 + m[9];
     f[3] = m15 + m[13];
     normalizePlane(f);
-    f+= 4;
+    f += 4;
 
     // far
-    f[0] = m3  - m[2];
-    f[1] = m7  - m[6];
+    f[0] = m3 - m[2];
+    f[1] = m7 - m[6];
     f[2] = m11 - m[10];
     f[3] = m15 - m[14];
     normalizePlane(f);
-    f+= 4;
+    f += 4;
 
     // near
-    f[0] = m3  + m[2];
-    f[1] = m7  + m[6];
+    f[0] = m3 + m[2];
+    f[1] = m7 + m[6];
     f[2] = m11 + m[10];
     f[3] = m15 + m[14];
     normalizePlane(f);
 }
 
-static
-jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
-        jfloatArray mvp_ref, jint mvpOffset,
-        jfloatArray spheres_ref, jint spheresOffset, jint spheresCount,
-        jintArray results_ref, jint resultsOffset, jint resultsCapacity) {
-    float frustum[6*4];
+static jint util_frustumCullSpheres(JNIEnv* env, jclass clazz, jfloatArray mvp_ref, jint mvpOffset,
+                                    jfloatArray spheres_ref, jint spheresOffset, jint spheresCount,
+                                    jintArray results_ref, jint resultsOffset,
+                                    jint resultsCapacity) {
+    float frustum[6 * 4];
     int outputCount;
     int* pResults;
     float* pSphere;
@@ -476,7 +468,7 @@ jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
     IntArrayHelper results(env, results_ref, resultsOffset, resultsCapacity);
 
     bool initializedOK = mvp.check() && spheres.check() && results.check();
-        if (! initializedOK) {
+    if (!initializedOK) {
         return -1;
     }
 
@@ -491,7 +483,7 @@ jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
     pSphere = spheres.mData;
     pResults = results.mData;
     outputCount = 0;
-    for(int i = 0; i < spheresCount; i++, pSphere += 4) {
+    for (int i = 0; i < spheresCount; i++, pSphere += 4) {
         if (sphereHitsFrustum(frustum, pSphere)) {
             if (outputCount < resultsCapacity) {
                 *pResults++ = i;
@@ -509,18 +501,15 @@ jint util_frustumCullSpheres(JNIEnv *env, jclass clazz,
  char[] indices, int indicesOffset, int indexCount);
  */
 
-static
-jint util_visibilityTest(JNIEnv *env, jclass clazz,
-        jfloatArray ws_ref, jint wsOffset,
-        jfloatArray positions_ref, jint positionsOffset,
-        jcharArray indices_ref, jint indicesOffset, jint indexCount) {
-
+static jint util_visibilityTest(JNIEnv* env, jclass clazz, jfloatArray ws_ref, jint wsOffset,
+                                jfloatArray positions_ref, jint positionsOffset,
+                                jcharArray indices_ref, jint indicesOffset, jint indexCount) {
     FloatArrayHelper ws(env, ws_ref, wsOffset, 16);
     FloatArrayHelper positions(env, positions_ref, positionsOffset, 0);
     UnsignedShortArrayHelper indices(env, indices_ref, indicesOffset, 0);
 
     bool checkOK = ws.check() && positions.check() && indices.check();
-    if (! checkOK) {
+    if (!checkOK) {
         // Return value will be ignored, because an exception has been thrown.
         return -1;
     }
@@ -534,49 +523,42 @@ jint util_visibilityTest(JNIEnv *env, jclass clazz,
     positions.bind();
     indices.bind();
 
-    return visibilityTest(ws.mData,
-            positions.mData, positions.mLength,
-            indices.mData, indexCount);
+    return visibilityTest(ws.mData, positions.mData, positions.mLength, indices.mData, indexCount);
 }
 
-#define I(_i, _j) ((_j)+ 4*(_i))
+#define I(_i, _j) ((_j) + 4 * (_i))
 
-static
-void multiplyMM(float* r, const float* lhs, const float* rhs)
-{
-    for (int i=0 ; i<4 ; i++) {
-        const float rhs_i0 = rhs[ I(i,0) ];
-        float ri0 = lhs[ I(0,0) ] * rhs_i0;
-        float ri1 = lhs[ I(0,1) ] * rhs_i0;
-        float ri2 = lhs[ I(0,2) ] * rhs_i0;
-        float ri3 = lhs[ I(0,3) ] * rhs_i0;
-        for (int j=1 ; j<4 ; j++) {
-            const float rhs_ij = rhs[ I(i,j) ];
-            ri0 += lhs[ I(j,0) ] * rhs_ij;
-            ri1 += lhs[ I(j,1) ] * rhs_ij;
-            ri2 += lhs[ I(j,2) ] * rhs_ij;
-            ri3 += lhs[ I(j,3) ] * rhs_ij;
+static void multiplyMM(float* r, const float* lhs, const float* rhs) {
+    for (int i = 0; i < 4; i++) {
+        const float rhs_i0 = rhs[I(i, 0)];
+        float ri0 = lhs[I(0, 0)] * rhs_i0;
+        float ri1 = lhs[I(0, 1)] * rhs_i0;
+        float ri2 = lhs[I(0, 2)] * rhs_i0;
+        float ri3 = lhs[I(0, 3)] * rhs_i0;
+        for (int j = 1; j < 4; j++) {
+            const float rhs_ij = rhs[I(i, j)];
+            ri0 += lhs[I(j, 0)] * rhs_ij;
+            ri1 += lhs[I(j, 1)] * rhs_ij;
+            ri2 += lhs[I(j, 2)] * rhs_ij;
+            ri3 += lhs[I(j, 3)] * rhs_ij;
         }
-        r[ I(i,0) ] = ri0;
-        r[ I(i,1) ] = ri1;
-        r[ I(i,2) ] = ri2;
-        r[ I(i,3) ] = ri3;
+        r[I(i, 0)] = ri0;
+        r[I(i, 1)] = ri1;
+        r[I(i, 2)] = ri2;
+        r[I(i, 3)] = ri3;
     }
 }
 
-static
-void util_multiplyMM(JNIEnv *env, jclass clazz,
-    jfloatArray result_ref, jint resultOffset,
-    jfloatArray lhs_ref, jint lhsOffset,
-    jfloatArray rhs_ref, jint rhsOffset) {
-
+static void util_multiplyMM(JNIEnv* env, jclass clazz, jfloatArray result_ref, jint resultOffset,
+                            jfloatArray lhs_ref, jint lhsOffset, jfloatArray rhs_ref,
+                            jint rhsOffset) {
     FloatArrayHelper resultMat(env, result_ref, resultOffset, 16);
     FloatArrayHelper lhs(env, lhs_ref, lhsOffset, 16);
     FloatArrayHelper rhs(env, rhs_ref, rhsOffset, 16);
 
     bool checkOK = resultMat.check() && lhs.check() && rhs.check();
 
-    if ( !checkOK ) {
+    if (!checkOK) {
         return;
     }
 
@@ -589,25 +571,20 @@ void util_multiplyMM(JNIEnv *env, jclass clazz,
     resultMat.commitChanges();
 }
 
-static
-void multiplyMV(float* r, const float* lhs, const float* rhs)
-{
+static void multiplyMV(float* r, const float* lhs, const float* rhs) {
     mx4transform(rhs[0], rhs[1], rhs[2], rhs[3], lhs, r);
 }
 
-static
-void util_multiplyMV(JNIEnv *env, jclass clazz,
-    jfloatArray result_ref, jint resultOffset,
-    jfloatArray lhs_ref, jint lhsOffset,
-    jfloatArray rhs_ref, jint rhsOffset) {
-
+static void util_multiplyMV(JNIEnv* env, jclass clazz, jfloatArray result_ref, jint resultOffset,
+                            jfloatArray lhs_ref, jint lhsOffset, jfloatArray rhs_ref,
+                            jint rhsOffset) {
     FloatArrayHelper resultV(env, result_ref, resultOffset, 4);
     FloatArrayHelper lhs(env, lhs_ref, lhsOffset, 16);
     FloatArrayHelper rhs(env, rhs_ref, rhsOffset, 4);
 
     bool checkOK = resultV.check() && lhs.check() && rhs.check();
 
-    if ( !checkOK ) {
+    if (!checkOK) {
         return;
     }
 
@@ -622,25 +599,18 @@ void util_multiplyMV(JNIEnv *env, jclass clazz,
 
 // ---------------------------------------------------------------------------
 
-static int checkInternalFormat(SkColorType colorType, int internalformat,
-    int type)
-{
-    switch(colorType) {
+static int checkInternalFormat(SkColorType colorType, int internalformat, int type) {
+    switch (colorType) {
         case kN32_SkColorType:
-            return (type == GL_UNSIGNED_BYTE &&
-                internalformat == GL_RGBA) ? 0 : -1;
+            return (type == GL_UNSIGNED_BYTE && internalformat == GL_RGBA) ? 0 : -1;
         case kAlpha_8_SkColorType:
-            return (type == GL_UNSIGNED_BYTE &&
-                internalformat == GL_ALPHA) ? 0 : -1;
+            return (type == GL_UNSIGNED_BYTE && internalformat == GL_ALPHA) ? 0 : -1;
         case kARGB_4444_SkColorType:
-            return (type == GL_UNSIGNED_SHORT_4_4_4_4 &&
-                internalformat == GL_RGBA) ? 0 : -1;
+            return (type == GL_UNSIGNED_SHORT_4_4_4_4 && internalformat == GL_RGBA) ? 0 : -1;
         case kRGB_565_SkColorType:
-            return (type == GL_UNSIGNED_SHORT_5_6_5 &&
-                internalformat == GL_RGB) ? 0 : -1;
+            return (type == GL_UNSIGNED_SHORT_5_6_5 && internalformat == GL_RGB) ? 0 : -1;
         case kRGBA_F16_SkColorType:
-            return (type == GL_HALF_FLOAT &&
-                internalformat == GL_RGBA16F) ? 0 : -1;
+            return (type == GL_HALF_FLOAT && internalformat == GL_RGBA16F) ? 0 : -1;
         default:
             break;
     }
@@ -661,9 +631,8 @@ static int getPixelFormatFromInternalFormat(uint32_t internalFormat) {
     }
 }
 
-static int getInternalFormat(SkColorType colorType)
-{
-    switch(colorType) {
+static int getInternalFormat(SkColorType colorType) {
+    switch (colorType) {
         case kAlpha_8_SkColorType:
             return GL_ALPHA;
         case kARGB_4444_SkColorType:
@@ -679,9 +648,8 @@ static int getInternalFormat(SkColorType colorType)
     }
 }
 
-static int getType(SkColorType colorType)
-{
-    switch(colorType) {
+static int getType(SkColorType colorType) {
+    switch (colorType) {
         case kAlpha_8_SkColorType:
             return GL_UNSIGNED_BYTE;
         case kARGB_4444_SkColorType:
@@ -697,26 +665,20 @@ static int getType(SkColorType colorType)
     }
 }
 
-static jint util_getInternalFormat(JNIEnv *env, jclass clazz,
-        jobject jbitmap)
-{
+static jint util_getInternalFormat(JNIEnv* env, jclass clazz, jobject jbitmap) {
     SkBitmap nativeBitmap;
     GraphicsJNI::getSkBitmap(env, jbitmap, &nativeBitmap);
     return getInternalFormat(nativeBitmap.colorType());
 }
 
-static jint util_getType(JNIEnv *env, jclass clazz,
-        jobject jbitmap)
-{
+static jint util_getType(JNIEnv* env, jclass clazz, jobject jbitmap) {
     SkBitmap nativeBitmap;
     GraphicsJNI::getSkBitmap(env, jbitmap, &nativeBitmap);
     return getType(nativeBitmap.colorType());
 }
 
-static jint util_texImage2D(JNIEnv *env, jclass clazz,
-        jint target, jint level, jint internalformat,
-        jobject jbitmap, jint type, jint border)
-{
+static jint util_texImage2D(JNIEnv* env, jclass clazz, jint target, jint level, jint internalformat,
+                            jobject jbitmap, jint type, jint border) {
     SkBitmap bitmap;
     GraphicsJNI::getSkBitmap(env, jbitmap, &bitmap);
     SkColorType colorType = bitmap.colorType();
@@ -727,8 +689,7 @@ static jint util_texImage2D(JNIEnv *env, jclass clazz,
         type = getType(colorType);
     }
     int err = checkInternalFormat(colorType, internalformat, type);
-    if (err)
-        return err;
+    if (err) return err;
     const int w = bitmap.width();
     const int h = bitmap.height();
     const void* p = bitmap.getPixels();
@@ -741,10 +702,8 @@ static jint util_texImage2D(JNIEnv *env, jclass clazz,
     return err;
 }
 
-static jint util_texSubImage2D(JNIEnv *env, jclass clazz,
-        jint target, jint level, jint xoffset, jint yoffset,
-        jobject jbitmap, jint format, jint type)
-{
+static jint util_texSubImage2D(JNIEnv* env, jclass clazz, jint target, jint level, jint xoffset,
+                               jint yoffset, jobject jbitmap, jint format, jint type) {
     SkBitmap bitmap;
     GraphicsJNI::getSkBitmap(env, jbitmap, &bitmap);
     SkColorType colorType = bitmap.colorType();
@@ -752,11 +711,10 @@ static jint util_texSubImage2D(JNIEnv *env, jclass clazz,
     if (format < 0) {
         format = getPixelFormatFromInternalFormat(internalFormat);
         if (format == GL_PALETTE8_RGBA8_OES)
-            return -1; // glCompressedTexSubImage2D() not supported
+            return -1;  // glCompressedTexSubImage2D() not supported
     }
     int err = checkInternalFormat(colorType, internalFormat, type);
-    if (err)
-        return err;
+    if (err) return err;
     const int w = bitmap.width();
     const int h = bitmap.height();
     const void* p = bitmap.getPixels();
@@ -779,17 +737,15 @@ static jfieldID elementSizeShiftID;
 
 /* Cache method IDs each time the class is loaded. */
 
-static void
-nativeClassInitBuffer(JNIEnv *env)
-{
+static void nativeClassInitBuffer(JNIEnv* env) {
     jclass nioAccessClassLocal = FindClassOrDie(env, "java/nio/NIOAccess");
     nioAccessClass = MakeGlobalRefOrDie(env, nioAccessClassLocal);
-    getBasePointerID = GetStaticMethodIDOrDie(env, nioAccessClass,
-            "getBasePointer", "(Ljava/nio/Buffer;)J");
-    getBaseArrayID = GetStaticMethodIDOrDie(env, nioAccessClass,
-            "getBaseArray", "(Ljava/nio/Buffer;)Ljava/lang/Object;");
-    getBaseArrayOffsetID = GetStaticMethodIDOrDie(env, nioAccessClass,
-            "getBaseArrayOffset", "(Ljava/nio/Buffer;)I");
+    getBasePointerID =
+            GetStaticMethodIDOrDie(env, nioAccessClass, "getBasePointer", "(Ljava/nio/Buffer;)J");
+    getBaseArrayID = GetStaticMethodIDOrDie(env, nioAccessClass, "getBaseArray",
+                                            "(Ljava/nio/Buffer;)Ljava/lang/Object;");
+    getBaseArrayOffsetID = GetStaticMethodIDOrDie(env, nioAccessClass, "getBaseArrayOffset",
+                                                  "(Ljava/nio/Buffer;)I");
 
     jclass bufferClassLocal = FindClassOrDie(env, "java/nio/Buffer");
     bufferClass = MakeGlobalRefOrDie(env, bufferClassLocal);
@@ -798,9 +754,7 @@ nativeClassInitBuffer(JNIEnv *env)
     elementSizeShiftID = GetFieldIDOrDie(env, bufferClass, "_elementSizeShift", "I");
 }
 
-static void *
-getPointer(JNIEnv *_env, jobject buffer, jint *remaining)
-{
+static void* getPointer(JNIEnv* _env, jobject buffer, jint* remaining) {
     jint position;
     jint limit;
     jint elementSizeShift;
@@ -810,17 +764,16 @@ getPointer(JNIEnv *_env, jobject buffer, jint *remaining)
     limit = _env->GetIntField(buffer, limitID);
     elementSizeShift = _env->GetIntField(buffer, elementSizeShiftID);
     *remaining = (limit - position) << elementSizeShift;
-    pointer = _env->CallStaticLongMethod(nioAccessClass,
-            getBasePointerID, buffer);
+    pointer = _env->CallStaticLongMethod(nioAccessClass, getBasePointerID, buffer);
     if (pointer != 0L) {
-        return reinterpret_cast<void *>(pointer);
+        return reinterpret_cast<void*>(pointer);
     }
     return NULL;
 }
 
 class BufferHelper {
-public:
-    BufferHelper(JNIEnv *env, jobject buffer) {
+  public:
+    BufferHelper(JNIEnv* env, jobject buffer) {
         mEnv = env;
         mBuffer = buffer;
         mData = NULL;
@@ -840,15 +793,11 @@ public:
         }
     }
 
-    inline void* getData() {
-        return mData;
-    }
+    inline void* getData() { return mData; }
 
-    inline jint remaining() {
-        return mRemaining;
-    }
+    inline jint remaining() { return mRemaining; }
 
-private:
+  private:
     JNIEnv* mEnv;
     jobject mBuffer;
     void* mData;
@@ -868,8 +817,8 @@ private:
  * @param out an ETC1 compressed version of the data.
  *
  */
-static void etc1_encodeBlock(JNIEnv *env, jclass clazz,
-        jobject in, jint validPixelMask, jobject out) {
+static void etc1_encodeBlock(JNIEnv* env, jclass clazz, jobject in, jint validPixelMask,
+                             jobject out) {
     if (validPixelMask < 0 || validPixelMask > 15) {
         doThrowIAE(env, "validPixelMask");
         return;
@@ -882,8 +831,8 @@ static void etc1_encodeBlock(JNIEnv *env, jclass clazz,
         } else if (outB.remaining() < ETC1_ENCODED_BLOCK_SIZE) {
             doThrowIAE(env, "out's remaining data < ENCODED_BLOCK_SIZE");
         } else {
-            etc1_encode_block((etc1_byte*) inB.getData(), validPixelMask,
-                    (etc1_byte*) outB.getData());
+            etc1_encode_block((etc1_byte*)inB.getData(), validPixelMask,
+                              (etc1_byte*)outB.getData());
         }
     }
 }
@@ -897,8 +846,7 @@ static void etc1_encodeBlock(JNIEnv *env, jclass clazz,
  * 4 x 4 square of 3-byte pixels in form R, G, B. Byte (3 * (x + 4 * y) is the R
  * value of pixel (x, y).
  */
-static void etc1_decodeBlock(JNIEnv *env, jclass clazz,
-        jobject in, jobject out){
+static void etc1_decodeBlock(JNIEnv* env, jclass clazz, jobject in, jobject out) {
     BufferHelper inB(env, in);
     BufferHelper outB(env, out);
     if (inB.checkPointer("in") && outB.checkPointer("out")) {
@@ -907,8 +855,7 @@ static void etc1_decodeBlock(JNIEnv *env, jclass clazz,
         } else if (outB.remaining() < ETC1_DECODED_BLOCK_SIZE) {
             doThrowIAE(env, "out's remaining data < DECODED_BLOCK_SIZE");
         } else {
-            etc1_decode_block((etc1_byte*) inB.getData(),
-                    (etc1_byte*) outB.getData());
+            etc1_decode_block((etc1_byte*)inB.getData(), (etc1_byte*)outB.getData());
         }
     }
 }
@@ -916,8 +863,7 @@ static void etc1_decodeBlock(JNIEnv *env, jclass clazz,
 /**
  * Return the size of the encoded image data (does not include size of PKM header).
  */
-static jint etc1_getEncodedDataSize(JNIEnv *env, jclass clazz,
-        jint width, jint height) {
+static jint etc1_getEncodedDataSize(JNIEnv* env, jclass clazz, jint width, jint height) {
     return etc1_get_encoded_data_size(width, height);
 }
 
@@ -927,9 +873,8 @@ static jint etc1_getEncodedDataSize(JNIEnv *env, jclass clazz,
  *           pixel (x,y) is at pIn + pixelSize * x + stride * y + redOffset;
  * @param out pointer to encoded data. Must be large enough to store entire encoded image.
  */
-static void etc1_encodeImage(JNIEnv *env, jclass clazz,
-        jobject in, jint width, jint height,
-        jint pixelSize, jint stride, jobject out) {
+static void etc1_encodeImage(JNIEnv* env, jclass clazz, jobject in, jint width, jint height,
+                             jint pixelSize, jint stride, jobject out) {
     if (pixelSize < 2 || pixelSize > 3) {
         doThrowIAE(env, "pixelSize must be 2 or 3");
         return;
@@ -944,8 +889,8 @@ static void etc1_encodeImage(JNIEnv *env, jclass clazz,
         } else if (outB.remaining() < encodedImageSize) {
             doThrowIAE(env, "out's remaining data < encoded image size");
         } else {
-            etc1_encode_image((etc1_byte*) inB.getData(), width, height, pixelSize, stride,
-                              (etc1_byte*) outB.getData());
+            etc1_encode_image((etc1_byte*)inB.getData(), width, height, pixelSize, stride,
+                              (etc1_byte*)outB.getData());
         }
     }
 }
@@ -957,10 +902,8 @@ static void etc1_encodeImage(JNIEnv *env, jclass clazz,
  *            pixel (x,y) is at pIn + pixelSize * x + stride * y. Must be
  *            large enough to store entire image.
  */
-static void etc1_decodeImage(JNIEnv *env, jclass clazz,
-        jobject  in, jobject out,
-        jint width, jint height,
-        jint pixelSize, jint stride) {
+static void etc1_decodeImage(JNIEnv* env, jclass clazz, jobject in, jobject out, jint width,
+                             jint height, jint pixelSize, jint stride) {
     if (pixelSize < 2 || pixelSize > 3) {
         doThrowIAE(env, "pixelSize must be 2 or 3");
         return;
@@ -975,8 +918,8 @@ static void etc1_decodeImage(JNIEnv *env, jclass clazz,
         } else if (outB.remaining() < imageSize) {
             doThrowIAE(env, "out's remaining data < image size");
         } else {
-            etc1_decode_image((etc1_byte*) inB.getData(), (etc1_byte*) outB.getData(),
-                              width, height, pixelSize, stride);
+            etc1_decode_image((etc1_byte*)inB.getData(), (etc1_byte*)outB.getData(), width, height,
+                              pixelSize, stride);
         }
     }
 }
@@ -984,14 +927,13 @@ static void etc1_decodeImage(JNIEnv *env, jclass clazz,
 /**
  * Format a PKM header
  */
-static void etc1_formatHeader(JNIEnv *env, jclass clazz,
-        jobject header, jint width, jint height) {
+static void etc1_formatHeader(JNIEnv* env, jclass clazz, jobject header, jint width, jint height) {
     BufferHelper headerB(env, header);
-    if (headerB.checkPointer("header") ){
+    if (headerB.checkPointer("header")) {
         if (headerB.remaining() < ETC_PKM_HEADER_SIZE) {
             doThrowIAE(env, "header's remaining data < ETC_PKM_HEADER_SIZE");
         } else {
-            etc1_pkm_format_header((etc1_byte*) headerB.getData(), width, height);
+            etc1_pkm_format_header((etc1_byte*)headerB.getData(), width, height);
         }
     }
 }
@@ -999,15 +941,14 @@ static void etc1_formatHeader(JNIEnv *env, jclass clazz,
 /**
  * Check if a PKM header is correctly formatted.
  */
-static jboolean etc1_isValid(JNIEnv *env, jclass clazz,
-        jobject header) {
+static jboolean etc1_isValid(JNIEnv* env, jclass clazz, jobject header) {
     jboolean result = false;
     BufferHelper headerB(env, header);
-    if (headerB.checkPointer("header") ){
+    if (headerB.checkPointer("header")) {
         if (headerB.remaining() < ETC_PKM_HEADER_SIZE) {
             doThrowIAE(env, "header's remaining data < ETC_PKM_HEADER_SIZE");
         } else {
-            result = etc1_pkm_is_valid((etc1_byte*) headerB.getData());
+            result = etc1_pkm_is_valid((etc1_byte*)headerB.getData());
         }
     }
     return result ? JNI_TRUE : JNI_FALSE;
@@ -1016,15 +957,14 @@ static jboolean etc1_isValid(JNIEnv *env, jclass clazz,
 /**
  * Read the image width from a PKM header
  */
-static jint etc1_getWidth(JNIEnv *env, jclass clazz,
-        jobject header) {
+static jint etc1_getWidth(JNIEnv* env, jclass clazz, jobject header) {
     jint result = 0;
     BufferHelper headerB(env, header);
-    if (headerB.checkPointer("header") ){
+    if (headerB.checkPointer("header")) {
         if (headerB.remaining() < ETC_PKM_HEADER_SIZE) {
             doThrowIAE(env, "header's remaining data < ETC_PKM_HEADER_SIZE");
         } else {
-            result = etc1_pkm_get_width((etc1_byte*) headerB.getData());
+            result = etc1_pkm_get_width((etc1_byte*)headerB.getData());
         }
     }
     return result;
@@ -1033,15 +973,14 @@ static jint etc1_getWidth(JNIEnv *env, jclass clazz,
 /**
  * Read the image height from a PKM header
  */
-static jint etc1_getHeight(JNIEnv *env, jclass clazz,
-        jobject header) {
+static jint etc1_getHeight(JNIEnv* env, jclass clazz, jobject header) {
     jint result = 0;
     BufferHelper headerB(env, header);
-    if (headerB.checkPointer("header") ){
+    if (headerB.checkPointer("header")) {
         if (headerB.remaining() < ETC_PKM_HEADER_SIZE) {
             doThrowIAE(env, "header's remaining data < ETC_PKM_HEADER_SIZE");
         } else {
-            result = etc1_pkm_get_height((etc1_byte*) headerB.getData());
+            result = etc1_pkm_get_height((etc1_byte*)headerB.getData());
         }
     }
     return result;
@@ -1052,33 +991,33 @@ static jint etc1_getHeight(JNIEnv *env, jclass clazz,
  */
 
 static const JNINativeMethod gMatrixMethods[] = {
-    { "multiplyMM", "([FI[FI[FI)V", (void*)util_multiplyMM },
-    { "multiplyMV", "([FI[FI[FI)V", (void*)util_multiplyMV },
+        {"multiplyMM", "([FI[FI[FI)V", (void*)util_multiplyMM},
+        {"multiplyMV", "([FI[FI[FI)V", (void*)util_multiplyMV},
 };
 
 static const JNINativeMethod gVisibilityMethods[] = {
-    { "computeBoundingSphere", "([FII[FI)V", (void*)util_computeBoundingSphere },
-    { "frustumCullSpheres", "([FI[FII[III)I", (void*)util_frustumCullSpheres },
-    { "visibilityTest", "([FI[FI[CII)I", (void*)util_visibilityTest },
+        {"computeBoundingSphere", "([FII[FI)V", (void*)util_computeBoundingSphere},
+        {"frustumCullSpheres", "([FI[FII[III)I", (void*)util_frustumCullSpheres},
+        {"visibilityTest", "([FI[FI[CII)I", (void*)util_visibilityTest},
 };
 
 static const JNINativeMethod gUtilsMethods[] = {
-    { "native_getInternalFormat", "(Landroid/graphics/Bitmap;)I", (void*) util_getInternalFormat },
-    { "native_getType", "(Landroid/graphics/Bitmap;)I", (void*) util_getType },
-    { "native_texImage2D", "(IIILandroid/graphics/Bitmap;II)I", (void*)util_texImage2D },
-    { "native_texSubImage2D", "(IIIILandroid/graphics/Bitmap;II)I", (void*)util_texSubImage2D },
+        {"native_getInternalFormat", "(Landroid/graphics/Bitmap;)I", (void*)util_getInternalFormat},
+        {"native_getType", "(Landroid/graphics/Bitmap;)I", (void*)util_getType},
+        {"native_texImage2D", "(IIILandroid/graphics/Bitmap;II)I", (void*)util_texImage2D},
+        {"native_texSubImage2D", "(IIIILandroid/graphics/Bitmap;II)I", (void*)util_texSubImage2D},
 };
 
 static const JNINativeMethod gEtc1Methods[] = {
-    { "encodeBlock", "(Ljava/nio/Buffer;ILjava/nio/Buffer;)V", (void*) etc1_encodeBlock },
-    { "decodeBlock", "(Ljava/nio/Buffer;Ljava/nio/Buffer;)V", (void*) etc1_decodeBlock },
-    { "getEncodedDataSize", "(II)I", (void*) etc1_getEncodedDataSize },
-    { "encodeImage", "(Ljava/nio/Buffer;IIIILjava/nio/Buffer;)V", (void*) etc1_encodeImage },
-    { "decodeImage", "(Ljava/nio/Buffer;Ljava/nio/Buffer;IIII)V", (void*) etc1_decodeImage },
-    { "formatHeader", "(Ljava/nio/Buffer;II)V", (void*) etc1_formatHeader },
-    { "isValid", "(Ljava/nio/Buffer;)Z", (void*) etc1_isValid },
-    { "getWidth", "(Ljava/nio/Buffer;)I", (void*) etc1_getWidth },
-    { "getHeight", "(Ljava/nio/Buffer;)I", (void*) etc1_getHeight },
+        {"encodeBlock", "(Ljava/nio/Buffer;ILjava/nio/Buffer;)V", (void*)etc1_encodeBlock},
+        {"decodeBlock", "(Ljava/nio/Buffer;Ljava/nio/Buffer;)V", (void*)etc1_decodeBlock},
+        {"getEncodedDataSize", "(II)I", (void*)etc1_getEncodedDataSize},
+        {"encodeImage", "(Ljava/nio/Buffer;IIIILjava/nio/Buffer;)V", (void*)etc1_encodeImage},
+        {"decodeImage", "(Ljava/nio/Buffer;Ljava/nio/Buffer;IIII)V", (void*)etc1_decodeImage},
+        {"formatHeader", "(Ljava/nio/Buffer;II)V", (void*)etc1_formatHeader},
+        {"isValid", "(Ljava/nio/Buffer;)Z", (void*)etc1_isValid},
+        {"getWidth", "(Ljava/nio/Buffer;)I", (void*)etc1_getWidth},
+        {"getHeight", "(Ljava/nio/Buffer;)I", (void*)etc1_getHeight},
 };
 
 typedef struct _ClassRegistrationInfo {
@@ -1088,14 +1027,13 @@ typedef struct _ClassRegistrationInfo {
 } ClassRegistrationInfo;
 
 static const ClassRegistrationInfo gClasses[] = {
-    {"android/opengl/Matrix", gMatrixMethods, NELEM(gMatrixMethods)},
-    {"android/opengl/Visibility", gVisibilityMethods, NELEM(gVisibilityMethods)},
-    {"android/opengl/GLUtils", gUtilsMethods, NELEM(gUtilsMethods)},
-    {"android/opengl/ETC1", gEtc1Methods, NELEM(gEtc1Methods)},
+        {"android/opengl/Matrix", gMatrixMethods, NELEM(gMatrixMethods)},
+        {"android/opengl/Visibility", gVisibilityMethods, NELEM(gVisibilityMethods)},
+        {"android/opengl/GLUtils", gUtilsMethods, NELEM(gUtilsMethods)},
+        {"android/opengl/ETC1", gEtc1Methods, NELEM(gEtc1Methods)},
 };
 
-int register_android_opengl_classes(JNIEnv* env)
-{
+int register_android_opengl_classes(JNIEnv* env) {
     nativeClassInitBuffer(env);
     int result = 0;
     for (int i = 0; i < NELEM(gClasses); i++) {
@@ -1105,4 +1043,4 @@ int register_android_opengl_classes(JNIEnv* env)
     return result;
 }
 
-} // namespace android
+}  // namespace android

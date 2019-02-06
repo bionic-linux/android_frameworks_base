@@ -40,12 +40,13 @@ extern uint32_t android_hardware_HardwareBuffer_convertToPixelFormat(uint32_t fo
 /* Convert from AHARDWAREBUFFER_USAGE* flags to to gralloc usage flags. */
 extern uint64_t android_hardware_HardwareBuffer_convertToGrallocUsageBits(uint64_t usage);
 
-inline void android_hardware_HardwareBuffer_convertToGrallocUsageBits(
-        uint64_t* outProducerUsage, uint64_t* outConsumerUsage, uint64_t usage, uint64_t) {
+inline void android_hardware_HardwareBuffer_convertToGrallocUsageBits(uint64_t* outProducerUsage,
+                                                                      uint64_t* outConsumerUsage,
+                                                                      uint64_t usage, uint64_t) {
     outProducerUsage[0] = outConsumerUsage[0] =
             android_hardware_HardwareBuffer_convertToGrallocUsageBits(usage);
 }
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_HARDWARE_HARDWAREBUFFER_H
+#endif  // _ANDROID_HARDWARE_HARDWAREBUFFER_H

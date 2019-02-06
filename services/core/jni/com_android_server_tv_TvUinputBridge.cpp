@@ -18,30 +18,30 @@
 
 #include "com_android_server_tv_TvKeys.h"
 
-#include "jni.h"
+#include <android/keycodes.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include <android/keycodes.h>
+#include "jni.h"
 
 #include <utils/BitSet.h>
 #include <utils/Errors.h>
-#include <utils/misc.h>
 #include <utils/Log.h>
 #include <utils/String8.h>
+#include <utils/misc.h>
 
 #include <ctype.h>
-#include <linux/input.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <time.h>
-#include <stdint.h>
-#include <map>
 #include <fcntl.h>
+#include <linux/input.h>
 #include <linux/uinput.h>
 #include <signal.h>
+#include <stdint.h>
 #include <sys/inotify.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
+#include <map>
 
 // Refer to EventHub.h
 #define MSC_ANDROID_TIME_SEC 0x6
@@ -51,8 +51,8 @@
 
 namespace android {
 
-static std::map<int32_t,int> keysMap;
-static std::map<int32_t,int32_t> slotsMap;
+static std::map<int32_t, int> keysMap;
+static std::map<int32_t, int32_t> slotsMap;
 static BitSet32 mtSlots;
 
 static void initKeysMap() {
@@ -64,7 +64,7 @@ static void initKeysMap() {
 }
 
 static int32_t getLinuxKeyCode(int32_t androidKeyCode) {
-    std::map<int,int>::iterator it = keysMap.find(androidKeyCode);
+    std::map<int, int>::iterator it = keysMap.find(androidKeyCode);
     if (it != keysMap.end()) {
         return it->second;
     }
@@ -72,7 +72,7 @@ static int32_t getLinuxKeyCode(int32_t androidKeyCode) {
 }
 
 static int findSlot(int32_t pointerId) {
-    std::map<int,int>::iterator it = slotsMap.find(pointerId);
+    std::map<int, int>::iterator it = slotsMap.find(pointerId);
     if (it != slotsMap.end()) {
         return it->second;
     }
@@ -97,26 +97,25 @@ static void unassignSlot(int32_t pointerId) {
 }
 
 class NativeConnection {
-public:
+  public:
     ~NativeConnection();
 
-    static NativeConnection* open(const char* name, const char* uniqueId,
-            int32_t width, int32_t height, int32_t maxPointerId);
+    static NativeConnection* open(const char* name, const char* uniqueId, int32_t width,
+                                  int32_t height, int32_t maxPointerId);
 
     void sendEvent(int32_t type, int32_t code, int32_t value);
 
     int32_t getMaxPointers() const { return mMaxPointers; }
 
-private:
+  private:
     NativeConnection(int fd, int32_t maxPointers);
 
     const int mFd;
     const int32_t mMaxPointers;
 };
 
-NativeConnection::NativeConnection(int fd, int32_t maxPointers) :
-        mFd(fd), mMaxPointers(maxPointers) {
-}
+NativeConnection::NativeConnection(int fd, int32_t maxPointers)
+    : mFd(fd), mMaxPointers(maxPointers) {}
 
 NativeConnection::~NativeConnection() {
     ALOGI("Un-Registering uinput device %d.", mFd);
@@ -124,10 +123,11 @@ NativeConnection::~NativeConnection() {
     close(mFd);
 }
 
-NativeConnection* NativeConnection::open(const char* name, const char* uniqueId,
-        int32_t width, int32_t height, int32_t maxPointers) {
+NativeConnection* NativeConnection::open(const char* name, const char* uniqueId, int32_t width,
+                                         int32_t height, int32_t maxPointers) {
     ALOGI("Registering uinput device %s: touch pad size %dx%d, "
-            "max pointers %d.", name, width, height, maxPointers);
+          "max pointers %d.",
+          name, width, height, maxPointers);
 
     int fd = ::open("/dev/uinput", O_WRONLY | O_NDELAY);
     if (fd < 0) {
@@ -183,15 +183,13 @@ void NativeConnection::sendEvent(int32_t type, int32_t code, int32_t value) {
     write(mFd, &iev, sizeof(iev));
 }
 
-
-static jlong nativeOpen(JNIEnv* env, jclass clazz,
-        jstring nameStr, jstring uniqueIdStr,
-        jint width, jint height, jint maxPointers) {
+static jlong nativeOpen(JNIEnv* env, jclass clazz, jstring nameStr, jstring uniqueIdStr, jint width,
+                        jint height, jint maxPointers) {
     ScopedUtfChars name(env, nameStr);
     ScopedUtfChars uniqueId(env, uniqueIdStr);
 
-    NativeConnection* connection = NativeConnection::open(name.c_str(), uniqueId.c_str(),
-            width, height, maxPointers);
+    NativeConnection* connection =
+            NativeConnection::open(name.c_str(), uniqueId.c_str(), width, height, maxPointers);
     return reinterpret_cast<jlong>(connection);
 }
 
@@ -217,8 +215,8 @@ static void nativeSendKey(JNIEnv* env, jclass clazz, jlong ptr, jint keyCode, jb
     }
 }
 
-static void nativeSendPointerDown(JNIEnv* env, jclass clazz, jlong ptr,
-        jint pointerId, jint x, jint y) {
+static void nativeSendPointerDown(JNIEnv* env, jclass clazz, jlong ptr, jint pointerId, jint x,
+                                  jint y) {
     NativeConnection* connection = reinterpret_cast<NativeConnection*>(ptr);
 
     int32_t slot = findSlot(pointerId);
@@ -233,8 +231,7 @@ static void nativeSendPointerDown(JNIEnv* env, jclass clazz, jlong ptr,
     }
 }
 
-static void nativeSendPointerUp(JNIEnv* env, jclass clazz, jlong ptr,
-        jint pointerId) {
+static void nativeSendPointerUp(JNIEnv* env, jclass clazz, jlong ptr, jint pointerId) {
     NativeConnection* connection = reinterpret_cast<NativeConnection*>(ptr);
 
     int32_t slot = findSlot(pointerId);
@@ -277,32 +274,24 @@ static void nativeClear(JNIEnv* env, jclass clazz, jlong ptr) {
  */
 
 static JNINativeMethod gUinputBridgeMethods[] = {
-    { "nativeOpen", "(Ljava/lang/String;Ljava/lang/String;III)J",
-        (void*)nativeOpen },
-    { "nativeClose", "(J)V",
-        (void*)nativeClose },
-    { "nativeSendTimestamp", "(JJ)V",
-        (void*)nativeSendTimestamp },
-    { "nativeSendKey", "(JIZ)V",
-        (void*)nativeSendKey },
-    { "nativeSendPointerDown", "(JIII)V",
-        (void*)nativeSendPointerDown },
-    { "nativeSendPointerUp", "(JI)V",
-        (void*)nativeSendPointerUp },
-    { "nativeClear", "(J)V",
-        (void*)nativeClear },
-    { "nativeSendPointerSync", "(J)V",
-        (void*)nativeSendPointerSync },
+        {"nativeOpen", "(Ljava/lang/String;Ljava/lang/String;III)J", (void*)nativeOpen},
+        {"nativeClose", "(J)V", (void*)nativeClose},
+        {"nativeSendTimestamp", "(JJ)V", (void*)nativeSendTimestamp},
+        {"nativeSendKey", "(JIZ)V", (void*)nativeSendKey},
+        {"nativeSendPointerDown", "(JIII)V", (void*)nativeSendPointerDown},
+        {"nativeSendPointerUp", "(JI)V", (void*)nativeSendPointerUp},
+        {"nativeClear", "(J)V", (void*)nativeClear},
+        {"nativeSendPointerSync", "(J)V", (void*)nativeSendPointerSync},
 };
 
 int register_android_server_tv_TvUinputBridge(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/tv/UinputBridge",
-              gUinputBridgeMethods, NELEM(gUinputBridgeMethods));
+                                       gUinputBridgeMethods, NELEM(gUinputBridgeMethods));
 
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
-    (void)res; // Don't complain about unused variable in the LOG_NDEBUG case
+    (void)res;  // Don't complain about unused variable in the LOG_NDEBUG case
 
     return 0;
 }
 
-} // namespace android
+}  // namespace android

@@ -17,14 +17,14 @@
 #ifndef _ANDROID_GRAPHICS_REGION_H_
 #define _ANDROID_GRAPHICS_REGION_H_
 
-#include "jni.h"
 #include "SkRegion.h"
+#include "jni.h"
 
 namespace android {
 
 /* Gets the underlying SkRegion from a Region object. */
 extern SkRegion* android_graphics_Region_getSkRegion(JNIEnv* env, jobject regionObj);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_GRAPHICS_REGION_H_
+#endif  // _ANDROID_GRAPHICS_REGION_H_

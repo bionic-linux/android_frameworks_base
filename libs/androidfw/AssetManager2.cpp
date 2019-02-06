@@ -150,7 +150,7 @@ void AssetManager2::DumpToLog() const {
   }
   LOG(INFO) << "Package ID map: " << list;
 
-  for (const auto& package_group: package_groups_) {
+  for (const auto& package_group : package_groups_) {
     list = "";
     for (const auto& package : package_group.packages_) {
       const LoadedPackage* loaded_package = package.loaded_package_;
@@ -606,8 +606,8 @@ const ResolvedBag* AssetManager2::GetBag(uint32_t resid, std::vector<uint32_t>& 
   child_resids.push_back(resid);
 
   uint32_t parent_resid = dtohl(map->parent.ident);
-  if (parent_resid == 0 || std::find(child_resids.begin(), child_resids.end(), parent_resid)
-      != child_resids.end()) {
+  if (parent_resid == 0 ||
+      std::find(child_resids.begin(), child_resids.end(), parent_resid) != child_resids.end()) {
     // There is no parent or that a circular dependency exist, meaning there is nothing to
     // inherit and we can do a simple copy of the entries in the map.
     const size_t entry_count = map_entry_end - map_entry;

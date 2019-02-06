@@ -105,44 +105,44 @@ TEST(ResourceValuesTest, StyleEquals) {
   StringPool pool;
 
   std::unique_ptr<Style> a = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   std::unique_ptr<Style> b = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("3"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("3"))
+                                 .Build();
 
   std::unique_ptr<Style> c = test::StyleBuilder()
-      .SetParent("android:style/NoParent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .SetParent("android:style/NoParent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   std::unique_ptr<Style> d = test::StyleBuilder()
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   std::unique_ptr<Style> e = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bat", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bat", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   std::unique_ptr<Style> f = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .Build();
 
   std::unique_ptr<Style> g = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   EXPECT_FALSE(a->Equals(b.get()));
   EXPECT_FALSE(a->Equals(c.get()));
@@ -155,10 +155,10 @@ TEST(ResourceValuesTest, StyleEquals) {
 
 TEST(ResourceValuesTest, StyleClone) {
   std::unique_ptr<Style> a = test::StyleBuilder()
-      .SetParent("android:style/Parent")
-      .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
-      .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
-      .Build();
+                                 .SetParent("android:style/Parent")
+                                 .AddItem("android:attr/foo", ResourceUtils::TryParseInt("1"))
+                                 .AddItem("android:attr/bar", ResourceUtils::TryParseInt("2"))
+                                 .Build();
 
   std::unique_ptr<Style> b(a->Clone(nullptr));
   EXPECT_TRUE(a->Equals(b.get()));
@@ -288,4 +288,4 @@ TEST(ResourcesValuesTest, AttributeIsCompatible) {
   EXPECT_FALSE(attr_three.IsCompatibleWith(attr_four));
 }
 
-} // namespace aapt
+}  // namespace aapt

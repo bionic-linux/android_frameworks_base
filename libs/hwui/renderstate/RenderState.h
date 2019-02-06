@@ -48,7 +48,7 @@ namespace renderthread {
 class CacheManager;
 class CanvasContext;
 class RenderThread;
-}
+}  // namespace renderthread
 
 // TODO: Replace Cache's GL state tracking with this. For now it's more a thin
 // wrapper of Caches for users to migrate to.

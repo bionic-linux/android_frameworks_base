@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include "jni.h"
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include <openssl/crypto.h>
 
@@ -26,17 +26,16 @@ static jint runSelfTest(JNIEnv* env, jobject /* clazz */) {
 }
 
 static const JNINativeMethod methods[] = {
-    /* name, signature, funcPtr */
-    {"runSelfTest", "()I", (void*) runSelfTest}
-};
+        /* name, signature, funcPtr */
+        {"runSelfTest", "()I", (void*)runSelfTest}};
 
-} // anonymous namespace
+}  // anonymous namespace
 
 namespace android {
 
-int register_android_server_devicepolicy_CryptoTestHelper(JNIEnv *env) {
-    return jniRegisterNativeMethods(
-            env, "com/android/server/devicepolicy/CryptoTestHelper", methods, NELEM(methods));
+int register_android_server_devicepolicy_CryptoTestHelper(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/devicepolicy/CryptoTestHelper",
+                                    methods, NELEM(methods));
 }
 
-} // namespace android
+}  // namespace android

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <utils/String8.h>
 #include <gtest/gtest.h>
+#include <utils/String8.h>
 
 #include "ConfigDescription.h"
 #include "ResourceTable.h"

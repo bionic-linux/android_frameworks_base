@@ -17,28 +17,34 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "PsParser.h"
 #include "frameworks/base/core/proto/android/os/ps.proto.h"
 #include "ih_util.h"
-#include "PsParser.h"
 
 using namespace android::os;
 
 status_t PsParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
-    header_t header;  // the header of /d/wakeup_sources
-    vector<int> columnIndices; // task table can't be split by purely delimiter, needs column positions.
-    record_t record;  // retain each record
+    header_t header;            // the header of /d/wakeup_sources
+    vector<int> columnIndices;  // task table can't be split by purely delimiter, needs column
+                                // positions.
+    record_t record;            // retain each record
     int nline = 0;
     int diff = 0;
 
     ProtoOutputStream proto;
-    Table table(PsProto::Process::_FIELD_NAMES, PsProto::Process::_FIELD_IDS, PsProto::Process::_FIELD_COUNT);
-    const char* pcyNames[] = { "fg", "bg", "ta" };
-    const int pcyValues[] = {PsProto::Process::POLICY_FG, PsProto::Process::POLICY_BG, PsProto::Process::POLICY_TA};
+    Table table(PsProto::Process::_FIELD_NAMES, PsProto::Process::_FIELD_IDS,
+                PsProto::Process::_FIELD_COUNT);
+    const char* pcyNames[] = {"fg", "bg", "ta"};
+    const int pcyValues[] = {PsProto::Process::POLICY_FG, PsProto::Process::POLICY_BG,
+                             PsProto::Process::POLICY_TA};
     table.addEnumTypeMap("pcy", pcyNames, pcyValues, 3);
-    const char* sNames[] = { "D", "R", "S", "T", "t", "X", "Z" };
-    const int sValues[] = {PsProto::Process::STATE_D, PsProto::Process::STATE_R, PsProto::Process::STATE_S, PsProto::Process::STATE_T, PsProto::Process::STATE_TRACING, PsProto::Process::STATE_X, PsProto::Process::STATE_Z};
+    const char* sNames[] = {"D", "R", "S", "T", "t", "X", "Z"};
+    const int sValues[] = {PsProto::Process::STATE_D,       PsProto::Process::STATE_R,
+                           PsProto::Process::STATE_S,       PsProto::Process::STATE_T,
+                           PsProto::Process::STATE_TRACING, PsProto::Process::STATE_X,
+                           PsProto::Process::STATE_Z};
     table.addEnumTypeMap("s", sNames, sValues, 7);
 
     // Parse line by line
@@ -48,7 +54,9 @@ status_t PsParser::Parse(const int in, const int out) const {
         if (nline++ == 0) {
             header = parseHeader(line, DEFAULT_WHITESPACE);
 
-            const char* headerNames[] = { "LABEL", "USER", "PID", "TID", "PPID", "VSZ", "RSS", "WCHAN", "ADDR", "S", "PRI", "NI", "RTPRIO", "SCH", "PCY", "TIME", "CMD", nullptr };
+            const char* headerNames[] = {"LABEL",  "USER",  "PID",  "TID",  "PPID", "VSZ",
+                                         "RSS",    "WCHAN", "ADDR", "S",    "PRI",  "NI",
+                                         "RTPRIO", "SCH",   "PCY",  "TIME", "CMD",  nullptr};
             if (!getColumnIndices(columnIndices, headerNames, line)) {
                 return -1;
             }
@@ -61,21 +69,23 @@ status_t PsParser::Parse(const int in, const int out) const {
         diff = record.size() - header.size();
         if (diff < 0) {
             // TODO: log this to incident report!
-            fprintf(stderr, "[%s]Line %d has %d missing fields\n%s\n", this->name.string(), nline, -diff, line.c_str());
+            fprintf(stderr, "[%s]Line %d has %d missing fields\n%s\n", this->name.string(), nline,
+                    -diff, line.c_str());
             printRecord(record);
             continue;
         } else if (diff > 0) {
             // TODO: log this to incident report!
-            fprintf(stderr, "[%s]Line %d has %d extra fields\n%s\n", this->name.string(), nline, diff, line.c_str());
+            fprintf(stderr, "[%s]Line %d has %d extra fields\n%s\n", this->name.string(), nline,
+                    diff, line.c_str());
             printRecord(record);
             continue;
         }
 
         uint64_t token = proto.start(PsProto::PROCESSES);
-        for (int i=0; i<(int)record.size(); i++) {
+        for (int i = 0; i < (int)record.size(); i++) {
             if (!table.insertField(&proto, header[i], record[i])) {
-                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n",
-                        this->name.string(), nline, header[i].c_str(), record[i].c_str());
+                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n", this->name.string(), nline,
+                        header[i].c_str(), record[i].c_str());
             }
         }
         proto.end(token);

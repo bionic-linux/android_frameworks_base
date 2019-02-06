@@ -60,8 +60,8 @@ bool VectorDrawableUtils::interpolatePathData(PathData* outData, const PathData&
 }
 
 /**
-* Convert an array of PathVerb to Path.
-*/
+ * Convert an array of PathVerb to Path.
+ */
 void VectorDrawableUtils::verbsToPath(SkPath* outPath, const PathData& data) {
     PathResolver resolver;
     char previousCommand = 'm';
@@ -299,8 +299,8 @@ void PathResolver::addCommand(SkPath* outPath, char previousCmd, char cmd,
             case 'a':  // Draws an elliptical arc
                 // (rx ry x-axis-rotation large-arc-flag sweep-flag x y)
                 outPath->arcTo(points->at(k + 0), points->at(k + 1), points->at(k + 2),
-                               (SkPath::ArcSize) (points->at(k + 3) != 0),
-                               (SkPath::Direction) (points->at(k + 4) == 0), 
+                               (SkPath::ArcSize)(points->at(k + 3) != 0),
+                               (SkPath::Direction)(points->at(k + 4) == 0),
                                points->at(k + 5) + currentX, points->at(k + 6) + currentY);
                 currentX += points->at(k + 5);
                 currentY += points->at(k + 6);
@@ -309,9 +309,9 @@ void PathResolver::addCommand(SkPath* outPath, char previousCmd, char cmd,
                 break;
             case 'A':  // Draws an elliptical arc
                 outPath->arcTo(points->at(k + 0), points->at(k + 1), points->at(k + 2),
-                               (SkPath::ArcSize) (points->at(k + 3) != 0),
-                               (SkPath::Direction) (points->at(k + 4) == 0), 
-                               points->at(k + 5), points->at(k + 6));
+                               (SkPath::ArcSize)(points->at(k + 3) != 0),
+                               (SkPath::Direction)(points->at(k + 4) == 0), points->at(k + 5),
+                               points->at(k + 6));
                 currentX = points->at(k + 5);
                 currentY = points->at(k + 6);
                 ctrlPointX = currentX;

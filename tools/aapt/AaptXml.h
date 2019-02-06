@@ -34,8 +34,8 @@ ssize_t indexOfAttribute(const android::ResXMLTree& tree, uint32_t attrRes);
  * Returns the string value for the specified attribute.
  * The string must be present in the ResXMLTree's string pool (inline in the XML).
  */
-android::String8 getAttribute(const android::ResXMLTree& tree, const char* ns,
-        const char* attr, android::String8* outError = NULL);
+android::String8 getAttribute(const android::ResXMLTree& tree, const char* ns, const char* attr,
+                              android::String8* outError = NULL);
 
 /**
  * Returns the string value for the specified attribute, or an empty string
@@ -43,15 +43,15 @@ android::String8 getAttribute(const android::ResXMLTree& tree, const char* ns,
  * The string must be present in the ResXMLTree's string pool (inline in the XML).
  */
 android::String8 getAttribute(const android::ResXMLTree& tree, uint32_t attrRes,
-        android::String8* outError = NULL);
+                              android::String8* outError = NULL);
 
 /**
  * Returns the integer value for the specified attribute, or the default value
  * if the attribute does not exist.
  * The integer must be declared inline in the XML.
  */
-int32_t getIntegerAttribute(const android::ResXMLTree& tree, const char* ns,
-        const char* attr, int32_t defValue = -1, android::String8* outError = NULL);
+int32_t getIntegerAttribute(const android::ResXMLTree& tree, const char* ns, const char* attr,
+                            int32_t defValue = -1, android::String8* outError = NULL);
 
 /**
  * Returns the integer value for the specified attribute, or the default value
@@ -59,7 +59,7 @@ int32_t getIntegerAttribute(const android::ResXMLTree& tree, const char* ns,
  * The integer must be declared inline in the XML.
  */
 inline int32_t getIntegerAttribute(const android::ResXMLTree& tree, const char* ns,
-        const char* attr, android::String8* outError) {
+                                   const char* attr, android::String8* outError) {
     return getIntegerAttribute(tree, ns, attr, -1, outError);
 }
 
@@ -69,7 +69,7 @@ inline int32_t getIntegerAttribute(const android::ResXMLTree& tree, const char* 
  * The integer must be declared inline in the XML.
  */
 int32_t getIntegerAttribute(const android::ResXMLTree& tree, uint32_t attrRes,
-        int32_t defValue = -1, android::String8* outError = NULL);
+                            int32_t defValue = -1, android::String8* outError = NULL);
 
 /**
  * Returns the integer value for the specified attribute, or the default value
@@ -77,7 +77,7 @@ int32_t getIntegerAttribute(const android::ResXMLTree& tree, uint32_t attrRes,
  * The integer must be declared inline in the XML.
  */
 inline int32_t getIntegerAttribute(const android::ResXMLTree& tree, uint32_t attrRes,
-        android::String8* outError) {
+                                   android::String8* outError) {
     return getIntegerAttribute(tree, attrRes, -1, outError);
 }
 
@@ -87,8 +87,8 @@ inline int32_t getIntegerAttribute(const android::ResXMLTree& tree, uint32_t att
  * The integer may be a resource in the supplied ResTable.
  */
 int32_t getResolvedIntegerAttribute(const android::ResTable& resTable,
-        const android::ResXMLTree& tree, uint32_t attrRes, int32_t defValue = -1,
-        android::String8* outError = NULL);
+                                    const android::ResXMLTree& tree, uint32_t attrRes,
+                                    int32_t defValue = -1, android::String8* outError = NULL);
 
 /**
  * Returns the integer value for the specified attribute, or the default value
@@ -96,8 +96,8 @@ int32_t getResolvedIntegerAttribute(const android::ResTable& resTable,
  * The integer may be a resource in the supplied ResTable.
  */
 inline int32_t getResolvedIntegerAttribute(const android::ResTable& resTable,
-        const android::ResXMLTree& tree, uint32_t attrRes,
-        android::String8* outError) {
+                                           const android::ResXMLTree& tree, uint32_t attrRes,
+                                           android::String8* outError) {
     return getResolvedIntegerAttribute(resTable, tree, attrRes, -1, outError);
 }
 
@@ -107,17 +107,17 @@ inline int32_t getResolvedIntegerAttribute(const android::ResTable& resTable,
  * The string may be a resource in the supplied ResTable.
  */
 android::String8 getResolvedAttribute(const android::ResTable& resTable,
-        const android::ResXMLTree& tree, uint32_t attrRes,
-        android::String8* outError = NULL);
+                                      const android::ResXMLTree& tree, uint32_t attrRes,
+                                      android::String8* outError = NULL);
 
 /**
  * Returns the resource for the specified attribute in the outValue parameter.
  * The resource may be a resource in the supplied ResTable.
  */
 void getResolvedResourceAttribute(const android::ResTable& resTable,
-        const android::ResXMLTree& tree, uint32_t attrRes, android::Res_value* outValue,
-        android::String8* outError = NULL);
+                                  const android::ResXMLTree& tree, uint32_t attrRes,
+                                  android::Res_value* outValue, android::String8* outError = NULL);
 
-} // namespace AaptXml
+}  // namespace AaptXml
 
-#endif // __AAPT_XML_H
+#endif  // __AAPT_XML_H

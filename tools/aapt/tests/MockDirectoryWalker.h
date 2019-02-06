@@ -4,8 +4,8 @@
 #ifndef MOCKDIRECTORYWALKER_H
 #define MOCKDIRECTORYWALKER_H
 
-#include <utils/Vector.h>
 #include <utils/String8.h>
+#include <utils/Vector.h>
 #include <utility>
 #include "DirectoryWalker.h"
 
@@ -20,12 +20,14 @@ using std::pair;
 // functions are inlined since they are short and simple
 
 class StringDirectoryWalker : public DirectoryWalker {
-public:
-    StringDirectoryWalker(String8& path, Vector< pair<String8,time_t> >& data)
-        :  mPos(0), mBasePath(path), mData(data) {
-        //fprintf(stdout,"StringDW built to mimic %s with %d files\n",
-        //       mBasePath.string());
-    };
+  public:
+    StringDirectoryWalker(String8& path, Vector<pair<String8, time_t> >& data)
+        : mPos(0),
+          mBasePath(path),
+          mData(data){
+                  // fprintf(stdout,"StringDW built to mimic %s with %d files\n",
+                  //       mBasePath.string());
+          };
     // Default copy constructor, and destructor are fine
 
     virtual bool openDir(String8 path) {
@@ -41,16 +43,14 @@ public:
     // Advance to next entry in the Vector
     virtual struct dirent* nextEntry() {
         // Advance position and check to see if we're done
-        if (mPos >= mData.size())
-            return NULL;
+        if (mPos >= mData.size()) return NULL;
 
         // Place data in the entry descriptor. This class only returns files.
         mEntry.d_type = DT_REG;
         mEntry.d_ino = mPos;
         // Copy chars from the string name to the entry name
         size_t i = 0;
-        for (i; i < mData[mPos].first.size(); ++i)
-            mEntry.d_name[i] = mData[mPos].first[i];
+        for (i; i < mData[mPos].first.size(); ++i) mEntry.d_name[i] = mData[mPos].first[i];
         mEntry.d_name[i] = '\0';
 
         // Place data in stats
@@ -63,23 +63,20 @@ public:
         return &mEntry;
     };
     // Get the stats for the current entry
-    virtual struct stat*   entryStats() {
-        return &mStats;
-    };
+    virtual struct stat* entryStats() { return &mStats; };
     // Nothing to do in clean up
-    virtual void closeDir() {
-        // Nothing to do
+    virtual void closeDir(){
+            // Nothing to do
     };
-    virtual DirectoryWalker* clone() {
-        return new StringDirectoryWalker(*this);
-    };
-private:
+    virtual DirectoryWalker* clone() { return new StringDirectoryWalker(*this); };
+
+  private:
     // Current position in the Vector
     size_t mPos;
     // Base path
     String8 mBasePath;
     // Data to simulate a directory full of files.
-    Vector< pair<String8,time_t> > mData;
+    Vector<pair<String8, time_t> > mData;
 };
 
-#endif // MOCKDIRECTORYWALKER_H
+#endif  // MOCKDIRECTORYWALKER_H

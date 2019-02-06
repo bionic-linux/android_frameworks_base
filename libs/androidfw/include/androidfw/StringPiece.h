@@ -87,27 +87,33 @@ template <typename TChar>
 constexpr const size_t BasicStringPiece<TChar>::npos;
 
 template <typename TChar>
-inline BasicStringPiece<TChar>::BasicStringPiece() : data_(nullptr), length_(0) {}
+inline BasicStringPiece<TChar>::BasicStringPiece() : data_(nullptr), length_(0) {
+}
 
 template <typename TChar>
 inline BasicStringPiece<TChar>::BasicStringPiece(const BasicStringPiece<TChar>& str)
-    : data_(str.data_), length_(str.length_) {}
+    : data_(str.data_), length_(str.length_) {
+}
 
 template <typename TChar>
 inline BasicStringPiece<TChar>::BasicStringPiece(const std::basic_string<TChar>& str)
-    : data_(str.data()), length_(str.length()) {}
+    : data_(str.data()), length_(str.length()) {
+}
 
 template <>
 inline BasicStringPiece<char>::BasicStringPiece(const char* str)
-    : data_(str), length_(str != nullptr ? strlen(str) : 0) {}
+    : data_(str), length_(str != nullptr ? strlen(str) : 0) {
+}
 
 template <>
 inline BasicStringPiece<char16_t>::BasicStringPiece(const char16_t* str)
-    : data_(str), length_(str != nullptr ? strlen16(str) : 0) {}
+    : data_(str), length_(str != nullptr ? strlen16(str) : 0) {
+}
 
 template <typename TChar>
 inline BasicStringPiece<TChar>::BasicStringPiece(const TChar* str, size_t len)
-    : data_(str), length_(len) {}
+    : data_(str), length_(len) {
+}
 
 template <typename TChar>
 inline BasicStringPiece<TChar>& BasicStringPiece<TChar>::operator=(

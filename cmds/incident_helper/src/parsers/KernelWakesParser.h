@@ -23,9 +23,9 @@
  * Kernel wakeup sources parser, parses text to protobuf in /d/wakeup_sources
  */
 class KernelWakesParser : public TextParserBase {
-public:
-    KernelWakesParser() : TextParserBase(String8("KernelWakeSources")) {};
-    ~KernelWakesParser() {};
+  public:
+    KernelWakesParser() : TextParserBase(String8("KernelWakeSources")){};
+    ~KernelWakesParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

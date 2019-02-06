@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-#define DEBUG false // STOPSHIP if true
+#define DEBUG false  // STOPSHIP if true
 #include "Log.h"
 #include "statslog.h"
 
 #include <android-base/file.h>
 #include <dirent.h>
 #include "StatsLogProcessor.h"
-#include "stats_log_util.h"
 #include "android-base/stringprintf.h"
+#include "external/StatsPullerManager.h"
 #include "guardrail/StatsdStats.h"
 #include "metrics/CountMetricProducer.h"
-#include "external/StatsPullerManager.h"
+#include "stats_log_util.h"
 #include "stats_util.h"
 #include "storage/StorageManager.h"
 
@@ -100,7 +100,6 @@ void StatsLogProcessor::onAnomalyAlarmFired(
 void StatsLogProcessor::onPeriodicAlarmFired(
         const int64_t& timestampNs,
         unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>> alarmSet) {
-
     std::lock_guard<std::mutex> lock(mMetricsMutex);
     for (const auto& itr : mMetricsManagers) {
         itr.second->onPeriodicAlarmFired(timestampNs, alarmSet);
@@ -223,8 +222,8 @@ void StatsLogProcessor::OnLogEvent(LogEvent* event, bool reconnected) {
 
     resetIfConfigTtlExpiredLocked(currentTimestampNs);
 
-    StatsdStats::getInstance().noteAtomLogged(
-        event->GetTagId(), event->GetElapsedTimestampNs() / NS_PER_SEC);
+    StatsdStats::getInstance().noteAtomLogged(event->GetTagId(),
+                                              event->GetElapsedTimestampNs() / NS_PER_SEC);
 
     // Hard-coded logic to update the isolated uid's in the uid-map.
     // The field numbers need to be currently updated by hand with atoms.proto
@@ -241,7 +240,6 @@ void StatsLogProcessor::OnLogEvent(LogEvent* event, bool reconnected) {
         mStatsPullerManager.ClearPullerCacheIfNecessary(curTimeSec * NS_PER_SEC);
         mLastPullerCacheClearTimeSec = curTimeSec;
     }
-
 
     if (event->GetTagId() != android::util::ISOLATED_UID_CHANGED) {
         // Map the isolated uid to host uid if necessary.
@@ -262,12 +260,12 @@ void StatsLogProcessor::OnConfigUpdated(const int64_t timestampNs, const ConfigK
     OnConfigUpdatedLocked(timestampNs, key, config);
 }
 
-void StatsLogProcessor::OnConfigUpdatedLocked(
-        const int64_t timestampNs, const ConfigKey& key, const StatsdConfig& config) {
+void StatsLogProcessor::OnConfigUpdatedLocked(const int64_t timestampNs, const ConfigKey& key,
+                                              const StatsdConfig& config) {
     VLOG("Updated configuration for key %s", key.ToString().c_str());
     sp<MetricsManager> newMetricsManager =
-        new MetricsManager(key, config, mTimeBaseNs, timestampNs, mUidMap,
-                           mAnomalyAlarmMonitor, mPeriodicAlarmMonitor);
+            new MetricsManager(key, config, mTimeBaseNs, timestampNs, mUidMap, mAnomalyAlarmMonitor,
+                               mPeriodicAlarmMonitor);
     if (newMetricsManager->isConfigValid()) {
         mUidMap->OnConfigUpdated(key);
         if (newMetricsManager->shouldAddUidMapListener()) {
@@ -378,8 +376,7 @@ void StatsLogProcessor::onConfigMetricsReportLocked(const ConfigKey& key,
 
     // First, fill in ConfigMetricsReport using current data on memory, which
     // starts from filling in StatsLogReport's.
-    it->second->onDumpReport(dumpTimeStampNs, include_current_partial_bucket,
-                             &str_set, proto);
+    it->second->onDumpReport(dumpTimeStampNs, include_current_partial_bucket, &str_set, proto);
 
     // Fill in UidMap if there is at least one metric to report.
     // This skips the uid map if it's an empty config.
@@ -395,13 +392,13 @@ void StatsLogProcessor::onConfigMetricsReportLocked(const ConfigKey& key,
 
     // Fill in the timestamps.
     proto->write(FIELD_TYPE_INT64 | FIELD_ID_LAST_REPORT_ELAPSED_NANOS,
-                (long long)lastReportTimeNs);
+                 (long long)lastReportTimeNs);
     proto->write(FIELD_TYPE_INT64 | FIELD_ID_CURRENT_REPORT_ELAPSED_NANOS,
-                (long long)dumpTimeStampNs);
+                 (long long)dumpTimeStampNs);
     proto->write(FIELD_TYPE_INT64 | FIELD_ID_LAST_REPORT_WALL_CLOCK_NANOS,
-                (long long)lastReportWallClockNs);
+                 (long long)lastReportWallClockNs);
     proto->write(FIELD_TYPE_INT64 | FIELD_ID_CURRENT_REPORT_WALL_CLOCK_NANOS,
-                (long long)getWallClockNs());
+                 (long long)getWallClockNs());
     // Dump report reason
     proto->write(FIELD_TYPE_INT32 | FIELD_ID_DUMP_REPORT_REASON, dumpReportReason);
 
@@ -457,8 +454,8 @@ void StatsLogProcessor::OnConfigRemoved(const ConfigKey& key) {
     }
 }
 
-void StatsLogProcessor::flushIfNecessaryLocked(
-    int64_t timestampNs, const ConfigKey& key, MetricsManager& metricsManager) {
+void StatsLogProcessor::flushIfNecessaryLocked(int64_t timestampNs, const ConfigKey& key,
+                                               MetricsManager& metricsManager) {
     auto lastCheckTime = mLastByteSizeTimes.find(key);
     if (lastCheckTime != mLastByteSizeTimes.end()) {
         if (timestampNs - lastCheckTime->second < StatsdStats::kMinByteSizeCheckPeriodNs) {
@@ -501,8 +498,7 @@ void StatsLogProcessor::flushIfNecessaryLocked(
     }
 }
 
-void StatsLogProcessor::WriteDataToDiskLocked(const ConfigKey& key,
-                                              const int64_t timestampNs,
+void StatsLogProcessor::WriteDataToDiskLocked(const ConfigKey& key, const int64_t timestampNs,
                                               const DumpReportReason dumpReportReason) {
     if (mMetricsManagers.find(key) == mMetricsManagers.end() ||
         !mMetricsManagers.find(key)->second->shouldWriteToDisk()) {
@@ -511,10 +507,10 @@ void StatsLogProcessor::WriteDataToDiskLocked(const ConfigKey& key,
     ProtoOutputStream proto;
     onConfigMetricsReportLocked(key, timestampNs, true /* include_current_partial_bucket*/,
                                 dumpReportReason, &proto);
-    string file_name = StringPrintf("%s/%ld_%d_%lld", STATS_DATA_DIR,
-         (long)getWallClockSec(), key.GetUid(), (long long)key.GetId());
-    android::base::unique_fd fd(open(file_name.c_str(),
-                                O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR));
+    string file_name = StringPrintf("%s/%ld_%d_%lld", STATS_DATA_DIR, (long)getWallClockSec(),
+                                    key.GetUid(), (long long)key.GetId());
+    android::base::unique_fd fd(
+            open(file_name.c_str(), O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR));
     if (fd == -1) {
         ALOGE("Attempt to write %s but failed", file_name.c_str());
         return;

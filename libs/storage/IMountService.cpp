@@ -16,8 +16,8 @@
 
 #define LOG_TAG "IMountService"
 
-#include <storage/IMountService.h>
 #include <binder/Parcel.h>
+#include <storage/IMountService.h>
 
 namespace android {
 
@@ -52,16 +52,11 @@ enum {
     TRANSACTION_encryptStorage,
 };
 
-class BpMountService: public BpInterface<IMountService>
-{
-public:
-    explicit BpMountService(const sp<IBinder>& impl)
-        : BpInterface<IMountService>(impl)
-    {
-    }
+class BpMountService : public BpInterface<IMountService> {
+  public:
+    explicit BpMountService(const sp<IBinder>& impl) : BpInterface<IMountService>(impl) {}
 
-    virtual void registerListener(const sp<IMountServiceListener>& listener)
-    {
+    virtual void registerListener(const sp<IMountServiceListener>& listener) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeStrongBinder(IInterface::asBinder(listener));
@@ -76,8 +71,7 @@ public:
         }
     }
 
-    virtual void unregisterListener(const sp<IMountServiceListener>& listener)
-    {
+    virtual void unregisterListener(const sp<IMountServiceListener>& listener) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeStrongBinder(IInterface::asBinder(listener));
@@ -92,8 +86,7 @@ public:
         }
     }
 
-    virtual bool isUsbMassStorageConnected()
-    {
+    virtual bool isUsbMassStorageConnected() {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         if (remote()->transact(TRANSACTION_isUsbMassStorageConnected, data, &reply) != NO_ERROR) {
@@ -108,8 +101,7 @@ public:
         return reply.readInt32() != 0;
     }
 
-    virtual void setUsbMassStorageEnabled(const bool enable)
-    {
+    virtual void setUsbMassStorageEnabled(const bool enable) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeInt32(enable != 0);
@@ -124,8 +116,7 @@ public:
         }
     }
 
-    virtual bool isUsbMassStorageEnabled()
-    {
+    virtual bool isUsbMassStorageEnabled() {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         if (remote()->transact(TRANSACTION_isUsbMassStorageEnabled, data, &reply) != NO_ERROR) {
@@ -140,8 +131,7 @@ public:
         return reply.readInt32() != 0;
     }
 
-    int32_t mountVolume(const String16& mountPoint)
-    {
+    int32_t mountVolume(const String16& mountPoint) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(mountPoint);
@@ -157,8 +147,8 @@ public:
         return reply.readInt32();
     }
 
-    int32_t unmountVolume(const String16& mountPoint, const bool force, const bool removeEncryption)
-    {
+    int32_t unmountVolume(const String16& mountPoint, const bool force,
+                          const bool removeEncryption) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(mountPoint);
@@ -176,8 +166,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t formatVolume(const String16& mountPoint)
-    {
+    int32_t formatVolume(const String16& mountPoint) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(mountPoint);
@@ -193,8 +182,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t getStorageUsers(const String16& mountPoint, int32_t** users)
-    {
+    int32_t getStorageUsers(const String16& mountPoint, int32_t** users) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(mountPoint);
@@ -215,15 +203,14 @@ public:
         } else {
             numUsers = static_cast<uint32_t>(numUsersI);
         }
-        *users = (int32_t*)malloc(sizeof(int32_t)*numUsers);
+        *users = (int32_t*)malloc(sizeof(int32_t) * numUsers);
         for (size_t i = 0; i < numUsers; i++) {
             **users++ = reply.readInt32();
         }
         return static_cast<int32_t>(numUsers);
     }
 
-    int32_t getVolumeState(const String16& mountPoint)
-    {
+    int32_t getVolumeState(const String16& mountPoint) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(mountPoint);
@@ -240,8 +227,7 @@ public:
     }
 
     int32_t createSecureContainer(const String16& id, const int32_t sizeMb, const String16& fstype,
-            const String16& key, const int32_t ownerUid)
-    {
+                                  const String16& key, const int32_t ownerUid) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -261,8 +247,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t finalizeSecureContainer(const String16& id)
-    {
+    int32_t finalizeSecureContainer(const String16& id) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -278,8 +263,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t destroySecureContainer(const String16& id)
-    {
+    int32_t destroySecureContainer(const String16& id) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -295,8 +279,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t mountSecureContainer(const String16& id, const String16& key, const int32_t ownerUid)
-    {
+    int32_t mountSecureContainer(const String16& id, const String16& key, const int32_t ownerUid) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -308,7 +291,7 @@ public:
             ALOGD("mountSecureContainer couldn't call remote");
             return -1;
         }
-        int32_t err = reply.readExceptionCode(); // What to do...
+        int32_t err = reply.readExceptionCode();  // What to do...
         if (err < 0) {
             ALOGD("mountSecureContainer caught exception %d\n", err);
             return err;
@@ -316,8 +299,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t unmountSecureContainer(const String16& id, const bool force)
-    {
+    int32_t unmountSecureContainer(const String16& id, const bool force) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -326,7 +308,7 @@ public:
             ALOGD("unmountSecureContainer couldn't call remote");
             return -1;
         }
-        int32_t err = reply.readExceptionCode(); // What to do...
+        int32_t err = reply.readExceptionCode();  // What to do...
         if (err < 0) {
             ALOGD("unmountSecureContainer caught exception %d\n", err);
             return err;
@@ -334,8 +316,7 @@ public:
         return reply.readInt32();
     }
 
-    bool isSecureContainerMounted(const String16& id)
-    {
+    bool isSecureContainerMounted(const String16& id) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -343,7 +324,7 @@ public:
             ALOGD("isSecureContainerMounted couldn't call remote");
             return false;
         }
-        int32_t err = reply.readExceptionCode(); // What to do...
+        int32_t err = reply.readExceptionCode();  // What to do...
         if (err < 0) {
             ALOGD("isSecureContainerMounted caught exception %d\n", err);
             return false;
@@ -351,8 +332,7 @@ public:
         return reply.readInt32() != 0;
     }
 
-    int32_t renameSecureContainer(const String16& oldId, const String16& newId)
-    {
+    int32_t renameSecureContainer(const String16& oldId, const String16& newId) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(oldId);
@@ -361,7 +341,7 @@ public:
             ALOGD("renameSecureContainer couldn't call remote");
             return -1;
         }
-        int32_t err = reply.readExceptionCode(); // What to do...
+        int32_t err = reply.readExceptionCode();  // What to do...
         if (err < 0) {
             ALOGD("renameSecureContainer caught exception %d\n", err);
             return err;
@@ -369,8 +349,7 @@ public:
         return reply.readInt32();
     }
 
-    bool getSecureContainerPath(const String16& id, String16& path)
-    {
+    bool getSecureContainerPath(const String16& id, String16& path) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -378,7 +357,7 @@ public:
             ALOGD("getSecureContainerPath couldn't call remote");
             return false;
         }
-        int32_t err = reply.readExceptionCode(); // What to do...
+        int32_t err = reply.readExceptionCode();  // What to do...
         if (err < 0) {
             ALOGD("getSecureContainerPath caught exception %d\n", err);
             return false;
@@ -387,8 +366,7 @@ public:
         return true;
     }
 
-    int32_t getSecureContainerList(const String16& id, String16*& containers)
-    {
+    int32_t getSecureContainerList(const String16& id, String16*& containers) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(id);
@@ -409,8 +387,7 @@ public:
         return numStrings;
     }
 
-    void shutdown(const sp<IMountShutdownObserver>& observer)
-    {
+    void shutdown(const sp<IMountShutdownObserver>& observer) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeStrongBinder(IInterface::asBinder(observer));
@@ -426,8 +403,7 @@ public:
         reply.readExceptionCode();
     }
 
-    void finishMediaUpdate()
-    {
+    void finishMediaUpdate() {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         if (remote()->transact(TRANSACTION_finishMediaUpdate, data, &reply) != NO_ERROR) {
@@ -443,8 +419,7 @@ public:
     }
 
     void mountObb(const String16& rawPath, const String16& canonicalPath, const String16& key,
-            const sp<IObbActionListener>& token, int32_t nonce)
-    {
+                  const sp<IObbActionListener>& token, int32_t nonce) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(rawPath);
@@ -463,9 +438,8 @@ public:
         }
     }
 
-    void unmountObb(const String16& filename, const bool force,
-            const sp<IObbActionListener>& token, const int32_t nonce)
-    {
+    void unmountObb(const String16& filename, const bool force, const sp<IObbActionListener>& token,
+                    const int32_t nonce) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(filename);
@@ -483,8 +457,7 @@ public:
         }
     }
 
-    bool isObbMounted(const String16& filename)
-    {
+    bool isObbMounted(const String16& filename) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(filename);
@@ -500,8 +473,7 @@ public:
         return reply.readInt32() != 0;
     }
 
-    bool getMountedObbPath(const String16& filename, String16& path)
-    {
+    bool getMountedObbPath(const String16& filename, String16& path) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(filename);
@@ -518,8 +490,7 @@ public:
         return true;
     }
 
-    int32_t decryptStorage(const String16& password)
-    {
+    int32_t decryptStorage(const String16& password) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(password);
@@ -535,8 +506,7 @@ public:
         return reply.readInt32();
     }
 
-    int32_t encryptStorage(const String16& password)
-    {
+    int32_t encryptStorage(const String16& password) {
         Parcel data, reply;
         data.writeInterfaceToken(IMountService::getInterfaceDescriptor());
         data.writeString16(password);
@@ -557,4 +527,4 @@ IMPLEMENT_META_INTERFACE(MountService, "android.os.storage.IStorageManager")
 
 // ----------------------------------------------------------------------
 
-}
+}  // namespace android

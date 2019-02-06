@@ -22,8 +22,8 @@
 #include <log/log.h>
 #include <utils/Errors.h>
 
-#include <mutex>
 #include <unistd.h>
+#include <mutex>
 
 static struct {
     jclass clazz;
@@ -32,19 +32,22 @@ static struct {
 
 static void jniInit(JNIEnv* env) {
     static std::once_flag sJniInitialized;
-    std::call_once(sJniInitialized, [](JNIEnv* env) {
-        jclass clazz = env->FindClass("android/os/SharedMemory");
-        LOG_ALWAYS_FATAL_IF(clazz == nullptr, "Failed to find android.os.SharedMemory");
-        sSharedMemory.clazz = (jclass) env->NewGlobalRef(clazz);
-        LOG_ALWAYS_FATAL_IF(sSharedMemory.clazz == nullptr,
-                "Failed to create global ref of android.os.SharedMemory");
-        sSharedMemory.getFd = env->GetMethodID(sSharedMemory.clazz, "getFd", "()I");
-        LOG_ALWAYS_FATAL_IF(sSharedMemory.getFd == nullptr,
-                "Failed to find method SharedMemory#getFd()");
-    }, env);
+    std::call_once(
+            sJniInitialized,
+            [](JNIEnv* env) {
+                jclass clazz = env->FindClass("android/os/SharedMemory");
+                LOG_ALWAYS_FATAL_IF(clazz == nullptr, "Failed to find android.os.SharedMemory");
+                sSharedMemory.clazz = (jclass)env->NewGlobalRef(clazz);
+                LOG_ALWAYS_FATAL_IF(sSharedMemory.clazz == nullptr,
+                                    "Failed to create global ref of android.os.SharedMemory");
+                sSharedMemory.getFd = env->GetMethodID(sSharedMemory.clazz, "getFd", "()I");
+                LOG_ALWAYS_FATAL_IF(sSharedMemory.getFd == nullptr,
+                                    "Failed to find method SharedMemory#getFd()");
+            },
+            env);
 }
 
-int ASharedMemory_create(const char *name, size_t size) {
+int ASharedMemory_create(const char* name, size_t size) {
     if (size == 0) {
         return android::BAD_VALUE;
     }
@@ -66,7 +69,7 @@ int ASharedMemory_dupFromJava(JNIEnv* env, jobject javaSharedMemory) {
     jniInit(env);
     if (!env->IsInstanceOf(javaSharedMemory, sSharedMemory.clazz)) {
         ALOGW("ASharedMemory_dupFromJava called with object "
-                "that's not an instanceof android.os.SharedMemory");
+              "that's not an instanceof android.os.SharedMemory");
         return -1;
     }
     int fd = env->CallIntMethod(javaSharedMemory, sSharedMemory.getFd);

@@ -17,15 +17,13 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "KernelWakesParser.h"
 #include "frameworks/base/core/proto/android/os/kernelwake.proto.h"
 #include "ih_util.h"
-#include "KernelWakesParser.h"
 
 using namespace android::os;
 
-status_t
-KernelWakesParser::Parse(const int in, const int out) const
-{
+status_t KernelWakesParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
     header_t header;  // the header of /d/wakeup_sources
@@ -34,8 +32,8 @@ KernelWakesParser::Parse(const int in, const int out) const
 
     ProtoOutputStream proto;
     Table table(KernelWakeSourcesProto::WakeupSource::_FIELD_NAMES,
-            KernelWakeSourcesProto::WakeupSource::_FIELD_IDS,
-            KernelWakeSourcesProto::WakeupSource::_FIELD_COUNT);
+                KernelWakeSourcesProto::WakeupSource::_FIELD_IDS,
+                KernelWakeSourcesProto::WakeupSource::_FIELD_COUNT);
 
     // parse line by line
     while (reader.readLine(&line)) {
@@ -51,19 +49,21 @@ KernelWakesParser::Parse(const int in, const int out) const
 
         if (record.size() < header.size()) {
             // TODO: log this to incident report!
-            fprintf(stderr, "[%s]Line %d has missing fields\n%s\n", this->name.string(), nline, line.c_str());
+            fprintf(stderr, "[%s]Line %d has missing fields\n%s\n", this->name.string(), nline,
+                    line.c_str());
             continue;
         } else if (record.size() > header.size()) {
             // TODO: log this to incident report!
-            fprintf(stderr, "[%s]Line %d has extra fields\n%s\n", this->name.string(), nline, line.c_str());
+            fprintf(stderr, "[%s]Line %d has extra fields\n%s\n", this->name.string(), nline,
+                    line.c_str());
             continue;
         }
 
         uint64_t token = proto.start(KernelWakeSourcesProto::WAKEUP_SOURCES);
-        for (int i=0; i<(int)record.size(); i++) {
+        for (int i = 0; i < (int)record.size(); i++) {
             if (!table.insertField(&proto, header[i], record[i])) {
-                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n",
-                        this->name.string(), nline, header[i].c_str(), record[i].c_str());
+                fprintf(stderr, "[%s]Line %d has bad value %s of %s\n", this->name.string(), nline,
+                        header[i].c_str(), record[i].c_str());
             }
         }
         proto.end(token);

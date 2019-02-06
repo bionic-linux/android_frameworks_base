@@ -23,9 +23,9 @@
 #include <map>
 #include <memory>
 
-#include <android_runtime/Log.h>
 #include <android-base/logging.h>
 #include <android-base/unique_fd.h>
+#include <android_runtime/Log.h>
 #include <jni.h>
 #include <libappfuse/FuseAppLoop.h>
 #include <nativehelper/ScopedLocalRef.h>
@@ -42,15 +42,14 @@ jmethodID gOnCommandMethod;
 jmethodID gOnOpenMethod;
 
 class Callback : public fuse::FuseAppLoopCallback {
-private:
+  private:
     typedef ScopedLocalRef<jbyteArray> LocalBytes;
     JNIEnv* const mEnv;
     jobject const mSelf;
     std::map<uint64_t, std::unique_ptr<LocalBytes>> mBuffers;
 
-public:
-    Callback(JNIEnv* env, jobject self) :
-        mEnv(env), mSelf(self) {}
+  public:
+    Callback(JNIEnv* env, jobject self) : mEnv(env), mSelf(self) {}
 
     void OnLookup(uint64_t unique, uint64_t inode) override {
         CallOnCommand(FUSE_LOOKUP, unique, inode, 0, 0, nullptr);
@@ -61,15 +60,15 @@ public:
     }
 
     void OnOpen(uint64_t unique, uint64_t inode) override {
-        const jbyteArray buffer = static_cast<jbyteArray>(mEnv->CallObjectMethod(
-                mSelf, gOnOpenMethod, unique, inode));
+        const jbyteArray buffer = static_cast<jbyteArray>(
+                mEnv->CallObjectMethod(mSelf, gOnOpenMethod, unique, inode));
         CHECK(!mEnv->ExceptionCheck());
         if (buffer == nullptr) {
             return;
         }
 
-        mBuffers.insert(std::make_pair(inode, std::unique_ptr<LocalBytes>(
-                new LocalBytes(mEnv, buffer))));
+        mBuffers.insert(
+                std::make_pair(inode, std::unique_ptr<LocalBytes>(new LocalBytes(mEnv, buffer))));
     }
 
     void OnFsync(uint64_t unique, uint64_t inode) override {
@@ -91,7 +90,7 @@ public:
     }
 
     void OnWrite(uint64_t unique, uint64_t inode, uint64_t offset, uint32_t size,
-            const void* buffer) override {
+                 const void* buffer) override {
         CHECK_LE(size, static_cast<uint32_t>(fuse::kFuseMaxWrite));
 
         auto it = mBuffers.find(inode);
@@ -105,7 +104,7 @@ public:
         CallOnCommand(FUSE_WRITE, unique, inode, offset, size, javaBuffer);
     }
 
-private:
+  private:
     // Helper function to make sure we invoke CallVoidMethod with correct size of integer arguments.
     void CallOnCommand(jint command, jlong unique, jlong inode, jlong offset, jint size,
                        jobject bytes) {
@@ -127,44 +126,44 @@ void com_android_internal_os_FuseAppLoop_start(JNIEnv* env, jobject self, jlong 
     reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Start(&callback);
 }
 
-void com_android_internal_os_FuseAppLoop_replySimple(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jint result) {
+void com_android_internal_os_FuseAppLoop_replySimple(JNIEnv* env, jobject self, jlong ptr,
+                                                     jlong unique, jint result) {
     if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplySimple(unique, result)) {
         reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Break();
     }
 }
 
-void com_android_internal_os_FuseAppLoop_replyOpen(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jlong fh) {
+void com_android_internal_os_FuseAppLoop_replyOpen(JNIEnv* env, jobject self, jlong ptr,
+                                                   jlong unique, jlong fh) {
     if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplyOpen(unique, fh)) {
         reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Break();
     }
 }
 
-void com_android_internal_os_FuseAppLoop_replyLookup(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jlong inode, jlong size) {
+void com_android_internal_os_FuseAppLoop_replyLookup(JNIEnv* env, jobject self, jlong ptr,
+                                                     jlong unique, jlong inode, jlong size) {
     if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplyLookup(unique, inode, size)) {
         reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Break();
     }
 }
 
-void com_android_internal_os_FuseAppLoop_replyGetAttr(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jlong inode, jlong size) {
-    if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplyGetAttr(
-            unique, inode, size, S_IFREG | 0777)) {
+void com_android_internal_os_FuseAppLoop_replyGetAttr(JNIEnv* env, jobject self, jlong ptr,
+                                                      jlong unique, jlong inode, jlong size) {
+    if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplyGetAttr(unique, inode, size,
+                                                                 S_IFREG | 0777)) {
         reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Break();
     }
 }
 
-void com_android_internal_os_FuseAppLoop_replyWrite(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jint size) {
+void com_android_internal_os_FuseAppLoop_replyWrite(JNIEnv* env, jobject self, jlong ptr,
+                                                    jlong unique, jint size) {
     if (!reinterpret_cast<fuse::FuseAppLoop*>(ptr)->ReplyWrite(unique, size)) {
         reinterpret_cast<fuse::FuseAppLoop*>(ptr)->Break();
     }
 }
 
-void com_android_internal_os_FuseAppLoop_replyRead(
-        JNIEnv* env, jobject self, jlong ptr, jlong unique, jint size, jbyteArray data) {
+void com_android_internal_os_FuseAppLoop_replyRead(JNIEnv* env, jobject self, jlong ptr,
+                                                   jlong unique, jint size, jbyteArray data) {
     ScopedByteArrayRO array(env, data);
     CHECK_GE(size, 0);
     CHECK_LE(static_cast<size_t>(size), array.size());
@@ -174,51 +173,23 @@ void com_android_internal_os_FuseAppLoop_replyRead(
 }
 
 const JNINativeMethod methods[] = {
-    {
-        "native_new",
-        "(I)J",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_new)
-    },
-    {
-        "native_delete",
-        "(J)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_delete)
-    },
-    {
-        "native_start",
-        "(J)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_start)
-    },
-    {
-        "native_replySimple",
-        "(JJI)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replySimple)
-    },
-    {
-        "native_replyOpen",
-        "(JJJ)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyOpen)
-    },
-    {
-        "native_replyLookup",
-        "(JJJJ)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyLookup)
-    },
-    {
-        "native_replyGetAttr",
-        "(JJJJ)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyGetAttr)
-    },
-    {
-        "native_replyRead",
-        "(JJI[B)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyRead)
-    },
-    {
-        "native_replyWrite",
-        "(JJI)V",
-        reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyWrite)
-    },
+        {"native_new", "(I)J", reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_new)},
+        {"native_delete", "(J)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_delete)},
+        {"native_start", "(J)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_start)},
+        {"native_replySimple", "(JJI)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replySimple)},
+        {"native_replyOpen", "(JJJ)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyOpen)},
+        {"native_replyLookup", "(JJJJ)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyLookup)},
+        {"native_replyGetAttr", "(JJJJ)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyGetAttr)},
+        {"native_replyRead", "(JJI[B)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyRead)},
+        {"native_replyWrite", "(JJI)V",
+         reinterpret_cast<void*>(com_android_internal_os_FuseAppLoop_replyWrite)},
 };
 }  // namespace
 

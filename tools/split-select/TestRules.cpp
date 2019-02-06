@@ -18,8 +18,8 @@
 
 #include <utils/String8.h>
 
-using android::String8;
 using android::sp;
+using android::String8;
 
 namespace split {
 namespace test {
@@ -71,20 +71,17 @@ const Rule AlwaysTrue() {
     return rule;
 }
 
-::testing::AssertionResult RulePredFormat(
-        const char*, const char*,
-        const sp<Rule>& actual, const Rule& expected) {
+::testing::AssertionResult RulePredFormat(const char*, const char*, const sp<Rule>& actual,
+                                          const Rule& expected) {
     const String8 expectedStr(expected.toJson());
     const String8 actualStr(actual != NULL ? actual->toJson() : String8());
 
     if (expectedStr != actualStr) {
-        return ::testing::AssertionFailure()
-                << "Expected: " << expectedStr.string() << "\n"
-                << "  Actual: " << actualStr.string();
+        return ::testing::AssertionFailure() << "Expected: " << expectedStr.string() << "\n"
+                                             << "  Actual: " << actualStr.string();
     }
     return ::testing::AssertionSuccess();
 }
 
-
-} // namespace test
-} // namespace split
+}  // namespace test
+}  // namespace split

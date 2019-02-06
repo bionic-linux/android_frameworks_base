@@ -88,7 +88,7 @@ public:
 
     ReportRequestSet batch;
 
-    Reporter();                       // PROD must use this constructor.
+    Reporter();                                // PROD must use this constructor.
     explicit Reporter(const char* directory);  // For testing purpose only.
     virtual ~Reporter();
 

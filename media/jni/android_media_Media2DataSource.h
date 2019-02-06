@@ -33,18 +33,19 @@ namespace android {
 // will be considered to be in a broken state, and the only further call this
 // will make is to close().
 class JMedia2DataSource : public DataSource {
-public:
-    JMedia2DataSource(JNIEnv *env, jobject source);
+  public:
+    JMedia2DataSource(JNIEnv* env, jobject source);
     virtual ~JMedia2DataSource();
 
     virtual status_t initCheck() const override;
-    virtual ssize_t readAt(off64_t offset, void *data, size_t size) override;
-    virtual status_t getSize(off64_t *size) override;
+    virtual ssize_t readAt(off64_t offset, void* data, size_t size) override;
+    virtual status_t getSize(off64_t* size) override;
 
     virtual String8 toString() override;
     virtual String8 getMIMEType() const override;
     virtual void close() override;
-private:
+
+  private:
     // Protect all member variables with mLock because this object will be
     // accessed on different threads.
     Mutex mLock;

@@ -24,25 +24,22 @@
 
 namespace android {
 
-class IObbActionListener: public IInterface
-{
-public:
+class IObbActionListener : public IInterface {
+  public:
     DECLARE_META_INTERFACE(ObbActionListener);
 
-    virtual void onObbResult(const String16& filename, const int32_t nonce, const int32_t state) = 0;
+    virtual void onObbResult(const String16& filename, const int32_t nonce,
+                             const int32_t state) = 0;
 };
 
 // ----------------------------------------------------------------------------
 
-class BnObbActionListener: public BnInterface<IObbActionListener>
-{
-public:
-    virtual status_t    onTransact( uint32_t code,
-                                    const Parcel& data,
-                                    Parcel* reply,
-                                    uint32_t flags = 0);
+class BnObbActionListener : public BnInterface<IObbActionListener> {
+  public:
+    virtual status_t onTransact(uint32_t code, const Parcel& data, Parcel* reply,
+                                uint32_t flags = 0);
 };
 
-}; // namespace android
+};  // namespace android
 
-#endif // ANDROID_IOBBACTIONLISTENER_H
+#endif  // ANDROID_IOBBACTIONLISTENER_H

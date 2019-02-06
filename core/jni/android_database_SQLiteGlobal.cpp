@@ -33,13 +33,12 @@ namespace android {
 // a long time.
 static const int SOFT_HEAP_LIMIT = 8 * 1024 * 1024;
 
-
 // Called each time a message is logged.
 static void sqliteLogCallback(void* data, int err, const char* msg) {
     bool verboseLog = !!data;
     int errType = err & 255;
-    if (errType == 0 || errType == SQLITE_CONSTRAINT || errType == SQLITE_SCHEMA
-            || errType == SQLITE_NOTICE || err == SQLITE_WARNING_AUTOINDEX) {
+    if (errType == 0 || errType == SQLITE_CONSTRAINT || errType == SQLITE_SCHEMA ||
+        errType == SQLITE_NOTICE || err == SQLITE_WARNING_AUTOINDEX) {
         if (verboseLog) {
             ALOG(LOG_VERBOSE, SQLITE_LOG_TAG, "(%d) %s\n", err, msg);
         }
@@ -75,18 +74,16 @@ static jint nativeReleaseMemory(JNIEnv* env, jclass clazz) {
     return sqlite3_release_memory(SOFT_HEAP_LIMIT);
 }
 
-static const JNINativeMethod sMethods[] =
-{
-    /* name, signature, funcPtr */
-    { "nativeReleaseMemory", "()I", (void*)nativeReleaseMemory },
+static const JNINativeMethod sMethods[] = {
+        /* name, signature, funcPtr */
+        {"nativeReleaseMemory", "()I", (void*)nativeReleaseMemory},
 };
 
-int register_android_database_SQLiteGlobal(JNIEnv *env)
-{
+int register_android_database_SQLiteGlobal(JNIEnv* env) {
     sqliteInitialize();
 
-    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteGlobal",
-            sMethods, NELEM(sMethods));
+    return RegisterMethodsOrDie(env, "android/database/sqlite/SQLiteGlobal", sMethods,
+                                NELEM(sMethods));
 }
 
-} // namespace android
+}  // namespace android

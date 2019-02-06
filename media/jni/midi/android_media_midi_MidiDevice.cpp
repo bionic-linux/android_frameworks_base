@@ -25,9 +25,9 @@
 using namespace android;
 using namespace android::media::midi;
 
-extern "C" jlong Java_android_media_midi_MidiDevice_native_1mirrorToNative(
-        JNIEnv *env, jobject, jobject midiDeviceServer, jint id)
-{
+extern "C" jlong Java_android_media_midi_MidiDevice_native_1mirrorToNative(JNIEnv* env, jobject,
+                                                                           jobject midiDeviceServer,
+                                                                           jint id) {
     // ALOGI("native_mirrorToNative(%p)...", midiDeviceServer);
     sp<IBinder> serverBinder = ibinderForJavaObject(env, midiDeviceServer);
     if (serverBinder.get() == NULL) {
@@ -42,9 +42,8 @@ extern "C" jlong Java_android_media_midi_MidiDevice_native_1mirrorToNative(
     return (jlong)devicePtr;
 }
 
-extern "C" void Java_android_media_midi_MidiDevice_native_removeFromNative(
-        JNIEnv *, jobject , jlong nativeToken)
-{
+extern "C" void Java_android_media_midi_MidiDevice_native_removeFromNative(JNIEnv*, jobject,
+                                                                           jlong nativeToken) {
     AMIDI_Device* devicePtr = (AMIDI_Device*)nativeToken;
     delete devicePtr;
 }

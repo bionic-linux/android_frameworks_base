@@ -41,9 +41,9 @@ static_assert(sizeof(sCurrentFileVersion) == sHeaderSize, "Header size is wrong"
 
 constexpr int sHistogramSize = ProfileData::HistogramSize();
 
-static bool mergeProfileDataIntoProto(protos::GraphicsStatsProto* proto,
-                                      const std::string& package, int64_t versionCode,
-                                      int64_t startTime, int64_t endTime, const ProfileData* data);
+static bool mergeProfileDataIntoProto(protos::GraphicsStatsProto* proto, const std::string& package,
+                                      int64_t versionCode, int64_t startTime, int64_t endTime,
+                                      const ProfileData* data);
 static void dumpAsTextToFd(protos::GraphicsStatsProto* proto, int outFd);
 
 class FileDescriptor {
@@ -56,7 +56,7 @@ public:
         }
     }
     bool valid() { return mFd != -1; }
-    operator int() { return mFd; } // NOLINT(google-explicit-constructor)
+    operator int() { return mFd; }  // NOLINT(google-explicit-constructor)
 
 private:
     int mFd;
@@ -178,8 +178,8 @@ bool mergeProfileDataIntoProto(protos::GraphicsStatsProto* proto, const std::str
     summary->set_slow_bitmap_upload_count(summary->slow_bitmap_upload_count() +
                                           data->jankTypeCount(kSlowSync));
     summary->set_slow_draw_count(summary->slow_draw_count() + data->jankTypeCount(kSlowRT));
-    summary->set_missed_deadline_count(summary->missed_deadline_count()
-            + data->jankTypeCount(kMissedDeadline));
+    summary->set_missed_deadline_count(summary->missed_deadline_count() +
+                                       data->jankTypeCount(kMissedDeadline));
 
     bool creatingHistogram = false;
     if (proto->histogram_size() == 0) {

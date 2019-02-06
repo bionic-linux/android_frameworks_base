@@ -16,12 +16,12 @@
 
 #define LOG_TAG "GraphicsStatsService"
 
+#include <JankTracker.h>
 #include <jni.h>
 #include <log/log.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include <JankTracker.h>
 #include <service/GraphicsStatsService.h>
 
 namespace android {
@@ -33,13 +33,14 @@ static jint getAshmemSize(JNIEnv*, jobject) {
 }
 
 static jlong createDump(JNIEnv*, jobject, jint fd, jboolean isProto) {
-    GraphicsStatsService::Dump* dump = GraphicsStatsService::createDump(fd, isProto
-            ? GraphicsStatsService::DumpType::Protobuf : GraphicsStatsService::DumpType::Text);
+    GraphicsStatsService::Dump* dump =
+            GraphicsStatsService::createDump(fd, isProto ? GraphicsStatsService::DumpType::Protobuf
+                                                         : GraphicsStatsService::DumpType::Text);
     return reinterpret_cast<jlong>(dump);
 }
 
 static void addToDump(JNIEnv* env, jobject, jlong dumpPtr, jstring jpath, jstring jpackage,
-        jlong versionCode, jlong startTime, jlong endTime, jbyteArray jdata) {
+                      jlong versionCode, jlong startTime, jlong endTime, jbyteArray jdata) {
     std::string path;
     const ProfileData* data = nullptr;
     LOG_ALWAYS_FATAL_IF(jdata == nullptr && jpath == nullptr, "Path and data can't both be null");
@@ -47,16 +48,19 @@ static void addToDump(JNIEnv* env, jobject, jlong dumpPtr, jstring jpath, jstrin
     if (jdata != nullptr) {
         buffer.reset(jdata);
         LOG_ALWAYS_FATAL_IF(buffer.size() != sizeof(ProfileData),
-                "Buffer size %zu doesn't match expected %zu!", buffer.size(), sizeof(ProfileData));
+                            "Buffer size %zu doesn't match expected %zu!", buffer.size(),
+                            sizeof(ProfileData));
         data = reinterpret_cast<const ProfileData*>(buffer.get());
     }
     if (jpath != nullptr) {
         ScopedUtfChars pathChars(env, jpath);
-        LOG_ALWAYS_FATAL_IF(pathChars.size() <= 0 || !pathChars.c_str(), "Failed to get path chars");
+        LOG_ALWAYS_FATAL_IF(pathChars.size() <= 0 || !pathChars.c_str(),
+                            "Failed to get path chars");
         path.assign(pathChars.c_str(), pathChars.size());
     }
     ScopedUtfChars packageChars(env, jpackage);
-    LOG_ALWAYS_FATAL_IF(packageChars.size() <= 0 || !packageChars.c_str(), "Failed to get path chars");
+    LOG_ALWAYS_FATAL_IF(packageChars.size() <= 0 || !packageChars.c_str(),
+                        "Failed to get path chars");
     GraphicsStatsService::Dump* dump = reinterpret_cast<GraphicsStatsService::Dump*>(dumpPtr);
     LOG_ALWAYS_FATAL_IF(!dump, "null passed for dump pointer");
 
@@ -78,14 +82,16 @@ static void finishDump(JNIEnv*, jobject, jlong dumpPtr) {
 }
 
 static void saveBuffer(JNIEnv* env, jobject clazz, jstring jpath, jstring jpackage,
-        jlong versionCode, jlong startTime, jlong endTime, jbyteArray jdata) {
+                       jlong versionCode, jlong startTime, jlong endTime, jbyteArray jdata) {
     ScopedByteArrayRO buffer(env, jdata);
     LOG_ALWAYS_FATAL_IF(buffer.size() != sizeof(ProfileData),
-            "Buffer size %zu doesn't match expected %zu!", buffer.size(), sizeof(ProfileData));
+                        "Buffer size %zu doesn't match expected %zu!", buffer.size(),
+                        sizeof(ProfileData));
     ScopedUtfChars pathChars(env, jpath);
     LOG_ALWAYS_FATAL_IF(pathChars.size() <= 0 || !pathChars.c_str(), "Failed to get path chars");
     ScopedUtfChars packageChars(env, jpackage);
-    LOG_ALWAYS_FATAL_IF(packageChars.size() <= 0 || !packageChars.c_str(), "Failed to get path chars");
+    LOG_ALWAYS_FATAL_IF(packageChars.size() <= 0 || !packageChars.c_str(),
+                        "Failed to get path chars");
 
     const std::string path(pathChars.c_str(), pathChars.size());
     const std::string package(packageChars.c_str(), packageChars.size());
@@ -94,18 +100,17 @@ static void saveBuffer(JNIEnv* env, jobject clazz, jstring jpath, jstring jpacka
 }
 
 static const JNINativeMethod sMethods[] = {
-    { "nGetAshmemSize", "()I", (void*) getAshmemSize },
-    { "nCreateDump", "(IZ)J", (void*) createDump },
-    { "nAddToDump", "(JLjava/lang/String;Ljava/lang/String;JJJ[B)V", (void*) addToDump },
-    { "nAddToDump", "(JLjava/lang/String;)V", (void*) addFileToDump },
-    { "nFinishDump", "(J)V", (void*) finishDump },
-    { "nSaveBuffer", "(Ljava/lang/String;Ljava/lang/String;JJJ[B)V", (void*) saveBuffer },
+        {"nGetAshmemSize", "()I", (void*)getAshmemSize},
+        {"nCreateDump", "(IZ)J", (void*)createDump},
+        {"nAddToDump", "(JLjava/lang/String;Ljava/lang/String;JJJ[B)V", (void*)addToDump},
+        {"nAddToDump", "(JLjava/lang/String;)V", (void*)addFileToDump},
+        {"nFinishDump", "(J)V", (void*)finishDump},
+        {"nSaveBuffer", "(Ljava/lang/String;Ljava/lang/String;JJJ[B)V", (void*)saveBuffer},
 };
 
-int register_android_server_GraphicsStatsService(JNIEnv* env)
-{
-    return jniRegisterNativeMethods(env, "com/android/server/GraphicsStatsService",
-                                    sMethods, NELEM(sMethods));
+int register_android_server_GraphicsStatsService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/GraphicsStatsService", sMethods,
+                                    NELEM(sMethods));
 }
 
-} // namespace android
+}  // namespace android

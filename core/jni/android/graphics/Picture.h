@@ -35,7 +35,7 @@ class Canvas;
 // of the old SkPicture interface by flip-flopping between the two
 // new classes.
 class Picture {
-public:
+  public:
     explicit Picture(const Picture* src = NULL);
 
     Canvas* beginRecording(int width, int height);
@@ -52,7 +52,7 @@ public:
 
     void draw(Canvas* canvas);
 
-private:
+  private:
     int mWidth;
     int mHeight;
     sk_sp<SkPicture> mPicture;
@@ -63,5 +63,5 @@ private:
     sk_sp<SkPicture> makePartialCopy() const;
 };
 
-}; // namespace android
-#endif // ANDROID_GRAPHICS_PICTURE_H_
+};      // namespace android
+#endif  // ANDROID_GRAPHICS_PICTURE_H_

@@ -24,9 +24,9 @@
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/android_view_InputQueue.h>
 #include <input/Input.h>
+#include <nativehelper/ScopedLocalRef.h>
 #include <utils/Looper.h>
 #include <utils/TypeHelpers.h>
-#include <nativehelper/ScopedLocalRef.h>
 
 #include <nativehelper/JNIHelp.h>
 #include "android_os_MessageQueue.h"
@@ -37,18 +37,18 @@
 
 namespace android {
 
-static struct {
-    jmethodID finishInputEvent;
-} gInputQueueClassInfo;
+static struct { jmethodID finishInputEvent; } gInputQueueClassInfo;
 
 enum {
     MSG_FINISH_INPUT = 1,
 };
 
-InputQueue::InputQueue(jobject inputQueueObj, const sp<Looper>& looper,
-        int dispatchReadFd, int dispatchWriteFd) :
-        mDispatchReadFd(dispatchReadFd), mDispatchWriteFd(dispatchWriteFd),
-        mDispatchLooper(looper), mHandler(new WeakMessageHandler(this)) {
+InputQueue::InputQueue(jobject inputQueueObj, const sp<Looper>& looper, int dispatchReadFd,
+                       int dispatchWriteFd)
+    : mDispatchReadFd(dispatchReadFd),
+      mDispatchWriteFd(dispatchWriteFd),
+      mDispatchLooper(looper),
+      mHandler(new WeakMessageHandler(this)) {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     mInputQueueWeakGlobal = env->NewGlobalRef(inputQueueObj);
 }
@@ -61,8 +61,8 @@ InputQueue::~InputQueue() {
     close(mDispatchWriteFd);
 }
 
-void InputQueue::attachLooper(Looper* looper, int ident,
-        ALooper_callbackFunc callback, void* data) {
+void InputQueue::attachLooper(Looper* looper, int ident, ALooper_callbackFunc callback,
+                              void* data) {
     Mutex::Autolock _l(mLock);
     for (size_t i = 0; i < mAppLoopers.size(); i++) {
         if (looper == mAppLoopers[i]) {
@@ -132,31 +132,31 @@ void InputQueue::finishEvent(InputEvent* event, bool handled) {
 }
 
 void InputQueue::handleMessage(const Message& message) {
-    switch(message.what) {
-    case MSG_FINISH_INPUT:
-        JNIEnv* env = AndroidRuntime::getJNIEnv();
-        ScopedLocalRef<jobject> inputQueueObj(env, jniGetReferent(env, mInputQueueWeakGlobal));
-        if (!inputQueueObj.get()) {
-            ALOGW("InputQueue was finalized without being disposed");
-            return;
-        }
-        while (true) {
-            InputEvent* event;
-            bool handled;
-            {
-                Mutex::Autolock _l(mLock);
-                if (mFinishedEvents.isEmpty()) {
-                    break;
-                }
-                event = mFinishedEvents[0].getKey();
-                handled = mFinishedEvents[0].getValue();
-                mFinishedEvents.removeAt(0);
+    switch (message.what) {
+        case MSG_FINISH_INPUT:
+            JNIEnv* env = AndroidRuntime::getJNIEnv();
+            ScopedLocalRef<jobject> inputQueueObj(env, jniGetReferent(env, mInputQueueWeakGlobal));
+            if (!inputQueueObj.get()) {
+                ALOGW("InputQueue was finalized without being disposed");
+                return;
             }
-            env->CallVoidMethod(inputQueueObj.get(), gInputQueueClassInfo.finishInputEvent,
-                    reinterpret_cast<jlong>(event), handled);
-            recycleInputEvent(event);
-        }
-        break;
+            while (true) {
+                InputEvent* event;
+                bool handled;
+                {
+                    Mutex::Autolock _l(mLock);
+                    if (mFinishedEvents.isEmpty()) {
+                        break;
+                    }
+                    event = mFinishedEvents[0].getKey();
+                    handled = mFinishedEvents[0].getValue();
+                    mFinishedEvents.removeAt(0);
+                }
+                env->CallVoidMethod(inputQueueObj.get(), gInputQueueClassInfo.finishInputEvent,
+                                    reinterpret_cast<jlong>(event), handled);
+                recycleInputEvent(event);
+            }
+            break;
     }
 }
 
@@ -217,7 +217,7 @@ static void nativeDispose(JNIEnv* env, jobject clazz, jlong ptr) {
 }
 
 static jlong nativeSendKeyEvent(JNIEnv* env, jobject clazz, jlong ptr, jobject eventObj,
-        jboolean predispatch) {
+                                jboolean predispatch) {
     InputQueue* queue = reinterpret_cast<InputQueue*>(ptr);
     KeyEvent* event = queue->createKeyEvent();
     status_t status = android_view_KeyEvent_toNative(env, eventObj, event);
@@ -249,22 +249,21 @@ static jlong nativeSendMotionEvent(JNIEnv* env, jobject clazz, jlong ptr, jobjec
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "nativeInit", "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;)J",
-        (void*) nativeInit },
-    { "nativeDispose", "(J)V", (void*) nativeDispose },
-    { "nativeSendKeyEvent", "(JLandroid/view/KeyEvent;Z)J", (void*) nativeSendKeyEvent },
-    { "nativeSendMotionEvent", "(JLandroid/view/MotionEvent;)J", (void*) nativeSendMotionEvent },
+        {"nativeInit", "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;)J",
+         (void*)nativeInit},
+        {"nativeDispose", "(J)V", (void*)nativeDispose},
+        {"nativeSendKeyEvent", "(JLandroid/view/KeyEvent;Z)J", (void*)nativeSendKeyEvent},
+        {"nativeSendMotionEvent", "(JLandroid/view/MotionEvent;)J", (void*)nativeSendMotionEvent},
 };
 
 static const char* const kInputQueuePathName = "android/view/InputQueue";
 
-int register_android_view_InputQueue(JNIEnv* env)
-{
+int register_android_view_InputQueue(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, kInputQueuePathName);
-    gInputQueueClassInfo.finishInputEvent = GetMethodIDOrDie(env, clazz, "finishInputEvent",
-                                                             "(JZ)V");
+    gInputQueueClassInfo.finishInputEvent =
+            GetMethodIDOrDie(env, clazz, "finishInputEvent", "(JZ)V");
 
     return RegisterMethodsOrDie(env, kInputQueuePathName, g_methods, NELEM(g_methods));
 }
 
-} // namespace android
+}  // namespace android

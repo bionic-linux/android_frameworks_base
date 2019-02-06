@@ -12,22 +12,17 @@ using namespace std;
 
 const bool GENERATE_MAPPING = true;
 
-static string
-make_filename(const FileDescriptorProto& file_descriptor)
-{
+static string make_filename(const FileDescriptorProto& file_descriptor) {
     return file_descriptor.name() + ".h";
 }
 
-static void
-write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& indent)
-{
+static void write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& indent) {
     const int N = enu.value_size();
     text << indent << "// enum " << enu.name() << endl;
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const EnumValueDescriptorProto& value = enu.value(i);
-        text << indent << "const int "
-                << make_constant_name(value.name())
-                << " = " << value.number() << ";" << endl;
+        text << indent << "const int " << make_constant_name(value.name()) << " = "
+             << value.number() << ";" << endl;
     }
 
     if (GENERATE_MAPPING) {
@@ -35,12 +30,13 @@ write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& ind
         string prefix = name + "_";
         text << indent << "const int _ENUM_" << name << "_COUNT = " << N << ";" << endl;
         text << indent << "const char* _ENUM_" << name << "_NAMES[" << N << "] = {" << endl;
-        for (int i=0; i<N; i++) {
-            text << indent << INDENT << "\"" << stripPrefix(enu.value(i).name(), prefix) << "\"," << endl;
+        for (int i = 0; i < N; i++) {
+            text << indent << INDENT << "\"" << stripPrefix(enu.value(i).name(), prefix) << "\","
+                 << endl;
         }
         text << indent << "};" << endl;
         text << indent << "const int _ENUM_" << name << "_VALUES[" << N << "] = {" << endl;
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             text << indent << INDENT << make_constant_name(enu.value(i).name()) << "," << endl;
         }
         text << indent << "};" << endl;
@@ -49,18 +45,16 @@ write_enum(stringstream& text, const EnumDescriptorProto& enu, const string& ind
     text << endl;
 }
 
-static void
-write_field(stringstream& text, const FieldDescriptorProto& field, const string& indent)
-{
-    string optional_comment = field.label() == FieldDescriptorProto::LABEL_OPTIONAL
-            ? "optional " : "";
-    string repeated_comment = field.label() == FieldDescriptorProto::LABEL_REPEATED
-            ? "repeated " : "";
+static void write_field(stringstream& text, const FieldDescriptorProto& field,
+                        const string& indent) {
+    string optional_comment =
+            field.label() == FieldDescriptorProto::LABEL_OPTIONAL ? "optional " : "";
+    string repeated_comment =
+            field.label() == FieldDescriptorProto::LABEL_REPEATED ? "repeated " : "";
     string proto_type = get_proto_type(field);
-    string packed_comment = field.options().packed()
-            ? " [packed=true]" : "";
+    string packed_comment = field.options().packed() ? " [packed=true]" : "";
     text << indent << "// " << optional_comment << repeated_comment << proto_type << ' '
-            << field.name() << " = " << field.number() << packed_comment << ';' << endl;
+         << field.name() << " = " << field.number() << packed_comment << ';' << endl;
 
     text << indent << "const uint64_t " << make_constant_name(field.name()) << " = 0x";
 
@@ -73,9 +67,8 @@ write_field(stringstream& text, const FieldDescriptorProto& field, const string&
     text << endl;
 }
 
-static void
-write_message(stringstream& text, const DescriptorProto& message, const string& indent)
-{
+static void write_message(stringstream& text, const DescriptorProto& message,
+                          const string& indent) {
     int N;
     const string indented = indent + INDENT;
 
@@ -84,19 +77,19 @@ write_message(stringstream& text, const DescriptorProto& message, const string& 
 
     // Enums
     N = message.enum_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_enum(text, message.enum_type(i), indented);
     }
 
     // Nested classes
     N = message.nested_type_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_message(text, message.nested_type(i), indented);
     }
 
     // Fields
     N = message.field_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         write_field(text, message.field(i), indented);
     }
 
@@ -104,13 +97,14 @@ write_message(stringstream& text, const DescriptorProto& message, const string& 
         N = message.field_size();
         text << indented << "const int _FIELD_COUNT = " << N << ";" << endl;
         text << indented << "const char* _FIELD_NAMES[" << N << "] = {" << endl;
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             text << indented << INDENT << "\"" << message.field(i).name() << "\"," << endl;
         }
         text << indented << "};" << endl;
         text << indented << "const uint64_t _FIELD_IDS[" << N << "] = {" << endl;
-        for (int i=0; i<N; i++) {
-            text << indented << INDENT << make_constant_name(message.field(i).name()) << "," << endl;
+        for (int i = 0; i < N; i++) {
+            text << indented << INDENT << make_constant_name(message.field(i).name()) << ","
+                 << endl;
         }
         text << indented << "};" << endl << endl;
     }
@@ -119,9 +113,8 @@ write_message(stringstream& text, const DescriptorProto& message, const string& 
     text << endl;
 }
 
-static void
-write_header_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor)
-{
+static void write_header_file(CodeGeneratorResponse* response,
+                              const FileDescriptorProto& file_descriptor) {
     stringstream text;
 
     text << "// Generated by protoc-gen-cppstream. DO NOT MODIFY." << endl;
@@ -143,12 +136,12 @@ write_header_file(CodeGeneratorResponse* response, const FileDescriptorProto& fi
 
     size_t N;
     N = file_descriptor.enum_type_size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         write_enum(text, file_descriptor.enum_type(i), "");
     }
 
     N = file_descriptor.message_type_size();
-    for (size_t i=0; i<N; i++) {
+    for (size_t i = 0; i < N; i++) {
         write_message(text, file_descriptor.message_type(i), "");
     }
 
@@ -164,8 +157,7 @@ write_header_file(CodeGeneratorResponse* response, const FileDescriptorProto& fi
     file_response->set_content(text.str());
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const* argv[]) {
     (void)argc;
     (void)argv;
 
@@ -179,7 +171,7 @@ int main(int argc, char const *argv[])
 
     // Build the files we need.
     const int N = request.proto_file_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const FileDescriptorProto& file_descriptor = request.proto_file(i);
         if (should_generate_for_file(request, file_descriptor.name())) {
             write_header_file(&response, file_descriptor);

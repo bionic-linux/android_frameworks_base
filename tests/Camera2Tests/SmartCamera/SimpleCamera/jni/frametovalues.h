@@ -26,17 +26,14 @@
 extern "C" {
 #endif
 
-JNIEXPORT jboolean JNICALL
-Java_androidx_media_filterpacks_image_ToGrayValuesFilter_toGrayValues(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject grayBuffer );
+JNIEXPORT jboolean JNICALL Java_androidx_media_filterpacks_image_ToGrayValuesFilter_toGrayValues(
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject grayBuffer);
 
-JNIEXPORT jboolean JNICALL
-Java_androidx_media_filterpacks_image_ToRgbValuesFilter_toRgbValues(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject rgbBuffer );
-
+JNIEXPORT jboolean JNICALL Java_androidx_media_filterpacks_image_ToRgbValuesFilter_toRgbValues(
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject rgbBuffer);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_TOGRAYVALUES_H
+#endif  // ANDROID_FILTERFW_JNI_TOGRAYVALUES_H

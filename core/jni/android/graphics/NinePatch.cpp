@@ -25,18 +25,18 @@
 
 #include <ResourceCache.h>
 
-#include "SkCanvas.h"
-#include "SkLatticeIter.h"
-#include "SkRegion.h"
 #include "GraphicsJNI.h"
 #include "NinePatchPeeker.h"
 #include "NinePatchUtils.h"
+#include "SkCanvas.h"
+#include "SkLatticeIter.h"
+#include "SkRegion.h"
 
 #include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
 
-jclass      gInsetStruct_class;
-jmethodID   gInsetStruct_constructorMethodID;
+jclass gInsetStruct_class;
+jmethodID gInsetStruct_constructorMethodID;
 
 using namespace android;
 
@@ -49,7 +49,7 @@ using namespace android;
  */
 
 class SkNinePatchGlue {
-public:
+  public:
     static jboolean isNinePatchChunk(JNIEnv* env, jobject, jbyteArray obj) {
         if (NULL == obj) {
             return JNI_FALSE;
@@ -69,7 +69,7 @@ public:
 
     static jlong validateNinePatchChunk(JNIEnv* env, jobject, jbyteArray obj) {
         size_t chunkSize = env->GetArrayLength(obj);
-        if (chunkSize < (int) (sizeof(Res_png_9patch))) {
+        if (chunkSize < (int)(sizeof(Res_png_9patch))) {
             jniThrowRuntimeException(env, "Array too small for chunk.");
             return NULL;
         }
@@ -84,15 +84,15 @@ public:
     static void finalize(JNIEnv* env, jobject, jlong patchHandle) {
         int8_t* patch = reinterpret_cast<int8_t*>(patchHandle);
         if (android::uirenderer::ResourceCache::hasInstance()) {
-            Res_png_9patch* p = (Res_png_9patch*) patch;
+            Res_png_9patch* p = (Res_png_9patch*)patch;
             android::uirenderer::ResourceCache::getInstance().destructor(p);
         } else {
             delete[] patch;
         }
     }
 
-    static jlong getTransparentRegion(JNIEnv* env, jobject, jobject jbitmap,
-            jlong chunkHandle, jobject dstRect) {
+    static jlong getTransparentRegion(JNIEnv* env, jobject, jobject jbitmap, jlong chunkHandle,
+                                      jobject dstRect) {
         Res_png_9patch* chunk = reinterpret_cast<Res_png_9patch*>(chunkHandle);
         SkASSERT(chunk);
 
@@ -129,7 +129,6 @@ public:
 
         return reinterpret_cast<jlong>(region);
     }
-
 };
 
 jobject NinePatchPeeker::createNinePatchInsets(JNIEnv* env, float scale) const {
@@ -137,19 +136,16 @@ jobject NinePatchPeeker::createNinePatchInsets(JNIEnv* env, float scale) const {
         return nullptr;
     }
 
-    return env->NewObject(gInsetStruct_class, gInsetStruct_constructorMethodID,
-            mOpticalInsets[0], mOpticalInsets[1],
-            mOpticalInsets[2], mOpticalInsets[3],
-            mOutlineInsets[0], mOutlineInsets[1],
-            mOutlineInsets[2], mOutlineInsets[3],
-            mOutlineRadius, mOutlineAlpha, scale);
+    return env->NewObject(gInsetStruct_class, gInsetStruct_constructorMethodID, mOpticalInsets[0],
+                          mOpticalInsets[1], mOpticalInsets[2], mOpticalInsets[3],
+                          mOutlineInsets[0], mOutlineInsets[1], mOutlineInsets[2],
+                          mOutlineInsets[3], mOutlineRadius, mOutlineAlpha, scale);
 }
 
 void NinePatchPeeker::getPadding(JNIEnv* env, jobject outPadding) const {
     if (mPatch) {
-        GraphicsJNI::set_jrect(env, outPadding,
-                mPatch->paddingLeft, mPatch->paddingTop,
-                mPatch->paddingRight, mPatch->paddingBottom);
+        GraphicsJNI::set_jrect(env, outPadding, mPatch->paddingLeft, mPatch->paddingTop,
+                               mPatch->paddingRight, mPatch->paddingBottom);
 
     } else {
         GraphicsJNI::set_jrect(env, outPadding, -1, -1, -1, -1);
@@ -159,19 +155,17 @@ void NinePatchPeeker::getPadding(JNIEnv* env, jobject outPadding) const {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 static const JNINativeMethod gNinePatchMethods[] = {
-    { "isNinePatchChunk", "([B)Z", (void*) SkNinePatchGlue::isNinePatchChunk },
-    { "validateNinePatchChunk", "([B)J",
-            (void*) SkNinePatchGlue::validateNinePatchChunk },
-    { "nativeFinalize", "(J)V", (void*) SkNinePatchGlue::finalize },
-    { "nativeGetTransparentRegion", "(Landroid/graphics/Bitmap;JLandroid/graphics/Rect;)J",
-            (void*) SkNinePatchGlue::getTransparentRegion }
-};
+        {"isNinePatchChunk", "([B)Z", (void*)SkNinePatchGlue::isNinePatchChunk},
+        {"validateNinePatchChunk", "([B)J", (void*)SkNinePatchGlue::validateNinePatchChunk},
+        {"nativeFinalize", "(J)V", (void*)SkNinePatchGlue::finalize},
+        {"nativeGetTransparentRegion", "(Landroid/graphics/Bitmap;JLandroid/graphics/Rect;)J",
+         (void*)SkNinePatchGlue::getTransparentRegion}};
 
 int register_android_graphics_NinePatch(JNIEnv* env) {
-    gInsetStruct_class = MakeGlobalRefOrDie(env, FindClassOrDie(env,
-            "android/graphics/NinePatch$InsetStruct"));
-    gInsetStruct_constructorMethodID = GetMethodIDOrDie(env, gInsetStruct_class, "<init>",
-            "(IIIIIIIIFIF)V");
-    return android::RegisterMethodsOrDie(env,
-            "android/graphics/NinePatch", gNinePatchMethods, NELEM(gNinePatchMethods));
+    gInsetStruct_class =
+            MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/NinePatch$InsetStruct"));
+    gInsetStruct_constructorMethodID =
+            GetMethodIDOrDie(env, gInsetStruct_class, "<init>", "(IIIIIIIIFIF)V");
+    return android::RegisterMethodsOrDie(env, "android/graphics/NinePatch", gNinePatchMethods,
+                                         NELEM(gNinePatchMethods));
 }

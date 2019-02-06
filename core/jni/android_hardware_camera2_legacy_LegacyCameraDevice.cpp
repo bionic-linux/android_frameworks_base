@@ -16,60 +16,61 @@
 
 #define LOG_TAG "Legacy-CameraDevice-JNI"
 // #define LOG_NDEBUG 0
-#include <utils/Log.h>
-#include <utils/Errors.h>
-#include <utils/Trace.h>
 #include <camera/CameraUtils.h>
+#include <utils/Errors.h>
+#include <utils/Log.h>
+#include <utils/Trace.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
-#include "core_jni_helpers.h"
-#include "android_runtime/android_view_Surface.h"
 #include "android_runtime/android_graphics_SurfaceTexture.h"
+#include "android_runtime/android_view_Surface.h"
+#include "core_jni_helpers.h"
+#include "jni.h"
 
-#include <gui/Surface.h>
 #include <gui/IGraphicBufferProducer.h>
 #include <gui/IProducerListener.h>
-#include <ui/GraphicBuffer.h>
-#include <system/window.h>
+#include <gui/Surface.h>
 #include <hardware/camera3.h>
 #include <system/camera_metadata.h>
+#include <system/window.h>
+#include <ui/GraphicBuffer.h>
 
-#include <stdint.h>
 #include <inttypes.h>
+#include <stdint.h>
 
 using namespace android;
 
 // fully-qualified class name
 #define CAMERA_DEVICE_CLASS_NAME "android/hardware/camera2/legacy/LegacyCameraDevice"
-#define CAMERA_DEVICE_BUFFER_SLACK  3
+#define CAMERA_DEVICE_BUFFER_SLACK 3
 #define DONT_CARE 0
 
-#define ARRAY_SIZE(a) (sizeof(a)/sizeof(*(a)))
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(*(a)))
 
-#define ALIGN(x, mask) ( ((x) + (mask) - 1) & ~((mask) - 1) )
+#define ALIGN(x, mask) (((x) + (mask)-1) & ~((mask)-1))
 
 // Use BAD_VALUE for surface abandoned error
 #define OVERRIDE_SURFACE_ERROR(err) \
-do {                                \
-    if (err == -ENODEV) {           \
-        err = BAD_VALUE;            \
-    }                               \
-} while (0)
+    do {                            \
+        if (err == -ENODEV) {       \
+            err = BAD_VALUE;        \
+        }                           \
+    } while (0)
 
 #define UPDATE(md, tag, data, size)               \
-do {                                              \
-    if ((md).update((tag), (data), (size))) {     \
-        ALOGE("Update " #tag " failed!");         \
-        return BAD_VALUE;                         \
-    }                                             \
-} while (0)
+    do {                                          \
+        if ((md).update((tag), (data), (size))) { \
+            ALOGE("Update " #tag " failed!");     \
+            return BAD_VALUE;                     \
+        }                                         \
+    } while (0)
 
 /**
  * Convert from RGB 888 to Y'CbCr using the conversion specified in JFIF v1.02
  */
 static void rgbToYuv420(uint8_t* rgbBuf, size_t width, size_t height, uint8_t* yPlane,
-        uint8_t* crPlane, uint8_t* cbPlane, size_t chromaStep, size_t yStride, size_t chromaStride) {
+                        uint8_t* crPlane, uint8_t* cbPlane, size_t chromaStep, size_t yStride,
+                        size_t chromaStride) {
     uint8_t R, G, B;
     size_t index = 0;
     for (size_t j = 0; j < height; j++) {
@@ -81,10 +82,10 @@ static void rgbToYuv420(uint8_t* rgbBuf, size_t width, size_t height, uint8_t* y
             R = rgbBuf[index++];
             G = rgbBuf[index++];
             B = rgbBuf[index++];
-            *y++ = (77 * R + 150 * G +  29 * B) >> 8;
+            *y++ = (77 * R + 150 * G + 29 * B) >> 8;
             if (jEven && (i & 1) == 0) {
-                *cb = (( -43 * R - 85 * G + 128 * B) >> 8) + 128;
-                *cr = (( 128 * R - 107 * G - 21 * B) >> 8) + 128;
+                *cb = ((-43 * R - 85 * G + 128 * B) >> 8) + 128;
+                *cr = ((128 * R - 107 * G - 21 * B) >> 8) + 128;
                 cr += chromaStep;
                 cb += chromaStep;
             }
@@ -104,46 +105,47 @@ static void rgbToYuv420(uint8_t* rgbBuf, size_t width, size_t height, android_yc
     size_t cStride = ycbcr->cstride;
     size_t yStride = ycbcr->ystride;
     ALOGV("%s: yStride is: %zu, cStride is: %zu, cStep is: %zu", __FUNCTION__, yStride, cStride,
-            cStep);
+          cStep);
     rgbToYuv420(rgbBuf, width, height, reinterpret_cast<uint8_t*>(ycbcr->y),
-            reinterpret_cast<uint8_t*>(ycbcr->cr), reinterpret_cast<uint8_t*>(ycbcr->cb),
-            cStep, yStride, cStride);
+                reinterpret_cast<uint8_t*>(ycbcr->cr), reinterpret_cast<uint8_t*>(ycbcr->cb), cStep,
+                yStride, cStride);
 }
 
 static status_t connectSurface(const sp<Surface>& surface, int32_t maxBufferSlack) {
     status_t err = NO_ERROR;
 
-    err = surface->connect(NATIVE_WINDOW_API_CAMERA, /*listener*/NULL);
+    err = surface->connect(NATIVE_WINDOW_API_CAMERA, /*listener*/ NULL);
     if (err != OK) {
-        ALOGE("%s: Unable to connect to surface, error %s (%d).", __FUNCTION__,
-                strerror(-err), err);
+        ALOGE("%s: Unable to connect to surface, error %s (%d).", __FUNCTION__, strerror(-err),
+              err);
         return err;
     }
 
     err = native_window_set_usage(surface.get(), GRALLOC_USAGE_SW_WRITE_OFTEN);
     if (err != NO_ERROR) {
         ALOGE("%s: Failed to set native window usage flag, error %s (%d).", __FUNCTION__,
-                strerror(-err), err);
+              strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
 
     int minUndequeuedBuffers;
-    err = static_cast<ANativeWindow*>(surface.get())->query(surface.get(),
-            NATIVE_WINDOW_MIN_UNDEQUEUED_BUFFERS, &minUndequeuedBuffers);
+    err = static_cast<ANativeWindow*>(surface.get())
+                  ->query(surface.get(), NATIVE_WINDOW_MIN_UNDEQUEUED_BUFFERS,
+                          &minUndequeuedBuffers);
     if (err != NO_ERROR) {
         ALOGE("%s: Failed to get native window min undequeued buffers, error %s (%d).",
-                __FUNCTION__, strerror(-err), err);
+              __FUNCTION__, strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
 
     ALOGV("%s: Setting buffer count to %d", __FUNCTION__,
-            maxBufferSlack + 1 + minUndequeuedBuffers);
+          maxBufferSlack + 1 + minUndequeuedBuffers);
     err = native_window_set_buffer_count(surface.get(), maxBufferSlack + 1 + minUndequeuedBuffers);
     if (err != NO_ERROR) {
         ALOGE("%s: Failed to set native window buffer count, error %s (%d).", __FUNCTION__,
-                strerror(-err), err);
+              strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
@@ -164,17 +166,16 @@ static status_t connectSurface(const sp<Surface>& surface, int32_t maxBufferSlac
  *               HAL_PIXEL_FORMAT_BLOB
  *    bufSize - the size of the pixelBuffer in bytes.
  */
-static status_t produceFrame(const sp<ANativeWindow>& anw,
-                             uint8_t* pixelBuffer,
-                             int32_t bufWidth, // Width of the pixelBuffer
-                             int32_t bufHeight, // Height of the pixelBuffer
-                             int32_t pixelFmt, // Format of the pixelBuffer
+static status_t produceFrame(const sp<ANativeWindow>& anw, uint8_t* pixelBuffer,
+                             int32_t bufWidth,   // Width of the pixelBuffer
+                             int32_t bufHeight,  // Height of the pixelBuffer
+                             int32_t pixelFmt,   // Format of the pixelBuffer
                              int32_t bufSize) {
     ATRACE_CALL();
     status_t err = NO_ERROR;
     ANativeWindowBuffer* anb;
-    ALOGV("%s: Dequeue buffer from %p %dx%d (fmt=%x, size=%x)",
-            __FUNCTION__, anw.get(), bufWidth, bufHeight, pixelFmt, bufSize);
+    ALOGV("%s: Dequeue buffer from %p %dx%d (fmt=%x, size=%x)", __FUNCTION__, anw.get(), bufWidth,
+          bufHeight, pixelFmt, bufSize);
 
     if (anw == 0) {
         ALOGE("%s: anw must not be NULL", __FUNCTION__);
@@ -200,8 +201,7 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
     // TODO: Switch to using Surface::lock and Surface::unlockAndPost
     err = native_window_dequeue_buffer_and_wait(anw.get(), &anb);
     if (err != NO_ERROR) {
-        ALOGE("%s: Failed to dequeue buffer, error %s (%d).", __FUNCTION__,
-                strerror(-err), err);
+        ALOGE("%s: Failed to dequeue buffer, error %s (%d).", __FUNCTION__, strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
@@ -212,8 +212,8 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
     uint32_t grallocBufStride = buf->getStride();
     if (grallocBufWidth != width || grallocBufHeight != height) {
         ALOGE("%s: Received gralloc buffer with bad dimensions %" PRIu32 "x%" PRIu32
-                ", expecting dimensions %zu x %zu",  __FUNCTION__, grallocBufWidth,
-                grallocBufHeight, width, height);
+              ", expecting dimensions %zu x %zu",
+              __FUNCTION__, grallocBufWidth, grallocBufHeight, width, height);
         return BAD_VALUE;
     }
 
@@ -221,37 +221,38 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
     err = anw->query(anw.get(), NATIVE_WINDOW_FORMAT, &bufFmt);
     if (err != NO_ERROR) {
         ALOGE("%s: Error while querying surface pixel format %s (%d).", __FUNCTION__,
-                strerror(-err), err);
+              strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
 
-    uint64_t tmpSize = (pixelFmt == HAL_PIXEL_FORMAT_BLOB) ? grallocBufWidth :
-            4 * grallocBufHeight * grallocBufWidth;
+    uint64_t tmpSize = (pixelFmt == HAL_PIXEL_FORMAT_BLOB) ? grallocBufWidth
+                                                           : 4 * grallocBufHeight * grallocBufWidth;
     if (bufFmt != pixelFmt) {
         if (bufFmt == HAL_PIXEL_FORMAT_RGBA_8888 && pixelFmt == HAL_PIXEL_FORMAT_BLOB) {
             ALOGV("%s: Using BLOB to RGBA format override.", __FUNCTION__);
             tmpSize = 4 * (grallocBufWidth + grallocBufStride * (grallocBufHeight - 1));
         } else {
             ALOGW("%s: Format mismatch in produceFrame: expecting format %#" PRIx32
-                    ", but received buffer with format %#" PRIx32, __FUNCTION__, pixelFmt, bufFmt);
+                  ", but received buffer with format %#" PRIx32,
+                  __FUNCTION__, pixelFmt, bufFmt);
         }
     }
 
     if (tmpSize > SIZE_MAX) {
         ALOGE("%s: Overflow calculating size, buffer with dimens %zu x %zu is absurdly large...",
-                __FUNCTION__, width, height);
+              __FUNCTION__, width, height);
         return BAD_VALUE;
     }
 
     size_t totalSizeBytes = tmpSize;
 
     ALOGV("%s: Pixel format chosen: %x", __FUNCTION__, pixelFmt);
-    switch(pixelFmt) {
+    switch (pixelFmt) {
         case HAL_PIXEL_FORMAT_YCrCb_420_SP: {
             if (bufferLength < totalSizeBytes) {
-                ALOGE("%s: PixelBuffer size %zu too small for given dimensions",
-                        __FUNCTION__, bufferLength);
+                ALOGE("%s: PixelBuffer size %zu too small for given dimensions", __FUNCTION__,
+                      bufferLength);
                 return BAD_VALUE;
             }
             uint8_t* img = NULL;
@@ -266,14 +267,14 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
             size_t yStride = width;
             size_t chromaStride = width;
 
-            rgbToYuv420(pixelBuffer, width, height, yPlane,
-                    uPlane, vPlane, chromaStep, yStride, chromaStride);
+            rgbToYuv420(pixelBuffer, width, height, yPlane, uPlane, vPlane, chromaStep, yStride,
+                        chromaStride);
             break;
         }
         case HAL_PIXEL_FORMAT_YV12: {
             if (bufferLength < totalSizeBytes) {
-                ALOGE("%s: PixelBuffer size %zu too small for given dimensions",
-                        __FUNCTION__, bufferLength);
+                ALOGE("%s: PixelBuffer size %zu too small for given dimensions", __FUNCTION__,
+                      bufferLength);
                 return BAD_VALUE;
             }
 
@@ -287,7 +288,7 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
             err = buf->lock(GRALLOC_USAGE_SW_WRITE_OFTEN, (void**)(&img));
             if (err != NO_ERROR) {
                 ALOGE("%s: Error %s (%d) while locking gralloc buffer for write.", __FUNCTION__,
-                        strerror(-err), err);
+                      strerror(-err), err);
                 return err;
             }
 
@@ -302,16 +303,16 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
             uint8_t* crPlane = img + static_cast<uint32_t>(height) * stride;
             uint8_t* cbPlane = crPlane + cStride * static_cast<uint32_t>(height) / 2;
 
-            rgbToYuv420(pixelBuffer, width, height, yPlane,
-                    crPlane, cbPlane, chromaStep, stride, cStride);
+            rgbToYuv420(pixelBuffer, width, height, yPlane, crPlane, cbPlane, chromaStep, stride,
+                        cStride);
             break;
         }
         case HAL_PIXEL_FORMAT_YCbCr_420_888: {
             // Software writes with YCbCr_420_888 format are unsupported
             // by the gralloc module for now
             if (bufferLength < totalSizeBytes) {
-                ALOGE("%s: PixelBuffer size %zu too small for given dimensions",
-                        __FUNCTION__, bufferLength);
+                ALOGE("%s: PixelBuffer size %zu too small for given dimensions", __FUNCTION__,
+                      bufferLength);
                 return BAD_VALUE;
             }
             android_ycbcr ycbcr = android_ycbcr();
@@ -320,7 +321,7 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
             err = buf->lockYCbCr(GRALLOC_USAGE_SW_WRITE_OFTEN, &ycbcr);
             if (err != NO_ERROR) {
                 ALOGE("%s: Failed to lock ycbcr buffer, error %s (%d).", __FUNCTION__,
-                        strerror(-err), err);
+                      strerror(-err), err);
                 return err;
             }
             rgbToYuv420(pixelBuffer, width, height, &ycbcr);
@@ -328,24 +329,22 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
         }
         case HAL_PIXEL_FORMAT_BLOB: {
             int8_t* img = NULL;
-            struct camera3_jpeg_blob footer = {
-                .jpeg_blob_id = CAMERA3_JPEG_BLOB_ID,
-                .jpeg_size = (uint32_t)bufferLength
-            };
+            struct camera3_jpeg_blob footer = {.jpeg_blob_id = CAMERA3_JPEG_BLOB_ID,
+                                               .jpeg_size = (uint32_t)bufferLength};
 
             size_t totalJpegSize = bufferLength + sizeof(footer);
-            totalJpegSize = (totalJpegSize + 3) & ~0x3; // round up to nearest octonibble
+            totalJpegSize = (totalJpegSize + 3) & ~0x3;  // round up to nearest octonibble
 
             if (totalJpegSize > totalSizeBytes) {
                 ALOGE("%s: Pixel buffer needs size %zu, cannot fit in gralloc buffer of size %zu",
-                        __FUNCTION__, totalJpegSize, totalSizeBytes);
+                      __FUNCTION__, totalJpegSize, totalSizeBytes);
                 return BAD_VALUE;
             }
 
             err = buf->lock(GRALLOC_USAGE_SW_WRITE_OFTEN, (void**)(&img));
             if (err != NO_ERROR) {
                 ALOGE("%s: Failed to lock buffer, error %s (%d).", __FUNCTION__, strerror(-err),
-                        err);
+                      err);
                 return err;
             }
 
@@ -367,7 +366,7 @@ static status_t produceFrame(const sp<ANativeWindow>& anw,
     }
 
     ALOGV("%s: Queue buffer to %p", __FUNCTION__, anw.get());
-    err = anw->queueBuffer(anw.get(), buf->getNativeBuffer(), /*fenceFd*/-1);
+    err = anw->queueBuffer(anw.get(), buf->getNativeBuffer(), /*fenceFd*/ -1);
     if (err != NO_ERROR) {
         ALOGE("%s: Failed to queue buffer, error %s (%d).", __FUNCTION__, strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
@@ -407,7 +406,7 @@ static sp<ANativeWindow> getNativeWindowFromTexture(JNIEnv* env, jobject surface
     }
     if (anw == NULL) {
         jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                "SurfaceTexture had no valid native window.");
+                             "SurfaceTexture had no valid native window.");
         return NULL;
     }
     return anw;
@@ -426,7 +425,7 @@ static sp<Surface> getSurface(JNIEnv* env, jobject surface) {
     }
     if (s == NULL) {
         jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                "Surface had no valid native Surface.");
+                             "Surface had no valid native Surface.");
         return NULL;
     }
     return s;
@@ -443,16 +442,17 @@ static jint LegacyCameraDevice_nativeDetectSurfaceType(JNIEnv* env, jobject thiz
     }
     int32_t fmt = 0;
     status_t err = anw->query(anw.get(), NATIVE_WINDOW_FORMAT, &fmt);
-    if(err != NO_ERROR) {
-        ALOGE("%s: Error while querying surface pixel format %s (%d).", __FUNCTION__, strerror(-err),
-                err);
+    if (err != NO_ERROR) {
+        ALOGE("%s: Error while querying surface pixel format %s (%d).", __FUNCTION__,
+              strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
     return fmt;
 }
 
-static jint LegacyCameraDevice_nativeDetectSurfaceDataspace(JNIEnv* env, jobject thiz, jobject surface) {
+static jint LegacyCameraDevice_nativeDetectSurfaceDataspace(JNIEnv* env, jobject thiz,
+                                                            jobject surface) {
     ALOGV("nativeDetectSurfaceDataspace");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -461,17 +461,17 @@ static jint LegacyCameraDevice_nativeDetectSurfaceDataspace(JNIEnv* env, jobject
     }
     int32_t fmt = 0;
     status_t err = anw->query(anw.get(), NATIVE_WINDOW_DEFAULT_DATASPACE, &fmt);
-    if(err != NO_ERROR) {
+    if (err != NO_ERROR) {
         ALOGE("%s: Error while querying surface dataspace  %s (%d).", __FUNCTION__, strerror(-err),
-                err);
+              err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
     return fmt;
 }
 
-static jint LegacyCameraDevice_nativeDetectSurfaceDimens(JNIEnv* env, jobject thiz,
-          jobject surface, jintArray dimens) {
+static jint LegacyCameraDevice_nativeDetectSurfaceDimens(JNIEnv* env, jobject thiz, jobject surface,
+                                                         jintArray dimens) {
     ALOGV("nativeGetSurfaceDimens");
 
     if (dimens == NULL) {
@@ -491,46 +491,44 @@ static jint LegacyCameraDevice_nativeDetectSurfaceDimens(JNIEnv* env, jobject th
     }
     int32_t dimenBuf[2];
     status_t err = anw->query(anw.get(), NATIVE_WINDOW_WIDTH, dimenBuf);
-    if(err != NO_ERROR) {
-        ALOGE("%s: Error while querying surface width %s (%d).", __FUNCTION__, strerror(-err),
-                err);
+    if (err != NO_ERROR) {
+        ALOGE("%s: Error while querying surface width %s (%d).", __FUNCTION__, strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
     err = anw->query(anw.get(), NATIVE_WINDOW_HEIGHT, dimenBuf + 1);
-    if(err != NO_ERROR) {
+    if (err != NO_ERROR) {
         ALOGE("%s: Error while querying surface height %s (%d).", __FUNCTION__, strerror(-err),
-                err);
+              err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
-    env->SetIntArrayRegion(dimens, /*start*/0, /*length*/ARRAY_SIZE(dimenBuf), dimenBuf);
+    env->SetIntArrayRegion(dimens, /*start*/ 0, /*length*/ ARRAY_SIZE(dimenBuf), dimenBuf);
     return NO_ERROR;
 }
 
 static jint LegacyCameraDevice_nativeDetectSurfaceUsageFlags(JNIEnv* env, jobject thiz,
-          jobject surface) {
+                                                             jobject surface) {
     ALOGV("nativeDetectSurfaceUsageFlags");
 
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
         jniThrowException(env, "java/lang/UnsupportedOperationException;",
-            "Could not retrieve native window from surface.");
+                          "Could not retrieve native window from surface.");
         return BAD_VALUE;
     }
     int32_t usage = 0;
     status_t err = anw->query(anw.get(), NATIVE_WINDOW_CONSUMER_USAGE_BITS, &usage);
-    if(err != NO_ERROR) {
+    if (err != NO_ERROR) {
         jniThrowException(env, "java/lang/UnsupportedOperationException;",
-            "Error while querying surface usage bits");
+                          "Error while querying surface usage bits");
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
     return usage;
 }
 
-static jint LegacyCameraDevice_nativeDisconnectSurface(JNIEnv* env, jobject thiz,
-          jobject surface) {
+static jint LegacyCameraDevice_nativeDisconnectSurface(JNIEnv* env, jobject thiz, jobject surface) {
     ALOGV("nativeDisconnectSurface");
     if (surface == nullptr) return NO_ERROR;
 
@@ -541,9 +539,9 @@ static jint LegacyCameraDevice_nativeDisconnectSurface(JNIEnv* env, jobject thiz
     }
 
     status_t err = native_window_api_disconnect(anw.get(), NATIVE_WINDOW_API_CAMERA);
-    if(err != NO_ERROR) {
+    if (err != NO_ERROR) {
         jniThrowException(env, "java/lang/UnsupportedOperationException;",
-            "Error while disconnecting surface");
+                          "Error while disconnecting surface");
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
@@ -551,7 +549,7 @@ static jint LegacyCameraDevice_nativeDisconnectSurface(JNIEnv* env, jobject thiz
 }
 
 static jint LegacyCameraDevice_nativeDetectTextureDimens(JNIEnv* env, jobject thiz,
-        jobject surfaceTexture, jintArray dimens) {
+                                                         jobject surfaceTexture, jintArray dimens) {
     ALOGV("nativeDetectTextureDimens");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindowFromTexture(env, surfaceTexture)) == NULL) {
@@ -561,22 +559,22 @@ static jint LegacyCameraDevice_nativeDetectTextureDimens(JNIEnv* env, jobject th
 
     int32_t dimenBuf[2];
     status_t err = anw->query(anw.get(), NATIVE_WINDOW_WIDTH, dimenBuf);
-    if(err != NO_ERROR) {
-        ALOGE("%s: Error while querying SurfaceTexture width %s (%d)", __FUNCTION__,
-                strerror(-err), err);
+    if (err != NO_ERROR) {
+        ALOGE("%s: Error while querying SurfaceTexture width %s (%d)", __FUNCTION__, strerror(-err),
+              err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
 
     err = anw->query(anw.get(), NATIVE_WINDOW_HEIGHT, dimenBuf + 1);
-    if(err != NO_ERROR) {
+    if (err != NO_ERROR) {
         ALOGE("%s: Error while querying SurfaceTexture height %s (%d)", __FUNCTION__,
-                strerror(-err), err);
+              strerror(-err), err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
 
-    env->SetIntArrayRegion(dimens, /*start*/0, /*length*/ARRAY_SIZE(dimenBuf), dimenBuf);
+    env->SetIntArrayRegion(dimens, /*start*/ 0, /*length*/ ARRAY_SIZE(dimenBuf), dimenBuf);
     if (env->ExceptionCheck()) {
         return BAD_VALUE;
     }
@@ -600,7 +598,8 @@ static jint LegacyCameraDevice_nativeConnectSurface(JNIEnv* env, jobject thiz, j
 }
 
 static jint LegacyCameraDevice_nativeProduceFrame(JNIEnv* env, jobject thiz, jobject surface,
-        jbyteArray pixelBuffer, jint width, jint height, jint pixelFormat) {
+                                                  jbyteArray pixelBuffer, jint width, jint height,
+                                                  jint pixelFormat) {
     ALOGV("nativeProduceFrame");
     sp<ANativeWindow> anw;
 
@@ -615,15 +614,15 @@ static jint LegacyCameraDevice_nativeProduceFrame(JNIEnv* env, jobject thiz, job
     }
 
     int32_t bufSize = static_cast<int32_t>(env->GetArrayLength(pixelBuffer));
-    jbyte* pixels = env->GetByteArrayElements(pixelBuffer, /*is_copy*/NULL);
+    jbyte* pixels = env->GetByteArrayElements(pixelBuffer, /*is_copy*/ NULL);
 
     if (pixels == NULL) {
         jniThrowNullPointerException(env, "pixels");
         return DONT_CARE;
     }
 
-    status_t err = produceFrame(anw, reinterpret_cast<uint8_t*>(pixels), width, height,
-            pixelFormat, bufSize);
+    status_t err = produceFrame(anw, reinterpret_cast<uint8_t*>(pixels), width, height, pixelFormat,
+                                bufSize);
     env->ReleaseByteArrayElements(pixelBuffer, pixels, JNI_ABORT);
 
     if (err != NO_ERROR) {
@@ -634,7 +633,7 @@ static jint LegacyCameraDevice_nativeProduceFrame(JNIEnv* env, jobject thiz, job
 }
 
 static jint LegacyCameraDevice_nativeSetSurfaceFormat(JNIEnv* env, jobject thiz, jobject surface,
-        jint pixelFormat) {
+                                                      jint pixelFormat) {
     ALOGV("nativeSetSurfaceType");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -651,7 +650,7 @@ static jint LegacyCameraDevice_nativeSetSurfaceFormat(JNIEnv* env, jobject thiz,
 }
 
 static jint LegacyCameraDevice_nativeSetSurfaceDimens(JNIEnv* env, jobject thiz, jobject surface,
-        jint width, jint height) {
+                                                      jint width, jint height) {
     ALOGV("nativeSetSurfaceDimens");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -664,7 +663,7 @@ static jint LegacyCameraDevice_nativeSetSurfaceDimens(JNIEnv* env, jobject thiz,
     status_t err = native_window_set_buffers_user_dimensions(anw.get(), width, height);
     if (err != NO_ERROR) {
         ALOGE("%s: Error while setting surface user dimens %s (%d).", __FUNCTION__, strerror(-err),
-                err);
+              err);
         OVERRIDE_SURFACE_ERROR(err);
         return err;
     }
@@ -696,7 +695,8 @@ static jlong LegacyCameraDevice_nativeGetSurfaceId(JNIEnv* env, jobject thiz, jo
 }
 
 static jint LegacyCameraDevice_nativeSetSurfaceOrientation(JNIEnv* env, jobject thiz,
-        jobject surface, jint facing, jint orientation) {
+                                                           jobject surface, jint facing,
+                                                           jint orientation) {
     ALOGV("nativeSetSurfaceOrientation");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -714,9 +714,8 @@ static jint LegacyCameraDevice_nativeSetSurfaceOrientation(JNIEnv* env, jobject 
 
     int32_t transform = 0;
 
-    if ((err = CameraUtils::getRotationTransform(staticMetadata, /*out*/&transform)) != NO_ERROR) {
-        ALOGE("%s: Invalid rotation transform %s (%d)", __FUNCTION__, strerror(-err),
-                err);
+    if ((err = CameraUtils::getRotationTransform(staticMetadata, /*out*/ &transform)) != NO_ERROR) {
+        ALOGE("%s: Invalid rotation transform %s (%d)", __FUNCTION__, strerror(-err), err);
         return err;
     }
 
@@ -724,7 +723,7 @@ static jint LegacyCameraDevice_nativeSetSurfaceOrientation(JNIEnv* env, jobject 
 
     if ((err = native_window_set_buffers_sticky_transform(anw.get(), transform)) != NO_ERROR) {
         ALOGE("%s: Unable to configure surface transform, error %s (%d)", __FUNCTION__,
-                strerror(-err), err);
+              strerror(-err), err);
         return err;
     }
 
@@ -732,7 +731,7 @@ static jint LegacyCameraDevice_nativeSetSurfaceOrientation(JNIEnv* env, jobject 
 }
 
 static jint LegacyCameraDevice_nativeSetNextTimestamp(JNIEnv* env, jobject thiz, jobject surface,
-        jlong timestamp) {
+                                                      jlong timestamp) {
     ALOGV("nativeSetNextTimestamp");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -743,16 +742,16 @@ static jint LegacyCameraDevice_nativeSetNextTimestamp(JNIEnv* env, jobject thiz,
     status_t err = NO_ERROR;
 
     if ((err = native_window_set_buffers_timestamp(anw.get(), static_cast<int64_t>(timestamp))) !=
-            NO_ERROR) {
+        NO_ERROR) {
         ALOGE("%s: Unable to set surface timestamp, error %s (%d)", __FUNCTION__, strerror(-err),
-                err);
+              err);
         return err;
     }
     return NO_ERROR;
 }
 
 static jint LegacyCameraDevice_nativeSetScalingMode(JNIEnv* env, jobject thiz, jobject surface,
-        jint mode) {
+                                                    jint mode) {
     ALOGV("nativeSetScalingMode");
     sp<ANativeWindow> anw;
     if ((anw = getNativeWindow(env, surface)) == NULL) {
@@ -761,8 +760,8 @@ static jint LegacyCameraDevice_nativeSetScalingMode(JNIEnv* env, jobject thiz, j
     }
     status_t err = NO_ERROR;
     if ((err = native_window_set_scaling_mode(anw.get(), static_cast<int>(mode))) != NO_ERROR) {
-        ALOGE("%s: Unable to set surface scaling mode, error %s (%d)", __FUNCTION__,
-                strerror(-err), err);
+        ALOGE("%s: Unable to set surface scaling mode, error %s (%d)", __FUNCTION__, strerror(-err),
+              err);
         return err;
     }
     return NO_ERROR;
@@ -773,62 +772,43 @@ static jint LegacyCameraDevice_nativeGetJpegFooterSize(JNIEnv* env, jobject thiz
     return static_cast<jint>(sizeof(struct camera3_jpeg_blob));
 }
 
-} // extern "C"
+}  // extern "C"
 
 static const JNINativeMethod gCameraDeviceMethods[] = {
-    { "nativeDetectSurfaceType",
-    "(Landroid/view/Surface;)I",
-    (void *)LegacyCameraDevice_nativeDetectSurfaceType },
-    { "nativeDetectSurfaceDataspace",
-    "(Landroid/view/Surface;)I",
-    (void *)LegacyCameraDevice_nativeDetectSurfaceDataspace },
-    { "nativeDetectSurfaceDimens",
-    "(Landroid/view/Surface;[I)I",
-    (void *)LegacyCameraDevice_nativeDetectSurfaceDimens },
-    { "nativeConnectSurface",
-    "(Landroid/view/Surface;)I",
-    (void *)LegacyCameraDevice_nativeConnectSurface },
-    { "nativeProduceFrame",
-    "(Landroid/view/Surface;[BIII)I",
-    (void *)LegacyCameraDevice_nativeProduceFrame },
-    { "nativeSetSurfaceFormat",
-    "(Landroid/view/Surface;I)I",
-    (void *)LegacyCameraDevice_nativeSetSurfaceFormat },
-    { "nativeSetSurfaceDimens",
-    "(Landroid/view/Surface;II)I",
-    (void *)LegacyCameraDevice_nativeSetSurfaceDimens },
-    { "nativeGetSurfaceId",
-    "(Landroid/view/Surface;)J",
-    (void *)LegacyCameraDevice_nativeGetSurfaceId },
-    { "nativeDetectTextureDimens",
-    "(Landroid/graphics/SurfaceTexture;[I)I",
-    (void *)LegacyCameraDevice_nativeDetectTextureDimens },
-    { "nativeSetSurfaceOrientation",
-    "(Landroid/view/Surface;II)I",
-    (void *)LegacyCameraDevice_nativeSetSurfaceOrientation },
-    { "nativeSetNextTimestamp",
-    "(Landroid/view/Surface;J)I",
-    (void *)LegacyCameraDevice_nativeSetNextTimestamp },
-    { "nativeGetJpegFooterSize",
-    "()I",
-    (void *)LegacyCameraDevice_nativeGetJpegFooterSize },
-    { "nativeDetectSurfaceUsageFlags",
-    "(Landroid/view/Surface;)I",
-    (void *)LegacyCameraDevice_nativeDetectSurfaceUsageFlags },
-    { "nativeSetScalingMode",
-    "(Landroid/view/Surface;I)I",
-    (void *)LegacyCameraDevice_nativeSetScalingMode },
-    { "nativeDisconnectSurface",
-    "(Landroid/view/Surface;)I",
-    (void *)LegacyCameraDevice_nativeDisconnectSurface },
+        {"nativeDetectSurfaceType", "(Landroid/view/Surface;)I",
+         (void*)LegacyCameraDevice_nativeDetectSurfaceType},
+        {"nativeDetectSurfaceDataspace", "(Landroid/view/Surface;)I",
+         (void*)LegacyCameraDevice_nativeDetectSurfaceDataspace},
+        {"nativeDetectSurfaceDimens", "(Landroid/view/Surface;[I)I",
+         (void*)LegacyCameraDevice_nativeDetectSurfaceDimens},
+        {"nativeConnectSurface", "(Landroid/view/Surface;)I",
+         (void*)LegacyCameraDevice_nativeConnectSurface},
+        {"nativeProduceFrame", "(Landroid/view/Surface;[BIII)I",
+         (void*)LegacyCameraDevice_nativeProduceFrame},
+        {"nativeSetSurfaceFormat", "(Landroid/view/Surface;I)I",
+         (void*)LegacyCameraDevice_nativeSetSurfaceFormat},
+        {"nativeSetSurfaceDimens", "(Landroid/view/Surface;II)I",
+         (void*)LegacyCameraDevice_nativeSetSurfaceDimens},
+        {"nativeGetSurfaceId", "(Landroid/view/Surface;)J",
+         (void*)LegacyCameraDevice_nativeGetSurfaceId},
+        {"nativeDetectTextureDimens", "(Landroid/graphics/SurfaceTexture;[I)I",
+         (void*)LegacyCameraDevice_nativeDetectTextureDimens},
+        {"nativeSetSurfaceOrientation", "(Landroid/view/Surface;II)I",
+         (void*)LegacyCameraDevice_nativeSetSurfaceOrientation},
+        {"nativeSetNextTimestamp", "(Landroid/view/Surface;J)I",
+         (void*)LegacyCameraDevice_nativeSetNextTimestamp},
+        {"nativeGetJpegFooterSize", "()I", (void*)LegacyCameraDevice_nativeGetJpegFooterSize},
+        {"nativeDetectSurfaceUsageFlags", "(Landroid/view/Surface;)I",
+         (void*)LegacyCameraDevice_nativeDetectSurfaceUsageFlags},
+        {"nativeSetScalingMode", "(Landroid/view/Surface;I)I",
+         (void*)LegacyCameraDevice_nativeSetScalingMode},
+        {"nativeDisconnectSurface", "(Landroid/view/Surface;)I",
+         (void*)LegacyCameraDevice_nativeDisconnectSurface},
 };
 
 // Get all the required offsets in java class and register native functions
-int register_android_hardware_camera2_legacy_LegacyCameraDevice(JNIEnv* env)
-{
+int register_android_hardware_camera2_legacy_LegacyCameraDevice(JNIEnv* env) {
     // Register native functions
-    return RegisterMethodsOrDie(env,
-            CAMERA_DEVICE_CLASS_NAME,
-            gCameraDeviceMethods,
-            NELEM(gCameraDeviceMethods));
+    return RegisterMethodsOrDie(env, CAMERA_DEVICE_CLASS_NAME, gCameraDeviceMethods,
+                                NELEM(gCameraDeviceMethods));
 }

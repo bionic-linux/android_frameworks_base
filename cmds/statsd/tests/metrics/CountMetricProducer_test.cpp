@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "src/metrics/CountMetricProducer.h"
-#include "src/stats_log_util.h"
 #include "metrics_test_helper.h"
+#include "src/stats_log_util.h"
 #include "tests/statsd_test_util.h"
 
 #include <gmock/gmock.h>
@@ -165,15 +165,15 @@ TEST(CountMetricProducerTest, TestEventsWithSlicedCondition) {
     event1.write("111");  // uid
     event1.init();
     ConditionKey key1;
-    key1[StringToId("APP_IN_BACKGROUND_PER_UID")] =
-        {getMockedDimensionKey(conditionTagId, 2, "111")};
+    key1[StringToId("APP_IN_BACKGROUND_PER_UID")] = {
+            getMockedDimensionKey(conditionTagId, 2, "111")};
 
     LogEvent event2(tagId, bucketStartTimeNs + 10);
     event2.write("222");  // uid
     event2.init();
     ConditionKey key2;
-    key2[StringToId("APP_IN_BACKGROUND_PER_UID")] =
-        {getMockedDimensionKey(conditionTagId, 2, "222")};
+    key2[StringToId("APP_IN_BACKGROUND_PER_UID")] = {
+            getMockedDimensionKey(conditionTagId, 2, "222")};
 
     sp<MockConditionWizard> wizard = new NaggyMock<MockConditionWizard>();
     EXPECT_CALL(*wizard, query(_, key1, _, _, _, _)).WillOnce(Return(ConditionState::kFalse));
@@ -380,13 +380,13 @@ TEST(CountMetricProducerTest, TestAnomalyDetectionUnSliced) {
     EXPECT_EQ(3L, countProducer.mCurrentSlicedCounter->begin()->second);
     // Anomaly at event 6 is within refractory period. The alarm is at event 5 timestamp not event 6
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event5.GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event5.GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
 
     countProducer.onMatchedLogEvent(1 /*log matcher index*/, event7);
     EXPECT_EQ(1UL, countProducer.mCurrentSlicedCounter->size());
     EXPECT_EQ(4L, countProducer.mCurrentSlicedCounter->begin()->second);
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event7.GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event7.GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
 }
 
 }  // namespace statsd

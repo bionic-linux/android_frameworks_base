@@ -16,7 +16,6 @@
 
 // Some native low-level image processing functions.
 
-
 #ifndef ANDROID_FILTERFW_JNI_IMGPROCUTIL_H
 #define ANDROID_FILTERFW_JNI_IMGPROCUTIL_H
 
@@ -26,7 +25,7 @@ inline int getIntensityFast(int R, int G, int B) {
 
 inline int clamp(int min, int val, int max) {
     return val < min ? min : (val > max ? max : val);
-        // Note that for performance reasons, this function does *not* check if min < max!
+    // Note that for performance reasons, this function does *not* check if min < max!
 }
 
-#endif // ANDROID_FILTERFW_JNI_IMGPROCUTIL_H
+#endif  // ANDROID_FILTERFW_JNI_IMGPROCUTIL_H

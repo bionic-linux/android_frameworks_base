@@ -16,10 +16,10 @@
 
 #define LOG_TAG "OpenGLRenderer"
 
-#include "jni.h"
-#include <nativehelper/JNIHelp.h>
 #include <cutils/log.h>
+#include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include <Interpolator.h>
 
@@ -66,8 +66,10 @@ static jlong createOvershootInterpolator(JNIEnv* env, jobject clazz, jfloat tens
 static jlong createPathInterpolator(JNIEnv* env, jobject clazz, jfloatArray jX, jfloatArray jY) {
     jsize lenX = env->GetArrayLength(jX);
     jsize lenY = env->GetArrayLength(jY);
-    LOG_ALWAYS_FATAL_IF(lenX != lenY || lenX <= 0, "Invalid path interpolator, x size: %d,"
-            " y size: %d", lenX, lenY);
+    LOG_ALWAYS_FATAL_IF(lenX != lenY || lenX <= 0,
+                        "Invalid path interpolator, x size: %d,"
+                        " y size: %d",
+                        lenX, lenY);
     std::vector<float> x(lenX);
     std::vector<float> y(lenY);
     env->GetFloatArrayRegion(jX, 0, lenX, x.data());
@@ -90,25 +92,27 @@ static jlong createLutInterpolator(JNIEnv* env, jobject clazz, jfloatArray jlut)
 // JNI Glue
 // ----------------------------------------------------------------------------
 
-const char* const kClassPathName = "com/android/internal/view/animation/NativeInterpolatorFactoryHelper";
+const char* const kClassPathName =
+        "com/android/internal/view/animation/NativeInterpolatorFactoryHelper";
 
 static const JNINativeMethod gMethods[] = {
-    { "createAccelerateDecelerateInterpolator", "()J", (void*) createAccelerateDecelerateInterpolator },
-    { "createAccelerateInterpolator", "(F)J", (void*) createAccelerateInterpolator },
-    { "createAnticipateInterpolator", "(F)J", (void*) createAnticipateInterpolator },
-    { "createAnticipateOvershootInterpolator", "(F)J", (void*) createAnticipateOvershootInterpolator },
-    { "createBounceInterpolator", "()J", (void*) createBounceInterpolator },
-    { "createCycleInterpolator", "(F)J", (void*) createCycleInterpolator },
-    { "createDecelerateInterpolator", "(F)J", (void*) createDecelerateInterpolator },
-    { "createLinearInterpolator", "()J", (void*) createLinearInterpolator },
-    { "createOvershootInterpolator", "(F)J", (void*) createOvershootInterpolator },
-    { "createPathInterpolator", "([F[F)J", (void*) createPathInterpolator },
-    { "createLutInterpolator", "([F)J", (void*) createLutInterpolator },
+        {"createAccelerateDecelerateInterpolator", "()J",
+         (void*)createAccelerateDecelerateInterpolator},
+        {"createAccelerateInterpolator", "(F)J", (void*)createAccelerateInterpolator},
+        {"createAnticipateInterpolator", "(F)J", (void*)createAnticipateInterpolator},
+        {"createAnticipateOvershootInterpolator", "(F)J",
+         (void*)createAnticipateOvershootInterpolator},
+        {"createBounceInterpolator", "()J", (void*)createBounceInterpolator},
+        {"createCycleInterpolator", "(F)J", (void*)createCycleInterpolator},
+        {"createDecelerateInterpolator", "(F)J", (void*)createDecelerateInterpolator},
+        {"createLinearInterpolator", "()J", (void*)createLinearInterpolator},
+        {"createOvershootInterpolator", "(F)J", (void*)createOvershootInterpolator},
+        {"createPathInterpolator", "([F[F)J", (void*)createPathInterpolator},
+        {"createLutInterpolator", "([F)J", (void*)createLutInterpolator},
 };
 
 int register_com_android_internal_view_animation_NativeInterpolatorFactoryHelper(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-
-} // namespace android
+}  // namespace android

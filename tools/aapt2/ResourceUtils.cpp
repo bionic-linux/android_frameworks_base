@@ -39,20 +39,17 @@ using ::android::base::StringPrintf;
 namespace aapt {
 namespace ResourceUtils {
 
-Maybe<ResourceName> ToResourceName(
-    const android::ResTable::resource_name& name_in) {
+Maybe<ResourceName> ToResourceName(const android::ResTable::resource_name& name_in) {
   ResourceName name_out;
   if (!name_in.package) {
     return {};
   }
 
-  name_out.package =
-      util::Utf16ToUtf8(StringPiece16(name_in.package, name_in.packageLen));
+  name_out.package = util::Utf16ToUtf8(StringPiece16(name_in.package, name_in.packageLen));
 
   const ResourceType* type;
   if (name_in.type) {
-    type = ParseResourceType(
-        util::Utf16ToUtf8(StringPiece16(name_in.type, name_in.typeLen)));
+    type = ParseResourceType(util::Utf16ToUtf8(StringPiece16(name_in.type, name_in.typeLen)));
   } else if (name_in.type8) {
     type = ParseResourceType(StringPiece(name_in.type8, name_in.typeLen));
   } else {
@@ -66,8 +63,7 @@ Maybe<ResourceName> ToResourceName(
   name_out.type = *type;
 
   if (name_in.name) {
-    name_out.entry =
-        util::Utf16ToUtf8(StringPiece16(name_in.name, name_in.nameLen));
+    name_out.entry = util::Utf16ToUtf8(StringPiece16(name_in.name, name_in.nameLen));
   } else if (name_in.name8) {
     name_out.entry.assign(name_in.name8, name_in.nameLen);
   } else {
@@ -76,8 +72,7 @@ Maybe<ResourceName> ToResourceName(
   return name_out;
 }
 
-bool ParseResourceName(const StringPiece& str, ResourceNameRef* out_ref,
-                       bool* out_private) {
+bool ParseResourceName(const StringPiece& str, ResourceNameRef* out_ref, bool* out_private) {
   if (str.empty()) {
     return false;
   }
@@ -118,8 +113,8 @@ bool ParseResourceName(const StringPiece& str, ResourceNameRef* out_ref,
   return true;
 }
 
-bool ParseReference(const StringPiece& str, ResourceNameRef* out_ref,
-                    bool* out_create, bool* out_private) {
+bool ParseReference(const StringPiece& str, ResourceNameRef* out_ref, bool* out_create,
+                    bool* out_private) {
   StringPiece trimmed_str(util::TrimWhitespace(str));
   if (trimmed_str.empty()) {
     return false;
@@ -135,9 +130,7 @@ bool ParseReference(const StringPiece& str, ResourceNameRef* out_ref,
     }
 
     ResourceNameRef name;
-    if (!ParseResourceName(
-            trimmed_str.substr(offset, trimmed_str.size() - offset), &name,
-            &priv)) {
+    if (!ParseResourceName(trimmed_str.substr(offset, trimmed_str.size() - offset), &name, &priv)) {
       return false;
     }
 
@@ -214,8 +207,7 @@ bool IsAttributeReference(const StringPiece& str) {
  * <[*]package>:[style/]<entry>
  * [[*]package:style/]<entry>
  */
-Maybe<Reference> ParseStyleParentReference(const StringPiece& str,
-                                           std::string* out_error) {
+Maybe<Reference> ParseStyleParentReference(const StringPiece& str, std::string* out_error) {
   if (str.empty()) {
     return {};
   }
@@ -292,8 +284,7 @@ Maybe<Reference> ParseXmlAttributeName(const StringPiece& str) {
   return Maybe<Reference>(std::move(ref));
 }
 
-std::unique_ptr<Reference> TryParseReference(const StringPiece& str,
-                                             bool* out_create) {
+std::unique_ptr<Reference> TryParseReference(const StringPiece& str, bool* out_create) {
   ResourceNameRef ref;
   bool private_ref = false;
   if (ParseReference(str, &ref, out_create, &private_ref)) {
@@ -367,8 +358,7 @@ std::unique_ptr<BinaryPrimitive> TryParseFlagSymbol(const Attribute* flag_attr,
     for (const Attribute::Symbol& symbol : flag_attr->symbols) {
       // Flag symbols are stored as @package:id/symbol resources,
       // so we need to match against the 'entry' part of the identifier.
-      const ResourceName& flag_symbol_resource_name =
-          symbol.symbol.name.value();
+      const ResourceName& flag_symbol_resource_name = symbol.symbol.name.value();
       if (trimmed_part == flag_symbol_resource_name.entry) {
         flags.data |= symbol.value;
         flag_set = true;
@@ -447,16 +437,14 @@ std::unique_ptr<BinaryPrimitive> TryParseColor(const StringPiece& str) {
   } else {
     return {};
   }
-  return error ? std::unique_ptr<BinaryPrimitive>()
-               : util::make_unique<BinaryPrimitive>(value);
+  return error ? std::unique_ptr<BinaryPrimitive>() : util::make_unique<BinaryPrimitive>(value);
 }
 
 Maybe<bool> ParseBool(const StringPiece& str) {
   StringPiece trimmed_str(util::TrimWhitespace(str));
   if (trimmed_str == "true" || trimmed_str == "TRUE" || trimmed_str == "True") {
     return Maybe<bool>(true);
-  } else if (trimmed_str == "false" || trimmed_str == "FALSE" ||
-             trimmed_str == "False") {
+  } else if (trimmed_str == "false" || trimmed_str == "FALSE" || trimmed_str == "False") {
     return Maybe<bool>(false);
   }
   return {};
@@ -562,8 +550,7 @@ uint32_t AndroidTypeToAttributeTypeMask(uint16_t type) {
 
     case android::Res_value::TYPE_INT_DEC:
     case android::Res_value::TYPE_INT_HEX:
-      return android::ResTable_map::TYPE_INTEGER |
-             android::ResTable_map::TYPE_ENUM |
+      return android::ResTable_map::TYPE_INTEGER | android::ResTable_map::TYPE_ENUM |
              android::ResTable_map::TYPE_FLAGS;
 
     case android::Res_value::TYPE_INT_BOOLEAN:

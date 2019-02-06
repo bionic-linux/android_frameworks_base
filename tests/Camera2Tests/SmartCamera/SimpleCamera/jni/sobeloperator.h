@@ -25,13 +25,12 @@
 extern "C" {
 #endif
 
-JNIEXPORT jboolean JNICALL
-Java_androidx_media_filterpacks_image_SobelFilter_sobelOperator(
-    JNIEnv* env, jclass clazz, jint width, jint height,
-    jobject imageBuffer, jobject magBuffer, jobject dirBuffer);
+JNIEXPORT jboolean JNICALL Java_androidx_media_filterpacks_image_SobelFilter_sobelOperator(
+        JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer, jobject magBuffer,
+        jobject dirBuffer);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_SOBELOPERATOR_H
+#endif  // ANDROID_FILTERFW_JNI_SOBELOPERATOR_H

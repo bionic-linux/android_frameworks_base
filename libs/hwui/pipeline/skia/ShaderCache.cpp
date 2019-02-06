@@ -15,8 +15,8 @@
  */
 
 #include "ShaderCache.h"
-#include <algorithm>
 #include <log/log.h>
+#include <algorithm>
 #include <thread>
 #include "FileBlobCache.h"
 #include "Properties.h"
@@ -83,7 +83,7 @@ sk_sp<SkData> ShaderCache::load(const SkData& key) {
     int maxTries = 3;
     while (valueSize > mObservedBlobValueSize && maxTries > 0) {
         mObservedBlobValueSize = std::min(valueSize, maxValueSize);
-        void *newValueBuffer = realloc(valueBuffer, mObservedBlobValueSize);
+        void* newValueBuffer = realloc(valueBuffer, mObservedBlobValueSize);
         if (!newValueBuffer) {
             free(valueBuffer);
             return nullptr;
@@ -97,7 +97,7 @@ sk_sp<SkData> ShaderCache::load(const SkData& key) {
         return nullptr;
     }
     if (valueSize > mObservedBlobValueSize) {
-        ALOGE("ShaderCache::load value size is too big %d", (int) valueSize);
+        ALOGE("ShaderCache::load value size is too big %d", (int)valueSize);
         free(valueBuffer);
         return nullptr;
     }

@@ -242,8 +242,8 @@ bool TableMerger::DoMerge(const Source& src, ResourceTable* src_table,
       for (auto& src_config_value : src_entry->values) {
         using CollisionResult = ResourceTable::CollisionResult;
 
-        ResourceConfigValue* dst_config_value = dst_entry->FindValue(
-            src_config_value->config, src_config_value->product);
+        ResourceConfigValue* dst_config_value =
+            dst_entry->FindValue(src_config_value->config, src_config_value->product);
         if (dst_config_value) {
           CollisionResult collision_result =
               MergeConfigValue(context_, res_name, overlay, dst_config_value,
@@ -271,8 +271,8 @@ bool TableMerger::DoMerge(const Source& src, ResourceTable* src_table,
           dst_config_value->value = std::move(new_file_ref);
 
         } else {
-          dst_config_value->value = std::unique_ptr<Value>(
-              src_config_value->value->Clone(&master_table_->string_pool));
+          dst_config_value->value =
+              std::unique_ptr<Value>(src_config_value->value->Clone(&master_table_->string_pool));
         }
       }
     }
@@ -280,8 +280,8 @@ bool TableMerger::DoMerge(const Source& src, ResourceTable* src_table,
   return !error;
 }
 
-std::unique_ptr<FileReference> TableMerger::CloneAndMangleFile(
-    const std::string& package, const FileReference& file_ref) {
+std::unique_ptr<FileReference> TableMerger::CloneAndMangleFile(const std::string& package,
+                                                               const FileReference& file_ref) {
   StringPiece prefix, entry, suffix;
   if (util::ExtractResFilePathParts(*file_ref.path, &prefix, &entry, &suffix)) {
     std::string mangled_entry = NameMangler::MangleEntry(package, entry.to_string());

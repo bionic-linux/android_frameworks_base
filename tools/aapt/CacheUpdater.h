@@ -7,10 +7,10 @@
 #ifndef CACHE_UPDATER_H
 #define CACHE_UPDATER_H
 
-#include <utils/String8.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <utils/String8.h>
 #include "Images.h"
 #ifdef _WIN32
 #include <direct.h>
@@ -29,7 +29,7 @@ using namespace android;
  *      To remove a file from the cache, call deleteFile
  */
 class CacheUpdater {
-public:
+  public:
     virtual ~CacheUpdater() {}
 
     // Make sure all the directories along this path exist
@@ -40,7 +40,8 @@ public:
 
     // Process an image from source out to dest
     virtual void processImage(String8 source, String8 dest) = 0;
-private:
+
+  private:
 };
 
 /** SystemCacheUpdater
@@ -49,14 +50,12 @@ private:
  * the PNG crunching in images.h to process images out to its cache components.
  */
 class SystemCacheUpdater : public CacheUpdater {
-public:
+  public:
     // Constructor to set bundle to pass to preProcessImage
-    explicit SystemCacheUpdater (Bundle* b)
-        : bundle(b) { };
+    explicit SystemCacheUpdater(Bundle* b) : bundle(b){};
 
     // Make sure all the directories along this path exist
-    virtual void ensureDirectoriesExist(String8 path)
-    {
+    virtual void ensureDirectoriesExist(String8 path) {
         // Check to see if we're dealing with a fully qualified path
         String8 existsPath;
         String8 toCreate;
@@ -66,7 +65,7 @@ public:
         // Check optomistically to see if all directories exist.
         // If something in the path doesn't exist, then walk the path backwards
         // and find the place to start creating directories forward.
-        if (stat(path.string(),&s) == -1) {
+        if (stat(path.string(), &s) == -1) {
             // Walk backwards to find place to start creating directories
             existsPath = path;
             do {
@@ -74,7 +73,7 @@ public:
                 // the string of paths to create.
                 toCreate = existsPath.getPathLeaf().appendPath(toCreate);
                 existsPath = existsPath.getPathDir();
-            } while (stat(existsPath.string(),&s) == -1);
+            } while (stat(existsPath.string(), &s) == -1);
 
             // Walk forwards and build directories as we go
             do {
@@ -84,29 +83,27 @@ public:
 #ifdef _WIN32
                 _mkdir(existsPath.string());
 #else
-                mkdir(existsPath.string(), S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP);
+                mkdir(existsPath.string(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP);
 #endif
             } while (remains.length() > 0);
-        } //if
+        }  // if
     };
 
     // Delete a file
-    virtual void deleteFile(String8 path)
-    {
-        if (remove(path.string()) != 0)
-            fprintf(stderr,"ERROR DELETING %s\n",path.string());
+    virtual void deleteFile(String8 path) {
+        if (remove(path.string()) != 0) fprintf(stderr, "ERROR DELETING %s\n", path.string());
     };
 
     // Process an image from source out to dest
-    virtual void processImage(String8 source, String8 dest)
-    {
+    virtual void processImage(String8 source, String8 dest) {
         // Make sure we're trying to write to a directory that is extant
         ensureDirectoriesExist(dest.getPathDir());
 
         preProcessImageToCache(bundle, source, dest);
     };
-private:
+
+  private:
     Bundle* bundle;
 };
 
-#endif // CACHE_UPDATER_H
+#endif  // CACHE_UPDATER_H

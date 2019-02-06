@@ -46,24 +46,20 @@ struct FrameCallback {
     }
 };
 
-
 class Choreographer : public DisplayEventDispatcher, public MessageHandler {
-public:
+  public:
     void postFrameCallback(AChoreographer_frameCallback cb, void* data);
     void postFrameCallbackDelayed(AChoreographer_frameCallback cb, void* data, nsecs_t delay);
 
-    enum {
-        MSG_SCHEDULE_CALLBACKS = 0,
-        MSG_SCHEDULE_VSYNC = 1
-    };
+    enum { MSG_SCHEDULE_CALLBACKS = 0, MSG_SCHEDULE_VSYNC = 1 };
     virtual void handleMessage(const Message& message) override;
 
     static Choreographer* getForThread();
 
-protected:
+  protected:
     virtual ~Choreographer() = default;
 
-private:
+  private:
     explicit Choreographer(const sp<Looper>& looper);
     Choreographer(const Choreographer&) = delete;
 
@@ -80,7 +76,6 @@ private:
     const sp<Looper> mLooper;
     const std::thread::id mThreadId;
 };
-
 
 static thread_local Choreographer* gChoreographer;
 Choreographer* Choreographer::getForThread() {
@@ -100,16 +95,15 @@ Choreographer* Choreographer::getForThread() {
     return gChoreographer;
 }
 
-Choreographer::Choreographer(const sp<Looper>& looper) :
-    DisplayEventDispatcher(looper), mLooper(looper), mThreadId(std::this_thread::get_id()) {
-}
+Choreographer::Choreographer(const sp<Looper>& looper)
+    : DisplayEventDispatcher(looper), mLooper(looper), mThreadId(std::this_thread::get_id()) {}
 
 void Choreographer::postFrameCallback(AChoreographer_frameCallback cb, void* data) {
     postFrameCallbackDelayed(cb, data, 0);
 }
 
-void Choreographer::postFrameCallbackDelayed(
-        AChoreographer_frameCallback cb, void* data, nsecs_t delay) {
+void Choreographer::postFrameCallbackDelayed(AChoreographer_frameCallback cb, void* data,
+                                             nsecs_t delay) {
     nsecs_t now = systemTime(SYSTEM_TIME_MONOTONIC);
     FrameCallback callback{cb, data, now + delay};
     {
@@ -139,7 +133,6 @@ void Choreographer::scheduleCallbacks() {
     }
 }
 
-
 void Choreographer::dispatchVsync(nsecs_t timestamp, int32_t id, uint32_t) {
     if (id != ISurfaceComposer::eDisplayIdMain) {
         ALOGV("choreographer %p ~ ignoring vsync signal for non-main display (id=%d)", this, id);
@@ -162,21 +155,21 @@ void Choreographer::dispatchVsync(nsecs_t timestamp, int32_t id, uint32_t) {
 
 void Choreographer::dispatchHotplug(nsecs_t, int32_t id, bool connected) {
     ALOGV("choreographer %p ~ received hotplug event (id=%" PRId32 ", connected=%s), ignoring.",
-            this, id, toString(connected));
+          this, id, toString(connected));
 }
 
 void Choreographer::handleMessage(const Message& message) {
     switch (message.what) {
-    case MSG_SCHEDULE_CALLBACKS:
-        scheduleCallbacks();
-        break;
-    case MSG_SCHEDULE_VSYNC:
-        scheduleVsync();
-        break;
+        case MSG_SCHEDULE_CALLBACKS:
+            scheduleCallbacks();
+            break;
+        case MSG_SCHEDULE_VSYNC:
+            scheduleVsync();
+            break;
     }
 }
 
-}
+}  // namespace android
 
 /* Glue for the NDK interface */
 
@@ -195,11 +188,12 @@ AChoreographer* AChoreographer_getInstance() {
 }
 
 void AChoreographer_postFrameCallback(AChoreographer* choreographer,
-        AChoreographer_frameCallback callback, void* data) {
+                                      AChoreographer_frameCallback callback, void* data) {
     AChoreographer_to_Choreographer(choreographer)->postFrameCallback(callback, data);
 }
 void AChoreographer_postFrameCallbackDelayed(AChoreographer* choreographer,
-        AChoreographer_frameCallback callback, void* data, long delayMillis) {
-    AChoreographer_to_Choreographer(choreographer)->postFrameCallbackDelayed(
-            callback, data, ms2ns(delayMillis));
+                                             AChoreographer_frameCallback callback, void* data,
+                                             long delayMillis) {
+    AChoreographer_to_Choreographer(choreographer)
+            ->postFrameCallbackDelayed(callback, data, ms2ns(delayMillis));
 }

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#include "jni.h"
-#include "GraphicsJNI.h"
 #include <core_jni_helpers.h>
+#include "GraphicsJNI.h"
+#include "jni.h"
 
+#include <CanvasProperty.h>
 #include <hwui/Paint.h>
 #include <utils/RefBase.h>
-#include <CanvasProperty.h>
 
 namespace android {
 
@@ -40,13 +40,12 @@ static jlong createPaint(JNIEnv* env, jobject clazz, jlong paintPtr) {
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gMethods[] = {
-    { "nCreateFloat", "(F)J", (void*) createFloat },
-    { "nCreatePaint", "(J)J", (void*) createPaint },
+        {"nCreateFloat", "(F)J", (void*)createFloat},
+        {"nCreatePaint", "(J)J", (void*)createPaint},
 };
 
 int register_android_graphics_CanvasProperty(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/graphics/CanvasProperty", gMethods,
-                                NELEM(gMethods));
+    return RegisterMethodsOrDie(env, "android/graphics/CanvasProperty", gMethods, NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

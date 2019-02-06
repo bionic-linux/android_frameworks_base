@@ -35,18 +35,17 @@ struct TableMergerTest : public ::testing::Test {
   std::unique_ptr<IAaptContext> context_;
 
   void SetUp() override {
-    context_ =
-        test::ContextBuilder()
-            // We are compiling this package.
-            .SetCompilationPackage("com.app.a")
+    context_ = test::ContextBuilder()
+                   // We are compiling this package.
+                   .SetCompilationPackage("com.app.a")
 
-            // Merge all packages that have this package ID.
-            .SetPackageId(0x7f)
+                   // Merge all packages that have this package ID.
+                   .SetPackageId(0x7f)
 
-            // Mangle all packages that do not have this package name.
-            .SetNameManglerPolicy(NameManglerPolicy{"com.app.a", {"com.app.b"}})
+                   // Mangle all packages that do not have this package name.
+                   .SetNameManglerPolicy(NameManglerPolicy{"com.app.a", {"com.app.b"}})
 
-            .Build();
+                   .Build();
   }
 };
 
@@ -56,9 +55,8 @@ TEST_F(TableMergerTest, SimpleMerge) {
           .SetPackageId("com.app.a", 0x7f)
           .AddReference("com.app.a:id/foo", "com.app.a:id/bar")
           .AddReference("com.app.a:id/bar", "com.app.b:id/foo")
-          .AddValue(
-              "com.app.a:styleable/view",
-              test::StyleableBuilder().AddItem("com.app.b:id/foo").Build())
+          .AddValue("com.app.a:styleable/view",
+                    test::StyleableBuilder().AddItem("com.app.b:id/foo").Build())
           .Build();
 
   std::unique_ptr<ResourceTable> table_b = test::ResourceTableBuilder()

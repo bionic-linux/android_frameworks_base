@@ -23,17 +23,15 @@
 extern "C" {
 #endif
 
-#define JNI_PIXELUTILS_METHOD(METHOD_NAME) \
-  Java_androidx_media_filterfw_PixelUtils_ ## METHOD_NAME
+#define JNI_PIXELUTILS_METHOD(METHOD_NAME) Java_androidx_media_filterfw_PixelUtils_##METHOD_NAME
 
-JNIEXPORT void JNICALL
-JNI_PIXELUTILS_METHOD(nativeCopyPixels)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height, jint offset,
-    jint pixStride, jint rowStride);
+JNIEXPORT void JNICALL JNI_PIXELUTILS_METHOD(nativeCopyPixels)(JNIEnv* env, jclass clazz,
+                                                               jobject input, jobject output,
+                                                               jint width, jint height, jint offset,
+                                                               jint pixStride, jint rowStride);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_PIXELUTILS_H
-
+#endif  // ANDROID_FILTERFW_JNI_PIXELUTILS_H

@@ -17,31 +17,29 @@
 #ifndef ANDROID_MEDIA_DEVICE_CALLBACK_H
 #define ANDROID_MEDIA_DEVICE_CALLBACK_H
 
-#include <system/audio.h>
 #include <media/AudioSystem.h>
+#include <system/audio.h>
 
 namespace android {
 
 // keep in sync with AudioSystem.java
-#define AUDIO_NATIVE_EVENT_ROUTING_CHANGE      1000
+#define AUDIO_NATIVE_EVENT_ROUTING_CHANGE 1000
 
-class JNIDeviceCallback: public AudioSystem::AudioDeviceCallback
-{
-public:
+class JNIDeviceCallback : public AudioSystem::AudioDeviceCallback {
+  public:
     JNIDeviceCallback(JNIEnv* env, jobject thiz, jobject weak_thiz, jmethodID postEventFromNative);
     ~JNIDeviceCallback();
 
-    virtual void onAudioDeviceUpdate(audio_io_handle_t audioIo,
-                                     audio_port_handle_t deviceId);
+    virtual void onAudioDeviceUpdate(audio_io_handle_t audioIo, audio_port_handle_t deviceId);
 
-private:
+  private:
     void sendEvent(int event);
 
-    jclass      mClass;     // Reference to AudioTrack/AudioRecord class
-    jobject     mObject;    // Weak ref to AudioTrack/AudioRecord Java object to call on
-    jmethodID   mPostEventFromNative; // postEventFromNative method ID.
+    jclass mClass;                   // Reference to AudioTrack/AudioRecord class
+    jobject mObject;                 // Weak ref to AudioTrack/AudioRecord Java object to call on
+    jmethodID mPostEventFromNative;  // postEventFromNative method ID.
 };
 
-}; // namespace android
+};  // namespace android
 
-#endif // ANDROID_MEDIA_DEVICE_CALLBACK_H
+#endif  // ANDROID_MEDIA_DEVICE_CALLBACK_H

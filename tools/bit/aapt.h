@@ -22,8 +22,7 @@
 
 using namespace std;
 
-struct Apk
-{
+struct Apk {
     string package;
     string runner;
     vector<string> activities;
@@ -36,4 +35,4 @@ string pretty_component_name(const string& packageName, const string& className)
 
 int inspect_apk(Apk* apk, const string& filename);
 
-#endif // AAPT_H
+#endif  // AAPT_H

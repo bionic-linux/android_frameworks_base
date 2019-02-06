@@ -21,9 +21,7 @@
 
 #include "Bench.h"
 
-
-Bench::Bench()
-{
+Bench::Bench() {
     mTimeBucket = NULL;
     mTimeBuckets = 0;
     mTimeBucketDivisor = 1;
@@ -34,27 +32,20 @@ Bench::Bench()
     mMemLoopCount = 0;
 }
 
+Bench::~Bench() {}
 
-Bench::~Bench()
-{
-}
-
-uint64_t Bench::getTimeNanos() const
-{
+uint64_t Bench::getTimeNanos() const {
     struct timespec t;
     clock_gettime(CLOCK_MONOTONIC, &t);
     return t.tv_nsec + ((uint64_t)t.tv_sec * 1000 * 1000 * 1000);
 }
 
-uint64_t Bench::getTimeMillis() const
-{
+uint64_t Bench::getTimeMillis() const {
     return getTimeNanos() / 1000000;
 }
 
-
-void Bench::testWork(void *usr, uint32_t idx)
-{
-    Bench *b = (Bench *)usr;
+void Bench::testWork(void* usr, uint32_t idx) {
+    Bench* b = (Bench*)usr;
     //__android_log_print(ANDROID_LOG_INFO, "bench", "test %i   %p", idx, b);
 
     float f1 = 0.f;
@@ -62,14 +53,13 @@ void Bench::testWork(void *usr, uint32_t idx)
     float f3 = 0.f;
     float f4 = 0.f;
 
-    float *ipk = b->mIpKernel[idx];
-    volatile float *src = b->mSrcBuf[idx];
-    volatile float *out = b->mOutBuf[idx];
+    float* ipk = b->mIpKernel[idx];
+    volatile float* src = b->mSrcBuf[idx];
+    volatile float* out = b->mOutBuf[idx];
 
     //__android_log_print(ANDROID_LOG_INFO, "bench", "test %p %p %p", ipk, src, out);
 
     do {
-
         for (int i = 0; i < 1024; i++) {
             f1 += src[i * 4] * ipk[i];
             f2 += src[i * 4 + 1] * ipk[i];
@@ -87,9 +77,9 @@ void Bench::testWork(void *usr, uint32_t idx)
 bool Bench::initIP() {
     int workers = mWorkers.getWorkerCount();
 
-    mIpKernel = new float *[workers];
-    mSrcBuf = new float *[workers];
-    mOutBuf = new float *[workers];
+    mIpKernel = new float*[workers];
+    mSrcBuf = new float*[workers];
+    mOutBuf = new float*[workers];
 
     for (int i = 0; i < workers; i++) {
         mIpKernel[i] = new float[1024];
@@ -118,7 +108,7 @@ bool Bench::runPowerManagementTest(uint64_t options) {
 
     //__android_log_print(ANDROID_LOG_INFO, "bench", "rpmt 2.1  b %i", mTimeBuckets);
     mTimeEndGroupNanos = mTimeStartNanos;
-    do  {
+    do {
         // Advance 8ms
         mTimeEndGroupNanos += 8 * 1000 * 1000;
 
@@ -158,7 +148,7 @@ bool Bench::init() {
     mWorkers.init();
 
     initIP();
-    //ALOGV("%p Launching thread(s), CPUs %i", mRSC, mWorkers.mCount + 1);
+    // ALOGV("%p Launching thread(s), CPUs %i", mRSC, mWorkers.mCount + 1);
 
     return true;
 }
@@ -176,7 +166,7 @@ bool Bench::incTimeBucket() const {
     return time < mTimeEndGroupNanos;
 }
 
-void Bench::getData(float *data, size_t count) const {
+void Bench::getData(float* data, size_t count) const {
     if (count > mTimeBuckets) {
         count = mTimeBuckets;
     }
@@ -185,8 +175,7 @@ void Bench::getData(float *data, size_t count) const {
     }
 }
 
-bool Bench::runCPUHeatSoak(uint64_t /* options */)
-{
+bool Bench::runCPUHeatSoak(uint64_t /* options */) {
     mTimeBucketDivisor = 1000 * 1000;  // use ms
     allocateBuckets(1000);
 
@@ -199,8 +188,7 @@ bool Bench::runCPUHeatSoak(uint64_t /* options */)
     return true;
 }
 
-float Bench::runMemoryBandwidthTest(uint64_t size)
-{
+float Bench::runMemoryBandwidthTest(uint64_t size) {
     uint64_t t1 = getTimeMillis();
     for (size_t ct = mMemLoopCount; ct > 0; ct--) {
         memcpy(mMemDst, mMemSrc, size);
@@ -219,18 +207,17 @@ float Bench::runMemoryBandwidthTest(uint64_t size)
     return (float)bw;
 }
 
-float Bench::runMemoryLatencyTest(uint64_t size)
-{
+float Bench::runMemoryLatencyTest(uint64_t size) {
     //__android_log_print(ANDROID_LOG_INFO, "bench", "latency %i", (int)size);
-    void ** sp = (void **)mMemSrc;
-    size_t maxIndex = size / sizeof(void *);
+    void** sp = (void**)mMemSrc;
+    size_t maxIndex = size / sizeof(void*);
     size_t loops = ((maxIndex / 2) & (~3));
-    //loops = 10;
+    // loops = 10;
 
     if (size != mMemLatencyLastSize) {
         __android_log_print(ANDROID_LOG_INFO, "bench", "latency build %i %i", (int)maxIndex, loops);
         mMemLatencyLastSize = size;
-        memset((void *)mMemSrc, 0, mMemLatencyLastSize);
+        memset((void*)mMemSrc, 0, mMemLatencyLastSize);
 
         size_t lastIdx = 0;
         for (size_t ct = 0; ct < loops; ct++) {
@@ -241,9 +228,11 @@ float Bench::runMemoryLatencyTest(uint64_t size)
                 if (ni >= maxIndex) {
                     ni = 1;
                 }
-    //            __android_log_print(ANDROID_LOG_INFO, "bench", "gen ni loop %i %i", lastIdx, ni);
+                //            __android_log_print(ANDROID_LOG_INFO, "bench", "gen ni loop %i %i",
+                //            lastIdx, ni);
             }
-      //      __android_log_print(ANDROID_LOG_INFO, "bench", "gen ct = %i  %i  %i  %p  %p", (int)ct, lastIdx, ni, &sp[lastIdx], &sp[ni]);
+            //      __android_log_print(ANDROID_LOG_INFO, "bench", "gen ct = %i  %i  %i  %p  %p",
+            //      (int)ct, lastIdx, ni, &sp[lastIdx], &sp[ni]);
             sp[lastIdx] = &sp[ni];
             lastIdx = ni;
         }
@@ -254,12 +243,12 @@ float Bench::runMemoryLatencyTest(uint64_t size)
     uint64_t t1 = getTimeNanos();
     for (size_t ct = mMemLoopCount; ct > 0; ct--) {
         size_t lc = 1;
-        volatile void *p = sp[0];
+        volatile void* p = sp[0];
         while (p != NULL) {
             // Unroll once to minimize branching overhead.
-            void **pn = (void **)p;
+            void** pn = (void**)p;
             p = pn[0];
-            pn = (void **)p;
+            pn = (void**)p;
             p = pn[0];
         }
     }
@@ -281,17 +270,16 @@ float Bench::runMemoryLatencyTest(uint64_t size)
     return (float)lat;
 }
 
-bool Bench::startMemTests()
-{
-    mMemSrc = (uint8_t *)malloc(1024*1024*64);
-    mMemDst = (uint8_t *)malloc(1024*1024*64);
+bool Bench::startMemTests() {
+    mMemSrc = (uint8_t*)malloc(1024 * 1024 * 64);
+    mMemDst = (uint8_t*)malloc(1024 * 1024 * 64);
 
-    memset(mMemSrc, 0, 1024*1024*16);
-    memset(mMemDst, 0, 1024*1024*16);
+    memset(mMemSrc, 0, 1024 * 1024 * 16);
+    memset(mMemDst, 0, 1024 * 1024 * 16);
 
     mMemLoopCount = 1;
     uint64_t start = getTimeMillis();
-    while((getTimeMillis() - start) < 500) {
+    while ((getTimeMillis() - start) < 500) {
         memcpy(mMemDst, mMemSrc, 1024);
         mMemLoopCount++;
     }
@@ -299,8 +287,7 @@ bool Bench::startMemTests()
     return true;
 }
 
-void Bench::endMemTests()
-{
+void Bench::endMemTests() {
     free(mMemSrc);
     free(mMemDst);
     mMemSrc = NULL;
@@ -311,11 +298,11 @@ void Bench::endMemTests()
 void Bench::GflopKernelC() {
     int halfKX = (mGFlop.kernelXSize / 2);
     for (int x = halfKX; x < (mGFlop.imageXSize - halfKX - 1); x++) {
-        const float * krnPtr = mGFlop.kernelBuffer;
+        const float* krnPtr = mGFlop.kernelBuffer;
         float sum = 0.f;
 
         int srcInc = mGFlop.imageXSize - mGFlop.kernelXSize;
-        const float * srcPtr = &mGFlop.srcBuffer[x - halfKX];
+        const float* srcPtr = &mGFlop.srcBuffer[x - halfKX];
 
         for (int ix = 0; ix < mGFlop.kernelXSize; ix++) {
             sum += srcPtr[0] * krnPtr[0];
@@ -323,18 +310,14 @@ void Bench::GflopKernelC() {
             srcPtr++;
         }
 
-        float * dstPtr = &mGFlop.dstBuffer[x];
+        float* dstPtr = &mGFlop.dstBuffer[x];
         dstPtr[0] = sum;
-
     }
-
 }
 
-void Bench::GflopKernelC_y3() {
-}
+void Bench::GflopKernelC_y3() {}
 
-float Bench::runGFlopsTest(uint64_t /* options */)
-{
+float Bench::runGFlopsTest(uint64_t /* options */) {
     mTimeBucketDivisor = 1000 * 1000;  // use ms
     allocateBuckets(1000);
 
@@ -349,9 +332,9 @@ float Bench::runGFlopsTest(uint64_t /* options */)
     mGFlop.kernelXSize = 27;
     mGFlop.imageXSize = 1024 * 1024;
 
-    mGFlop.srcBuffer = (float *)malloc(mGFlop.imageXSize * sizeof(float));
-    mGFlop.dstBuffer = (float *)malloc(mGFlop.imageXSize * sizeof(float));
-    mGFlop.kernelBuffer = (float *)malloc(mGFlop.kernelXSize * sizeof(float));
+    mGFlop.srcBuffer = (float*)malloc(mGFlop.imageXSize * sizeof(float));
+    mGFlop.dstBuffer = (float*)malloc(mGFlop.imageXSize * sizeof(float));
+    mGFlop.kernelBuffer = (float*)malloc(mGFlop.kernelXSize * sizeof(float));
 
     double ops = mGFlop.kernelXSize;
     ops = ops * 2.f - 1.f;
@@ -369,5 +352,3 @@ float Bench::runGFlopsTest(uint64_t /* options */)
 
     return (float)gflops;
 }
-
-

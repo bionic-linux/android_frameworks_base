@@ -43,7 +43,8 @@ struct PngOptions {
  */
 class Png {
  public:
-  explicit Png(IDiagnostics* diag) : mDiag(diag) {}
+  explicit Png(IDiagnostics* diag) : mDiag(diag) {
+  }
 
   bool process(const Source& source, std::istream* input, BigBuffer* outBuffer,
                const PngOptions& options);
@@ -65,9 +66,13 @@ class PngChunkFilter : public io::InputStream {
   bool Next(const void** buffer, size_t* len) override;
   void BackUp(size_t count) override;
 
-  bool CanRewind() const override { return true; }
+  bool CanRewind() const override {
+    return true;
+  }
   bool Rewind() override;
-  size_t ByteCount() const override { return window_start_; }
+  size_t ByteCount() const override {
+    return window_start_;
+  }
 
   bool HadError() const override {
     return !error_msg_.empty();
@@ -96,9 +101,8 @@ std::unique_ptr<Image> ReadPng(IAaptContext* context, const Source& source, io::
  * Writes the RGBA Image, with optional 9-patch meta-data, into the OutputStream
  * as a PNG.
  */
-bool WritePng(IAaptContext* context, const Image* image,
-              const NinePatch* nine_patch, io::OutputStream* out,
-              const PngOptions& options);
+bool WritePng(IAaptContext* context, const Image* image, const NinePatch* nine_patch,
+              io::OutputStream* out, const PngOptions& options);
 
 }  // namespace aapt
 

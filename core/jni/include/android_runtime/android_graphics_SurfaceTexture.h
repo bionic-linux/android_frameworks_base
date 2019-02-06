@@ -35,6 +35,6 @@ extern sp<GLConsumer> SurfaceTexture_getSurfaceTexture(JNIEnv* env, jobject thiz
 /* gets the producer end of the SurfaceTexture */
 extern sp<IGraphicBufferProducer> SurfaceTexture_getProducer(JNIEnv* env, jobject thiz);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_GRAPHICS_SURFACETEXTURE_H
+#endif  // _ANDROID_GRAPHICS_SURFACETEXTURE_H

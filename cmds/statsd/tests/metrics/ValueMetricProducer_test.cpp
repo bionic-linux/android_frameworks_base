@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "src/metrics/ValueMetricProducer.h"
-#include "src/stats_log_util.h"
 #include "metrics_test_helper.h"
+#include "src/stats_log_util.h"
 #include "tests/statsd_test_util.h"
 
 #include <gmock/gmock.h>
@@ -494,14 +494,15 @@ TEST(ValueMetricProducerTest, TestPulledValueWithUpgradeWhileConditionFalse) {
     valueProducer.setBucketSize(60 * NS_PER_SEC);
     valueProducer.onConditionChanged(true, bucketStartTimeNs + 1);
 
-    valueProducer.onConditionChanged(false, bucket2StartTimeNs-100);
+    valueProducer.onConditionChanged(false, bucket2StartTimeNs - 100);
     EXPECT_FALSE(valueProducer.mCondition);
 
-    valueProducer.notifyAppUpgrade(bucket2StartTimeNs-50, "ANY.APP", 1, 1);
+    valueProducer.notifyAppUpgrade(bucket2StartTimeNs - 50, "ANY.APP", 1, 1);
     // Expect one full buckets already done and starting a partial bucket.
-    EXPECT_EQ(bucket2StartTimeNs-50, valueProducer.mCurrentBucketStartTimeNs);
+    EXPECT_EQ(bucket2StartTimeNs - 50, valueProducer.mCurrentBucketStartTimeNs);
     EXPECT_EQ(1UL, valueProducer.mPastBuckets[DEFAULT_METRIC_DIMENSION_KEY].size());
-    EXPECT_EQ(bucketStartTimeNs, valueProducer.mPastBuckets[DEFAULT_METRIC_DIMENSION_KEY][0].mBucketStartNs);
+    EXPECT_EQ(bucketStartTimeNs,
+              valueProducer.mPastBuckets[DEFAULT_METRIC_DIMENSION_KEY][0].mBucketStartNs);
     EXPECT_EQ(20L, valueProducer.mPastBuckets[DEFAULT_METRIC_DIMENSION_KEY][0].mValue);
     EXPECT_FALSE(valueProducer.mCondition);
 }
@@ -637,36 +638,33 @@ TEST(ValueMetricProducerTest, TestAnomalyDetection) {
 
     sp<AnomalyTracker> anomalyTracker = valueProducer.addAnomalyTracker(alert, alarmMonitor);
 
-
-    shared_ptr<LogEvent> event1
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 1 * NS_PER_SEC);
+    shared_ptr<LogEvent> event1 = make_shared<LogEvent>(tagId, bucketStartTimeNs + 1 * NS_PER_SEC);
     event1->write(161);
-    event1->write(10); // value of interest
+    event1->write(10);  // value of interest
     event1->init();
-    shared_ptr<LogEvent> event2
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 2 + NS_PER_SEC);
+    shared_ptr<LogEvent> event2 = make_shared<LogEvent>(tagId, bucketStartTimeNs + 2 + NS_PER_SEC);
     event2->write(162);
-    event2->write(20); // value of interest
+    event2->write(20);  // value of interest
     event2->init();
-    shared_ptr<LogEvent> event3
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 2 * bucketSizeNs + 1 * NS_PER_SEC);
+    shared_ptr<LogEvent> event3 =
+            make_shared<LogEvent>(tagId, bucketStartTimeNs + 2 * bucketSizeNs + 1 * NS_PER_SEC);
     event3->write(163);
-    event3->write(130); // value of interest
+    event3->write(130);  // value of interest
     event3->init();
-    shared_ptr<LogEvent> event4
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 1 * NS_PER_SEC);
+    shared_ptr<LogEvent> event4 =
+            make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 1 * NS_PER_SEC);
     event4->write(35);
-    event4->write(1); // value of interest
+    event4->write(1);  // value of interest
     event4->init();
-    shared_ptr<LogEvent> event5
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 2 * NS_PER_SEC);
+    shared_ptr<LogEvent> event5 =
+            make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 2 * NS_PER_SEC);
     event5->write(45);
-    event5->write(150); // value of interest
+    event5->write(150);  // value of interest
     event5->init();
-    shared_ptr<LogEvent> event6
-            = make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 10 * NS_PER_SEC);
+    shared_ptr<LogEvent> event6 =
+            make_shared<LogEvent>(tagId, bucketStartTimeNs + 3 * bucketSizeNs + 10 * NS_PER_SEC);
     event6->write(25);
-    event6->write(160); // value of interest
+    event6->write(160);  // value of interest
     event6->init();
 
     // Two events in bucket #0.
@@ -684,16 +682,16 @@ TEST(ValueMetricProducerTest, TestAnomalyDetection) {
     valueProducer.onMatchedLogEvent(1 /*log matcher index*/, *event4);
     // Anomaly at event 4 since Value sum == 131 > 130!
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event4->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event4->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
     valueProducer.onMatchedLogEvent(1 /*log matcher index*/, *event5);
     // Event 5 is within 3 sec refractory period. Thus last alarm timestamp is still event4.
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event4->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event4->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
 
     valueProducer.onMatchedLogEvent(1 /*log matcher index*/, *event6);
     // Anomaly at event 6 since Value sum == 160 > 130 and after refractory period.
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event6->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event6->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
 }
 
 // Test value metric no condition, the pull on bucket boundary come in time and too late

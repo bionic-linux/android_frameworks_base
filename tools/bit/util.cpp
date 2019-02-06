@@ -16,25 +16,21 @@
 
 #include "util.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <dirent.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-
-FileInfo::FileInfo()
-{
+FileInfo::FileInfo() {
     memset(this, 0, sizeof(FileInfo));
 }
 
-FileInfo::FileInfo(const FileInfo& that)
-{
+FileInfo::FileInfo(const FileInfo& that) {
     memcpy(this, &that, sizeof(FileInfo));
 }
 
-FileInfo::FileInfo(const string& filename)
-{
+FileInfo::FileInfo(const string& filename) {
     struct stat st;
     int err = stat(filename.c_str(), &st);
     if (err != 0) {
@@ -47,60 +43,33 @@ FileInfo::FileInfo(const string& filename)
     }
 }
 
-bool
-FileInfo::operator==(const FileInfo& that) const
-{
-    return exists == that.exists
-            && mtime == that.mtime
-            && ctime == that.ctime
-            && size == that.size;
+bool FileInfo::operator==(const FileInfo& that) const {
+    return exists == that.exists && mtime == that.mtime && ctime == that.ctime && size == that.size;
 }
 
-bool
-FileInfo::operator!=(const FileInfo& that) const
-{
-    return exists != that.exists
-            || mtime != that.mtime
-            || ctime != that.ctime
-            || size != that.size;
+bool FileInfo::operator!=(const FileInfo& that) const {
+    return exists != that.exists || mtime != that.mtime || ctime != that.ctime || size != that.size;
 }
 
-FileInfo::~FileInfo()
-{
-}
+FileInfo::~FileInfo() {}
 
-TrackedFile::TrackedFile()
-    :filename(),
-     fileInfo()
-{
-}
+TrackedFile::TrackedFile() : filename(), fileInfo() {}
 
-TrackedFile::TrackedFile(const TrackedFile& that)
-{
+TrackedFile::TrackedFile(const TrackedFile& that) {
     filename = that.filename;
     fileInfo = that.fileInfo;
 }
 
-TrackedFile::TrackedFile(const string& file)
-    :filename(file),
-     fileInfo(file)
-{
-}
+TrackedFile::TrackedFile(const string& file) : filename(file), fileInfo(file) {}
 
-TrackedFile::~TrackedFile()
-{
-}
+TrackedFile::~TrackedFile() {}
 
-bool
-TrackedFile::HasChanged() const
-{
+bool TrackedFile::HasChanged() const {
     FileInfo updated(filename);
     return !updated.exists || fileInfo != updated;
 }
 
-void
-get_directory_contents(const string& name, map<string,FileInfo>* results)
-{
+void get_directory_contents(const string& name, map<string, FileInfo>* results) {
     DIR* dir = opendir(name.c_str());
     if (dir == NULL) {
         return;
@@ -123,14 +92,13 @@ get_directory_contents(const string& name, map<string,FileInfo>* results)
     closedir(dir);
 }
 
-bool
-directory_contents_differ(const map<string,FileInfo>& before, const map<string,FileInfo>& after)
-{
+bool directory_contents_differ(const map<string, FileInfo>& before,
+                               const map<string, FileInfo>& after) {
     if (before.size() != after.size()) {
         return true;
     }
-    map<string,FileInfo>::const_iterator b = before.begin();
-    map<string,FileInfo>::const_iterator a = after.begin();
+    map<string, FileInfo>::const_iterator b = before.begin();
+    map<string, FileInfo>::const_iterator a = after.begin();
     while (b != before.end() && a != after.end()) {
         if (b->first != a->first) {
             return true;
@@ -144,9 +112,7 @@ directory_contents_differ(const map<string,FileInfo>& before, const map<string,F
     return false;
 }
 
-string
-escape_quotes(const char* str)
-{
+string escape_quotes(const char* str) {
     string result;
     while (*str) {
         if (*str == '"') {
@@ -159,26 +125,19 @@ escape_quotes(const char* str)
     return result;
 }
 
-string
-escape_for_commandline(const char* str)
-{
-    if (strchr(str, '"') != NULL || strchr(str, ' ') != NULL
-            || strchr(str, '\t') != NULL) {
+string escape_for_commandline(const char* str) {
+    if (strchr(str, '"') != NULL || strchr(str, ' ') != NULL || strchr(str, '\t') != NULL) {
         return escape_quotes(str);
     } else {
         return str;
     }
 }
 
-static bool
-spacechr(char c)
-{
+static bool spacechr(char c) {
     return c == ' ' || c == '\t' || c == '\n' || c == '\r';
 }
 
-string
-trim(const string& str)
-{
+string trim(const string& str) {
     const ssize_t N = (ssize_t)str.size();
     ssize_t begin = 0;
     while (begin < N && spacechr(str[begin])) {
@@ -188,28 +147,22 @@ trim(const string& str)
     while (end >= begin && spacechr(str[end])) {
         end--;
     }
-    return string(str, begin, end-begin+1);
+    return string(str, begin, end - begin + 1);
 }
 
-bool
-starts_with(const string& str, const string& prefix)
-{
+bool starts_with(const string& str, const string& prefix) {
     return str.compare(0, prefix.length(), prefix) == 0;
 }
 
-bool
-ends_with(const string& str, const string& suffix)
-{
+bool ends_with(const string& str, const string& suffix) {
     if (str.length() < suffix.length()) {
         return false;
     } else {
-        return str.compare(str.length()-suffix.length(), suffix.length(), suffix) == 0;
+        return str.compare(str.length() - suffix.length(), suffix.length(), suffix) == 0;
     }
 }
 
-void
-split_lines(vector<string>* result, const string& str)
-{
+void split_lines(vector<string>* result, const string& str) {
     const int N = str.length();
     int begin = 0;
     int end = 0;
@@ -217,30 +170,28 @@ split_lines(vector<string>* result, const string& str)
         const char c = str[end];
         if (c == '\r' || c == '\n') {
             if (begin != end) {
-                result->push_back(string(str, begin, end-begin));
+                result->push_back(string(str, begin, end - begin));
             }
-            begin = end+1;
+            begin = end + 1;
         }
     }
     if (begin != end) {
-        result->push_back(string(str, begin, end-begin));
+        result->push_back(string(str, begin, end - begin));
     }
 }
 
-string
-read_file(const string& filename)
-{
+string read_file(const string& filename) {
     FILE* file = fopen(filename.c_str(), "r");
     if (file == NULL) {
         return string();
     }
-    
+
     fseek(file, 0, SEEK_END);
     int size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
     char* buf = (char*)malloc(size);
-    if ((size_t) size != fread(buf, 1, size, file)) {
+    if ((size_t)size != fread(buf, 1, size, file)) {
         free(buf);
         fclose(file);
         return string();
@@ -253,5 +204,3 @@ read_file(const string& filename)
 
     return result;
 }
-
-

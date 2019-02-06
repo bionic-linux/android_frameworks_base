@@ -38,7 +38,6 @@ string ConfigKey::ToString() const {
     return s;
 }
 
-
 int64_t StrToInt64(const string& str) {
     char* endp;
     int64_t value;

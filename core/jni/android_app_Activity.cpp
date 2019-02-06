@@ -22,8 +22,7 @@
 
 extern "C" void android_dlwarning(void*, void (*)(void*, const char*));
 
-namespace android
-{
+namespace android {
 
 static jstring getDlWarning_native(JNIEnv* env, jobject) {
     std::string msg;
@@ -37,9 +36,7 @@ static jstring getDlWarning_native(JNIEnv* env, jobject) {
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "getDlWarning",
-        "()Ljava/lang/String;",
-        reinterpret_cast<void*>(getDlWarning_native) },
+        {"getDlWarning", "()Ljava/lang/String;", reinterpret_cast<void*>(getDlWarning_native)},
 };
 
 static const char* const kActivityPathName = "android/app/Activity";
@@ -48,4 +45,4 @@ int register_android_app_Activity(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kActivityPathName, g_methods, NELEM(g_methods));
 }
 
-} // namespace android
+}  // namespace android

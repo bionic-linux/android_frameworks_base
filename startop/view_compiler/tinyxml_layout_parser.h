@@ -26,34 +26,34 @@ namespace startop {
 
 template <typename Visitor>
 class TinyXmlVisitorAdapter : public tinyxml2::XMLVisitor {
- public:
-  explicit TinyXmlVisitorAdapter(Visitor* visitor) : visitor_{visitor} {}
+  public:
+    explicit TinyXmlVisitorAdapter(Visitor* visitor) : visitor_{visitor} {}
 
-  bool VisitEnter(const tinyxml2::XMLDocument& /*doc*/) override {
-    visitor_->VisitStartDocument();
-    return true;
-  }
+    bool VisitEnter(const tinyxml2::XMLDocument& /*doc*/) override {
+        visitor_->VisitStartDocument();
+        return true;
+    }
 
-  bool VisitExit(const tinyxml2::XMLDocument& /*doc*/) override {
-    visitor_->VisitEndDocument();
-    return true;
-  }
+    bool VisitExit(const tinyxml2::XMLDocument& /*doc*/) override {
+        visitor_->VisitEndDocument();
+        return true;
+    }
 
-  bool VisitEnter(const tinyxml2::XMLElement& element,
-                  const tinyxml2::XMLAttribute* /*firstAttribute*/) override {
-    visitor_->VisitStartTag(
-        std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(
-            element.Name()));
-    return true;
-  }
+    bool VisitEnter(const tinyxml2::XMLElement& element,
+                    const tinyxml2::XMLAttribute* /*firstAttribute*/) override {
+        visitor_->VisitStartTag(
+                std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(
+                        element.Name()));
+        return true;
+    }
 
-  bool VisitExit(const tinyxml2::XMLElement& /*element*/) override {
-    visitor_->VisitEndTag();
-    return true;
-  }
+    bool VisitExit(const tinyxml2::XMLElement& /*element*/) override {
+        visitor_->VisitEndTag();
+        return true;
+    }
 
- private:
-  Visitor* visitor_;
+  private:
+    Visitor* visitor_;
 };
 
 // Returns whether a layout resource represented by a TinyXML document is supported by the layout

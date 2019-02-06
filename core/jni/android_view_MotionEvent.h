@@ -17,8 +17,8 @@
 #ifndef _ANDROID_VIEW_MOTIONEVENT_H
 #define _ANDROID_VIEW_MOTIONEVENT_H
 
-#include "jni.h"
 #include <utils/Errors.h>
+#include "jni.h"
 
 namespace android {
 
@@ -36,6 +36,6 @@ extern MotionEvent* android_view_MotionEvent_getNativePtr(JNIEnv* env, jobject e
  * Returns non-zero on error. */
 extern status_t android_view_MotionEvent_recycle(JNIEnv* env, jobject eventObj);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_OS_KEYEVENT_H
+#endif  // _ANDROID_OS_KEYEVENT_H

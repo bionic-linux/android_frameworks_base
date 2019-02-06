@@ -242,7 +242,7 @@ void EglManager::loadConfigs() {
                              &numConfigs) ||
             numConfigs != 1) {
             ALOGE("Device claims wide gamut support, cannot find matching config, error = %s",
-                    eglErrorString());
+                  eglErrorString());
             EglExtensions.pixelFormatFloat = false;
         }
     }

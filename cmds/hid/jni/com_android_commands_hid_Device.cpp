@@ -21,22 +21,22 @@
 #include <linux/uhid.h>
 
 #include <fcntl.h>
+#include <unistd.h>
 #include <cstdio>
 #include <cstring>
 #include <memory>
-#include <unistd.h>
 
+#include <android/log.h>
+#include <android/looper.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include <android/looper.h>
-#include <android/log.h>
 
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 namespace android {
 namespace uhid {
@@ -61,10 +61,10 @@ static void checkAndClearException(JNIEnv* env, const char* methodName) {
     }
 }
 
-DeviceCallback::DeviceCallback(JNIEnv* env, jobject callback) :
-    mCallbackObject(env->NewGlobalRef(callback)) {
+DeviceCallback::DeviceCallback(JNIEnv* env, jobject callback)
+    : mCallbackObject(env->NewGlobalRef(callback)) {
     env->GetJavaVM(&mJavaVM);
- }
+}
 
 DeviceCallback::~DeviceCallback() {
     JNIEnv* env = getJNIEnv();
@@ -85,8 +85,8 @@ void DeviceCallback::onDeviceOpen() {
 
 void DeviceCallback::onDeviceGetReport(uint32_t requestId, uint8_t reportId) {
     JNIEnv* env = getJNIEnv();
-    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceGetReport,
-            requestId, reportId);
+    env->CallVoidMethod(mCallbackObject, gDeviceCallbackClassInfo.onDeviceGetReport, requestId,
+                        reportId);
     checkAndClearException(env, "onDeviceGetReport");
 }
 
@@ -97,8 +97,7 @@ JNIEnv* DeviceCallback::getJNIEnv() {
 }
 
 Device* Device::open(int32_t id, const char* name, int32_t vid, int32_t pid,
-        std::vector<uint8_t> descriptor, std::unique_ptr<DeviceCallback> callback) {
-
+                     std::vector<uint8_t> descriptor, std::unique_ptr<DeviceCallback> callback) {
     size_t size = descriptor.size();
     if (size > HID_MAX_DESCRIPTOR_SIZE) {
         LOGE("Received invalid hid report with descriptor size %zu, skipping", size);
@@ -114,8 +113,7 @@ Device* Device::open(int32_t id, const char* name, int32_t vid, int32_t pid,
     struct uhid_event ev = {};
     ev.type = UHID_CREATE2;
     strlcpy(reinterpret_cast<char*>(ev.u.create2.name), name, sizeof(ev.u.create2.name));
-    memcpy(&ev.u.create2.rd_data, descriptor.data(),
-            size * sizeof(ev.u.create2.rd_data[0]));
+    memcpy(&ev.u.create2.rd_data, descriptor.data(), size * sizeof(ev.u.create2.rd_data[0]));
     ev.u.create2.rd_size = size;
     ev.u.create2.bus = BUS_BLUETOOTH;
     ev.u.create2.vendor = vid;
@@ -141,8 +139,8 @@ Device* Device::open(int32_t id, const char* name, int32_t vid, int32_t pid,
     return new Device(id, fd, std::move(callback));
 }
 
-Device::Device(int32_t id, int fd, std::unique_ptr<DeviceCallback> callback) :
-            mId(id), mFd(fd), mDeviceCallback(std::move(callback)) {
+Device::Device(int32_t id, int fd, std::unique_ptr<DeviceCallback> callback)
+    : mId(id), mFd(fd), mDeviceCallback(std::move(callback)) {
     ALooper* aLooper = ALooper_forThread();
     if (aLooper == NULL) {
         LOGE("Could not get ALooper, ALooper_forThread returned NULL");
@@ -189,7 +187,7 @@ void Device::sendGetFeatureReportReply(uint32_t id, const std::vector<uint8_t>& 
     ev.u.get_report_reply.err = report.size() == 0 ? EIO : 0;
     ev.u.get_report_reply.size = report.size();
     memcpy(&ev.u.get_report_reply.data, report.data(),
-            report.size() * sizeof(ev.u.get_report_reply.data[0]));
+           report.size() * sizeof(ev.u.get_report_reply.data[0]));
     ssize_t ret = TEMP_FAILURE_RETRY(::write(mFd, &ev, sizeof(ev)));
     if (ret < 0 || ret != sizeof(ev)) {
         LOGE("Failed to send hid event (UHID_GET_REPORT_REPLY): %s", strerror(errno));
@@ -222,7 +220,7 @@ int Device::handleEvents(int events) {
     return 1;
 }
 
-} // namespace uhid
+}  // namespace uhid
 
 std::vector<uint8_t> getData(JNIEnv* env, jbyteArray javaArray) {
     std::vector<uint8_t> data;
@@ -239,8 +237,8 @@ std::vector<uint8_t> getData(JNIEnv* env, jbyteArray javaArray) {
     return data;
 }
 
-static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jint id, jint vid, jint pid,
-        jbyteArray rawDescriptor, jobject callback) {
+static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jint id, jint vid,
+                        jint pid, jbyteArray rawDescriptor, jobject callback) {
     ScopedUtfChars name(env, rawName);
     if (name.c_str() == nullptr) {
         return 0;
@@ -250,8 +248,8 @@ static jlong openDevice(JNIEnv* env, jclass /* clazz */, jstring rawName, jint i
 
     std::unique_ptr<uhid::DeviceCallback> cb(new uhid::DeviceCallback(env, callback));
 
-    uhid::Device* d = uhid::Device::open(
-            id, reinterpret_cast<const char*>(name.c_str()), vid, pid, desc, std::move(cb));
+    uhid::Device* d = uhid::Device::open(id, reinterpret_cast<const char*>(name.c_str()), vid, pid,
+                                         desc, std::move(cb));
     return reinterpret_cast<jlong>(d);
 }
 
@@ -266,7 +264,7 @@ static void sendReport(JNIEnv* env, jclass /* clazz */, jlong ptr, jbyteArray ra
 }
 
 static void sendGetFeatureReportReply(JNIEnv* env, jclass /* clazz */, jlong ptr, jint id,
-        jbyteArray rawReport) {
+                                      jbyteArray rawReport) {
     uhid::Device* d = reinterpret_cast<uhid::Device*>(ptr);
     if (d) {
         std::vector<uint8_t> report = getData(env, rawReport);
@@ -284,14 +282,14 @@ static void closeDevice(JNIEnv* /* env */, jclass /* clazz */, jlong ptr) {
 }
 
 static JNINativeMethod sMethods[] = {
-    { "nativeOpenDevice",
-            "(Ljava/lang/String;III[B"
-            "Lcom/android/commands/hid/Device$DeviceCallback;)J",
-            reinterpret_cast<void*>(openDevice) },
-    { "nativeSendReport", "(J[B)V", reinterpret_cast<void*>(sendReport) },
-    { "nativeSendGetFeatureReportReply", "(JI[B)V",
-            reinterpret_cast<void*>(sendGetFeatureReportReply) },
-    { "nativeCloseDevice", "(J)V", reinterpret_cast<void*>(closeDevice) },
+        {"nativeOpenDevice",
+         "(Ljava/lang/String;III[B"
+         "Lcom/android/commands/hid/Device$DeviceCallback;)J",
+         reinterpret_cast<void*>(openDevice)},
+        {"nativeSendReport", "(J[B)V", reinterpret_cast<void*>(sendReport)},
+        {"nativeSendGetFeatureReportReply", "(JI[B)V",
+         reinterpret_cast<void*>(sendGetFeatureReportReply)},
+        {"nativeCloseDevice", "(J)V", reinterpret_cast<void*>(closeDevice)},
 };
 
 int register_com_android_commands_hid_Device(JNIEnv* env) {
@@ -300,31 +298,29 @@ int register_com_android_commands_hid_Device(JNIEnv* env) {
         LOGE("Unable to find class 'DeviceCallback'");
         return JNI_ERR;
     }
-    uhid::gDeviceCallbackClassInfo.onDeviceOpen =
-            env->GetMethodID(clazz, "onDeviceOpen", "()V");
+    uhid::gDeviceCallbackClassInfo.onDeviceOpen = env->GetMethodID(clazz, "onDeviceOpen", "()V");
     uhid::gDeviceCallbackClassInfo.onDeviceGetReport =
             env->GetMethodID(clazz, "onDeviceGetReport", "(II)V");
-    uhid::gDeviceCallbackClassInfo.onDeviceError =
-            env->GetMethodID(clazz, "onDeviceError", "()V");
+    uhid::gDeviceCallbackClassInfo.onDeviceError = env->GetMethodID(clazz, "onDeviceError", "()V");
     if (uhid::gDeviceCallbackClassInfo.onDeviceOpen == NULL ||
-            uhid::gDeviceCallbackClassInfo.onDeviceError == NULL) {
+        uhid::gDeviceCallbackClassInfo.onDeviceError == NULL) {
         LOGE("Unable to obtain onDeviceOpen or onDeviceError methods");
         return JNI_ERR;
     }
 
-    return jniRegisterNativeMethods(env, "com/android/commands/hid/Device",
-            sMethods, NELEM(sMethods));
+    return jniRegisterNativeMethods(env, "com/android/commands/hid/Device", sMethods,
+                                    NELEM(sMethods));
 }
 
-} // namespace android
+}  // namespace android
 
 jint JNI_OnLoad(JavaVM* jvm, void*) {
-    JNIEnv *env = NULL;
+    JNIEnv* env = NULL;
     if (jvm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) {
         return JNI_ERR;
     }
 
-    if (android::register_com_android_commands_hid_Device(env) < 0 ){
+    if (android::register_com_android_commands_hid_Device(env) < 0) {
         return JNI_ERR;
     }
 

@@ -24,13 +24,12 @@
 extern "C" {
 #endif
 
-    JNIEXPORT jfloat JNICALL
-    Java_androidx_media_filterfw_samples_simplecamera_ContrastRatioFilter_contrastOperator(
+JNIEXPORT jfloat JNICALL
+Java_androidx_media_filterfw_samples_simplecamera_ContrastRatioFilter_contrastOperator(
         JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_CONTRAST_H
-
+#endif  // ANDROID_FILTERFW_JNI_CONTRAST_H

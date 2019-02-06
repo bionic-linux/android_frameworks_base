@@ -18,9 +18,9 @@
 #define ANDROID_OS_HW_BLOB_H
 
 #include <android-base/macros.h>
-#include <jni.h>
 #include <hidl/HidlSupport.h>
 #include <hwbinder/Parcel.h>
+#include <jni.h>
 #include <utils/RefBase.h>
 #include <utils/Vector.h>
 
@@ -32,55 +32,51 @@ struct JHwBlob : public RefBase {
         NATIVE_HANDLE,
     };
 
-    static void InitClass(JNIEnv *env);
+    static void InitClass(JNIEnv* env);
 
-    static sp<JHwBlob> SetNativeContext(
-            JNIEnv *env, jobject thiz, const sp<JHwBlob> &context);
+    static sp<JHwBlob> SetNativeContext(JNIEnv* env, jobject thiz, const sp<JHwBlob>& context);
 
-    static sp<JHwBlob> GetNativeContext(JNIEnv *env, jobject thiz);
+    static sp<JHwBlob> GetNativeContext(JNIEnv* env, jobject thiz);
 
-    static jobject NewObject(JNIEnv *env, const void *ptr, size_t handle);
-    static jobject NewObject(JNIEnv *env, size_t size);
+    static jobject NewObject(JNIEnv* env, const void* ptr, size_t handle);
+    static jobject NewObject(JNIEnv* env, size_t size);
 
-    JHwBlob(JNIEnv *env, jobject thiz, size_t size);
+    JHwBlob(JNIEnv* env, jobject thiz, size_t size);
 
-    void setTo(const void *ptr, size_t handle);
+    void setTo(const void* ptr, size_t handle);
 
-    status_t getHandle(size_t *handle) const;
+    status_t getHandle(size_t* handle) const;
 
-    status_t read(size_t offset, void *data, size_t size) const;
-    status_t write(size_t offset, const void *data, size_t size);
+    status_t read(size_t offset, void* data, size_t size) const;
+    status_t write(size_t offset, const void* data, size_t size);
 
-    status_t getString(
-            size_t offset, const android::hardware::hidl_string **s) const;
+    status_t getString(size_t offset, const android::hardware::hidl_string** s) const;
 
-    const void *data() const;
-    void *data();
+    const void* data() const;
+    void* data();
 
     size_t size() const;
 
     void specializeBlobTo(BlobType type);
     BlobType type() const;
 
-    status_t putBlob(size_t offset, const sp<JHwBlob> &blob);
+    status_t putBlob(size_t offset, const sp<JHwBlob>& blob);
 
-    status_t writeToParcel(hardware::Parcel *parcel) const;
+    status_t writeToParcel(hardware::Parcel* parcel) const;
 
-    status_t writeEmbeddedToParcel(
-            hardware::Parcel *parcel,
-            size_t parentHandle,
-            size_t parentOffset) const;
+    status_t writeEmbeddedToParcel(hardware::Parcel* parcel, size_t parentHandle,
+                                   size_t parentOffset) const;
 
-protected:
+  protected:
     virtual ~JHwBlob();
 
-private:
+  private:
     struct BlobInfo {
         size_t mOffset;
         sp<JHwBlob> mBlob;
     };
 
-    void *mBuffer;
+    void* mBuffer;
     size_t mSize;
     BlobType mType;
     bool mOwnsBuffer;
@@ -89,14 +85,13 @@ private:
 
     Vector<BlobInfo> mSubBlobs;
 
-    status_t writeSubBlobsToParcel(hardware::Parcel *parcel, size_t parentHandle) const;
+    status_t writeSubBlobsToParcel(hardware::Parcel* parcel, size_t parentHandle) const;
 
     DISALLOW_COPY_AND_ASSIGN(JHwBlob);
 };
 
-int register_android_os_HwBlob(JNIEnv *env);
+int register_android_os_HwBlob(JNIEnv* env);
 
 }  // namespace android
 
 #endif  // ANDROID_OS_HW_BLOB_H
-

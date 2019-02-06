@@ -17,17 +17,15 @@
 #ifndef _ANDROID_OS_MESSAGEQUEUE_H
 #define _ANDROID_OS_MESSAGEQUEUE_H
 
-#include "jni.h"
 #include <utils/Looper.h>
+#include "jni.h"
 
 namespace android {
 
 class MessageQueue : public virtual RefBase {
-public:
+  public:
     /* Gets the message queue's looper. */
-    inline sp<Looper> getLooper() const {
-        return mLooper;
-    }
+    inline sp<Looper> getLooper() const { return mLooper; }
 
     /* Checks whether the JNI environment has a pending exception.
      *
@@ -54,18 +52,18 @@ public:
      */
     virtual void raiseException(JNIEnv* env, const char* msg, jthrowable exceptionObj) = 0;
 
-protected:
+  protected:
     MessageQueue();
     virtual ~MessageQueue();
 
-protected:
+  protected:
     sp<Looper> mLooper;
 };
 
 /* Gets the native object associated with a MessageQueue. */
-extern sp<MessageQueue> android_os_MessageQueue_getMessageQueue(
-        JNIEnv* env, jobject messageQueueObj);
+extern sp<MessageQueue> android_os_MessageQueue_getMessageQueue(JNIEnv* env,
+                                                                jobject messageQueueObj);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_OS_MESSAGEQUEUE_H
+#endif  // _ANDROID_OS_MESSAGEQUEUE_H

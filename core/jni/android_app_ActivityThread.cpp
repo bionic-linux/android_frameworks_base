@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#include "jni.h"
-#include "GraphicsJNI.h"
 #include <nativehelper/JNIHelp.h>
+#include "GraphicsJNI.h"
+#include "jni.h"
 
 #include <minikin/Layout.h>
 #include <renderthread/RenderProxy.h>
 
-#include "core_jni_helpers.h"
 #include <unistd.h>
+#include "core_jni_helpers.h"
 
 namespace android {
 
@@ -31,25 +31,22 @@ static void android_app_ActivityThread_purgePendingResources(JNIEnv* env, jobjec
     mallopt(M_PURGE, 0);
 }
 
-static void
-android_app_ActivityThread_dumpGraphics(JNIEnv* env, jobject clazz, jobject javaFileDescriptor) {
+static void android_app_ActivityThread_dumpGraphics(JNIEnv* env, jobject clazz,
+                                                    jobject javaFileDescriptor) {
     int fd = jniGetFDFromFileDescriptor(env, javaFileDescriptor);
     android::uirenderer::renderthread::RenderProxy::dumpGraphicsMemory(fd);
     minikin::Layout::dumpMinikinStats(fd);
 }
 
-
 static JNINativeMethod gActivityThreadMethods[] = {
-    // ------------ Regular JNI ------------------
-    { "nPurgePendingResources",        "()V",
-      (void*) android_app_ActivityThread_purgePendingResources },
-    { "nDumpGraphicsInfo",        "(Ljava/io/FileDescriptor;)V",
-      (void*) android_app_ActivityThread_dumpGraphics }
-};
+        // ------------ Regular JNI ------------------
+        {"nPurgePendingResources", "()V", (void*)android_app_ActivityThread_purgePendingResources},
+        {"nDumpGraphicsInfo", "(Ljava/io/FileDescriptor;)V",
+         (void*)android_app_ActivityThread_dumpGraphics}};
 
 int register_android_app_ActivityThread(JNIEnv* env) {
-    return RegisterMethodsOrDie(env, "android/app/ActivityThread",
-            gActivityThreadMethods, NELEM(gActivityThreadMethods));
+    return RegisterMethodsOrDie(env, "android/app/ActivityThread", gActivityThreadMethods,
+                                NELEM(gActivityThreadMethods));
 }
 
-};
+};  // namespace android

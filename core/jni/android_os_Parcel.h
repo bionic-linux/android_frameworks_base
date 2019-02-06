@@ -26,4 +26,4 @@ extern Parcel* parcelForJavaObject(JNIEnv* env, jobject obj);
 extern jobject createJavaParcelObject(JNIEnv* env);
 extern void recycleJavaParcelObject(JNIEnv* env, jobject object);
 
-}
+}  // namespace android

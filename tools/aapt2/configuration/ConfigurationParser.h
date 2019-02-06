@@ -32,16 +32,7 @@ namespace aapt {
 namespace configuration {
 
 /** Enumeration of currently supported ABIs. */
-enum class Abi {
-  kArmeV6,
-  kArmV7a,
-  kArm64V8a,
-  kX86,
-  kX86_64,
-  kMips,
-  kMips64,
-  kUniversal
-};
+enum class Abi { kArmeV6, kArmV7a, kArm64V8a, kX86, kX86_64, kMips, kMips64, kUniversal };
 
 /** Helper method to convert an ABI to a string representing the path within the APK. */
 const android::StringPiece& AbiToString(Abi abi);
@@ -86,9 +77,8 @@ struct AndroidSdk {
 
   inline friend bool operator==(const AndroidSdk& lhs, const AndroidSdk& rhs) {
     return lhs.min_sdk_version == rhs.min_sdk_version &&
-        lhs.target_sdk_version == rhs.target_sdk_version &&
-        lhs.max_sdk_version == rhs.max_sdk_version &&
-        lhs.manifest == rhs.manifest;
+           lhs.target_sdk_version == rhs.target_sdk_version &&
+           lhs.max_sdk_version == rhs.max_sdk_version && lhs.manifest == rhs.manifest;
   }
 };
 
@@ -134,7 +124,6 @@ struct IDiagnostics;
  */
 class ConfigurationParser {
  public:
-
   /** Returns a ConfigurationParser for the file located at the provided path. */
   static Maybe<ConfigurationParser> ForPath(const std::string& path);
 

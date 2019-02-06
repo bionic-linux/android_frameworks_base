@@ -53,7 +53,7 @@ static unsigned nextSize;
 
 static const uint32_t ID_RIFF = 0x46464952;
 static const uint32_t ID_WAVE = 0x45564157;
-static const uint32_t ID_FMT  = 0x20746d66;
+static const uint32_t ID_FMT = 0x20746d66;
 static const uint32_t ID_DATA = 0x61746164;
 
 struct RiffWaveHeader {
@@ -77,7 +77,7 @@ struct ChunkFormat {
 };
 
 // this callback handler is called every time a buffer finishes playing
-void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context) {
+void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void* context) {
     (void)bq;
     (void)context;
     audioplay::setPlaying(false);
@@ -155,15 +155,13 @@ bool createBufferQueueAudioPlayer(const ChunkFormat* chunkFormat) {
             channelMask = 0;
     }
 
-    SLDataFormat_PCM format_pcm = {
-        SL_DATAFORMAT_PCM,
-        chunkFormat->num_channels,
-        chunkFormat->sample_rate * 1000,  // convert to milliHz
-        chunkFormat->bits_per_sample,
-        16,
-        channelMask,
-        SL_BYTEORDER_LITTLEENDIAN
-    };
+    SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM,
+                                   chunkFormat->num_channels,
+                                   chunkFormat->sample_rate * 1000,  // convert to milliHz
+                                   chunkFormat->bits_per_sample,
+                                   16,
+                                   channelMask,
+                                   SL_BYTEORDER_LITTLEENDIAN};
     SLDataSource audioSrc = {&loc_bufq, &format_pcm};
 
     // configure audio sink
@@ -173,8 +171,9 @@ bool createBufferQueueAudioPlayer(const ChunkFormat* chunkFormat) {
     // create audio player
     const SLInterfaceID ids[3] = {SL_IID_BUFFERQUEUE, SL_IID_VOLUME, SL_IID_ANDROIDCONFIGURATION};
     const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
-    result = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk,
-            3, ids, req);
+    result = (*engineEngine)
+                     ->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 3,
+                                         ids, req);
     if (result != SL_RESULT_SUCCESS) {
         ALOGE("sl CreateAudioPlayer failed with result %d", result);
         return false;
@@ -183,15 +182,16 @@ bool createBufferQueueAudioPlayer(const ChunkFormat* chunkFormat) {
 
     // Use the System stream for boot sound playback.
     SLAndroidConfigurationItf playerConfig;
-    result = (*bqPlayerObject)->GetInterface(bqPlayerObject,
-        SL_IID_ANDROIDCONFIGURATION, &playerConfig);
+    result = (*bqPlayerObject)
+                     ->GetInterface(bqPlayerObject, SL_IID_ANDROIDCONFIGURATION, &playerConfig);
     if (result != SL_RESULT_SUCCESS) {
         ALOGE("config GetInterface failed with result %d", result);
         return false;
     }
     SLint32 streamType = SL_ANDROID_STREAM_SYSTEM;
-    result = (*playerConfig)->SetConfiguration(playerConfig,
-        SL_ANDROID_KEY_STREAM_TYPE, &streamType, sizeof(SLint32));
+    result = (*playerConfig)
+                     ->SetConfiguration(playerConfig, SL_ANDROID_KEY_STREAM_TYPE, &streamType,
+                                        sizeof(SLint32));
     if (result != SL_RESULT_SUCCESS) {
         ALOGE("SetConfiguration failed with result %d", result);
         return false;
@@ -199,10 +199,11 @@ bool createBufferQueueAudioPlayer(const ChunkFormat* chunkFormat) {
     // use normal performance mode as low latency is not needed. This is not mandatory so
     // do not bail if we fail
     SLuint32 performanceMode = SL_ANDROID_PERFORMANCE_NONE;
-    result = (*playerConfig)->SetConfiguration(
-           playerConfig, SL_ANDROID_KEY_PERFORMANCE_MODE, &performanceMode, sizeof(SLuint32));
-    ALOGW_IF(result != SL_RESULT_SUCCESS,
-            "could not set performance mode on player, error %d", result);
+    result = (*playerConfig)
+                     ->SetConfiguration(playerConfig, SL_ANDROID_KEY_PERFORMANCE_MODE,
+                                        &performanceMode, sizeof(SLuint32));
+    ALOGW_IF(result != SL_RESULT_SUCCESS, "could not set performance mode on player, error %d",
+             result);
     (void)result;
 
     // realize the player
@@ -222,8 +223,8 @@ bool createBufferQueueAudioPlayer(const ChunkFormat* chunkFormat) {
     (void)result;
 
     // get the buffer queue interface
-    result = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE,
-            &bqPlayerBufferQueue);
+    result = (*bqPlayerObject)
+                     ->GetInterface(bqPlayerObject, SL_IID_BUFFERQUEUE, &bqPlayerBufferQueue);
     if (result != SL_RESULT_SUCCESS) {
         ALOGE("sl playberBufferQueue GetInterface failed with result %d", result);
         return false;
@@ -305,7 +306,7 @@ bool parseClipBuf(const uint8_t* clipBuf, int clipBufSize, const ChunkFormat** o
     return true;
 }
 
-} // namespace
+}  // namespace
 
 bool create(const uint8_t* exampleClipBuf, int exampleClipBufSize) {
     if (!createEngine()) {
@@ -339,8 +340,8 @@ bool playClip(const uint8_t* buf, int size) {
         return false;
     }
 
-    CHATTY("playClip on player %p: buf=%p size=%d nextSize %d",
-           bqPlayerBufferQueue, buf, size, nextSize);
+    CHATTY("playClip on player %p: buf=%p size=%d nextSize %d", bqPlayerBufferQueue, buf, size,
+           nextSize);
 
     if (nextSize > 0) {
         // here we only enqueue one buffer because it is a long clip,
@@ -364,10 +365,10 @@ void setPlaying(bool isPlaying) {
 
     if (NULL != bqPlayerPlay) {
         // set the player's state
-        result = (*bqPlayerPlay)->SetPlayState(bqPlayerPlay,
-            isPlaying ? SL_PLAYSTATE_PLAYING : SL_PLAYSTATE_STOPPED);
+        result = (*bqPlayerPlay)
+                         ->SetPlayState(bqPlayerPlay,
+                                        isPlaying ? SL_PLAYSTATE_PLAYING : SL_PLAYSTATE_STOPPED);
     }
-
 }
 
 void destroy() {

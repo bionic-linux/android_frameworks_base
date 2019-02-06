@@ -30,7 +30,7 @@ namespace {
 
 StatsdConfig CreateStatsdConfig(DurationMetric::AggregationType aggregationType) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateScreenTurnedOnAtomMatcher();
     *config.add_atom_matcher() = CreateScreenTurnedOffAtomMatcher();
     *config.add_atom_matcher() = CreateAcquireWakelockAtomMatcher();
@@ -54,8 +54,7 @@ StatsdConfig CreateStatsdConfig(DurationMetric::AggregationType aggregationType)
     durationMetric->set_condition(screenIsOffPredicate.id());
     durationMetric->set_aggregation_type(aggregationType);
     // The metric is dimensioning by first attribution node and only by uid.
-    *durationMetric->mutable_dimensions_in_what() =
-        CreateAttributionUidDimensions(
+    *durationMetric->mutable_dimensions_in_what() = CreateAttributionUidDimensions(
             android::util::WAKELOCK_STATE_CHANGED, {Position::FIRST});
     durationMetric->set_bucket(FIVE_MINUTES);
     return config;

@@ -21,24 +21,22 @@
 
 #include <jni.h>
 
-#define JNI_FES_FUNCTION(name) Java_androidx_media_filterpacks_numeric_StatsFilter_ ## name
+#define JNI_FES_FUNCTION(name) Java_androidx_media_filterpacks_numeric_StatsFilter_##name
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-JNIEXPORT void JNICALL
-JNI_FES_FUNCTION(score)(
-    JNIEnv* env, jobject thiz, jobject imageBuffer, jfloatArray statsArray);
+JNIEXPORT void JNICALL JNI_FES_FUNCTION(score)(JNIEnv* env, jobject thiz, jobject imageBuffer,
+                                               jfloatArray statsArray);
 
-JNIEXPORT void JNICALL
-JNI_FES_FUNCTION(regionscore)(
-   JNIEnv* env, jobject thiz, jobject imageBuffer, jint width, jint height,
-   jfloat lefp, jfloat top, jfloat right, jfloat bottom, jfloatArray statsArray);
+JNIEXPORT void JNICALL JNI_FES_FUNCTION(regionscore)(JNIEnv* env, jobject thiz, jobject imageBuffer,
+                                                     jint width, jint height, jfloat lefp,
+                                                     jfloat top, jfloat right, jfloat bottom,
+                                                     jfloatArray statsArray);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif  // ANDROID_FILTERFW_JNI_STATS_SCORER_H

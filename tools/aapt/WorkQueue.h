@@ -32,11 +32,11 @@ namespace android {
  * on the queue at the end.
  */
 class WorkQueue {
-public:
+  public:
     class WorkUnit {
-    public:
-        WorkUnit() { }
-        virtual ~WorkUnit() { }
+      public:
+        WorkUnit() {}
+        virtual ~WorkUnit() {}
 
         /*
          * Runs the work unit.
@@ -85,20 +85,20 @@ public:
      */
     status_t finish();
 
-private:
+  private:
     class WorkThread : public Thread {
-    public:
+      public:
         WorkThread(WorkQueue* workQueue, bool canCallJava);
         virtual ~WorkThread();
 
-    private:
+      private:
         virtual bool threadLoop();
 
         WorkQueue* const mWorkQueue;
     };
 
     status_t cancelLocked();
-    bool threadLoop(); // called from each work thread
+    bool threadLoop();  // called from each work thread
 
     const size_t mMaxThreads;
     const bool mCanCallJava;
@@ -114,6 +114,6 @@ private:
     Vector<WorkUnit*> mWorkUnits;
 };
 
-}; // namespace android
+};  // namespace android
 
-#endif // AAPT_WORK_QUEUE_H
+#endif  // AAPT_WORK_QUEUE_H

@@ -17,31 +17,24 @@
 
 #include <inttypes.h>
 
-#include <android/util/protobuf.h>
 #include <android/util/ProtoOutputStream.h>
+#include <android/util/protobuf.h>
 #include <cutils/log.h>
 
 namespace android {
 namespace util {
 
 ProtoOutputStream::ProtoOutputStream()
-        :mBuffer(),
-         mCopyBegin(0),
-         mCompact(false),
-         mDepth(0),
-         mObjectId(0),
-         mExpectedObjectToken(UINT64_C(-1))
-{
-}
+    : mBuffer(),
+      mCopyBegin(0),
+      mCompact(false),
+      mDepth(0),
+      mObjectId(0),
+      mExpectedObjectToken(UINT64_C(-1)) {}
 
-ProtoOutputStream::~ProtoOutputStream()
-{
-}
+ProtoOutputStream::~ProtoOutputStream() {}
 
-
-void
-ProtoOutputStream::clear()
-{
+void ProtoOutputStream::clear() {
     mBuffer.clear();
     mCopyBegin = 0;
     mCompact = false;
@@ -50,117 +43,211 @@ ProtoOutputStream::clear()
     mExpectedObjectToken = UINT64_C(-1);
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, double val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, double val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
-        case FIELD_TYPE_DOUBLE:   writeDoubleImpl(id, (double)val);           break;
-        case FIELD_TYPE_FLOAT:    writeFloatImpl(id, (float)val);             break;
-        case FIELD_TYPE_INT64:    writeInt64Impl(id, (long long)val);         break;
-        case FIELD_TYPE_UINT64:   writeUint64Impl(id, (uint64_t)val);         break;
-        case FIELD_TYPE_INT32:    writeInt32Impl(id, (int)val);               break;
-        case FIELD_TYPE_FIXED64:  writeFixed64Impl(id, (uint64_t)val);        break;
-        case FIELD_TYPE_FIXED32:  writeFixed32Impl(id, (uint32_t)val);        break;
-        case FIELD_TYPE_UINT32:   writeUint32Impl(id, (uint32_t)val);         break;
-        case FIELD_TYPE_SFIXED32: writeSFixed32Impl(id, (int)val);            break;
-        case FIELD_TYPE_SFIXED64: writeSFixed64Impl(id, (long long)val);      break;
-        case FIELD_TYPE_SINT32:   writeZigzagInt32Impl(id, (int)val);         break;
-        case FIELD_TYPE_SINT64:   writeZigzagInt64Impl(id, (long long)val);   break;
+        case FIELD_TYPE_DOUBLE:
+            writeDoubleImpl(id, (double)val);
+            break;
+        case FIELD_TYPE_FLOAT:
+            writeFloatImpl(id, (float)val);
+            break;
+        case FIELD_TYPE_INT64:
+            writeInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_UINT64:
+            writeUint64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_INT32:
+            writeInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_FIXED64:
+            writeFixed64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_FIXED32:
+            writeFixed32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_UINT32:
+            writeUint32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_SFIXED32:
+            writeSFixed32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SFIXED64:
+            writeSFixed64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_SINT32:
+            writeZigzagInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SINT64:
+            writeZigzagInt64Impl(id, (long long)val);
+            break;
         default:
             ALOGW("Field type %d is not supported when writing double val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
     return true;
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, float val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, float val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
-        case FIELD_TYPE_DOUBLE:   writeDoubleImpl(id, (double)val);           break;
-        case FIELD_TYPE_FLOAT:    writeFloatImpl(id, (float)val);             break;
-        case FIELD_TYPE_INT64:    writeInt64Impl(id, (long long)val);         break;
-        case FIELD_TYPE_UINT64:   writeUint64Impl(id, (uint64_t)val);         break;
-        case FIELD_TYPE_INT32:    writeInt32Impl(id, (int)val);               break;
-        case FIELD_TYPE_FIXED64:  writeFixed64Impl(id, (uint64_t)val);        break;
-        case FIELD_TYPE_FIXED32:  writeFixed32Impl(id, (uint32_t)val);        break;
-        case FIELD_TYPE_UINT32:   writeUint32Impl(id, (uint32_t)val);         break;
-        case FIELD_TYPE_SFIXED32: writeSFixed32Impl(id, (int)val);            break;
-        case FIELD_TYPE_SFIXED64: writeSFixed64Impl(id, (long long)val);      break;
-        case FIELD_TYPE_SINT32:   writeZigzagInt32Impl(id, (int)val);         break;
-        case FIELD_TYPE_SINT64:   writeZigzagInt64Impl(id, (long long)val);   break;
+        case FIELD_TYPE_DOUBLE:
+            writeDoubleImpl(id, (double)val);
+            break;
+        case FIELD_TYPE_FLOAT:
+            writeFloatImpl(id, (float)val);
+            break;
+        case FIELD_TYPE_INT64:
+            writeInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_UINT64:
+            writeUint64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_INT32:
+            writeInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_FIXED64:
+            writeFixed64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_FIXED32:
+            writeFixed32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_UINT32:
+            writeUint32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_SFIXED32:
+            writeSFixed32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SFIXED64:
+            writeSFixed64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_SINT32:
+            writeZigzagInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SINT64:
+            writeZigzagInt64Impl(id, (long long)val);
+            break;
         default:
             ALOGW("Field type %d is not supported when writing float val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
     return true;
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, int val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, int val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
-        case FIELD_TYPE_DOUBLE:   writeDoubleImpl(id, (double)val);           break;
-        case FIELD_TYPE_FLOAT:    writeFloatImpl(id, (float)val);             break;
-        case FIELD_TYPE_INT64:    writeInt64Impl(id, (long long)val);         break;
-        case FIELD_TYPE_UINT64:   writeUint64Impl(id, (uint64_t)val);         break;
-        case FIELD_TYPE_INT32:    writeInt32Impl(id, (int)val);               break;
-        case FIELD_TYPE_FIXED64:  writeFixed64Impl(id, (uint64_t)val);        break;
-        case FIELD_TYPE_FIXED32:  writeFixed32Impl(id, (uint32_t)val);        break;
-        case FIELD_TYPE_UINT32:   writeUint32Impl(id, (uint32_t)val);         break;
-        case FIELD_TYPE_SFIXED32: writeSFixed32Impl(id, (int)val);            break;
-        case FIELD_TYPE_SFIXED64: writeSFixed64Impl(id, (long long)val);      break;
-        case FIELD_TYPE_SINT32:   writeZigzagInt32Impl(id, (int)val);         break;
-        case FIELD_TYPE_SINT64:   writeZigzagInt64Impl(id, (long long)val);   break;
-        case FIELD_TYPE_ENUM:     writeEnumImpl(id, (int)val);                break;
-        case FIELD_TYPE_BOOL:     writeBoolImpl(id, val != 0);                break;
+        case FIELD_TYPE_DOUBLE:
+            writeDoubleImpl(id, (double)val);
+            break;
+        case FIELD_TYPE_FLOAT:
+            writeFloatImpl(id, (float)val);
+            break;
+        case FIELD_TYPE_INT64:
+            writeInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_UINT64:
+            writeUint64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_INT32:
+            writeInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_FIXED64:
+            writeFixed64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_FIXED32:
+            writeFixed32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_UINT32:
+            writeUint32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_SFIXED32:
+            writeSFixed32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SFIXED64:
+            writeSFixed64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_SINT32:
+            writeZigzagInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SINT64:
+            writeZigzagInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_ENUM:
+            writeEnumImpl(id, (int)val);
+            break;
+        case FIELD_TYPE_BOOL:
+            writeBoolImpl(id, val != 0);
+            break;
         default:
             ALOGW("Field type %d is not supported when writing int val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
     return true;
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, long long val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, long long val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
-        case FIELD_TYPE_DOUBLE:   writeDoubleImpl(id, (double)val);           break;
-        case FIELD_TYPE_FLOAT:    writeFloatImpl(id, (float)val);             break;
-        case FIELD_TYPE_INT64:    writeInt64Impl(id, (long long)val);         break;
-        case FIELD_TYPE_UINT64:   writeUint64Impl(id, (uint64_t)val);         break;
-        case FIELD_TYPE_INT32:    writeInt32Impl(id, (int)val);               break;
-        case FIELD_TYPE_FIXED64:  writeFixed64Impl(id, (uint64_t)val);        break;
-        case FIELD_TYPE_FIXED32:  writeFixed32Impl(id, (uint32_t)val);        break;
-        case FIELD_TYPE_UINT32:   writeUint32Impl(id, (uint32_t)val);         break;
-        case FIELD_TYPE_SFIXED32: writeSFixed32Impl(id, (int)val);            break;
-        case FIELD_TYPE_SFIXED64: writeSFixed64Impl(id, (long long)val);      break;
-        case FIELD_TYPE_SINT32:   writeZigzagInt32Impl(id, (int)val);         break;
-        case FIELD_TYPE_SINT64:   writeZigzagInt64Impl(id, (long long)val);   break;
-        case FIELD_TYPE_ENUM:     writeEnumImpl(id, (int)val);                break;
-        case FIELD_TYPE_BOOL:     writeBoolImpl(id, val != 0);                break;
+        case FIELD_TYPE_DOUBLE:
+            writeDoubleImpl(id, (double)val);
+            break;
+        case FIELD_TYPE_FLOAT:
+            writeFloatImpl(id, (float)val);
+            break;
+        case FIELD_TYPE_INT64:
+            writeInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_UINT64:
+            writeUint64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_INT32:
+            writeInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_FIXED64:
+            writeFixed64Impl(id, (uint64_t)val);
+            break;
+        case FIELD_TYPE_FIXED32:
+            writeFixed32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_UINT32:
+            writeUint32Impl(id, (uint32_t)val);
+            break;
+        case FIELD_TYPE_SFIXED32:
+            writeSFixed32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SFIXED64:
+            writeSFixed64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_SINT32:
+            writeZigzagInt32Impl(id, (int)val);
+            break;
+        case FIELD_TYPE_SINT64:
+            writeZigzagInt64Impl(id, (long long)val);
+            break;
+        case FIELD_TYPE_ENUM:
+            writeEnumImpl(id, (int)val);
+            break;
+        case FIELD_TYPE_BOOL:
+            writeBoolImpl(id, val != 0);
+            break;
         default:
             ALOGW("Field type %d is not supported when writing long long val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
     return true;
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, bool val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, bool val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
@@ -169,14 +256,12 @@ ProtoOutputStream::write(uint64_t fieldId, bool val)
             return true;
         default:
             ALOGW("Field type %d is not supported when writing bool val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, std::string val)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, std::string val) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
@@ -185,14 +270,12 @@ ProtoOutputStream::write(uint64_t fieldId, std::string val)
             return true;
         default:
             ALOGW("Field type %d is not supported when writing string val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
 }
 
-bool
-ProtoOutputStream::write(uint64_t fieldId, const char* val, size_t size)
-{
+bool ProtoOutputStream::write(uint64_t fieldId, const char* val, size_t size) {
     if (mCompact) return false;
     const uint32_t id = (uint32_t)fieldId;
     switch (fieldId & FIELD_TYPE_MASK) {
@@ -201,12 +284,13 @@ ProtoOutputStream::write(uint64_t fieldId, const char* val, size_t size)
             writeUtf8StringImpl(id, val, size);
             return true;
         case FIELD_TYPE_MESSAGE:
-            // can directly write valid format of message bytes into ProtoOutputStream without calling start/end
+            // can directly write valid format of message bytes into ProtoOutputStream without
+            // calling start/end
             writeMessageBytesImpl(id, val, size);
             return true;
         default:
             ALOGW("Field type %d is not supported when writing char[] val.",
-                    (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
+                  (int)((fieldId & FIELD_TYPE_MASK) >> FIELD_TYPE_SHIFT));
             return false;
     }
 }
@@ -224,13 +308,12 @@ ProtoOutputStream::write(uint64_t fieldId, const char* val, size_t size)
  *                  because of the overflow, and only the tokens are compared.
  *  Bits  0-31 - offset of the first size field in the buffer.
  */
-static uint64_t
-makeToken(uint32_t tagSize, bool repeated, uint32_t depth, uint32_t objectId, size_t sizePos) {
-    return ((UINT64_C(0x07) & (uint64_t)tagSize) << 61)
-            | (repeated ? (UINT64_C(1) << 60) : 0)
-            | (UINT64_C(0x01ff) & (uint64_t)depth) << 51
-            | (UINT64_C(0x07ffff) & (uint64_t)objectId) << 32
-            | (UINT64_C(0x0ffffffff) & (uint64_t)sizePos);
+static uint64_t makeToken(uint32_t tagSize, bool repeated, uint32_t depth, uint32_t objectId,
+                          size_t sizePos) {
+    return ((UINT64_C(0x07) & (uint64_t)tagSize) << 61) | (repeated ? (UINT64_C(1) << 60) : 0) |
+           (UINT64_C(0x01ff) & (uint64_t)depth) << 51 |
+           (UINT64_C(0x07ffff) & (uint64_t)objectId) << 32 |
+           (UINT64_C(0x0ffffffff) & (uint64_t)sizePos);
 }
 
 /**
@@ -254,9 +337,7 @@ static uint32_t getSizePosFromToken(uint64_t token) {
     return (uint32_t)token;
 }
 
-uint64_t
-ProtoOutputStream::start(uint64_t fieldId)
-{
+uint64_t ProtoOutputStream::start(uint64_t fieldId) {
     if ((fieldId & FIELD_TYPE_MASK) != FIELD_TYPE_MESSAGE) {
         ALOGE("Can't call start for non-message type field: 0x%" PRIx64, fieldId);
         return 0;
@@ -269,16 +350,14 @@ ProtoOutputStream::start(uint64_t fieldId)
 
     mDepth++;
     mObjectId++;
-    mBuffer.writeRawFixed64(mExpectedObjectToken); // push previous token into stack.
+    mBuffer.writeRawFixed64(mExpectedObjectToken);  // push previous token into stack.
 
-    mExpectedObjectToken = makeToken(sizePos - prevPos,
-        (bool)(fieldId & FIELD_COUNT_REPEATED), mDepth, mObjectId, sizePos);
+    mExpectedObjectToken = makeToken(sizePos - prevPos, (bool)(fieldId & FIELD_COUNT_REPEATED),
+                                     mDepth, mObjectId, sizePos);
     return mExpectedObjectToken;
 }
 
-void
-ProtoOutputStream::end(uint64_t token)
-{
+void ProtoOutputStream::end(uint64_t token) {
     if (token != mExpectedObjectToken) {
         ALOGE("Unexpected token: 0x%" PRIx64 ", should be 0x%" PRIx64, token, mExpectedObjectToken);
         return;
@@ -302,21 +381,18 @@ ProtoOutputStream::end(uint64_t token)
     // If raw size is larger than 0, write the negative value here to indicate a compact is needed.
     if (childRawSize > 0) {
         mBuffer.editRawFixed32(sizePos, -childRawSize);
-        mBuffer.editRawFixed32(sizePos+4, -1);
+        mBuffer.editRawFixed32(sizePos + 4, -1);
     } else {
         // reset wp which erase the header tag of the message when its size is 0.
         mBuffer.wp()->rewind()->move(sizePos - getTagSizeFromToken(token));
     }
 }
 
-size_t
-ProtoOutputStream::bytesWritten()
-{
+size_t ProtoOutputStream::bytesWritten() {
     return mBuffer.size();
 }
 
-bool
-ProtoOutputStream::compact() {
+bool ProtoOutputStream::compact() {
     if (mCompact) return true;
     if (mDepth != 0) {
         ALOGE("Can't compact when depth(%" PRIu32 ") is not zero. Missing calls to end.", mDepth);
@@ -324,7 +400,7 @@ ProtoOutputStream::compact() {
     }
     // record the size of the original buffer.
     size_t rawBufferSize = mBuffer.size();
-    if (rawBufferSize == 0) return true; // nothing to do if the buffer is empty;
+    if (rawBufferSize == 0) return true;  // nothing to do if the buffer is empty;
 
     // reset edit pointer and recursively compute encoded size of messages.
     mBuffer.ep()->rewind();
@@ -354,9 +430,7 @@ ProtoOutputStream::compact() {
  * First compaction pass.  Iterate through the data, and fill in the
  * nested object sizes so the next pass can compact them.
  */
-size_t
-ProtoOutputStream::editEncodedSize(size_t rawSize)
-{
+size_t ProtoOutputStream::editEncodedSize(size_t rawSize) {
     size_t objectStart = mBuffer.ep()->pos();
     size_t objectEnd = objectStart + rawSize;
     size_t encodedSize = 0;
@@ -382,12 +456,12 @@ ProtoOutputStream::editEncodedSize(size_t rawSize)
                 childEncodedSize = (int)mBuffer.readRawFixed32();
                 if (childRawSize >= 0 && childRawSize == childEncodedSize) {
                     mBuffer.ep()->move(childRawSize);
-                } else if (childRawSize < 0 && childEncodedSize == -1){
+                } else if (childRawSize < 0 && childEncodedSize == -1) {
                     childEncodedSize = editEncodedSize(-childRawSize);
                     mBuffer.editRawFixed32(childEncodedSizePos, childEncodedSize);
                 } else {
-                    ALOGE("Bad raw or encoded values: raw=%d, encoded=%d at %zu",
-                            childRawSize, childEncodedSize, childEncodedSizePos);
+                    ALOGE("Bad raw or encoded values: raw=%d, encoded=%d at %zu", childRawSize,
+                          childEncodedSize, childEncodedSizePos);
                     return 0;
                 }
                 encodedSize += get_varint_size(childEncodedSize) + childEncodedSize;
@@ -398,7 +472,7 @@ ProtoOutputStream::editEncodedSize(size_t rawSize)
                 break;
             default:
                 ALOGE("Unexpected wire type %d in editEncodedSize at [%zu, %zu]",
-                        read_wire_type(tag), objectStart, objectEnd);
+                      read_wire_type(tag), objectStart, objectEnd);
                 return 0;
         }
     }
@@ -410,9 +484,7 @@ ProtoOutputStream::editEncodedSize(size_t rawSize)
  * forward in the buffer, converting the pairs of uint32s into a single
  * unsigned varint of the size.
  */
-bool
-ProtoOutputStream::compactSize(size_t rawSize)
-{
+bool ProtoOutputStream::compactSize(size_t rawSize) {
     size_t objectStart = mBuffer.ep()->pos();
     size_t objectEnd = objectStart + rawSize;
     int childRawSize, childEncodedSize;
@@ -421,7 +493,8 @@ ProtoOutputStream::compactSize(size_t rawSize)
         uint32_t tag = (uint32_t)mBuffer.readRawVarint();
         switch (read_wire_type(tag)) {
             case WIRE_TYPE_VARINT:
-                while ((mBuffer.readRawByte() & 0x80) != 0) {}
+                while ((mBuffer.readRawByte() & 0x80) != 0) {
+                }
                 break;
             case WIRE_TYPE_FIXED64:
                 mBuffer.ep()->move(8);
@@ -437,11 +510,11 @@ ProtoOutputStream::compactSize(size_t rawSize)
                 mBuffer.writeRawVarint32(childEncodedSize);
                 if (childRawSize >= 0 && childRawSize == childEncodedSize) {
                     mBuffer.ep()->move(childEncodedSize);
-                } else if (childRawSize < 0){
+                } else if (childRawSize < 0) {
                     if (!compactSize(-childRawSize)) return false;
                 } else {
-                    ALOGE("Bad raw or encoded values: raw=%d, encoded=%d",
-                            childRawSize, childEncodedSize);
+                    ALOGE("Bad raw or encoded values: raw=%d, encoded=%d", childRawSize,
+                          childEncodedSize);
                     return false;
                 }
                 break;
@@ -449,17 +522,15 @@ ProtoOutputStream::compactSize(size_t rawSize)
                 mBuffer.ep()->move(4);
                 break;
             default:
-                ALOGE("Unexpected wire type %d in compactSize at [%zu, %zu]",
-                        read_wire_type(tag), objectStart, objectEnd);
+                ALOGE("Unexpected wire type %d in compactSize at [%zu, %zu]", read_wire_type(tag),
+                      objectStart, objectEnd);
                 return false;
         }
     }
     return true;
 }
 
-size_t
-ProtoOutputStream::size()
-{
+size_t ProtoOutputStream::size() {
     if (!compact()) {
         ALOGE("compact failed, the ProtoOutputStream data is corrupted!");
         // TODO: handle this error
@@ -467,8 +538,7 @@ ProtoOutputStream::size()
     return mBuffer.size();
 }
 
-static bool write_all(int fd, uint8_t const* buf, size_t size)
-{
+static bool write_all(int fd, uint8_t const* buf, size_t size) {
     while (size > 0) {
         ssize_t amt = ::write(fd, buf, size);
         if (amt < 0) {
@@ -480,9 +550,7 @@ static bool write_all(int fd, uint8_t const* buf, size_t size)
     return true;
 }
 
-bool
-ProtoOutputStream::flush(int fd)
-{
+bool ProtoOutputStream::flush(int fd) {
     if (fd < 0) return false;
     if (!compact()) return false;
 
@@ -494,9 +562,7 @@ ProtoOutputStream::flush(int fd)
     return true;
 }
 
-EncodedBuffer::iterator
-ProtoOutputStream::data()
-{
+EncodedBuffer::iterator ProtoOutputStream::data() {
     if (!compact()) {
         ALOGE("compact failed, the ProtoOutputStream data is corrupted!");
         // TODO: handle this error
@@ -504,27 +570,20 @@ ProtoOutputStream::data()
     return mBuffer.begin();
 }
 
-void
-ProtoOutputStream::writeRawVarint(uint64_t varint)
-{
+void ProtoOutputStream::writeRawVarint(uint64_t varint) {
     mBuffer.writeRawVarint64(varint);
 }
 
-void
-ProtoOutputStream::writeLengthDelimitedHeader(uint32_t id, size_t size)
-{
+void ProtoOutputStream::writeLengthDelimitedHeader(uint32_t id, size_t size) {
     mBuffer.writeHeader(id, WIRE_TYPE_LENGTH_DELIMITED);
     // reserves 64 bits for length delimited fields, if first field is negative, compact it.
     mBuffer.writeRawFixed32(size);
     mBuffer.writeRawFixed32(size);
 }
 
-void
-ProtoOutputStream::writeRawByte(uint8_t byte)
-{
+void ProtoOutputStream::writeRawByte(uint8_t byte) {
     mBuffer.writeRawByte(byte);
 }
-
 
 // =========================================================================
 // Private functions
@@ -533,130 +592,97 @@ ProtoOutputStream::writeRawByte(uint8_t byte)
  * bit_cast
  */
 template <class From, class To>
-inline To bit_cast(From const &from) {
+inline To bit_cast(From const& from) {
     To to;
     memcpy(&to, &from, sizeof(to));
     return to;
 }
 
-inline void
-ProtoOutputStream::writeDoubleImpl(uint32_t id, double val)
-{
+inline void ProtoOutputStream::writeDoubleImpl(uint32_t id, double val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED64);
     mBuffer.writeRawFixed64(bit_cast<double, uint64_t>(val));
 }
 
-inline void
-ProtoOutputStream::writeFloatImpl(uint32_t id, float val)
-{
+inline void ProtoOutputStream::writeFloatImpl(uint32_t id, float val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED32);
     mBuffer.writeRawFixed32(bit_cast<float, uint32_t>(val));
 }
 
-inline void
-ProtoOutputStream::writeInt64Impl(uint32_t id, long long val)
-{
+inline void ProtoOutputStream::writeInt64Impl(uint32_t id, long long val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint64((uint64_t)val);
 }
 
-inline void
-ProtoOutputStream::writeInt32Impl(uint32_t id, int val)
-{
+inline void ProtoOutputStream::writeInt32Impl(uint32_t id, int val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint32((uint32_t)val);
 }
 
-inline void
-ProtoOutputStream::writeUint64Impl(uint32_t id, uint64_t val)
-{
+inline void ProtoOutputStream::writeUint64Impl(uint32_t id, uint64_t val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint64(val);
 }
 
-inline void
-ProtoOutputStream::writeUint32Impl(uint32_t id, uint32_t val)
-{
+inline void ProtoOutputStream::writeUint32Impl(uint32_t id, uint32_t val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint32(val);
 }
 
-inline void
-ProtoOutputStream::writeFixed64Impl(uint32_t id, uint64_t val)
-{
+inline void ProtoOutputStream::writeFixed64Impl(uint32_t id, uint64_t val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED64);
     mBuffer.writeRawFixed64(val);
 }
 
-inline void
-ProtoOutputStream::writeFixed32Impl(uint32_t id, uint32_t val)
-{
+inline void ProtoOutputStream::writeFixed32Impl(uint32_t id, uint32_t val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED32);
     mBuffer.writeRawFixed32(val);
 }
 
-inline void
-ProtoOutputStream::writeSFixed64Impl(uint32_t id, long long val)
-{
+inline void ProtoOutputStream::writeSFixed64Impl(uint32_t id, long long val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED64);
     mBuffer.writeRawFixed64((uint64_t)val);
 }
 
-inline void
-ProtoOutputStream::writeSFixed32Impl(uint32_t id, int val)
-{
+inline void ProtoOutputStream::writeSFixed32Impl(uint32_t id, int val) {
     mBuffer.writeHeader(id, WIRE_TYPE_FIXED32);
     mBuffer.writeRawFixed32((uint32_t)val);
 }
 
-inline void
-ProtoOutputStream::writeZigzagInt64Impl(uint32_t id, long long val)
-{
+inline void ProtoOutputStream::writeZigzagInt64Impl(uint32_t id, long long val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint64((val << 1) ^ (val >> 63));
 }
 
-inline void
-ProtoOutputStream::writeZigzagInt32Impl(uint32_t id, int val)
-{
+inline void ProtoOutputStream::writeZigzagInt32Impl(uint32_t id, int val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint32((val << 1) ^ (val >> 31));
 }
 
-inline void
-ProtoOutputStream::writeEnumImpl(uint32_t id, int val)
-{
+inline void ProtoOutputStream::writeEnumImpl(uint32_t id, int val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
-    mBuffer.writeRawVarint32((uint32_t) val);
+    mBuffer.writeRawVarint32((uint32_t)val);
 }
 
-inline void
-ProtoOutputStream::writeBoolImpl(uint32_t id, bool val)
-{
+inline void ProtoOutputStream::writeBoolImpl(uint32_t id, bool val) {
     mBuffer.writeHeader(id, WIRE_TYPE_VARINT);
     mBuffer.writeRawVarint32(val ? 1 : 0);
 }
 
-inline void
-ProtoOutputStream::writeUtf8StringImpl(uint32_t id, const char* val, size_t size)
-{
+inline void ProtoOutputStream::writeUtf8StringImpl(uint32_t id, const char* val, size_t size) {
     if (val == NULL) return;
     writeLengthDelimitedHeader(id, size);
-    for (size_t i=0; i<size; i++) {
+    for (size_t i = 0; i < size; i++) {
         mBuffer.writeRawByte((uint8_t)val[i]);
     }
 }
 
-inline void
-ProtoOutputStream::writeMessageBytesImpl(uint32_t id, const char* val, size_t size)
-{
+inline void ProtoOutputStream::writeMessageBytesImpl(uint32_t id, const char* val, size_t size) {
     if (val == NULL) return;
     writeLengthDelimitedHeader(id, size);
-    for (size_t i=0; i<size; i++) {
+    for (size_t i = 0; i < size; i++) {
         mBuffer.writeRawByte(val[i]);
     }
 }
 
-} // util
-} // android
-
+}  // namespace util
+}  // namespace android

@@ -29,16 +29,14 @@ class ImmutableMap {
   static_assert(is_comparable<TKey, TKey>::value, "key is not comparable");
 
  public:
-  using const_iterator =
-      typename std::vector<std::pair<TKey, TValue>>::const_iterator;
+  using const_iterator = typename std::vector<std::pair<TKey, TValue>>::const_iterator;
 
   ImmutableMap(ImmutableMap&&) noexcept = default;
   ImmutableMap& operator=(ImmutableMap&&) noexcept = default;
 
   static ImmutableMap<TKey, TValue> CreatePreSorted(
       std::initializer_list<std::pair<TKey, TValue>> list) {
-    return ImmutableMap(
-        std::vector<std::pair<TKey, TValue>>(list.begin(), list.end()));
+    return ImmutableMap(std::vector<std::pair<TKey, TValue>>(list.begin(), list.end()));
   }
 
   static ImmutableMap<TKey, TValue> CreateAndSort(
@@ -48,11 +46,10 @@ class ImmutableMap {
     return ImmutableMap(std::move(data));
   }
 
-  template <typename TKey2, typename = typename std::enable_if<
-                                is_comparable<TKey, TKey2>::value>::type>
+  template <typename TKey2,
+            typename = typename std::enable_if<is_comparable<TKey, TKey2>::value>::type>
   const_iterator find(const TKey2& key) const {
-    auto cmp = [](const std::pair<TKey, TValue>& candidate,
-                  const TKey2& target) -> bool {
+    auto cmp = [](const std::pair<TKey, TValue>& candidate, const TKey2& target) -> bool {
       return candidate.first < target;
     };
 
@@ -64,15 +61,19 @@ class ImmutableMap {
     return end_iter;
   }
 
-  const_iterator begin() const { return data_.begin(); }
+  const_iterator begin() const {
+    return data_.begin();
+  }
 
-  const_iterator end() const { return data_.end(); }
+  const_iterator end() const {
+    return data_.end();
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ImmutableMap);
 
-  explicit ImmutableMap(std::vector<std::pair<TKey, TValue>> data)
-      : data_(std::move(data)) {}
+  explicit ImmutableMap(std::vector<std::pair<TKey, TValue>> data) : data_(std::move(data)) {
+  }
 
   std::vector<std::pair<TKey, TValue>> data_;
 };

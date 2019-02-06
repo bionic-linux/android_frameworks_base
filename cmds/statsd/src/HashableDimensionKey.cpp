@@ -18,8 +18,8 @@
 
 #include <mutex>
 
-#include "HashableDimensionKey.h"
 #include "FieldValue.h"
+#include "HashableDimensionKey.h"
 
 namespace android {
 namespace os {
@@ -70,8 +70,8 @@ bool filterValues(const vector<Matcher>& matcherFields, const vector<FieldValue>
             if (value.mField.matches(matcher)) {
                 output->addValue(value);
                 output->mutableValue(num_matches)->mField.setTag(value.mField.getTag());
-                output->mutableValue(num_matches)->mField.setField(
-                    value.mField.getField() & matcher.mMask);
+                output->mutableValue(num_matches)
+                        ->mField.setField(value.mField.getField() & matcher.mMask);
                 num_matches++;
             }
         }
@@ -104,9 +104,9 @@ void getDimensionForCondition(const std::vector<FieldValue>& eventValues,
 
     for (size_t i = 0; i < count; i++) {
         conditionDimension->mutableValue(i)->mField.setField(
-            links.conditionFields[i].mMatcher.getField());
+                links.conditionFields[i].mMatcher.getField());
         conditionDimension->mutableValue(i)->mField.setTag(
-            links.conditionFields[i].mMatcher.getTag());
+                links.conditionFields[i].mMatcher.getTag());
     }
 }
 

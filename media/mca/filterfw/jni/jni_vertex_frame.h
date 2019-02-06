@@ -23,32 +23,28 @@
 extern "C" {
 #endif
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_VertexFrame_nativeAllocate(JNIEnv* env, jobject thiz, jint size);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_VertexFrame_nativeAllocate(JNIEnv* env,
+                                                                                 jobject thiz,
+                                                                                 jint size);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_VertexFrame_nativeDeallocate(JNIEnv* env, jobject thiz);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_VertexFrame_nativeDeallocate(JNIEnv* env,
+                                                                                   jobject thiz);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_VertexFrame_setNativeInts(JNIEnv* env, jobject thiz, jintArray ints);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_VertexFrame_setNativeInts(JNIEnv* env,
+                                                                                jobject thiz,
+                                                                                jintArray ints);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_VertexFrame_setNativeFloats(JNIEnv* env,
-                                                       jobject thiz,
-                                                       jfloatArray floats);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_VertexFrame_setNativeFloats(
+        JNIEnv* env, jobject thiz, jfloatArray floats);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_VertexFrame_setNativeData(JNIEnv* env,
-                                                     jobject thiz,
-                                                     jbyteArray data,
-                                                     jint offset,
-                                                     jint length);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_VertexFrame_setNativeData(
+        JNIEnv* env, jobject thiz, jbyteArray data, jint offset, jint length);
 
-JNIEXPORT jint JNICALL
-Java_android_filterfw_core_VertexFrame_getNativeVboId(JNIEnv* env, jobject thiz);
+JNIEXPORT jint JNICALL Java_android_filterfw_core_VertexFrame_getNativeVboId(JNIEnv* env,
+                                                                             jobject thiz);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_VERTEX_FRAME_H
+#endif  // ANDROID_FILTERFW_JNI_VERTEX_FRAME_H

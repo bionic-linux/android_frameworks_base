@@ -28,7 +28,6 @@ using std::unique_ptr;
 using std::unordered_map;
 using std::vector;
 
-
 SimpleLogMatchingTracker::SimpleLogMatchingTracker(const int64_t& id, const int index,
                                                    const SimpleAtomMatcher& matcher,
                                                    const UidMap& uidMap)

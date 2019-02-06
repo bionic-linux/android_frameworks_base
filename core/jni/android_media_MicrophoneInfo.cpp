@@ -22,9 +22,7 @@ using namespace android;
 
 static jclass gArrayListClass;
 static jmethodID gArrayListCstor;
-static struct {
-    jmethodID add;
-} gArrayListMethods;
+static struct { jmethodID add; } gArrayListMethods;
 
 static jclass gFloatClass;
 static jmethodID gFloatCstor;
@@ -45,9 +43,8 @@ static jmethodID gPairCstor;
 
 namespace android {
 
-jint convertMicrophoneInfoFromNative(JNIEnv *env, jobject *jMicrophoneInfo,
-        const media::MicrophoneInfo *microphoneInfo)
-{
+jint convertMicrophoneInfoFromNative(JNIEnv* env, jobject* jMicrophoneInfo,
+                                     const media::MicrophoneInfo* microphoneInfo) {
     jint jStatus = (jint)AUDIO_JAVA_SUCCESS;
     jstring jDeviceId = NULL;
     jstring jAddress = NULL;
@@ -59,24 +56,22 @@ jint convertMicrophoneInfoFromNative(JNIEnv *env, jobject *jMicrophoneInfo,
     jDeviceId = env->NewStringUTF(String8(microphoneInfo->getDeviceId()).string());
     jAddress = env->NewStringUTF(String8(microphoneInfo->getAddress()).string());
     if (microphoneInfo->getGeometricLocation().size() != 3 ||
-            microphoneInfo->getOrientation().size() != 3) {
+        microphoneInfo->getOrientation().size() != 3) {
         jStatus = nativeToJavaStatus(BAD_VALUE);
         goto exit;
     }
-    jGeometricLocation = env->NewObject(gMicrophoneInfoCoordinateClass,
-                                        gMicrophoneInfoCoordinateCstor,
-                                        microphoneInfo->getGeometricLocation()[0],
-                                        microphoneInfo->getGeometricLocation()[1],
-                                        microphoneInfo->getGeometricLocation()[2]);
-    jOrientation = env->NewObject(gMicrophoneInfoCoordinateClass,
-                                  gMicrophoneInfoCoordinateCstor,
-                                  microphoneInfo->getOrientation()[0],
-                                  microphoneInfo->getOrientation()[1],
-                                  microphoneInfo->getOrientation()[2]);
+    jGeometricLocation = env->NewObject(
+            gMicrophoneInfoCoordinateClass, gMicrophoneInfoCoordinateCstor,
+            microphoneInfo->getGeometricLocation()[0], microphoneInfo->getGeometricLocation()[1],
+            microphoneInfo->getGeometricLocation()[2]);
+    jOrientation =
+            env->NewObject(gMicrophoneInfoCoordinateClass, gMicrophoneInfoCoordinateCstor,
+                           microphoneInfo->getOrientation()[0], microphoneInfo->getOrientation()[1],
+                           microphoneInfo->getOrientation()[2]);
     // Create a list of Pair for frequency response.
     if (microphoneInfo->getFrequencyResponses().size() != 2 ||
-            microphoneInfo->getFrequencyResponses()[0].size() !=
-                    microphoneInfo->getFrequencyResponses()[1].size()) {
+        microphoneInfo->getFrequencyResponses()[0].size() !=
+                microphoneInfo->getFrequencyResponses()[1].size()) {
         jStatus = nativeToJavaStatus(BAD_VALUE);
         goto exit;
     }
@@ -85,7 +80,7 @@ jint convertMicrophoneInfoFromNative(JNIEnv *env, jobject *jMicrophoneInfo,
         jobject jFrequency = env->NewObject(gFloatClass, gFloatCstor,
                                             microphoneInfo->getFrequencyResponses()[0][i]);
         jobject jResponse = env->NewObject(gFloatClass, gFloatCstor,
-                                          microphoneInfo->getFrequencyResponses()[1][i]);
+                                           microphoneInfo->getFrequencyResponses()[1][i]);
         jobject jFrequencyResponse = env->NewObject(gPairClass, gPairCstor, jFrequency, jResponse);
         env->CallBooleanMethod(jFrequencyResponses, gArrayListMethods.add, jFrequencyResponse);
         env->DeleteLocalRef(jFrequency);
@@ -102,27 +97,23 @@ jint convertMicrophoneInfoFromNative(JNIEnv *env, jobject *jMicrophoneInfo,
         int channelMappingType = microphoneInfo->getChannelMapping()[i];
         if (channelMappingType != AUDIO_MICROPHONE_CHANNEL_MAPPING_UNUSED) {
             jobject jChannelIndex = env->NewObject(gIntegerClass, gIntegerCstor, i);
-            jobject jChannelMappingType = env->NewObject(gIntegerClass, gIntegerCstor,
-                                                         channelMappingType);
-            jobject jChannelMapping = env->NewObject(gPairClass, gPairCstor,
-                                                     jChannelIndex, jChannelMappingType);
+            jobject jChannelMappingType =
+                    env->NewObject(gIntegerClass, gIntegerCstor, channelMappingType);
+            jobject jChannelMapping =
+                    env->NewObject(gPairClass, gPairCstor, jChannelIndex, jChannelMappingType);
             env->CallBooleanMethod(jChannelMappings, gArrayListMethods.add, jChannelMapping);
             env->DeleteLocalRef(jChannelIndex);
             env->DeleteLocalRef(jChannelMappingType);
             env->DeleteLocalRef(jChannelMapping);
         }
     }
-    *jMicrophoneInfo = env->NewObject(gMicrophoneInfoClass, gMicrophoneInfoCstor, jDeviceId,
-                                      microphoneInfo->getType(), jAddress,
-                                      microphoneInfo->getDeviceLocation(),
-                                      microphoneInfo->getDeviceGroup(),
-                                      microphoneInfo->getIndexInTheGroup(),
-                                      jGeometricLocation, jOrientation,
-                                      jFrequencyResponses, jChannelMappings,
-                                      microphoneInfo->getSensitivity(),
-                                      microphoneInfo->getMaxSpl(),
-                                      microphoneInfo->getMinSpl(),
-                                      microphoneInfo->getDirectionality());
+    *jMicrophoneInfo =
+            env->NewObject(gMicrophoneInfoClass, gMicrophoneInfoCstor, jDeviceId,
+                           microphoneInfo->getType(), jAddress, microphoneInfo->getDeviceLocation(),
+                           microphoneInfo->getDeviceGroup(), microphoneInfo->getIndexInTheGroup(),
+                           jGeometricLocation, jOrientation, jFrequencyResponses, jChannelMappings,
+                           microphoneInfo->getSensitivity(), microphoneInfo->getMaxSpl(),
+                           microphoneInfo->getMinSpl(), microphoneInfo->getDirectionality());
 
 exit:
     if (jDeviceId != NULL) {
@@ -146,10 +137,9 @@ exit:
     return jStatus;
 }
 
-}
+}  // namespace android
 
-int register_android_media_MicrophoneInfo(JNIEnv *env)
-{
+int register_android_media_MicrophoneInfo(JNIEnv* env) {
     jclass arrayListClass = FindClassOrDie(env, "java/util/ArrayList");
     gArrayListClass = MakeGlobalRefOrDie(env, arrayListClass);
     gArrayListCstor = GetMethodIDOrDie(env, arrayListClass, "<init>", "()V");
@@ -168,18 +158,22 @@ int register_android_media_MicrophoneInfo(JNIEnv *env)
 
     jclass microphoneInfoClass = FindClassOrDie(env, "android/media/MicrophoneInfo");
     gMicrophoneInfoClass = MakeGlobalRefOrDie(env, microphoneInfoClass);
-    gMicrophoneInfoCstor = GetMethodIDOrDie(env, microphoneInfoClass, "<init>",
-            "(Ljava/lang/String;ILjava/lang/String;IIILandroid/media/MicrophoneInfo$Coordinate3F;Landroid/media/MicrophoneInfo$Coordinate3F;Ljava/util/List;Ljava/util/List;FFFI)V");
+    gMicrophoneInfoCstor =
+            GetMethodIDOrDie(env, microphoneInfoClass, "<init>",
+                             "(Ljava/lang/String;ILjava/lang/String;IIILandroid/media/"
+                             "MicrophoneInfo$Coordinate3F;Landroid/media/"
+                             "MicrophoneInfo$Coordinate3F;Ljava/util/List;Ljava/util/List;FFFI)V");
 
-    jclass microphoneInfoCoordinateClass = FindClassOrDie(
-            env, "android/media/MicrophoneInfo$Coordinate3F");
+    jclass microphoneInfoCoordinateClass =
+            FindClassOrDie(env, "android/media/MicrophoneInfo$Coordinate3F");
     gMicrophoneInfoCoordinateClass = MakeGlobalRefOrDie(env, microphoneInfoCoordinateClass);
-    gMicrophoneInfoCoordinateCstor = GetMethodIDOrDie(env, microphoneInfoCoordinateClass, "<init>",
-           "(FFF)V");
+    gMicrophoneInfoCoordinateCstor =
+            GetMethodIDOrDie(env, microphoneInfoCoordinateClass, "<init>", "(FFF)V");
 
     jclass pairClass = FindClassOrDie(env, "android/util/Pair");
     gPairClass = MakeGlobalRefOrDie(env, pairClass);
-    gPairCstor = GetMethodIDOrDie(env, pairClass, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
+    gPairCstor =
+            GetMethodIDOrDie(env, pairClass, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
 
     return 0;
 }

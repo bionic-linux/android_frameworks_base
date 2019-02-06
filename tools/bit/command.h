@@ -23,8 +23,7 @@
 
 using namespace std;
 
-struct Command
-{
+struct Command {
     explicit Command(const string& prog);
     ~Command();
 
@@ -39,14 +38,14 @@ struct Command
 
     string prog;
     vector<string> args;
-    map<string,string> env;
+    map<string, string> env;
 };
 
 /**
  * Run the command and collect stdout.
  * Returns the exit code.
  */
-string get_command_output(const Command& command, int* err, bool quiet=false);
+string get_command_output(const Command& command, int* err, bool quiet = false);
 
 /**
  * Run the command.
@@ -57,5 +56,4 @@ int run_command(const Command& command);
 // Mac OS doesn't have execvpe. This is the same as execvpe.
 int exec_with_path_search(const char* prog, char const* const* argv, char const* const* envp);
 
-#endif // COMMAND_H
-
+#endif  // COMMAND_H

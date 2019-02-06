@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <utils/String8.h>
 #include <gtest/gtest.h>
+#include <utils/String8.h>
 
 #include "AaptAssets.h"
 #include "ResourceFilter.h"
@@ -24,7 +24,7 @@
 using android::String8;
 
 static ::testing::AssertionResult TestParse(AaptGroupEntry& entry, const String8& dirName,
-        String8* outType) {
+                                            String8* outType) {
     if (entry.initFromDirName(dirName, outType)) {
         return ::testing::AssertionSuccess() << dirName << " was successfully parsed";
     }
@@ -32,7 +32,7 @@ static ::testing::AssertionResult TestParse(AaptGroupEntry& entry, const String8
 }
 
 static ::testing::AssertionResult TestParse(AaptGroupEntry& entry, const char* input,
-        String8* outType) {
+                                            String8* outType) {
     return TestParse(entry, String8(input), outType);
 }
 

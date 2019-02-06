@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 #include <vector>
-#include "benchmark/benchmark.h"
 #include "FieldValue.h"
 #include "HashableDimensionKey.h"
+#include "benchmark/benchmark.h"
 #include "logd/LogEvent.h"
 #include "stats_log_util.h"
 
@@ -26,7 +26,7 @@ namespace statsd {
 
 using std::vector;
 
-static void createLogEventAndMatcher(LogEvent* event, FieldMatcher *field_matcher) {
+static void createLogEventAndMatcher(LogEvent* event, FieldMatcher* field_matcher) {
     AttributionNodeInternal node;
     node.set_uid(100);
     node.set_tag("LOCATION");

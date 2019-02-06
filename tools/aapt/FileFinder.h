@@ -10,9 +10,9 @@
 #ifndef FILEFINDER_H
 #define FILEFINDER_H
 
-#include <utils/Vector.h>
 #include <utils/KeyedVector.h>
 #include <utils/String8.h>
+#include <utils/Vector.h>
 
 #include "DirectoryWalker.h"
 
@@ -21,17 +21,15 @@ using namespace android;
 // Abstraction to allow for dependency injection. See MockFileFinder.h
 // for the testing implementation.
 class FileFinder {
-public:
+  public:
     virtual bool findFiles(String8 basePath, Vector<String8>& extensions,
-                           KeyedVector<String8,time_t>& fileStore,
-                           DirectoryWalker* dw) = 0;
+                           KeyedVector<String8, time_t>& fileStore, DirectoryWalker* dw) = 0;
 
-    virtual ~FileFinder() {};
+    virtual ~FileFinder(){};
 };
 
 class SystemFileFinder : public FileFinder {
-public:
-
+  public:
     /* findFiles takes a path, a Vector of extensions, and a destination KeyedVector
      *           and places path/modification date key/values pointing to
      *          all files with matching extensions found into the KeyedVector
@@ -54,10 +52,9 @@ public:
      * Recursively descends into subdirectories.
      */
     virtual bool findFiles(String8 basePath, Vector<String8>& extensions,
-                           KeyedVector<String8,time_t>& fileStore,
-                           DirectoryWalker* dw);
+                           KeyedVector<String8, time_t>& fileStore, DirectoryWalker* dw);
 
-private:
+  private:
     /**
      * checkAndAddFile looks at a single file path and stat combo
      * to determine whether it is a matching file (by looking at
@@ -74,7 +71,6 @@ private:
      */
     static void checkAndAddFile(const String8& path, const struct stat* stats,
                                 Vector<String8>& extensions,
-                                KeyedVector<String8,time_t>& fileStore);
-
+                                KeyedVector<String8, time_t>& fileStore);
 };
-#endif // FILEFINDER_H
+#endif  // FILEFINDER_H

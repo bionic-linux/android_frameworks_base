@@ -41,7 +41,8 @@ class ReferenceVisitor : public DescendingValueVisitor {
 
   ReferenceVisitor(const CallSite& callsite, IAaptContext* context, SymbolTable* symbols,
                    xml::IPackageDeclStack* decls)
-      : callsite_(callsite), context_(context), symbols_(symbols), decls_(decls), error_(false) {}
+      : callsite_(callsite), context_(context), symbols_(symbols), decls_(decls), error_(false) {
+  }
 
   void Visit(Reference* ref) override {
     if (!ReferenceLinker::LinkReference(callsite_, ref, context_, symbols_, decls_)) {

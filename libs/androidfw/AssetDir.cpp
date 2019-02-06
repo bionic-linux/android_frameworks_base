@@ -23,7 +23,6 @@
 
 using namespace android;
 
-
 /*
  * Find a matching entry in a vector of FileInfo.  Because it's sorted, we
  * can use a binary search.
@@ -31,12 +30,11 @@ using namespace android;
  * Assumes the vector is sorted in ascending order.
  */
 /*static*/ int AssetDir::FileInfo::findEntry(const SortedVector<FileInfo>* pVector,
-    const String8& fileName)
-{
-    FileInfo tmpInfo;
+                                             const String8& fileName) {
+  FileInfo tmpInfo;
 
-    tmpInfo.setFileName(fileName);
-    return pVector->indexOf(tmpInfo);
+  tmpInfo.setFileName(fileName);
+  return pVector->indexOf(tmpInfo);
 
 #if 0  // don't need this after all (uses 1/2 compares of SortedVector though)
     int lo, hi, cur;
@@ -63,4 +61,3 @@ using namespace android;
     return -1;
 #endif
 }
-

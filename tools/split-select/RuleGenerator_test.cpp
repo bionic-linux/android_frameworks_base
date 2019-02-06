@@ -16,8 +16,8 @@
 
 #include "RuleGenerator.h"
 
-#include "aapt/SdkConstants.h"
 #include "TestRules.h"
+#include "aapt/SdkConstants.h"
 
 #include <gtest/gtest.h>
 #include <utils/Vector.h>
@@ -34,23 +34,20 @@ TEST(RuleGeneratorTest, testAbiRules) {
     const ssize_t x86Index = abis.add(abi::Variant_x86);
 
     EXPECT_RULES_EQ(RuleGenerator::generateAbi(abis, armeabiIndex),
-            ContainsAnyRule(Rule::NATIVE_PLATFORM, "armeabi")
-    );
+                    ContainsAnyRule(Rule::NATIVE_PLATFORM, "armeabi"));
 
     EXPECT_RULES_EQ(RuleGenerator::generateAbi(abis, armeabi_v7aIndex),
-            ContainsAnyRule(Rule::NATIVE_PLATFORM, "armeabi-v7a", "arm64-v8a")
-    );
+                    ContainsAnyRule(Rule::NATIVE_PLATFORM, "armeabi-v7a", "arm64-v8a"));
 
     EXPECT_RULES_EQ(RuleGenerator::generateAbi(abis, x86Index),
-            ContainsAnyRule(Rule::NATIVE_PLATFORM, "x86", "x86_64")
-    );
+                    ContainsAnyRule(Rule::NATIVE_PLATFORM, "x86", "x86_64"));
 }
 
 TEST(RuleGeneratorTest, densityConstantsAreSane) {
-    EXPECT_LT(263, (int) ConfigDescription::DENSITY_XHIGH);
-    EXPECT_GT(262, (int) ConfigDescription::DENSITY_HIGH);
-    EXPECT_LT(363, (int) ConfigDescription::DENSITY_XXHIGH);
-    EXPECT_GT(362, (int) ConfigDescription::DENSITY_XHIGH);
+    EXPECT_LT(263, (int)ConfigDescription::DENSITY_XHIGH);
+    EXPECT_GT(262, (int)ConfigDescription::DENSITY_HIGH);
+    EXPECT_LT(363, (int)ConfigDescription::DENSITY_XXHIGH);
+    EXPECT_GT(362, (int)ConfigDescription::DENSITY_XHIGH);
 }
 
 TEST(RuleGeneratorTest, testDensityRules) {
@@ -60,20 +57,15 @@ TEST(RuleGeneratorTest, testDensityRules) {
     const ssize_t xxhighIndex = densities.add(ConfigDescription::DENSITY_XXHIGH);
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, highIndex),
-            AndRule()
-            .add(LtRule(Rule::SCREEN_DENSITY, 263))
-    );
+                    AndRule().add(LtRule(Rule::SCREEN_DENSITY, 263)));
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, xhighIndex),
-            AndRule()
-            .add(GtRule(Rule::SCREEN_DENSITY, 262))
-            .add(LtRule(Rule::SCREEN_DENSITY, 363))
-    );
+                    AndRule()
+                            .add(GtRule(Rule::SCREEN_DENSITY, 262))
+                            .add(LtRule(Rule::SCREEN_DENSITY, 363)));
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, xxhighIndex),
-            AndRule()
-            .add(GtRule(Rule::SCREEN_DENSITY, 362))
-    );
+                    AndRule().add(GtRule(Rule::SCREEN_DENSITY, 362)));
 }
 
 TEST(RuleGeneratorTest, testDensityRulesWithAnyDpi) {
@@ -84,27 +76,24 @@ TEST(RuleGeneratorTest, testDensityRulesWithAnyDpi) {
     const ssize_t anyIndex = densities.add(ConfigDescription::DENSITY_ANY);
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, highIndex),
-            AndRule()
-            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
-            .add(LtRule(Rule::SCREEN_DENSITY, 263))
-    );
+                    AndRule()
+                            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
+                            .add(LtRule(Rule::SCREEN_DENSITY, 263)));
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, xhighIndex),
-            AndRule()
-            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
-            .add(GtRule(Rule::SCREEN_DENSITY, 262))
-            .add(LtRule(Rule::SCREEN_DENSITY, 363))
-    );
+                    AndRule()
+                            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
+                            .add(GtRule(Rule::SCREEN_DENSITY, 262))
+                            .add(LtRule(Rule::SCREEN_DENSITY, 363)));
 
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, xxhighIndex),
-            AndRule()
-            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
-            .add(GtRule(Rule::SCREEN_DENSITY, 362))
-    );
+                    AndRule()
+                            .add(LtRule(Rule::SDK_VERSION, SDK_LOLLIPOP))
+                            .add(GtRule(Rule::SCREEN_DENSITY, 362)));
 
     // We expect AlwaysTrue because anydpi always has attached v21 to the configuration
     // and the rest of the rule generation code generates the sdk version checks.
     EXPECT_RULES_EQ(RuleGenerator::generateDensity(densities, anyIndex), AlwaysTrue());
 }
 
-} // namespace split
+}  // namespace split

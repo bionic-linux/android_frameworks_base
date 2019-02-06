@@ -19,8 +19,8 @@
 
 #include "android-base/stringprintf.h"
 #include "guardrail/StatsdStats.h"
-#include "storage/StorageManager.h"
 #include "stats_log_util.h"
+#include "storage/StorageManager.h"
 
 #include <android-base/file.h>
 #include <dirent.h>
@@ -219,7 +219,7 @@ void StorageManager::appendConfigMetricsReport(const ConfigKey& key, ProtoOutput
                 string content;
                 if (android::base::ReadFdToString(fd, &content)) {
                     proto->write(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED | FIELD_ID_REPORTS,
-                                content.c_str(), content.size());
+                                 content.c_str(), content.size());
                 }
                 close(fd);
             }
@@ -282,13 +282,12 @@ void StorageManager::readConfigFromDisk(map<ConfigKey, StatsdConfig>& configsMap
 
 bool StorageManager::readConfigFromDisk(const ConfigKey& key, StatsdConfig* config) {
     string content;
-    return config != nullptr &&
-        StorageManager::readConfigFromDisk(key, &content) && config->ParseFromString(content);
+    return config != nullptr && StorageManager::readConfigFromDisk(key, &content) &&
+           config->ParseFromString(content);
 }
 
 bool StorageManager::readConfigFromDisk(const ConfigKey& key, string* content) {
-    unique_ptr<DIR, decltype(&closedir)> dir(opendir(STATS_SERVICE_DIR),
-                                             closedir);
+    unique_ptr<DIR, decltype(&closedir)> dir(opendir(STATS_SERVICE_DIR), closedir);
     if (dir == NULL) {
         VLOG("Directory does not exist: %s", STATS_SERVICE_DIR);
         return false;
@@ -307,7 +306,7 @@ bool StorageManager::readConfigFromDisk(const ConfigKey& key, string* content) {
         if (suffixLen <= nameLen &&
             strncmp(name + nameLen - suffixLen, suffix.c_str(), suffixLen) == 0) {
             int fd = open(StringPrintf("%s/%s", STATS_SERVICE_DIR, name).c_str(),
-                                  O_RDONLY | O_CLOEXEC);
+                          O_RDONLY | O_CLOEXEC);
             if (fd != -1) {
                 if (android::base::ReadFdToString(fd, content)) {
                     return true;
@@ -319,8 +318,7 @@ bool StorageManager::readConfigFromDisk(const ConfigKey& key, string* content) {
     return false;
 }
 
-bool StorageManager::hasIdenticalConfig(const ConfigKey& key,
-                                        const vector<uint8_t>& config) {
+bool StorageManager::hasIdenticalConfig(const ConfigKey& key, const vector<uint8_t>& config) {
     string content;
     if (StorageManager::readConfigFromDisk(key, &content)) {
         vector<uint8_t> vec(content.begin(), content.end());
@@ -418,11 +416,8 @@ void StorageManager::printDirStats(FILE* out, const char* path) {
         int64_t timestamp = result[0];
         int64_t uid = result[1];
         int64_t configID = result[2];
-        fprintf(out, "\t #%d, Last updated: %lld, UID: %d, Config ID: %lld",
-                fileCount + 1,
-                (long long)timestamp,
-                (int)uid,
-                (long long)configID);
+        fprintf(out, "\t #%d, Last updated: %lld, UID: %d, Config ID: %lld", fileCount + 1,
+                (long long)timestamp, (int)uid, (long long)configID);
         string file_name = getFilePath(path, timestamp, uid, configID);
         ifstream file(file_name.c_str(), ifstream::in | ifstream::binary);
         if (file.is_open()) {
@@ -435,8 +430,8 @@ void StorageManager::printDirStats(FILE* out, const char* path) {
         fprintf(out, "\n");
         fileCount++;
     }
-    fprintf(out, "\tTotal number of files: %d, Total size of files: %d bytes.\n",
-            fileCount, totalFileSize);
+    fprintf(out, "\tTotal number of files: %d, Total size of files: %d bytes.\n", fileCount,
+            totalFileSize);
 }
 
 }  // namespace statsd

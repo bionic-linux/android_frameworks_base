@@ -33,7 +33,10 @@ const uint32_t kMaxNumberOfQuads = 2048;
 // This array is never used directly but used as a memcpy source in the
 // OpenGLRenderer constructor
 const TextureVertex kUnitQuadVertices[] = {
-        {0, 0, 0, 0}, {1, 0, 1, 0}, {0, 1, 0, 1}, {1, 1, 1, 1},
+        {0, 0, 0, 0},
+        {1, 0, 1, 0},
+        {0, 1, 0, 1},
+        {1, 1, 1, 1},
 };
 
 const GLsizei kVertexStride = sizeof(Vertex);

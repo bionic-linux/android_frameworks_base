@@ -31,9 +31,8 @@ public:
     MaxDurationTracker(const ConfigKey& key, const int64_t& id, const MetricDimensionKey& eventKey,
                        sp<ConditionWizard> wizard, int conditionIndex,
                        const std::vector<Matcher>& dimensionInCondition, bool nesting,
-                       int64_t currentBucketStartNs, int64_t currentBucketNum,
-                       int64_t startTimeNs, int64_t bucketSizeNs, bool conditionSliced,
-                       bool fullLink,
+                       int64_t currentBucketStartNs, int64_t currentBucketNum, int64_t startTimeNs,
+                       int64_t bucketSizeNs, bool conditionSliced, bool fullLink,
                        const std::vector<sp<DurationAnomalyTracker>>& anomalyTrackers);
 
     MaxDurationTracker(const MaxDurationTracker& tracker) = default;

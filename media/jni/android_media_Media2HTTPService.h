@@ -25,14 +25,14 @@
 namespace android {
 
 struct JMedia2HTTPService : public MediaHTTPService {
-    JMedia2HTTPService(JNIEnv *env, jobject thiz);
+    JMedia2HTTPService(JNIEnv* env, jobject thiz);
 
     virtual sp<MediaHTTPConnection> makeHTTPConnection() override;
 
-protected:
+  protected:
     virtual ~JMedia2HTTPService();
 
-private:
+  private:
     jobject mMedia2HTTPServiceObj;
 
     jmethodID mMakeHTTPConnectionMethod;

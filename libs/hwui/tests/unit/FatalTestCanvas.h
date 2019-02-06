@@ -132,4 +132,4 @@ public:
 
     int mDrawCounter = 0;  // counts how may draw calls of any kind were made to this canvas
 };
-}
+}  // namespace

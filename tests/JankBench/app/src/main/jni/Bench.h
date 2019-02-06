@@ -23,24 +23,20 @@
 
 #include <string.h>
 
-
-
 class Bench {
-public:
+  public:
     Bench();
     ~Bench();
 
     struct GFlop {
         int kernelXSize;
-        //int kernelYSize;
+        // int kernelYSize;
         int imageXSize;
-        //int imageYSize;
+        // int imageYSize;
 
-        float *srcBuffer;
-        float *kernelBuffer;
-        float *dstBuffer;
-
-
+        float* srcBuffer;
+        float* kernelBuffer;
+        float* dstBuffer;
     };
     GFlop mGFlop;
 
@@ -56,8 +52,7 @@ public:
 
     float runGFlopsTest(uint64_t options);
 
-    void getData(float *data, size_t count) const;
-
+    void getData(float* data, size_t count) const;
 
     void finish();
 
@@ -71,26 +66,24 @@ public:
     // true if the test is ongoing, false if time is up
     bool incTimeBucket() const;
 
-
-protected:
+  protected:
     WorkerPool mWorkers;
 
     bool mExit;
     bool mPaused;
 
-    static void testWork(void *usr, uint32_t idx);
+    static void testWork(void* usr, uint32_t idx);
 
-private:
-    uint8_t * volatile mMemSrc;
-    uint8_t * volatile mMemDst;
+  private:
+    uint8_t* volatile mMemSrc;
+    uint8_t* volatile mMemDst;
     size_t mMemLoopCount;
     size_t mMemLatencyLastSize;
 
-
-    float ** mIpKernel;
-    float * volatile * mSrcBuf;
-    float * volatile * mOutBuf;
-    uint32_t * mTimeBucket;
+    float** mIpKernel;
+    float* volatile* mSrcBuf;
+    float* volatile* mOutBuf;
+    uint32_t* mTimeBucket;
 
     uint64_t mTimeStartNanos;
     uint64_t mTimeEndNanos;
@@ -104,9 +97,6 @@ private:
     void GflopKernelC_y3();
 
     bool allocateBuckets(size_t);
-
-
 };
-
 
 #endif

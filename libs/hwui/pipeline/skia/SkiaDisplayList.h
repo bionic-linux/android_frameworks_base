@@ -17,9 +17,9 @@
 #pragma once
 
 #include "DisplayList.h"
-#include "hwui/AnimatedImageDrawable.h"
 #include "GLFunctorDrawable.h"
 #include "RenderNodeDrawable.h"
+#include "hwui/AnimatedImageDrawable.h"
 
 #include <SkLiteDL.h>
 #include <SkLiteRecorder.h>

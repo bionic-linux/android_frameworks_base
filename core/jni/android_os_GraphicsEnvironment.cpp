@@ -29,8 +29,8 @@ void setDriverPath(JNIEnv* env, jobject clazz, jstring path) {
 }
 
 void setLayerPaths_native(JNIEnv* env, jobject clazz, jobject classLoader, jstring layerPaths) {
-    android::NativeLoaderNamespace* appNamespace = android::FindNativeLoaderNamespaceByClassLoader(
-        env, classLoader);
+    android::NativeLoaderNamespace* appNamespace =
+            android::FindNativeLoaderNamespaceByClassLoader(env, classLoader);
     ScopedUtfChars layerPathsChars(env, layerPaths);
     android::GraphicsEnv::getInstance().setLayerPaths(appNamespace, layerPathsChars.c_str());
 }
@@ -43,14 +43,15 @@ void setDebugLayers_native(JNIEnv* env, jobject clazz, jstring layers) {
 }
 
 const JNINativeMethod g_methods[] = {
-    { "setDriverPath", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDriverPath) },
-    { "setLayerPaths", "(Ljava/lang/ClassLoader;Ljava/lang/String;)V", reinterpret_cast<void*>(setLayerPaths_native) },
-    { "setDebugLayers", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayers_native) },
+        {"setDriverPath", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDriverPath)},
+        {"setLayerPaths", "(Ljava/lang/ClassLoader;Ljava/lang/String;)V",
+         reinterpret_cast<void*>(setLayerPaths_native)},
+        {"setDebugLayers", "(Ljava/lang/String;)V", reinterpret_cast<void*>(setDebugLayers_native)},
 };
 
 const char* const kGraphicsEnvironmentName = "android/os/GraphicsEnvironment";
 
-} // anonymous namespace
+}  // anonymous namespace
 
 namespace android {
 
@@ -58,4 +59,4 @@ int register_android_os_GraphicsEnvironment(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kGraphicsEnvironmentName, g_methods, NELEM(g_methods));
 }
 
-} // namespace android
+}  // namespace android

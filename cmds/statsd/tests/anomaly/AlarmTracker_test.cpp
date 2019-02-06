@@ -34,8 +34,8 @@ const ConfigKey kConfigKey(0, 12345);
 
 TEST(AlarmTrackerTest, TestTriggerTimestamp) {
     sp<AlarmMonitor> subscriberAlarmMonitor =
-        new AlarmMonitor(100, [](const sp<IStatsCompanionService>&, int64_t){},
-                         [](const sp<IStatsCompanionService>&){});
+            new AlarmMonitor(100, [](const sp<IStatsCompanionService>&, int64_t) {},
+                             [](const sp<IStatsCompanionService>&) {});
     Alarm alarm;
     alarm.set_offset_millis(15 * MS_PER_SEC);
     alarm.set_period_millis(60 * 60 * MS_PER_SEC);  // 1hr
@@ -46,7 +46,7 @@ TEST(AlarmTrackerTest, TestTriggerTimestamp) {
 
     uint64_t currentTimeSec = startMillis / MS_PER_SEC + 10;
     std::unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>> firedAlarmSet =
-        subscriberAlarmMonitor->popSoonerThan(static_cast<uint32_t>(currentTimeSec));
+            subscriberAlarmMonitor->popSoonerThan(static_cast<uint32_t>(currentTimeSec));
     EXPECT_TRUE(firedAlarmSet.empty());
     tracker.informAlarmsFired(currentTimeSec * NS_PER_SEC, firedAlarmSet);
     EXPECT_EQ(tracker.mAlarmSec, (int64_t)(startMillis / MS_PER_SEC + 15));

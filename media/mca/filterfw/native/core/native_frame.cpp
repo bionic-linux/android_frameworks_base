@@ -20,42 +20,41 @@ namespace android {
 namespace filterfw {
 
 NativeFrame::NativeFrame(int size) : data_(NULL), size_(size), capacity_(size) {
-  data_ = capacity_ == 0 ? NULL : new uint8_t[capacity_];
+    data_ = capacity_ == 0 ? NULL : new uint8_t[capacity_];
 }
 
 NativeFrame::~NativeFrame() {
-  delete[] data_;
+    delete[] data_;
 }
 
 bool NativeFrame::WriteData(const uint8_t* data, int offset, int size) {
-  if (size_ >= (offset + size)) {
-    memcpy(data_ + offset, data, size);
-    return true;
-  }
-  return false;
+    if (size_ >= (offset + size)) {
+        memcpy(data_ + offset, data, size);
+        return true;
+    }
+    return false;
 }
 
 bool NativeFrame::SetData(uint8_t* data, int size) {
-  delete[] data_;
-  size_ = capacity_ = size;
-  data_ = data;
-  return true;
+    delete[] data_;
+    size_ = capacity_ = size;
+    data_ = data;
+    return true;
 }
 
 NativeFrame* NativeFrame::Clone() const {
-  NativeFrame* result = new NativeFrame(size_);
-  if (data_)
-    result->WriteData(data_, 0, size_);
-  return result;
+    NativeFrame* result = new NativeFrame(size_);
+    if (data_) result->WriteData(data_, 0, size_);
+    return result;
 }
 
 bool NativeFrame::Resize(int newSize) {
-  if (newSize <= capacity_ && newSize >= 0) {
-    size_ = newSize;
-    return true;
-  }
-  return false;
+    if (newSize <= capacity_ && newSize >= 0) {
+        size_ = newSize;
+        return true;
+    }
+    return false;
 }
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android

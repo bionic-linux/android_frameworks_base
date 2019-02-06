@@ -23,7 +23,7 @@ namespace android {
 namespace uhid {
 
 class DeviceCallback {
-public:
+  public:
     DeviceCallback(JNIEnv* env, jobject callback);
     ~DeviceCallback();
 
@@ -31,16 +31,16 @@ public:
     void onDeviceGetReport(uint32_t requestId, uint8_t reportId);
     void onDeviceError();
 
-private:
+  private:
     JNIEnv* getJNIEnv();
     jobject mCallbackObject;
     JavaVM* mJavaVM;
 };
 
 class Device {
-public:
+  public:
     static Device* open(int32_t id, const char* name, int32_t vid, int32_t pid,
-            std::vector<uint8_t> descriptor, std::unique_ptr<DeviceCallback> callback);
+                        std::vector<uint8_t> descriptor, std::unique_ptr<DeviceCallback> callback);
 
     Device(int32_t id, int fd, std::unique_ptr<DeviceCallback> callback);
     ~Device();
@@ -51,12 +51,11 @@ public:
 
     int handleEvents(int events);
 
-private:
+  private:
     int32_t mId;
     int mFd;
     std::unique_ptr<DeviceCallback> mDeviceCallback;
 };
 
-
-} // namespace uhid
-} // namespace android
+}  // namespace uhid
+}  // namespace android

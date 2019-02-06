@@ -17,15 +17,13 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "PageTypeInfoParser.h"
 #include "frameworks/base/core/proto/android/os/pagetypeinfo.proto.h"
 #include "ih_util.h"
-#include "PageTypeInfoParser.h"
 
 using namespace android::os;
 
-status_t
-PageTypeInfoParser::Parse(const int in, const int out) const
-{
+status_t PageTypeInfoParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
     bool migrateTypeSession = false;
@@ -33,9 +31,8 @@ PageTypeInfoParser::Parse(const int in, const int out) const
     header_t blockHeader;
 
     ProtoOutputStream proto;
-    Table table(PageTypeInfoProto::Block::_FIELD_NAMES,
-            PageTypeInfoProto::Block::_FIELD_IDS,
-            PageTypeInfoProto::Block::_FIELD_COUNT);
+    Table table(PageTypeInfoProto::Block::_FIELD_NAMES, PageTypeInfoProto::Block::_FIELD_IDS,
+                PageTypeInfoProto::Block::_FIELD_COUNT);
 
     while (reader.readLine(&line)) {
         if (line.empty()) {
@@ -68,11 +65,13 @@ PageTypeInfoParser::Parse(const int in, const int out) const
             // expect part 0 starts with "Node"
             if (stripPrefix(&record[0], "Node")) {
                 proto.write(PageTypeInfoProto::MigrateType::NODE, toInt(record[0]));
-            } else return BAD_VALUE;
+            } else
+                return BAD_VALUE;
             // expect part 1 starts with "zone"
             if (stripPrefix(&record[1], "zone")) {
                 proto.write(PageTypeInfoProto::MigrateType::ZONE, record[1]);
-            } else return BAD_VALUE;
+            } else
+                return BAD_VALUE;
             // expect part 2 starts with "type"
             if (stripPrefix(&record[2], "type")) {
                 // An example looks like:
@@ -81,29 +80,33 @@ PageTypeInfoParser::Parse(const int in, const int out) const
                 record_t pageCounts = parseRecord(record[2]);
 
                 proto.write(PageTypeInfoProto::MigrateType::TYPE, pageCounts[0]);
-                for (size_t i=1; i<pageCounts.size(); i++) {
-                    proto.write(PageTypeInfoProto::MigrateType::FREE_PAGES_COUNT, toInt(pageCounts[i]));
+                for (size_t i = 1; i < pageCounts.size(); i++) {
+                    proto.write(PageTypeInfoProto::MigrateType::FREE_PAGES_COUNT,
+                                toInt(pageCounts[i]));
                 }
-            } else return BAD_VALUE;
+            } else
+                return BAD_VALUE;
 
             proto.end(token);
         } else if (!blockHeader.empty() && record.size() == 2) {
             uint64_t token = proto.start(PageTypeInfoProto::BLOCKS);
             if (stripPrefix(&record[0], "Node")) {
                 proto.write(PageTypeInfoProto::Block::NODE, toInt(record[0]));
-            } else return BAD_VALUE;
+            } else
+                return BAD_VALUE;
 
             if (stripPrefix(&record[1], "zone")) {
                 record_t blockCounts = parseRecord(record[1]);
                 proto.write(PageTypeInfoProto::Block::ZONE, blockCounts[0]);
 
-                for (size_t i=0; i<blockHeader.size(); i++) {
-                    if (!table.insertField(&proto, blockHeader[i], blockCounts[i+1])) {
+                for (size_t i = 0; i < blockHeader.size(); i++) {
+                    if (!table.insertField(&proto, blockHeader[i], blockCounts[i + 1])) {
                         fprintf(stderr, "Header %s has bad data %s\n", blockHeader[i].c_str(),
-                            blockCounts[i+1].c_str());
+                                blockCounts[i + 1].c_str());
                     }
                 }
-            } else return BAD_VALUE;
+            } else
+                return BAD_VALUE;
             proto.end(token);
         }
     }

@@ -28,8 +28,8 @@
 #include "utils/TraceUtils.h"
 
 #include <GrBackendSurface.h>
-#include <SkImageInfo.h>
 #include <SkBlendMode.h>
+#include <SkImageInfo.h>
 
 #include <cutils/properties.h>
 #include <strings.h>
@@ -144,8 +144,8 @@ bool SkiaOpenGLPipeline::copyLayerInto(DeferredLayerUpdater* deferredLayer, SkBi
 
     if (!tmpSurface.get()) {
         surfaceInfo = surfaceInfo.makeColorType(SkColorType::kN32_SkColorType);
-        tmpSurface = SkSurface::MakeRenderTarget(mRenderThread.getGrContext(),
-                                                 SkBudgeted::kYes, surfaceInfo);
+        tmpSurface = SkSurface::MakeRenderTarget(mRenderThread.getGrContext(), SkBudgeted::kYes,
+                                                 surfaceInfo);
         if (!tmpSurface.get()) {
             ALOGW("Unable to readback GPU contents into the provided bitmap");
             return false;
@@ -165,11 +165,10 @@ bool SkiaOpenGLPipeline::copyLayerInto(DeferredLayerUpdater* deferredLayer, SkBi
         // if we fail to readback from the GPU directly (e.g. 565) then we attempt to read into 8888
         // and then draw that into the destination format before giving up.
         SkBitmap tmpBitmap;
-        SkImageInfo bitmapInfo = SkImageInfo::MakeN32(bitmap->width(), bitmap->height(),
-                                                      bitmap->alphaType());
+        SkImageInfo bitmapInfo =
+                SkImageInfo::MakeN32(bitmap->width(), bitmap->height(), bitmap->alphaType());
         if (tmpBitmap.tryAllocPixels(bitmapInfo) &&
-                tmpImage->readPixels(bitmapInfo, tmpBitmap.getPixels(),
-                                     tmpBitmap.rowBytes(), 0, 0)) {
+            tmpImage->readPixels(bitmapInfo, tmpBitmap.getPixels(), tmpBitmap.rowBytes(), 0, 0)) {
             SkCanvas canvas(*bitmap);
             SkPaint paint;
             paint.setBlendMode(SkBlendMode::kSrc);
@@ -183,7 +182,8 @@ bool SkiaOpenGLPipeline::copyLayerInto(DeferredLayerUpdater* deferredLayer, SkBi
 }
 
 static Layer* createLayer(RenderState& renderState, uint32_t layerWidth, uint32_t layerHeight,
-                          sk_sp<SkColorFilter> colorFilter, int alpha, SkBlendMode mode, bool blend) {
+                          sk_sp<SkColorFilter> colorFilter, int alpha, SkBlendMode mode,
+                          bool blend) {
     GlLayer* layer =
             new GlLayer(renderState, layerWidth, layerHeight, colorFilter, alpha, mode, blend);
     layer->generateTexture();
@@ -301,18 +301,23 @@ static bool isFP16Supported(const sk_sp<GrContext>& grContext) {
     static std::once_flag sOnceFlag;
     static bool supported = false;
 
-    std::call_once(sOnceFlag, [](const sk_sp<GrContext>& grContext) {
-        if (!grContext->caps()->isConfigTexturable(kRGBA_half_GrPixelConfig)) {
-            supported = false;
-            return;
-        }
+    std::call_once(sOnceFlag,
+                   [](const sk_sp<GrContext>& grContext) {
+                       if (!grContext->caps()->isConfigTexturable(kRGBA_half_GrPixelConfig)) {
+                           supported = false;
+                           return;
+                       }
 
-        sp<GraphicBuffer> buffer = new GraphicBuffer(1, 1, PIXEL_FORMAT_RGBA_FP16,
-                GraphicBuffer::USAGE_HW_TEXTURE | GraphicBuffer::USAGE_SW_WRITE_NEVER |
-                        GraphicBuffer::USAGE_SW_READ_NEVER, "tempFp16Buffer");
-        status_t error = buffer->initCheck();
-        supported = !error;
-    }, grContext);
+                       sp<GraphicBuffer> buffer =
+                               new GraphicBuffer(1, 1, PIXEL_FORMAT_RGBA_FP16,
+                                                 GraphicBuffer::USAGE_HW_TEXTURE |
+                                                         GraphicBuffer::USAGE_SW_WRITE_NEVER |
+                                                         GraphicBuffer::USAGE_SW_READ_NEVER,
+                                                 "tempFp16Buffer");
+                       status_t error = buffer->initCheck();
+                       supported = !error;
+                   },
+                   grContext);
 
     return supported;
 }

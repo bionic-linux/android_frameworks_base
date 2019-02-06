@@ -35,13 +35,11 @@ public:
 
     bool init(const std::vector<AtomMatcher>& allLogMatchers,
               const std::vector<sp<LogMatchingTracker>>& allTrackers,
-              const std::unordered_map<int64_t, int>& matcherMap,
-              std::vector<bool>& stack);
+              const std::unordered_map<int64_t, int>& matcherMap, std::vector<bool>& stack);
 
     ~CombinationLogMatchingTracker();
 
-    void onLogEvent(const LogEvent& event,
-                    const std::vector<sp<LogMatchingTracker>>& allTrackers,
+    void onLogEvent(const LogEvent& event, const std::vector<sp<LogMatchingTracker>>& allTrackers,
                     std::vector<MatchingState>& matcherResults) override;
 
 private:

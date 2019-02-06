@@ -112,8 +112,7 @@ private:
     /**
      * Save the configs to disk.
      */
-    void update_saved_configs_locked(const ConfigKey& key,
-                                     const std::vector<uint8_t>& buffer,
+    void update_saved_configs_locked(const ConfigKey& key, const std::vector<uint8_t>& buffer,
                                      const int numBytes);
 
     /**

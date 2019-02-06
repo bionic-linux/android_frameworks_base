@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <storage/IObbActionListener.h>
 #include <binder/Parcel.h>
+#include <storage/IObbActionListener.h>
 
 namespace android {
 
@@ -24,24 +24,21 @@ enum {
 };
 
 // This is a stub that real consumers should override.
-class BpObbActionListener: public BpInterface<IObbActionListener> {
-public:
-    explicit BpObbActionListener(const sp<IBinder>& impl)
-        : BpInterface<IObbActionListener>(impl)
-    { }
+class BpObbActionListener : public BpInterface<IObbActionListener> {
+  public:
+    explicit BpObbActionListener(const sp<IBinder>& impl) : BpInterface<IObbActionListener>(impl) {}
 
     virtual void onObbResult(const String16& /* filename */, const int32_t /* nonce */,
-                             const int32_t /* state */) { }
+                             const int32_t /* state */) {}
 };
 
 IMPLEMENT_META_INTERFACE(ObbActionListener, "android.os.storage.IObbActionListener")
 
 // ----------------------------------------------------------------------
 
-status_t BnObbActionListener::onTransact(
-    uint32_t code, const Parcel& data, Parcel* reply, uint32_t flags)
-{
-    switch(code) {
+status_t BnObbActionListener::onTransact(uint32_t code, const Parcel& data, Parcel* reply,
+                                         uint32_t flags) {
+    switch (code) {
         case TRANSACTION_onObbResult: {
             CHECK_INTERFACE(IObbActionListener, data, reply);
             String16 filename = data.readString16();
@@ -58,4 +55,4 @@ status_t BnObbActionListener::onTransact(
 
 // ----------------------------------------------------------------------
 
-}
+}  // namespace android

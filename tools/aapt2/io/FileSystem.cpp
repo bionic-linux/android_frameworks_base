@@ -30,7 +30,8 @@ using ::android::StringPiece;
 namespace aapt {
 namespace io {
 
-RegularFile::RegularFile(const Source& source) : source_(source) {}
+RegularFile::RegularFile(const Source& source) : source_(source) {
+}
 
 std::unique_ptr<IData> RegularFile::OpenAsData() {
   android::FileMap map;
@@ -52,7 +53,8 @@ const Source& RegularFile::GetSource() const {
 }
 
 FileCollectionIterator::FileCollectionIterator(FileCollection* collection)
-    : current_(collection->files_.begin()), end_(collection->files_.end()) {}
+    : current_(collection->files_.begin()), end_(collection->files_.end()) {
+}
 
 bool FileCollectionIterator::HasNext() {
   return current_ != end_;

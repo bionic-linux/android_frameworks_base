@@ -18,26 +18,26 @@
 #define LOG_TAG "AlarmManagerService"
 
 #include <nativehelper/JNIHelp.h>
-#include "jni.h"
 #include <utils/Log.h>
-#include <utils/misc.h>
 #include <utils/String8.h>
+#include <utils/misc.h>
+#include "jni.h"
 
-#include <dirent.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/epoll.h>
-#include <sys/timerfd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <arpa/inet.h>
-#include <netinet/in.h>
-#include <stdlib.h>
+#include <dirent.h>
 #include <errno.h>
-#include <unistd.h>
+#include <fcntl.h>
 #include <linux/ioctl.h>
 #include <linux/rtc.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/epoll.h>
+#include <sys/socket.h>
+#include <sys/timerfd.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <array>
 #include <memory>
@@ -61,35 +61,29 @@ static constexpr int ANDROID_ALARM_TIME_CHANGE_MASK = 1 << 16;
 static const size_t ANDROID_ALARM_TYPE_COUNT = 5;
 static const size_t N_ANDROID_TIMERFDS = ANDROID_ALARM_TYPE_COUNT + 1;
 static const clockid_t android_alarm_to_clockid[N_ANDROID_TIMERFDS] = {
-    CLOCK_REALTIME_ALARM,
-    CLOCK_REALTIME,
-    CLOCK_BOOTTIME_ALARM,
-    CLOCK_BOOTTIME,
-    CLOCK_MONOTONIC,
-    CLOCK_REALTIME,
+        CLOCK_REALTIME_ALARM, CLOCK_REALTIME,  CLOCK_BOOTTIME_ALARM,
+        CLOCK_BOOTTIME,       CLOCK_MONOTONIC, CLOCK_REALTIME,
 };
 
 typedef std::array<int, N_ANDROID_TIMERFDS> TimerFds;
 
-class AlarmImpl
-{
-public:
-    AlarmImpl(const TimerFds &fds, int epollfd, int rtc_id) :
-        fds{fds}, epollfd{epollfd}, rtc_id{rtc_id} { }
+class AlarmImpl {
+  public:
+    AlarmImpl(const TimerFds& fds, int epollfd, int rtc_id)
+        : fds{fds}, epollfd{epollfd}, rtc_id{rtc_id} {}
     ~AlarmImpl();
 
-    int set(int type, struct timespec *ts);
-    int setTime(struct timeval *tv);
+    int set(int type, struct timespec* ts);
+    int setTime(struct timeval* tv);
     int waitForAlarm();
 
-private:
+  private:
     const TimerFds fds;
     const int epollfd;
     const int rtc_id;
 };
 
-AlarmImpl::~AlarmImpl()
-{
+AlarmImpl::~AlarmImpl() {
     for (auto fd : fds) {
         epoll_ctl(epollfd, EPOLL_CTL_DEL, fd, nullptr);
         close(fd);
@@ -98,8 +92,7 @@ AlarmImpl::~AlarmImpl()
     close(epollfd);
 }
 
-int AlarmImpl::set(int type, struct timespec *ts)
-{
+int AlarmImpl::set(int type, struct timespec* ts) {
     if (static_cast<size_t>(type) > ANDROID_ALARM_TYPE_COUNT) {
         errno = EINVAL;
         return -1;
@@ -118,8 +111,7 @@ int AlarmImpl::set(int type, struct timespec *ts)
     return timerfd_settime(fds[type], TFD_TIMER_ABSTIME, &spec, NULL);
 }
 
-int AlarmImpl::setTime(struct timeval *tv)
-{
+int AlarmImpl::setTime(struct timeval* tv) {
     struct rtc_time rtc;
     struct tm tm, *gmtime_res;
     int fd;
@@ -162,15 +154,13 @@ int AlarmImpl::setTime(struct timeval *tv)
     rtc.tm_yday = tm.tm_yday;
     rtc.tm_isdst = tm.tm_isdst;
     res = ioctl(fd, RTC_SET_TIME, &rtc);
-    if (res < 0)
-        ALOGV("RTC_SET_TIME ioctl failed: %s\n", strerror(errno));
+    if (res < 0) ALOGV("RTC_SET_TIME ioctl failed: %s\n", strerror(errno));
 done:
     close(fd);
     return res;
 }
 
-int AlarmImpl::waitForAlarm()
-{
+int AlarmImpl::waitForAlarm() {
     epoll_event events[N_ANDROID_TIMERFDS];
 
     int nevents = epoll_wait(epollfd, events, N_ANDROID_TIMERFDS, -1);
@@ -197,9 +187,9 @@ int AlarmImpl::waitForAlarm()
     return result;
 }
 
-static jint android_server_AlarmManagerService_setKernelTime(JNIEnv*, jobject, jlong nativeData, jlong millis)
-{
-    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
+static jint android_server_AlarmManagerService_setKernelTime(JNIEnv*, jobject, jlong nativeData,
+                                                             jlong millis) {
+    AlarmImpl* impl = reinterpret_cast<AlarmImpl*>(nativeData);
     struct timeval tv;
     int ret;
 
@@ -207,22 +197,22 @@ static jint android_server_AlarmManagerService_setKernelTime(JNIEnv*, jobject, j
         return -1;
     }
 
-    tv.tv_sec = (time_t) (millis / 1000LL);
-    tv.tv_usec = (suseconds_t) ((millis % 1000LL) * 1000LL);
+    tv.tv_sec = (time_t)(millis / 1000LL);
+    tv.tv_usec = (suseconds_t)((millis % 1000LL) * 1000LL);
 
-    ALOGD("Setting time of day to sec=%d\n", (int) tv.tv_sec);
+    ALOGD("Setting time of day to sec=%d\n", (int)tv.tv_sec);
 
     ret = impl->setTime(&tv);
 
-    if(ret < 0) {
+    if (ret < 0) {
         ALOGW("Unable to set rtc to %ld: %s\n", tv.tv_sec, strerror(errno));
         ret = -1;
     }
     return ret;
 }
 
-static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobject, jlong, jint minswest)
-{
+static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobject, jlong,
+                                                                 jint minswest) {
     struct timezone tz;
 
     tz.tz_minuteswest = minswest;
@@ -241,11 +231,9 @@ static jint android_server_AlarmManagerService_setKernelTimezone(JNIEnv*, jobjec
 
 static const char rtc_sysfs[] = "/sys/class/rtc";
 
-static bool rtc_is_hctosys(unsigned int rtc_id)
-{
-    android::String8 hctosys_path = String8::format("%s/rtc%u/hctosys",
-            rtc_sysfs, rtc_id);
-    FILE *file = fopen(hctosys_path.string(), "re");
+static bool rtc_is_hctosys(unsigned int rtc_id) {
+    android::String8 hctosys_path = String8::format("%s/rtc%u/hctosys", rtc_sysfs, rtc_id);
+    FILE* file = fopen(hctosys_path.string(), "re");
     if (!file) {
         ALOGE("failed to open %s: %s", hctosys_path.string(), strerror(errno));
         return false;
@@ -255,8 +243,7 @@ static bool rtc_is_hctosys(unsigned int rtc_id)
     bool ret = false;
     int err = fscanf(file, "%u", &hctosys);
     if (err == EOF)
-        ALOGE("failed to read from %s: %s", hctosys_path.string(),
-                strerror(errno));
+        ALOGE("failed to read from %s: %s", hctosys_path.string(), strerror(errno));
     else if (err == 0)
         ALOGE("%s did not have expected contents", hctosys_path.string());
     else
@@ -266,15 +253,14 @@ static bool rtc_is_hctosys(unsigned int rtc_id)
     return ret;
 }
 
-static int wall_clock_rtc()
-{
-    std::unique_ptr<DIR, int(*)(DIR*)> dir(opendir(rtc_sysfs), closedir);
+static int wall_clock_rtc() {
+    std::unique_ptr<DIR, int (*)(DIR*)> dir(opendir(rtc_sysfs), closedir);
     if (!dir.get()) {
         ALOGE("failed to open %s: %s", rtc_sysfs, strerror(errno));
         return -1;
     }
 
-    struct dirent *dirent;
+    struct dirent* dirent;
     while (errno = 0, dirent = readdir(dir.get())) {
         unsigned int rtc_id;
         int matched = sscanf(dirent->d_name, "rtc%u", &rtc_id);
@@ -298,41 +284,41 @@ static int wall_clock_rtc()
     return -1;
 }
 
-static void log_timerfd_create_error(clockid_t id)
-{
+static void log_timerfd_create_error(clockid_t id) {
     if (errno == EINVAL) {
         switch (id) {
-        case CLOCK_REALTIME_ALARM:
-        case CLOCK_BOOTTIME_ALARM:
-            ALOGE("kernel missing required commits:");
-            ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6cffe00f7d4e24679eae6b7aae4caaf915288256");
-            ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11ffa9d6065f344a9bd769a2452f26f2f671e5f8");
-            LOG_ALWAYS_FATAL("kernel does not support timerfd_create() with alarm timers");
-            break;
+            case CLOCK_REALTIME_ALARM:
+            case CLOCK_BOOTTIME_ALARM:
+                ALOGE("kernel missing required commits:");
+                ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/"
+                      "?id=6cffe00f7d4e24679eae6b7aae4caaf915288256");
+                ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/"
+                      "?id=11ffa9d6065f344a9bd769a2452f26f2f671e5f8");
+                LOG_ALWAYS_FATAL("kernel does not support timerfd_create() with alarm timers");
+                break;
 
-        case CLOCK_BOOTTIME:
-            ALOGE("kernel missing required commit:");
-            ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4a2378a943f09907fb1ae35c15de917f60289c14");
-            LOG_ALWAYS_FATAL("kernel does not support timerfd_create(CLOCK_BOOTTIME)");
-            break;
+            case CLOCK_BOOTTIME:
+                ALOGE("kernel missing required commit:");
+                ALOGE("https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/"
+                      "?id=4a2378a943f09907fb1ae35c15de917f60289c14");
+                LOG_ALWAYS_FATAL("kernel does not support timerfd_create(CLOCK_BOOTTIME)");
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
     ALOGE("timerfd_create(%u) failed: %s", id, strerror(errno));
 }
 
-static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject)
-{
+static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject) {
     int epollfd;
     TimerFds fds;
 
     epollfd = epoll_create(fds.size());
     if (epollfd < 0) {
-        ALOGE("epoll_create(%zu) failed: %s", fds.size(),
-                strerror(errno));
+        ALOGE("epoll_create(%zu) failed: %s", fds.size(), strerror(errno));
         return 0;
     }
 
@@ -348,7 +334,7 @@ static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject)
         }
     }
 
-    AlarmImpl *ret = new AlarmImpl(fds, epollfd, wall_clock_rtc());
+    AlarmImpl* ret = new AlarmImpl(fds, epollfd, wall_clock_rtc());
 
     for (size_t i = 0; i < fds.size(); i++) {
         epoll_event event;
@@ -369,7 +355,7 @@ static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject)
        RTC change notifications, just set up as cancelable */
 
     int err = timerfd_settime(fds[ANDROID_ALARM_TYPE_COUNT],
-            TFD_TIMER_ABSTIME | TFD_TIMER_CANCEL_ON_SET, &spec, NULL);
+                              TFD_TIMER_ABSTIME | TFD_TIMER_CANCEL_ON_SET, &spec, NULL);
     if (err < 0) {
         ALOGE("timerfd_settime() failed: %s", strerror(errno));
         delete ret;
@@ -379,41 +365,35 @@ static jlong android_server_AlarmManagerService_init(JNIEnv*, jobject)
     return reinterpret_cast<jlong>(ret);
 }
 
-static void android_server_AlarmManagerService_close(JNIEnv*, jobject, jlong nativeData)
-{
-    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
+static void android_server_AlarmManagerService_close(JNIEnv*, jobject, jlong nativeData) {
+    AlarmImpl* impl = reinterpret_cast<AlarmImpl*>(nativeData);
     delete impl;
 }
 
-static jint android_server_AlarmManagerService_set(JNIEnv*, jobject, jlong nativeData, jint type, jlong seconds, jlong nanoseconds)
-{
-    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
+static jint android_server_AlarmManagerService_set(JNIEnv*, jobject, jlong nativeData, jint type,
+                                                   jlong seconds, jlong nanoseconds) {
+    AlarmImpl* impl = reinterpret_cast<AlarmImpl*>(nativeData);
     struct timespec ts;
     ts.tv_sec = seconds;
     ts.tv_nsec = nanoseconds;
 
     const int result = impl->set(type, &ts);
-    if (result < 0)
-    {
-        ALOGE("Unable to set alarm to %lld.%09lld: %s\n",
-              static_cast<long long>(seconds),
+    if (result < 0) {
+        ALOGE("Unable to set alarm to %lld.%09lld: %s\n", static_cast<long long>(seconds),
               static_cast<long long>(nanoseconds), strerror(errno));
     }
     return result >= 0 ? 0 : errno;
 }
 
-static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jlong nativeData)
-{
-    AlarmImpl *impl = reinterpret_cast<AlarmImpl *>(nativeData);
+static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jlong nativeData) {
+    AlarmImpl* impl = reinterpret_cast<AlarmImpl*>(nativeData);
     int result = 0;
 
-    do
-    {
+    do {
         result = impl->waitForAlarm();
     } while (result < 0 && errno == EINTR);
 
-    if (result < 0)
-    {
+    if (result < 0) {
         ALOGE("Unable to wait on alarm: %s\n", strerror(errno));
         return 0;
     }
@@ -422,19 +402,18 @@ static jint android_server_AlarmManagerService_waitForAlarm(JNIEnv*, jobject, jl
 }
 
 static const JNINativeMethod sMethods[] = {
-     /* name, signature, funcPtr */
-    {"init", "()J", (void*)android_server_AlarmManagerService_init},
-    {"close", "(J)V", (void*)android_server_AlarmManagerService_close},
-    {"set", "(JIJJ)I", (void*)android_server_AlarmManagerService_set},
-    {"waitForAlarm", "(J)I", (void*)android_server_AlarmManagerService_waitForAlarm},
-    {"setKernelTime", "(JJ)I", (void*)android_server_AlarmManagerService_setKernelTime},
-    {"setKernelTimezone", "(JI)I", (void*)android_server_AlarmManagerService_setKernelTimezone},
+        /* name, signature, funcPtr */
+        {"init", "()J", (void*)android_server_AlarmManagerService_init},
+        {"close", "(J)V", (void*)android_server_AlarmManagerService_close},
+        {"set", "(JIJJ)I", (void*)android_server_AlarmManagerService_set},
+        {"waitForAlarm", "(J)I", (void*)android_server_AlarmManagerService_waitForAlarm},
+        {"setKernelTime", "(JJ)I", (void*)android_server_AlarmManagerService_setKernelTime},
+        {"setKernelTimezone", "(JI)I", (void*)android_server_AlarmManagerService_setKernelTimezone},
 };
 
-int register_android_server_AlarmManagerService(JNIEnv* env)
-{
-    return jniRegisterNativeMethods(env, "com/android/server/AlarmManagerService",
-                                    sMethods, NELEM(sMethods));
+int register_android_server_AlarmManagerService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/AlarmManagerService", sMethods,
+                                    NELEM(sMethods));
 }
 
 } /* namespace android */

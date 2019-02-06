@@ -19,16 +19,16 @@
 
 #include <android_runtime/AndroidRuntime.h>
 #include <jni.h>
-#include <nativehelper/JNIHelp.h>
 #include <media/MediaAnalyticsItem.h>
+#include <nativehelper/JNIHelp.h>
 
 namespace android {
 
 class MediaMetricsJNI {
-public:
-    static jobject writeMetricsToBundle(JNIEnv* env, MediaAnalyticsItem *item, jobject mybundle);
+  public:
+    static jobject writeMetricsToBundle(JNIEnv* env, MediaAnalyticsItem* item, jobject mybundle);
 };
 
 };  // namespace android
 
-#endif //  _ANDROID_MEDIA_MEDIAMETRICSJNI_H_
+#endif  //  _ANDROID_MEDIA_MEDIAMETRICSJNI_H_

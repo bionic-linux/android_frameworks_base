@@ -17,14 +17,14 @@
 #ifndef _ANDROID_GRAPHICS_MATRIX_H_
 #define _ANDROID_GRAPHICS_MATRIX_H_
 
-#include "jni.h"
 #include "SkMatrix.h"
+#include "jni.h"
 
 namespace android {
 
 /* Gets the underlying SkMatrix from a Matrix object. */
 extern SkMatrix* android_graphics_Matrix_getSkMatrix(JNIEnv* env, jobject matrixObj);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_GRAPHICS_MATRIX_H_
+#endif  // _ANDROID_GRAPHICS_MATRIX_H_

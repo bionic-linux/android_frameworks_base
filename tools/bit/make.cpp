@@ -24,24 +24,22 @@
 #include <json/value.h>
 
 #include <fstream>
-#include <string>
 #include <map>
+#include <string>
 #include <thread>
 
-#include <sys/types.h>
 #include <dirent.h>
 #include <string.h>
+#include <sys/types.h>
 
 using namespace std;
 
-map<string,string> g_buildVars;
+map<string, string> g_buildVars;
 
-string
-get_build_var(const string& name, bool quiet)
-{
+string get_build_var(const string& name, bool quiet) {
     int err;
 
-    map<string,string>::iterator it = g_buildVars.find(name);
+    map<string, string>::iterator it = g_buildVars.find(name);
     if (it == g_buildVars.end()) {
         Command cmd("build/soong/soong_ui.bash");
         cmd.AddArg("--dumpvar-mode");
@@ -59,9 +57,7 @@ get_build_var(const string& name, bool quiet)
     }
 }
 
-string
-sniff_device_name(const string& buildOut, const string& product)
-{
+string sniff_device_name(const string& buildOut, const string& product) {
     string match("ro.build.product=" + product);
 
     string base(buildOut + "/target/product");
@@ -79,7 +75,7 @@ sniff_device_name(const string& buildOut, const string& product)
             string filename(base + "/" + entry->d_name + "/system/build.prop");
             vector<string> lines;
             split_lines(&lines, read_file(filename));
-            for (size_t i=0; i<lines.size(); i++) {
+            for (size_t i = 0; i < lines.size(); i++) {
                 if (lines[i] == match) {
                     return entry->d_name;
                 }
@@ -91,9 +87,7 @@ sniff_device_name(const string& buildOut, const string& product)
     return string();
 }
 
-void
-json_error(const string& filename, const char* error, bool quiet)
-{
+void json_error(const string& filename, const char* error, bool quiet) {
     if (!quiet) {
         print_error("Unable to parse module info file (%s): %s", error, filename.c_str());
         print_error("Have you done a full build?");
@@ -101,9 +95,7 @@ json_error(const string& filename, const char* error, bool quiet)
     exit(1);
 }
 
-static void
-get_values(const Json::Value& json, const string& name, vector<string>* result)
-{
+static void get_values(const Json::Value& json, const string& name, vector<string>* result) {
     Json::Value nullValue;
 
     const Json::Value& value = json.get(name, nullValue);
@@ -112,7 +104,7 @@ get_values(const Json::Value& json, const string& name, vector<string>* result)
     }
 
     const int N = value.size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const Json::Value& child = value[i];
         if (child.isString()) {
             result->push_back(child.asString());
@@ -120,9 +112,8 @@ get_values(const Json::Value& json, const string& name, vector<string>* result)
     }
 }
 
-void
-read_modules(const string& buildOut, const string& device, map<string,Module>* result, bool quiet)
-{
+void read_modules(const string& buildOut, const string& device, map<string, Module>* result,
+                  bool quiet) {
     string filename(string(buildOut + "/target/product/") + device + "/module-info.json");
     std::ifstream stream(filename, std::ifstream::binary);
 
@@ -148,7 +139,7 @@ read_modules(const string& buildOut, const string& device, map<string,Module>* r
 
     vector<string> names = json.getMemberNames();
     const int N = names.size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         const string& name = names[i];
 
         const Json::Value& value = json[name];
@@ -166,8 +157,8 @@ read_modules(const string& buildOut, const string& device, map<string,Module>* r
         // Only keep classes we can handle
         for (ssize_t i = module.classes.size() - 1; i >= 0; i--) {
             string cl = module.classes[i];
-            if (!(cl == "JAVA_LIBRARIES" || cl == "EXECUTABLES" || cl == "SHARED_LIBRARIES"
-                    || cl == "APPS" || cl == "NATIVE_TESTS")) {
+            if (!(cl == "JAVA_LIBRARIES" || cl == "EXECUTABLES" || cl == "SHARED_LIBRARIES" ||
+                  cl == "APPS" || cl == "NATIVE_TESTS")) {
                 module.classes.erase(module.classes.begin() + i);
             }
         }
@@ -190,15 +181,12 @@ read_modules(const string& buildOut, const string& device, map<string,Module>* r
     }
 }
 
-int
-build_goals(const vector<string>& goals)
-{
+int build_goals(const vector<string>& goals) {
     Command cmd("build/soong/soong_ui.bash");
     cmd.AddArg("--make-mode");
-    for (size_t i=0; i<goals.size(); i++) {
+    for (size_t i = 0; i < goals.size(); i++) {
         cmd.AddArg(goals[i]);
     }
 
     return run_command(cmd);
 }
-

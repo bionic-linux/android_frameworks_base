@@ -23,7 +23,9 @@
 
 namespace android {
 
-static inline uint32_t get_package(uint32_t attr) { return attr >> 24; }
+static inline uint32_t get_package(uint32_t attr) {
+  return attr >> 24;
+}
 
 /**
  * A helper class to search linearly for the requested
@@ -91,7 +93,8 @@ inline BackTrackingAttributeFinder<Derived, Iterator>::BackTrackingAttributeFind
       last_package_id_(0),
       current_attr_(0),
       framework_start_(end),
-      app_start_(end) {}
+      app_start_(end) {
+}
 
 template <typename Derived, typename Iterator>
 void BackTrackingAttributeFinder<Derived, Iterator>::JumpToClosestAttribute(

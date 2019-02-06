@@ -40,6 +40,5 @@ vector<string> split(const string& str, const char delimiter);
  */
 string stripPrefix(const string& str, const string& prefix);
 
-} // namespace stream_proto
-} // namespace android
-
+}  // namespace stream_proto
+}  // namespace android

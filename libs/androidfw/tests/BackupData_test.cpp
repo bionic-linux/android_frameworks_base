@@ -21,10 +21,10 @@
 
 #include <gtest/gtest.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 namespace android {
 
@@ -43,32 +43,32 @@ namespace android {
 // KEY4 is only ever deleted
 
 class BackupDataTest : public testing::Test {
-protected:
-    char* m_external_storage;
-    String8 mFilename;
-    String8 mKey1;
-    String8 mKey2;
-    String8 mKey3;
-    String8 mKey4;
+ protected:
+  char* m_external_storage;
+  String8 mFilename;
+  String8 mKey1;
+  String8 mKey2;
+  String8 mKey3;
+  String8 mKey4;
 
-    virtual void SetUp() {
-        m_external_storage = getenv("EXTERNAL_STORAGE");
-        mFilename.append(m_external_storage);
-        mFilename.append(TEST_FILENAME);
+  virtual void SetUp() {
+    m_external_storage = getenv("EXTERNAL_STORAGE");
+    mFilename.append(m_external_storage);
+    mFilename.append(TEST_FILENAME);
 
-        ::unlink(mFilename.string());
-        int fd = ::open(mFilename.string(), O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-        if (fd < 0) {
-            FAIL() << "Couldn't create " << mFilename.string() << " for writing";
-        }
-        mKey1 = String8(KEY1);
-        mKey2 = String8(KEY2);
-        mKey3 = String8(KEY3);
-        mKey4 = String8(KEY4);
-   }
-
-    virtual void TearDown() {
+    ::unlink(mFilename.string());
+    int fd = ::open(mFilename.string(), O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    if (fd < 0) {
+      FAIL() << "Couldn't create " << mFilename.string() << " for writing";
     }
+    mKey1 = String8(KEY1);
+    mKey2 = String8(KEY2);
+    mKey3 = String8(KEY3);
+    mKey4 = String8(KEY4);
+  }
+
+  virtual void TearDown() {
+  }
 };
 
 TEST_F(BackupDataTest, WriteAndReadSingle) {
@@ -76,37 +76,32 @@ TEST_F(BackupDataTest, WriteAndReadSingle) {
   BackupDataWriter* writer = new BackupDataWriter(fd);
 
   EXPECT_EQ(NO_ERROR, writer->WriteEntityHeader(mKey1, sizeof(DATA1)))
-          << "WriteEntityHeader returned an error";
+      << "WriteEntityHeader returned an error";
   EXPECT_EQ(NO_ERROR, writer->WriteEntityData(DATA1, sizeof(DATA1)))
-          << "WriteEntityData returned an error";
+      << "WriteEntityData returned an error";
 
   ::close(fd);
   fd = ::open(mFilename.string(), O_RDONLY);
   BackupDataReader* reader = new BackupDataReader(fd);
-  EXPECT_EQ(NO_ERROR, reader->Status())
-          << "Reader ctor failed";
+  EXPECT_EQ(NO_ERROR, reader->Status()) << "Reader ctor failed";
 
   bool done;
   int type;
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader";
 
   String8 key;
   size_t dataSize;
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error";
-  EXPECT_EQ(mKey1, key)
-          << "wrong key from ReadEntityHeader";
-  EXPECT_EQ(sizeof(DATA1), dataSize)
-          << "wrong size from ReadEntityHeader";
+      << "ReadEntityHeader returned an error";
+  EXPECT_EQ(mKey1, key) << "wrong key from ReadEntityHeader";
+  EXPECT_EQ(sizeof(DATA1), dataSize) << "wrong size from ReadEntityHeader";
 
   char* dataBytes = new char[dataSize];
-  EXPECT_EQ((int) dataSize, reader->ReadEntityData(dataBytes, dataSize))
-          << "ReadEntityData returned an error";
+  EXPECT_EQ((int)dataSize, reader->ReadEntityData(dataBytes, dataSize))
+      << "ReadEntityData returned an error";
   for (unsigned int i = 0; i < sizeof(DATA1); i++) {
-    EXPECT_EQ(DATA1[i], dataBytes[i])
-             << "data character " << i << " should be equal";
+    EXPECT_EQ(DATA1[i], dataBytes[i]) << "data character " << i << " should be equal";
   }
   delete[] dataBytes;
   delete writer;
@@ -139,22 +134,18 @@ TEST_F(BackupDataTest, WriteAndReadMultiple) {
 
   // read and verify second entity
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on second entity";
-  EXPECT_EQ(mKey2, key)
-          << "wrong key from ReadEntityHeader on second entity";
-  EXPECT_EQ(sizeof(DATA2), dataSize)
-          << "wrong size from ReadEntityHeader on second entity";
+      << "ReadEntityHeader returned an error on second entity";
+  EXPECT_EQ(mKey2, key) << "wrong key from ReadEntityHeader on second entity";
+  EXPECT_EQ(sizeof(DATA2), dataSize) << "wrong size from ReadEntityHeader on second entity";
 
   dataBytes = new char[dataSize];
   EXPECT_EQ((int)dataSize, reader->ReadEntityData(dataBytes, dataSize))
-          << "ReadEntityData returned an error on second entity";
+      << "ReadEntityData returned an error on second entity";
   for (unsigned int i = 0; i < sizeof(DATA2); i++) {
-    EXPECT_EQ(DATA2[i], dataBytes[i])
-             << "data character " << i << " should be equal";
+    EXPECT_EQ(DATA2[i], dataBytes[i]) << "data character " << i << " should be equal";
   }
   delete dataBytes;
   delete writer;
@@ -194,22 +185,18 @@ TEST_F(BackupDataTest, SkipEntity) {
 
   // read and verify third entity
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader after skip";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader after skip";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on third entity";
-  EXPECT_EQ(mKey3, key)
-          << "wrong key from ReadEntityHeader on third entity";
-  EXPECT_EQ(sizeof(DATA3), dataSize)
-          << "wrong size from ReadEntityHeader on third entity";
+      << "ReadEntityHeader returned an error on third entity";
+  EXPECT_EQ(mKey3, key) << "wrong key from ReadEntityHeader on third entity";
+  EXPECT_EQ(sizeof(DATA3), dataSize) << "wrong size from ReadEntityHeader on third entity";
 
   dataBytes = new char[dataSize];
-  EXPECT_EQ((int) dataSize, reader->ReadEntityData(dataBytes, dataSize))
-          << "ReadEntityData returned an error on third entity";
+  EXPECT_EQ((int)dataSize, reader->ReadEntityData(dataBytes, dataSize))
+      << "ReadEntityData returned an error on third entity";
   for (unsigned int i = 0; i < sizeof(DATA3); i++) {
-    EXPECT_EQ(DATA3[i], dataBytes[i])
-             << "data character " << i << " should be equal";
+    EXPECT_EQ(DATA3[i], dataBytes[i]) << "data character " << i << " should be equal";
   }
   delete dataBytes;
   delete writer;
@@ -241,15 +228,12 @@ TEST_F(BackupDataTest, DeleteEntity) {
 
   // read and verify deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader on deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader on deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on second entity";
-  EXPECT_EQ(mKey2, key)
-          << "wrong key from ReadEntityHeader on second entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on second entity";
+      << "ReadEntityHeader returned an error on second entity";
+  EXPECT_EQ(mKey2, key) << "wrong key from ReadEntityHeader on second entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on second entity";
 
   delete writer;
   delete reader;
@@ -282,34 +266,27 @@ TEST_F(BackupDataTest, EneityAfterDelete) {
 
   // read and verify deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader on deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader on deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on second entity";
-  EXPECT_EQ(mKey2, key)
-          << "wrong key from ReadEntityHeader on second entity";
-  EXPECT_EQ(-1, (int)dataSize)
-          << "not recognizing deletion on second entity";
+      << "ReadEntityHeader returned an error on second entity";
+  EXPECT_EQ(mKey2, key) << "wrong key from ReadEntityHeader on second entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on second entity";
 
   // read and verify third entity
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader after deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader after deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on third entity";
-  EXPECT_EQ(mKey3, key)
-          << "wrong key from ReadEntityHeader on third entity";
-  EXPECT_EQ(sizeof(DATA3), dataSize)
-          << "wrong size from ReadEntityHeader on third entity";
+      << "ReadEntityHeader returned an error on third entity";
+  EXPECT_EQ(mKey3, key) << "wrong key from ReadEntityHeader on third entity";
+  EXPECT_EQ(sizeof(DATA3), dataSize) << "wrong size from ReadEntityHeader on third entity";
 
   dataBytes = new char[dataSize];
-  EXPECT_EQ((int) dataSize, reader->ReadEntityData(dataBytes, dataSize))
-          << "ReadEntityData returned an error on third entity";
+  EXPECT_EQ((int)dataSize, reader->ReadEntityData(dataBytes, dataSize))
+      << "ReadEntityData returned an error on third entity";
   for (unsigned int i = 0; i < sizeof(DATA3); i++) {
-    EXPECT_EQ(DATA3[i], dataBytes[i])
-             << "data character " << i << " should be equal";
+    EXPECT_EQ(DATA3[i], dataBytes[i]) << "data character " << i << " should be equal";
   }
   delete dataBytes;
   delete writer;
@@ -334,51 +311,39 @@ TEST_F(BackupDataTest, OnlyDeleteEntities) {
   size_t dataSize;
   // read and verify first deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader first deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader first deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on first entity";
-  EXPECT_EQ(mKey1, key)
-          << "wrong key from ReadEntityHeader on first entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on first entity";
+      << "ReadEntityHeader returned an error on first entity";
+  EXPECT_EQ(mKey1, key) << "wrong key from ReadEntityHeader on first entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on first entity";
 
   // read and verify second deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader second deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader second deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on second entity";
-  EXPECT_EQ(mKey2, key)
-          << "wrong key from ReadEntityHeader on second entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on second entity";
+      << "ReadEntityHeader returned an error on second entity";
+  EXPECT_EQ(mKey2, key) << "wrong key from ReadEntityHeader on second entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on second entity";
 
   // read and verify third deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader third deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader third deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on third entity";
-  EXPECT_EQ(mKey3, key)
-          << "wrong key from ReadEntityHeader on third entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on third entity";
+      << "ReadEntityHeader returned an error on third entity";
+  EXPECT_EQ(mKey3, key) << "wrong key from ReadEntityHeader on third entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on third entity";
 
   // read and verify fourth deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader fourth deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader fourth deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on fourth entity";
-  EXPECT_EQ(mKey4, key)
-          << "wrong key from ReadEntityHeader on fourth entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on fourth entity";
+      << "ReadEntityHeader returned an error on fourth entity";
+  EXPECT_EQ(mKey4, key) << "wrong key from ReadEntityHeader on fourth entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on fourth entity";
 
   delete writer;
   delete reader;
@@ -400,15 +365,12 @@ TEST_F(BackupDataTest, ReadDeletedEntityData) {
   size_t dataSize;
   // read and verify first deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader first deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader first deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on first entity";
-  EXPECT_EQ(mKey1, key)
-          << "wrong key from ReadEntityHeader on first entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on first entity";
+      << "ReadEntityHeader returned an error on first entity";
+  EXPECT_EQ(mKey1, key) << "wrong key from ReadEntityHeader on first entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on first entity";
 
   // erroneously try to read first entity data
   char* dataBytes = new char[10];
@@ -419,19 +381,16 @@ TEST_F(BackupDataTest, ReadDeletedEntityData) {
 
   // read and verify second deletion
   reader->ReadNextHeader(&done, &type);
-  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type)
-          << "wrong type from ReadNextHeader second deletion";
+  EXPECT_EQ(BACKUP_HEADER_ENTITY_V1, type) << "wrong type from ReadNextHeader second deletion";
 
   EXPECT_EQ(NO_ERROR, reader->ReadEntityHeader(&key, &dataSize))
-          << "ReadEntityHeader returned an error on second entity";
-  EXPECT_EQ(mKey2, key)
-          << "wrong key from ReadEntityHeader on second entity";
-  EXPECT_EQ(-1, (int) dataSize)
-          << "not recognizing deletion on second entity";
+      << "ReadEntityHeader returned an error on second entity";
+  EXPECT_EQ(mKey2, key) << "wrong key from ReadEntityHeader on second entity";
+  EXPECT_EQ(-1, (int)dataSize) << "not recognizing deletion on second entity";
 
   delete[] dataBytes;
   delete writer;
   delete reader;
 }
 
-}
+}  // namespace android

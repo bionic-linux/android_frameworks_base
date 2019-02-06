@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-
 /*
  * System clock functions.
  */
 
-#include <sys/time.h>
-#include <limits.h>
-#include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <limits.h>
 #include <string.h>
+#include <sys/time.h>
 
 #include <nativehelper/JNIHelp.h>
-#include "jni.h"
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include <sys/time.h>
 #include <time.h>
@@ -38,17 +37,16 @@ namespace android {
 
 static_assert(std::is_same<int64_t, jlong>::value, "jlong isn't an int64_t");
 static_assert(std::is_same<decltype(uptimeMillis()), int64_t>::value,
-        "uptimeMillis signature change, expected int64_t return value");
+              "uptimeMillis signature change, expected int64_t return value");
 static_assert(std::is_same<decltype(elapsedRealtime()), int64_t>::value,
-        "uptimeMillis signature change, expected int64_t return value");
+              "uptimeMillis signature change, expected int64_t return value");
 static_assert(std::is_same<decltype(elapsedRealtimeNano()), int64_t>::value,
-        "uptimeMillis signature change, expected int64_t return value");
+              "uptimeMillis signature change, expected int64_t return value");
 
 /*
  * native public static long currentThreadTimeMillis();
  */
-static jlong android_os_SystemClock_currentThreadTimeMillis()
-{
+static jlong android_os_SystemClock_currentThreadTimeMillis() {
     struct timespec tm;
 
     clock_gettime(CLOCK_THREAD_CPUTIME_ID, &tm);
@@ -59,8 +57,7 @@ static jlong android_os_SystemClock_currentThreadTimeMillis()
 /*
  * native public static long currentThreadTimeMicro();
  */
-static jlong android_os_SystemClock_currentThreadTimeMicro()
-{
+static jlong android_os_SystemClock_currentThreadTimeMicro() {
     struct timespec tm;
 
     clock_gettime(CLOCK_THREAD_CPUTIME_ID, &tm);
@@ -71,8 +68,7 @@ static jlong android_os_SystemClock_currentThreadTimeMicro()
 /*
  * native public static long currentTimeMicro();
  */
-static jlong android_os_SystemClock_currentTimeMicro()
-{
+static jlong android_os_SystemClock_currentTimeMicro() {
     struct timeval tv;
 
     gettimeofday(&tv, NULL);
@@ -83,24 +79,19 @@ static jlong android_os_SystemClock_currentTimeMicro()
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-    // All of these are @CriticalNative, so we can defer directly to SystemClock.h for
-    // some of these
-    { "uptimeMillis", "()J", (void*) uptimeMillis },
-    { "elapsedRealtime", "()J", (void*) elapsedRealtime },
-    { "elapsedRealtimeNanos", "()J", (void*) elapsedRealtimeNano },
+        // All of these are @CriticalNative, so we can defer directly to SystemClock.h for
+        // some of these
+        {"uptimeMillis", "()J", (void*)uptimeMillis},
+        {"elapsedRealtime", "()J", (void*)elapsedRealtime},
+        {"elapsedRealtimeNanos", "()J", (void*)elapsedRealtimeNano},
 
-    // SystemClock doesn't have an implementation for these that we can directly call
-    { "currentThreadTimeMillis", "()J",
-            (void*) android_os_SystemClock_currentThreadTimeMillis },
-    { "currentThreadTimeMicro", "()J",
-            (void*) android_os_SystemClock_currentThreadTimeMicro },
-    { "currentTimeMicro", "()J",
-            (void*) android_os_SystemClock_currentTimeMicro },
+        // SystemClock doesn't have an implementation for these that we can directly call
+        {"currentThreadTimeMillis", "()J", (void*)android_os_SystemClock_currentThreadTimeMillis},
+        {"currentThreadTimeMicro", "()J", (void*)android_os_SystemClock_currentThreadTimeMicro},
+        {"currentTimeMicro", "()J", (void*)android_os_SystemClock_currentTimeMicro},
 };
-int register_android_os_SystemClock(JNIEnv* env)
-{
+int register_android_os_SystemClock(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/os/SystemClock", gMethods, NELEM(gMethods));
 }
 
-}; // namespace android
-
+};  // namespace android

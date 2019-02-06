@@ -32,15 +32,13 @@ ProductFilter::ResourceConfigValueIter ProductFilter::SelectProductToKeep(
       if (selected_product_iter != end) {
         // We have two possible values for this product!
         diag->Error(DiagMessage(config_value->value->GetSource())
-                    << "selection of product '" << config_value->product
-                    << "' for resource " << name << " is ambiguous");
+                    << "selection of product '" << config_value->product << "' for resource "
+                    << name << " is ambiguous");
 
-        ResourceConfigValue* previously_selected_config_value =
-            selected_product_iter->get();
-        diag->Note(
-            DiagMessage(previously_selected_config_value->value->GetSource())
-            << "product '" << previously_selected_config_value->product
-            << "' is also a candidate");
+        ResourceConfigValue* previously_selected_config_value = selected_product_iter->get();
+        diag->Note(DiagMessage(previously_selected_config_value->value->GetSource())
+                   << "product '" << previously_selected_config_value->product
+                   << "' is also a candidate");
         return end;
       }
 
@@ -52,14 +50,11 @@ ProductFilter::ResourceConfigValueIter ProductFilter::SelectProductToKeep(
       if (default_product_iter != end) {
         // We have two possible default values.
         diag->Error(DiagMessage(config_value->value->GetSource())
-                    << "multiple default products defined for resource "
-                    << name);
+                    << "multiple default products defined for resource " << name);
 
-        ResourceConfigValue* previously_default_config_value =
-            default_product_iter->get();
-        diag->Note(
-            DiagMessage(previously_default_config_value->value->GetSource())
-            << "default product also defined here");
+        ResourceConfigValue* previously_default_config_value = default_product_iter->get();
+        diag->Note(DiagMessage(previously_default_config_value->value->GetSource())
+                   << "default product also defined here");
         return end;
       }
 
@@ -69,8 +64,7 @@ ProductFilter::ResourceConfigValueIter ProductFilter::SelectProductToKeep(
   }
 
   if (default_product_iter == end) {
-    diag->Error(DiagMessage() << "no default product defined for resource "
-                              << name);
+    diag->Error(DiagMessage() << "no default product defined for resource " << name);
     return end;
   }
 
@@ -91,14 +85,13 @@ bool ProductFilter::Consume(IAaptContext* context, ResourceTable* table) {
         ResourceConfigValueIter start_range_iter = iter;
         while (iter != entry->values.end()) {
           ++iter;
-          if (iter == entry->values.end() ||
-              (*iter)->config != (*start_range_iter)->config) {
+          if (iter == entry->values.end() || (*iter)->config != (*start_range_iter)->config) {
             // End of the array, or we saw a different config,
             // so this must be the end of a range of products.
             // Select the product to keep from the set of products defined.
             ResourceNameRef name(pkg->name, type->type, entry->name);
-            auto value_to_keep = SelectProductToKeep(
-                name, start_range_iter, iter, context->GetDiagnostics());
+            auto value_to_keep =
+                SelectProductToKeep(name, start_range_iter, iter, context->GetDiagnostics());
             if (value_to_keep == iter) {
               // An error occurred, we could not pick a product.
               error = true;

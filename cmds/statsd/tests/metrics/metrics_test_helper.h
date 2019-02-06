@@ -28,8 +28,8 @@ class MockConditionWizard : public ConditionWizard {
 public:
     MOCK_METHOD6(query,
                  ConditionState(const int conditionIndex, const ConditionKey& conditionParameters,
-                                const vector<Matcher>& dimensionFields,
-                                const bool isSubsetDim, const bool isPartialLink,
+                                const vector<Matcher>& dimensionFields, const bool isSubsetDim,
+                                const bool isPartialLink,
                                 std::unordered_set<HashableDimensionKey>* dimensionKeySet));
 };
 
@@ -43,8 +43,8 @@ public:
 };
 
 class MockUidMap : public UidMap {
- public:
-  MOCK_CONST_METHOD1(getHostUidOrSelf, int(int uid));
+public:
+    MOCK_CONST_METHOD1(getHostUidOrSelf, int(int uid));
 };
 
 HashableDimensionKey getMockedDimensionKey(int tagId, int key, std::string value);

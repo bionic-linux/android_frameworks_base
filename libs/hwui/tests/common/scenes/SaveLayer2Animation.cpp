@@ -53,14 +53,14 @@ public:
             std::string stri = std::to_string(i);
             std::string offscreen = "offscreen line " + stri;
             TestUtils::drawUtf8ToCanvas(&canvas, offscreen.c_str(), mBluePaint, bounds.fLeft,
-                    top + padding);
+                                        top + padding);
             canvas.restore();
 
             canvas.drawRect(bounds.fLeft, top + padding, bounds.fRight,
                             top + smallRectHeight - padding, mBluePaint);
             std::string onscreen = "onscreen line " + stri;
             TestUtils::drawUtf8ToCanvas(&canvas, onscreen.c_str(), mGreenPaint, bounds.fLeft,
-                    top + smallRectHeight - padding);
+                                        top + smallRectHeight - padding);
         }
     }
     void doFrame(int frameNr) override {}

@@ -40,7 +40,7 @@ public:
         mValues = values;
     }
 
-    HashableDimensionKey() {};
+    HashableDimensionKey(){};
 
     HashableDimensionKey(const HashableDimensionKey& that) : mValues(that.getValues()){};
 
@@ -76,17 +76,17 @@ private:
 };
 
 class MetricDimensionKey {
- public:
+public:
     explicit MetricDimensionKey(const HashableDimensionKey& dimensionKeyInWhat,
                                 const HashableDimensionKey& dimensionKeyInCondition)
         : mDimensionKeyInWhat(dimensionKeyInWhat),
-          mDimensionKeyInCondition(dimensionKeyInCondition) {};
+          mDimensionKeyInCondition(dimensionKeyInCondition){};
 
     MetricDimensionKey(){};
 
     MetricDimensionKey(const MetricDimensionKey& that)
         : mDimensionKeyInWhat(that.getDimensionKeyInWhat()),
-          mDimensionKeyInCondition(that.getDimensionKeyInCondition()) {};
+          mDimensionKeyInCondition(that.getDimensionKeyInCondition()){};
 
     MetricDimensionKey& operator=(const MetricDimensionKey& from) = default;
 
@@ -112,9 +112,9 @@ class MetricDimensionKey {
 
     bool operator<(const MetricDimensionKey& that) const;
 
-  private:
-      HashableDimensionKey mDimensionKeyInWhat;
-      HashableDimensionKey mDimensionKeyInCondition;
+private:
+    HashableDimensionKey mDimensionKeyInWhat;
+    HashableDimensionKey mDimensionKeyInCondition;
 };
 
 android::hash_t hashDimension(const HashableDimensionKey& key);

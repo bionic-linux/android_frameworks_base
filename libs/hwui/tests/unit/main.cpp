@@ -18,10 +18,10 @@
 #include "gtest/gtest.h"
 
 #include "Caches.h"
+#include "Properties.h"
 #include "debug/GlesDriver.h"
 #include "debug/NullGlesDriver.h"
 #include "hwui/Typeface.h"
-#include "Properties.h"
 #include "tests/common/LeakChecker.h"
 #include "thread/TaskManager.h"
 
@@ -32,7 +32,9 @@ using namespace android;
 using namespace android::uirenderer;
 
 static auto CRASH_SIGNALS = {
-        SIGABRT, SIGSEGV, SIGBUS,
+        SIGABRT,
+        SIGSEGV,
+        SIGBUS,
 };
 
 static map<int, struct sigaction> gSigChain;

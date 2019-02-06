@@ -196,13 +196,14 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, arcStrokeClip) {
 }
 
 RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, simpleRejection) {
-    auto node = TestUtils::createNode<RecordingCanvas>(0, 0, 200, 200, [](RenderProperties& props,
-                                                                          RecordingCanvas& canvas) {
-        canvas.save(SaveFlags::MatrixClip);
-        canvas.clipRect(200, 200, 400, 400, SkClipOp::kIntersect);  // intersection should be empty
-        canvas.drawRect(0, 0, 400, 400, SkPaint());
-        canvas.restore();
-    });
+    auto node = TestUtils::createNode<RecordingCanvas>(
+            0, 0, 200, 200, [](RenderProperties& props, RecordingCanvas& canvas) {
+                canvas.save(SaveFlags::MatrixClip);
+                canvas.clipRect(200, 200, 400, 400,
+                                SkClipOp::kIntersect);  // intersection should be empty
+                canvas.drawRect(0, 0, 400, 400, SkPaint());
+                canvas.restore();
+            });
     FrameBuilder frameBuilder(SkRect::MakeWH(200, 200), 200, 200, sLightGeometry,
                               Caches::getInstance());
     frameBuilder.deferRenderNode(*TestUtils::getSyncedNode(node));
@@ -225,7 +226,6 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, simpleBatching) {
 
     auto node = TestUtils::createNode<RecordingCanvas>(
             0, 0, 200, 200, [](RenderProperties& props, RecordingCanvas& canvas) {
-
                 sk_sp<Bitmap> bitmap(TestUtils::createBitmap(
                         10, 10,
                         kAlpha_8_SkColorType));  // Disable merging by using alpha 8 bitmap
@@ -565,14 +565,16 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, textMerging) {
             EXPECT_EQ(OpClipSideFlags::None, opList.states[1]->computedState.clipSideFlags);
         }
     };
-    auto node = TestUtils::createNode<RecordingCanvas>(0, 0, 400, 400, [](RenderProperties& props,
-                                                                          RecordingCanvas& canvas) {
-        SkPaint paint;
-        paint.setAntiAlias(true);
-        paint.setTextSize(50);
-        TestUtils::drawUtf8ToCanvas(&canvas, "Test string1", paint, 100, 0);  // will be top clipped
-        TestUtils::drawUtf8ToCanvas(&canvas, "Test string1", paint, 100, 100);  // not clipped
-    });
+    auto node = TestUtils::createNode<RecordingCanvas>(
+            0, 0, 400, 400, [](RenderProperties& props, RecordingCanvas& canvas) {
+                SkPaint paint;
+                paint.setAntiAlias(true);
+                paint.setTextSize(50);
+                TestUtils::drawUtf8ToCanvas(&canvas, "Test string1", paint, 100,
+                                            0);  // will be top clipped
+                TestUtils::drawUtf8ToCanvas(&canvas, "Test string1", paint, 100,
+                                            100);  // not clipped
+            });
     FrameBuilder frameBuilder(SkRect::MakeWH(400, 400), 400, 400, sLightGeometry,
                               Caches::getInstance());
     frameBuilder.deferRenderNode(*TestUtils::getSyncedNode(node));
@@ -1100,13 +1102,14 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, saveLayerUnclipped_round) {
         }
     };
 
-    auto node = TestUtils::createNode<RecordingCanvas>(0, 0, 200, 200, [](RenderProperties& props,
-                                                                          RecordingCanvas& canvas) {
-        canvas.saveLayerAlpha(10.95f, 10.5f, 189.75f, 189.25f,  // values should all round out
-                              128, (SaveFlags::Flags)(0));
-        canvas.drawRect(0, 0, 200, 200, SkPaint());
-        canvas.restore();
-    });
+    auto node = TestUtils::createNode<RecordingCanvas>(
+            0, 0, 200, 200, [](RenderProperties& props, RecordingCanvas& canvas) {
+                canvas.saveLayerAlpha(10.95f, 10.5f, 189.75f,
+                                      189.25f,  // values should all round out
+                                      128, (SaveFlags::Flags)(0));
+                canvas.drawRect(0, 0, 200, 200, SkPaint());
+                canvas.restore();
+            });
 
     FrameBuilder frameBuilder(SkRect::MakeWH(200, 200), 200, 200, sLightGeometry,
                               Caches::getInstance());
@@ -1154,7 +1157,6 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, saveLayerUnclipped_mergedClears)
 
     auto node = TestUtils::createNode<RecordingCanvas>(
             0, 0, 200, 200, [](RenderProperties& props, RecordingCanvas& canvas) {
-
                 int restoreTo = canvas.save(SaveFlags::MatrixClip);
                 canvas.scale(2, 2);
                 canvas.saveLayerAlpha(0, 0, 5, 5, 128, SaveFlags::MatrixClip);
@@ -2375,17 +2377,19 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderProjectLast) {
             0, 0, 100, 100, [](RenderProperties& props, RecordingCanvas& canvas) {
                 drawOrderedNode(&canvas, 0, nullptr);  // nodeB
                 drawOrderedNode(&canvas, 1, [](RenderProperties& props, RecordingCanvas& canvas) {
-                    drawOrderedNode(&canvas, 3, [](RenderProperties& props,
-                                                   RecordingCanvas& canvas) {  // drawn as 2
-                        props.setProjectBackwards(true);
-                        props.setClipToBounds(false);
-                    });  // nodeR
-                });      // nodeC
-                drawOrderedNode(&canvas, 2, [](RenderProperties& props,
-                                               RecordingCanvas& canvas) {  // drawn as 3
-                    props.setProjectionReceiver(true);
-                });  // nodeE
-            });      // nodeA
+                    drawOrderedNode(&canvas, 3,
+                                    [](RenderProperties& props,
+                                       RecordingCanvas& canvas) {  // drawn as 2
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                });                      // nodeC
+                drawOrderedNode(&canvas, 2,
+                                [](RenderProperties& props,
+                                   RecordingCanvas& canvas) {  // drawn as 3
+                                    props.setProjectionReceiver(true);
+                                });  // nodeE
+            });                      // nodeA
 
     FrameBuilder frameBuilder(SkRect::MakeWH(100, 100), 100, 100, sLightGeometry,
                               Caches::getInstance());
@@ -2525,21 +2529,26 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderProjectedSiblin
     */
     auto nodeA = TestUtils::createNode<RecordingCanvas>(
             0, 0, 100, 100, [](RenderProperties& props, RecordingCanvas& canvas) {
-                drawOrderedNode(&canvas, 0, [](RenderProperties& props,
-                                               RecordingCanvas& canvas) {  // G
-                    drawOrderedNode(&canvas, 1,
+                drawOrderedNode(
+                        &canvas, 0,
+                        [](RenderProperties& props,
+                           RecordingCanvas& canvas) {  // G
+                            drawOrderedNode(
+                                    &canvas, 1,
                                     [](RenderProperties& props, RecordingCanvas& canvas) {  // B
                                         props.setProjectionReceiver(true);
                                     });  // nodeB
-                    drawOrderedNode(&canvas, 2,
+                            drawOrderedNode(
+                                    &canvas, 2,
                                     [](RenderProperties& props, RecordingCanvas& canvas) {  // C
                                     });                                                     // nodeC
-                    drawOrderedNode(&canvas, 255,
+                            drawOrderedNode(
+                                    &canvas, 255,
                                     [](RenderProperties& props, RecordingCanvas& canvas) {  // R
                                         props.setProjectBackwards(true);
                                         props.setClipToBounds(false);
                                     });  // nodeR
-                });                      // nodeG
+                        });              // nodeG
             });                          // nodeA
 
     FrameBuilder frameBuilder(SkRect::MakeWH(100, 100), 100, 100, sLightGeometry,
@@ -2565,14 +2574,15 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderGrandparentRece
             0, 0, 100, 100, [](RenderProperties& props, RecordingCanvas& canvas) {
                 drawOrderedNode(&canvas, 0, [](RenderProperties& props, RecordingCanvas& canvas) {
                     props.setProjectionReceiver(true);
-                    drawOrderedNode(&canvas, 1,
-                                    [](RenderProperties& props, RecordingCanvas& canvas) {
-                                        drawOrderedNode(&canvas, 2, [](RenderProperties& props,
-                                                                       RecordingCanvas& canvas) {
+                    drawOrderedNode(
+                            &canvas, 1, [](RenderProperties& props, RecordingCanvas& canvas) {
+                                drawOrderedNode(
+                                        &canvas, 2,
+                                        [](RenderProperties& props, RecordingCanvas& canvas) {
                                             props.setProjectBackwards(true);
                                             props.setClipToBounds(false);
                                         });  // nodeR
-                                    });      // nodeC
+                            });              // nodeC
                 });                          // nodeB
             });                              // nodeA
 
@@ -2599,19 +2609,22 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderTwoReceivables)
                                 [](RenderProperties& props, RecordingCanvas& canvas) {  // B
                                     props.setProjectionReceiver(true);
                                 });  // nodeB
-                drawOrderedNode(&canvas, 2, [](RenderProperties& props,
-                                               RecordingCanvas& canvas) {  // C
-                    drawOrderedNode(&canvas, 3,
-                                    [](RenderProperties& props, RecordingCanvas& canvas) {  // G
-                                        props.setProjectionReceiver(true);
-                                    });  // nodeG
-                    drawOrderedNode(&canvas, 1,
-                                    [](RenderProperties& props, RecordingCanvas& canvas) {  // R
-                                        props.setProjectBackwards(true);
-                                        props.setClipToBounds(false);
-                                    });  // nodeR
-                });                      // nodeC
-            });                          // nodeA
+                drawOrderedNode(&canvas, 2,
+                                [](RenderProperties& props,
+                                   RecordingCanvas& canvas) {  // C
+                                    drawOrderedNode(&canvas, 3,
+                                                    [](RenderProperties& props,
+                                                       RecordingCanvas& canvas) {  // G
+                                                        props.setProjectionReceiver(true);
+                                                    });  // nodeG
+                                    drawOrderedNode(&canvas, 1,
+                                                    [](RenderProperties& props,
+                                                       RecordingCanvas& canvas) {  // R
+                                                        props.setProjectBackwards(true);
+                                                        props.setClipToBounds(false);
+                                                    });  // nodeR
+                                });                      // nodeC
+            });                                          // nodeA
 
     FrameBuilder frameBuilder(SkRect::MakeWH(100, 100), 100, 100, sLightGeometry,
                               Caches::getInstance());
@@ -2636,19 +2649,22 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderTwoReceivablesL
                                 [](RenderProperties& props, RecordingCanvas& canvas) {  // B
                                     props.setProjectionReceiver(true);
                                 });  // nodeB
-                drawOrderedNode(&canvas, 2, [](RenderProperties& props,
-                                               RecordingCanvas& canvas) {  // C
-                    drawOrderedNode(&canvas, 1,
-                                    [](RenderProperties& props, RecordingCanvas& canvas) {  // G
-                                        props.setProjectionReceiver(true);
-                                        props.setProjectBackwards(true);
-                                        props.setClipToBounds(false);
-                                    });  // nodeG
-                    drawOrderedNode(&canvas, 3,
-                                    [](RenderProperties& props, RecordingCanvas& canvas) {  // R
-                                    });                                                     // nodeR
-                });                                                                         // nodeC
-            });                                                                             // nodeA
+                drawOrderedNode(&canvas, 2,
+                                [](RenderProperties& props,
+                                   RecordingCanvas& canvas) {  // C
+                                    drawOrderedNode(&canvas, 1,
+                                                    [](RenderProperties& props,
+                                                       RecordingCanvas& canvas) {  // G
+                                                        props.setProjectionReceiver(true);
+                                                        props.setProjectBackwards(true);
+                                                        props.setClipToBounds(false);
+                                                    });  // nodeG
+                                    drawOrderedNode(&canvas, 3,
+                                                    [](RenderProperties& props,
+                                                       RecordingCanvas& canvas) {  // R
+                                                    });                            // nodeR
+                                });                                                // nodeC
+            });                                                                    // nodeA
 
     FrameBuilder frameBuilder(SkRect::MakeWH(100, 100), 100, 100, sLightGeometry,
                               Caches::getInstance());
@@ -2675,22 +2691,27 @@ RENDERTHREAD_OPENGL_PIPELINE_TEST(FrameBuilder, projectionReorderTwoReceivablesD
                                 [](RenderProperties& props, RecordingCanvas& canvas) {  // B
                                     props.setProjectionReceiver(true);
                                 });  // nodeB
-                drawOrderedNode(&canvas, 1, [](RenderProperties& props,
-                                               RecordingCanvas& canvas) {  // C
-                    drawOrderedNode(&canvas, 2,
+                drawOrderedNode(
+                        &canvas, 1,
+                        [](RenderProperties& props,
+                           RecordingCanvas& canvas) {  // C
+                            drawOrderedNode(
+                                    &canvas, 2,
                                     [](RenderProperties& props, RecordingCanvas& canvas) {  // G
                                         props.setProjectionReceiver(true);
                                     });  // nodeG
-                    drawOrderedNode(
-                            &canvas, 4, [](RenderProperties& props, RecordingCanvas& canvas) {  // D
-                                drawOrderedNode(&canvas, 3, [](RenderProperties& props,
-                                                               RecordingCanvas& canvas) {  // R
-                                    props.setProjectBackwards(true);
-                                    props.setClipToBounds(false);
-                                });  // nodeR
-                            });      // nodeD
-                });                  // nodeC
-            });                      // nodeA
+                            drawOrderedNode(
+                                    &canvas, 4,
+                                    [](RenderProperties& props, RecordingCanvas& canvas) {  // D
+                                        drawOrderedNode(&canvas, 3,
+                                                        [](RenderProperties& props,
+                                                           RecordingCanvas& canvas) {  // R
+                                                            props.setProjectBackwards(true);
+                                                            props.setClipToBounds(false);
+                                                        });  // nodeR
+                                    });                      // nodeD
+                        });                                  // nodeC
+            });                                              // nodeA
 
     FrameBuilder frameBuilder(SkRect::MakeWH(100, 100), 100, 100, sLightGeometry,
                               Caches::getInstance());

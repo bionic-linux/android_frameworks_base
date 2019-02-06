@@ -477,7 +477,6 @@ TEST(AtomMatcherTest, TestWriteAtomToProto) {
     EXPECT_EQ(999, atom.num_results());
 }
 
-
 }  // namespace statsd
 }  // namespace os
 }  // namespace android

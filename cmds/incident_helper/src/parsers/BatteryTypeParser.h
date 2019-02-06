@@ -26,9 +26,9 @@ using namespace android;
  * /sys/class/power_supply/bms/battery_type.
  */
 class BatteryTypeParser : public TextParserBase {
-public:
-    BatteryTypeParser() : TextParserBase(String8("BatteryTypeParser")) {};
-    ~BatteryTypeParser() {};
+  public:
+    BatteryTypeParser() : TextParserBase(String8("BatteryTypeParser")){};
+    ~BatteryTypeParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

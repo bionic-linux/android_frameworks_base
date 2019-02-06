@@ -20,11 +20,11 @@
 
 #include "android_view_PointerIcon.h"
 
+#include <android/graphics/GraphicsJNI.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/Log.h>
-#include <utils/Log.h>
-#include <android/graphics/GraphicsJNI.h>
 #include <nativehelper/ScopedLocalRef.h>
+#include <utils/Log.h>
 
 #include "core_jni_helpers.h"
 
@@ -42,12 +42,11 @@ static struct {
     jmethodID load;
 } gPointerIconClassInfo;
 
-
 // --- Global Functions ---
 
 jobject android_view_PointerIcon_getSystemIcon(JNIEnv* env, jobject contextObj, int32_t style) {
-    jobject pointerIconObj = env->CallStaticObjectMethod(gPointerIconClassInfo.clazz,
-            gPointerIconClassInfo.getSystemIcon, contextObj, style);
+    jobject pointerIconObj = env->CallStaticObjectMethod(
+            gPointerIconClassInfo.clazz, gPointerIconClassInfo.getSystemIcon, contextObj, style);
     if (env->ExceptionCheck()) {
         ALOGW("An exception occurred while getting a pointer icon with style %d.", style);
         LOGW_EX(env);
@@ -58,15 +57,15 @@ jobject android_view_PointerIcon_getSystemIcon(JNIEnv* env, jobject contextObj, 
 }
 
 status_t android_view_PointerIcon_load(JNIEnv* env, jobject pointerIconObj, jobject contextObj,
-        PointerIcon* outPointerIcon) {
+                                       PointerIcon* outPointerIcon) {
     outPointerIcon->reset();
 
     if (!pointerIconObj) {
         return OK;
     }
 
-    ScopedLocalRef<jobject> loadedPointerIconObj(env, env->CallObjectMethod(pointerIconObj,
-            gPointerIconClassInfo.load, contextObj));
+    ScopedLocalRef<jobject> loadedPointerIconObj(
+            env, env->CallObjectMethod(pointerIconObj, gPointerIconClassInfo.load, contextObj));
     if (env->ExceptionCheck() || !loadedPointerIconObj.get()) {
         ALOGW("An exception occurred while loading a pointer icon.");
         LOGW_EX(env);
@@ -77,7 +76,7 @@ status_t android_view_PointerIcon_load(JNIEnv* env, jobject pointerIconObj, jobj
 }
 
 status_t android_view_PointerIcon_getLoadedIcon(JNIEnv* env, jobject pointerIconObj,
-        PointerIcon* outPointerIcon) {
+                                                PointerIcon* outPointerIcon) {
     if (!pointerIconObj) {
         return BAD_VALUE;
     }
@@ -91,15 +90,17 @@ status_t android_view_PointerIcon_getLoadedIcon(JNIEnv* env, jobject pointerIcon
         GraphicsJNI::getSkBitmap(env, bitmapObj.get(), &(outPointerIcon->bitmap));
     }
 
-    ScopedLocalRef<jobjectArray> bitmapFramesObj(env, reinterpret_cast<jobjectArray>(
-            env->GetObjectField(pointerIconObj, gPointerIconClassInfo.mBitmapFrames)));
+    ScopedLocalRef<jobjectArray> bitmapFramesObj(
+            env, reinterpret_cast<jobjectArray>(
+                         env->GetObjectField(pointerIconObj, gPointerIconClassInfo.mBitmapFrames)));
     if (bitmapFramesObj.get()) {
-        outPointerIcon->durationPerFrame = env->GetIntField(
-                pointerIconObj, gPointerIconClassInfo.mDurationPerFrame);
+        outPointerIcon->durationPerFrame =
+                env->GetIntField(pointerIconObj, gPointerIconClassInfo.mDurationPerFrame);
         jsize size = env->GetArrayLength(bitmapFramesObj.get());
         outPointerIcon->bitmapFrames.resize(size);
         for (jsize i = 0; i < size; ++i) {
-            ScopedLocalRef<jobject> bitmapObj(env, env->GetObjectArrayElement(bitmapFramesObj.get(), i));
+            ScopedLocalRef<jobject> bitmapObj(env,
+                                              env->GetObjectArrayElement(bitmapFramesObj.get(), i));
             GraphicsJNI::getSkBitmap(env, bitmapObj.get(), &(outPointerIcon->bitmapFrames[i]));
         }
     }
@@ -107,20 +108,19 @@ status_t android_view_PointerIcon_getLoadedIcon(JNIEnv* env, jobject pointerIcon
     return OK;
 }
 
-status_t android_view_PointerIcon_loadSystemIcon(JNIEnv* env, jobject contextObj,
-        int32_t style, PointerIcon* outPointerIcon) {
+status_t android_view_PointerIcon_loadSystemIcon(JNIEnv* env, jobject contextObj, int32_t style,
+                                                 PointerIcon* outPointerIcon) {
     jobject pointerIconObj = android_view_PointerIcon_getSystemIcon(env, contextObj, style);
     if (!pointerIconObj) {
         outPointerIcon->reset();
         return UNKNOWN_ERROR;
     }
 
-    status_t status = android_view_PointerIcon_load(env, pointerIconObj,
-            contextObj, outPointerIcon);
+    status_t status =
+            android_view_PointerIcon_load(env, pointerIconObj, contextObj, outPointerIcon);
     env->DeleteLocalRef(pointerIconObj);
     return status;
 }
-
 
 // --- JNI Registration ---
 
@@ -128,31 +128,32 @@ int register_android_view_PointerIcon(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/view/PointerIcon");
     gPointerIconClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
 
-    gPointerIconClassInfo.mBitmap = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mBitmap", "Landroid/graphics/Bitmap;");
+    gPointerIconClassInfo.mBitmap = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz, "mBitmap",
+                                                    "Landroid/graphics/Bitmap;");
 
-    gPointerIconClassInfo.mType = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mType", "I");
+    gPointerIconClassInfo.mType = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz, "mType", "I");
 
-    gPointerIconClassInfo.mHotSpotX = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mHotSpotX", "F");
+    gPointerIconClassInfo.mHotSpotX =
+            GetFieldIDOrDie(env, gPointerIconClassInfo.clazz, "mHotSpotX", "F");
 
-    gPointerIconClassInfo.mHotSpotY = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mHotSpotY", "F");
+    gPointerIconClassInfo.mHotSpotY =
+            GetFieldIDOrDie(env, gPointerIconClassInfo.clazz, "mHotSpotY", "F");
 
-    gPointerIconClassInfo.mBitmapFrames = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mBitmapFrames", "[Landroid/graphics/Bitmap;");
+    gPointerIconClassInfo.mBitmapFrames = GetFieldIDOrDie(
+            env, gPointerIconClassInfo.clazz, "mBitmapFrames", "[Landroid/graphics/Bitmap;");
 
-    gPointerIconClassInfo.mDurationPerFrame = GetFieldIDOrDie(env, gPointerIconClassInfo.clazz,
-            "mDurationPerFrame", "I");
+    gPointerIconClassInfo.mDurationPerFrame =
+            GetFieldIDOrDie(env, gPointerIconClassInfo.clazz, "mDurationPerFrame", "I");
 
-    gPointerIconClassInfo.getSystemIcon = GetStaticMethodIDOrDie(env, gPointerIconClassInfo.clazz,
-            "getSystemIcon", "(Landroid/content/Context;I)Landroid/view/PointerIcon;");
+    gPointerIconClassInfo.getSystemIcon =
+            GetStaticMethodIDOrDie(env, gPointerIconClassInfo.clazz, "getSystemIcon",
+                                   "(Landroid/content/Context;I)Landroid/view/PointerIcon;");
 
-    gPointerIconClassInfo.load = GetMethodIDOrDie(env, gPointerIconClassInfo.clazz,
-            "load", "(Landroid/content/Context;)Landroid/view/PointerIcon;");
+    gPointerIconClassInfo.load =
+            GetMethodIDOrDie(env, gPointerIconClassInfo.clazz, "load",
+                             "(Landroid/content/Context;)Landroid/view/PointerIcon;");
 
     return 0;
 }
 
-} // namespace android
+}  // namespace android

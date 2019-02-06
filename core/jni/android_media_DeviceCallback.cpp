@@ -18,22 +18,19 @@
 
 #define LOG_TAG "AudioDeviceCallback-JNI"
 
-#include <utils/Log.h>
-#include <nativehelper/JNIHelp.h>
-#include "core_jni_helpers.h"
 #include <media/AudioSystem.h>
+#include <nativehelper/JNIHelp.h>
+#include <utils/Log.h>
+#include "core_jni_helpers.h"
 
 #include "android_media_DeviceCallback.h"
-
 
 // ----------------------------------------------------------------------------
 
 using namespace android;
 
 JNIDeviceCallback::JNIDeviceCallback(JNIEnv* env, jobject thiz, jobject weak_thiz,
-                                     jmethodID postEventFromNative)
-{
-
+                                     jmethodID postEventFromNative) {
     // Hold onto the AudioTrack/AudioRecord class for use in calling the static method
     // that posts events to the application thread.
     jclass clazz = env->GetObjectClass(thiz);
@@ -44,15 +41,14 @@ JNIDeviceCallback::JNIDeviceCallback(JNIEnv* env, jobject thiz, jobject weak_thi
 
     // We use a weak reference so the AudioTrack/AudioRecord object can be garbage collected.
     // The reference is only used as a proxy for callbacks.
-    mObject  = env->NewGlobalRef(weak_thiz);
+    mObject = env->NewGlobalRef(weak_thiz);
 
     mPostEventFromNative = postEventFromNative;
 }
 
-JNIDeviceCallback::~JNIDeviceCallback()
-{
+JNIDeviceCallback::~JNIDeviceCallback() {
     // remove global references
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
     if (env == NULL) {
         return;
     }
@@ -61,21 +57,17 @@ JNIDeviceCallback::~JNIDeviceCallback()
 }
 
 void JNIDeviceCallback::onAudioDeviceUpdate(audio_io_handle_t audioIo,
-                                            audio_port_handle_t deviceId)
-{
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+                                            audio_port_handle_t deviceId) {
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
     if (env == NULL) {
         return;
     }
 
     ALOGV("%s audioIo %d deviceId %d", __FUNCTION__, audioIo, deviceId);
-    env->CallStaticVoidMethod(mClass,
-                              mPostEventFromNative,
-                              mObject,
+    env->CallStaticVoidMethod(mClass, mPostEventFromNative, mObject,
                               AUDIO_NATIVE_EVENT_ROUTING_CHANGE, deviceId, 0, NULL);
     if (env->ExceptionCheck()) {
         ALOGW("An exception occurred while notifying an event.");
         env->ExceptionClear();
     }
 }
-

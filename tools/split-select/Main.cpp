@@ -41,29 +41,40 @@ static void usage() {
             "split-select --generate --base <path/to/apk> [--split <path/to/apk> [...]]\n"
             "\n"
             "  --help                   Displays more information about this program.\n"
-            "  --target <config>        Performs the Split APK selection on the given configuration.\n"
-            "  --generate               Generates the logic for selecting the Split APK, in JSON format.\n"
-            "  --base <path/to/apk>     Specifies the base APK, from which all Split APKs must be based off.\n"
+            "  --target <config>        Performs the Split APK selection on the given "
+            "configuration.\n"
+            "  --generate               Generates the logic for selecting the Split APK, in JSON "
+            "format.\n"
+            "  --base <path/to/apk>     Specifies the base APK, from which all Split APKs must be "
+            "based off.\n"
             "  --split <path/to/apk>    Includes a Split APK in the selection process.\n"
             "\n"
             "  Where <config> is an extended AAPT resource qualifier of the form\n"
-            "  'resource-qualifiers:extended-qualifiers', where 'resource-qualifiers' is an AAPT resource\n"
-            "  qualifier (ex: en-rUS-sw600dp-xhdpi), and 'extended-qualifiers' is an ordered list of one\n"
+            "  'resource-qualifiers:extended-qualifiers', where 'resource-qualifiers' is an AAPT "
+            "resource\n"
+            "  qualifier (ex: en-rUS-sw600dp-xhdpi), and 'extended-qualifiers' is an ordered list "
+            "of one\n"
             "  qualifier (or none) from each category:\n"
             "    Architecture: armeabi, armeabi-v7a, arm64-v8a, x86, x86_64, mips\n");
 }
 
 static void help() {
     usage();
-    fprintf(stderr, "\n"
-            "  Generates the logic for selecting a Split APK given some target Android device configuration.\n"
-            "  Using the flag --generate will emit a JSON encoded tree of rules that must be satisfied in order\n"
-            "  to install the given Split APK. Using the flag --target along with the device configuration\n"
-            "  will emit the set of Split APKs to install, following the same logic that would have been emitted\n"
+    fprintf(stderr,
+            "\n"
+            "  Generates the logic for selecting a Split APK given some target Android device "
+            "configuration.\n"
+            "  Using the flag --generate will emit a JSON encoded tree of rules that must be "
+            "satisfied in order\n"
+            "  to install the given Split APK. Using the flag --target along with the device "
+            "configuration\n"
+            "  will emit the set of Split APKs to install, following the same logic that would "
+            "have been emitted\n"
             "  via JSON.\n");
 }
 
-Vector<SplitDescription> select(const SplitDescription& target, const Vector<SplitDescription>& splits) {
+Vector<SplitDescription> select(const SplitDescription& target,
+                                const Vector<SplitDescription>& splits) {
     const SplitSelector selector(splits);
     return selector.getBestSplits(target);
 }
@@ -99,8 +110,7 @@ void generate(const KeyedVector<String8, Vector<SplitDescription> >& splits, con
         }
         masterRule = Rule::simplify(masterRule);
         fprintf(stdout, "  {\n    \"path\": \"%s\",\n    \"rules\": %s\n  }",
-                splits.keyAt(i).string(),
-                masterRule->toJson(2).string());
+                splits.keyAt(i).string(), masterRule->toJson(2).string());
     }
     fprintf(stdout, "\n]\n");
 }
@@ -149,7 +159,7 @@ static bool getAppInfo(const String8& path, AppInfo& outInfo) {
 
     ResXMLParser::event_code_t event;
     while ((event = xml.next()) != ResXMLParser::BAD_DOCUMENT &&
-            event != ResXMLParser::END_DOCUMENT) {
+           event != ResXMLParser::END_DOCUMENT) {
         if (event != ResXMLParser::START_TAG) {
             continue;
         }
@@ -158,25 +168,23 @@ static bool getAppInfo(const String8& path, AppInfo& outInfo) {
         const char16_t* name = xml.getElementName(&len);
         String16 name16(name, len);
         if (name16 == kManifestTag) {
-            ssize_t idx = xml.indexOfAttribute(
-                    kAndroidNamespace.string(), kAndroidNamespace.size(),
-                    kVersionCodeAttr.string(), kVersionCodeAttr.size());
+            ssize_t idx = xml.indexOfAttribute(kAndroidNamespace.string(), kAndroidNamespace.size(),
+                                               kVersionCodeAttr.string(), kVersionCodeAttr.size());
             if (idx >= 0) {
                 outInfo.versionCode = xml.getAttributeData(idx);
             }
 
         } else if (name16 == kApplicationTag) {
-            ssize_t idx = xml.indexOfAttribute(
-                    kAndroidNamespace.string(), kAndroidNamespace.size(),
-                    kMultiArchAttr.string(), kMultiArchAttr.size());
+            ssize_t idx = xml.indexOfAttribute(kAndroidNamespace.string(), kAndroidNamespace.size(),
+                                               kMultiArchAttr.string(), kMultiArchAttr.size());
             if (idx >= 0) {
                 outInfo.multiArch = xml.getAttributeData(idx) != 0;
             }
 
         } else if (name16 == kUsesSdkTag) {
-            ssize_t idx = xml.indexOfAttribute(
-                    kAndroidNamespace.string(), kAndroidNamespace.size(),
-                    kMinSdkVersionAttr.string(), kMinSdkVersionAttr.size());
+            ssize_t idx =
+                    xml.indexOfAttribute(kAndroidNamespace.string(), kAndroidNamespace.size(),
+                                         kMinSdkVersionAttr.string(), kMinSdkVersionAttr.size());
             if (idx >= 0) {
                 uint16_t type = xml.getAttributeDataType(idx);
                 if (type >= Res_value::TYPE_FIRST_INT && type <= Res_value::TYPE_LAST_INT) {
@@ -316,8 +324,7 @@ static int main(int argc, char** argv) {
     SplitDescription targetSplit;
     if (!generateFlag) {
         if (!SplitDescription::parse(targetConfigStr, &targetSplit)) {
-            fprintf(stderr, "error: invalid --target config: '%s'.\n",
-                    targetConfigStr.string());
+            fprintf(stderr, "error: invalid --target config: '%s'.\n", targetConfigStr.string());
             usage();
             return 1;
         }
@@ -369,7 +376,7 @@ static int main(int argc, char** argv) {
     return 0;
 }
 
-} // namespace split
+}  // namespace split
 
 int main(int argc, char** argv) {
     return split::main(argc, argv);

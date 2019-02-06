@@ -18,10 +18,10 @@
 
 #include "histogram.h"
 
-#include <string.h>
-#include <jni.h>
-#include <unistd.h>
 #include <android/log.h>
+#include <jni.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "imgprocutil.h"
 
@@ -36,29 +36,29 @@ inline void addPixelToHistogram(unsigned char*& pImg, int* pHist, int numBins) {
 }
 
 void Java_androidx_media_filterpacks_histogram_GrayHistogramFilter_extractHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject maskBuffer, jobject histogramBuffer )
-{
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject maskBuffer,
+        jobject histogramBuffer) {
     unsigned char* pImg = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     int* pHist = static_cast<int*>(env->GetDirectBufferAddress(histogramBuffer));
-    int numPixels  = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
-    int numBins    = env->GetDirectBufferCapacity(histogramBuffer);
+    int numPixels = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
+    int numBins = env->GetDirectBufferCapacity(histogramBuffer);
 
     unsigned char* pMask = NULL;
-    if(maskBuffer != NULL) {
+    if (maskBuffer != NULL) {
         pMask = static_cast<unsigned char*>(env->GetDirectBufferAddress(maskBuffer));
     }
 
-    for(int i = 0; i < numBins; ++i) pHist[i] = 0;
+    for (int i = 0; i < numBins; ++i) pHist[i] = 0;
 
-    if(pMask == NULL) {
-        for( ; numPixels > 0; --numPixels) {
+    if (pMask == NULL) {
+        for (; numPixels > 0; --numPixels) {
             addPixelToHistogram(pImg, pHist, numBins);
         }
     } else {
-        for( ; numPixels > 0; --numPixels) {
-            if(*pMask == 0){
+        for (; numPixels > 0; --numPixels) {
+            if (*pMask == 0) {
                 pMask += 4;
-                pImg  += 4;  // Note that otherwise addPixelToHistogram advances pImg by 4
+                pImg += 4;  // Note that otherwise addPixelToHistogram advances pImg by 4
                 continue;
             }
             pMask += 4;
@@ -68,61 +68,60 @@ void Java_androidx_media_filterpacks_histogram_GrayHistogramFilter_extractHistog
 }
 
 void Java_androidx_media_filterpacks_histogram_ChromaHistogramFilter_extractChromaHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hBins, jint sBins)
-{
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hBins,
+        jint sBins) {
     unsigned char* pixelIn = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     float* histOut = static_cast<float*>(env->GetDirectBufferAddress(histogramBuffer));
-    int numPixels  = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
+    int numPixels = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
 
     for (int i = 0; i < hBins * sBins; ++i) histOut[i] = 0.0f;
 
     int h, s, v;
     float hScaler = hBins / 256.0f;
     float sScaler = sBins / 256.0f;
-    for( ; numPixels > 0; --numPixels) {
-      h = *(pixelIn++);
-      s = *(pixelIn++);
-      v = *(pixelIn++);
-      pixelIn++;
+    for (; numPixels > 0; --numPixels) {
+        h = *(pixelIn++);
+        s = *(pixelIn++);
+        v = *(pixelIn++);
+        pixelIn++;
 
-      int index = static_cast<int>(s * sScaler) * hBins + static_cast<int>(h * hScaler);
-      histOut[index] += 1.0f;
+        int index = static_cast<int>(s * sScaler) * hBins + static_cast<int>(h * hScaler);
+        histOut[index] += 1.0f;
     }
 }
 
 void Java_androidx_media_filterpacks_histogram_NewChromaHistogramFilter_extractChromaHistogram(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer,
-    jint hueBins, jint saturationBins, jint valueBins,
-    jint saturationThreshold, jint valueThreshold) {
+        JNIEnv* env, jclass clazz, jobject imageBuffer, jobject histogramBuffer, jint hueBins,
+        jint saturationBins, jint valueBins, jint saturationThreshold, jint valueThreshold) {
     unsigned char* pixelIn = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     float* histOut = static_cast<float*>(env->GetDirectBufferAddress(histogramBuffer));
-    int numPixels  = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
+    int numPixels = env->GetDirectBufferCapacity(imageBuffer) / 4;  // 4 bytes per pixel
 
     // TODO: add check on the size of histOut
     for (int i = 0; i < (hueBins * saturationBins + valueBins); ++i) {
-      histOut[i] = 0.0f;
+        histOut[i] = 0.0f;
     }
 
-    for( ; numPixels > 0; --numPixels) {
-      int h = *(pixelIn++);
-      int s = *(pixelIn++);
-      int v = *(pixelIn++);
+    for (; numPixels > 0; --numPixels) {
+        int h = *(pixelIn++);
+        int s = *(pixelIn++);
+        int v = *(pixelIn++);
 
-      pixelIn++;
-      // If a pixel that is either too dark (less than valueThreshold) or colorless
-      // (less than saturationThreshold), if will be put in a 1-D value histogram instead.
+        pixelIn++;
+        // If a pixel that is either too dark (less than valueThreshold) or colorless
+        // (less than saturationThreshold), if will be put in a 1-D value histogram instead.
 
-      int index;
-      if (s > saturationThreshold && v > valueThreshold) {
-        int sIndex = s * saturationBins / 256;
+        int index;
+        if (s > saturationThreshold && v > valueThreshold) {
+            int sIndex = s * saturationBins / 256;
 
-        // Shifting hue index by 0.5 such that peaks of red, yellow, green, cyan, blue, pink
-        // will be at the center of some bins.
-        int hIndex = ((h * hueBins + 128) / 256) % hueBins;
-        index = sIndex * hueBins + hIndex;
-      } else {
-        index =  hueBins * saturationBins + (v * valueBins / 256);
-      }
-      histOut[index] += 1.0f;
+            // Shifting hue index by 0.5 such that peaks of red, yellow, green, cyan, blue, pink
+            // will be at the center of some bins.
+            int hIndex = ((h * hueBins + 128) / 256) % hueBins;
+            index = sIndex * hueBins + hIndex;
+        } else {
+            index = hueBins * saturationBins + (v * valueBins / 256);
+        }
+        histOut[index] += 1.0f;
     }
 }

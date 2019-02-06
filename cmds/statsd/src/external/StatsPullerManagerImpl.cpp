@@ -35,12 +35,12 @@
 
 #include <iostream>
 
+using std::list;
 using std::make_shared;
 using std::map;
 using std::shared_ptr;
 using std::string;
 using std::vector;
-using std::list;
 
 namespace android {
 namespace os {
@@ -313,7 +313,7 @@ void StatsPullerManagerImpl::OnAlarmFired(const int64_t currentTimeNs) {
                     // we may have just come out of a coma, compute next pull time
                     receiverInfo->nextPullTimeNs =
                             (currentTimeNs - receiverInfo->nextPullTimeNs) /
-                                receiverInfo->intervalNs * receiverInfo->intervalNs +
+                                    receiverInfo->intervalNs * receiverInfo->intervalNs +
                             receiverInfo->intervalNs + receiverInfo->nextPullTimeNs;
                     if (receiverInfo->nextPullTimeNs < minNextPullTimeNs) {
                         minNextPullTimeNs = receiverInfo->nextPullTimeNs;

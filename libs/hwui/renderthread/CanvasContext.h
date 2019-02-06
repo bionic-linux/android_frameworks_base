@@ -78,7 +78,7 @@ public:
     bool createOrUpdateLayer(RenderNode* node, const DamageAccumulator& dmgAccumulator,
                              ErrorHandler* errorHandler) {
         return mRenderPipeline->createOrUpdateLayer(node, dmgAccumulator, mWideColorGamut,
-                errorHandler);
+                                                    errorHandler);
     }
 
     /**

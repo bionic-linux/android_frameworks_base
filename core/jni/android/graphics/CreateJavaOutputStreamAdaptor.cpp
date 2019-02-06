@@ -9,8 +9,8 @@
 #include <nativehelper/JNIHelp.h>
 #include <memory>
 
-static jmethodID    gInputStream_readMethodID;
-static jmethodID    gInputStream_skipMethodID;
+static jmethodID gInputStream_readMethodID;
+static jmethodID gInputStream_skipMethodID;
 
 /**
  *  Wrapper for a Java InputStream.
@@ -18,15 +18,15 @@ static jmethodID    gInputStream_skipMethodID;
 class JavaInputStreamAdaptor : public SkStream {
     JavaInputStreamAdaptor(JavaVM* jvm, jobject js, jbyteArray ar, jint capacity,
                            bool swallowExceptions)
-            : fJvm(jvm)
-            , fJavaInputStream(js)
-            , fJavaByteArray(ar)
-            , fCapacity(capacity)
-            , fBytesRead(0)
-            , fIsAtEnd(false)
-            , fSwallowExceptions(swallowExceptions) {}
+        : fJvm(jvm),
+          fJavaInputStream(js),
+          fJavaByteArray(ar),
+          fCapacity(capacity),
+          fBytesRead(0),
+          fIsAtEnd(false),
+          fSwallowExceptions(swallowExceptions) {}
 
-public:
+  public:
     static JavaInputStreamAdaptor* Create(JNIEnv* env, jobject js, jbyteArray ar,
                                           bool swallowExceptions) {
         JavaVM* jvm;
@@ -37,7 +37,7 @@ public:
             return nullptr;
         }
 
-        ar = (jbyteArray) env->NewGlobalRef(ar);
+        ar = (jbyteArray)env->NewGlobalRef(ar);
         if (!ar) {
             env->DeleteGlobalRef(js);
             return nullptr;
@@ -89,7 +89,7 @@ public:
 
     bool isAtEnd() const override { return fIsAtEnd; }
 
-private:
+  private:
     size_t doRead(void* buffer, size_t size, JNIEnv* env) {
         size_t bytesRead = 0;
         // read the bytes
@@ -103,20 +103,19 @@ private:
                 requested = static_cast<jint>(size);
             }
 
-            jint n = env->CallIntMethod(fJavaInputStream,
-                                        gInputStream_readMethodID, fJavaByteArray, 0, requested);
+            jint n = env->CallIntMethod(fJavaInputStream, gInputStream_readMethodID, fJavaByteArray,
+                                        0, requested);
             if (checkException(env)) {
                 SkDebugf("---- read threw an exception\n");
                 return bytesRead;
             }
 
-            if (n < 0) { // n == 0 should not be possible, see InputStream read() specifications.
+            if (n < 0) {  // n == 0 should not be possible, see InputStream read() specifications.
                 fIsAtEnd = true;
                 break;  // eof
             }
 
-            env->GetByteArrayRegion(fJavaByteArray, 0, n,
-                                    reinterpret_cast<jbyte*>(buffer));
+            env->GetByteArrayRegion(fJavaByteArray, 0, n, reinterpret_cast<jbyte*>(buffer));
             if (checkException(env)) {
                 SkDebugf("---- read:GetByteArrayRegion threw an exception\n");
                 return bytesRead;
@@ -132,8 +131,8 @@ private:
     }
 
     size_t doSkip(size_t size, JNIEnv* env) {
-        jlong skipped = env->CallLongMethod(fJavaInputStream,
-                                            gInputStream_skipMethodID, (jlong)size);
+        jlong skipped =
+                env->CallLongMethod(fJavaInputStream, gInputStream_skipMethodID, (jlong)size);
         if (checkException(env)) {
             SkDebugf("------- skip threw an exception\n");
             return 0;
@@ -162,13 +161,13 @@ private:
         return true;
     }
 
-    JavaVM*     fJvm;
-    jobject     fJavaInputStream;
-    jbyteArray  fJavaByteArray;
-    const jint  fCapacity;
-    size_t      fBytesRead;
-    bool        fIsAtEnd;
-    const bool  fSwallowExceptions;
+    JavaVM* fJvm;
+    jobject fJavaInputStream;
+    jbyteArray fJavaByteArray;
+    const jint fCapacity;
+    size_t fBytesRead;
+    bool fIsAtEnd;
+    const bool fSwallowExceptions;
 };
 
 SkStream* CreateJavaInputStreamAdaptor(JNIEnv* env, jobject stream, jbyteArray storage,
@@ -183,8 +182,7 @@ static SkMemoryStream* adaptor_to_mem_stream(SkStream* stream) {
     size_t len;
     char* data = (char*)sk_malloc_throw(bufferSize);
 
-    while ((len = stream->read(data + streamLen,
-                               bufferSize - streamLen)) != 0) {
+    while ((len = stream->read(data + streamLen, bufferSize - streamLen)) != 0) {
         streamLen += len;
         if (streamLen == bufferSize) {
             bufferSize *= 2;
@@ -198,8 +196,7 @@ static SkMemoryStream* adaptor_to_mem_stream(SkStream* stream) {
     return streamMem;
 }
 
-SkStreamRewindable* CopyJavaInputStream(JNIEnv* env, jobject stream,
-                                        jbyteArray storage) {
+SkStreamRewindable* CopyJavaInputStream(JNIEnv* env, jobject stream, jbyteArray storage) {
     std::unique_ptr<SkStream> adaptor(CreateJavaInputStreamAdaptor(env, stream, storage));
     if (NULL == adaptor.get()) {
         return NULL;
@@ -209,19 +206,17 @@ SkStreamRewindable* CopyJavaInputStream(JNIEnv* env, jobject stream,
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static jmethodID    gOutputStream_writeMethodID;
-static jmethodID    gOutputStream_flushMethodID;
+static jmethodID gOutputStream_writeMethodID;
+static jmethodID gOutputStream_flushMethodID;
 
 class SkJavaOutputStream : public SkWStream {
-public:
+  public:
     SkJavaOutputStream(JNIEnv* env, jobject stream, jbyteArray storage)
         : fEnv(env), fJavaOutputStream(stream), fJavaByteArray(storage), fBytesWritten(0) {
         fCapacity = env->GetArrayLength(storage);
     }
 
-    virtual size_t bytesWritten() const {
-        return fBytesWritten;
-    }
+    virtual size_t bytesWritten() const { return fBytesWritten; }
 
     virtual bool write(const void* buffer, size_t size) {
         JNIEnv* env = fEnv;
@@ -237,8 +232,7 @@ public:
                 requested = static_cast<jint>(size);
             }
 
-            env->SetByteArrayRegion(storage, 0, requested,
-                                    reinterpret_cast<const jbyte*>(buffer));
+            env->SetByteArrayRegion(storage, 0, requested, reinterpret_cast<const jbyte*>(buffer));
             if (env->ExceptionCheck()) {
                 env->ExceptionDescribe();
                 env->ExceptionClear();
@@ -246,8 +240,8 @@ public:
                 return false;
             }
 
-            fEnv->CallVoidMethod(fJavaOutputStream, gOutputStream_writeMethodID,
-                                 storage, 0, requested);
+            fEnv->CallVoidMethod(fJavaOutputStream, gOutputStream_writeMethodID, storage, 0,
+                                 requested);
             if (env->ExceptionCheck()) {
                 env->ExceptionDescribe();
                 env->ExceptionClear();
@@ -262,24 +256,20 @@ public:
         return true;
     }
 
-    virtual void flush() {
-        fEnv->CallVoidMethod(fJavaOutputStream, gOutputStream_flushMethodID);
-    }
+    virtual void flush() { fEnv->CallVoidMethod(fJavaOutputStream, gOutputStream_flushMethodID); }
 
-private:
-    JNIEnv*     fEnv;
-    jobject     fJavaOutputStream;  // the caller owns this object
-    jbyteArray  fJavaByteArray;     // the caller owns this object
-    jint        fCapacity;
-    size_t      fBytesWritten;
+  private:
+    JNIEnv* fEnv;
+    jobject fJavaOutputStream;  // the caller owns this object
+    jbyteArray fJavaByteArray;  // the caller owns this object
+    jint fCapacity;
+    size_t fBytesWritten;
 };
 
-SkWStream* CreateJavaOutputStreamAdaptor(JNIEnv* env, jobject stream,
-                                         jbyteArray storage) {
+SkWStream* CreateJavaOutputStreamAdaptor(JNIEnv* env, jobject stream, jbyteArray storage) {
     static bool gInited;
 
     if (!gInited) {
-
         gInited = true;
     }
 
@@ -292,8 +282,8 @@ static jclass findClassCheck(JNIEnv* env, const char classname[]) {
     return clazz;
 }
 
-static jmethodID getMethodIDCheck(JNIEnv* env, jclass clazz,
-                                  const char methodname[], const char type[]) {
+static jmethodID getMethodIDCheck(JNIEnv* env, jclass clazz, const char methodname[],
+                                  const char type[]) {
     jmethodID id = env->GetMethodID(clazz, methodname, type);
     SkASSERT(!env->ExceptionCheck());
     return id;

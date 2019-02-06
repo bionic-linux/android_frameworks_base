@@ -43,7 +43,8 @@ class DominatedKeyValueRemover : public DominatorTree::BottomUpVisitor {
   using Node = DominatorTree::Node;
 
   explicit DominatedKeyValueRemover(IAaptContext* context, ResourceEntry* entry)
-      : context_(context), entry_(entry) {}
+      : context_(context), entry_(entry) {
+  }
 
   void VisitConfig(Node* node) {
     Node* parent = node->parent();
@@ -75,12 +76,11 @@ class DominatedKeyValueRemover : public DominatorTree::BottomUpVisitor {
       }
     }
     if (context_->IsVerbose()) {
-      context_->GetDiagnostics()->Note(
-          DiagMessage(node_value->value->GetSource())
-          << "removing dominated duplicate resource with name \""
-          << entry_->name << "\"");
-      context_->GetDiagnostics()->Note(
-          DiagMessage(parent_value->value->GetSource()) << "dominated here");
+      context_->GetDiagnostics()->Note(DiagMessage(node_value->value->GetSource())
+                                       << "removing dominated duplicate resource with name \""
+                                       << entry_->name << "\"");
+      context_->GetDiagnostics()->Note(DiagMessage(parent_value->value->GetSource())
+                                       << "dominated here");
     }
     node_value->value = {};
   }
@@ -98,13 +98,11 @@ static void DedupeEntry(IAaptContext* context, ResourceEntry* entry) {
   tree.Accept(&remover);
 
   // Erase the values that were removed.
-  entry->values.erase(
-      std::remove_if(
-          entry->values.begin(), entry->values.end(),
-          [](const std::unique_ptr<ResourceConfigValue>& val) -> bool {
-            return val == nullptr || val->value == nullptr;
-          }),
-      entry->values.end());
+  entry->values.erase(std::remove_if(entry->values.begin(), entry->values.end(),
+                                     [](const std::unique_ptr<ResourceConfigValue>& val) -> bool {
+                                       return val == nullptr || val->value == nullptr;
+                                     }),
+                      entry->values.end());
 }
 
 }  // namespace

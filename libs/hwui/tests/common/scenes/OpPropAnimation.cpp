@@ -40,24 +40,25 @@ public:
 
     sp<RenderNode> content;
     void createContent(int width, int height, Canvas& canvas) override {
-        content = TestUtils::createNode(0, 0, width, height, [this, width, height](
-                                                                     RenderProperties& props,
-                                                                     Canvas& canvas) {
-            mPaint->value.setAntiAlias(true);
-            mPaint->value.setColor(Color::Blue_500);
+        content = TestUtils::createNode(
+                0, 0, width, height,
+                [this, width, height](RenderProperties& props, Canvas& canvas) {
+                    mPaint->value.setAntiAlias(true);
+                    mPaint->value.setColor(Color::Blue_500);
 
-            mRoundRectRight->value = width / 2;
-            mRoundRectBottom->value = height / 2;
+                    mRoundRectRight->value = width / 2;
+                    mRoundRectBottom->value = height / 2;
 
-            mCircleX->value = width * 0.75;
-            mCircleY->value = height * 0.75;
+                    mCircleX->value = width * 0.75;
+                    mCircleY->value = height * 0.75;
 
-            canvas.drawColor(Color::White, SkBlendMode::kSrcOver);
-            canvas.drawRoundRect(mRoundRectLeft.get(), mRoundRectTop.get(), mRoundRectRight.get(),
-                                 mRoundRectBottom.get(), mRoundRectRx.get(), mRoundRectRy.get(),
-                                 mPaint.get());
-            canvas.drawCircle(mCircleX.get(), mCircleY.get(), mCircleRadius.get(), mPaint.get());
-        });
+                    canvas.drawColor(Color::White, SkBlendMode::kSrcOver);
+                    canvas.drawRoundRect(mRoundRectLeft.get(), mRoundRectTop.get(),
+                                         mRoundRectRight.get(), mRoundRectBottom.get(),
+                                         mRoundRectRx.get(), mRoundRectRy.get(), mPaint.get());
+                    canvas.drawCircle(mCircleX.get(), mCircleY.get(), mCircleRadius.get(),
+                                      mPaint.get());
+                });
         canvas.drawRenderNode(content.get());
     }
 

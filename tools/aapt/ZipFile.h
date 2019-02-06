@@ -21,9 +21,9 @@
 #ifndef __LIBS_ZIPFILE_H
 #define __LIBS_ZIPFILE_H
 
-#include <utils/Vector.h>
-#include <utils/Errors.h>
 #include <stdio.h>
+#include <utils/Errors.h>
+#include <utils/Vector.h>
 
 #include "ZipEntry.h"
 
@@ -42,15 +42,11 @@ namespace android {
  * an unusable Zip archive.
  */
 class ZipFile {
-public:
-    ZipFile(void)
-      : mZipFp(NULL), mReadOnly(false), mNeedCDRewrite(false)
-      {}
+  public:
+    ZipFile(void) : mZipFp(NULL), mReadOnly(false), mNeedCDRewrite(false) {}
     ~ZipFile(void) {
-        if (!mReadOnly)
-            flush();
-        if (mZipFp != NULL)
-            fclose(mZipFp);
+        if (!mReadOnly) flush();
+        if (mZipFp != NULL) fclose(mZipFp);
         discardEntries();
     }
 
@@ -58,10 +54,10 @@ public:
      * Open a new or existing archive.
      */
     enum {
-        kOpenReadOnly   = 0x01,
-        kOpenReadWrite  = 0x02,
-        kOpenCreate     = 0x04,     // create if it doesn't exist
-        kOpenTruncate   = 0x08,     // if it exists, empty it
+        kOpenReadOnly = 0x01,
+        kOpenReadWrite = 0x02,
+        kOpenCreate = 0x04,    // create if it doesn't exist
+        kOpenTruncate = 0x08,  // if it exists, empty it
     };
     status_t open(const char* zipFileName, int flags);
 
@@ -77,16 +73,12 @@ public:
      *
      * If "ppEntry" is non-NULL, a pointer to the new entry will be returned.
      */
-    status_t add(const char* fileName, int compressionMethod,
-        ZipEntry** ppEntry)
-    {
+    status_t add(const char* fileName, int compressionMethod, ZipEntry** ppEntry) {
         return add(fileName, fileName, compressionMethod, ppEntry);
     }
-    status_t add(const char* fileName, const char* storageName,
-        int compressionMethod, ZipEntry** ppEntry)
-    {
-        return addCommon(fileName, NULL, 0, storageName,
-                         ZipEntry::kCompressStored,
+    status_t add(const char* fileName, const char* storageName, int compressionMethod,
+                 ZipEntry** ppEntry) {
+        return addCommon(fileName, NULL, 0, storageName, ZipEntry::kCompressStored,
                          compressionMethod, ppEntry);
     }
 
@@ -95,11 +87,8 @@ public:
      *
      * If "ppEntry" is non-NULL, a pointer to the new entry will be returned.
      */
-    status_t addGzip(const char* fileName, const char* storageName,
-        ZipEntry** ppEntry)
-    {
-        return addCommon(fileName, NULL, 0, storageName,
-                         ZipEntry::kCompressDeflated,
+    status_t addGzip(const char* fileName, const char* storageName, ZipEntry** ppEntry) {
+        return addCommon(fileName, NULL, 0, storageName, ZipEntry::kCompressDeflated,
                          ZipEntry::kCompressDeflated, ppEntry);
     }
 
@@ -108,11 +97,9 @@ public:
      *
      * If "ppEntry" is non-NULL, a pointer to the new entry will be returned.
      */
-    status_t add(const void* data, size_t size, const char* storageName,
-        int compressionMethod, ZipEntry** ppEntry)
-    {
-        return addCommon(NULL, data, size, storageName,
-                         ZipEntry::kCompressStored,
+    status_t add(const void* data, size_t size, const char* storageName, int compressionMethod,
+                 ZipEntry** ppEntry) {
+        return addCommon(NULL, data, size, storageName, ZipEntry::kCompressStored,
                          compressionMethod, ppEntry);
     }
 
@@ -123,8 +110,8 @@ public:
      *
      * If "ppEntry" is non-NULL, a pointer to the new entry will be returned.
      */
-    status_t add(const ZipFile* pSourceZip, const ZipEntry* pSourceEntry,
-        int padding, ZipEntry** ppEntry);
+    status_t add(const ZipFile* pSourceZip, const ZipEntry* pSourceEntry, int padding,
+                 ZipEntry** ppEntry);
 
     /*
      * Mark an entry as having been removed.  It is not actually deleted
@@ -145,8 +132,8 @@ public:
      *
      * Returns "false" if an error was encountered in the compressed data.
      */
-    //bool uncompress(const ZipEntry* pEntry, void* buf) const;
-    //bool uncompress(const ZipEntry* pEntry, FILE* fp) const;
+    // bool uncompress(const ZipEntry* pEntry, void* buf) const;
+    // bool uncompress(const ZipEntry* pEntry, FILE* fp) const;
     void* uncompress(const ZipEntry* pEntry);
 
     /*
@@ -164,52 +151,48 @@ public:
     int getNumEntries(void) const { return mEntries.size(); }
     ZipEntry* getEntryByIndex(int idx) const;
 
-private:
+  private:
     /* these are private and not defined */
     ZipFile(const ZipFile& src);
     ZipFile& operator=(const ZipFile& src);
 
     class EndOfCentralDir {
-    public:
-        EndOfCentralDir(void) :
-            mDiskNumber(0),
-            mDiskWithCentralDir(0),
-            mNumEntries(0),
-            mTotalNumEntries(0),
-            mCentralDirSize(0),
-            mCentralDirOffset(0),
-            mCommentLen(0),
-            mComment(NULL)
-            {}
-        virtual ~EndOfCentralDir(void) {
-            delete[] mComment;
-        }
+      public:
+        EndOfCentralDir(void)
+            : mDiskNumber(0),
+              mDiskWithCentralDir(0),
+              mNumEntries(0),
+              mTotalNumEntries(0),
+              mCentralDirSize(0),
+              mCentralDirOffset(0),
+              mCommentLen(0),
+              mComment(NULL) {}
+        virtual ~EndOfCentralDir(void) { delete[] mComment; }
 
         status_t readBuf(const unsigned char* buf, int len);
         status_t write(FILE* fp);
 
-        //unsigned long   mSignature;
-        unsigned short  mDiskNumber;
-        unsigned short  mDiskWithCentralDir;
-        unsigned short  mNumEntries;
-        unsigned short  mTotalNumEntries;
-        unsigned long   mCentralDirSize;
-        unsigned long   mCentralDirOffset;      // offset from first disk
-        unsigned short  mCommentLen;
-        unsigned char*  mComment;
+        // unsigned long   mSignature;
+        unsigned short mDiskNumber;
+        unsigned short mDiskWithCentralDir;
+        unsigned short mNumEntries;
+        unsigned short mTotalNumEntries;
+        unsigned long mCentralDirSize;
+        unsigned long mCentralDirOffset;  // offset from first disk
+        unsigned short mCommentLen;
+        unsigned char* mComment;
 
         enum {
-            kSignature      = 0x06054b50,
-            kEOCDLen        = 22,       // EndOfCentralDir len, excl. comment
+            kSignature = 0x06054b50,
+            kEOCDLen = 22,  // EndOfCentralDir len, excl. comment
 
-            kMaxCommentLen  = 65535,    // longest possible in ushort
-            kMaxEOCDSearch  = kMaxCommentLen + EndOfCentralDir::kEOCDLen,
+            kMaxCommentLen = 65535,  // longest possible in ushort
+            kMaxEOCDSearch = kMaxCommentLen + EndOfCentralDir::kEOCDLen,
 
         };
 
         void dump(void) const;
     };
-
 
     /* read all entries in the central dir */
     status_t readCentralDir(void);
@@ -221,23 +204,20 @@ private:
     void discardEntries(void);
 
     /* common handler for all "add" functions */
-    status_t addCommon(const char* fileName, const void* data, size_t size,
-        const char* storageName, int sourceType, int compressionMethod,
-        ZipEntry** ppEntry);
+    status_t addCommon(const char* fileName, const void* data, size_t size, const char* storageName,
+                       int sourceType, int compressionMethod, ZipEntry** ppEntry);
 
     /* copy all of "srcFp" into "dstFp" */
     status_t copyFpToFp(FILE* dstFp, FILE* srcFp, unsigned long* pCRC32);
     /* copy all of "data" into "dstFp" */
-    status_t copyDataToFp(FILE* dstFp,
-        const void* data, size_t size, unsigned long* pCRC32);
+    status_t copyDataToFp(FILE* dstFp, const void* data, size_t size, unsigned long* pCRC32);
     /* copy some of "srcFp" into "dstFp" */
-    status_t copyPartialFpToFp(FILE* dstFp, FILE* srcFp, long length,
-        unsigned long* pCRC32);
+    status_t copyPartialFpToFp(FILE* dstFp, FILE* srcFp, long length, unsigned long* pCRC32);
     /* like memmove(), but on parts of a single file */
     status_t filemove(FILE* fp, off_t dest, off_t src, size_t n);
     /* compress all of "srcFp" into "dstFp", using Deflate */
-    status_t compressFpToFp(FILE* dstFp, FILE* srcFp,
-        const void* data, size_t size, unsigned long* pCRC32);
+    status_t compressFpToFp(FILE* dstFp, FILE* srcFp, const void* data, size_t size,
+                            unsigned long* pCRC32);
 
     /* get modification date from a file descriptor */
     time_t getModTime(int fd);
@@ -246,25 +226,25 @@ private:
      * We use stdio FILE*, which gives us buffering but makes dealing
      * with files >2GB awkward.  Until we support Zip64, we're fine.
      */
-    FILE*           mZipFp;             // Zip file pointer
+    FILE* mZipFp;  // Zip file pointer
 
     /* one of these per file */
     EndOfCentralDir mEOCD;
 
     /* did we open this read-only? */
-    bool            mReadOnly;
+    bool mReadOnly;
 
     /* set this when we trash the central dir */
-    bool            mNeedCDRewrite;
+    bool mNeedCDRewrite;
 
     /*
      * One ZipEntry per entry in the zip file.  I'm using pointers instead
      * of objects because it's easier than making operator= work for the
      * classes and sub-classes.
      */
-    Vector<ZipEntry*>   mEntries;
+    Vector<ZipEntry*> mEntries;
 };
 
-}; // namespace android
+};  // namespace android
 
-#endif // __LIBS_ZIPFILE_H
+#endif  // __LIBS_ZIPFILE_H

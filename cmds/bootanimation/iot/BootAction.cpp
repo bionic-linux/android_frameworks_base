@@ -39,19 +39,17 @@ bool BootAction::init(const std::string& libraryPath,
     while (client == nullptr) {
         client = APeripheralManagerClient_new();
         if (client == nullptr) {
-          ALOGV("peripheralmanager is not up, sleeping before we check again.");
-          usleep(250000);
+            ALOGV("peripheralmanager is not up, sleeping before we check again.");
+            usleep(250000);
         }
     }
     ALOGD("Peripheralmanager is up.");
     APeripheralManagerClient_delete(client);
 
-
     ALOGI("Loading boot action %s", libraryPath.c_str());
     mLibHandle = dlopen(libraryPath.c_str(), RTLD_NOW);
     if (mLibHandle == nullptr) {
-        ALOGE("Unable to load library at %s :: %s",
-              libraryPath.c_str(), dlerror());
+        ALOGE("Unable to load library at %s :: %s", libraryPath.c_str(), dlerror());
         return false;
     }
 

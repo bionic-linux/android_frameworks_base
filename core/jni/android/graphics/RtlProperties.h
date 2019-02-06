@@ -40,10 +40,10 @@ enum RtlDebugLevel {
 static RtlDebugLevel readRtlDebugLevel() {
     char property[PROPERTY_VALUE_MAX];
     if (property_get(RTL_PROPERTY_DEBUG, property, NULL) > 0) {
-        return (RtlDebugLevel) atoi(property);
+        return (RtlDebugLevel)atoi(property);
     }
     return kRtlDebugDisabled;
 }
 
-} // namespace android
-#endif // _ANDROID_GRAPHICS_RTL_PROPERTIES_H_
+}  // namespace android
+#endif  // _ANDROID_GRAPHICS_RTL_PROPERTIES_H_

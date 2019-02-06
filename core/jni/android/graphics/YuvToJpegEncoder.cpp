@@ -1,8 +1,8 @@
+#include "YuvToJpegEncoder.h"
+#include <hardware/hardware.h>
+#include <ui/PixelFormat.h>
 #include "CreateJavaOutputStreamAdaptor.h"
 #include "SkJPEGWriteUtility.h"
-#include "YuvToJpegEncoder.h"
-#include <ui/PixelFormat.h>
-#include <hardware/hardware.h>
 
 #include "core_jni_helpers.h"
 
@@ -16,12 +16,11 @@ YuvToJpegEncoder* YuvToJpegEncoder::create(int format, int* strides) {
     } else if (format == HAL_PIXEL_FORMAT_YCbCr_422_I) {
         return new Yuv422IToJpegEncoder(strides);
     } else {
-      return NULL;
+        return NULL;
     }
 }
 
-YuvToJpegEncoder::YuvToJpegEncoder(int* strides) : fStrides(strides) {
-}
+YuvToJpegEncoder::YuvToJpegEncoder(int* strides) : fStrides(strides) {}
 
 struct ErrorMgr {
     struct jpeg_error_mgr pub;
@@ -29,16 +28,16 @@ struct ErrorMgr {
 };
 
 void error_exit(j_common_ptr cinfo) {
-    ErrorMgr* err = (ErrorMgr*) cinfo->err;
-    (*cinfo->err->output_message) (cinfo);
+    ErrorMgr* err = (ErrorMgr*)cinfo->err;
+    (*cinfo->err->output_message)(cinfo);
     longjmp(err->jmp, 1);
 }
 
-bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width,
-        int height, int* offsets, int jpegQuality) {
-    jpeg_compress_struct    cinfo;
-    ErrorMgr                err;
-    skjpeg_destination_mgr  sk_wstream(stream);
+bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width, int height, int* offsets,
+                              int jpegQuality) {
+    jpeg_compress_struct cinfo;
+    ErrorMgr err;
+    skjpeg_destination_mgr sk_wstream(stream);
 
     cinfo.err = jpeg_std_error(&err.pub);
     err.pub.error_exit = error_exit;
@@ -55,7 +54,7 @@ bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width,
 
     jpeg_start_compress(&cinfo, TRUE);
 
-    compress(&cinfo, (uint8_t*) inYuv, offsets);
+    compress(&cinfo, (uint8_t*)inYuv, offsets);
 
     jpeg_finish_compress(&cinfo);
 
@@ -64,8 +63,8 @@ bool YuvToJpegEncoder::encode(SkWStream* stream, void* inYuv, int width,
     return true;
 }
 
-void YuvToJpegEncoder::setJpegCompressStruct(jpeg_compress_struct* cinfo,
-        int width, int height, int quality) {
+void YuvToJpegEncoder::setJpegCompressStruct(jpeg_compress_struct* cinfo, int width, int height,
+                                             int quality) {
     cinfo->image_width = width;
     cinfo->image_height = height;
     cinfo->input_components = 3;
@@ -80,13 +79,11 @@ void YuvToJpegEncoder::setJpegCompressStruct(jpeg_compress_struct* cinfo,
 }
 
 ///////////////////////////////////////////////////////////////////
-Yuv420SpToJpegEncoder::Yuv420SpToJpegEncoder(int* strides) :
-        YuvToJpegEncoder(strides) {
+Yuv420SpToJpegEncoder::Yuv420SpToJpegEncoder(int* strides) : YuvToJpegEncoder(strides) {
     fNumPlanes = 2;
 }
 
-void Yuv420SpToJpegEncoder::compress(jpeg_compress_struct* cinfo,
-        uint8_t* yuv, int* offsets) {
+void Yuv420SpToJpegEncoder::compress(jpeg_compress_struct* cinfo, uint8_t* yuv, int* offsets) {
     SkDebugf("onFlyCompress");
     JSAMPROW y[16];
     JSAMPROW cb[8];
@@ -99,14 +96,13 @@ void Yuv420SpToJpegEncoder::compress(jpeg_compress_struct* cinfo,
     int width = cinfo->image_width;
     int height = cinfo->image_height;
     uint8_t* yPlanar = yuv + offsets[0];
-    uint8_t* vuPlanar = yuv + offsets[1]; //width * height;
-    uint8_t* uRows = new uint8_t [8 * (width >> 1)];
-    uint8_t* vRows = new uint8_t [8 * (width >> 1)];
-
+    uint8_t* vuPlanar = yuv + offsets[1];  // width * height;
+    uint8_t* uRows = new uint8_t[8 * (width >> 1)];
+    uint8_t* vRows = new uint8_t[8 * (width >> 1)];
 
     // process 16 lines of Y and 8 lines of U/V each time.
     while (cinfo->next_scanline < cinfo->image_height) {
-        //deitnerleave u and v
+        // deitnerleave u and v
         deinterleave(vuPlanar, uRows, vRows, cinfo->next_scanline, width, height);
 
         // Jpeg library ignores the rows whose indices are greater than height.
@@ -118,19 +114,18 @@ void Yuv420SpToJpegEncoder::compress(jpeg_compress_struct* cinfo,
             if ((i & 1) == 0) {
                 // height and width are both halved because of downsampling
                 int offset = (i >> 1) * (width >> 1);
-                cb[i/2] = uRows + offset;
-                cr[i/2] = vRows + offset;
+                cb[i / 2] = uRows + offset;
+                cr[i / 2] = vRows + offset;
             }
-          }
+        }
         jpeg_write_raw_data(cinfo, planes, 16);
     }
-    delete [] uRows;
-    delete [] vRows;
-
+    delete[] uRows;
+    delete[] vRows;
 }
 
-void Yuv420SpToJpegEncoder::deinterleave(uint8_t* vuPlanar, uint8_t* uRows,
-        uint8_t* vRows, int rowIndex, int width, int height) {
+void Yuv420SpToJpegEncoder::deinterleave(uint8_t* vuPlanar, uint8_t* uRows, uint8_t* vRows,
+                                         int rowIndex, int width, int height) {
     int numRows = (height - rowIndex) / 2;
     if (numRows > 8) numRows = 8;
     for (int row = 0; row < numRows; ++row) {
@@ -156,13 +151,11 @@ void Yuv420SpToJpegEncoder::configSamplingFactors(jpeg_compress_struct* cinfo) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-Yuv422IToJpegEncoder::Yuv422IToJpegEncoder(int* strides) :
-        YuvToJpegEncoder(strides) {
+Yuv422IToJpegEncoder::Yuv422IToJpegEncoder(int* strides) : YuvToJpegEncoder(strides) {
     fNumPlanes = 1;
 }
 
-void Yuv422IToJpegEncoder::compress(jpeg_compress_struct* cinfo,
-        uint8_t* yuv, int* offsets) {
+void Yuv422IToJpegEncoder::compress(jpeg_compress_struct* cinfo, uint8_t* yuv, int* offsets) {
     SkDebugf("onFlyCompress_422");
     JSAMPROW y[16];
     JSAMPROW cb[16];
@@ -174,9 +167,9 @@ void Yuv422IToJpegEncoder::compress(jpeg_compress_struct* cinfo,
 
     int width = cinfo->image_width;
     int height = cinfo->image_height;
-    uint8_t* yRows = new uint8_t [16 * width];
-    uint8_t* uRows = new uint8_t [16 * (width >> 1)];
-    uint8_t* vRows = new uint8_t [16 * (width >> 1)];
+    uint8_t* yRows = new uint8_t[16 * width];
+    uint8_t* uRows = new uint8_t[16 * (width >> 1)];
+    uint8_t* vRows = new uint8_t[16 * (width >> 1)];
 
     uint8_t* yuvOffset = yuv + offsets[0];
 
@@ -198,14 +191,13 @@ void Yuv422IToJpegEncoder::compress(jpeg_compress_struct* cinfo,
 
         jpeg_write_raw_data(cinfo, planes, 16);
     }
-    delete [] yRows;
-    delete [] uRows;
-    delete [] vRows;
+    delete[] yRows;
+    delete[] uRows;
+    delete[] vRows;
 }
 
-
 void Yuv422IToJpegEncoder::deinterleave(uint8_t* yuv, uint8_t* yRows, uint8_t* uRows,
-        uint8_t* vRows, int rowIndex, int width, int height) {
+                                        uint8_t* vRows, int rowIndex, int width, int height) {
     int numRows = height - rowIndex;
     if (numRows > 16) numRows = 16;
     for (int row = 0; row < numRows; ++row) {
@@ -233,10 +225,10 @@ void Yuv422IToJpegEncoder::configSamplingFactors(jpeg_compress_struct* cinfo) {
 }
 ///////////////////////////////////////////////////////////////////////////////
 
-static jboolean YuvImage_compressToJpeg(JNIEnv* env, jobject, jbyteArray inYuv,
-        jint format, jint width, jint height, jintArray offsets,
-        jintArray strides, jint jpegQuality, jobject jstream,
-        jbyteArray jstorage) {
+static jboolean YuvImage_compressToJpeg(JNIEnv* env, jobject, jbyteArray inYuv, jint format,
+                                        jint width, jint height, jintArray offsets,
+                                        jintArray strides, jint jpegQuality, jobject jstream,
+                                        jbyteArray jstorage) {
     jbyte* yuv = env->GetByteArrayElements(inYuv, NULL);
     SkWStream* strm = CreateJavaOutputStreamAdaptor(env, jstream, jstorage);
 
@@ -258,13 +250,11 @@ static jboolean YuvImage_compressToJpeg(JNIEnv* env, jobject, jbyteArray inYuv,
 }
 ///////////////////////////////////////////////////////////////////////////////
 
-static const JNINativeMethod gYuvImageMethods[] = {
-    {   "nativeCompressToJpeg",  "([BIII[I[IILjava/io/OutputStream;[B)Z",
-        (void*)YuvImage_compressToJpeg }
-};
+static const JNINativeMethod gYuvImageMethods[] = {{"nativeCompressToJpeg",
+                                                    "([BIII[I[IILjava/io/OutputStream;[B)Z",
+                                                    (void*)YuvImage_compressToJpeg}};
 
-int register_android_graphics_YuvImage(JNIEnv* env)
-{
+int register_android_graphics_YuvImage(JNIEnv* env) {
     return android::RegisterMethodsOrDie(env, "android/graphics/YuvImage", gYuvImageMethods,
                                          NELEM(gYuvImageMethods));
 }

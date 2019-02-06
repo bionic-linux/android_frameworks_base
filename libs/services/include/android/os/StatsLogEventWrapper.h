@@ -27,21 +27,19 @@ namespace os {
 
 // Represents a parcelable object. Only used to send data from Android OS to statsd.
 class StatsLogEventWrapper : public android::Parcelable {
- public:
-  StatsLogEventWrapper();
+  public:
+    StatsLogEventWrapper();
 
-  StatsLogEventWrapper(StatsLogEventWrapper&& in) = default;
+    StatsLogEventWrapper(StatsLogEventWrapper&& in) = default;
 
-  android::status_t writeToParcel(android::Parcel* out) const;
+    android::status_t writeToParcel(android::Parcel* out) const;
 
-  android::status_t readFromParcel(const android::Parcel* in);
+    android::status_t readFromParcel(const android::Parcel* in);
 
-  // These are public for ease of conversion.
-  std::vector<uint8_t> bytes;
+    // These are public for ease of conversion.
+    std::vector<uint8_t> bytes;
 };
-} // Namespace os
-} // Namespace android
-
+}  // Namespace os
+}  // Namespace android
 
 #endif  // STATS_LOG_EVENT_WRAPPER_H
-

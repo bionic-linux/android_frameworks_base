@@ -30,7 +30,7 @@ namespace {
 
 StatsdConfig CreateCountMetric_NoLink_CombinationCondition_Config() {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     auto screenBrightnessChangeAtomMatcher = CreateScreenBrightnessChangedAtomMatcher();
     *config.add_atom_matcher() = screenBrightnessChangeAtomMatcher;
     *config.add_atom_matcher() = CreateScreenTurnedOnAtomMatcher();
@@ -234,7 +234,7 @@ namespace {
 
 StatsdConfig CreateCountMetric_Link_CombinationCondition() {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     auto appCrashMatcher = CreateProcessCrashAtomMatcher();
     *config.add_atom_matcher() = appCrashMatcher;
     *config.add_atom_matcher() = CreateScreenTurnedOnAtomMatcher();
@@ -426,7 +426,7 @@ namespace {
 StatsdConfig CreateDurationMetricConfig_NoLink_CombinationCondition(
         DurationMetric::AggregationType aggregationType) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateBatterySaverModeStartAtomMatcher();
     *config.add_atom_matcher() = CreateBatterySaverModeStopAtomMatcher();
     *config.add_atom_matcher() = CreateScreenTurnedOnAtomMatcher();
@@ -466,15 +466,15 @@ StatsdConfig CreateDurationMetricConfig_NoLink_CombinationCondition(
 }  // namespace
 
 TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_OR_CombinationCondition) {
-    for (auto aggregationType : { DurationMetric::MAX_SPARSE, DurationMetric::SUM}) {
+    for (auto aggregationType : {DurationMetric::MAX_SPARSE, DurationMetric::SUM}) {
         ConfigKey cfgKey;
         auto config = CreateDurationMetricConfig_NoLink_CombinationCondition(aggregationType);
         int64_t bucketStartTimeNs = 10000000000;
         int64_t bucketSizeNs =
                 TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
-        auto processor = CreateStatsLogProcessor(
-                bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+        auto processor =
+                CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
         EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
         EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 
@@ -585,8 +585,7 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_OR_CombinationCondit
             EXPECT_EQ(data.bucket_info(1).duration_nanos(), bucketSizeNs - 300);
         }
         EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
-        EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                  bucketStartTimeNs + bucketSizeNs);
+        EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + bucketSizeNs);
         EXPECT_EQ(data.bucket_info(1).start_bucket_elapsed_nanos(),
                   bucketStartTimeNs + bucketSizeNs);
         EXPECT_EQ(data.bucket_info(1).end_bucket_elapsed_nanos(),
@@ -605,8 +604,7 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_OR_CombinationCondit
             EXPECT_EQ(data.bucket_info(1).duration_nanos(), bucketSizeNs + 700 - 600);
         }
         EXPECT_EQ(data.bucket_info(0).start_bucket_elapsed_nanos(), bucketStartTimeNs);
-        EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(),
-                  bucketStartTimeNs + bucketSizeNs);
+        EXPECT_EQ(data.bucket_info(0).end_bucket_elapsed_nanos(), bucketStartTimeNs + bucketSizeNs);
         EXPECT_EQ(data.bucket_info(1).start_bucket_elapsed_nanos(),
                   bucketStartTimeNs + bucketSizeNs);
         EXPECT_EQ(data.bucket_info(1).end_bucket_elapsed_nanos(),
@@ -619,7 +617,7 @@ namespace {
 StatsdConfig CreateDurationMetricConfig_Link_CombinationCondition(
         DurationMetric::AggregationType aggregationType) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateMoveToBackgroundAtomMatcher();
     *config.add_atom_matcher() = CreateMoveToForegroundAtomMatcher();
     *config.add_atom_matcher() = CreateScreenTurnedOnAtomMatcher();
@@ -679,8 +677,8 @@ TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_OR_CombinationConditio
         int64_t bucketSizeNs =
                 TimeUnitToBucketSizeInMillis(config.duration_metric(0).bucket()) * 1000000LL;
 
-        auto processor = CreateStatsLogProcessor(
-                bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+        auto processor =
+                CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
         EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
         EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 

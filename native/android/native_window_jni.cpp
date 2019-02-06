@@ -16,8 +16,8 @@
 
 #define LOG_TAG "Surface"
 
-#include <android/native_window_jni.h>
 #include <android/native_window.h>
+#include <android/native_window_jni.h>
 #include <system/window.h>
 
 #include <gui/Surface.h>

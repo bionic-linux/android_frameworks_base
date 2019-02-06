@@ -29,24 +29,24 @@
 
 namespace android {
 
-void register_android_server_broadcastradio_Tuner(JavaVM *vm, JNIEnv *env);
+void register_android_server_broadcastradio_Tuner(JavaVM* vm, JNIEnv* env);
 
 namespace server {
 namespace BroadcastRadio {
 namespace Tuner {
 
-void assignHalInterfaces(JNIEnv *env, JavaRef<jobject> const &jTuner,
-        sp<hardware::broadcastradio::V1_0::IBroadcastRadio> halModule,
-        sp<hardware::broadcastradio::V1_0::ITuner> halTuner);
+void assignHalInterfaces(JNIEnv* env, JavaRef<jobject> const& jTuner,
+                         sp<hardware::broadcastradio::V1_0::IBroadcastRadio> halModule,
+                         sp<hardware::broadcastradio::V1_0::ITuner> halTuner);
 
-sp<hardware::broadcastradio::V1_1::ITunerCallback>
-getNativeCallback(JNIEnv *env, JavaRef<jobject> const &tuner);
+sp<hardware::broadcastradio::V1_1::ITunerCallback> getNativeCallback(JNIEnv* env,
+                                                                     JavaRef<jobject> const& tuner);
 
-Region getRegion(JNIEnv *env, jobject obj);
+Region getRegion(JNIEnv* env, jobject obj);
 
-} // namespace Tuner
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace Tuner
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android
 
-#endif // _ANDROID_SERVER_BROADCASTRADIORADIO_TUNER_H
+#endif  // _ANDROID_SERVER_BROADCASTRADIORADIO_TUNER_H

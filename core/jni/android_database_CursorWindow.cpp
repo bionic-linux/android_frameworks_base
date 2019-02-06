@@ -18,29 +18,29 @@
 #define LOG_TAG "CursorWindow"
 #define LOG_NDEBUG 0
 
+#include <android_runtime/AndroidRuntime.h>
 #include <inttypes.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
 
 #include <utils/Log.h>
-#include <utils/String8.h>
 #include <utils/String16.h>
+#include <utils/String8.h>
 #include <utils/Unicode.h>
 
+#include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
-#include <dirent.h>
+#include <unistd.h>
 
 #undef LOG_NDEBUG
 #define LOG_NDEBUG 1
 
 #include <androidfw/CursorWindow.h>
+#include "android_database_SQLiteCommon.h"
 #include "android_os_Parcel.h"
 #include "android_util_Binder.h"
-#include "android_database_SQLiteCommon.h"
 
 #include "core_jni_helpers.h"
 
@@ -55,13 +55,14 @@ static jstring gEmptyString;
 
 static void throwExceptionWithRowCol(JNIEnv* env, jint row, jint column) {
     String8 msg;
-    msg.appendFormat("Couldn't read row %d, col %d from CursorWindow.  "
+    msg.appendFormat(
+            "Couldn't read row %d, col %d from CursorWindow.  "
             "Make sure the Cursor is initialized correctly before accessing data from it.",
             row, column);
     jniThrowException(env, "java/lang/IllegalStateException", msg.string());
 }
 
-static void throwUnknownTypeException(JNIEnv * env, jint type) {
+static void throwUnknownTypeException(JNIEnv* env, jint type) {
     String8 msg;
     msg.appendFormat("UNKNOWN type %d", type);
     jniThrowException(env, "java/lang/IllegalStateException", msg.string());
@@ -71,13 +72,13 @@ static int getFdCount() {
     char fdpath[PATH_MAX];
     int count = 0;
     snprintf(fdpath, PATH_MAX, "/proc/%d/fd", getpid());
-    DIR *dir = opendir(fdpath);
+    DIR* dir = opendir(fdpath);
     if (dir != NULL) {
-        struct dirent *dirent;
+        struct dirent* dirent;
         while ((dirent = readdir(dir))) {
             count++;
         }
-        count -= 2; // discount "." and ".."
+        count -= 2;  // discount "." and ".."
         closedir(dir);
     }
     return count;
@@ -92,8 +93,8 @@ static jlong nativeCreate(JNIEnv* env, jclass clazz, jstring nameObj, jint curso
     CursorWindow* window;
     status_t status = CursorWindow::create(name, cursorWindowSize, &window);
     if (status || !window) {
-        ALOGE("Could not allocate CursorWindow '%s' of size %d due to error %d.",
-                name.string(), cursorWindowSize, status);
+        ALOGE("Could not allocate CursorWindow '%s' of size %d due to error %d.", name.string(),
+              cursorWindowSize, status);
         return 0;
     }
 
@@ -108,12 +109,12 @@ static jlong nativeCreateFromParcel(JNIEnv* env, jclass clazz, jobject parcelObj
     status_t status = CursorWindow::createFromParcel(parcel, &window);
     if (status || !window) {
         ALOGE("Could not create CursorWindow from Parcel due to error %d, process fd count=%d",
-                status, getFdCount());
+              status, getFdCount());
         return 0;
     }
 
     LOG_WINDOW("nativeInitializeFromBinder: numRows = %d, numColumns = %d, window = %p",
-            window->getNumRows(), window->getNumColumns(), window);
+               window->getNumRows(), window->getNumColumns(), window);
     return reinterpret_cast<jlong>(window);
 }
 
@@ -130,8 +131,7 @@ static jstring nativeGetName(JNIEnv* env, jclass clazz, jlong windowPtr) {
     return env->NewStringUTF(window->name().string());
 }
 
-static void nativeWriteToParcel(JNIEnv * env, jclass clazz, jlong windowPtr,
-        jobject parcelObj) {
+static void nativeWriteToParcel(JNIEnv* env, jclass clazz, jlong windowPtr, jobject parcelObj) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     Parcel* parcel = parcelForJavaObject(env, parcelObj);
 
@@ -143,7 +143,7 @@ static void nativeWriteToParcel(JNIEnv * env, jclass clazz, jlong windowPtr,
     }
 }
 
-static void nativeClear(JNIEnv * env, jclass clazz, jlong windowPtr) {
+static void nativeClear(JNIEnv* env, jclass clazz, jlong windowPtr) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Clearing window %p", window);
     status_t status = window->clear();
@@ -157,8 +157,7 @@ static jint nativeGetNumRows(JNIEnv* env, jclass clazz, jlong windowPtr) {
     return window->getNumRows();
 }
 
-static jboolean nativeSetNumColumns(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint columnNum) {
+static jboolean nativeSetNumColumns(JNIEnv* env, jclass clazz, jlong windowPtr, jint columnNum) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     status_t status = window->setNumColumns(columnNum);
     return status == OK;
@@ -175,8 +174,7 @@ static void nativeFreeLastRow(JNIEnv* env, jclass clazz, jlong windowPtr) {
     window->freeLastRow();
 }
 
-static jint nativeGetType(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jint nativeGetType(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("returning column type affinity for %d,%d from %p", row, column, window);
 
@@ -184,14 +182,13 @@ static jint nativeGetType(JNIEnv* env, jclass clazz, jlong windowPtr,
     if (!fieldSlot) {
         // FIXME: This is really broken but we have CTS tests that depend
         // on this legacy behavior.
-        //throwExceptionWithRowCol(env, row, column);
+        // throwExceptionWithRowCol(env, row, column);
         return CursorWindow::FIELD_TYPE_NULL;
     }
     return window->getFieldSlotType(fieldSlot);
 }
 
-static jbyteArray nativeGetBlob(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jbyteArray nativeGetBlob(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Getting blob for %d,%d from %p", row, column, window);
 
@@ -229,8 +226,7 @@ static jbyteArray nativeGetBlob(JNIEnv* env, jclass clazz, jlong windowPtr,
     return NULL;
 }
 
-static jstring nativeGetString(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jstring nativeGetString(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Getting string for %d,%d from %p", row, column, window);
 
@@ -278,8 +274,7 @@ static jstring nativeGetString(JNIEnv* env, jclass clazz, jlong windowPtr,
 }
 
 static jcharArray allocCharArrayBuffer(JNIEnv* env, jobject bufferObj, size_t size) {
-    jcharArray dataObj = jcharArray(env->GetObjectField(bufferObj,
-            gCharArrayBufferClassInfo.data));
+    jcharArray dataObj = jcharArray(env->GetObjectField(bufferObj, gCharArrayBufferClassInfo.data));
     if (dataObj && size) {
         jsize capacity = env->GetArrayLength(dataObj);
         if (size_t(capacity) < size) {
@@ -292,7 +287,7 @@ static jcharArray allocCharArrayBuffer(JNIEnv* env, jobject bufferObj, size_t si
         if (capacity < 64) {
             capacity = 64;
         }
-        dataObj = env->NewCharArray(capacity); // might throw OOM
+        dataObj = env->NewCharArray(capacity);  // might throw OOM
         if (dataObj) {
             env->SetObjectField(bufferObj, gCharArrayBufferClassInfo.data, dataObj);
         }
@@ -300,18 +295,17 @@ static jcharArray allocCharArrayBuffer(JNIEnv* env, jobject bufferObj, size_t si
     return dataObj;
 }
 
-static void fillCharArrayBufferUTF(JNIEnv* env, jobject bufferObj,
-        const char* str, size_t len) {
+static void fillCharArrayBufferUTF(JNIEnv* env, jobject bufferObj, const char* str, size_t len) {
     ssize_t size = utf8_to_utf16_length(reinterpret_cast<const uint8_t*>(str), len);
     if (size < 0) {
-        size = 0; // invalid UTF8 string
+        size = 0;  // invalid UTF8 string
     }
     jcharArray dataObj = allocCharArrayBuffer(env, bufferObj, size);
     if (dataObj) {
         if (size) {
             jchar* data = static_cast<jchar*>(env->GetPrimitiveArrayCritical(dataObj, NULL));
             utf8_to_utf16_no_null_terminator(reinterpret_cast<const uint8_t*>(str), len,
-                    reinterpret_cast<char16_t*>(data), (size_t) size);
+                                             reinterpret_cast<char16_t*>(data), (size_t)size);
             env->ReleasePrimitiveArrayCritical(dataObj, data, 0);
         }
         env->SetIntField(bufferObj, gCharArrayBufferClassInfo.sizeCopied, size);
@@ -325,8 +319,8 @@ static void clearCharArrayBuffer(JNIEnv* env, jobject bufferObj) {
     }
 }
 
-static void nativeCopyStringToBuffer(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column, jobject bufferObj) {
+static void nativeCopyStringToBuffer(JNIEnv* env, jclass clazz, jlong windowPtr, jint row,
+                                     jint column, jobject bufferObj) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Copying string for %d,%d from %p", row, column, window);
 
@@ -364,8 +358,7 @@ static void nativeCopyStringToBuffer(JNIEnv* env, jclass clazz, jlong windowPtr,
     }
 }
 
-static jlong nativeGetLong(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jlong nativeGetLong(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Getting long for %d,%d from %p", row, column, window);
 
@@ -395,8 +388,7 @@ static jlong nativeGetLong(JNIEnv* env, jclass clazz, jlong windowPtr,
     }
 }
 
-static jdouble nativeGetDouble(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jdouble nativeGetDouble(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     LOG_WINDOW("Getting double for %d,%d from %p", row, column, window);
 
@@ -426,8 +418,8 @@ static jdouble nativeGetDouble(JNIEnv* env, jclass clazz, jlong windowPtr,
     }
 }
 
-static jboolean nativePutBlob(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jbyteArray valueObj, jint row, jint column) {
+static jboolean nativePutBlob(JNIEnv* env, jclass clazz, jlong windowPtr, jbyteArray valueObj,
+                              jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     jsize len = env->GetArrayLength(valueObj);
 
@@ -444,8 +436,8 @@ static jboolean nativePutBlob(JNIEnv* env, jclass clazz, jlong windowPtr,
     return true;
 }
 
-static jboolean nativePutString(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jstring valueObj, jint row, jint column) {
+static jboolean nativePutString(JNIEnv* env, jclass clazz, jlong windowPtr, jstring valueObj,
+                                jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
 
     size_t sizeIncludingNull = env->GetStringUTFLength(valueObj) + 1;
@@ -466,8 +458,8 @@ static jboolean nativePutString(JNIEnv* env, jclass clazz, jlong windowPtr,
     return true;
 }
 
-static jboolean nativePutLong(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jlong value, jint row, jint column) {
+static jboolean nativePutLong(JNIEnv* env, jclass clazz, jlong windowPtr, jlong value, jint row,
+                              jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     status_t status = window->putLong(row, column, value);
 
@@ -480,8 +472,8 @@ static jboolean nativePutLong(JNIEnv* env, jclass clazz, jlong windowPtr,
     return true;
 }
 
-static jboolean nativePutDouble(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jdouble value, jint row, jint column) {
+static jboolean nativePutDouble(JNIEnv* env, jclass clazz, jlong windowPtr, jdouble value, jint row,
+                                jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     status_t status = window->putDouble(row, column, value);
 
@@ -494,8 +486,7 @@ static jboolean nativePutDouble(JNIEnv* env, jclass clazz, jlong windowPtr,
     return true;
 }
 
-static jboolean nativePutNull(JNIEnv* env, jclass clazz, jlong windowPtr,
-        jint row, jint column) {
+static jboolean nativePutNull(JNIEnv* env, jclass clazz, jlong windowPtr, jint row, jint column) {
     CursorWindow* window = reinterpret_cast<CursorWindow*>(windowPtr);
     status_t status = window->putNull(row, column);
 
@@ -508,59 +499,37 @@ static jboolean nativePutNull(JNIEnv* env, jclass clazz, jlong windowPtr,
     return true;
 }
 
-static const JNINativeMethod sMethods[] =
-{
-    /* name, signature, funcPtr */
-    { "nativeCreate", "(Ljava/lang/String;I)J",
-            (void*)nativeCreate },
-    { "nativeCreateFromParcel", "(Landroid/os/Parcel;)J",
-            (void*)nativeCreateFromParcel },
-    { "nativeDispose", "(J)V",
-            (void*)nativeDispose },
-    { "nativeWriteToParcel", "(JLandroid/os/Parcel;)V",
-            (void*)nativeWriteToParcel },
+static const JNINativeMethod sMethods[] = {
+        /* name, signature, funcPtr */
+        {"nativeCreate", "(Ljava/lang/String;I)J", (void*)nativeCreate},
+        {"nativeCreateFromParcel", "(Landroid/os/Parcel;)J", (void*)nativeCreateFromParcel},
+        {"nativeDispose", "(J)V", (void*)nativeDispose},
+        {"nativeWriteToParcel", "(JLandroid/os/Parcel;)V", (void*)nativeWriteToParcel},
 
-    { "nativeGetName", "(J)Ljava/lang/String;",
-            (void*)nativeGetName },
-    { "nativeGetBlob", "(JII)[B",
-            (void*)nativeGetBlob },
-    { "nativeGetString", "(JII)Ljava/lang/String;",
-            (void*)nativeGetString },
-    { "nativeCopyStringToBuffer", "(JIILandroid/database/CharArrayBuffer;)V",
-            (void*)nativeCopyStringToBuffer },
-    { "nativePutBlob", "(J[BII)Z",
-            (void*)nativePutBlob },
-    { "nativePutString", "(JLjava/lang/String;II)Z",
-            (void*)nativePutString },
+        {"nativeGetName", "(J)Ljava/lang/String;", (void*)nativeGetName},
+        {"nativeGetBlob", "(JII)[B", (void*)nativeGetBlob},
+        {"nativeGetString", "(JII)Ljava/lang/String;", (void*)nativeGetString},
+        {"nativeCopyStringToBuffer", "(JIILandroid/database/CharArrayBuffer;)V",
+         (void*)nativeCopyStringToBuffer},
+        {"nativePutBlob", "(J[BII)Z", (void*)nativePutBlob},
+        {"nativePutString", "(JLjava/lang/String;II)Z", (void*)nativePutString},
 
-    // ------- @FastNative below here ----------------------
-    { "nativeClear", "(J)V",
-            (void*)nativeClear },
-    { "nativeGetNumRows", "(J)I",
-            (void*)nativeGetNumRows },
-    { "nativeSetNumColumns", "(JI)Z",
-            (void*)nativeSetNumColumns },
-    { "nativeAllocRow", "(J)Z",
-            (void*)nativeAllocRow },
-    { "nativeFreeLastRow", "(J)V",
-            (void*)nativeFreeLastRow },
-    { "nativeGetType", "(JII)I",
-            (void*)nativeGetType },
-    { "nativeGetLong", "(JII)J",
-            (void*)nativeGetLong },
-    { "nativeGetDouble", "(JII)D",
-            (void*)nativeGetDouble },
+        // ------- @FastNative below here ----------------------
+        {"nativeClear", "(J)V", (void*)nativeClear},
+        {"nativeGetNumRows", "(J)I", (void*)nativeGetNumRows},
+        {"nativeSetNumColumns", "(JI)Z", (void*)nativeSetNumColumns},
+        {"nativeAllocRow", "(J)Z", (void*)nativeAllocRow},
+        {"nativeFreeLastRow", "(J)V", (void*)nativeFreeLastRow},
+        {"nativeGetType", "(JII)I", (void*)nativeGetType},
+        {"nativeGetLong", "(JII)J", (void*)nativeGetLong},
+        {"nativeGetDouble", "(JII)D", (void*)nativeGetDouble},
 
-    { "nativePutLong", "(JJII)Z",
-            (void*)nativePutLong },
-    { "nativePutDouble", "(JDII)Z",
-            (void*)nativePutDouble },
-    { "nativePutNull", "(JII)Z",
-            (void*)nativePutNull },
+        {"nativePutLong", "(JJII)Z", (void*)nativePutLong},
+        {"nativePutDouble", "(JDII)Z", (void*)nativePutDouble},
+        {"nativePutNull", "(JII)Z", (void*)nativePutNull},
 };
 
-int register_android_database_CursorWindow(JNIEnv* env)
-{
+int register_android_database_CursorWindow(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/database/CharArrayBuffer");
 
     gCharArrayBufferClassInfo.data = GetFieldIDOrDie(env, clazz, "data", "[C");
@@ -571,4 +540,4 @@ int register_android_database_CursorWindow(JNIEnv* env)
     return RegisterMethodsOrDie(env, "android/database/CursorWindow", sMethods, NELEM(sMethods));
 }
 
-} // namespace android
+}  // namespace android

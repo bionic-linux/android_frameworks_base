@@ -36,7 +36,7 @@ class HwBinderDeathRecipientList : public RefBase {
     std::vector<sp<HwBinderDeathRecipient>> mList;
     Mutex mLock;
 
-public:
+  public:
     HwBinderDeathRecipientList();
     ~HwBinderDeathRecipientList();
 
@@ -50,26 +50,25 @@ public:
 };
 
 struct JHwRemoteBinder : public RefBase {
-    static void InitClass(JNIEnv *env);
+    static void InitClass(JNIEnv* env);
 
-    static sp<JHwRemoteBinder> SetNativeContext(
-            JNIEnv *env, jobject thiz, const sp<JHwRemoteBinder> &context);
+    static sp<JHwRemoteBinder> SetNativeContext(JNIEnv* env, jobject thiz,
+                                                const sp<JHwRemoteBinder>& context);
 
-    static sp<JHwRemoteBinder> GetNativeContext(JNIEnv *env, jobject thiz);
+    static sp<JHwRemoteBinder> GetNativeContext(JNIEnv* env, jobject thiz);
 
-    static jobject NewObject(JNIEnv *env, const sp<hardware::IBinder> &binder);
+    static jobject NewObject(JNIEnv* env, const sp<hardware::IBinder>& binder);
 
-    JHwRemoteBinder(
-            JNIEnv *env, jobject thiz, const sp<hardware::IBinder> &binder);
+    JHwRemoteBinder(JNIEnv* env, jobject thiz, const sp<hardware::IBinder>& binder);
 
     sp<hardware::IBinder> getBinder() const;
-    void setBinder(const sp<hardware::IBinder> &binder);
+    void setBinder(const sp<hardware::IBinder>& binder);
     sp<HwBinderDeathRecipientList> getDeathRecipientList() const;
 
-protected:
+  protected:
     virtual ~JHwRemoteBinder();
 
-private:
+  private:
     jobject mObject;
 
     sp<hardware::IBinder> mBinder;
@@ -77,9 +76,8 @@ private:
     DISALLOW_COPY_AND_ASSIGN(JHwRemoteBinder);
 };
 
-int register_android_os_HwRemoteBinder(JNIEnv *env);
+int register_android_os_HwRemoteBinder(JNIEnv* env);
 
 }  // namespace android
 
 #endif  // ANDROID_OS_HW_REMOTE_BINDER_H
-

@@ -36,4 +36,4 @@ void print_warning(const char* format, ...);
 void print_one_line(const char* format, ...);
 void check_error(int err);
 
-#endif // PRINT_H
+#endif  // PRINT_H

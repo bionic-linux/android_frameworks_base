@@ -15,12 +15,12 @@
  */
 
 #include <androidfw/ResourceTypes.h>
-#include <utils/String8.h>
 #include <gtest/gtest.h>
+#include <utils/String8.h>
 
 #include "AaptConfig.h"
-#include "ResourceFilter.h"
 #include "ConfigDescription.h"
+#include "ResourceFilter.h"
 
 using android::String8;
 

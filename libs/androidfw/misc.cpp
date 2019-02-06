@@ -21,10 +21,10 @@
 //
 #include <androidfw/misc.h>
 
-#include <sys/stat.h>
-#include <cstring>
 #include <errno.h>
+#include <sys/stat.h>
 #include <cstdio>
+#include <cstring>
 
 using namespace android;
 
@@ -33,53 +33,49 @@ namespace android {
 /*
  * Get a file's type.
  */
-FileType getFileType(const char* fileName)
-{
-    struct stat sb;
+FileType getFileType(const char* fileName) {
+  struct stat sb;
 
-    if (stat(fileName, &sb) < 0) {
-        if (errno == ENOENT || errno == ENOTDIR)
-            return kFileTypeNonexistent;
-        else {
-            fprintf(stderr, "getFileType got errno=%d on '%s'\n",
-                errno, fileName);
-            return kFileTypeUnknown;
-        }
-    } else {
-        if (S_ISREG(sb.st_mode))
-            return kFileTypeRegular;
-        else if (S_ISDIR(sb.st_mode))
-            return kFileTypeDirectory;
-        else if (S_ISCHR(sb.st_mode))
-            return kFileTypeCharDev;
-        else if (S_ISBLK(sb.st_mode))
-            return kFileTypeBlockDev;
-        else if (S_ISFIFO(sb.st_mode))
-            return kFileTypeFifo;
+  if (stat(fileName, &sb) < 0) {
+    if (errno == ENOENT || errno == ENOTDIR)
+      return kFileTypeNonexistent;
+    else {
+      fprintf(stderr, "getFileType got errno=%d on '%s'\n", errno, fileName);
+      return kFileTypeUnknown;
+    }
+  } else {
+    if (S_ISREG(sb.st_mode))
+      return kFileTypeRegular;
+    else if (S_ISDIR(sb.st_mode))
+      return kFileTypeDirectory;
+    else if (S_ISCHR(sb.st_mode))
+      return kFileTypeCharDev;
+    else if (S_ISBLK(sb.st_mode))
+      return kFileTypeBlockDev;
+    else if (S_ISFIFO(sb.st_mode))
+      return kFileTypeFifo;
 #if defined(S_ISLNK)
-        else if (S_ISLNK(sb.st_mode))
-            return kFileTypeSymlink;
+    else if (S_ISLNK(sb.st_mode))
+      return kFileTypeSymlink;
 #endif
 #if defined(S_ISSOCK)
-        else if (S_ISSOCK(sb.st_mode))
-            return kFileTypeSocket;
+    else if (S_ISSOCK(sb.st_mode))
+      return kFileTypeSocket;
 #endif
-        else
-            return kFileTypeUnknown;
-    }
+    else
+      return kFileTypeUnknown;
+  }
 }
 
 /*
  * Get a file's modification date.
  */
-time_t getFileModDate(const char* fileName)
-{
-    struct stat sb;
+time_t getFileModDate(const char* fileName) {
+  struct stat sb;
 
-    if (stat(fileName, &sb) < 0)
-        return (time_t) -1;
+  if (stat(fileName, &sb) < 0) return (time_t)-1;
 
-    return sb.st_mtime;
+  return sb.st_mtime;
 }
 
-}; // namespace android
+};  // namespace android

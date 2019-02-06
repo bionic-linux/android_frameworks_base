@@ -355,7 +355,12 @@ void MultiApkGenerator::AddScreens(const ConfigDescription& config, xml::Element
   //  normal  = 300
   //  large   = 400
   //  xlarge  = 500
-  constexpr const uint32_t kScreenSizes[4] = {200, 300, 400, 500,};
+  constexpr const uint32_t kScreenSizes[4] = {
+      200,
+      300,
+      400,
+      500,
+  };
   constexpr const uint32_t kScreenSizeResourceId = 0x010102ca;
   constexpr const uint32_t kScreenDensityResourceId = 0x010102cb;
 
@@ -370,7 +375,6 @@ void MultiApkGenerator::AddScreens(const ConfigDescription& config, xml::Element
     xml::Attribute* density = screen->FindOrCreateAttribute(kSchemaAndroid, "screenDensity");
     density->compiled_attribute = xml::AaptAttribute(Attribute(), {kScreenDensityResourceId});
     density->compiled_value = ResourceUtils::MakeInt(config.density);
-
 
     parent->AppendChild(std::move(screen));
   }

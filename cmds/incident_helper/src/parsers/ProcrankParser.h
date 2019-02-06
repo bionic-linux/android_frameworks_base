@@ -25,9 +25,9 @@ using namespace android;
  * Procrank parser, parses text produced by command procrank
  */
 class ProcrankParser : public TextParserBase {
-public:
-    ProcrankParser() : TextParserBase(String8("ProcrankParser")) {};
-    ~ProcrankParser() {};
+  public:
+    ProcrankParser() : TextParserBase(String8("ProcrankParser")){};
+    ~ProcrankParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

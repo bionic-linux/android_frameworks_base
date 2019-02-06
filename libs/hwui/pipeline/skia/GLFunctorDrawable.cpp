@@ -18,14 +18,14 @@
 #include <GrContext.h>
 #include <private/hwui/DrawGlInfo.h>
 #include "GlFunctorLifecycleListener.h"
+#include "GrBackendSurface.h"
+#include "GrGLTypes.h"
+#include "GrRenderTarget.h"
+#include "GrRenderTargetContext.h"
 #include "RenderNode.h"
 #include "SkAndroidFrameworkUtils.h"
 #include "SkClipStack.h"
 #include "SkRect.h"
-#include "GrBackendSurface.h"
-#include "GrRenderTarget.h"
-#include "GrRenderTargetContext.h"
-#include "GrGLTypes.h"
 
 namespace android {
 namespace uirenderer {
@@ -50,14 +50,14 @@ static void setScissor(int viewportHeight, const SkIRect& clip) {
 }
 
 static bool GetFboDetails(SkCanvas* canvas, GLuint* outFboID, SkISize* outFboSize) {
-    GrRenderTargetContext *renderTargetContext =
+    GrRenderTargetContext* renderTargetContext =
             canvas->internal_private_accessTopLayerRenderTargetContext();
     if (!renderTargetContext) {
         ALOGW("Unable to extract renderTarget info from canvas; aborting GLFunctor draw");
         return false;
     }
 
-    GrRenderTarget *renderTarget = renderTargetContext->accessRenderTarget();
+    GrRenderTarget* renderTarget = renderTargetContext->accessRenderTarget();
     if (!renderTarget) {
         ALOGW("Unable to extract renderTarget info from canvas; aborting GLFunctor draw");
         return false;
@@ -102,15 +102,16 @@ void GLFunctorDrawable::onDraw(SkCanvas* canvas) {
     sk_sp<SkSurface> tmpSurface;
     // we are in a state where there is an unclipped saveLayer
     if (fboID != 0 && !surfaceBounds.contains(clipBounds)) {
-
         // create an offscreen layer and clear it
-        SkImageInfo surfaceInfo = canvas->imageInfo().makeWH(clipBounds.width(), clipBounds.height());
-        tmpSurface = SkSurface::MakeRenderTarget(canvas->getGrContext(), SkBudgeted::kYes,
-                                                 surfaceInfo);
+        SkImageInfo surfaceInfo =
+                canvas->imageInfo().makeWH(clipBounds.width(), clipBounds.height());
+        tmpSurface =
+                SkSurface::MakeRenderTarget(canvas->getGrContext(), SkBudgeted::kYes, surfaceInfo);
         tmpSurface->getCanvas()->clear(SK_ColorTRANSPARENT);
 
         GrBackendObject backendObject;
-        if (!tmpSurface->getRenderTargetHandle(&backendObject, SkSurface::kFlushWrite_BackendHandleAccess)) {
+        if (!tmpSurface->getRenderTargetHandle(&backendObject,
+                                               SkSurface::kFlushWrite_BackendHandleAccess)) {
             ALOGW("Unable to extract renderTarget info from offscreen canvas; aborting GLFunctor");
             return;
         }
@@ -151,7 +152,7 @@ void GLFunctorDrawable::onDraw(SkCanvas* canvas) {
     bool clearStencilAfterFunctor = false;
     if (CC_UNLIKELY(clipRegion.isComplex())) {
         // clear the stencil
-        //TODO: move stencil clear and canvas flush to SkAndroidFrameworkUtils::clipWithStencil
+        // TODO: move stencil clear and canvas flush to SkAndroidFrameworkUtils::clipWithStencil
         glDisable(GL_SCISSOR_TEST);
         glStencilMask(0x1);
         glClearStencil(0);
@@ -170,7 +171,7 @@ void GLFunctorDrawable::onDraw(SkCanvas* canvas) {
 
         // GL ops get inserted here if previous flush is missing, which could dirty the stencil
         bool stencilWritten = SkAndroidFrameworkUtils::clipWithStencil(tmpCanvas);
-        tmpCanvas->flush(); //need this flush for the single op that draws into the stencil
+        tmpCanvas->flush();  // need this flush for the single op that draws into the stencil
 
         // ensure that the framebuffer that the webview will render into is bound before after we
         // draw into the stencil

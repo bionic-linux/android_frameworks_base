@@ -17,6 +17,7 @@
 #include "CanvasContext.h"
 #include <GpuMemoryTracker.h>
 
+#include "../Properties.h"
 #include "AnimationContext.h"
 #include "Caches.h"
 #include "EglManager.h"
@@ -34,7 +35,6 @@
 #include "renderstate/Stencil.h"
 #include "utils/GLUtils.h"
 #include "utils/TimeUtils.h"
-#include "../Properties.h"
 
 #include <cutils/properties.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>

@@ -20,19 +20,18 @@
 
 typedef uint32_t uint32;
 
-void JNI_PIXELUTILS_METHOD(nativeCopyPixels)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height, jint offset,
-    jint pixStride, jint rowStride) {
-  uint32* pInPix = static_cast<uint32*>(env->GetDirectBufferAddress(input));
-  uint32* pOutput = static_cast<uint32*>(env->GetDirectBufferAddress(output));
-  uint32* pOutRow = pOutput + offset;
-  for (int y = 0; y < height; ++y) {
-    uint32* pOutPix = pOutRow;
-    for (int x = 0; x < width; ++x) {
-      *pOutPix = *(pInPix++);
-      pOutPix += pixStride;
+void JNI_PIXELUTILS_METHOD(nativeCopyPixels)(JNIEnv* env, jclass clazz, jobject input,
+                                             jobject output, jint width, jint height, jint offset,
+                                             jint pixStride, jint rowStride) {
+    uint32* pInPix = static_cast<uint32*>(env->GetDirectBufferAddress(input));
+    uint32* pOutput = static_cast<uint32*>(env->GetDirectBufferAddress(output));
+    uint32* pOutRow = pOutput + offset;
+    for (int y = 0; y < height; ++y) {
+        uint32* pOutPix = pOutRow;
+        for (int x = 0; x < width; ++x) {
+            *pOutPix = *(pInPix++);
+            pOutPix += pixStride;
+        }
+        pOutRow += rowStride;
     }
-    pOutRow += rowStride;
-  }
 }
-

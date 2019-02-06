@@ -16,28 +16,28 @@
 
 #define LOG_TAG "LightsService"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
 
+#include <android-base/chrono_utils.h>
 #include <android/hardware/light/2.0/ILight.h>
 #include <android/hardware/light/2.0/types.h>
-#include <android-base/chrono_utils.h>
-#include <utils/misc.h>
-#include <utils/Log.h>
-#include <map>
 #include <stdio.h>
+#include <utils/Log.h>
+#include <utils/misc.h>
+#include <map>
 
 namespace android {
 
 using Brightness = ::android::hardware::light::V2_0::Brightness;
-using Flash      = ::android::hardware::light::V2_0::Flash;
-using ILight     = ::android::hardware::light::V2_0::ILight;
+using Flash = ::android::hardware::light::V2_0::Flash;
+using ILight = ::android::hardware::light::V2_0::ILight;
 using LightState = ::android::hardware::light::V2_0::LightState;
-using Status     = ::android::hardware::light::V2_0::Status;
-using Type       = ::android::hardware::light::V2_0::Type;
-template<typename T>
-using Return     = ::android::hardware::Return<T>;
+using Status = ::android::hardware::light::V2_0::Status;
+using Type = ::android::hardware::light::V2_0::Type;
+template <typename T>
+using Return = ::android::hardware::Return<T>;
 
 static bool sLightSupported = true;
 
@@ -49,8 +49,7 @@ static bool validate(jint light, jint flash, jint brightness) {
         valid = false;
     }
 
-    if (flash != static_cast<jint>(Flash::NONE) &&
-        flash != static_cast<jint>(Flash::TIMED) &&
+    if (flash != static_cast<jint>(Flash::NONE) && flash != static_cast<jint>(Flash::TIMED) &&
         flash != static_cast<jint>(Flash::HARDWARE)) {
         ALOGE("Invalid flash parameter %d.", flash);
         valid = false;
@@ -72,12 +71,8 @@ static bool validate(jint light, jint flash, jint brightness) {
     return valid;
 }
 
-static LightState constructState(
-        jint colorARGB,
-        jint flashMode,
-        jint onMS,
-        jint offMS,
-        jint brightnessMode){
+static LightState constructState(jint colorARGB, jint flashMode, jint onMS, jint offMS,
+                                 jint brightnessMode) {
     Flash flash = static_cast<Flash>(flashMode);
     Brightness brightness = static_cast<Brightness>(brightnessMode);
 
@@ -98,10 +93,7 @@ static LightState constructState(
     return state;
 }
 
-static void processReturn(
-        const Return<Status> &ret,
-        Type type,
-        const LightState &state) {
+static void processReturn(const Return<Status>& ret, Type type, const LightState& state) {
     if (!ret.isOk()) {
         ALOGE("Failed to issue set light command.");
         return;
@@ -114,8 +106,7 @@ static void processReturn(
             ALOGE("Light requested not available on this device. %d", type);
             break;
         case Status::BRIGHTNESS_NOT_SUPPORTED:
-            ALOGE("Brightness parameter not supported on this device: %d",
-                state.brightnessMode);
+            ALOGE("Brightness parameter not supported on this device: %d", state.brightnessMode);
             break;
         case Status::UNKNOWN:
         default:
@@ -123,16 +114,8 @@ static void processReturn(
     }
 }
 
-static void setLight_native(
-        JNIEnv* /* env */,
-        jobject /* clazz */,
-        jint light,
-        jint colorARGB,
-        jint flashMode,
-        jint onMS,
-        jint offMS,
-        jint brightnessMode) {
-
+static void setLight_native(JNIEnv* /* env */, jobject /* clazz */, jint light, jint colorARGB,
+                            jint flashMode, jint onMS, jint offMS, jint brightnessMode) {
     if (!sLightSupported) {
         return;
     }
@@ -142,8 +125,7 @@ static void setLight_native(
     }
 
     Type type = static_cast<Type>(light);
-    LightState state = constructState(
-        colorARGB, flashMode, onMS, offMS, brightnessMode);
+    LightState state = constructState(colorARGB, flashMode, onMS, offMS, brightnessMode);
 
     {
         android::base::Timer t;
@@ -159,12 +141,12 @@ static void setLight_native(
 }
 
 static const JNINativeMethod method_table[] = {
-    { "setLight_native", "(IIIIII)V", (void*)setLight_native },
+        {"setLight_native", "(IIIIII)V", (void*)setLight_native},
 };
 
-int register_android_server_LightsService(JNIEnv *env) {
-    return jniRegisterNativeMethods(env, "com/android/server/lights/LightsService",
-            method_table, NELEM(method_table));
+int register_android_server_LightsService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/lights/LightsService", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

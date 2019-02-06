@@ -34,39 +34,37 @@ namespace filterfw {
 // advanced, which could result in the hash function trying to deference a
 // stale pointer.
 template <class ForwardIterator>
-void STLDeleteContainerPointers(ForwardIterator begin,
-                                ForwardIterator end) {
-  while (begin != end) {
-    ForwardIterator temp = begin;
-    ++begin;
-    delete *temp;
-  }
+void STLDeleteContainerPointers(ForwardIterator begin, ForwardIterator end) {
+    while (begin != end) {
+        ForwardIterator temp = begin;
+        ++begin;
+        delete *temp;
+    }
 }
 
 // Given an STL container consisting of (key, value) pairs, STLDeleteValues
 // deletes all the "value" components and clears the container.  Does nothing
 // in the case it's given a NULL pointer.
 template <class T>
-void STLDeleteValues(T *v) {
-  if (!v) return;
-  for (typename T::iterator i = v->begin(); i != v->end(); ++i) {
-    delete i->second;
-  }
-  v->clear();
+void STLDeleteValues(T* v) {
+    if (!v) return;
+    for (typename T::iterator i = v->begin(); i != v->end(); ++i) {
+        delete i->second;
+    }
+    v->clear();
 }
 
 // Perform a lookup in a map or hash_map.
 // If the key is present a const pointer to the associated value is returned,
 // otherwise a NULL pointer is returned.
 template <class Collection>
-const typename Collection::value_type::second_type*
-FindOrNull(const Collection& collection,
-           const typename Collection::value_type::first_type& key) {
-  typename Collection::const_iterator it = collection.find(key);
-  if (it == collection.end()) {
-    return 0;
-  }
-  return &it->second;
+const typename Collection::value_type::second_type* FindOrNull(
+        const Collection& collection, const typename Collection::value_type::first_type& key) {
+    typename Collection::const_iterator it = collection.find(key);
+    if (it == collection.end()) {
+        return 0;
+    }
+    return &it->second;
 }
 
 // A simple class that gives checklist functionality: There are essemtially two
@@ -74,7 +72,7 @@ FindOrNull(const Collection& collection,
 //  - Adding a new (unchecked) item.
 //  - Checking off an item.
 // When checking off the last remaining item CheckItem() returns true.
-template<typename T>
+template <typename T>
 class CheckList {
   public:
     // Add a new unchecked item. Does nothing if item is already in checklist.
@@ -85,26 +83,22 @@ class CheckList {
     bool CheckItem(const T& item);
 
     // Clear the checklist.
-    void Clear() {
-      items_.clear();
-    }
+    void Clear() { items_.clear(); }
 
   private:
     std::set<T> items_;
 };
 
-template<typename T>
+template <typename T>
 void CheckList<T>::AddItem(const T& item) {
-  if (!ContainsKey(items_, item))
-    items_.insert(item);
+    if (!ContainsKey(items_, item)) items_.insert(item);
 }
 
-template<typename T>
+template <typename T>
 bool CheckList<T>::CheckItem(const T& item) {
-  typename std::set<T>::iterator iter = items_.find(item);
-  if (iter != items_.end())
-    items_.erase(iter);
-  return items_.empty();
+    typename std::set<T>::iterator iter = items_.find(item);
+    if (iter != items_.end()) items_.erase(iter);
+    return items_.empty();
 }
 
 // Perform a lookup in a map or hash_map whose values are pointers.
@@ -113,21 +107,20 @@ bool CheckList<T>::CheckItem(const T& item) {
 // This function does not distinguish between a missing key and a key mapped
 // to a NULL value.
 template <class Collection>
-const typename Collection::value_type::second_type
-FindPtrOrNull(const Collection& collection,
-              const typename Collection::value_type::first_type& key) {
-  typename Collection::const_iterator it = collection.find(key);
-  if (it == collection.end()) {
-    return 0;
-  }
-  return it->second;
+const typename Collection::value_type::second_type FindPtrOrNull(
+        const Collection& collection, const typename Collection::value_type::first_type& key) {
+    typename Collection::const_iterator it = collection.find(key);
+    if (it == collection.end()) {
+        return 0;
+    }
+    return it->second;
 }
 
 // Test to see if a set, map, hash_set or hash_map contains a particular key.
 // Returns true if the key is in the collection.
 template <typename Collection, typename Key>
 bool ContainsKey(const Collection& collection, const Key& key) {
-  return collection.find(key) != collection.end();
+    return collection.find(key) != collection.end();
 }
 
 // Insert a new key and value into a map or hash_map.
@@ -135,14 +128,13 @@ bool ContainsKey(const Collection& collection, const Key& key) {
 // inserted, otherwise nothing happens. True indicates that an insert
 // took place, false indicates the key was already present.
 template <class Collection, class Key, class Value>
-bool InsertIfNotPresent(Collection * const collection,
-                        const Key& key, const Value& value) {
-  std::pair<typename Collection::iterator, bool> ret =
-    collection->insert(typename Collection::value_type(key, value));
-  return ret.second;
+bool InsertIfNotPresent(Collection* const collection, const Key& key, const Value& value) {
+    std::pair<typename Collection::iterator, bool> ret =
+            collection->insert(typename Collection::value_type(key, value));
+    return ret.second;
 }
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
-#endif // ANDROID_FILTERFW_BASE_UTILITIES_H
+#endif  // ANDROID_FILTERFW_BASE_UTILITIES_H

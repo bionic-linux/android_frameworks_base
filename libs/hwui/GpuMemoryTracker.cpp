@@ -33,7 +33,9 @@ pthread_t gGpuThread = 0;
 #define NUM_TYPES static_cast<int>(GpuObjectType::TypeCount)
 
 const char* TYPE_NAMES[] = {
-        "Texture", "OffscreenBuffer", "Layer",
+        "Texture",
+        "OffscreenBuffer",
+        "Layer",
 };
 
 struct TypeStats {
@@ -136,4 +138,4 @@ void GpuMemoryTracker::onFrameCompleted() {
 }
 
 }  // namespace uirenderer
-}  // namespace android;
+}  // namespace android

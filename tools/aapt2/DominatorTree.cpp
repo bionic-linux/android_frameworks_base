@@ -25,11 +25,9 @@ using ::android::ConfigDescription;
 
 namespace aapt {
 
-DominatorTree::DominatorTree(
-    const std::vector<std::unique_ptr<ResourceConfigValue>>& configs) {
+DominatorTree::DominatorTree(const std::vector<std::unique_ptr<ResourceConfigValue>>& configs) {
   for (const auto& config : configs) {
-    product_roots_[config->product].TryAddChild(
-        util::make_unique<Node>(config.get(), nullptr));
+    product_roots_[config->product].TryAddChild(util::make_unique<Node>(config.get(), nullptr));
   }
 }
 
@@ -63,9 +61,7 @@ bool DominatorTree::Node::AddChild(std::unique_ptr<Node> new_child) {
   if (has_dominated_children) {
     children_.erase(
         std::remove_if(children_.begin(), children_.end(),
-                       [](const std::unique_ptr<Node>& child) -> bool {
-                         return child == nullptr;
-                       }),
+                       [](const std::unique_ptr<Node>& child) -> bool { return child == nullptr; }),
         children_.end());
   }
   // Add the new config to a child if a child dominates the new config.

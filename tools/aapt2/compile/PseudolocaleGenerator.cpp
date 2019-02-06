@@ -223,7 +223,8 @@ class Visitor : public ValueVisitor {
   std::unique_ptr<Item> item;
 
   Visitor(StringPool* pool, Pseudolocalizer::Method method)
-      : pool_(pool), method_(method), localizer_(method) {}
+      : pool_(pool), method_(method), localizer_(method) {
+  }
 
   void Visit(Plural* plural) override {
     std::unique_ptr<Plural> localized = util::make_unique<Plural>();
@@ -312,8 +313,8 @@ ConfigDescription ModifyConfigForPseudoLocale(const ConfigDescription& base,
 }
 
 void PseudolocalizeIfNeeded(const Pseudolocalizer::Method method,
-                            ResourceConfigValue* original_value,
-                            StringPool* pool, ResourceEntry* entry) {
+                            ResourceConfigValue* original_value, StringPool* pool,
+                            ResourceEntry* entry) {
   Visitor visitor(pool, method);
   original_value->value->Accept(&visitor);
 

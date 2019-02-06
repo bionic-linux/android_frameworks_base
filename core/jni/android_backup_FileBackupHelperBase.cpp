@@ -22,25 +22,18 @@
 
 #include <androidfw/BackupHelpers.h>
 
-namespace android
-{
+namespace android {
 
-static jlong
-ctor(JNIEnv* env, jobject clazz)
-{
-    return (jlong)new RestoreHelperBase();
+static jlong ctor(JNIEnv* env, jobject clazz) {
+    return (jlong) new RestoreHelperBase();
 }
 
-static void
-dtor(JNIEnv* env, jobject clazz, jlong ptr)
-{
+static void dtor(JNIEnv* env, jobject clazz, jlong ptr) {
     delete (RestoreHelperBase*)ptr;
 }
 
-static jint
-performBackup_native(JNIEnv* env, jobject clazz, jobject oldState, jlong data,
-        jobject newState, jobjectArray files, jobjectArray keys)
-{
+static jint performBackup_native(JNIEnv* env, jobject clazz, jobject oldState, jlong data,
+                                 jobject newState, jobjectArray files, jobjectArray keys) {
     int err;
 
     // all parameters have already been checked against null
@@ -49,36 +42,34 @@ performBackup_native(JNIEnv* env, jobject clazz, jobject oldState, jlong data,
     BackupDataWriter* dataStream = (BackupDataWriter*)data;
 
     const int fileCount = env->GetArrayLength(files);
-    char const** filesUTF = (char const**)malloc(sizeof(char*)*fileCount);
-    for (int i=0; i<fileCount; i++) {
+    char const** filesUTF = (char const**)malloc(sizeof(char*) * fileCount);
+    for (int i = 0; i < fileCount; i++) {
         filesUTF[i] = env->GetStringUTFChars((jstring)env->GetObjectArrayElement(files, i), NULL);
     }
 
     const int keyCount = env->GetArrayLength(keys);
-    char const** keysUTF = (char const**)malloc(sizeof(char*)*keyCount);
-    for (int i=0; i<keyCount; i++) {
+    char const** keysUTF = (char const**)malloc(sizeof(char*) * keyCount);
+    for (int i = 0; i < keyCount; i++) {
         keysUTF[i] = env->GetStringUTFChars((jstring)env->GetObjectArrayElement(keys, i), NULL);
     }
 
     err = back_up_files(oldStateFD, dataStream, newStateFD, filesUTF, keysUTF, fileCount);
 
-    for (int i=0; i<fileCount; i++) {
+    for (int i = 0; i < fileCount; i++) {
         env->ReleaseStringUTFChars((jstring)env->GetObjectArrayElement(files, i), filesUTF[i]);
     }
     free(filesUTF);
 
-    for (int i=0; i<keyCount; i++) {
+    for (int i = 0; i < keyCount; i++) {
         env->ReleaseStringUTFChars((jstring)env->GetObjectArrayElement(keys, i), keysUTF[i]);
     }
     free(keysUTF);
 
-    return (jint) err;
+    return (jint)err;
 }
 
-
-static jint
-writeFile_native(JNIEnv* env, jobject clazz, jlong ptr, jstring filenameObj, jlong backupReaderPtr)
-{
+static jint writeFile_native(JNIEnv* env, jobject clazz, jlong ptr, jstring filenameObj,
+                             jlong backupReaderPtr) {
     int err;
     RestoreHelperBase* restore = (RestoreHelperBase*)ptr;
     BackupDataReader* reader = (BackupDataReader*)backupReaderPtr;
@@ -90,12 +81,10 @@ writeFile_native(JNIEnv* env, jobject clazz, jlong ptr, jstring filenameObj, jlo
 
     env->ReleaseStringUTFChars(filenameObj, filename);
 
-    return (jint) err;
+    return (jint)err;
 }
 
-static jint
-writeSnapshot_native(JNIEnv* env, jobject clazz, jlong ptr, jobject fileDescriptor)
-{
+static jint writeSnapshot_native(JNIEnv* env, jobject clazz, jlong ptr, jobject fileDescriptor) {
     int err;
 
     RestoreHelperBase* restore = (RestoreHelperBase*)ptr;
@@ -103,23 +92,23 @@ writeSnapshot_native(JNIEnv* env, jobject clazz, jlong ptr, jobject fileDescript
 
     err = restore->WriteSnapshot(fd);
 
-    return (jint) err;
+    return (jint)err;
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "ctor", "()J", (void*)ctor },
-    { "dtor", "(J)V", (void*)dtor },
-    { "performBackup_native",
-       "(Ljava/io/FileDescriptor;JLjava/io/FileDescriptor;[Ljava/lang/String;[Ljava/lang/String;)I",
-       (void*)performBackup_native },
-    { "writeFile_native", "(JLjava/lang/String;J)I", (void*)writeFile_native },
-    { "writeSnapshot_native", "(JLjava/io/FileDescriptor;)I", (void*)writeSnapshot_native },
+        {"ctor", "()J", (void*)ctor},
+        {"dtor", "(J)V", (void*)dtor},
+        {"performBackup_native",
+         "(Ljava/io/FileDescriptor;JLjava/io/FileDescriptor;[Ljava/lang/String;[Ljava/lang/"
+         "String;)I",
+         (void*)performBackup_native},
+        {"writeFile_native", "(JLjava/lang/String;J)I", (void*)writeFile_native},
+        {"writeSnapshot_native", "(JLjava/io/FileDescriptor;)I", (void*)writeSnapshot_native},
 };
 
-int register_android_backup_FileBackupHelperBase(JNIEnv* env)
-{
-    return RegisterMethodsOrDie(env, "android/app/backup/FileBackupHelperBase",
-            g_methods, NELEM(g_methods));
+int register_android_backup_FileBackupHelperBase(JNIEnv* env) {
+    return RegisterMethodsOrDie(env, "android/app/backup/FileBackupHelperBase", g_methods,
+                                NELEM(g_methods));
 }
 
-}
+}  // namespace android

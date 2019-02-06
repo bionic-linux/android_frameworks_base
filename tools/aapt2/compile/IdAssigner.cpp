@@ -31,9 +31,8 @@ namespace aapt {
  * ResourceEntry,
  * as long as there is no existing ID or the ID is the same.
  */
-static bool AssignId(IDiagnostics* diag, const ResourceId& id,
-                     const ResourceName& name, ResourceTablePackage* pkg,
-                     ResourceTableType* type, ResourceEntry* entry) {
+static bool AssignId(IDiagnostics* diag, const ResourceId& id, const ResourceName& name,
+                     ResourceTablePackage* pkg, ResourceTableType* type, ResourceEntry* entry) {
   if (pkg->id.value() == id.package_id()) {
     if (!type->id || type->id.value() == id.type_id()) {
       type->id = id.type_id();
@@ -47,8 +46,8 @@ static bool AssignId(IDiagnostics* diag, const ResourceId& id,
 
   const ResourceId existing_id(pkg->id.value(), type->id ? type->id.value() : 0,
                                entry->id ? entry->id.value() : 0);
-  diag->Error(DiagMessage() << "can't assign ID " << id << " to resource "
-                            << name << " with conflicting ID " << existing_id);
+  diag->Error(DiagMessage() << "can't assign ID " << id << " to resource " << name
+                            << " with conflicting ID " << existing_id);
   return false;
 }
 
@@ -67,9 +66,8 @@ bool IdAssigner::Consume(IAaptContext* context, ResourceTable* table) {
           const auto iter = assigned_id_map_->find(name);
           if (iter != assigned_id_map_->end()) {
             const ResourceId assigned_id = iter->second;
-            const bool result =
-                AssignId(context->GetDiagnostics(), assigned_id, name,
-                         package.get(), type.get(), entry.get());
+            const bool result = AssignId(context->GetDiagnostics(), assigned_id, name,
+                                         package.get(), type.get(), entry.get());
             if (!result) {
               return false;
             }
@@ -78,14 +76,13 @@ bool IdAssigner::Consume(IAaptContext* context, ResourceTable* table) {
 
         if (package->id && type->id && entry->id) {
           // If the ID is set for this resource, then reserve it.
-          ResourceId resource_id(package->id.value(), type->id.value(),
-                                 entry->id.value());
+          ResourceId resource_id(package->id.value(), type->id.value(), entry->id.value());
           auto result = assigned_ids.insert({resource_id, name});
           const ResourceName& existing_name = result.first->second;
           if (!result.second) {
-            context->GetDiagnostics()->Error(
-                DiagMessage() << "resource " << name << " has same ID "
-                              << resource_id << " as " << existing_name);
+            context->GetDiagnostics()->Error(DiagMessage()
+                                             << "resource " << name << " has same ID "
+                                             << resource_id << " as " << existing_name);
             return false;
           }
         }
@@ -103,10 +100,10 @@ bool IdAssigner::Consume(IAaptContext* context, ResourceTable* table) {
       auto result = assigned_ids.insert({pre_assigned_id, pre_assigned_name});
       const ResourceName& existing_name = result.first->second;
       if (!result.second && existing_name != pre_assigned_name) {
-        context->GetDiagnostics()->Error(
-            DiagMessage() << "stable ID " << pre_assigned_id << " for resource "
-                          << pre_assigned_name
-                          << " is already taken by resource " << existing_name);
+        context->GetDiagnostics()->Error(DiagMessage()
+                                         << "stable ID " << pre_assigned_id << " for resource "
+                                         << pre_assigned_name << " is already taken by resource "
+                                         << existing_name);
         return false;
       }
     }

@@ -28,40 +28,35 @@ struct NioJNIData {
 
 static NioJNIData gNioJNI;
 
-void* android::nio_getPointer(JNIEnv *_env, jobject buffer, jarray *array) {
+void* android::nio_getPointer(JNIEnv* _env, jobject buffer, jarray* array) {
     assert(array);
 
     jlong pointer;
     jint offset;
-    void *data;
+    void* data;
 
-    pointer = _env->CallStaticLongMethod(gNioJNI.nioAccessClass,
-                                         gNioJNI.getBasePointerID, buffer);
+    pointer = _env->CallStaticLongMethod(gNioJNI.nioAccessClass, gNioJNI.getBasePointerID, buffer);
     if (pointer != 0L) {
         *array = NULL;
-        return reinterpret_cast<void *>(pointer);
+        return reinterpret_cast<void*>(pointer);
     }
 
-    *array = (jarray) _env->CallStaticObjectMethod(gNioJNI.nioAccessClass,
-                                               gNioJNI.getBaseArrayID, buffer);
-    offset = _env->CallStaticIntMethod(gNioJNI.nioAccessClass,
-                                       gNioJNI.getBaseArrayOffsetID, buffer);
-    data = _env->GetPrimitiveArrayCritical(*array, (jboolean *) 0);
+    *array = (jarray)_env->CallStaticObjectMethod(gNioJNI.nioAccessClass, gNioJNI.getBaseArrayID,
+                                                  buffer);
+    offset =
+            _env->CallStaticIntMethod(gNioJNI.nioAccessClass, gNioJNI.getBaseArrayOffsetID, buffer);
+    data = _env->GetPrimitiveArrayCritical(*array, (jboolean*)0);
 
-    return (void *) ((char *) data + offset);
+    return (void*)((char*)data + offset);
 }
 
-
-void android::nio_releasePointer(JNIEnv *_env, jarray array, void *data,
-                                jboolean commit) {
-    _env->ReleasePrimitiveArrayCritical(array, data,
-                                        commit ? 0 : JNI_ABORT);
+void android::nio_releasePointer(JNIEnv* _env, jarray array, void* data, jboolean commit) {
+    _env->ReleasePrimitiveArrayCritical(array, data, commit ? 0 : JNI_ABORT);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-android::AutoBufferPointer::AutoBufferPointer(JNIEnv* env, jobject nioBuffer,
-                                              jboolean commit) {
+android::AutoBufferPointer::AutoBufferPointer(JNIEnv* env, jobject nioBuffer, jboolean commit) {
     fEnv = env;
     fCommit = commit;
     fPointer = android::nio_getPointer(env, nioBuffer, &fArray);
@@ -79,12 +74,12 @@ namespace android {
 
 int register_android_nio_utils(JNIEnv* env) {
     jclass localClass = FindClassOrDie(env, "java/nio/NIOAccess");
-    gNioJNI.getBasePointerID = GetStaticMethodIDOrDie(env, localClass, "getBasePointer",
-                                                      "(Ljava/nio/Buffer;)J");
+    gNioJNI.getBasePointerID =
+            GetStaticMethodIDOrDie(env, localClass, "getBasePointer", "(Ljava/nio/Buffer;)J");
     gNioJNI.getBaseArrayID = GetStaticMethodIDOrDie(env, localClass, "getBaseArray",
                                                     "(Ljava/nio/Buffer;)Ljava/lang/Object;");
-    gNioJNI.getBaseArrayOffsetID = GetStaticMethodIDOrDie(env, localClass, "getBaseArrayOffset",
-                                                          "(Ljava/nio/Buffer;)I");
+    gNioJNI.getBaseArrayOffsetID =
+            GetStaticMethodIDOrDie(env, localClass, "getBaseArrayOffset", "(Ljava/nio/Buffer;)I");
 
     // now record a permanent version of the class ID
     gNioJNI.nioAccessClass = MakeGlobalRefOrDie(env, localClass);
@@ -92,4 +87,4 @@ int register_android_nio_utils(JNIEnv* env) {
     return 0;
 }
 
-}
+}  // namespace android

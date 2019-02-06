@@ -28,12 +28,15 @@ namespace split {
 
 struct RuleGenerator {
     // Generate rules for a Split given the group of mutually exclusive splits it belongs to
-    static android::sp<Rule> generate(const android::SortedVector<SplitDescription>& group, size_t index);
+    static android::sp<Rule> generate(const android::SortedVector<SplitDescription>& group,
+                                      size_t index);
 
-    static android::sp<Rule> generateAbi(const android::Vector<abi::Variant>& allVariants, size_t index);
-    static android::sp<Rule> generateDensity(const android::Vector<int>& allDensities, size_t index);
+    static android::sp<Rule> generateAbi(const android::Vector<abi::Variant>& allVariants,
+                                         size_t index);
+    static android::sp<Rule> generateDensity(const android::Vector<int>& allDensities,
+                                             size_t index);
 };
 
-} // namespace split
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_RULE_GENERATOR
+#endif  // H_ANDROID_SPLIT_RULE_GENERATOR

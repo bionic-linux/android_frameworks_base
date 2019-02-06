@@ -35,7 +35,8 @@ class DynamicPackageEntry {
  public:
   DynamicPackageEntry() = default;
   DynamicPackageEntry(std::string&& package_name, int package_id)
-      : package_name(std::move(package_name)), package_id(package_id) {}
+      : package_name(std::move(package_name)), package_id(package_id) {
+  }
 
   std::string package_name;
   int package_id = 0;
@@ -88,8 +89,7 @@ class LoadedPackage {
     }
 
     bool operator==(const iterator& rhs) const {
-      return loadedPackage_ == rhs.loadedPackage_ &&
-             typeIndex_ == rhs.typeIndex_ &&
+      return loadedPackage_ == rhs.loadedPackage_ && typeIndex_ == rhs.typeIndex_ &&
              entryIndex_ == rhs.entryIndex_;
     }
 

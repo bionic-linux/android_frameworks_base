@@ -38,7 +38,8 @@ struct Source {
   }
 
   inline Source(const android::StringPiece& path, size_t line)
-      : path(path.to_string()), line(line) {}
+      : path(path.to_string()), line(line) {
+  }
 
   inline Source WithLine(size_t line) const {
     return Source(path, line);

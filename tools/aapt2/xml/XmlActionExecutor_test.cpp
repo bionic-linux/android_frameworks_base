@@ -40,8 +40,7 @@ TEST(XmlActionExecutorTest, BuildsAccessibleNestedPattern) {
     return true;
   });
 
-  std::unique_ptr<XmlResource> doc =
-      test::BuildXmlDom("<manifest><application /></manifest>");
+  std::unique_ptr<XmlResource> doc = test::BuildXmlDom("<manifest><application /></manifest>");
 
   StdErrDiagnostics diag;
   ASSERT_TRUE(executor.Execute(XmlActionExecutorPolicy::kNone, &diag, doc.get()));

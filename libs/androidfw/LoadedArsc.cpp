@@ -233,7 +233,7 @@ uint32_t LoadedPackage::iterator::operator*() const {
     return 0;
   }
   return make_resid(loadedPackage_->package_id_, typeIndex_ + loadedPackage_->type_id_offset_,
-          entryIndex_);
+                    entryIndex_);
 }
 
 const ResTable_entry* LoadedPackage::GetEntry(const ResTable_type* type_chunk,

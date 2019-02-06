@@ -38,49 +38,49 @@ static const int kAwDrawGLInfoVersion = 3;
 
 // Holds the information required to trigger an OpenGL drawing operation.
 struct AwDrawGLInfo {
-  int version;  // The AwDrawGLInfo this struct was built with.
+    int version;  // The AwDrawGLInfo this struct was built with.
 
-  // Input: tells the draw function what action to perform.
-  enum Mode {
-    kModeDraw = 0,
-    kModeProcess,
-    kModeProcessNoContext,
-    kModeSync,
-  } mode;
+    // Input: tells the draw function what action to perform.
+    enum Mode {
+        kModeDraw = 0,
+        kModeProcess,
+        kModeProcessNoContext,
+        kModeSync,
+    } mode;
 
-  // Input: current clip rect in surface coordinates. Reflects the current state
-  // of the OpenGL scissor rect. Both the OpenGL scissor rect and viewport are
-  // set by the caller of the draw function and updated during View animations.
-  int clip_left;
-  int clip_top;
-  int clip_right;
-  int clip_bottom;
+    // Input: current clip rect in surface coordinates. Reflects the current state
+    // of the OpenGL scissor rect. Both the OpenGL scissor rect and viewport are
+    // set by the caller of the draw function and updated during View animations.
+    int clip_left;
+    int clip_top;
+    int clip_right;
+    int clip_bottom;
 
-  // Input: current width/height of destination surface.
-  int width;
-  int height;
+    // Input: current width/height of destination surface.
+    int width;
+    int height;
 
-  // Input: is the View rendered into an independent layer.
-  // If false, the surface is likely to hold to the full screen contents, with
-  // the scissor box set by the caller to the actual View location and size.
-  // Also the transformation matrix will contain at least a translation to the
-  // position of the View to render, plus any other transformations required as
-  // part of any ongoing View animation. View translucency (alpha) is ignored,
-  // although the framework will set is_layer to true for non-opaque cases.
-  // Can be requested via the View.setLayerType(View.LAYER_TYPE_NONE, ...)
-  // Android API method.
-  //
-  // If true, the surface is dedicated to the View and should have its size.
-  // The viewport and scissor box are set by the caller to the whole surface.
-  // Animation transformations are handled by the caller and not reflected in
-  // the provided transformation matrix. Translucency works normally.
-  // Can be requested via the View.setLayerType(View.LAYER_TYPE_HARDWARE, ...)
-  // Android API method.
-  bool is_layer;
+    // Input: is the View rendered into an independent layer.
+    // If false, the surface is likely to hold to the full screen contents, with
+    // the scissor box set by the caller to the actual View location and size.
+    // Also the transformation matrix will contain at least a translation to the
+    // position of the View to render, plus any other transformations required as
+    // part of any ongoing View animation. View translucency (alpha) is ignored,
+    // although the framework will set is_layer to true for non-opaque cases.
+    // Can be requested via the View.setLayerType(View.LAYER_TYPE_NONE, ...)
+    // Android API method.
+    //
+    // If true, the surface is dedicated to the View and should have its size.
+    // The viewport and scissor box are set by the caller to the whole surface.
+    // Animation transformations are handled by the caller and not reflected in
+    // the provided transformation matrix. Translucency works normally.
+    // Can be requested via the View.setLayerType(View.LAYER_TYPE_HARDWARE, ...)
+    // Android API method.
+    bool is_layer;
 
-  // Input: current transformation matrix in surface pixels.
-  // Uses the column-based OpenGL matrix format.
-  float transform[16];
+    // Input: current transformation matrix in surface pixels.
+    // Uses the column-based OpenGL matrix format.
+    float transform[16];
 };
 
 // Function to invoke a direct GL draw into the client's pre-configured
@@ -89,13 +89,11 @@ struct AwDrawGLInfo {
 // call to AwContents.getAwDrawGLViewContext().
 // |draw_info| carries the in and out parameters for this draw.
 // |spare| ignored; pass NULL.
-typedef void (AwDrawGLFunction)(long view_context,
-                                AwDrawGLInfo* draw_info,
-                                void* spare);
+typedef void(AwDrawGLFunction)(long view_context, AwDrawGLInfo* draw_info, void* spare);
 enum AwMapMode {
-  MAP_READ_ONLY,
-  MAP_WRITE_ONLY,
-  MAP_READ_WRITE,
+    MAP_READ_ONLY,
+    MAP_WRITE_ONLY,
+    MAP_READ_WRITE,
 };
 
 // Called to create a GraphicBuffer
@@ -115,13 +113,13 @@ static const int kAwDrawGLFunctionTableVersion = 1;
 
 // Set of functions used in rendering in hardware mode
 struct AwDrawGLFunctionTable {
-  int version;
-  AwCreateGraphicBufferFunction* create_graphic_buffer;
-  AwReleaseGraphicBufferFunction* release_graphic_buffer;
-  AwMapFunction* map;
-  AwUnmapFunction* unmap;
-  AwGetNativeBufferFunction* get_native_buffer;
-  AwGetStrideFunction* get_stride;
+    int version;
+    AwCreateGraphicBufferFunction* create_graphic_buffer;
+    AwReleaseGraphicBufferFunction* release_graphic_buffer;
+    AwMapFunction* map;
+    AwUnmapFunction* unmap;
+    AwGetNativeBufferFunction* get_native_buffer;
+    AwGetStrideFunction* get_stride;
 };
 
 #ifdef __cplusplus

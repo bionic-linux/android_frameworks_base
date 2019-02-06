@@ -25,34 +25,32 @@
 
 namespace android {
 
-#define DECLARE_ALLOC_METHODS(Suffix,Type)                          \
-    const ::android::hardware::hidl_vec<Type> *                     \
-    allocTemporary ## Suffix ## Vector(                             \
-            JNIEnv *env, Type ## Array arrayObj);
+#define DECLARE_ALLOC_METHODS(Suffix, Type)                                    \
+    const ::android::hardware::hidl_vec<Type>* allocTemporary##Suffix##Vector( \
+            JNIEnv* env, Type##Array arrayObj);
 
 struct EphemeralStorage {
     EphemeralStorage();
     ~EphemeralStorage();
 
-    void release(JNIEnv *env);
+    void release(JNIEnv* env);
 
-    hardware::hidl_string *allocStringArray(size_t size);
+    hardware::hidl_string* allocStringArray(size_t size);
 
-    void *allocTemporaryStorage(size_t size);
+    void* allocTemporaryStorage(size_t size);
 
-    const ::android::hardware::hidl_string *allocTemporaryString(
-            JNIEnv *env, jstring stringObj);
+    const ::android::hardware::hidl_string* allocTemporaryString(JNIEnv* env, jstring stringObj);
 
-    native_handle_t *allocTemporaryNativeHandle(int numFds, int numInts);
+    native_handle_t* allocTemporaryNativeHandle(int numFds, int numInts);
 
-    DECLARE_ALLOC_METHODS(Int8,jbyte)
-    DECLARE_ALLOC_METHODS(Int16,jshort)
-    DECLARE_ALLOC_METHODS(Int32,jint)
-    DECLARE_ALLOC_METHODS(Int64,jlong)
-    DECLARE_ALLOC_METHODS(Float,jfloat)
-    DECLARE_ALLOC_METHODS(Double,jdouble)
+    DECLARE_ALLOC_METHODS(Int8, jbyte)
+    DECLARE_ALLOC_METHODS(Int16, jshort)
+    DECLARE_ALLOC_METHODS(Int32, jint)
+    DECLARE_ALLOC_METHODS(Int64, jlong)
+    DECLARE_ALLOC_METHODS(Float, jfloat)
+    DECLARE_ALLOC_METHODS(Double, jdouble)
 
-private:
+  private:
     enum Type {
         TYPE_STRING_ARRAY,
         TYPE_STORAGE,
@@ -69,7 +67,7 @@ private:
     struct Item {
         Type mType;
         jobject mObj;
-        void *mPtr;
+        void* mPtr;
     };
 
     Vector<Item> mItems;

@@ -163,7 +163,6 @@ TEST(LogEventTest, TestLogParsing2) {
     EXPECT_EQ((float)1.1, item7.mValue.float_value);
 }
 
-
 TEST(LogEventTest, TestBinaryFieldAtom) {
     Atom launcherAtom;
     auto launcher_event = launcherAtom.mutable_launcher_event();

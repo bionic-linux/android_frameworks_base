@@ -67,8 +67,7 @@ class XmlNamespaceRemoverTest : public ::testing::Test {
 };
 
 TEST_F(XmlNamespaceRemoverTest, RemoveUris) {
-  std::unique_ptr<xml::XmlResource> doc =
-      test::BuildXmlDomForPackageName(context_.get(), R"EOF(
+  std::unique_ptr<xml::XmlResource> doc = test::BuildXmlDomForPackageName(context_.get(), R"EOF(
             <View xmlns:android="http://schemas.android.com/apk/res/android"
                   android:text="hello" />)EOF");
 
@@ -83,8 +82,7 @@ TEST_F(XmlNamespaceRemoverTest, RemoveUris) {
 }
 
 TEST_F(XmlNamespaceRemoverTest, RemoveNamespaces) {
-  std::unique_ptr<xml::XmlResource> doc =
-      test::BuildXmlDomForPackageName(context_.get(), R"EOF(
+  std::unique_ptr<xml::XmlResource> doc = test::BuildXmlDomForPackageName(context_.get(), R"EOF(
             <View xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:foo="http://schemas.android.com/apk/res/foo"
                   foo:bar="foobar"
@@ -101,8 +99,7 @@ TEST_F(XmlNamespaceRemoverTest, RemoveNamespaces) {
 }
 
 TEST_F(XmlNamespaceRemoverTest, RemoveNestedNamespaces) {
-  std::unique_ptr<xml::XmlResource> doc =
-      test::BuildXmlDomForPackageName(context_.get(), R"EOF(
+  std::unique_ptr<xml::XmlResource> doc = test::BuildXmlDomForPackageName(context_.get(), R"EOF(
             <View xmlns:android="http://schemas.android.com/apk/res/android"
                   android:text="hello">
               <View xmlns:foo="http://schemas.example.com/foo"

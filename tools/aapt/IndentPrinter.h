@@ -2,13 +2,9 @@
 #define __INDENT_PRINTER_H
 
 class IndentPrinter {
-public:
-    explicit IndentPrinter(FILE* stream, int indentSize=2)
-        : mStream(stream)
-        , mIndentSize(indentSize)
-        , mIndent(0)
-        , mNeedsIndent(true) {
-    }
+  public:
+    explicit IndentPrinter(FILE* stream, int indentSize = 2)
+        : mStream(stream), mIndentSize(indentSize), mIndent(0), mNeedsIndent(true) {}
 
     void indent(int amount = 1) {
         mIndent += amount;
@@ -41,7 +37,7 @@ public:
         mNeedsIndent = true;
     }
 
-private:
+  private:
     void doIndent() {
         if (mNeedsIndent) {
             int numSpaces = mIndent * mIndentSize;
@@ -59,5 +55,4 @@ private:
     bool mNeedsIndent;
 };
 
-#endif // __INDENT_PRINTER_H
-
+#endif  // __INDENT_PRINTER_H

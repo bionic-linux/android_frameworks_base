@@ -233,8 +233,8 @@ bool AssetManagerSymbolSource::IsPackageDynamic(uint32_t packageId) const {
   return assets_.getResources(false).isPackageDynamic(packageId);
 }
 
-static std::unique_ptr<SymbolTable::Symbol> LookupAttributeInTable(
-    const android::ResTable& table, ResourceId id) {
+static std::unique_ptr<SymbolTable::Symbol> LookupAttributeInTable(const android::ResTable& table,
+                                                                   ResourceId id) {
   // Try as a bag.
   const android::ResTable::bag_entry* entry;
   ssize_t count = table.lockBag(id.id, &entry);
@@ -346,8 +346,7 @@ std::unique_ptr<SymbolTable::Symbol> AssetManagerSymbolSource::FindByName(
   return {};
 }
 
-static Maybe<ResourceName> GetResourceName(const android::ResTable& table,
-                                           ResourceId id) {
+static Maybe<ResourceName> GetResourceName(const android::ResTable& table, ResourceId id) {
   android::ResTable::resource_name res_name = {};
   if (!table.getResourceName(id.id, true, &res_name)) {
     return {};
@@ -355,8 +354,7 @@ static Maybe<ResourceName> GetResourceName(const android::ResTable& table,
   return ResourceUtils::ToResourceName(res_name);
 }
 
-std::unique_ptr<SymbolTable::Symbol> AssetManagerSymbolSource::FindById(
-    ResourceId id) {
+std::unique_ptr<SymbolTable::Symbol> AssetManagerSymbolSource::FindById(ResourceId id) {
   if (!id.is_valid()) {
     // Exit early and avoid the error logs from AssetManager.
     return {};

@@ -31,7 +31,8 @@ using ::android::StringPiece;
 
 namespace aapt {
 
-StringPool::Ref::Ref() : entry_(nullptr) {}
+StringPool::Ref::Ref() : entry_(nullptr) {
+}
 
 StringPool::Ref::Ref(const StringPool::Ref& rhs) : entry_(rhs.entry_) {
   if (entry_ != nullptr) {
@@ -88,10 +89,10 @@ const StringPool::Context& StringPool::Ref::GetContext() const {
   return entry_->context;
 }
 
-StringPool::StyleRef::StyleRef() : entry_(nullptr) {}
+StringPool::StyleRef::StyleRef() : entry_(nullptr) {
+}
 
-StringPool::StyleRef::StyleRef(const StringPool::StyleRef& rhs)
-    : entry_(rhs.entry_) {
+StringPool::StyleRef::StyleRef(const StringPool::StyleRef& rhs) : entry_(rhs.entry_) {
   if (entry_ != nullptr) {
     entry_->ref_++;
   }
@@ -368,24 +369,23 @@ static bool EncodeString(const std::string& str, const bool utf8, BigBuffer* out
                          IDiagnostics* diag) {
   if (utf8) {
     const std::string& encoded = str;
-    const ssize_t utf16_length = utf8_to_utf16_length(
-        reinterpret_cast<const uint8_t*>(encoded.data()), encoded.size());
+    const ssize_t utf16_length =
+        utf8_to_utf16_length(reinterpret_cast<const uint8_t*>(encoded.data()), encoded.size());
     CHECK(utf16_length >= 0);
 
     // Make sure the lengths to be encoded do not exceed the maximum length that
     // can be encoded using chars
-    if ((((size_t)encoded.size()) > EncodeLengthMax<char>())
-        || (((size_t)utf16_length) > EncodeLengthMax<char>())) {
-
+    if ((((size_t)encoded.size()) > EncodeLengthMax<char>()) ||
+        (((size_t)utf16_length) > EncodeLengthMax<char>())) {
       diag->Error(DiagMessage() << "string too large to encode using UTF-8 "
-          << "written instead as '" << kStringTooLarge << "'");
+                                << "written instead as '" << kStringTooLarge << "'");
 
       EncodeString(kStringTooLarge, utf8, out, diag);
       return false;
     }
 
-    const size_t total_size = EncodedLengthUnits<char>(utf16_length)
-        + EncodedLengthUnits<char>(encoded.size()) + encoded.size() + 1;
+    const size_t total_size = EncodedLengthUnits<char>(utf16_length) +
+                              EncodedLengthUnits<char>(encoded.size()) + encoded.size() + 1;
 
     char* data = out->NextBlock<char>(total_size);
 
@@ -404,15 +404,14 @@ static bool EncodeString(const std::string& str, const bool utf8, BigBuffer* out
     // length that can be encoded
     if (((size_t)utf16_length) > EncodeLengthMax<char16_t>()) {
       diag->Error(DiagMessage() << "string too large to encode using UTF-16 "
-          << "written instead as '" << kStringTooLarge << "'");
+                                << "written instead as '" << kStringTooLarge << "'");
 
       EncodeString(kStringTooLarge, utf8, out, diag);
       return false;
     }
 
     // Total number of 16-bit words to write.
-    const size_t total_size = EncodedLengthUnits<char16_t>(utf16_length)
-        + encoded.size() + 1;
+    const size_t total_size = EncodedLengthUnits<char16_t>(utf16_length) + encoded.size() + 1;
 
     char16_t* data = out->NextBlock<char16_t>(total_size);
 
@@ -431,8 +430,7 @@ static bool EncodeString(const std::string& str, const bool utf8, BigBuffer* out
   return true;
 }
 
-bool StringPool::Flatten(BigBuffer* out, const StringPool& pool, bool utf8,
-                         IDiagnostics* diag) {
+bool StringPool::Flatten(BigBuffer* out, const StringPool& pool, bool utf8, IDiagnostics* diag) {
   bool no_error = true;
   const size_t start_index = out->size();
   android::ResStringPool_header* header = out->NextBlock<android::ResStringPool_header>();
@@ -490,8 +488,8 @@ bool StringPool::Flatten(BigBuffer* out, const StringPool& pool, bool utf8,
     // ResStringPool_span structure worth of 0xFFFFFFFF at the end
     // of the style block, so fill in the remaining 2 32bit words
     // with 0xFFFFFFFF.
-    const size_t padding_length = sizeof(android::ResStringPool_span) -
-                                  sizeof(android::ResStringPool_span::name);
+    const size_t padding_length =
+        sizeof(android::ResStringPool_span) - sizeof(android::ResStringPool_span::name);
     uint8_t* padding = out->NextBlock<uint8_t>(padding_length);
     memset(padding, 0xff, padding_length);
     out->Align4();

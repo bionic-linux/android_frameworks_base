@@ -62,13 +62,16 @@ const char* gVS_Header_Varyings_HasVertexAlpha = "varying float alpha;\n";
 const char* gVS_Header_Varyings_HasBitmap = "varying highp vec2 outBitmapTexCoords;\n";
 const char* gVS_Header_Varyings_HasGradient[6] = {
         // Linear
-        "varying highp vec2 linear;\n", "varying float linear;\n",
+        "varying highp vec2 linear;\n",
+        "varying float linear;\n",
 
         // Circular
-        "varying highp vec2 circular;\n", "varying highp vec2 circular;\n",
+        "varying highp vec2 circular;\n",
+        "varying highp vec2 circular;\n",
 
         // Sweep
-        "varying highp vec2 sweep;\n", "varying highp vec2 sweep;\n",
+        "varying highp vec2 sweep;\n",
+        "varying highp vec2 sweep;\n",
 };
 const char* gVS_Header_Varyings_HasRoundRectClip = "varying mediump vec2 roundRectPos;\n";
 const char* gVS_Main = "\nvoid main(void) {\n";
@@ -343,18 +346,22 @@ const char* gFS_Main_BlendShadersBG = "    fragColor = blendShaders(gradientColo
 const char* gFS_Main_BlendShadersGB = "    fragColor = blendShaders(bitmapColor, gradientColor)";
 const char* gFS_Main_BlendShaders_Modulate[6] = {
         // Don't modulate
-        ";\n", ";\n",
+        ";\n",
+        ";\n",
         // Modulate
-        " * color.a;\n", " * color.a;\n",
+        " * color.a;\n",
+        " * color.a;\n",
         // Modulate with alpha 8 texture
         " * texture2D(baseSampler, outTexCoords).a;\n",
         " * gamma(texture2D(baseSampler, outTexCoords).a, color.rgb);\n",
 };
 const char* gFS_Main_GradientShader_Modulate[6] = {
         // Don't modulate
-        "    fragColor = gradientColor;\n", "    fragColor = gradientColor;\n",
+        "    fragColor = gradientColor;\n",
+        "    fragColor = gradientColor;\n",
         // Modulate
-        "    fragColor = gradientColor * color.a;\n", "    fragColor = gradientColor * color.a;\n",
+        "    fragColor = gradientColor * color.a;\n",
+        "    fragColor = gradientColor * color.a;\n",
         // Modulate with alpha 8 texture
         "    fragColor = gradientColor * texture2D(baseSampler, outTexCoords).a;\n",
         "    fragColor = gradientColor * gamma(texture2D(baseSampler, outTexCoords).a, "
@@ -362,9 +369,11 @@ const char* gFS_Main_GradientShader_Modulate[6] = {
 };
 const char* gFS_Main_BitmapShader_Modulate[6] = {
         // Don't modulate
-        "    fragColor = bitmapColor;\n", "    fragColor = bitmapColor;\n",
+        "    fragColor = bitmapColor;\n",
+        "    fragColor = bitmapColor;\n",
         // Modulate
-        "    fragColor = bitmapColor * color.a;\n", "    fragColor = bitmapColor * color.a;\n",
+        "    fragColor = bitmapColor * color.a;\n",
+        "    fragColor = bitmapColor * color.a;\n",
         // Modulate with alpha 8 texture
         "    fragColor = bitmapColor * texture2D(baseSampler, outTexCoords).a;\n",
         "    fragColor = bitmapColor * gamma(texture2D(baseSampler, outTexCoords).a, "

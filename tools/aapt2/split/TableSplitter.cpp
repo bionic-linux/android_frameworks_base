@@ -19,8 +19,8 @@
 #include <algorithm>
 #include <map>
 #include <set>
-#include <unordered_set>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "android-base/logging.h"
@@ -57,9 +57,8 @@ class SplitValueSelector {
     }
   }
 
-  std::vector<ResourceConfigValue*> SelectValues(
-      const ConfigDensityGroups& density_groups,
-      ConfigClaimedMap* claimed_values) {
+  std::vector<ResourceConfigValue*> SelectValues(const ConfigDensityGroups& density_groups,
+                                                 ConfigClaimedMap* claimed_values) {
     std::vector<ResourceConfigValue*> selected;
 
     // Select the regular values.
@@ -84,10 +83,8 @@ class SplitValueSelector {
       // in multiple splits.
       const ConfigDescription& config = entry.first;
       const std::vector<ResourceConfigValue*>& related_values = entry.second;
-      auto density_value_iter =
-          density_dependent_config_to_density_map_.find(config);
-      if (density_value_iter !=
-          density_dependent_config_to_density_map_.end()) {
+      auto density_value_iter = density_dependent_config_to_density_map_.find(config);
+      if (density_value_iter != density_dependent_config_to_density_map_.end()) {
         // Select the best one!
         ConfigDescription target_density = config;
         target_density.density = density_value_iter->second;
@@ -113,17 +110,16 @@ class SplitValueSelector {
   DISALLOW_COPY_AND_ASSIGN(SplitValueSelector);
 
   std::set<ConfigDescription> density_independent_configs_;
-  std::map<ConfigDescription, uint16_t>
-      density_dependent_config_to_density_map_;
+  std::map<ConfigDescription, uint16_t> density_dependent_config_to_density_map_;
 };
 
 /**
  * Marking non-preferred densities as claimed will make sure the base doesn't include them, leaving
  * only the preferred density behind.
  */
-static void MarkNonPreferredDensitiesAsClaimed(
-    const std::vector<uint16_t>& preferred_densities, const ConfigDensityGroups& density_groups,
-    ConfigClaimedMap* config_claimed_map) {
+static void MarkNonPreferredDensitiesAsClaimed(const std::vector<uint16_t>& preferred_densities,
+                                               const ConfigDensityGroups& density_groups,
+                                               ConfigClaimedMap* config_claimed_map) {
   for (auto& entry : density_groups) {
     const ConfigDescription& config = entry.first;
     const std::vector<ResourceConfigValue*>& related_values = entry.second;
@@ -159,10 +155,9 @@ bool TableSplitter::VerifySplitConstraints(IAaptContext* context) {
     for (size_t j = i + 1; j < split_constraints_.size(); j++) {
       for (const ConfigDescription& config : split_constraints_[i].configs) {
         if (split_constraints_[j].configs.find(config) != split_constraints_[j].configs.end()) {
-          context->GetDiagnostics()->Error(DiagMessage()
-                                           << "config '" << config
-                                           << "' appears in multiple splits, "
-                                           << "target split ambiguous");
+          context->GetDiagnostics()->Error(DiagMessage() << "config '" << config
+                                                         << "' appears in multiple splits, "
+                                                         << "target split ambiguous");
           error = true;
         }
       }
@@ -210,8 +205,8 @@ void TableSplitter::SplitTable(ResourceTable* original_table) {
 
             if (config_value->config.density != 0) {
               // Create a bucket for this density-dependent config.
-              density_groups[CopyWithoutDensity(config_value->config)]
-                  .push_back(config_value.get());
+              density_groups[CopyWithoutDensity(config_value->config)].push_back(
+                  config_value.get());
             }
           }
         }
@@ -248,15 +243,14 @@ void TableSplitter::SplitTable(ResourceTable* original_table) {
             for (ResourceConfigValue* config_value : selected_values) {
               ResourceConfigValue* new_config_value =
                   split_entry->FindOrCreateValue(config_value->config, config_value->product);
-              new_config_value->value = std::unique_ptr<Value>(
-                  config_value->value->Clone(&split_table->string_pool));
+              new_config_value->value =
+                  std::unique_ptr<Value>(config_value->value->Clone(&split_table->string_pool));
             }
           }
         }
 
         if (!options_.preferred_densities.empty()) {
-          MarkNonPreferredDensitiesAsClaimed(options_.preferred_densities,
-                                             density_groups,
+          MarkNonPreferredDensitiesAsClaimed(options_.preferred_densities, density_groups,
                                              &config_claimed_map);
         }
 
@@ -270,9 +264,8 @@ void TableSplitter::SplitTable(ResourceTable* original_table) {
         }
 
         // Now erase all nullptrs.
-        entry->values.erase(
-            std::remove(entry->values.begin(), entry->values.end(), nullptr),
-            entry->values.end());
+        entry->values.erase(std::remove(entry->values.begin(), entry->values.end(), nullptr),
+                            entry->values.end());
       }
     }
   }

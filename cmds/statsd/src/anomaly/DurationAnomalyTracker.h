@@ -48,7 +48,8 @@ public:
     // and removes it from firedAlarms. The AlarmMonitor is not informed.
     // Note that this will generally be called from a different thread from the other functions;
     // the caller is responsible for thread safety.
-    void informAlarmsFired(const int64_t& timestampNs,
+    void informAlarmsFired(
+            const int64_t& timestampNs,
             unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& firedAlarms) override;
 
 protected:

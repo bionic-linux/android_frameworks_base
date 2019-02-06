@@ -4,25 +4,24 @@
 
 #include <jni.h>
 
-static jlong Interpolator_constructor(JNIEnv* env, jobject clazz, jint valueCount, jint frameCount)
-{
+static jlong Interpolator_constructor(JNIEnv* env, jobject clazz, jint valueCount,
+                                      jint frameCount) {
     return reinterpret_cast<jlong>(new SkInterpolator(valueCount, frameCount));
 }
 
-static void Interpolator_destructor(JNIEnv* env, jobject clazz, jlong interpHandle)
-{
+static void Interpolator_destructor(JNIEnv* env, jobject clazz, jlong interpHandle) {
     SkInterpolator* interp = reinterpret_cast<SkInterpolator*>(interpHandle);
     delete interp;
 }
 
-static void Interpolator_reset(JNIEnv* env, jobject clazz, jlong interpHandle, jint valueCount, jint frameCount)
-{
+static void Interpolator_reset(JNIEnv* env, jobject clazz, jlong interpHandle, jint valueCount,
+                               jint frameCount) {
     SkInterpolator* interp = reinterpret_cast<SkInterpolator*>(interpHandle);
     interp->reset(valueCount, frameCount);
 }
 
-static void Interpolator_setKeyFrame(JNIEnv* env, jobject clazz, jlong interpHandle, jint index, jint msec, jfloatArray valueArray, jfloatArray blendArray)
-{
+static void Interpolator_setKeyFrame(JNIEnv* env, jobject clazz, jlong interpHandle, jint index,
+                                     jint msec, jfloatArray valueArray, jfloatArray blendArray) {
     SkInterpolator* interp = reinterpret_cast<SkInterpolator*>(interpHandle);
 
     AutoJavaFloatArray autoValues(env, valueArray);
@@ -31,24 +30,23 @@ static void Interpolator_setKeyFrame(JNIEnv* env, jobject clazz, jlong interpHan
     SkScalar* scalars = autoValues.ptr();
     SkScalar* blend = autoBlend.ptr();
 #else
-    #error Need to convert float array to SkScalar array before calling the following function.
+#error Need to convert float array to SkScalar array before calling the following function.
 #endif
 
     interp->setKeyFrame(index, msec, scalars, blend);
 }
 
-static void Interpolator_setRepeatMirror(JNIEnv* env, jobject clazz, jlong interpHandle, jfloat repeatCount, jboolean mirror)
-{
+static void Interpolator_setRepeatMirror(JNIEnv* env, jobject clazz, jlong interpHandle,
+                                         jfloat repeatCount, jboolean mirror) {
     SkInterpolator* interp = reinterpret_cast<SkInterpolator*>(interpHandle);
-    if (repeatCount > 32000)
-        repeatCount = 32000;
+    if (repeatCount > 32000) repeatCount = 32000;
 
     interp->setRepeatCount(repeatCount);
     interp->setMirror(mirror != 0);
 }
 
-static jint Interpolator_timeToValues(JNIEnv* env, jobject clazz, jlong interpHandle, jint msec, jfloatArray valueArray)
-{
+static jint Interpolator_timeToValues(JNIEnv* env, jobject clazz, jlong interpHandle, jint msec,
+                                      jfloatArray valueArray) {
     SkInterpolator* interp = reinterpret_cast<SkInterpolator*>(interpHandle);
     SkInterpolatorBase::Result result;
 
@@ -72,16 +70,14 @@ static jint Interpolator_timeToValues(JNIEnv* env, jobject clazz, jlong interpHa
  * JNI registration.
  */
 static const JNINativeMethod gInterpolatorMethods[] = {
-    { "nativeConstructor",      "(II)J",        (void*)Interpolator_constructor     },
-    { "nativeDestructor",       "(J)V",         (void*)Interpolator_destructor      },
-    { "nativeReset",            "(JII)V",       (void*)Interpolator_reset           },
-    { "nativeSetKeyFrame",      "(JII[F[F)V",   (void*)Interpolator_setKeyFrame     },
-    { "nativeSetRepeatMirror",  "(JFZ)V",       (void*)Interpolator_setRepeatMirror },
-    { "nativeTimeToValues",     "(JI[F)I",      (void*)Interpolator_timeToValues    }
-};
+        {"nativeConstructor", "(II)J", (void*)Interpolator_constructor},
+        {"nativeDestructor", "(J)V", (void*)Interpolator_destructor},
+        {"nativeReset", "(JII)V", (void*)Interpolator_reset},
+        {"nativeSetKeyFrame", "(JII[F[F)V", (void*)Interpolator_setKeyFrame},
+        {"nativeSetRepeatMirror", "(JFZ)V", (void*)Interpolator_setRepeatMirror},
+        {"nativeTimeToValues", "(JI[F)I", (void*)Interpolator_timeToValues}};
 
-int register_android_graphics_Interpolator(JNIEnv* env)
-{
-    return android::RegisterMethodsOrDie(env, "android/graphics/Interpolator",
-                                         gInterpolatorMethods, NELEM(gInterpolatorMethods));
+int register_android_graphics_Interpolator(JNIEnv* env) {
+    return android::RegisterMethodsOrDie(env, "android/graphics/Interpolator", gInterpolatorMethods,
+                                         NELEM(gInterpolatorMethods));
 }

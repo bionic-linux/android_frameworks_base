@@ -28,11 +28,14 @@ AlarmMonitor::AlarmMonitor(
         uint32_t minDiffToUpdateRegisteredAlarmTimeSec,
         const std::function<void(const sp<IStatsCompanionService>&, int64_t)>& updateAlarm,
         const std::function<void(const sp<IStatsCompanionService>&)>& cancelAlarm)
-    : mRegisteredAlarmTimeSec(0), mMinUpdateTimeSec(minDiffToUpdateRegisteredAlarmTimeSec),
+    : mRegisteredAlarmTimeSec(0),
+      mMinUpdateTimeSec(minDiffToUpdateRegisteredAlarmTimeSec),
       mUpdateAlarm(updateAlarm),
-      mCancelAlarm(cancelAlarm) {}
+      mCancelAlarm(cancelAlarm) {
+}
 
-AlarmMonitor::~AlarmMonitor() {}
+AlarmMonitor::~AlarmMonitor() {
+}
 
 void AlarmMonitor::setStatsCompanionService(sp<IStatsCompanionService> statsCompanionService) {
     std::lock_guard<std::mutex> lock(mLock);
@@ -99,7 +102,7 @@ unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>> AlarmMonitor::popS
     std::lock_guard<std::mutex> lock(mLock);
 
     for (sp<const InternalAlarm> t = mPq.top(); t != nullptr && t->timestampSec <= timestampSec;
-        t = mPq.top()) {
+         t = mPq.top()) {
         oldAlarms.insert(t);
         mPq.pop();  // remove t
     }

@@ -104,31 +104,33 @@ protected:
 }  // end anonymous namespace
 
 TEST(RenderNodeDrawable, zReorder) {
-    auto parent = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                               SkiaRecordingCanvas& canvas) {
-        canvas.insertReorderBarrier(true);
-        canvas.insertReorderBarrier(false);
-        drawOrderedNode(&canvas, 0, 10.0f);  // in reorder=false at this point, so played inorder
-        drawOrderedRect(&canvas, 1);
-        canvas.insertReorderBarrier(true);
-        drawOrderedNode(&canvas, 6, 2.0f);
-        drawOrderedRect(&canvas, 3);
-        drawOrderedNode(&canvas, 4, 0.0f);
-        drawOrderedRect(&canvas, 5);
-        drawOrderedNode(&canvas, 2, -2.0f);
-        drawOrderedNode(&canvas, 7, 2.0f);
-        canvas.insertReorderBarrier(false);
-        drawOrderedRect(&canvas, 8);
-        drawOrderedNode(&canvas, 9, -10.0f);  // in reorder=false at this point, so played inorder
-        canvas.insertReorderBarrier(true);    // reorder a node ahead of drawrect op
-        drawOrderedRect(&canvas, 11);
-        drawOrderedNode(&canvas, 10, -1.0f);
-        canvas.insertReorderBarrier(false);
-        canvas.insertReorderBarrier(true);  // test with two empty reorder sections
-        canvas.insertReorderBarrier(true);
-        canvas.insertReorderBarrier(false);
-        drawOrderedRect(&canvas, 12);
-    });
+    auto parent = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                canvas.insertReorderBarrier(true);
+                canvas.insertReorderBarrier(false);
+                drawOrderedNode(&canvas, 0,
+                                10.0f);  // in reorder=false at this point, so played inorder
+                drawOrderedRect(&canvas, 1);
+                canvas.insertReorderBarrier(true);
+                drawOrderedNode(&canvas, 6, 2.0f);
+                drawOrderedRect(&canvas, 3);
+                drawOrderedNode(&canvas, 4, 0.0f);
+                drawOrderedRect(&canvas, 5);
+                drawOrderedNode(&canvas, 2, -2.0f);
+                drawOrderedNode(&canvas, 7, 2.0f);
+                canvas.insertReorderBarrier(false);
+                drawOrderedRect(&canvas, 8);
+                drawOrderedNode(&canvas, 9,
+                                -10.0f);  // in reorder=false at this point, so played inorder
+                canvas.insertReorderBarrier(true);  // reorder a node ahead of drawrect op
+                drawOrderedRect(&canvas, 11);
+                drawOrderedNode(&canvas, 10, -1.0f);
+                canvas.insertReorderBarrier(false);
+                canvas.insertReorderBarrier(true);  // test with two empty reorder sections
+                canvas.insertReorderBarrier(true);
+                canvas.insertReorderBarrier(false);
+                drawOrderedRect(&canvas, 12);
+            });
 
     // create a canvas not backed by any device/pixels, but with dimensions to avoid quick rejection
     ZReorderCanvas canvas(100, 100);
@@ -181,7 +183,7 @@ static SkMatrix getRecorderMatrix(const SkiaRecordingCanvas& recorder) {
     recorder.getMatrix(&matrix);
     return matrix;
 }
-}
+}  // namespace
 
 TEST(RenderNodeDrawable, saveLayerClipAndMatrixRestore) {
     auto surface = SkSurface::MakeRasterN32Premul(400, 800);
@@ -354,9 +356,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, emptyReceiver) {
     class ProjectionTestCanvas : public SkCanvas {
     public:
         ProjectionTestCanvas(int width, int height) : SkCanvas(width, height) {}
-        void onDrawRect(const SkRect& rect, const SkPaint& paint) override {
-            mDrawCounter++;
-        }
+        void onDrawRect(const SkRect& rect, const SkPaint& paint) override { mDrawCounter++; }
 
         int getDrawCounter() { return mDrawCounter; }
 
@@ -369,7 +369,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, emptyReceiver) {
             [](RenderProperties& properties, SkiaRecordingCanvas& canvas) {
                 properties.setProjectionReceiver(true);
             },
-            "B"); // a receiver with an empty display list
+            "B");  // a receiver with an empty display list
 
     auto projectingRipple = TestUtils::createSkiaNode(
             0, 0, 100, 100,
@@ -646,7 +646,7 @@ static int drawNode(RenderThread& renderThread, const sp<RenderNode>& renderNode
     canvas.drawDrawable(&drawable);
     return canvas.getIndex();
 }
-}
+}  // namespace
 
 RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderProjectedInMiddle) {
     /* R is backward projected on B
@@ -656,18 +656,22 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderProjectedInMiddle) {
                   |
                   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            props.setProjectionReceiver(true);
-        });  // nodeB
-        drawOrderedNode(&canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeC
-    });          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                    props.setProjectionReceiver(true);
+                                });  // nodeB
+                drawOrderedNode(
+                        &canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            drawOrderedNode(
+                                    &canvas, 1,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(3, drawNode(renderThread, nodeA));
 }
 
@@ -680,21 +684,24 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderProjectLast) {
                   |
                   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, nullptr);  // nodeB
-        drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            drawOrderedNode(&canvas, 3, [](RenderProperties& props,
-                                           SkiaRecordingCanvas& canvas) {  // drawn as 2
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeC
-        drawOrderedNode(&canvas, 2,
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0, nullptr);  // nodeB
+                drawOrderedNode(&canvas, 1,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                    drawOrderedNode(&canvas, 3,
+                                                    [](RenderProperties& props,
+                                                       SkiaRecordingCanvas& canvas) {  // drawn as 2
+                                                        props.setProjectBackwards(true);
+                                                        props.setClipToBounds(false);
+                                                    });  // nodeR
+                                });                      // nodeC
+                drawOrderedNode(
+                        &canvas, 2,
                         [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // drawn as 3
                             props.setProjectionReceiver(true);
                         });  // nodeE
-    });                      // nodeA
+            });              // nodeA
     EXPECT_EQ(4, drawNode(renderThread, nodeA));
 }
 
@@ -706,17 +713,20 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderNoReceivable) {
                   |
                   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, nullptr);  // nodeB
-        drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            drawOrderedNode(&canvas, 255, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                // not having a projection receiver is an undefined behavior
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeC
-    });          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0, nullptr);  // nodeB
+                drawOrderedNode(
+                        &canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            drawOrderedNode(
+                                    &canvas, 255,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        // not having a projection receiver is an undefined behavior
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(2, drawNode(renderThread, nodeA));
 }
 
@@ -728,17 +738,20 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderParentReceivable) {
                   |
                   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, nullptr);  // nodeB
-        drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            props.setProjectionReceiver(true);
-            drawOrderedNode(&canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeC
-    });          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0, nullptr);  // nodeB
+                drawOrderedNode(
+                        &canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            props.setProjectionReceiver(true);
+                            drawOrderedNode(
+                                    &canvas, 2,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(3, drawNode(renderThread, nodeA));
 }
 
@@ -750,18 +763,22 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderSameNodeReceivable) {
                   |
                   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, nullptr);  // nodeB
-        drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            drawOrderedNode(&canvas, 255, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                // having a node that is projected on itself is an undefined/unexpected behavior
-                props.setProjectionReceiver(true);
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeC
-    });          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0, nullptr);  // nodeB
+                drawOrderedNode(
+                        &canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            drawOrderedNode(
+                                    &canvas, 255,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        // having a node that is projected on itself is an
+                                        // undefined/unexpected behavior
+                                        props.setProjectionReceiver(true);
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(2, drawNode(renderThread, nodeA));
 }
 
@@ -773,18 +790,21 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderProjectedSibling) {
               / | \
              B  C  R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            props.setProjectionReceiver(true);
-        });  // nodeB
-        drawOrderedNode(&canvas, 1,
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                    props.setProjectionReceiver(true);
+                                });  // nodeB
+                drawOrderedNode(
+                        &canvas, 1,
                         [](RenderProperties& props, SkiaRecordingCanvas& canvas) {});  // nodeC
-        drawOrderedNode(&canvas, 255, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            props.setProjectBackwards(true);
-            props.setClipToBounds(false);
-        });  // nodeR
-    });      // nodeA
+                drawOrderedNode(&canvas, 255,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                    props.setProjectBackwards(true);
+                                    props.setClipToBounds(false);
+                                });  // nodeR
+            });                      // nodeA
     EXPECT_EQ(2, drawNode(renderThread, nodeA));
 }
 
@@ -797,20 +817,26 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderProjectedSibling2) {
               / | \
              B  C  R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                props.setProjectionReceiver(true);
-            });  // nodeB
-            drawOrderedNode(&canvas, 2,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {});  // nodeC
-            drawOrderedNode(&canvas, 255, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                props.setProjectBackwards(true);
-                props.setClipToBounds(false);
-            });  // nodeR
-        });      // nodeG
-    });          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(
+                        &canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            drawOrderedNode(
+                                    &canvas, 1,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        props.setProjectionReceiver(true);
+                                    });  // nodeB
+                            drawOrderedNode(&canvas, 2,
+                                            [](RenderProperties& props,
+                                               SkiaRecordingCanvas& canvas) {});  // nodeC
+                            drawOrderedNode(
+                                    &canvas, 255,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeG
+            });                          // nodeA
     EXPECT_EQ(3, drawNode(renderThread, nodeA));
 }
 
@@ -824,19 +850,23 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderGrandparentReceivable) {
                 |
                 R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-            props.setProjectionReceiver(true);
-            drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                drawOrderedNode(&canvas, 2,
-                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                                    props.setProjectBackwards(true);
-                                    props.setClipToBounds(false);
-                                });  // nodeR
-            });                      // nodeC
-        });                          // nodeB
-    });                              // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(
+                        &canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                            props.setProjectionReceiver(true);
+                            drawOrderedNode(
+                                    &canvas, 1,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                        drawOrderedNode(&canvas, 2,
+                                                        [](RenderProperties& props,
+                                                           SkiaRecordingCanvas& canvas) {
+                                                            props.setProjectBackwards(true);
+                                                            props.setClipToBounds(false);
+                                                        });  // nodeR
+                                    });                      // nodeC
+                        });                                  // nodeB
+            });                                              // nodeA
     EXPECT_EQ(3, drawNode(renderThread, nodeA));
 }
 
@@ -848,23 +878,27 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderTwoReceivables) {
                  / \
                 G   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
-            props.setProjectionReceiver(true);
-        });  // nodeB
-        drawOrderedNode(&canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
-            drawOrderedNode(&canvas, 3,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
-                                props.setProjectionReceiver(true);
-                            });  // nodeG
-            drawOrderedNode(&canvas, 1,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // R
-                                props.setProjectBackwards(true);
-                                props.setClipToBounds(false);
-                            });  // nodeR
-        });                      // nodeC
-    });                          // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
+                                    props.setProjectionReceiver(true);
+                                });  // nodeB
+                drawOrderedNode(
+                        &canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
+                            drawOrderedNode(
+                                    &canvas, 3,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
+                                        props.setProjectionReceiver(true);
+                                    });  // nodeG
+                            drawOrderedNode(
+                                    &canvas, 1,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // R
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(4, drawNode(renderThread, nodeA));
 }
 
@@ -876,23 +910,27 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderTwoReceivablesLikelyScena
                  / \
                 G   R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
-            props.setProjectionReceiver(true);
-        });  // nodeB
-        drawOrderedNode(&canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
-            drawOrderedNode(&canvas, 1,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
-                                props.setProjectionReceiver(true);
-                                props.setProjectBackwards(true);
-                                props.setClipToBounds(false);
-                            });  // nodeG
-            drawOrderedNode(&canvas, 3,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // R
-                            });                                                         // nodeR
-        });                                                                             // nodeC
-    });                                                                                 // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
+                                    props.setProjectionReceiver(true);
+                                });  // nodeB
+                drawOrderedNode(
+                        &canvas, 2, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
+                            drawOrderedNode(
+                                    &canvas, 1,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
+                                        props.setProjectionReceiver(true);
+                                        props.setProjectBackwards(true);
+                                        props.setClipToBounds(false);
+                                    });  // nodeG
+                            drawOrderedNode(
+                                    &canvas, 3,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // R
+                                    });  // nodeR
+                        });              // nodeC
+            });                          // nodeA
     EXPECT_EQ(4, drawNode(renderThread, nodeA));
 }
 
@@ -906,26 +944,31 @@ RENDERTHREAD_TEST(RenderNodeDrawable, projectionReorderTwoReceivablesDeeper) {
                     |
                     R
     */
-    auto nodeA = TestUtils::createSkiaNode(0, 0, 100, 100, [](RenderProperties& props,
-                                                              SkiaRecordingCanvas& canvas) {
-        drawOrderedNode(&canvas, 0, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
-            props.setProjectionReceiver(true);
-        });  // nodeB
-        drawOrderedNode(&canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
-            drawOrderedNode(&canvas, 2,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
-                                props.setProjectionReceiver(true);
-                            });  // nodeG
-            drawOrderedNode(&canvas, 4,
-                            [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // D
-                                drawOrderedNode(&canvas, 3, [](RenderProperties& props,
-                                                               SkiaRecordingCanvas& canvas) {  // R
-                                    props.setProjectBackwards(true);
-                                    props.setClipToBounds(false);
-                                });  // nodeR
-                            });      // nodeD
-        });                          // nodeC
-    });                              // nodeA
+    auto nodeA = TestUtils::createSkiaNode(
+            0, 0, 100, 100, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                drawOrderedNode(&canvas, 0,
+                                [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // B
+                                    props.setProjectionReceiver(true);
+                                });  // nodeB
+                drawOrderedNode(
+                        &canvas, 1, [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // C
+                            drawOrderedNode(
+                                    &canvas, 2,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // G
+                                        props.setProjectionReceiver(true);
+                                    });  // nodeG
+                            drawOrderedNode(
+                                    &canvas, 4,
+                                    [](RenderProperties& props, SkiaRecordingCanvas& canvas) {  // D
+                                        drawOrderedNode(&canvas, 3,
+                                                        [](RenderProperties& props,
+                                                           SkiaRecordingCanvas& canvas) {  // R
+                                                            props.setProjectBackwards(true);
+                                                            props.setClipToBounds(false);
+                                                        });  // nodeR
+                                    });                      // nodeD
+                        });                                  // nodeC
+            });                                              // nodeA
     EXPECT_EQ(5, drawNode(renderThread, nodeA));
 }
 
@@ -1057,7 +1100,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, layerComposeQuality) {
     public:
         FrameTestCanvas() : TestCanvasBase(CANVAS_WIDTH, CANVAS_HEIGHT) {}
         void onDrawImageRect(const SkImage* image, const SkRect* src, const SkRect& dst,
-                const SkPaint* paint, SrcRectConstraint constraint) override {
+                             const SkPaint* paint, SrcRectConstraint constraint) override {
             mDrawCounter++;
             EXPECT_EQ(kLow_SkFilterQuality, paint->getFilterQuality());
         }
@@ -1075,7 +1118,7 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(RenderNodeDrawable, layerComposeQuality) {
     FrameTestCanvas canvas;
     RenderNodeDrawable drawable(layerNode.get(), &canvas, true);
     canvas.drawDrawable(&drawable);
-    EXPECT_EQ(1, canvas.mDrawCounter);  //make sure the layer was composed
+    EXPECT_EQ(1, canvas.mDrawCounter);  // make sure the layer was composed
 
     // clean up layer pointer, so we can safely destruct RenderNode
     layerNode->setLayerSurface(nullptr);
@@ -1154,14 +1197,14 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(SkiaRecordingCanvas, drawVectorDrawable) {
     public:
         VectorDrawableTestCanvas() : TestCanvasBase(CANVAS_WIDTH, CANVAS_HEIGHT) {}
         void onDrawBitmapRect(const SkBitmap& bitmap, const SkRect* src, const SkRect& dst,
-                const SkPaint* paint, SrcRectConstraint constraint) override {
+                              const SkPaint* paint, SrcRectConstraint constraint) override {
             const int index = mDrawCounter++;
             switch (index) {
                 case 0:
                     EXPECT_EQ(dst, SkRect::MakeWH(CANVAS_WIDTH, CANVAS_HEIGHT));
                     break;
                 case 1:
-                    EXPECT_EQ(dst, SkRect::MakeWH(CANVAS_WIDTH/2, CANVAS_HEIGHT));
+                    EXPECT_EQ(dst, SkRect::MakeWH(CANVAS_WIDTH / 2, CANVAS_HEIGHT));
                     break;
                 default:
                     ADD_FAILURE();
@@ -1171,17 +1214,18 @@ RENDERTHREAD_SKIA_PIPELINE_TEST(SkiaRecordingCanvas, drawVectorDrawable) {
 
     VectorDrawable::Group* group = new VectorDrawable::Group();
     sp<VectorDrawableRoot> vectorDrawable(new VectorDrawableRoot(group));
-    vectorDrawable->mutateStagingProperties()->setScaledSize(CANVAS_WIDTH/10, CANVAS_HEIGHT/10);
+    vectorDrawable->mutateStagingProperties()->setScaledSize(CANVAS_WIDTH / 10, CANVAS_HEIGHT / 10);
 
-    auto node = TestUtils::createSkiaNode(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT,
-            [&](RenderProperties& props, SkiaRecordingCanvas& canvas) {
-                vectorDrawable->mutateStagingProperties()->setBounds(SkRect::MakeWH(CANVAS_WIDTH,
-                        CANVAS_HEIGHT));
-                canvas.drawVectorDrawable(vectorDrawable.get());
-                vectorDrawable->mutateStagingProperties()->setBounds(SkRect::MakeWH(CANVAS_WIDTH/2,
-                        CANVAS_HEIGHT));
-                canvas.drawVectorDrawable(vectorDrawable.get());
-            });
+    auto node =
+            TestUtils::createSkiaNode(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT,
+                                      [&](RenderProperties& props, SkiaRecordingCanvas& canvas) {
+                                          vectorDrawable->mutateStagingProperties()->setBounds(
+                                                  SkRect::MakeWH(CANVAS_WIDTH, CANVAS_HEIGHT));
+                                          canvas.drawVectorDrawable(vectorDrawable.get());
+                                          vectorDrawable->mutateStagingProperties()->setBounds(
+                                                  SkRect::MakeWH(CANVAS_WIDTH / 2, CANVAS_HEIGHT));
+                                          canvas.drawVectorDrawable(vectorDrawable.get());
+                                      });
 
     VectorDrawableTestCanvas canvas;
     RenderNodeDrawable drawable(node.get(), &canvas, true);

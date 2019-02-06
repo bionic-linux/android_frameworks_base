@@ -23,7 +23,6 @@
 #include "guardrail/StatsdStats.h"
 #include "stats_log_util.h"
 #include "stats_util.h"
-#include "stats_log_util.h"
 
 #include <android-base/file.h>
 #include <dirent.h>
@@ -72,7 +71,7 @@ void ConfigManager::AddListener(const sp<ConfigListener>& listener) {
 void ConfigManager::UpdateConfig(const ConfigKey& key, const StatsdConfig& config) {
     vector<sp<ConfigListener>> broadcastList;
     {
-        lock_guard <mutex> lock(mMutex);
+        lock_guard<mutex> lock(mMutex);
 
         const int numBytes = config.ByteSize();
         vector<uint8_t> buffer(numBytes);
@@ -131,7 +130,7 @@ void ConfigManager::RemoveConfigReceiver(const ConfigKey& key) {
 void ConfigManager::RemoveConfig(const ConfigKey& key) {
     vector<sp<ConfigListener>> broadcastList;
     {
-        lock_guard <mutex> lock(mMutex);
+        lock_guard<mutex> lock(mMutex);
 
         auto uidIt = mConfigs.find(key.GetUid());
         if (uidIt != mConfigs.end() && uidIt->second.find(key) != uidIt->second.end()) {
@@ -153,7 +152,7 @@ void ConfigManager::RemoveConfig(const ConfigKey& key) {
         remove_saved_configs(key);
     }
 
-    for (const sp<ConfigListener>& listener:broadcastList) {
+    for (const sp<ConfigListener>& listener : broadcastList) {
         listener->OnConfigRemoved(key);
     }
 }
@@ -167,7 +166,7 @@ void ConfigManager::RemoveConfigs(int uid) {
     vector<ConfigKey> removed;
     vector<sp<ConfigListener>> broadcastList;
     {
-        lock_guard <mutex> lock(mMutex);
+        lock_guard<mutex> lock(mMutex);
 
         auto uidIt = mConfigs.find(uid);
         if (uidIt == mConfigs.end()) {
@@ -176,9 +175,9 @@ void ConfigManager::RemoveConfigs(int uid) {
 
         for (auto it = uidIt->second.begin(); it != uidIt->second.end(); ++it) {
             // Remove from map
-                remove_saved_configs(*it);
-                removed.push_back(*it);
-                mConfigReceivers.erase(*it);
+            remove_saved_configs(*it);
+            removed.push_back(*it);
+            mConfigReceivers.erase(*it);
         }
 
         mConfigs.erase(uidIt);
@@ -191,7 +190,7 @@ void ConfigManager::RemoveConfigs(int uid) {
     // Remove separately so if they do anything in the callback they can't mess up our iteration.
     for (auto& key : removed) {
         // Tell everyone
-        for (const sp<ConfigListener>& listener:broadcastList) {
+        for (const sp<ConfigListener>& listener : broadcastList) {
             listener->OnConfigRemoved(key);
         }
     }
@@ -201,7 +200,7 @@ void ConfigManager::RemoveAllConfigs() {
     vector<ConfigKey> removed;
     vector<sp<ConfigListener>> broadcastList;
     {
-        lock_guard <mutex> lock(mMutex);
+        lock_guard<mutex> lock(mMutex);
 
         for (auto uidIt = mConfigs.begin(); uidIt != mConfigs.end();) {
             for (auto it = uidIt->second.begin(); it != uidIt->second.end();) {
@@ -221,7 +220,7 @@ void ConfigManager::RemoveAllConfigs() {
     // Remove separately so if they do anything in the callback they can't mess up our iteration.
     for (auto& key : removed) {
         // Tell everyone
-        for (const sp<ConfigListener>& listener:broadcastList) {
+        for (const sp<ConfigListener>& listener : broadcastList) {
             listener->OnConfigRemoved(key);
         }
     }
@@ -266,16 +265,14 @@ void ConfigManager::Dump(FILE* out) {
     }
 }
 
-void ConfigManager::update_saved_configs_locked(const ConfigKey& key,
-                                                const vector<uint8_t>& buffer,
+void ConfigManager::update_saved_configs_locked(const ConfigKey& key, const vector<uint8_t>& buffer,
                                                 const int numBytes) {
     // If there is a pre-existing config with same key we should first delete it.
     remove_saved_configs(key);
 
     // Then we save the latest config.
-    string file_name =
-        StringPrintf("%s/%ld_%d_%lld", STATS_SERVICE_DIR, time(nullptr),
-                     key.GetUid(), (long long)key.GetId());
+    string file_name = StringPrintf("%s/%ld_%d_%lld", STATS_SERVICE_DIR, time(nullptr),
+                                    key.GetUid(), (long long)key.GetId());
     StorageManager::writeFile(file_name.c_str(), &buffer[0], numBytes);
 }
 

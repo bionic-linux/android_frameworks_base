@@ -56,8 +56,7 @@ std::shared_ptr<DimToValMap> MockBucket(
 }
 
 // Returns the value, for the given key, in that bucket, or 0 if not present.
-int64_t getBucketValue(const std::shared_ptr<DimToValMap>& bucket,
-                       const MetricDimensionKey& key) {
+int64_t getBucketValue(const std::shared_ptr<DimToValMap>& bucket, const MetricDimensionKey& key) {
     const auto& itr = bucket->find(key);
     if (itr != bucket->end()) {
         return itr->second;
@@ -66,8 +65,7 @@ int64_t getBucketValue(const std::shared_ptr<DimToValMap>& bucket,
 }
 
 // Returns true if keys in trueList are detected as anomalies and keys in falseList are not.
-bool detectAnomaliesPass(AnomalyTracker& tracker,
-                         const int64_t& bucketNum,
+bool detectAnomaliesPass(AnomalyTracker& tracker, const int64_t& bucketNum,
                          const std::shared_ptr<DimToValMap>& currentBucket,
                          const std::set<const MetricDimensionKey>& trueList,
                          const std::set<const MetricDimensionKey>& falseList) {
@@ -85,8 +83,7 @@ bool detectAnomaliesPass(AnomalyTracker& tracker,
 }
 
 // Calls tracker.detectAndDeclareAnomaly on each key in the bucket.
-void detectAndDeclareAnomalies(AnomalyTracker& tracker,
-                               const int64_t& bucketNum,
+void detectAndDeclareAnomalies(AnomalyTracker& tracker, const int64_t& bucketNum,
                                const std::shared_ptr<DimToValMap>& bucket,
                                const int64_t& eventTimestamp) {
     for (const auto& kv : *bucket) {
@@ -98,20 +95,19 @@ void detectAndDeclareAnomalies(AnomalyTracker& tracker,
 // timestamp (in ns) + refractoryPeriodSec.
 // If a timestamp value is negative, instead asserts that the refractory period is inapplicable
 // (either non-existant or already past).
-void checkRefractoryTimes(AnomalyTracker& tracker,
-                          const int64_t& currTimestampNs,
+void checkRefractoryTimes(AnomalyTracker& tracker, const int64_t& currTimestampNs,
                           const int32_t& refractoryPeriodSec,
                           const std::unordered_map<MetricDimensionKey, int64_t>& timestamps) {
     for (const auto& kv : timestamps) {
         if (kv.second < 0) {
             // Make sure that, if there is a refractory period, it is already past.
             EXPECT_LT(tracker.getRefractoryPeriodEndsSec(kv.first) * NS_PER_SEC,
-                    (uint64_t)currTimestampNs)
+                      (uint64_t)currTimestampNs)
                     << "Failure was at currTimestampNs " << currTimestampNs;
         } else {
             EXPECT_EQ(tracker.getRefractoryPeriodEndsSec(kv.first),
                       std::ceil(1.0 * kv.second / NS_PER_SEC) + refractoryPeriodSec)
-                      << "Failure was at currTimestampNs " << currTimestampNs;
+                    << "Failure was at currTimestampNs " << currTimestampNs;
         }
     }
 }
@@ -153,7 +149,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 0, bucket0, {}, {keyA, keyB, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 0, bucket0, eventTimestamp1);
     checkRefractoryTimes(anomalyTracker, eventTimestamp0, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, -1}, {keyC, -1}});
+                         {{keyA, -1}, {keyB, -1}, {keyC, -1}});
 
     // Adds past bucket #0
     anomalyTracker.addPastBucket(bucket0, 0);
@@ -167,7 +163,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 1, bucket1, {}, {keyA, keyB, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 1, bucket1, eventTimestamp1);
     checkRefractoryTimes(anomalyTracker, eventTimestamp1, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, -1}, {keyC, -1}});
+                         {{keyA, -1}, {keyB, -1}, {keyC, -1}});
 
     // Adds past bucket #0 again. The sum does not change.
     anomalyTracker.addPastBucket(bucket0, 0);
@@ -179,7 +175,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 1, bucket1, {}, {keyA, keyB, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 1, bucket1, eventTimestamp1 + 1);
     checkRefractoryTimes(anomalyTracker, eventTimestamp1, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, -1}, {keyC, -1}});
+                         {{keyA, -1}, {keyB, -1}, {keyC, -1}});
 
     // Adds past bucket #1.
     anomalyTracker.addPastBucket(bucket1, 1);
@@ -193,7 +189,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 2, bucket2, {keyB}, {keyA, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 2, bucket2, eventTimestamp2);
     checkRefractoryTimes(anomalyTracker, eventTimestamp2, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}});
 
     // Adds past bucket #1 again. Nothing changes.
     anomalyTracker.addPastBucket(bucket1, 1);
@@ -206,7 +202,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 2, bucket2, {keyB}, {keyA, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 2, bucket2, eventTimestamp2 + 1);
     checkRefractoryTimes(anomalyTracker, eventTimestamp2, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}});
 
     // Adds past bucket #2.
     anomalyTracker.addPastBucket(bucket2, 2);
@@ -219,7 +215,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 3, bucket3, {keyA}, {keyB, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 3, bucket3, eventTimestamp3);
     checkRefractoryTimes(anomalyTracker, eventTimestamp3, refractoryPeriodSec,
-            {{keyA, eventTimestamp3}, {keyB, eventTimestamp2}, {keyC, -1}});
+                         {{keyA, eventTimestamp3}, {keyB, eventTimestamp2}, {keyC, -1}});
 
     // Adds bucket #3.
     anomalyTracker.addPastBucket(bucket3, 3L);
@@ -232,7 +228,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 4, bucket4, {keyB}, {keyA, keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 4, bucket4, eventTimestamp4);
     checkRefractoryTimes(anomalyTracker, eventTimestamp4, refractoryPeriodSec,
-            {{keyA, eventTimestamp3}, {keyB, eventTimestamp4}, {keyC, -1}});
+                         {{keyA, eventTimestamp3}, {keyB, eventTimestamp4}, {keyC, -1}});
 
     // Adds bucket #4.
     anomalyTracker.addPastBucket(bucket4, 4);
@@ -245,7 +241,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 5, bucket5, {keyA, keyB}, {keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 5, bucket5, eventTimestamp5);
     checkRefractoryTimes(anomalyTracker, eventTimestamp5, refractoryPeriodSec,
-            {{keyA, eventTimestamp3}, {keyB, eventTimestamp4}, {keyC, -1}});
+                         {{keyA, eventTimestamp3}, {keyB, eventTimestamp4}, {keyC, -1}});
 
     // Adds bucket #5.
     anomalyTracker.addPastBucket(bucket5, 5);
@@ -258,7 +254,7 @@ TEST(AnomalyTrackerTest, TestConsecutiveBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 6, bucket6, {keyA, keyB}, {keyC}));
     detectAndDeclareAnomalies(anomalyTracker, 6, bucket6, eventTimestamp6);
     checkRefractoryTimes(anomalyTracker, eventTimestamp6, refractoryPeriodSec,
-            {{keyA, eventTimestamp6}, {keyB, eventTimestamp4}, {keyC, -1}});
+                         {{keyA, eventTimestamp6}, {keyB, eventTimestamp4}, {keyC, -1}});
 }
 
 TEST(AnomalyTrackerTest, TestSparseBuckets) {
@@ -295,7 +291,7 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 9, bucket9, {}, {keyA, keyB, keyC, keyD}));
     detectAndDeclareAnomalies(anomalyTracker, 9, bucket9, eventTimestamp1);
     checkRefractoryTimes(anomalyTracker, eventTimestamp1, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, -1}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, -1}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Add past bucket #9
     anomalyTracker.addPastBucket(bucket9, 9);
@@ -311,7 +307,7 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
     EXPECT_EQ(anomalyTracker.mMostRecentBucketNum, 15L);
     checkRefractoryTimes(anomalyTracker, eventTimestamp2, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Add past bucket #16
     anomalyTracker.addPastBucket(bucket16, 16);
@@ -324,7 +320,7 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     // Within refractory period.
     detectAndDeclareAnomalies(anomalyTracker, 18, bucket18, eventTimestamp3);
     checkRefractoryTimes(anomalyTracker, eventTimestamp3, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp2}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
     EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 1UL);
     EXPECT_EQ(anomalyTracker.getSumOverPastBuckets(keyB), 4LL);
 
@@ -341,7 +337,7 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     EXPECT_EQ(anomalyTracker.getSumOverPastBuckets(keyC), 1LL);
     detectAndDeclareAnomalies(anomalyTracker, 20, bucket20, eventTimestamp4);
     checkRefractoryTimes(anomalyTracker, eventTimestamp4, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Add bucket #18 again. Nothing changes.
     anomalyTracker.addPastBucket(bucket18, 18);
@@ -356,7 +352,7 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     detectAndDeclareAnomalies(anomalyTracker, 20, bucket20, eventTimestamp4 + 1);
     // Within refractory period.
     checkRefractoryTimes(anomalyTracker, eventTimestamp4 + 1, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Add past bucket #20
     anomalyTracker.addPastBucket(bucket20, 20);
@@ -369,31 +365,32 @@ TEST(AnomalyTrackerTest, TestSparseBuckets) {
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
     detectAndDeclareAnomalies(anomalyTracker, 25, bucket25, eventTimestamp5);
     checkRefractoryTimes(anomalyTracker, eventTimestamp5, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, eventTimestamp4}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Add past bucket #25
     anomalyTracker.addPastBucket(bucket25, 25);
     EXPECT_EQ(anomalyTracker.mMostRecentBucketNum, 25L);
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 1UL);
     EXPECT_EQ(anomalyTracker.getSumOverPastBuckets(keyD), 1LL);
-    EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 28, bucket28, {},
-            {keyA, keyB, keyC, keyD, keyE}));
+    EXPECT_TRUE(
+            detectAnomaliesPass(anomalyTracker, 28, bucket28, {}, {keyA, keyB, keyC, keyD, keyE}));
     EXPECT_EQ(anomalyTracker.mMostRecentBucketNum, 27L);
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
     detectAndDeclareAnomalies(anomalyTracker, 28, bucket28, eventTimestamp6);
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
     checkRefractoryTimes(anomalyTracker, eventTimestamp6, refractoryPeriodSec,
-            {{keyA, -1}, {keyB, -1}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
+                         {{keyA, -1}, {keyB, -1}, {keyC, -1}, {keyD, -1}, {keyE, -1}});
 
     // Updates current bucket #28.
     (*bucket28)[keyE] = 5;
-    EXPECT_TRUE(detectAnomaliesPass(anomalyTracker, 28, bucket28, {keyE},
-            {keyA, keyB, keyC, keyD}));
+    EXPECT_TRUE(
+            detectAnomaliesPass(anomalyTracker, 28, bucket28, {keyE}, {keyA, keyB, keyC, keyD}));
     EXPECT_EQ(anomalyTracker.mMostRecentBucketNum, 27L);
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
     detectAndDeclareAnomalies(anomalyTracker, 28, bucket28, eventTimestamp6 + 7);
     // TODO: after detectAnomaly fix: EXPECT_EQ(anomalyTracker.mSumOverPastBuckets.size(), 0UL);
-    checkRefractoryTimes(anomalyTracker, eventTimestamp6, refractoryPeriodSec,
+    checkRefractoryTimes(
+            anomalyTracker, eventTimestamp6, refractoryPeriodSec,
             {{keyA, -1}, {keyB, -1}, {keyC, -1}, {keyD, -1}, {keyE, eventTimestamp6 + 7}});
 }
 

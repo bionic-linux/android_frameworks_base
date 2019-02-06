@@ -28,30 +28,31 @@ IncrementalGaussian::IncrementalGaussian()
       mean_(0.0f),
       var_(0.0f),
       exp_denom_(0.0f),
-      pdf_denom_(0.0f) {
-}
+      pdf_denom_(0.0f) {}
 
 void IncrementalGaussian::Add(float value) {
-  ++n_;
-  sum_x_ += value;
-  sum_x2_ += value * value;
+    ++n_;
+    sum_x_ += value;
+    sum_x2_ += value * value;
 
-  mean_ = sum_x_ / n_;
-  var_ = sum_x2_ / n_ - mean_ * mean_;
+    mean_ = sum_x_ / n_;
+    var_ = sum_x2_ / n_ - mean_ * mean_;
 
-  exp_denom_ = 2.0f * var_;
-  pdf_denom_ = sqrtf(M_PI * exp_denom_);
+    exp_denom_ = 2.0f * var_;
+    pdf_denom_ = sqrtf(M_PI * exp_denom_);
 }
 
 float IncrementalGaussian::Std() const {
-  return sqrtf(var_);
+    return sqrtf(var_);
 }
 
 float IncrementalGaussian::Pdf(float value) const {
-  if (var_ == 0.0f) { return n_ > 0 ? value == mean_ : 0.0f; }
-  const float diff = value - mean_;
-  return expf(-diff * diff / exp_denom_) / pdf_denom_;
+    if (var_ == 0.0f) {
+        return n_ > 0 ? value == mean_ : 0.0f;
+    }
+    const float diff = value - mean_;
+    return expf(-diff * diff / exp_denom_) / pdf_denom_;
 }
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android

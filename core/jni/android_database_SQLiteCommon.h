@@ -43,9 +43,9 @@ void throw_sqlite3_exception(JNIEnv* env, sqlite3* handle, const char* message);
 /* throw a SQLiteException for a given error code */
 void throw_sqlite3_exception_errcode(JNIEnv* env, int errcode, const char* message);
 
-void throw_sqlite3_exception(JNIEnv* env, int errcode,
-        const char* sqlite3Message, const char* message);
+void throw_sqlite3_exception(JNIEnv* env, int errcode, const char* sqlite3Message,
+                             const char* message);
 
-}
+}  // namespace android
 
-#endif // _ANDROID_DATABASE_SQLITE_COMMON_H
+#endif  // _ANDROID_DATABASE_SQLITE_COMMON_H

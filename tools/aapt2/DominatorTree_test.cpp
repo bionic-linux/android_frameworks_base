@@ -31,10 +31,10 @@ namespace {
 
 class PrettyPrinter : public DominatorTree::Visitor {
  public:
-  explicit PrettyPrinter(const int indent = 2) : indent_(indent) {}
+  explicit PrettyPrinter(const int indent = 2) : indent_(indent) {
+  }
 
-  void VisitTree(const std::string& product,
-                 DominatorTree::Node* root) override {
+  void VisitTree(const std::string& product, DominatorTree::Node* root) override {
     for (auto& child : root->children()) {
       VisitNode(child.get(), 0);
     }
@@ -50,8 +50,7 @@ class PrettyPrinter : public DominatorTree::Visitor {
  private:
   void VisitConfig(const DominatorTree::Node* node, const int indent) {
     auto config_string = node->value()->config.toString();
-    buffer_ << std::string(indent, ' ')
-            << (config_string.isEmpty() ? "<default>" : config_string)
+    buffer_ << std::string(indent, ' ') << (config_string.isEmpty() ? "<default>" : config_string)
             << std::endl;
   }
 

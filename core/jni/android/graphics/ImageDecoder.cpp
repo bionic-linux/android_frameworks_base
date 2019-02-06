@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+#include "ImageDecoder.h"
 #include "Bitmap.h"
 #include "BitmapFactory.h"
 #include "ByteBufferStreamAdaptor.h"
 #include "CreateJavaOutputStreamAdaptor.h"
 #include "GraphicsJNI.h"
-#include "ImageDecoder.h"
 #include "Utils.h"
 #include "core_jni_helpers.h"
 
@@ -36,10 +36,10 @@
 
 using namespace android;
 
-static jclass    gImageDecoder_class;
-static jclass    gSize_class;
-static jclass    gDecodeException_class;
-static jclass    gCanvas_class;
+static jclass gImageDecoder_class;
+static jclass gSize_class;
+static jclass gDecodeException_class;
+static jclass gCanvas_class;
 static jmethodID gImageDecoder_constructorMethodID;
 static jmethodID gImageDecoder_postProcessMethodID;
 static jmethodID gSize_constructorMethodID;
@@ -68,8 +68,9 @@ static jobject throw_exception(JNIEnv* env, ImageDecoder::Error error, const cha
             return nullptr;
         }
     }
-    jthrowable exception = (jthrowable) env->NewObject(gDecodeException_class,
-            gDecodeException_constructorMethodID, error, jstr, cause, source);
+    jthrowable exception =
+            (jthrowable)env->NewObject(gDecodeException_class, gDecodeException_constructorMethodID,
+                                       error, jstr, cause, source);
     // Only throw if not out of memory.
     if (exception) {
         env->Throw(exception);
@@ -96,9 +97,8 @@ static jobject native_create(JNIEnv* env, std::unique_ptr<SkStream> stream, jobj
                 SkString msg;
                 msg.printf("Failed to create image decoder with message '%s'",
                            SkCodec::ResultToString(result));
-                return throw_exception(env, ImageDecoder::kSourceMalformedData,  msg.c_str(),
+                return throw_exception(env, ImageDecoder::kSourceMalformedData, msg.c_str(),
                                        nullptr, source);
-
         }
     }
 
@@ -107,8 +107,8 @@ static jobject native_create(JNIEnv* env, std::unique_ptr<SkStream> stream, jobj
         return throw_exception(env, ImageDecoder::kSourceException, "", jexception, source);
     }
 
-    decoder->mCodec = SkAndroidCodec::MakeFromCodec(std::move(codec),
-            SkAndroidCodec::ExifOrientationBehavior::kRespect);
+    decoder->mCodec = SkAndroidCodec::MakeFromCodec(
+            std::move(codec), SkAndroidCodec::ExifOrientationBehavior::kRespect);
     if (!decoder->mCodec.get()) {
         return throw_exception(env, ImageDecoder::kSourceMalformedData, "", nullptr, source);
     }
@@ -118,12 +118,12 @@ static jobject native_create(JNIEnv* env, std::unique_ptr<SkStream> stream, jobj
     const int height = info.height();
     const bool isNinePatch = decoder->mPeeker->mPatch != nullptr;
     return env->NewObject(gImageDecoder_class, gImageDecoder_constructorMethodID,
-                          reinterpret_cast<jlong>(decoder.release()), width, height,
-                          animated, isNinePatch);
+                          reinterpret_cast<jlong>(decoder.release()), width, height, animated,
+                          isNinePatch);
 }
 
-static jobject ImageDecoder_nCreateFd(JNIEnv* env, jobject /*clazz*/,
-        jobject fileDescriptor, jobject source) {
+static jobject ImageDecoder_nCreateFd(JNIEnv* env, jobject /*clazz*/, jobject fileDescriptor,
+                                      jobject source) {
     int descriptor = jniGetFDFromFileDescriptor(env, fileDescriptor);
 
     struct stat fdStat;
@@ -144,8 +144,8 @@ static jobject ImageDecoder_nCreateFd(JNIEnv* env, jobject /*clazz*/,
     return native_create(env, std::move(fileStream), source);
 }
 
-static jobject ImageDecoder_nCreateInputStream(JNIEnv* env, jobject /*clazz*/,
-        jobject is, jbyteArray storage, jobject source) {
+static jobject ImageDecoder_nCreateInputStream(JNIEnv* env, jobject /*clazz*/, jobject is,
+                                               jbyteArray storage, jobject source) {
     std::unique_ptr<SkStream> stream(CreateJavaInputStreamAdaptor(env, is, storage, false));
 
     if (!stream.get()) {
@@ -154,8 +154,7 @@ static jobject ImageDecoder_nCreateInputStream(JNIEnv* env, jobject /*clazz*/,
     }
 
     std::unique_ptr<SkStream> bufferedStream(
-        SkFrontBufferedStream::Make(std::move(stream),
-        SkCodec::MinBufferedBytesNeeded()));
+            SkFrontBufferedStream::Make(std::move(stream), SkCodec::MinBufferedBytesNeeded()));
     return native_create(env, std::move(bufferedStream), source);
 }
 
@@ -168,8 +167,8 @@ static jobject ImageDecoder_nCreateAsset(JNIEnv* env, jobject /*clazz*/, jlong a
 
 static jobject ImageDecoder_nCreateByteBuffer(JNIEnv* env, jobject /*clazz*/, jobject jbyteBuffer,
                                               jint initialPosition, jint limit, jobject source) {
-    std::unique_ptr<SkStream> stream = CreateByteBufferStreamAdaptor(env, jbyteBuffer,
-                                                                     initialPosition, limit);
+    std::unique_ptr<SkStream> stream =
+            CreateByteBufferStreamAdaptor(env, jbyteBuffer, initialPosition, limit);
     if (!stream) {
         return throw_exception(env, ImageDecoder::kSourceMalformedData, "Failed to read ByteBuffer",
                                nullptr, source);
@@ -247,7 +246,7 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
             // uploading to the gpu as 8888 will not save memory. This still
             // may save us from using F16, but do not go down to 565.
             if (allocator != ImageDecoder::kHardware_Allocator &&
-               (allocator != ImageDecoder::kDefault_Allocator || requireMutable)) {
+                (allocator != ImageDecoder::kDefault_Allocator || requireMutable)) {
                 colorType = kRGB_565_SkColorType;
             }
         }
@@ -281,8 +280,8 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
     }
     if (!nativeBitmap) {
         SkString msg;
-        msg.printf("OOM allocating Bitmap with dimensions %i x %i",
-                decodeInfo.width(), decodeInfo.height());
+        msg.printf("OOM allocating Bitmap with dimensions %i x %i", decodeInfo.width(),
+                   decodeInfo.height());
         doThrowOOME(env, msg.c_str());
         return nullptr;
     }
@@ -291,8 +290,7 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
     options.fSampleSize = sampleSize;
     auto result = codec->getAndroidPixels(decodeInfo, bm.getPixels(), bm.rowBytes(), &options);
     jthrowable jexception = get_and_clear_exception(env);
-    int onPartialImageError = jexception ? ImageDecoder::kSourceException
-                                         : 0; // No error.
+    int onPartialImageError = jexception ? ImageDecoder::kSourceException : 0;  // No error.
     switch (result) {
         case SkCodec::kSuccess:
             // Ignore the exception, since the decode was successful anyway.
@@ -318,7 +316,7 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
 
     if (onPartialImageError) {
         env->CallVoidMethod(jdecoder, gCallback_onPartialImageMethodID, onPartialImageError,
-                jexception);
+                            jexception);
         if (env->ExceptionCheck()) {
             return nullptr;
         }
@@ -358,10 +356,10 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
             SkIRect subset;
             GraphicsJNI::jrect_to_irect(env, jsubset, &subset);
 
-            translateX    = -subset.fLeft;
-            translateY    = -subset.fTop;
-            desiredWidth  =  subset.width();
-            desiredHeight =  subset.height();
+            translateX = -subset.fLeft;
+            translateY = -subset.fTop;
+            desiredWidth = subset.width();
+            desiredHeight = subset.height();
         }
         SkImageInfo scaledInfo = bitmapInfo.makeWH(desiredWidth, desiredHeight);
         SkBitmap scaledBm;
@@ -378,8 +376,8 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
         }
         if (!scaledPixelRef) {
             SkString msg;
-            msg.printf("OOM allocating scaled Bitmap with dimensions %i x %i",
-                    desiredWidth, desiredHeight);
+            msg.printf("OOM allocating scaled Bitmap with dimensions %i x %i", desiredWidth,
+                       desiredHeight);
             doThrowOOME(env, msg.c_str());
             return nullptr;
         }
@@ -391,8 +389,8 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
         SkCanvas canvas(scaledBm, SkCanvas::ColorBehavior::kLegacy);
         canvas.translate(translateX, translateY);
         if (scale) {
-            float scaleX = (float) desiredWidth  / decodeInfo.width();
-            float scaleY = (float) desiredHeight / decodeInfo.height();
+            float scaleX = (float)desiredWidth / decodeInfo.width();
+            float scaleY = (float)desiredHeight / decodeInfo.height();
             canvas.scale(scaleX, scaleY);
         }
 
@@ -450,9 +448,8 @@ static jobject ImageDecoder_nDecodeBitmap(JNIEnv* env, jobject /*clazz*/, jlong 
         bitmapCreateFlags |= bitmap::kBitmapCreateFlag_Mutable;
     } else {
         if ((allocator == ImageDecoder::kDefault_Allocator ||
-             allocator == ImageDecoder::kHardware_Allocator)
-            && bm.colorType() != kAlpha_8_SkColorType)
-        {
+             allocator == ImageDecoder::kHardware_Allocator) &&
+            bm.colorType() != kAlpha_8_SkColorType) {
             sk_sp<Bitmap> hwBitmap = Bitmap::allocateHardwareBitmap(bm);
             if (hwBitmap) {
                 hwBitmap->setImmutable();
@@ -503,32 +500,52 @@ static jobject ImageDecoder_nGetColorSpace(JNIEnv* env, jobject /*clazz*/, jlong
 }
 
 static const JNINativeMethod gImageDecoderMethods[] = {
-    { "nCreate",        "(JLandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;",    (void*) ImageDecoder_nCreateAsset },
-    { "nCreate",        "(Ljava/nio/ByteBuffer;IILandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;", (void*) ImageDecoder_nCreateByteBuffer },
-    { "nCreate",        "([BIILandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;", (void*) ImageDecoder_nCreateByteArray },
-    { "nCreate",        "(Ljava/io/InputStream;[BLandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;", (void*) ImageDecoder_nCreateInputStream },
-    { "nCreate",        "(Ljava/io/FileDescriptor;Landroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;", (void*) ImageDecoder_nCreateFd },
-    { "nDecodeBitmap",  "(JLandroid/graphics/ImageDecoder;ZIILandroid/graphics/Rect;ZIZZZLandroid/graphics/ColorSpace;)Landroid/graphics/Bitmap;",
-                                                                 (void*) ImageDecoder_nDecodeBitmap },
-    { "nGetSampledSize","(JI)Landroid/util/Size;",               (void*) ImageDecoder_nGetSampledSize },
-    { "nGetPadding",    "(JLandroid/graphics/Rect;)V",           (void*) ImageDecoder_nGetPadding },
-    { "nClose",         "(J)V",                                  (void*) ImageDecoder_nClose},
-    { "nGetMimeType",   "(J)Ljava/lang/String;",                 (void*) ImageDecoder_nGetMimeType },
-    { "nGetColorSpace", "(J)Landroid/graphics/ColorSpace;",      (void*) ImageDecoder_nGetColorSpace },
+        {"nCreate", "(JLandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;",
+         (void*)ImageDecoder_nCreateAsset},
+        {"nCreate",
+         "(Ljava/nio/ByteBuffer;IILandroid/graphics/ImageDecoder$Source;)Landroid/graphics/"
+         "ImageDecoder;",
+         (void*)ImageDecoder_nCreateByteBuffer},
+        {"nCreate", "([BIILandroid/graphics/ImageDecoder$Source;)Landroid/graphics/ImageDecoder;",
+         (void*)ImageDecoder_nCreateByteArray},
+        {"nCreate",
+         "(Ljava/io/InputStream;[BLandroid/graphics/ImageDecoder$Source;)Landroid/graphics/"
+         "ImageDecoder;",
+         (void*)ImageDecoder_nCreateInputStream},
+        {"nCreate",
+         "(Ljava/io/FileDescriptor;Landroid/graphics/ImageDecoder$Source;)Landroid/graphics/"
+         "ImageDecoder;",
+         (void*)ImageDecoder_nCreateFd},
+        {"nDecodeBitmap",
+         "(JLandroid/graphics/ImageDecoder;ZIILandroid/graphics/Rect;ZIZZZLandroid/graphics/"
+         "ColorSpace;)Landroid/graphics/Bitmap;",
+         (void*)ImageDecoder_nDecodeBitmap},
+        {"nGetSampledSize", "(JI)Landroid/util/Size;", (void*)ImageDecoder_nGetSampledSize},
+        {"nGetPadding", "(JLandroid/graphics/Rect;)V", (void*)ImageDecoder_nGetPadding},
+        {"nClose", "(J)V", (void*)ImageDecoder_nClose},
+        {"nGetMimeType", "(J)Ljava/lang/String;", (void*)ImageDecoder_nGetMimeType},
+        {"nGetColorSpace", "(J)Landroid/graphics/ColorSpace;", (void*)ImageDecoder_nGetColorSpace},
 };
 
 int register_android_graphics_ImageDecoder(JNIEnv* env) {
-    gImageDecoder_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/ImageDecoder"));
-    gImageDecoder_constructorMethodID = GetMethodIDOrDie(env, gImageDecoder_class, "<init>", "(JIIZZ)V");
-    gImageDecoder_postProcessMethodID = GetMethodIDOrDie(env, gImageDecoder_class, "postProcessAndRelease", "(Landroid/graphics/Canvas;)I");
+    gImageDecoder_class =
+            MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/ImageDecoder"));
+    gImageDecoder_constructorMethodID =
+            GetMethodIDOrDie(env, gImageDecoder_class, "<init>", "(JIIZZ)V");
+    gImageDecoder_postProcessMethodID = GetMethodIDOrDie(
+            env, gImageDecoder_class, "postProcessAndRelease", "(Landroid/graphics/Canvas;)I");
 
     gSize_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/util/Size"));
     gSize_constructorMethodID = GetMethodIDOrDie(env, gSize_class, "<init>", "(II)V");
 
-    gDecodeException_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/ImageDecoder$DecodeException"));
-    gDecodeException_constructorMethodID = GetMethodIDOrDie(env, gDecodeException_class, "<init>", "(ILjava/lang/String;Ljava/lang/Throwable;Landroid/graphics/ImageDecoder$Source;)V");
+    gDecodeException_class = MakeGlobalRefOrDie(
+            env, FindClassOrDie(env, "android/graphics/ImageDecoder$DecodeException"));
+    gDecodeException_constructorMethodID = GetMethodIDOrDie(
+            env, gDecodeException_class, "<init>",
+            "(ILjava/lang/String;Ljava/lang/Throwable;Landroid/graphics/ImageDecoder$Source;)V");
 
-    gCallback_onPartialImageMethodID = GetMethodIDOrDie(env, gImageDecoder_class, "onPartialImage", "(ILjava/lang/Throwable;)V");
+    gCallback_onPartialImageMethodID = GetMethodIDOrDie(env, gImageDecoder_class, "onPartialImage",
+                                                        "(ILjava/lang/Throwable;)V");
 
     gCanvas_class = MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/Canvas"));
     gCanvas_constructorMethodID = GetMethodIDOrDie(env, gCanvas_class, "<init>", "(J)V");

@@ -30,7 +30,7 @@ namespace {
 
 StatsdConfig CreateStatsdConfig(int num_buckets, int threshold) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     auto wakelockAcquireMatcher = CreateAcquireWakelockAtomMatcher();
 
     *config.add_atom_matcher() = wakelockAcquireMatcher;
@@ -61,8 +61,7 @@ TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_single_bucket) {
     const uint32_t refractory_period_sec = config.alert(0).refractory_period_secs();
 
     int64_t bucketStartTimeNs = 10000000000;
-    int64_t bucketSizeNs =
-        TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
+    int64_t bucketSizeNs = TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
 
     ConfigKey cfgKey;
     auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
@@ -71,17 +70,16 @@ TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_single_bucket) {
     EXPECT_EQ(1u, processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers.size());
 
     sp<AnomalyTracker> anomalyTracker =
-        processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers[0];
+            processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers[0];
 
     std::vector<AttributionNodeInternal> attributions1 = {CreateAttribution(111, "App1")};
-    std::vector<AttributionNodeInternal> attributions2 = {
-        CreateAttribution(111, "App1"), CreateAttribution(222, "GMSCoreModule1")};
-    std::vector<AttributionNodeInternal> attributions3 = {
-        CreateAttribution(111, "App1"), CreateAttribution(333, "App3")};
-    std::vector<AttributionNodeInternal> attributions4 = {
-        CreateAttribution(222, "GMSCoreModule1"), CreateAttribution(333, "App3")};
-    std::vector<AttributionNodeInternal> attributions5 = {
-        CreateAttribution(222, "GMSCoreModule1") };
+    std::vector<AttributionNodeInternal> attributions2 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(222, "GMSCoreModule1")};
+    std::vector<AttributionNodeInternal> attributions3 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(333, "App3")};
+    std::vector<AttributionNodeInternal> attributions4 = {CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(333, "App3")};
+    std::vector<AttributionNodeInternal> attributions5 = {CreateAttribution(222, "GMSCoreModule1")};
 
     FieldValue fieldValue1(Field(android::util::WAKELOCK_STATE_CHANGED, (int32_t)0x02010101),
                            Value((int32_t)111));
@@ -164,8 +162,7 @@ TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_multiple_buckets) {
     const uint32_t refractory_period_sec = config.alert(0).refractory_period_secs();
 
     int64_t bucketStartTimeNs = 10000000000;
-    int64_t bucketSizeNs =
-        TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
+    int64_t bucketSizeNs = TimeUnitToBucketSizeInMillis(config.count_metric(0).bucket()) * 1000000;
 
     ConfigKey cfgKey;
     auto processor = CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
@@ -174,17 +171,16 @@ TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_multiple_buckets) {
     EXPECT_EQ(1u, processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers.size());
 
     sp<AnomalyTracker> anomalyTracker =
-        processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers[0];
+            processor->mMetricsManagers.begin()->second->mAllAnomalyTrackers[0];
 
     std::vector<AttributionNodeInternal> attributions1 = {CreateAttribution(111, "App1")};
-    std::vector<AttributionNodeInternal> attributions2 = {
-        CreateAttribution(111, "App1"), CreateAttribution(222, "GMSCoreModule1")};
-    std::vector<AttributionNodeInternal> attributions3 = {
-        CreateAttribution(111, "App1"), CreateAttribution(333, "App3")};
-    std::vector<AttributionNodeInternal> attributions4 = {
-        CreateAttribution(222, "GMSCoreModule1"), CreateAttribution(333, "App3")};
-    std::vector<AttributionNodeInternal> attributions5 = {
-        CreateAttribution(222, "GMSCoreModule1") };
+    std::vector<AttributionNodeInternal> attributions2 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(222, "GMSCoreModule1")};
+    std::vector<AttributionNodeInternal> attributions3 = {CreateAttribution(111, "App1"),
+                                                          CreateAttribution(333, "App3")};
+    std::vector<AttributionNodeInternal> attributions4 = {CreateAttribution(222, "GMSCoreModule1"),
+                                                          CreateAttribution(333, "App3")};
+    std::vector<AttributionNodeInternal> attributions5 = {CreateAttribution(222, "GMSCoreModule1")};
 
     FieldValue fieldValue1(Field(android::util::WAKELOCK_STATE_CHANGED, (int32_t)0x02010101),
                            Value((int32_t)111));
@@ -219,14 +215,14 @@ TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_multiple_buckets) {
     EXPECT_EQ(refractory_period_sec + (bucketStartTimeNs + bucketSizeNs + 1) / NS_PER_SEC + 1,
               anomalyTracker->getRefractoryPeriodEndsSec(dimensionKey1));
 
-    event = CreateAcquireWakelockEvent(
-        attributions2, "wl1", bucketStartTimeNs + 3 * bucketSizeNs + 1);
+    event = CreateAcquireWakelockEvent(attributions2, "wl1",
+                                       bucketStartTimeNs + 3 * bucketSizeNs + 1);
     processor->OnLogEvent(event.get());
     EXPECT_EQ(refractory_period_sec + (bucketStartTimeNs + bucketSizeNs + 1) / NS_PER_SEC + 1,
               anomalyTracker->getRefractoryPeriodEndsSec(dimensionKey1));
 
-    event = CreateAcquireWakelockEvent(
-        attributions2, "wl1", bucketStartTimeNs + 3 * bucketSizeNs + 2);
+    event = CreateAcquireWakelockEvent(attributions2, "wl1",
+                                       bucketStartTimeNs + 3 * bucketSizeNs + 2);
     processor->OnLogEvent(event.get());
     EXPECT_EQ(refractory_period_sec + (bucketStartTimeNs + 3 * bucketSizeNs + 2) / NS_PER_SEC + 1,
               anomalyTracker->getRefractoryPeriodEndsSec(dimensionKey1));

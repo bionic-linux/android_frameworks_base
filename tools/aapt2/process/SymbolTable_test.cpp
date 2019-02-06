@@ -33,8 +33,7 @@ TEST(ResourceTableSymbolSourceTest, FindSymbols) {
       test::ResourceTableBuilder()
           .AddSimple("android:id/foo", ResourceId(0x01020000))
           .AddSimple("android:id/bar")
-          .AddValue("android:attr/foo", ResourceId(0x01010000),
-                    test::AttributeBuilder().Build())
+          .AddValue("android:attr/foo", ResourceId(0x01010000), test::AttributeBuilder().Build())
           .Build();
 
   ResourceTableSymbolSource symbol_source(table.get());

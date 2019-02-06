@@ -150,12 +150,9 @@ class XmlPullParser : public IPackageDeclStack {
  private:
   DISALLOW_COPY_AND_ASSIGN(XmlPullParser);
 
-  static void XMLCALL StartNamespaceHandler(void* user_data, const char* prefix,
-                                            const char* uri);
-  static void XMLCALL StartElementHandler(void* user_data, const char* name,
-                                          const char** attrs);
-  static void XMLCALL CharacterDataHandler(void* user_data, const char* s,
-                                           int len);
+  static void XMLCALL StartNamespaceHandler(void* user_data, const char* prefix, const char* uri);
+  static void XMLCALL StartElementHandler(void* user_data, const char* name, const char** attrs);
+  static void XMLCALL CharacterDataHandler(void* user_data, const char* s, int len);
   static void XMLCALL EndElementHandler(void* user_data, const char* name);
   static void XMLCALL EndNamespaceHandler(void* user_data, const char* prefix);
   static void XMLCALL CommentDataHandler(void* user_data, const char* comment);
@@ -202,8 +199,7 @@ Maybe<android::StringPiece> FindNonEmptyAttribute(const XmlPullParser* parser,
 // Implementation
 //
 
-inline ::std::ostream& operator<<(::std::ostream& out,
-                                  XmlPullParser::Event event) {
+inline ::std::ostream& operator<<(::std::ostream& out, XmlPullParser::Event event) {
   switch (event) {
     case XmlPullParser::Event::kBadDocument:
       return out << "BadDocument";
@@ -300,18 +296,16 @@ inline XmlPullParser::const_iterator XmlPullParser::FindAttribute(
       std::pair<android::StringPiece, android::StringPiece>(namespace_uri, name),
       [](const Attribute& attr,
          const std::pair<android::StringPiece, android::StringPiece>& rhs) -> bool {
-        int cmp = attr.namespace_uri.compare(
-            0, attr.namespace_uri.size(), rhs.first.data(), rhs.first.size());
+        int cmp = attr.namespace_uri.compare(0, attr.namespace_uri.size(), rhs.first.data(),
+                                             rhs.first.size());
         if (cmp < 0) return true;
         if (cmp > 0) return false;
-        cmp = attr.name.compare(0, attr.name.size(), rhs.second.data(),
-                                rhs.second.size());
+        cmp = attr.name.compare(0, attr.name.size(), rhs.second.data(), rhs.second.size());
         if (cmp < 0) return true;
         return false;
       });
 
-  if (iter != end_iter && namespace_uri == iter->namespace_uri &&
-      name == iter->name) {
+  if (iter != end_iter && namespace_uri == iter->namespace_uri && name == iter->name) {
     return iter;
   }
   return end_iter;

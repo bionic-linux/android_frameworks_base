@@ -20,10 +20,10 @@
 #include <binder/IServiceManager.h>
 #include <utils/RefBase.h>
 #include <utils/threads.h>
+#include <list>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <list>
 #include "PullDataReceiver.h"
 #include "StatsPuller.h"
 #include "logd/LogEvent.h"
@@ -33,17 +33,17 @@ namespace os {
 namespace statsd {
 
 typedef struct {
-  // The field numbers of the fields that need to be summed when merging
-  // isolated uid with host uid.
-  std::vector<int> additiveFields;
-  // The field numbers of the fields that can't be merged when merging
-  // data belong to isolated uid and host uid.
-  std::vector<int> nonAdditiveFields;
-  // How long should the puller wait before doing an actual pull again. Default
-  // 1 sec. Set this to 0 if this is handled elsewhere.
-  int64_t coolDownNs = 1 * NS_PER_SEC;
-  // The actual puller
-  sp<StatsPuller> puller;
+    // The field numbers of the fields that need to be summed when merging
+    // isolated uid with host uid.
+    std::vector<int> additiveFields;
+    // The field numbers of the fields that can't be merged when merging
+    // data belong to isolated uid and host uid.
+    std::vector<int> nonAdditiveFields;
+    // How long should the puller wait before doing an actual pull again. Default
+    // 1 sec. Set this to 0 if this is handled elsewhere.
+    int64_t coolDownNs = 1 * NS_PER_SEC;
+    // The actual puller
+    sp<StatsPuller> puller;
 } PullAtomInfo;
 
 class StatsPullerManagerImpl : public virtual RefBase {
@@ -70,7 +70,7 @@ public:
 
     const static std::map<int, PullAtomInfo> kAllPullAtomInfo;
 
-   private:
+private:
     StatsPullerManagerImpl();
 
     sp<IStatsCompanionService> mStatsCompanionService = nullptr;

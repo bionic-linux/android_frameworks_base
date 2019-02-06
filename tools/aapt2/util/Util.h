@@ -224,7 +224,9 @@ class Tokenizer {
 
     iterator& operator++();
 
-    android::StringPiece operator*() { return token_; }
+    android::StringPiece operator*() {
+      return token_;
+    }
     bool operator==(const iterator& rhs) const;
     bool operator!=(const iterator& rhs) const;
 

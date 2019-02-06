@@ -34,20 +34,16 @@ struct Test {
     bool run;
 };
 
-Test TESTS[] = {
-    { "backup_helper_test_empty", backup_helper_test_empty, 0, false },
-    { "backup_helper_test_four", backup_helper_test_four, 0, false },
-    { "backup_helper_test_files", backup_helper_test_files, 0, false },
-    { "backup_helper_test_null_base", backup_helper_test_null_base, 0, false },
-    { "backup_helper_test_missing_file", backup_helper_test_missing_file, 0, false },
-    { "backup_helper_test_data_writer", backup_helper_test_data_writer, 0, false },
-    { "backup_helper_test_data_reader", backup_helper_test_data_reader, 0, false },
-    { 0, NULL, 0, false}
-};
+Test TESTS[] = {{"backup_helper_test_empty", backup_helper_test_empty, 0, false},
+                {"backup_helper_test_four", backup_helper_test_four, 0, false},
+                {"backup_helper_test_files", backup_helper_test_files, 0, false},
+                {"backup_helper_test_null_base", backup_helper_test_null_base, 0, false},
+                {"backup_helper_test_missing_file", backup_helper_test_missing_file, 0, false},
+                {"backup_helper_test_data_writer", backup_helper_test_data_writer, 0, false},
+                {"backup_helper_test_data_reader", backup_helper_test_data_reader, 0, false},
+                {0, NULL, 0, false}};
 
-int
-main(int argc, const char** argv)
-{
+int main(int argc, const char** argv) {
     Test* t;
 
     if (argc == 1) {
@@ -59,7 +55,7 @@ main(int argc, const char** argv)
     } else {
         t = TESTS;
         while (t->name) {
-            for (int i=1; i<argc; i++) {
+            for (int i = 1; i < argc; i++) {
                 if (0 == strcmp(t->name, argv[i])) {
                     t->run = true;
                 }
@@ -77,14 +73,13 @@ main(int argc, const char** argv)
         t++;
     }
 
-
     int failed = 0;
     int i = 1;
     t = TESTS;
     while (t->name) {
         if (t->run) {
-            printf("===== Running %s (%d of %d) ==============================\n",
-                    t->name, i, testCount);
+            printf("===== Running %s (%d of %d) ==============================\n", t->name, i,
+                   testCount);
             fflush(stdout);
             fflush(stderr);
             t->result = t->func();
@@ -117,10 +112,8 @@ main(int argc, const char** argv)
 }
 
 #else
-int
-main(int, char**)
-{
-    printf ("test_backup_helper built without the tests\n");
+int main(int, char**) {
+    printf("test_backup_helper built without the tests\n");
     return 0;
 }
 #endif

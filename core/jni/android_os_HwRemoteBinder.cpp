@@ -22,23 +22,23 @@
 
 #include "android_os_HwParcel.h"
 
-#include <android/hidl/base/1.0/IBase.h>
-#include <android/hidl/base/1.0/BpHwBase.h>
 #include <android/hidl/base/1.0/BnHwBase.h>
+#include <android/hidl/base/1.0/BpHwBase.h>
+#include <android/hidl/base/1.0/IBase.h>
 #include <android_runtime/AndroidRuntime.h>
-#include <hidl/Status.h>
 #include <hidl/HidlTransportSupport.h>
+#include <hidl/Status.h>
 #include <nativehelper/JNIHelp.h>
-#include <nativehelper/ScopedUtfChars.h>
 #include <nativehelper/ScopedLocalRef.h>
+#include <nativehelper/ScopedUtfChars.h>
 
 #include "core_jni_helpers.h"
 
 using android::AndroidRuntime;
 
-#define PACKAGE_PATH    "android/os"
-#define CLASS_NAME      "HwRemoteBinder"
-#define CLASS_PATH      PACKAGE_PATH "/" CLASS_NAME
+#define PACKAGE_PATH "android/os"
+#define CLASS_NAME "HwRemoteBinder"
+#define CLASS_PATH PACKAGE_PATH "/" CLASS_NAME
 
 namespace android {
 
@@ -49,42 +49,39 @@ static struct fields_t {
     jmethodID sendDeathNotice;
 } gProxyOffsets;
 
-static struct class_offsets_t
-{
-    jmethodID mGetName;
-} gClassOffsets;
+static struct class_offsets_t { jmethodID mGetName; } gClassOffsets;
 
-static JavaVM* jnienv_to_javavm(JNIEnv* env)
-{
+static JavaVM* jnienv_to_javavm(JNIEnv* env) {
     JavaVM* vm;
     return env->GetJavaVM(&vm) >= 0 ? vm : NULL;
 }
 
-static JNIEnv* javavm_to_jnienv(JavaVM* vm)
-{
+static JNIEnv* javavm_to_jnienv(JavaVM* vm) {
     JNIEnv* env;
-    return vm->GetEnv((void **)&env, JNI_VERSION_1_4) >= 0 ? env : NULL;
+    return vm->GetEnv((void**)&env, JNI_VERSION_1_4) >= 0 ? env : NULL;
 }
 
 // ----------------------------------------------------------------------------
-class HwBinderDeathRecipient : public hardware::IBinder::DeathRecipient
-{
-public:
-    HwBinderDeathRecipient(JNIEnv* env, jobject object, jlong cookie, const sp<HwBinderDeathRecipientList>& list)
-        : mVM(jnienv_to_javavm(env)), mObject(env->NewGlobalRef(object)),
-          mObjectWeak(NULL), mCookie(cookie), mList(list)
-    {
+class HwBinderDeathRecipient : public hardware::IBinder::DeathRecipient {
+  public:
+    HwBinderDeathRecipient(JNIEnv* env, jobject object, jlong cookie,
+                           const sp<HwBinderDeathRecipientList>& list)
+        : mVM(jnienv_to_javavm(env)),
+          mObject(env->NewGlobalRef(object)),
+          mObjectWeak(NULL),
+          mCookie(cookie),
+          mList(list) {
         // These objects manage their own lifetimes so are responsible for final bookkeeping.
         // The list holds a strong reference to this object.
         list->add(this);
     }
 
-    void binderDied(const wp<hardware::IBinder>& who)
-    {
+    void binderDied(const wp<hardware::IBinder>& who) {
         if (mObject != NULL) {
             JNIEnv* env = javavm_to_jnienv(mVM);
 
-            env->CallStaticVoidMethod(gProxyOffsets.proxy_class, gProxyOffsets.sendDeathNotice, mObject, mCookie);
+            env->CallStaticVoidMethod(gProxyOffsets.proxy_class, gProxyOffsets.sendDeathNotice,
+                                      mObject, mCookie);
             if (env->ExceptionCheck()) {
                 ALOGE("Uncaught exception returned from death notification.");
                 env->ExceptionClear();
@@ -105,8 +102,7 @@ public:
         }
     }
 
-    void clearReference()
-    {
+    void clearReference() {
         sp<HwBinderDeathRecipientList> list = mList.promote();
         if (list != NULL) {
             list->remove(this);
@@ -135,13 +131,14 @@ public:
             // recipient on the VM side, but the list is being torn down.
             JNIEnv* env = javavm_to_jnienv(mVM);
             ScopedLocalRef<jclass> objClassRef(env, env->GetObjectClass(mObject));
-            ScopedLocalRef<jstring> nameRef(env,
-                    (jstring) env->CallObjectMethod(objClassRef.get(), gClassOffsets.mGetName));
+            ScopedLocalRef<jstring> nameRef(
+                    env, (jstring)env->CallObjectMethod(objClassRef.get(), gClassOffsets.mGetName));
             ScopedUtfChars nameUtf(env, nameRef.get());
             if (nameUtf.c_str() != NULL) {
                 ALOGW("BinderProxy is being destroyed but the application did not call "
-                        "unlinkToDeath to unlink all of its death recipients beforehand.  "
-                        "Releasing leaked death recipient: %s", nameUtf.c_str());
+                      "unlinkToDeath to unlink all of its death recipients beforehand.  "
+                      "Releasing leaked death recipient: %s",
+                      nameUtf.c_str());
             } else {
                 ALOGW("BinderProxy being destroyed; unable to get DR object name");
                 env->ExceptionClear();
@@ -149,9 +146,8 @@ public:
         }
     }
 
-protected:
-    virtual ~HwBinderDeathRecipient()
-    {
+  protected:
+    virtual ~HwBinderDeathRecipient() {
         JNIEnv* env = javavm_to_jnienv(mVM);
         if (mObject != NULL) {
             env->DeleteGlobalRef(mObject);
@@ -160,17 +156,16 @@ protected:
         }
     }
 
-private:
+  private:
     JavaVM* const mVM;
     jobject mObject;
-    jweak mObjectWeak; // will be a weak ref to the same VM-side DeathRecipient after binderDied()
+    jweak mObjectWeak;  // will be a weak ref to the same VM-side DeathRecipient after binderDied()
     jlong mCookie;
     wp<HwBinderDeathRecipientList> mList;
 };
 // ----------------------------------------------------------------------------
 
-HwBinderDeathRecipientList::HwBinderDeathRecipientList() {
-}
+HwBinderDeathRecipientList::HwBinderDeathRecipientList() {}
 
 HwBinderDeathRecipientList::~HwBinderDeathRecipientList() {
     AutoMutex _l(mLock);
@@ -200,7 +195,7 @@ void HwBinderDeathRecipientList::remove(const sp<HwBinderDeathRecipient>& recipi
 sp<HwBinderDeathRecipient> HwBinderDeathRecipientList::find(jobject recipient) {
     AutoMutex _l(mLock);
 
-    for(auto iter = mList.rbegin(); iter != mList.rend(); iter++) {
+    for (auto iter = mList.rbegin(); iter != mList.rend(); iter++) {
         if ((*iter)->matches(recipient)) {
             return (*iter);
         }
@@ -214,25 +209,23 @@ Mutex& HwBinderDeathRecipientList::lock() {
 }
 
 // static
-void JHwRemoteBinder::InitClass(JNIEnv *env) {
+void JHwRemoteBinder::InitClass(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, CLASS_PATH);
 
     gProxyOffsets.proxy_class = MakeGlobalRefOrDie(env, clazz);
-    gProxyOffsets.contextID =
-        GetFieldIDOrDie(env, clazz, "mNativeContext", "J");
+    gProxyOffsets.contextID = GetFieldIDOrDie(env, clazz, "mNativeContext", "J");
     gProxyOffsets.constructID = GetMethodIDOrDie(env, clazz, "<init>", "()V");
-    gProxyOffsets.sendDeathNotice = GetStaticMethodIDOrDie(env, clazz, "sendDeathNotice",
-            "(Landroid/os/IHwBinder$DeathRecipient;J)V");
+    gProxyOffsets.sendDeathNotice = GetStaticMethodIDOrDie(
+            env, clazz, "sendDeathNotice", "(Landroid/os/IHwBinder$DeathRecipient;J)V");
 
     clazz = FindClassOrDie(env, "java/lang/Class");
     gClassOffsets.mGetName = GetMethodIDOrDie(env, clazz, "getName", "()Ljava/lang/String;");
 }
 
 // static
-sp<JHwRemoteBinder> JHwRemoteBinder::SetNativeContext(
-        JNIEnv *env, jobject thiz, const sp<JHwRemoteBinder> &context) {
-    sp<JHwRemoteBinder> old =
-        (JHwRemoteBinder *)env->GetLongField(thiz, gProxyOffsets.contextID);
+sp<JHwRemoteBinder> JHwRemoteBinder::SetNativeContext(JNIEnv* env, jobject thiz,
+                                                      const sp<JHwRemoteBinder>& context) {
+    sp<JHwRemoteBinder> old = (JHwRemoteBinder*)env->GetLongField(thiz, gProxyOffsets.contextID);
 
     if (context != NULL) {
         context->incStrong(NULL /* id */);
@@ -248,14 +241,12 @@ sp<JHwRemoteBinder> JHwRemoteBinder::SetNativeContext(
 }
 
 // static
-sp<JHwRemoteBinder> JHwRemoteBinder::GetNativeContext(
-        JNIEnv *env, jobject thiz) {
-    return (JHwRemoteBinder *)env->GetLongField(thiz, gProxyOffsets.contextID);
+sp<JHwRemoteBinder> JHwRemoteBinder::GetNativeContext(JNIEnv* env, jobject thiz) {
+    return (JHwRemoteBinder*)env->GetLongField(thiz, gProxyOffsets.contextID);
 }
 
 // static
-jobject JHwRemoteBinder::NewObject(
-        JNIEnv *env, const sp<hardware::IBinder> &binder) {
+jobject JHwRemoteBinder::NewObject(JNIEnv* env, const sp<hardware::IBinder>& binder) {
     ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, CLASS_PATH));
 
     // XXX Have to look up the constructor here because otherwise that static
@@ -269,8 +260,7 @@ jobject JHwRemoteBinder::NewObject(
     return obj;
 }
 
-JHwRemoteBinder::JHwRemoteBinder(
-        JNIEnv *env, jobject thiz, const sp<hardware::IBinder> &binder)
+JHwRemoteBinder::JHwRemoteBinder(JNIEnv* env, jobject thiz, const sp<hardware::IBinder>& binder)
     : mBinder(binder) {
     mDeathRecipientList = new HwBinderDeathRecipientList();
     jclass clazz = env->GetObjectClass(thiz);
@@ -280,7 +270,7 @@ JHwRemoteBinder::JHwRemoteBinder(
 }
 
 JHwRemoteBinder::~JHwRemoteBinder() {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
 
     env->DeleteWeakGlobalRef(mObject);
     mObject = NULL;
@@ -290,7 +280,7 @@ sp<hardware::IBinder> JHwRemoteBinder::getBinder() const {
     return mBinder;
 }
 
-void JHwRemoteBinder::setBinder(const sp<hardware::IBinder> &binder) {
+void JHwRemoteBinder::setBinder(const sp<hardware::IBinder>& binder) {
     mBinder = binder;
 }
 
@@ -304,55 +294,45 @@ sp<HwBinderDeathRecipientList> JHwRemoteBinder::getDeathRecipientList() const {
 
 using namespace android;
 
-static void releaseNativeContext(void *nativeContext) {
-    sp<JHwRemoteBinder> binder = (JHwRemoteBinder *)nativeContext;
+static void releaseNativeContext(void* nativeContext) {
+    sp<JHwRemoteBinder> binder = (JHwRemoteBinder*)nativeContext;
 
     if (binder != NULL) {
         binder->decStrong(NULL /* id */);
     }
 }
 
-static jlong JHwRemoteBinder_native_init(JNIEnv *env) {
+static jlong JHwRemoteBinder_native_init(JNIEnv* env) {
     JHwRemoteBinder::InitClass(env);
 
     return reinterpret_cast<jlong>(&releaseNativeContext);
 }
 
-static void JHwRemoteBinder_native_setup_empty(JNIEnv *env, jobject thiz) {
-    sp<JHwRemoteBinder> context =
-        new JHwRemoteBinder(env, thiz, NULL /* service */);
+static void JHwRemoteBinder_native_setup_empty(JNIEnv* env, jobject thiz) {
+    sp<JHwRemoteBinder> context = new JHwRemoteBinder(env, thiz, NULL /* service */);
 
     JHwRemoteBinder::SetNativeContext(env, thiz, context);
 }
 
-static void JHwRemoteBinder_native_transact(
-        JNIEnv *env,
-        jobject thiz,
-        jint code,
-        jobject requestObj,
-        jobject replyObj,
-        jint flags) {
-    sp<hardware::IBinder> binder =
-        JHwRemoteBinder::GetNativeContext(env, thiz)->getBinder();
+static void JHwRemoteBinder_native_transact(JNIEnv* env, jobject thiz, jint code,
+                                            jobject requestObj, jobject replyObj, jint flags) {
+    sp<hardware::IBinder> binder = JHwRemoteBinder::GetNativeContext(env, thiz)->getBinder();
 
     if (requestObj == NULL) {
         jniThrowException(env, "java/lang/NullPointerException", NULL);
         return;
     }
 
-    const hardware::Parcel *request =
-        JHwParcel::GetNativeContext(env, requestObj)->getParcel();
+    const hardware::Parcel* request = JHwParcel::GetNativeContext(env, requestObj)->getParcel();
 
-    hardware::Parcel *reply =
-        JHwParcel::GetNativeContext(env, replyObj)->getParcel();
+    hardware::Parcel* reply = JHwParcel::GetNativeContext(env, replyObj)->getParcel();
 
     status_t err = binder->transact(code, *request, reply, flags);
     signalExceptionForError(env, err, true /* canThrowRemoteException */);
 }
 
-static jboolean JHwRemoteBinder_linkToDeath(JNIEnv* env, jobject thiz,
-        jobject recipient, jlong cookie)
-{
+static jboolean JHwRemoteBinder_linkToDeath(JNIEnv* env, jobject thiz, jobject recipient,
+                                            jlong cookie) {
     if (recipient == NULL) {
         jniThrowNullPointerException(env, NULL);
         return JNI_FALSE;
@@ -376,9 +356,7 @@ static jboolean JHwRemoteBinder_linkToDeath(JNIEnv* env, jobject thiz,
     return JNI_TRUE;
 }
 
-static jboolean JHwRemoteBinder_unlinkToDeath(JNIEnv* env, jobject thiz,
-                                                 jobject recipient)
-{
+static jboolean JHwRemoteBinder_unlinkToDeath(JNIEnv* env, jobject thiz, jobject recipient) {
     jboolean res = JNI_FALSE;
     if (recipient == NULL) {
         jniThrowNullPointerException(env, NULL);
@@ -409,16 +387,15 @@ static jboolean JHwRemoteBinder_unlinkToDeath(JNIEnv* env, jobject thiz,
         if (err == NO_ERROR || err == DEAD_OBJECT) {
             res = JNI_TRUE;
         } else {
-            jniThrowException(env, "java/util/NoSuchElementException",
-                              "Death link does not exist");
+            jniThrowException(env, "java/util/NoSuchElementException", "Death link does not exist");
         }
     }
 
     return res;
 }
 
-static sp<hidl::base::V1_0::IBase> toIBase(JNIEnv* env, jclass hwRemoteBinderClazz, jobject jbinder)
-{
+static sp<hidl::base::V1_0::IBase> toIBase(JNIEnv* env, jclass hwRemoteBinderClazz,
+                                           jobject jbinder) {
     if (jbinder == nullptr) {
         return nullptr;
     }
@@ -435,8 +412,7 @@ static sp<hidl::base::V1_0::IBase> toIBase(JNIEnv* env, jclass hwRemoteBinderCla
 // and getBinder() returns the same object.
 // In particular, if other is an android.os.HwBinder object (for stubs) then
 // it returns false.
-static jboolean JHwRemoteBinder_equals(JNIEnv* env, jobject thiz, jobject other)
-{
+static jboolean JHwRemoteBinder_equals(JNIEnv* env, jobject thiz, jobject other) {
     if (env->IsSameObject(thiz, other)) {
         return true;
     }
@@ -446,44 +422,39 @@ static jboolean JHwRemoteBinder_equals(JNIEnv* env, jobject thiz, jobject other)
 
     ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, CLASS_PATH));
 
-    return hardware::interfacesEqual(toIBase(env, clazz.get(), thiz), toIBase(env, clazz.get(), other));
+    return hardware::interfacesEqual(toIBase(env, clazz.get(), thiz),
+                                     toIBase(env, clazz.get(), other));
 }
 
 static jint JHwRemoteBinder_hashCode(JNIEnv* env, jobject thiz) {
     jlong longHash = reinterpret_cast<jlong>(
             JHwRemoteBinder::GetNativeContext(env, thiz)->getBinder().get());
-    return static_cast<jint>(longHash ^ (longHash >> 32)); // See Long.hashCode()
+    return static_cast<jint>(longHash ^ (longHash >> 32));  // See Long.hashCode()
 }
 
 static JNINativeMethod gMethods[] = {
-    { "native_init", "()J", (void *)JHwRemoteBinder_native_init },
+        {"native_init", "()J", (void*)JHwRemoteBinder_native_init},
 
-    { "native_setup_empty", "()V",
-        (void *)JHwRemoteBinder_native_setup_empty },
+        {"native_setup_empty", "()V", (void*)JHwRemoteBinder_native_setup_empty},
 
-    { "transact",
-        "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V",
-        (void *)JHwRemoteBinder_native_transact },
+        {"transact", "(IL" PACKAGE_PATH "/HwParcel;L" PACKAGE_PATH "/HwParcel;I)V",
+         (void*)JHwRemoteBinder_native_transact},
 
-    {"linkToDeath",
-        "(Landroid/os/IHwBinder$DeathRecipient;J)Z",
-        (void*)JHwRemoteBinder_linkToDeath},
+        {"linkToDeath", "(Landroid/os/IHwBinder$DeathRecipient;J)Z",
+         (void*)JHwRemoteBinder_linkToDeath},
 
-    {"unlinkToDeath",
-        "(Landroid/os/IHwBinder$DeathRecipient;)Z",
-        (void*)JHwRemoteBinder_unlinkToDeath},
+        {"unlinkToDeath", "(Landroid/os/IHwBinder$DeathRecipient;)Z",
+         (void*)JHwRemoteBinder_unlinkToDeath},
 
-    {"equals", "(Ljava/lang/Object;)Z",
-        (void*)JHwRemoteBinder_equals},
+        {"equals", "(Ljava/lang/Object;)Z", (void*)JHwRemoteBinder_equals},
 
-    {"hashCode", "()I", (void*)JHwRemoteBinder_hashCode},
+        {"hashCode", "()I", (void*)JHwRemoteBinder_hashCode},
 };
 
 namespace android {
 
-int register_android_os_HwRemoteBinder(JNIEnv *env) {
+int register_android_os_HwRemoteBinder(JNIEnv* env) {
     return RegisterMethodsOrDie(env, CLASS_PATH, gMethods, NELEM(gMethods));
 }
 
 }  // namespace android
-

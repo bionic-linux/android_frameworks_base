@@ -37,7 +37,7 @@ using V1_0::Deemphasis;
 using V1_0::Rds;
 
 class RegionalBandDefinition {
-public:
+  public:
     std::vector<Region> mRegions;
     std::vector<Band> mTypes;
     uint32_t mLowerLimit;
@@ -47,101 +47,107 @@ public:
     Deemphasis mFmDeemphasis = {};
     Rds mFmRds = Rds::NONE;
 
-    bool fitsInsideBand(const BandConfig &bandConfig) const;
+    bool fitsInsideBand(const BandConfig& bandConfig) const;
     std::vector<RegionalBandConfig> withConfig(BandConfig bandConfig) const;
 };
 
 static const RegionalBandDefinition kKnownRegionConfigs[] = {
-    {
-        { Region::ITU_1 },
-        { Band::FM },
-        87500,
-        108000,
-        100,
-        Deemphasis::D50,
-        Rds::WORLD,
-    },
-    {
-        { Region::ITU_2 },
-        { Band::FM, Band::FM_HD },
-        87700,
-        107900,
-        200,
-        Deemphasis::D75,
-        Rds::US,
-    },
-    {
-        { Region::OIRT },
-        { Band::FM },
-        65800,
-        74000,
-        10,
-        Deemphasis::D50,
-        Rds::WORLD,
-    },
-    {
-        { Region::JAPAN },
-        { Band::FM },
-        76000,
-        90000,
-        100,
-        Deemphasis::D50,
-        Rds::WORLD,
-    },
-    {
-        { Region::KOREA },
-        { Band::FM },
-        87500,
-        108000,
-        100,
-        Deemphasis::D75,
-        Rds::WORLD,
-    },
-    {  // AM LW
-        { Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA },
-        { Band::AM },
-        153,
-        282,
-        9,
-    },
-    {  // AM MW
-        { Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA },
-        { Band::AM },
-        531,
-        1620,
-        9,
-    },
-    {  // AM SW
-        { Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA },
-        { Band::AM },
-        2300,
-        26100,
-        5,
-    },
-    {  // AM LW ITU2
-        { Region::ITU_2 },
-        { Band::AM, Band::AM_HD },
-        153,
-        279,
-        9,
-    },
-    {  // AM MW ITU2
-        { Region::ITU_2 },
-        { Band::AM, Band::AM_HD },
-        530,
-        1700,
-        10,
-    },
-    {  // AM SW ITU2
-        { Region::ITU_2 },
-        { Band::AM, Band::AM_HD },
-        2300,
-        26100,
-        5,
-    },
+        {
+                {Region::ITU_1},
+                {Band::FM},
+                87500,
+                108000,
+                100,
+                Deemphasis::D50,
+                Rds::WORLD,
+        },
+        {
+                {Region::ITU_2},
+                {Band::FM, Band::FM_HD},
+                87700,
+                107900,
+                200,
+                Deemphasis::D75,
+                Rds::US,
+        },
+        {
+                {Region::OIRT},
+                {Band::FM},
+                65800,
+                74000,
+                10,
+                Deemphasis::D50,
+                Rds::WORLD,
+        },
+        {
+                {Region::JAPAN},
+                {Band::FM},
+                76000,
+                90000,
+                100,
+                Deemphasis::D50,
+                Rds::WORLD,
+        },
+        {
+                {Region::KOREA},
+                {Band::FM},
+                87500,
+                108000,
+                100,
+                Deemphasis::D75,
+                Rds::WORLD,
+        },
+        {
+                // AM LW
+                {Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA},
+                {Band::AM},
+                153,
+                282,
+                9,
+        },
+        {
+                // AM MW
+                {Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA},
+                {Band::AM},
+                531,
+                1620,
+                9,
+        },
+        {
+                // AM SW
+                {Region::ITU_1, Region::OIRT, Region::JAPAN, Region::KOREA},
+                {Band::AM},
+                2300,
+                26100,
+                5,
+        },
+        {
+                // AM LW ITU2
+                {Region::ITU_2},
+                {Band::AM, Band::AM_HD},
+                153,
+                279,
+                9,
+        },
+        {
+                // AM MW ITU2
+                {Region::ITU_2},
+                {Band::AM, Band::AM_HD},
+                530,
+                1700,
+                10,
+        },
+        {
+                // AM SW ITU2
+                {Region::ITU_2},
+                {Band::AM, Band::AM_HD},
+                2300,
+                26100,
+                5,
+        },
 };
 
-bool RegionalBandDefinition::fitsInsideBand(const BandConfig &bandConfig) const {
+bool RegionalBandDefinition::fitsInsideBand(const BandConfig& bandConfig) const {
     if (std::find(mTypes.begin(), mTypes.end(), bandConfig.type) == mTypes.end()) return false;
     if (mLowerLimit < bandConfig.lowerLimit) return false;
     if (mUpperLimit > bandConfig.upperLimit) return false;
@@ -157,7 +163,7 @@ bool RegionalBandDefinition::fitsInsideBand(const BandConfig &bandConfig) const 
 std::vector<RegionalBandConfig> RegionalBandDefinition::withConfig(BandConfig config) const {
     config.lowerLimit = mLowerLimit;
     config.upperLimit = mUpperLimit;
-    config.spacings = hidl_vec<uint32_t>({ mSpacing });
+    config.spacings = hidl_vec<uint32_t>({mSpacing});
     if (utils::isFm(config.type)) {
         auto&& fm = config.ext.fm;
         fm.deemphasis = mFmDeemphasis;
@@ -190,7 +196,7 @@ std::vector<RegionalBandConfig> mapRegions(const hidl_vec<BandConfig>& bands) {
     return out;
 }
 
-} // namespace regions
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace regions
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android

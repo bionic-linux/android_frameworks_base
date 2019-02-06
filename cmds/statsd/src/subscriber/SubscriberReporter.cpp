@@ -29,8 +29,7 @@ namespace statsd {
 
 using std::vector;
 
-void SubscriberReporter::setBroadcastSubscriber(const ConfigKey& configKey,
-                                                int64_t subscriberId,
+void SubscriberReporter::setBroadcastSubscriber(const ConfigKey& configKey, int64_t subscriberId,
                                                 const sp<IBinder>& intentSender) {
     VLOG("SubscriberReporter::setBroadcastSubscriber called.");
     lock_guard<std::mutex> lock(mLock);
@@ -70,8 +69,8 @@ void SubscriberReporter::alertBroadcastSubscriber(const ConfigKey& configKey,
     VLOG("SubscriberReporter::alertBroadcastSubscriber called.");
     lock_guard<std::mutex> lock(mLock);
 
-    if (!subscription.has_broadcast_subscriber_details()
-            || !subscription.broadcast_subscriber_details().has_subscriber_id()) {
+    if (!subscription.has_broadcast_subscriber_details() ||
+        !subscription.broadcast_subscriber_details().has_subscriber_id()) {
         ALOGE("Broadcast subscriber does not have an id.");
         return;
     }
@@ -91,7 +90,7 @@ void SubscriberReporter::alertBroadcastSubscriber(const ConfigKey& configKey,
     auto it2 = it1->second.find(subscriberId);
     if (it2 == it1->second.end()) {
         ALOGW("Cannot inform subscriber of config %s for missing subscriberId %lld ",
-                configKey.ToString().c_str(), (long long)subscriberId);
+              configKey.ToString().c_str(), (long long)subscriberId);
         return;
     }
     sendBroadcastLocked(it2->second, configKey, subscription, cookies, dimKey);
@@ -108,12 +107,8 @@ void SubscriberReporter::sendBroadcastLocked(const sp<IBinder>& intentSender,
         return;
     }
     mStatsCompanionService->sendSubscriberBroadcast(
-            intentSender,
-            configKey.GetUid(),
-            configKey.GetId(),
-            subscription.id(),
-            subscription.rule_id(),
-            cookies,
+            intentSender, configKey.GetUid(), configKey.GetId(), subscription.id(),
+            subscription.rule_id(), cookies,
             getStatsDimensionsValue(dimKey.getDimensionKeyInWhat()));
 }
 

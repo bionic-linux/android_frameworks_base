@@ -189,15 +189,15 @@ bool SkiaPipeline::createOrUpdateLayer(RenderNode* node, const DamageAccumulator
         } else {
             String8 cachesOutput;
             mRenderThread.cacheManager().dumpMemoryUsage(cachesOutput,
-                    &mRenderThread.renderState());
+                                                         &mRenderThread.renderState());
             ALOGE("%s", cachesOutput.string());
             if (errorHandler) {
                 std::ostringstream err;
                 err << "Unable to create layer for " << node->getName();
                 const int maxTextureSize = DeviceInfo::get()->maxTextureSize();
                 err << ", size " << info.width() << "x" << info.height() << " max size "
-                    << maxTextureSize << " color type " << (int)info.colorType()
-                    << " has context " << (int)(mRenderThread.getGrContext() != nullptr);
+                    << maxTextureSize << " color type " << (int)info.colorType() << " has context "
+                    << (int)(mRenderThread.getGrContext() != nullptr);
                 errorHandler->onError(err.str());
             }
         }
@@ -311,8 +311,7 @@ void SkiaPipeline::endCapture(SkSurface* surface) {
                 mSavePictureProcessor->savePicture(data, mCapturedFile);
             } else {
                 mSavePictureProcessor->savePicture(
-                        data,
-                        mCapturedFile + "_" + std::to_string(mCaptureSequence));
+                        data, mCapturedFile + "_" + std::to_string(mCaptureSequence));
             }
             mCaptureSequence--;
         }
@@ -351,7 +350,7 @@ static Rect nodeBounds(RenderNode& node) {
     auto& props = node.properties();
     return Rect(props.getLeft(), props.getTop(), props.getRight(), props.getBottom());
 }
-}
+}  // namespace
 
 void SkiaPipeline::renderFrameImpl(const LayerUpdateQueue& layers, const SkRect& clip,
                                    const std::vector<sp<RenderNode>>& nodes, bool opaque,
@@ -475,10 +474,20 @@ void SkiaPipeline::dumpResourceCacheUsage() const {
 // (3) Requires RGBA colors (instead of BGRA).
 static const uint32_t kOverdrawColors[2][6] = {
         {
-                0x00000000, 0x00000000, 0x2f2f0000, 0x2f002f00, 0x3f00003f, 0x7f00007f,
+                0x00000000,
+                0x00000000,
+                0x2f2f0000,
+                0x2f002f00,
+                0x3f00003f,
+                0x7f00007f,
         },
         {
-                0x00000000, 0x00000000, 0x2f2f0000, 0x4f004f4f, 0x5f50335f, 0x7f00007f,
+                0x00000000,
+                0x00000000,
+                0x2f2f0000,
+                0x4f004f4f,
+                0x5f50335f,
+                0x7f00007f,
         },
 };
 

@@ -139,7 +139,8 @@ TEST_F(MultiApkGeneratorTest, VersionFilterOlderVersion) {
 
   OutputArtifact artifact = test::ArtifactBuilder().AddDensity(xhdpi_).SetAndroidSdk(4).Build();
 
-  MultiApkGeneratorWrapper generator{&apk, ctx.get()};;
+  MultiApkGeneratorWrapper generator{&apk, ctx.get()};
+  ;
   std::unique_ptr<ResourceTable> split =
       generator.FilterTable(ctx.get(), artifact, *apk.GetResourceTable(), &chain);
 

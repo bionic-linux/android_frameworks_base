@@ -469,7 +469,8 @@ TEST_F(ResourceParserTest, ParseStyleWithShorthandParent) {
   Style* style = test::GetValue<Style>(&table_, "style/foo");
   ASSERT_THAT(style, NotNull());
   ASSERT_TRUE(style->parent);
-  EXPECT_THAT(style->parent.value().name, Eq(make_value(test::ParseNameOrDie("com.app:style/Theme"))));
+  EXPECT_THAT(style->parent.value().name,
+              Eq(make_value(test::ParseNameOrDie("com.app:style/Theme"))));
 }
 
 TEST_F(ResourceParserTest, ParseStyleWithPackageAliasedParent) {
@@ -482,7 +483,8 @@ TEST_F(ResourceParserTest, ParseStyleWithPackageAliasedParent) {
   ASSERT_THAT(style, NotNull());
   ASSERT_TRUE(style->parent);
   ASSERT_TRUE(style->parent.value().name);
-  EXPECT_THAT(style->parent.value().name, Eq(make_value(test::ParseNameOrDie("android:style/Theme"))));
+  EXPECT_THAT(style->parent.value().name,
+              Eq(make_value(test::ParseNameOrDie("android:style/Theme"))));
 }
 
 TEST_F(ResourceParserTest, ParseStyleWithPackageAliasedItems) {
@@ -742,12 +744,24 @@ TEST_F(ResourceParserTest, KeepAllProducts) {
       <string name="bot" product="default">yes</string>)";
   ASSERT_TRUE(TestParse(input));
 
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/foo", ConfigDescription::DefaultConfig(), "phone"), NotNull());
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/foo",ConfigDescription::DefaultConfig(), "no-sdcard"), NotNull());
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/bar", ConfigDescription::DefaultConfig(), ""), NotNull());
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/baz", ConfigDescription::DefaultConfig(), ""), NotNull());
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/bit", ConfigDescription::DefaultConfig(), "phablet"), NotNull());
-  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/bot", ConfigDescription::DefaultConfig(), "default"), NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(
+                  &table_, "string/foo", ConfigDescription::DefaultConfig(), "phone"),
+              NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(
+                  &table_, "string/foo", ConfigDescription::DefaultConfig(), "no-sdcard"),
+              NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/bar",
+                                                        ConfigDescription::DefaultConfig(), ""),
+              NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(&table_, "string/baz",
+                                                        ConfigDescription::DefaultConfig(), ""),
+              NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(
+                  &table_, "string/bit", ConfigDescription::DefaultConfig(), "phablet"),
+              NotNull());
+  ASSERT_THAT(test::GetValueForConfigAndProduct<String>(
+                  &table_, "string/bot", ConfigDescription::DefaultConfig(), "default"),
+              NotNull());
 }
 
 TEST_F(ResourceParserTest, AutoIncrementIdsInPublicGroup) {
@@ -764,8 +778,7 @@ TEST_F(ResourceParserTest, AutoIncrementIdsInPublicGroup) {
   ASSERT_TRUE(result.value().package->id);
   ASSERT_TRUE(result.value().type->id);
   ASSERT_TRUE(result.value().entry->id);
-  ResourceId actual_id(result.value().package->id.value(),
-                       result.value().type->id.value(),
+  ResourceId actual_id(result.value().package->id.value(), result.value().type->id.value(),
                        result.value().entry->id.value());
   EXPECT_THAT(actual_id, Eq(ResourceId(0x01010040)));
 
@@ -775,8 +788,7 @@ TEST_F(ResourceParserTest, AutoIncrementIdsInPublicGroup) {
   ASSERT_TRUE(result.value().package->id);
   ASSERT_TRUE(result.value().type->id);
   ASSERT_TRUE(result.value().entry->id);
-  actual_id = ResourceId(result.value().package->id.value(),
-                         result.value().type->id.value(),
+  actual_id = ResourceId(result.value().package->id.value(), result.value().type->id.value(),
                          result.value().entry->id.value());
   EXPECT_THAT(actual_id, Eq(ResourceId(0x01010041)));
 }

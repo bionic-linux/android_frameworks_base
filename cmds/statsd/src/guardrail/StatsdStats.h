@@ -157,7 +157,7 @@ public:
      * Report a config has been removed.
      */
     void noteConfigRemoved(const ConfigKey& key);
-   /**
+    /**
      * Report a config has been reset when ttl expires.
      */
     void noteConfigReset(const ConfigKey& key);
@@ -202,7 +202,6 @@ public:
      * [size]: The output tuple size.
      */
     void noteMetricDimensionSize(const ConfigKey& key, const int64_t& id, int size);
-
 
     /**
      * Report the max size of output tuple of dimension in condition across dimensions in what.
@@ -278,8 +277,8 @@ public:
     void noteLoggerError(int error);
 
     /*
-    * Records when system server restarts.
-    */
+     * Records when system server restarts.
+     */
     void noteSystemServerRestart(int32_t timeSec);
 
     /**

@@ -32,16 +32,14 @@ using ::testing::Not;
 namespace aapt {
 
 TEST(JavaClassGeneratorTest, FailWhenEntryIsJavaKeyword) {
-  std::unique_ptr<ResourceTable> table =
-      test::ResourceTableBuilder()
-          .SetPackageId("android", 0x01)
-          .AddSimple("android:id/class", ResourceId(0x01020000))
-          .Build();
+  std::unique_ptr<ResourceTable> table = test::ResourceTableBuilder()
+                                             .SetPackageId("android", 0x01)
+                                             .AddSimple("android:id/class", ResourceId(0x01020000))
+                                             .Build();
 
   std::unique_ptr<IAaptContext> context =
       test::ContextBuilder()
-          .AddSymbolSource(
-              util::make_unique<ResourceTableSymbolSource>(table.get()))
+          .AddSymbolSource(util::make_unique<ResourceTableSymbolSource>(table.get()))
           .SetNameManglerPolicy(NameManglerPolicy{"android"})
           .Build();
   JavaClassGenerator generator(context.get(), table.get(), {});
@@ -255,11 +253,10 @@ TEST(JavaClassGeneratorTest, EmitOtherPackagesAttributesInStyleable) {
 }
 
 TEST(JavaClassGeneratorTest, CommentsForSimpleResourcesArePresent) {
-  std::unique_ptr<ResourceTable> table =
-      test::ResourceTableBuilder()
-          .SetPackageId("android", 0x01)
-          .AddSimple("android:id/foo", ResourceId(0x01010000))
-          .Build();
+  std::unique_ptr<ResourceTable> table = test::ResourceTableBuilder()
+                                             .SetPackageId("android", 0x01)
+                                             .AddSimple("android:id/foo", ResourceId(0x01010000))
+                                             .Build();
   test::GetValue<Id>(table.get(), "android:id/foo")
       ->SetComment(std::string("This is a comment\n@deprecated"));
 
@@ -285,7 +282,8 @@ TEST(JavaClassGeneratorTest, CommentsForSimpleResourcesArePresent) {
   EXPECT_THAT(output, HasSubstr(expected_text));
 }
 
-TEST(JavaClassGeneratorTest, CommentsForEnumAndFlagAttributesArePresent) {}
+TEST(JavaClassGeneratorTest, CommentsForEnumAndFlagAttributesArePresent) {
+}
 
 TEST(JavaClassGeneratorTest, CommentsForStyleablesAndNestedAttributesArePresent) {
   Attribute attr;

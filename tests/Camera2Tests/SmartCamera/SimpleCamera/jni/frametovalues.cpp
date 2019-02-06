@@ -18,59 +18,60 @@
 
 #include "frametovalues.h"
 
-#include <string.h>
-#include <jni.h>
-#include <unistd.h>
 #include <android/log.h>
+#include <jni.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "imgprocutil.h"
 
-jboolean Java_androidx_media_filterpacks_image_ToGrayValuesFilter_toGrayValues(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject grayBuffer )
-{
+jboolean Java_androidx_media_filterpacks_image_ToGrayValuesFilter_toGrayValues(JNIEnv* env,
+                                                                               jclass clazz,
+                                                                               jobject imageBuffer,
+                                                                               jobject grayBuffer) {
     unsigned char* pixelPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     unsigned char* grayPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(grayBuffer));
 
     if (pixelPtr == 0 || grayPtr == 0) {
-      return JNI_FALSE;
+        return JNI_FALSE;
     }
 
-    int numPixels  = env->GetDirectBufferCapacity(imageBuffer) / 4;
+    int numPixels = env->GetDirectBufferCapacity(imageBuffer) / 4;
 
     // TODO: the current implementation is focused on the correctness not performance.
     // If performance becomes an issue, it is better to increment pixelPtr directly.
     int disp = 0;
-    for(int idx = 0; idx < numPixels; idx++, disp+=4) {
-      int R = *(pixelPtr + disp);
-      int G = *(pixelPtr + disp + 1);
-      int B = *(pixelPtr + disp + 2);
-      int gray = getIntensityFast(R, G, B);
-      *(grayPtr+idx) = static_cast<unsigned char>(gray);
+    for (int idx = 0; idx < numPixels; idx++, disp += 4) {
+        int R = *(pixelPtr + disp);
+        int G = *(pixelPtr + disp + 1);
+        int B = *(pixelPtr + disp + 2);
+        int gray = getIntensityFast(R, G, B);
+        *(grayPtr + idx) = static_cast<unsigned char>(gray);
     }
 
     return JNI_TRUE;
 }
 
-jboolean Java_androidx_media_filterpacks_image_ToRgbValuesFilter_toRgbValues(
-    JNIEnv* env, jclass clazz, jobject imageBuffer, jobject rgbBuffer )
-{
+jboolean Java_androidx_media_filterpacks_image_ToRgbValuesFilter_toRgbValues(JNIEnv* env,
+                                                                             jclass clazz,
+                                                                             jobject imageBuffer,
+                                                                             jobject rgbBuffer) {
     unsigned char* pixelPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     unsigned char* rgbPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(rgbBuffer));
 
     if (pixelPtr == 0 || rgbPtr == 0) {
-      return JNI_FALSE;
+        return JNI_FALSE;
     }
 
-    int numPixels  = env->GetDirectBufferCapacity(imageBuffer) / 4;
+    int numPixels = env->GetDirectBufferCapacity(imageBuffer) / 4;
 
     // TODO: this code could be revised to improve the performance as the TODO above.
     int pixelDisp = 0;
     int rgbDisp = 0;
-    for(int idx = 0; idx < numPixels; idx++, pixelDisp += 4, rgbDisp += 3) {
-      for (int c = 0; c < 3; ++c) {
-        *(rgbPtr + rgbDisp + c) = *(pixelPtr + pixelDisp + c);
-      }
+    for (int idx = 0; idx < numPixels; idx++, pixelDisp += 4, rgbDisp += 3) {
+        for (int c = 0; c < 3; ++c) {
+            *(rgbPtr + rgbDisp + c) = *(pixelPtr + pixelDisp + c);
+        }
     }
     return JNI_TRUE;
 }
-

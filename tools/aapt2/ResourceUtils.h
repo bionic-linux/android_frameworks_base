@@ -74,8 +74,7 @@ bool IsAttributeReference(const android::StringPiece& str);
 /**
  * Convert an android::ResTable::resource_name to an aapt::ResourceName struct.
  */
-Maybe<ResourceName> ToResourceName(
-    const android::ResTable::resource_name& name);
+Maybe<ResourceName> ToResourceName(const android::ResTable::resource_name& name);
 
 /**
  * Returns a boolean value if the string is equal to TRUE, true, True, FALSE,

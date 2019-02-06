@@ -156,10 +156,16 @@ TEST(PartialBucketE2eTest, TestCountMetricSplitOnUpgrade) {
     ConfigMetricsReport report = GetReports(service.mProcessor, start + 4);
     backfillStartEndTimestamp(&report);
     EXPECT_EQ(1, report.metrics_size());
-    EXPECT_TRUE(report.metrics(0).count_metrics().data(0).bucket_info(0).
-                    has_start_bucket_elapsed_nanos());
-    EXPECT_TRUE(report.metrics(0).count_metrics().data(0).bucket_info(0).
-                    has_end_bucket_elapsed_nanos());
+    EXPECT_TRUE(report.metrics(0)
+                        .count_metrics()
+                        .data(0)
+                        .bucket_info(0)
+                        .has_start_bucket_elapsed_nanos());
+    EXPECT_TRUE(report.metrics(0)
+                        .count_metrics()
+                        .data(0)
+                        .bucket_info(0)
+                        .has_end_bucket_elapsed_nanos());
     EXPECT_EQ(1, report.metrics(0).count_metrics().data(0).bucket_info(0).count());
 }
 
@@ -179,10 +185,16 @@ TEST(PartialBucketE2eTest, TestCountMetricSplitOnRemoval) {
     ConfigMetricsReport report = GetReports(service.mProcessor, start + 4);
     backfillStartEndTimestamp(&report);
     EXPECT_EQ(1, report.metrics_size());
-    EXPECT_TRUE(report.metrics(0).count_metrics().data(0).bucket_info(0).
-                    has_start_bucket_elapsed_nanos());
-    EXPECT_TRUE(report.metrics(0).count_metrics().data(0).bucket_info(0).
-                    has_end_bucket_elapsed_nanos());
+    EXPECT_TRUE(report.metrics(0)
+                        .count_metrics()
+                        .data(0)
+                        .bucket_info(0)
+                        .has_start_bucket_elapsed_nanos());
+    EXPECT_TRUE(report.metrics(0)
+                        .count_metrics()
+                        .data(0)
+                        .bucket_info(0)
+                        .has_end_bucket_elapsed_nanos());
     EXPECT_EQ(1, report.metrics(0).count_metrics().data(0).bucket_info(0).count());
 }
 

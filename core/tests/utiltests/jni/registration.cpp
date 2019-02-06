@@ -16,17 +16,17 @@
 
 #include <jni.h>
 
-extern void android_util_MemoryIntArrayTest_setAshmemSize(JNIEnv* env,
-       jobject clazz, jint fd, jint size);
+extern void android_util_MemoryIntArrayTest_setAshmemSize(JNIEnv* env, jobject clazz, jint fd,
+                                                          jint size);
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_android_util_MemoryIntArrayTest_nativeSetAshmemSize(
-            JNIEnv * env, jobject obj, jint fd, jint size);
+JNIEXPORT void JNICALL Java_android_util_MemoryIntArrayTest_nativeSetAshmemSize(JNIEnv* env,
+                                                                                jobject obj,
+                                                                                jint fd, jint size);
 };
 
 JNIEXPORT void JNICALL Java_android_util_MemoryIntArrayTest_nativeSetAshmemSize(
-        __attribute__((unused)) JNIEnv * env,__attribute__((unused)) jobject obj,
-        jint fd, jint size)
-{
+        __attribute__((unused)) JNIEnv* env, __attribute__((unused)) jobject obj, jint fd,
+        jint size) {
     android_util_MemoryIntArrayTest_setAshmemSize(env, obj, fd, size);
 }

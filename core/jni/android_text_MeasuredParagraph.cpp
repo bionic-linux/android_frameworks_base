@@ -16,26 +16,26 @@
 
 #define LOG_TAG "MeasuredParagraph"
 
-#include "GraphicsJNI.h"
-#include "utils/misc.h"
-#include "utils/Log.h"
-#include <nativehelper/ScopedStringChars.h>
-#include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/JNIHelp.h>
-#include "core_jni_helpers.h"
-#include <cstdint>
-#include <vector>
-#include <list>
+#include <nativehelper/ScopedPrimitiveArray.h>
+#include <nativehelper/ScopedStringChars.h>
 #include <algorithm>
+#include <cstdint>
+#include <list>
+#include <vector>
+#include "GraphicsJNI.h"
+#include "core_jni_helpers.h"
+#include "utils/Log.h"
+#include "utils/misc.h"
 
-#include "SkPaint.h"
-#include "SkTypeface.h"
 #include <hwui/MinikinSkia.h>
 #include <hwui/MinikinUtils.h>
 #include <hwui/Paint.h>
-#include <minikin/FontCollection.h>
 #include <minikin/AndroidLineBreakerHelper.h>
+#include <minikin/FontCollection.h>
 #include <minikin/MinikinFont.h>
+#include "SkPaint.h"
+#include "SkTypeface.h"
 
 namespace android {
 
@@ -51,7 +51,8 @@ static inline minikin::MeasuredText* toMeasuredParagraph(jlong ptr) {
     return reinterpret_cast<minikin::MeasuredText*>(ptr);
 }
 
-template<typename Ptr> static inline jlong toJLong(Ptr ptr) {
+template <typename Ptr>
+static inline jlong toJLong(Ptr ptr) {
     return reinterpret_cast<jlong>(ptr);
 }
 
@@ -76,20 +77,20 @@ static void nAddStyleRun(JNIEnv* /* unused */, jclass /* unused */, jlong builde
 // Regular JNI
 static void nAddReplacementRun(JNIEnv* /* unused */, jclass /* unused */, jlong builderPtr,
                                jlong paintPtr, jint start, jint end, jfloat width) {
-    toBuilder(builderPtr)->addReplacementRun(start, end, width,
-                                             toPaint(paintPtr)->getMinikinLocaleListId());
+    toBuilder(builderPtr)
+            ->addReplacementRun(start, end, width, toPaint(paintPtr)->getMinikinLocaleListId());
 }
 
 // Regular JNI
 static jlong nBuildNativeMeasuredParagraph(JNIEnv* env, jclass /* unused */, jlong builderPtr,
-                                      jcharArray javaText, jboolean computeHyphenation,
-                                      jboolean computeLayout) {
+                                           jcharArray javaText, jboolean computeHyphenation,
+                                           jboolean computeLayout) {
     ScopedCharArrayRO text(env, javaText);
     const minikin::U16StringPiece textBuffer(text.get(), text.size());
 
     // Pass the ownership to Java.
-    return toJLong(toBuilder(builderPtr)->build(textBuffer, computeHyphenation,
-                                                computeLayout).release());
+    return toJLong(
+            toBuilder(builderPtr)->build(textBuffer, computeHyphenation, computeLayout).release());
 }
 
 // Regular JNI
@@ -137,22 +138,22 @@ static jint nGetMemoryUsage(jlong ptr) {
 }
 
 static const JNINativeMethod gMethods[] = {
-    // MeasuredParagraphBuilder native functions.
-    {"nInitBuilder", "()J", (void*) nInitBuilder},
-    {"nAddStyleRun", "(JJIIZ)V", (void*) nAddStyleRun},
-    {"nAddReplacementRun", "(JJIIF)V", (void*) nAddReplacementRun},
-    {"nBuildNativeMeasuredParagraph", "(J[CZZ)J", (void*) nBuildNativeMeasuredParagraph},
-    {"nFreeBuilder", "(J)V", (void*) nFreeBuilder},
+        // MeasuredParagraphBuilder native functions.
+        {"nInitBuilder", "()J", (void*)nInitBuilder},
+        {"nAddStyleRun", "(JJIIZ)V", (void*)nAddStyleRun},
+        {"nAddReplacementRun", "(JJIIF)V", (void*)nAddReplacementRun},
+        {"nBuildNativeMeasuredParagraph", "(J[CZZ)J", (void*)nBuildNativeMeasuredParagraph},
+        {"nFreeBuilder", "(J)V", (void*)nFreeBuilder},
 
-    // MeasuredParagraph native functions.
-    {"nGetWidth", "(JII)F", (void*) nGetWidth},  // Critical Natives
-    {"nGetBounds", "(J[CIILandroid/graphics/Rect;)V", (void*) nGetBounds},  // Regular JNI
-    {"nGetReleaseFunc", "()J", (void*) nGetReleaseFunc},  // Critical Natives
-    {"nGetMemoryUsage", "(J)I", (void*) nGetMemoryUsage},  // Critical Native
+        // MeasuredParagraph native functions.
+        {"nGetWidth", "(JII)F", (void*)nGetWidth},                             // Critical Natives
+        {"nGetBounds", "(J[CIILandroid/graphics/Rect;)V", (void*)nGetBounds},  // Regular JNI
+        {"nGetReleaseFunc", "()J", (void*)nGetReleaseFunc},                    // Critical Natives
+        {"nGetMemoryUsage", "(J)I", (void*)nGetMemoryUsage},                   // Critical Native
 };
 
 int register_android_text_MeasuredParagraph(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/text/MeasuredParagraph", gMethods, NELEM(gMethods));
 }
 
-}
+}  // namespace android

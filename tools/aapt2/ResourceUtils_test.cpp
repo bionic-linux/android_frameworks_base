@@ -82,7 +82,8 @@ TEST(ResourceUtilsTest, ParseReferenceWithSurroundingWhitespace) {
   ResourceNameRef actual;
   bool create = false;
   bool private_ref = false;
-  EXPECT_TRUE(ResourceUtils::ParseReference("\t @android:color/foo\n \n\t", &actual, &create, &private_ref));
+  EXPECT_TRUE(ResourceUtils::ParseReference("\t @android:color/foo\n \n\t", &actual, &create,
+                                            &private_ref));
   EXPECT_THAT(actual, Eq(ResourceNameRef("android", ResourceType::kColor, "foo")));
   EXPECT_FALSE(create);
   EXPECT_FALSE(private_ref);
@@ -112,7 +113,8 @@ TEST(ResourceUtilsTest, FailToParseAutoCreateNonIdReference) {
   bool create = false;
   bool private_ref = false;
   ResourceNameRef actual;
-  EXPECT_FALSE(ResourceUtils::ParseReference("@+android:color/foo", &actual, &create, &private_ref));
+  EXPECT_FALSE(
+      ResourceUtils::ParseReference("@+android:color/foo", &actual, &create, &private_ref));
 }
 
 TEST(ResourceUtilsTest, ParseAttributeReferences) {
@@ -196,8 +198,10 @@ TEST(ResourceUtilsTest, NullIsEmptyReference) {
 }
 
 TEST(ResourceUtilsTest, EmptyIsBinaryPrimitive) {
-  ASSERT_THAT(ResourceUtils::MakeEmpty(), Pointee(ValueEq(BinaryPrimitive(Res_value::TYPE_NULL, Res_value::DATA_NULL_EMPTY))));
-  ASSERT_THAT(ResourceUtils::TryParseNullOrEmpty("@empty"), Pointee(ValueEq(BinaryPrimitive(Res_value::TYPE_NULL, Res_value::DATA_NULL_EMPTY))));
+  ASSERT_THAT(ResourceUtils::MakeEmpty(),
+              Pointee(ValueEq(BinaryPrimitive(Res_value::TYPE_NULL, Res_value::DATA_NULL_EMPTY))));
+  ASSERT_THAT(ResourceUtils::TryParseNullOrEmpty("@empty"),
+              Pointee(ValueEq(BinaryPrimitive(Res_value::TYPE_NULL, Res_value::DATA_NULL_EMPTY))));
 }
 
 TEST(ResourceUtilsTest, ItemsWithWhitespaceAreParsedCorrectly) {

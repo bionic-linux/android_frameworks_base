@@ -16,6 +16,7 @@
 
 #define LOG_TAG "IotBootAnimation"
 
+#include <BootAnimation.h>
 #include <base/files/file_util.h>
 #include <binder/IPCThreadState.h>
 #include <binder/IServiceManager.h>
@@ -24,7 +25,6 @@
 #include <sys/resource.h>
 #include <utils/Log.h>
 #include <utils/threads.h>
-#include <BootAnimation.h>
 
 #include "BootAction.h"
 #include "BootAnimationUtil.h"
@@ -40,7 +40,7 @@ namespace {
 constexpr const char* kDefaultLibName = "libbootaction.so";
 
 class BootActionAnimationCallbacks : public android::BootAnimation::Callbacks {
-public:
+  public:
     BootActionAnimationCallbacks(std::unique_ptr<BootParameters> bootParameters)
         : mBootParameters(std::move(bootParameters)) {}
 
@@ -76,13 +76,13 @@ public:
             // told to shut down. If the animation exits early keep the action
             // running.
             char value[PROPERTY_VALUE_MAX] = {0};
-            for (int exitRequested = 0; exitRequested == 0; ) {
+            for (int exitRequested = 0; exitRequested == 0;) {
                 property_get("service.bootanim.exit", value, "0");
                 exitRequested = atoi(value);
 
                 // Poll value at 10hz.
                 if (exitRequested == 0) {
-                  usleep(100000);
+                    usleep(100000);
                 }
             }
 
@@ -93,7 +93,7 @@ public:
         }
     };
 
-private:
+  private:
     std::unique_ptr<BootParameters> mBootParameters;
     sp<BootAction> mBootAction = nullptr;
 };
@@ -116,8 +116,8 @@ int main() {
     sp<ProcessState> proc(ProcessState::self());
     ProcessState::self()->startThreadPool();
 
-    sp<BootAnimation> boot = new BootAnimation(
-            new BootActionAnimationCallbacks(std::move(bootParameters)));
+    sp<BootAnimation> boot =
+            new BootAnimation(new BootActionAnimationCallbacks(std::move(bootParameters)));
 
     IPCThreadState::self()->joinThreadPool();
     return 0;

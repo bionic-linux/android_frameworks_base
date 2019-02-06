@@ -17,11 +17,12 @@
 #ifndef ANDROID_FILTERFW_BASE_LOGGING_H
 #define ANDROID_FILTERFW_BASE_LOGGING_H
 
-#define  LOG_EVERY_FRAME false
+#define LOG_EVERY_FRAME false
 
-#define  LOG_FRAME(...) if (LOG_EVERY_FRAME) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
+#define LOG_FRAME(...) \
+    if (LOG_EVERY_FRAME) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
 
-#define  LOG_TAG "MCA"
+#define LOG_TAG "MCA"
 #include <utils/Log.h>
 
-#endif //  ANDROID_FILTERFW_BASE_LOGGING_H
+#endif  //  ANDROID_FILTERFW_BASE_LOGGING_H

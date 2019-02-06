@@ -191,8 +191,7 @@ bool isStateTracker(const SimplePredicate& simplePredicate, vector<Matcher>* pri
                 primaryKeys->push_back(matcher);
                 index++;
             }
-            Matcher stateFieldMatcher =
-                    getSimpleMatcher(it->first, it->second.exclusiveField);
+            Matcher stateFieldMatcher = getSimpleMatcher(it->first, it->second.exclusiveField);
             // 3.2 last dimension should be the exclusive field.
             if (!(dimensions.back() == stateFieldMatcher)) {
                 return false;
@@ -262,9 +261,9 @@ bool initConditions(const ConfigKey& key, const StatsdConfig& config,
     return true;
 }
 
-bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
-                 const int64_t timeBaseTimeNs, const int64_t currentTimeNs,
-                 UidMap& uidMap, const unordered_map<int64_t, int>& logTrackerMap,
+bool initMetrics(const ConfigKey& key, const StatsdConfig& config, const int64_t timeBaseTimeNs,
+                 const int64_t currentTimeNs, UidMap& uidMap,
+                 const unordered_map<int64_t, int>& logTrackerMap,
                  const unordered_map<int64_t, int>& conditionTrackerMap,
                  const vector<sp<LogMatchingTracker>>& allAtomMatchers,
                  vector<sp<ConditionTracker>>& allConditionTrackers,
@@ -291,9 +290,8 @@ bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
         metricMap.insert({metric.id(), metricIndex});
         int trackerIndex;
         if (!handleMetricWithLogTrackers(metric.what(), metricIndex,
-                                         metric.has_dimensions_in_what(),
-                                         allAtomMatchers, logTrackerMap, trackerToMetricMap,
-                                         trackerIndex)) {
+                                         metric.has_dimensions_in_what(), allAtomMatchers,
+                                         logTrackerMap, trackerToMetricMap, trackerIndex)) {
             return false;
         }
 
@@ -436,9 +434,8 @@ bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
         metricMap.insert({metric.id(), metricIndex});
         int trackerIndex;
         if (!handleMetricWithLogTrackers(metric.what(), metricIndex,
-                                         metric.has_dimensions_in_what(),
-                                         allAtomMatchers, logTrackerMap, trackerToMetricMap,
-                                         trackerIndex)) {
+                                         metric.has_dimensions_in_what(), allAtomMatchers,
+                                         logTrackerMap, trackerToMetricMap, trackerIndex)) {
             return false;
         }
 
@@ -465,9 +462,8 @@ bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
             }
         }
 
-        sp<MetricProducer> valueProducer = new ValueMetricProducer(key, metric, conditionIndex,
-                                                                   wizard, pullTagId,
-                                                                   timeBaseTimeNs, currentTimeNs);
+        sp<MetricProducer> valueProducer = new ValueMetricProducer(
+                key, metric, conditionIndex, wizard, pullTagId, timeBaseTimeNs, currentTimeNs);
         allMetricProducers.push_back(valueProducer);
     }
 
@@ -496,9 +492,8 @@ bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
         metricMap.insert({metric.id(), metricIndex});
         int trackerIndex;
         if (!handleMetricWithLogTrackers(metric.what(), metricIndex,
-                                         metric.has_dimensions_in_what(),
-                                         allAtomMatchers, logTrackerMap, trackerToMetricMap,
-                                         trackerIndex)) {
+                                         metric.has_dimensions_in_what(), allAtomMatchers,
+                                         logTrackerMap, trackerToMetricMap, trackerIndex)) {
             return false;
         }
 
@@ -543,8 +538,7 @@ bool initMetrics(const ConfigKey& key, const StatsdConfig& config,
     return true;
 }
 
-bool initAlerts(const StatsdConfig& config,
-                const unordered_map<int64_t, int>& metricProducerMap,
+bool initAlerts(const StatsdConfig& config, const unordered_map<int64_t, int>& metricProducerMap,
                 const sp<AlarmMonitor>& anomalyAlarmMonitor,
                 vector<sp<MetricProducer>>& allMetricProducers,
                 vector<sp<AnomalyTracker>>& allAnomalyTrackers) {
@@ -562,8 +556,8 @@ bool initAlerts(const StatsdConfig& config,
             return false;
         }
         if (alert.trigger_if_sum_gt() < 0 || alert.num_buckets() <= 0) {
-            ALOGW("invalid alert: threshold=%f num_buckets= %d",
-                  alert.trigger_if_sum_gt(), alert.num_buckets());
+            ALOGW("invalid alert: threshold=%f num_buckets= %d", alert.trigger_if_sum_gt(),
+                  alert.num_buckets());
             return false;
         }
         const int metricIndex = itr->second;
@@ -583,14 +577,13 @@ bool initAlerts(const StatsdConfig& config,
         }
         if (subscription.subscriber_information_case() ==
             Subscription::SubscriberInformationCase::SUBSCRIBER_INFORMATION_NOT_SET) {
-            ALOGW("subscription \"%lld\" has no subscriber info.\"",
-                (long long)subscription.id());
+            ALOGW("subscription \"%lld\" has no subscriber info.\"", (long long)subscription.id());
             return false;
         }
         const auto& itr = anomalyTrackerMap.find(subscription.rule_id());
         if (itr == anomalyTrackerMap.end()) {
             ALOGW("subscription \"%lld\" has unknown rule id: \"%lld\"",
-                (long long)subscription.id(), (long long)subscription.rule_id());
+                  (long long)subscription.id(), (long long)subscription.rule_id());
             return false;
         }
         const int anomalyTrackerIndex = itr->second;
@@ -600,12 +593,11 @@ bool initAlerts(const StatsdConfig& config,
 }
 
 bool initAlarms(const StatsdConfig& config, const ConfigKey& key,
-                const sp<AlarmMonitor>& periodicAlarmMonitor,
-                const int64_t timeBaseNs, const int64_t currentTimeNs,
-                vector<sp<AlarmTracker>>& allAlarmTrackers) {
+                const sp<AlarmMonitor>& periodicAlarmMonitor, const int64_t timeBaseNs,
+                const int64_t currentTimeNs, vector<sp<AlarmTracker>>& allAlarmTrackers) {
     unordered_map<int64_t, int> alarmTrackerMap;
     int64_t startMillis = timeBaseNs / 1000 / 1000;
-    int64_t currentTimeMillis = currentTimeNs / 1000 /1000;
+    int64_t currentTimeMillis = currentTimeNs / 1000 / 1000;
     for (int i = 0; i < config.alarm_size(); i++) {
         const Alarm& alarm = config.alarm(i);
         if (alarm.offset_millis() <= 0) {
@@ -618,8 +610,7 @@ bool initAlarms(const StatsdConfig& config, const ConfigKey& key,
         }
         alarmTrackerMap.insert(std::make_pair(alarm.id(), allAlarmTrackers.size()));
         allAlarmTrackers.push_back(
-            new AlarmTracker(startMillis, currentTimeMillis,
-                             alarm, key, periodicAlarmMonitor));
+                new AlarmTracker(startMillis, currentTimeMillis, alarm, key, periodicAlarmMonitor));
     }
     for (int i = 0; i < config.subscription_size(); ++i) {
         const Subscription& subscription = config.subscription(i);
@@ -628,14 +619,13 @@ bool initAlarms(const StatsdConfig& config, const ConfigKey& key,
         }
         if (subscription.subscriber_information_case() ==
             Subscription::SubscriberInformationCase::SUBSCRIBER_INFORMATION_NOT_SET) {
-            ALOGW("subscription \"%lld\" has no subscriber info.\"",
-                (long long)subscription.id());
+            ALOGW("subscription \"%lld\" has no subscriber info.\"", (long long)subscription.id());
             return false;
         }
         const auto& itr = alarmTrackerMap.find(subscription.rule_id());
         if (itr == alarmTrackerMap.end()) {
             ALOGW("subscription \"%lld\" has unknown rule id: \"%lld\"",
-                (long long)subscription.id(), (long long)subscription.rule_id());
+                  (long long)subscription.id(), (long long)subscription.rule_id());
             return false;
         }
         const int trackerIndex = itr->second;
@@ -646,9 +636,8 @@ bool initAlarms(const StatsdConfig& config, const ConfigKey& key,
 
 bool initStatsdConfig(const ConfigKey& key, const StatsdConfig& config, UidMap& uidMap,
                       const sp<AlarmMonitor>& anomalyAlarmMonitor,
-                      const sp<AlarmMonitor>& periodicAlarmMonitor,
-                      const int64_t timeBaseNs, const int64_t currentTimeNs,
-                      set<int>& allTagIds,
+                      const sp<AlarmMonitor>& periodicAlarmMonitor, const int64_t timeBaseNs,
+                      const int64_t currentTimeNs, set<int>& allTagIds,
                       vector<sp<LogMatchingTracker>>& allAtomMatchers,
                       vector<sp<ConditionTracker>>& allConditionTrackers,
                       vector<sp<MetricProducer>>& allMetricProducers,
@@ -674,9 +663,8 @@ bool initStatsdConfig(const ConfigKey& key, const StatsdConfig& config, UidMap& 
         return false;
     }
 
-    if (!initMetrics(key, config, timeBaseNs, currentTimeNs, uidMap,
-                     logTrackerMap, conditionTrackerMap,
-                     allAtomMatchers, allConditionTrackers, allMetricProducers,
+    if (!initMetrics(key, config, timeBaseNs, currentTimeNs, uidMap, logTrackerMap,
+                     conditionTrackerMap, allAtomMatchers, allConditionTrackers, allMetricProducers,
                      conditionToMetricMap, trackerToMetricMap, metricProducerMap,
                      noReportMetricIds)) {
         ALOGE("initMetricProducers failed");
@@ -687,8 +675,8 @@ bool initStatsdConfig(const ConfigKey& key, const StatsdConfig& config, UidMap& 
         ALOGE("initAlerts failed");
         return false;
     }
-    if (!initAlarms(config, key, periodicAlarmMonitor,
-                    timeBaseNs, currentTimeNs, allPeriodicAlarmTrackers)) {
+    if (!initAlarms(config, key, periodicAlarmMonitor, timeBaseNs, currentTimeNs,
+                    allPeriodicAlarmTrackers)) {
         ALOGE("initAlarms failed");
         return false;
     }

@@ -26,18 +26,18 @@
 
 namespace android {
 
-void register_android_server_broadcastradio_TunerCallback(JavaVM *vm, JNIEnv *env);
+void register_android_server_broadcastradio_TunerCallback(JavaVM* vm, JNIEnv* env);
 
 namespace server {
 namespace BroadcastRadio {
 namespace TunerCallback {
 
-sp<hardware::broadcastradio::V1_1::ITunerCallback>
-getNativeCallback(JNIEnv *env, jobject jTunerCallback);
+sp<hardware::broadcastradio::V1_1::ITunerCallback> getNativeCallback(JNIEnv* env,
+                                                                     jobject jTunerCallback);
 
-} // namespace TunerCallback
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace TunerCallback
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android
 
-#endif // _ANDROID_SERVER_BROADCASTRADIO_TUNERCALLBACK_H
+#endif  // _ANDROID_SERVER_BROADCASTRADIO_TUNERCALLBACK_H

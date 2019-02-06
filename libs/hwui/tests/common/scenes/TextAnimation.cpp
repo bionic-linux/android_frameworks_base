@@ -26,23 +26,24 @@ public:
     sp<RenderNode> card;
     void createContent(int width, int height, Canvas& canvas) override {
         canvas.drawColor(Color::White, SkBlendMode::kSrcOver);
-        card = TestUtils::createNode(0, 0, width, height, [](RenderProperties& props,
-                                                             Canvas& canvas) {
-            SkPaint paint;
-            paint.setAntiAlias(true);
-            paint.setTextSize(50);
+        card = TestUtils::createNode(
+                0, 0, width, height, [](RenderProperties& props, Canvas& canvas) {
+                    SkPaint paint;
+                    paint.setAntiAlias(true);
+                    paint.setTextSize(50);
 
-            paint.setColor(Color::Black);
-            for (int i = 0; i < 10; i++) {
-                TestUtils::drawUtf8ToCanvas(&canvas, "Test string", paint, 400, i * 100);
-            }
+                    paint.setColor(Color::Black);
+                    for (int i = 0; i < 10; i++) {
+                        TestUtils::drawUtf8ToCanvas(&canvas, "Test string", paint, 400, i * 100);
+                    }
 
-            SkPath path;
-            path.addOval(SkRect::MakeLTRB(100, 100, 300, 300));
+                    SkPath path;
+                    path.addOval(SkRect::MakeLTRB(100, 100, 300, 300));
 
-            paint.setColor(Color::Blue_500);
-            TestUtils::drawUtf8ToCanvas(&canvas, "This is a neat circle of text!", paint, path);
-        });
+                    paint.setColor(Color::Blue_500);
+                    TestUtils::drawUtf8ToCanvas(&canvas, "This is a neat circle of text!", paint,
+                                                path);
+                });
         canvas.drawRenderNode(card.get());
     }
 

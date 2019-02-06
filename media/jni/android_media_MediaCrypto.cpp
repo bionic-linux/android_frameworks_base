@@ -20,9 +20,9 @@
 
 #include "android_media_MediaCrypto.h"
 
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "jni.h"
-#include <nativehelper/JNIHelp.h>
 
 #include <binder/IServiceManager.h>
 #include <cutils/properties.h>
@@ -38,13 +38,12 @@ struct fields_t {
 
 static fields_t gFields;
 
-static sp<JCrypto> getCrypto(JNIEnv *env, jobject thiz) {
-    return (JCrypto *)env->GetLongField(thiz, gFields.context);
+static sp<JCrypto> getCrypto(JNIEnv* env, jobject thiz) {
+    return (JCrypto*)env->GetLongField(thiz, gFields.context);
 }
 
-JCrypto::JCrypto(
-        JNIEnv *env, jobject thiz,
-        const uint8_t uuid[16], const void *initData, size_t initSize) {
+JCrypto::JCrypto(JNIEnv* env, jobject thiz, const uint8_t uuid[16], const void* initData,
+                 size_t initSize) {
     mObject = env->NewWeakGlobalRef(thiz);
 
     mCrypto = MakeCrypto(uuid, initData, initSize);
@@ -56,7 +55,7 @@ JCrypto::~JCrypto() {
     }
     mCrypto.clear();
 
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
 
     env->DeleteWeakGlobalRef(mObject);
     mObject = NULL;
@@ -81,8 +80,7 @@ sp<ICrypto> JCrypto::MakeCrypto() {
 }
 
 // static
-sp<ICrypto> JCrypto::MakeCrypto(
-        const uint8_t uuid[16], const void *initData, size_t initSize) {
+sp<ICrypto> JCrypto::MakeCrypto(const uint8_t uuid[16], const void* initData, size_t initSize) {
     sp<ICrypto> crypto = MakeCrypto();
 
     if (crypto == NULL) {
@@ -98,7 +96,7 @@ sp<ICrypto> JCrypto::MakeCrypto(
     return crypto;
 }
 
-bool JCrypto::requiresSecureDecoderComponent(const char *mime) const {
+bool JCrypto::requiresSecureDecoderComponent(const char* mime) const {
     if (mCrypto == NULL) {
         return false;
     }
@@ -122,7 +120,7 @@ status_t JCrypto::initCheck() const {
 }
 
 // static
-sp<ICrypto> JCrypto::GetCrypto(JNIEnv *env, jobject obj) {
+sp<ICrypto> JCrypto::GetCrypto(JNIEnv* env, jobject obj) {
     jclass clazz = env->FindClass("android/media/MediaCrypto");
     CHECK(clazz != NULL);
 
@@ -140,11 +138,11 @@ sp<ICrypto> JCrypto::GetCrypto(JNIEnv *env, jobject obj) {
 }
 
 // JNI conversion utilities
-static Vector<uint8_t> JByteArrayToVector(JNIEnv *env, jbyteArray const &byteArray) {
+static Vector<uint8_t> JByteArrayToVector(JNIEnv* env, jbyteArray const& byteArray) {
     Vector<uint8_t> vector;
     size_t length = env->GetArrayLength(byteArray);
     vector.insertAt((size_t)0, length);
-    env->GetByteArrayRegion(byteArray, 0, length, (jbyte *)vector.editArray());
+    env->GetByteArrayRegion(byteArray, 0, length, (jbyte*)vector.editArray());
     return vector;
 }
 
@@ -152,9 +150,8 @@ static Vector<uint8_t> JByteArrayToVector(JNIEnv *env, jbyteArray const &byteArr
 
 using namespace android;
 
-static sp<JCrypto> setCrypto(
-        JNIEnv *env, jobject thiz, const sp<JCrypto> &crypto) {
-    sp<JCrypto> old = (JCrypto *)env->GetLongField(thiz, gFields.context);
+static sp<JCrypto> setCrypto(JNIEnv* env, jobject thiz, const sp<JCrypto>& crypto) {
+    sp<JCrypto> old = (JCrypto*)env->GetLongField(thiz, gFields.context);
     if (crypto != NULL) {
         crypto->incStrong(thiz);
     }
@@ -166,11 +163,11 @@ static sp<JCrypto> setCrypto(
     return old;
 }
 
-static void android_media_MediaCrypto_release(JNIEnv *env, jobject thiz) {
+static void android_media_MediaCrypto_release(JNIEnv* env, jobject thiz) {
     setCrypto(env, thiz, NULL);
 }
 
-static void android_media_MediaCrypto_native_init(JNIEnv *env) {
+static void android_media_MediaCrypto_native_init(JNIEnv* env) {
     jclass clazz = env->FindClass("android/media/MediaCrypto");
     CHECK(clazz != NULL);
 
@@ -178,32 +175,27 @@ static void android_media_MediaCrypto_native_init(JNIEnv *env) {
     CHECK(gFields.context != NULL);
 }
 
-static void android_media_MediaCrypto_native_setup(
-        JNIEnv *env, jobject thiz,
-        jbyteArray uuidObj, jbyteArray initDataObj) {
+static void android_media_MediaCrypto_native_setup(JNIEnv* env, jobject thiz, jbyteArray uuidObj,
+                                                   jbyteArray initDataObj) {
     jsize uuidLength = env->GetArrayLength(uuidObj);
 
     if (uuidLength != 16) {
-        jniThrowException(
-                env,
-                "java/lang/IllegalArgumentException",
-                NULL);
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return;
     }
 
     jboolean isCopy;
-    jbyte *uuid = env->GetByteArrayElements(uuidObj, &isCopy);
+    jbyte* uuid = env->GetByteArrayElements(uuidObj, &isCopy);
 
     jsize initDataLength = 0;
-    jbyte *initData = NULL;
+    jbyte* initData = NULL;
 
     if (initDataObj != NULL) {
         initDataLength = env->GetArrayLength(initDataObj);
         initData = env->GetByteArrayElements(initDataObj, &isCopy);
     }
 
-    sp<JCrypto> crypto = new JCrypto(
-            env, thiz, (const uint8_t *)uuid, initData, initDataLength);
+    sp<JCrypto> crypto = new JCrypto(env, thiz, (const uint8_t*)uuid, initData, initDataLength);
 
     status_t err = crypto->initCheck();
 
@@ -216,37 +208,32 @@ static void android_media_MediaCrypto_native_setup(
     uuid = NULL;
 
     if (err != OK) {
-        jniThrowException(
-                env,
-                "android/media/MediaCryptoException",
-                "Failed to instantiate crypto object.");
+        jniThrowException(env, "android/media/MediaCryptoException",
+                          "Failed to instantiate crypto object.");
         return;
     }
 
-    setCrypto(env,thiz, crypto);
+    setCrypto(env, thiz, crypto);
 }
 
-static void android_media_MediaCrypto_native_finalize(
-        JNIEnv *env, jobject thiz) {
+static void android_media_MediaCrypto_native_finalize(JNIEnv* env, jobject thiz) {
     android_media_MediaCrypto_release(env, thiz);
 }
 
-static jboolean android_media_MediaCrypto_isCryptoSchemeSupportedNative(
-        JNIEnv *env, jobject /* thiz */, jbyteArray uuidObj) {
+static jboolean android_media_MediaCrypto_isCryptoSchemeSupportedNative(JNIEnv* env,
+                                                                        jobject /* thiz */,
+                                                                        jbyteArray uuidObj) {
     jsize uuidLength = env->GetArrayLength(uuidObj);
 
     if (uuidLength != 16) {
-        jniThrowException(
-                env,
-                "java/lang/IllegalArgumentException",
-                NULL);
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return JNI_FALSE;
     }
 
     jboolean isCopy;
-    jbyte *uuid = env->GetByteArrayElements(uuidObj, &isCopy);
+    jbyte* uuid = env->GetByteArrayElements(uuidObj, &isCopy);
 
-    bool result = JCrypto::IsCryptoSchemeSupported((const uint8_t *)uuid);
+    bool result = JCrypto::IsCryptoSchemeSupported((const uint8_t*)uuid);
 
     env->ReleaseByteArrayElements(uuidObj, uuid, 0);
     uuid = NULL;
@@ -254,8 +241,8 @@ static jboolean android_media_MediaCrypto_isCryptoSchemeSupportedNative(
     return result ? JNI_TRUE : JNI_FALSE;
 }
 
-static jboolean android_media_MediaCrypto_requiresSecureDecoderComponent(
-        JNIEnv *env, jobject thiz, jstring mimeObj) {
+static jboolean android_media_MediaCrypto_requiresSecureDecoderComponent(JNIEnv* env, jobject thiz,
+                                                                         jstring mimeObj) {
     if (mimeObj == NULL) {
         jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return JNI_FALSE;
@@ -268,7 +255,7 @@ static jboolean android_media_MediaCrypto_requiresSecureDecoderComponent(
         return JNI_FALSE;
     }
 
-    const char *mime = env->GetStringUTFChars(mimeObj, NULL);
+    const char* mime = env->GetStringUTFChars(mimeObj, NULL);
 
     if (mime == NULL) {
         return JNI_FALSE;
@@ -282,8 +269,8 @@ static jboolean android_media_MediaCrypto_requiresSecureDecoderComponent(
     return result ? JNI_TRUE : JNI_FALSE;
 }
 
-static void android_media_MediaCrypto_setMediaDrmSession(
-        JNIEnv *env, jobject thiz, jbyteArray jsessionId) {
+static void android_media_MediaCrypto_setMediaDrmSession(JNIEnv* env, jobject thiz,
+                                                         jbyteArray jsessionId) {
     if (jsessionId == NULL) {
         jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
         return;
@@ -316,27 +303,23 @@ static void android_media_MediaCrypto_setMediaDrmSession(
 }
 
 static const JNINativeMethod gMethods[] = {
-    { "release", "()V", (void *)android_media_MediaCrypto_release },
-    { "native_init", "()V", (void *)android_media_MediaCrypto_native_init },
+        {"release", "()V", (void*)android_media_MediaCrypto_release},
+        {"native_init", "()V", (void*)android_media_MediaCrypto_native_init},
 
-    { "native_setup", "([B[B)V",
-      (void *)android_media_MediaCrypto_native_setup },
+        {"native_setup", "([B[B)V", (void*)android_media_MediaCrypto_native_setup},
 
-    { "native_finalize", "()V",
-      (void *)android_media_MediaCrypto_native_finalize },
+        {"native_finalize", "()V", (void*)android_media_MediaCrypto_native_finalize},
 
-    { "isCryptoSchemeSupportedNative", "([B)Z",
-      (void *)android_media_MediaCrypto_isCryptoSchemeSupportedNative },
+        {"isCryptoSchemeSupportedNative", "([B)Z",
+         (void*)android_media_MediaCrypto_isCryptoSchemeSupportedNative},
 
-    { "requiresSecureDecoderComponent", "(Ljava/lang/String;)Z",
-      (void *)android_media_MediaCrypto_requiresSecureDecoderComponent },
+        {"requiresSecureDecoderComponent", "(Ljava/lang/String;)Z",
+         (void*)android_media_MediaCrypto_requiresSecureDecoderComponent},
 
-    { "setMediaDrmSession", "([B)V",
-      (void *)android_media_MediaCrypto_setMediaDrmSession },
+        {"setMediaDrmSession", "([B)V", (void*)android_media_MediaCrypto_setMediaDrmSession},
 };
 
-int register_android_media_Crypto(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaCrypto", gMethods, NELEM(gMethods));
+int register_android_media_Crypto(JNIEnv* env) {
+    return AndroidRuntime::registerNativeMethods(env, "android/media/MediaCrypto", gMethods,
+                                                 NELEM(gMethods));
 }
-

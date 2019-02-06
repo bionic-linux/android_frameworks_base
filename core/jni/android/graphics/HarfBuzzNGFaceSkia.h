@@ -27,23 +27,19 @@
 #ifndef _ANDROID_GRAPHICS_HARF_BUZZ_NG_FACE_SKIA_H_
 #define _ANDROID_GRAPHICS_HARF_BUZZ_NG_FACE_SKIA_H_
 
-#include <SkScalar.h>
 #include <SkPaint.h>
+#include <SkScalar.h>
 
 #include <hb.h>
 
 namespace android {
 
-static inline float
-HBFixedToFloat (hb_position_t v)
-{
-    return scalbnf (v, -8);
+static inline float HBFixedToFloat(hb_position_t v) {
+    return scalbnf(v, -8);
 }
 
-static inline hb_position_t
-HBFloatToFixed (float v)
-{
-    return scalbnf (v, +8);
+static inline hb_position_t HBFloatToFixed(float v) {
+    return scalbnf(v, +8);
 }
 
 static inline hb_position_t SkScalarToHBFixed(SkScalar value) {

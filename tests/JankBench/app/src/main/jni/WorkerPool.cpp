@@ -16,16 +16,14 @@
 
 #include "WorkerPool.h"
 //#include <atomic>
+#include <android/log.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
-#include <android/log.h>
 
-
-//static pthread_key_t gThreadTLSKey = 0;
-//static uint32_t gThreadTLSKeyCount = 0;
-//static pthread_mutex_t gInitMutex = PTHREAD_MUTEX_INITIALIZER;
-
+// static pthread_key_t gThreadTLSKey = 0;
+// static uint32_t gThreadTLSKeyCount = 0;
+// static pthread_mutex_t gInitMutex = PTHREAD_MUTEX_INITIALIZER;
 
 WorkerPool::Signal::Signal() {
     mSet = true;
@@ -58,7 +56,8 @@ void WorkerPool::Signal::set() {
 
     status = pthread_mutex_lock(&mMutex);
     if (status) {
-        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i locking for set condition.", status);
+        __android_log_print(ANDROID_LOG_INFO, "bench",
+                            "WorkerPool: error %i locking for set condition.", status);
         return;
     }
 
@@ -66,12 +65,14 @@ void WorkerPool::Signal::set() {
 
     status = pthread_cond_signal(&mCondition);
     if (status) {
-        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i on set condition.", status);
+        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i on set condition.",
+                            status);
     }
 
     status = pthread_mutex_unlock(&mMutex);
     if (status) {
-        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i unlocking for set condition.", status);
+        __android_log_print(ANDROID_LOG_INFO, "bench",
+                            "WorkerPool: error %i unlocking for set condition.", status);
     }
 }
 
@@ -81,7 +82,8 @@ bool WorkerPool::Signal::wait(uint64_t timeout) {
 
     status = pthread_mutex_lock(&mMutex);
     if (status) {
-        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i locking for condition.", status);
+        __android_log_print(ANDROID_LOG_INFO, "bench",
+                            "WorkerPool: error %i locking for condition.", status);
         return false;
     }
 
@@ -104,20 +106,20 @@ bool WorkerPool::Signal::wait(uint64_t timeout) {
     } else {
 #ifndef RS_SERVER
         if (status != ETIMEDOUT) {
-            __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i waiting for condition.", status);
+            __android_log_print(ANDROID_LOG_INFO, "bench",
+                                "WorkerPool: error %i waiting for condition.", status);
         }
 #endif
     }
 
     status = pthread_mutex_unlock(&mMutex);
     if (status) {
-        __android_log_print(ANDROID_LOG_INFO, "bench", "WorkerPool: error %i unlocking for condition.", status);
+        __android_log_print(ANDROID_LOG_INFO, "bench",
+                            "WorkerPool: error %i unlocking for condition.", status);
     }
 
     return ret;
 }
-
-
 
 WorkerPool::WorkerPool() {
     mExit = false;
@@ -128,13 +130,10 @@ WorkerPool::WorkerPool() {
     mNativeThreadId = NULL;
     mLaunchSignals = NULL;
     mLaunchCallback = NULL;
-
-
 }
 
-
 WorkerPool::~WorkerPool() {
-__android_log_print(ANDROID_LOG_INFO, "bench", "~wp");
+    __android_log_print(ANDROID_LOG_INFO, "bench", "~wp");
     mExit = true;
     mLaunchData = NULL;
     mLaunchCallback = NULL;
@@ -144,11 +143,11 @@ __android_log_print(ANDROID_LOG_INFO, "bench", "~wp");
     for (uint32_t ct = 0; ct < mCount; ct++) {
         mLaunchSignals[ct].set();
     }
-    void *res;
+    void* res;
     for (uint32_t ct = 0; ct < mCount; ct++) {
         pthread_join(mThreadId[ct], &res);
     }
-    //rsAssert(__sync_fetch_and_or(&mRunningCount, 0) == 0);
+    // rsAssert(__sync_fetch_and_or(&mRunningCount, 0) == 0);
     free(mThreadId);
     free(mNativeThreadId);
     delete[] mLaunchSignals;
@@ -166,8 +165,8 @@ bool WorkerPool::init(int threadCount) {
 
     __android_log_print(ANDROID_LOG_INFO, "Bench", "ThreadLaunch %i", mCount);
 
-    mThreadId = (pthread_t *) calloc(mCount, sizeof(pthread_t));
-    mNativeThreadId = (pid_t *) calloc(mCount, sizeof(pid_t));
+    mThreadId = (pthread_t*)calloc(mCount, sizeof(pthread_t));
+    mNativeThreadId = (pid_t*)calloc(mCount, sizeof(pid_t));
     mLaunchSignals = new Signal[mCount];
     mLaunchCallback = NULL;
 
@@ -183,11 +182,12 @@ bool WorkerPool::init(int threadCount) {
         return false;
     }
 
-    for (uint32_t ct=0; ct < mCount; ct++) {
+    for (uint32_t ct = 0; ct < mCount; ct++) {
         status = pthread_create(&mThreadId[ct], &threadAttr, helperThreadProc, this);
         if (status) {
             mCount = ct;
-            __android_log_print(ANDROID_LOG_INFO, "bench", "Created fewer than expected number of threads.");
+            __android_log_print(ANDROID_LOG_INFO, "bench",
+                                "Created fewer than expected number of threads.");
             return false;
         }
     }
@@ -199,8 +199,8 @@ bool WorkerPool::init(int threadCount) {
     return true;
 }
 
-void * WorkerPool::helperThreadProc(void *vwp) {
-    WorkerPool *wp = (WorkerPool *)vwp;
+void* WorkerPool::helperThreadProc(void* vwp) {
+    WorkerPool* wp = (WorkerPool*)vwp;
 
     uint32_t idx = __sync_fetch_and_add(&wp->mLaunchCount, 1);
 
@@ -210,27 +210,22 @@ void * WorkerPool::helperThreadProc(void *vwp) {
     while (!wp->mExit) {
         wp->mLaunchSignals[idx].wait();
         if (wp->mLaunchCallback) {
-           // idx +1 is used because the calling thread is always worker 0.
-           wp->mLaunchCallback(wp->mLaunchData, idx);
+            // idx +1 is used because the calling thread is always worker 0.
+            wp->mLaunchCallback(wp->mLaunchData, idx);
         }
         __sync_fetch_and_sub(&wp->mRunningCount, 1);
         wp->mCompleteSignal.set();
     }
 
-    //ALOGV("RS helperThread exited %p idx=%i", dc, idx);
+    // ALOGV("RS helperThread exited %p idx=%i", dc, idx);
     return NULL;
 }
 
+void WorkerPool::waitForAll() const {}
 
-void WorkerPool::waitForAll() const {
-}
+void WorkerPool::waitFor(uint64_t) const {}
 
-void WorkerPool::waitFor(uint64_t) const {
-}
-
-
-
-uint64_t WorkerPool::launchWork(WorkerCallback_t cb, void *usr, int maxThreads) {
+uint64_t WorkerPool::launchWork(WorkerCallback_t cb, void* usr, int maxThreads) {
     //__android_log_print(ANDROID_LOG_INFO, "bench", "lw 1");
     mLaunchData = usr;
     mLaunchCallback = cb;
@@ -239,11 +234,13 @@ uint64_t WorkerPool::launchWork(WorkerCallback_t cb, void *usr, int maxThreads) 
         maxThreads = mCount;
     }
     if ((uint32_t)maxThreads > mCount) {
-        //__android_log_print(ANDROID_LOG_INFO, "bench", "launchWork max > count", maxThreads, mCount);
+        //__android_log_print(ANDROID_LOG_INFO, "bench", "launchWork max > count", maxThreads,
+        // mCount);
         maxThreads = mCount;
     }
 
-    //__android_log_print(ANDROID_LOG_INFO, "bench", "lw 2  %i  %i  %i", maxThreads, mRunningCount, mCount);
+    //__android_log_print(ANDROID_LOG_INFO, "bench", "lw 2  %i  %i  %i", maxThreads, mRunningCount,
+    // mCount);
     mRunningCount = maxThreads;
     __sync_synchronize();
 
@@ -259,8 +256,4 @@ uint64_t WorkerPool::launchWork(WorkerCallback_t cb, void *usr, int maxThreads) 
 
     //__android_log_print(ANDROID_LOG_INFO, "bench", "lw 4    %i", mRunningCount);
     return 0;
-
 }
-
-
-

@@ -16,14 +16,14 @@
 
 #define LOG_TAG "ObbScanner"
 
+#include <androidfw/ObbFile.h>
 #include <utils/Log.h>
 #include <utils/String8.h>
-#include <androidfw/ObbFile.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
-#include "utils/misc.h"
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
+#include "utils/misc.h"
 
 #include "core_jni_helpers.h"
 
@@ -39,8 +39,7 @@ static struct {
 } gObbInfoClassInfo;
 
 static void android_content_res_ObbScanner_getObbInfo(JNIEnv* env, jobject clazz, jstring file,
-        jobject obbInfo)
-{
+                                                      jobject obbInfo) {
     const char* filePath = env->GetStringUTFChars(file, NULL);
 
     sp<ObbFile> obb = new ObbFile();
@@ -77,17 +76,16 @@ static void android_content_res_ObbScanner_getObbInfo(JNIEnv* env, jobject clazz
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "getObbInfo_native", "(Ljava/lang/String;Landroid/content/res/ObbInfo;)V",
-            (void*) android_content_res_ObbScanner_getObbInfo },
+        /* name, signature, funcPtr */
+        {"getObbInfo_native", "(Ljava/lang/String;Landroid/content/res/ObbInfo;)V",
+         (void*)android_content_res_ObbScanner_getObbInfo},
 };
 
-int register_android_content_res_ObbScanner(JNIEnv* env)
-{
+int register_android_content_res_ObbScanner(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/content/res/ObbInfo");
 
-    gObbInfoClassInfo.packageName = GetFieldIDOrDie(env, clazz, "packageName",
-                                                    "Ljava/lang/String;");
+    gObbInfoClassInfo.packageName =
+            GetFieldIDOrDie(env, clazz, "packageName", "Ljava/lang/String;");
     gObbInfoClassInfo.version = GetFieldIDOrDie(env, clazz, "version", "I");
     gObbInfoClassInfo.flags = GetFieldIDOrDie(env, clazz, "flags", "I");
     gObbInfoClassInfo.salt = GetFieldIDOrDie(env, clazz, "salt", "[B");
@@ -95,4 +93,4 @@ int register_android_content_res_ObbScanner(JNIEnv* env)
     return RegisterMethodsOrDie(env, "android/content/res/ObbScanner", gMethods, NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

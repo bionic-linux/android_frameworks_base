@@ -22,9 +22,8 @@
 
 namespace android {
 
-class IMountShutdownObserver: public IInterface
-{
-public:
+class IMountShutdownObserver : public IInterface {
+  public:
     DECLARE_META_INTERFACE(MountShutdownObserver);
 
     virtual void onShutDownComplete(const int32_t statusCode) = 0;
@@ -32,15 +31,12 @@ public:
 
 // ----------------------------------------------------------------------------
 
-class BnMountShutdownObserver: public BnInterface<IMountShutdownObserver>
-{
-public:
-    virtual status_t    onTransact( uint32_t code,
-                                    const Parcel& data,
-                                    Parcel* reply,
-                                    uint32_t flags = 0);
+class BnMountShutdownObserver : public BnInterface<IMountShutdownObserver> {
+  public:
+    virtual status_t onTransact(uint32_t code, const Parcel& data, Parcel* reply,
+                                uint32_t flags = 0);
 };
 
-}; // namespace android
+};  // namespace android
 
-#endif // ANDROID_IMOUNTSHUTDOWNOBSERVER_H
+#endif  // ANDROID_IMOUNTSHUTDOWNOBSERVER_H

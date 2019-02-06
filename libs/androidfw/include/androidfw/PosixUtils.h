@@ -32,5 +32,5 @@ struct ProcResult {
 // stderr.
 std::unique_ptr<ProcResult> ExecuteBinary(const std::vector<std::string>& argv);
 
-} // namespace util
-} // namespace android
+}  // namespace util
+}  // namespace android

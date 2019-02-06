@@ -25,5 +25,5 @@ string get_proto_type(const FieldDescriptorProto& field);
  */
 bool should_generate_for_file(const CodeGeneratorRequest& request, const string& file);
 
-} // stream_proto
-} // android
+}  // namespace stream_proto
+}  // namespace android

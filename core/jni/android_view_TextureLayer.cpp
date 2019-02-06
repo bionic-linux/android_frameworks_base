@@ -16,32 +16,32 @@
 
 #define LOG_TAG "OpenGLRenderer"
 
-#include "jni.h"
-#include "GraphicsJNI.h"
 #include <nativehelper/JNIHelp.h>
+#include "GraphicsJNI.h"
+#include "jni.h"
 
-#include "core_jni_helpers.h"
 #include <android_runtime/android_graphics_SurfaceTexture.h>
+#include "core_jni_helpers.h"
 
 #include <gui/GLConsumer.h>
 #include <hwui/Paint.h>
 
 #include <SkBitmap.h>
+#include <SkBlendMode.h>
 #include <SkCanvas.h>
 #include <SkMatrix.h>
-#include <SkBlendMode.h>
 
 #include <DeferredLayerUpdater.h>
-#include <SkiaShader.h>
 #include <Rect.h>
 #include <RenderNode.h>
+#include <SkiaShader.h>
 
 namespace android {
 
 using namespace uirenderer;
 
-static jboolean TextureLayer_prepare(JNIEnv* env, jobject clazz,
-        jlong layerUpdaterPtr, jint width, jint height, jboolean isOpaque) {
+static jboolean TextureLayer_prepare(JNIEnv* env, jobject clazz, jlong layerUpdaterPtr, jint width,
+                                     jint height, jboolean isOpaque) {
     DeferredLayerUpdater* layer = reinterpret_cast<DeferredLayerUpdater*>(layerUpdaterPtr);
     bool changed = false;
     changed |= layer->setSize(width, height);
@@ -49,8 +49,8 @@ static jboolean TextureLayer_prepare(JNIEnv* env, jobject clazz,
     return changed;
 }
 
-static void TextureLayer_setLayerPaint(JNIEnv* env, jobject clazz,
-        jlong layerUpdaterPtr, jlong paintPtr) {
+static void TextureLayer_setLayerPaint(JNIEnv* env, jobject clazz, jlong layerUpdaterPtr,
+                                       jlong paintPtr) {
     DeferredLayerUpdater* layer = reinterpret_cast<DeferredLayerUpdater*>(layerUpdaterPtr);
     if (layer) {
         Paint* paint = reinterpret_cast<Paint*>(paintPtr);
@@ -58,22 +58,21 @@ static void TextureLayer_setLayerPaint(JNIEnv* env, jobject clazz,
     }
 }
 
-static void TextureLayer_setTransform(JNIEnv* env, jobject clazz,
-        jlong layerUpdaterPtr, jlong matrixPtr) {
+static void TextureLayer_setTransform(JNIEnv* env, jobject clazz, jlong layerUpdaterPtr,
+                                      jlong matrixPtr) {
     DeferredLayerUpdater* layer = reinterpret_cast<DeferredLayerUpdater*>(layerUpdaterPtr);
     SkMatrix* matrix = reinterpret_cast<SkMatrix*>(matrixPtr);
     layer->setTransform(matrix);
 }
 
-static void TextureLayer_setSurfaceTexture(JNIEnv* env, jobject clazz,
-        jlong layerUpdaterPtr, jobject surface) {
+static void TextureLayer_setSurfaceTexture(JNIEnv* env, jobject clazz, jlong layerUpdaterPtr,
+                                           jobject surface) {
     DeferredLayerUpdater* layer = reinterpret_cast<DeferredLayerUpdater*>(layerUpdaterPtr);
     sp<GLConsumer> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, surface));
     layer->setSurfaceTexture(surfaceTexture);
 }
 
-static void TextureLayer_updateSurfaceTexture(JNIEnv* env, jobject clazz,
-        jlong layerUpdaterPtr) {
+static void TextureLayer_updateSurfaceTexture(JNIEnv* env, jobject clazz, jlong layerUpdaterPtr) {
     DeferredLayerUpdater* layer = reinterpret_cast<DeferredLayerUpdater*>(layerUpdaterPtr);
     layer->updateTexImage();
 }
@@ -85,16 +84,16 @@ static void TextureLayer_updateSurfaceTexture(JNIEnv* env, jobject clazz,
 const char* const kClassPathName = "android/view/TextureLayer";
 
 static const JNINativeMethod gMethods[] = {
-    { "nPrepare",                "(JIIZ)Z",    (void*) TextureLayer_prepare },
-    { "nSetLayerPaint",          "(JJ)V",      (void*) TextureLayer_setLayerPaint },
-    { "nSetTransform",           "(JJ)V",      (void*) TextureLayer_setTransform },
-    { "nSetSurfaceTexture",      "(JLandroid/graphics/SurfaceTexture;)V",
-            (void*) TextureLayer_setSurfaceTexture },
-    { "nUpdateSurfaceTexture",   "(J)V",       (void*) TextureLayer_updateSurfaceTexture },
+        {"nPrepare", "(JIIZ)Z", (void*)TextureLayer_prepare},
+        {"nSetLayerPaint", "(JJ)V", (void*)TextureLayer_setLayerPaint},
+        {"nSetTransform", "(JJ)V", (void*)TextureLayer_setTransform},
+        {"nSetSurfaceTexture", "(JLandroid/graphics/SurfaceTexture;)V",
+         (void*)TextureLayer_setSurfaceTexture},
+        {"nUpdateSurfaceTexture", "(J)V", (void*)TextureLayer_updateSurfaceTexture},
 };
 
 int register_android_view_TextureLayer(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-};
+};  // namespace android

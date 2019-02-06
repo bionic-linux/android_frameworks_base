@@ -8,9 +8,9 @@
 #define DIRECTORYWALKER_H
 
 #include <dirent.h>
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <utils/String8.h>
 
@@ -23,14 +23,14 @@ using namespace android;
 // and descriptions.
 
 class DirectoryWalker {
-public:
-    virtual ~DirectoryWalker() {};
+  public:
+    virtual ~DirectoryWalker(){};
     virtual bool openDir(String8 path) = 0;
     virtual bool openDir(const char* path) = 0;
     // Advance to next directory entry
     virtual struct dirent* nextEntry() = 0;
     // Get the stats for the current entry
-    virtual struct stat*   entryStats() = 0;
+    virtual struct stat* entryStats() = 0;
     // Clean Up
     virtual void closeDir() = 0;
     // This class is able to replicate itself on the heap
@@ -51,16 +51,14 @@ public:
 // functions are inlined since they're very short and simple
 
 class SystemDirectoryWalker : public DirectoryWalker {
-
     // Default constructor, copy constructor, and destructor are fine
-public:
+  public:
     virtual bool openDir(String8 path) {
         mBasePath = path;
         dir = NULL;
-        dir = opendir(mBasePath.string() );
+        dir = opendir(mBasePath.string());
 
-        if (dir == NULL)
-            return false;
+        if (dir == NULL) return false;
 
         return true;
     };
@@ -72,27 +70,21 @@ public:
     // Advance to next directory entry
     virtual struct dirent* nextEntry() {
         struct dirent* entryPtr = readdir(dir);
-        if (entryPtr == NULL)
-            return NULL;
+        if (entryPtr == NULL) return NULL;
 
         mEntry = *entryPtr;
         // Get stats
         String8 fullPath = mBasePath.appendPathCopy(mEntry.d_name);
-        stat(fullPath.string(),&mStats);
+        stat(fullPath.string(), &mStats);
         return &mEntry;
     };
     // Get the stats for the current entry
-    virtual struct stat*   entryStats() {
-        return &mStats;
-    };
-    virtual void closeDir() {
-        closedir(dir);
-    };
-    virtual DirectoryWalker* clone() {
-        return new SystemDirectoryWalker(*this);
-    };
-private:
+    virtual struct stat* entryStats() { return &mStats; };
+    virtual void closeDir() { closedir(dir); };
+    virtual DirectoryWalker* clone() { return new SystemDirectoryWalker(*this); };
+
+  private:
     DIR* dir;
 };
 
-#endif // DIRECTORYWALKER_H
+#endif  // DIRECTORYWALKER_H

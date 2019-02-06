@@ -36,27 +36,20 @@ TEST(XmlIdCollectorTest, CollectsIds) {
   XmlIdCollector collector;
   ASSERT_TRUE(collector.Consume(context.get(), doc.get()));
 
-  EXPECT_EQ(
-      1, std::count(doc->file.exported_symbols.begin(),
-                    doc->file.exported_symbols.end(),
-                    SourcedResourceName{test::ParseNameOrDie("id/foo"), 3u}));
+  EXPECT_EQ(1, std::count(doc->file.exported_symbols.begin(), doc->file.exported_symbols.end(),
+                          SourcedResourceName{test::ParseNameOrDie("id/foo"), 3u}));
 
-  EXPECT_EQ(
-      1, std::count(doc->file.exported_symbols.begin(),
-                    doc->file.exported_symbols.end(),
-                    SourcedResourceName{test::ParseNameOrDie("id/bar"), 3u}));
+  EXPECT_EQ(1, std::count(doc->file.exported_symbols.begin(), doc->file.exported_symbols.end(),
+                          SourcedResourceName{test::ParseNameOrDie("id/bar"), 3u}));
 
-  EXPECT_EQ(
-      1, std::count(doc->file.exported_symbols.begin(),
-                    doc->file.exported_symbols.end(),
-                    SourcedResourceName{test::ParseNameOrDie("id/car"), 6u}));
+  EXPECT_EQ(1, std::count(doc->file.exported_symbols.begin(), doc->file.exported_symbols.end(),
+                          SourcedResourceName{test::ParseNameOrDie("id/car"), 6u}));
 }
 
 TEST(XmlIdCollectorTest, DontCollectNonIds) {
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
 
-  std::unique_ptr<xml::XmlResource> doc =
-      test::BuildXmlDom("<View foo=\"@+string/foo\"/>");
+  std::unique_ptr<xml::XmlResource> doc = test::BuildXmlDom("<View foo=\"@+string/foo\"/>");
 
   XmlIdCollector collector;
   ASSERT_TRUE(collector.Consume(context.get(), doc.get()));

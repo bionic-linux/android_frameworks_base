@@ -25,14 +25,14 @@ static jint android_os_HidlSupport_getPidIfSharable(JNIEnv*, jclass) {
 }
 
 static const JNINativeMethod gHidlSupportMethods[] = {
-    {"getPidIfSharable", "()I", (void*)android_os_HidlSupport_getPidIfSharable},
+        {"getPidIfSharable", "()I", (void*)android_os_HidlSupport_getPidIfSharable},
 };
 
 const char* const kHidlSupportPathName = "android/os/HidlSupport";
 
-int register_android_os_HidlSupport(JNIEnv* env)
-{
-    return RegisterMethodsOrDie(env, kHidlSupportPathName, gHidlSupportMethods, NELEM(gHidlSupportMethods));
+int register_android_os_HidlSupport(JNIEnv* env) {
+    return RegisterMethodsOrDie(env, kHidlSupportPathName, gHidlSupportMethods,
+                                NELEM(gHidlSupportMethods));
 }
 
 }  // namespace android

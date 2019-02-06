@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include "jni.h"
 #include "GraphicsJNI.h"
+#include "jni.h"
 
 #include <PathParser.h>
 #include <SkPath.h>
@@ -29,7 +29,7 @@ namespace android {
 using namespace uirenderer;
 
 static void parseStringForPath(JNIEnv* env, jobject, jlong skPathHandle, jstring inputPathStr,
-        jint strLength) {
+                               jint strLength) {
     const char* pathString = env->GetStringUTFChars(inputPathStr, NULL);
     SkPath* skPath = reinterpret_cast<SkPath*>(skPathHandle);
 
@@ -68,12 +68,12 @@ static long createPathDataFromStringPath(JNIEnv* env, jobject, jstring inputStr,
 }
 
 static bool interpolatePathData(JNIEnv*, jobject, jlong outPathDataPtr, jlong fromPathDataPtr,
-        jlong toPathDataPtr, jfloat fraction) {
+                                jlong toPathDataPtr, jfloat fraction) {
     PathData* outPathData = reinterpret_cast<PathData*>(outPathDataPtr);
     PathData* fromPathData = reinterpret_cast<PathData*>(fromPathDataPtr);
     PathData* toPathData = reinterpret_cast<PathData*>(toPathDataPtr);
-    return VectorDrawableUtils::interpolatePathData(outPathData, *fromPathData,
-            *toPathData, fraction);
+    return VectorDrawableUtils::interpolatePathData(outPathData, *fromPathData, *toPathData,
+                                                    fraction);
 }
 
 static void deletePathData(JNIEnv*, jobject, jlong pathDataHandle) {
@@ -100,21 +100,22 @@ static void setSkPathFromPathData(JNIEnv*, jobject, jlong outPathPtr, jlong path
 }
 
 static const JNINativeMethod gMethods[] = {
-    {"nParseStringForPath", "(JLjava/lang/String;I)V", (void*)parseStringForPath},
-    {"nCreatePathDataFromString", "(Ljava/lang/String;I)J", (void*)createPathDataFromStringPath},
+        {"nParseStringForPath", "(JLjava/lang/String;I)V", (void*)parseStringForPath},
+        {"nCreatePathDataFromString", "(Ljava/lang/String;I)J",
+         (void*)createPathDataFromStringPath},
 
-    // ---------------- @FastNative -----------------
+        // ---------------- @FastNative -----------------
 
-    {"nCreateEmptyPathData", "()J", (void*)createEmptyPathData},
-    {"nCreatePathData", "(J)J", (void*)createPathData},
-    {"nInterpolatePathData", "(JJJF)Z", (void*)interpolatePathData},
-    {"nFinalize", "(J)V", (void*)deletePathData},
-    {"nCanMorph", "(JJ)Z", (void*)canMorphPathData},
-    {"nSetPathData", "(JJ)V", (void*)setPathData},
-    {"nCreatePathFromPathData", "(JJ)V", (void*)setSkPathFromPathData},
+        {"nCreateEmptyPathData", "()J", (void*)createEmptyPathData},
+        {"nCreatePathData", "(J)J", (void*)createPathData},
+        {"nInterpolatePathData", "(JJJF)Z", (void*)interpolatePathData},
+        {"nFinalize", "(J)V", (void*)deletePathData},
+        {"nCanMorph", "(JJ)Z", (void*)canMorphPathData},
+        {"nSetPathData", "(JJ)V", (void*)setPathData},
+        {"nCreatePathFromPathData", "(JJ)V", (void*)setSkPathFromPathData},
 };
 
 int register_android_util_PathParser(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/util/PathParser", gMethods, NELEM(gMethods));
 }
-};
+};  // namespace android

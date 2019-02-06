@@ -32,8 +32,7 @@ namespace statsd {
 
 class SimpleLogMatchingTracker : public virtual LogMatchingTracker {
 public:
-    SimpleLogMatchingTracker(const int64_t& id, const int index,
-                             const SimpleAtomMatcher& matcher,
+    SimpleLogMatchingTracker(const int64_t& id, const int index, const SimpleAtomMatcher& matcher,
                              const UidMap& uidMap);
 
     ~SimpleLogMatchingTracker();
@@ -43,8 +42,7 @@ public:
               const std::unordered_map<int64_t, int>& matcherMap,
               std::vector<bool>& stack) override;
 
-    void onLogEvent(const LogEvent& event,
-                    const std::vector<sp<LogMatchingTracker>>& allTrackers,
+    void onLogEvent(const LogEvent& event, const std::vector<sp<LogMatchingTracker>>& allTrackers,
                     std::vector<MatchingState>& matcherResults) override;
 
 private:

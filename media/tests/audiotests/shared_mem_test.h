@@ -5,23 +5,22 @@
 
 namespace android {
 
-class AudioTrackTest{
-    public:
-        AudioTrackTest(void);
-        ~AudioTrackTest() {};
+class AudioTrackTest {
+  public:
+    AudioTrackTest(void);
+    ~AudioTrackTest(){};
 
-        void Execute(void);
-        int Test01();
+    void Execute(void);
+    int Test01();
 
-        void Generate(short *buffer, long bufferSz, long amplitude, unsigned long &phi, long dPhi);
-        void InitSine();
-        short ComputeSine(long amplitude, long phi);
+    void Generate(short* buffer, long bufferSz, long amplitude, unsigned long& phi, long dPhi);
+    void InitSine();
+    short ComputeSine(long amplitude, long phi);
 
-        #define SIN_SZ    1024
-        short sin1024[SIN_SZ];           // sine table 2*pi = 1024
+#define SIN_SZ 1024
+    short sin1024[SIN_SZ];  // sine table 2*pi = 1024
 };
 
-};
-
+};  // namespace android
 
 #endif /*AUDIOTRACKTEST_H_*/

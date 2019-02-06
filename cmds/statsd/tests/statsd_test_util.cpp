@@ -18,7 +18,6 @@ namespace android {
 namespace os {
 namespace statsd {
 
-
 AtomMatcher CreateSimpleAtomMatcher(const string& name, int atomId) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
@@ -90,7 +89,7 @@ AtomMatcher CreateReleaseWakelockAtomMatcher() {
 }
 
 AtomMatcher CreateBatterySaverModeStateChangedAtomMatcher(
-    const string& name, BatterySaverModeStateChanged::State state) {
+        const string& name, BatterySaverModeStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -102,19 +101,17 @@ AtomMatcher CreateBatterySaverModeStateChangedAtomMatcher(
 }
 
 AtomMatcher CreateBatterySaverModeStartAtomMatcher() {
-    return CreateBatterySaverModeStateChangedAtomMatcher(
-        "BatterySaverModeStart", BatterySaverModeStateChanged::ON);
+    return CreateBatterySaverModeStateChangedAtomMatcher("BatterySaverModeStart",
+                                                         BatterySaverModeStateChanged::ON);
 }
-
 
 AtomMatcher CreateBatterySaverModeStopAtomMatcher() {
-    return CreateBatterySaverModeStateChangedAtomMatcher(
-        "BatterySaverModeStop", BatterySaverModeStateChanged::OFF);
+    return CreateBatterySaverModeStateChangedAtomMatcher("BatterySaverModeStop",
+                                                         BatterySaverModeStateChanged::OFF);
 }
 
-
-AtomMatcher CreateScreenStateChangedAtomMatcher(
-    const string& name, android::view::DisplayStateEnum state) {
+AtomMatcher CreateScreenStateChangedAtomMatcher(const string& name,
+                                                android::view::DisplayStateEnum state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -125,19 +122,17 @@ AtomMatcher CreateScreenStateChangedAtomMatcher(
     return atom_matcher;
 }
 
-
 AtomMatcher CreateScreenTurnedOnAtomMatcher() {
     return CreateScreenStateChangedAtomMatcher("ScreenTurnedOn",
-            android::view::DisplayStateEnum::DISPLAY_STATE_ON);
+                                               android::view::DisplayStateEnum::DISPLAY_STATE_ON);
 }
 
 AtomMatcher CreateScreenTurnedOffAtomMatcher() {
-    return CreateScreenStateChangedAtomMatcher("ScreenTurnedOff",
-            ::android::view::DisplayStateEnum::DISPLAY_STATE_OFF);
+    return CreateScreenStateChangedAtomMatcher(
+            "ScreenTurnedOff", ::android::view::DisplayStateEnum::DISPLAY_STATE_OFF);
 }
 
-AtomMatcher CreateSyncStateChangedAtomMatcher(
-    const string& name, SyncStateChanged::State state) {
+AtomMatcher CreateSyncStateChangedAtomMatcher(const string& name, SyncStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -157,7 +152,7 @@ AtomMatcher CreateSyncEndAtomMatcher() {
 }
 
 AtomMatcher CreateActivityForegroundStateChangedAtomMatcher(
-    const string& name, ActivityForegroundStateChanged::State state) {
+        const string& name, ActivityForegroundStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -170,16 +165,16 @@ AtomMatcher CreateActivityForegroundStateChangedAtomMatcher(
 
 AtomMatcher CreateMoveToBackgroundAtomMatcher() {
     return CreateActivityForegroundStateChangedAtomMatcher(
-        "Background", ActivityForegroundStateChanged::BACKGROUND);
+            "Background", ActivityForegroundStateChanged::BACKGROUND);
 }
 
 AtomMatcher CreateMoveToForegroundAtomMatcher() {
     return CreateActivityForegroundStateChangedAtomMatcher(
-        "Foreground", ActivityForegroundStateChanged::FOREGROUND);
+            "Foreground", ActivityForegroundStateChanged::FOREGROUND);
 }
 
 AtomMatcher CreateProcessLifeCycleStateChangedAtomMatcher(
-    const string& name, ProcessLifeCycleStateChanged::State state) {
+        const string& name, ProcessLifeCycleStateChanged::State state) {
     AtomMatcher atom_matcher;
     atom_matcher.set_id(StringToId(name));
     auto simple_atom_matcher = atom_matcher.mutable_simple_atom_matcher();
@@ -191,8 +186,8 @@ AtomMatcher CreateProcessLifeCycleStateChangedAtomMatcher(
 }
 
 AtomMatcher CreateProcessCrashAtomMatcher() {
-    return CreateProcessLifeCycleStateChangedAtomMatcher(
-        "Crashed", ProcessLifeCycleStateChanged::CRASHED);
+    return CreateProcessLifeCycleStateChangedAtomMatcher("Crashed",
+                                                         ProcessLifeCycleStateChanged::CRASHED);
 }
 
 Predicate CreateScheduledJobPredicate() {
@@ -270,7 +265,7 @@ FieldMatcher CreateAttributionUidDimensions(const int atomId,
 }
 
 FieldMatcher CreateAttributionUidAndTagDimensions(const int atomId,
-                                                 const std::vector<Position>& positions) {
+                                                  const std::vector<Position>& positions) {
     FieldMatcher dimensions;
     dimensions.set_field(atomId);
     for (const auto position : positions) {
@@ -292,8 +287,8 @@ FieldMatcher CreateDimensions(const int atomId, const std::vector<int>& fields) 
     return dimensions;
 }
 
-std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(
-    const android::view::DisplayStateEnum state, uint64_t timestampNs) {
+std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(const android::view::DisplayStateEnum state,
+                                                        uint64_t timestampNs) {
     auto event = std::make_unique<LogEvent>(android::util::SCREEN_STATE_CHANGED, timestampNs);
     EXPECT_TRUE(event->write(state));
     event->init();
@@ -301,34 +296,33 @@ std::unique_ptr<LogEvent> CreateScreenStateChangedEvent(
 }
 
 std::unique_ptr<LogEvent> CreateBatterySaverOnEvent(uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(
-        android::util::BATTERY_SAVER_MODE_STATE_CHANGED, timestampNs);
+    auto event = std::make_unique<LogEvent>(android::util::BATTERY_SAVER_MODE_STATE_CHANGED,
+                                            timestampNs);
     EXPECT_TRUE(event->write(BatterySaverModeStateChanged::ON));
     event->init();
     return event;
 }
 
 std::unique_ptr<LogEvent> CreateBatterySaverOffEvent(uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(
-        android::util::BATTERY_SAVER_MODE_STATE_CHANGED, timestampNs);
+    auto event = std::make_unique<LogEvent>(android::util::BATTERY_SAVER_MODE_STATE_CHANGED,
+                                            timestampNs);
     EXPECT_TRUE(event->write(BatterySaverModeStateChanged::OFF));
     event->init();
     return event;
 }
 
-std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(
-    int level, uint64_t timestampNs) {
+std::unique_ptr<LogEvent> CreateScreenBrightnessChangedEvent(int level, uint64_t timestampNs) {
     auto event = std::make_unique<LogEvent>(android::util::SCREEN_BRIGHTNESS_CHANGED, timestampNs);
     EXPECT_TRUE(event->write(level));
     event->init();
     return event;
-
 }
 
 std::unique_ptr<LogEvent> CreateScheduledJobStateChangedEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& jobName,
         const ScheduledJobStateChanged::State state, uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(android::util::SCHEDULED_JOB_STATE_CHANGED, timestampNs);
+    auto event =
+            std::make_unique<LogEvent>(android::util::SCHEDULED_JOB_STATE_CHANGED, timestampNs);
     event->write(attributions);
     event->write(jobName);
     event->write(state);
@@ -337,18 +331,18 @@ std::unique_ptr<LogEvent> CreateScheduledJobStateChangedEvent(
 }
 
 std::unique_ptr<LogEvent> CreateStartScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs) {
-    return CreateScheduledJobStateChangedEvent(
-            attributions, name, ScheduledJobStateChanged::STARTED, timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs) {
+    return CreateScheduledJobStateChangedEvent(attributions, name,
+                                               ScheduledJobStateChanged::STARTED, timestampNs);
 }
 
 // Create log event when scheduled job finishes.
 std::unique_ptr<LogEvent> CreateFinishScheduledJobEvent(
-    const std::vector<AttributionNodeInternal>& attributions,
-    const string& name, uint64_t timestampNs) {
-    return CreateScheduledJobStateChangedEvent(
-            attributions, name, ScheduledJobStateChanged::FINISHED, timestampNs);
+        const std::vector<AttributionNodeInternal>& attributions, const string& name,
+        uint64_t timestampNs) {
+    return CreateScheduledJobStateChangedEvent(attributions, name,
+                                               ScheduledJobStateChanged::FINISHED, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateWakelockStateChangedEvent(
@@ -366,21 +360,21 @@ std::unique_ptr<LogEvent> CreateWakelockStateChangedEvent(
 std::unique_ptr<LogEvent> CreateAcquireWakelockEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& wakelockName,
         uint64_t timestampNs) {
-    return CreateWakelockStateChangedEvent(
-        attributions, wakelockName, WakelockStateChanged::ACQUIRE, timestampNs);
+    return CreateWakelockStateChangedEvent(attributions, wakelockName,
+                                           WakelockStateChanged::ACQUIRE, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateReleaseWakelockEvent(
         const std::vector<AttributionNodeInternal>& attributions, const string& wakelockName,
         uint64_t timestampNs) {
-    return CreateWakelockStateChangedEvent(
-        attributions, wakelockName, WakelockStateChanged::RELEASE, timestampNs);
+    return CreateWakelockStateChangedEvent(attributions, wakelockName,
+                                           WakelockStateChanged::RELEASE, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateActivityForegroundStateChangedEvent(
-    const int uid, const ActivityForegroundStateChanged::State state, uint64_t timestampNs) {
-    auto event = std::make_unique<LogEvent>(
-        android::util::ACTIVITY_FOREGROUND_STATE_CHANGED, timestampNs);
+        const int uid, const ActivityForegroundStateChanged::State state, uint64_t timestampNs) {
+    auto event = std::make_unique<LogEvent>(android::util::ACTIVITY_FOREGROUND_STATE_CHANGED,
+                                            timestampNs);
     event->write(uid);
     event->write("pkg_name");
     event->write("class_name");
@@ -391,12 +385,12 @@ std::unique_ptr<LogEvent> CreateActivityForegroundStateChangedEvent(
 
 std::unique_ptr<LogEvent> CreateMoveToBackgroundEvent(const int uid, uint64_t timestampNs) {
     return CreateActivityForegroundStateChangedEvent(
-        uid, ActivityForegroundStateChanged::BACKGROUND, timestampNs);
+            uid, ActivityForegroundStateChanged::BACKGROUND, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateMoveToForegroundEvent(const int uid, uint64_t timestampNs) {
     return CreateActivityForegroundStateChangedEvent(
-        uid, ActivityForegroundStateChanged::FOREGROUND, timestampNs);
+            uid, ActivityForegroundStateChanged::FOREGROUND, timestampNs);
 }
 
 std::unique_ptr<LogEvent> CreateSyncStateChangedEvent(
@@ -423,9 +417,9 @@ std::unique_ptr<LogEvent> CreateSyncEndEvent(
 }
 
 std::unique_ptr<LogEvent> CreateProcessLifeCycleStateChangedEvent(
-    const int uid, const ProcessLifeCycleStateChanged::State state, uint64_t timestampNs) {
-    auto logEvent = std::make_unique<LogEvent>(
-        android::util::PROCESS_LIFE_CYCLE_STATE_CHANGED, timestampNs);
+        const int uid, const ProcessLifeCycleStateChanged::State state, uint64_t timestampNs) {
+    auto logEvent = std::make_unique<LogEvent>(android::util::PROCESS_LIFE_CYCLE_STATE_CHANGED,
+                                               timestampNs);
     logEvent->write(uid);
     logEvent->write("");
     logEvent->write(state);
@@ -434,14 +428,13 @@ std::unique_ptr<LogEvent> CreateProcessLifeCycleStateChangedEvent(
 }
 
 std::unique_ptr<LogEvent> CreateAppCrashEvent(const int uid, uint64_t timestampNs) {
-    return CreateProcessLifeCycleStateChangedEvent(
-        uid, ProcessLifeCycleStateChanged::CRASHED, timestampNs);
+    return CreateProcessLifeCycleStateChangedEvent(uid, ProcessLifeCycleStateChanged::CRASHED,
+                                                   timestampNs);
 }
 
-std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(
-    int isolatedUid, int hostUid, bool is_create, uint64_t timestampNs) {
-    auto logEvent = std::make_unique<LogEvent>(
-        android::util::ISOLATED_UID_CHANGED, timestampNs);
+std::unique_ptr<LogEvent> CreateIsolatedUidChangedEvent(int isolatedUid, int hostUid,
+                                                        bool is_create, uint64_t timestampNs) {
+    auto logEvent = std::make_unique<LogEvent>(android::util::ISOLATED_UID_CHANGED, timestampNs);
     logEvent->write(hostUid);
     logEvent->write(isolatedUid);
     logEvent->write(is_create);
@@ -453,13 +446,14 @@ sp<StatsLogProcessor> CreateStatsLogProcessor(const int64_t timeBaseNs, const in
                                               const StatsdConfig& config, const ConfigKey& key) {
     sp<UidMap> uidMap = new UidMap();
     sp<AlarmMonitor> anomalyAlarmMonitor =
-        new AlarmMonitor(1,  [](const sp<IStatsCompanionService>&, int64_t){},
-                [](const sp<IStatsCompanionService>&){});
+            new AlarmMonitor(1, [](const sp<IStatsCompanionService>&, int64_t) {},
+                             [](const sp<IStatsCompanionService>&) {});
     sp<AlarmMonitor> periodicAlarmMonitor =
-        new AlarmMonitor(1,  [](const sp<IStatsCompanionService>&, int64_t){},
-                [](const sp<IStatsCompanionService>&){});
-    sp<StatsLogProcessor> processor = new StatsLogProcessor(
-        uidMap, anomalyAlarmMonitor, periodicAlarmMonitor, timeBaseNs, [](const ConfigKey&){return true;});
+            new AlarmMonitor(1, [](const sp<IStatsCompanionService>&, int64_t) {},
+                             [](const sp<IStatsCompanionService>&) {});
+    sp<StatsLogProcessor> processor =
+            new StatsLogProcessor(uidMap, anomalyAlarmMonitor, periodicAlarmMonitor, timeBaseNs,
+                                  [](const ConfigKey&) { return true; });
     processor->OnConfigUpdated(currentTimeNs, key, config);
     return processor;
 }
@@ -471,11 +465,11 @@ AttributionNodeInternal CreateAttribution(const int& uid, const string& tag) {
     return attribution;
 }
 
-void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>> *events) {
-  std::sort(events->begin(), events->end(),
-            [](const std::unique_ptr<LogEvent>& a, const std::unique_ptr<LogEvent>& b) {
-              return a->GetElapsedTimestampNs() < b->GetElapsedTimestampNs();
-            });
+void sortLogEventsByTimestamp(std::vector<std::unique_ptr<LogEvent>>* events) {
+    std::sort(events->begin(), events->end(),
+              [](const std::unique_ptr<LogEvent>& a, const std::unique_ptr<LogEvent>& b) {
+                  return a->GetElapsedTimestampNs() < b->GetElapsedTimestampNs();
+              });
 }
 
 int64_t StringToId(const string& str) {
@@ -487,12 +481,10 @@ void ValidateAttributionUidDimension(const DimensionsValue& value, int atomId, i
     // Attribution field.
     EXPECT_EQ(value.value_tuple().dimensions_value(0).field(), 1);
     // Uid only.
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value_size(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).field(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).value_int(), uid);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value_size(), 1);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).field(), 1);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).value_int(),
+              uid);
 }
 
 void ValidateUidDimension(const DimensionsValue& value, int atomId, int uid) {
@@ -501,12 +493,10 @@ void ValidateUidDimension(const DimensionsValue& value, int atomId, int uid) {
     // Attribution field.
     EXPECT_EQ(value.value_tuple().dimensions_value(0).field(), 1);
     // Uid only.
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value_size(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).field(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).value_int(), uid);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value_size(), 1);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).field(), 1);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).value_int(),
+              uid);
 }
 
 void ValidateUidDimension(const DimensionsValue& value, int node_idx, int atomId, int uid) {
@@ -514,48 +504,65 @@ void ValidateUidDimension(const DimensionsValue& value, int node_idx, int atomId
     EXPECT_GT(value.value_tuple().dimensions_value_size(), node_idx);
     // Attribution field.
     EXPECT_EQ(value.value_tuple().dimensions_value(node_idx).field(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(0).field(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(0).value_int(), uid);
+    EXPECT_EQ(value.value_tuple()
+                      .dimensions_value(node_idx)
+                      .value_tuple()
+                      .dimensions_value(0)
+                      .field(),
+              1);
+    EXPECT_EQ(value.value_tuple()
+                      .dimensions_value(node_idx)
+                      .value_tuple()
+                      .dimensions_value(0)
+                      .value_int(),
+              uid);
 }
 
-void ValidateAttributionUidAndTagDimension(
-    const DimensionsValue& value, int node_idx, int atomId, int uid, const std::string& tag) {
+void ValidateAttributionUidAndTagDimension(const DimensionsValue& value, int node_idx, int atomId,
+                                           int uid, const std::string& tag) {
     EXPECT_EQ(value.field(), atomId);
     EXPECT_GT(value.value_tuple().dimensions_value_size(), node_idx);
     // Attribution field.
     EXPECT_EQ(1, value.value_tuple().dimensions_value(node_idx).field());
     // Uid only.
-    EXPECT_EQ(2, value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value_size());
-    EXPECT_EQ(1, value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(0).field());
-    EXPECT_EQ(uid, value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(0).value_int());
-    EXPECT_EQ(2, value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(1).field());
-    EXPECT_EQ(tag, value.value_tuple().dimensions_value(node_idx)
-        .value_tuple().dimensions_value(1).value_str());
+    EXPECT_EQ(2,
+              value.value_tuple().dimensions_value(node_idx).value_tuple().dimensions_value_size());
+    EXPECT_EQ(1, value.value_tuple()
+                         .dimensions_value(node_idx)
+                         .value_tuple()
+                         .dimensions_value(0)
+                         .field());
+    EXPECT_EQ(uid, value.value_tuple()
+                           .dimensions_value(node_idx)
+                           .value_tuple()
+                           .dimensions_value(0)
+                           .value_int());
+    EXPECT_EQ(2, value.value_tuple()
+                         .dimensions_value(node_idx)
+                         .value_tuple()
+                         .dimensions_value(1)
+                         .field());
+    EXPECT_EQ(tag, value.value_tuple()
+                           .dimensions_value(node_idx)
+                           .value_tuple()
+                           .dimensions_value(1)
+                           .value_str());
 }
 
-void ValidateAttributionUidAndTagDimension(
-    const DimensionsValue& value, int atomId, int uid, const std::string& tag) {
+void ValidateAttributionUidAndTagDimension(const DimensionsValue& value, int atomId, int uid,
+                                           const std::string& tag) {
     EXPECT_EQ(value.field(), atomId);
     EXPECT_EQ(1, value.value_tuple().dimensions_value_size());
     // Attribution field.
     EXPECT_EQ(1, value.value_tuple().dimensions_value(0).field());
     // Uid only.
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value_size(), 2);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).field(), 1);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(0).value_int(), uid);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(1).field(), 2);
-    EXPECT_EQ(value.value_tuple().dimensions_value(0)
-        .value_tuple().dimensions_value(1).value_str(), tag);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value_size(), 2);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).field(), 1);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(0).value_int(),
+              uid);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(1).field(), 2);
+    EXPECT_EQ(value.value_tuple().dimensions_value(0).value_tuple().dimensions_value(1).value_str(),
+              tag);
 }
 
 bool EqualsTo(const DimensionsValue& s1, const DimensionsValue& s2) {
@@ -654,7 +661,7 @@ void backfillStringInDimension(const std::map<uint64_t, string>& str_map,
             dimension->set_value_str(it->second);
         } else {
             ALOGE("Can not find the string hash: %llu",
-                (unsigned long long)dimension->value_str_hash());
+                  (unsigned long long)dimension->value_str_hash());
         }
     } else if (dimension->has_value_tuple()) {
         auto value_tuple = dimension->mutable_value_tuple();
@@ -664,7 +671,7 @@ void backfillStringInDimension(const std::map<uint64_t, string>& str_map,
     }
 }
 
-void backfillStringInReport(ConfigMetricsReport *config_report) {
+void backfillStringInReport(ConfigMetricsReport* config_report) {
     std::map<uint64_t, string> str_map;
     for (const auto& str : config_report->strings()) {
         uint64_t hash = Hash64(str);
@@ -686,9 +693,9 @@ void backfillStringInReport(ConfigMetricsReport *config_report) {
         }
     }
     // Backfill the package names.
-    for (int i = 0 ; i < config_report->uid_map().snapshots_size(); ++i) {
+    for (int i = 0; i < config_report->uid_map().snapshots_size(); ++i) {
         auto snapshot = config_report->mutable_uid_map()->mutable_snapshots(i);
-        for (int j = 0 ; j < snapshot->package_info_size(); ++j) {
+        for (int j = 0; j < snapshot->package_info_size(); ++j) {
             auto package_info = snapshot->mutable_package_info(j);
             if (package_info->has_name_hash()) {
                 auto it = str_map.find((uint64_t)(package_info->name_hash()));
@@ -697,14 +704,13 @@ void backfillStringInReport(ConfigMetricsReport *config_report) {
                     package_info->set_name(it->second);
                 } else {
                     ALOGE("Can not find the string package name hash: %llu",
-                        (unsigned long long)package_info->name_hash());
+                          (unsigned long long)package_info->name_hash());
                 }
-
             }
         }
     }
     // Backfill the app name in app changes.
-    for (int i = 0 ; i < config_report->uid_map().changes_size(); ++i) {
+    for (int i = 0; i < config_report->uid_map().changes_size(); ++i) {
         auto change = config_report->mutable_uid_map()->mutable_changes(i);
         if (change->has_app_hash()) {
             auto it = str_map.find((uint64_t)(change->app_hash()));
@@ -713,13 +719,13 @@ void backfillStringInReport(ConfigMetricsReport *config_report) {
                 change->set_app(it->second);
             } else {
                 ALOGE("Can not find the string change app name hash: %llu",
-                    (unsigned long long)change->app_hash());
+                      (unsigned long long)change->app_hash());
             }
         }
     }
 }
 
-void backfillStringInReport(ConfigMetricsReportList *config_report_list) {
+void backfillStringInReport(ConfigMetricsReportList* config_report_list) {
     for (int i = 0; i < config_report_list->reports_size(); ++i) {
         backfillStringInReport(config_report_list->mutable_reports(i));
     }
@@ -727,14 +733,13 @@ void backfillStringInReport(ConfigMetricsReportList *config_report_list) {
 
 bool backfillDimensionPath(const DimensionsValue& path,
                            const google::protobuf::RepeatedPtrField<DimensionsValue>& leafValues,
-                           int* leafIndex,
-                           DimensionsValue* dimension) {
+                           int* leafIndex, DimensionsValue* dimension) {
     dimension->set_field(path.field());
     if (path.has_value_tuple()) {
         for (int i = 0; i < path.value_tuple().dimensions_value_size(); ++i) {
-            if (!backfillDimensionPath(
-                path.value_tuple().dimensions_value(i), leafValues, leafIndex,
-                dimension->mutable_value_tuple()->add_dimensions_value())) {
+            if (!backfillDimensionPath(path.value_tuple().dimensions_value(i), leafValues,
+                                       leafIndex,
+                                       dimension->mutable_value_tuple()->add_dimensions_value())) {
                 return false;
             }
         }
@@ -755,7 +760,7 @@ bool backfillDimensionPath(const DimensionsValue& path,
     return backfillDimensionPath(path, leafValues, &leafIndex, dimension);
 }
 
-void backfillDimensionPath(ConfigMetricsReportList *config_report_list) {
+void backfillDimensionPath(ConfigMetricsReportList* config_report_list) {
     for (int i = 0; i < config_report_list->reports_size(); ++i) {
         auto report = config_report_list->mutable_reports(i);
         for (int j = 0; j < report->metrics_size(); ++j) {
@@ -784,39 +789,37 @@ void backfillDimensionPath(ConfigMetricsReportList *config_report_list) {
     }
 }
 
-void backfillStartEndTimestamp(StatsLogReport *report) {
+void backfillStartEndTimestamp(StatsLogReport* report) {
     const int64_t timeBaseNs = report->time_base_elapsed_nano_seconds();
     const int64_t bucketSizeNs = report->bucket_size_nano_seconds();
     if (report->has_count_metrics()) {
-        backfillStartEndTimestampForMetrics(
-            timeBaseNs, bucketSizeNs, report->mutable_count_metrics());
+        backfillStartEndTimestampForMetrics(timeBaseNs, bucketSizeNs,
+                                            report->mutable_count_metrics());
     } else if (report->has_duration_metrics()) {
-        backfillStartEndTimestampForMetrics(
-            timeBaseNs, bucketSizeNs, report->mutable_duration_metrics());
+        backfillStartEndTimestampForMetrics(timeBaseNs, bucketSizeNs,
+                                            report->mutable_duration_metrics());
     } else if (report->has_gauge_metrics()) {
-        backfillStartEndTimestampForMetrics(
-            timeBaseNs, bucketSizeNs, report->mutable_gauge_metrics());
+        backfillStartEndTimestampForMetrics(timeBaseNs, bucketSizeNs,
+                                            report->mutable_gauge_metrics());
         if (report->gauge_metrics().skipped_size() > 0) {
-            backfillStartEndTimestampForSkippedBuckets(
-                timeBaseNs, report->mutable_gauge_metrics());
+            backfillStartEndTimestampForSkippedBuckets(timeBaseNs, report->mutable_gauge_metrics());
         }
     } else if (report->has_value_metrics()) {
-        backfillStartEndTimestampForMetrics(
-            timeBaseNs, bucketSizeNs, report->mutable_value_metrics());
+        backfillStartEndTimestampForMetrics(timeBaseNs, bucketSizeNs,
+                                            report->mutable_value_metrics());
         if (report->value_metrics().skipped_size() > 0) {
-            backfillStartEndTimestampForSkippedBuckets(
-                timeBaseNs, report->mutable_value_metrics());
+            backfillStartEndTimestampForSkippedBuckets(timeBaseNs, report->mutable_value_metrics());
         }
     }
 }
 
-void backfillStartEndTimestamp(ConfigMetricsReport *config_report) {
+void backfillStartEndTimestamp(ConfigMetricsReport* config_report) {
     for (int j = 0; j < config_report->metrics_size(); ++j) {
         backfillStartEndTimestamp(config_report->mutable_metrics(j));
     }
 }
 
-void backfillStartEndTimestamp(ConfigMetricsReportList *config_report_list) {
+void backfillStartEndTimestamp(ConfigMetricsReportList* config_report_list) {
     for (int i = 0; i < config_report_list->reports_size(); ++i) {
         backfillStartEndTimestamp(config_report_list->mutable_reports(i));
     }

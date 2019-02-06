@@ -58,14 +58,13 @@ static void setVrMode_native(JNIEnv* /* env */, jclass /* clazz */, jboolean ena
 }
 
 static const JNINativeMethod method_table[] = {
-    { "initializeNative", "()V", (void*)init_native },
-    { "setVrModeNative", "(Z)V", (void*)setVrMode_native },
+        {"initializeNative", "()V", (void*)init_native},
+        {"setVrModeNative", "(Z)V", (void*)setVrMode_native},
 };
 
-int register_android_server_vr_VrManagerService(JNIEnv *env)
-{
-    return jniRegisterNativeMethods(env, "com/android/server/vr/VrManagerService",
-            method_table, NELEM(method_table));
+int register_android_server_vr_VrManagerService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/vr/VrManagerService", method_table,
+                                    NELEM(method_table));
 }
 
-}; // namespace android
+};  // namespace android

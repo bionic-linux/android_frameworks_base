@@ -29,7 +29,10 @@ class RecentsAnimation : public TestScene {
 public:
     void createContent(int width, int height, Canvas& renderer) override {
         static SkColor COLORS[] = {
-                Color::Red_500, Color::Purple_500, Color::Blue_500, Color::Green_500,
+                Color::Red_500,
+                Color::Purple_500,
+                Color::Blue_500,
+                Color::Green_500,
         };
 
         thumbnailSize = std::min(std::min(width, height) / 2, 720);

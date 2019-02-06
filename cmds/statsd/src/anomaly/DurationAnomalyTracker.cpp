@@ -26,7 +26,7 @@ namespace statsd {
 
 DurationAnomalyTracker::DurationAnomalyTracker(const Alert& alert, const ConfigKey& configKey,
                                                const sp<AlarmMonitor>& alarmMonitor)
-        : AnomalyTracker(alert, configKey), mAlarmMonitor(alarmMonitor) {
+    : AnomalyTracker(alert, configKey), mAlarmMonitor(alarmMonitor) {
     VLOG("DurationAnomalyTracker() called");
 }
 
@@ -38,7 +38,7 @@ DurationAnomalyTracker::~DurationAnomalyTracker() {
 void DurationAnomalyTracker::startAlarm(const MetricDimensionKey& dimensionKey,
                                         const int64_t& timestampNs) {
     // Alarms are stored in secs. Must round up, since if it fires early, it is ignored completely.
-    uint32_t timestampSec = static_cast<uint32_t>((timestampNs -1) / NS_PER_SEC) + 1; // round up
+    uint32_t timestampSec = static_cast<uint32_t>((timestampNs - 1) / NS_PER_SEC) + 1;  // round up
     if (isInRefractoryPeriod(timestampNs, dimensionKey)) {
         VLOG("Not setting anomaly alarm since it would fall in the refractory period.");
         return;
@@ -82,9 +82,9 @@ void DurationAnomalyTracker::cancelAllAlarms() {
     mAlarms.clear();
 }
 
-void DurationAnomalyTracker::informAlarmsFired(const int64_t& timestampNs,
+void DurationAnomalyTracker::informAlarmsFired(
+        const int64_t& timestampNs,
         unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& firedAlarms) {
-
     if (firedAlarms.empty() || mAlarms.empty()) return;
     // Find the intersection of firedAlarms and mAlarms.
     // The for loop is inefficient, since it loops over all keys, but that's okay since it is very

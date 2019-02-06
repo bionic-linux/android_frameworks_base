@@ -17,8 +17,8 @@
 #ifndef ANDROID_MEDIA_MICROPHONEINFO_H
 #define ANDROID_MEDIA_MICROPHONEINFO_H
 
-#include <system/audio.h>
 #include <media/MicrophoneInfo.h>
+#include <system/audio.h>
 
 #include "jni.h"
 
@@ -26,8 +26,8 @@ namespace android {
 
 // Conversion from C++ MicrophoneInfo object to Java MicrophoneInfo object
 
-extern jint convertMicrophoneInfoFromNative(JNIEnv *env, jobject *jMicrophoneInfo,
-        const media::MicrophoneInfo *microphoneInfo);
-} // namespace android
+extern jint convertMicrophoneInfoFromNative(JNIEnv* env, jobject* jMicrophoneInfo,
+                                            const media::MicrophoneInfo* microphoneInfo);
+}  // namespace android
 
 #endif

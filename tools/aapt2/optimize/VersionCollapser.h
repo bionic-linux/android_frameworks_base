@@ -35,6 +35,6 @@ class VersionCollapser : public IResourceTableConsumer {
   DISALLOW_COPY_AND_ASSIGN(VersionCollapser);
 };
 
-} // namespace aapt
+}  // namespace aapt
 
 #endif  // AAPT_OPTIMIZE_VERSIONCOLLAPSER_H

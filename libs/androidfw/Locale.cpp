@@ -93,8 +93,7 @@ bool LocaleValue::InitFromFilterString(const StringPiece& str) {
 
   // At this point, valid == true && numTags > 1.
   const std::string& part2 = parts[1];
-  if ((part2.length() == 2 && is_alpha(part2)) ||
-      (part2.length() == 3 && is_number(part2))) {
+  if ((part2.length() == 2 && is_alpha(part2)) || (part2.length() == 3 && is_number(part2))) {
     set_region(part2.c_str());
   } else if (part2.length() == 4 && is_alpha(part2)) {
     set_script(part2.c_str());
@@ -110,8 +109,7 @@ bool LocaleValue::InitFromFilterString(const StringPiece& str) {
 
   // At this point, valid == true && numTags > 1.
   const std::string& part3 = parts[2];
-  if (((part3.length() == 2 && is_alpha(part3)) ||
-       (part3.length() == 3 && is_number(part3))) &&
+  if (((part3.length() == 2 && is_alpha(part3)) || (part3.length() == 3 && is_number(part3))) &&
       script[0]) {
     set_region(part3.c_str());
   } else if (part3.length() >= 4 && part3.length() <= 8) {

@@ -17,20 +17,18 @@
 #ifndef _ANDROID_CONTENT_RES_CONFIGURATION_H
 #define _ANDROID_CONTENT_RES_CONFIGURATION_H
 
-#include <androidfw/ResourceTypes.h>
 #include <android/configuration.h>
+#include <androidfw/ResourceTypes.h>
 
 #include "jni.h"
 
-struct AConfiguration : android::ResTable_config {
-};
+struct AConfiguration : android::ResTable_config {};
 
 namespace android {
 
-extern void android_Configuration_getFromJava(
-        JNIEnv* env, jobject clazz, struct AConfiguration* out);
+extern void android_Configuration_getFromJava(JNIEnv* env, jobject clazz,
+                                              struct AConfiguration* out);
 
-} // namespace android
+}  // namespace android
 
-
-#endif // _ANDROID_CONTENT_RES_CONFIGURATION_H
+#endif  // _ANDROID_CONTENT_RES_CONFIGURATION_H

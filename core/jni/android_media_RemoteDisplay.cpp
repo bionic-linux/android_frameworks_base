@@ -16,15 +16,15 @@
 
 #define LOG_TAG "RemoteDisplay"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
 #include "android_os_Parcel.h"
 #include "android_util_Binder.h"
 
-#include "core_jni_helpers.h"
-#include <android_runtime/android_view_Surface.h>
 #include <android_runtime/Log.h>
+#include <android_runtime/android_view_Surface.h>
+#include "core_jni_helpers.h"
 
 #include <binder/IServiceManager.h>
 
@@ -49,32 +49,32 @@ static struct {
 // ----------------------------------------------------------------------------
 
 class NativeRemoteDisplayClient : public BnRemoteDisplayClient {
-public:
-    NativeRemoteDisplayClient(JNIEnv* env, jobject remoteDisplayObj) :
-            mRemoteDisplayObjGlobal(env->NewGlobalRef(remoteDisplayObj)) {
-    }
+  public:
+    NativeRemoteDisplayClient(JNIEnv* env, jobject remoteDisplayObj)
+        : mRemoteDisplayObjGlobal(env->NewGlobalRef(remoteDisplayObj)) {}
 
-protected:
+  protected:
     ~NativeRemoteDisplayClient() {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
         env->DeleteGlobalRef(mRemoteDisplayObjGlobal);
     }
 
-public:
+  public:
     virtual void onDisplayConnected(const sp<IGraphicBufferProducer>& bufferProducer,
-            uint32_t width, uint32_t height, uint32_t flags, uint32_t session) {
+                                    uint32_t width, uint32_t height, uint32_t flags,
+                                    uint32_t session) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
 
-        jobject surfaceObj = android_view_Surface_createFromIGraphicBufferProducer(env, bufferProducer);
+        jobject surfaceObj =
+                android_view_Surface_createFromIGraphicBufferProducer(env, bufferProducer);
         if (surfaceObj == NULL) {
             ALOGE("Could not create Surface from surface texture %p provided by media server.",
                   bufferProducer.get());
             return;
         }
 
-        env->CallVoidMethod(mRemoteDisplayObjGlobal,
-                gRemoteDisplayClassInfo.notifyDisplayConnected,
-                surfaceObj, width, height, flags, session);
+        env->CallVoidMethod(mRemoteDisplayObjGlobal, gRemoteDisplayClassInfo.notifyDisplayConnected,
+                            surfaceObj, width, height, flags, session);
         env->DeleteLocalRef(surfaceObj);
         checkAndClearExceptionFromCallback(env, "notifyDisplayConnected");
     }
@@ -83,19 +83,19 @@ public:
         JNIEnv* env = AndroidRuntime::getJNIEnv();
 
         env->CallVoidMethod(mRemoteDisplayObjGlobal,
-                gRemoteDisplayClassInfo.notifyDisplayDisconnected);
+                            gRemoteDisplayClassInfo.notifyDisplayDisconnected);
         checkAndClearExceptionFromCallback(env, "notifyDisplayDisconnected");
     }
 
     virtual void onDisplayError(int32_t error) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
 
-        env->CallVoidMethod(mRemoteDisplayObjGlobal,
-                gRemoteDisplayClassInfo.notifyDisplayError, error);
+        env->CallVoidMethod(mRemoteDisplayObjGlobal, gRemoteDisplayClassInfo.notifyDisplayError,
+                            error);
         checkAndClearExceptionFromCallback(env, "notifyDisplayError");
     }
 
-private:
+  private:
     jobject mRemoteDisplayObjGlobal;
 
     static void checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
@@ -108,40 +108,32 @@ private:
 };
 
 class NativeRemoteDisplay {
-public:
+  public:
     NativeRemoteDisplay(const sp<IRemoteDisplay>& display,
-            const sp<NativeRemoteDisplayClient>& client) :
-            mDisplay(display), mClient(client) {
-    }
+                        const sp<NativeRemoteDisplayClient>& client)
+        : mDisplay(display), mClient(client) {}
 
-    ~NativeRemoteDisplay() {
-        mDisplay->dispose();
-    }
+    ~NativeRemoteDisplay() { mDisplay->dispose(); }
 
-    void pause() {
-        mDisplay->pause();
-    }
+    void pause() { mDisplay->pause(); }
 
-    void resume() {
-        mDisplay->resume();
-    }
+    void resume() { mDisplay->resume(); }
 
-private:
+  private:
     sp<IRemoteDisplay> mDisplay;
     sp<NativeRemoteDisplayClient> mClient;
 };
 
-
 // ----------------------------------------------------------------------------
 
 static jlong nativeListen(JNIEnv* env, jobject remoteDisplayObj, jstring ifaceStr,
-        jstring opPackageNameStr) {
+                          jstring opPackageNameStr) {
     ScopedUtfChars iface(env, ifaceStr);
     ScopedUtfChars opPackageName(env, opPackageNameStr);
 
     sp<IServiceManager> sm = defaultServiceManager();
-    sp<IMediaPlayerService> service = interface_cast<IMediaPlayerService>(
-            sm->getService(String16("media.player")));
+    sp<IMediaPlayerService> service =
+            interface_cast<IMediaPlayerService>(sm->getService(String16("media.player")));
     if (service == NULL) {
         ALOGE("Could not obtain IMediaPlayerService from service manager");
         return 0;
@@ -149,10 +141,10 @@ static jlong nativeListen(JNIEnv* env, jobject remoteDisplayObj, jstring ifaceSt
 
     sp<NativeRemoteDisplayClient> client(new NativeRemoteDisplayClient(env, remoteDisplayObj));
     sp<IRemoteDisplay> display = service->listenForRemoteDisplay(String16(opPackageName.c_str()),
-            client, String8(iface.c_str()));
+                                                                 client, String8(iface.c_str()));
     if (display == NULL) {
         ALOGE("Media player service rejected request to listen for remote display '%s'.",
-                iface.c_str());
+              iface.c_str());
         return 0;
     }
 
@@ -178,28 +170,23 @@ static void nativeDispose(JNIEnv* env, jobject remoteDisplayObj, jlong ptr) {
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gMethods[] = {
-    {"nativeListen", "(Ljava/lang/String;Ljava/lang/String;)J",
-            (void*)nativeListen },
-    {"nativeDispose", "(J)V",
-            (void*)nativeDispose },
-    {"nativePause", "(J)V",
-            (void*)nativePause },
-    {"nativeResume", "(J)V",
-            (void*)nativeResume },
+        {"nativeListen", "(Ljava/lang/String;Ljava/lang/String;)J", (void*)nativeListen},
+        {"nativeDispose", "(J)V", (void*)nativeDispose},
+        {"nativePause", "(J)V", (void*)nativePause},
+        {"nativeResume", "(J)V", (void*)nativeResume},
 };
 
-int register_android_media_RemoteDisplay(JNIEnv* env)
-{
+int register_android_media_RemoteDisplay(JNIEnv* env) {
     int err = RegisterMethodsOrDie(env, "android/media/RemoteDisplay", gMethods, NELEM(gMethods));
 
     jclass clazz = FindClassOrDie(env, "android/media/RemoteDisplay");
-    gRemoteDisplayClassInfo.notifyDisplayConnected = GetMethodIDOrDie(env,
-            clazz, "notifyDisplayConnected", "(Landroid/view/Surface;IIII)V");
-    gRemoteDisplayClassInfo.notifyDisplayDisconnected = GetMethodIDOrDie(env,
-            clazz, "notifyDisplayDisconnected", "()V");
-    gRemoteDisplayClassInfo.notifyDisplayError = GetMethodIDOrDie(env,
-            clazz, "notifyDisplayError", "(I)V");
+    gRemoteDisplayClassInfo.notifyDisplayConnected =
+            GetMethodIDOrDie(env, clazz, "notifyDisplayConnected", "(Landroid/view/Surface;IIII)V");
+    gRemoteDisplayClassInfo.notifyDisplayDisconnected =
+            GetMethodIDOrDie(env, clazz, "notifyDisplayDisconnected", "()V");
+    gRemoteDisplayClassInfo.notifyDisplayError =
+            GetMethodIDOrDie(env, clazz, "notifyDisplayError", "(I)V");
     return err;
 }
 
-};
+};  // namespace android

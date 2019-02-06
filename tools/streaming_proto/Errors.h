@@ -8,8 +8,7 @@ namespace stream_proto {
 
 using namespace std;
 
-struct Error
-{
+struct Error {
     Error();
     Error(const Error& that);
     Error(const string& filename, int lineno, const char* message);
@@ -19,9 +18,8 @@ struct Error
     string message;
 };
 
-class Errors
-{
-public:
+class Errors {
+  public:
     Errors();
     ~Errors();
 
@@ -33,7 +31,7 @@ public:
 
     bool HasErrors() const;
 
-private:
+  private:
     // The errors that have been added
     vector<Error> m_errors;
     void AddImpl(const string& filename, int lineno, const char* format, va_list ap);
@@ -43,6 +41,5 @@ extern Errors ERRORS;
 extern const string UNKNOWN_FILE;
 extern const int UNKNOWN_LINE;
 
-
-} // namespace stream_proto
-} // namespace android
+}  // namespace stream_proto
+}  // namespace android

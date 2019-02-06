@@ -39,17 +39,20 @@ extern "C" {
 #endif
 
 // JNI Wrappers ////////////////////////////////////////////////////////////////////////////////////
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeBuffer_allocate(JNIEnv* env, jobject thiz, jint size);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeBuffer_allocate(JNIEnv* env,
+                                                                            jobject thiz,
+                                                                            jint size);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeBuffer_deallocate(JNIEnv* env, jobject thiz, jboolean owns_data);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeBuffer_deallocate(JNIEnv* env,
+                                                                              jobject thiz,
+                                                                              jboolean owns_data);
 
-JNIEXPORT jboolean JNICALL
-Java_android_filterfw_core_NativeBuffer_nativeCopyTo(JNIEnv* env, jobject thiz, jobject new_buffer);
+JNIEXPORT jboolean JNICALL Java_android_filterfw_core_NativeBuffer_nativeCopyTo(JNIEnv* env,
+                                                                                jobject thiz,
+                                                                                jobject new_buffer);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTEFW_JNI_NATIVE_BUFFER_H
+#endif  // ANDROID_FILTEFW_JNI_NATIVE_BUFFER_H

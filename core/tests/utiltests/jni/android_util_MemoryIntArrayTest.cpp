@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#include <atomic>
-#include <jni.h>
 #include <cutils/ashmem.h>
+#include <jni.h>
 #include <linux/ashmem.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
+#include <atomic>
 
 void android_util_MemoryIntArrayTest_setAshmemSize(__attribute__((unused)) JNIEnv* env,
-        __attribute__((unused)) jobject clazz, jint fd, jint size)
-{
+                                                   __attribute__((unused)) jobject clazz, jint fd,
+                                                   jint size) {
     if (fd < 0) {
         return;
     }

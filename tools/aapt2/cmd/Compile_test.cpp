@@ -38,8 +38,8 @@ int TestCompile(std::string path, std::string outDir, bool legacy, StdErrDiagnos
 TEST(CompilerTest, MultiplePeriods) {
   StdErrDiagnostics diag;
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
-  const std::string kResDir = android::base::Dirname(android::base::GetExecutablePath())
-      + "/integration-tests/CompileTest/res";
+  const std::string kResDir = android::base::Dirname(android::base::GetExecutablePath()) +
+                              "/integration-tests/CompileTest/res";
 
   // Resource files without periods in the file name should not throw errors
   const std::string path0 = kResDir + "/values/values.xml";
@@ -93,4 +93,4 @@ TEST(CompilerTest, MultiplePeriods) {
   ASSERT_EQ(remove(path5_out.c_str()), 0);
 }
 
-}
+}  // namespace aapt

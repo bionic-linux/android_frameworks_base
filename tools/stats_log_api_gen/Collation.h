@@ -17,40 +17,39 @@
 #ifndef ANDROID_STATS_LOG_API_GEN_COLLATION_H
 #define ANDROID_STATS_LOG_API_GEN_COLLATION_H
 
-
 #include <google/protobuf/descriptor.h>
 
+#include <map>
 #include <set>
 #include <vector>
-#include <map>
 
 namespace android {
 namespace stats_log_api_gen {
 
+using google::protobuf::Descriptor;
+using google::protobuf::FieldDescriptor;
 using std::map;
 using std::set;
 using std::string;
 using std::vector;
-using google::protobuf::Descriptor;
-using google::protobuf::FieldDescriptor;
 
 /**
  * The types for atom parameters.
  */
 typedef enum {
-  JAVA_TYPE_UNKNOWN = 0,
+    JAVA_TYPE_UNKNOWN = 0,
 
-  JAVA_TYPE_ATTRIBUTION_CHAIN = 1,
-  JAVA_TYPE_BOOLEAN = 2,
-  JAVA_TYPE_INT = 3,
-  JAVA_TYPE_LONG = 4,
-  JAVA_TYPE_FLOAT = 5,
-  JAVA_TYPE_DOUBLE = 6,
-  JAVA_TYPE_STRING = 7,
-  JAVA_TYPE_ENUM = 8,
+    JAVA_TYPE_ATTRIBUTION_CHAIN = 1,
+    JAVA_TYPE_BOOLEAN = 2,
+    JAVA_TYPE_INT = 3,
+    JAVA_TYPE_LONG = 4,
+    JAVA_TYPE_FLOAT = 5,
+    JAVA_TYPE_DOUBLE = 6,
+    JAVA_TYPE_STRING = 7,
+    JAVA_TYPE_ENUM = 8,
 
-  JAVA_TYPE_OBJECT = -1,
-  JAVA_TYPE_BYTE_ARRAY = -2,
+    JAVA_TYPE_OBJECT = -1,
+    JAVA_TYPE_BYTE_ARRAY = -2,
 } java_type_t;
 
 /**
@@ -63,11 +62,10 @@ struct AtomField {
     // If the field is of type enum, the following map contains the list of enum values.
     map<int /* numeric value */, string /* value name */> enumValues;
 
-    inline AtomField() :name(), javaType(JAVA_TYPE_UNKNOWN) {}
-    inline AtomField(const AtomField& that) :name(that.name),
-                                             javaType(that.javaType),
-                                             enumValues(that.enumValues) {}
-    inline AtomField(string n, java_type_t jt) :name(n), javaType(jt) {}
+    inline AtomField() : name(), javaType(JAVA_TYPE_UNKNOWN) {}
+    inline AtomField(const AtomField& that)
+        : name(that.name), javaType(that.javaType), enumValues(that.enumValues) {}
+    inline AtomField(string n, java_type_t jt) : name(n), javaType(jt) {}
     inline ~AtomField() {}
 };
 
@@ -109,10 +107,9 @@ struct Atoms {
  * Gather the information about the atoms.  Returns the number of errors.
  */
 int collate_atoms(const Descriptor* descriptor, Atoms* atoms);
-int collate_atom(const Descriptor *atom, AtomDecl *atomDecl, vector<java_type_t> *signature);
+int collate_atom(const Descriptor* atom, AtomDecl* atomDecl, vector<java_type_t>* signature);
 
 }  // namespace stats_log_api_gen
 }  // namespace android
 
-
-#endif // ANDROID_STATS_LOG_API_GEN_COLLATION_H
+#endif  // ANDROID_STATS_LOG_API_GEN_COLLATION_H

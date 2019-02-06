@@ -20,11 +20,10 @@
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 
-
 namespace android {
 
 bool android_util_Log_isVerboseLogEnabled(const char* tag);
 
 }
 
-#endif // _ANDROID_UTIL_LOG_H
+#endif  // _ANDROID_UTIL_LOG_H

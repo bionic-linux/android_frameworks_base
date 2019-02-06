@@ -156,5 +156,5 @@ TEST(CanvasState, saveAndRestoreButNotTooMuch) {
     state.restore();
     EXPECT_TRUE(approxEqual(*state.currentTransform(), simpleTranslate));  // verify not restored
 }
-}
-}
+}  // namespace uirenderer
+}  // namespace android

@@ -17,8 +17,8 @@
 #define LOG_TAG "BackupHelperDispatcher_native"
 #include <utils/Log.h>
 
-#include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <nativehelper/JNIHelp.h>
 
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -28,22 +28,19 @@
 
 #define VERSION_1_HEADER 0x01706c48  // 'Hlp'1 little endian
 
-namespace android
-{
+namespace android {
 
 struct chunk_header_v1 {
     int headerSize;
     int version;
-    int dataSize; // corresponds to Header.chunkSize
-    int nameLength; // not including the NULL terminator, which is not written to the file
+    int dataSize;    // corresponds to Header.chunkSize
+    int nameLength;  // not including the NULL terminator, which is not written to the file
 };
 
 static jfieldID s_chunkSizeField = 0;
 static jfieldID s_keyPrefixField = 0;
 
-static jint
-readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
-{
+static jint readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj) {
     chunk_header_v1 flattenedHeader;
     ssize_t amt;
     String8 keyPrefix;
@@ -53,7 +50,7 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
 
     amt = read(fd, &flattenedHeader.headerSize, sizeof(flattenedHeader.headerSize));
     if (amt != sizeof(flattenedHeader.headerSize)) {
-        return (jint) -1;
+        return (jint)-1;
     }
 
     int remainingHeader = flattenedHeader.headerSize - sizeof(flattenedHeader.headerSize);
@@ -63,25 +60,25 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
         if (remainingHeader > 0) {
             lseek(fd, remainingHeader, SEEK_CUR);
             // >0 means skip this chunk
-            return (jint) 1;
+            return (jint)1;
         }
     }
 
     amt = read(fd, &flattenedHeader.version,
-            sizeof(chunk_header_v1)-sizeof(flattenedHeader.headerSize));
+               sizeof(chunk_header_v1) - sizeof(flattenedHeader.headerSize));
     if (amt <= 0) {
         ALOGW("Failed reading chunk header");
-        return (jint) -1;
+        return (jint)-1;
     }
-    remainingHeader -= sizeof(chunk_header_v1)-sizeof(flattenedHeader.headerSize);
+    remainingHeader -= sizeof(chunk_header_v1) - sizeof(flattenedHeader.headerSize);
 
     if (flattenedHeader.version != VERSION_1_HEADER) {
         ALOGW("Skipping unknown header version: 0x%08x, %d bytes", flattenedHeader.version,
-                flattenedHeader.headerSize);
+              flattenedHeader.headerSize);
         if (remainingHeader > 0) {
             lseek(fd, remainingHeader, SEEK_CUR);
             // >0 means skip this chunk
-            return (jint) 1;
+            return (jint)1;
         }
     }
 
@@ -94,16 +91,16 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
 #endif
 
     if (flattenedHeader.dataSize < 0 || flattenedHeader.nameLength < 0 ||
-            remainingHeader < flattenedHeader.nameLength) {
+        remainingHeader < flattenedHeader.nameLength) {
         ALOGW("Malformed V1 header remainingHeader=%d dataSize=%d nameLength=%d", remainingHeader,
-                flattenedHeader.dataSize, flattenedHeader.nameLength);
-        return (jint) -1;
+              flattenedHeader.dataSize, flattenedHeader.nameLength);
+        return (jint)-1;
     }
 
     buf = keyPrefix.lockBuffer(flattenedHeader.nameLength);
     if (buf == NULL) {
         ALOGW("unable to allocate %d bytes", flattenedHeader.nameLength);
-        return (jint) -1;
+        return (jint)-1;
     }
 
     amt = read(fd, buf, flattenedHeader.nameLength);
@@ -120,29 +117,23 @@ readHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
     env->SetIntField(headerObj, s_chunkSizeField, flattenedHeader.dataSize);
     env->SetObjectField(headerObj, s_keyPrefixField, env->NewStringUTF(keyPrefix.string()));
 
-    return (jint) 0;
+    return (jint)0;
 }
 
-static jint
-skipChunk_native(JNIEnv* env, jobject clazz, jobject fdObj, jint bytesToSkip)
-{
+static jint skipChunk_native(JNIEnv* env, jobject clazz, jobject fdObj, jint bytesToSkip) {
     int fd = jniGetFDFromFileDescriptor(env, fdObj);
 
     lseek(fd, bytesToSkip, SEEK_CUR);
 
-    return (jint) 0;
+    return (jint)0;
 }
 
-static int
-padding_len(int len)
-{
+static int padding_len(int len) {
     len = len % 4;
     return len == 0 ? len : 4 - len;
 }
 
-static jint
-allocateHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj)
-{
+static jint allocateHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj) {
     int pos;
     jstring nameObj;
     int nameLength;
@@ -162,12 +153,11 @@ allocateHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdO
 
     lseek(fd, headerSize, SEEK_CUR);
 
-    return (jint) pos;
+    return (jint)pos;
 }
 
-static jint
-writeHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj, jint pos)
-{
+static jint writeHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj,
+                               jint pos) {
     int err;
     chunk_header_v1 header;
     int namePadding;
@@ -189,45 +179,42 @@ writeHeader_native(JNIEnv* env, jobject clazz, jobject headerObj, jobject fdObj,
     lseek(fd, pos, SEEK_SET);
     err = write(fd, &header, sizeof(chunk_header_v1));
     if (err != sizeof(chunk_header_v1)) {
-        return (jint) errno;
+        return (jint)errno;
     }
 
     buf = env->GetStringUTFChars(nameObj, NULL);
     err = write(fd, buf, header.nameLength);
     env->ReleaseStringUTFChars(nameObj, buf);
     if (err != header.nameLength) {
-        return (jint) errno;
+        return (jint)errno;
     }
 
     if (namePadding != 0) {
         int zero = 0;
         err = write(fd, &zero, namePadding);
         if (err != namePadding) {
-            return (jint) errno;
+            return (jint)errno;
         }
     }
 
     lseek(fd, prevPos, SEEK_SET);
-    return (jint) 0;
+    return (jint)0;
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "readHeader_native",
-       "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;)I",
-       (void*)readHeader_native },
-    { "skipChunk_native",
-        "(Ljava/io/FileDescriptor;I)I",
-        (void*)skipChunk_native },
-    { "allocateHeader_native",
-        "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;)I",
-        (void*)allocateHeader_native },
-    { "writeHeader_native",
-       "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;I)I",
-       (void*)writeHeader_native },
+        {"readHeader_native",
+         "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;)I",
+         (void*)readHeader_native},
+        {"skipChunk_native", "(Ljava/io/FileDescriptor;I)I", (void*)skipChunk_native},
+        {"allocateHeader_native",
+         "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;)I",
+         (void*)allocateHeader_native},
+        {"writeHeader_native",
+         "(Landroid/app/backup/BackupHelperDispatcher$Header;Ljava/io/FileDescriptor;I)I",
+         (void*)writeHeader_native},
 };
 
-int register_android_backup_BackupHelperDispatcher(JNIEnv* env)
-{
+int register_android_backup_BackupHelperDispatcher(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/app/backup/BackupHelperDispatcher$Header");
     s_chunkSizeField = GetFieldIDOrDie(env, clazz, "chunkSize", "I");
     s_keyPrefixField = GetFieldIDOrDie(env, clazz, "keyPrefix", "Ljava/lang/String;");
@@ -236,4 +223,4 @@ int register_android_backup_BackupHelperDispatcher(JNIEnv* env)
                                 NELEM(g_methods));
 }
 
-}
+}  // namespace android

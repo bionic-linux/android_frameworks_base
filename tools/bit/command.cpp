@@ -20,60 +20,45 @@
 #include "util.h"
 
 #include <errno.h>
-#include <string.h>
 #include <stdlib.h>
-#include <sys/types.h>
+#include <string.h>
 #include <sys/stat.h>
-#include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
-extern char **environ;
+extern char** environ;
 
-Command::Command(const string& prog)
-    :prog(prog)
-{
-}
+Command::Command(const string& prog) : prog(prog) {}
 
-Command::~Command()
-{
-}
+Command::~Command() {}
 
-void
-Command::AddArg(const string& arg)
-{
+void Command::AddArg(const string& arg) {
     args.push_back(arg);
 }
 
-void
-Command::AddEnv(const string& name, const string& value)
-{
+void Command::AddEnv(const string& name, const string& value) {
     env[name] = value;
 }
 
-const char*
-Command::GetProg() const
-{
+const char* Command::GetProg() const {
     return prog.c_str();
 }
 
-char *const *
-Command::GetArgv() const
-{
+char* const* Command::GetArgv() const {
     const int N = args.size();
-    char** result = (char**)malloc(sizeof(char*)*(N+2));
+    char** result = (char**)malloc(sizeof(char*) * (N + 2));
     result[0] = strdup(prog.c_str());
-    for (int i=0; i<N; i++) {
-        result[i+1] = strdup(args[i].c_str());
+    for (int i = 0; i < N; i++) {
+        result[i + 1] = strdup(args[i].c_str());
     }
-    result[N+1] = 0;
+    result[N + 1] = 0;
     return result;
 }
 
-char *const *
-Command::GetEnv() const
-{
-    map<string,string> copy;
-    for (const char** p=(const char**)environ; *p != NULL; p++) {
+char* const* Command::GetEnv() const {
+    map<string, string> copy;
+    for (const char** p = (const char**)environ; *p != NULL; p++) {
         char* name = strdup(*p);
         char* value = strchr(name, '=');
         *value = '\0';
@@ -81,12 +66,12 @@ Command::GetEnv() const
         copy[name] = value;
         free(name);
     }
-    for (map<string,string>::const_iterator it=env.begin(); it!=env.end(); it++) {
+    for (map<string, string>::const_iterator it = env.begin(); it != env.end(); it++) {
         copy[it->first] = it->second;
     }
-    char** result = (char**)malloc(sizeof(char*)*(copy.size()+1));
+    char** result = (char**)malloc(sizeof(char*) * (copy.size() + 1));
     char** row = result;
-    for (map<string,string>::const_iterator it=copy.begin(); it!=copy.end(); it++) {
+    for (map<string, string>::const_iterator it = copy.begin(); it != copy.end(); it++) {
         *row = (char*)malloc(it->first.size() + it->second.size() + 2);
         strcpy(*row, it->first.c_str());
         strcat(*row, "=");
@@ -97,9 +82,7 @@ Command::GetEnv() const
     return result;
 }
 
-string
-get_command_output(const Command& command, int* err, bool quiet)
-{
+string get_command_output(const Command& command, int* err, bool quiet) {
     if (!quiet) {
         print_command(command);
     }
@@ -117,7 +100,8 @@ get_command_output(const Command& command, int* err, bool quiet)
         return string();
     } else if (pid == 0) {
         // child
-        while ((dup2(fds[1], STDOUT_FILENO) == -1) && (errno == EINTR)) {}
+        while ((dup2(fds[1], STDOUT_FILENO) == -1) && (errno == EINTR)) {
+        }
         close(fds[1]);
         close(fds[0]);
         const char* prog = command.GetProg();
@@ -132,7 +116,7 @@ get_command_output(const Command& command, int* err, bool quiet)
         // parent
         close(fds[1]);
         string result;
-        const int size = 16*1024;
+        const int size = 16 * 1024;
         char* buf = (char*)malloc(size);
         while (true) {
             ssize_t amt = read(fds[0], buf, size);
@@ -155,10 +139,7 @@ get_command_output(const Command& command, int* err, bool quiet)
     }
 }
 
-
-int
-run_command(const Command& command)
-{
+int run_command(const Command& command) {
     print_command(command);
 
     pid_t pid = fork();
@@ -186,11 +167,9 @@ run_command(const Command& command)
     }
 }
 
-int
-exec_with_path_search(const char* prog, char const* const* argv, char const* const* envp)
-{
+int exec_with_path_search(const char* prog, char const* const* argv, char const* const* envp) {
     if (strchr(prog, '/') != NULL) {
-        return execve(prog, (char*const*)argv, (char*const*)envp);
+        return execve(prog, (char* const*)argv, (char* const*)envp);
     } else {
         char* pathEnv = strdup(getenv("PATH"));
         if (pathEnv == NULL) {
@@ -207,7 +186,7 @@ exec_with_path_search(const char* prog, char const* const* argv, char const* con
                 struct stat st;
                 string executable = string(dir) + "/" + prog;
                 if (stat(executable.c_str(), &st) == 0) {
-                    execve(executable.c_str(), (char*const*)argv, (char*const*)envp);
+                    execve(executable.c_str(), (char* const*)argv, (char* const*)envp);
                 }
             }
             dir = next;
@@ -216,4 +195,3 @@ exec_with_path_search(const char* prog, char const* const* argv, char const* con
         return 1;
     }
 }
-

@@ -72,7 +72,9 @@ void outputBenchmarkReport(const TestScene::Info& info, const TestScene::Options
     };
 
     static std::array<ReportInfo, 4> REPORTS = {
-            ReportInfo{50, "_50th"}, ReportInfo{90, "_90th"}, ReportInfo{95, "_95th"},
+            ReportInfo{50, "_50th"},
+            ReportInfo{90, "_90th"},
+            ReportInfo{95, "_95th"},
             ReportInfo{99, "_99th"},
     };
 

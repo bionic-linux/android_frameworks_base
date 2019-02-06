@@ -65,7 +65,8 @@ SimpleConditionTracker::SimpleConditionTracker(
     if (simplePredicate.has_stop_all()) {
         auto pair = trackerNameIndexMap.find(simplePredicate.stop_all());
         if (pair == trackerNameIndexMap.end()) {
-            ALOGW("Stop all matcher %lld found in the config", (long long)simplePredicate.stop_all());
+            ALOGW("Stop all matcher %lld found in the config",
+                  (long long)simplePredicate.stop_all());
             return;
         }
         mStopAllLogMatcherIndex = pair->second;
@@ -133,7 +134,7 @@ void SimpleConditionTracker::handleStopAll(std::vector<ConditionState>& conditio
     // triggered a condition change.
     conditionChangedCache[mIndex] =
             (mInitialValue == ConditionState::kFalse && mSlicedConditionState.empty()) ? false
-                                                                                           : true;
+                                                                                       : true;
 
     for (const auto& cond : mSlicedConditionState) {
         if (cond.second > 0) {
@@ -158,11 +159,12 @@ bool SimpleConditionTracker::hitGuardRail(const HashableDimensionKey& newKey) {
     // 1. Report the tuple count if the tuple count > soft limit
     if (mSlicedConditionState.size() > StatsdStats::kDimensionKeySizeSoftLimit - 1) {
         size_t newTupleCount = mSlicedConditionState.size() + 1;
-        StatsdStats::getInstance().noteConditionDimensionSize(mConfigKey, mConditionId, newTupleCount);
+        StatsdStats::getInstance().noteConditionDimensionSize(mConfigKey, mConditionId,
+                                                              newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > StatsdStats::kDimensionKeySizeHardLimit) {
-            ALOGE("Predicate %lld dropping data for dimension key %s",
-                (long long)mConditionId, newKey.toString().c_str());
+            ALOGE("Predicate %lld dropping data for dimension key %s", (long long)mConditionId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -251,16 +253,14 @@ void SimpleConditionTracker::handleConditionEvent(const HashableDimensionKey& ou
          conditionChangedCache[mIndex] == true);
 }
 
-void SimpleConditionTracker::evaluateCondition(
-        const LogEvent& event,
-        const vector<MatchingState>& eventMatcherValues,
-        const vector<sp<ConditionTracker>>& mAllConditions,
-        vector<ConditionState>& conditionCache,
-        vector<bool>& conditionChangedCache) {
+void SimpleConditionTracker::evaluateCondition(const LogEvent& event,
+                                               const vector<MatchingState>& eventMatcherValues,
+                                               const vector<sp<ConditionTracker>>& mAllConditions,
+                                               vector<ConditionState>& conditionCache,
+                                               vector<bool>& conditionChangedCache) {
     if (conditionCache[mIndex] != ConditionState::kNotEvaluated) {
         // it has been evaluated.
-        VLOG("Yes, already evaluated, %lld %d",
-            (long long)mConditionId, conditionCache[mIndex]);
+        VLOG("Yes, already evaluated, %lld %d", (long long)mConditionId, conditionCache[mIndex]);
         return;
     }
     mLastChangedToTrueDimensions.clear();
@@ -344,16 +344,12 @@ void SimpleConditionTracker::evaluateCondition(
 
 void SimpleConditionTracker::isConditionMet(
         const ConditionKey& conditionParameters, const vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensionFields,
-        const bool isSubOutputDimensionFields,
-        const bool isPartialLink,
-        vector<ConditionState>& conditionCache,
+        const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
+        const bool isPartialLink, vector<ConditionState>& conditionCache,
         std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const {
-
     if (conditionCache[mIndex] != ConditionState::kNotEvaluated) {
         // it has been evaluated.
-        VLOG("Yes, already evaluated, %lld %d",
-            (long long)mConditionId, conditionCache[mIndex]);
+        VLOG("Yes, already evaluated, %lld %d", (long long)mConditionId, conditionCache[mIndex]);
         return;
     }
     const auto pair = conditionParameters.find(mConditionId);
@@ -361,15 +357,16 @@ void SimpleConditionTracker::isConditionMet(
     if (pair == conditionParameters.end()) {
         ConditionState conditionState = ConditionState::kNotEvaluated;
         if (dimensionFields.size() > 0 && dimensionFields[0].mMatcher.getTag() == mDimensionTag) {
-            conditionState = conditionState | getMetConditionDimension(
-                allConditions, dimensionFields, isSubOutputDimensionFields, dimensionsKeySet);
+            conditionState = conditionState |
+                             getMetConditionDimension(allConditions, dimensionFields,
+                                                      isSubOutputDimensionFields, dimensionsKeySet);
         } else {
             conditionState = conditionState | mInitialValue;
             if (!mSliced) {
                 const auto& itr = mSlicedConditionState.find(DEFAULT_DIMENSION_KEY);
                 if (itr != mSlicedConditionState.end()) {
                     ConditionState sliceState =
-                        itr->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
+                            itr->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
                     conditionState = conditionState | sliceState;
                 }
             }
@@ -386,7 +383,7 @@ void SimpleConditionTracker::isConditionMet(
         conditionState = conditionState | mInitialValue;
         for (const auto& slice : mSlicedConditionState) {
             ConditionState sliceState =
-                slice.second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
+                    slice.second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
             if (slice.first.contains(key)) {
                 conditionState = conditionState | sliceState;
                 if (sliceState == ConditionState::kTrue && dimensionFields.size() > 0) {
@@ -405,7 +402,7 @@ void SimpleConditionTracker::isConditionMet(
         conditionState = conditionState | mInitialValue;
         if (startedCountIt != mSlicedConditionState.end()) {
             ConditionState sliceState =
-                startedCountIt->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
+                    startedCountIt->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
             conditionState = conditionState | sliceState;
             if (sliceState == ConditionState::kTrue && dimensionFields.size() > 0) {
                 if (isSubOutputDimensionFields) {
@@ -417,7 +414,6 @@ void SimpleConditionTracker::isConditionMet(
                 }
             }
         }
-
     }
     conditionCache[mIndex] = conditionState;
     VLOG("Predicate %lld return %d", (long long)mConditionId, conditionCache[mIndex]);
@@ -425,8 +421,7 @@ void SimpleConditionTracker::isConditionMet(
 
 ConditionState SimpleConditionTracker::getMetConditionDimension(
         const std::vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensionFields,
-        const bool isSubOutputDimensionFields,
+        const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
         std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const {
     ConditionState conditionState = mInitialValue;
     if (dimensionFields.size() == 0 || mOutputDimensions.size() == 0 ||
@@ -434,7 +429,7 @@ ConditionState SimpleConditionTracker::getMetConditionDimension(
         const auto& itr = mSlicedConditionState.find(DEFAULT_DIMENSION_KEY);
         if (itr != mSlicedConditionState.end()) {
             ConditionState sliceState =
-                itr->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
+                    itr->second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
             conditionState = conditionState | sliceState;
         }
         return conditionState;
@@ -442,7 +437,7 @@ ConditionState SimpleConditionTracker::getMetConditionDimension(
 
     for (const auto& slice : mSlicedConditionState) {
         ConditionState sliceState =
-            slice.second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
+                slice.second > 0 ? ConditionState::kTrue : ConditionState::kFalse;
         conditionState = conditionState | sliceState;
 
         if (sliceState == ConditionState::kTrue && dimensionFields.size() > 0) {

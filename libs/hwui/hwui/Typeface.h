@@ -86,6 +86,6 @@ private:
     // base weight in CSS-style units, 1..1000
     int fBaseWeight;
 };
-}
+}  // namespace android
 
 #endif  // _ANDROID_GRAPHICS_TYPEFACE_IMPL_H_

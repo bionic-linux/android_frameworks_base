@@ -24,4 +24,4 @@ struct AMIDI_Device {
     int32_t deviceId;
 };
 
-#endif // ANDROID_MEDIA_MIDI_INTERNAL_H_
+#endif  // ANDROID_MEDIA_MIDI_INTERNAL_H_

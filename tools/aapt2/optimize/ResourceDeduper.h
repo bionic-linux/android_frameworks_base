@@ -36,6 +36,6 @@ class ResourceDeduper : public IResourceTableConsumer {
   DISALLOW_COPY_AND_ASSIGN(ResourceDeduper);
 };
 
-} // namespace aapt
+}  // namespace aapt
 
 #endif  // AAPT_OPTIMIZE_RESOURCEDEDUPER_H

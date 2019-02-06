@@ -21,12 +21,12 @@
 #include "util.h"
 
 #include <errno.h>
-#include <string.h>
+#include <limits.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <limits.h>
+#include <unistd.h>
 
 #include <iostream>
 #include <istream>
@@ -34,19 +34,15 @@
 
 using namespace std;
 
-struct Buffer: public streambuf
-{
+struct Buffer : public streambuf {
     Buffer(char* begin, size_t size);
 };
 
-Buffer::Buffer(char* begin, size_t size)
-{
+Buffer::Buffer(char* begin, size_t size) {
     this->setg(begin, begin, begin + size);
 }
 
-int
-run_adb(const char* first, ...)
-{
+int run_adb(const char* first, ...) {
     Command cmd("adb");
 
     if (first == NULL) {
@@ -69,9 +65,7 @@ run_adb(const char* first, ...)
     return run_command(cmd);
 }
 
-string
-get_system_property(const string& name, int* err)
-{
+string get_system_property(const string& name, int* err) {
     Command cmd("adb");
     cmd.AddArg("shell");
     cmd.AddArg("getprop");
@@ -80,10 +74,7 @@ get_system_property(const string& name, int* err)
     return trim(get_command_output(cmd, err, false));
 }
 
-
-static uint64_t
-read_varint(int fd, int* err, bool* done)
-{
+static uint64_t read_varint(int fd, int* err, bool* done) {
     uint32_t bits = 0;
     uint64_t result = 0;
     while (true) {
@@ -107,9 +98,7 @@ read_varint(int fd, int* err, bool* done)
     }
 }
 
-static char*
-read_sized_buffer(int fd, int* err, size_t* resultSize)
-{
+static char* read_sized_buffer(int fd, int* err, size_t* resultSize) {
     bool done = false;
     uint64_t size = read_varint(fd, err, &done);
     if (*err != 0 || done) {
@@ -120,7 +109,7 @@ read_sized_buffer(int fd, int* err, size_t* resultSize)
         return NULL;
     }
     // 10 MB seems like a reasonable limit.
-    if (size > 10*1024*1024) {
+    if (size > 10 * 1024 * 1024) {
         print_error("result buffer too large: %llu", size);
         return NULL;
     }
@@ -131,7 +120,7 @@ read_sized_buffer(int fd, int* err, size_t* resultSize)
     }
     int pos = 0;
     while (size - pos > 0) {
-        ssize_t amt = read(fd, buf+pos, size-pos);
+        ssize_t amt = read(fd, buf + pos, size - pos);
         if (amt == 0) {
             // early end of pipe
             print_error("Early end of pipe.");
@@ -150,9 +139,7 @@ read_sized_buffer(int fd, int* err, size_t* resultSize)
     return buf;
 }
 
-static int
-read_sized_proto(int fd, Message* message)
-{
+static int read_sized_proto(int fd, Message* message) {
     int err = 0;
     size_t size;
     char* buf = read_sized_buffer(fd, &err, &size);
@@ -178,9 +165,7 @@ read_sized_proto(int fd, Message* message)
     return err;
 }
 
-static int
-skip_bytes(int fd, ssize_t size, char* scratch, int scratchSize)
-{
+static int skip_bytes(int fd, ssize_t size, char* scratch, int scratchSize) {
     while (size > 0) {
         ssize_t amt = size < scratchSize ? size : scratchSize;
         fprintf(stderr, "skipping %lu/%ld bytes\n", size, amt);
@@ -198,13 +183,12 @@ skip_bytes(int fd, ssize_t size, char* scratch, int scratchSize)
     return 0;
 }
 
-static int
-skip_unknown_field(int fd, uint64_t tag, char* scratch, int scratchSize) {
+static int skip_unknown_field(int fd, uint64_t tag, char* scratch, int scratchSize) {
     bool done;
     int err;
     uint64_t size;
     switch (tag & 0x7) {
-        case 0: // varint
+        case 0:  // varint
             read_varint(fd, &err, &done);
             if (err != 0) {
                 return err;
@@ -235,10 +219,8 @@ skip_unknown_field(int fd, uint64_t tag, char* scratch, int scratchSize) {
     }
 }
 
-static int
-read_instrumentation_results(int fd, char* scratch, int scratchSize,
-        InstrumentationCallbacks* callbacks)
-{
+static int read_instrumentation_results(int fd, char* scratch, int scratchSize,
+                                        InstrumentationCallbacks* callbacks) {
     bool done = false;
     int err = 0;
     string result;
@@ -249,14 +231,14 @@ read_instrumentation_results(int fd, char* scratch, int scratchSize,
             return 0;
         } else if (err != 0) {
             return err;
-        } else if (tag == 0xa) { // test_status
+        } else if (tag == 0xa) {  // test_status
             TestStatus status;
             err = read_sized_proto(fd, &status);
             if (err != 0) {
                 return err;
             }
             callbacks->OnTestStatus(status);
-        } else if (tag == 0x12) { // session_status
+        } else if (tag == 0x12) {  // session_status
             SessionStatus status;
             err = read_sized_proto(fd, &status);
             if (err != 0) {
@@ -273,10 +255,8 @@ read_instrumentation_results(int fd, char* scratch, int scratchSize,
     return 0;
 }
 
-int
-run_instrumentation_test(const string& packageName, const string& runner, const string& className,
-        InstrumentationCallbacks* callbacks)
-{
+int run_instrumentation_test(const string& packageName, const string& runner,
+                             const string& className, InstrumentationCallbacks* callbacks) {
     Command cmd("adb");
     cmd.AddArg("shell");
     cmd.AddArg("am");
@@ -313,7 +293,8 @@ run_instrumentation_test(const string& packageName, const string& runner, const 
         return errno;
     } else if (pid == 0) {
         // child
-        while ((dup2(fds[1], STDOUT_FILENO) == -1) && (errno == EINTR)) {}
+        while ((dup2(fds[1], STDOUT_FILENO) == -1) && (errno == EINTR)) {
+        }
         close(fds[1]);
         close(fds[0]);
         const char* prog = cmd.GetProg();
@@ -326,7 +307,7 @@ run_instrumentation_test(const string& packageName, const string& runner, const 
         // parent
         close(fds[1]);
         string result;
-        const int size = 16*1024;
+        const int size = 16 * 1024;
         char* buf = (char*)malloc(size);
         int err = read_instrumentation_results(fds[0], buf, size, callbacks);
         free(buf);
@@ -347,16 +328,14 @@ run_instrumentation_test(const string& packageName, const string& runner, const 
  * Get the second to last bundle in the args list. Stores the last name found
  * in last. If the path is not found or if the args list is empty, returns NULL.
  */
-static const ResultsBundleEntry *
-find_penultimate_entry(const ResultsBundle& bundle, va_list args)
-{
+static const ResultsBundleEntry* find_penultimate_entry(const ResultsBundle& bundle, va_list args) {
     const ResultsBundle* b = &bundle;
     const char* arg = va_arg(args, char*);
     while (arg) {
         string last = arg;
         arg = va_arg(args, char*);
         bool found = false;
-        for (int i=0; i<b->entries_size(); i++) {
+        for (int i = 0; i < b->entries_size(); i++) {
             const ResultsBundleEntry& e = b->entries(i);
             if (e.key() == last) {
                 if (arg == NULL) {
@@ -377,9 +356,7 @@ find_penultimate_entry(const ResultsBundle& bundle, va_list args)
     return NULL;
 }
 
-string
-get_bundle_string(const ResultsBundle& bundle, bool* found, ...)
-{
+string get_bundle_string(const ResultsBundle& bundle, bool* found, ...) {
     va_list args;
     va_start(args, found);
     const ResultsBundleEntry* entry = find_penultimate_entry(bundle, args);
@@ -396,9 +373,7 @@ get_bundle_string(const ResultsBundle& bundle, bool* found, ...)
     return string();
 }
 
-int32_t
-get_bundle_int(const ResultsBundle& bundle, bool* found, ...)
-{
+int32_t get_bundle_int(const ResultsBundle& bundle, bool* found, ...) {
     va_list args;
     va_start(args, found);
     const ResultsBundleEntry* entry = find_penultimate_entry(bundle, args);
@@ -415,9 +390,7 @@ get_bundle_int(const ResultsBundle& bundle, bool* found, ...)
     return 0;
 }
 
-float
-get_bundle_float(const ResultsBundle& bundle, bool* found, ...)
-{
+float get_bundle_float(const ResultsBundle& bundle, bool* found, ...) {
     va_list args;
     va_start(args, found);
     const ResultsBundleEntry* entry = find_penultimate_entry(bundle, args);
@@ -434,9 +407,7 @@ get_bundle_float(const ResultsBundle& bundle, bool* found, ...)
     return 0;
 }
 
-double
-get_bundle_double(const ResultsBundle& bundle, bool* found, ...)
-{
+double get_bundle_double(const ResultsBundle& bundle, bool* found, ...) {
     va_list args;
     va_start(args, found);
     const ResultsBundleEntry* entry = find_penultimate_entry(bundle, args);
@@ -453,9 +424,7 @@ get_bundle_double(const ResultsBundle& bundle, bool* found, ...)
     return 0;
 }
 
-int64_t
-get_bundle_long(const ResultsBundle& bundle, bool* found, ...)
-{
+int64_t get_bundle_long(const ResultsBundle& bundle, bool* found, ...) {
     va_list args;
     va_start(args, found);
     const ResultsBundleEntry* entry = find_penultimate_entry(bundle, args);
@@ -471,4 +440,3 @@ get_bundle_long(const ResultsBundle& bundle, bool* found, ...)
     *found = false;
     return 0;
 }
-

@@ -18,10 +18,10 @@
 
 #include <gtest/gtest_prod.h>
 #include "config/ConfigListener.h"
+#include "external/StatsPullerManager.h"
 #include "logd/LogReader.h"
 #include "metrics/MetricsManager.h"
 #include "packages/UidMap.h"
-#include "external/StatsPullerManager.h"
 
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"
 
@@ -134,8 +134,8 @@ private:
 
     void resetIfConfigTtlExpiredLocked(const int64_t timestampNs);
 
-    void OnConfigUpdatedLocked(
-        const int64_t currentTimestampNs, const ConfigKey& key, const StatsdConfig& config);
+    void OnConfigUpdatedLocked(const int64_t currentTimestampNs, const ConfigKey& key,
+                               const StatsdConfig& config);
 
     void WriteDataToDiskLocked(const DumpReportReason dumpReportReason);
     void WriteDataToDiskLocked(const ConfigKey& key, const int64_t timestampNs,
@@ -217,7 +217,8 @@ private:
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_SimpleCondition);
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_SimpleCondition);
 
-    FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_CombinationCondition);
+    FRIEND_TEST(DimensionInConditionE2eTest,
+                TestDurationMetric_PartialLink_AND_CombinationCondition);
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondition);
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationCondition);
 

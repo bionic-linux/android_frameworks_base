@@ -67,8 +67,8 @@ bool CopyProtoToArchive(IAaptContext* context, ::google::protobuf::MessageLite* 
       // Wrap our IArchiveWriter with an adaptor that implements the ZeroCopyOutputStream interface.
       ::google::protobuf::io::CopyingOutputStreamAdaptor adaptor(writer);
       if (!proto_msg->SerializeToZeroCopyStream(&adaptor)) {
-        context->GetDiagnostics()->Error(DiagMessage() << "failed to write " << out_path
-                                                       << " to archive");
+        context->GetDiagnostics()->Error(DiagMessage()
+                                         << "failed to write " << out_path << " to archive");
         return false;
       }
     }

@@ -58,17 +58,14 @@ void SoundPoolThread::quit() {
     ALOGV("return from quit");
 }
 
-SoundPoolThread::SoundPoolThread(SoundPool* soundPool) :
-    mSoundPool(soundPool)
-{
+SoundPoolThread::SoundPoolThread(SoundPool* soundPool) : mSoundPool(soundPool) {
     mMsgQueue.setCapacity(maxMessages);
     if (createThreadEtc(beginThread, this, "SoundPoolThread")) {
         mRunning = true;
     }
 }
 
-SoundPoolThread::~SoundPoolThread()
-{
+SoundPoolThread::~SoundPoolThread() {
     quit();
 }
 
@@ -84,16 +81,15 @@ int SoundPoolThread::run() {
         SoundPoolMsg msg = read();
         ALOGV("Got message m=%d, mData=%d", msg.mMessageType, msg.mData);
         switch (msg.mMessageType) {
-        case SoundPoolMsg::KILL:
-            ALOGV("goodbye");
-            return NO_ERROR;
-        case SoundPoolMsg::LOAD_SAMPLE:
-            doLoadSample(msg.mData);
-            break;
-        default:
-            ALOGW("run: Unrecognized message %d\n",
-                    msg.mMessageType);
-            break;
+            case SoundPoolMsg::KILL:
+                ALOGV("goodbye");
+                return NO_ERROR;
+            case SoundPoolMsg::LOAD_SAMPLE:
+                doLoadSample(msg.mData);
+                break;
+            default:
+                ALOGW("run: Unrecognized message %d\n", msg.mMessageType);
+                break;
         }
     }
 }
@@ -103,7 +99,7 @@ void SoundPoolThread::loadSample(int sampleID) {
 }
 
 void SoundPoolThread::doLoadSample(int sampleID) {
-    sp <Sample> sample = mSoundPool->findSample(sampleID);
+    sp<Sample> sample = mSoundPool->findSample(sampleID);
     status_t status = -1;
     if (sample != 0) {
         status = sample->doLoad();
@@ -111,4 +107,4 @@ void SoundPoolThread::doLoadSample(int sampleID) {
     mSoundPool->notify(SoundPoolEvent(SoundPoolEvent::SAMPLE_LOADED, sampleID, status));
 }
 
-} // end namespace android
+}  // end namespace android

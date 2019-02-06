@@ -17,10 +17,10 @@
 #include "RuleGenerator.h"
 #include "aapt/SdkConstants.h"
 
+#include <androidfw/ResourceTypes.h>
 #include <algorithm>
 #include <cmath>
 #include <vector>
-#include <androidfw/ResourceTypes.h>
 
 using namespace android;
 
@@ -28,7 +28,7 @@ namespace split {
 
 // Calculate the point at which the density selection changes between l and h.
 static inline int findMid(int l, int h) {
-    double root = sqrt((h*h) + (8*l*h));
+    double root = sqrt((h * h) + (8 * l * h));
     return (double(-h) + root) / 2.0;
 }
 
@@ -37,14 +37,15 @@ sp<Rule> RuleGenerator::generateDensity(const Vector<int>& allDensities, size_t 
         sp<Rule> densityRule = new Rule();
         densityRule->op = Rule::AND_SUBRULES;
 
-        const bool hasAnyDensity = std::find(allDensities.begin(),
-                allDensities.end(), (int) ResTable_config::DENSITY_ANY) != allDensities.end();
+        const bool hasAnyDensity =
+                std::find(allDensities.begin(), allDensities.end(),
+                          (int)ResTable_config::DENSITY_ANY) != allDensities.end();
 
         if (hasAnyDensity) {
             sp<Rule> version = new Rule();
             version->op = Rule::LESS_THAN;
             version->key = Rule::SDK_VERSION;
-            version->longArgs.add((long) SDK_LOLLIPOP);
+            version->longArgs.add((long)SDK_LOLLIPOP);
             densityRule->subrules.add(version);
         }
 
@@ -56,7 +57,8 @@ sp<Rule> RuleGenerator::generateDensity(const Vector<int>& allDensities, size_t 
             densityRule->subrules.add(gt);
         }
 
-        if (index + 1 < allDensities.size() && allDensities[index + 1] != ResTable_config::DENSITY_ANY) {
+        if (index + 1 < allDensities.size() &&
+            allDensities[index + 1] != ResTable_config::DENSITY_ANY) {
             sp<Rule> lt = new Rule();
             lt->op = Rule::LESS_THAN;
             lt->key = Rule::SCREEN_DENSITY;
@@ -160,4 +162,4 @@ sp<Rule> RuleGenerator::generate(const SortedVector<SplitDescription>& group, si
     return rootRule;
 }
 
-} // namespace split
+}  // namespace split

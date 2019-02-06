@@ -25,12 +25,12 @@
 #include <binder/IServiceManager.h>
 #include <utils/Looper.h>
 
-#include <cstring>
 #include <fcntl.h>
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <cstring>
 
 using namespace android;
 using namespace android::base;
@@ -39,7 +39,7 @@ using namespace android::os;
 
 // ================================================================================
 class StatusListener : public BnIncidentReportStatusListener {
-public:
+  public:
     StatusListener();
     virtual ~StatusListener();
 
@@ -50,45 +50,31 @@ public:
     virtual Status onReportFailed();
 };
 
-StatusListener::StatusListener()
-{
-}
+StatusListener::StatusListener() {}
 
-StatusListener::~StatusListener()
-{
-}
+StatusListener::~StatusListener() {}
 
-Status
-StatusListener::onReportStarted()
-{
+Status StatusListener::onReportStarted() {
     return Status::ok();
 }
 
-Status
-StatusListener::onReportSectionStatus(int32_t section, int32_t status)
-{
+Status StatusListener::onReportSectionStatus(int32_t section, int32_t status) {
     fprintf(stderr, "section %d status %d\n", section, status);
     return Status::ok();
 }
 
-Status
-StatusListener::onReportServiceStatus(const String16& service, int32_t status)
-{
+Status StatusListener::onReportServiceStatus(const String16& service, int32_t status) {
     fprintf(stderr, "service '%s' status %d\n", String8(service).string(), status);
     return Status::ok();
 }
 
-Status
-StatusListener::onReportFinished()
-{
+Status StatusListener::onReportFinished() {
     fprintf(stderr, "done\n");
     exit(0);
     return Status::ok();
 }
 
-Status
-StatusListener::onReportFailed()
-{
+Status StatusListener::onReportFailed() {
     fprintf(stderr, "failed\n");
     exit(1);
     return Status::ok();
@@ -122,9 +108,7 @@ static void section_list(FILE* out) {
 }
 
 // ================================================================================
-static IncidentSection const*
-find_section(const char* name)
-{
+static IncidentSection const* find_section(const char* name) {
     size_t low = 0;
     size_t high = INCIDENT_SECTION_COUNT - 1;
 
@@ -145,29 +129,21 @@ find_section(const char* name)
 }
 
 // ================================================================================
-static int
-get_dest(const char* arg)
-{
-    if (strcmp(arg, "L") == 0
-        || strcmp(arg, "LOCAL") == 0) {
-      return DEST_LOCAL;
+static int get_dest(const char* arg) {
+    if (strcmp(arg, "L") == 0 || strcmp(arg, "LOCAL") == 0) {
+        return DEST_LOCAL;
     }
-    if (strcmp(arg, "E") == 0
-        || strcmp(arg, "EXPLICIT") == 0) {
-      return DEST_EXPLICIT;
+    if (strcmp(arg, "E") == 0 || strcmp(arg, "EXPLICIT") == 0) {
+        return DEST_EXPLICIT;
     }
-    if (strcmp(arg, "A") == 0
-        || strcmp(arg, "AUTO") == 0
-        || strcmp(arg, "AUTOMATIC") == 0) {
-      return DEST_AUTOMATIC;
+    if (strcmp(arg, "A") == 0 || strcmp(arg, "AUTO") == 0 || strcmp(arg, "AUTOMATIC") == 0) {
+        return DEST_AUTOMATIC;
     }
-    return -1; // return the default value
+    return -1;  // return the default value
 }
 
 // ================================================================================
-static void
-usage(FILE* out)
-{
+static void usage(FILE* out) {
     fprintf(out, "usage: incident OPTIONS [SECTION...]\n");
     fprintf(out, "\n");
     fprintf(out, "Takes an incident report.\n");
@@ -182,13 +158,11 @@ usage(FILE* out)
     fprintf(out, "\n");
 }
 
-int
-main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     Status status;
     IncidentReportArgs args;
     enum { DEST_DROPBOX, DEST_STDOUT } destination = DEST_STDOUT;
-    int dest = -1; // default
+    int dest = -1;  // default
 
     // Parse the args
     int opt;
@@ -218,7 +192,7 @@ main(int argc, char** argv)
     if (optind == argc) {
         args.setAll(true);
     } else {
-        for (int i=optind; i<argc; i++) {
+        for (int i = optind; i < argc; i++) {
             const char* arg = argv[i];
             char* end;
             if (arg[0] != '\0') {
@@ -269,7 +243,7 @@ main(int argc, char** argv)
         }
 
         // Wait for the result and print out the data they send.
-        //IPCThreadState::self()->joinThreadPool();
+        // IPCThreadState::self()->joinThreadPool();
 
         while (true) {
             int amt = splice(fds[0], NULL, STDOUT_FILENO, NULL, 4096, 0);
@@ -289,5 +263,4 @@ main(int argc, char** argv)
             return 0;
         }
     }
-
 }

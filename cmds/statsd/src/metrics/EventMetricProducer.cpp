@@ -18,8 +18,8 @@
 #include "Log.h"
 
 #include "EventMetricProducer.h"
-#include "stats_util.h"
 #include "stats_log_util.h"
+#include "stats_util.h"
 
 #include <limits.h>
 #include <stdlib.h>
@@ -29,8 +29,8 @@ using android::util::FIELD_TYPE_BOOL;
 using android::util::FIELD_TYPE_FLOAT;
 using android::util::FIELD_TYPE_INT32;
 using android::util::FIELD_TYPE_INT64;
-using android::util::FIELD_TYPE_STRING;
 using android::util::FIELD_TYPE_MESSAGE;
+using android::util::FIELD_TYPE_STRING;
 using android::util::ProtoOutputStream;
 using std::map;
 using std::string;
@@ -106,7 +106,7 @@ void EventMetricProducer::clearPastBucketsLocked(const int64_t dumpTimeNs) {
 
 void EventMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                              const bool include_current_partial_bucket,
-                                             std::set<string> *str_set,
+                                             std::set<string>* str_set,
                                              ProtoOutputStream* protoOutput) {
     if (mProto->size() <= 0) {
         return;
@@ -114,8 +114,7 @@ void EventMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
     protoOutput->write(FIELD_TYPE_INT64 | FIELD_ID_ID, (long long)mMetricId);
 
     size_t bufferSize = mProto->size();
-    VLOG("metric %lld dump report now... proto size: %zu ",
-        (long long)mMetricId, bufferSize);
+    VLOG("metric %lld dump report now... proto size: %zu ", (long long)mMetricId, bufferSize);
     std::unique_ptr<std::vector<uint8_t>> buffer = serializeProtoLocked(*mProto);
 
     protoOutput->write(FIELD_TYPE_MESSAGE | FIELD_ID_EVENT_METRICS,
@@ -130,10 +129,10 @@ void EventMetricProducer::onConditionChangedLocked(const bool conditionMet,
     mCondition = conditionMet;
 }
 
-void EventMetricProducer::onMatchedLogEventInternalLocked(
-        const size_t matcherIndex, const MetricDimensionKey& eventKey,
-        const ConditionKey& conditionKey, bool condition,
-        const LogEvent& event) {
+void EventMetricProducer::onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                                          const MetricDimensionKey& eventKey,
+                                                          const ConditionKey& conditionKey,
+                                                          bool condition, const LogEvent& event) {
     if (!condition) {
         return;
     }
@@ -145,14 +144,14 @@ void EventMetricProducer::onMatchedLogEventInternalLocked(
             android::util::AtomsInfo::kNotTruncatingTimestampAtomWhiteList.end();
     if (truncateTimestamp) {
         mProto->write(FIELD_TYPE_INT64 | FIELD_ID_ELAPSED_TIMESTAMP_NANOS,
-            (long long)truncateTimestampNsToFiveMinutes(event.GetElapsedTimestampNs()));
+                      (long long)truncateTimestampNsToFiveMinutes(event.GetElapsedTimestampNs()));
         mProto->write(FIELD_TYPE_INT64 | FIELD_ID_WALL_CLOCK_TIMESTAMP_NANOS,
-            (long long)truncateTimestampNsToFiveMinutes(getWallClockNs()));
+                      (long long)truncateTimestampNsToFiveMinutes(getWallClockNs()));
     } else {
         mProto->write(FIELD_TYPE_INT64 | FIELD_ID_ELAPSED_TIMESTAMP_NANOS,
-            (long long)event.GetElapsedTimestampNs());
+                      (long long)event.GetElapsedTimestampNs());
         mProto->write(FIELD_TYPE_INT64 | FIELD_ID_WALL_CLOCK_TIMESTAMP_NANOS,
-            (long long)getWallClockNs());
+                      (long long)getWallClockNs());
     }
 
     uint64_t eventToken = mProto->start(FIELD_TYPE_MESSAGE | FIELD_ID_ATOMS);

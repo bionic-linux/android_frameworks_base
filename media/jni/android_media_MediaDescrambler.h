@@ -28,10 +28,13 @@ namespace cas {
 namespace native {
 namespace V1_0 {
 struct IDescrambler;
-}}}}
+}
+}  // namespace native
+}  // namespace cas
+}  // namespace hardware
 using hardware::cas::native::V1_0::IDescrambler;
 
-sp<IDescrambler> GetDescrambler(JNIEnv *env, jobject obj);
+sp<IDescrambler> GetDescrambler(JNIEnv* env, jobject obj);
 
 }  // namespace android
 

@@ -24,43 +24,40 @@
 #include <media/MediaPlayerInterface.h>
 #include <utils/Errors.h>
 
-using android::INVALID_OPERATION;
-using android::Surface;
 using android::IGraphicBufferProducer;
 using android::IMediaHTTPService;
+using android::INVALID_OPERATION;
+using android::KeyedVector;
 using android::MediaPlayerBase;
 using android::OK;
 using android::Parcel;
-using android::SortedVector;
-using android::TEST_PLAYER;
-using android::UNKNOWN_ERROR;
 using android::player_type;
+using android::SortedVector;
 using android::sp;
 using android::status_t;
 using android::String8;
-using android::KeyedVector;
+using android::Surface;
+using android::TEST_PLAYER;
+using android::UNKNOWN_ERROR;
 
 // This file contains a test player that is loaded via the
 // TestPlayerStub class.  The player contains various implementation
 // of the invoke method that java tests can use.
 
 namespace {
-const char *kPing = "ping";
+const char* kPing = "ping";
 
-class Player: public MediaPlayerBase
-{
+class Player : public MediaPlayerBase {
   public:
-    enum TestType {TEST_UNKNOWN, PING};
+    enum TestType { TEST_UNKNOWN, PING };
     Player() {}
     virtual ~Player() {}
 
-    virtual status_t    initCheck() {return OK;}
-    virtual bool        hardwareOutput() {return true;}
+    virtual status_t initCheck() { return OK; }
+    virtual bool hardwareOutput() { return true; }
 
-    virtual status_t    setDataSource(
-            const sp<IMediaHTTPService>& /* httpService */,
-            const char *url,
-            const KeyedVector<String8, String8> *) {
+    virtual status_t setDataSource(const sp<IMediaHTTPService>& /* httpService */, const char* url,
+                                   const KeyedVector<String8, String8>*) {
         ALOGV("setDataSource %s", url);
         mTest = TEST_UNKNOWN;
         if (strncmp(url, kPing, strlen(kPing)) == 0) {
@@ -69,67 +66,63 @@ class Player: public MediaPlayerBase
         return OK;
     }
 
-    virtual status_t    setDataSource(int /* fd */, int64_t /* offset */, int64_t /* length */) {
+    virtual status_t setDataSource(int /* fd */, int64_t /* offset */, int64_t /* length */) {
         return OK;
     }
-    virtual status_t    setVideoSurfaceTexture(
-                                const sp<IGraphicBufferProducer>& /* bufferProducer */) {
+    virtual status_t setVideoSurfaceTexture(
+            const sp<IGraphicBufferProducer>& /* bufferProducer */) {
         return OK;
     }
-    virtual status_t    prepare() { return OK; }
-    virtual status_t    prepareAsync() { return OK; }
-    virtual status_t    start() { return OK; }
-    virtual status_t    stop() { return OK; }
-    virtual status_t    pause() { return OK; }
-    virtual bool        isPlaying() { return true; }
-    virtual status_t    seekTo(int /* msec */, android::MediaPlayerSeekMode /* mode */) { return OK; }
-    virtual status_t    getCurrentPosition(int* /* msec */) { return OK; }
-    virtual status_t    getDuration(int* /* msec */) { return OK; }
-    virtual status_t    reset() {return OK;}
-    virtual status_t    setLooping(int /* loop */) { return OK; }
-    virtual player_type playerType() {return TEST_PLAYER;}
-    virtual status_t    invoke(const Parcel& request, Parcel *reply);
-    virtual status_t    setParameter(int /* key */, const Parcel& /* request */) { return OK; }
-    virtual status_t    getParameter(int /* key */, Parcel* /* reply */) { return OK; }
-
+    virtual status_t prepare() { return OK; }
+    virtual status_t prepareAsync() { return OK; }
+    virtual status_t start() { return OK; }
+    virtual status_t stop() { return OK; }
+    virtual status_t pause() { return OK; }
+    virtual bool isPlaying() { return true; }
+    virtual status_t seekTo(int /* msec */, android::MediaPlayerSeekMode /* mode */) { return OK; }
+    virtual status_t getCurrentPosition(int* /* msec */) { return OK; }
+    virtual status_t getDuration(int* /* msec */) { return OK; }
+    virtual status_t reset() { return OK; }
+    virtual status_t setLooping(int /* loop */) { return OK; }
+    virtual player_type playerType() { return TEST_PLAYER; }
+    virtual status_t invoke(const Parcel& request, Parcel* reply);
+    virtual status_t setParameter(int /* key */, const Parcel& /* request */) { return OK; }
+    virtual status_t getParameter(int /* key */, Parcel* /* reply */) { return OK; }
 
   private:
     // Take a request, copy it to the reply.
-    void ping(const Parcel& request, Parcel *reply);
+    void ping(const Parcel& request, Parcel* reply);
 
     status_t mStatus;
     TestType mTest;
 };
 
-status_t Player::invoke(const Parcel& request, Parcel *reply)
-{
+status_t Player::invoke(const Parcel& request, Parcel* reply) {
     switch (mTest) {
         case PING:
             ping(request, reply);
             break;
-        default: mStatus = UNKNOWN_ERROR;
+        default:
+            mStatus = UNKNOWN_ERROR;
     }
     return mStatus;
 }
 
-void Player::ping(const Parcel& request, Parcel *reply)
-{
+void Player::ping(const Parcel& request, Parcel* reply) {
     const size_t len = request.dataAvail();
 
     reply->setData(static_cast<const uint8_t*>(request.readInplace(len)), len);
     mStatus = OK;
 }
 
-}
+}  // namespace
 
-extern "C" android::MediaPlayerBase* newPlayer()
-{
+extern "C" android::MediaPlayerBase* newPlayer() {
     ALOGD("New invoke test player");
     return new Player();
 }
 
-extern "C" android::status_t deletePlayer(android::MediaPlayerBase *player)
-{
+extern "C" android::status_t deletePlayer(android::MediaPlayerBase* player) {
     ALOGD("Delete invoke test player");
     delete player;
     return OK;

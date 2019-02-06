@@ -28,32 +28,31 @@
 namespace android {
 
 struct JHwParcel : public RefBase {
-    static void InitClass(JNIEnv *env);
+    static void InitClass(JNIEnv* env);
 
-    static sp<JHwParcel> SetNativeContext(
-            JNIEnv *env, jobject thiz, const sp<JHwParcel> &context);
+    static sp<JHwParcel> SetNativeContext(JNIEnv* env, jobject thiz, const sp<JHwParcel>& context);
 
-    static sp<JHwParcel> GetNativeContext(JNIEnv *env, jobject thiz);
+    static sp<JHwParcel> GetNativeContext(JNIEnv* env, jobject thiz);
 
-    static jobject NewObject(JNIEnv *env);
+    static jobject NewObject(JNIEnv* env);
 
-    JHwParcel(JNIEnv *env, jobject thiz);
+    JHwParcel(JNIEnv* env, jobject thiz);
 
-    void setParcel(hardware::Parcel *parcel, bool assumeOwnership);
-    hardware::Parcel *getParcel();
+    void setParcel(hardware::Parcel* parcel, bool assumeOwnership);
+    hardware::Parcel* getParcel();
 
-    EphemeralStorage *getStorage();
+    EphemeralStorage* getStorage();
 
     void setTransactCallback(::android::hardware::IBinder::TransactCallback cb);
 
     void send();
     bool wasSent() const;
 
-protected:
+  protected:
     virtual ~JHwParcel();
 
-private:
-    hardware::Parcel *mParcel;
+  private:
+    hardware::Parcel* mParcel;
     bool mOwnsParcel;
 
     EphemeralStorage mStorage;
@@ -64,8 +63,8 @@ private:
     DISALLOW_COPY_AND_ASSIGN(JHwParcel);
 };
 
-void signalExceptionForError(JNIEnv *env, status_t err, bool canThrowRemoteException = false);
-int register_android_os_HwParcel(JNIEnv *env);
+void signalExceptionForError(JNIEnv* env, status_t err, bool canThrowRemoteException = false);
+int register_android_os_HwParcel(JNIEnv* env);
 
 }  // namespace android
 

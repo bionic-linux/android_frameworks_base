@@ -48,8 +48,7 @@ struct TableSplitterOptions {
 
 class TableSplitter {
  public:
-  TableSplitter(const std::vector<SplitConstraints>& splits,
-                const TableSplitterOptions& options)
+  TableSplitter(const std::vector<SplitConstraints>& splits, const TableSplitterOptions& options)
       : split_constraints_(splits), options_(options) {
     for (size_t i = 0; i < split_constraints_.size(); i++) {
       splits_.push_back(util::make_unique<ResourceTable>());
@@ -60,7 +59,9 @@ class TableSplitter {
 
   void SplitTable(ResourceTable* original_table);
 
-  std::vector<std::unique_ptr<ResourceTable>>& splits() { return splits_; }
+  std::vector<std::unique_ptr<ResourceTable>>& splits() {
+    return splits_;
+  }
 
  private:
   std::vector<SplitConstraints> split_constraints_;
@@ -69,6 +70,6 @@ class TableSplitter {
 
   DISALLOW_COPY_AND_ASSIGN(TableSplitter);
 };
-}
+}  // namespace aapt
 
 #endif /* AAPT_SPLIT_TABLESPLITTER_H */

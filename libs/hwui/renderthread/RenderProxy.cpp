@@ -84,17 +84,16 @@ void RenderProxy::setName(const char* name) {
 
 void RenderProxy::initialize(const sp<Surface>& surface) {
     mRenderThread.queue().post(
-            [ this, surf = surface ]() mutable { mContext->setSurface(std::move(surf)); });
+            [this, surf = surface]() mutable { mContext->setSurface(std::move(surf)); });
 }
 
 void RenderProxy::allocateBuffers(const sp<Surface>& surface) {
-    mRenderThread.queue().post(
-            [ surf = surface ]() mutable { surf->allocateBuffers(); });
+    mRenderThread.queue().post([surf = surface]() mutable { surf->allocateBuffers(); });
 }
 
 void RenderProxy::updateSurface(const sp<Surface>& surface) {
     mRenderThread.queue().post(
-            [ this, surf = surface ]() mutable { mContext->setSurface(std::move(surf)); });
+            [this, surf = surface]() mutable { mContext->setSurface(std::move(surf)); });
 }
 
 bool RenderProxy::pauseSurface(const sp<Surface>& surface) {
@@ -244,7 +243,7 @@ void RenderProxy::dumpGraphicsMemory(int fd) {
 
 void RenderProxy::setProcessStatsBuffer(int fd) {
     auto& rt = RenderThread::getInstance();
-    rt.queue().post([&rt, fd = dup(fd) ]() {
+    rt.queue().post([&rt, fd = dup(fd)]() {
         rt.globalProfileData().switchStorageToAshmem(fd);
         close(fd);
     });
@@ -288,13 +287,13 @@ void RenderProxy::serializeDisplayListTree() {
 }
 
 void RenderProxy::addFrameMetricsObserver(FrameMetricsObserver* observerPtr) {
-    mRenderThread.queue().post([ this, observer = sp{observerPtr} ]() {
+    mRenderThread.queue().post([this, observer = sp{observerPtr}]() {
         mContext->addFrameMetricsObserver(observer.get());
     });
 }
 
 void RenderProxy::removeFrameMetricsObserver(FrameMetricsObserver* observerPtr) {
-    mRenderThread.queue().post([ this, observer = sp{observerPtr} ]() {
+    mRenderThread.queue().post([this, observer = sp{observerPtr}]() {
         mContext->removeFrameMetricsObserver(observer.get());
     });
 }

@@ -19,21 +19,19 @@
 #ifndef _RUNTIME_ANDROID_RUNTIME_H
 #define _RUNTIME_ANDROID_RUNTIME_H
 
-#include <utils/Errors.h>
 #include <binder/IBinder.h>
-#include <utils/String8.h>
+#include <jni.h>
+#include <pthread.h>
+#include <utils/Errors.h>
 #include <utils/String16.h>
+#include <utils/String8.h>
 #include <utils/Vector.h>
 #include <utils/threads.h>
-#include <pthread.h>
-#include <jni.h>
-
 
 namespace android {
 
-class AndroidRuntime
-{
-public:
+class AndroidRuntime {
+  public:
     AndroidRuntime(char* argBlockStart, size_t argBlockSize);
     virtual ~AndroidRuntime();
 
@@ -50,8 +48,8 @@ public:
     /**
      * Register a set of methods in the specified class.
      */
-    static int registerNativeMethods(JNIEnv* env,
-        const char* className, const JNINativeMethod* gMethods, int numMethods);
+    static int registerNativeMethods(JNIEnv* env, const char* className,
+                                     const JNINativeMethod* gMethods, int numMethods);
 
     /**
      * Call a class's static main method with the given arguments,
@@ -64,7 +62,7 @@ public:
      */
     static jclass findClass(JNIEnv* env, const char* className);
 
-    void start(const char *classname, const Vector<String8>& options, bool zygote);
+    void start(const char* classname, const Vector<String8>& options, bool zygote);
 
     void exit(int code);
 
@@ -92,17 +90,16 @@ public:
      * fork. Override it to initialize threads, etc. Upon return, the
      * correct static main will be invoked.
      */
-    virtual void onZygoteInit() { }
+    virtual void onZygoteInit() {}
 
     /**
      * Called when the Java application exits to perform additional cleanup actions
      * before the process is terminated.
      */
-    virtual void onExit(int /*code*/) { }
+    virtual void onExit(int /*code*/) {}
 
     /** create a new thread that is visible from Java */
-    static android_thread_id_t createJavaThread(const char* name, void (*start)(void *),
-        void* arg);
+    static android_thread_id_t createJavaThread(const char* name, void (*start)(void*), void* arg);
 
     /** return a pointer to the VM running in this process */
     static JavaVM* getJavaVM() { return mJavaVM; }
@@ -116,19 +113,13 @@ public:
     /** Create a Java string from an ASCII or Latin-1 string */
     static jstring NewStringLatin1(JNIEnv* env, const char* bytes);
 
-private:
+  private:
     static int startReg(JNIEnv* env);
-    bool parseRuntimeOption(const char* property,
-                            char* buffer,
-                            const char* runtimeArg,
+    bool parseRuntimeOption(const char* property, char* buffer, const char* runtimeArg,
                             const char* defaultArg = "");
-    bool parseCompilerOption(const char* property,
-                             char* buffer,
-                             const char* compilerArg,
+    bool parseCompilerOption(const char* property, char* buffer, const char* compilerArg,
                              const char* quotingArg);
-    bool parseCompilerRuntimeOption(const char* property,
-                                    char* buffer,
-                                    const char* runtimeArg,
+    bool parseCompilerRuntimeOption(const char* property, char* buffer, const char* runtimeArg,
                                     const char* quotingArg);
     void parseExtraOpts(char* extraOptsBuf, const char* quotingArg);
     int startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote);
@@ -144,16 +135,12 @@ private:
     /*
      * Thread creation helpers.
      */
-    static int javaCreateThreadEtc(
-                                android_thread_func_t entryFunction,
-                                void* userData,
-                                const char* threadName,
-                                int32_t threadPriority,
-                                size_t threadStackSize,
-                                android_thread_id_t* threadId);
+    static int javaCreateThreadEtc(android_thread_func_t entryFunction, void* userData,
+                                   const char* threadName, int32_t threadPriority,
+                                   size_t threadStackSize, android_thread_id_t* threadId);
     static int javaThreadShell(void* args);
 };
 
-}
+}  // namespace android
 
 #endif

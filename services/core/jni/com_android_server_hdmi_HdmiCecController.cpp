@@ -32,6 +32,10 @@
 #include <utils/Looper.h>
 #include <utils/RefBase.h>
 
+using ::android::hardware::hidl_string;
+using ::android::hardware::hidl_vec;
+using ::android::hardware::Return;
+using ::android::hardware::Void;
 using ::android::hardware::tv::cec::V1_0::CecLogicalAddress;
 using ::android::hardware::tv::cec::V1_0::CecMessage;
 using ::android::hardware::tv::cec::V1_0::HdmiPortInfo;
@@ -42,10 +46,6 @@ using ::android::hardware::tv::cec::V1_0::MaxLength;
 using ::android::hardware::tv::cec::V1_0::OptionKey;
 using ::android::hardware::tv::cec::V1_0::Result;
 using ::android::hardware::tv::cec::V1_0::SendMessageResult;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-using ::android::hardware::hidl_vec;
-using ::android::hardware::hidl_string;
 
 namespace android {
 
@@ -55,7 +55,7 @@ static struct {
 } gHdmiCecControllerClassInfo;
 
 class HdmiCecController {
-public:
+  public:
     HdmiCecController(sp<IHdmiCec> hdmiCec, jobject callbacksObj, const sp<Looper>& looper);
     ~HdmiCecController();
 
@@ -82,17 +82,16 @@ public:
     // Whether to hdmi device is connected to the given port.
     bool isConnected(int port);
 
-    jobject getCallbacksObj() const {
-        return mCallbacksObj;
-    }
+    jobject getCallbacksObj() const { return mCallbacksObj; }
 
-private:
+  private:
     class HdmiCecCallback : public IHdmiCecCallback {
-    public:
-        explicit HdmiCecCallback(HdmiCecController* controller) : mController(controller) {};
-        Return<void> onCecMessage(const CecMessage& event)  override;
-        Return<void> onHotplugEvent(const HotplugEvent& event)  override;
-    private:
+      public:
+        explicit HdmiCecCallback(HdmiCecController* controller) : mController(controller){};
+        Return<void> onCecMessage(const CecMessage& event) override;
+        Return<void> onHotplugEvent(const HotplugEvent& event) override;
+
+      private:
         HdmiCecController* mController;
     };
 
@@ -106,48 +105,43 @@ private:
 
 // Handler class to delegate incoming message to service thread.
 class HdmiCecEventHandler : public MessageHandler {
-public:
-    enum EventType {
-        CEC_MESSAGE,
-        HOT_PLUG
-    };
+  public:
+    enum EventType { CEC_MESSAGE, HOT_PLUG };
 
     HdmiCecEventHandler(HdmiCecController* controller, const CecMessage& cecMessage)
-            : mController(controller),
-              mCecMessage(cecMessage) {}
+        : mController(controller), mCecMessage(cecMessage) {}
 
     HdmiCecEventHandler(HdmiCecController* controller, const HotplugEvent& hotplugEvent)
-            : mController(controller),
-              mHotplugEvent(hotplugEvent) {}
+        : mController(controller), mHotplugEvent(hotplugEvent) {}
 
     virtual ~HdmiCecEventHandler() {}
 
     void handleMessage(const Message& message) {
         switch (message.what) {
-        case EventType::CEC_MESSAGE:
-            propagateCecCommand(mCecMessage);
-            break;
-        case EventType::HOT_PLUG:
-            propagateHotplugEvent(mHotplugEvent);
-            break;
-        default:
-            // TODO: add more type whenever new type is introduced.
-            break;
+            case EventType::CEC_MESSAGE:
+                propagateCecCommand(mCecMessage);
+                break;
+            case EventType::HOT_PLUG:
+                propagateHotplugEvent(mHotplugEvent);
+                break;
+            default:
+                // TODO: add more type whenever new type is introduced.
+                break;
         }
     }
 
-private:
+  private:
     // Propagate the message up to Java layer.
     void propagateCecCommand(const CecMessage& message) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
         jint srcAddr = static_cast<jint>(message.initiator);
         jint dstAddr = static_cast<jint>(message.destination);
         jbyteArray body = env->NewByteArray(message.body.size());
-        const jbyte* bodyPtr = reinterpret_cast<const jbyte *>(message.body.data());
+        const jbyte* bodyPtr = reinterpret_cast<const jbyte*>(message.body.data());
         env->SetByteArrayRegion(body, 0, message.body.size(), bodyPtr);
         env->CallVoidMethod(mController->getCallbacksObj(),
-                gHdmiCecControllerClassInfo.handleIncomingCecCommand, srcAddr,
-                dstAddr, body);
+                            gHdmiCecControllerClassInfo.handleIncomingCecCommand, srcAddr, dstAddr,
+                            body);
         env->DeleteLocalRef(body);
 
         checkAndClearExceptionFromCallback(env, __FUNCTION__);
@@ -157,9 +151,9 @@ private:
         // Note that this method should be called in service thread.
         JNIEnv* env = AndroidRuntime::getJNIEnv();
         jint port = static_cast<jint>(event.portId);
-        jboolean connected = (jboolean) event.connected;
+        jboolean connected = (jboolean)event.connected;
         env->CallVoidMethod(mController->getCallbacksObj(),
-                gHdmiCecControllerClassInfo.handleHotplug, port, connected);
+                            gHdmiCecControllerClassInfo.handleHotplug, port, connected);
 
         checkAndClearExceptionFromCallback(env, __FUNCTION__);
     }
@@ -178,11 +172,9 @@ private:
     HotplugEvent mHotplugEvent;
 };
 
-HdmiCecController::HdmiCecController(sp<IHdmiCec> hdmiCec,
-        jobject callbacksObj, const sp<Looper>& looper)
-        : mHdmiCec(hdmiCec),
-          mCallbacksObj(callbacksObj),
-          mLooper(looper) {
+HdmiCecController::HdmiCecController(sp<IHdmiCec> hdmiCec, jobject callbacksObj,
+                                     const sp<Looper>& looper)
+    : mHdmiCec(hdmiCec), mCallbacksObj(callbacksObj), mLooper(looper) {
     mHdmiCecCallback = new HdmiCecCallback(this);
     Return<void> ret = mHdmiCec->setCallback(mHdmiCecCallback);
     if (!ret.isOk()) {
@@ -204,7 +196,7 @@ int HdmiCecController::sendMessage(const CecMessage& message) {
         ALOGE("Failed to send CEC message.");
         return static_cast<int>(SendMessageResult::FAIL);
     }
-    return static_cast<int>((SendMessageResult) ret);
+    return static_cast<int>((SendMessageResult)ret);
 }
 
 int HdmiCecController::addLogicalAddress(CecLogicalAddress address) {
@@ -213,7 +205,7 @@ int HdmiCecController::addLogicalAddress(CecLogicalAddress address) {
         ALOGE("Failed to add a logical address.");
         return static_cast<int>(Result::FAILURE_UNKNOWN);
     }
-    return static_cast<int>((Result) ret);
+    return static_cast<int>((Result)ret);
 }
 
 void HdmiCecController::clearLogicaladdress() {
@@ -227,9 +219,9 @@ int HdmiCecController::getPhysicalAddress() {
     Result result;
     uint16_t addr;
     Return<void> ret = mHdmiCec->getPhysicalAddress([&result, &addr](Result res, uint16_t paddr) {
-            result = res;
-            addr = paddr;
-        });
+        result = res;
+        addr = paddr;
+    });
     if (!ret.isOk()) {
         ALOGE("Failed to get physical address.");
         return INVALID_PHYSICAL_ADDRESS;
@@ -264,9 +256,8 @@ jobjectArray HdmiCecController::getPortInfos() {
         return NULL;
     }
     hidl_vec<HdmiPortInfo> ports;
-    Return<void> ret = mHdmiCec->getPortInfo([&ports](hidl_vec<HdmiPortInfo> list) {
-            ports = list;
-        });
+    Return<void> ret =
+            mHdmiCec->getPortInfo([&ports](hidl_vec<HdmiPortInfo> list) { ports = list; });
     if (!ret.isOk()) {
         ALOGE("Failed to get port information.");
         return NULL;
@@ -274,12 +265,13 @@ jobjectArray HdmiCecController::getPortInfos() {
     jobjectArray res = env->NewObjectArray(ports.size(), hdmiPortInfo, NULL);
 
     // MHL support field will be obtained from MHL HAL. Leave it to false.
-    jboolean mhlSupported = (jboolean) 0;
+    jboolean mhlSupported = (jboolean)0;
     for (size_t i = 0; i < ports.size(); ++i) {
-        jboolean cecSupported = (jboolean) ports[i].cecSupported;
-        jboolean arcSupported = (jboolean) ports[i].arcSupported;
-        jobject infoObj = env->NewObject(hdmiPortInfo, ctor, ports[i].portId, ports[i].type,
-                ports[i].physicalAddress, cecSupported, mhlSupported, arcSupported);
+        jboolean cecSupported = (jboolean)ports[i].cecSupported;
+        jboolean arcSupported = (jboolean)ports[i].arcSupported;
+        jobject infoObj =
+                env->NewObject(hdmiPortInfo, ctor, ports[i].portId, ports[i].type,
+                               ports[i].physicalAddress, cecSupported, mhlSupported, arcSupported);
         env->SetObjectArrayElement(res, i, infoObj);
     }
     return res;
@@ -329,56 +321,49 @@ Return<void> HdmiCecController::HdmiCecCallback::onHotplugEvent(const HotplugEve
 }
 
 //------------------------------------------------------------------------------
-#define GET_METHOD_ID(var, clazz, methodName, methodDescriptor) \
-        var = env->GetMethodID(clazz, methodName, methodDescriptor); \
-        LOG_FATAL_IF(! (var), "Unable to find method " methodName);
+#define GET_METHOD_ID(var, clazz, methodName, methodDescriptor)  \
+    var = env->GetMethodID(clazz, methodName, methodDescriptor); \
+    LOG_FATAL_IF(!(var), "Unable to find method " methodName);
 
-static jlong nativeInit(JNIEnv* env, jclass clazz, jobject callbacksObj,
-        jobject messageQueueObj) {
+static jlong nativeInit(JNIEnv* env, jclass clazz, jobject callbacksObj, jobject messageQueueObj) {
     // TODO(b/31632518)
     sp<IHdmiCec> hdmiCec = IHdmiCec::getService();
     if (hdmiCec == nullptr) {
         ALOGE("Couldn't get tv.cec service.");
         return 0;
     }
-    sp<MessageQueue> messageQueue =
-            android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
+    sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
 
-    HdmiCecController* controller = new HdmiCecController(
-            hdmiCec,
-            env->NewGlobalRef(callbacksObj),
-            messageQueue->getLooper());
+    HdmiCecController* controller = new HdmiCecController(hdmiCec, env->NewGlobalRef(callbacksObj),
+                                                          messageQueue->getLooper());
 
     GET_METHOD_ID(gHdmiCecControllerClassInfo.handleIncomingCecCommand, clazz,
-            "handleIncomingCecCommand", "(II[B)V");
-    GET_METHOD_ID(gHdmiCecControllerClassInfo.handleHotplug, clazz,
-            "handleHotplug", "(IZ)V");
+                  "handleIncomingCecCommand", "(II[B)V");
+    GET_METHOD_ID(gHdmiCecControllerClassInfo.handleHotplug, clazz, "handleHotplug", "(IZ)V");
 
     return reinterpret_cast<jlong>(controller);
 }
 
-static jint nativeSendCecCommand(JNIEnv* env, jclass clazz, jlong controllerPtr,
-        jint srcAddr, jint dstAddr, jbyteArray body) {
+static jint nativeSendCecCommand(JNIEnv* env, jclass clazz, jlong controllerPtr, jint srcAddr,
+                                 jint dstAddr, jbyteArray body) {
     CecMessage message;
     message.initiator = static_cast<CecLogicalAddress>(srcAddr);
     message.destination = static_cast<CecLogicalAddress>(dstAddr);
 
     jsize len = env->GetArrayLength(body);
     ScopedByteArrayRO bodyPtr(env, body);
-    size_t bodyLength = MIN(static_cast<size_t>(len),
-            static_cast<size_t>(MaxLength::MESSAGE_BODY));
+    size_t bodyLength = MIN(static_cast<size_t>(len), static_cast<size_t>(MaxLength::MESSAGE_BODY));
     message.body.resize(bodyLength);
     for (size_t i = 0; i < bodyLength; ++i) {
         message.body[i] = static_cast<uint8_t>(bodyPtr[i]);
     }
 
-    HdmiCecController* controller =
-            reinterpret_cast<HdmiCecController*>(controllerPtr);
+    HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->sendMessage(message);
 }
 
 static jint nativeAddLogicalAddress(JNIEnv* env, jclass clazz, jlong controllerPtr,
-        jint logicalAddress) {
+                                    jint logicalAddress) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->addLogicalAddress(static_cast<CecLogicalAddress>(logicalAddress));
 }
@@ -415,40 +400,38 @@ static void nativeSetOption(JNIEnv* env, jclass clazz, jlong controllerPtr, jint
 
 static void nativeSetLanguage(JNIEnv* env, jclass clazz, jlong controllerPtr, jstring language) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
-    const char *languageStr = env->GetStringUTFChars(language, NULL);
+    const char* languageStr = env->GetStringUTFChars(language, NULL);
     controller->setLanguage(languageStr);
     env->ReleaseStringUTFChars(language, languageStr);
 }
 
 static void nativeEnableAudioReturnChannel(JNIEnv* env, jclass clazz, jlong controllerPtr,
-        jint port, jboolean enabled) {
+                                           jint port, jboolean enabled) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     controller->enableAudioReturnChannel(port, enabled == JNI_TRUE);
 }
 
 static jboolean nativeIsConnected(JNIEnv* env, jclass clazz, jlong controllerPtr, jint port) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
-    return controller->isConnected(port) ? JNI_TRUE : JNI_FALSE ;
+    return controller->isConnected(port) ? JNI_TRUE : JNI_FALSE;
 }
 
 static const JNINativeMethod sMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeInit",
-      "(Lcom/android/server/hdmi/HdmiCecController;Landroid/os/MessageQueue;)J",
-      (void *) nativeInit },
-    { "nativeSendCecCommand", "(JII[B)I", (void *) nativeSendCecCommand },
-    { "nativeAddLogicalAddress", "(JI)I", (void *) nativeAddLogicalAddress },
-    { "nativeClearLogicalAddress", "(J)V", (void *) nativeClearLogicalAddress },
-    { "nativeGetPhysicalAddress", "(J)I", (void *) nativeGetPhysicalAddress },
-    { "nativeGetVersion", "(J)I", (void *) nativeGetVersion },
-    { "nativeGetVendorId", "(J)I", (void *) nativeGetVendorId },
-    { "nativeGetPortInfos",
-      "(J)[Landroid/hardware/hdmi/HdmiPortInfo;",
-      (void *) nativeGetPortInfos },
-    { "nativeSetOption", "(JIZ)V", (void *) nativeSetOption },
-    { "nativeSetLanguage", "(JLjava/lang/String;)V", (void *) nativeSetLanguage },
-    { "nativeEnableAudioReturnChannel", "(JIZ)V", (void *) nativeEnableAudioReturnChannel },
-    { "nativeIsConnected", "(JI)Z", (void *) nativeIsConnected },
+        /* name, signature, funcPtr */
+        {"nativeInit", "(Lcom/android/server/hdmi/HdmiCecController;Landroid/os/MessageQueue;)J",
+         (void*)nativeInit},
+        {"nativeSendCecCommand", "(JII[B)I", (void*)nativeSendCecCommand},
+        {"nativeAddLogicalAddress", "(JI)I", (void*)nativeAddLogicalAddress},
+        {"nativeClearLogicalAddress", "(J)V", (void*)nativeClearLogicalAddress},
+        {"nativeGetPhysicalAddress", "(J)I", (void*)nativeGetPhysicalAddress},
+        {"nativeGetVersion", "(J)I", (void*)nativeGetVersion},
+        {"nativeGetVendorId", "(J)I", (void*)nativeGetVendorId},
+        {"nativeGetPortInfos", "(J)[Landroid/hardware/hdmi/HdmiPortInfo;",
+         (void*)nativeGetPortInfos},
+        {"nativeSetOption", "(JIZ)V", (void*)nativeSetOption},
+        {"nativeSetLanguage", "(JLjava/lang/String;)V", (void*)nativeSetLanguage},
+        {"nativeEnableAudioReturnChannel", "(JIZ)V", (void*)nativeEnableAudioReturnChannel},
+        {"nativeIsConnected", "(JI)Z", (void*)nativeIsConnected},
 };
 
 #define CLASS_PATH "com/android/server/hdmi/HdmiCecController"
@@ -456,8 +439,8 @@ static const JNINativeMethod sMethods[] = {
 int register_android_server_hdmi_HdmiCecController(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, CLASS_PATH, sMethods, NELEM(sMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
-    (void)res; // Don't scream about unused variable in the LOG_NDEBUG case
+    (void)res;  // Don't scream about unused variable in the LOG_NDEBUG case
     return 0;
 }
 
-}  /* namespace android */
+} /* namespace android */

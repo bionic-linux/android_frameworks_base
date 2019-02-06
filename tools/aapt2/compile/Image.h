@@ -72,7 +72,8 @@ struct Range {
   int32_t end = 0;
 
   explicit Range() = default;
-  inline explicit Range(int32_t s, int32_t e) : start(s), end(e) {}
+  inline explicit Range(int32_t s, int32_t e) : start(s), end(e) {
+  }
 };
 
 inline bool operator==(const Range& left, const Range& right) {
@@ -93,7 +94,8 @@ struct Bounds {
 
   explicit Bounds() = default;
   inline explicit Bounds(int32_t l, int32_t t, int32_t r, int32_t b)
-      : left(l), top(t), right(r), bottom(b) {}
+      : left(l), top(t), right(r), bottom(b) {
+  }
 
   bool nonZero() const;
 };
@@ -103,8 +105,8 @@ inline bool Bounds::nonZero() const {
 }
 
 inline bool operator==(const Bounds& left, const Bounds& right) {
-  return left.left == right.left && left.top == right.top &&
-         left.right == right.right && left.bottom == right.bottom;
+  return left.left == right.left && left.top == right.top && left.right == right.right &&
+         left.bottom == right.bottom;
 }
 
 /**
@@ -115,8 +117,7 @@ inline bool operator==(const Bounds& left, const Bounds& right) {
 class NinePatch {
  public:
   static std::unique_ptr<NinePatch> Create(uint8_t** rows, const int32_t width,
-                                           const int32_t height,
-                                           std::string* err_out);
+                                           const int32_t height, std::string* err_out);
 
   /**
    * Packs the RGBA_8888 data pointed to by pixel into a uint32_t

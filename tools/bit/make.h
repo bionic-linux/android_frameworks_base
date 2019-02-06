@@ -23,8 +23,7 @@
 
 using namespace std;
 
-struct Module
-{
+struct Module {
     string name;
     vector<string> classes;
     vector<string> paths;
@@ -42,9 +41,9 @@ string get_build_var(const string& name, bool quiet);
  */
 string sniff_device_name(const string& buildOut, const string& product);
 
-void read_modules(const string& buildOut, const string& buildDevice,
-        map<string,Module>* modules, bool quiet);
+void read_modules(const string& buildOut, const string& buildDevice, map<string, Module>* modules,
+                  bool quiet);
 
 int build_goals(const vector<string>& goals);
 
-#endif // MAKE_H
+#endif  // MAKE_H

@@ -37,7 +37,6 @@ using std::string;
 using std::unordered_map;
 using std::vector;
 
-
 ConditionState evaluateCombinationCondition(const std::vector<int>& children,
                                             const LogicalOperation& operation,
                                             const std::vector<ConditionState>& conditionCache) {

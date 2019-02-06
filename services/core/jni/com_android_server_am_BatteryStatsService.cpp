@@ -39,9 +39,10 @@
 #include <nativehelper/ScopedPrimitiveArray.h>
 
 #include <log/log.h>
-#include <utils/misc.h>
 #include <utils/Log.h>
+#include <utils/misc.h>
 
+using android::hardware::hidl_vec;
 using android::hardware::Return;
 using android::hardware::Void;
 using android::hardware::power::V1_0::PowerStatePlatformSleepState;
@@ -49,14 +50,12 @@ using android::hardware::power::V1_0::PowerStateVoter;
 using android::hardware::power::V1_0::Status;
 using android::hardware::power::V1_1::PowerStateSubsystem;
 using android::hardware::power::V1_1::PowerStateSubsystemSleepState;
-using android::hardware::hidl_vec;
 using android::system::suspend::V1_0::ISystemSuspend;
 using android::system::suspend::V1_0::ISystemSuspendCallback;
 using IPowerV1_1 = android::hardware::power::V1_1::IPower;
 using IPowerV1_0 = android::hardware::power::V1_0::IPower;
 
-namespace android
-{
+namespace android {
 
 #define LAST_RESUME_REASON "/sys/kernel/wakeup_reasons/last_resume_reason"
 #define MAX_REASON_SIZE 512
@@ -65,7 +64,7 @@ static bool wakeup_init = false;
 static sem_t wakeup_sem;
 extern sp<IPowerV1_0> getPowerHalV1_0();
 extern sp<IPowerV1_1> getPowerHalV1_1();
-extern bool processPowerHalReturn(const Return<void> &ret, const char* functionName);
+extern bool processPowerHalReturn(const Return<void>& ret, const char* functionName);
 extern sp<ISystemSuspend> getSuspendHal();
 
 // Java methods used in getLowPowerStats
@@ -75,7 +74,7 @@ static jmethodID jputVoter = NULL;
 static jmethodID jputState = NULL;
 
 class WakeupCallback : public ISystemSuspendCallback {
-public:
+  public:
     Return<void> notifyWakeup(bool success) override {
         ALOGV("In wakeup_callback: %s", success ? "resumed from suspend" : "suspend aborted");
         int ret = sem_post(&wakeup_sem);
@@ -88,8 +87,7 @@ public:
     }
 };
 
-static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
-{
+static jint nativeWaitWakeup(JNIEnv* env, jobject clazz, jobject outBuf) {
     if (outBuf == NULL) {
         jniThrowException(env, "java/lang/NullPointerException", "null argument");
         return -1;
@@ -125,7 +123,7 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
         return 0;
     }
 
-    FILE *fp = fopen(LAST_RESUME_REASON, "r");
+    FILE* fp = fopen(LAST_RESUME_REASON, "r");
     if (fp == NULL) {
         ALOGE("Failed to open %s", LAST_RESUME_REASON);
         return -1;
@@ -205,11 +203,11 @@ static jint nativeWaitWakeup(JNIEnv *env, jobject clazz, jobject outBuf)
 static void getLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject jrpmStats) {
     if (jrpmStats == NULL) {
         jniThrowException(env, "java/lang/NullPointerException",
-                "The rpmstats jni input jobject jrpmStats is null.");
+                          "The rpmstats jni input jobject jrpmStats is null.");
         return;
     }
-    if (jgetAndUpdatePlatformState == NULL || jgetSubsystem == NULL
-            || jputVoter == NULL || jputState == NULL) {
+    if (jgetAndUpdatePlatformState == NULL || jgetSubsystem == NULL || jputVoter == NULL ||
+        jputState == NULL) {
         ALOGE("A rpmstats jni jmethodID is null.");
         return;
     }
@@ -222,31 +220,29 @@ static void getLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject jrpmStats
 
     Return<void> ret = powerHalV1_0->getPlatformLowPowerStats(
             [&env, &jrpmStats](hidl_vec<PowerStatePlatformSleepState> states, Status status) {
+                if (status != Status::SUCCESS) return;
 
-            if (status != Status::SUCCESS) return;
+                for (size_t i = 0; i < states.size(); i++) {
+                    const PowerStatePlatformSleepState& state = states[i];
 
-            for (size_t i = 0; i < states.size(); i++) {
-                const PowerStatePlatformSleepState& state = states[i];
+                    jobject jplatformState = env->CallObjectMethod(
+                            jrpmStats, jgetAndUpdatePlatformState,
+                            env->NewStringUTF(state.name.c_str()), state.residencyInMsecSinceBoot,
+                            state.totalTransitions);
+                    if (jplatformState == NULL) {
+                        ALOGE("The rpmstats jni jobject jplatformState is null.");
+                        return;
+                    }
 
-                jobject jplatformState = env->CallObjectMethod(jrpmStats,
-                        jgetAndUpdatePlatformState,
-                        env->NewStringUTF(state.name.c_str()),
-                        state.residencyInMsecSinceBoot,
-                        state.totalTransitions);
-                if (jplatformState == NULL) {
-                    ALOGE("The rpmstats jni jobject jplatformState is null.");
-                    return;
+                    for (size_t j = 0; j < state.voters.size(); j++) {
+                        const PowerStateVoter& voter = state.voters[j];
+                        env->CallVoidMethod(jplatformState, jputVoter,
+                                            env->NewStringUTF(voter.name.c_str()),
+                                            voter.totalTimeInMsecVotedForSinceBoot,
+                                            voter.totalNumberOfTimesVotedSinceBoot);
+                    }
                 }
-
-                for (size_t j = 0; j < state.voters.size(); j++) {
-                    const PowerStateVoter& voter = state.voters[j];
-                    env->CallVoidMethod(jplatformState, jputVoter,
-                            env->NewStringUTF(voter.name.c_str()),
-                            voter.totalTimeInMsecVotedForSinceBoot,
-                            voter.totalNumberOfTimesVotedSinceBoot);
-                }
-            }
-    });
+            });
     if (!processPowerHalReturn(ret, "getPlatformLowPowerStats")) {
         return;
     }
@@ -259,36 +255,35 @@ static void getLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject jrpmStats
     }
     ret = powerHal_1_1->getSubsystemLowPowerStats(
             [&env, &jrpmStats](hidl_vec<PowerStateSubsystem> subsystems, Status status) {
+                if (status != Status::SUCCESS) return;
 
-        if (status != Status::SUCCESS) return;
+                if (subsystems.size() > 0) {
+                    for (size_t i = 0; i < subsystems.size(); i++) {
+                        const PowerStateSubsystem& subsystem = subsystems[i];
 
-        if (subsystems.size() > 0) {
-            for (size_t i = 0; i < subsystems.size(); i++) {
-                const PowerStateSubsystem &subsystem = subsystems[i];
+                        jobject jsubsystem =
+                                env->CallObjectMethod(jrpmStats, jgetSubsystem,
+                                                      env->NewStringUTF(subsystem.name.c_str()));
+                        if (jsubsystem == NULL) {
+                            ALOGE("The rpmstats jni jobject jsubsystem is null.");
+                            return;
+                        }
 
-                jobject jsubsystem = env->CallObjectMethod(jrpmStats, jgetSubsystem,
-                        env->NewStringUTF(subsystem.name.c_str()));
-                if (jsubsystem == NULL) {
-                    ALOGE("The rpmstats jni jobject jsubsystem is null.");
-                    return;
+                        for (size_t j = 0; j < subsystem.states.size(); j++) {
+                            const PowerStateSubsystemSleepState& state = subsystem.states[j];
+                            env->CallVoidMethod(
+                                    jsubsystem, jputState, env->NewStringUTF(state.name.c_str()),
+                                    state.residencyInMsecSinceBoot, state.totalTransitions);
+                        }
+                    }
                 }
-
-                for (size_t j = 0; j < subsystem.states.size(); j++) {
-                    const PowerStateSubsystemSleepState& state = subsystem.states[j];
-                    env->CallVoidMethod(jsubsystem, jputState,
-                            env->NewStringUTF(state.name.c_str()),
-                            state.residencyInMsecSinceBoot,
-                            state.totalTransitions);
-                }
-            }
-        }
-    });
+            });
     processPowerHalReturn(ret, "getSubsystemLowPowerStats");
 }
 
 static jint getPlatformLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject outBuf) {
-    char *output = (char*)env->GetDirectBufferAddress(outBuf);
-    char *offset = output;
+    char* output = (char*)env->GetDirectBufferAddress(outBuf);
+    char* offset = output;
     int remaining = (int)env->GetDirectBufferCapacity(outBuf);
     int total_added = -1;
 
@@ -305,35 +300,17 @@ static jint getPlatformLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject o
         }
 
         Return<void> ret = powerHalV1_0->getPlatformLowPowerStats(
-            [&offset, &remaining, &total_added](hidl_vec<PowerStatePlatformSleepState> states,
-                    Status status) {
-                if (status != Status::SUCCESS)
-                    return;
-                for (size_t i = 0; i < states.size(); i++) {
-                    int added;
-                    const PowerStatePlatformSleepState& state = states[i];
+                [&offset, &remaining, &total_added](hidl_vec<PowerStatePlatformSleepState> states,
+                                                    Status status) {
+                    if (status != Status::SUCCESS) return;
+                    for (size_t i = 0; i < states.size(); i++) {
+                        int added;
+                        const PowerStatePlatformSleepState& state = states[i];
 
-                    added = snprintf(offset, remaining,
-                        "state_%zu name=%s time=%" PRIu64 " count=%" PRIu64 " ",
-                        i + 1, state.name.c_str(), state.residencyInMsecSinceBoot,
-                        state.totalTransitions);
-                    if (added < 0) {
-                        break;
-                    }
-                    if (added > remaining) {
-                        added = remaining;
-                    }
-                    offset += added;
-                    remaining -= added;
-                    total_added += added;
-
-                    for (size_t j = 0; j < state.voters.size(); j++) {
-                        const PowerStateVoter& voter = state.voters[j];
                         added = snprintf(offset, remaining,
-                                "voter_%zu name=%s time=%" PRIu64 " count=%" PRIu64 " ",
-                                j + 1, voter.name.c_str(),
-                                voter.totalTimeInMsecVotedForSinceBoot,
-                                voter.totalNumberOfTimesVotedSinceBoot);
+                                         "state_%zu name=%s time=%" PRIu64 " count=%" PRIu64 " ",
+                                         i + 1, state.name.c_str(), state.residencyInMsecSinceBoot,
+                                         state.totalTransitions);
                         if (added < 0) {
                             break;
                         }
@@ -343,18 +320,34 @@ static jint getPlatformLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject o
                         offset += added;
                         remaining -= added;
                         total_added += added;
-                    }
 
-                    if (remaining <= 0) {
-                        /* rewrite NULL character*/
-                        offset--;
-                        total_added--;
-                        ALOGE("PowerHal: buffer not enough");
-                        break;
+                        for (size_t j = 0; j < state.voters.size(); j++) {
+                            const PowerStateVoter& voter = state.voters[j];
+                            added = snprintf(
+                                    offset, remaining,
+                                    "voter_%zu name=%s time=%" PRIu64 " count=%" PRIu64 " ", j + 1,
+                                    voter.name.c_str(), voter.totalTimeInMsecVotedForSinceBoot,
+                                    voter.totalNumberOfTimesVotedSinceBoot);
+                            if (added < 0) {
+                                break;
+                            }
+                            if (added > remaining) {
+                                added = remaining;
+                            }
+                            offset += added;
+                            remaining -= added;
+                            total_added += added;
+                        }
+
+                        if (remaining <= 0) {
+                            /* rewrite NULL character*/
+                            offset--;
+                            total_added--;
+                            ALOGE("PowerHal: buffer not enough");
+                            break;
+                        }
                     }
-                }
-            }
-        );
+                });
 
         if (!processPowerHalReturn(ret, "getPlatformLowPowerStats")) {
             return -1;
@@ -366,8 +359,8 @@ static jint getPlatformLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject o
 }
 
 static jint getSubsystemLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject outBuf) {
-    char *output = (char*)env->GetDirectBufferAddress(outBuf);
-    char *offset = output;
+    char* output = (char*)env->GetDirectBufferAddress(outBuf);
+    char* offset = output;
     int remaining = (int)env->GetDirectBufferCapacity(outBuf);
     int total_added = -1;
 
@@ -383,70 +376,69 @@ static jint getSubsystemLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject 
         // Trying to get 1.1, this will succeed only for devices supporting 1.1
         powerHal_1_1 = getPowerHalV1_1();
         if (powerHal_1_1 == nullptr) {
-            //This device does not support IPower@1.1, exiting gracefully
+            // This device does not support IPower@1.1, exiting gracefully
             return 0;
         }
 
         Return<void> ret = powerHal_1_1->getSubsystemLowPowerStats(
-           [&offset, &remaining, &total_added](hidl_vec<PowerStateSubsystem> subsystems,
-                Status status) {
+                [&offset, &remaining, &total_added](hidl_vec<PowerStateSubsystem> subsystems,
+                                                    Status status) {
+                    if (status != Status::SUCCESS) return;
 
-            if (status != Status::SUCCESS)
-                return;
-
-            if (subsystems.size() > 0) {
-                int added = snprintf(offset, remaining, "SubsystemPowerState ");
-                offset += added;
-                remaining -= added;
-                total_added += added;
-
-                for (size_t i = 0; i < subsystems.size(); i++) {
-                    const PowerStateSubsystem &subsystem = subsystems[i];
-
-                    added = snprintf(offset, remaining,
-                                     "subsystem_%zu name=%s ", i + 1, subsystem.name.c_str());
-                    if (added < 0) {
-                        break;
-                    }
-
-                    if (added > remaining) {
-                        added = remaining;
-                    }
-
-                    offset += added;
-                    remaining -= added;
-                    total_added += added;
-
-                    for (size_t j = 0; j < subsystem.states.size(); j++) {
-                        const PowerStateSubsystemSleepState& state = subsystem.states[j];
-                        added = snprintf(offset, remaining,
-                                         "state_%zu name=%s time=%" PRIu64 " count=%" PRIu64 " last entry=%" PRIu64 " ",
-                                         j + 1, state.name.c_str(), state.residencyInMsecSinceBoot,
-                                         state.totalTransitions, state.lastEntryTimestampMs);
-                        if (added < 0) {
-                            break;
-                        }
-
-                        if (added > remaining) {
-                            added = remaining;
-                        }
-
+                    if (subsystems.size() > 0) {
+                        int added = snprintf(offset, remaining, "SubsystemPowerState ");
                         offset += added;
                         remaining -= added;
                         total_added += added;
-                    }
 
-                    if (remaining <= 0) {
-                        /* rewrite NULL character*/
-                        offset--;
-                        total_added--;
-                        ALOGE("PowerHal: buffer not enough");
-                        break;
+                        for (size_t i = 0; i < subsystems.size(); i++) {
+                            const PowerStateSubsystem& subsystem = subsystems[i];
+
+                            added = snprintf(offset, remaining, "subsystem_%zu name=%s ", i + 1,
+                                             subsystem.name.c_str());
+                            if (added < 0) {
+                                break;
+                            }
+
+                            if (added > remaining) {
+                                added = remaining;
+                            }
+
+                            offset += added;
+                            remaining -= added;
+                            total_added += added;
+
+                            for (size_t j = 0; j < subsystem.states.size(); j++) {
+                                const PowerStateSubsystemSleepState& state = subsystem.states[j];
+                                added = snprintf(
+                                        offset, remaining,
+                                        "state_%zu name=%s time=%" PRIu64 " count=%" PRIu64
+                                        " last entry=%" PRIu64 " ",
+                                        j + 1, state.name.c_str(), state.residencyInMsecSinceBoot,
+                                        state.totalTransitions, state.lastEntryTimestampMs);
+                                if (added < 0) {
+                                    break;
+                                }
+
+                                if (added > remaining) {
+                                    added = remaining;
+                                }
+
+                                offset += added;
+                                remaining -= added;
+                                total_added += added;
+                            }
+
+                            if (remaining <= 0) {
+                                /* rewrite NULL character*/
+                                offset--;
+                                total_added--;
+                                ALOGE("PowerHal: buffer not enough");
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-        }
-        );
+                });
 
         if (!processPowerHalReturn(ret, "getSubsystemLowPowerStats")) {
             return -1;
@@ -459,36 +451,36 @@ static jint getSubsystemLowPowerStats(JNIEnv* env, jobject /* clazz */, jobject 
 }
 
 static const JNINativeMethod method_table[] = {
-    { "nativeWaitWakeup", "(Ljava/nio/ByteBuffer;)I", (void*)nativeWaitWakeup },
-    { "getLowPowerStats", "(Lcom/android/internal/os/RpmStats;)V", (void*)getLowPowerStats },
-    { "getPlatformLowPowerStats", "(Ljava/nio/ByteBuffer;)I", (void*)getPlatformLowPowerStats },
-    { "getSubsystemLowPowerStats", "(Ljava/nio/ByteBuffer;)I", (void*)getSubsystemLowPowerStats },
+        {"nativeWaitWakeup", "(Ljava/nio/ByteBuffer;)I", (void*)nativeWaitWakeup},
+        {"getLowPowerStats", "(Lcom/android/internal/os/RpmStats;)V", (void*)getLowPowerStats},
+        {"getPlatformLowPowerStats", "(Ljava/nio/ByteBuffer;)I", (void*)getPlatformLowPowerStats},
+        {"getSubsystemLowPowerStats", "(Ljava/nio/ByteBuffer;)I", (void*)getSubsystemLowPowerStats},
 };
 
-int register_android_server_BatteryStatsService(JNIEnv *env)
-{
+int register_android_server_BatteryStatsService(JNIEnv* env) {
     // get java classes and methods
     jclass clsRpmStats = env->FindClass("com/android/internal/os/RpmStats");
     jclass clsPowerStatePlatformSleepState =
             env->FindClass("com/android/internal/os/RpmStats$PowerStatePlatformSleepState");
     jclass clsPowerStateSubsystem =
             env->FindClass("com/android/internal/os/RpmStats$PowerStateSubsystem");
-    if (clsRpmStats == NULL || clsPowerStatePlatformSleepState == NULL
-            || clsPowerStateSubsystem == NULL) {
+    if (clsRpmStats == NULL || clsPowerStatePlatformSleepState == NULL ||
+        clsPowerStateSubsystem == NULL) {
         ALOGE("A rpmstats jni jclass is null.");
     } else {
         jgetAndUpdatePlatformState = env->GetMethodID(clsRpmStats, "getAndUpdatePlatformState",
-                "(Ljava/lang/String;JI)Lcom/android/internal/os/RpmStats$PowerStatePlatformSleepState;");
-        jgetSubsystem = env->GetMethodID(clsRpmStats, "getSubsystem",
+                                                      "(Ljava/lang/String;JI)Lcom/android/internal/"
+                                                      "os/RpmStats$PowerStatePlatformSleepState;");
+        jgetSubsystem = env->GetMethodID(
+                clsRpmStats, "getSubsystem",
                 "(Ljava/lang/String;)Lcom/android/internal/os/RpmStats$PowerStateSubsystem;");
         jputVoter = env->GetMethodID(clsPowerStatePlatformSleepState, "putVoter",
-                "(Ljava/lang/String;JI)V");
-        jputState = env->GetMethodID(clsPowerStateSubsystem, "putState",
-                "(Ljava/lang/String;JI)V");
+                                     "(Ljava/lang/String;JI)V");
+        jputState = env->GetMethodID(clsPowerStateSubsystem, "putState", "(Ljava/lang/String;JI)V");
     }
 
-    return jniRegisterNativeMethods(env, "com/android/server/am/BatteryStatsService",
-            method_table, NELEM(method_table));
+    return jniRegisterNativeMethods(env, "com/android/server/am/BatteryStatsService", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

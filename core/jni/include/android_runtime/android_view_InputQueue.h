@@ -27,13 +27,12 @@
 /*
  * Declare a concrete type for the NDK's AInputQueue forward declaration
  */
-struct AInputQueue{
-};
+struct AInputQueue {};
 
 namespace android {
 
 class InputQueue : public AInputQueue, public MessageHandler {
-public:
+  public:
     virtual ~InputQueue();
 
     void attachLooper(Looper* looper, int ident, ALooper_callbackFunc callback, void* data);
@@ -58,12 +57,12 @@ public:
 
     static InputQueue* createQueue(jobject inputQueueObj, const sp<Looper>& looper);
 
-protected:
+  protected:
     virtual void handleMessage(const Message& message);
 
-private:
-    InputQueue(jobject inputQueueObj, const sp<Looper>& looper,
-            int readDispatchFd, int writeDispatchFd);
+  private:
+    InputQueue(jobject inputQueueObj, const sp<Looper>& looper, int readDispatchFd,
+               int writeDispatchFd);
 
     void detachLooperLocked();
 
@@ -80,6 +79,6 @@ private:
     Vector<key_value_pair_t<InputEvent*, bool> > mFinishedEvents;
 };
 
-} // namespace android
+}  // namespace android
 
 #endif

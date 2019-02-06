@@ -59,8 +59,7 @@ TEST(ConfigTest, shouldSelectBestDensity) {
 
   Vector<ResTable_config> configs;
 
-  ResTable_config expectedBest =
-      buildDensityConfig(ResTable_config::DENSITY_HIGH);
+  ResTable_config expectedBest = buildDensityConfig(ResTable_config::DENSITY_HIGH);
   configs.add(expectedBest);
   ASSERT_EQ(expectedBest, selectBest(deviceConfig, configs));
 
@@ -93,8 +92,7 @@ TEST(ConfigTest, shouldSelectBestDensityWhenNoneSpecified) {
   Vector<ResTable_config> configs;
   configs.add(buildDensityConfig(ResTable_config::DENSITY_HIGH));
 
-  ResTable_config expectedBest =
-      buildDensityConfig(ResTable_config::DENSITY_MEDIUM);
+  ResTable_config expectedBest = buildDensityConfig(ResTable_config::DENSITY_MEDIUM);
   configs.add(expectedBest);
   ASSERT_EQ(expectedBest, selectBest(deviceConfig, configs));
 
@@ -159,8 +157,7 @@ TEST(ConfigTest, ScreenShapeHasCorrectDiff) {
   ResTable_config roundConfig = defaultConfig;
   roundConfig.screenLayout2 = ResTable_config::SCREENROUND_YES;
 
-  EXPECT_EQ(defaultConfig.diff(roundConfig),
-            ResTable_config::CONFIG_SCREEN_ROUND);
+  EXPECT_EQ(defaultConfig.diff(roundConfig), ResTable_config::CONFIG_SCREEN_ROUND);
 }
 
 TEST(ConfigTest, RoundIsMoreSpecific) {

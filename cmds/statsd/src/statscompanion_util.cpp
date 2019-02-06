@@ -23,10 +23,10 @@ namespace android {
 namespace os {
 namespace statsd {
 
-sp <IStatsCompanionService> getStatsCompanionService() {
+sp<IStatsCompanionService> getStatsCompanionService() {
     sp<IStatsCompanionService> statsCompanion = nullptr;
     // Get statscompanion service from service manager
-    static const sp <IServiceManager> sm(defaultServiceManager());
+    static const sp<IServiceManager> sm(defaultServiceManager());
     if (statsCompanion == nullptr) {
         if (sm != nullptr) {
             const String16 name("statscompanion");

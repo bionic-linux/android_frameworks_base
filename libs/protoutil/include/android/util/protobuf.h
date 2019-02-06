@@ -57,7 +57,7 @@ uint8_t* write_raw_varint(uint8_t* buf, uint64_t val);
  */
 uint8_t* write_length_delimited_tag_header(uint8_t* buf, uint32_t fieldId, size_t size);
 
-} // util
-} // android
+}  // namespace util
+}  // namespace android
 
 #endif  // ANDROID_UTIL_PROTOUBUF_H

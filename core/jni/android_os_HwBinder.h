@@ -27,35 +27,29 @@ namespace android {
 struct JHwBinderHolder;
 
 struct JHwBinder : public hardware::BHwBinder {
-    static void InitClass(JNIEnv *env);
+    static void InitClass(JNIEnv* env);
 
-    static sp<JHwBinderHolder> SetNativeContext(
-            JNIEnv *env, jobject thiz, const sp<JHwBinderHolder> &context);
+    static sp<JHwBinderHolder> SetNativeContext(JNIEnv* env, jobject thiz,
+                                                const sp<JHwBinderHolder>& context);
 
-    static sp<JHwBinder> GetNativeBinder(JNIEnv *env, jobject thiz);
+    static sp<JHwBinder> GetNativeBinder(JNIEnv* env, jobject thiz);
 
-    JHwBinder(JNIEnv *env, jobject thiz);
+    JHwBinder(JNIEnv* env, jobject thiz);
 
-protected:
+  protected:
     virtual ~JHwBinder();
 
-    virtual status_t onTransact(
-            uint32_t code,
-            const hardware::Parcel &data,
-            hardware::Parcel *reply,
-            uint32_t flags,
-            TransactCallback callback);
+    virtual status_t onTransact(uint32_t code, const hardware::Parcel& data,
+                                hardware::Parcel* reply, uint32_t flags, TransactCallback callback);
 
-private:
+  private:
     jobject mObject;
 
     DISALLOW_COPY_AND_ASSIGN(JHwBinder);
 };
 
-int register_android_os_HwBinder(JNIEnv *env);
+int register_android_os_HwBinder(JNIEnv* env);
 
 }  // namespace android
 
 #endif  // _ANDROID_OS_HW_BINDER_H
-
-

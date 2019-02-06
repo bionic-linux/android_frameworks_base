@@ -20,10 +20,10 @@
 
 #include "android_media_Media2DataSource.h"
 
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "jni.h"
-#include <nativehelper/JNIHelp.h>
 
 #include <drm/drm_framework_common.h>
 #include <media/stagefright/foundation/ADebug.h>
@@ -34,9 +34,7 @@ namespace android {
 static const size_t kBufferSize = 64 * 1024;
 
 JMedia2DataSource::JMedia2DataSource(JNIEnv* env, jobject source)
-    : mJavaObjStatus(OK),
-      mSizeIsCached(false),
-      mCachedSize(0) {
+    : mJavaObjStatus(OK), mSizeIsCached(false), mCachedSize(0) {
     mMedia2DataSourceObj = env->NewGlobalRef(source);
     CHECK(mMedia2DataSourceObj != NULL);
 
@@ -65,7 +63,7 @@ status_t JMedia2DataSource::initCheck() const {
     return OK;
 }
 
-ssize_t JMedia2DataSource::readAt(off64_t offset, void *data, size_t size) {
+ssize_t JMedia2DataSource::readAt(off64_t offset, void* data, size_t size) {
     Mutex::Autolock lock(mLock);
 
     if (mJavaObjStatus != OK) {
@@ -76,8 +74,8 @@ ssize_t JMedia2DataSource::readAt(off64_t offset, void *data, size_t size) {
     }
 
     JNIEnv* env = AndroidRuntime::getJNIEnv();
-    jint numread = env->CallIntMethod(mMedia2DataSourceObj, mReadAtMethod,
-            (jlong)offset, mByteArrayObj, (jint)0, (jint)size);
+    jint numread = env->CallIntMethod(mMedia2DataSourceObj, mReadAtMethod, (jlong)offset,
+                                      mByteArrayObj, (jint)0, (jint)size);
     if (env->ExceptionCheck()) {
         ALOGW("An exception occurred in readAt()");
         LOGW_EX(env);

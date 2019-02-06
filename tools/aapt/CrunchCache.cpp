@@ -6,19 +6,22 @@
 // CrunchCache.h
 
 #include <utils/Compat.h>
-#include <utils/Vector.h>
 #include <utils/String8.h>
+#include <utils/Vector.h>
 
-#include "DirectoryWalker.h"
-#include "FileFinder.h"
 #include "CacheUpdater.h"
 #include "CrunchCache.h"
+#include "DirectoryWalker.h"
+#include "FileFinder.h"
 
 using namespace android;
 
 CrunchCache::CrunchCache(String8 sourcePath, String8 destPath, FileFinder* ff)
-    : mSourcePath(sourcePath), mDestPath(destPath), mSourceFiles(0), mDestFiles(0), mFileFinder(ff)
-{
+    : mSourcePath(sourcePath),
+      mDestPath(destPath),
+      mSourceFiles(0),
+      mDestFiles(0),
+      mFileFinder(ff) {
     // We initialize the default value to return to 0 so if a file doesn't exist
     // then all files are automatically "newer" than it.
 
@@ -29,8 +32,7 @@ CrunchCache::CrunchCache(String8 sourcePath, String8 destPath, FileFinder* ff)
     loadFiles();
 }
 
-size_t CrunchCache::crunch(CacheUpdater* cu, bool forceOverwrite)
-{
+size_t CrunchCache::crunch(CacheUpdater* cu, bool forceOverwrite) {
     size_t numFilesUpdated = 0;
 
     // Iterate through the source files and compare to cache.
@@ -44,11 +46,10 @@ size_t CrunchCache::crunch(CacheUpdater* cu, bool forceOverwrite)
         // This efficiently strips the source directory prefix from our path.
         // Also, String8 doesn't have a substring method so this is what we've
         // got to work with.
-        const char* rPathPtr = mSourceFiles.keyAt(0).string()+mSourcePath.length();
+        const char* rPathPtr = mSourceFiles.keyAt(0).string() + mSourcePath.length();
         // Strip leading slash if present
         int offset = 0;
-        if (rPathPtr[0] == OS_PATH_SEPARATOR)
-            offset = 1;
+        if (rPathPtr[0] == OS_PATH_SEPARATOR) offset = 1;
         relativePath = String8(rPathPtr + offset);
 
         if (forceOverwrite || needsUpdating(relativePath)) {
@@ -76,8 +77,7 @@ size_t CrunchCache::crunch(CacheUpdater* cu, bool forceOverwrite)
     return numFilesUpdated;
 }
 
-void CrunchCache::loadFiles()
-{
+void CrunchCache::loadFiles() {
     // Clear out our data structures to avoid putting in duplicates
     mSourceFiles.clear();
     mDestFiles.clear();
@@ -86,16 +86,15 @@ void CrunchCache::loadFiles()
     DirectoryWalker* dw = new SystemDirectoryWalker();
 
     // Load files in the source directory
-    mFileFinder->findFiles(mSourcePath, mExtensions, mSourceFiles,dw);
+    mFileFinder->findFiles(mSourcePath, mExtensions, mSourceFiles, dw);
 
     // Load files in the destination directory
-    mFileFinder->findFiles(mDestPath,mExtensions,mDestFiles,dw);
+    mFileFinder->findFiles(mDestPath, mExtensions, mDestFiles, dw);
 
     delete dw;
 }
 
-bool CrunchCache::needsUpdating(const String8& relativePath) const
-{
+bool CrunchCache::needsUpdating(const String8& relativePath) const {
     // Retrieve modification dates for this file entry under the source and
     // cache directory trees. The vectors will return a modification date of 0
     // if the file doesn't exist.

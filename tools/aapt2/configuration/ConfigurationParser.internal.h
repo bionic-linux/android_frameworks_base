@@ -47,7 +47,7 @@ using Entry = std::unordered_map<std::string, T>;
 template <class T>
 using Group = Entry<OrderedEntry<T>>;
 
-template<typename T>
+template <typename T>
 bool IsGroupValid(const Group<T>& group, const std::string& name, IDiagnostics* diag) {
   std::set<int32_t> orders;
   for (const auto& p : group) {

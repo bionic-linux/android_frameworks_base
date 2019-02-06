@@ -17,8 +17,7 @@
 #include <android/bitmap.h>
 #include <android/graphics/Bitmap.h>
 
-int AndroidBitmap_getInfo(JNIEnv* env, jobject jbitmap,
-                          AndroidBitmapInfo* info) {
+int AndroidBitmap_getInfo(JNIEnv* env, jobject jbitmap, AndroidBitmapInfo* info) {
     if (NULL == env || NULL == jbitmap) {
         return ANDROID_BITMAP_RESULT_BAD_PARAMETER;
     }

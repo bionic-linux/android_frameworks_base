@@ -18,26 +18,25 @@
 
 #include "contrast.h"
 
+#include <android/log.h>
+#include <jni.h>
 #include <math.h>
 #include <string.h>
-#include <jni.h>
 #include <unistd.h>
-#include <android/log.h>
 
-jfloat
-Java_androidx_media_filterfw_samples_simplecamera_ContrastRatioFilter_contrastOperator(
-    JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
-
+jfloat Java_androidx_media_filterfw_samples_simplecamera_ContrastRatioFilter_contrastOperator(
+        JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
     if (imageBuffer == 0) {
-      return 0.0f;
+        return 0.0f;
     }
     float total = 0;
     const int numPixels = width * height;
     unsigned char* srcPtr = static_cast<unsigned char*>(env->GetDirectBufferAddress(imageBuffer));
     float* lumArray = new float[numPixels];
     for (int i = 0; i < numPixels; i++) {
-        lumArray[i] = (0.2126f * *(srcPtr + 4 * i) + 0.7152f *
-            *(srcPtr + 4 * i + 1) + 0.0722f * *(srcPtr + 4 * i + 2)) / 255;
+        lumArray[i] = (0.2126f * *(srcPtr + 4 * i) + 0.7152f * *(srcPtr + 4 * i + 1) +
+                       0.0722f * *(srcPtr + 4 * i + 2)) /
+                      255;
         total += lumArray[i];
     }
     const float avg = total / numPixels;
@@ -47,5 +46,5 @@ Java_androidx_media_filterfw_samples_simplecamera_ContrastRatioFilter_contrastOp
         sum += (lumArray[i] - avg) * (lumArray[i] - avg);
     }
     delete[] lumArray;
-    return ((float) sqrt(sum / numPixels));
+    return ((float)sqrt(sum / numPixels));
 }

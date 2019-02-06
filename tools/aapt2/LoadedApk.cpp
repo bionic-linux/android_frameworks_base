@@ -216,20 +216,14 @@ bool LoadedApk::WriteToArchive(IAaptContext* context, ResourceTable* split_table
       }
 
       io::BigBufferInputStream input_stream(&buffer);
-      if (!io::CopyInputStreamToArchive(context,
-                                        &input_stream,
-                                        path,
-                                        ArchiveEntry::kAlign,
+      if (!io::CopyInputStreamToArchive(context, &input_stream, path, ArchiveEntry::kAlign,
                                         writer)) {
         return false;
       }
     } else if (format_ == ApkFormat::kProto && path == kProtoResourceTablePath) {
       pb::ResourceTable pb_table;
       SerializeTableToPb(*split_table, &pb_table, context->GetDiagnostics());
-      if (!io::CopyProtoToArchive(context,
-                                  &pb_table,
-                                  path,
-                                  ArchiveEntry::kAlign, writer)) {
+      if (!io::CopyProtoToArchive(context, &pb_table, path, ArchiveEntry::kAlign, writer)) {
         return false;
       }
     } else if (manifest != nullptr && path == "AndroidManifest.xml") {

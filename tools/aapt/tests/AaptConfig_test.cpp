@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include <utils/String8.h>
 #include <gtest/gtest.h>
+#include <utils/String8.h>
 
 #include "AaptConfig.h"
 #include "ConfigDescription.h"
@@ -24,14 +24,15 @@
 
 using android::String8;
 
-static ::testing::AssertionResult TestParse(const String8& input, ConfigDescription* config=NULL) {
+static ::testing::AssertionResult TestParse(const String8& input,
+                                            ConfigDescription* config = NULL) {
     if (AaptConfig::parse(String8(input), config)) {
         return ::testing::AssertionSuccess() << input << " was successfully parsed";
     }
     return ::testing::AssertionFailure() << input << " could not be parsed";
 }
 
-static ::testing::AssertionResult TestParse(const char* input, ConfigDescription* config=NULL) {
+static ::testing::AssertionResult TestParse(const char* input, ConfigDescription* config = NULL) {
     return TestParse(String8(input), config);
 }
 
@@ -57,10 +58,13 @@ TEST(AaptConfigTest, ParseBasicQualifiers) {
     EXPECT_TRUE(TestParse("fr-land", &config));
     EXPECT_EQ(String8("fr-land"), config.toString());
 
-    EXPECT_TRUE(TestParse("mcc310-pl-sw720dp-normal-long-port-night-"
-                "xhdpi-keyssoft-qwerty-navexposed-nonav", &config));
+    EXPECT_TRUE(
+            TestParse("mcc310-pl-sw720dp-normal-long-port-night-"
+                      "xhdpi-keyssoft-qwerty-navexposed-nonav",
+                      &config));
     EXPECT_EQ(String8("mcc310-pl-sw720dp-normal-long-port-night-"
-                "xhdpi-keyssoft-qwerty-navexposed-nonav-v13"), config.toString());
+                      "xhdpi-keyssoft-qwerty-navexposed-nonav-v13"),
+              config.toString());
 }
 
 TEST(AaptConfigTest, ParseLocales) {

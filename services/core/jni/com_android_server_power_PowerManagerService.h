@@ -26,6 +26,6 @@ namespace android {
 
 extern void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t eventType);
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_SERVER_POWER_MANAGER_SERVICE_H
+#endif  // _ANDROID_SERVER_POWER_MANAGER_SERVICE_H

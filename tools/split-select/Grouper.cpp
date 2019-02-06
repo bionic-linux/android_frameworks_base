@@ -16,8 +16,8 @@
 
 #include "Grouper.h"
 
-#include "aapt/AaptUtil.h"
 #include "SplitDescription.h"
+#include "aapt/AaptUtil.h"
 
 #include <utils/KeyedVector.h>
 #include <utils/Vector.h>
@@ -27,8 +27,8 @@ using AaptUtil::appendValue;
 
 namespace split {
 
-Vector<SortedVector<SplitDescription> >
-groupByMutualExclusivity(const Vector<SplitDescription>& splits) {
+Vector<SortedVector<SplitDescription> > groupByMutualExclusivity(
+        const Vector<SplitDescription>& splits) {
     Vector<SortedVector<SplitDescription> > groups;
 
     // Find mutually exclusive splits and group them.
@@ -40,7 +40,7 @@ groupByMutualExclusivity(const Vector<SplitDescription>& splits) {
         if (split.config.density != 0) {
             SplitDescription key(split);
             key.config.density = 0;
-            key.config.sdkVersion = 0; // Ignore density so we can support anydpi.
+            key.config.sdkVersion = 0;  // Ignore density so we can support anydpi.
             appendValue(densityGroups, key, split);
         } else if (split.abi != abi::Variant_none) {
             SplitDescription key(split);
@@ -65,4 +65,4 @@ groupByMutualExclusivity(const Vector<SplitDescription>& splits) {
     return groups;
 }
 
-} // namespace split
+}  // namespace split

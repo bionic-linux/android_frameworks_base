@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#include "jni.h"
 #include "core_jni_helpers.h"
+#include "jni.h"
 
-#include "FontUtils.h"
-#include "GraphicsJNI.h"
-#include <nativehelper/ScopedPrimitiveArray.h>
-#include "SkTypeface.h"
 #include <android_runtime/android_util_AssetManager.h>
 #include <androidfw/AssetManager.h>
 #include <hwui/Typeface.h>
 #include <minikin/FontFamily.h>
+#include <nativehelper/ScopedPrimitiveArray.h>
+#include "FontUtils.h"
+#include "GraphicsJNI.h"
+#include "SkTypeface.h"
 
 using namespace android;
 
@@ -32,7 +32,8 @@ static inline Typeface* toTypeface(jlong ptr) {
     return reinterpret_cast<Typeface*>(ptr);
 }
 
-template<typename Ptr> static inline jlong toJLong(Ptr ptr) {
+template <typename Ptr>
+static inline jlong toJLong(Ptr ptr) {
     return reinterpret_cast<jlong>(ptr);
 }
 
@@ -51,12 +52,12 @@ static jlong Typeface_createFromTypeface(JNIEnv* env, jobject, jlong familyHandl
 }
 
 static jlong Typeface_createFromTypefaceWithExactStyle(JNIEnv* env, jobject, jlong nativeInstance,
-        jint weight, jboolean italic) {
+                                                       jint weight, jboolean italic) {
     return toJLong(Typeface::createAbsolute(toTypeface(nativeInstance), weight, italic));
 }
 
 static jlong Typeface_createFromTypefaceWithVariation(JNIEnv* env, jobject, jlong familyHandle,
-        jobject listOfAxis) {
+                                                      jobject listOfAxis) {
     std::vector<minikin::FontVariation> variations;
     ListHelper list(env, listOfAxis);
     for (jint i = 0; i < list.size(); i++) {
@@ -93,8 +94,8 @@ static jint Typeface_getWeight(jlong faceHandle) {
     return toTypeface(faceHandle)->fStyle.weight();
 }
 
-static jlong Typeface_createFromArray(JNIEnv *env, jobject, jlongArray familyArray,
-        int weight, int italic) {
+static jlong Typeface_createFromArray(JNIEnv* env, jobject, jlongArray familyArray, int weight,
+                                      int italic) {
     ScopedLongArrayRO families(env, familyArray);
     std::vector<std::shared_ptr<minikin::FontFamily>> familyVec;
     familyVec.reserve(families.size());
@@ -110,7 +111,7 @@ static void Typeface_setDefault(jlong faceHandle) {
     Typeface::setDefault(toTypeface(faceHandle));
 }
 
-static jobject Typeface_getSupportedAxes(JNIEnv *env, jobject, jlong faceHandle) {
+static jobject Typeface_getSupportedAxes(JNIEnv* env, jobject, jlong faceHandle) {
     Typeface* face = toTypeface(faceHandle);
     const std::unordered_set<minikin::AxisTag>& tagSet = face->fFontCollection->getSupportedTags();
     const size_t length = tagSet.size();
@@ -131,23 +132,21 @@ static jobject Typeface_getSupportedAxes(JNIEnv *env, jobject, jlong faceHandle)
 ///////////////////////////////////////////////////////////////////////////////
 
 static const JNINativeMethod gTypefaceMethods[] = {
-    { "nativeCreateFromTypeface", "(JI)J", (void*)Typeface_createFromTypeface },
-    { "nativeCreateFromTypefaceWithExactStyle", "(JIZ)J",
-            (void*)Typeface_createFromTypefaceWithExactStyle },
-    { "nativeCreateFromTypefaceWithVariation", "(JLjava/util/List;)J",
-            (void*)Typeface_createFromTypefaceWithVariation },
-    { "nativeCreateWeightAlias",  "(JI)J", (void*)Typeface_createWeightAlias },
-    { "nativeGetReleaseFunc",     "()J",  (void*)Typeface_getReleaseFunc },
-    { "nativeGetStyle",           "(J)I",  (void*)Typeface_getStyle },
-    { "nativeGetWeight",      "(J)I",  (void*)Typeface_getWeight },
-    { "nativeCreateFromArray",    "([JII)J",
-                                           (void*)Typeface_createFromArray },
-    { "nativeSetDefault",         "(J)V",   (void*)Typeface_setDefault },
-    { "nativeGetSupportedAxes",   "(J)[I",  (void*)Typeface_getSupportedAxes },
+        {"nativeCreateFromTypeface", "(JI)J", (void*)Typeface_createFromTypeface},
+        {"nativeCreateFromTypefaceWithExactStyle", "(JIZ)J",
+         (void*)Typeface_createFromTypefaceWithExactStyle},
+        {"nativeCreateFromTypefaceWithVariation", "(JLjava/util/List;)J",
+         (void*)Typeface_createFromTypefaceWithVariation},
+        {"nativeCreateWeightAlias", "(JI)J", (void*)Typeface_createWeightAlias},
+        {"nativeGetReleaseFunc", "()J", (void*)Typeface_getReleaseFunc},
+        {"nativeGetStyle", "(J)I", (void*)Typeface_getStyle},
+        {"nativeGetWeight", "(J)I", (void*)Typeface_getWeight},
+        {"nativeCreateFromArray", "([JII)J", (void*)Typeface_createFromArray},
+        {"nativeSetDefault", "(J)V", (void*)Typeface_setDefault},
+        {"nativeGetSupportedAxes", "(J)[I", (void*)Typeface_getSupportedAxes},
 };
 
-int register_android_graphics_Typeface(JNIEnv* env)
-{
+int register_android_graphics_Typeface(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/graphics/Typeface", gTypefaceMethods,
                                 NELEM(gTypefaceMethods));
 }

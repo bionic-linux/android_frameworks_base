@@ -25,47 +25,45 @@
 #include <log/log.h>
 
 #include <SkBitmap.h>
+#include <SkBlendMode.h>
 #include <SkCanvas.h>
 #include <SkColor.h>
 #include <SkPaint.h>
-#include <SkBlendMode.h>
 
 namespace android {
 
 // --- WeakLooperCallback ---
 
-class WeakLooperCallback: public LooperCallback {
-protected:
-    virtual ~WeakLooperCallback() { }
+class WeakLooperCallback : public LooperCallback {
+  protected:
+    virtual ~WeakLooperCallback() {}
 
-public:
-    explicit WeakLooperCallback(const wp<LooperCallback>& callback) :
-        mCallback(callback) {
-    }
+  public:
+    explicit WeakLooperCallback(const wp<LooperCallback>& callback) : mCallback(callback) {}
 
     virtual int handleEvent(int fd, int events, void* data) {
         sp<LooperCallback> callback = mCallback.promote();
         if (callback != NULL) {
             return callback->handleEvent(fd, events, data);
         }
-        return 0; // the client is gone, remove the callback
+        return 0;  // the client is gone, remove the callback
     }
 
-private:
+  private:
     wp<LooperCallback> mCallback;
 };
 
 // --- PointerController ---
 
 // Time to wait before starting the fade when the pointer is inactive.
-static const nsecs_t INACTIVITY_TIMEOUT_DELAY_TIME_NORMAL = 15 * 1000 * 1000000LL; // 15 seconds
-static const nsecs_t INACTIVITY_TIMEOUT_DELAY_TIME_SHORT = 3 * 1000 * 1000000LL; // 3 seconds
+static const nsecs_t INACTIVITY_TIMEOUT_DELAY_TIME_NORMAL = 15 * 1000 * 1000000LL;  // 15 seconds
+static const nsecs_t INACTIVITY_TIMEOUT_DELAY_TIME_SHORT = 3 * 1000 * 1000000LL;    // 3 seconds
 
 // Time to spend fading out the spot completely.
-static const nsecs_t SPOT_FADE_DURATION = 200 * 1000000LL; // 200 ms
+static const nsecs_t SPOT_FADE_DURATION = 200 * 1000000LL;  // 200 ms
 
 // Time to spend fading out the pointer completely.
-static const nsecs_t POINTER_FADE_DURATION = 500 * 1000000LL; // 500 ms
+static const nsecs_t POINTER_FADE_DURATION = 500 * 1000000LL;  // 500 ms
 
 // The number of events to be read at once for DisplayEventReceiver.
 static const int EVENT_BUFFER_SIZE = 100;
@@ -73,14 +71,15 @@ static const int EVENT_BUFFER_SIZE = 100;
 // --- PointerController ---
 
 PointerController::PointerController(const sp<PointerControllerPolicyInterface>& policy,
-        const sp<Looper>& looper, const sp<SpriteController>& spriteController) :
-        mPolicy(policy), mLooper(looper), mSpriteController(spriteController) {
+                                     const sp<Looper>& looper,
+                                     const sp<SpriteController>& spriteController)
+    : mPolicy(policy), mLooper(looper), mSpriteController(spriteController) {
     mHandler = new WeakMessageHandler(this);
     mCallback = new WeakLooperCallback(this);
 
     if (mDisplayEventReceiver.initCheck() == NO_ERROR) {
-        mLooper->addFd(mDisplayEventReceiver.getFd(), Looper::POLL_CALLBACK,
-                       Looper::EVENT_INPUT, mCallback, nullptr);
+        mLooper->addFd(mDisplayEventReceiver.getFd(), Looper::POLL_CALLBACK, Looper::EVENT_INPUT,
+                       mCallback, nullptr);
     } else {
         ALOGE("Failed to initialize DisplayEventReceiver.");
     }
@@ -101,7 +100,7 @@ PointerController::PointerController(const sp<PointerControllerPolicyInterface>&
     mLocked.pointerFadeDirection = 0;
     mLocked.pointerX = 0;
     mLocked.pointerY = 0;
-    mLocked.pointerAlpha = 0.0f; // pointer is initially faded
+    mLocked.pointerAlpha = 0.0f;  // pointer is initially faded
     mLocked.pointerSprite = mSpriteController->createSprite();
     mLocked.pointerIconChanged = false;
     mLocked.requestedPointerType = mPolicy->getDefaultPointerIconId();
@@ -135,15 +134,15 @@ PointerController::~PointerController() {
     mLocked.recycledSprites.clear();
 }
 
-bool PointerController::getBounds(float* outMinX, float* outMinY,
-        float* outMaxX, float* outMaxY) const {
+bool PointerController::getBounds(float* outMinX, float* outMinY, float* outMaxX,
+                                  float* outMaxY) const {
     AutoMutex _l(mLock);
 
     return getBoundsLocked(outMinX, outMinY, outMaxX, outMaxY);
 }
 
-bool PointerController::getBoundsLocked(float* outMinX, float* outMinY,
-        float* outMaxX, float* outMaxY) const {
+bool PointerController::getBoundsLocked(float* outMinX, float* outMinY, float* outMaxX,
+                                        float* outMaxY) const {
     if (mLocked.displayWidth <= 0 || mLocked.displayHeight <= 0) {
         return false;
     }
@@ -151,15 +150,15 @@ bool PointerController::getBoundsLocked(float* outMinX, float* outMinY,
     *outMinX = 0;
     *outMinY = 0;
     switch (mLocked.displayOrientation) {
-    case DISPLAY_ORIENTATION_90:
-    case DISPLAY_ORIENTATION_270:
-        *outMaxX = mLocked.displayHeight - 1;
-        *outMaxY = mLocked.displayWidth - 1;
-        break;
-    default:
-        *outMaxX = mLocked.displayWidth - 1;
-        *outMaxY = mLocked.displayHeight - 1;
-        break;
+        case DISPLAY_ORIENTATION_90:
+        case DISPLAY_ORIENTATION_270:
+            *outMaxX = mLocked.displayHeight - 1;
+            *outMaxY = mLocked.displayWidth - 1;
+            break;
+        default:
+            *outMaxX = mLocked.displayWidth - 1;
+            *outMaxY = mLocked.displayHeight - 1;
+            break;
     }
     return true;
 }
@@ -285,18 +284,17 @@ void PointerController::setPresentation(Presentation presentation) {
     }
 }
 
-void PointerController::setSpots(const PointerCoords* spotCoords,
-        const uint32_t* spotIdToIndex, BitSet32 spotIdBits) {
+void PointerController::setSpots(const PointerCoords* spotCoords, const uint32_t* spotIdToIndex,
+                                 BitSet32 spotIdBits) {
 #if DEBUG_POINTER_UPDATES
     ALOGD("setSpots: idBits=%08x", spotIdBits.value);
-    for (BitSet32 idBits(spotIdBits); !idBits.isEmpty(); ) {
+    for (BitSet32 idBits(spotIdBits); !idBits.isEmpty();) {
         uint32_t id = idBits.firstMarkedBit();
         idBits.clearBit(id);
         const PointerCoords& c = spotCoords[spotIdToIndex[id]];
         ALOGD(" spot %d: position=(%0.3f, %0.3f), pressure=%0.3f", id,
-                c.getAxisValue(AMOTION_EVENT_AXIS_X),
-                c.getAxisValue(AMOTION_EVENT_AXIS_Y),
-                c.getAxisValue(AMOTION_EVENT_AXIS_PRESSURE));
+              c.getAxisValue(AMOTION_EVENT_AXIS_X), c.getAxisValue(AMOTION_EVENT_AXIS_Y),
+              c.getAxisValue(AMOTION_EVENT_AXIS_PRESSURE));
     }
 #endif
 
@@ -305,11 +303,12 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
     mSpriteController->openTransaction();
 
     // Add or move spots for fingers that are down.
-    for (BitSet32 idBits(spotIdBits); !idBits.isEmpty(); ) {
+    for (BitSet32 idBits(spotIdBits); !idBits.isEmpty();) {
         uint32_t id = idBits.clearFirstMarkedBit();
         const PointerCoords& c = spotCoords[spotIdToIndex[id]];
         const SpriteIcon& icon = c.getAxisValue(AMOTION_EVENT_AXIS_PRESSURE) > 0
-                ? mResources.spotTouch : mResources.spotHover;
+                                         ? mResources.spotTouch
+                                         : mResources.spotHover;
         float x = c.getAxisValue(AMOTION_EVENT_AXIS_X);
         float y = c.getAxisValue(AMOTION_EVENT_AXIS_Y);
 
@@ -324,8 +323,7 @@ void PointerController::setSpots(const PointerCoords* spotCoords,
     // Remove spots for fingers that went up.
     for (size_t i = 0; i < mLocked.spots.size(); i++) {
         Spot* spot = mLocked.spots.itemAt(i);
-        if (spot->id != Spot::INVALID_ID
-                && !spotIdBits.hasBit(spot->id)) {
+        if (spot->id != Spot::INVALID_ID && !spotIdBits.hasBit(spot->id)) {
             fadeOutAndReleaseSpotLocked(spot);
         }
     }
@@ -373,8 +371,7 @@ void PointerController::setDisplayViewport(int32_t width, int32_t height, int32_
     AutoMutex _l(mLock);
 
     // Adjust to use the display's unrotated coordinate frame.
-    if (orientation == DISPLAY_ORIENTATION_90
-            || orientation == DISPLAY_ORIENTATION_270) {
+    if (orientation == DISPLAY_ORIENTATION_90 || orientation == DISPLAY_ORIENTATION_270) {
         int32_t temp = height;
         height = width;
         width = temp;
@@ -406,38 +403,38 @@ void PointerController::setDisplayViewport(int32_t width, int32_t height, int32_
 
         // Undo the previous rotation.
         switch (mLocked.displayOrientation) {
-        case DISPLAY_ORIENTATION_90:
-            temp = x;
-            x = mLocked.displayWidth - y;
-            y = temp;
-            break;
-        case DISPLAY_ORIENTATION_180:
-            x = mLocked.displayWidth - x;
-            y = mLocked.displayHeight - y;
-            break;
-        case DISPLAY_ORIENTATION_270:
-            temp = x;
-            x = y;
-            y = mLocked.displayHeight - temp;
-            break;
+            case DISPLAY_ORIENTATION_90:
+                temp = x;
+                x = mLocked.displayWidth - y;
+                y = temp;
+                break;
+            case DISPLAY_ORIENTATION_180:
+                x = mLocked.displayWidth - x;
+                y = mLocked.displayHeight - y;
+                break;
+            case DISPLAY_ORIENTATION_270:
+                temp = x;
+                x = y;
+                y = mLocked.displayHeight - temp;
+                break;
         }
 
         // Perform the new rotation.
         switch (orientation) {
-        case DISPLAY_ORIENTATION_90:
-            temp = x;
-            x = y;
-            y = mLocked.displayWidth - temp;
-            break;
-        case DISPLAY_ORIENTATION_180:
-            x = mLocked.displayWidth - x;
-            y = mLocked.displayHeight - y;
-            break;
-        case DISPLAY_ORIENTATION_270:
-            temp = x;
-            x = mLocked.displayHeight - y;
-            y = temp;
-            break;
+            case DISPLAY_ORIENTATION_90:
+                temp = x;
+                x = y;
+                y = mLocked.displayWidth - temp;
+                break;
+            case DISPLAY_ORIENTATION_180:
+                x = mLocked.displayWidth - x;
+                y = mLocked.displayHeight - y;
+                break;
+            case DISPLAY_ORIENTATION_270:
+                temp = x;
+                x = mLocked.displayHeight - y;
+                y = temp;
+                break;
         }
 
         // Apply offsets to convert from the pixel center to the pixel top-left corner position
@@ -472,23 +469,25 @@ void PointerController::setCustomPointerIcon(const SpriteIcon& icon) {
 
 void PointerController::handleMessage(const Message& message) {
     switch (message.what) {
-    case MSG_INACTIVITY_TIMEOUT:
-        doInactivityTimeout();
-        break;
+        case MSG_INACTIVITY_TIMEOUT:
+            doInactivityTimeout();
+            break;
     }
 }
 
 int PointerController::handleEvent(int /* fd */, int events, void* /* data */) {
     if (events & (Looper::EVENT_ERROR | Looper::EVENT_HANGUP)) {
         ALOGE("Display event receiver pipe was closed or an error occurred.  "
-              "events=0x%x", events);
-        return 0; // remove the callback
+              "events=0x%x",
+              events);
+        return 0;  // remove the callback
     }
 
     if (!(events & Looper::EVENT_INPUT)) {
         ALOGW("Received spurious callback for unhandled poll event.  "
-              "events=0x%x", events);
-        return 1; // keep the callback
+              "events=0x%x",
+              events);
+        return 1;  // keep the callback
     }
 
     bool gotVsync = false;
@@ -566,8 +565,8 @@ bool PointerController::doFadingAnimationLocked(nsecs_t timestamp) {
 }
 
 bool PointerController::doBitmapAnimationLocked(nsecs_t timestamp) {
-    std::map<int32_t, PointerAnimation>::const_iterator iter = mLocked.animationResources.find(
-            mLocked.requestedPointerType);
+    std::map<int32_t, PointerAnimation>::const_iterator iter =
+            mLocked.animationResources.find(mLocked.requestedPointerType);
     if (iter == mLocked.animationResources.end()) {
         return false;
     }
@@ -606,7 +605,8 @@ void PointerController::resetInactivityTimeoutLocked() {
     mLooper->removeMessages(mHandler, MSG_INACTIVITY_TIMEOUT);
 
     nsecs_t timeout = mLocked.inactivityTimeout == INACTIVITY_TIMEOUT_SHORT
-            ? INACTIVITY_TIMEOUT_DELAY_TIME_SHORT : INACTIVITY_TIMEOUT_DELAY_TIME_NORMAL;
+                              ? INACTIVITY_TIMEOUT_DELAY_TIME_SHORT
+                              : INACTIVITY_TIMEOUT_DELAY_TIME_NORMAL;
     mLooper->sendMessageDelayed(timeout, mHandler, MSG_INACTIVITY_TIMEOUT);
 }
 
@@ -633,7 +633,7 @@ void PointerController::updatePointerLocked() {
                 mLocked.pointerSprite->setIcon(mLocked.pointerIcon);
             } else {
                 std::map<int32_t, SpriteIcon>::const_iterator iter =
-                    mLocked.additionalMouseResources.find(mLocked.requestedPointerType);
+                        mLocked.additionalMouseResources.find(mLocked.requestedPointerType);
                 if (iter != mLocked.additionalMouseResources.end()) {
                     std::map<int32_t, PointerAnimation>::const_iterator anim_iter =
                             mLocked.animationResources.find(mLocked.requestedPointerType);
@@ -681,7 +681,7 @@ PointerController::Spot* PointerController::createAndAddSpotLocked(uint32_t id) 
 
     // Obtain a sprite from the recycled pool.
     sp<Sprite> sprite;
-    if (! mLocked.recycledSprites.isEmpty()) {
+    if (!mLocked.recycledSprites.isEmpty()) {
         sprite = mLocked.recycledSprites.top();
         mLocked.recycledSprites.pop();
     } else {
@@ -733,7 +733,6 @@ void PointerController::loadResources() {
     mPolicy->loadPointerResources(&mResources);
 }
 
-
 // --- PointerController::Spot ---
 
 void PointerController::Spot::updateSprite(const SpriteIcon* icon, float x, float y) {
@@ -756,4 +755,4 @@ void PointerController::Spot::updateSprite(const SpriteIcon* icon, float x, floa
     }
 }
 
-} // namespace android
+}  // namespace android

@@ -26,9 +26,9 @@ using namespace android;
  * 'top -b -n 1 -H -s 6 -o pid,tid,user,pr,ni,%cpu,s,virt,res,pcy,cmd,name'
  */
 class CpuInfoParser : public TextParserBase {
-public:
-    CpuInfoParser() : TextParserBase(String8("CpuInfoParser")) {};
-    ~CpuInfoParser() {};
+  public:
+    CpuInfoParser() : TextParserBase(String8("CpuInfoParser")){};
+    ~CpuInfoParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

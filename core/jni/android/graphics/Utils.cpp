@@ -15,15 +15,12 @@
  */
 
 #include "Utils.h"
-#include "SkUtils.h"
 #include "SkData.h"
+#include "SkUtils.h"
 
 using namespace android;
 
-AssetStreamAdaptor::AssetStreamAdaptor(Asset* asset)
-    : fAsset(asset)
-{
-}
+AssetStreamAdaptor::AssetStreamAdaptor(Asset* asset) : fAsset(asset) {}
 
 bool AssetStreamAdaptor::rewind() {
     off64_t pos = fAsset->seek(0, SEEK_SET);
@@ -45,7 +42,7 @@ bool AssetStreamAdaptor::isAtEnd() const {
 SkStreamRewindable* AssetStreamAdaptor::onDuplicate() const {
     // Cannot create a duplicate, since each AssetStreamAdaptor
     // would be modifying the Asset.
-    //return new AssetStreamAdaptor(fAsset);
+    // return new AssetStreamAdaptor(fAsset);
     return NULL;
 }
 

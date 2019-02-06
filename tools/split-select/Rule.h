@@ -20,8 +20,8 @@
 #include "SplitDescription.h"
 
 #include <utils/RefBase.h>
-#include <utils/StrongPointer.h>
 #include <utils/String8.h>
+#include <utils/StrongPointer.h>
 #include <utils/Vector.h>
 
 namespace split {
@@ -64,16 +64,13 @@ struct Rule : public virtual android::RefBase {
     android::Vector<double> doubleArgs;
     android::Vector<android::sp<Rule> > subrules;
 
-    android::String8 toJson(int indent=0) const;
+    android::String8 toJson(int indent = 0) const;
 
     static android::sp<Rule> simplify(android::sp<Rule> rule);
 };
 
-Rule::Rule()
-: op(ALWAYS_TRUE)
-, key(NONE)
-, negate(false) {}
+Rule::Rule() : op(ALWAYS_TRUE), key(NONE), negate(false) {}
 
-} // namespace split
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_RULE
+#endif  // H_ANDROID_SPLIT_RULE

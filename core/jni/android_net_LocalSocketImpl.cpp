@@ -21,21 +21,21 @@
 #include "utils/Log.h"
 #include "utils/misc.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
 #include <arpa/inet.h>
-#include <netinet/in.h>
-#include <stdlib.h>
 #include <errno.h>
-#include <unistd.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/un.h>
+#include <unistd.h>
 
 #include <cutils/sockets.h>
-#include <netinet/tcp.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <netinet/tcp.h>
 
 namespace android {
 
@@ -51,10 +51,8 @@ static jmethodID method_CredentialsInit;
 /* private native void connectLocal(FileDescriptor fd,
  * String name, int namespace) throws IOException
  */
-static void
-socket_connect_local(JNIEnv *env, jobject object,
-                        jobject fileDescriptor, jstring name, jint namespaceId)
-{
+static void socket_connect_local(JNIEnv* env, jobject object, jobject fileDescriptor, jstring name,
+                                 jint namespaceId) {
     int ret;
     int fd;
 
@@ -71,11 +69,7 @@ socket_connect_local(JNIEnv *env, jobject object,
 
     ScopedUtfChars nameUtf8(env, name);
 
-    ret = socket_local_client_connect(
-                fd,
-                nameUtf8.c_str(),
-                namespaceId,
-                SOCK_STREAM);
+    ret = socket_local_client_connect(fd, nameUtf8.c_str(), namespaceId, SOCK_STREAM);
 
     if (ret < 0) {
         jniThrowIOException(env, errno);
@@ -89,10 +83,8 @@ socket_connect_local(JNIEnv *env, jobject object,
  * throws IOException;
  */
 
-static void
-socket_bind_local (JNIEnv *env, jobject object, jobject fileDescriptor,
-                jstring name, jint namespaceId)
-{
+static void socket_bind_local(JNIEnv* env, jobject object, jobject fileDescriptor, jstring name,
+                              jint namespaceId) {
     int ret;
     int fd;
 
@@ -123,26 +115,21 @@ socket_bind_local (JNIEnv *env, jobject object, jobject fileDescriptor,
  * fields in the LocalSocketImpl object. Returns 0 on success
  * or -1 if an exception was thrown.
  */
-static int socket_process_cmsg(JNIEnv *env, jobject thisJ, struct msghdr * pMsg)
-{
-    struct cmsghdr *cmsgptr;
+static int socket_process_cmsg(JNIEnv* env, jobject thisJ, struct msghdr* pMsg) {
+    struct cmsghdr* cmsgptr;
 
-    for (cmsgptr = CMSG_FIRSTHDR(pMsg);
-            cmsgptr != NULL; cmsgptr = CMSG_NXTHDR(pMsg, cmsgptr)) {
-
+    for (cmsgptr = CMSG_FIRSTHDR(pMsg); cmsgptr != NULL; cmsgptr = CMSG_NXTHDR(pMsg, cmsgptr)) {
         if (cmsgptr->cmsg_level != SOL_SOCKET) {
             continue;
         }
 
         if (cmsgptr->cmsg_type == SCM_RIGHTS) {
-            int *pDescriptors = (int *)CMSG_DATA(cmsgptr);
+            int* pDescriptors = (int*)CMSG_DATA(cmsgptr);
             jobjectArray fdArray;
-            int count
-                = ((cmsgptr->cmsg_len - CMSG_LEN(0)) / sizeof(int));
+            int count = ((cmsgptr->cmsg_len - CMSG_LEN(0)) / sizeof(int));
 
             if (count < 0) {
-                jniThrowException(env, "java/io/IOException",
-                    "invalid cmsg length");
+                jniThrowException(env, "java/io/IOException", "invalid cmsg length");
                 return -1;
             }
 
@@ -153,8 +140,7 @@ static int socket_process_cmsg(JNIEnv *env, jobject thisJ, struct msghdr * pMsg)
             }
 
             for (int i = 0; i < count; i++) {
-                jobject fdObject
-                        = jniCreateFileDescriptor(env, pDescriptors[i]);
+                jobject fdObject = jniCreateFileDescriptor(env, pDescriptors[i]);
 
                 if (env->ExceptionCheck()) {
                     return -1;
@@ -185,16 +171,14 @@ static int socket_process_cmsg(JNIEnv *env, jobject thisJ, struct msghdr * pMsg)
  * Returns the length of normal data read, or -1 if an exception has
  * been thrown in this function.
  */
-static ssize_t socket_read_all(JNIEnv *env, jobject thisJ, int fd,
-        void *buffer, size_t len)
-{
+static ssize_t socket_read_all(JNIEnv* env, jobject thisJ, int fd, void* buffer, size_t len) {
     ssize_t ret;
     struct msghdr msg;
     struct iovec iv;
-    unsigned char *buf = (unsigned char *)buffer;
+    unsigned char* buf = (unsigned char*)buffer;
     // Enough buffer for a pile of fd's. We throw an exception if
     // this buffer is too small.
-    struct cmsghdr cmsgbuf[2*sizeof(cmsghdr) + 0x100];
+    struct cmsghdr cmsgbuf[2 * sizeof(cmsghdr) + 0x100];
 
     memset(&msg, 0, sizeof(msg));
     memset(&iv, 0, sizeof(iv));
@@ -223,7 +207,7 @@ static ssize_t socket_read_all(JNIEnv *env, jobject thisJ, int fd,
         // To us, any of the above flags are a fatal error
 
         jniThrowException(env, "java/io/IOException",
-                "Unexpected error or truncation during recvmsg()");
+                          "Unexpected error or truncation during recvmsg()");
 
         return -1;
     }
@@ -240,30 +224,26 @@ static ssize_t socket_read_all(JNIEnv *env, jobject thisJ, int fd,
  *
  * Returns 0 on success or -1 if an exception was thrown.
  */
-static int socket_write_all(JNIEnv *env, jobject object, int fd,
-        void *buf, size_t len)
-{
+static int socket_write_all(JNIEnv* env, jobject object, int fd, void* buf, size_t len) {
     ssize_t ret;
     struct msghdr msg;
-    unsigned char *buffer = (unsigned char *)buf;
+    unsigned char* buffer = (unsigned char*)buf;
     memset(&msg, 0, sizeof(msg));
 
-    jobjectArray outboundFds
-            = (jobjectArray)env->GetObjectField(
-                object, field_outboundFileDescriptors);
+    jobjectArray outboundFds =
+            (jobjectArray)env->GetObjectField(object, field_outboundFileDescriptors);
 
     if (env->ExceptionCheck()) {
         return -1;
     }
 
-    struct cmsghdr *cmsg;
+    struct cmsghdr* cmsg;
     int countFds = outboundFds == NULL ? 0 : env->GetArrayLength(outboundFds);
     int fds[countFds];
     char msgbuf[CMSG_SPACE(countFds)];
 
     // Add any pending outbound file descriptors to the message
     if (outboundFds != NULL) {
-
         if (env->ExceptionCheck()) {
             return -1;
         }
@@ -320,8 +300,7 @@ static int socket_write_all(JNIEnv *env, jobject object, int fd,
     return 0;
 }
 
-static jint socket_read (JNIEnv *env, jobject object, jobject fileDescriptor)
-{
+static jint socket_read(JNIEnv* env, jobject object, jobject fileDescriptor) {
     int fd;
     int err;
 
@@ -353,9 +332,8 @@ static jint socket_read (JNIEnv *env, jobject object, jobject fileDescriptor)
     return (jint)buf;
 }
 
-static jint socket_readba (JNIEnv *env, jobject object,
-        jbyteArray buffer, jint off, jint len, jobject fileDescriptor)
-{
+static jint socket_readba(JNIEnv* env, jobject object, jbyteArray buffer, jint off, jint len,
+                          jobject fileDescriptor) {
     int fd;
     jbyte* byteBuffer;
     int ret;
@@ -388,19 +366,16 @@ static jint socket_readba (JNIEnv *env, jobject object,
         return (jint)-1;
     }
 
-    ret = socket_read_all(env, object,
-            fd, byteBuffer + off, len);
+    ret = socket_read_all(env, object, fd, byteBuffer + off, len);
 
     // A return of -1 above means an exception is pending
 
     env->ReleaseByteArrayElements(buffer, byteBuffer, 0);
 
-    return (jint) ((ret == 0) ? -1 : ret);
+    return (jint)((ret == 0) ? -1 : ret);
 }
 
-static void socket_write (JNIEnv *env, jobject object,
-        jint b, jobject fileDescriptor)
-{
+static void socket_write(JNIEnv* env, jobject object, jint b, jobject fileDescriptor) {
     int fd;
     int err;
 
@@ -420,9 +395,8 @@ static void socket_write (JNIEnv *env, jobject object,
     // A return of -1 above means an exception is pending
 }
 
-static void socket_writeba (JNIEnv *env, jobject object,
-        jbyteArray buffer, jint off, jint len, jobject fileDescriptor)
-{
+static void socket_writeba(JNIEnv* env, jobject object, jbyteArray buffer, jint off, jint len,
+                           jobject fileDescriptor) {
     int fd;
     int err;
     jbyte* byteBuffer;
@@ -443,24 +417,21 @@ static void socket_writeba (JNIEnv *env, jobject object,
         return;
     }
 
-    byteBuffer = env->GetByteArrayElements(buffer,NULL);
+    byteBuffer = env->GetByteArrayElements(buffer, NULL);
 
     if (NULL == byteBuffer) {
         // an exception will have been thrown
         return;
     }
 
-    err = socket_write_all(env, object, fd,
-            byteBuffer + off, len);
+    err = socket_write_all(env, object, fd, byteBuffer + off, len);
     UNUSED(err);
     // A return of -1 above means an exception is pending
 
     env->ReleaseByteArrayElements(buffer, byteBuffer, JNI_ABORT);
 }
 
-static jobject socket_get_peer_credentials(JNIEnv *env,
-        jobject object, jobject fileDescriptor)
-{
+static jobject socket_get_peer_credentials(JNIEnv* env, jobject object, jobject fileDescriptor) {
     int err;
     int fd;
 
@@ -491,29 +462,26 @@ static jobject socket_get_peer_credentials(JNIEnv *env,
         return NULL;
     }
 
-    return env->NewObject(class_Credentials, method_CredentialsInit,
-            creds.pid, creds.uid, creds.gid);
+    return env->NewObject(class_Credentials, method_CredentialsInit, creds.pid, creds.uid,
+                          creds.gid);
 }
 
 /*
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-     /* name, signature, funcPtr */
-    {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
-                                                (void*)socket_connect_local},
-    {"bindLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V", (void*)socket_bind_local},
-    {"read_native", "(Ljava/io/FileDescriptor;)I", (void*) socket_read},
-    {"readba_native", "([BIILjava/io/FileDescriptor;)I", (void*) socket_readba},
-    {"writeba_native", "([BIILjava/io/FileDescriptor;)V", (void*) socket_writeba},
-    {"write_native", "(ILjava/io/FileDescriptor;)V", (void*) socket_write},
-    {"getPeerCredentials_native",
-            "(Ljava/io/FileDescriptor;)Landroid/net/Credentials;",
-            (void*) socket_get_peer_credentials}
-};
+        /* name, signature, funcPtr */
+        {"connectLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V",
+         (void*)socket_connect_local},
+        {"bindLocal", "(Ljava/io/FileDescriptor;Ljava/lang/String;I)V", (void*)socket_bind_local},
+        {"read_native", "(Ljava/io/FileDescriptor;)I", (void*)socket_read},
+        {"readba_native", "([BIILjava/io/FileDescriptor;)I", (void*)socket_readba},
+        {"writeba_native", "([BIILjava/io/FileDescriptor;)V", (void*)socket_writeba},
+        {"write_native", "(ILjava/io/FileDescriptor;)V", (void*)socket_write},
+        {"getPeerCredentials_native", "(Ljava/io/FileDescriptor;)Landroid/net/Credentials;",
+         (void*)socket_get_peer_credentials}};
 
-int register_android_net_LocalSocketImpl(JNIEnv *env)
-{
+int register_android_net_LocalSocketImpl(JNIEnv* env) {
     jclass clazz;
 
     clazz = env->FindClass("android/net/LocalSocketImpl");
@@ -522,15 +490,15 @@ int register_android_net_LocalSocketImpl(JNIEnv *env)
         goto error;
     }
 
-    field_inboundFileDescriptors = env->GetFieldID(clazz,
-            "inboundFileDescriptors", "[Ljava/io/FileDescriptor;");
+    field_inboundFileDescriptors =
+            env->GetFieldID(clazz, "inboundFileDescriptors", "[Ljava/io/FileDescriptor;");
 
     if (field_inboundFileDescriptors == NULL) {
         goto error;
     }
 
-    field_outboundFileDescriptors = env->GetFieldID(clazz,
-            "outboundFileDescriptors", "[Ljava/io/FileDescriptor;");
+    field_outboundFileDescriptors =
+            env->GetFieldID(clazz, "outboundFileDescriptors", "[Ljava/io/FileDescriptor;");
 
     if (field_outboundFileDescriptors == NULL) {
         goto error;
@@ -552,19 +520,17 @@ int register_android_net_LocalSocketImpl(JNIEnv *env)
 
     class_FileDescriptor = (jclass)env->NewGlobalRef(class_FileDescriptor);
 
-    method_CredentialsInit
-            = env->GetMethodID(class_Credentials, "<init>", "(III)V");
+    method_CredentialsInit = env->GetMethodID(class_Credentials, "<init>", "(III)V");
 
     if (method_CredentialsInit == NULL) {
         goto error;
     }
 
-    return jniRegisterNativeMethods(env,
-        "android/net/LocalSocketImpl", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/net/LocalSocketImpl", gMethods, NELEM(gMethods));
 
 error:
     ALOGE("Error registering android.net.LocalSocketImpl");
     return -1;
 }
 
-};
+};  // namespace android

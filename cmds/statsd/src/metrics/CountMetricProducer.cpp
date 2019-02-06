@@ -19,8 +19,8 @@
 
 #include "CountMetricProducer.h"
 #include "guardrail/StatsdStats.h"
-#include "stats_util.h"
 #include "stats_log_util.h"
+#include "stats_util.h"
 
 #include <limits.h>
 #include <stdlib.h>
@@ -82,7 +82,7 @@ CountMetricProducer::CountMetricProducer(const ConfigKey& key, const CountMetric
     }
 
     mSliceByPositionALL = HasPositionALL(metric.dimensions_in_what()) ||
-            HasPositionALL(metric.dimensions_in_condition());
+                          HasPositionALL(metric.dimensions_in_condition());
 
     if (metric.has_dimensions_in_condition()) {
         translateFieldMatcher(metric.dimensions_in_condition(), &mDimensionsInCondition);
@@ -110,8 +110,7 @@ CountMetricProducer::~CountMetricProducer() {
 }
 
 void CountMetricProducer::dumpStatesLocked(FILE* out, bool verbose) const {
-    if (mCurrentSlicedCounter == nullptr ||
-        mCurrentSlicedCounter->size() == 0) {
+    if (mCurrentSlicedCounter == nullptr || mCurrentSlicedCounter->size() == 0) {
         return;
     }
 
@@ -120,9 +119,9 @@ void CountMetricProducer::dumpStatesLocked(FILE* out, bool verbose) const {
     if (verbose) {
         for (const auto& it : *mCurrentSlicedCounter) {
             fprintf(out, "\t(what)%s\t(condition)%s  %lld\n",
-                it.first.getDimensionKeyInWhat().toString().c_str(),
-                it.first.getDimensionKeyInCondition().toString().c_str(),
-                (unsigned long long)it.second);
+                    it.first.getDimensionKeyInWhat().toString().c_str(),
+                    it.first.getDimensionKeyInCondition().toString().c_str(),
+                    (unsigned long long)it.second);
         }
     }
 }
@@ -132,7 +131,6 @@ void CountMetricProducer::onSlicedConditionMayChangeLocked(bool overallCondition
     VLOG("Metric %lld onSlicedConditionMayChange", (long long)mMetricId);
 }
 
-
 void CountMetricProducer::clearPastBucketsLocked(const int64_t dumpTimeNs) {
     flushIfNeededLocked(dumpTimeNs);
     mPastBuckets.clear();
@@ -140,7 +138,7 @@ void CountMetricProducer::clearPastBucketsLocked(const int64_t dumpTimeNs) {
 
 void CountMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                              const bool include_current_partial_bucket,
-                                             std::set<string> *str_set,
+                                             std::set<string>* str_set,
                                              ProtoOutputStream* protoOutput) {
     if (include_current_partial_bucket) {
         flushLocked(dumpTimeNs);
@@ -157,18 +155,17 @@ void CountMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
     // Fills the dimension path if not slicing by ALL.
     if (!mSliceByPositionALL) {
         if (!mDimensionsInWhat.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
             writeDimensionPathToProto(mDimensionsInWhat, protoOutput);
             protoOutput->end(dimenPathToken);
         }
         if (!mDimensionsInCondition.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
             writeDimensionPathToProto(mDimensionsInCondition, protoOutput);
             protoOutput->end(dimenPathToken);
         }
-
     }
 
     uint64_t protoToken = protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_COUNT_METRICS);
@@ -182,16 +179,16 @@ void CountMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
 
         // First fill dimension.
         if (mSliceByPositionALL) {
-            uint64_t dimensionToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
+            uint64_t dimensionToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
             writeDimensionToProto(dimensionKey.getDimensionKeyInWhat(), str_set, protoOutput);
             protoOutput->end(dimensionToken);
 
             if (dimensionKey.hasDimensionKeyInCondition()) {
-                uint64_t dimensionInConditionToken = protoOutput->start(
-                        FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
-                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(),
-                                      str_set, protoOutput);
+                uint64_t dimensionInConditionToken =
+                        protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
+                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(), str_set,
+                                      protoOutput);
                 protoOutput->end(dimensionInConditionToken);
             }
         } else {
@@ -199,8 +196,8 @@ void CountMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                            FIELD_ID_DIMENSION_LEAF_IN_WHAT, str_set, protoOutput);
             if (dimensionKey.hasDimensionKeyInCondition()) {
                 writeDimensionLeafNodesToProto(dimensionKey.getDimensionKeyInCondition(),
-                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION,
-                                               str_set, protoOutput);
+                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION, str_set,
+                                               protoOutput);
             }
         }
         // Then fill bucket_info (CountBucketInfo).
@@ -252,8 +249,8 @@ bool CountMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
         StatsdStats::getInstance().noteMetricDimensionSize(mConfigKey, mMetricId, newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > StatsdStats::kDimensionKeySizeHardLimit) {
-            ALOGE("CountMetric %lld dropping data for dimension key %s",
-                (long long)mMetricId, newKey.toString().c_str());
+            ALOGE("CountMetric %lld dropping data for dimension key %s", (long long)mMetricId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -261,10 +258,10 @@ bool CountMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
     return false;
 }
 
-void CountMetricProducer::onMatchedLogEventInternalLocked(
-        const size_t matcherIndex, const MetricDimensionKey& eventKey,
-        const ConditionKey& conditionKey, bool condition,
-        const LogEvent& event) {
+void CountMetricProducer::onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                                          const MetricDimensionKey& eventKey,
+                                                          const ConditionKey& conditionKey,
+                                                          bool condition, const LogEvent& event) {
     int64_t eventTimeNs = event.GetElapsedTimestampNs();
     flushIfNeededLocked(eventTimeNs);
 
@@ -330,8 +327,7 @@ void CountMetricProducer::flushCurrentBucketLocked(const int64_t& eventTimeNs) {
         auto& bucketList = mPastBuckets[counter.first];
         bucketList.push_back(info);
         VLOG("metric %lld, dump key value: %s -> %lld", (long long)mMetricId,
-             counter.first.toString().c_str(),
-             (long long)counter.second);
+             counter.first.toString().c_str(), (long long)counter.second);
     }
 
     // If we have finished a full bucket, then send this to anomaly tracker.

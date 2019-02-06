@@ -205,7 +205,8 @@ struct ResourceKeyRef {
 
   ResourceKeyRef() = default;
   ResourceKeyRef(const ResourceNameRef& n, const android::ConfigDescription& c)
-      : name(n), config(c) {}
+      : name(n), config(c) {
+  }
 
   /**
    * Prevent taking a reference to a temporary. This is bad.
@@ -219,14 +220,17 @@ bool operator<(const ResourceKeyRef& a, const ResourceKeyRef& b);
 // ResourceId implementation.
 //
 
-inline ResourceId::ResourceId() : id(0) {}
+inline ResourceId::ResourceId() : id(0) {
+}
 
-inline ResourceId::ResourceId(const ResourceId& rhs) : id(rhs.id) {}
+inline ResourceId::ResourceId(const ResourceId& rhs) : id(rhs.id) {
+}
 
-inline ResourceId::ResourceId(uint32_t res_id) : id(res_id) {}
+inline ResourceId::ResourceId(uint32_t res_id) : id(res_id) {
+}
 
-inline ResourceId::ResourceId(uint8_t p, uint8_t t, uint16_t e)
-    : id((p << 24) | (t << 16) | e) {}
+inline ResourceId::ResourceId(uint8_t p, uint8_t t, uint16_t e) : id((p << 24) | (t << 16) | e) {
+}
 
 inline bool ResourceId::is_valid() const {
   return (id & 0xff000000u) != 0 && (id & 0x00ff0000u) != 0;
@@ -287,7 +291,8 @@ inline ::std::ostream& operator<<(::std::ostream& out, const ResourceType& val) 
 
 inline ResourceName::ResourceName(const android::StringPiece& p, ResourceType t,
                                   const android::StringPiece& e)
-    : package(p.to_string()), type(t), entry(e.to_string()) {}
+    : package(p.to_string()), type(t), entry(e.to_string()) {
+}
 
 inline int ResourceName::compare(const ResourceName& other) const {
   int cmp = package.compare(other.package);
@@ -303,18 +308,15 @@ inline bool ResourceName::is_valid() const {
 }
 
 inline bool operator<(const ResourceName& lhs, const ResourceName& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) <
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) < std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline bool operator==(const ResourceName& lhs, const ResourceName& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) ==
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) == std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline bool operator!=(const ResourceName& lhs, const ResourceName& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) !=
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) != std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline ::std::ostream& operator<<(::std::ostream& out, const ResourceName& name) {
@@ -326,11 +328,13 @@ inline ::std::ostream& operator<<(::std::ostream& out, const ResourceName& name)
 //
 
 inline ResourceNameRef::ResourceNameRef(const ResourceName& rhs)
-    : package(rhs.package), type(rhs.type), entry(rhs.entry) {}
+    : package(rhs.package), type(rhs.type), entry(rhs.entry) {
+}
 
 inline ResourceNameRef::ResourceNameRef(const android::StringPiece& p, ResourceType t,
                                         const android::StringPiece& e)
-    : package(p), type(t), entry(e) {}
+    : package(p), type(t), entry(e) {
+}
 
 inline ResourceNameRef& ResourceNameRef::operator=(const ResourceName& rhs) {
   package = rhs.package;
@@ -348,18 +352,15 @@ inline bool ResourceNameRef::is_valid() const {
 }
 
 inline bool operator<(const ResourceNameRef& lhs, const ResourceNameRef& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) <
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) < std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline bool operator==(const ResourceNameRef& lhs, const ResourceNameRef& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) ==
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) == std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline bool operator!=(const ResourceNameRef& lhs, const ResourceNameRef& rhs) {
-  return std::tie(lhs.package, lhs.type, lhs.entry) !=
-         std::tie(rhs.package, rhs.type, rhs.entry);
+  return std::tie(lhs.package, lhs.type, lhs.entry) != std::tie(rhs.package, rhs.type, rhs.entry);
 }
 
 inline ::std::ostream& operator<<(::std::ostream& out, const ResourceNameRef& name) {

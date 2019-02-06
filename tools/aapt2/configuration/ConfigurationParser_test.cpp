@@ -392,10 +392,8 @@ TEST_F(ConfigurationParserTest, ArtifactFormatAction) {
   bool ok = ArtifactFormatTagHandler(&config, NodeCast<Element>(doc.get()->root.get()), &diag_);
   ASSERT_TRUE(ok);
   ASSERT_TRUE(config.artifact_format);
-  EXPECT_EQ(
-      "${base}.${abi}.${screen-density}.${locale}.${sdk}.${gl}.${feature}.release",
-      static_cast<std::string>(config.artifact_format.value())
-  );
+  EXPECT_EQ("${base}.${abi}.${screen-density}.${locale}.${sdk}.${gl}.${feature}.release",
+            static_cast<std::string>(config.artifact_format.value()));
 }
 
 TEST_F(ConfigurationParserTest, AbiGroupAction) {
@@ -758,10 +756,8 @@ TEST_F(ConfigurationParserTest, GlTextureGroupAction) {
 
   auto& out = config.gl_texture_groups["dxt1"].entry;
 
-  GlTexture texture{
-      std::string("GL_EXT_texture_compression_dxt1"),
-      {"assets/dxt1/main/*", "assets/dxt1/test/*"}
-  };
+  GlTexture texture{std::string("GL_EXT_texture_compression_dxt1"),
+                    {"assets/dxt1/main/*", "assets/dxt1/test/*"}};
 
   ASSERT_EQ(1ul, out.size());
   ASSERT_EQ(texture, out[0]);

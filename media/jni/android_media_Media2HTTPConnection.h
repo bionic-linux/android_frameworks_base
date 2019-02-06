@@ -25,21 +25,20 @@
 namespace android {
 
 struct JMedia2HTTPConnection : public MediaHTTPConnection {
-    JMedia2HTTPConnection(JNIEnv *env, jobject thiz);
+    JMedia2HTTPConnection(JNIEnv* env, jobject thiz);
 
-    virtual bool connect(
-            const char *uri, const KeyedVector<String8, String8> *headers) override;
+    virtual bool connect(const char* uri, const KeyedVector<String8, String8>* headers) override;
 
     virtual void disconnect() override;
-    virtual ssize_t readAt(off64_t offset, void *data, size_t size) override;
+    virtual ssize_t readAt(off64_t offset, void* data, size_t size) override;
     virtual off64_t getSize() override;
-    virtual status_t getMIMEType(String8 *mimeType) override;
-    virtual status_t getUri(String8 *uri) override;
+    virtual status_t getMIMEType(String8* mimeType) override;
+    virtual status_t getUri(String8* uri) override;
 
-protected:
+  protected:
     virtual ~JMedia2HTTPConnection();
 
-private:
+  private:
     jobject mMedia2HTTPConnectionObj;
     jmethodID mConnectMethod;
     jmethodID mDisconnectMethod;

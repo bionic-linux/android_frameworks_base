@@ -25,8 +25,8 @@
 
 namespace android {
 
-static ::testing::AssertionResult TestParse(
-    const StringPiece& input, ConfigDescription* config = nullptr) {
+static ::testing::AssertionResult TestParse(const StringPiece& input,
+                                            ConfigDescription* config = nullptr) {
   if (ConfigDescription::Parse(input, config)) {
     return ::testing::AssertionSuccess() << input << " was successfully parsed";
   }

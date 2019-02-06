@@ -48,7 +48,7 @@ static void log(const char* fmt, ...) {
     va_end(args);
 }
 
-static void error(const char* fmt,  ...) {
+static void error(const char* fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
@@ -58,16 +58,15 @@ static void error(const char* fmt,  ...) {
 static void usage() {
     error("Keymap Validation Tool\n\n");
     error("Usage:\n");
-    error(
-        " %s [-q] [*.kl] [*.kcm] [*.idc] [virtualkeys.*] [...]\n"
-        "   Validates the specified key layouts, key character maps, \n"
-        "   input device configurations, or virtual key definitions.\n\n"
-        "   -q Quiet; do not write anything to standard out.\n",
-        kProgName);
+    error(" %s [-q] [*.kl] [*.kcm] [*.idc] [virtualkeys.*] [...]\n"
+          "   Validates the specified key layouts, key character maps, \n"
+          "   input device configurations, or virtual key definitions.\n\n"
+          "   -q Quiet; do not write anything to standard out.\n",
+          kProgName);
 }
 
 static FileType getFileType(const char* filename) {
-    const char *extension = strrchr(filename, '.');
+    const char* extension = strrchr(filename, '.');
     if (extension) {
         if (strcmp(extension, ".kl") == 0) {
             return FILETYPE_KEYLAYOUT;
@@ -92,52 +91,52 @@ static bool validateFile(const char* filename) {
 
     FileType fileType = getFileType(filename);
     switch (fileType) {
-    case FILETYPE_UNKNOWN:
-        error("Supported file types: *.kl, *.kcm, virtualkeys.*\n\n");
-        return false;
-
-    case FILETYPE_KEYLAYOUT: {
-        sp<KeyLayoutMap> map;
-        status_t status = KeyLayoutMap::load(String8(filename), &map);
-        if (status) {
-            error("Error %d parsing key layout file.\n\n", status);
+        case FILETYPE_UNKNOWN:
+            error("Supported file types: *.kl, *.kcm, virtualkeys.*\n\n");
             return false;
-        }
-        break;
-    }
 
-    case FILETYPE_KEYCHARACTERMAP: {
-        sp<KeyCharacterMap> map;
-        status_t status = KeyCharacterMap::load(String8(filename),
-                KeyCharacterMap::FORMAT_ANY, &map);
-        if (status) {
-            error("Error %d parsing key character map file.\n\n", status);
-            return false;
+        case FILETYPE_KEYLAYOUT: {
+            sp<KeyLayoutMap> map;
+            status_t status = KeyLayoutMap::load(String8(filename), &map);
+            if (status) {
+                error("Error %d parsing key layout file.\n\n", status);
+                return false;
+            }
+            break;
         }
-        break;
-    }
 
-    case FILETYPE_INPUTDEVICECONFIGURATION: {
-        PropertyMap* map;
-        status_t status = PropertyMap::load(String8(filename), &map);
-        if (status) {
-            error("Error %d parsing input device configuration file.\n\n", status);
-            return false;
+        case FILETYPE_KEYCHARACTERMAP: {
+            sp<KeyCharacterMap> map;
+            status_t status =
+                    KeyCharacterMap::load(String8(filename), KeyCharacterMap::FORMAT_ANY, &map);
+            if (status) {
+                error("Error %d parsing key character map file.\n\n", status);
+                return false;
+            }
+            break;
         }
-        delete map;
-        break;
-    }
 
-    case FILETYPE_VIRTUALKEYDEFINITION: {
-        VirtualKeyMap* map;
-        status_t status = VirtualKeyMap::load(String8(filename), &map);
-        if (status) {
-            error("Error %d parsing virtual key definition file.\n\n", status);
-            return false;
+        case FILETYPE_INPUTDEVICECONFIGURATION: {
+            PropertyMap* map;
+            status_t status = PropertyMap::load(String8(filename), &map);
+            if (status) {
+                error("Error %d parsing input device configuration file.\n\n", status);
+                return false;
+            }
+            delete map;
+            break;
         }
-        delete map;
-        break;
-    }
+
+        case FILETYPE_VIRTUALKEYDEFINITION: {
+            VirtualKeyMap* map;
+            status_t status = VirtualKeyMap::load(String8(filename), &map);
+            if (status) {
+                error("Error %d parsing virtual key definition file.\n\n", status);
+                return false;
+            }
+            delete map;
+            break;
+        }
     }
 
     log("No errors.\n\n");

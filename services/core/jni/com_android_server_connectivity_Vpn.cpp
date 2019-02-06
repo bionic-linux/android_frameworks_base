@@ -23,8 +23,8 @@
 #include <fcntl.h>
 #include <linux/if.h>
 #include <linux/if_tun.h>
-#include <linux/route.h>
 #include <linux/ipv6_route.h>
+#include <linux/route.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,17 +37,16 @@
 
 #include "netutils/ifc.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
-namespace android
-{
+namespace android {
 
 static int inet4 = -1;
 static int inet6 = -1;
 
-static inline in_addr_t *as_in_addr(sockaddr *sa) {
-    return &((sockaddr_in *)sa)->sin_addr.s_addr;
+static inline in_addr_t* as_in_addr(sockaddr* sa) {
+    return &((sockaddr_in*)sa)->sin_addr.s_addr;
 }
 
 //------------------------------------------------------------------------------
@@ -55,8 +54,7 @@ static inline in_addr_t *as_in_addr(sockaddr *sa) {
 #define SYSTEM_ERROR (-1)
 #define BAD_ARGUMENT (-2)
 
-static int create_interface(int mtu)
-{
+static int create_interface(int mtu) {
     int tun = open("/dev/tun", O_RDWR | O_NONBLOCK | O_CLOEXEC);
 
     ifreq ifr4;
@@ -90,8 +88,7 @@ error:
     return SYSTEM_ERROR;
 }
 
-static int get_interface_name(char *name, int tun)
-{
+static int get_interface_name(char* name, int tun) {
     ifreq ifr4;
     if (ioctl(tun, TUNGETIFF, &ifr4)) {
         ALOGE("Cannot get interface name: %s", strerror(errno));
@@ -101,8 +98,7 @@ static int get_interface_name(char *name, int tun)
     return 0;
 }
 
-static int get_interface_index(const char *name)
-{
+static int get_interface_index(const char* name) {
     ifreq ifr4;
     strncpy(ifr4.ifr_name, name, IFNAMSIZ);
     if (ioctl(inet4, SIOGIFINDEX, &ifr4)) {
@@ -112,8 +108,7 @@ static int get_interface_index(const char *name)
     return ifr4.ifr_ifindex;
 }
 
-static int set_addresses(const char *name, const char *addresses)
-{
+static int set_addresses(const char* name, const char* addresses) {
     int index = get_interface_index(name);
     if (index < 0) {
         return index;
@@ -139,8 +134,7 @@ static int set_addresses(const char *name, const char *addresses)
 
         if (strchr(address, ':')) {
             // Add an IPv6 address.
-            if (inet_pton(AF_INET6, address, &ifr6.ifr6_addr) != 1 ||
-                    prefix < 0 || prefix > 128) {
+            if (inet_pton(AF_INET6, address, &ifr6.ifr6_addr) != 1 || prefix < 0 || prefix > 128) {
                 count = BAD_ARGUMENT;
                 break;
             }
@@ -152,8 +146,8 @@ static int set_addresses(const char *name, const char *addresses)
             }
         } else {
             // Add an IPv4 address.
-            if (inet_pton(AF_INET, address, as_in_addr(&ifr4.ifr_addr)) != 1 ||
-                    prefix < 0 || prefix > 32) {
+            if (inet_pton(AF_INET, address, as_in_addr(&ifr4.ifr_addr)) != 1 || prefix < 0 ||
+                prefix > 32) {
                 count = BAD_ARGUMENT;
                 break;
             }
@@ -189,8 +183,7 @@ static int set_addresses(const char *name, const char *addresses)
     return count;
 }
 
-static int reset_interface(const char *name)
-{
+static int reset_interface(const char* name) {
     ifreq ifr4;
     strncpy(ifr4.ifr_name, name, IFNAMSIZ);
     ifr4.ifr_flags = 0;
@@ -202,8 +195,7 @@ static int reset_interface(const char *name)
     return 0;
 }
 
-static int check_interface(const char *name)
-{
+static int check_interface(const char* name) {
     ifreq ifr4;
     strncpy(ifr4.ifr_name, name, IFNAMSIZ);
     ifr4.ifr_flags = 0;
@@ -214,12 +206,11 @@ static int check_interface(const char *name)
     return ifr4.ifr_flags;
 }
 
-static bool modifyAddress(JNIEnv *env, jobject thiz, jstring jName, jstring jAddress,
-                          jint jPrefixLength, bool add)
-{
+static bool modifyAddress(JNIEnv* env, jobject thiz, jstring jName, jstring jAddress,
+                          jint jPrefixLength, bool add) {
     int error = SYSTEM_ERROR;
-    const char *name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
-    const char *address = jAddress ? env->GetStringUTFChars(jAddress, NULL) : NULL;
+    const char* name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
+    const char* address = jAddress ? env->GetStringUTFChars(jAddress, NULL) : NULL;
 
     if (!name) {
         jniThrowNullPointerException(env, "name");
@@ -250,8 +241,7 @@ static bool modifyAddress(JNIEnv *env, jobject thiz, jstring jName, jstring jAdd
 
 //------------------------------------------------------------------------------
 
-static void throwException(JNIEnv *env, int error, const char *message)
-{
+static void throwException(JNIEnv* env, int error, const char* message) {
     if (error == SYSTEM_ERROR) {
         jniThrowException(env, "java/lang/IllegalStateException", message);
     } else {
@@ -259,8 +249,7 @@ static void throwException(JNIEnv *env, int error, const char *message)
     }
 }
 
-static jint create(JNIEnv *env, jobject /* thiz */, jint mtu)
-{
+static jint create(JNIEnv* env, jobject /* thiz */, jint mtu) {
     int tun = create_interface(mtu);
     if (tun < 0) {
         throwException(env, tun, "Cannot create interface");
@@ -269,8 +258,7 @@ static jint create(JNIEnv *env, jobject /* thiz */, jint mtu)
     return tun;
 }
 
-static jstring getName(JNIEnv *env, jobject /* thiz */, jint tun)
-{
+static jstring getName(JNIEnv* env, jobject /* thiz */, jint tun) {
     char name[IFNAMSIZ];
     if (get_interface_name(name, tun) < 0) {
         throwException(env, SYSTEM_ERROR, "Cannot get interface name");
@@ -279,11 +267,9 @@ static jstring getName(JNIEnv *env, jobject /* thiz */, jint tun)
     return env->NewStringUTF(name);
 }
 
-static jint setAddresses(JNIEnv *env, jobject /* thiz */, jstring jName,
-        jstring jAddresses)
-{
-    const char *name = NULL;
-    const char *addresses = NULL;
+static jint setAddresses(JNIEnv* env, jobject /* thiz */, jstring jName, jstring jAddresses) {
+    const char* name = NULL;
+    const char* addresses = NULL;
     int count = -1;
 
     name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
@@ -312,9 +298,8 @@ error:
     return count;
 }
 
-static void reset(JNIEnv *env, jobject /* thiz */, jstring jName)
-{
-    const char *name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
+static void reset(JNIEnv* env, jobject /* thiz */, jstring jName) {
+    const char* name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
     if (!name) {
         jniThrowNullPointerException(env, "name");
         return;
@@ -325,9 +310,8 @@ static void reset(JNIEnv *env, jobject /* thiz */, jstring jName)
     env->ReleaseStringUTFChars(jName, name);
 }
 
-static jint check(JNIEnv *env, jobject /* thiz */, jstring jName)
-{
-    const char *name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
+static jint check(JNIEnv* env, jobject /* thiz */, jstring jName) {
+    const char* name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
     if (!name) {
         jniThrowNullPointerException(env, "name");
         return 0;
@@ -337,40 +321,37 @@ static jint check(JNIEnv *env, jobject /* thiz */, jstring jName)
     return flags;
 }
 
-static bool addAddress(JNIEnv *env, jobject thiz, jstring jName, jstring jAddress,
-                       jint jPrefixLength)
-{
+static bool addAddress(JNIEnv* env, jobject thiz, jstring jName, jstring jAddress,
+                       jint jPrefixLength) {
     return modifyAddress(env, thiz, jName, jAddress, jPrefixLength, true);
 }
 
-static bool delAddress(JNIEnv *env, jobject thiz, jstring jName, jstring jAddress,
-                       jint jPrefixLength)
-{
+static bool delAddress(JNIEnv* env, jobject thiz, jstring jName, jstring jAddress,
+                       jint jPrefixLength) {
     return modifyAddress(env, thiz, jName, jAddress, jPrefixLength, false);
 }
 
 //------------------------------------------------------------------------------
 
 static const JNINativeMethod gMethods[] = {
-    {"jniCreate", "(I)I", (void *)create},
-    {"jniGetName", "(I)Ljava/lang/String;", (void *)getName},
-    {"jniSetAddresses", "(Ljava/lang/String;Ljava/lang/String;)I", (void *)setAddresses},
-    {"jniReset", "(Ljava/lang/String;)V", (void *)reset},
-    {"jniCheck", "(Ljava/lang/String;)I", (void *)check},
-    {"jniAddAddress", "(Ljava/lang/String;Ljava/lang/String;I)Z", (void *)addAddress},
-    {"jniDelAddress", "(Ljava/lang/String;Ljava/lang/String;I)Z", (void *)delAddress},
+        {"jniCreate", "(I)I", (void*)create},
+        {"jniGetName", "(I)Ljava/lang/String;", (void*)getName},
+        {"jniSetAddresses", "(Ljava/lang/String;Ljava/lang/String;)I", (void*)setAddresses},
+        {"jniReset", "(Ljava/lang/String;)V", (void*)reset},
+        {"jniCheck", "(Ljava/lang/String;)I", (void*)check},
+        {"jniAddAddress", "(Ljava/lang/String;Ljava/lang/String;I)Z", (void*)addAddress},
+        {"jniDelAddress", "(Ljava/lang/String;Ljava/lang/String;I)Z", (void*)delAddress},
 };
 
-int register_android_server_connectivity_Vpn(JNIEnv *env)
-{
+int register_android_server_connectivity_Vpn(JNIEnv* env) {
     if (inet4 == -1) {
         inet4 = socket(AF_INET, SOCK_DGRAM, 0);
     }
     if (inet6 == -1) {
         inet6 = socket(AF_INET6, SOCK_DGRAM, 0);
     }
-    return jniRegisterNativeMethods(env, "com/android/server/connectivity/Vpn",
-            gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "com/android/server/connectivity/Vpn", gMethods,
+                                    NELEM(gMethods));
 }
 
-};
+};  // namespace android

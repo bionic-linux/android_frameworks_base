@@ -39,30 +39,41 @@ const uint64_t FIELD_TYPE_MASK = 0x0ffULL << FIELD_TYPE_SHIFT;
  * The types are copied from external/protobuf/src/google/protobuf/descriptor.h directly,
  * so no extra mapping needs to be maintained in this case.
  */
-const uint64_t FIELD_TYPE_UNKNOWN  = 0;
-const uint64_t FIELD_TYPE_DOUBLE   = 1ULL << FIELD_TYPE_SHIFT;   // double, exactly eight bytes on the wire.
-const uint64_t FIELD_TYPE_FLOAT    = 2ULL << FIELD_TYPE_SHIFT;   // float, exactly four bytes on the wire.
-const uint64_t FIELD_TYPE_INT64    = 3ULL << FIELD_TYPE_SHIFT;   // int64, varint on the wire.  Negative numbers
-                                                                 // take 10 bytes.  Use TYPE_SINT64 if negative
-                                                                 // values are likely.
-const uint64_t FIELD_TYPE_UINT64   = 4ULL << FIELD_TYPE_SHIFT;   // uint64, varint on the wire.
-const uint64_t FIELD_TYPE_INT32    = 5ULL << FIELD_TYPE_SHIFT;   // int32, varint on the wire.  Negative numbers
-                                                                 // take 10 bytes.  Use TYPE_SINT32 if negative
-                                                                 // values are likely.
-const uint64_t FIELD_TYPE_FIXED64  = 6ULL << FIELD_TYPE_SHIFT;   // uint64, exactly eight bytes on the wire.
-const uint64_t FIELD_TYPE_FIXED32  = 7ULL << FIELD_TYPE_SHIFT;   // uint32, exactly four bytes on the wire.
-const uint64_t FIELD_TYPE_BOOL     = 8ULL << FIELD_TYPE_SHIFT;   // bool, varint on the wire.
-const uint64_t FIELD_TYPE_STRING   = 9ULL << FIELD_TYPE_SHIFT;   // UTF-8 text.
-// const uint64_t FIELD_TYPE_GROUP = 10ULL << FIELD_TYPE_SHIFT;  // Tag-delimited message.  Deprecated.
-const uint64_t FIELD_TYPE_MESSAGE  = 11ULL << FIELD_TYPE_SHIFT;  // Length-delimited message.
+const uint64_t FIELD_TYPE_UNKNOWN = 0;
+const uint64_t FIELD_TYPE_DOUBLE = 1ULL
+                                   << FIELD_TYPE_SHIFT;  // double, exactly eight bytes on the wire.
+const uint64_t FIELD_TYPE_FLOAT = 2ULL
+                                  << FIELD_TYPE_SHIFT;  // float, exactly four bytes on the wire.
+const uint64_t FIELD_TYPE_INT64 = 3ULL
+                                  << FIELD_TYPE_SHIFT;  // int64, varint on the wire.  Negative
+                                                        // numbers take 10 bytes.  Use TYPE_SINT64
+                                                        // if negative values are likely.
+const uint64_t FIELD_TYPE_UINT64 = 4ULL << FIELD_TYPE_SHIFT;  // uint64, varint on the wire.
+const uint64_t FIELD_TYPE_INT32 = 5ULL
+                                  << FIELD_TYPE_SHIFT;  // int32, varint on the wire.  Negative
+                                                        // numbers take 10 bytes.  Use TYPE_SINT32
+                                                        // if negative values are likely.
+const uint64_t FIELD_TYPE_FIXED64 =
+        6ULL << FIELD_TYPE_SHIFT;  // uint64, exactly eight bytes on the wire.
+const uint64_t FIELD_TYPE_FIXED32 = 7ULL
+                                    << FIELD_TYPE_SHIFT;  // uint32, exactly four bytes on the wire.
+const uint64_t FIELD_TYPE_BOOL = 8ULL << FIELD_TYPE_SHIFT;    // bool, varint on the wire.
+const uint64_t FIELD_TYPE_STRING = 9ULL << FIELD_TYPE_SHIFT;  // UTF-8 text.
+// const uint64_t FIELD_TYPE_GROUP = 10ULL << FIELD_TYPE_SHIFT;  // Tag-delimited message.
+// Deprecated.
+const uint64_t FIELD_TYPE_MESSAGE = 11ULL << FIELD_TYPE_SHIFT;  // Length-delimited message.
 
-const uint64_t FIELD_TYPE_BYTES    = 12ULL << FIELD_TYPE_SHIFT;  // Arbitrary byte array.
-const uint64_t FIELD_TYPE_UINT32   = 13ULL << FIELD_TYPE_SHIFT;  // uint32, varint on the wire
-const uint64_t FIELD_TYPE_ENUM     = 14ULL << FIELD_TYPE_SHIFT;  // Enum, varint on the wire
-const uint64_t FIELD_TYPE_SFIXED32 = 15ULL << FIELD_TYPE_SHIFT;  // int32, exactly four bytes on the wire
-const uint64_t FIELD_TYPE_SFIXED64 = 16ULL << FIELD_TYPE_SHIFT;  // int64, exactly eight bytes on the wire
-const uint64_t FIELD_TYPE_SINT32   = 17ULL << FIELD_TYPE_SHIFT;  // int32, ZigZag-encoded varint on the wire
-const uint64_t FIELD_TYPE_SINT64   = 18ULL << FIELD_TYPE_SHIFT;  // int64, ZigZag-encoded varint on the wire
+const uint64_t FIELD_TYPE_BYTES = 12ULL << FIELD_TYPE_SHIFT;   // Arbitrary byte array.
+const uint64_t FIELD_TYPE_UINT32 = 13ULL << FIELD_TYPE_SHIFT;  // uint32, varint on the wire
+const uint64_t FIELD_TYPE_ENUM = 14ULL << FIELD_TYPE_SHIFT;    // Enum, varint on the wire
+const uint64_t FIELD_TYPE_SFIXED32 = 15ULL
+                                     << FIELD_TYPE_SHIFT;  // int32, exactly four bytes on the wire
+const uint64_t FIELD_TYPE_SFIXED64 = 16ULL
+                                     << FIELD_TYPE_SHIFT;  // int64, exactly eight bytes on the wire
+const uint64_t FIELD_TYPE_SINT32 = 17ULL
+                                   << FIELD_TYPE_SHIFT;  // int32, ZigZag-encoded varint on the wire
+const uint64_t FIELD_TYPE_SINT64 = 18ULL
+                                   << FIELD_TYPE_SHIFT;  // int64, ZigZag-encoded varint on the wire
 
 //
 // FieldId flags for whether the field is single, repeated or packed.
@@ -84,9 +95,8 @@ const uint64_t FIELD_COUNT_PACKED = 5ULL << FIELD_COUNT_SHIFT;
  *
  * See the java version implementation (ProtoOutputStream.java) for more infos.
  */
-class ProtoOutputStream
-{
-public:
+class ProtoOutputStream {
+  public:
     ProtoOutputStream();
     ~ProtoOutputStream();
 
@@ -119,21 +129,23 @@ public:
      * Flushes the protobuf data out to given fd. When the following functions are called,
      * it is not able to write to ProtoOutputStream any more since the data is compact.
      */
-    size_t size(); // Get the size of the serialized protobuf.
-    EncodedBuffer::iterator data(); // Get the reader apis of the data.
-    bool flush(int fd); // Flush data directly to a file descriptor.
+    size_t size();                   // Get the size of the serialized protobuf.
+    EncodedBuffer::iterator data();  // Get the reader apis of the data.
+    bool flush(int fd);              // Flush data directly to a file descriptor.
 
     /**
-     * Clears the ProtoOutputStream so the buffer can be reused instead of deallocation/allocation again.
+     * Clears the ProtoOutputStream so the buffer can be reused instead of deallocation/allocation
+     * again.
      */
     void clear();
 
-    // Please don't use the following functions to dump protos unless you are familiar with protobuf encoding.
+    // Please don't use the following functions to dump protos unless you are familiar with protobuf
+    // encoding.
     void writeRawVarint(uint64_t varint);
     void writeLengthDelimitedHeader(uint32_t id, size_t size);
     void writeRawByte(uint8_t byte);
 
-private:
+  private:
     EncodedBuffer mBuffer;
     size_t mCopyBegin;
     bool mCompact;
@@ -163,7 +175,7 @@ private:
     bool compactSize(size_t rawSize);
 };
 
-}
-}
+}  // namespace util
+}  // namespace android
 
-#endif // ANDROID_UTIL_PROTOOUTPUT_STREAM_H
+#endif  // ANDROID_UTIL_PROTOOUTPUT_STREAM_H

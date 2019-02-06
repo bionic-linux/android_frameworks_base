@@ -18,16 +18,14 @@
 
 #include "ih_util.h"
 
+#include <unistd.h>
 #include <algorithm>
 #include <sstream>
-#include <unistd.h>
 
 bool isValidChar(char c) {
     uint8_t v = (uint8_t)c;
-    return (v >= (uint8_t)'a' && v <= (uint8_t)'z')
-        || (v >= (uint8_t)'A' && v <= (uint8_t)'Z')
-        || (v >= (uint8_t)'0' && v <= (uint8_t)'9')
-        || (v == (uint8_t)'_');
+    return (v >= (uint8_t)'a' && v <= (uint8_t)'z') || (v >= (uint8_t)'A' && v <= (uint8_t)'Z') ||
+           (v >= (uint8_t)'0' && v <= (uint8_t)'9') || (v == (uint8_t)'_');
 }
 
 std::string trim(const std::string& s, const std::string& charset) {
@@ -59,8 +57,8 @@ static inline bool isNumber(const std::string& s) {
 }
 
 // This is similiar to Split in android-base/file.h, but it won't add empty string
-static void split(const std::string& line, std::vector<std::string>& words,
-        const trans_func& func, const std::string& delimiters) {
+static void split(const std::string& line, std::vector<std::string>& words, const trans_func& func,
+                  const std::string& delimiters) {
     words.clear();  // clear the buffer before split
 
     size_t base = 0;
@@ -68,7 +66,7 @@ static void split(const std::string& line, std::vector<std::string>& words,
     while (true) {
         found = line.find_first_of(delimiters, base);
         if (found != base) {
-            std::string word = (*func) (line.substr(base, found - base));
+            std::string word = (*func)(line.substr(base, found - base));
             if (!word.empty()) {
                 words.push_back(word);
             }
@@ -92,7 +90,8 @@ record_t parseRecord(const std::string& line, const std::string& delimiters) {
     return record;
 }
 
-bool getColumnIndices(std::vector<int>& indices, const char** headerNames, const std::string& line) {
+bool getColumnIndices(std::vector<int>& indices, const char** headerNames,
+                      const std::string& line) {
     indices.clear();
 
     size_t lastIndex = 0;
@@ -112,7 +111,8 @@ bool getColumnIndices(std::vector<int>& indices, const char** headerNames, const
     return true;
 }
 
-record_t parseRecordByColumns(const std::string& line, const std::vector<int>& indices, const std::string& delimiters) {
+record_t parseRecordByColumns(const std::string& line, const std::vector<int>& indices,
+                              const std::string& delimiters) {
     record_t record;
     int lastIndex = 0;
     int lastBeginning = 0;
@@ -131,11 +131,13 @@ record_t parseRecordByColumns(const std::string& line, const std::vector<int>& i
                 break;
             }
             // If we're past the end of the line AND we've already saved everything up to the end.
-            fprintf(stderr, "index wrong: lastIndex: %d, idx: %d, lineSize: %d\n", lastIndex, idx, lineSize);
-            record.clear(); // The indices are wrong, return empty.
+            fprintf(stderr, "index wrong: lastIndex: %d, idx: %d, lineSize: %d\n", lastIndex, idx,
+                    lineSize);
+            record.clear();  // The indices are wrong, return empty.
             return record;
         }
-        while (idx < lineSize && delimiters.find(line[idx++]) == std::string::npos);
+        while (idx < lineSize && delimiters.find(line[idx++]) == std::string::npos)
+            ;
         record.push_back(trimDefault(line.substr(lastIndex, idx - lastIndex)));
         lastBeginning = lastIndex;
         lastIndex = idx;
@@ -159,8 +161,8 @@ void printRecord(const record_t& record) {
         fprintf(stderr, "}\n");
         return;
     }
-    for(size_t i = 0; i < record.size(); ++i) {
-        if(i != 0) fprintf(stderr, "\", ");
+    for (size_t i = 0; i < record.size(); ++i) {
+        if (i != 0) fprintf(stderr, "\", ");
         fprintf(stderr, "\"%s", record[i].c_str());
     }
     fprintf(stderr, "\" }\n");
@@ -191,7 +193,8 @@ bool stripSuffix(std::string* line, const char* key, bool endAtDelimiter) {
     const auto tail = line->find_last_not_of(DEFAULT_WHITESPACE);
     if (tail == std::string::npos) return false;
     int i = 0;
-    while (key[++i] != '\0'); // compute the size of the key
+    while (key[++i] != '\0')
+        ;  // compute the size of the key
     int j = tail;
     while (i > 0) {
         if (j < 0 || key[--i] != line->at(j--)) {
@@ -204,7 +207,7 @@ bool stripSuffix(std::string* line, const char* key, bool endAtDelimiter) {
         if (j < 0 || isValidChar(line->at(j))) return false;
     }
 
-    line->assign(trimDefault(line->substr(0, j+1)));
+    line->assign(trimDefault(line->substr(0, j + 1)));
     return true;
 }
 
@@ -216,7 +219,7 @@ std::string behead(std::string* line, const char cut) {
         return head;
     }
     std::string head = line->substr(0, found);
-    while(line->at(found) == cut) found++; // trim more cut of the rest
+    while (line->at(found) == cut) found++;  // trim more cut of the rest
     line->assign(line->substr(found));
     return head;
 }
@@ -234,14 +237,12 @@ double toDouble(const std::string& s) {
 }
 
 // ==============================================================================
-Reader::Reader(const int fd)
-{
+Reader::Reader(const int fd) {
     mFile = fdopen(fd, "r");
     mStatus = mFile == nullptr ? "Invalid fd " + std::to_string(fd) : "";
 }
 
-Reader::~Reader()
-{
+Reader::~Reader() {
     if (mFile != nullptr) fclose(mFile);
 }
 
@@ -268,9 +269,7 @@ bool Reader::ok(std::string* error) {
 
 // ==============================================================================
 Table::Table(const char* names[], const uint64_t ids[], const int count)
-        :mEnums(),
-         mEnumValuesByName()
-{
+    : mEnums(), mEnumValuesByName() {
     std::map<std::string, uint64_t> fields;
     for (int i = 0; i < count; i++) {
         fields[names[i]] = ids[i];
@@ -278,13 +277,10 @@ Table::Table(const char* names[], const uint64_t ids[], const int count)
     mFields = fields;
 }
 
-Table::~Table()
-{
-}
+Table::~Table() {}
 
-void
-Table::addEnumTypeMap(const char* field, const char* enumNames[], const int enumValues[], const int enumSize)
-{
+void Table::addEnumTypeMap(const char* field, const char* enumNames[], const int enumValues[],
+                           const int enumSize) {
     if (mFields.find(field) == mFields.end()) {
         fprintf(stderr, "Field '%s' not found", field);
         return;
@@ -297,19 +293,16 @@ Table::addEnumTypeMap(const char* field, const char* enumNames[], const int enum
     mEnums[field] = enu;
 }
 
-void
-Table::addEnumNameToValue(const char* enumName, const int enumValue)
-{
+void Table::addEnumNameToValue(const char* enumName, const int enumValue) {
     mEnumValuesByName[enumName] = enumValue;
 }
 
-bool
-Table::insertField(ProtoOutputStream* proto, const std::string& name, const std::string& value)
-{
+bool Table::insertField(ProtoOutputStream* proto, const std::string& name,
+                        const std::string& value) {
     if (mFields.find(name) == mFields.end()) return false;
 
     uint64_t found = mFields[name];
-    record_t repeats; // used for repeated fields
+    record_t repeats;  // used for repeated fields
     switch ((found & FIELD_COUNT_MASK) | (found & FIELD_TYPE_MASK)) {
         case FIELD_COUNT_SINGLE | FIELD_TYPE_DOUBLE:
         case FIELD_COUNT_SINGLE | FIELD_TYPE_FLOAT:
@@ -331,18 +324,20 @@ Table::insertField(ProtoOutputStream* proto, const std::string& name, const std:
                 proto->write(found, true);
                 break;
             }
-            if (strcmp(toLowerStr(value).c_str(), "false") == 0 || strcmp(value.c_str(), "0") == 0) {
+            if (strcmp(toLowerStr(value).c_str(), "false") == 0 ||
+                strcmp(value.c_str(), "0") == 0) {
                 proto->write(found, false);
                 break;
             }
             return false;
         case FIELD_COUNT_SINGLE | FIELD_TYPE_ENUM:
-            // if the field has its own enum mapping, use this, otherwise use general name to value mapping.
+            // if the field has its own enum mapping, use this, otherwise use general name to value
+            // mapping.
             if (mEnums.find(name) != mEnums.end()) {
                 if (mEnums[name].find(value) != mEnums[name].end()) {
                     proto->write(found, mEnums[name][value]);
                 } else {
-                    proto->write(found, 0); // TODO: should get the default enum value (Unknown)
+                    proto->write(found, 0);  // TODO: should get the default enum value (Unknown)
                 }
             } else if (mEnumValuesByName.find(value) != mEnumValuesByName.end()) {
                 proto->write(found, mEnumValuesByName[value]);
@@ -362,13 +357,13 @@ Table::insertField(ProtoOutputStream* proto, const std::string& name, const std:
         // REPEATED TYPE below:
         case FIELD_COUNT_REPEATED | FIELD_TYPE_INT32:
             repeats = parseRecord(value, COMMA_DELIMITER);
-            for (size_t i=0; i<repeats.size(); i++) {
+            for (size_t i = 0; i < repeats.size(); i++) {
                 proto->write(found, toInt(repeats[i]));
             }
             break;
         case FIELD_COUNT_REPEATED | FIELD_TYPE_STRING:
             repeats = parseRecord(value, COMMA_DELIMITER);
-            for (size_t i=0; i<repeats.size(); i++) {
+            for (size_t i = 0; i < repeats.size(); i++) {
                 proto->write(found, repeats[i]);
             }
             break;
@@ -379,21 +374,11 @@ Table::insertField(ProtoOutputStream* proto, const std::string& name, const std:
 }
 
 // ================================================================================
-Message::Message(Table* table)
-        :mTable(table),
-         mPreviousField(""),
-         mTokens(),
-         mSubMessages()
-{
-}
+Message::Message(Table* table) : mTable(table), mPreviousField(""), mTokens(), mSubMessages() {}
 
-Message::~Message()
-{
-}
+Message::~Message() {}
 
-void
-Message::addSubMessage(uint64_t fieldId, Message* fieldMsg)
-{
+void Message::addSubMessage(uint64_t fieldId, Message* fieldMsg) {
     for (auto iter = mTable->mFields.begin(); iter != mTable->mFields.end(); iter++) {
         if (iter->second == fieldId) {
             mSubMessages[iter->first] = fieldMsg;
@@ -402,14 +387,13 @@ Message::addSubMessage(uint64_t fieldId, Message* fieldMsg)
     }
 }
 
-bool
-Message::insertField(ProtoOutputStream* proto, const std::string& name, const std::string& value)
-{
+bool Message::insertField(ProtoOutputStream* proto, const std::string& name,
+                          const std::string& value) {
     // If the field name can be found, it means the name is a primitive field.
     if (mTable->mFields.find(name) != mTable->mFields.end()) {
         endSession(proto);
-        // The only edge case is for example ro.hardware itself is a message, so a field called "value"
-        // would be defined in proto Ro::Hardware and it must be the first field.
+        // The only edge case is for example ro.hardware itself is a message, so a field called
+        // "value" would be defined in proto Ro::Hardware and it must be the first field.
         if (mSubMessages.find(name) != mSubMessages.end()) {
             startSession(proto, name);
             return mSubMessages[name]->insertField(proto, "value", value);
@@ -423,7 +407,7 @@ Message::insertField(ProtoOutputStream* proto, const std::string& name, const st
     std::string mutableName = name;
     for (auto iter = mSubMessages.begin(); iter != mSubMessages.end(); iter++) {
         std::string fieldName = iter->first;
-        std::string prefix = fieldName + "_"; // underscore is the delimiter in the name
+        std::string prefix = fieldName + "_";  // underscore is the delimiter in the name
         if (stripPrefix(&mutableName, prefix.c_str())) {
             if (mPreviousField != fieldName) {
                 endSession(proto);
@@ -436,18 +420,14 @@ Message::insertField(ProtoOutputStream* proto, const std::string& name, const st
     return false;
 }
 
-void
-Message::startSession(ProtoOutputStream* proto, const std::string& name)
-{
+void Message::startSession(ProtoOutputStream* proto, const std::string& name) {
     uint64_t fieldId = mTable->mFields[name];
     uint64_t token = proto->start(fieldId);
     mPreviousField = name;
     mTokens.push(token);
 }
 
-void
-Message::endSession(ProtoOutputStream* proto)
-{
+void Message::endSession(ProtoOutputStream* proto) {
     if (mPreviousField == "") return;
     if (mSubMessages.find(mPreviousField) != mSubMessages.end()) {
         mSubMessages[mPreviousField]->endSession(proto);

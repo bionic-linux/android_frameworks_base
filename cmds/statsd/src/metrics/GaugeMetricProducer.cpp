@@ -1,25 +1,25 @@
 /*
-* Copyright (C) 2017 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #define DEBUG false  // STOPSHIP if true
 #include "Log.h"
 
 #include "../guardrail/StatsdStats.h"
-#include "GaugeMetricProducer.h"
 #include "../stats_log_util.h"
+#include "GaugeMetricProducer.h"
 
 #include <cutils/log.h>
 
@@ -31,12 +31,12 @@ using android::util::FIELD_TYPE_INT64;
 using android::util::FIELD_TYPE_MESSAGE;
 using android::util::FIELD_TYPE_STRING;
 using android::util::ProtoOutputStream;
+using std::make_shared;
 using std::map;
+using std::shared_ptr;
 using std::string;
 using std::unordered_map;
 using std::vector;
-using std::make_shared;
-using std::shared_ptr;
 
 namespace android {
 namespace os {
@@ -122,13 +122,13 @@ GaugeMetricProducer::GaugeMetricProducer(const ConfigKey& key, const GaugeMetric
     }
     mConditionSliced = (metric.links().size() > 0) || (mDimensionsInCondition.size() > 0);
     mSliceByPositionALL = HasPositionALL(metric.dimensions_in_what()) ||
-            HasPositionALL(metric.dimensions_in_condition());
+                          HasPositionALL(metric.dimensions_in_condition());
 
     flushIfNeededLocked(startTimeNs);
     // Kicks off the puller immediately.
     if (mPullTagId != -1 && mSamplingType == GaugeMetric::RANDOM_ONE_SAMPLE) {
-        mStatsPullerManager->RegisterReceiver(
-                mPullTagId, this, getCurrentBucketEndTimeNs(), mBucketSizeNs);
+        mStatsPullerManager->RegisterReceiver(mPullTagId, this, getCurrentBucketEndTimeNs(),
+                                              mBucketSizeNs);
     }
 
     VLOG("Gauge metric %lld created. bucket size %lld start_time: %lld sliced %d",
@@ -153,8 +153,7 @@ GaugeMetricProducer::~GaugeMetricProducer() {
 }
 
 void GaugeMetricProducer::dumpStatesLocked(FILE* out, bool verbose) const {
-    if (mCurrentSlicedBucket == nullptr ||
-        mCurrentSlicedBucket->size() == 0) {
+    if (mCurrentSlicedBucket == nullptr || mCurrentSlicedBucket->size() == 0) {
         return;
     }
 
@@ -163,9 +162,9 @@ void GaugeMetricProducer::dumpStatesLocked(FILE* out, bool verbose) const {
     if (verbose) {
         for (const auto& it : *mCurrentSlicedBucket) {
             fprintf(out, "\t(what)%s\t(condition)%s  %d atoms\n",
-                it.first.getDimensionKeyInWhat().toString().c_str(),
-                it.first.getDimensionKeyInCondition().toString().c_str(),
-                (int)it.second.size());
+                    it.first.getDimensionKeyInWhat().toString().c_str(),
+                    it.first.getDimensionKeyInCondition().toString().c_str(),
+                    (int)it.second.size());
         }
     }
 }
@@ -178,7 +177,7 @@ void GaugeMetricProducer::clearPastBucketsLocked(const int64_t dumpTimeNs) {
 
 void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                              const bool include_current_partial_bucket,
-                                             std::set<string> *str_set,
+                                             std::set<string>* str_set,
                                              ProtoOutputStream* protoOutput) {
     VLOG("Gauge metric %lld report now...", (long long)mMetricId);
     if (include_current_partial_bucket) {
@@ -198,14 +197,14 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
     // Fills the dimension path if not slicing by ALL.
     if (!mSliceByPositionALL) {
         if (!mDimensionsInWhat.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_WHAT);
             writeDimensionPathToProto(mDimensionsInWhat, protoOutput);
             protoOutput->end(dimenPathToken);
         }
         if (!mDimensionsInCondition.empty()) {
-            uint64_t dimenPathToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
+            uint64_t dimenPathToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_PATH_IN_CONDITION);
             writeDimensionPathToProto(mDimensionsInCondition, protoOutput);
             protoOutput->end(dimenPathToken);
         }
@@ -233,16 +232,16 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
 
         // First fill dimension.
         if (mSliceByPositionALL) {
-            uint64_t dimensionToken = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
+            uint64_t dimensionToken =
+                    protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_WHAT);
             writeDimensionToProto(dimensionKey.getDimensionKeyInWhat(), str_set, protoOutput);
             protoOutput->end(dimensionToken);
 
             if (dimensionKey.hasDimensionKeyInCondition()) {
-                uint64_t dimensionInConditionToken = protoOutput->start(
-                        FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
-                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(),
-                                      str_set, protoOutput);
+                uint64_t dimensionInConditionToken =
+                        protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_ID_DIMENSION_IN_CONDITION);
+                writeDimensionToProto(dimensionKey.getDimensionKeyInCondition(), str_set,
+                                      protoOutput);
                 protoOutput->end(dimensionInConditionToken);
             }
         } else {
@@ -250,8 +249,8 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                            FIELD_ID_DIMENSION_LEAF_IN_WHAT, str_set, protoOutput);
             if (dimensionKey.hasDimensionKeyInCondition()) {
                 writeDimensionLeafNodesToProto(dimensionKey.getDimensionKeyInCondition(),
-                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION,
-                                               str_set, protoOutput);
+                                               FIELD_ID_DIMENSION_LEAF_IN_CONDITION, str_set,
+                                               protoOutput);
             }
         }
 
@@ -272,9 +271,8 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
 
             if (!bucket.mGaugeAtoms.empty()) {
                 for (const auto& atom : bucket.mGaugeAtoms) {
-                    uint64_t atomsToken =
-                        protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
-                                           FIELD_ID_ATOM);
+                    uint64_t atomsToken = protoOutput->start(FIELD_TYPE_MESSAGE |
+                                                             FIELD_COUNT_REPEATED | FIELD_ID_ATOM);
                     writeFieldValueTreeToStream(mTagId, *(atom.mFields), protoOutput);
                     protoOutput->end(atomsToken);
                 }
@@ -283,19 +281,20 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
                                 mTagId) ==
                         android::util::AtomsInfo::kNotTruncatingTimestampAtomWhiteList.end();
                 for (const auto& atom : bucket.mGaugeAtoms) {
-                    const int64_t elapsedTimestampNs =  truncateTimestamp ?
-                        truncateTimestampNsToFiveMinutes(atom.mElapsedTimestamps) :
-                            atom.mElapsedTimestamps;
-                    const int64_t wallClockNs = truncateTimestamp ?
-                        truncateTimestampNsToFiveMinutes(atom.mWallClockTimestampNs) :
-                            atom.mWallClockTimestampNs;
-                    protoOutput->write(
-                        FIELD_TYPE_INT64 | FIELD_COUNT_REPEATED | FIELD_ID_ELAPSED_ATOM_TIMESTAMP,
-                        (long long)elapsedTimestampNs);
-                    protoOutput->write(
-                        FIELD_TYPE_INT64 | FIELD_COUNT_REPEATED |
-                            FIELD_ID_WALL_CLOCK_ATOM_TIMESTAMP,
-                        (long long)wallClockNs);
+                    const int64_t elapsedTimestampNs =
+                            truncateTimestamp
+                                    ? truncateTimestampNsToFiveMinutes(atom.mElapsedTimestamps)
+                                    : atom.mElapsedTimestamps;
+                    const int64_t wallClockNs =
+                            truncateTimestamp
+                                    ? truncateTimestampNsToFiveMinutes(atom.mWallClockTimestampNs)
+                                    : atom.mWallClockTimestampNs;
+                    protoOutput->write(FIELD_TYPE_INT64 | FIELD_COUNT_REPEATED |
+                                               FIELD_ID_ELAPSED_ATOM_TIMESTAMP,
+                                       (long long)elapsedTimestampNs);
+                    protoOutput->write(FIELD_TYPE_INT64 | FIELD_COUNT_REPEATED |
+                                               FIELD_ID_WALL_CLOCK_ATOM_TIMESTAMP,
+                                       (long long)wallClockNs);
                 }
             }
             protoOutput->end(bucketInfoToken);
@@ -313,7 +312,7 @@ void GaugeMetricProducer::onDumpReportLocked(const int64_t dumpTimeNs,
 
 void GaugeMetricProducer::pullLocked(const int64_t timestampNs) {
     bool triggerPuller = false;
-    switch(mSamplingType) {
+    switch (mSamplingType) {
         // When the metric wants to do random sampling and there is already one gauge atom for the
         // current bucket, do not do it again.
         case GaugeMetric::RANDOM_ONE_SAMPLE: {
@@ -400,8 +399,8 @@ bool GaugeMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
         StatsdStats::getInstance().noteMetricDimensionSize(mConfigKey, mMetricId, newTupleCount);
         // 2. Don't add more tuples, we are above the allowed threshold. Drop the data.
         if (newTupleCount > mDimensionHardLimit) {
-            ALOGE("GaugeMetric %lld dropping data for dimension key %s",
-                (long long)mMetricId, newKey.toString().c_str());
+            ALOGE("GaugeMetric %lld dropping data for dimension key %s", (long long)mMetricId,
+                  newKey.toString().c_str());
             return true;
         }
     }
@@ -409,10 +408,10 @@ bool GaugeMetricProducer::hitGuardRailLocked(const MetricDimensionKey& newKey) {
     return false;
 }
 
-void GaugeMetricProducer::onMatchedLogEventInternalLocked(
-        const size_t matcherIndex, const MetricDimensionKey& eventKey,
-        const ConditionKey& conditionKey, bool condition,
-        const LogEvent& event) {
+void GaugeMetricProducer::onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                                          const MetricDimensionKey& eventKey,
+                                                          const ConditionKey& conditionKey,
+                                                          bool condition, const LogEvent& event) {
     if (condition == false) {
         return;
     }

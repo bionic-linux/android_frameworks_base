@@ -23,28 +23,29 @@
 extern "C" {
 #endif
 
-#define JNI_COLORSPACE_METHOD(METHOD_NAME) \
-  Java_androidx_media_filterfw_ColorSpace_ ## METHOD_NAME
+#define JNI_COLORSPACE_METHOD(METHOD_NAME) Java_androidx_media_filterfw_ColorSpace_##METHOD_NAME
 
-JNIEXPORT void JNICALL
-JNI_COLORSPACE_METHOD(nativeYuv420pToRgba8888)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height);
+JNIEXPORT void JNICALL JNI_COLORSPACE_METHOD(nativeYuv420pToRgba8888)(JNIEnv* env, jclass clazz,
+                                                                      jobject input, jobject output,
+                                                                      jint width, jint height);
 
-JNIEXPORT void JNICALL
-JNI_COLORSPACE_METHOD(nativeArgb8888ToRgba8888)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height);
+JNIEXPORT void JNICALL JNI_COLORSPACE_METHOD(nativeArgb8888ToRgba8888)(JNIEnv* env, jclass clazz,
+                                                                       jobject input,
+                                                                       jobject output, jint width,
+                                                                       jint height);
 
-JNIEXPORT void JNICALL
-JNI_COLORSPACE_METHOD(nativeRgba8888ToHsva8888)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height);
+JNIEXPORT void JNICALL JNI_COLORSPACE_METHOD(nativeRgba8888ToHsva8888)(JNIEnv* env, jclass clazz,
+                                                                       jobject input,
+                                                                       jobject output, jint width,
+                                                                       jint height);
 
-JNIEXPORT void JNICALL
-JNI_COLORSPACE_METHOD(nativeRgba8888ToYcbcra8888)(
-    JNIEnv* env, jclass clazz, jobject input, jobject output, jint width, jint height);
-
+JNIEXPORT void JNICALL JNI_COLORSPACE_METHOD(nativeRgba8888ToYcbcra8888)(JNIEnv* env, jclass clazz,
+                                                                         jobject input,
+                                                                         jobject output, jint width,
+                                                                         jint height);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // ANDROID_FILTERFW_JNI_COLORSPACE_H
+#endif  // ANDROID_FILTERFW_JNI_COLORSPACE_H

@@ -63,10 +63,10 @@ TEST(SplitSelectorTest, rulesShouldMatchSelection) {
     ASSERT_LT(ResTable_config::DENSITY_HIGH, 263);
 
     Rule expectedRule(test::AndRule()
-            .add(test::GtRule(Rule::SDK_VERSION, 3))
-            .add(test::GtRule(Rule::SCREEN_DENSITY, 180))
-            .add(test::LtRule(Rule::SCREEN_DENSITY, 263)));
+                              .add(test::GtRule(Rule::SDK_VERSION, 3))
+                              .add(test::GtRule(Rule::SCREEN_DENSITY, 180))
+                              .add(test::LtRule(Rule::SCREEN_DENSITY, 263)));
     EXPECT_RULES_EQ(rule, expectedRule);
 }
 
-} // namespace split
+}  // namespace split

@@ -33,7 +33,8 @@ namespace test {
 
 class Context : public IAaptContext {
  public:
-  Context() : name_mangler_({}), symbols_(&name_mangler_), min_sdk_version_(0) {}
+  Context() : name_mangler_({}), symbols_(&name_mangler_), min_sdk_version_(0) {
+  }
 
   PackageType GetPackageType() override {
     return package_type_;
@@ -127,7 +128,9 @@ class ContextBuilder {
     return *this;
   }
 
-  std::unique_ptr<Context> Build() { return std::move(context_); }
+  std::unique_ptr<Context> Build() {
+    return std::move(context_);
+  }
 
  private:
   std::unique_ptr<Context> context_ = std::unique_ptr<Context>(new Context());

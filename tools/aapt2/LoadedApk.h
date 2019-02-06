@@ -106,7 +106,6 @@ class LoadedApk {
                               const TableFlattenerOptions& options, FilterChain* filters,
                               IArchiveWriter* writer, xml::XmlResource* manifest = nullptr);
 
-
  private:
   DISALLOW_COPY_AND_ASSIGN(LoadedApk);
 

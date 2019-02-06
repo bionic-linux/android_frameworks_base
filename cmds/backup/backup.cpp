@@ -25,32 +25,30 @@ using namespace android;
 
 #include <unistd.h>
 
-static int usage(int /* argc */, const char** argv)
-{
+static int usage(int /* argc */, const char** argv) {
     const char* p = argv[0];
 
-    fprintf(stderr, "%s: Backs up your data.\n"
-                    "\n"
-                    "usage: %s\n"
-                    "  Prints all of the data that can be backed up to stdout.\n"
-                    "\n"
-                    "usage: %s list FILE\n"
-                    "  Lists the backup entities in the file.\n"
-                    "\n"
-                    "usage: %s print NAME FILE\n"
-                    "  Prints the entity named NAME in FILE.\n",
-                    p, p, p, p);
+    fprintf(stderr,
+            "%s: Backs up your data.\n"
+            "\n"
+            "usage: %s\n"
+            "  Prints all of the data that can be backed up to stdout.\n"
+            "\n"
+            "usage: %s list FILE\n"
+            "  Lists the backup entities in the file.\n"
+            "\n"
+            "usage: %s print NAME FILE\n"
+            "  Prints the entity named NAME in FILE.\n",
+            p, p, p, p);
     return 1;
 }
 
-static int perform_full_backup()
-{
+static int perform_full_backup() {
     printf("this would have written all of your data to stdout\n");
     return 0;
 }
 
-static int perform_list(const char* filename)
-{
+static int perform_list(const char* filename) {
     int err;
     int fd;
 
@@ -69,8 +67,7 @@ static int perform_list(const char* filename)
             break;
         }
         switch (type) {
-            case BACKUP_HEADER_ENTITY_V1:
-            {
+            case BACKUP_HEADER_ENTITY_V1: {
                 String8 key;
                 size_t dataSize;
                 err = reader.ReadEntityHeader(&key, &dataSize);
@@ -81,8 +78,7 @@ static int perform_list(const char* filename)
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 printf("Unknown chunk type: 0x%08x\n", type);
                 break;
             }
@@ -92,14 +88,12 @@ static int perform_list(const char* filename)
     return 0;
 }
 
-static int perform_print(const char* entityname, const char* filename)
-{
+static int perform_print(const char* entityname, const char* filename) {
     printf("perform_print(%s, %s);", entityname, filename);
     return 0;
 }
 
-int main(int argc, const char** argv)
-{
+int main(int argc, const char** argv) {
     if (argc <= 1) {
         return perform_full_backup();
     }
@@ -111,4 +105,3 @@ int main(int argc, const char** argv)
     }
     return usage(argc, argv);
 }
-

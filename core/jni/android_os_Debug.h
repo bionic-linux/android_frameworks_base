@@ -17,13 +17,13 @@
 #ifndef ANDROID_OS_DEBUG_H
 #define ANDROID_OS_DEBUG_H
 
-#include <memory>
 #include <stdio.h>
+#include <memory>
 
 namespace android {
 
 inline void safeFclose(FILE* fp) {
-  if (fp) fclose(fp);
+    if (fp) fclose(fp);
 }
 
 using UniqueFile = std::unique_ptr<FILE, decltype(&safeFclose)>;

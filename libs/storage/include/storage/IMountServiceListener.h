@@ -22,24 +22,23 @@
 
 namespace android {
 
-class IMountServiceListener: public IInterface {
-public:
+class IMountServiceListener : public IInterface {
+  public:
     DECLARE_META_INTERFACE(MountServiceListener);
 
     virtual void onUsbMassStorageConnectionChanged(const bool connected) = 0;
-    virtual void onStorageStateChanged(const String16& path,
-            const String16& oldState, const String16& newState) = 0;
+    virtual void onStorageStateChanged(const String16& path, const String16& oldState,
+                                       const String16& newState) = 0;
 };
 
 // ----------------------------------------------------------------------------
 
-class BnMountServiceListener: public BnInterface<IMountServiceListener> {
-public:
-    virtual status_t onTransact(uint32_t code, const Parcel& data,
-            Parcel* reply, uint32_t flags = 0);
+class BnMountServiceListener : public BnInterface<IMountServiceListener> {
+  public:
+    virtual status_t onTransact(uint32_t code, const Parcel& data, Parcel* reply,
+                                uint32_t flags = 0);
 };
 
-}
-; // namespace android
+};  // namespace android
 
-#endif // ANDROID_IMOUNTSERVICELISTENER_H
+#endif  // ANDROID_IMOUNTSERVICELISTENER_H

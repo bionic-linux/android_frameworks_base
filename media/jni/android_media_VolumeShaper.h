@@ -27,30 +27,30 @@ using media::VolumeShaper;
 struct VolumeShaperHelper {
     struct fields_t {
         // VolumeShaper.Configuration
-        jclass    coClazz;
+        jclass coClazz;
         jmethodID coConstructId;
-        jfieldID  coTypeId;
-        jfieldID  coIdId;
-        jfieldID  coOptionFlagsId;
-        jfieldID  coDurationMsId;
-        jfieldID  coInterpolatorTypeId;
-        jfieldID  coTimesId;
-        jfieldID  coVolumesId;
+        jfieldID coTypeId;
+        jfieldID coIdId;
+        jfieldID coOptionFlagsId;
+        jfieldID coDurationMsId;
+        jfieldID coInterpolatorTypeId;
+        jfieldID coTimesId;
+        jfieldID coVolumesId;
 
         // VolumeShaper.Operation
-        jclass    opClazz;
+        jclass opClazz;
         jmethodID opConstructId;
-        jfieldID  opFlagsId;
-        jfieldID  opReplaceIdId;
-        jfieldID  opXOffsetId;
+        jfieldID opFlagsId;
+        jfieldID opReplaceIdId;
+        jfieldID opXOffsetId;
 
         // VolumeShaper.State
-        jclass    stClazz;
+        jclass stClazz;
         jmethodID stConstructId;
-        jfieldID  stVolumeId;
-        jfieldID  stXOffsetId;
+        jfieldID stVolumeId;
+        jfieldID stXOffsetId;
 
-        void init(JNIEnv *env) {
+        void init(JNIEnv* env) {
             jclass lclazz = env->FindClass("android/media/VolumeShaper$Configuration");
             if (lclazz == nullptr) {
                 return;
@@ -97,41 +97,38 @@ struct VolumeShaperHelper {
             env->DeleteLocalRef(lclazz);
         }
 
-        void exit(JNIEnv *env) {
+        void exit(JNIEnv* env) {
             env->DeleteGlobalRef(coClazz);
             coClazz = nullptr;
         }
     };
 
-    static sp<VolumeShaper::Configuration> convertJobjectToConfiguration(
-            JNIEnv *env, const fields_t &fields, jobject jshaper) {
+    static sp<VolumeShaper::Configuration> convertJobjectToConfiguration(JNIEnv* env,
+                                                                         const fields_t& fields,
+                                                                         jobject jshaper) {
         sp<VolumeShaper::Configuration> configuration = new VolumeShaper::Configuration();
 
         configuration->setType(
-            (VolumeShaper::Configuration::Type)env->GetIntField(jshaper, fields.coTypeId));
-        configuration->setId(
-            (int)env->GetIntField(jshaper, fields.coIdId));
+                (VolumeShaper::Configuration::Type)env->GetIntField(jshaper, fields.coTypeId));
+        configuration->setId((int)env->GetIntField(jshaper, fields.coIdId));
         if (configuration->getType() == VolumeShaper::Configuration::TYPE_SCALE) {
-            configuration->setOptionFlags(
-                (VolumeShaper::Configuration::OptionFlag)
-                env->GetIntField(jshaper, fields.coOptionFlagsId));
+            configuration->setOptionFlags((VolumeShaper::Configuration::OptionFlag)env->GetIntField(
+                    jshaper, fields.coOptionFlagsId));
             configuration->setDurationMs(
                     (double)env->GetDoubleField(jshaper, fields.coDurationMsId));
             configuration->setInterpolatorType(
-                (VolumeShaper::Configuration::InterpolatorType)
-                env->GetIntField(jshaper, fields.coInterpolatorTypeId));
+                    (VolumeShaper::Configuration::InterpolatorType)env->GetIntField(
+                            jshaper, fields.coInterpolatorTypeId));
 
             // convert point arrays
             jobject xobj = env->GetObjectField(jshaper, fields.coTimesId);
-            jfloatArray *xarray = reinterpret_cast<jfloatArray*>(&xobj);
+            jfloatArray* xarray = reinterpret_cast<jfloatArray*>(&xobj);
             jsize xlen = env->GetArrayLength(*xarray);
-            /* const */ float * const x =
-                    env->GetFloatArrayElements(*xarray, nullptr /* isCopy */);
+            /* const */ float* const x = env->GetFloatArrayElements(*xarray, nullptr /* isCopy */);
             jobject yobj = env->GetObjectField(jshaper, fields.coVolumesId);
-            jfloatArray *yarray = reinterpret_cast<jfloatArray*>(&yobj);
+            jfloatArray* yarray = reinterpret_cast<jfloatArray*>(&yobj);
             jsize ylen = env->GetArrayLength(*yarray);
-            /* const */ float * const y =
-                    env->GetFloatArrayElements(*yarray, nullptr /* isCopy */);
+            /* const */ float* const y = env->GetFloatArrayElements(*yarray, nullptr /* isCopy */);
             if (xlen != ylen) {
                 ALOGE("array size must match");
                 return nullptr;
@@ -139,25 +136,25 @@ struct VolumeShaperHelper {
             for (jsize i = 0; i < xlen; ++i) {
                 configuration->emplace(x[i], y[i]);
             }
-            env->ReleaseFloatArrayElements(*xarray, x, JNI_ABORT); // no need to copy back
+            env->ReleaseFloatArrayElements(*xarray, x, JNI_ABORT);  // no need to copy back
             env->ReleaseFloatArrayElements(*yarray, y, JNI_ABORT);
         }
         return configuration;
     }
 
     static jobject convertVolumeShaperToJobject(
-            JNIEnv *env, const fields_t &fields,
-            const sp<VolumeShaper::Configuration> &configuration) {
+            JNIEnv* env, const fields_t& fields,
+            const sp<VolumeShaper::Configuration>& configuration) {
         jfloatArray xarray = nullptr;
         jfloatArray yarray = nullptr;
         if (configuration->getType() == VolumeShaper::Configuration::TYPE_SCALE) {
             // convert curve arrays
             jfloatArray xarray = env->NewFloatArray(configuration->size());
             jfloatArray yarray = env->NewFloatArray(configuration->size());
-            float * const x = env->GetFloatArrayElements(xarray, nullptr /* isCopy */);
-            float * const y = env->GetFloatArrayElements(yarray, nullptr /* isCopy */);
+            float* const x = env->GetFloatArrayElements(xarray, nullptr /* isCopy */);
+            float* const y = env->GetFloatArrayElements(yarray, nullptr /* isCopy */);
             float *xptr = x, *yptr = y;
-            for (const auto &pt : *configuration.get()) {
+            for (const auto& pt : *configuration.get()) {
                 *xptr++ = pt.first;
                 *yptr++ = pt.second;
             }
@@ -178,10 +175,11 @@ struct VolumeShaperHelper {
         return jshaper;
     }
 
-    static sp<VolumeShaper::Operation> convertJobjectToOperation(
-            JNIEnv *env, const fields_t &fields, jobject joperation) {
+    static sp<VolumeShaper::Operation> convertJobjectToOperation(JNIEnv* env,
+                                                                 const fields_t& fields,
+                                                                 jobject joperation) {
         VolumeShaper::Operation::Flag flags =
-            (VolumeShaper::Operation::Flag)env->GetIntField(joperation, fields.opFlagsId);
+                (VolumeShaper::Operation::Flag)env->GetIntField(joperation, fields.opFlagsId);
         int replaceId = env->GetIntField(joperation, fields.opReplaceIdId);
         float xOffset = env->GetFloatField(joperation, fields.opXOffsetId);
 
@@ -190,8 +188,8 @@ struct VolumeShaperHelper {
         return operation;
     }
 
-    static jobject convertOperationToJobject(
-            JNIEnv *env, const fields_t &fields, const sp<VolumeShaper::Operation> &operation) {
+    static jobject convertOperationToJobject(JNIEnv* env, const fields_t& fields,
+                                             const sp<VolumeShaper::Operation>& operation) {
         // prepare constructor args
         jvalue args[3];
         args[0].i = (jint)operation->getFlags();
@@ -202,8 +200,8 @@ struct VolumeShaperHelper {
         return joperation;
     }
 
-    static sp<VolumeShaper::State> convertJobjectToState(
-            JNIEnv *env, const fields_t &fields, jobject jstate) {
+    static sp<VolumeShaper::State> convertJobjectToState(JNIEnv* env, const fields_t& fields,
+                                                         jobject jstate) {
         float volume = env->GetFloatField(jstate, fields.stVolumeId);
         float xOffset = env->GetFloatField(jstate, fields.stXOffsetId);
 
@@ -211,8 +209,8 @@ struct VolumeShaperHelper {
         return state;
     }
 
-    static jobject convertStateToJobject(
-            JNIEnv *env, const fields_t &fields, const sp<VolumeShaper::State> &state) {
+    static jobject convertStateToJobject(JNIEnv* env, const fields_t& fields,
+                                         const sp<VolumeShaper::State>& state) {
         // prepare constructor args
         jvalue args[2];
         args[0].f = (jfloat)state->getVolume();
@@ -225,4 +223,4 @@ struct VolumeShaperHelper {
 
 }  // namespace android
 
-#endif // _ANDROID_MEDIA_VOLUME_SHAPER_H_
+#endif  // _ANDROID_MEDIA_VOLUME_SHAPER_H_

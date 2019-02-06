@@ -44,7 +44,7 @@ LogEvent::LogEvent(int32_t tagId, int64_t wallClockTimestampNs, int64_t elapsedT
     mLogdTimestampNs = wallClockTimestampNs;
     mTagId = tagId;
     mLogUid = 0;
-    mContext = create_android_logger(1937006964); // the event tag shared by all stats logs
+    mContext = create_android_logger(1937006964);  // the event tag shared by all stats logs
     if (mContext) {
         android_log_write_int64(mContext, elapsedTimestampNs);
         android_log_write_int32(mContext, tagId);
@@ -55,7 +55,7 @@ LogEvent::LogEvent(int32_t tagId, int64_t timestampNs) {
     mLogdTimestampNs = timestampNs;
     mTagId = tagId;
     mLogUid = 0;
-    mContext = create_android_logger(1937006964); // the event tag shared by all stats logs
+    mContext = create_android_logger(1937006964);  // the event tag shared by all stats logs
     if (mContext) {
         android_log_write_int64(mContext, timestampNs);
         android_log_write_int32(mContext, tagId);
@@ -130,37 +130,37 @@ bool LogEvent::write(float value) {
 
 bool LogEvent::write(const std::vector<AttributionNodeInternal>& nodes) {
     if (mContext) {
-         if (android_log_write_list_begin(mContext) < 0) {
+        if (android_log_write_list_begin(mContext) < 0) {
             return false;
-         }
-         for (size_t i = 0; i < nodes.size(); ++i) {
-             if (!write(nodes[i])) {
+        }
+        for (size_t i = 0; i < nodes.size(); ++i) {
+            if (!write(nodes[i])) {
                 return false;
-             }
-         }
-         if (android_log_write_list_end(mContext) < 0) {
+            }
+        }
+        if (android_log_write_list_end(mContext) < 0) {
             return false;
-         }
-         return true;
+        }
+        return true;
     }
     return false;
 }
 
 bool LogEvent::write(const AttributionNodeInternal& node) {
     if (mContext) {
-         if (android_log_write_list_begin(mContext) < 0) {
+        if (android_log_write_list_begin(mContext) < 0) {
             return false;
-         }
-         if (android_log_write_int32(mContext, node.uid()) < 0) {
+        }
+        if (android_log_write_int32(mContext, node.uid()) < 0) {
             return false;
-         }
-         if (android_log_write_string8(mContext, node.tag().c_str()) < 0) {
+        }
+        if (android_log_write_string8(mContext, node.tag().c_str()) < 0) {
             return false;
-         }
-         if (android_log_write_list_end(mContext) < 0) {
+        }
+        if (android_log_write_list_end(mContext) < 0) {
             return false;
-         }
-         return true;
+        }
+        return true;
     }
     return false;
 }

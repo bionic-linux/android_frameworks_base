@@ -31,8 +31,7 @@ class PerfettoDetails;  // Declared in statsd_config.pb.h
 // The trace is uploaded to Dropbox by the perfetto cmdline util once done.
 // This method returns immediately after passing the config and does NOT wait
 // for the full duration of the trace.
-bool CollectPerfettoTraceAndUploadToDropbox(const PerfettoDetails& config,
-                                            int64_t alert_id,
+bool CollectPerfettoTraceAndUploadToDropbox(const PerfettoDetails& config, int64_t alert_id,
                                             const ConfigKey& configKey);
 
 }  // namespace statsd

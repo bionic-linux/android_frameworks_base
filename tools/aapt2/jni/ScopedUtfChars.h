@@ -17,8 +17,8 @@
 #ifndef SCOPED_UTF_CHARS_H_included
 #define SCOPED_UTF_CHARS_H_included
 
-#include <string.h>
 #include <jni.h>
+#include <string.h>
 
 #include "android-base/logging.h"
 
@@ -32,8 +32,8 @@ class ScopedUtfChars {
     utf_chars_ = env->GetStringUTFChars(s, nullptr);
   }
 
-  ScopedUtfChars(ScopedUtfChars&& rhs) :
-      env_(rhs.env_), string_(rhs.string_), utf_chars_(rhs.utf_chars_) {
+  ScopedUtfChars(ScopedUtfChars&& rhs)
+      : env_(rhs.env_), string_(rhs.string_), utf_chars_(rhs.utf_chars_) {
     rhs.env_ = nullptr;
     rhs.string_ = nullptr;
     rhs.utf_chars_ = nullptr;

@@ -33,7 +33,9 @@ class FilterIterator {
     Advance();
   }
 
-  bool HasNext() { return current_ != end_; }
+  bool HasNext() {
+    return current_ != end_;
+  }
 
   Iterator NextIter() {
     Iterator iter = current_;
@@ -42,7 +44,9 @@ class FilterIterator {
     return iter;
   }
 
-  typename Iterator::reference Next() { return *NextIter(); }
+  typename Iterator::reference Next() {
+    return *NextIter();
+  }
 
  private:
   void Advance() {
@@ -58,8 +62,7 @@ class FilterIterator {
 };
 
 template <typename Iterator, typename Pred>
-FilterIterator<Iterator, Pred> make_filter_iterator(Iterator begin,
-                                                    Iterator end = Iterator(),
+FilterIterator<Iterator, Pred> make_filter_iterator(Iterator begin, Iterator end = Iterator(),
                                                     Pred pred = Pred()) {
   return FilterIterator<Iterator, Pred>(begin, end, pred);
 }
@@ -71,8 +74,7 @@ FilterIterator<Iterator, Pred> make_filter_iterator(Iterator begin,
  */
 static void CollapseVersions(int min_sdk, ResourceEntry* entry) {
   // First look for all sdks less than minSdk.
-  for (auto iter = entry->values.rbegin(); iter != entry->values.rend();
-       ++iter) {
+  for (auto iter = entry->values.rbegin(); iter != entry->values.rend(); ++iter) {
     // Check if the item was already marked for removal.
     if (!(*iter)) {
       continue;
@@ -93,13 +95,11 @@ static void CollapseVersions(int min_sdk, ResourceEntry* entry) {
 
         // Only return Configs that differ in SDK version.
         config_without_sdk.sdkVersion = val->config.sdkVersion;
-        return config_without_sdk == val->config &&
-               val->config.sdkVersion <= min_sdk;
+        return config_without_sdk == val->config && val->config.sdkVersion <= min_sdk;
       };
 
       // Remove the rest that match.
-      auto filter_iter =
-          make_filter_iterator(iter + 1, entry->values.rend(), pred);
+      auto filter_iter = make_filter_iterator(iter + 1, entry->values.rend(), pred);
       while (filter_iter.HasNext()) {
         filter_iter.Next() = {};
       }
@@ -107,24 +107,21 @@ static void CollapseVersions(int min_sdk, ResourceEntry* entry) {
   }
 
   // Now erase the nullptr values.
-  entry->values.erase(
-      std::remove_if(entry->values.begin(), entry->values.end(),
-                     [](const std::unique_ptr<ResourceConfigValue>& val)
-                         -> bool { return val == nullptr; }),
-      entry->values.end());
+  entry->values.erase(std::remove_if(entry->values.begin(), entry->values.end(),
+                                     [](const std::unique_ptr<ResourceConfigValue>& val) -> bool {
+                                       return val == nullptr;
+                                     }),
+                      entry->values.end());
 
   // Strip the version qualifiers for every resource with version <= minSdk. This will ensure that
   // the resource entries are all packed together in the same ResTable_type struct and take up less
   // space in the resources.arsc table.
   bool modified = false;
   for (std::unique_ptr<ResourceConfigValue>& config_value : entry->values) {
-    if (config_value->config.sdkVersion != 0 &&
-        config_value->config.sdkVersion <= min_sdk) {
+    if (config_value->config.sdkVersion != 0 && config_value->config.sdkVersion <= min_sdk) {
       // Override the resource with a Configuration without an SDK.
-      std::unique_ptr<ResourceConfigValue> new_value =
-          util::make_unique<ResourceConfigValue>(
-              config_value->config.CopyWithoutSdkVersion(),
-              config_value->product);
+      std::unique_ptr<ResourceConfigValue> new_value = util::make_unique<ResourceConfigValue>(
+          config_value->config.CopyWithoutSdkVersion(), config_value->product);
       new_value->value = std::move(config_value->value);
       config_value = std::move(new_value);
 

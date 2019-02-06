@@ -17,9 +17,7 @@ const uint64_t FIELD_COUNT_SINGLE = 1ULL << FIELD_COUNT_SHIFT;
 const uint64_t FIELD_COUNT_REPEATED = 2ULL << FIELD_COUNT_SHIFT;
 const uint64_t FIELD_COUNT_PACKED = 5ULL << FIELD_COUNT_SHIFT;
 
-uint64_t
-get_field_id(const FieldDescriptorProto& field)
-{
+uint64_t get_field_id(const FieldDescriptorProto& field) {
     // Number
     uint64_t result = (uint32_t)field.number();
 
@@ -38,9 +36,7 @@ get_field_id(const FieldDescriptorProto& field)
     return result;
 }
 
-string
-get_proto_type(const FieldDescriptorProto& field)
-{
+string get_proto_type(const FieldDescriptorProto& field) {
     switch (field.type()) {
         case FieldDescriptorProto::TYPE_DOUBLE:
             return "double";
@@ -84,11 +80,9 @@ get_proto_type(const FieldDescriptorProto& field)
     }
 }
 
-bool
-should_generate_for_file(const CodeGeneratorRequest& request, const string& file)
-{
+bool should_generate_for_file(const CodeGeneratorRequest& request, const string& file) {
     const int N = request.file_to_generate_size();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         if (request.file_to_generate(i) == file) {
             return true;
         }
@@ -96,5 +90,5 @@ should_generate_for_file(const CodeGeneratorRequest& request, const string& file
     return false;
 }
 
-} // stream_proto
-} // android
+}  // namespace stream_proto
+}  // namespace android

@@ -35,15 +35,13 @@ namespace aapt {
 TEST(ResourceTableTest, FailToAddResourceWithBadName) {
   ResourceTable table;
 
-  EXPECT_FALSE(table.AddResource(
-      test::ParseNameOrDie("android:id/hey,there"), ConfigDescription{}, "",
-      test::ValueBuilder<Id>().SetSource("test.xml", 21u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_FALSE(table.AddResource(test::ParseNameOrDie("android:id/hey,there"), ConfigDescription{},
+                                 "", test::ValueBuilder<Id>().SetSource("test.xml", 21u).Build(),
+                                 test::GetDiagnostics()));
 
-  EXPECT_FALSE(table.AddResource(
-      test::ParseNameOrDie("android:id/hey:there"), ConfigDescription{}, "",
-      test::ValueBuilder<Id>().SetSource("test.xml", 21u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_FALSE(table.AddResource(test::ParseNameOrDie("android:id/hey:there"), ConfigDescription{},
+                                 "", test::ValueBuilder<Id>().SetSource("test.xml", 21u).Build(),
+                                 test::GetDiagnostics()));
 }
 
 TEST(ResourceTableTest, AddResourceWithWeirdNameWhenAddingMangledResources) {
@@ -57,10 +55,10 @@ TEST(ResourceTableTest, AddResourceWithWeirdNameWhenAddingMangledResources) {
 TEST(ResourceTableTest, AddOneResource) {
   ResourceTable table;
 
-  EXPECT_TRUE(table.AddResource(
-      test::ParseNameOrDie("android:attr/id"), ConfigDescription{}, "",
-      test::ValueBuilder<Id>().SetSource("test/path/file.xml", 23u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_TRUE(
+      table.AddResource(test::ParseNameOrDie("android:attr/id"), ConfigDescription{}, "",
+                        test::ValueBuilder<Id>().SetSource("test/path/file.xml", 23u).Build(),
+                        test::GetDiagnostics()));
 
   EXPECT_THAT(test::GetValue<Id>(&table, "android:attr/id"), NotNull());
 }
@@ -72,32 +70,33 @@ TEST(ResourceTableTest, AddMultipleResources) {
   ConfigDescription language_config;
   memcpy(language_config.language, "pl", sizeof(language_config.language));
 
-  EXPECT_TRUE(table.AddResource(
-      test::ParseNameOrDie("android:attr/layout_width"), config, "",
-      test::ValueBuilder<Id>().SetSource("test/path/file.xml", 10u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_TRUE(
+      table.AddResource(test::ParseNameOrDie("android:attr/layout_width"), config, "",
+                        test::ValueBuilder<Id>().SetSource("test/path/file.xml", 10u).Build(),
+                        test::GetDiagnostics()));
 
-  EXPECT_TRUE(table.AddResource(
-      test::ParseNameOrDie("android:attr/id"), config, "",
-      test::ValueBuilder<Id>().SetSource("test/path/file.xml", 12u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_TRUE(
+      table.AddResource(test::ParseNameOrDie("android:attr/id"), config, "",
+                        test::ValueBuilder<Id>().SetSource("test/path/file.xml", 12u).Build(),
+                        test::GetDiagnostics()));
 
-  EXPECT_TRUE(table.AddResource(
-      test::ParseNameOrDie("android:string/ok"), config, "",
-      test::ValueBuilder<Id>().SetSource("test/path/file.xml", 14u).Build(),
-      test::GetDiagnostics()));
+  EXPECT_TRUE(
+      table.AddResource(test::ParseNameOrDie("android:string/ok"), config, "",
+                        test::ValueBuilder<Id>().SetSource("test/path/file.xml", 14u).Build(),
+                        test::GetDiagnostics()));
 
-  EXPECT_TRUE(table.AddResource(
-      test::ParseNameOrDie("android:string/ok"), language_config, "",
-      test::ValueBuilder<BinaryPrimitive>(android::Res_value{})
-          .SetSource("test/path/file.xml", 20u)
-          .Build(),
-      test::GetDiagnostics()));
+  EXPECT_TRUE(table.AddResource(test::ParseNameOrDie("android:string/ok"), language_config, "",
+                                test::ValueBuilder<BinaryPrimitive>(android::Res_value{})
+                                    .SetSource("test/path/file.xml", 20u)
+                                    .Build(),
+                                test::GetDiagnostics()));
 
   EXPECT_THAT(test::GetValue<Id>(&table, "android:attr/layout_width"), NotNull());
   EXPECT_THAT(test::GetValue<Id>(&table, "android:attr/id"), NotNull());
   EXPECT_THAT(test::GetValue<Id>(&table, "android:string/ok"), NotNull());
-  EXPECT_THAT(test::GetValueForConfig<BinaryPrimitive>(&table, "android:string/ok", language_config), NotNull());
+  EXPECT_THAT(
+      test::GetValueForConfig<BinaryPrimitive>(&table, "android:string/ok", language_config),
+      NotNull());
 }
 
 TEST(ResourceTableTest, OverrideWeakResourceValue) {
@@ -138,16 +137,18 @@ TEST(ResourceTableTest, ProductVaryingValues) {
   ResourceTable table;
 
   EXPECT_TRUE(table.AddResource(test::ParseNameOrDie("android:string/foo"),
-                                test::ParseConfigOrDie("land"), "tablet",
-                                util::make_unique<Id>(),
+                                test::ParseConfigOrDie("land"), "tablet", util::make_unique<Id>(),
                                 test::GetDiagnostics()));
   EXPECT_TRUE(table.AddResource(test::ParseNameOrDie("android:string/foo"),
-                                test::ParseConfigOrDie("land"), "phone",
-                                util::make_unique<Id>(),
+                                test::ParseConfigOrDie("land"), "phone", util::make_unique<Id>(),
                                 test::GetDiagnostics()));
 
-  EXPECT_THAT(test::GetValueForConfigAndProduct<Id>(&table, "android:string/foo",test::ParseConfigOrDie("land"), "tablet"), NotNull());
-  EXPECT_THAT(test::GetValueForConfigAndProduct<Id>(&table, "android:string/foo",test::ParseConfigOrDie("land"), "phone"), NotNull());
+  EXPECT_THAT(test::GetValueForConfigAndProduct<Id>(&table, "android:string/foo",
+                                                    test::ParseConfigOrDie("land"), "tablet"),
+              NotNull());
+  EXPECT_THAT(test::GetValueForConfigAndProduct<Id>(&table, "android:string/foo",
+                                                    test::ParseConfigOrDie("land"), "phone"),
+              NotNull());
 
   Maybe<ResourceTable::SearchResult> sr =
       table.FindResource(test::ParseNameOrDie("android:string/foo"));

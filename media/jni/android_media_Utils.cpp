@@ -17,29 +17,25 @@
 // #define LOG_NDEBUG 0
 #define LOG_TAG "AndroidMediaUtils"
 
+#include "android_media_Utils.h"
 #include <hardware/camera3.h>
 #include <utils/Log.h>
-#include "android_media_Utils.h"
 
-#include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/foundation/ABuffer.h>
+#include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/foundation/AMessage.h>
 
 #include <nativehelper/ScopedLocalRef.h>
 
-#define ALIGN(x, mask) ( ((x) + (mask) - 1) & ~((mask) - 1) )
+#define ALIGN(x, mask) (((x) + (mask)-1) & ~((mask)-1))
 
 namespace android {
 
-AssetStream::AssetStream(SkStream* stream)
-    : mStream(stream), mPosition(0) {
-}
+AssetStream::AssetStream(SkStream* stream) : mStream(stream), mPosition(0) {}
 
-AssetStream::~AssetStream() {
-}
+AssetStream::~AssetStream() {}
 
-piex::Error AssetStream::GetData(
-        const size_t offset, const size_t length, std::uint8_t* data) {
+piex::Error AssetStream::GetData(const size_t offset, const size_t length, std::uint8_t* data) {
     // Seek first.
     if (mPosition != offset) {
         if (!mStream->seek(offset)) {
@@ -54,15 +50,11 @@ piex::Error AssetStream::GetData(
     return size == length ? piex::Error::kOk : piex::Error::kFail;
 }
 
-BufferedStream::BufferedStream(SkStream* stream)
-    : mStream(stream) {
-}
+BufferedStream::BufferedStream(SkStream* stream) : mStream(stream) {}
 
-BufferedStream::~BufferedStream() {
-}
+BufferedStream::~BufferedStream() {}
 
-piex::Error BufferedStream::GetData(
-        const size_t offset, const size_t length, std::uint8_t* data) {
+piex::Error BufferedStream::GetData(const size_t offset, const size_t length, std::uint8_t* data) {
     // Seek first.
     if (offset + length > mStreamBuffer.bytesWritten()) {
         size_t sizeToRead = offset + length - mStreamBuffer.bytesWritten();
@@ -72,7 +64,7 @@ piex::Error BufferedStream::GetData(
 
         void* tempBuffer = malloc(sizeToRead);
         if (tempBuffer == NULL) {
-          return piex::Error::kFail;
+            return piex::Error::kFail;
         }
 
         size_t bytesRead = mStream->read(tempBuffer, sizeToRead);
@@ -92,16 +84,14 @@ piex::Error BufferedStream::GetData(
     }
 }
 
-FileStream::FileStream(const int fd)
-    : mPosition(0) {
+FileStream::FileStream(const int fd) : mPosition(0) {
     mFile = fdopen(fd, "r");
     if (mFile == NULL) {
         return;
     }
 }
 
-FileStream::FileStream(const String8 filename)
-    : mPosition(0) {
+FileStream::FileStream(const String8 filename) : mPosition(0) {
     mFile = fopen(filename.string(), "r");
     if (mFile == NULL) {
         return;
@@ -115,8 +105,7 @@ FileStream::~FileStream() {
     }
 }
 
-piex::Error FileStream::GetData(
-        const size_t offset, const size_t length, std::uint8_t* data) {
+piex::Error FileStream::GetData(const size_t offset, const size_t length, std::uint8_t* data) {
     if (mFile == NULL) {
         return piex::Error::kFail;
     }
@@ -142,9 +131,8 @@ bool FileStream::exists() const {
     return mFile != NULL;
 }
 
-bool GetExifFromRawImage(
-        piex::StreamInterface* stream, const String8& filename,
-        piex::PreviewImageData& image_data) {
+bool GetExifFromRawImage(piex::StreamInterface* stream, const String8& filename,
+                         piex::PreviewImageData& image_data) {
     // Reset the PreviewImageData to its default.
     image_data = piex::PreviewImageData();
 
@@ -165,10 +153,8 @@ bool GetExifFromRawImage(
     return true;
 }
 
-bool ConvertKeyValueArraysToKeyedVector(
-        JNIEnv *env, jobjectArray keys, jobjectArray values,
-        KeyedVector<String8, String8>* keyedVector) {
-
+bool ConvertKeyValueArraysToKeyedVector(JNIEnv* env, jobjectArray keys, jobjectArray values,
+                                        KeyedVector<String8, String8>* keyedVector) {
     int nKeyValuePairs = 0;
     bool failed = false;
     if (keys != NULL && values != NULL) {
@@ -177,8 +163,7 @@ bool ConvertKeyValueArraysToKeyedVector(
     }
 
     if (!failed) {
-        failed = ((keys != NULL && values == NULL) ||
-                  (keys == NULL && values != NULL));
+        failed = ((keys != NULL && values == NULL) || (keys == NULL && values != NULL));
     }
 
     if (failed) {
@@ -190,8 +175,8 @@ bool ConvertKeyValueArraysToKeyedVector(
     for (int i = 0; i < nKeyValuePairs; ++i) {
         // No need to check on the ArrayIndexOutOfBoundsException, since
         // it won't happen here.
-        jstring key = (jstring) env->GetObjectArrayElement(keys, i);
-        jstring value = (jstring) env->GetObjectArrayElement(values, i);
+        jstring key = (jstring)env->GetObjectArrayElement(keys, i);
+        jstring value = (jstring)env->GetObjectArrayElement(values, i);
 
         const char* keyStr = env->GetStringUTFChars(key, NULL);
         if (!keyStr) {  // OutOfMemoryError
@@ -214,18 +199,17 @@ bool ConvertKeyValueArraysToKeyedVector(
     return true;
 }
 
-static jobject makeIntegerObject(JNIEnv *env, int32_t value) {
+static jobject makeIntegerObject(JNIEnv* env, int32_t value) {
     ScopedLocalRef<jclass> clazz(env, env->FindClass("java/lang/Integer"));
     CHECK(clazz.get() != NULL);
 
-    jmethodID integerConstructID =
-        env->GetMethodID(clazz.get(), "<init>", "(I)V");
+    jmethodID integerConstructID = env->GetMethodID(clazz.get(), "<init>", "(I)V");
     CHECK(integerConstructID != NULL);
 
     return env->NewObject(clazz.get(), integerConstructID, value);
 }
 
-static jobject makeLongObject(JNIEnv *env, int64_t value) {
+static jobject makeLongObject(JNIEnv* env, int64_t value) {
     ScopedLocalRef<jclass> clazz(env, env->FindClass("java/lang/Long"));
     CHECK(clazz.get() != NULL);
 
@@ -235,71 +219,63 @@ static jobject makeLongObject(JNIEnv *env, int64_t value) {
     return env->NewObject(clazz.get(), longConstructID, value);
 }
 
-static jobject makeFloatObject(JNIEnv *env, float value) {
+static jobject makeFloatObject(JNIEnv* env, float value) {
     ScopedLocalRef<jclass> clazz(env, env->FindClass("java/lang/Float"));
     CHECK(clazz.get() != NULL);
 
-    jmethodID floatConstructID =
-        env->GetMethodID(clazz.get(), "<init>", "(F)V");
+    jmethodID floatConstructID = env->GetMethodID(clazz.get(), "<init>", "(F)V");
     CHECK(floatConstructID != NULL);
 
     return env->NewObject(clazz.get(), floatConstructID, value);
 }
 
-static jobject makeByteBufferObject(
-        JNIEnv *env, const void *data, size_t size) {
+static jobject makeByteBufferObject(JNIEnv* env, const void* data, size_t size) {
     jbyteArray byteArrayObj = env->NewByteArray(size);
-    env->SetByteArrayRegion(byteArrayObj, 0, size, (const jbyte *)data);
+    env->SetByteArrayRegion(byteArrayObj, 0, size, (const jbyte*)data);
 
     ScopedLocalRef<jclass> clazz(env, env->FindClass("java/nio/ByteBuffer"));
     CHECK(clazz.get() != NULL);
 
     jmethodID byteBufWrapID =
-        env->GetStaticMethodID(
-                clazz.get(), "wrap", "([B)Ljava/nio/ByteBuffer;");
+            env->GetStaticMethodID(clazz.get(), "wrap", "([B)Ljava/nio/ByteBuffer;");
     CHECK(byteBufWrapID != NULL);
 
-    jobject byteBufObj = env->CallStaticObjectMethod(
-            clazz.get(), byteBufWrapID, byteArrayObj);
+    jobject byteBufObj = env->CallStaticObjectMethod(clazz.get(), byteBufWrapID, byteArrayObj);
 
-    env->DeleteLocalRef(byteArrayObj); byteArrayObj = NULL;
+    env->DeleteLocalRef(byteArrayObj);
+    byteArrayObj = NULL;
 
     return byteBufObj;
 }
 
-static void SetMapInt32(
-        JNIEnv *env, jobject hashMapObj, jmethodID hashMapPutID,
-        const char *key, int32_t value) {
+static void SetMapInt32(JNIEnv* env, jobject hashMapObj, jmethodID hashMapPutID, const char* key,
+                        int32_t value) {
     jstring keyObj = env->NewStringUTF(key);
     jobject valueObj = makeIntegerObject(env, value);
 
     env->CallObjectMethod(hashMapObj, hashMapPutID, keyObj, valueObj);
 
-    env->DeleteLocalRef(valueObj); valueObj = NULL;
-    env->DeleteLocalRef(keyObj); keyObj = NULL;
+    env->DeleteLocalRef(valueObj);
+    valueObj = NULL;
+    env->DeleteLocalRef(keyObj);
+    keyObj = NULL;
 }
 
-status_t ConvertMessageToMap(
-        JNIEnv *env, const sp<AMessage> &msg, jobject *map) {
-    ScopedLocalRef<jclass> hashMapClazz(
-            env, env->FindClass("java/util/HashMap"));
+status_t ConvertMessageToMap(JNIEnv* env, const sp<AMessage>& msg, jobject* map) {
+    ScopedLocalRef<jclass> hashMapClazz(env, env->FindClass("java/util/HashMap"));
 
     if (hashMapClazz.get() == NULL) {
         return -EINVAL;
     }
 
-    jmethodID hashMapConstructID =
-        env->GetMethodID(hashMapClazz.get(), "<init>", "()V");
+    jmethodID hashMapConstructID = env->GetMethodID(hashMapClazz.get(), "<init>", "()V");
 
     if (hashMapConstructID == NULL) {
         return -EINVAL;
     }
 
-    jmethodID hashMapPutID =
-        env->GetMethodID(
-                hashMapClazz.get(),
-                "put",
-                "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+    jmethodID hashMapPutID = env->GetMethodID(
+            hashMapClazz.get(), "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
     if (hashMapPutID == NULL) {
         return -EINVAL;
@@ -309,7 +285,7 @@ status_t ConvertMessageToMap(
 
     for (size_t i = 0; i < msg->countEntries(); ++i) {
         AMessage::Type valueType;
-        const char *key = msg->getEntryNameAt(i, &valueType);
+        const char* key = msg->getEntryNameAt(i, &valueType);
 
         if (!strncmp(key, "android._", 9)) {
             // don't expose private keys (starting with android._)
@@ -319,8 +295,7 @@ status_t ConvertMessageToMap(
         jobject valueObj = NULL;
 
         switch (valueType) {
-            case AMessage::kTypeInt32:
-            {
+            case AMessage::kTypeInt32: {
                 int32_t val;
                 CHECK(msg->findInt32(key, &val));
 
@@ -328,8 +303,7 @@ status_t ConvertMessageToMap(
                 break;
             }
 
-            case AMessage::kTypeInt64:
-            {
+            case AMessage::kTypeInt64: {
                 int64_t val;
                 CHECK(msg->findInt64(key, &val));
 
@@ -337,8 +311,7 @@ status_t ConvertMessageToMap(
                 break;
             }
 
-            case AMessage::kTypeFloat:
-            {
+            case AMessage::kTypeFloat: {
                 float val;
                 CHECK(msg->findFloat(key, &val));
 
@@ -346,8 +319,7 @@ status_t ConvertMessageToMap(
                 break;
             }
 
-            case AMessage::kTypeString:
-            {
+            case AMessage::kTypeString: {
                 AString val;
                 CHECK(msg->findString(key, &val));
 
@@ -355,48 +327,28 @@ status_t ConvertMessageToMap(
                 break;
             }
 
-            case AMessage::kTypeBuffer:
-            {
+            case AMessage::kTypeBuffer: {
                 sp<ABuffer> buffer;
                 CHECK(msg->findBuffer(key, &buffer));
 
-                valueObj = makeByteBufferObject(
-                        env, buffer->data(), buffer->size());
+                valueObj = makeByteBufferObject(env, buffer->data(), buffer->size());
                 break;
             }
 
-            case AMessage::kTypeRect:
-            {
+            case AMessage::kTypeRect: {
                 int32_t left, top, right, bottom;
                 CHECK(msg->findRect(key, &left, &top, &right, &bottom));
 
-                SetMapInt32(
-                        env,
-                        hashMap,
-                        hashMapPutID,
-                        AStringPrintf("%s-left", key).c_str(),
-                        left);
+                SetMapInt32(env, hashMap, hashMapPutID, AStringPrintf("%s-left", key).c_str(),
+                            left);
 
-                SetMapInt32(
-                        env,
-                        hashMap,
-                        hashMapPutID,
-                        AStringPrintf("%s-top", key).c_str(),
-                        top);
+                SetMapInt32(env, hashMap, hashMapPutID, AStringPrintf("%s-top", key).c_str(), top);
 
-                SetMapInt32(
-                        env,
-                        hashMap,
-                        hashMapPutID,
-                        AStringPrintf("%s-right", key).c_str(),
-                        right);
+                SetMapInt32(env, hashMap, hashMapPutID, AStringPrintf("%s-right", key).c_str(),
+                            right);
 
-                SetMapInt32(
-                        env,
-                        hashMap,
-                        hashMapPutID,
-                        AStringPrintf("%s-bottom", key).c_str(),
-                        bottom);
+                SetMapInt32(env, hashMap, hashMapPutID, AStringPrintf("%s-bottom", key).c_str(),
+                            bottom);
                 break;
             }
 
@@ -409,8 +361,10 @@ status_t ConvertMessageToMap(
 
             env->CallObjectMethod(hashMap, hashMapPutID, keyObj, valueObj);
 
-            env->DeleteLocalRef(keyObj); keyObj = NULL;
-            env->DeleteLocalRef(valueObj); valueObj = NULL;
+            env->DeleteLocalRef(keyObj);
+            keyObj = NULL;
+            env->DeleteLocalRef(valueObj);
+            valueObj = NULL;
         }
     }
 
@@ -419,9 +373,8 @@ status_t ConvertMessageToMap(
     return OK;
 }
 
-status_t ConvertKeyValueArraysToMessage(
-        JNIEnv *env, jobjectArray keys, jobjectArray values,
-        sp<AMessage> *out) {
+status_t ConvertKeyValueArraysToMessage(JNIEnv* env, jobjectArray keys, jobjectArray values,
+                                        sp<AMessage>* out) {
     ScopedLocalRef<jclass> stringClass(env, env->FindClass("java/lang/String"));
     CHECK(stringClass.get() != NULL);
     ScopedLocalRef<jclass> integerClass(env, env->FindClass("java/lang/Integer"));
@@ -458,7 +411,7 @@ status_t ConvertKeyValueArraysToMessage(
             return -EINVAL;
         }
 
-        const char *tmp = env->GetStringUTFChars((jstring)keyObj, NULL);
+        const char* tmp = env->GetStringUTFChars((jstring)keyObj, NULL);
 
         if (tmp == NULL) {
             return -ENOMEM;
@@ -477,7 +430,7 @@ status_t ConvertKeyValueArraysToMessage(
         jobject valueObj = env->GetObjectArrayElement(values, i);
 
         if (env->IsInstanceOf(valueObj, stringClass.get())) {
-            const char *value = env->GetStringUTFChars((jstring)valueObj, NULL);
+            const char* value = env->GetStringUTFChars((jstring)valueObj, NULL);
 
             if (value == NULL) {
                 return -ENOMEM;
@@ -488,36 +441,31 @@ status_t ConvertKeyValueArraysToMessage(
             env->ReleaseStringUTFChars((jstring)valueObj, value);
             value = NULL;
         } else if (env->IsInstanceOf(valueObj, integerClass.get())) {
-            jmethodID intValueID =
-                env->GetMethodID(integerClass.get(), "intValue", "()I");
+            jmethodID intValueID = env->GetMethodID(integerClass.get(), "intValue", "()I");
             CHECK(intValueID != NULL);
 
             jint value = env->CallIntMethod(valueObj, intValueID);
 
             msg->setInt32(key.c_str(), value);
         } else if (env->IsInstanceOf(valueObj, longClass.get())) {
-            jmethodID longValueID =
-                env->GetMethodID(longClass.get(), "longValue", "()J");
+            jmethodID longValueID = env->GetMethodID(longClass.get(), "longValue", "()J");
             CHECK(longValueID != NULL);
 
             jlong value = env->CallLongMethod(valueObj, longValueID);
 
             msg->setInt64(key.c_str(), value);
         } else if (env->IsInstanceOf(valueObj, floatClass.get())) {
-            jmethodID floatValueID =
-                env->GetMethodID(floatClass.get(), "floatValue", "()F");
+            jmethodID floatValueID = env->GetMethodID(floatClass.get(), "floatValue", "()F");
             CHECK(floatValueID != NULL);
 
             jfloat value = env->CallFloatMethod(valueObj, floatValueID);
 
             msg->setFloat(key.c_str(), value);
         } else if (env->IsInstanceOf(valueObj, byteBufClass.get())) {
-            jmethodID positionID =
-                env->GetMethodID(byteBufClass.get(), "position", "()I");
+            jmethodID positionID = env->GetMethodID(byteBufClass.get(), "position", "()I");
             CHECK(positionID != NULL);
 
-            jmethodID limitID =
-                env->GetMethodID(byteBufClass.get(), "limit", "()I");
+            jmethodID limitID = env->GetMethodID(byteBufClass.get(), "limit", "()I");
             CHECK(limitID != NULL);
 
             jint position = env->CallIntMethod(valueObj, positionID);
@@ -525,28 +473,22 @@ status_t ConvertKeyValueArraysToMessage(
 
             sp<ABuffer> buffer = new ABuffer(limit - position);
 
-            void *data = env->GetDirectBufferAddress(valueObj);
+            void* data = env->GetDirectBufferAddress(valueObj);
 
             if (data != NULL) {
-                memcpy(buffer->data(),
-                       (const uint8_t *)data + position,
-                       buffer->size());
+                memcpy(buffer->data(), (const uint8_t*)data + position, buffer->size());
             } else {
-                jmethodID arrayID =
-                    env->GetMethodID(byteBufClass.get(), "array", "()[B");
+                jmethodID arrayID = env->GetMethodID(byteBufClass.get(), "array", "()[B");
                 CHECK(arrayID != NULL);
 
-                jbyteArray byteArray =
-                    (jbyteArray)env->CallObjectMethod(valueObj, arrayID);
+                jbyteArray byteArray = (jbyteArray)env->CallObjectMethod(valueObj, arrayID);
                 CHECK(byteArray != NULL);
 
-                env->GetByteArrayRegion(
-                        byteArray,
-                        position,
-                        buffer->size(),
-                        (jbyte *)buffer->data());
+                env->GetByteArrayRegion(byteArray, position, buffer->size(),
+                                        (jbyte*)buffer->data());
 
-                env->DeleteLocalRef(byteArray); byteArray = NULL;
+                env->DeleteLocalRef(byteArray);
+                byteArray = NULL;
             }
 
             msg->setBuffer(key.c_str(), buffer);
@@ -564,8 +506,7 @@ enum {
     IMAGE_MAX_NUM_PLANES = 3,
 };
 
-bool usingRGBAToJpegOverride(int32_t imageFormat,
-        int32_t containerFormat) {
+bool usingRGBAToJpegOverride(int32_t imageFormat, int32_t containerFormat) {
     return containerFormat == HAL_PIXEL_FORMAT_BLOB && imageFormat == HAL_PIXEL_FORMAT_RGBA_8888;
 }
 
@@ -622,7 +563,7 @@ uint32_t Image_getJpegSize(LockedImage* buffer, bool usingRGBAOverride) {
 
     // First check for JPEG transport header at the end of the buffer
     uint8_t* header = jpegBuffer + (width - sizeof(struct camera3_jpeg_blob));
-    struct camera3_jpeg_blob *blob = (struct camera3_jpeg_blob*)(header);
+    struct camera3_jpeg_blob* blob = (struct camera3_jpeg_blob*)(header);
     if (blob->jpeg_blob_id == CAMERA3_JPEG_BLOB_ID) {
         size = blob->jpeg_size;
         ALOGV("%s: Jpeg size = %d", __FUNCTION__, size);
@@ -636,16 +577,15 @@ uint32_t Image_getJpegSize(LockedImage* buffer, bool usingRGBAOverride) {
          * will be mis-identified as having a header, in which case
          * we will get a garbage size value.
          */
-        ALOGW("%s: No JPEG header detected, defaulting to size=width=%d",
-                __FUNCTION__, width);
+        ALOGW("%s: No JPEG header detected, defaulting to size=width=%d", __FUNCTION__, width);
         size = width;
     }
 
     return size;
 }
 
-status_t getLockedImageInfo(LockedImage* buffer, int idx,
-        int32_t containerFormat, uint8_t **base, uint32_t *size, int *pixelStride, int *rowStride) {
+status_t getLockedImageInfo(LockedImage* buffer, int idx, int32_t containerFormat, uint8_t** base,
+                            uint32_t* size, int* pixelStride, int* rowStride) {
     ALOGV("%s", __FUNCTION__);
     LOG_ALWAYS_FATAL_IF(buffer == NULL, "Input buffer is NULL!!!");
     LOG_ALWAYS_FATAL_IF(base == NULL, "base is NULL!!!");
@@ -659,7 +599,7 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
     uint32_t dataSize, ySize, cSize, cStride;
     uint32_t pStride = 0, rStride = 0;
     uint8_t *cb, *cr;
-    uint8_t *pData = NULL;
+    uint8_t* pData = NULL;
     int bytesPerPixel = 0;
 
     dataSize = ySize = cSize = cStride = 0;
@@ -669,12 +609,7 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
     fmt = applyFormatOverrides(fmt, containerFormat);
     switch (fmt) {
         case HAL_PIXEL_FORMAT_YCbCr_420_888:
-            pData =
-                (idx == 0) ?
-                    buffer->data :
-                (idx == 1) ?
-                    buffer->dataCb :
-                buffer->dataCr;
+            pData = (idx == 0) ? buffer->data : (idx == 1) ? buffer->dataCb : buffer->dataCr;
             // only map until last pixel
             if (idx == 0) {
                 pStride = 1;
@@ -684,7 +619,7 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
                 pStride = buffer->chromaStep;
                 rStride = buffer->chromaStride;
                 dataSize = buffer->chromaStride * (buffer->height / 2 - 1) +
-                        buffer->chromaStep * (buffer->width / 2 - 1) + 1;
+                           buffer->chromaStep * (buffer->width / 2 - 1) + 1;
             }
             break;
         // NV21
@@ -695,12 +630,7 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
             ySize = buffer->width * (buffer->height - 1) + buffer->width;
             cSize = buffer->width * (buffer->height / 2 - 1) + buffer->width - 1;
 
-            pData =
-                (idx == 0) ?
-                    buffer->data :
-                (idx == 1) ?
-                    cb:
-                cr;
+            pData = (idx == 0) ? buffer->data : (idx == 1) ? cb : cr;
 
             dataSize = (idx == 0) ? ySize : cSize;
             pStride = (idx == 0) ? 1 : 2;
@@ -708,8 +638,8 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
             break;
         case HAL_PIXEL_FORMAT_YV12:
             // Y and C stride need to be 16 pixel aligned.
-            LOG_ALWAYS_FATAL_IF(buffer->stride % 16,
-                                "Stride is not 16 pixel aligned %d", buffer->stride);
+            LOG_ALWAYS_FATAL_IF(buffer->stride % 16, "Stride is not 16 pixel aligned %d",
+                                buffer->stride);
 
             ySize = buffer->stride * buffer->height;
             cStride = ALIGN(buffer->stride / 2, 16);
@@ -717,12 +647,7 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
             cSize = cStride * buffer->height / 2;
             cb = cr + cSize;
 
-            pData =
-                (idx == 0) ?
-                    buffer->data :
-                (idx == 1) ?
-                    cb :
-                cr;
+            pData = (idx == 0) ? buffer->data : (idx == 1) ? cb : cr;
             dataSize = (idx == 0) ? ySize : cSize;
             pStride = 1;
             rStride = (idx == 0) ? buffer->stride : ALIGN(buffer->stride / 2, 16);
@@ -752,12 +677,11 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
             // When RGBA override is being used, buffer height will be equal to width
             if (usingRGBAOverride) {
                 LOG_ALWAYS_FATAL_IF(buffer->height != buffer->width,
-                        "RGBA override BLOB format buffer should have height == width");
+                                    "RGBA override BLOB format buffer should have height == width");
             } else {
                 LOG_ALWAYS_FATAL_IF(buffer->height != 1,
-                        "BLOB format buffer should have height value 1");
+                                    "BLOB format buffer should have height value 1");
             }
-
 
             pData = buffer->data;
             dataSize = Image_getJpegSize(buffer, usingRGBAOverride);
@@ -777,22 +701,21 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
             // Used for RAW_OPAQUE data, height must be 1, width == size, single plane.
             LOG_ALWAYS_FATAL_IF(idx != 0, "Wrong index: %d", idx);
             LOG_ALWAYS_FATAL_IF(buffer->height != 1,
-                    "RAW_PRIVATE should has height value one but got %d", buffer->height);
+                                "RAW_PRIVATE should has height value one but got %d",
+                                buffer->height);
             pData = buffer->data;
             dataSize = buffer->width;
-            pStride = 0; // RAW OPAQUE doesn't have pixel stride
-            rStride = 0; // RAW OPAQUE doesn't have row stride
+            pStride = 0;  // RAW OPAQUE doesn't have pixel stride
+            rStride = 0;  // RAW OPAQUE doesn't have row stride
             break;
         case HAL_PIXEL_FORMAT_RAW10:
             // Single plane 10bpp bayer data.
             LOG_ALWAYS_FATAL_IF(idx != 0, "Wrong index: %d", idx);
-            LOG_ALWAYS_FATAL_IF(buffer->width % 4,
-                                "Width is not multiple of 4 %d", buffer->width);
-            LOG_ALWAYS_FATAL_IF(buffer->height % 2,
-                                "Height is not even %d", buffer->height);
+            LOG_ALWAYS_FATAL_IF(buffer->width % 4, "Width is not multiple of 4 %d", buffer->width);
+            LOG_ALWAYS_FATAL_IF(buffer->height % 2, "Height is not even %d", buffer->height);
             LOG_ALWAYS_FATAL_IF(buffer->stride < (buffer->width * 10 / 8),
-                                "stride (%d) should be at least %d",
-                                buffer->stride, buffer->width * 10 / 8);
+                                "stride (%d) should be at least %d", buffer->stride,
+                                buffer->width * 10 / 8);
             pData = buffer->data;
             dataSize = buffer->stride * buffer->height;
             pStride = 0;
@@ -801,13 +724,11 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
         case HAL_PIXEL_FORMAT_RAW12:
             // Single plane 10bpp bayer data.
             LOG_ALWAYS_FATAL_IF(idx != 0, "Wrong index: %d", idx);
-            LOG_ALWAYS_FATAL_IF(buffer->width % 4,
-                                "Width is not multiple of 4 %d", buffer->width);
-            LOG_ALWAYS_FATAL_IF(buffer->height % 2,
-                                "Height is not even %d", buffer->height);
+            LOG_ALWAYS_FATAL_IF(buffer->width % 4, "Width is not multiple of 4 %d", buffer->width);
+            LOG_ALWAYS_FATAL_IF(buffer->height % 2, "Height is not even %d", buffer->height);
             LOG_ALWAYS_FATAL_IF(buffer->stride < (buffer->width * 12 / 8),
-                                "stride (%d) should be at least %d",
-                                buffer->stride, buffer->width * 12 / 8);
+                                "stride (%d) should be at least %d", buffer->stride,
+                                buffer->width * 12 / 8);
             pData = buffer->data;
             dataSize = buffer->stride * buffer->height;
             pStride = 0;
@@ -853,8 +774,8 @@ status_t getLockedImageInfo(LockedImage* buffer, int idx,
     return OK;
 }
 
-status_t lockImageFromBuffer(sp<GraphicBuffer> buffer, uint32_t inUsage,
-        const Rect& rect, int fenceFd, LockedImage* outputImage) {
+status_t lockImageFromBuffer(sp<GraphicBuffer> buffer, uint32_t inUsage, const Rect& rect,
+                             int fenceFd, LockedImage* outputImage) {
     ALOGV("%s: Try to lock the GraphicBuffer", __FUNCTION__);
 
     if (buffer == nullptr || outputImage == nullptr) {
@@ -904,8 +825,8 @@ status_t lockImageFromBuffer(sp<GraphicBuffer> buffer, uint32_t inUsage,
     return OK;
 }
 
-status_t lockImageFromBuffer(BufferItem* bufferItem, uint32_t inUsage,
-        int fenceFd, LockedImage* outputImage) {
+status_t lockImageFromBuffer(BufferItem* bufferItem, uint32_t inUsage, int fenceFd,
+                             LockedImage* outputImage) {
     ALOGV("%s: Try to lock the BufferItem", __FUNCTION__);
     if (bufferItem == nullptr || outputImage == nullptr) {
         ALOGE("Input BufferItem or output LockedImage is NULL!");
@@ -913,17 +834,17 @@ status_t lockImageFromBuffer(BufferItem* bufferItem, uint32_t inUsage,
     }
 
     status_t res = lockImageFromBuffer(bufferItem->mGraphicBuffer, inUsage, bufferItem->mCrop,
-            fenceFd, outputImage);
+                                       fenceFd, outputImage);
     if (res != OK) {
         ALOGE("%s: lock graphic buffer failed", __FUNCTION__);
         return res;
     }
 
-    outputImage->crop        = bufferItem->mCrop;
-    outputImage->transform   = bufferItem->mTransform;
+    outputImage->crop = bufferItem->mCrop;
+    outputImage->transform = bufferItem->mTransform;
     outputImage->scalingMode = bufferItem->mScalingMode;
-    outputImage->timestamp   = bufferItem->mTimestamp;
-    outputImage->dataSpace   = bufferItem->mDataSpace;
+    outputImage->timestamp = bufferItem->mTimestamp;
+    outputImage->dataSpace = bufferItem->mDataSpace;
     outputImage->frameNumber = bufferItem->mFrameNumber;
     ALOGV("%s: Successfully locked the image from the BufferItem", __FUNCTION__);
     return OK;
@@ -952,4 +873,3 @@ int getBufferHeight(BufferItem* buffer) {
 }
 
 }  // namespace android
-

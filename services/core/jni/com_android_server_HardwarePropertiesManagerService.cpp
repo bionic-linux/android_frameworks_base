@@ -39,7 +39,7 @@ using hardware::thermal::V1_0::IThermal;
 using hardware::thermal::V1_0::Temperature;
 using hardware::thermal::V1_0::ThermalStatus;
 using hardware::thermal::V1_0::ThermalStatusCode;
-template<typename T>
+template <typename T>
 using Return = hardware::Return<T>;
 
 // ---------------------------------------------------------------------------
@@ -66,13 +66,13 @@ static sp<IThermal> gThermalHal = nullptr;
 
 // struct ThermalHalDeathRecipient;
 struct ThermalHalDeathRecipient : virtual public hidl_death_recipient {
-      // hidl_death_recipient interface
-      virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override {
-          std::lock_guard<std::mutex> lock(gThermalHalMutex);
-          ALOGE("ThermalHAL just died");
-          gThermalHal = nullptr;
-          getThermalHalLocked();
-      }
+    // hidl_death_recipient interface
+    virtual void serviceDied(uint64_t cookie, const wp<IBase>& who) override {
+        std::lock_guard<std::mutex> lock(gThermalHalMutex);
+        ALOGE("ThermalHAL just died");
+        gThermalHal = nullptr;
+        getThermalHalLocked();
+    }
 };
 
 sp<ThermalHalDeathRecipient> gThermalHalDeathRecipient = nullptr;
@@ -97,11 +97,11 @@ static void getThermalHalLocked() {
         if (gThermalHalDeathRecipient == nullptr) {
             gThermalHalDeathRecipient = new ThermalHalDeathRecipient();
         }
-        hardware::Return<bool> linked = gThermalHal->linkToDeath(
-            gThermalHalDeathRecipient, 0x451F /* cookie */);
+        hardware::Return<bool> linked =
+                gThermalHal->linkToDeath(gThermalHalDeathRecipient, 0x451F /* cookie */);
         if (!linked.isOk()) {
             ALOGE("Transaction error in linking to ThermalHAL death: %s",
-            linked.description().c_str());
+                  linked.description().c_str());
             gThermalHal = nullptr;
         } else if (!linked) {
             ALOGW("Unable to link to ThermalHal death notifications");
@@ -117,7 +117,7 @@ static void nativeInit(JNIEnv* env, jobject obj) {
     getThermalHalLocked();
 }
 
-static jfloatArray nativeGetFanSpeeds(JNIEnv *env, jclass /* clazz */) {
+static jfloatArray nativeGetFanSpeeds(JNIEnv* env, jclass /* clazz */) {
     std::lock_guard<std::mutex> lock(gThermalHalMutex);
     getThermalHalLocked();
     if (gThermalHal == nullptr) {
@@ -126,15 +126,14 @@ static jfloatArray nativeGetFanSpeeds(JNIEnv *env, jclass /* clazz */) {
     }
 
     hidl_vec<CoolingDevice> list;
-    Return<void> ret = gThermalHal->getCoolingDevices(
-            [&list](ThermalStatus status, hidl_vec<CoolingDevice> devices) {
-                if (status.code == ThermalStatusCode::SUCCESS) {
-                    list = std::move(devices);
-                } else {
-                    ALOGE("Couldn't get fan speeds because of HAL error: %s",
-                          status.debugMessage.c_str());
-                }
-            });
+    Return<void> ret = gThermalHal->getCoolingDevices([&list](ThermalStatus status,
+                                                              hidl_vec<CoolingDevice> devices) {
+        if (status.code == ThermalStatusCode::SUCCESS) {
+            list = std::move(devices);
+        } else {
+            ALOGE("Couldn't get fan speeds because of HAL error: %s", status.debugMessage.c_str());
+        }
+    });
 
     if (!ret.isOk()) {
         ALOGE("getCoolingDevices failed status: %s", ret.description().c_str());
@@ -149,7 +148,7 @@ static jfloatArray nativeGetFanSpeeds(JNIEnv *env, jclass /* clazz */) {
     return fanSpeeds;
 }
 
-static jfloatArray nativeGetDeviceTemperatures(JNIEnv *env, jclass /* clazz */, int type,
+static jfloatArray nativeGetDeviceTemperatures(JNIEnv* env, jclass /* clazz */, int type,
                                                int source) {
     std::lock_guard<std::mutex> lock(gThermalHalMutex);
     getThermalHalLocked();
@@ -197,7 +196,7 @@ static jfloatArray nativeGetDeviceTemperatures(JNIEnv *env, jclass /* clazz */, 
     return deviceTemps;
 }
 
-static jobjectArray nativeGetCpuUsages(JNIEnv *env, jclass /* clazz */) {
+static jobjectArray nativeGetCpuUsages(JNIEnv* env, jclass /* clazz */) {
     std::lock_guard<std::mutex> lock(gThermalHalMutex);
     getThermalHalLocked();
     if (gThermalHal == nullptr || !gCpuUsageInfoClassInfo.initMethod) {
@@ -205,28 +204,26 @@ static jobjectArray nativeGetCpuUsages(JNIEnv *env, jclass /* clazz */) {
         return env->NewObjectArray(0, gCpuUsageInfoClassInfo.clazz, nullptr);
     }
     hidl_vec<CpuUsage> list;
-    Return<void> ret = gThermalHal->getCpuUsages(
-            [&list](ThermalStatus status, hidl_vec<CpuUsage> cpuUsages) {
-                if (status.code == ThermalStatusCode::SUCCESS) {
-                    list = std::move(cpuUsages);
-                } else {
-                    ALOGE("Couldn't get CPU usages because of HAL error: %s",
-                          status.debugMessage.c_str());
-                }
-            });
+    Return<void> ret = gThermalHal->getCpuUsages([&list](ThermalStatus status,
+                                                         hidl_vec<CpuUsage> cpuUsages) {
+        if (status.code == ThermalStatusCode::SUCCESS) {
+            list = std::move(cpuUsages);
+        } else {
+            ALOGE("Couldn't get CPU usages because of HAL error: %s", status.debugMessage.c_str());
+        }
+    });
 
     if (!ret.isOk()) {
         ALOGE("getCpuUsages failed status: %s", ret.description().c_str());
     }
 
-    jobjectArray cpuUsages = env->NewObjectArray(list.size(), gCpuUsageInfoClassInfo.clazz,
-                                                 nullptr);
+    jobjectArray cpuUsages =
+            env->NewObjectArray(list.size(), gCpuUsageInfoClassInfo.clazz, nullptr);
     for (size_t i = 0; i < list.size(); ++i) {
         if (list[i].isOnline) {
-            jobject cpuUsage = env->NewObject(gCpuUsageInfoClassInfo.clazz,
-                                              gCpuUsageInfoClassInfo.initMethod,
-                                              list[i].active,
-                                              list[i].total);
+            jobject cpuUsage =
+                    env->NewObject(gCpuUsageInfoClassInfo.clazz, gCpuUsageInfoClassInfo.initMethod,
+                                   list[i].active, list[i].total);
             env->SetObjectArrayElement(cpuUsages, i, cpuUsage);
         }
     }
@@ -236,16 +233,11 @@ static jobjectArray nativeGetCpuUsages(JNIEnv *env, jclass /* clazz */) {
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gHardwarePropertiesManagerServiceMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeInit", "()V",
-            (void*) nativeInit },
-    { "nativeGetFanSpeeds", "()[F",
-            (void*) nativeGetFanSpeeds },
-    { "nativeGetDeviceTemperatures", "(II)[F",
-            (void*) nativeGetDeviceTemperatures },
-    { "nativeGetCpuUsages", "()[Landroid/os/CpuUsageInfo;",
-            (void*) nativeGetCpuUsages }
-};
+        /* name, signature, funcPtr */
+        {"nativeInit", "()V", (void*)nativeInit},
+        {"nativeGetFanSpeeds", "()[F", (void*)nativeGetFanSpeeds},
+        {"nativeGetDeviceTemperatures", "(II)[F", (void*)nativeGetDeviceTemperatures},
+        {"nativeGetCpuUsages", "()[Landroid/os/CpuUsageInfo;", (void*)nativeGetCpuUsages}};
 
 int register_android_server_HardwarePropertiesManagerService(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/HardwarePropertiesManagerService",
@@ -253,12 +245,12 @@ int register_android_server_HardwarePropertiesManagerService(JNIEnv* env) {
                                        NELEM(gHardwarePropertiesManagerServiceMethods));
     jclass clazz = env->FindClass("android/os/CpuUsageInfo");
     gCpuUsageInfoClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
-    gCpuUsageInfoClassInfo.initMethod = GetMethodIDOrDie(env, gCpuUsageInfoClassInfo.clazz,
-                                                         "<init>", "(JJ)V");
+    gCpuUsageInfoClassInfo.initMethod =
+            GetMethodIDOrDie(env, gCpuUsageInfoClassInfo.clazz, "<init>", "(JJ)V");
 
     clazz = env->FindClass("android/os/HardwarePropertiesManager");
-    jfieldID undefined_temperature_field = GetStaticFieldIDOrDie(env, clazz,
-                                                                 "UNDEFINED_TEMPERATURE", "F");
+    jfieldID undefined_temperature_field =
+            GetStaticFieldIDOrDie(env, clazz, "UNDEFINED_TEMPERATURE", "F");
     gUndefinedTemperature = env->GetStaticFloatField(clazz, undefined_temperature_field);
 
     return res;

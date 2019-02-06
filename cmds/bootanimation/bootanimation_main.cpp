@@ -16,18 +16,18 @@
 
 #define LOG_TAG "BootAnimation"
 
-#include <stdint.h>
 #include <inttypes.h>
+#include <stdint.h>
 
+#include <android-base/properties.h>
 #include <binder/IPCThreadState.h>
-#include <binder/ProcessState.h>
 #include <binder/IServiceManager.h>
+#include <binder/ProcessState.h>
 #include <cutils/properties.h>
 #include <sys/resource.h>
 #include <utils/Log.h>
 #include <utils/SystemClock.h>
 #include <utils/threads.h>
-#include <android-base/properties.h>
 
 #include "BootAnimation.h"
 #include "BootAnimationUtil.h"
@@ -46,19 +46,20 @@ static const char PLAY_SOUND_PROP_NAME[] = "persist.sys.bootanim.play_sound";
 static const char BOOT_COMPLETED_PROP_NAME[] = "sys.boot_completed";
 static const char POWER_CTL_PROP_NAME[] = "sys.powerctl";
 static const char BOOTREASON_PROP_NAME[] = "ro.boot.bootreason";
-static const std::vector<std::string> PLAY_SOUND_BOOTREASON_BLACKLIST {
-  "kernel_panic",
-  "Panic",
-  "Watchdog",
+static const std::vector<std::string> PLAY_SOUND_BOOTREASON_BLACKLIST{
+        "kernel_panic",
+        "Panic",
+        "Watchdog",
 };
 
 class InitAudioThread : public Thread {
-public:
+  public:
     InitAudioThread(uint8_t* exampleAudioData, int exampleAudioLength)
         : Thread(false),
           mExampleAudioData(exampleAudioData),
           mExampleAudioLength(exampleAudioLength) {}
-private:
+
+  private:
     virtual bool threadLoop() {
         audioplay::create(mExampleAudioData, mExampleAudioLength);
         // Exit immediately
@@ -97,7 +98,7 @@ bool playSoundsAllowed() {
 }
 
 class AudioAnimationCallbacks : public android::BootAnimation::Callbacks {
-public:
+  public:
     void init(const Vector<Animation::Part>& parts) override {
         const Animation::Part* partWithAudio = nullptr;
         for (const Animation::Part& part : parts) {
@@ -111,16 +112,14 @@ public:
         }
 
         ALOGD("found audio.wav, creating playback engine");
-        initAudioThread = new InitAudioThread(partWithAudio->audioData,
-                partWithAudio->audioLength);
+        initAudioThread = new InitAudioThread(partWithAudio->audioData, partWithAudio->audioLength);
         initAudioThread->run("BootAnimation::InitAudioThread", PRIORITY_NORMAL);
     };
 
     void playPart(int partNumber, const Animation::Part& part, int playNumber) override {
         // only play audio file the first time we animate the part
         if (playNumber == 0 && part.audioData && playSoundsAllowed()) {
-            ALOGD("playing clip for part%d, size=%d",
-                  partNumber, part.audioLength);
+            ALOGD("playing clip for part%d, size=%d", partNumber, part.audioLength);
             // Block until the audio engine is finished initializing.
             if (initAudioThread != nullptr) {
                 initAudioThread->join();
@@ -135,21 +134,18 @@ public:
         audioplay::destroy();
     };
 
-private:
+  private:
     sp<InitAudioThread> initAudioThread = nullptr;
 };
 
 }  // namespace
 
-
-int main()
-{
+int main() {
     setpriority(PRIO_PROCESS, 0, ANDROID_PRIORITY_DISPLAY);
 
     bool noBootAnimation = bootAnimationDisabled();
-    ALOGI_IF(noBootAnimation,  "boot animation disabled");
+    ALOGI_IF(noBootAnimation, "boot animation disabled");
     if (!noBootAnimation) {
-
         sp<ProcessState> proc(ProcessState::self());
         ProcessState::self()->startThreadPool();
 

@@ -19,101 +19,94 @@
 //#define LOG_NDEBUG 0
 #define LOG_TAG "AudioEffects-JNI"
 
-#include <utils/Log.h>
+#include <android_runtime/AndroidRuntime.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
-#include <android_runtime/AndroidRuntime.h>
+#include <utils/Log.h>
 #include "media/AudioEffect.h"
 
 #include <nativehelper/ScopedUtfChars.h>
 
 using namespace android;
 
-#define AUDIOEFFECT_SUCCESS                      0
-#define AUDIOEFFECT_ERROR                       (-1)
-#define AUDIOEFFECT_ERROR_ALREADY_EXISTS        (-2)
-#define AUDIOEFFECT_ERROR_NO_INIT               (-3)
-#define AUDIOEFFECT_ERROR_BAD_VALUE             (-4)
-#define AUDIOEFFECT_ERROR_INVALID_OPERATION     (-5)
-#define AUDIOEFFECT_ERROR_NO_MEMORY             (-6)
-#define AUDIOEFFECT_ERROR_DEAD_OBJECT           (-7)
+#define AUDIOEFFECT_SUCCESS 0
+#define AUDIOEFFECT_ERROR (-1)
+#define AUDIOEFFECT_ERROR_ALREADY_EXISTS (-2)
+#define AUDIOEFFECT_ERROR_NO_INIT (-3)
+#define AUDIOEFFECT_ERROR_BAD_VALUE (-4)
+#define AUDIOEFFECT_ERROR_INVALID_OPERATION (-5)
+#define AUDIOEFFECT_ERROR_NO_MEMORY (-6)
+#define AUDIOEFFECT_ERROR_DEAD_OBJECT (-7)
 
 // ----------------------------------------------------------------------------
 static const char* const kClassPathName = "android/media/audiofx/AudioEffect";
 
 struct fields_t {
     // these fields provide access from C++ to the...
-    jclass    clazzEffect;          // AudioEffect class
+    jclass clazzEffect;             // AudioEffect class
     jmethodID midPostNativeEvent;   // event post callback method
-    jfieldID  fidNativeAudioEffect; // stores in Java the native AudioEffect object
-    jfieldID  fidJniData;           // stores in Java additional resources used by the native AudioEffect
-    jclass    clazzDesc;            // AudioEffect.Descriptor class
-    jmethodID midDescCstor;         // AudioEffect.Descriptor class constructor
+    jfieldID fidNativeAudioEffect;  // stores in Java the native AudioEffect object
+    jfieldID fidJniData;     // stores in Java additional resources used by the native AudioEffect
+    jclass clazzDesc;        // AudioEffect.Descriptor class
+    jmethodID midDescCstor;  // AudioEffect.Descriptor class constructor
 };
 static fields_t fields;
 
 struct effect_callback_cookie {
-    jclass      audioEffect_class;  // AudioEffect class
-    jobject     audioEffect_ref;    // AudioEffect object instance
- };
+    jclass audioEffect_class;  // AudioEffect class
+    jobject audioEffect_ref;   // AudioEffect object instance
+};
 
 // ----------------------------------------------------------------------------
 class AudioEffectJniStorage {
-    public:
-        effect_callback_cookie mCallbackData;
+  public:
+    effect_callback_cookie mCallbackData;
 
-    AudioEffectJniStorage() {
-    }
+    AudioEffectJniStorage() {}
 
-    ~AudioEffectJniStorage() {
-    }
-
+    ~AudioEffectJniStorage() {}
 };
 
-
 static jint translateError(int code) {
-    switch(code) {
-    case NO_ERROR:
-        return AUDIOEFFECT_SUCCESS;
-    case ALREADY_EXISTS:
-        return AUDIOEFFECT_ERROR_ALREADY_EXISTS;
-    case NO_INIT:
-        return AUDIOEFFECT_ERROR_NO_INIT;
-    case BAD_VALUE:
-        return AUDIOEFFECT_ERROR_BAD_VALUE;
-    case INVALID_OPERATION:
-        return AUDIOEFFECT_ERROR_INVALID_OPERATION;
-    case NO_MEMORY:
-        return AUDIOEFFECT_ERROR_NO_MEMORY;
-    case DEAD_OBJECT:
-    case FAILED_TRANSACTION: // Hidl crash shows as FAILED_TRANSACTION: -2147483646
-        return AUDIOEFFECT_ERROR_DEAD_OBJECT;
-    default:
-        return AUDIOEFFECT_ERROR;
+    switch (code) {
+        case NO_ERROR:
+            return AUDIOEFFECT_SUCCESS;
+        case ALREADY_EXISTS:
+            return AUDIOEFFECT_ERROR_ALREADY_EXISTS;
+        case NO_INIT:
+            return AUDIOEFFECT_ERROR_NO_INIT;
+        case BAD_VALUE:
+            return AUDIOEFFECT_ERROR_BAD_VALUE;
+        case INVALID_OPERATION:
+            return AUDIOEFFECT_ERROR_INVALID_OPERATION;
+        case NO_MEMORY:
+            return AUDIOEFFECT_ERROR_NO_MEMORY;
+        case DEAD_OBJECT:
+        case FAILED_TRANSACTION:  // Hidl crash shows as FAILED_TRANSACTION: -2147483646
+            return AUDIOEFFECT_ERROR_DEAD_OBJECT;
+        default:
+            return AUDIOEFFECT_ERROR;
     }
 }
 
 static Mutex sLock;
 
 // ----------------------------------------------------------------------------
-static void effectCallback(int event, void* user, void *info) {
-
-    effect_param_t *p;
+static void effectCallback(int event, void* user, void* info) {
+    effect_param_t* p;
     int arg1 = 0;
     int arg2 = 0;
     jobject obj = NULL;
     jbyteArray array = NULL;
-    jbyte *bytes;
+    jbyte* bytes;
     bool param;
     size_t size;
 
-    effect_callback_cookie *callbackInfo = (effect_callback_cookie *)user;
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    effect_callback_cookie* callbackInfo = (effect_callback_cookie*)user;
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
 
-    ALOGV("effectCallback: callbackInfo %p, audioEffect_ref %p audioEffect_class %p",
-            callbackInfo,
-            callbackInfo->audioEffect_ref,
-            callbackInfo->audioEffect_class);
+    ALOGV("effectCallback: callbackInfo %p, audioEffect_ref %p audioEffect_class %p", callbackInfo,
+          callbackInfo->audioEffect_ref, callbackInfo->audioEffect_class);
 
     if (!user || !env) {
         ALOGW("effectCallback error user %p, env %p", user, env);
@@ -121,56 +114,54 @@ static void effectCallback(int event, void* user, void *info) {
     }
 
     switch (event) {
-    case AudioEffect::EVENT_CONTROL_STATUS_CHANGED:
-        if (info == 0) {
-            ALOGW("EVENT_CONTROL_STATUS_CHANGED info == NULL");
-            goto effectCallback_Exit;
-        }
-        param = *(bool *)info;
-        arg1 = (int)param;
-        ALOGV("EVENT_CONTROL_STATUS_CHANGED");
-        break;
-    case AudioEffect::EVENT_ENABLE_STATUS_CHANGED:
-        if (info == 0) {
-            ALOGW("EVENT_ENABLE_STATUS_CHANGED info == NULL");
-            goto effectCallback_Exit;
-        }
-        param = *(bool *)info;
-        arg1 = (int)param;
-        ALOGV("EVENT_ENABLE_STATUS_CHANGED");
-        break;
-    case AudioEffect::EVENT_PARAMETER_CHANGED:
-        if (info == 0) {
-            ALOGW("EVENT_PARAMETER_CHANGED info == NULL");
-            goto effectCallback_Exit;
-        }
-        p = (effect_param_t *)info;
-        if (p->psize == 0 || p->vsize == 0) {
-            goto effectCallback_Exit;
-        }
-        // arg1 contains offset of parameter value from start of byte array
-        arg1 = sizeof(effect_param_t) + ((p->psize - 1) / sizeof(int) + 1) * sizeof(int);
-        size = arg1 + p->vsize;
-        array = env->NewByteArray(size);
-        if (array == NULL) {
-            ALOGE("effectCallback: Couldn't allocate byte array for parameter data");
-            goto effectCallback_Exit;
-        }
-        bytes = env->GetByteArrayElements(array, NULL);
-        memcpy(bytes, p, size);
-        env->ReleaseByteArrayElements(array, bytes, 0);
-        obj = array;
-        ALOGV("EVENT_PARAMETER_CHANGED");
-       break;
-    case AudioEffect::EVENT_ERROR:
-        ALOGW("EVENT_ERROR");
-        break;
+        case AudioEffect::EVENT_CONTROL_STATUS_CHANGED:
+            if (info == 0) {
+                ALOGW("EVENT_CONTROL_STATUS_CHANGED info == NULL");
+                goto effectCallback_Exit;
+            }
+            param = *(bool*)info;
+            arg1 = (int)param;
+            ALOGV("EVENT_CONTROL_STATUS_CHANGED");
+            break;
+        case AudioEffect::EVENT_ENABLE_STATUS_CHANGED:
+            if (info == 0) {
+                ALOGW("EVENT_ENABLE_STATUS_CHANGED info == NULL");
+                goto effectCallback_Exit;
+            }
+            param = *(bool*)info;
+            arg1 = (int)param;
+            ALOGV("EVENT_ENABLE_STATUS_CHANGED");
+            break;
+        case AudioEffect::EVENT_PARAMETER_CHANGED:
+            if (info == 0) {
+                ALOGW("EVENT_PARAMETER_CHANGED info == NULL");
+                goto effectCallback_Exit;
+            }
+            p = (effect_param_t*)info;
+            if (p->psize == 0 || p->vsize == 0) {
+                goto effectCallback_Exit;
+            }
+            // arg1 contains offset of parameter value from start of byte array
+            arg1 = sizeof(effect_param_t) + ((p->psize - 1) / sizeof(int) + 1) * sizeof(int);
+            size = arg1 + p->vsize;
+            array = env->NewByteArray(size);
+            if (array == NULL) {
+                ALOGE("effectCallback: Couldn't allocate byte array for parameter data");
+                goto effectCallback_Exit;
+            }
+            bytes = env->GetByteArrayElements(array, NULL);
+            memcpy(bytes, p, size);
+            env->ReleaseByteArrayElements(array, bytes, 0);
+            obj = array;
+            ALOGV("EVENT_PARAMETER_CHANGED");
+            break;
+        case AudioEffect::EVENT_ERROR:
+            ALOGW("EVENT_ERROR");
+            break;
     }
 
-    env->CallStaticVoidMethod(
-        callbackInfo->audioEffect_class,
-        fields.midPostNativeEvent,
-        callbackInfo->audioEffect_ref, event, arg1, arg2, obj);
+    env->CallStaticVoidMethod(callbackInfo->audioEffect_class, fields.midPostNativeEvent,
+                              callbackInfo->audioEffect_ref, event, arg1, arg2, obj);
 
 effectCallback_Exit:
     if (array) {
@@ -185,20 +176,15 @@ effectCallback_Exit:
 
 // ----------------------------------------------------------------------------
 
-static sp<AudioEffect> getAudioEffect(JNIEnv* env, jobject thiz)
-{
+static sp<AudioEffect> getAudioEffect(JNIEnv* env, jobject thiz) {
     Mutex::Autolock l(sLock);
-    AudioEffect* const ae =
-            (AudioEffect*)env->GetLongField(thiz, fields.fidNativeAudioEffect);
+    AudioEffect* const ae = (AudioEffect*)env->GetLongField(thiz, fields.fidNativeAudioEffect);
     return sp<AudioEffect>(ae);
 }
 
-static sp<AudioEffect> setAudioEffect(JNIEnv* env, jobject thiz,
-                                    const sp<AudioEffect>& ae)
-{
+static sp<AudioEffect> setAudioEffect(JNIEnv* env, jobject thiz, const sp<AudioEffect>& ae) {
     Mutex::Autolock l(sLock);
-    sp<AudioEffect> old =
-            (AudioEffect*)env->GetLongField(thiz, fields.fidNativeAudioEffect);
+    sp<AudioEffect> old = (AudioEffect*)env->GetLongField(thiz, fields.fidNativeAudioEffect);
     if (ae.get()) {
         ae->incStrong((void*)setAudioEffect);
     }
@@ -213,10 +199,7 @@ static sp<AudioEffect> setAudioEffect(JNIEnv* env, jobject thiz,
 // This function gets some field IDs, which in turn causes class initialization.
 // It is called from a static block in AudioEffect, which won't run until the
 // first time an instance of this class is used.
-static void
-android_media_AudioEffect_native_init(JNIEnv *env)
-{
-
+static void android_media_AudioEffect_native_init(JNIEnv* env) {
     ALOGV("android_media_AudioEffect_native_init");
 
     fields.clazzEffect = NULL;
@@ -232,9 +215,9 @@ android_media_AudioEffect_native_init(JNIEnv *env)
     fields.clazzEffect = (jclass)env->NewGlobalRef(clazz);
 
     // Get the postEvent method
-    fields.midPostNativeEvent = env->GetStaticMethodID(
-            fields.clazzEffect,
-            "postEventFromNative", "(Ljava/lang/Object;IIILjava/lang/Object;)V");
+    fields.midPostNativeEvent =
+            env->GetStaticMethodID(fields.clazzEffect, "postEventFromNative",
+                                   "(Ljava/lang/Object;IIILjava/lang/Object;)V");
     if (fields.midPostNativeEvent == NULL) {
         ALOGE("Can't find AudioEffect.%s", "postEventFromNative");
         return;
@@ -242,17 +225,13 @@ android_media_AudioEffect_native_init(JNIEnv *env)
 
     // Get the variables fields
     //      nativeTrackInJavaObj
-    fields.fidNativeAudioEffect = env->GetFieldID(
-            fields.clazzEffect,
-            "mNativeAudioEffect", "J");
+    fields.fidNativeAudioEffect = env->GetFieldID(fields.clazzEffect, "mNativeAudioEffect", "J");
     if (fields.fidNativeAudioEffect == NULL) {
         ALOGE("Can't find AudioEffect.%s", "mNativeAudioEffect");
         return;
     }
     //      fidJniData;
-    fields.fidJniData = env->GetFieldID(
-            fields.clazzEffect,
-            "mJniData", "J");
+    fields.fidJniData = env->GetFieldID(fields.clazzEffect, "mJniData", "J");
     if (fields.fidJniData == NULL) {
         ALOGE("Can't find AudioEffect.%s", "mJniData");
         return;
@@ -265,30 +244,26 @@ android_media_AudioEffect_native_init(JNIEnv *env)
     }
     fields.clazzDesc = (jclass)env->NewGlobalRef(clazz);
 
-    fields.midDescCstor
-            = env->GetMethodID(
-                    fields.clazzDesc,
-                    "<init>",
-                    "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+    fields.midDescCstor = env->GetMethodID(fields.clazzDesc, "<init>",
+                                           "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/"
+                                           "String;Ljava/lang/String;Ljava/lang/String;)V");
     if (fields.midDescCstor == NULL) {
         ALOGE("Can't find android/media/audiofx/AudioEffect$Descriptor class constructor");
         return;
     }
 }
 
-
-static jint
-android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_this,
-        jstring type, jstring uuid, jint priority, jint sessionId, jintArray jId,
-        jobjectArray javadesc, jstring opPackageName)
-{
+static jint android_media_AudioEffect_native_setup(JNIEnv* env, jobject thiz, jobject weak_this,
+                                                   jstring type, jstring uuid, jint priority,
+                                                   jint sessionId, jintArray jId,
+                                                   jobjectArray javadesc, jstring opPackageName) {
     ALOGV("android_media_AudioEffect_native_setup");
     AudioEffectJniStorage* lpJniStorage = NULL;
     int lStatus = AUDIOEFFECT_ERROR_NO_MEMORY;
     sp<AudioEffect> lpAudioEffect;
     jint* nId = NULL;
-    const char *typeStr = NULL;
-    const char *uuidStr = NULL;
+    const char* typeStr = NULL;
+    const char* uuidStr = NULL;
     effect_descriptor_t desc;
     jobject jdesc;
     char str[EFFECT_STRING_LEN_MAX];
@@ -334,10 +309,8 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
     lpJniStorage->mCallbackData.audioEffect_ref = env->NewGlobalRef(weak_this);
 
     ALOGV("setup: lpJniStorage: %p audioEffect_ref %p audioEffect_class %p, &mCallbackData %p",
-            lpJniStorage,
-            lpJniStorage->mCallbackData.audioEffect_ref,
-            lpJniStorage->mCallbackData.audioEffect_class,
-            &lpJniStorage->mCallbackData);
+          lpJniStorage, lpJniStorage->mCallbackData.audioEffect_ref,
+          lpJniStorage->mCallbackData.audioEffect_class, &lpJniStorage->mCallbackData);
 
     if (jId == NULL) {
         ALOGE("setup: NULL java array for id pointer");
@@ -346,14 +319,9 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
     }
 
     // create the native AudioEffect object
-    lpAudioEffect = new AudioEffect(typeStr,
-                                    String16(opPackageNameStr.c_str()),
-                                    uuidStr,
-                                    priority,
-                                    effectCallback,
-                                    &lpJniStorage->mCallbackData,
-                                    (audio_session_t) sessionId,
-                                    AUDIO_IO_HANDLE_NONE);
+    lpAudioEffect = new AudioEffect(typeStr, String16(opPackageNameStr.c_str()), uuidStr, priority,
+                                    effectCallback, &lpJniStorage->mCallbackData,
+                                    (audio_session_t)sessionId, AUDIO_IO_HANDLE_NONE);
     if (lpAudioEffect == 0) {
         ALOGE("Error creating AudioEffect");
         goto setup_failure;
@@ -365,7 +333,7 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
         goto setup_failure;
     }
 
-    nId = (jint *) env->GetPrimitiveArrayCritical(jId, NULL);
+    nId = (jint*)env->GetPrimitiveArrayCritical(jId, NULL);
     if (nId == NULL) {
         ALOGE("setup: Error retrieving id pointer");
         lStatus = AUDIOEFFECT_ERROR_BAD_VALUE;
@@ -405,13 +373,8 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
     jdescName = env->NewStringUTF(desc.name);
     jdescImplementor = env->NewStringUTF(desc.implementor);
 
-    jdesc = env->NewObject(fields.clazzDesc,
-                           fields.midDescCstor,
-                           jdescType,
-                           jdescUuid,
-                           jdescConnect,
-                           jdescName,
-                           jdescImplementor);
+    jdesc = env->NewObject(fields.clazzDesc, fields.midDescCstor, jdescType, jdescUuid,
+                           jdescConnect, jdescName, jdescImplementor);
     env->DeleteLocalRef(jdescType);
     env->DeleteLocalRef(jdescUuid);
     env->DeleteLocalRef(jdescConnect);
@@ -428,7 +391,7 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
 
     env->SetLongField(thiz, fields.fidJniData, (jlong)lpJniStorage);
 
-    return (jint) AUDIOEFFECT_SUCCESS;
+    return (jint)AUDIOEFFECT_SUCCESS;
 
     // failures:
 setup_failure:
@@ -455,9 +418,8 @@ setup_failure:
     return (jint)lStatus;
 }
 
-
 // ----------------------------------------------------------------------------
-static void android_media_AudioEffect_native_release(JNIEnv *env,  jobject thiz) {
+static void android_media_AudioEffect_native_release(JNIEnv* env, jobject thiz) {
     sp<AudioEffect> lpAudioEffect = setAudioEffect(env, thiz, 0);
     if (lpAudioEffect == 0) {
         return;
@@ -465,7 +427,7 @@ static void android_media_AudioEffect_native_release(JNIEnv *env,  jobject thiz)
 
     // delete the JNI data
     AudioEffectJniStorage* lpJniStorage =
-        (AudioEffectJniStorage *)env->GetLongField(thiz, fields.fidJniData);
+            (AudioEffectJniStorage*)env->GetLongField(thiz, fields.fidJniData);
 
     // reset the native resources in the Java object so any attempt to access
     // them after a call to release fails.
@@ -480,31 +442,28 @@ static void android_media_AudioEffect_native_release(JNIEnv *env,  jobject thiz)
 }
 
 // ----------------------------------------------------------------------------
-static void android_media_AudioEffect_native_finalize(JNIEnv *env,  jobject thiz) {
+static void android_media_AudioEffect_native_finalize(JNIEnv* env, jobject thiz) {
     ALOGV("android_media_AudioEffect_native_finalize jobject: %p\n", thiz);
     android_media_AudioEffect_native_release(env, thiz);
 }
 
-static jint
-android_media_AudioEffect_native_setEnabled(JNIEnv *env, jobject thiz, jboolean enabled)
-{
+static jint android_media_AudioEffect_native_setEnabled(JNIEnv* env, jobject thiz,
+                                                        jboolean enabled) {
     sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
     if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-            "Unable to retrieve AudioEffect pointer for enable()");
+                          "Unable to retrieve AudioEffect pointer for enable()");
         return AUDIOEFFECT_ERROR_NO_INIT;
     }
 
-    return (jint) translateError(lpAudioEffect->setEnabled(enabled));
+    return (jint)translateError(lpAudioEffect->setEnabled(enabled));
 }
 
-static jboolean
-android_media_AudioEffect_native_getEnabled(JNIEnv *env, jobject thiz)
-{
-  sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
-  if (lpAudioEffect == 0) {
+static jboolean android_media_AudioEffect_native_getEnabled(JNIEnv* env, jobject thiz) {
+    sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
+    if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-            "Unable to retrieve AudioEffect pointer for getEnabled()");
+                          "Unable to retrieve AudioEffect pointer for getEnabled()");
         return JNI_FALSE;
     }
 
@@ -515,14 +474,11 @@ android_media_AudioEffect_native_getEnabled(JNIEnv *env, jobject thiz)
     }
 }
 
-
-static jboolean
-android_media_AudioEffect_native_hasControl(JNIEnv *env, jobject thiz)
-{
-  sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
-  if (lpAudioEffect == 0) {
+static jboolean android_media_AudioEffect_native_hasControl(JNIEnv* env, jobject thiz) {
+    sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
+    if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-            "Unable to retrieve AudioEffect pointer for hasControl()");
+                          "Unable to retrieve AudioEffect pointer for hasControl()");
         return JNI_FALSE;
     }
 
@@ -533,20 +489,20 @@ android_media_AudioEffect_native_hasControl(JNIEnv *env, jobject thiz)
     }
 }
 
-static jint android_media_AudioEffect_native_setParameter(JNIEnv *env,
-        jobject thiz, jint psize, jbyteArray pJavaParam, jint vsize,
-        jbyteArray pJavaValue) {
+static jint android_media_AudioEffect_native_setParameter(JNIEnv* env, jobject thiz, jint psize,
+                                                          jbyteArray pJavaParam, jint vsize,
+                                                          jbyteArray pJavaValue) {
     // retrieve the AudioEffect object
     jbyte* lpValue = NULL;
     jbyte* lpParam = NULL;
     jint lStatus = AUDIOEFFECT_ERROR_BAD_VALUE;
-    effect_param_t *p;
+    effect_param_t* p;
     int voffset;
 
     sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
     if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Unable to retrieve AudioEffect pointer for setParameter()");
+                          "Unable to retrieve AudioEffect pointer for setParameter()");
         return AUDIOEFFECT_ERROR_NO_INIT;
     }
 
@@ -555,21 +511,21 @@ static jint android_media_AudioEffect_native_setParameter(JNIEnv *env,
     }
 
     // get the pointer for the param from the java array
-    lpParam = (jbyte *) env->GetPrimitiveArrayCritical(pJavaParam, NULL);
+    lpParam = (jbyte*)env->GetPrimitiveArrayCritical(pJavaParam, NULL);
     if (lpParam == NULL) {
         ALOGE("setParameter: Error retrieving param pointer");
         goto setParameter_Exit;
     }
 
     // get the pointer for the value from the java array
-    lpValue = (jbyte *) env->GetPrimitiveArrayCritical(pJavaValue, NULL);
+    lpValue = (jbyte*)env->GetPrimitiveArrayCritical(pJavaValue, NULL);
     if (lpValue == NULL) {
         ALOGE("setParameter: Error retrieving value pointer");
         goto setParameter_Exit;
     }
 
     voffset = ((psize - 1) / sizeof(int) + 1) * sizeof(int);
-    p = (effect_param_t *) malloc(sizeof(effect_param_t) + voffset + vsize);
+    p = (effect_param_t*)malloc(sizeof(effect_param_t) + voffset + vsize);
     memcpy(p->data, lpParam, psize);
     p->psize = psize;
     memcpy(p->data + voffset, lpValue, vsize);
@@ -590,24 +546,23 @@ setParameter_Exit:
     if (lpValue != NULL) {
         env->ReleasePrimitiveArrayCritical(pJavaValue, lpValue, 0);
     }
-    return (jint) translateError(lStatus);
+    return (jint)translateError(lStatus);
 }
 
-static jint
-android_media_AudioEffect_native_getParameter(JNIEnv *env,
-        jobject thiz, jint psize, jbyteArray pJavaParam,
-        jint vsize, jbyteArray pJavaValue) {
+static jint android_media_AudioEffect_native_getParameter(JNIEnv* env, jobject thiz, jint psize,
+                                                          jbyteArray pJavaParam, jint vsize,
+                                                          jbyteArray pJavaValue) {
     // retrieve the AudioEffect object
     jbyte* lpParam = NULL;
     jbyte* lpValue = NULL;
     jint lStatus = AUDIOEFFECT_ERROR_BAD_VALUE;
-    effect_param_t *p;
+    effect_param_t* p;
     int voffset;
 
     sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
     if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Unable to retrieve AudioEffect pointer for getParameter()");
+                          "Unable to retrieve AudioEffect pointer for getParameter()");
         return AUDIOEFFECT_ERROR_NO_INIT;
     }
 
@@ -616,21 +571,21 @@ android_media_AudioEffect_native_getParameter(JNIEnv *env,
     }
 
     // get the pointer for the param from the java array
-    lpParam = (jbyte *) env->GetPrimitiveArrayCritical(pJavaParam, NULL);
+    lpParam = (jbyte*)env->GetPrimitiveArrayCritical(pJavaParam, NULL);
     if (lpParam == NULL) {
         ALOGE("getParameter: Error retrieving param pointer");
         goto getParameter_Exit;
     }
 
     // get the pointer for the value from the java array
-    lpValue = (jbyte *) env->GetPrimitiveArrayCritical(pJavaValue, NULL);
+    lpValue = (jbyte*)env->GetPrimitiveArrayCritical(pJavaValue, NULL);
     if (lpValue == NULL) {
         ALOGE("getParameter: Error retrieving value pointer");
         goto getParameter_Exit;
     }
 
     voffset = ((psize - 1) / sizeof(int) + 1) * sizeof(int);
-    p = (effect_param_t *) malloc(sizeof(effect_param_t) + voffset + vsize);
+    p = (effect_param_t*)malloc(sizeof(effect_param_t) + voffset + vsize);
     memcpy(p->data, lpParam, psize);
     p->psize = psize;
     p->vsize = vsize;
@@ -658,12 +613,12 @@ getParameter_Exit:
     if (lStatus == NO_ERROR) {
         return vsize;
     }
-    return (jint) translateError(lStatus);
+    return (jint)translateError(lStatus);
 }
 
-static jint android_media_AudioEffect_native_command(JNIEnv *env, jobject thiz,
-        jint cmdCode, jint cmdSize, jbyteArray jCmdData, jint replySize,
-        jbyteArray jReplyData) {
+static jint android_media_AudioEffect_native_command(JNIEnv* env, jobject thiz, jint cmdCode,
+                                                     jint cmdSize, jbyteArray jCmdData,
+                                                     jint replySize, jbyteArray jReplyData) {
     jbyte* pCmdData = NULL;
     jbyte* pReplyData = NULL;
     jint lStatus = AUDIOEFFECT_ERROR_BAD_VALUE;
@@ -671,7 +626,7 @@ static jint android_media_AudioEffect_native_command(JNIEnv *env, jobject thiz,
     sp<AudioEffect> lpAudioEffect = getAudioEffect(env, thiz);
     if (lpAudioEffect == 0) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Unable to retrieve AudioEffect pointer for setParameter()");
+                          "Unable to retrieve AudioEffect pointer for setParameter()");
         return AUDIOEFFECT_ERROR_NO_INIT;
     }
 
@@ -681,7 +636,7 @@ static jint android_media_AudioEffect_native_command(JNIEnv *env, jobject thiz,
 
     // get the pointer for the command from the java array
     if (cmdSize != 0) {
-        pCmdData = (jbyte *) env->GetPrimitiveArrayCritical(jCmdData, NULL);
+        pCmdData = (jbyte*)env->GetPrimitiveArrayCritical(jCmdData, NULL);
         if (pCmdData == NULL) {
             ALOGE("setParameter: Error retrieving command pointer");
             goto command_Exit;
@@ -690,18 +645,15 @@ static jint android_media_AudioEffect_native_command(JNIEnv *env, jobject thiz,
 
     // get the pointer for the reply from the java array
     if (replySize != 0 && jReplyData != NULL) {
-        pReplyData = (jbyte *) env->GetPrimitiveArrayCritical(jReplyData, NULL);
+        pReplyData = (jbyte*)env->GetPrimitiveArrayCritical(jReplyData, NULL);
         if (pReplyData == NULL) {
             ALOGE("setParameter: Error retrieving reply pointer");
             goto command_Exit;
         }
     }
 
-    lStatus = translateError(lpAudioEffect->command((uint32_t)cmdCode,
-                                                    (uint32_t)cmdSize,
-                                                    pCmdData,
-                                                    (uint32_t *)&replySize,
-                                                    pReplyData));
+    lStatus = translateError(lpAudioEffect->command((uint32_t)cmdCode, (uint32_t)cmdSize, pCmdData,
+                                                    (uint32_t*)&replySize, pReplyData));
 
 command_Exit:
 
@@ -718,9 +670,8 @@ command_Exit:
     return lStatus;
 }
 
-static jobjectArray
-android_media_AudioEffect_native_queryEffects(JNIEnv *env, jclass clazz __unused)
-{
+static jobjectArray android_media_AudioEffect_native_queryEffects(JNIEnv* env,
+                                                                  jclass clazz __unused) {
     effect_descriptor_t desc;
     char str[EFFECT_STRING_LEN_MAX];
     uint32_t totalEffectsCount = 0;
@@ -769,13 +720,8 @@ android_media_AudioEffect_native_queryEffects(JNIEnv *env, jclass clazz __unused
         jdescName = env->NewStringUTF(desc.name);
         jdescImplementor = env->NewStringUTF(desc.implementor);
 
-        jdesc = env->NewObject(fields.clazzDesc,
-                               fields.midDescCstor,
-                               jdescType,
-                               jdescUuid,
-                               jdescConnect,
-                               jdescName,
-                               jdescImplementor);
+        jdesc = env->NewObject(fields.clazzDesc, fields.midDescCstor, jdescType, jdescUuid,
+                               jdescConnect, jdescName, jdescImplementor);
         env->DeleteLocalRef(jdescType);
         env->DeleteLocalRef(jdescUuid);
         env->DeleteLocalRef(jdescConnect);
@@ -787,7 +733,7 @@ android_media_AudioEffect_native_queryEffects(JNIEnv *env, jclass clazz __unused
         }
 
         env->SetObjectArrayElement(temp, returnedEffectsCount++, jdesc);
-   }
+    }
 
     if (returnedEffectsCount == 0) {
         goto queryEffects_failure;
@@ -808,21 +754,16 @@ queryEffects_failure:
         env->DeleteLocalRef(temp);
     }
     return NULL;
-
 }
 
-
-
-static jobjectArray
-android_media_AudioEffect_native_queryPreProcessings(JNIEnv *env, jclass clazz __unused,
-                                                     jint audioSession)
-{
-    effect_descriptor_t *descriptors = new effect_descriptor_t[AudioEffect::kMaxPreProcessing];
+static jobjectArray android_media_AudioEffect_native_queryPreProcessings(JNIEnv* env,
+                                                                         jclass clazz __unused,
+                                                                         jint audioSession) {
+    effect_descriptor_t* descriptors = new effect_descriptor_t[AudioEffect::kMaxPreProcessing];
     uint32_t numEffects = AudioEffect::kMaxPreProcessing;
 
-    status_t status = AudioEffect::queryDefaultPreProcessing((audio_session_t) audioSession,
-                                           descriptors,
-                                           &numEffects);
+    status_t status = AudioEffect::queryDefaultPreProcessing((audio_session_t)audioSession,
+                                                             descriptors, &numEffects);
     if (status != NO_ERROR || numEffects == 0) {
         delete[] descriptors;
         return NULL;
@@ -844,7 +785,6 @@ android_media_AudioEffect_native_queryPreProcessings(JNIEnv *env, jclass clazz _
     jobject jdesc;
 
     for (uint32_t i = 0; i < numEffects; i++) {
-
         AudioEffect::guidToString(&descriptors[i].type, str, EFFECT_STRING_LEN_MAX);
         jdescType = env->NewStringUTF(str);
         AudioEffect::guidToString(&descriptors[i].uuid, str, EFFECT_STRING_LEN_MAX);
@@ -853,13 +793,8 @@ android_media_AudioEffect_native_queryPreProcessings(JNIEnv *env, jclass clazz _
         jdescName = env->NewStringUTF(descriptors[i].name);
         jdescImplementor = env->NewStringUTF(descriptors[i].implementor);
 
-        jdesc = env->NewObject(fields.clazzDesc,
-                               fields.midDescCstor,
-                               jdescType,
-                               jdescUuid,
-                               jdescConnect,
-                               jdescName,
-                               jdescImplementor);
+        jdesc = env->NewObject(fields.clazzDesc, fields.midDescCstor, jdescType, jdescUuid,
+                               jdescConnect, jdescName, jdescImplementor);
         env->DeleteLocalRef(jdescType);
         env->DeleteLocalRef(jdescUuid);
         env->DeleteLocalRef(jdescConnect);
@@ -868,52 +803,52 @@ android_media_AudioEffect_native_queryPreProcessings(JNIEnv *env, jclass clazz _
         if (jdesc == NULL) {
             ALOGE("env->NewObject(fields.clazzDesc, fields.midDescCstor)");
             env->DeleteLocalRef(ret);
-            return NULL;;
+            return NULL;
+            ;
         }
 
         env->SetObjectArrayElement(ret, i, jdesc);
-   }
+    }
 
-   return ret;
+    return ret;
 }
 
 // ----------------------------------------------------------------------------
 
 // Dalvik VM type signatures
 static const JNINativeMethod gMethods[] = {
-    {"native_init",          "()V",      (void *)android_media_AudioEffect_native_init},
-    {"native_setup",         "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;II[I[Ljava/lang/Object;Ljava/lang/String;)I",
-                                         (void *)android_media_AudioEffect_native_setup},
-    {"native_finalize",      "()V",      (void *)android_media_AudioEffect_native_finalize},
-    {"native_release",       "()V",      (void *)android_media_AudioEffect_native_release},
-    {"native_setEnabled",    "(Z)I",      (void *)android_media_AudioEffect_native_setEnabled},
-    {"native_getEnabled",    "()Z",      (void *)android_media_AudioEffect_native_getEnabled},
-    {"native_hasControl",    "()Z",      (void *)android_media_AudioEffect_native_hasControl},
-    {"native_setParameter",  "(I[BI[B)I",  (void *)android_media_AudioEffect_native_setParameter},
-    {"native_getParameter",  "(I[BI[B)I",  (void *)android_media_AudioEffect_native_getParameter},
-    {"native_command",       "(II[BI[B)I", (void *)android_media_AudioEffect_native_command},
-    {"native_query_effects", "()[Ljava/lang/Object;", (void *)android_media_AudioEffect_native_queryEffects},
-    {"native_query_pre_processing", "(I)[Ljava/lang/Object;",
-            (void *)android_media_AudioEffect_native_queryPreProcessings},
+        {"native_init", "()V", (void*)android_media_AudioEffect_native_init},
+        {"native_setup",
+         "(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/String;II[I[Ljava/lang/Object;Ljava/lang/"
+         "String;)I",
+         (void*)android_media_AudioEffect_native_setup},
+        {"native_finalize", "()V", (void*)android_media_AudioEffect_native_finalize},
+        {"native_release", "()V", (void*)android_media_AudioEffect_native_release},
+        {"native_setEnabled", "(Z)I", (void*)android_media_AudioEffect_native_setEnabled},
+        {"native_getEnabled", "()Z", (void*)android_media_AudioEffect_native_getEnabled},
+        {"native_hasControl", "()Z", (void*)android_media_AudioEffect_native_hasControl},
+        {"native_setParameter", "(I[BI[B)I", (void*)android_media_AudioEffect_native_setParameter},
+        {"native_getParameter", "(I[BI[B)I", (void*)android_media_AudioEffect_native_getParameter},
+        {"native_command", "(II[BI[B)I", (void*)android_media_AudioEffect_native_command},
+        {"native_query_effects", "()[Ljava/lang/Object;",
+         (void*)android_media_AudioEffect_native_queryEffects},
+        {"native_query_pre_processing", "(I)[Ljava/lang/Object;",
+         (void*)android_media_AudioEffect_native_queryPreProcessings},
 };
-
 
 // ----------------------------------------------------------------------------
 
-extern int register_android_media_visualizer(JNIEnv *env);
+extern int register_android_media_visualizer(JNIEnv* env);
 
-int register_android_media_AudioEffect(JNIEnv *env)
-{
+int register_android_media_AudioEffect(JNIEnv* env) {
     return AndroidRuntime::registerNativeMethods(env, kClassPathName, gMethods, NELEM(gMethods));
 }
 
-jint JNI_OnLoad(JavaVM* vm, void* reserved __unused)
-{
-
+jint JNI_OnLoad(JavaVM* vm, void* reserved __unused) {
     JNIEnv* env = NULL;
     jint result = -1;
 
-    if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK) {
         ALOGE("ERROR: GetEnv failed\n");
         goto bail;
     }
@@ -935,4 +870,3 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved __unused)
 bail:
     return result;
 }
-

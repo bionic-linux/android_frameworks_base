@@ -18,8 +18,8 @@
 #define _ANDROID_NATIVE_CALLBACK_THREAD_H
 
 #include <android-base/macros.h>
-#include <functional>
 #include <jni.h>
+#include <functional>
 #include <queue>
 #include <thread>
 
@@ -28,7 +28,7 @@ namespace android {
 class NativeCallbackThread {
     typedef std::function<void(JNIEnv*)> Task;
 
-    JavaVM *mvm;
+    JavaVM* mvm;
     std::queue<Task> mQueue;
 
     std::mutex mQueueMutex;
@@ -40,14 +40,14 @@ class NativeCallbackThread {
 
     DISALLOW_COPY_AND_ASSIGN(NativeCallbackThread);
 
-public:
-    explicit NativeCallbackThread(JavaVM *vm);
+  public:
+    explicit NativeCallbackThread(JavaVM* vm);
     virtual ~NativeCallbackThread();
 
-    void enqueue(const Task &task);
+    void enqueue(const Task& task);
     void stop();
 };
 
-} // namespace android
+}  // namespace android
 
-#endif // _ANDROID_NATIVE_CALLBACK_THREAD_H
+#endif  // _ANDROID_NATIVE_CALLBACK_THREAD_H

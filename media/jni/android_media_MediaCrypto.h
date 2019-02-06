@@ -30,26 +30,25 @@ struct ICrypto;
 struct JCrypto : public RefBase {
     static bool IsCryptoSchemeSupported(const uint8_t uuid[16]);
 
-    JCrypto(JNIEnv *env, jobject thiz,
-            const uint8_t uuid[16], const void *initData, size_t initSize);
+    JCrypto(JNIEnv* env, jobject thiz, const uint8_t uuid[16], const void* initData,
+            size_t initSize);
 
     status_t initCheck() const;
 
-    bool requiresSecureDecoderComponent(const char *mime) const;
+    bool requiresSecureDecoderComponent(const char* mime) const;
 
-    static sp<ICrypto> GetCrypto(JNIEnv *env, jobject obj);
+    static sp<ICrypto> GetCrypto(JNIEnv* env, jobject obj);
 
-protected:
+  protected:
     virtual ~JCrypto();
 
-private:
+  private:
     jweak mObject;
     sp<ICrypto> mCrypto;
 
     static sp<ICrypto> MakeCrypto();
 
-    static sp<ICrypto> MakeCrypto(
-            const uint8_t uuid[16], const void *initData, size_t initSize);
+    static sp<ICrypto> MakeCrypto(const uint8_t uuid[16], const void* initData, size_t initSize);
 
     DISALLOW_EVIL_CONSTRUCTORS(JCrypto);
 };

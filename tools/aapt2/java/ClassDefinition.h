@@ -60,7 +60,8 @@ template <typename T>
 class PrimitiveMember : public ClassMember {
  public:
   PrimitiveMember(const android::StringPiece& name, const T& val)
-      : name_(name.to_string()), val_(val) {}
+      : name_(name.to_string()), val_(val) {
+  }
 
   bool empty() const override {
     return false;
@@ -94,7 +95,8 @@ template <>
 class PrimitiveMember<std::string> : public ClassMember {
  public:
   PrimitiveMember(const android::StringPiece& name, const std::string& val)
-      : name_(name.to_string()), val_(val) {}
+      : name_(name.to_string()), val_(val) {
+  }
 
   bool empty() const override {
     return false;
@@ -128,7 +130,8 @@ using StringMember = PrimitiveMember<std::string>;
 template <typename T>
 class PrimitiveArrayMember : public ClassMember {
  public:
-  explicit PrimitiveArrayMember(const android::StringPiece& name) : name_(name.to_string()) {}
+  explicit PrimitiveArrayMember(const android::StringPiece& name) : name_(name.to_string()) {
+  }
 
   void AddElement(const T& val) {
     elements_.push_back(val);
@@ -179,7 +182,8 @@ class MethodDefinition : public ClassMember {
  public:
   // Expected method signature example: 'public static void onResourcesLoaded(int p)'.
   explicit MethodDefinition(const android::StringPiece& signature)
-      : signature_(signature.to_string()) {}
+      : signature_(signature.to_string()) {
+  }
 
   // Appends a single statement to the method. It should include no newlines or else
   // formatting may be broken.
@@ -212,7 +216,8 @@ class ClassDefinition : public ClassMember {
                             bool final, io::OutputStream* out);
 
   ClassDefinition(const android::StringPiece& name, ClassQualifier qualifier, bool createIfEmpty)
-      : name_(name.to_string()), qualifier_(qualifier), create_if_empty_(createIfEmpty) {}
+      : name_(name.to_string()), qualifier_(qualifier), create_if_empty_(createIfEmpty) {
+  }
 
   enum class Result {
     kAdded,

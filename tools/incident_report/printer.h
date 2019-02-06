@@ -19,9 +19,8 @@
 
 #include <stdio.h>
 
-class Out
-{
-public:
+class Out {
+  public:
     explicit Out(int fd);
     ~Out();
 
@@ -30,7 +29,7 @@ public:
     void indent();
     void dedent();
 
-private:
+  private:
     FILE* mOut;
     int mBufSize;
     char* mBuf;
@@ -41,4 +40,4 @@ private:
     void print_indent();
 };
 
-#endif // PRINTER_H
+#endif  // PRINTER_H

@@ -17,15 +17,13 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "BatteryTypeParser.h"
 #include "frameworks/base/core/proto/android/os/batterytype.proto.h"
 #include "ih_util.h"
-#include "BatteryTypeParser.h"
 
 using namespace android::os;
 
-status_t
-BatteryTypeParser::Parse(const int in, const int out) const
-{
+status_t BatteryTypeParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
     bool readLine = false;

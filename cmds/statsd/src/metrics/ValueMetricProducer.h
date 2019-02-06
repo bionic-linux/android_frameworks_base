@@ -51,7 +51,7 @@ public:
                           const int64_t version) override {
         std::lock_guard<std::mutex> lock(mMutex);
 
-        if (mPullTagId != -1 && (mCondition == true || mConditionTrackerIndex < 0) ) {
+        if (mPullTagId != -1 && (mCondition == true || mConditionTrackerIndex < 0)) {
             vector<shared_ptr<LogEvent>> allData;
             mStatsPullerManager->Pull(mPullTagId, eventTimeNs, &allData);
             if (allData.size() == 0) {
@@ -82,15 +82,14 @@ public:
     };
 
 protected:
-    void onMatchedLogEventInternalLocked(
-            const size_t matcherIndex, const MetricDimensionKey& eventKey,
-            const ConditionKey& conditionKey, bool condition,
-            const LogEvent& event) override;
+    void onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                         const MetricDimensionKey& eventKey,
+                                         const ConditionKey& conditionKey, bool condition,
+                                         const LogEvent& event) override;
 
 private:
-    void onDumpReportLocked(const int64_t dumpTimeNs,
-                            const bool include_current_partial_bucket,
-                            std::set<string> *str_set,
+    void onDumpReportLocked(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                            std::set<string>* str_set,
                             android::util::ProtoOutputStream* protoOutput) override;
     void clearPastBucketsLocked(const int64_t dumpTimeNs) override;
 

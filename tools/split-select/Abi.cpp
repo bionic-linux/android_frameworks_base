@@ -37,7 +37,8 @@ static Vector<Variant> buildVariants(Variant v1, Variant v2, Variant v3) {
 }
 
 static const Vector<Variant> sNoneVariants;
-static const Vector<Variant> sArmVariants = buildVariants(Variant_armeabi, Variant_armeabi_v7a, Variant_arm64_v8a);
+static const Vector<Variant> sArmVariants =
+        buildVariants(Variant_armeabi, Variant_armeabi_v7a, Variant_arm64_v8a);
 static const Vector<Variant> sIntelVariants = buildVariants(Variant_x86, Variant_x86_64);
 static const Vector<Variant> sMipsVariants = buildVariants(Variant_mips, Variant_mips64);
 
@@ -95,5 +96,5 @@ const char* toString(Variant variant) {
     return "";
 }
 
-} // namespace abi
-} // namespace split
+}  // namespace abi
+}  // namespace split

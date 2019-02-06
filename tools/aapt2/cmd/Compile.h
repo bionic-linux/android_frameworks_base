@@ -7,8 +7,8 @@
 
 namespace aapt {
 
-  int Compile(const std::vector<android::StringPiece>& args, IDiagnostics* diagnostics);
+int Compile(const std::vector<android::StringPiece>& args, IDiagnostics* diagnostics);
 
-}// namespace aapt
+}  // namespace aapt
 
-#endif //AAPT2_COMPILE_H
+#endif  // AAPT2_COMPILE_H

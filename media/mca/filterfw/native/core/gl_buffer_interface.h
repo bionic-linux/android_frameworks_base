@@ -24,7 +24,7 @@ namespace filterfw {
 
 class GLTextureHandle {
   public:
-    virtual ~GLTextureHandle() { }
+    virtual ~GLTextureHandle() {}
 
     // Returns the held texture id.
     virtual GLuint GetTextureId() const = 0;
@@ -48,7 +48,7 @@ class GLTextureHandle {
 
 class GLFrameBufferHandle {
   public:
-    virtual ~GLFrameBufferHandle() { }
+    virtual ~GLFrameBufferHandle() {}
 
     // Returns the held FBO id.
     virtual GLuint GetFboId() const = 0;
@@ -62,10 +62,10 @@ class GLFrameBufferHandle {
 // The GLFrame class implements this interface.
 class GLBufferHandle : public GLTextureHandle, public GLFrameBufferHandle {
   public:
-    virtual ~GLBufferHandle() { }
+    virtual ~GLBufferHandle() {}
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_GL_BUFFER_INTERFACE_H

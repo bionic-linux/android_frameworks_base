@@ -25,18 +25,18 @@
 #include "SkBitmapRegionDecoder.h"
 #include "SkCodec.h"
 #include "SkData.h"
-#include "SkUtils.h"
 #include "SkPixelRef.h"
 #include "SkStream.h"
+#include "SkUtils.h"
 
 #include "android_nio_utils.h"
 #include "android_util_Binder.h"
 #include "core_jni_helpers.h"
 
-#include <nativehelper/JNIHelp.h>
 #include <androidfw/Asset.h>
 #include <binder/Parcel.h>
 #include <jni.h>
+#include <nativehelper/JNIHelp.h>
 #include <sys/stat.h>
 
 #include <memory>
@@ -44,9 +44,8 @@
 using namespace android;
 
 static jobject createBitmapRegionDecoder(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream) {
-  std::unique_ptr<SkBitmapRegionDecoder> brd(
-            SkBitmapRegionDecoder::Create(stream.release(),
-                                          SkBitmapRegionDecoder::kAndroidCodec_Strategy));
+    std::unique_ptr<SkBitmapRegionDecoder> brd(SkBitmapRegionDecoder::Create(
+            stream.release(), SkBitmapRegionDecoder::kAndroidCodec_Strategy));
     if (!brd) {
         doThrowIOE(env, "Image format not supported");
         return nullObjectReturn("CreateBitmapRegionDecoder returned null");
@@ -56,7 +55,7 @@ static jobject createBitmapRegionDecoder(JNIEnv* env, std::unique_ptr<SkStreamRe
 }
 
 static jobject nativeNewInstanceFromByteArray(JNIEnv* env, jobject, jbyteArray byteArray,
-                                     jint offset, jint length, jboolean isShareable) {
+                                              jint offset, jint length, jboolean isShareable) {
     /*  If isShareable we could decide to just wrap the java array and
         share it, but that means adding a globalref to the java array object
         For now we just always copy the array's data if isShareable.
@@ -70,7 +69,7 @@ static jobject nativeNewInstanceFromByteArray(JNIEnv* env, jobject, jbyteArray b
 }
 
 static jobject nativeNewInstanceFromFileDescriptor(JNIEnv* env, jobject clazz,
-                                          jobject fileDescriptor, jboolean isShareable) {
+                                                   jobject fileDescriptor, jboolean isShareable) {
     NPE_CHECK_RETURN_ZERO(env, fileDescriptor);
 
     jint descriptor = jniGetFDFromFileDescriptor(env, fileDescriptor);
@@ -90,9 +89,9 @@ static jobject nativeNewInstanceFromFileDescriptor(JNIEnv* env, jobject clazz,
 }
 
 static jobject nativeNewInstanceFromStream(JNIEnv* env, jobject clazz,
-                                  jobject is,       // InputStream
-                                  jbyteArray storage, // byte[]
-                                  jboolean isShareable) {
+                                           jobject is,          // InputStream
+                                           jbyteArray storage,  // byte[]
+                                           jboolean isShareable) {
     jobject brd = NULL;
     // for now we don't allow shareable with java inputstreams
     std::unique_ptr<SkStreamRewindable> stream(CopyJavaInputStream(env, is, storage));
@@ -105,8 +104,8 @@ static jobject nativeNewInstanceFromStream(JNIEnv* env, jobject clazz,
 }
 
 static jobject nativeNewInstanceFromAsset(JNIEnv* env, jobject clazz,
-                                 jlong native_asset, // Asset
-                                 jboolean isShareable) {
+                                          jlong native_asset,  // Asset
+                                          jboolean isShareable) {
     Asset* asset = reinterpret_cast<Asset*>(native_asset);
     std::unique_ptr<SkMemoryStream> stream(CopyAssetToStream(asset));
     if (NULL == stream) {
@@ -123,9 +122,8 @@ static jobject nativeNewInstanceFromAsset(JNIEnv* env, jobject clazz,
  * purgeable not supported
  * reportSizeToVM not supported
  */
-static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint inputX,
-        jint inputY, jint inputWidth, jint inputHeight, jobject options) {
-
+static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint inputX, jint inputY,
+                                  jint inputWidth, jint inputHeight, jobject options) {
     // Set default options.
     int sampleSize = 1;
     SkColorType colorType = kN32_SkColorType;
@@ -181,14 +179,14 @@ static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint in
         allocator = &heapAlloc;
     }
 
-    sk_sp<SkColorSpace> decodeColorSpace = brd->computeOutputColorSpace(
-            decodeColorType, colorSpace);
+    sk_sp<SkColorSpace> decodeColorSpace =
+            brd->computeOutputColorSpace(decodeColorType, colorSpace);
 
     // Decode the region.
     SkIRect subset = SkIRect::MakeXYWH(inputX, inputY, inputWidth, inputHeight);
     SkBitmap bitmap;
-    if (!brd->decodeRegion(&bitmap, allocator, subset, sampleSize,
-            decodeColorType, requireUnpremul, decodeColorSpace)) {
+    if (!brd->decodeRegion(&bitmap, allocator, subset, sampleSize, decodeColorType, requireUnpremul,
+                           decodeColorSpace)) {
         return nullObjectReturn("Failed to decode region.");
     }
 
@@ -197,7 +195,8 @@ static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint in
         env->SetIntField(options, gOptions_widthFieldID, bitmap.width());
         env->SetIntField(options, gOptions_heightFieldID, bitmap.height());
 
-        env->SetObjectField(options, gOptions_mimeFieldID,
+        env->SetObjectField(
+                options, gOptions_mimeFieldID,
                 encodedFormatToString(env, (SkEncodedImageFormat)brd->getEncodedFormat()));
         if (env->ExceptionCheck()) {
             return nullObjectReturn("OOM in encodedFormatToString()");
@@ -207,12 +206,12 @@ static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint in
         if (isHardware) {
             configID = GraphicsJNI::kHardware_LegacyBitmapConfig;
         }
-        jobject config = env->CallStaticObjectMethod(gBitmapConfig_class,
-                gBitmapConfig_nativeToConfigMethodID, configID);
+        jobject config = env->CallStaticObjectMethod(
+                gBitmapConfig_class, gBitmapConfig_nativeToConfigMethodID, configID);
         env->SetObjectField(options, gOptions_outConfigFieldID, config);
 
         env->SetObjectField(options, gOptions_outColorSpaceFieldID,
-                GraphicsJNI::getColorSpace(env, decodeColorSpace, decodeColorType));
+                            GraphicsJNI::getColorSpace(env, decodeColorSpace, decodeColorType));
     }
 
     // If we may have reused a bitmap, we need to indicate that the pixels have changed.
@@ -234,59 +233,48 @@ static jobject nativeDecodeRegion(JNIEnv* env, jobject, jlong brdHandle, jint in
 }
 
 static jint nativeGetHeight(JNIEnv* env, jobject, jlong brdHandle) {
-    SkBitmapRegionDecoder* brd =
-            reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
+    SkBitmapRegionDecoder* brd = reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
     return static_cast<jint>(brd->height());
 }
 
 static jint nativeGetWidth(JNIEnv* env, jobject, jlong brdHandle) {
-    SkBitmapRegionDecoder* brd =
-            reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
+    SkBitmapRegionDecoder* brd = reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
     return static_cast<jint>(brd->width());
 }
 
 static void nativeClean(JNIEnv* env, jobject, jlong brdHandle) {
-    SkBitmapRegionDecoder* brd =
-            reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
+    SkBitmapRegionDecoder* brd = reinterpret_cast<SkBitmapRegionDecoder*>(brdHandle);
     delete brd;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 static const JNINativeMethod gBitmapRegionDecoderMethods[] = {
-    {   "nativeDecodeRegion",
-        "(JIIIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
-        (void*)nativeDecodeRegion},
+        {"nativeDecodeRegion",
+         "(JIIIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
+         (void*)nativeDecodeRegion},
 
-    {   "nativeGetHeight", "(J)I", (void*)nativeGetHeight},
+        {"nativeGetHeight", "(J)I", (void*)nativeGetHeight},
 
-    {   "nativeGetWidth", "(J)I", (void*)nativeGetWidth},
+        {"nativeGetWidth", "(J)I", (void*)nativeGetWidth},
 
-    {   "nativeClean", "(J)V", (void*)nativeClean},
+        {"nativeClean", "(J)V", (void*)nativeClean},
 
-    {   "nativeNewInstance",
-        "([BIIZ)Landroid/graphics/BitmapRegionDecoder;",
-        (void*)nativeNewInstanceFromByteArray
-    },
+        {"nativeNewInstance", "([BIIZ)Landroid/graphics/BitmapRegionDecoder;",
+         (void*)nativeNewInstanceFromByteArray},
 
-    {   "nativeNewInstance",
-        "(Ljava/io/InputStream;[BZ)Landroid/graphics/BitmapRegionDecoder;",
-        (void*)nativeNewInstanceFromStream
-    },
+        {"nativeNewInstance", "(Ljava/io/InputStream;[BZ)Landroid/graphics/BitmapRegionDecoder;",
+         (void*)nativeNewInstanceFromStream},
 
-    {   "nativeNewInstance",
-        "(Ljava/io/FileDescriptor;Z)Landroid/graphics/BitmapRegionDecoder;",
-        (void*)nativeNewInstanceFromFileDescriptor
-    },
+        {"nativeNewInstance", "(Ljava/io/FileDescriptor;Z)Landroid/graphics/BitmapRegionDecoder;",
+         (void*)nativeNewInstanceFromFileDescriptor},
 
-    {   "nativeNewInstance",
-        "(JZ)Landroid/graphics/BitmapRegionDecoder;",
-        (void*)nativeNewInstanceFromAsset
-    },
+        {"nativeNewInstance", "(JZ)Landroid/graphics/BitmapRegionDecoder;",
+         (void*)nativeNewInstanceFromAsset},
 };
 
-int register_android_graphics_BitmapRegionDecoder(JNIEnv* env)
-{
+int register_android_graphics_BitmapRegionDecoder(JNIEnv* env) {
     return android::RegisterMethodsOrDie(env, "android/graphics/BitmapRegionDecoder",
-            gBitmapRegionDecoderMethods, NELEM(gBitmapRegionDecoderMethods));
+                                         gBitmapRegionDecoderMethods,
+                                         NELEM(gBitmapRegionDecoderMethods));
 }

@@ -21,39 +21,37 @@
 #include "android_media_Media2HTTPConnection.h"
 #include "android_media_Media2HTTPService.h"
 
+#include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
 #include "jni.h"
-#include <nativehelper/JNIHelp.h>
 
 #include <media/stagefright/foundation/ADebug.h>
 #include <nativehelper/ScopedLocalRef.h>
 
 namespace android {
 
-JMedia2HTTPService::JMedia2HTTPService(JNIEnv *env, jobject thiz) {
+JMedia2HTTPService::JMedia2HTTPService(JNIEnv* env, jobject thiz) {
     mMedia2HTTPServiceObj = env->NewGlobalRef(thiz);
     CHECK(mMedia2HTTPServiceObj != NULL);
 
     ScopedLocalRef<jclass> media2HTTPServiceClass(env, env->GetObjectClass(mMedia2HTTPServiceObj));
     CHECK(media2HTTPServiceClass.get() != NULL);
 
-    mMakeHTTPConnectionMethod = env->GetMethodID(
-            media2HTTPServiceClass.get(),
-            "makeHTTPConnection",
-            "()Landroid/media/Media2HTTPConnection;");
+    mMakeHTTPConnectionMethod = env->GetMethodID(media2HTTPServiceClass.get(), "makeHTTPConnection",
+                                                 "()Landroid/media/Media2HTTPConnection;");
     CHECK(mMakeHTTPConnectionMethod != NULL);
 }
 
 JMedia2HTTPService::~JMedia2HTTPService() {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    JNIEnv* env = AndroidRuntime::getJNIEnv();
     env->DeleteGlobalRef(mMedia2HTTPServiceObj);
 }
 
 sp<MediaHTTPConnection> JMedia2HTTPService::makeHTTPConnection() {
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     jobject media2HTTPConnectionObj =
-        env->CallObjectMethod(mMedia2HTTPServiceObj, mMakeHTTPConnectionMethod);
+            env->CallObjectMethod(mMedia2HTTPServiceObj, mMakeHTTPConnectionMethod);
 
     return new JMedia2HTTPConnection(env, media2HTTPConnectionObj);
 }

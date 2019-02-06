@@ -35,8 +35,7 @@ static bool writeAllBytes(const int fd, void* buffer, const size_t byteCount) {
             if (errno == EINTR) {
                 continue;
             }
-            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                    "Error writing to buffer: %d", errno);
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Error writing to buffer: %d", errno);
             return false;
         }
         remainingBytes -= writtenByteCount;
@@ -58,13 +57,12 @@ static bool readAllBytes(const int fd, void* buffer, const size_t byteCount) {
             if (errno == EINTR) {
                 continue;
             }
-            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                    "Error reading from buffer: %d", errno);
+            __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "Error reading from buffer: %d", errno);
             return false;
         } else if (readByteCount == 0 && remainingBytes > 0) {
             __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,
-                    "File closed before all bytes were read. %zu/%zu remaining", remainingBytes,
-                    byteCount);
+                                "File closed before all bytes were read. %zu/%zu remaining",
+                                remainingBytes, byteCount);
             return false;
         }
     }
@@ -76,7 +74,7 @@ static void throwException(JNIEnv* env, const char* className, const char* messa
     env->ThrowNew(exceptionClass, message);
 }
 
-static void throwIllegalStateException(JNIEnv* env, char *message) {
+static void throwIllegalStateException(JNIEnv* env, char* message) {
     const char* className = "java/lang/IllegalStateException";
     throwException(env, className, message);
 }
@@ -89,9 +87,9 @@ static void throwIllegalArgumentException(JNIEnv* env, char* message) {
 static void readBitmapPixels(JNIEnv* env, jclass /* clazz */, jobject jbitmap, jint fd) {
     // Read the info.
     AndroidBitmapInfo readInfo;
-    bool read = readAllBytes(fd, (void*) &readInfo, sizeof(AndroidBitmapInfo));
+    bool read = readAllBytes(fd, (void*)&readInfo, sizeof(AndroidBitmapInfo));
     if (!read) {
-        throwIllegalStateException(env, (char*) "Cannot read bitmap info");
+        throwIllegalStateException(env, (char*)"Cannot read bitmap info");
         return;
     }
 
@@ -99,15 +97,15 @@ static void readBitmapPixels(JNIEnv* env, jclass /* clazz */, jobject jbitmap, j
     AndroidBitmapInfo targetInfo;
     int result = AndroidBitmap_getInfo(env, jbitmap, &targetInfo);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot get bitmap info");
+        throwIllegalStateException(env, (char*)"Cannot get bitmap info");
         return;
     }
 
     // Enforce we can reuse the bitmap.
-    if (readInfo.width != targetInfo.width || readInfo.height != targetInfo.height
-            || readInfo.stride != targetInfo.stride || readInfo.format != targetInfo.format
-            || readInfo.flags != targetInfo.flags) {
-        throwIllegalArgumentException(env, (char*) "Cannot reuse bitmap");
+    if (readInfo.width != targetInfo.width || readInfo.height != targetInfo.height ||
+        readInfo.stride != targetInfo.stride || readInfo.format != targetInfo.format ||
+        readInfo.flags != targetInfo.flags) {
+        throwIllegalArgumentException(env, (char*)"Cannot reuse bitmap");
         return;
     }
 
@@ -115,22 +113,22 @@ static void readBitmapPixels(JNIEnv* env, jclass /* clazz */, jobject jbitmap, j
     void* pixels;
     result = AndroidBitmap_lockPixels(env, jbitmap, &pixels);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot lock bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot lock bitmap pixels");
         return;
     }
 
     // Read the pixels.
     size_t byteCount = readInfo.stride * readInfo.height;
-    read = readAllBytes(fd, (void*) pixels, byteCount);
+    read = readAllBytes(fd, (void*)pixels, byteCount);
     if (!read) {
-        throwIllegalStateException(env, (char*) "Cannot read bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot read bitmap pixels");
         return;
     }
 
     // Unlock the pixels.
     result = AndroidBitmap_unlockPixels(env, jbitmap);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot unlock bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot unlock bitmap pixels");
     }
 }
 
@@ -139,14 +137,14 @@ static void writeBitmapPixels(JNIEnv* env, jclass /* clazz */, jobject jbitmap, 
     AndroidBitmapInfo info;
     int result = AndroidBitmap_getInfo(env, jbitmap, &info);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot get bitmap info");
+        throwIllegalStateException(env, (char*)"Cannot get bitmap info");
         return;
     }
 
     // Write the info.
-    bool written = writeAllBytes(fd, (void*) &info, sizeof(AndroidBitmapInfo));
+    bool written = writeAllBytes(fd, (void*)&info, sizeof(AndroidBitmapInfo));
     if (!written) {
-        throwIllegalStateException(env, (char*) "Cannot write bitmap info");
+        throwIllegalStateException(env, (char*)"Cannot write bitmap info");
         return;
     }
 
@@ -154,40 +152,40 @@ static void writeBitmapPixels(JNIEnv* env, jclass /* clazz */, jobject jbitmap, 
     void* pixels;
     result = AndroidBitmap_lockPixels(env, jbitmap, &pixels);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot lock bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot lock bitmap pixels");
         return;
     }
 
     // Write the pixels.
     size_t byteCount = info.stride * info.height;
-    written = writeAllBytes(fd, (void*) pixels, byteCount);
+    written = writeAllBytes(fd, (void*)pixels, byteCount);
     if (!written) {
-        throwIllegalStateException(env, (char*) "Cannot write bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot write bitmap pixels");
         return;
     }
 
     // Unlock the pixels.
     result = AndroidBitmap_unlockPixels(env, jbitmap);
     if (result < 0) {
-        throwIllegalStateException(env, (char*) "Cannot unlock bitmap pixels");
+        throwIllegalStateException(env, (char*)"Cannot unlock bitmap pixels");
     }
 }
 
 static const JNINativeMethod sMethods[] = {
-    {"nativeReadBitmapPixels", "(Landroid/graphics/Bitmap;I)V", (void *) readBitmapPixels},
-    {"nativeWriteBitmapPixels", "(Landroid/graphics/Bitmap;I)V", (void *) writeBitmapPixels},
+        {"nativeReadBitmapPixels", "(Landroid/graphics/Bitmap;I)V", (void*)readBitmapPixels},
+        {"nativeWriteBitmapPixels", "(Landroid/graphics/Bitmap;I)V", (void*)writeBitmapPixels},
 };
 
 int register_com_android_printspooler_util_BitmapSerializeUtils(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/printspooler/util/BitmapSerializeUtils",
-        sMethods, NELEM(sMethods));
+                                    sMethods, NELEM(sMethods));
 }
 
-}
+}  // namespace android
 
 jint JNI_OnLoad(JavaVM* jvm, void*) {
-    JNIEnv *env = NULL;
-    if (jvm->GetEnv((void**) &env, JNI_VERSION_1_6)) {
+    JNIEnv* env = NULL;
+    if (jvm->GetEnv((void**)&env, JNI_VERSION_1_6)) {
         return JNI_ERR;
     }
 

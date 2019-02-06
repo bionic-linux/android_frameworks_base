@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "src/metrics/DurationMetricProducer.h"
-#include "src/stats_log_util.h"
 #include "metrics_test_helper.h"
 #include "src/condition/ConditionWizard.h"
+#include "src/stats_log_util.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

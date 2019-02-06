@@ -17,9 +17,9 @@
 // Need to use LOGE_EX.
 #define LOG_TAG "AppFuseBridge"
 
-#include <android_runtime/Log.h>
 #include <android-base/logging.h>
 #include <android-base/unique_fd.h>
+#include <android_runtime/Log.h>
 #include <core_jni_helpers.h>
 #include <libappfuse/FuseBridgeLoop.h>
 #include <libappfuse/FuseBuffer.h>
@@ -37,7 +37,7 @@ class Callback : public fuse::FuseBridgeLoopCallback {
     JNIEnv* mEnv;
     jobject mSelf;
 
-public:
+  public:
     Callback(JNIEnv* env, jobject self) : mEnv(env), mSelf(self) {}
     void OnMount(int mount_id) override {
         mEnv->CallVoidMethod(mSelf, gAppFuseOnMount, mount_id);
@@ -57,7 +57,7 @@ public:
 };
 
 class MonitorScope final {
-public:
+  public:
     MonitorScope(JNIEnv* env, jobject obj) : mEnv(env), mObj(obj), mLocked(false) {
         if (mEnv->MonitorEnter(obj) == JNI_OK) {
             mLocked = true;
@@ -74,11 +74,9 @@ public:
         }
     }
 
-    explicit operator bool() {
-        return mLocked;
-    }
+    explicit operator bool() { return mLocked; }
 
-private:
+  private:
     // Lifetime of |MonitorScope| must be shorter than the reference of mObj.
     JNIEnv* mEnv;
     jobject mObj;
@@ -97,16 +95,16 @@ void com_android_server_storage_AppFuseBridge_delete(JNIEnv* env, jobject self, 
     delete loop;
 }
 
-void com_android_server_storage_AppFuseBridge_start_loop(
-        JNIEnv* env, jobject self, jlong java_loop) {
+void com_android_server_storage_AppFuseBridge_start_loop(JNIEnv* env, jobject self,
+                                                         jlong java_loop) {
     fuse::FuseBridgeLoop* const loop = reinterpret_cast<fuse::FuseBridgeLoop*>(java_loop);
     CHECK(loop);
     Callback callback(env, self);
     loop->Start(&callback);
 }
 
-jint com_android_server_storage_AppFuseBridge_add_bridge(
-        JNIEnv* env, jobject self, jlong java_loop, jint mountId, jint javaDevFd) {
+jint com_android_server_storage_AppFuseBridge_add_bridge(JNIEnv* env, jobject self, jlong java_loop,
+                                                         jint mountId, jint javaDevFd) {
     base::unique_fd devFd(javaDevFd);
     fuse::FuseBridgeLoop* const loop = reinterpret_cast<fuse::FuseBridgeLoop*>(java_loop);
     CHECK(loop);
@@ -124,27 +122,14 @@ jint com_android_server_storage_AppFuseBridge_add_bridge(
 }
 
 const JNINativeMethod methods[] = {
-    {
-        "native_new",
-        "()J",
-        reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_new)
-    },
-    {
-        "native_delete",
-        "(J)V",
-        reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_delete)
-    },
-    {
-        "native_start_loop",
-        "(J)V",
-        reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_start_loop)
-    },
-    {
-        "native_add_bridge",
-        "(JII)I",
-        reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_add_bridge)
-    }
-};
+        {"native_new", "()J",
+         reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_new)},
+        {"native_delete", "(J)V",
+         reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_delete)},
+        {"native_start_loop", "(J)V",
+         reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_start_loop)},
+        {"native_add_bridge", "(JII)I",
+         reinterpret_cast<void*>(com_android_server_storage_AppFuseBridge_add_bridge)}};
 
 }  // namespace
 

@@ -124,4 +124,4 @@ TEST_F(IdmapTest, OverlayDoesNotIncludeNonOverlaidResources) {
   ASSERT_LT(block, 0);
 }
 
-}  // namespace
+}  // namespace android

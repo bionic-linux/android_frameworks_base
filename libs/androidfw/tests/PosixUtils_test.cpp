@@ -51,5 +51,5 @@ TEST(PosixUtilsTest, NoSuchBinary) {
   ASSERT_THAT(result, IsNull());
 }
 
-} // android
-} // util
+}  // namespace util
+}  // namespace android

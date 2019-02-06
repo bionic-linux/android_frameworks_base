@@ -19,8 +19,8 @@
 
 #include <stdlib.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
 #include <usbhost/usbhost.h>
 
@@ -28,9 +28,10 @@
 
 // com.android.server.usb.descriptors
 extern "C" {
-jbyteArray JNICALL Java_com_android_server_usb_descriptors_UsbDescriptorParser_getRawDescriptors_1native(
+jbyteArray JNICALL
+Java_com_android_server_usb_descriptors_UsbDescriptorParser_getRawDescriptors_1native(
         JNIEnv* env, jobject thiz, jstring deviceAddr) {
-    const char *deviceAddrStr = env->GetStringUTFChars(deviceAddr, NULL);
+    const char* deviceAddrStr = env->GetStringUTFChars(deviceAddr, NULL);
     struct usb_device* device = usb_device_open(deviceAddrStr);
     env->ReleaseStringUTFChars(deviceAddr, deviceAddrStr);
 
@@ -62,10 +63,10 @@ jbyteArray JNICALL Java_com_android_server_usb_descriptors_UsbDescriptorParser_g
     return ret;
 }
 
-jstring JNICALL Java_com_android_server_usb_descriptors_UsbDescriptorParser_getDescriptorString_1native(
+jstring JNICALL
+Java_com_android_server_usb_descriptors_UsbDescriptorParser_getDescriptorString_1native(
         JNIEnv* env, jobject thiz, jstring deviceAddr, jint stringId) {
-
-    const char *deviceAddrStr = env->GetStringUTFChars(deviceAddr, NULL);
+    const char* deviceAddrStr = env->GetStringUTFChars(deviceAddr, NULL);
     struct usb_device* device = usb_device_open(deviceAddrStr);
     env->ReleaseStringUTFChars(deviceAddr, deviceAddrStr);
 
@@ -84,14 +85,13 @@ jstring JNICALL Java_com_android_server_usb_descriptors_UsbDescriptorParser_getD
     // Get Raw UCS2 Bytes
     jbyte* byteBuffer = NULL;
     size_t numUSC2Bytes = 0;
-    int retVal =
-            usb_device_get_string_ucs2(device, stringId, 0 /*timeout*/,
-                                     (void**)&byteBuffer, &numUSC2Bytes);
+    int retVal = usb_device_get_string_ucs2(device, stringId, 0 /*timeout*/, (void**)&byteBuffer,
+                                            &numUSC2Bytes);
 
     jstring j_str = NULL;
 
     if (retVal == 0) {
-        j_str = env->NewString((jchar*)byteBuffer, numUSC2Bytes/2);
+        j_str = env->NewString((jchar*)byteBuffer, numUSC2Bytes / 2);
         free(byteBuffer);
     }
 
@@ -100,4 +100,4 @@ jstring JNICALL Java_com_android_server_usb_descriptors_UsbDescriptorParser_getD
     return j_str;
 }
 
-} // extern "C"
+}  // extern "C"

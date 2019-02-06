@@ -28,19 +28,12 @@ using namespace std;
  * words, this losslessly stores a parsed protobuf object without
  * having the .proto file that generated it.
  */
-class GenericMessage
-{
-public:
+class GenericMessage {
+  public:
     GenericMessage();
     ~GenericMessage();
 
-    enum {
-        TYPE_VALUE32,
-        TYPE_VALUE64,
-        TYPE_MESSAGE,
-        TYPE_STRING,
-        TYPE_DATA
-    };
+    enum { TYPE_VALUE32, TYPE_VALUE64, TYPE_MESSAGE, TYPE_STRING, TYPE_DATA };
 
     struct Node {
         uint32_t type;
@@ -58,14 +51,13 @@ public:
     GenericMessage* addMessage(int32_t fieldId);
     void addString(int32_t fieldId, const string& value);
 
-    typedef multimap<int32_t,Node>::const_iterator const_iterator;
-    typedef pair<const_iterator,const_iterator> const_iterator_pair;
+    typedef multimap<int32_t, Node>::const_iterator const_iterator;
+    typedef pair<const_iterator, const_iterator> const_iterator_pair;
 
     const_iterator_pair find(int fieldId) const;
 
-private:
-    multimap<int,Node> mNodes;
+  private:
+    multimap<int, Node> mNodes;
 };
 
-#endif // GENERIC_MESSAGE_H
-
+#endif  // GENERIC_MESSAGE_H

@@ -28,8 +28,8 @@
 #include <base/json/json_value_converter.h>
 #include <utils/Log.h>
 
-using android::base::RemoveFileIfExists;
 using android::base::ReadFileToString;
+using android::base::RemoveFileIfExists;
 using base::JSONReader;
 using base::JSONValueConverter;
 using base::Value;
@@ -78,10 +78,8 @@ void BootParameters::SavedBootParameters::RegisterJSONConverter(
         JSONValueConverter<SavedBootParameters>* converter) {
     converter->RegisterIntField("brightness", &SavedBootParameters::brightness);
     converter->RegisterIntField("volume", &SavedBootParameters::volume);
-    converter->RegisterRepeatedString("param_names",
-                                      &SavedBootParameters::param_names);
-    converter->RegisterRepeatedString("param_values",
-                                      &SavedBootParameters::param_values);
+    converter->RegisterRepeatedString("param_names", &SavedBootParameters::param_names);
+    converter->RegisterRepeatedString("param_values", &SavedBootParameters::param_values);
 }
 
 BootParameters::BootParameters() {
@@ -92,8 +90,7 @@ BootParameters::BootParameters() {
 void BootParameters::loadParameters() {
     std::string contents;
     if (!ReadFileToString(kLastBootFile, &contents)) {
-        if (errno != ENOENT)
-            ALOGE("Unable to read from %s: %s", kLastBootFile, strerror(errno));
+        if (errno != ENOENT) ALOGE("Unable to read from %s: %s", kLastBootFile, strerror(errno));
 
         return;
     }
@@ -110,10 +107,8 @@ void BootParameters::loadParameters() {
 
         if (mRawParameters.param_names.size() == mRawParameters.param_values.size()) {
             for (size_t i = 0; i < mRawParameters.param_names.size(); i++) {
-                mParameters.push_back({
-                        .key = mRawParameters.param_names[i]->c_str(),
-                        .value = mRawParameters.param_values[i]->c_str()
-                });
+                mParameters.push_back({.key = mRawParameters.param_names[i]->c_str(),
+                                       .value = mRawParameters.param_values[i]->c_str()});
             }
         } else {
             ALOGW("Parameter names and values size mismatch");

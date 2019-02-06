@@ -30,13 +30,13 @@ namespace BroadcastRadio {
 // Keep in sync with STATUS_* constants from RadioManager.java.
 enum class Status : jint {
     OK = 0,
-    ERROR = -0x80000000ll,  // Integer.MIN_VALUE
-    PERMISSION_DENIED = -1,  // -EPERM
-    NO_INIT = -19,  // -ENODEV
-    BAD_VALUE = -22,  // -EINVAL
-    DEAD_OBJECT = -32,  // -EPIPE
+    ERROR = -0x80000000ll,    // Integer.MIN_VALUE
+    PERMISSION_DENIED = -1,   // -EPERM
+    NO_INIT = -19,            // -ENODEV
+    BAD_VALUE = -22,          // -EINVAL
+    DEAD_OBJECT = -32,        // -EPIPE
     INVALID_OPERATION = -38,  // -ENOSYS
-    TIMED_OUT = -110,  // -ETIMEDOUT
+    TIMED_OUT = -110,         // -ETIMEDOUT
 };
 
 // Keep in sync with REGION_* constants from RadioManager.java.
@@ -49,8 +49,8 @@ enum class Region : jint {
     KOREA = 4,
 };
 
-} // namespace BroadcastRadio
-} // namespace server
-} // namespace android
+}  // namespace BroadcastRadio
+}  // namespace server
+}  // namespace android
 
-#endif // _ANDROID_SERVER_RADIO_TYPES_H
+#endif  // _ANDROID_SERVER_RADIO_TYPES_H

@@ -109,5 +109,5 @@ void RootAlphaPropertyValuesHolder::setFraction(float fraction) {
     mTree->mutateProperties()->setRootAlpha(animatedValue);
 }
 
-}  // namepace uirenderer
+}  // namespace uirenderer
 }  // namespace android

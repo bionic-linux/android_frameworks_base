@@ -30,7 +30,7 @@ namespace {
 
 StatsdConfig CreateStatsdConfigForPushedEvent(const GaugeMetric::SamplingType sampling_type) {
     StatsdConfig config;
-    config.add_allowed_log_source("AID_ROOT"); // LogEvent defaults to UID of root.
+    config.add_allowed_log_source("AID_ROOT");  // LogEvent defaults to UID of root.
     *config.add_atom_matcher() = CreateMoveToBackgroundAtomMatcher();
     *config.add_atom_matcher() = CreateMoveToForegroundAtomMatcher();
 
@@ -39,7 +39,7 @@ StatsdConfig CreateStatsdConfigForPushedEvent(const GaugeMetric::SamplingType sa
 
     auto isInBackgroundPredicate = CreateIsInBackgroundPredicate();
     *isInBackgroundPredicate.mutable_simple_predicate()->mutable_dimensions() =
-        CreateDimensions(android::util::ACTIVITY_FOREGROUND_STATE_CHANGED, {1 /* uid field */ });
+            CreateDimensions(android::util::ACTIVITY_FOREGROUND_STATE_CHANGED, {1 /* uid field */});
     *config.add_predicate() = isInBackgroundPredicate;
 
     auto gaugeMetric = config.add_gauge_metric();
@@ -54,7 +54,7 @@ StatsdConfig CreateStatsdConfigForPushedEvent(const GaugeMetric::SamplingType sa
     fieldMatcher->add_child()->set_field(4);  // activity_name(str)
     fieldMatcher->add_child()->set_field(7);  // activity_start_msec(int64)
     *gaugeMetric->mutable_dimensions_in_what() =
-        CreateDimensions(android::util::APP_START_OCCURRED, {1 /* uid field */ });
+            CreateDimensions(android::util::APP_START_OCCURRED, {1 /* uid field */});
     gaugeMetric->set_bucket(FIVE_MINUTES);
 
     auto links = gaugeMetric->add_links();
@@ -69,11 +69,10 @@ StatsdConfig CreateStatsdConfigForPushedEvent(const GaugeMetric::SamplingType sa
 }
 
 std::unique_ptr<LogEvent> CreateAppStartOccurredEvent(
-    const int uid, const string& pkg_name, AppStartOccurred::TransitionType type,
-    const string& activity_name, const string& calling_pkg_name, const bool is_instant_app,
-    int64_t activity_start_msec, uint64_t timestampNs) {
-    auto logEvent = std::make_unique<LogEvent>(
-        android::util::APP_START_OCCURRED, timestampNs);
+        const int uid, const string& pkg_name, AppStartOccurred::TransitionType type,
+        const string& activity_name, const string& calling_pkg_name, const bool is_instant_app,
+        int64_t activity_start_msec, uint64_t timestampNs) {
+    auto logEvent = std::make_unique<LogEvent>(android::util::APP_START_OCCURRED, timestampNs);
     logEvent->write(uid);
     logEvent->write(pkg_name);
     logEvent->write(type);
@@ -89,15 +88,15 @@ std::unique_ptr<LogEvent> CreateAppStartOccurredEvent(
 
 TEST(GaugeMetricE2eTest, TestMultipleFieldsForPushedEvent) {
     for (const auto& sampling_type :
-            { GaugeMetric::ALL_CONDITION_CHANGES, GaugeMetric:: RANDOM_ONE_SAMPLE }) {
+         {GaugeMetric::ALL_CONDITION_CHANGES, GaugeMetric::RANDOM_ONE_SAMPLE}) {
         auto config = CreateStatsdConfigForPushedEvent(sampling_type);
         int64_t bucketStartTimeNs = 10000000000;
         int64_t bucketSizeNs =
-            TimeUnitToBucketSizeInMillis(config.gauge_metric(0).bucket()) * 1000000;
+                TimeUnitToBucketSizeInMillis(config.gauge_metric(0).bucket()) * 1000000;
 
         ConfigKey cfgKey;
-        auto processor = CreateStatsLogProcessor(
-                bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
+        auto processor =
+                CreateStatsLogProcessor(bucketStartTimeNs, bucketStartTimeNs, config, cfgKey);
         EXPECT_EQ(processor->mMetricsManagers.size(), 1u);
         EXPECT_TRUE(processor->mMetricsManagers.begin()->second->isConfigValid());
 
@@ -105,42 +104,41 @@ TEST(GaugeMetricE2eTest, TestMultipleFieldsForPushedEvent) {
         int appUid2 = 456;
         std::vector<std::unique_ptr<LogEvent>> events;
         events.push_back(CreateMoveToBackgroundEvent(appUid1, bucketStartTimeNs + 15));
-        events.push_back(CreateMoveToForegroundEvent(
-                appUid1, bucketStartTimeNs + bucketSizeNs + 250));
-        events.push_back(CreateMoveToBackgroundEvent(
-                appUid1, bucketStartTimeNs + bucketSizeNs + 350));
-        events.push_back(CreateMoveToForegroundEvent(
-            appUid1, bucketStartTimeNs + 2 * bucketSizeNs + 100));
+        events.push_back(
+                CreateMoveToForegroundEvent(appUid1, bucketStartTimeNs + bucketSizeNs + 250));
+        events.push_back(
+                CreateMoveToBackgroundEvent(appUid1, bucketStartTimeNs + bucketSizeNs + 350));
+        events.push_back(
+                CreateMoveToForegroundEvent(appUid1, bucketStartTimeNs + 2 * bucketSizeNs + 100));
 
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::WARM, "activity_name1", "calling_pkg_name1",
+                true /*is_instant_app*/, 101 /*activity_start_msec*/, bucketStartTimeNs + 10));
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::HOT, "activity_name2", "calling_pkg_name2",
+                true /*is_instant_app*/, 102 /*activity_start_msec*/, bucketStartTimeNs + 20));
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::COLD, "activity_name3", "calling_pkg_name3",
+                true /*is_instant_app*/, 103 /*activity_start_msec*/, bucketStartTimeNs + 30));
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::WARM, "activity_name4", "calling_pkg_name4",
+                true /*is_instant_app*/, 104 /*activity_start_msec*/,
+                bucketStartTimeNs + bucketSizeNs + 30));
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::COLD, "activity_name5", "calling_pkg_name5",
+                true /*is_instant_app*/, 105 /*activity_start_msec*/,
+                bucketStartTimeNs + 2 * bucketSizeNs));
+        events.push_back(CreateAppStartOccurredEvent(
+                appUid1, "app1", AppStartOccurred::HOT, "activity_name6", "calling_pkg_name6",
+                false /*is_instant_app*/, 106 /*activity_start_msec*/,
+                bucketStartTimeNs + 2 * bucketSizeNs + 10));
 
+        events.push_back(
+                CreateMoveToBackgroundEvent(appUid2, bucketStartTimeNs + bucketSizeNs + 10));
         events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::WARM, "activity_name1", "calling_pkg_name1",
-            true /*is_instant_app*/, 101 /*activity_start_msec*/, bucketStartTimeNs + 10));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::HOT, "activity_name2", "calling_pkg_name2",
-            true /*is_instant_app*/, 102 /*activity_start_msec*/, bucketStartTimeNs + 20));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::COLD, "activity_name3", "calling_pkg_name3",
-            true /*is_instant_app*/, 103 /*activity_start_msec*/, bucketStartTimeNs + 30));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::WARM, "activity_name4", "calling_pkg_name4",
-            true /*is_instant_app*/, 104 /*activity_start_msec*/,
-            bucketStartTimeNs + bucketSizeNs + 30));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::COLD, "activity_name5", "calling_pkg_name5",
-            true /*is_instant_app*/, 105 /*activity_start_msec*/,
-            bucketStartTimeNs + 2 * bucketSizeNs));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid1, "app1", AppStartOccurred::HOT, "activity_name6", "calling_pkg_name6",
-            false /*is_instant_app*/, 106 /*activity_start_msec*/,
-            bucketStartTimeNs + 2 * bucketSizeNs + 10));
-
-        events.push_back(CreateMoveToBackgroundEvent(
-                appUid2, bucketStartTimeNs + bucketSizeNs + 10));
-        events.push_back(CreateAppStartOccurredEvent(
-            appUid2, "app2", AppStartOccurred::COLD, "activity_name7", "calling_pkg_name7",
-            true /*is_instant_app*/, 201 /*activity_start_msec*/,
-            bucketStartTimeNs + 2 * bucketSizeNs + 10));
+                appUid2, "app2", AppStartOccurred::COLD, "activity_name7", "calling_pkg_name7",
+                true /*is_instant_app*/, 201 /*activity_start_msec*/,
+                bucketStartTimeNs + 2 * bucketSizeNs + 10));
 
         sortLogEventsByTimestamp(&events);
 
@@ -159,8 +157,8 @@ TEST(GaugeMetricE2eTest, TestMultipleFieldsForPushedEvent) {
         EXPECT_EQ(1, reports.reports_size());
         EXPECT_EQ(1, reports.reports(0).metrics_size());
         StatsLogReport::GaugeMetricDataWrapper gaugeMetrics;
-        sortMetricDataByDimensionsValue(
-                reports.reports(0).metrics(0).gauge_metrics(), &gaugeMetrics);
+        sortMetricDataByDimensionsValue(reports.reports(0).metrics(0).gauge_metrics(),
+                                        &gaugeMetrics);
         EXPECT_EQ(2, gaugeMetrics.data_size());
 
         auto data = gaugeMetrics.data(0);

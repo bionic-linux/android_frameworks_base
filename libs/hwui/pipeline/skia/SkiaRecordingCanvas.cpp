@@ -125,14 +125,11 @@ void SkiaRecordingCanvas::callDrawGLFunction(Functor* functor,
 class VectorDrawable : public SkDrawable {
 public:
     VectorDrawable(VectorDrawableRoot* tree)
-            : mRoot(tree)
-            , mBounds(tree->stagingProperties()->getBounds()) {}
+            : mRoot(tree), mBounds(tree->stagingProperties()->getBounds()) {}
 
 protected:
     virtual SkRect onGetBounds() override { return mBounds; }
-    virtual void onDraw(SkCanvas* canvas) override {
-        mRoot->draw(canvas, mBounds);
-    }
+    virtual void onDraw(SkCanvas* canvas) override { mRoot->draw(canvas, mBounds); }
 
 private:
     sp<VectorDrawableRoot> mRoot;
@@ -147,7 +144,6 @@ void SkiaRecordingCanvas::drawVectorDrawable(VectorDrawableRoot* tree) {
 // ----------------------------------------------------------------------------
 // Recording Canvas draw operations: Bitmaps
 // ----------------------------------------------------------------------------
-
 
 void SkiaRecordingCanvas::drawBitmap(Bitmap& bitmap, float left, float top, const SkPaint* paint) {
     SkPaint tmpPaint;

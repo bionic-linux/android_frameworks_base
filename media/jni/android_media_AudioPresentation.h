@@ -29,15 +29,15 @@ namespace android {
 
 struct JAudioPresentationInfo {
     struct fields_t {
-        jclass      clazz;
-        jmethodID   constructID;
+        jclass clazz;
+        jmethodID constructID;
 
         // list parameters
         jclass listclazz;
         jmethodID listConstructId;
         jmethodID listAddId;
 
-        void init(JNIEnv *env) {
+        void init(JNIEnv* env) {
             jclass lclazz = env->FindClass("android/media/AudioPresentation");
             if (lclazz == NULL) {
                 return;
@@ -48,8 +48,8 @@ struct JAudioPresentationInfo {
                 return;
             }
 
-            constructID = env->GetMethodID(clazz, "<init>",
-                                "(IILjava/util/Map;Ljava/lang/String;IZZZ)V");
+            constructID =
+                    env->GetMethodID(clazz, "<init>", "(IILjava/util/Map;Ljava/lang/String;IZZZ)V");
             env->DeleteLocalRef(lclazz);
 
             // list objects
@@ -64,7 +64,7 @@ struct JAudioPresentationInfo {
             env->DeleteLocalRef(llistclazz);
         }
 
-        void exit(JNIEnv *env) {
+        void exit(JNIEnv* env) {
             env->DeleteGlobalRef(clazz);
             clazz = NULL;
             env->DeleteGlobalRef(listclazz);
@@ -72,23 +72,20 @@ struct JAudioPresentationInfo {
         }
     };
 
-    static status_t ConvertMessageToMap(JNIEnv *env, const sp<AMessage> &msg, jobject *map) {
+    static status_t ConvertMessageToMap(JNIEnv* env, const sp<AMessage>& msg, jobject* map) {
         ScopedLocalRef<jclass> hashMapClazz(env, env->FindClass("java/util/HashMap"));
 
         if (hashMapClazz.get() == NULL) {
             return -EINVAL;
         }
-        jmethodID hashMapConstructID =
-            env->GetMethodID(hashMapClazz.get(), "<init>", "()V");
+        jmethodID hashMapConstructID = env->GetMethodID(hashMapClazz.get(), "<init>", "()V");
 
         if (hashMapConstructID == NULL) {
             return -EINVAL;
         }
         jmethodID hashMapPutID =
-            env->GetMethodID(
-                    hashMapClazz.get(),
-                    "put",
-                    "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+                env->GetMethodID(hashMapClazz.get(), "put",
+                                 "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
 
         if (hashMapPutID == NULL) {
             return -EINVAL;
@@ -98,7 +95,7 @@ struct JAudioPresentationInfo {
 
         for (size_t i = 0; i < msg->countEntries(); ++i) {
             AMessage::Type valueType;
-            const char *key = msg->getEntryNameAt(i, &valueType);
+            const char* key = msg->getEntryNameAt(i, &valueType);
 
             if (!strncmp(key, "android._", 9)) {
                 // don't expose private keys (starting with android._)
@@ -117,8 +114,10 @@ struct JAudioPresentationInfo {
 
                 env->CallObjectMethod(hashMap, hashMapPutID, keyObj, valueObj);
 
-                env->DeleteLocalRef(keyObj); keyObj = NULL;
-                env->DeleteLocalRef(valueObj); valueObj = NULL;
+                env->DeleteLocalRef(keyObj);
+                keyObj = NULL;
+                env->DeleteLocalRef(valueObj);
+                valueObj = NULL;
             }
         }
 
@@ -127,11 +126,11 @@ struct JAudioPresentationInfo {
         return OK;
     }
 
-    jobject asJobject(JNIEnv *env, const fields_t& fields, const AudioPresentationInfo &info) {
+    jobject asJobject(JNIEnv* env, const fields_t& fields, const AudioPresentationInfo& info) {
         jobject list = env->NewObject(fields.listclazz, fields.listConstructId);
 
         for (size_t i = 0; i < info.countPresentations(); ++i) {
-            const sp<AudioPresentation> &ap = info.getPresentation(i);
+            const sp<AudioPresentation>& ap = info.getPresentation(i);
             jobject jLabelObject;
 
             sp<AMessage> labelMessage = new AMessage();
@@ -144,26 +143,24 @@ struct JAudioPresentationInfo {
             }
             jstring jLanguage = env->NewStringUTF(ap->mLanguage.string());
 
-            jobject jValueObj = env->NewObject(fields.clazz, fields.constructID,
-                                static_cast<jint>(ap->mPresentationId),
-                                static_cast<jint>(ap->mProgramId),
-                                jLabelObject,
-                                jLanguage,
-                                static_cast<jint>(ap->mMasteringIndication),
-                                static_cast<jboolean>((ap->mAudioDescriptionAvailable == 1) ?
-                                    1 : 0),
-                                static_cast<jboolean>((ap->mSpokenSubtitlesAvailable == 1) ?
-                                    1 : 0),
-                                static_cast<jboolean>((ap->mDialogueEnhancementAvailable == 1) ?
-                                    1 : 0));
+            jobject jValueObj = env->NewObject(
+                    fields.clazz, fields.constructID, static_cast<jint>(ap->mPresentationId),
+                    static_cast<jint>(ap->mProgramId), jLabelObject, jLanguage,
+                    static_cast<jint>(ap->mMasteringIndication),
+                    static_cast<jboolean>((ap->mAudioDescriptionAvailable == 1) ? 1 : 0),
+                    static_cast<jboolean>((ap->mSpokenSubtitlesAvailable == 1) ? 1 : 0),
+                    static_cast<jboolean>((ap->mDialogueEnhancementAvailable == 1) ? 1 : 0));
             if (jValueObj == NULL) {
-                env->DeleteLocalRef(jLanguage); jLanguage = NULL;
+                env->DeleteLocalRef(jLanguage);
+                jLanguage = NULL;
                 return NULL;
             }
 
             env->CallBooleanMethod(list, fields.listAddId, jValueObj);
-            env->DeleteLocalRef(jValueObj); jValueObj = NULL;
-            env->DeleteLocalRef(jLanguage); jLanguage = NULL;
+            env->DeleteLocalRef(jValueObj);
+            jValueObj = NULL;
+            env->DeleteLocalRef(jLanguage);
+            jLanguage = NULL;
         }
         return list;
     }

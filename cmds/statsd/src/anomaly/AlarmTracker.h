@@ -34,10 +34,8 @@ namespace statsd {
 
 class AlarmTracker : public virtual RefBase {
 public:
-    AlarmTracker(const int64_t startMillis,
-                 const int64_t currentMillis,
-                 const Alarm& alarm, const ConfigKey& configKey,
-                 const sp<AlarmMonitor>& subscriberAlarmMonitor);
+    AlarmTracker(const int64_t startMillis, const int64_t currentMillis, const Alarm& alarm,
+                 const ConfigKey& configKey, const sp<AlarmMonitor>& subscriberAlarmMonitor);
 
     virtual ~AlarmTracker();
 
@@ -45,7 +43,8 @@ public:
 
     void addSubscription(const Subscription& subscription);
 
-    void informAlarmsFired(const int64_t& timestampNs,
+    void informAlarmsFired(
+            const int64_t& timestampNs,
             unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& firedAlarms);
 
 protected:

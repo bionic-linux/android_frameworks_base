@@ -17,8 +17,8 @@
 #ifndef ANDROID_FILTERFW_FILTERPACKS_BASE_TIME_UTIL_H
 #define ANDROID_FILTERFW_FILTERPACKS_BASE_TIME_UTIL_H
 
-#include <string>
 #include <utils/RefBase.h>
+#include <string>
 
 #define LOG_MFF_RUNNING_TIMES 0
 
@@ -36,9 +36,7 @@ class NamedStopWatch : public RefBase {
     void Stop();
 
     void SetName(const std::string& name) { mName = name; }
-    void SetLoggingPeriodInFrames(uint64_t numFrames) {
-        mLoggingPeriodInFrames = numFrames;
-    }
+    void SetLoggingPeriodInFrames(uint64_t numFrames) { mLoggingPeriodInFrames = numFrames; }
 
     const std::string& Name() const { return mName; }
     uint64_t NumCalls() const { return mNumCalls; }
@@ -55,15 +53,14 @@ class NamedStopWatch : public RefBase {
 class ScopedTimer {
   public:
     explicit ScopedTimer(const std::string& stop_watch_name);
-    explicit ScopedTimer(NamedStopWatch* watch)
-        : mWatch(watch) { mWatch->Start(); }
+    explicit ScopedTimer(NamedStopWatch* watch) : mWatch(watch) { mWatch->Start(); }
     ~ScopedTimer() { mWatch->Stop(); }
 
   private:
     NamedStopWatch* mWatch;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_FILTERPACKS_BASE_TIME_UTIL_H

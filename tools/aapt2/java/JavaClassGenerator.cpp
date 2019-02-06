@@ -45,17 +45,14 @@ using ::android::base::StringPrintf;
 namespace aapt {
 
 static const std::set<StringPiece> sJavaIdentifiers = {
-    "abstract",   "assert",       "boolean",   "break",      "byte",
-    "case",       "catch",        "char",      "class",      "const",
-    "continue",   "default",      "do",        "double",     "else",
-    "enum",       "extends",      "final",     "finally",    "float",
-    "for",        "goto",         "if",        "implements", "import",
-    "instanceof", "int",          "interface", "long",       "native",
-    "new",        "package",      "private",   "protected",  "public",
-    "return",     "short",        "static",    "strictfp",   "super",
-    "switch",     "synchronized", "this",      "throw",      "throws",
-    "transient",  "try",          "void",      "volatile",   "while",
-    "true",       "false",        "null"};
+    "abstract", "assert", "boolean",    "break",     "byte",       "case",      "catch",
+    "char",     "class",  "const",      "continue",  "default",    "do",        "double",
+    "else",     "enum",   "extends",    "final",     "finally",    "float",     "for",
+    "goto",     "if",     "implements", "import",    "instanceof", "int",       "interface",
+    "long",     "native", "new",        "package",   "private",    "protected", "public",
+    "return",   "short",  "static",     "strictfp",  "super",      "switch",    "synchronized",
+    "this",     "throw",  "throws",     "transient", "try",        "void",      "volatile",
+    "while",    "true",   "false",      "null"};
 
 static bool IsValidSymbol(const StringPiece& symbol) {
   return sJavaIdentifiers.find(symbol) == sJavaIdentifiers.end();
@@ -89,8 +86,7 @@ static std::string TransformNestedAttr(const ResourceNameRef& attr_name,
 
   // We may reference IDs from other packages, so prefix the entry name with
   // the package.
-  if (!attr_name.package.empty() &&
-      package_name_to_generate != attr_name.package) {
+  if (!attr_name.package.empty() && package_name_to_generate != attr_name.package) {
     output += "_" + JavaClassGenerator::TransformToFieldName(attr_name.package);
   }
   output += "_" + JavaClassGenerator::TransformToFieldName(attr_name.entry);
@@ -115,8 +111,7 @@ static void AddAttributeFormatDoc(AnnotationProcessor* processor, Attribute* att
   }
 
   if (type_mask & android::ResTable_map::TYPE_INTEGER) {
-    processor->AppendComment(
-        "<p>May be an integer value, such as \"<code>100</code>\".");
+    processor->AppendComment("<p>May be an integer value, such as \"<code>100</code>\".");
   }
 
   if (type_mask & android::ResTable_map::TYPE_BOOLEAN) {
@@ -134,8 +129,7 @@ static void AddAttributeFormatDoc(AnnotationProcessor* processor, Attribute* att
   }
 
   if (type_mask & android::ResTable_map::TYPE_FLOAT) {
-    processor->AppendComment(
-        "<p>May be a floating point value, such as \"<code>1.2</code>\".");
+    processor->AppendComment("<p>May be a floating point value, such as \"<code>1.2</code>\".");
   }
 
   if (type_mask & android::ResTable_map::TYPE_DIMENSION) {
@@ -158,15 +152,13 @@ static void AddAttributeFormatDoc(AnnotationProcessor* processor, Attribute* att
         "container.");
   }
 
-  if (type_mask &
-      (android::ResTable_map::TYPE_FLAGS | android::ResTable_map::TYPE_ENUM)) {
+  if (type_mask & (android::ResTable_map::TYPE_FLAGS | android::ResTable_map::TYPE_ENUM)) {
     if (type_mask & android::ResTable_map::TYPE_FLAGS) {
       processor->AppendComment(
           "<p>Must be one or more (separated by '|') of the following "
           "constant values.</p>");
     } else {
-      processor->AppendComment(
-          "<p>Must be one of the following constant values.</p>");
+      processor->AppendComment("<p>Must be one of the following constant values.</p>");
     }
 
     processor->AppendComment(
@@ -178,18 +170,17 @@ static void AddAttributeFormatDoc(AnnotationProcessor* processor, Attribute* att
       std::stringstream line;
       line << "<tr><td>" << symbol.symbol.name.value().entry << "</td>"
            << "<td>" << std::hex << symbol.value << std::dec << "</td>"
-           << "<td>" << util::TrimWhitespace(symbol.symbol.GetComment())
-           << "</td></tr>";
+           << "<td>" << util::TrimWhitespace(symbol.symbol.GetComment()) << "</td></tr>";
       processor->AppendComment(line.str());
     }
     processor->AppendComment("</table>");
   }
 }
 
-JavaClassGenerator::JavaClassGenerator(IAaptContext* context,
-                                       ResourceTable* table,
+JavaClassGenerator::JavaClassGenerator(IAaptContext* context, ResourceTable* table,
                                        const JavaClassGeneratorOptions& options)
-    : context_(context), table_(table), options_(options) {}
+    : context_(context), table_(table), options_(options) {
+}
 
 bool JavaClassGenerator::SkipSymbol(Visibility::Level level) {
   switch (options_.types) {

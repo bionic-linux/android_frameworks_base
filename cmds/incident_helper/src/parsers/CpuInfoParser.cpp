@@ -17,20 +17,19 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "CpuInfoParser.h"
 #include "frameworks/base/core/proto/android/os/cpuinfo.proto.h"
 #include "ih_util.h"
-#include "CpuInfoParser.h"
 
 using namespace android::os;
 
-static void writeSuffixLine(ProtoOutputStream* proto, uint64_t fieldId,
-        const string& line, const string& delimiter,
-        const int count, const char* names[], const uint64_t ids[])
-{
+static void writeSuffixLine(ProtoOutputStream* proto, uint64_t fieldId, const string& line,
+                            const string& delimiter, const int count, const char* names[],
+                            const uint64_t ids[]) {
     record_t record = parseRecord(line, delimiter);
     uint64_t token = proto->start(fieldId);
-    for (int i=0; i<(int)record.size(); i++) {
-        for (int j=0; j<count; j++) {
+    for (int i = 0; i < (int)record.size(); i++) {
+        for (int j = 0; j < count; j++) {
             if (stripSuffix(&record[i], names[j], true)) {
                 proto->write(ids[j], toInt(record[i]));
                 break;
@@ -40,13 +39,12 @@ static void writeSuffixLine(ProtoOutputStream* proto, uint64_t fieldId,
     proto->end(token);
 }
 
-status_t
-CpuInfoParser::Parse(const int in, const int out) const
-{
+status_t CpuInfoParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
     header_t header;
-    vector<int> columnIndices; // task table can't be split by purely delimiter, needs column positions.
+    vector<int> columnIndices;  // task table can't be split by purely delimiter, needs column
+                                // positions.
     record_t record;
     int nline = 0;
     int diff = 0;
@@ -54,11 +52,14 @@ CpuInfoParser::Parse(const int in, const int out) const
     bool nextToUsage = false;
 
     ProtoOutputStream proto;
-    Table table(CpuInfoProto::Task::_FIELD_NAMES, CpuInfoProto::Task::_FIELD_IDS, CpuInfoProto::Task::_FIELD_COUNT);
+    Table table(CpuInfoProto::Task::_FIELD_NAMES, CpuInfoProto::Task::_FIELD_IDS,
+                CpuInfoProto::Task::_FIELD_COUNT);
     table.addEnumTypeMap("s", CpuInfoProto::Task::_ENUM_STATUS_NAMES,
-            CpuInfoProto::Task::_ENUM_STATUS_VALUES, CpuInfoProto::Task::_ENUM_STATUS_COUNT);
+                         CpuInfoProto::Task::_ENUM_STATUS_VALUES,
+                         CpuInfoProto::Task::_ENUM_STATUS_COUNT);
     table.addEnumTypeMap("pcy", CpuInfoProto::Task::_ENUM_POLICY_NAMES,
-            CpuInfoProto::Task::_ENUM_POLICY_VALUES, CpuInfoProto::Task::_ENUM_POLICY_COUNT);
+                         CpuInfoProto::Task::_ENUM_POLICY_VALUES,
+                         CpuInfoProto::Task::_ENUM_POLICY_COUNT);
 
     // parse line by line
     while (reader.readLine(&line)) {
@@ -68,32 +69,32 @@ CpuInfoParser::Parse(const int in, const int out) const
 
         if (stripPrefix(&line, "Tasks:")) {
             writeSuffixLine(&proto, CpuInfoProto::TASK_STATS, line, COMMA_DELIMITER,
-                CpuInfoProto::TaskStats::_FIELD_COUNT,
-                CpuInfoProto::TaskStats::_FIELD_NAMES,
-                CpuInfoProto::TaskStats::_FIELD_IDS);
+                            CpuInfoProto::TaskStats::_FIELD_COUNT,
+                            CpuInfoProto::TaskStats::_FIELD_NAMES,
+                            CpuInfoProto::TaskStats::_FIELD_IDS);
             continue;
         }
         if (stripPrefix(&line, "Mem:")) {
             writeSuffixLine(&proto, CpuInfoProto::MEM, line, COMMA_DELIMITER,
-                CpuInfoProto::MemStats::_FIELD_COUNT,
-                CpuInfoProto::MemStats::_FIELD_NAMES,
-                CpuInfoProto::MemStats::_FIELD_IDS);
+                            CpuInfoProto::MemStats::_FIELD_COUNT,
+                            CpuInfoProto::MemStats::_FIELD_NAMES,
+                            CpuInfoProto::MemStats::_FIELD_IDS);
             continue;
         }
         if (stripPrefix(&line, "Swap:")) {
             writeSuffixLine(&proto, CpuInfoProto::SWAP, line, COMMA_DELIMITER,
-                CpuInfoProto::MemStats::_FIELD_COUNT,
-                CpuInfoProto::MemStats::_FIELD_NAMES,
-                CpuInfoProto::MemStats::_FIELD_IDS);
+                            CpuInfoProto::MemStats::_FIELD_COUNT,
+                            CpuInfoProto::MemStats::_FIELD_NAMES,
+                            CpuInfoProto::MemStats::_FIELD_IDS);
             nextToSwap = true;
             continue;
         }
 
         if (nextToSwap) {
             writeSuffixLine(&proto, CpuInfoProto::CPU_USAGE, line, DEFAULT_WHITESPACE,
-                CpuInfoProto::CpuUsage::_FIELD_COUNT,
-                CpuInfoProto::CpuUsage::_FIELD_NAMES,
-                CpuInfoProto::CpuUsage::_FIELD_IDS);
+                            CpuInfoProto::CpuUsage::_FIELD_COUNT,
+                            CpuInfoProto::CpuUsage::_FIELD_NAMES,
+                            CpuInfoProto::CpuUsage::_FIELD_IDS);
             nextToUsage = true;
             nextToSwap = false;
             continue;
@@ -109,15 +110,17 @@ CpuInfoParser::Parse(const int in, const int out) const
             nextToUsage = false;
 
             // NAME is not in the list since we need to modify the end of the CMD index.
-            const char* headerNames[] = { "PID", "TID", "USER", "PR", "NI", "CPU", "S", "VIRT", "RES", "PCY", "CMD", nullptr };
+            const char* headerNames[] = {"PID", "TID",  "USER", "PR",  "NI",  "CPU",
+                                         "S",   "VIRT", "RES",  "PCY", "CMD", nullptr};
             if (!getColumnIndices(columnIndices, headerNames, line)) {
                 return -1;
             }
-            // Need to remove the end index of CMD and use the start index of NAME because CMD values contain spaces.
-            // for example: ... CMD             NAME
+            // Need to remove the end index of CMD and use the start index of NAME because CMD
+            // values contain spaces. for example: ... CMD             NAME
             //              ... Jit thread pool com.google.android.gms.feedback
-            // If use end index of CMD, parsed result = { "Jit", "thread pool com.google.android.gms.feedback" }
-            // If use start index of NAME, parsed result = { "Jit thread pool", "com.google.android.gms.feedback" }
+            // If use end index of CMD, parsed result = { "Jit", "thread pool
+            // com.google.android.gms.feedback" } If use start index of NAME, parsed result = { "Jit
+            // thread pool", "com.google.android.gms.feedback" }
             int endCMD = columnIndices.back();
             columnIndices.pop_back();
             columnIndices.push_back(line.find("NAME", endCMD) - 1);
@@ -129,17 +132,19 @@ CpuInfoParser::Parse(const int in, const int out) const
         record = parseRecordByColumns(line, columnIndices);
         diff = record.size() - header.size();
         if (diff < 0) {
-            fprintf(stderr, "[%s]Line %d has %d missing fields\n%s\n", this->name.string(), nline, -diff, line.c_str());
+            fprintf(stderr, "[%s]Line %d has %d missing fields\n%s\n", this->name.string(), nline,
+                    -diff, line.c_str());
             printRecord(record);
             continue;
         } else if (diff > 0) {
-            fprintf(stderr, "[%s]Line %d has %d extra fields\n%s\n", this->name.string(), nline, diff, line.c_str());
+            fprintf(stderr, "[%s]Line %d has %d extra fields\n%s\n", this->name.string(), nline,
+                    diff, line.c_str());
             printRecord(record);
             continue;
         }
 
         uint64_t token = proto.start(CpuInfoProto::TASKS);
-        for (int i=0; i<(int)record.size(); i++) {
+        for (int i = 0; i < (int)record.size(); i++) {
             if (!table.insertField(&proto, header[i], record[i])) {
                 fprintf(stderr, "[%s]Line %d fails to insert field %s with value %s\n",
                         this->name.string(), nline, header[i].c_str(), record[i].c_str());

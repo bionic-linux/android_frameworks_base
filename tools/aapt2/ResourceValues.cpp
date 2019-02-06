@@ -67,7 +67,8 @@ void BaseItem<Derived>::Accept(ConstValueVisitor* visitor) const {
   visitor->Visit(static_cast<const Derived*>(this));
 }
 
-RawString::RawString(const StringPool::Ref& ref) : value(ref) {}
+RawString::RawString(const StringPool::Ref& ref) : value(ref) {
+}
 
 bool RawString::Equals(const Value* value) const {
   const RawString* other = ValueCast<RawString>(value);
@@ -94,25 +95,27 @@ void RawString::Print(std::ostream* out) const {
   *out << "(raw string) " << *value;
 }
 
-Reference::Reference() : reference_type(Type::kResource) {}
+Reference::Reference() : reference_type(Type::kResource) {
+}
 
 Reference::Reference(const ResourceNameRef& n, Type t)
-    : name(n.ToResourceName()), reference_type(t) {}
+    : name(n.ToResourceName()), reference_type(t) {
+}
 
-Reference::Reference(const ResourceId& i, Type type)
-    : id(i), reference_type(type) {}
+Reference::Reference(const ResourceId& i, Type type) : id(i), reference_type(type) {
+}
 
 Reference::Reference(const ResourceNameRef& n, const ResourceId& i)
-    : name(n.ToResourceName()), id(i), reference_type(Type::kResource) {}
+    : name(n.ToResourceName()), id(i), reference_type(Type::kResource) {
+}
 
 bool Reference::Equals(const Value* value) const {
   const Reference* other = ValueCast<Reference>(value);
   if (!other) {
     return false;
   }
-  return reference_type == other->reference_type &&
-         private_reference == other->private_reference && id == other->id &&
-         name == other->name;
+  return reference_type == other->reference_type && private_reference == other->private_reference &&
+         id == other->id && name == other->name;
 }
 
 bool Reference::Flatten(android::Res_value* out_value) const {
@@ -396,8 +399,7 @@ bool BinaryPrimitive::Equals(const Value* value) const {
   if (!other) {
     return false;
   }
-  return this->value.dataType == other->value.dataType &&
-         this->value.data == other->value.data;
+  return this->value.dataType == other->value.dataType && this->value.data == other->value.data;
 }
 
 bool BinaryPrimitive::Flatten(::android::Res_value* out_value) const {
@@ -1081,9 +1083,7 @@ bool Styleable::Equals(const Value* value) const {
   }
 
   return std::equal(entries.begin(), entries.end(), other->entries.begin(),
-                    [](const Reference& a, const Reference& b) -> bool {
-                      return a.Equals(&b);
-                    });
+                    [](const Reference& a, const Reference& b) -> bool { return a.Equals(&b); });
 }
 
 Styleable* Styleable::Clone(StringPool* /*new_pool*/) const {

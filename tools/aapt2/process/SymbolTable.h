@@ -151,13 +151,11 @@ class ISymbolSource {
  public:
   virtual ~ISymbolSource() = default;
 
-  virtual std::unique_ptr<SymbolTable::Symbol> FindByName(
-      const ResourceName& name) = 0;
+  virtual std::unique_ptr<SymbolTable::Symbol> FindByName(const ResourceName& name) = 0;
   virtual std::unique_ptr<SymbolTable::Symbol> FindById(ResourceId id) = 0;
 
   // Default implementation tries the name if it exists, else the ID.
-  virtual std::unique_ptr<SymbolTable::Symbol> FindByReference(
-      const Reference& ref) {
+  virtual std::unique_ptr<SymbolTable::Symbol> FindByReference(const Reference& ref) {
     if (ref.name) {
       return FindByName(ref.name.value());
     } else if (ref.id) {
@@ -172,10 +170,10 @@ class ISymbolSource {
 // Lookups by ID are ignored.
 class ResourceTableSymbolSource : public ISymbolSource {
  public:
-  explicit ResourceTableSymbolSource(ResourceTable* table) : table_(table) {}
+  explicit ResourceTableSymbolSource(ResourceTable* table) : table_(table) {
+  }
 
-  std::unique_ptr<SymbolTable::Symbol> FindByName(
-      const ResourceName& name) override;
+  std::unique_ptr<SymbolTable::Symbol> FindByName(const ResourceName& name) override;
 
   std::unique_ptr<SymbolTable::Symbol> FindById(ResourceId id) override {
     return {};
@@ -195,11 +193,9 @@ class AssetManagerSymbolSource : public ISymbolSource {
   std::map<size_t, std::string> GetAssignedPackageIds() const;
   bool IsPackageDynamic(uint32_t packageId) const;
 
-  std::unique_ptr<SymbolTable::Symbol> FindByName(
-      const ResourceName& name) override;
+  std::unique_ptr<SymbolTable::Symbol> FindByName(const ResourceName& name) override;
   std::unique_ptr<SymbolTable::Symbol> FindById(ResourceId id) override;
-  std::unique_ptr<SymbolTable::Symbol> FindByReference(
-      const Reference& ref) override;
+  std::unique_ptr<SymbolTable::Symbol> FindByReference(const Reference& ref) override;
 
   android::AssetManager* GetAssetManager() {
     return &assets_;

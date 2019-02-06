@@ -17,13 +17,11 @@
 
 #include <android/util/ProtoOutputStream.h>
 
+#include "EventLogTagsParser.h"
 #include "frameworks/base/core/proto/android/util/event_log_tags.proto.h"
 #include "ih_util.h"
-#include "EventLogTagsParser.h"
 
-status_t
-EventLogTagsParser::Parse(const int in, const int out) const
-{
+status_t EventLogTagsParser::Parse(const int in, const int out) const {
     Reader reader(in);
     string line;
 
@@ -36,8 +34,8 @@ EventLogTagsParser::Parse(const int in, const int out) const
         string tagNumber = behead(&line, ' ');
         string tagName = behead(&line, ' ');
         if (tagNumber == "" || tagName == "") {
-            fprintf(stderr, "Bad line, expect at least two parts: %s[%s, %s]\n",
-                debug.c_str(), tagNumber.c_str(), tagName.c_str());
+            fprintf(stderr, "Bad line, expect at least two parts: %s[%s, %s]\n", debug.c_str(),
+                    tagNumber.c_str(), tagName.c_str());
             continue;
         }
 
@@ -59,7 +57,7 @@ EventLogTagsParser::Parse(const int in, const int out) const
                 char c = valueDescriptor[2][0];
                 int unit = 0;
                 if (c < '0' || c > '9') {
-                    unit = (int) c;
+                    unit = (int)c;
                 } else {
                     unit = toInt(valueDescriptor[2]);
                 }

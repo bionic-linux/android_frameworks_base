@@ -424,10 +424,9 @@ const Attribute* Element::FindAttribute(const StringPiece& ns, const StringPiece
 }
 
 void Element::RemoveAttribute(const StringPiece& ns, const StringPiece& name) {
-  auto new_attr_end = std::remove_if(attributes.begin(), attributes.end(),
-    [&](const Attribute& attr) -> bool {
-      return ns == attr.namespace_uri && name == attr.name;
-    });
+  auto new_attr_end = std::remove_if(
+      attributes.begin(), attributes.end(),
+      [&](const Attribute& attr) -> bool { return ns == attr.namespace_uri && name == attr.name; });
 
   attributes.erase(new_attr_end, attributes.end());
 }

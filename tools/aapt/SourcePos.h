@@ -1,14 +1,13 @@
 #ifndef SOURCEPOS_H
 #define SOURCEPOS_H
 
-#include <utils/String8.h>
 #include <stdio.h>
+#include <utils/String8.h>
 
 using namespace android;
 
-class SourcePos
-{
-public:
+class SourcePos {
+  public:
     String8 file;
     int line;
 
@@ -27,5 +26,4 @@ public:
     static void printErrors(FILE* to);
 };
 
-
-#endif // SOURCEPOS_H
+#endif  // SOURCEPOS_H

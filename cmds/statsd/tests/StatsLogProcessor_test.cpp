@@ -44,13 +44,12 @@ using android::util::ProtoOutputStream;
  */
 class MockMetricsManager : public MetricsManager {
 public:
-    MockMetricsManager() : MetricsManager(
-        ConfigKey(1, 12345), StatsdConfig(), 1000, 1000,
-        new UidMap(),
-        new AlarmMonitor(10, [](const sp<IStatsCompanionService>&, int64_t){},
-                         [](const sp<IStatsCompanionService>&){}),
-        new AlarmMonitor(10, [](const sp<IStatsCompanionService>&, int64_t){},
-                         [](const sp<IStatsCompanionService>&){})) {
+    MockMetricsManager()
+        : MetricsManager(ConfigKey(1, 12345), StatsdConfig(), 1000, 1000, new UidMap(),
+                         new AlarmMonitor(10, [](const sp<IStatsCompanionService>&, int64_t) {},
+                                          [](const sp<IStatsCompanionService>&) {}),
+                         new AlarmMonitor(10, [](const sp<IStatsCompanionService>&, int64_t) {},
+                                          [](const sp<IStatsCompanionService>&) {})) {
     }
 
     MOCK_METHOD0(byteSize, size_t());
@@ -64,7 +63,7 @@ TEST(StatsLogProcessorTest, TestRateLimitByteSize) {
     sp<AlarmMonitor> periodicAlarmMonitor;
     // Construct the processor with a dummy sendBroadcast function that does nothing.
     StatsLogProcessor p(m, anomalyAlarmMonitor, periodicAlarmMonitor, 0,
-        [](const ConfigKey& key) {return true;});
+                        [](const ConfigKey& key) { return true; });
 
     MockMetricsManager mockMetricsManager;
 
@@ -83,7 +82,10 @@ TEST(StatsLogProcessorTest, TestRateLimitBroadcast) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
 
     MockMetricsManager mockMetricsManager;
 
@@ -109,7 +111,10 @@ TEST(StatsLogProcessorTest, TestDropWhenByteSizeTooLarge) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
 
     MockMetricsManager mockMetricsManager;
 
@@ -148,7 +153,10 @@ TEST(StatsLogProcessorTest, TestUidMapHasSnapshot) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
     ConfigKey key(3, 4);
     StatsdConfig config = MakeConfig(true);
     p.OnConfigUpdated(0, key, config);
@@ -173,7 +181,10 @@ TEST(StatsLogProcessorTest, TestEmptyConfigHasNoUidMap) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
     ConfigKey key(3, 4);
     StatsdConfig config = MakeConfig(false);
     p.OnConfigUpdated(0, key, config);
@@ -195,7 +206,10 @@ TEST(StatsLogProcessorTest, TestReportIncludesSubConfig) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
     ConfigKey key(3, 4);
     StatsdConfig config;
     auto annotation = config.add_annotation();
@@ -224,7 +238,10 @@ TEST(StatsLogProcessorTest, TestOutOfOrderLogs) {
     sp<AlarmMonitor> subscriberAlarmMonitor;
     int broadcastCount = 0;
     StatsLogProcessor p(m, anomalyAlarmMonitor, subscriberAlarmMonitor, 0,
-                        [&broadcastCount](const ConfigKey& key) { broadcastCount++; return true;});
+                        [&broadcastCount](const ConfigKey& key) {
+                            broadcastCount++;
+                            return true;
+                        });
 
     LogEvent event1(0, 1 /*logd timestamp*/, 1001 /*elapsedRealtime*/);
     event1.init();

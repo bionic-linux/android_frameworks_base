@@ -7,11 +7,11 @@
 #ifndef IMAGES_H
 #define IMAGES_H
 
-#include "ResourceTable.h"
 #include "Bundle.h"
+#include "ResourceTable.h"
 
-#include <utils/String8.h>
 #include <utils/RefBase.h>
+#include <utils/String8.h>
 
 using android::String8;
 
@@ -20,7 +20,7 @@ status_t preProcessImage(const Bundle* bundle, const sp<AaptAssets>& assets,
 
 status_t preProcessImageToCache(const Bundle* bundle, const String8& source, const String8& dest);
 
-status_t postProcessImage(const Bundle* bundle, const sp<AaptAssets>& assets,
-                          ResourceTable* table, const sp<AaptFile>& file);
+status_t postProcessImage(const Bundle* bundle, const sp<AaptAssets>& assets, ResourceTable* table,
+                          const sp<AaptFile>& file);
 
 #endif

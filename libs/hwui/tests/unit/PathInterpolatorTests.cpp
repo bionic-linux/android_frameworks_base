@@ -86,5 +86,5 @@ TEST(Interpolator, pathInterpolation) {
         }
     }
 }
-}
-}
+}  // namespace uirenderer
+}  // namespace android

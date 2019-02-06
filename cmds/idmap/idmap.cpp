@@ -1,12 +1,13 @@
 #include "idmap.h"
 
-#include <private/android_filesystem_config.h> // for AID_SYSTEM
+#include <private/android_filesystem_config.h>  // for AID_SYSTEM
 
 #include <stdlib.h>
 #include <string.h>
 
 namespace {
-    const char *usage = "NAME\n\
+const char* usage =
+        "NAME\n\
       idmap - create or display idmap files\n\
 \n\
 SYNOPSIS \n\
@@ -101,142 +102,132 @@ EXAMPLES \n\
 NOTES \n\
       This tool and its expected invocation from installd is modelled on dexopt.";
 
-    bool verify_directory_readable(const char *path)
-    {
-        return access(path, R_OK | X_OK) == 0;
-    }
-
-    bool verify_directory_writable(const char *path)
-    {
-        return access(path, W_OK) == 0;
-    }
-
-    bool verify_file_readable(const char *path)
-    {
-        return access(path, R_OK) == 0;
-    }
-
-    bool verify_root_or_system()
-    {
-        uid_t uid = getuid();
-        gid_t gid = getgid();
-
-        return (uid == 0 && gid == 0) || (uid == AID_SYSTEM && gid == AID_SYSTEM);
-    }
-
-    int maybe_create_fd(const char *target_apk_path, const char *overlay_apk_path,
-            const char *idmap_str)
-    {
-        // anyone (not just root or system) may do --fd -- the file has
-        // already been opened by someone else on our behalf
-
-        char *endptr;
-        int idmap_fd = strtol(idmap_str, &endptr, 10);
-        if (*endptr != '\0') {
-            fprintf(stderr, "error: failed to parse file descriptor argument %s\n", idmap_str);
-            return -1;
-        }
-
-        if (!verify_file_readable(target_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
-            return -1;
-        }
-
-        if (!verify_file_readable(overlay_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
-            return -1;
-        }
-
-        return idmap_create_fd(target_apk_path, overlay_apk_path, idmap_fd);
-    }
-
-    int maybe_create_path(const char *target_apk_path, const char *overlay_apk_path,
-            const char *idmap_path)
-    {
-        if (!verify_root_or_system()) {
-            fprintf(stderr, "error: permission denied: not user root or user system\n");
-            return -1;
-        }
-
-        if (!verify_file_readable(target_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
-            return -1;
-        }
-
-        if (!verify_file_readable(overlay_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
-            return -1;
-        }
-
-        return idmap_create_path(target_apk_path, overlay_apk_path, idmap_path);
-    }
-
-    int maybe_verify_fd(const char *target_apk_path, const char *overlay_apk_path,
-            const char *idmap_str)
-    {
-        char *endptr;
-        int idmap_fd = strtol(idmap_str, &endptr, 10);
-        if (*endptr != '\0') {
-            fprintf(stderr, "error: failed to parse file descriptor argument %s\n", idmap_str);
-            return -1;
-        }
-
-        if (!verify_file_readable(target_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
-            return -1;
-        }
-
-        if (!verify_file_readable(overlay_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
-            return -1;
-        }
-
-        return idmap_verify_fd(target_apk_path, overlay_apk_path, idmap_fd);
-    }
-
-    int maybe_scan(const char *target_package_name, const char *target_apk_path,
-            const char *idmap_dir, const android::Vector<const char *> *overlay_dirs)
-    {
-        if (!verify_root_or_system()) {
-            fprintf(stderr, "error: permission denied: not user root or user system\n");
-            return -1;
-        }
-
-        if (!verify_file_readable(target_apk_path)) {
-            ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
-            return -1;
-        }
-
-        if (!verify_directory_writable(idmap_dir)) {
-            ALOGD("error: no write access to %s: %s\n", idmap_dir, strerror(errno));
-            return -1;
-        }
-
-        const size_t N = overlay_dirs->size();
-        for (size_t i = 0; i < N; i++) {
-            const char *dir = overlay_dirs->itemAt(i);
-            if (!verify_directory_readable(dir)) {
-                ALOGD("error: no read access to %s: %s\n", dir, strerror(errno));
-                return -1;
-            }
-        }
-
-        return idmap_scan(target_package_name, target_apk_path, idmap_dir, overlay_dirs);
-    }
-
-    int maybe_inspect(const char *idmap_path)
-    {
-        // anyone (not just root or system) may do --inspect
-        if (!verify_file_readable(idmap_path)) {
-            ALOGD("error: failed to read idmap %s: %s\n", idmap_path, strerror(errno));
-            return -1;
-        }
-        return idmap_inspect(idmap_path);
-    }
+bool verify_directory_readable(const char* path) {
+    return access(path, R_OK | X_OK) == 0;
 }
 
-int main(int argc, char **argv)
-{
+bool verify_directory_writable(const char* path) {
+    return access(path, W_OK) == 0;
+}
+
+bool verify_file_readable(const char* path) {
+    return access(path, R_OK) == 0;
+}
+
+bool verify_root_or_system() {
+    uid_t uid = getuid();
+    gid_t gid = getgid();
+
+    return (uid == 0 && gid == 0) || (uid == AID_SYSTEM && gid == AID_SYSTEM);
+}
+
+int maybe_create_fd(const char* target_apk_path, const char* overlay_apk_path,
+                    const char* idmap_str) {
+    // anyone (not just root or system) may do --fd -- the file has
+    // already been opened by someone else on our behalf
+
+    char* endptr;
+    int idmap_fd = strtol(idmap_str, &endptr, 10);
+    if (*endptr != '\0') {
+        fprintf(stderr, "error: failed to parse file descriptor argument %s\n", idmap_str);
+        return -1;
+    }
+
+    if (!verify_file_readable(target_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
+        return -1;
+    }
+
+    if (!verify_file_readable(overlay_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
+        return -1;
+    }
+
+    return idmap_create_fd(target_apk_path, overlay_apk_path, idmap_fd);
+}
+
+int maybe_create_path(const char* target_apk_path, const char* overlay_apk_path,
+                      const char* idmap_path) {
+    if (!verify_root_or_system()) {
+        fprintf(stderr, "error: permission denied: not user root or user system\n");
+        return -1;
+    }
+
+    if (!verify_file_readable(target_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
+        return -1;
+    }
+
+    if (!verify_file_readable(overlay_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
+        return -1;
+    }
+
+    return idmap_create_path(target_apk_path, overlay_apk_path, idmap_path);
+}
+
+int maybe_verify_fd(const char* target_apk_path, const char* overlay_apk_path,
+                    const char* idmap_str) {
+    char* endptr;
+    int idmap_fd = strtol(idmap_str, &endptr, 10);
+    if (*endptr != '\0') {
+        fprintf(stderr, "error: failed to parse file descriptor argument %s\n", idmap_str);
+        return -1;
+    }
+
+    if (!verify_file_readable(target_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
+        return -1;
+    }
+
+    if (!verify_file_readable(overlay_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", overlay_apk_path, strerror(errno));
+        return -1;
+    }
+
+    return idmap_verify_fd(target_apk_path, overlay_apk_path, idmap_fd);
+}
+
+int maybe_scan(const char* target_package_name, const char* target_apk_path, const char* idmap_dir,
+               const android::Vector<const char*>* overlay_dirs) {
+    if (!verify_root_or_system()) {
+        fprintf(stderr, "error: permission denied: not user root or user system\n");
+        return -1;
+    }
+
+    if (!verify_file_readable(target_apk_path)) {
+        ALOGD("error: failed to read apk %s: %s\n", target_apk_path, strerror(errno));
+        return -1;
+    }
+
+    if (!verify_directory_writable(idmap_dir)) {
+        ALOGD("error: no write access to %s: %s\n", idmap_dir, strerror(errno));
+        return -1;
+    }
+
+    const size_t N = overlay_dirs->size();
+    for (size_t i = 0; i < N; i++) {
+        const char* dir = overlay_dirs->itemAt(i);
+        if (!verify_directory_readable(dir)) {
+            ALOGD("error: no read access to %s: %s\n", dir, strerror(errno));
+            return -1;
+        }
+    }
+
+    return idmap_scan(target_package_name, target_apk_path, idmap_dir, overlay_dirs);
+}
+
+int maybe_inspect(const char* idmap_path) {
+    // anyone (not just root or system) may do --inspect
+    if (!verify_file_readable(idmap_path)) {
+        ALOGD("error: failed to read idmap %s: %s\n", idmap_path, strerror(errno));
+        return -1;
+    }
+    return idmap_inspect(idmap_path);
+}
+}  // namespace
+
+int main(int argc, char** argv) {
 #if 0
     {
         char buf[1024];
@@ -267,7 +258,7 @@ int main(int argc, char **argv)
     }
 
     if (argc >= 6 && !strcmp(argv[1], "--scan")) {
-        android::Vector<const char *> v;
+        android::Vector<const char*> v;
         for (int i = 5; i < argc; i++) {
             v.push(argv[i]);
         }

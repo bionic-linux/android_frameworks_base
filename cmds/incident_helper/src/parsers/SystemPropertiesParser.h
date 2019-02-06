@@ -25,9 +25,9 @@ using namespace android;
  * SystemProperties parser, parses text produced by command getprop.
  */
 class SystemPropertiesParser : public TextParserBase {
-public:
-    SystemPropertiesParser() : TextParserBase(String8("SystemPropertiesParser")) {};
-    ~SystemPropertiesParser() {};
+  public:
+    SystemPropertiesParser() : TextParserBase(String8("SystemPropertiesParser")){};
+    ~SystemPropertiesParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

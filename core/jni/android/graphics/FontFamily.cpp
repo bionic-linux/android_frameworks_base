@@ -16,27 +16,27 @@
 
 #define LOG_TAG "Minikin"
 
-#include <nativehelper/JNIHelp.h>
 #include <core_jni_helpers.h>
+#include <nativehelper/JNIHelp.h>
 
+#include <android_runtime/AndroidRuntime.h>
+#include <android_runtime/android_util_AssetManager.h>
+#include <androidfw/AssetManager2.h>
+#include <nativehelper/ScopedPrimitiveArray.h>
+#include <nativehelper/ScopedUtfChars.h>
+#include "FontUtils.h"
+#include "GraphicsJNI.h"
 #include "SkData.h"
 #include "SkFontMgr.h"
 #include "SkRefCnt.h"
 #include "SkTypeface.h"
-#include "GraphicsJNI.h"
-#include <nativehelper/ScopedPrimitiveArray.h>
-#include <nativehelper/ScopedUtfChars.h>
-#include <android_runtime/AndroidRuntime.h>
-#include <android_runtime/android_util_AssetManager.h>
-#include <androidfw/AssetManager2.h>
 #include "Utils.h"
-#include "FontUtils.h"
 
 #include <hwui/MinikinSkia.h>
 #include <hwui/Typeface.h>
-#include <utils/FatVector.h>
 #include <minikin/FontFamily.h>
 #include <minikin/LocaleList.h>
+#include <utils/FatVector.h>
 
 #include <memory>
 
@@ -59,7 +59,8 @@ static inline FontFamilyWrapper* toFamily(jlong ptr) {
     return reinterpret_cast<FontFamilyWrapper*>(ptr);
 }
 
-template<typename Ptr> static inline jlong toJLong(Ptr ptr) {
+template <typename Ptr>
+static inline jlong toJLong(Ptr ptr) {
     return reinterpret_cast<jlong>(ptr);
 }
 
@@ -107,7 +108,7 @@ static jlong FontFamily_getFamilyReleaseFunc() {
 }
 
 static bool addSkTypeface(NativeFamilyBuilder* builder, sk_sp<SkData>&& data, int ttcIndex,
-        jint weight, jint italic) {
+                          jint weight, jint italic) {
     uirenderer::FatVector<SkFontArguments::Axis, 2> skiaAxes;
     for (const auto& axis : builder->axes) {
         skiaAxes.emplace_back(SkFontArguments::Axis{axis.axisTag, axis.value});
@@ -128,9 +129,8 @@ static bool addSkTypeface(NativeFamilyBuilder* builder, sk_sp<SkData>&& data, in
         builder->axes.clear();
         return false;
     }
-    std::shared_ptr<minikin::MinikinFont> minikinFont =
-            std::make_shared<MinikinFontSkia>(std::move(face), fontPtr, fontSize, ttcIndex,
-                    builder->axes);
+    std::shared_ptr<minikin::MinikinFont> minikinFont = std::make_shared<MinikinFontSkia>(
+            std::move(face), fontPtr, fontSize, ttcIndex, builder->axes);
     minikin::Font::Builder fontBuilder(minikinFont);
 
     if (weight != RESOLVE_BY_FONT_TABLE) {
@@ -163,12 +163,12 @@ static void release_global_ref(const void* /*data*/, void* context) {
     env->DeleteGlobalRef(obj);
 
     if (needToAttach) {
-       AndroidRuntime::getJavaVM()->DetachCurrentThread();
+        AndroidRuntime::getJavaVM()->DetachCurrentThread();
     }
 }
 
 static jboolean FontFamily_addFont(JNIEnv* env, jobject clazz, jlong builderPtr, jobject bytebuf,
-        jint ttcIndex, jint weight, jint isItalic) {
+                                   jint ttcIndex, jint weight, jint isItalic) {
     NPE_CHECK_RETURN_ZERO(env, bytebuf);
     NativeFamilyBuilder* builder = reinterpret_cast<NativeFamilyBuilder*>(builderPtr);
     const void* fontPtr = env->GetDirectBufferAddress(bytebuf);
@@ -184,13 +184,14 @@ static jboolean FontFamily_addFont(JNIEnv* env, jobject clazz, jlong builderPtr,
         return false;
     }
     jobject fontRef = MakeGlobalRefOrDie(env, bytebuf);
-    sk_sp<SkData> data(SkData::MakeWithProc(fontPtr, fontSize,
-            release_global_ref, reinterpret_cast<void*>(fontRef)));
+    sk_sp<SkData> data(SkData::MakeWithProc(fontPtr, fontSize, release_global_ref,
+                                            reinterpret_cast<void*>(fontRef)));
     return addSkTypeface(builder, std::move(data), ttcIndex, weight, isItalic);
 }
 
 static jboolean FontFamily_addFontWeightStyle(JNIEnv* env, jobject clazz, jlong builderPtr,
-        jobject font, jint ttcIndex, jint weight, jint isItalic) {
+                                              jobject font, jint ttcIndex, jint weight,
+                                              jint isItalic) {
     NPE_CHECK_RETURN_ZERO(env, font);
     NativeFamilyBuilder* builder = toNativeBuilder(builderPtr);
     const void* fontPtr = env->GetDirectBufferAddress(font);
@@ -206,8 +207,8 @@ static jboolean FontFamily_addFontWeightStyle(JNIEnv* env, jobject clazz, jlong 
         return false;
     }
     jobject fontRef = MakeGlobalRefOrDie(env, font);
-    sk_sp<SkData> data(SkData::MakeWithProc(fontPtr, fontSize,
-            release_global_ref, reinterpret_cast<void*>(fontRef)));
+    sk_sp<SkData> data(SkData::MakeWithProc(fontPtr, fontSize, release_global_ref,
+                                            reinterpret_cast<void*>(fontRef)));
     return addSkTypeface(builder, std::move(data), ttcIndex, weight, isItalic);
 }
 
@@ -216,8 +217,9 @@ static void releaseAsset(const void* ptr, void* context) {
 }
 
 static jboolean FontFamily_addFontFromAssetManager(JNIEnv* env, jobject, jlong builderPtr,
-        jobject jassetMgr, jstring jpath, jint cookie, jboolean isAsset, jint ttcIndex,
-        jint weight, jint isItalic) {
+                                                   jobject jassetMgr, jstring jpath, jint cookie,
+                                                   jboolean isAsset, jint ttcIndex, jint weight,
+                                                   jint isItalic) {
     NPE_CHECK_RETURN_ZERO(env, jassetMgr);
     NPE_CHECK_RETURN_ZERO(env, jpath);
 
@@ -236,16 +238,16 @@ static jboolean FontFamily_addFontFromAssetManager(JNIEnv* env, jobject, jlong b
 
     std::unique_ptr<Asset> asset;
     {
-      ScopedLock<AssetManager2> locked_mgr(*mgr);
-      if (isAsset) {
-          asset = locked_mgr->Open(str.c_str(), Asset::ACCESS_BUFFER);
-      } else if (cookie > 0) {
-          // Valid java cookies are 1-based, but AssetManager cookies are 0-based.
-          asset = locked_mgr->OpenNonAsset(str.c_str(), static_cast<ApkAssetsCookie>(cookie - 1),
-                  Asset::ACCESS_BUFFER);
-      } else {
-          asset = locked_mgr->OpenNonAsset(str.c_str(), Asset::ACCESS_BUFFER);
-      }
+        ScopedLock<AssetManager2> locked_mgr(*mgr);
+        if (isAsset) {
+            asset = locked_mgr->Open(str.c_str(), Asset::ACCESS_BUFFER);
+        } else if (cookie > 0) {
+            // Valid java cookies are 1-based, but AssetManager cookies are 0-based.
+            asset = locked_mgr->OpenNonAsset(str.c_str(), static_cast<ApkAssetsCookie>(cookie - 1),
+                                             Asset::ACCESS_BUFFER);
+        } else {
+            asset = locked_mgr->OpenNonAsset(str.c_str(), Asset::ACCESS_BUFFER);
+        }
     }
 
     if (nullptr == asset) {
@@ -259,8 +261,8 @@ static jboolean FontFamily_addFontFromAssetManager(JNIEnv* env, jobject, jlong b
         return false;
     }
 
-    sk_sp<SkData> data(SkData::MakeWithProc(buf, asset->getLength(), releaseAsset,
-            asset.release()));
+    sk_sp<SkData> data(
+            SkData::MakeWithProc(buf, asset->getLength(), releaseAsset, asset.release()));
     return addSkTypeface(builder, std::move(data), ttcIndex, weight, isItalic);
 }
 
@@ -272,25 +274,25 @@ static void FontFamily_addAxisValue(jlong builderPtr, jint tag, jfloat value) {
 ///////////////////////////////////////////////////////////////////////////////
 
 static const JNINativeMethod gFontFamilyMethods[] = {
-    { "nInitBuilder",           "(Ljava/lang/String;I)J", (void*)FontFamily_initBuilder },
-    { "nCreateFamily",          "(J)J", (void*)FontFamily_create },
-    { "nGetBuilderReleaseFunc", "()J", (void*)FontFamily_getBuilderReleaseFunc },
-    { "nGetFamilyReleaseFunc",  "()J", (void*)FontFamily_getFamilyReleaseFunc },
-    { "nAddFont",               "(JLjava/nio/ByteBuffer;III)Z", (void*)FontFamily_addFont },
-    { "nAddFontWeightStyle",    "(JLjava/nio/ByteBuffer;III)Z",
-            (void*)FontFamily_addFontWeightStyle },
-    { "nAddFontFromAssetManager",    "(JLandroid/content/res/AssetManager;Ljava/lang/String;IZIII)Z",
-            (void*)FontFamily_addFontFromAssetManager },
-    { "nAddAxisValue",         "(JIF)V", (void*)FontFamily_addAxisValue },
+        {"nInitBuilder", "(Ljava/lang/String;I)J", (void*)FontFamily_initBuilder},
+        {"nCreateFamily", "(J)J", (void*)FontFamily_create},
+        {"nGetBuilderReleaseFunc", "()J", (void*)FontFamily_getBuilderReleaseFunc},
+        {"nGetFamilyReleaseFunc", "()J", (void*)FontFamily_getFamilyReleaseFunc},
+        {"nAddFont", "(JLjava/nio/ByteBuffer;III)Z", (void*)FontFamily_addFont},
+        {"nAddFontWeightStyle", "(JLjava/nio/ByteBuffer;III)Z",
+         (void*)FontFamily_addFontWeightStyle},
+        {"nAddFontFromAssetManager",
+         "(JLandroid/content/res/AssetManager;Ljava/lang/String;IZIII)Z",
+         (void*)FontFamily_addFontFromAssetManager},
+        {"nAddAxisValue", "(JIF)V", (void*)FontFamily_addAxisValue},
 };
 
-int register_android_graphics_FontFamily(JNIEnv* env)
-{
+int register_android_graphics_FontFamily(JNIEnv* env) {
     int err = RegisterMethodsOrDie(env, "android/graphics/FontFamily", gFontFamilyMethods,
-            NELEM(gFontFamilyMethods));
+                                   NELEM(gFontFamilyMethods));
 
     init_FontUtils(env);
     return err;
 }
 
-}
+}  // namespace android

@@ -27,7 +27,7 @@ bool ExtractResourceName(const StringPiece& str, StringPiece* out_package, Strin
   const char* start = str.data();
   const char* end = start + str.size();
   if (start[0] == '@') {
-      start++;
+    start++;
   }
   const char* current = start;
   while (current != end) {

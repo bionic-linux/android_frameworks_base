@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-#include "AaptAssets.h"
 #include "ApkBuilder.h"
+#include "AaptAssets.h"
 
 using namespace android;
 
 ApkBuilder::ApkBuilder(const sp<WeakResourceFilter>& configFilter)
-    : mConfigFilter(configFilter)
-    , mDefaultFilter(new AndResourceFilter()) {
+    : mConfigFilter(configFilter), mDefaultFilter(new AndResourceFilter()) {
     // Add the default split, which is present for all APKs.
     mDefaultFilter->addFilter(mConfigFilter);
     mSplits.add(new ApkSplit(std::set<ConfigDescription>(), mDefaultFilter, true));
@@ -35,8 +34,10 @@ status_t ApkBuilder::createSplitForConfigs(const std::set<ConfigDescription>& co
         for (; iter != configs.end(); iter++) {
             if (splitConfigs.count(*iter) > 0) {
                 // Can't have overlapping configurations.
-                fprintf(stderr, "ERROR: Split configuration '%s' is already defined "
-                        "in another split.\n", iter->toString().string());
+                fprintf(stderr,
+                        "ERROR: Split configuration '%s' is already defined "
+                        "in another split.\n",
+                        iter->toString().string());
                 return ALREADY_EXISTS;
             }
         }
@@ -78,7 +79,8 @@ void ApkBuilder::print() const {
     }
 }
 
-ApkSplit::ApkSplit(const std::set<ConfigDescription>& configs, const sp<ResourceFilter>& filter, bool isBase)
+ApkSplit::ApkSplit(const std::set<ConfigDescription>& configs, const sp<ResourceFilter>& filter,
+                   bool isBase)
     : mConfigs(configs), mFilter(filter), mIsBase(isBase) {
     std::set<ConfigDescription>::const_iterator iter = configs.begin();
     for (; iter != configs.end(); iter++) {
@@ -119,6 +121,7 @@ void ApkSplit::print() const {
 
     std::set<OutputEntry>::const_iterator iter = mFiles.begin();
     for (; iter != mFiles.end(); iter++) {
-        fprintf(stderr, "  %s (%s)\n", iter->getPath().string(), iter->getFile()->getSourceFile().string());
+        fprintf(stderr, "  %s (%s)\n", iter->getPath().string(),
+                iter->getFile()->getSourceFile().string());
     }
 }

@@ -31,9 +31,9 @@ ConditionState ConditionWizard::query(const int index, const ConditionKey& param
                                       std::unordered_set<HashableDimensionKey>* dimensionKeySet) {
     vector<ConditionState> cache(mAllConditions.size(), ConditionState::kNotEvaluated);
 
-    mAllConditions[index]->isConditionMet(
-        parameters, mAllConditions, dimensionFields, isSubOutputDimensionFields, isPartialLink,
-        cache, *dimensionKeySet);
+    mAllConditions[index]->isConditionMet(parameters, mAllConditions, dimensionFields,
+                                          isSubOutputDimensionFields, isPartialLink, cache,
+                                          *dimensionKeySet);
     return cache[index];
 }
 
@@ -41,9 +41,8 @@ ConditionState ConditionWizard::getMetConditionDimension(
         const int index, const vector<Matcher>& dimensionFields,
         const bool isSubOutputDimensionFields,
         std::unordered_set<HashableDimensionKey>* dimensionsKeySet) const {
-    return mAllConditions[index]->getMetConditionDimension(mAllConditions, dimensionFields,
-                                                           isSubOutputDimensionFields,
-                                                           *dimensionsKeySet);
+    return mAllConditions[index]->getMetConditionDimension(
+            mAllConditions, dimensionFields, isSubOutputDimensionFields, *dimensionsKeySet);
 }
 
 const set<HashableDimensionKey>* ConditionWizard::getChangedToTrueDimensions(

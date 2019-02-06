@@ -138,7 +138,8 @@ std::unique_ptr<const LoadedIdmap> LoadedIdmap::Load(const StringPiece& idmap_da
 
     // Validate the type IDs.
     const IdmapEntry_header* entry_header = reinterpret_cast<const IdmapEntry_header*>(data_ptr);
-    if (!is_valid_type_id(dtohs(entry_header->target_type_id)) || !is_valid_type_id(dtohs(entry_header->overlay_type_id))) {
+    if (!is_valid_type_id(dtohs(entry_header->target_type_id)) ||
+        !is_valid_type_id(dtohs(entry_header->overlay_type_id))) {
       LOG(ERROR) << StringPrintf("Invalid type map (0x%02x -> 0x%02x)",
                                  dtohs(entry_header->target_type_id),
                                  dtohs(entry_header->overlay_type_id));

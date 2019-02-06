@@ -68,8 +68,8 @@ std::string Utf16ToUtf8(const StringPiece16& utf16) {
   return utf8;
 }
 
-static std::vector<std::string> SplitAndTransform(
-    const StringPiece& str, char sep, const std::function<char(char)>& f) {
+static std::vector<std::string> SplitAndTransform(const StringPiece& str, char sep,
+                                                  const std::function<char(char)>& f) {
   std::vector<std::string> parts;
   const StringPiece::const_iterator end = std::end(str);
   StringPiece::const_iterator start = std::begin(str);
@@ -90,6 +90,5 @@ std::vector<std::string> SplitAndLowercase(const StringPiece& str, char sep) {
   return SplitAndTransform(str, sep, ::tolower);
 }
 
-
-} // namespace util
-} // namespace android
+}  // namespace util
+}  // namespace android

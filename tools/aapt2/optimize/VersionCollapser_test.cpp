@@ -32,88 +32,70 @@ static std::unique_ptr<ResourceTable> BuildTableWithConfigs(
 }
 
 TEST(VersionCollapserTest, CollapseVersions) {
-  std::unique_ptr<IAaptContext> context =
-      test::ContextBuilder().SetMinSdkVersion(7).Build();
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().SetMinSdkVersion(7).Build();
 
   const StringPiece res_name = "@android:string/foo";
 
   std::unique_ptr<ResourceTable> table = BuildTableWithConfigs(
-      res_name,
-      {"land-v4", "land-v5", "sw600dp", "land-v6", "land-v14", "land-v21"});
+      res_name, {"land-v4", "land-v5", "sw600dp", "land-v6", "land-v14", "land-v21"});
 
   VersionCollapser collapser;
   ASSERT_TRUE(collapser.Consume(context.get(), table.get()));
 
   // These should be removed.
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v4")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v4")));
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v5")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v5")));
   // This one should be removed because it was renamed to 'land', with the
   // version dropped.
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v6")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v6")));
 
   // These should remain.
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("sw600dp")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("sw600dp")));
 
   // 'land' should be present because it was renamed from 'land-v6'.
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land")));
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v14")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v14")));
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v21")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v21")));
 }
 
 TEST(VersionCollapserTest, CollapseVersionsWhenMinSdkIsHighest) {
-  std::unique_ptr<IAaptContext> context =
-      test::ContextBuilder().SetMinSdkVersion(21).Build();
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().SetMinSdkVersion(21).Build();
 
   const StringPiece res_name = "@android:string/foo";
 
   std::unique_ptr<ResourceTable> table = BuildTableWithConfigs(
-      res_name, {"land-v4", "land-v5", "sw600dp", "land-v6", "land-v14",
-                 "land-v21", "land-v22"});
+      res_name, {"land-v4", "land-v5", "sw600dp", "land-v6", "land-v14", "land-v21", "land-v22"});
   VersionCollapser collapser;
   ASSERT_TRUE(collapser.Consume(context.get(), table.get()));
 
   // These should all be removed.
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v4")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v4")));
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v5")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v5")));
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v6")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v6")));
   EXPECT_EQ(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v14")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v14")));
 
   // These should remain.
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(
-                table.get(), res_name,
-                test::ParseConfigOrDie("sw600dp").CopyWithoutSdkVersion()));
+            test::GetValueForConfig<Id>(table.get(), res_name,
+                                        test::ParseConfigOrDie("sw600dp").CopyWithoutSdkVersion()));
 
   // land-v21 should have been converted to land.
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land")));
   // land-v22 should remain as-is.
   EXPECT_NE(nullptr,
-            test::GetValueForConfig<Id>(table.get(), res_name,
-                                        test::ParseConfigOrDie("land-v22")));
+            test::GetValueForConfig<Id>(table.get(), res_name, test::ParseConfigOrDie("land-v22")));
 }
 
 }  // namespace aapt

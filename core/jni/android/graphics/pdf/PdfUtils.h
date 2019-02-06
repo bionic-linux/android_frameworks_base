@@ -21,8 +21,7 @@
 
 namespace android {
 
-int getBlock(void* param, unsigned long position, unsigned char* outBuffer,
-        unsigned long size);
+int getBlock(void* param, unsigned long position, unsigned char* outBuffer, unsigned long size);
 
 jlong nativeOpen(JNIEnv* env, jclass thiz, jint fd, jlong size);
 void nativeClose(JNIEnv* env, jclass thiz, jlong documentPtr);
@@ -30,6 +29,6 @@ void nativeClose(JNIEnv* env, jclass thiz, jlong documentPtr);
 jint nativeGetPageCount(JNIEnv* env, jclass thiz, jlong documentPtr);
 jboolean nativeScaleForPrinting(JNIEnv* env, jclass thiz, jlong documentPtr);
 
-};
+};  // namespace android
 
 #endif /* PDF_UTILS_H_ */

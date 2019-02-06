@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-#include "core_jni_helpers.h"
 #include <cutils/ashmem.h>
 #include <linux/ashmem.h>
 #include <sys/mman.h>
+#include "core_jni_helpers.h"
 
 namespace android {
 
 static jint android_util_MemoryIntArray_create(JNIEnv* env, jobject clazz, jstring name,
-        jint size)
-{
+                                               jint size) {
     if (name == NULL) {
         jniThrowException(env, "java/io/IOException", "bad name");
         return -1;
@@ -53,9 +52,7 @@ static jint android_util_MemoryIntArray_create(JNIEnv* env, jobject clazz, jstri
     return fd;
 }
 
-static jlong android_util_MemoryIntArray_open(JNIEnv* env, jobject clazz, jint fd,
-    jboolean owner)
-{
+static jlong android_util_MemoryIntArray_open(JNIEnv* env, jobject clazz, jint fd, jboolean owner) {
     if (fd < 0) {
         jniThrowException(env, "java/io/IOException", "bad file descriptor");
         return -1;
@@ -90,7 +87,7 @@ static jlong android_util_MemoryIntArray_open(JNIEnv* env, jobject clazz, jint f
     // Check if the mapped size is the same as the ashmem region.
     int mmapedSize = ashmem_get_size_region(fd);
     if (mmapedSize != ashmemSize) {
-        munmap(reinterpret_cast<void *>(ashmemAddr), ashmemSize);
+        munmap(reinterpret_cast<void*>(ashmemAddr), ashmemSize);
         jniThrowException(env, "java/io/IOException", "bad file descriptor");
         return -1;
     }
@@ -111,9 +108,8 @@ static jlong android_util_MemoryIntArray_open(JNIEnv* env, jobject clazz, jint f
     return reinterpret_cast<jlong>(ashmemAddr);
 }
 
-static void android_util_MemoryIntArray_close(JNIEnv* env, jobject clazz, jint fd,
-    jlong ashmemAddr, jboolean owner)
-{
+static void android_util_MemoryIntArray_close(JNIEnv* env, jobject clazz, jint fd, jlong ashmemAddr,
+                                              jboolean owner) {
     if (fd < 0) {
         jniThrowException(env, "java/io/IOException", "bad file descriptor");
         return;
@@ -130,7 +126,7 @@ static void android_util_MemoryIntArray_close(JNIEnv* env, jobject clazz, jint f
         return;
     }
 
-    int unmapResult = munmap(reinterpret_cast<void *>(ashmemAddr), ashmemSize);
+    int unmapResult = munmap(reinterpret_cast<void*>(ashmemAddr), ashmemSize);
     if (unmapResult < 0) {
         jniThrowException(env, "java/io/IOException", "munmap failed");
         return;
@@ -144,9 +140,8 @@ static void android_util_MemoryIntArray_close(JNIEnv* env, jobject clazz, jint f
     }
 }
 
-static jint android_util_MemoryIntArray_get(JNIEnv* env, jobject clazz,
-        jint fd, jlong address, jint index)
-{
+static jint android_util_MemoryIntArray_get(JNIEnv* env, jobject clazz, jint fd, jlong address,
+                                            jint index) {
     if (fd < 0) {
         jniThrowException(env, "java/io/IOException", "bad file descriptor");
         return -1;
@@ -166,9 +161,8 @@ static jint android_util_MemoryIntArray_get(JNIEnv* env, jobject clazz,
     return value->load(std::memory_order_relaxed);
 }
 
-static void android_util_MemoryIntArray_set(JNIEnv* env, jobject clazz,
-        jint fd, jlong address, jint index, jint newValue)
-{
+static void android_util_MemoryIntArray_set(JNIEnv* env, jobject clazz, jint fd, jlong address,
+                                            jint index, jint newValue) {
     if (fd < 0) {
         jniThrowException(env, "java/io/IOException", "bad file descriptor");
         return;
@@ -208,17 +202,16 @@ static jint android_util_MemoryIntArray_size(JNIEnv* env, jobject clazz, jint fd
 }
 
 static const JNINativeMethod methods[] = {
-    {"nativeCreate",  "(Ljava/lang/String;I)I", (void*)android_util_MemoryIntArray_create},
-    {"nativeOpen",  "(IZ)J", (void*)android_util_MemoryIntArray_open},
-    {"nativeClose", "(IJZ)V", (void*)android_util_MemoryIntArray_close},
-    {"nativeGet",  "(IJI)I", (void*)android_util_MemoryIntArray_get},
-    {"nativeSet", "(IJII)V", (void*) android_util_MemoryIntArray_set},
-    {"nativeSize", "(I)I", (void*) android_util_MemoryIntArray_size},
+        {"nativeCreate", "(Ljava/lang/String;I)I", (void*)android_util_MemoryIntArray_create},
+        {"nativeOpen", "(IZ)J", (void*)android_util_MemoryIntArray_open},
+        {"nativeClose", "(IJZ)V", (void*)android_util_MemoryIntArray_close},
+        {"nativeGet", "(IJI)I", (void*)android_util_MemoryIntArray_get},
+        {"nativeSet", "(IJII)V", (void*)android_util_MemoryIntArray_set},
+        {"nativeSize", "(I)I", (void*)android_util_MemoryIntArray_size},
 };
 
-int register_android_util_MemoryIntArray(JNIEnv* env)
-{
+int register_android_util_MemoryIntArray(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/util/MemoryIntArray", methods, NELEM(methods));
 }
 
-}
+}  // namespace android

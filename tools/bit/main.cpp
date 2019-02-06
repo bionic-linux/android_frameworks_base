@@ -50,24 +50,22 @@ struct Target {
 
     int testPassCount;
     int testFailCount;
-    int unknownFailureCount; // unknown failure == "Process crashed", etc.
+    int unknownFailureCount;  // unknown failure == "Process crashed", etc.
     bool actionsWithNoTests;
 
     Target(bool b, bool i, bool t, const string& p);
 };
 
 Target::Target(bool b, bool i, bool t, const string& p)
-    :build(b),
-     install(i),
-     test(t),
-     pattern(p),
-     testActionCount(0),
-     testPassCount(0),
-     testFailCount(0),
-     unknownFailureCount(0),
-     actionsWithNoTests(false)
-{
-}
+    : build(b),
+      install(i),
+      test(t),
+      pattern(p),
+      testActionCount(0),
+      testPassCount(0),
+      testFailCount(0),
+      unknownFailureCount(0),
+      actionsWithNoTests(false) {}
 
 /**
  * Command line options.
@@ -89,21 +87,11 @@ struct Options {
     ~Options();
 };
 
-Options::Options()
-    :runHelp(false),
-     runTab(false),
-     noRestart(false),
-     reboot(false),
-     targets()
-{
-}
+Options::Options() : runHelp(false), runTab(false), noRestart(false), reboot(false), targets() {}
 
-Options::~Options()
-{
-}
+Options::~Options() {}
 
-struct InstallApk
-{
+struct InstallApk {
     TrackedFile file;
     bool alwaysInstall;
     bool installed;
@@ -111,27 +99,16 @@ struct InstallApk
     InstallApk();
     InstallApk(const InstallApk& that);
     InstallApk(const string& filename, bool always);
-    ~InstallApk() {};
+    ~InstallApk(){};
 };
 
-InstallApk::InstallApk()
-{
-}
+InstallApk::InstallApk() {}
 
 InstallApk::InstallApk(const InstallApk& that)
-    :file(that.file),
-     alwaysInstall(that.alwaysInstall),
-     installed(that.installed)
-{
-}
+    : file(that.file), alwaysInstall(that.alwaysInstall), installed(that.installed) {}
 
 InstallApk::InstallApk(const string& filename, bool always)
-    :file(filename),
-     alwaysInstall(always),
-     installed(false)
-{
-}
-
+    : file(filename), alwaysInstall(always), installed(false) {}
 
 /**
  * Record for an test that is going to be launched.
@@ -158,11 +135,7 @@ struct TestAction {
     int failCount;
 };
 
-TestAction::TestAction()
-    :passCount(0),
-     failCount(0)
-{
-}
+TestAction::TestAction() : passCount(0), failCount(0) {}
 
 /**
  * Record for an activity that is going to be launched.
@@ -178,9 +151,8 @@ struct ActivityAction {
 /**
  * Callback class for the am instrument command.
  */
-class TestResults: public InstrumentationCallbacks
-{
-public:
+class TestResults : public InstrumentationCallbacks {
+  public:
     virtual void OnTestStatus(TestStatus& status);
     virtual void OnSessionStatus(SessionStatus& status);
 
@@ -194,23 +166,21 @@ public:
 
     string GetErrorMessage();
 
-private:
+  private:
     TestAction* m_currentAction;
     SessionStatus m_sessionStatus;
 };
 
-void
-TestResults::OnTestStatus(TestStatus& status)
-{
+void TestResults::OnTestStatus(TestStatus& status) {
     bool found;
-//    printf("OnTestStatus\n");
-//    status.PrintDebugString();
+    //    printf("OnTestStatus\n");
+    //    status.PrintDebugString();
     int32_t resultCode = status.has_results() ? status.result_code() : 0;
 
     if (!status.has_results()) {
         return;
     }
-    const ResultsBundle &results = status.results();
+    const ResultsBundle& results = status.results();
 
     int32_t currentTestNum = get_bundle_int(results, &found, "current", NULL);
     if (!found) {
@@ -255,8 +225,8 @@ TestResults::OnTestStatus(TestStatus& status)
         m_currentAction->failCount++;
         m_currentAction->target->testFailCount++;
         printf("%s\n%sFailed: %s:%s\\#%s%s\n", g_escapeClearLine, g_escapeRedBold,
-                m_currentAction->target->name.c_str(), className.c_str(),
-                testName.c_str(), g_escapeEndColor);
+               m_currentAction->target->name.c_str(), className.c_str(), testName.c_str(),
+               g_escapeEndColor);
 
         string stack = get_bundle_string(results, &found, "stack", NULL);
         if (found) {
@@ -265,31 +235,23 @@ TestResults::OnTestStatus(TestStatus& status)
     }
 }
 
-void
-TestResults::OnSessionStatus(SessionStatus& status)
-{
-    //status.PrintDebugString();
+void TestResults::OnSessionStatus(SessionStatus& status) {
+    // status.PrintDebugString();
     m_sessionStatus = status;
     if (m_currentAction && !IsSuccess()) {
         m_currentAction->target->unknownFailureCount++;
     }
 }
 
-void
-TestResults::SetCurrentAction(TestAction* action)
-{
+void TestResults::SetCurrentAction(TestAction* action) {
     m_currentAction = action;
 }
 
-bool
-TestResults::IsSuccess()
-{
-    return m_sessionStatus.result_code() == -1; // Activity.RESULT_OK.
+bool TestResults::IsSuccess() {
+    return m_sessionStatus.result_code() == -1;  // Activity.RESULT_OK.
 }
 
-string
-TestResults::GetErrorMessage()
-{
+string TestResults::GetErrorMessage() {
     bool found;
     string shortMsg = get_bundle_string(m_sessionStatus.results(), &found, "shortMsg", NULL);
     if (!found) {
@@ -298,12 +260,10 @@ TestResults::GetErrorMessage()
     return shortMsg;
 }
 
-
 /**
  * Prints the usage statement / help text.
  */
-static void
-print_usage(FILE* out) {
+static void print_usage(FILE* out) {
     fprintf(out, "usage: bit OPTIONS PATTERN\n");
     fprintf(out, "\n");
     fprintf(out, "  Build, sync and test android code.\n");
@@ -369,12 +329,17 @@ print_usage(FILE* out) {
     fprintf(out, "      Builds and installs CtsProtoTestCases.apk, and runs the testWrite\n");
     fprintf(out, "      test method on that class.\n");
     fprintf(out, "\n");
-    fprintf(out, "    bit CtsProtoTestCases:.ProtoOutputStreamBoolTest\\#testWrite,.ProtoOutputStreamBoolTest\\#testRepeated\n");
+    fprintf(out,
+            "    bit "
+            "CtsProtoTestCases:.ProtoOutputStreamBoolTest\\#testWrite,.ProtoOutputStreamBoolTest\\#"
+            "testRepeated\n");
     fprintf(out, "      Builds and installs CtsProtoTestCases.apk, and runs the testWrite\n");
     fprintf(out, "      and testRepeated test methods on that class.\n");
     fprintf(out, "\n");
     fprintf(out, "    bit CtsProtoTestCases:android.util.proto.cts.\n");
-    fprintf(out, "      Builds and installs CtsProtoTestCases.apk, and runs the tests in the java package\n");
+    fprintf(out,
+            "      Builds and installs CtsProtoTestCases.apk, and runs the tests in the java "
+            "package\n");
     fprintf(out, "      \"android.util.proto.cts\".\n");
     fprintf(out, "\n");
     fprintf(out, "  Launching an Activity\n");
@@ -408,16 +373,13 @@ print_usage(FILE* out) {
     fprintf(out, "\n");
 }
 
-
 /**
  * Sets the appropriate flag* variables. If there is a problem with the
  * commandline arguments, prints the help message and exits with an error.
  */
-static void
-parse_args(Options* options, int argc, const char** argv)
-{
+static void parse_args(Options* options, int argc, const char** argv) {
     // Help
-    if (argc == 2 && (strcmp(argv[1],  "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
+    if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
         options->runHelp = true;
         return;
     }
@@ -435,10 +397,10 @@ parse_args(Options* options, int argc, const char** argv)
     bool flagBuild = false;
     bool flagInstall = false;
     bool flagTest = false;
-    for (int i=1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
         string arg(argv[i]);
         if (arg[0] == '-') {
-            for (size_t j=1; j<arg.size(); j++) {
+            for (size_t j = 1; j < arg.size(); j++) {
                 switch (arg[j]) {
                     case '-':
                         break;
@@ -484,7 +446,7 @@ parse_args(Options* options, int argc, const char** argv)
             }
         } else {
             Target* target = new Target(flagBuild || !anyPhases, flagInstall || !anyPhases,
-                    flagTest || !anyPhases, arg);
+                                        flagTest || !anyPhases, arg);
             size_t colonPos = arg.find(':');
             if (colonPos == 0) {
                 fprintf(stderr, "Test / activity supplied without a module to build: %s\n",
@@ -496,7 +458,7 @@ parse_args(Options* options, int argc, const char** argv)
                 target->name = arg;
             } else {
                 target->name.assign(arg, 0, colonPos);
-                size_t beginPos = colonPos+1;
+                size_t beginPos = colonPos + 1;
                 size_t commaPos;
                 while (true) {
                     commaPos = arg.find(',', beginPos);
@@ -507,9 +469,9 @@ parse_args(Options* options, int argc, const char** argv)
                         break;
                     } else {
                         if (commaPos != beginPos) {
-                            target->actions.push_back(string(arg, beginPos, commaPos-beginPos));
+                            target->actions.push_back(string(arg, beginPos, commaPos - beginPos));
                         }
-                        beginPos = commaPos+1;
+                        beginPos = commaPos + 1;
                     }
                 }
             }
@@ -529,14 +491,14 @@ parse_args(Options* options, int argc, const char** argv)
  * Get an environment variable.
  * Exits with an error if it is unset or the empty string.
  */
-static string
-get_required_env(const char* name, bool quiet)
-{
+static string get_required_env(const char* name, bool quiet) {
     const char* value = getenv(name);
     if (value == NULL || value[0] == '\0') {
         if (!quiet) {
-            fprintf(stderr, "%s not set. Did you source build/envsetup.sh,"
-                    " run lunch and do a build?\n", name);
+            fprintf(stderr,
+                    "%s not set. Did you source build/envsetup.sh,"
+                    " run lunch and do a build?\n",
+                    name);
         }
         exit(1);
     }
@@ -549,9 +511,7 @@ get_required_env(const char* name, bool quiet)
  * This duplicates the logic in build/make/core/envsetup.mk (which hasn't changed since 2011)
  * so that we don't have to wait for get_build_var make invocation.
  */
-string
-get_out_dir()
-{
+string get_out_dir() {
     const char* out_dir = getenv("OUT_DIR");
     if (out_dir == NULL || out_dir[0] == '\0') {
         const char* common_base = getenv("OUT_DIR_COMMON_BASE");
@@ -581,9 +541,7 @@ get_out_dir()
  * Check that a system property on the device matches the expected value.
  * Exits with an error if they don't.
  */
-static void
-check_device_property(const string& property, const string& expected)
-{
+static void check_device_property(const string& property, const string& expected) {
     int err;
     string deviceValue = get_system_property(property, &err);
     check_error(err);
@@ -596,8 +554,7 @@ check_device_property(const string& property, const string& expected)
     }
 }
 
-static void
-chdir_or_exit(const char *path) {
+static void chdir_or_exit(const char* path) {
     // TODO: print_command("cd", path);
     if (0 != chdir(path)) {
         print_error("Error: Could not chdir: %s", path);
@@ -608,9 +565,7 @@ chdir_or_exit(const char *path) {
 /**
  * Run the build, install, and test actions.
  */
-bool
-run_phases(vector<Target*> targets, const Options& options)
-{
+bool run_phases(vector<Target*> targets, const Options& options) {
     int err = 0;
 
     //
@@ -631,11 +586,11 @@ run_phases(vector<Target*> targets, const Options& options)
     const string buildOut = get_out_dir();
 
     // Get the modules for the targets
-    map<string,Module> modules;
+    map<string, Module> modules;
     read_modules(buildOut, buildDevice, &modules, false);
-    for (size_t i=0; i<targets.size(); i++) {
+    for (size_t i = 0; i < targets.size(); i++) {
         Target* target = targets[i];
-        map<string,Module>::iterator mod = modules.find(target->name);
+        map<string, Module>::iterator mod = modules.find(target->name);
         if (mod != modules.end()) {
             target->module = mod->second;
         } else {
@@ -649,7 +604,7 @@ run_phases(vector<Target*> targets, const Options& options)
 
     // Choose the goals
     vector<string> goals;
-    for (size_t i=0; i<targets.size(); i++) {
+    for (size_t i = 0; i < targets.size(); i++) {
         Target* target = targets[i];
         if (target->build) {
             goals.push_back(target->name);
@@ -662,10 +617,10 @@ run_phases(vector<Target*> targets, const Options& options)
     bool syncSystem = false;
     bool alwaysSyncSystem = false;
     vector<InstallApk> installApks;
-    for (size_t i=0; i<targets.size(); i++) {
+    for (size_t i = 0; i < targets.size(); i++) {
         Target* target = targets[i];
         if (target->install) {
-            for (size_t j=0; j<target->module.installed.size(); j++) {
+            for (size_t j = 0; j < target->module.installed.size(); j++) {
                 const string& file = target->module.installed[j];
                 // System partition
                 if (starts_with(file, systemPath)) {
@@ -687,7 +642,7 @@ run_phases(vector<Target*> targets, const Options& options)
             }
         }
     }
-    map<string,FileInfo> systemFilesBefore;
+    map<string, FileInfo> systemFilesBefore;
     if (syncSystem && !alwaysSyncSystem) {
         get_directory_contents(systemPath, &systemFilesBefore);
     }
@@ -714,7 +669,7 @@ run_phases(vector<Target*> targets, const Options& options)
 
         if (!alwaysSyncSystem) {
             // If nothing changed and we weren't forced to sync, skip the reboot for speed.
-            map<string,FileInfo> systemFilesAfter;
+            map<string, FileInfo> systemFilesAfter;
             get_directory_contents(systemPath, &systemFilesAfter);
             skipSync = !directory_contents_differ(systemFilesBefore, systemFilesAfter);
         }
@@ -771,7 +726,7 @@ run_phases(vector<Target*> targets, const Options& options)
     // Install APKs
     if (installApks.size() > 0) {
         print_status("Installing APKs");
-        for (size_t i=0; i<installApks.size(); i++) {
+        for (size_t i = 0; i < installApks.size(); i++) {
             InstallApk& apk = installApks[i];
             if (!apk.file.fileInfo.exists || apk.file.HasChanged()) {
                 // It didn't exist before or it changed, so int needs install
@@ -792,10 +747,10 @@ run_phases(vector<Target*> targets, const Options& options)
     bool printedInspecting = false;
     vector<TestAction> testActions;
     vector<ActivityAction> activityActions;
-    for (size_t i=0; i<targets.size(); i++) {
+    for (size_t i = 0; i < targets.size(); i++) {
         Target* target = targets[i];
         if (target->test) {
-            for (size_t j=0; j<target->module.installed.size(); j++) {
+            for (size_t j = 0; j < target->module.installed.size(); j++) {
                 string filename = target->module.installed[j];
 
                 if (!ends_with(filename, ".apk")) {
@@ -811,11 +766,12 @@ run_phases(vector<Target*> targets, const Options& options)
                 err = inspect_apk(&apk, filename);
                 check_error(err);
 
-                for (size_t k=0; k<target->actions.size(); k++) {
+                for (size_t k = 0; k < target->actions.size(); k++) {
                     string actionString = target->actions[k];
                     if (actionString == "*") {
                         if (apk.runner.length() == 0) {
-                            print_error("Error: Test requested for apk that doesn't"
+                            print_error(
+                                    "Error: Test requested for apk that doesn't"
                                     " have an <instrumentation> tag: %s\n",
                                     target->module.name.c_str());
                             exit(1);
@@ -833,7 +789,8 @@ run_phases(vector<Target*> targets, const Options& options)
                         activityActions.push_back(action);
                     } else {
                         if (apk.runner.length() == 0) {
-                            print_error("Error: Test requested for apk that doesn't"
+                            print_error(
+                                    "Error: Test requested for apk that doesn't"
                                     " have an <instrumentation> tag: %s\n",
                                     target->module.name.c_str());
                             exit(1);
@@ -855,31 +812,31 @@ run_phases(vector<Target*> targets, const Options& options)
     TestResults testResults;
     if (testActions.size() > 0) {
         print_status("Running tests");
-        for (size_t i=0; i<testActions.size(); i++) {
+        for (size_t i = 0; i < testActions.size(); i++) {
             TestAction& action = testActions[i];
             testResults.SetCurrentAction(&action);
             err = run_instrumentation_test(action.packageName, action.runner, action.className,
-                    &testResults);
+                                           &testResults);
             check_error(err);
             if (action.passCount == 0 && action.failCount == 0) {
                 action.target->actionsWithNoTests = true;
             }
             int total = action.passCount + action.failCount;
-            printf("%sRan %d test%s for %s. ", g_escapeClearLine,
-                    total, total > 1 ? "s" : "", action.target->name.c_str());
+            printf("%sRan %d test%s for %s. ", g_escapeClearLine, total, total > 1 ? "s" : "",
+                   action.target->name.c_str());
             if (action.passCount == 0 && action.failCount == 0) {
                 printf("%s%d passed, %d failed%s\n", g_escapeYellowBold, action.passCount,
-                        action.failCount, g_escapeEndColor);
-            } else if (action.failCount >  0) {
+                       action.failCount, g_escapeEndColor);
+            } else if (action.failCount > 0) {
                 printf("%d passed, %s%d failed%s\n", action.passCount, g_escapeRedBold,
-                        action.failCount, g_escapeEndColor);
+                       action.failCount, g_escapeEndColor);
             } else {
                 printf("%s%d passed%s, %d failed\n", g_escapeGreenBold, action.passCount,
-                        g_escapeEndColor, action.failCount);
+                       g_escapeEndColor, action.failCount);
             }
             if (!testResults.IsSuccess()) {
                 printf("\n%sTest didn't finish successfully: %s%s\n", g_escapeRedBold,
-                        testResults.GetErrorMessage().c_str(), g_escapeEndColor);
+                       testResults.GetErrorMessage().c_str(), g_escapeEndColor);
             }
         }
     }
@@ -890,10 +847,10 @@ run_phases(vector<Target*> targets, const Options& options)
 
         if (activityActions.size() > 1) {
             print_warning("Multiple activities specified.  Will only start the first one:");
-            for (size_t i=0; i<activityActions.size(); i++) {
+            for (size_t i = 0; i < activityActions.size(); i++) {
                 ActivityAction& action = activityActions[i];
                 print_warning("   %s",
-                        pretty_component_name(action.packageName, action.className).c_str());
+                              pretty_component_name(action.packageName, action.className).c_str());
             }
         }
 
@@ -912,7 +869,7 @@ run_phases(vector<Target*> targets, const Options& options)
     // Build
     if (goals.size() > 0) {
         printf("%sBuilt:%s\n", g_escapeBold, g_escapeEndColor);
-        for (size_t i=0; i<goals.size(); i++) {
+        for (size_t i = 0; i < goals.size(); i++) {
             printf("   %s\n", goals[i].c_str());
         }
     }
@@ -927,7 +884,7 @@ run_phases(vector<Target*> targets, const Options& options)
     }
     if (installApks.size() > 0) {
         bool printedTitle = false;
-        for (size_t i=0; i<installApks.size(); i++) {
+        for (size_t i = 0; i < installApks.size(); i++) {
             const InstallApk& apk = installApks[i];
             if (apk.installed) {
                 if (!printedTitle) {
@@ -938,7 +895,7 @@ run_phases(vector<Target*> targets, const Options& options)
             }
         }
         printedTitle = false;
-        for (size_t i=0; i<installApks.size(); i++) {
+        for (size_t i = 0; i < installApks.size(); i++) {
             const InstallApk& apk = installApks[i];
             if (!apk.installed) {
                 if (!printedTitle) {
@@ -955,7 +912,7 @@ run_phases(vector<Target*> targets, const Options& options)
     if (testActions.size() > 0) {
         printf("%sRan tests:%s\n", g_escapeBold, g_escapeEndColor);
         size_t maxNameLength = 0;
-        for (size_t i=0; i<targets.size(); i++) {
+        for (size_t i = 0; i < targets.size(); i++) {
             Target* target = targets[i];
             if (target->test) {
                 size_t len = target->name.length();
@@ -965,25 +922,25 @@ run_phases(vector<Target*> targets, const Options& options)
             }
         }
         string padding(maxNameLength, ' ');
-        for (size_t i=0; i<targets.size(); i++) {
+        for (size_t i = 0; i < targets.size(); i++) {
             Target* target = targets[i];
             if (target->testActionCount > 0) {
                 printf("   %s%s", target->name.c_str(), padding.c_str() + target->name.length());
                 if (target->unknownFailureCount > 0) {
-                    printf("     %sUnknown failure, see above message.%s\n",
-                            g_escapeRedBold, g_escapeEndColor);
+                    printf("     %sUnknown failure, see above message.%s\n", g_escapeRedBold,
+                           g_escapeEndColor);
                     hasErrors = true;
                 } else if (target->actionsWithNoTests) {
                     printf("     %s%d passed, %d failed%s\n", g_escapeYellowBold,
-                            target->testPassCount, target->testFailCount, g_escapeEndColor);
+                           target->testPassCount, target->testFailCount, g_escapeEndColor);
                     hasErrors = true;
                 } else if (target->testFailCount > 0) {
                     printf("     %d passed, %s%d failed%s\n", target->testPassCount,
-                            g_escapeRedBold, target->testFailCount, g_escapeEndColor);
+                           g_escapeRedBold, target->testFailCount, g_escapeEndColor);
                     hasErrors = true;
                 } else {
                     printf("     %s%d passed%s, %d failed\n", g_escapeGreenBold,
-                            target->testPassCount, g_escapeEndColor, target->testFailCount);
+                           target->testPassCount, g_escapeEndColor, target->testFailCount);
                 }
             }
         }
@@ -1001,9 +958,7 @@ run_phases(vector<Target*> targets, const Options& options)
 /**
  * Implement tab completion of the target names from the all modules file.
  */
-void
-run_tab_completion(const string& word)
-{
+void run_tab_completion(const string& word) {
     const string buildTop = get_required_env("ANDROID_BUILD_TOP", true);
     const string buildProduct = get_required_env("TARGET_PRODUCT", false);
     const string buildOut = get_out_dir();
@@ -1012,10 +967,10 @@ run_tab_completion(const string& word)
 
     string buildDevice = sniff_device_name(buildOut, buildProduct);
 
-    map<string,Module> modules;
+    map<string, Module> modules;
     read_modules(buildOut, buildDevice, &modules, true);
 
-    for (map<string,Module>::const_iterator it = modules.begin(); it != modules.end(); it++) {
+    for (map<string, Module>::const_iterator it = modules.begin(); it != modules.end(); it++) {
         if (starts_with(it->first, word)) {
             printf("%s\n", it->first.c_str());
         }
@@ -1025,9 +980,7 @@ run_tab_completion(const string& word)
 /**
  * Main entry point.
  */
-int
-main(int argc, const char** argv)
-{
+int main(int argc, const char** argv) {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     init_print();
 
@@ -1048,4 +1001,3 @@ main(int argc, const char** argv)
 
     return 0;
 }
-

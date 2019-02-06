@@ -11,8 +11,8 @@
 
 #include <utils/KeyedVector.h>
 #include <utils/String8.h>
-#include "FileFinder.h"
 #include "CacheUpdater.h"
+#include "FileFinder.h"
 
 using namespace android;
 
@@ -27,7 +27,7 @@ using namespace android;
  *      Then update the cache by calling crunch.
  */
 class CrunchCache {
-public:
+  public:
     // Constructor
     CrunchCache(String8 sourcePath, String8 destPath, FileFinder* ff);
 
@@ -52,9 +52,9 @@ public:
      *      The function then returns the number of files changed in cache
      *      (counting deletions).
      */
-    size_t crunch(CacheUpdater* cu, bool forceOverwrite=false);
+    size_t crunch(CacheUpdater* cu, bool forceOverwrite = false);
 
-private:
+  private:
     /** loadFiles is a wrapper to the FileFinder that places matching
      * files into mSourceFiles and mDestFiles.
      *
@@ -92,11 +92,11 @@ private:
 
     // Each vector of paths contains one entry per PNG file encountered.
     // Each entry consists of a path pointing to that PNG.
-    DefaultKeyedVector<String8,time_t> mSourceFiles;
-    DefaultKeyedVector<String8,time_t> mDestFiles;
+    DefaultKeyedVector<String8, time_t> mSourceFiles;
+    DefaultKeyedVector<String8, time_t> mDestFiles;
 
     // Pointer to a FileFinder to use
     FileFinder* mFileFinder;
 };
 
-#endif // CRUNCHCACHE_H
+#endif  // CRUNCHCACHE_H

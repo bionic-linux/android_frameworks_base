@@ -38,11 +38,10 @@ void MetricProducer::onMatchedLogEventLocked(const size_t matcherIndex, const Lo
         for (const auto& link : mMetric2ConditionLinks) {
             getDimensionForCondition(event.getValues(), link, &conditionKey[link.conditionId]);
         }
-        auto conditionState =
-            mWizard->query(mConditionTrackerIndex, conditionKey, mDimensionsInCondition,
-                           !mSameConditionDimensionsInTracker,
-                           !mHasLinksToAllConditionDimensionsInTracker,
-                           &dimensionKeysInCondition);
+        auto conditionState = mWizard->query(
+                mConditionTrackerIndex, conditionKey, mDimensionsInCondition,
+                !mSameConditionDimensionsInTracker, !mHasLinksToAllConditionDimensionsInTracker,
+                &dimensionKeysInCondition);
         condition = (conditionState == ConditionState::kTrue);
     } else {
         condition = mCondition;
@@ -57,15 +56,12 @@ void MetricProducer::onMatchedLogEventLocked(const size_t matcherIndex, const Lo
     MetricDimensionKey metricKey(dimensionInWhat, DEFAULT_DIMENSION_KEY);
     for (const auto& conditionDimensionKey : dimensionKeysInCondition) {
         metricKey.setDimensionKeyInCondition(conditionDimensionKey);
-        onMatchedLogEventInternalLocked(
-                matcherIndex, metricKey, conditionKey, condition, event);
+        onMatchedLogEventInternalLocked(matcherIndex, metricKey, conditionKey, condition, event);
     }
     if (dimensionKeysInCondition.empty()) {
-        onMatchedLogEventInternalLocked(
-                matcherIndex, metricKey, conditionKey, condition, event);
+        onMatchedLogEventInternalLocked(matcherIndex, metricKey, conditionKey, condition, event);
     }
-
- }
+}
 
 }  // namespace statsd
 }  // namespace os

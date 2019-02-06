@@ -25,9 +25,9 @@ using namespace android;
  * Cpu frequency parser, parses text in /sys/devices/system/cpu/cpufreq/all_time_in_state
  */
 class CpuFreqParser : public TextParserBase {
-public:
-    CpuFreqParser() : TextParserBase(String8("CpuFreqParser")) {};
-    ~CpuFreqParser() {};
+  public:
+    CpuFreqParser() : TextParserBase(String8("CpuFreqParser")){};
+    ~CpuFreqParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };

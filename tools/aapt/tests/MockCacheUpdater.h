@@ -10,31 +10,25 @@
 using namespace android;
 
 class MockCacheUpdater : public CacheUpdater {
-public:
-
-    MockCacheUpdater()
-        : deleteCount(0), processCount(0) { };
+  public:
+    MockCacheUpdater() : deleteCount(0), processCount(0){};
 
     // Make sure all the directories along this path exist
-    virtual void ensureDirectoriesExist(String8 path)
-    {
-        // Nothing to do
+    virtual void ensureDirectoriesExist(String8 path){
+            // Nothing to do
     };
 
     // Delete a file
-    virtual void deleteFile(String8 path) {
-        deleteCount++;
-    };
+    virtual void deleteFile(String8 path) { deleteCount++; };
 
     // Process an image from source out to dest
-    virtual void processImage(String8 source, String8 dest) {
-        processCount++;
-    };
+    virtual void processImage(String8 source, String8 dest) { processCount++; };
 
     // DATA MEMBERS
     int deleteCount;
     int processCount;
-private:
+
+  private:
 };
 
-#endif // MOCKCACHEUPDATER_H
+#endif  // MOCKCACHEUPDATER_H

@@ -92,7 +92,8 @@ constexpr const char* kAaptXmlNs = "http://schemas.android.com/tools/aapt";
 /** A default noop diagnostics context. */
 class NoopDiagnostics : public IDiagnostics {
  public:
-  void Log(Level level, DiagMessageActual& actualMsg) override {}
+  void Log(Level level, DiagMessageActual& actualMsg) override {
+  }
 };
 NoopDiagnostics noop_;
 
@@ -603,13 +604,13 @@ bool ScreenDensityGroupTagHandler(PostProcessingConfiguration* config, Element* 
     bool parsed = ConfigDescription::Parse(label, &config_descriptor);
     if (parsed &&
         (config_descriptor.CopyWithoutSdkVersion().diff(ConfigDescription::DefaultConfig()) ==
-            android::ResTable_config::CONFIG_DENSITY)) {
+         android::ResTable_config::CONFIG_DENSITY)) {
       // Copy the density with the minimum SDK version stripped out.
       group.push_back(config_descriptor.CopyWithoutSdkVersion());
     } else {
-      diag->Error(DiagMessage()
-                      << "Could not parse config descriptor for empty screen-density-group: "
-                      << label);
+      diag->Error(
+          DiagMessage() << "Could not parse config descriptor for empty screen-density-group: "
+                        << label);
       valid = false;
     }
 
@@ -670,13 +671,13 @@ bool LocaleGroupTagHandler(PostProcessingConfiguration* config, Element* root_el
     bool parsed = ConfigDescription::Parse(label, &config_descriptor);
     if (parsed &&
         (config_descriptor.CopyWithoutSdkVersion().diff(ConfigDescription::DefaultConfig()) ==
-            android::ResTable_config::CONFIG_LOCALE)) {
+         android::ResTable_config::CONFIG_LOCALE)) {
       // Copy the locale with the minimum SDK version stripped out.
       group.push_back(config_descriptor.CopyWithoutSdkVersion());
     } else {
-      diag->Error(DiagMessage()
-                      << "Could not parse config descriptor for empty screen-density-group: "
-                      << label);
+      diag->Error(
+          DiagMessage() << "Could not parse config descriptor for empty screen-density-group: "
+                        << label);
       valid = false;
     }
 

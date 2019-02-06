@@ -26,9 +26,9 @@ extern "C" {
 
 // TODO: Change this to an opaque handle?
 typedef struct {
-  void* value;
-  int type;
-  int count;
+    void* value;
+    int type;
+    int count;
 } Value;
 
 // TODO: Probably should make these const Value*?
@@ -74,7 +74,7 @@ int GetValueCount(Value value);
 void ReleaseValue(Value* value);
 
 #ifdef __cplusplus
-} // extern "C"
+}  // extern "C"
 #endif
 
 #endif  // ANDROID_FILTERFW_FILTER_VALUE_H

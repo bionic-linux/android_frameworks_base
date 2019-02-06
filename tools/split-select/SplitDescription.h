@@ -17,8 +17,8 @@
 #ifndef H_ANDROID_SPLIT_SPLIT_DESCRIPTION
 #define H_ANDROID_SPLIT_SPLIT_DESCRIPTION
 
-#include "aapt/ConfigDescription.h"
 #include "Abi.h"
+#include "aapt/ConfigDescription.h"
 
 #include <utils/String8.h>
 #include <utils/Vector.h>
@@ -45,7 +45,7 @@ struct SplitDescription {
 };
 
 ssize_t parseAbi(const android::Vector<android::String8>& parts, const ssize_t index,
-        SplitDescription* outSplit);
+                 SplitDescription* outSplit);
 
 bool SplitDescription::operator<(const SplitDescription& rhs) const {
     return compare(rhs) < 0;
@@ -59,6 +59,6 @@ bool SplitDescription::operator!=(const SplitDescription& rhs) const {
     return compare(rhs) != 0;
 }
 
-} // namespace split
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_SPLIT_DESCRIPTION
+#endif  // H_ANDROID_SPLIT_SPLIT_DESCRIPTION

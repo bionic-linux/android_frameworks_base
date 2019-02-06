@@ -27,8 +27,7 @@ namespace android {
 extern AAssetManager* NdkAssetManagerForJavaObject(JNIEnv* env, jobject jassetmanager);
 extern Guarded<AssetManager2>* AssetManagerForJavaObject(JNIEnv* env, jobject jassetmanager);
 extern Guarded<AssetManager2>* AssetManagerForNdkAssetManager(AAssetManager* assetmanager);
-struct assetmanager_offsets_t
-{
+struct assetmanager_offsets_t {
     jfieldID mObject;
 };
 extern assetmanager_offsets_t gAssetManagerOffsets;

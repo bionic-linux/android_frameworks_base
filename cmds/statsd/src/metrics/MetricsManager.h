@@ -36,9 +36,9 @@ namespace statsd {
 // A MetricsManager is responsible for managing metrics from one single config source.
 class MetricsManager : public PackageInfoListener {
 public:
-    MetricsManager(const ConfigKey& configKey, const StatsdConfig& config,
-                   const int64_t timeBaseNs, const int64_t currentTimeNs,
-                   const sp<UidMap>& uidMap, const sp<AlarmMonitor>& anomalyAlarmMonitor,
+    MetricsManager(const ConfigKey& configKey, const StatsdConfig& config, const int64_t timeBaseNs,
+                   const int64_t currentTimeNs, const sp<UidMap>& uidMap,
+                   const sp<AlarmMonitor>& anomalyAlarmMonitor,
                    const sp<AlarmMonitor>& periodicAlarmMonitor);
 
     virtual ~MetricsManager();
@@ -49,12 +49,12 @@ public:
     void onLogEvent(const LogEvent& event);
 
     void onAnomalyAlarmFired(
-        const int64_t& timestampNs,
-        unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& alarmSet);
+            const int64_t& timestampNs,
+            unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& alarmSet);
 
     void onPeriodicAlarmFired(
-        const int64_t& timestampNs,
-        unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& alarmSet);
+            const int64_t& timestampNs,
+            unordered_set<sp<const InternalAlarm>, SpHash<InternalAlarm>>& alarmSet);
 
     void notifyAppUpgrade(const int64_t& eventTimeNs, const string& apk, const int uid,
                           const int64_t version) override;
@@ -103,9 +103,8 @@ public:
 
     virtual void dropData(const int64_t dropTimeNs);
 
-    virtual void onDumpReport(const int64_t dumpTimeNs,
-                              const bool include_current_partial_bucket,
-                              std::set<string> *str_set,
+    virtual void onDumpReport(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                              std::set<string>* str_set,
                               android::util::ProtoOutputStream* protoOutput);
 
     // Computes the total byte size of all metrics managed by a single config source.
@@ -114,7 +113,9 @@ public:
 
 private:
     // For test only.
-    inline int64_t getTtlEndNs() const { return mTtlEndNs; }
+    inline int64_t getTtlEndNs() const {
+        return mTtlEndNs;
+    }
 
     const ConfigKey mConfigKey;
 
@@ -218,7 +219,8 @@ private:
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_SimpleCondition);
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_NoLink_AND_CombinationCondition);
     FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_Link_AND_CombinationCondition);
-    FRIEND_TEST(DimensionInConditionE2eTest, TestDurationMetric_PartialLink_AND_CombinationCondition);
+    FRIEND_TEST(DimensionInConditionE2eTest,
+                TestDurationMetric_PartialLink_AND_CombinationCondition);
 
     FRIEND_TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_single_bucket);
     FRIEND_TEST(AnomalyDetectionE2eTest, TestSlicedCountMetric_multiple_buckets);

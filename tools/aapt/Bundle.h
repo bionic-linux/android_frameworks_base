@@ -7,12 +7,12 @@
 #define __BUNDLE_H
 
 #include <stdlib.h>
-#include <utils/Log.h>
-#include <utils/threads.h>
-#include <utils/List.h>
 #include <utils/Errors.h>
+#include <utils/List.h>
+#include <utils/Log.h>
 #include <utils/String8.h>
 #include <utils/Vector.h>
+#include <utils/threads.h>
 
 #include "SdkConstants.h"
 
@@ -45,32 +45,62 @@ typedef enum PseudolocalizationMethod {
  * Bundle of goodies, including everything specified on the command line.
  */
 class Bundle {
-public:
+  public:
     Bundle(void)
-        : mCmd(kCommandUnknown), mVerbose(false), mAndroidList(false),
-          mForce(false), mGrayscaleTolerance(0), mMakePackageDirs(false),
-          mUpdate(false), mExtending(false),
-          mRequireLocalization(false), mPseudolocalize(NO_PSEUDOLOCALIZATION),
-          mWantUTF16(false), mValues(false), mIncludeMetaData(false),
-          mCompressionMethod(0), mJunkPath(false), mOutputAPKFile(NULL),
-          mManifestPackageNameOverride(NULL), mInstrumentationPackageNameOverride(NULL),
-          mAutoAddOverlay(false), mGenDependencies(false), mNoVersionVectors(false),
+        : mCmd(kCommandUnknown),
+          mVerbose(false),
+          mAndroidList(false),
+          mForce(false),
+          mGrayscaleTolerance(0),
+          mMakePackageDirs(false),
+          mUpdate(false),
+          mExtending(false),
+          mRequireLocalization(false),
+          mPseudolocalize(NO_PSEUDOLOCALIZATION),
+          mWantUTF16(false),
+          mValues(false),
+          mIncludeMetaData(false),
+          mCompressionMethod(0),
+          mJunkPath(false),
+          mOutputAPKFile(NULL),
+          mManifestPackageNameOverride(NULL),
+          mInstrumentationPackageNameOverride(NULL),
+          mAutoAddOverlay(false),
+          mGenDependencies(false),
+          mNoVersionVectors(false),
           mNoVersionTransitions(false),
-          mCrunchedOutputDir(NULL), mProguardFile(NULL), mMainDexProguardFile(NULL),
-          mAndroidManifestFile(NULL), mPublicOutputFile(NULL),
-          mRClassDir(NULL), mResourceIntermediatesDir(NULL), mManifestMinSdkVersion(NULL),
-          mMinSdkVersion(NULL), mTargetSdkVersion(NULL), mMaxSdkVersion(NULL),
-          mVersionCode(NULL), mVersionName(NULL), mReplaceVersion(false), mCustomPackage(NULL),
-          mExtraPackages(NULL), mMaxResVersion(NULL), mDebugMode(false), mNonConstantId(false),
+          mCrunchedOutputDir(NULL),
+          mProguardFile(NULL),
+          mMainDexProguardFile(NULL),
+          mAndroidManifestFile(NULL),
+          mPublicOutputFile(NULL),
+          mRClassDir(NULL),
+          mResourceIntermediatesDir(NULL),
+          mManifestMinSdkVersion(NULL),
+          mMinSdkVersion(NULL),
+          mTargetSdkVersion(NULL),
+          mMaxSdkVersion(NULL),
+          mVersionCode(NULL),
+          mVersionName(NULL),
+          mReplaceVersion(false),
+          mCustomPackage(NULL),
+          mExtraPackages(NULL),
+          mMaxResVersion(NULL),
+          mDebugMode(false),
+          mNonConstantId(false),
           mSkipSymbolsWithoutDefaultLocalization(false),
-          mProduct(NULL), mUseCrunchCache(false), mErrorOnFailedInsert(false),
-          mErrorOnMissingConfigEntry(false), mOutputTextSymbols(NULL),
-          mSingleCrunchInputFile(NULL), mSingleCrunchOutputFile(NULL),
+          mProduct(NULL),
+          mUseCrunchCache(false),
+          mErrorOnFailedInsert(false),
+          mErrorOnMissingConfigEntry(false),
+          mOutputTextSymbols(NULL),
+          mSingleCrunchInputFile(NULL),
+          mSingleCrunchOutputFile(NULL),
           mBuildSharedLibrary(false),
           mBuildAppAsSharedLibrary(false),
           mCompileSdkVersion(0),
-          mArgc(0), mArgv(NULL)
-        {}
+          mArgc(0),
+          mArgv(NULL) {}
     ~Bundle(void) {}
 
     /*
@@ -90,7 +120,7 @@ public:
     bool getForce(void) const { return mForce; }
     void setForce(bool val) { mForce = val; }
     void setGrayscaleTolerance(int val) { mGrayscaleTolerance = val; }
-    int  getGrayscaleTolerance() const { return mGrayscaleTolerance; }
+    int getGrayscaleTolerance() const { return mGrayscaleTolerance; }
     bool getMakePackageDirs(void) const { return mMakePackageDirs; }
     void setMakePackageDirs(bool val) { mMakePackageDirs = val; }
     bool getUpdate(void) const { return mUpdate; }
@@ -113,9 +143,13 @@ public:
     const char* getOutputAPKFile() const { return mOutputAPKFile; }
     void setOutputAPKFile(const char* val) { mOutputAPKFile = val; }
     const char* getManifestPackageNameOverride() const { return mManifestPackageNameOverride; }
-    void setManifestPackageNameOverride(const char * val) { mManifestPackageNameOverride = val; }
-    const char* getInstrumentationPackageNameOverride() const { return mInstrumentationPackageNameOverride; }
-    void setInstrumentationPackageNameOverride(const char * val) { mInstrumentationPackageNameOverride = val; }
+    void setManifestPackageNameOverride(const char* val) { mManifestPackageNameOverride = val; }
+    const char* getInstrumentationPackageNameOverride() const {
+        return mInstrumentationPackageNameOverride;
+    }
+    void setInstrumentationPackageNameOverride(const char* val) {
+        mInstrumentationPackageNameOverride = val;
+    }
     bool getAutoAddOverlay() { return mAutoAddOverlay; }
     void setAutoAddOverlay(bool val) { mAutoAddOverlay = val; }
     bool getGenDependencies() { return mGenDependencies; }
@@ -125,7 +159,9 @@ public:
     bool getErrorOnMissingConfigEntry() { return mErrorOnMissingConfigEntry; }
     void setErrorOnMissingConfigEntry(bool val) { mErrorOnMissingConfigEntry = val; }
     const android::String8& getCompileSdkVersionCodename() { return mCompileSdkVersionCodename; }
-    void setCompileSdkVersionCodename(const android::String8& codename) { mCompileSdkVersionCodename = codename; }
+    void setCompileSdkVersionCodename(const android::String8& codename) {
+        mCompileSdkVersionCodename = codename;
+    }
     int getCompileSdkVersion() { return mCompileSdkVersion; }
     void setCompileSdkVersion(int version) { mCompileSdkVersion = version; }
     const android::String8& getPlatformBuildVersionCode() { return mPlatformVersionCode; }
@@ -139,23 +175,23 @@ public:
         mPrivateSymbolsPackage = package;
     }
 
-    bool getUTF16StringsOption() {
-        return mWantUTF16 || !isMinSdkAtLeast(SDK_FROYO);
-    }
+    bool getUTF16StringsOption() { return mWantUTF16 || !isMinSdkAtLeast(SDK_FROYO); }
 
     /*
      * Input options.
      */
     const android::Vector<const char*>& getAssetSourceDirs() const { return mAssetSourceDirs; }
-    void addAssetSourceDir(const char* dir) { mAssetSourceDirs.insertAt(dir,0); }
+    void addAssetSourceDir(const char* dir) { mAssetSourceDirs.insertAt(dir, 0); }
     const char* getCrunchedOutputDir() const { return mCrunchedOutputDir; }
     void setCrunchedOutputDir(const char* dir) { mCrunchedOutputDir = dir; }
     const char* getProguardFile() const { return mProguardFile; }
     void setProguardFile(const char* file) { mProguardFile = file; }
     const char* getMainDexProguardFile() const { return mMainDexProguardFile; }
     void setMainDexProguardFile(const char* file) { mMainDexProguardFile = file; }
-    const android::Vector<const char*>& getResourceSourceDirs() const { return mResourceSourceDirs; }
-    void addResourceSourceDir(const char* dir) { mResourceSourceDirs.insertAt(dir,0); }
+    const android::Vector<const char*>& getResourceSourceDirs() const {
+        return mResourceSourceDirs;
+    }
+    void addResourceSourceDir(const char* dir) { mResourceSourceDirs.insertAt(dir, 0); }
     const char* getAndroidManifestFile() const { return mAndroidManifestFile; }
     void setAndroidManifestFile(const char* file) { mAndroidManifestFile = file; }
     const char* getPublicOutputFile() const { return mPublicOutputFile; }
@@ -163,34 +199,47 @@ public:
     const char* getRClassDir() const { return mRClassDir; }
     void setRClassDir(const char* dir) { mRClassDir = dir; }
     const android::String8& getConfigurations() const { return mConfigurations; }
-    void addConfigurations(const char* val) { if (mConfigurations.size() > 0) { mConfigurations.append(","); mConfigurations.append(val); } else { mConfigurations = val; } }
+    void addConfigurations(const char* val) {
+        if (mConfigurations.size() > 0) {
+            mConfigurations.append(",");
+            mConfigurations.append(val);
+        } else {
+            mConfigurations = val;
+        }
+    }
     const android::String8& getPreferredDensity() const { return mPreferredDensity; }
     void setPreferredDensity(const char* val) { mPreferredDensity = val; }
-    void addSplitConfigurations(const char* val) { mPartialConfigurations.add(android::String8(val)); }
-    const android::Vector<android::String8>& getSplitConfigurations() const { return mPartialConfigurations; }
+    void addSplitConfigurations(const char* val) {
+        mPartialConfigurations.add(android::String8(val));
+    }
+    const android::Vector<android::String8>& getSplitConfigurations() const {
+        return mPartialConfigurations;
+    }
     const char* getResourceIntermediatesDir() const { return mResourceIntermediatesDir; }
     void setResourceIntermediatesDir(const char* dir) { mResourceIntermediatesDir = dir; }
     const android::Vector<android::String8>& getPackageIncludes() const { return mPackageIncludes; }
     void addPackageInclude(const char* file) { mPackageIncludes.add(android::String8(file)); }
     const android::Vector<const char*>& getJarFiles() const { return mJarFiles; }
     void addJarFile(const char* file) { mJarFiles.add(file); }
-    const android::Vector<const char*>& getNoCompressExtensions() const { return mNoCompressExtensions; }
+    const android::Vector<const char*>& getNoCompressExtensions() const {
+        return mNoCompressExtensions;
+    }
     void addNoCompressExtension(const char* ext) { mNoCompressExtensions.add(ext); }
     void setFeatureOfPackage(const char* str) { mFeatureOfPackage = str; }
     const android::String8& getFeatureOfPackage() const { return mFeatureOfPackage; }
     void setFeatureAfterPackage(const char* str) { mFeatureAfterPackage = str; }
     const android::String8& getFeatureAfterPackage() const { return mFeatureAfterPackage; }
 
-    const char*  getManifestMinSdkVersion() const { return mManifestMinSdkVersion; }
-    void setManifestMinSdkVersion(const char*  val) { mManifestMinSdkVersion = val; }
-    const char*  getMinSdkVersion() const { return mMinSdkVersion; }
-    void setMinSdkVersion(const char*  val) { mMinSdkVersion = val; }
-    const char*  getTargetSdkVersion() const { return mTargetSdkVersion; }
-    void setTargetSdkVersion(const char*  val) { mTargetSdkVersion = val; }
-    const char*  getMaxSdkVersion() const { return mMaxSdkVersion; }
-    void setMaxSdkVersion(const char*  val) { mMaxSdkVersion = val; }
-    const char*  getVersionCode() const { return mVersionCode; }
-    void setVersionCode(const char*  val) { mVersionCode = val; }
+    const char* getManifestMinSdkVersion() const { return mManifestMinSdkVersion; }
+    void setManifestMinSdkVersion(const char* val) { mManifestMinSdkVersion = val; }
+    const char* getMinSdkVersion() const { return mMinSdkVersion; }
+    void setMinSdkVersion(const char* val) { mMinSdkVersion = val; }
+    const char* getTargetSdkVersion() const { return mTargetSdkVersion; }
+    void setTargetSdkVersion(const char* val) { mTargetSdkVersion = val; }
+    const char* getMaxSdkVersion() const { return mMaxSdkVersion; }
+    void setMaxSdkVersion(const char* val) { mMaxSdkVersion = val; }
+    const char* getVersionCode() const { return mVersionCode; }
+    void setVersionCode(const char* val) { mVersionCode = val; }
     const char* getVersionName() const { return mVersionName; }
     void setVersionName(const char* val) { mVersionName = val; }
     bool getReplaceVersion() { return mReplaceVersion; }
@@ -202,15 +251,19 @@ public:
     const char* getExtraPackages() const { return mExtraPackages; }
     void setExtraPackages(const char* val) { mExtraPackages = val; }
     const char* getMaxResVersion() const { return mMaxResVersion; }
-    void setMaxResVersion(const char * val) { mMaxResVersion = val; }
+    void setMaxResVersion(const char* val) { mMaxResVersion = val; }
     bool getDebugMode() const { return mDebugMode; }
     void setDebugMode(bool val) { mDebugMode = val; }
     bool getNonConstantId() const { return mNonConstantId; }
     void setNonConstantId(bool val) { mNonConstantId = val; }
-    bool getSkipSymbolsWithoutDefaultLocalization() const { return mSkipSymbolsWithoutDefaultLocalization; }
-    void setSkipSymbolsWithoutDefaultLocalization(bool val) { mSkipSymbolsWithoutDefaultLocalization = val; }
+    bool getSkipSymbolsWithoutDefaultLocalization() const {
+        return mSkipSymbolsWithoutDefaultLocalization;
+    }
+    void setSkipSymbolsWithoutDefaultLocalization(bool val) {
+        mSkipSymbolsWithoutDefaultLocalization = val;
+    }
     const char* getProduct() const { return mProduct; }
-    void setProduct(const char * val) { mProduct = val; }
+    void setProduct(const char* val) { mProduct = val; }
     void setUseCrunchCache(bool val) { mUseCrunchCache = val; }
     bool getUseCrunchCache() const { return mUseCrunchCache; }
     const char* getOutputTextSymbols() const { return mOutputTextSymbols; }
@@ -265,7 +318,7 @@ public:
          * the command line. If neither, it's not available since
          * the minimum SDK version is assumed to be 1.
          */
-        const char *minVer;
+        const char* minVer;
         if (mManifestMinSdkVersion != NULL) {
             minVer = mManifestMinSdkVersion;
         } else if (mMinSdkVersion != NULL) {
@@ -274,7 +327,7 @@ public:
             return false;
         }
 
-        char *end;
+        char* end;
         int minSdkNum = (int)strtol(minVer, &end, 0);
         if (*end == '\0') {
             if (minSdkNum < desired) {
@@ -284,30 +337,30 @@ public:
         return true;
     }
 
-private:
+  private:
     /* commands & modifiers */
-    Command     mCmd;
-    bool        mVerbose;
-    bool        mAndroidList;
-    bool        mForce;
-    int         mGrayscaleTolerance;
-    bool        mMakePackageDirs;
-    bool        mUpdate;
-    bool        mExtending;
-    bool        mRequireLocalization;
-    short       mPseudolocalize;
-    bool        mWantUTF16;
-    bool        mValues;
-    bool        mIncludeMetaData;
-    int         mCompressionMethod;
-    bool        mJunkPath;
+    Command mCmd;
+    bool mVerbose;
+    bool mAndroidList;
+    bool mForce;
+    int mGrayscaleTolerance;
+    bool mMakePackageDirs;
+    bool mUpdate;
+    bool mExtending;
+    bool mRequireLocalization;
+    short mPseudolocalize;
+    bool mWantUTF16;
+    bool mValues;
+    bool mIncludeMetaData;
+    int mCompressionMethod;
+    bool mJunkPath;
     const char* mOutputAPKFile;
     const char* mManifestPackageNameOverride;
     const char* mInstrumentationPackageNameOverride;
-    bool        mAutoAddOverlay;
-    bool        mGenDependencies;
-    bool        mNoVersionVectors;
-    bool        mNoVersionTransitions;
+    bool mAutoAddOverlay;
+    bool mGenDependencies;
+    bool mNoVersionVectors;
+    bool mNoVersionTransitions;
     const char* mCrunchedOutputDir;
     const char* mProguardFile;
     const char* mMainDexProguardFile;
@@ -333,37 +386,36 @@ private:
     const char* mMaxSdkVersion;
     const char* mVersionCode;
     const char* mVersionName;
-    bool        mReplaceVersion;
+    bool mReplaceVersion;
     const char* mCustomPackage;
     const char* mExtraPackages;
     const char* mMaxResVersion;
-    bool        mDebugMode;
-    bool        mNonConstantId;
-    bool        mSkipSymbolsWithoutDefaultLocalization;
+    bool mDebugMode;
+    bool mNonConstantId;
+    bool mSkipSymbolsWithoutDefaultLocalization;
     const char* mProduct;
-    bool        mUseCrunchCache;
-    bool        mErrorOnFailedInsert;
-    bool        mErrorOnMissingConfigEntry;
+    bool mUseCrunchCache;
+    bool mErrorOnFailedInsert;
+    bool mErrorOnMissingConfigEntry;
     const char* mOutputTextSymbols;
     const char* mSingleCrunchInputFile;
     const char* mSingleCrunchOutputFile;
-    bool        mBuildSharedLibrary;
-    bool        mBuildAppAsSharedLibrary;
-    int         mCompileSdkVersion;
+    bool mBuildSharedLibrary;
+    bool mBuildAppAsSharedLibrary;
+    int mCompileSdkVersion;
     android::String8 mCompileSdkVersionCodename;
     android::String8 mPlatformVersionCode;
     android::String8 mPlatformVersionName;
     android::String8 mPrivateSymbolsPackage;
 
     /* file specification */
-    int         mArgc;
+    int mArgc;
     char* const* mArgv;
 
 #if 0
     /* misc stuff */
     int         mPackageCount;
 #endif
-
 };
 
-#endif // __BUNDLE_H
+#endif  // __BUNDLE_H

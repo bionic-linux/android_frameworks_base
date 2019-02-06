@@ -90,10 +90,8 @@ class ColorValidator {
 // };
 //
 template <typename ImageLine>
-static bool FillRanges(const ImageLine* image_line,
-                       const ColorValidator* color_validator,
-                       std::vector<Range>* primary_ranges,
-                       std::vector<Range>* secondary_ranges,
+static bool FillRanges(const ImageLine* image_line, const ColorValidator* color_validator,
+                       std::vector<Range>* primary_ranges, std::vector<Range>* secondary_ranges,
                        std::string* out_err) {
   const int32_t length = image_line->GetLength();
 
@@ -133,11 +131,13 @@ static bool FillRanges(const ImageLine* image_line,
  */
 class HorizontalImageLine {
  public:
-  explicit HorizontalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset,
-                               int32_t length)
-      : rows_(rows), xoffset_(xoffset), yoffset_(yoffset), length_(length) {}
+  explicit HorizontalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset, int32_t length)
+      : rows_(rows), xoffset_(xoffset), yoffset_(yoffset), length_(length) {
+  }
 
-  inline int32_t GetLength() const { return length_; }
+  inline int32_t GetLength() const {
+    return length_;
+  }
 
   inline uint32_t GetColor(int32_t idx) const {
     return NinePatch::PackRGBA(rows_[yoffset_] + (idx + xoffset_) * 4);
@@ -156,11 +156,13 @@ class HorizontalImageLine {
  */
 class VerticalImageLine {
  public:
-  explicit VerticalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset,
-                             int32_t length)
-      : rows_(rows), xoffset_(xoffset), yoffset_(yoffset), length_(length) {}
+  explicit VerticalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset, int32_t length)
+      : rows_(rows), xoffset_(xoffset), yoffset_(yoffset), length_(length) {
+  }
 
-  inline int32_t GetLength() const { return length_; }
+  inline int32_t GetLength() const {
+    return length_;
+  }
 
   inline uint32_t GetColor(int32_t idx) const {
     return NinePatch::PackRGBA(rows_[yoffset_ + idx] + (xoffset_ * 4));
@@ -175,20 +177,22 @@ class VerticalImageLine {
 
 class DiagonalImageLine {
  public:
-  explicit DiagonalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset,
-                             int32_t xstep, int32_t ystep, int32_t length)
+  explicit DiagonalImageLine(uint8_t** rows, int32_t xoffset, int32_t yoffset, int32_t xstep,
+                             int32_t ystep, int32_t length)
       : rows_(rows),
         xoffset_(xoffset),
         yoffset_(yoffset),
         xstep_(xstep),
         ystep_(ystep),
-        length_(length) {}
+        length_(length) {
+  }
 
-  inline int32_t GetLength() const { return length_; }
+  inline int32_t GetLength() const {
+    return length_;
+  }
 
   inline uint32_t GetColor(int32_t idx) const {
-    return NinePatch::PackRGBA(rows_[yoffset_ + (idx * ystep_)] +
-                               ((idx + xoffset_) * xstep_) * 4);
+    return NinePatch::PackRGBA(rows_[yoffset_ + (idx * ystep_)] + ((idx + xoffset_) * xstep_) * 4);
   }
 
  private:
@@ -218,9 +222,8 @@ inline static uint32_t get_alpha(uint32_t color) {
 
 static bool PopulateBounds(const std::vector<Range>& padding,
                            const std::vector<Range>& layout_bounds,
-                           const std::vector<Range>& stretch_regions,
-                           const int32_t length, int32_t* padding_start,
-                           int32_t* padding_end, int32_t* layout_start,
+                           const std::vector<Range>& stretch_regions, const int32_t length,
+                           int32_t* padding_start, int32_t* padding_end, int32_t* layout_start,
                            int32_t* layout_end, const StringPiece& edge_name,
                            std::string* out_err) {
   if (padding.size() > 1) {
@@ -245,8 +248,7 @@ static bool PopulateBounds(const std::vector<Range>& padding,
 
   if (layout_bounds.size() > 2) {
     std::stringstream err_stream;
-    err_stream << "too many layout bounds sections on " << edge_name
-               << " border";
+    err_stream << "too many layout bounds sections on " << edge_name << " border";
     *out_err = err_stream.str();
     return false;
   }
@@ -260,8 +262,7 @@ static bool PopulateBounds(const std::vector<Range>& padding,
     // end at length.
     if (range.start != 0 && range.end != length) {
       std::stringstream err_stream;
-      err_stream << "layout bounds on " << edge_name
-                 << " border must start at edge";
+      err_stream << "layout bounds on " << edge_name << " border must start at edge";
       *out_err = err_stream.str();
       return false;
     }
@@ -271,8 +272,7 @@ static bool PopulateBounds(const std::vector<Range>& padding,
       const Range& range = layout_bounds.back();
       if (range.end != length) {
         std::stringstream err_stream;
-        err_stream << "layout bounds on " << edge_name
-                   << " border must start at edge";
+        err_stream << "layout bounds on " << edge_name << " border must start at edge";
         *out_err = err_stream.str();
         return false;
       }
@@ -282,8 +282,7 @@ static bool PopulateBounds(const std::vector<Range>& padding,
   return true;
 }
 
-static int32_t CalculateSegmentCount(const std::vector<Range>& stretch_regions,
-                                     int32_t length) {
+static int32_t CalculateSegmentCount(const std::vector<Range>& stretch_regions, int32_t length) {
   if (stretch_regions.size() == 0) {
     return 0;
   }
@@ -301,8 +300,7 @@ static int32_t CalculateSegmentCount(const std::vector<Range>& stretch_regions,
 
 static uint32_t GetRegionColor(uint8_t** rows, const Bounds& region) {
   // Sample the first pixel to compare against.
-  const uint32_t expected_color =
-      NinePatch::PackRGBA(rows[region.top] + region.left * 4);
+  const uint32_t expected_color = NinePatch::PackRGBA(rows[region.top] + region.left * 4);
   for (int32_t y = region.top; y < region.bottom; y++) {
     const uint8_t* row = rows[y];
     for (int32_t x = region.left; x < region.right; x++) {
@@ -338,10 +336,11 @@ static uint32_t GetRegionColor(uint8_t** rows, const Bounds& region) {
 // the indices must be offset by 1.
 //
 // width and height also include the 9-patch 1px border.
-static void CalculateRegionColors(
-    uint8_t** rows, const std::vector<Range>& horizontal_stretch_regions,
-    const std::vector<Range>& vertical_stretch_regions, const int32_t width,
-    const int32_t height, std::vector<uint32_t>* out_colors) {
+static void CalculateRegionColors(uint8_t** rows,
+                                  const std::vector<Range>& horizontal_stretch_regions,
+                                  const std::vector<Range>& vertical_stretch_regions,
+                                  const int32_t width, const int32_t height,
+                                  std::vector<uint32_t>* out_colors) {
   int32_t next_top = 0;
   Bounds bounds;
   auto row_iter = vertical_stretch_regions.begin();
@@ -403,8 +402,7 @@ static void CalculateRegionColors(
 // alpha value begins
 // (on both sides).
 template <typename ImageLine>
-static void FindOutlineInsets(const ImageLine* image_line, int32_t* out_start,
-                              int32_t* out_end) {
+static void FindOutlineInsets(const ImageLine* image_line, int32_t* out_start, int32_t* out_end) {
   *out_start = 0;
   *out_end = 0;
 
@@ -457,10 +455,8 @@ uint32_t NinePatch::PackRGBA(const uint8_t* pixel) {
   return (pixel[3] << 24) | (pixel[0] << 16) | (pixel[1] << 8) | pixel[2];
 }
 
-std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
-                                             const int32_t width,
-                                             const int32_t height,
-                                             std::string* out_err) {
+std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows, const int32_t width,
+                                             const int32_t height, std::string* out_err) {
   if (width < 3 || height < 3) {
     *out_err = "image must be at least 3x3 (1x1 image with 1 pixel border)";
     return {};
@@ -478,8 +474,7 @@ std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
   } else if (PackRGBA(rows[0]) == kColorOpaqueWhite) {
     color_validator = util::make_unique<WhiteNeutralColorValidator>();
   } else {
-    *out_err =
-        "top-left corner pixel must be either opaque white or transparent";
+    *out_err = "top-left corner pixel must be either opaque white or transparent";
     return {};
   }
 
@@ -487,9 +482,8 @@ std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
   auto nine_patch = std::unique_ptr<NinePatch>(new NinePatch());
 
   HorizontalImageLine top_row(rows, 0, 0, width);
-  if (!FillRanges(&top_row, color_validator.get(),
-                  &nine_patch->horizontal_stretch_regions, &unexpected_ranges,
-                  out_err)) {
+  if (!FillRanges(&top_row, color_validator.get(), &nine_patch->horizontal_stretch_regions,
+                  &unexpected_ranges, out_err)) {
     return {};
   }
 
@@ -503,9 +497,8 @@ std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
   }
 
   VerticalImageLine left_col(rows, 0, 0, height);
-  if (!FillRanges(&left_col, color_validator.get(),
-                  &nine_patch->vertical_stretch_regions, &unexpected_ranges,
-                  out_err)) {
+  if (!FillRanges(&left_col, color_validator.get(), &nine_patch->vertical_stretch_regions,
+                  &unexpected_ranges, out_err)) {
     return {};
   }
 
@@ -524,32 +517,28 @@ std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
   }
 
   if (!PopulateBounds(horizontal_padding, horizontal_layout_bounds,
-                      nine_patch->horizontal_stretch_regions, width - 2,
-                      &nine_patch->padding.left, &nine_patch->padding.right,
-                      &nine_patch->layout_bounds.left,
+                      nine_patch->horizontal_stretch_regions, width - 2, &nine_patch->padding.left,
+                      &nine_patch->padding.right, &nine_patch->layout_bounds.left,
                       &nine_patch->layout_bounds.right, "bottom", out_err)) {
     return {};
   }
 
   VerticalImageLine right_col(rows, width - 1, 0, height);
-  if (!FillRanges(&right_col, color_validator.get(), &vertical_padding,
-                  &vertical_layout_bounds, out_err)) {
+  if (!FillRanges(&right_col, color_validator.get(), &vertical_padding, &vertical_layout_bounds,
+                  out_err)) {
     return {};
   }
 
   if (!PopulateBounds(vertical_padding, vertical_layout_bounds,
-                      nine_patch->vertical_stretch_regions, height - 2,
-                      &nine_patch->padding.top, &nine_patch->padding.bottom,
-                      &nine_patch->layout_bounds.top,
+                      nine_patch->vertical_stretch_regions, height - 2, &nine_patch->padding.top,
+                      &nine_patch->padding.bottom, &nine_patch->layout_bounds.top,
                       &nine_patch->layout_bounds.bottom, "right", out_err)) {
     return {};
   }
 
   // Fill the region colors of the 9-patch.
-  const int32_t num_rows =
-      CalculateSegmentCount(nine_patch->horizontal_stretch_regions, width - 2);
-  const int32_t num_cols =
-      CalculateSegmentCount(nine_patch->vertical_stretch_regions, height - 2);
+  const int32_t num_rows = CalculateSegmentCount(nine_patch->horizontal_stretch_regions, width - 2);
+  const int32_t num_cols = CalculateSegmentCount(nine_patch->vertical_stretch_regions, height - 2);
   if ((int64_t)num_rows * (int64_t)num_cols > 0x7f) {
     *out_err = "too many regions in 9-patch";
     return {};
@@ -557,40 +546,35 @@ std::unique_ptr<NinePatch> NinePatch::Create(uint8_t** rows,
 
   nine_patch->region_colors.reserve(num_rows * num_cols);
   CalculateRegionColors(rows, nine_patch->horizontal_stretch_regions,
-                        nine_patch->vertical_stretch_regions, width - 2,
-                        height - 2, &nine_patch->region_colors);
+                        nine_patch->vertical_stretch_regions, width - 2, height - 2,
+                        &nine_patch->region_colors);
 
   // Compute the outline based on opacity.
 
   // Find left and right extent of 9-patch content on center row.
   HorizontalImageLine mid_row(rows, 1, height / 2, width - 2);
-  FindOutlineInsets(&mid_row, &nine_patch->outline.left,
-                    &nine_patch->outline.right);
+  FindOutlineInsets(&mid_row, &nine_patch->outline.left, &nine_patch->outline.right);
 
   // Find top and bottom extent of 9-patch content on center column.
   VerticalImageLine mid_col(rows, width / 2, 1, height - 2);
-  FindOutlineInsets(&mid_col, &nine_patch->outline.top,
-                    &nine_patch->outline.bottom);
+  FindOutlineInsets(&mid_col, &nine_patch->outline.top, &nine_patch->outline.bottom);
 
-  const int32_t outline_width =
-      (width - 2) - nine_patch->outline.left - nine_patch->outline.right;
+  const int32_t outline_width = (width - 2) - nine_patch->outline.left - nine_patch->outline.right;
   const int32_t outline_height =
       (height - 2) - nine_patch->outline.top - nine_patch->outline.bottom;
 
   // Find the largest alpha value within the outline area.
-  HorizontalImageLine outline_mid_row(
-      rows, 1 + nine_patch->outline.left,
-      1 + nine_patch->outline.top + (outline_height / 2), outline_width);
-  VerticalImageLine outline_mid_col(
-      rows, 1 + nine_patch->outline.left + (outline_width / 2),
-      1 + nine_patch->outline.top, outline_height);
+  HorizontalImageLine outline_mid_row(rows, 1 + nine_patch->outline.left,
+                                      1 + nine_patch->outline.top + (outline_height / 2),
+                                      outline_width);
+  VerticalImageLine outline_mid_col(rows, 1 + nine_patch->outline.left + (outline_width / 2),
+                                    1 + nine_patch->outline.top, outline_height);
   nine_patch->outline_alpha =
       std::max(FindMaxAlpha(&outline_mid_row), FindMaxAlpha(&outline_mid_col));
 
   // Assuming the image is a round rect, compute the radius by marching
   // diagonally from the top left corner towards the center.
-  DiagonalImageLine diagonal(rows, 1 + nine_patch->outline.left,
-                             1 + nine_patch->outline.top, 1, 1,
+  DiagonalImageLine diagonal(rows, 1 + nine_patch->outline.left, 1 + nine_patch->outline.top, 1, 1,
                              std::min(outline_width, outline_height));
   int32_t top_left, bottom_right;
   FindOutlineInsets(&diagonal, &top_left, &bottom_right);
@@ -616,10 +600,9 @@ std::unique_ptr<uint8_t[]> NinePatch::SerializeBase(size_t* outLen) const {
   data.paddingBottom = padding.bottom;
 
   auto buffer = std::unique_ptr<uint8_t[]>(new uint8_t[data.serializedSize()]);
-  android::Res_png_9patch::serialize(
-      data, (const int32_t*)horizontal_stretch_regions.data(),
-      (const int32_t*)vertical_stretch_regions.data(), region_colors.data(),
-      buffer.get());
+  android::Res_png_9patch::serialize(data, (const int32_t*)horizontal_stretch_regions.data(),
+                                     (const int32_t*)vertical_stretch_regions.data(),
+                                     region_colors.data(), buffer.get());
   // Convert to file endianness.
   reinterpret_cast<android::Res_png_9patch*>(buffer.get())->deviceToFile();
 
@@ -627,8 +610,7 @@ std::unique_ptr<uint8_t[]> NinePatch::SerializeBase(size_t* outLen) const {
   return buffer;
 }
 
-std::unique_ptr<uint8_t[]> NinePatch::SerializeLayoutBounds(
-    size_t* out_len) const {
+std::unique_ptr<uint8_t[]> NinePatch::SerializeLayoutBounds(size_t* out_len) const {
   size_t chunk_len = sizeof(uint32_t) * 4;
   auto buffer = std::unique_ptr<uint8_t[]>(new uint8_t[chunk_len]);
   uint8_t* cursor = buffer.get();
@@ -649,8 +631,7 @@ std::unique_ptr<uint8_t[]> NinePatch::SerializeLayoutBounds(
   return buffer;
 }
 
-std::unique_ptr<uint8_t[]> NinePatch::SerializeRoundedRectOutline(
-    size_t* out_len) const {
+std::unique_ptr<uint8_t[]> NinePatch::SerializeRoundedRectOutline(size_t* out_len) const {
   size_t chunk_len = sizeof(uint32_t) * 6;
   auto buffer = std::unique_ptr<uint8_t[]>(new uint8_t[chunk_len]);
   uint8_t* cursor = buffer.get();
@@ -681,19 +662,15 @@ std::unique_ptr<uint8_t[]> NinePatch::SerializeRoundedRectOutline(
 }
 
 ::std::ostream& operator<<(::std::ostream& out, const Bounds& bounds) {
-  return out << "l=" << bounds.left << " t=" << bounds.top
-             << " r=" << bounds.right << " b=" << bounds.bottom;
+  return out << "l=" << bounds.left << " t=" << bounds.top << " r=" << bounds.right
+             << " b=" << bounds.bottom;
 }
 
 ::std::ostream& operator<<(::std::ostream& out, const NinePatch& nine_patch) {
-  return out << "horizontalStretch:"
-             << util::Joiner(nine_patch.horizontal_stretch_regions, " ")
-             << " verticalStretch:"
-             << util::Joiner(nine_patch.vertical_stretch_regions, " ")
-             << " padding: " << nine_patch.padding
-             << ", bounds: " << nine_patch.layout_bounds
-             << ", outline: " << nine_patch.outline
-             << " rad=" << nine_patch.outline_radius
+  return out << "horizontalStretch:" << util::Joiner(nine_patch.horizontal_stretch_regions, " ")
+             << " verticalStretch:" << util::Joiner(nine_patch.vertical_stretch_regions, " ")
+             << " padding: " << nine_patch.padding << ", bounds: " << nine_patch.layout_bounds
+             << ", outline: " << nine_patch.outline << " rad=" << nine_patch.outline_radius
              << " alpha=" << nine_patch.outline_alpha;
 }
 

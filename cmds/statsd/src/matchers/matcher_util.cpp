@@ -135,7 +135,7 @@ bool matchesSimple(const UidMap& uidMap, const FieldValueMatcher& matcher,
         return false;
     }
 
-    vector<pair<int, int>> ranges; // the ranges are for matching ANY position
+    vector<pair<int, int>> ranges;  // the ranges are for matching ANY position
     if (matcher.has_position()) {
         // Repeated fields position is stored as a node in the path.
         depth++;

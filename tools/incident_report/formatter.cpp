@@ -28,9 +28,7 @@ extern ProtoFieldFormat const PROTO_FORMAT_FIELDS[];
 extern ProtoEnumLabel const PROTO_FORMAT_ENUM_LABELS[];
 extern ProtoMessageFormat const PROTO_FORMAT_MESSAGES[];
 
-static const char*
-get_string(int index)
-{
+static const char* get_string(int index) {
     if (index >= 0 && index < PROTO_FORMAT_STRING_POOL_SIZE) {
         return PROTO_FORMAT_STRING_POOL + index;
     } else {
@@ -40,9 +38,7 @@ get_string(int index)
     }
 }
 
-static ProtoMessageFormat const*
-get_message(int index)
-{
+static ProtoMessageFormat const* get_message(int index) {
     if (index >= 0 && index < PROTO_FORMAT_MESSAGES_LENGTH) {
         return PROTO_FORMAT_MESSAGES + index;
     } else {
@@ -52,9 +48,7 @@ get_message(int index)
     }
 }
 
-static int
-compare_name(const char* full, const char* package, const char* clazz)
-{
+static int compare_name(const char* full, const char* package, const char* clazz) {
     int const packageLen = strlen(package);
     int cmp = strncmp(full, package, packageLen);
     if (cmp == 0) {
@@ -66,9 +60,7 @@ compare_name(const char* full, const char* package, const char* clazz)
     return cmp;
 }
 
-int
-find_message_index(const char* name)
-{
+int find_message_index(const char* name) {
     size_t low = 0;
     size_t high = PROTO_FORMAT_FIELDS_LENGTH - 1;
 

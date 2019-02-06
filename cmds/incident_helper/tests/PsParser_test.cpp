@@ -20,11 +20,11 @@
 
 #include <android-base/file.h>
 #include <android-base/test_utils.h>
+#include <fcntl.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/message_lite.h>
 #include <gtest/gtest.h>
 #include <string.h>
-#include <fcntl.h>
 
 using namespace android::base;
 using namespace android::os;
@@ -37,12 +37,10 @@ using ::testing::internal::GetCapturedStderr;
 using ::testing::internal::GetCapturedStdout;
 
 class PsParserTest : public Test {
-public:
-    virtual void SetUp() override {
-        ASSERT_TRUE(tf.fd != -1);
-    }
+  public:
+    virtual void SetUp() override { ASSERT_TRUE(tf.fd != -1); }
 
-protected:
+  protected:
     TemporaryFile tf;
 
     const string kTestPath = GetExecutableDirectory();
@@ -216,7 +214,8 @@ TEST_F(PsParserTest, Normal) {
     bool matches = true;
 
     if (got.processes_size() != expected.processes_size()) {
-        fprintf(stderr, "Got %d processes, want %d\n", got.processes_size(), expected.processes_size());
+        fprintf(stderr, "Got %d processes, want %d\n", got.processes_size(),
+                expected.processes_size());
         matches = false;
     } else {
         int n = got.processes_size();
@@ -225,11 +224,13 @@ TEST_F(PsParserTest, Normal) {
             PsProto::Process e = expected.processes(i);
 
             if (g.label() != e.label()) {
-                fprintf(stderr, "prcs[%d]: Invalid label. Got %s, want %s\n", i, g.label().c_str(), e.label().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid label. Got %s, want %s\n", i, g.label().c_str(),
+                        e.label().c_str());
                 matches = false;
             }
             if (g.user() != e.user()) {
-                fprintf(stderr, "prcs[%d]: Invalid user. Got %s, want %s\n", i, g.user().c_str(), e.user().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid user. Got %s, want %s\n", i, g.user().c_str(),
+                        e.user().c_str());
                 matches = false;
             }
             if (g.pid() != e.pid()) {
@@ -253,11 +254,13 @@ TEST_F(PsParserTest, Normal) {
                 matches = false;
             }
             if (g.wchan() != e.wchan()) {
-                fprintf(stderr, "prcs[%d]: Invalid wchan. Got %s, want %s\n", i, g.wchan().c_str(), e.wchan().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid wchan. Got %s, want %s\n", i, g.wchan().c_str(),
+                        e.wchan().c_str());
                 matches = false;
             }
             if (g.addr() != e.addr()) {
-                fprintf(stderr, "prcs[%d]: Invalid addr. Got %s, want %s\n", i, g.addr().c_str(), e.addr().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid addr. Got %s, want %s\n", i, g.addr().c_str(),
+                        e.addr().c_str());
                 matches = false;
             }
             if (g.s() != e.s()) {
@@ -273,7 +276,8 @@ TEST_F(PsParserTest, Normal) {
                 matches = false;
             }
             if (g.rtprio() != e.rtprio()) {
-                fprintf(stderr, "prcs[%d]: Invalid rtprio. Got %s, want %s\n", i, g.rtprio().c_str(), e.rtprio().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid rtprio. Got %s, want %s\n", i,
+                        g.rtprio().c_str(), e.rtprio().c_str());
                 matches = false;
             }
             if (g.sch() != e.sch()) {
@@ -285,11 +289,13 @@ TEST_F(PsParserTest, Normal) {
                 matches = false;
             }
             if (g.time() != e.time()) {
-                fprintf(stderr, "prcs[%d]: Invalid time. Got %s, want %s\n", i, g.time().c_str(), e.time().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid time. Got %s, want %s\n", i, g.time().c_str(),
+                        e.time().c_str());
                 matches = false;
             }
             if (g.cmd() != e.cmd()) {
-                fprintf(stderr, "prcs[%d]: Invalid cmd. Got %s, want %s\n", i, g.cmd().c_str(), e.cmd().c_str());
+                fprintf(stderr, "prcs[%d]: Invalid cmd. Got %s, want %s\n", i, g.cmd().c_str(),
+                        e.cmd().c_str());
                 matches = false;
             }
         }

@@ -235,7 +235,7 @@ private:
      * layer is finished deferring, it will still be represented in mLayerBuilders, but it's index
      * won't be in mLayerStack. This is because it can be replayed, but can't have any more drawing
      * ops added to it.
-    */
+     */
     LsaVector<size_t> mLayerStack;
 
     CanvasState mCanvasState;

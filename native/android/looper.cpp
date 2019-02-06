@@ -18,12 +18,12 @@
 #include <utils/Log.h>
 
 #include <android/looper.h>
-#include <utils/Looper.h>
 #include <binder/IPCThreadState.h>
+#include <utils/Looper.h>
 
+using android::IPCThreadState;
 using android::Looper;
 using android::sp;
-using android::IPCThreadState;
 
 static inline Looper* ALooper_to_Looper(ALooper* alooper) {
     return reinterpret_cast<Looper*>(alooper);
@@ -75,8 +75,8 @@ void ALooper_wake(ALooper* looper) {
     ALooper_to_Looper(looper)->wake();
 }
 
-int ALooper_addFd(ALooper* looper, int fd, int ident, int events,
-        ALooper_callbackFunc callback, void* data) {
+int ALooper_addFd(ALooper* looper, int fd, int ident, int events, ALooper_callbackFunc callback,
+                  void* data) {
     return ALooper_to_Looper(looper)->addFd(fd, ident, events, callback, data);
 }
 

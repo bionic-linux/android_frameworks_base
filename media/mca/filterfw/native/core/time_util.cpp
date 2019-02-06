@@ -19,9 +19,9 @@
 
 #include "core/time_util.h"
 
+#include <sys/time.h>
 #include <map>
 #include <string>
-#include <sys/time.h>
 
 namespace android {
 namespace filterfw {
@@ -34,20 +34,18 @@ uint64_t getTimeUs() {
     if (basesec == 0) {
         basesec = tv.tv_sec;
     }
-    nowtime = (uint64_t)(tv.tv_sec - basesec) * (uint64_t)1000000 +
-              (uint64_t)tv.tv_usec;
+    nowtime = (uint64_t)(tv.tv_sec - basesec) * (uint64_t)1000000 + (uint64_t)tv.tv_usec;
     return nowtime;
 }
 
 const uint64_t NamedStopWatch::kDefaultLoggingPeriodInFrames = 100;
 
 NamedStopWatch::NamedStopWatch(const std::string& name)
-      : mName(name),
-        mLoggingPeriodInFrames(kDefaultLoggingPeriodInFrames),
-        mStartUSec(0),
-        mNumCalls(0),
-        mTotalUSec(0) {
-}
+    : mName(name),
+      mLoggingPeriodInFrames(kDefaultLoggingPeriodInFrames),
+      mStartUSec(0),
+      mNumCalls(0),
+      mTotalUSec(0) {}
 
 void NamedStopWatch::Start() {
     mStartUSec = getTimeUs();
@@ -88,5 +86,5 @@ ScopedTimer::ScopedTimer(const string& stop_watch_name) {
     mWatch->Start();
 }
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android

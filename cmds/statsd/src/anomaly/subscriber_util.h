@@ -16,18 +16,16 @@
 
 #pragma once
 
-#include "config/ConfigKey.h"
 #include "HashableDimensionKey.h"
+#include "config/ConfigKey.h"
 #include "frameworks/base/cmds/statsd/src/statsd_config.pb.h"
 
 namespace android {
 namespace os {
 namespace statsd {
 
-void triggerSubscribers(const int64_t rule_id,
-                        const MetricDimensionKey& dimensionKey,
-                        const ConfigKey& configKey,
-                        const std::vector<Subscription>& subscriptions);
+void triggerSubscribers(const int64_t rule_id, const MetricDimensionKey& dimensionKey,
+                        const ConfigKey& configKey, const std::vector<Subscription>& subscriptions);
 
 }  // namespace statsd
 }  // namespace os

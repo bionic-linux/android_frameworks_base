@@ -24,9 +24,9 @@
 
 namespace split {
 
-android::Vector<android::SortedVector<SplitDescription> >
-groupByMutualExclusivity(const android::Vector<SplitDescription>& splits);
+android::Vector<android::SortedVector<SplitDescription> > groupByMutualExclusivity(
+        const android::Vector<SplitDescription>& splits);
 
-} // namespace split
+}  // namespace split
 
-#endif // H_ANDROID_SPLIT_GROUPER
+#endif  // H_ANDROID_SPLIT_GROUPER

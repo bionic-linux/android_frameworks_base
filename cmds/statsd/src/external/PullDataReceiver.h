@@ -15,9 +15,9 @@
  */
 #pragma once
 
+#include <utils/RefBase.h>
 #include <utils/String16.h>
 #include <unordered_map>
-#include <utils/RefBase.h>
 #include "StatsPuller.h"
 #include "logd/LogEvent.h"
 
@@ -25,10 +25,11 @@ namespace android {
 namespace os {
 namespace statsd {
 
-class PullDataReceiver : virtual public RefBase{
- public:
-  virtual ~PullDataReceiver() {}
-  virtual void onDataPulled(const std::vector<std::shared_ptr<LogEvent>>& data) = 0;
+class PullDataReceiver : virtual public RefBase {
+public:
+    virtual ~PullDataReceiver() {
+    }
+    virtual void onDataPulled(const std::vector<std::shared_ptr<LogEvent>>& data) = 0;
 };
 
 }  // namespace statsd

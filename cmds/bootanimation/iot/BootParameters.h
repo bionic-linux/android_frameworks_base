@@ -27,7 +27,7 @@ namespace android {
 
 // Provides access to the parameters set by DeviceManager.reboot().
 class BootParameters {
-public:
+  public:
     // Constructor loads the parameters for this boot and swaps the param files
     // to clear the parameters for next boot.
     BootParameters();
@@ -43,7 +43,7 @@ public:
     // Returns the additional boot parameters that were set on reboot.
     const std::vector<ABootActionParameter>& getParameters() const { return mParameters; }
 
-private:
+  private:
     // Raw boot saved_parameters loaded from .json.
     struct SavedBootParameters {
         int brightness;
@@ -68,6 +68,5 @@ private:
 };
 
 }  // namespace android
-
 
 #endif  // _BOOTANIMATION_BOOT_PARAMETERS_H_

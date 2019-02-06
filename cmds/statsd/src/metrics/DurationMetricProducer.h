@@ -16,7 +16,6 @@
 
 #pragma once
 
-
 #include <unordered_map>
 
 #include <android/util/ProtoOutputStream.h>
@@ -46,24 +45,23 @@ public:
 
     virtual ~DurationMetricProducer();
 
-    sp<AnomalyTracker> addAnomalyTracker(const Alert &alert,
+    sp<AnomalyTracker> addAnomalyTracker(const Alert& alert,
                                          const sp<AlarmMonitor>& anomalyAlarmMonitor) override;
 
 protected:
     void onMatchedLogEventLocked(const size_t matcherIndex, const LogEvent& event) override;
 
-    void onMatchedLogEventInternalLocked(
-            const size_t matcherIndex, const MetricDimensionKey& eventKey,
-            const ConditionKey& conditionKeys, bool condition,
-            const LogEvent& event) override;
+    void onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                         const MetricDimensionKey& eventKey,
+                                         const ConditionKey& conditionKeys, bool condition,
+                                         const LogEvent& event) override;
 
 private:
     void handleStartEvent(const MetricDimensionKey& eventKey, const ConditionKey& conditionKeys,
                           bool condition, const LogEvent& event);
 
-    void onDumpReportLocked(const int64_t dumpTimeNs,
-                            const bool include_current_partial_bucket,
-                            std::set<string> *str_set,
+    void onDumpReportLocked(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                            std::set<string>* str_set,
                             android::util::ProtoOutputStream* protoOutput) override;
 
     void clearPastBucketsLocked(const int64_t dumpTimeNs) override;
@@ -120,12 +118,12 @@ private:
 
     // The duration trackers in the current bucket.
     std::unordered_map<HashableDimensionKey,
-        std::unordered_map<HashableDimensionKey, std::unique_ptr<DurationTracker>>>
+                       std::unordered_map<HashableDimensionKey, std::unique_ptr<DurationTracker>>>
             mCurrentSlicedDurationTrackerMap;
 
     // Helper function to create a duration tracker given the metric aggregation type.
     std::unique_ptr<DurationTracker> createDurationTracker(
-        const MetricDimensionKey& eventKey) const;
+            const MetricDimensionKey& eventKey) const;
 
     // This hides the base class's std::vector<sp<AnomalyTracker>> mAnomalyTrackers
     std::vector<sp<DurationAnomalyTracker>> mAnomalyTrackers;

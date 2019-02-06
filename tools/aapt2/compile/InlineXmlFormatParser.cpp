@@ -39,7 +39,8 @@ class Visitor : public xml::PackageAwareVisitor {
   using xml::PackageAwareVisitor::Visit;
 
   explicit Visitor(IAaptContext* context, xml::XmlResource* xml_resource)
-      : context_(context), xml_resource_(xml_resource) {}
+      : context_(context), xml_resource_(xml_resource) {
+  }
 
   void Visit(xml::Element* el) override {
     if (el->namespace_uri != xml::kSchemaAapt || el->name != "attr") {
@@ -58,8 +59,8 @@ class Visitor : public xml::PackageAwareVisitor {
 
     Maybe<Reference> ref = ResourceUtils::ParseXmlAttributeName(attr->value);
     if (!ref) {
-      context_->GetDiagnostics()->Error(DiagMessage(src) << "invalid XML attribute '" << attr->value
-                                                         << "'");
+      context_->GetDiagnostics()->Error(DiagMessage(src)
+                                        << "invalid XML attribute '" << attr->value << "'");
       error_ = true;
       return;
     }

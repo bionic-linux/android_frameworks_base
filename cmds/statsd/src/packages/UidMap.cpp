@@ -16,10 +16,10 @@
 #define DEBUG false  // STOPSHIP if true
 #include "Log.h"
 
-#include "hash.h"
-#include "stats_log_util.h"
 #include "guardrail/StatsdStats.h"
+#include "hash.h"
 #include "packages/UidMap.h"
+#include "stats_log_util.h"
 
 #include <android/os/IStatsCompanionService.h>
 #include <binder/IServiceManager.h>
@@ -35,9 +35,9 @@ using android::util::FIELD_TYPE_BOOL;
 using android::util::FIELD_TYPE_FLOAT;
 using android::util::FIELD_TYPE_INT32;
 using android::util::FIELD_TYPE_INT64;
-using android::util::FIELD_TYPE_UINT64;
 using android::util::FIELD_TYPE_MESSAGE;
 using android::util::FIELD_TYPE_STRING;
+using android::util::FIELD_TYPE_UINT64;
 using android::util::ProtoOutputStream;
 
 namespace android {
@@ -61,9 +61,11 @@ const int FIELD_ID_CHANGE_NEW_VERSION = 5;
 const int FIELD_ID_CHANGE_PREV_VERSION = 6;
 const int FIELD_ID_CHANGE_PACKAGE_HASH = 7;
 
-UidMap::UidMap() : mBytesUsed(0) {}
+UidMap::UidMap() : mBytesUsed(0) {
+}
 
-UidMap::~UidMap() {}
+UidMap::~UidMap() {
+}
 
 bool UidMap::hasApp(int uid, const string& packageName) const {
     lock_guard<mutex> lock(mMutex);
@@ -80,7 +82,7 @@ string UidMap::normalizeAppName(const string& appName) const {
 
 std::set<string> UidMap::getAppNamesFromUid(const int32_t& uid, bool returnNormalized) const {
     lock_guard<mutex> lock(mMutex);
-    return getAppNamesFromUidLocked(uid,returnNormalized);
+    return getAppNamesFromUidLocked(uid, returnNormalized);
 }
 
 std::set<string> UidMap::getAppNamesFromUidLocked(const int32_t& uid, bool returnNormalized) const {
@@ -315,8 +317,8 @@ size_t UidMap::getBytesUsed() const {
     return mBytesUsed;
 }
 
-void UidMap::appendUidMap(const int64_t& timestamp, const ConfigKey& key,
-                          std::set<string> *str_set, ProtoOutputStream* proto) {
+void UidMap::appendUidMap(const int64_t& timestamp, const ConfigKey& key, std::set<string>* str_set,
+                          ProtoOutputStream* proto) {
     lock_guard<mutex> lock(mMutex);  // Lock for updates
 
     for (const ChangeRecord& record : mChanges) {

@@ -276,9 +276,9 @@ static bool FlattenXml(IAaptContext* context, const xml::XmlResource& xml_res,
                        const StringPiece& path, bool keep_raw_values, bool utf16,
                        OutputFormat format, IArchiveWriter* writer) {
   if (context->IsVerbose()) {
-    context->GetDiagnostics()->Note(DiagMessage(path) << "writing to archive (keep_raw_values="
-                                                      << (keep_raw_values ? "true" : "false")
-                                                      << ")");
+    context->GetDiagnostics()->Note(DiagMessage(path)
+                                    << "writing to archive (keep_raw_values="
+                                    << (keep_raw_values ? "true" : "false") << ")");
   }
 
   switch (format) {
@@ -728,8 +728,8 @@ static bool LoadStableIdMap(IDiagnostics* diag, const std::string& path,
     StringPiece res_name_str =
         util::TrimWhitespace(line.substr(0, std::distance(line.begin(), iter)));
     if (!ResourceUtils::ParseResourceName(res_name_str, &name)) {
-      diag->Error(DiagMessage(Source(path, line_no)) << "invalid resource name '" << res_name_str
-                                                     << "'");
+      diag->Error(DiagMessage(Source(path, line_no))
+                  << "invalid resource name '" << res_name_str << "'");
       return false;
     }
 
@@ -739,8 +739,8 @@ static bool LoadStableIdMap(IDiagnostics* diag, const std::string& path,
 
     Maybe<ResourceId> maybe_id = ResourceUtils::ParseResourceId(res_id_str);
     if (!maybe_id) {
-      diag->Error(DiagMessage(Source(path, line_no)) << "invalid resource ID '" << res_id_str
-                                                     << "'");
+      diag->Error(DiagMessage(Source(path, line_no))
+                  << "invalid resource ID '" << res_id_str << "'");
       return false;
     }
 
@@ -809,11 +809,13 @@ class LinkCommand {
     if (!options_.manifest_fixer_options.compile_sdk_version) {
       xml::Attribute* attr = manifest_xml->root->FindAttribute(xml::kSchemaAndroid, "versionCode");
       if (attr != nullptr) {
-        Maybe<std::string>& compile_sdk_version = options_.manifest_fixer_options.compile_sdk_version;
+        Maybe<std::string>& compile_sdk_version =
+            options_.manifest_fixer_options.compile_sdk_version;
         if (BinaryPrimitive* prim = ValueCast<BinaryPrimitive>(attr->compiled_value.get())) {
           switch (prim->value.dataType) {
             case Res_value::TYPE_INT_DEC:
-              compile_sdk_version = StringPrintf("%" PRId32, static_cast<int32_t>(prim->value.data));
+              compile_sdk_version =
+                  StringPrintf("%" PRId32, static_cast<int32_t>(prim->value.data));
               break;
             case Res_value::TYPE_INT_HEX:
               compile_sdk_version = StringPrintf("%" PRIx32, prim->value.data);
@@ -1256,8 +1258,8 @@ class LinkCommand {
     file::AppendPath(&out_path, file::PackageToPath(package_utf8));
 
     if (!file::mkdirs(out_path)) {
-      context_->GetDiagnostics()->Error(DiagMessage() << "failed to create directory '" << out_path
-                                                      << "'");
+      context_->GetDiagnostics()->Error(DiagMessage()
+                                        << "failed to create directory '" << out_path << "'");
       return false;
     }
 
@@ -1611,12 +1613,11 @@ class LinkCommand {
     // or higher] as invalid. In order to work around this limitation, we allow the use
     // of traditionally reserved resource IDs [those between 0x02 and 0x7E]. Allow the
     // definition of what a valid "split" package ID is to account for this.
-    const bool isSplitPackage = (options_.allow_reserved_package_id &&
-          context_->GetPackageId() != kAppPackageId &&
-          context_->GetPackageId() != kFrameworkPackageId)
-        || (!options_.allow_reserved_package_id && context_->GetPackageId() > kAppPackageId);
-    if (isSplitPackage &&
-        included_feature_base_ == make_value(context_->GetCompilationPackage())) {
+    const bool isSplitPackage =
+        (options_.allow_reserved_package_id && context_->GetPackageId() != kAppPackageId &&
+         context_->GetPackageId() != kFrameworkPackageId) ||
+        (!options_.allow_reserved_package_id && context_->GetPackageId() > kAppPackageId);
+    if (isSplitPackage && included_feature_base_ == make_value(context_->GetCompilationPackage())) {
       // The base APK is included, and this is a feature split. If the base package is
       // the same as this package, then we are building an old style Android Instant Apps feature
       // split and must apply this workaround to avoid requiring namespaces support.
@@ -2088,10 +2089,11 @@ int Link(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
                           "Disables automatic deduping of resources with\n"
                           "identical values across compatible configurations.",
                           &options.no_resource_deduping)
-          .OptionalSwitch("--no-resource-removal",
-                          "Disables automatic removal of resources without defaults. Use this only\n"
-                          "when building runtime resource overlay packages.",
-                          &options.no_resource_removal)
+          .OptionalSwitch(
+              "--no-resource-removal",
+              "Disables automatic removal of resources without defaults. Use this only\n"
+              "when building runtime resource overlay packages.",
+              &options.no_resource_removal)
           .OptionalSwitch("--enable-sparse-encoding",
                           "Enables encoding sparse entries using a binary search tree.\n"
                           "This decreases APK size at the cost of resource retrieval performance.",
@@ -2129,11 +2131,11 @@ int Link(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
                         "Version name to inject into the AndroidManifest.xml if none is present.",
                         &options.manifest_fixer_options.version_name_default)
           .OptionalSwitch("--replace-version",
-                         "If --version-code and/or --version-name are specified, these\n"
-                         "values will replace any value already in the manifest. By\n"
-                         "default, nothing is changed if the manifest already defines\n"
-                         "these attributes.",
-                         &options.manifest_fixer_options.replace_version)
+                          "If --version-code and/or --version-name are specified, these\n"
+                          "values will replace any value already in the manifest. By\n"
+                          "default, nothing is changed if the manifest already defines\n"
+                          "these attributes.",
+                          &options.manifest_fixer_options.replace_version)
           .OptionalFlag("--compile-sdk-version-code",
                         "Version code (integer) to inject into the AndroidManifest.xml if none is\n"
                         "present.",
@@ -2281,9 +2283,9 @@ int Link(const std::vector<StringPiece>& args, IDiagnostics* diagnostics) {
     }
 
     const uint32_t package_id_int = maybe_package_id_int.value();
-    if (package_id_int > std::numeric_limits<uint8_t>::max()
-        || package_id_int == kFrameworkPackageId
-        || (!options.allow_reserved_package_id && package_id_int < kAppPackageId)) {
+    if (package_id_int > std::numeric_limits<uint8_t>::max() ||
+        package_id_int == kFrameworkPackageId ||
+        (!options.allow_reserved_package_id && package_id_int < kAppPackageId)) {
       context.GetDiagnostics()->Error(
           DiagMessage() << StringPrintf(
               "invalid package ID 0x%02x. Must be in the range 0x7f-0xff.", package_id_int));

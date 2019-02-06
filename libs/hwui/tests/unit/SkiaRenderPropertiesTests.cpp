@@ -71,7 +71,7 @@ static void testProperty(std::function<void(RenderProperties&)> propSetupCallbac
     canvas.drawDrawable(&drawable);
     EXPECT_EQ(1, canvas.mDrawCounter);
 }
-}
+}  // namespace
 
 TEST(RenderNodeDrawable, renderPropClipping) {
     testProperty(

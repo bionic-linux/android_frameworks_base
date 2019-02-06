@@ -18,26 +18,22 @@
 
 #include "utils/Log.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
+#include "jni.h"
 
 #include <usbhost/usbhost.h>
 
 using namespace android;
 
-static jint
-android_hardware_UsbDevice_get_device_id(JNIEnv *env, jobject clazz, jstring name)
-{
-    const char *nameStr = env->GetStringUTFChars(name, NULL);
+static jint android_hardware_UsbDevice_get_device_id(JNIEnv* env, jobject clazz, jstring name) {
+    const char* nameStr = env->GetStringUTFChars(name, NULL);
     int id = usb_device_get_unique_id_from_name(nameStr);
     env->ReleaseStringUTFChars(name, nameStr);
     return id;
 }
 
-static jstring
-android_hardware_UsbDevice_get_device_name(JNIEnv *env, jobject clazz, jint id)
-{
+static jstring android_hardware_UsbDevice_get_device_name(JNIEnv* env, jobject clazz, jint id) {
     char* name = usb_device_get_name_from_unique_id(id);
     jstring result = env->NewStringUTF(name);
     free(name);
@@ -45,15 +41,14 @@ android_hardware_UsbDevice_get_device_name(JNIEnv *env, jobject clazz, jint id)
 }
 
 static const JNINativeMethod method_table[] = {
-    // static methods
-    { "native_get_device_id", "(Ljava/lang/String;)I",
-                                        (void*)android_hardware_UsbDevice_get_device_id },
-    { "native_get_device_name", "(I)Ljava/lang/String;",
-                                        (void*)android_hardware_UsbDevice_get_device_name },
+        // static methods
+        {"native_get_device_id", "(Ljava/lang/String;)I",
+         (void*)android_hardware_UsbDevice_get_device_id},
+        {"native_get_device_name", "(I)Ljava/lang/String;",
+         (void*)android_hardware_UsbDevice_get_device_name},
 };
 
-int register_android_hardware_UsbDevice(JNIEnv *env)
-{
-    return RegisterMethodsOrDie(env, "android/hardware/usb/UsbDevice",
-            method_table, NELEM(method_table));
+int register_android_hardware_UsbDevice(JNIEnv* env) {
+    return RegisterMethodsOrDie(env, "android/hardware/usb/UsbDevice", method_table,
+                                NELEM(method_table));
 }

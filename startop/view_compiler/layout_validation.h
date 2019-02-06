@@ -27,18 +27,18 @@ namespace startop {
 // features, such as includes and merges, we need to pre-validate the layout before we start
 // compiling.
 class LayoutValidationVisitor {
- public:
-  void VisitStartDocument() const {}
-  void VisitEndDocument() const {}
-  void VisitStartTag(const std::u16string& name);
-  void VisitEndTag() const {}
+  public:
+    void VisitStartDocument() const {}
+    void VisitEndDocument() const {}
+    void VisitStartTag(const std::u16string& name);
+    void VisitEndTag() const {}
 
-  const std::string& message() const { return message_; }
-  bool can_compile() const { return can_compile_; }
+    const std::string& message() const { return message_; }
+    bool can_compile() const { return can_compile_; }
 
- private:
-  std::string message_{"Okay"};
-  bool can_compile_{true};
+  private:
+    std::string message_{"Okay"};
+    bool can_compile_{true};
 };
 
 }  // namespace startop

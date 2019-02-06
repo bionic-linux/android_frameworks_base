@@ -25,7 +25,7 @@
 namespace android {
 int register_android_server_AlarmManagerService(JNIEnv* env);
 int register_android_server_BatteryStatsService(JNIEnv* env);
-int register_android_server_ConsumerIrService(JNIEnv *env);
+int register_android_server_ConsumerIrService(JNIEnv* env);
 int register_android_server_InputApplicationHandle(JNIEnv* env);
 int register_android_server_InputWindowHandle(JNIEnv* env);
 int register_android_server_InputManager(JNIEnv* env);
@@ -54,16 +54,15 @@ int register_android_server_SyntheticPasswordManager(JNIEnv* env);
 int register_android_server_GraphicsStatsService(JNIEnv* env);
 int register_android_hardware_display_DisplayViewport(JNIEnv* env);
 int register_android_server_net_NetworkStatsService(JNIEnv* env);
-};
+};  // namespace android
 
 using namespace android;
 
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
-{
+extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
     JNIEnv* env = NULL;
     jint result = -1;
 
-    if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK) {
         ALOGE("GetEnv failed!");
         return result;
     }

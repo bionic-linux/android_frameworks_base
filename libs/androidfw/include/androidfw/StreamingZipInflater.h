@@ -17,8 +17,8 @@
 #ifndef __LIBS_STREAMINGZIPINFLATER_H
 #define __LIBS_STREAMINGZIPINFLATER_H
 
-#include <unistd.h>
 #include <inttypes.h>
+#include <unistd.h>
 #include <zlib.h>
 
 #include <utils/Compat.h>
@@ -26,59 +26,59 @@
 namespace android {
 
 class StreamingZipInflater {
-public:
-    static const size_t INPUT_CHUNK_SIZE = 64 * 1024;
-    static const size_t OUTPUT_CHUNK_SIZE = 64 * 1024;
+ public:
+  static const size_t INPUT_CHUNK_SIZE = 64 * 1024;
+  static const size_t OUTPUT_CHUNK_SIZE = 64 * 1024;
 
-    // Flavor that pages in the compressed data from a fd
-    StreamingZipInflater(int fd, off64_t compDataStart, size_t uncompSize, size_t compSize);
+  // Flavor that pages in the compressed data from a fd
+  StreamingZipInflater(int fd, off64_t compDataStart, size_t uncompSize, size_t compSize);
 
-    // Flavor that gets the compressed data from an in-memory buffer
-    StreamingZipInflater(class FileMap* dataMap, size_t uncompSize);
+  // Flavor that gets the compressed data from an in-memory buffer
+  StreamingZipInflater(class FileMap* dataMap, size_t uncompSize);
 
-    ~StreamingZipInflater();
+  ~StreamingZipInflater();
 
-    // read 'count' bytes of uncompressed data from the current position.  outBuf may
-    // be NULL, in which case the data is consumed and discarded.
-    ssize_t read(void* outBuf, size_t count);
+  // read 'count' bytes of uncompressed data from the current position.  outBuf may
+  // be NULL, in which case the data is consumed and discarded.
+  ssize_t read(void* outBuf, size_t count);
 
-    // seeking backwards requires uncompressing fom the beginning, so is very
-    // expensive.  seeking forwards only requires uncompressing from the current
-    // position to the destination.
-    off64_t seekAbsolute(off64_t absoluteInputPosition);
+  // seeking backwards requires uncompressing fom the beginning, so is very
+  // expensive.  seeking forwards only requires uncompressing from the current
+  // position to the destination.
+  off64_t seekAbsolute(off64_t absoluteInputPosition);
 
-private:
-    void initInflateState();
-    int readNextChunk();
+ private:
+  void initInflateState();
+  int readNextChunk();
 
-    // where to find the uncompressed data
-    int mFd;
-    off64_t mInFileStart;         // where the compressed data lives in the file
-    class FileMap* mDataMap;
+  // where to find the uncompressed data
+  int mFd;
+  off64_t mInFileStart;  // where the compressed data lives in the file
+  class FileMap* mDataMap;
 
-    z_stream mInflateState;
-    bool mStreamNeedsInit;
+  z_stream mInflateState;
+  bool mStreamNeedsInit;
 
-    // output invariants for this asset
-    uint8_t* mOutBuf;           // output buf for decompressed bytes
-    size_t mOutBufSize;         // allocated size of mOutBuf
-    size_t mOutTotalSize;       // total uncompressed size of the blob
+  // output invariants for this asset
+  uint8_t* mOutBuf;      // output buf for decompressed bytes
+  size_t mOutBufSize;    // allocated size of mOutBuf
+  size_t mOutTotalSize;  // total uncompressed size of the blob
 
-    // current output state bookkeeping
-    off64_t mOutCurPosition;      // current position in total offset
-    size_t mOutLastDecoded;     // last decoded byte + 1 in mOutbuf
-    size_t mOutDeliverable;     // next undelivered byte of decoded output in mOutBuf
+  // current output state bookkeeping
+  off64_t mOutCurPosition;  // current position in total offset
+  size_t mOutLastDecoded;   // last decoded byte + 1 in mOutbuf
+  size_t mOutDeliverable;   // next undelivered byte of decoded output in mOutBuf
 
-    // input invariants
-    uint8_t* mInBuf;
-    size_t mInBufSize;          // allocated size of mInBuf;
-    size_t mInTotalSize;        // total size of compressed data for this blob
+  // input invariants
+  uint8_t* mInBuf;
+  size_t mInBufSize;    // allocated size of mInBuf;
+  size_t mInTotalSize;  // total size of compressed data for this blob
 
-    // input state bookkeeping
-    size_t mInNextChunkOffset;  // offset from start of blob at which the next input chunk lies
-    // the z_stream contains state about input block consumption
+  // input state bookkeeping
+  size_t mInNextChunkOffset;  // offset from start of blob at which the next input chunk lies
+                              // the z_stream contains state about input block consumption
 };
 
-}
+}  // namespace android
 
 #endif

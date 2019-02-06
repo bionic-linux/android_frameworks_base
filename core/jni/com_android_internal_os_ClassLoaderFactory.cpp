@@ -20,34 +20,27 @@
 
 #include "core_jni_helpers.h"
 
-
-static jstring createClassloaderNamespace_native(JNIEnv* env,
-                                              jobject clazz,
-                                              jobject classLoader,
-                                              jint targetSdkVersion,
-                                              jstring librarySearchPath,
-                                              jstring libraryPermittedPath,
-                                              jboolean isShared,
-                                              jboolean isForVendor) {
-    return android::CreateClassLoaderNamespace(env, targetSdkVersion,
-                                               classLoader, isShared == JNI_TRUE,
-                                               isForVendor == JNI_TRUE,
+static jstring createClassloaderNamespace_native(JNIEnv* env, jobject clazz, jobject classLoader,
+                                                 jint targetSdkVersion, jstring librarySearchPath,
+                                                 jstring libraryPermittedPath, jboolean isShared,
+                                                 jboolean isForVendor) {
+    return android::CreateClassLoaderNamespace(env, targetSdkVersion, classLoader,
+                                               isShared == JNI_TRUE, isForVendor == JNI_TRUE,
                                                librarySearchPath, libraryPermittedPath);
 }
 
 static const JNINativeMethod g_methods[] = {
-    { "createClassloaderNamespace",
-      "(Ljava/lang/ClassLoader;ILjava/lang/String;Ljava/lang/String;ZZ)Ljava/lang/String;",
-      reinterpret_cast<void*>(createClassloaderNamespace_native) },
+        {"createClassloaderNamespace",
+         "(Ljava/lang/ClassLoader;ILjava/lang/String;Ljava/lang/String;ZZ)Ljava/lang/String;",
+         reinterpret_cast<void*>(createClassloaderNamespace_native)},
 };
 
 static const char* const kClassLoaderFactoryPathName = "com/android/internal/os/ClassLoaderFactory";
 
-namespace android
-{
+namespace android {
 
 int register_com_android_internal_os_ClassLoaderFactory(JNIEnv* env) {
     return RegisterMethodsOrDie(env, kClassLoaderFactoryPathName, g_methods, NELEM(g_methods));
 }
 
-} // namespace android
+}  // namespace android

@@ -16,7 +16,6 @@
 
 #include "Color.h"
 
-
 #include <utils/Log.h>
 #include <cmath>
 
@@ -56,7 +55,6 @@ bool transferFunctionCloseToSRGB(const SkColorSpace* colorSpace) {
 }
 
 sk_sp<SkColorSpace> DataSpaceToColorSpace(android_dataspace dataspace) {
-
     SkColorSpace::Gamut gamut;
     switch (dataspace & HAL_DATASPACE_STANDARD_MASK) {
         case HAL_DATASPACE_STANDARD_BT709:

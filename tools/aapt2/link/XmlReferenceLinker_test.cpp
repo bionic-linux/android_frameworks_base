@@ -245,7 +245,8 @@ TEST_F(XmlReferenceLinkerTest, LinkViewWithLocalPackageAndAliasOfTheSameName) {
 
   // All attributes and references in this element should be referring to
   // "com.app.test" (0x7f).
-  xml::Attribute* xml_attr = view_el->FindAttribute(xml::BuildPackageNamespace("com.app.test"), "attr");
+  xml::Attribute* xml_attr =
+      view_el->FindAttribute(xml::BuildPackageNamespace("com.app.test"), "attr");
   ASSERT_THAT(xml_attr, NotNull());
   ASSERT_TRUE(xml_attr->compiled_attribute);
   EXPECT_EQ(make_value(ResourceId(0x7f010002)), xml_attr->compiled_attribute.value().id);

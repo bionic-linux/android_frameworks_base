@@ -19,21 +19,15 @@
 namespace android {
 namespace util {
 
-uint8_t
-read_wire_type(uint32_t varint)
-{
-    return (uint8_t) (varint & WIRE_TYPE_MASK);
+uint8_t read_wire_type(uint32_t varint) {
+    return (uint8_t)(varint & WIRE_TYPE_MASK);
 }
 
-uint32_t
-read_field_id(uint32_t varint)
-{
+uint32_t read_field_id(uint32_t varint) {
     return varint >> FIELD_ID_SHIFT;
 }
 
-size_t
-get_varint_size(uint64_t varint)
-{
+size_t get_varint_size(uint64_t varint) {
     size_t size = 1;
     while ((varint & ~0x7F)) {
         size++;
@@ -42,9 +36,7 @@ get_varint_size(uint64_t varint)
     return size;
 }
 
-uint8_t*
-write_raw_varint(uint8_t* buf, uint64_t val)
-{
+uint8_t* write_raw_varint(uint8_t* buf, uint64_t val) {
     uint8_t* p = buf;
     while (true) {
         if ((val & ~0x7F) == 0) {
@@ -57,13 +49,11 @@ write_raw_varint(uint8_t* buf, uint64_t val)
     }
 }
 
-uint8_t*
-write_length_delimited_tag_header(uint8_t* buf, uint32_t fieldId, size_t size)
-{
+uint8_t* write_length_delimited_tag_header(uint8_t* buf, uint32_t fieldId, size_t size) {
     buf = write_raw_varint(buf, (fieldId << FIELD_ID_SHIFT) | WIRE_TYPE_LENGTH_DELIMITED);
     buf = write_raw_varint(buf, size);
     return buf;
 }
 
-} // util
-} // android
+}  // namespace util
+}  // namespace android

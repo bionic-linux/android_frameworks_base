@@ -18,23 +18,27 @@
 
 //#define LOG_NDEBUG 0
 
+#include <nativehelper/JNIHelp.h>
 #include "android_os_MessageQueue.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/android_view_Surface.h"
-#include <nativehelper/JNIHelp.h>
 #include "jni.h"
 
-#include <android/hardware/tv/input/1.0/ITvInputCallback.h>
 #include <android/hardware/tv/input/1.0/ITvInput.h>
+#include <android/hardware/tv/input/1.0/ITvInputCallback.h>
 #include <android/hardware/tv/input/1.0/types.h>
 #include <gui/Surface.h>
+#include <hardware/tv_input.h>
 #include <utils/Errors.h>
 #include <utils/KeyedVector.h>
 #include <utils/Log.h>
 #include <utils/Looper.h>
 #include <utils/NativeHandle.h>
-#include <hardware/tv_input.h>
 
+using ::android::hardware::hidl_string;
+using ::android::hardware::hidl_vec;
+using ::android::hardware::Return;
+using ::android::hardware::Void;
 using ::android::hardware::audio::common::V2_0::AudioDevice;
 using ::android::hardware::tv::input::V1_0::ITvInput;
 using ::android::hardware::tv::input::V1_0::ITvInputCallback;
@@ -44,10 +48,6 @@ using ::android::hardware::tv::input::V1_0::TvInputEvent;
 using ::android::hardware::tv::input::V1_0::TvInputEventType;
 using ::android::hardware::tv::input::V1_0::TvInputType;
 using ::android::hardware::tv::input::V1_0::TvStreamConfig;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
-using ::android::hardware::hidl_vec;
-using ::android::hardware::hidl_string;
 
 namespace android {
 
@@ -58,9 +58,7 @@ static struct {
     jmethodID firstFrameCaptured;
 } gTvInputHalClassInfo;
 
-static struct {
-    jclass clazz;
-} gTvStreamConfigClassInfo;
+static struct { jclass clazz; } gTvStreamConfigClassInfo;
 
 static struct {
     jclass clazz;
@@ -90,7 +88,7 @@ static struct {
 ////////////////////////////////////////////////////////////////////////////////
 
 class BufferProducerThread : public Thread {
-public:
+  public:
     BufferProducerThread(tv_input_device_t* device, int deviceId, const tv_stream_t* stream);
 
     virtual status_t readyToRun();
@@ -99,7 +97,7 @@ public:
     void onCaptured(uint32_t seq, bool succeeded);
     void shutdown();
 
-private:
+  private:
     Mutex mLock;
     Condition mCondition;
     sp<Surface> mSurface;
@@ -120,8 +118,8 @@ private:
     void setSurfaceLocked(const sp<Surface>& surface);
 };
 
-BufferProducerThread::BufferProducerThread(
-        tv_input_device_t* device, int deviceId, const tv_stream_t* stream)
+BufferProducerThread::BufferProducerThread(tv_input_device_t* device, int deviceId,
+                                           const tv_stream_t* stream)
     : Thread(false),
       mDevice(device),
       mDeviceId(deviceId),
@@ -138,8 +136,8 @@ status_t BufferProducerThread::readyToRun() {
     if (err != NO_ERROR) {
         return err;
     }
-    err = native_window_set_buffers_dimensions(
-            anw.get(), mStream.buffer_producer.width, mStream.buffer_producer.height);
+    err = native_window_set_buffers_dimensions(anw.get(), mStream.buffer_producer.width,
+                                               mStream.buffer_producer.height);
     if (err != NO_ERROR) {
         return err;
     }
@@ -240,8 +238,7 @@ bool BufferProducerThread::threadLoop() {
         }
         mBuffer = buffer;
         mBufferState = CAPTURING;
-        mDevice->request_capture(mDevice, mDeviceId, mStream.stream_id,
-                                 buffer->handle, ++mSeq);
+        mDevice->request_capture(mDevice, mDeviceId, mStream.stream_id, buffer->handle, ++mSeq);
     }
 
     return true;
@@ -250,7 +247,7 @@ bool BufferProducerThread::threadLoop() {
 ////////////////////////////////////////////////////////////////////////////////
 
 class JTvInputHal {
-public:
+  public:
     ~JTvInputHal();
 
     static JTvInputHal* createInstance(JNIEnv* env, jobject thiz, const sp<Looper>& looper);
@@ -264,10 +261,10 @@ public:
     void onStreamConfigurationsChanged(int deviceId);
     void onCaptured(int deviceId, int streamId, uint32_t seq, bool succeeded);
 
-private:
+  private:
     // Connection between a surface and a stream.
     class Connection {
-    public:
+      public:
         Connection() {}
 
         sp<Surface> mSurface;
@@ -280,21 +277,22 @@ private:
     };
 
     class NotifyHandler : public MessageHandler {
-    public:
+      public:
         NotifyHandler(JTvInputHal* hal, const TvInputEvent& event);
 
         virtual void handleMessage(const Message& message);
 
-    private:
+      private:
         TvInputEvent mEvent;
         JTvInputHal* mHal;
     };
 
     class TvInputCallback : public ITvInputCallback {
-    public:
+      public:
         explicit TvInputCallback(JTvInputHal* hal);
         Return<void> notify(const TvInputEvent& event) override;
-    private:
+
+      private:
         JTvInputHal* mHal;
     };
 
@@ -311,7 +309,7 @@ private:
 };
 
 JTvInputHal::JTvInputHal(JNIEnv* env, jobject thiz, sp<ITvInput> tvInput,
-        const sp<Looper>& looper) {
+                         const sp<Looper>& looper) {
     mThiz = env->NewWeakGlobalRef(thiz);
     mTvInput = tvInput;
     mLooper = looper;
@@ -360,8 +358,8 @@ int JTvInputHal::addOrUpdateStream(int deviceId, int streamId, const sp<Surface>
         // Need to configure stream
         Result result = Result::UNKNOWN;
         hidl_vec<TvStreamConfig> list;
-        mTvInput->getStreamConfigurations(deviceId,
-                [&result, &list](Result res, hidl_vec<TvStreamConfig> configs) {
+        mTvInput->getStreamConfigurations(
+                deviceId, [&result, &list](Result res, hidl_vec<TvStreamConfig> configs) {
                     result = res;
                     if (res == Result::OK) {
                         list = configs;
@@ -387,19 +385,19 @@ int JTvInputHal::addOrUpdateStream(int deviceId, int streamId, const sp<Surface>
         result = Result::UNKNOWN;
         const native_handle_t* sidebandStream;
         mTvInput->openStream(deviceId, streamId,
-                [&result, &sidebandStream](Result res, const native_handle_t* handle) {
-                    result = res;
-                    if (res == Result::OK) {
-                        if (handle) {
-                            sidebandStream = native_handle_clone(handle);
-                        } else {
-                            result = Result::UNKNOWN;
-                        }
-                    }
-                });
+                             [&result, &sidebandStream](Result res, const native_handle_t* handle) {
+                                 result = res;
+                                 if (res == Result::OK) {
+                                     if (handle) {
+                                         sidebandStream = native_handle_clone(handle);
+                                     } else {
+                                         result = Result::UNKNOWN;
+                                     }
+                                 }
+                             });
         if (result != Result::OK) {
             ALOGE("Couldn't open stream. device id:%d stream id:%d result:%d", deviceId, streamId,
-                    result);
+                  result);
             return UNKNOWN_ERROR;
         }
         connection.mSourceHandle = NativeHandle::create((native_handle_t*)sidebandStream, true);
@@ -442,8 +440,8 @@ int JTvInputHal::removeStream(int deviceId, int streamId) {
 const hidl_vec<TvStreamConfig> JTvInputHal::getStreamConfigs(int deviceId) {
     Result result = Result::UNKNOWN;
     hidl_vec<TvStreamConfig> list;
-    mTvInput->getStreamConfigurations(deviceId,
-            [&result, &list](Result res, hidl_vec<TvStreamConfig> configs) {
+    mTvInput->getStreamConfigurations(
+            deviceId, [&result, &list](Result res, hidl_vec<TvStreamConfig> configs) {
                 result = res;
                 if (res == Result::OK) {
                     list = configs;
@@ -462,38 +460,30 @@ void JTvInputHal::onDeviceAvailable(const TvInputDeviceInfo& info) {
     }
     JNIEnv* env = AndroidRuntime::getJNIEnv();
 
-    jobject builder = env->NewObject(
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            gTvInputHardwareInfoBuilderClassInfo.constructor);
-    env->CallObjectMethod(
-            builder, gTvInputHardwareInfoBuilderClassInfo.deviceId, info.deviceId);
-    env->CallObjectMethod(
-            builder, gTvInputHardwareInfoBuilderClassInfo.type, info.type);
+    jobject builder = env->NewObject(gTvInputHardwareInfoBuilderClassInfo.clazz,
+                                     gTvInputHardwareInfoBuilderClassInfo.constructor);
+    env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.deviceId, info.deviceId);
+    env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.type, info.type);
     if (info.type == TvInputType::HDMI) {
-        env->CallObjectMethod(
-                builder, gTvInputHardwareInfoBuilderClassInfo.hdmiPortId, info.portId);
+        env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.hdmiPortId,
+                              info.portId);
     }
-    env->CallObjectMethod(
-            builder, gTvInputHardwareInfoBuilderClassInfo.cableConnectionStatus,
-            info.cableConnectionStatus);
-    env->CallObjectMethod(
-            builder, gTvInputHardwareInfoBuilderClassInfo.audioType, info.audioType);
+    env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.cableConnectionStatus,
+                          info.cableConnectionStatus);
+    env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.audioType, info.audioType);
     if (info.audioType != AudioDevice::NONE) {
         uint8_t buffer[info.audioAddress.size() + 1];
         memcpy(buffer, info.audioAddress.data(), info.audioAddress.size());
         buffer[info.audioAddress.size()] = '\0';
-        jstring audioAddress = env->NewStringUTF(reinterpret_cast<const char *>(buffer));
-        env->CallObjectMethod(
-                builder, gTvInputHardwareInfoBuilderClassInfo.audioAddress, audioAddress);
+        jstring audioAddress = env->NewStringUTF(reinterpret_cast<const char*>(buffer));
+        env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.audioAddress,
+                              audioAddress);
         env->DeleteLocalRef(audioAddress);
     }
 
     jobject infoObject = env->CallObjectMethod(builder, gTvInputHardwareInfoBuilderClassInfo.build);
 
-    env->CallVoidMethod(
-            mThiz,
-            gTvInputHalClassInfo.deviceAvailable,
-            infoObject);
+    env->CallVoidMethod(mThiz, gTvInputHalClassInfo.deviceAvailable, infoObject);
 
     env->DeleteLocalRef(builder);
     env->DeleteLocalRef(infoObject);
@@ -510,10 +500,7 @@ void JTvInputHal::onDeviceUnavailable(int deviceId) {
         mConnections.removeItem(deviceId);
     }
     JNIEnv* env = AndroidRuntime::getJNIEnv();
-    env->CallVoidMethod(
-            mThiz,
-            gTvInputHalClassInfo.deviceUnavailable,
-            deviceId);
+    env->CallVoidMethod(mThiz, gTvInputHalClassInfo.deviceUnavailable, deviceId);
 }
 
 void JTvInputHal::onStreamConfigurationsChanged(int deviceId) {
@@ -526,10 +513,7 @@ void JTvInputHal::onStreamConfigurationsChanged(int deviceId) {
         connections.clear();
     }
     JNIEnv* env = AndroidRuntime::getJNIEnv();
-    env->CallVoidMethod(
-            mThiz,
-            gTvInputHalClassInfo.streamConfigsChanged,
-            deviceId);
+    env->CallVoidMethod(mThiz, gTvInputHalClassInfo.streamConfigsChanged, deviceId);
 }
 
 void JTvInputHal::onCaptured(int deviceId, int streamId, uint32_t seq, bool succeeded) {
@@ -547,11 +531,7 @@ void JTvInputHal::onCaptured(int deviceId, int streamId, uint32_t seq, bool succ
     thread->onCaptured(seq, succeeded);
     if (seq == 0) {
         JNIEnv* env = AndroidRuntime::getJNIEnv();
-        env->CallVoidMethod(
-                mThiz,
-                gTvInputHalClassInfo.firstFrameCaptured,
-                deviceId,
-                streamId);
+        env->CallVoidMethod(mThiz, gTvInputHalClassInfo.firstFrameCaptured, deviceId, streamId);
     }
 }
 
@@ -588,13 +568,12 @@ Return<void> JTvInputHal::TvInputCallback::notify(const TvInputEvent& event) {
 ////////////////////////////////////////////////////////////////////////////////
 
 static jlong nativeOpen(JNIEnv* env, jobject thiz, jobject messageQueueObj) {
-    sp<MessageQueue> messageQueue =
-            android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
+    sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
     return (jlong)JTvInputHal::createInstance(env, thiz, messageQueue->getLooper());
 }
 
-static int nativeAddOrUpdateStream(JNIEnv* env, jclass clazz,
-        jlong ptr, jint deviceId, jint streamId, jobject jsurface) {
+static int nativeAddOrUpdateStream(JNIEnv* env, jclass clazz, jlong ptr, jint deviceId,
+                                   jint streamId, jobject jsurface) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     if (!jsurface) {
         return BAD_VALUE;
@@ -606,33 +585,29 @@ static int nativeAddOrUpdateStream(JNIEnv* env, jclass clazz,
     return tvInputHal->addOrUpdateStream(deviceId, streamId, surface);
 }
 
-static int nativeRemoveStream(JNIEnv* env, jclass clazz,
-        jlong ptr, jint deviceId, jint streamId) {
+static int nativeRemoveStream(JNIEnv* env, jclass clazz, jlong ptr, jint deviceId, jint streamId) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     return tvInputHal->removeStream(deviceId, streamId);
 }
 
-static jobjectArray nativeGetStreamConfigs(JNIEnv* env, jclass clazz,
-        jlong ptr, jint deviceId, jint generation) {
+static jobjectArray nativeGetStreamConfigs(JNIEnv* env, jclass clazz, jlong ptr, jint deviceId,
+                                           jint generation) {
     JTvInputHal* tvInputHal = (JTvInputHal*)ptr;
     const hidl_vec<TvStreamConfig> configs = tvInputHal->getStreamConfigs(deviceId);
 
     jobjectArray result = env->NewObjectArray(configs.size(), gTvStreamConfigClassInfo.clazz, NULL);
     for (size_t i = 0; i < configs.size(); ++i) {
-        jobject builder = env->NewObject(
-                gTvStreamConfigBuilderClassInfo.clazz,
-                gTvStreamConfigBuilderClassInfo.constructor);
-        env->CallObjectMethod(
-                builder, gTvStreamConfigBuilderClassInfo.streamId, configs[i].streamId);
-        env->CallObjectMethod(
-                builder, gTvStreamConfigBuilderClassInfo.type,
-                        TV_STREAM_TYPE_INDEPENDENT_VIDEO_SOURCE);
-        env->CallObjectMethod(
-                builder, gTvStreamConfigBuilderClassInfo.maxWidth, configs[i].maxVideoWidth);
-        env->CallObjectMethod(
-                builder, gTvStreamConfigBuilderClassInfo.maxHeight, configs[i].maxVideoHeight);
-        env->CallObjectMethod(
-                builder, gTvStreamConfigBuilderClassInfo.generation, generation);
+        jobject builder = env->NewObject(gTvStreamConfigBuilderClassInfo.clazz,
+                                         gTvStreamConfigBuilderClassInfo.constructor);
+        env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.streamId,
+                              configs[i].streamId);
+        env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.type,
+                              TV_STREAM_TYPE_INDEPENDENT_VIDEO_SOURCE);
+        env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.maxWidth,
+                              configs[i].maxVideoWidth);
+        env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.maxHeight,
+                              configs[i].maxVideoHeight);
+        env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.generation, generation);
 
         jobject config = env->CallObjectMethod(builder, gTvStreamConfigBuilderClassInfo.build);
 
@@ -650,47 +625,40 @@ static void nativeClose(JNIEnv* env, jclass clazz, jlong ptr) {
 }
 
 static const JNINativeMethod gTvInputHalMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeOpen", "(Landroid/os/MessageQueue;)J",
-            (void*) nativeOpen },
-    { "nativeAddOrUpdateStream", "(JIILandroid/view/Surface;)I",
-            (void*) nativeAddOrUpdateStream },
-    { "nativeRemoveStream", "(JII)I",
-            (void*) nativeRemoveStream },
-    { "nativeGetStreamConfigs", "(JII)[Landroid/media/tv/TvStreamConfig;",
-            (void*) nativeGetStreamConfigs },
-    { "nativeClose", "(J)V",
-            (void*) nativeClose },
+        /* name, signature, funcPtr */
+        {"nativeOpen", "(Landroid/os/MessageQueue;)J", (void*)nativeOpen},
+        {"nativeAddOrUpdateStream", "(JIILandroid/view/Surface;)I", (void*)nativeAddOrUpdateStream},
+        {"nativeRemoveStream", "(JII)I", (void*)nativeRemoveStream},
+        {"nativeGetStreamConfigs", "(JII)[Landroid/media/tv/TvStreamConfig;",
+         (void*)nativeGetStreamConfigs},
+        {"nativeClose", "(J)V", (void*)nativeClose},
 };
 
-#define FIND_CLASS(var, className) \
-        var = env->FindClass(className); \
-        LOG_FATAL_IF(! (var), "Unable to find class " className)
+#define FIND_CLASS(var, className)   \
+    var = env->FindClass(className); \
+    LOG_FATAL_IF(!(var), "Unable to find class " className)
 
-#define GET_METHOD_ID(var, clazz, methodName, fieldDescriptor) \
-        var = env->GetMethodID(clazz, methodName, fieldDescriptor); \
-        LOG_FATAL_IF(! (var), "Unable to find method" methodName)
+#define GET_METHOD_ID(var, clazz, methodName, fieldDescriptor)  \
+    var = env->GetMethodID(clazz, methodName, fieldDescriptor); \
+    LOG_FATAL_IF(!(var), "Unable to find method" methodName)
 
 int register_android_server_tv_TvInputHal(JNIEnv* env) {
-    int res = jniRegisterNativeMethods(env, "com/android/server/tv/TvInputHal",
-            gTvInputHalMethods, NELEM(gTvInputHalMethods));
+    int res = jniRegisterNativeMethods(env, "com/android/server/tv/TvInputHal", gTvInputHalMethods,
+                                       NELEM(gTvInputHalMethods));
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
-    (void)res; // Don't complain about unused variable in the LOG_NDEBUG case
+    (void)res;  // Don't complain about unused variable in the LOG_NDEBUG case
 
     jclass clazz;
     FIND_CLASS(clazz, "com/android/server/tv/TvInputHal");
 
-    GET_METHOD_ID(
-            gTvInputHalClassInfo.deviceAvailable, clazz,
-            "deviceAvailableFromNative", "(Landroid/media/tv/TvInputHardwareInfo;)V");
-    GET_METHOD_ID(
-            gTvInputHalClassInfo.deviceUnavailable, clazz, "deviceUnavailableFromNative", "(I)V");
-    GET_METHOD_ID(
-            gTvInputHalClassInfo.streamConfigsChanged, clazz,
-            "streamConfigsChangedFromNative", "(I)V");
-    GET_METHOD_ID(
-            gTvInputHalClassInfo.firstFrameCaptured, clazz,
-            "firstFrameCapturedFromNative", "(II)V");
+    GET_METHOD_ID(gTvInputHalClassInfo.deviceAvailable, clazz, "deviceAvailableFromNative",
+                  "(Landroid/media/tv/TvInputHardwareInfo;)V");
+    GET_METHOD_ID(gTvInputHalClassInfo.deviceUnavailable, clazz, "deviceUnavailableFromNative",
+                  "(I)V");
+    GET_METHOD_ID(gTvInputHalClassInfo.streamConfigsChanged, clazz,
+                  "streamConfigsChangedFromNative", "(I)V");
+    GET_METHOD_ID(gTvInputHalClassInfo.firstFrameCaptured, clazz, "firstFrameCapturedFromNative",
+                  "(II)V");
 
     FIND_CLASS(gTvStreamConfigClassInfo.clazz, "android/media/tv/TvStreamConfig");
     gTvStreamConfigClassInfo.clazz = jclass(env->NewGlobalRef(gTvStreamConfigClassInfo.clazz));
@@ -699,72 +667,49 @@ int register_android_server_tv_TvInputHal(JNIEnv* env) {
     gTvStreamConfigBuilderClassInfo.clazz =
             jclass(env->NewGlobalRef(gTvStreamConfigBuilderClassInfo.clazz));
 
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.constructor,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "<init>", "()V");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.streamId,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "streamId", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.type,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "type", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.maxWidth,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "maxWidth", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.maxHeight,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "maxHeight", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.generation,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "generation", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
-    GET_METHOD_ID(
-            gTvStreamConfigBuilderClassInfo.build,
-            gTvStreamConfigBuilderClassInfo.clazz,
-            "build", "()Landroid/media/tv/TvStreamConfig;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.constructor,
+                  gTvStreamConfigBuilderClassInfo.clazz, "<init>", "()V");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.streamId, gTvStreamConfigBuilderClassInfo.clazz,
+                  "streamId", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.type, gTvStreamConfigBuilderClassInfo.clazz,
+                  "type", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.maxWidth, gTvStreamConfigBuilderClassInfo.clazz,
+                  "maxWidth", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.maxHeight, gTvStreamConfigBuilderClassInfo.clazz,
+                  "maxHeight", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.generation, gTvStreamConfigBuilderClassInfo.clazz,
+                  "generation", "(I)Landroid/media/tv/TvStreamConfig$Builder;");
+    GET_METHOD_ID(gTvStreamConfigBuilderClassInfo.build, gTvStreamConfigBuilderClassInfo.clazz,
+                  "build", "()Landroid/media/tv/TvStreamConfig;");
 
     FIND_CLASS(gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "android/media/tv/TvInputHardwareInfo$Builder");
+               "android/media/tv/TvInputHardwareInfo$Builder");
     gTvInputHardwareInfoBuilderClassInfo.clazz =
             jclass(env->NewGlobalRef(gTvInputHardwareInfoBuilderClassInfo.clazz));
 
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.constructor,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "<init>", "()V");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.deviceId,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "deviceId", "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.type,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "type", "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.hdmiPortId,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "hdmiPortId", "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.cableConnectionStatus,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "cableConnectionStatus", "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.audioType,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "audioType", "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.audioAddress,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "audioAddress", "(Ljava/lang/String;)Landroid/media/tv/TvInputHardwareInfo$Builder;");
-    GET_METHOD_ID(
-            gTvInputHardwareInfoBuilderClassInfo.build,
-            gTvInputHardwareInfoBuilderClassInfo.clazz,
-            "build", "()Landroid/media/tv/TvInputHardwareInfo;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.constructor,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "<init>", "()V");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.deviceId,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "deviceId",
+                  "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.type,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "type",
+                  "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.hdmiPortId,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "hdmiPortId",
+                  "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.cableConnectionStatus,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "cableConnectionStatus",
+                  "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.audioType,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "audioType",
+                  "(I)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.audioAddress,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "audioAddress",
+                  "(Ljava/lang/String;)Landroid/media/tv/TvInputHardwareInfo$Builder;");
+    GET_METHOD_ID(gTvInputHardwareInfoBuilderClassInfo.build,
+                  gTvInputHardwareInfoBuilderClassInfo.clazz, "build",
+                  "()Landroid/media/tv/TvInputHardwareInfo;");
 
     return 0;
 }

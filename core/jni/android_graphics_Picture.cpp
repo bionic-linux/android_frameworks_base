@@ -79,8 +79,8 @@ static jint android_graphics_Picture_getHeight(JNIEnv* env, jobject, jlong pictu
     return static_cast<jint>(pict->height());
 }
 
-static jlong android_graphics_Picture_beginRecording(JNIEnv* env, jobject, jlong pictHandle,
-                                                     jint w, jint h) {
+static jlong android_graphics_Picture_beginRecording(JNIEnv* env, jobject, jlong pictHandle, jint w,
+                                                     jint h) {
     Picture* pict = reinterpret_cast<Picture*>(pictHandle);
     Canvas* canvas = pict->beginRecording(w, h);
     return reinterpret_cast<jlong>(canvas);
@@ -92,19 +92,20 @@ static void android_graphics_Picture_endRecording(JNIEnv* env, jobject, jlong pi
 }
 
 static const JNINativeMethod gMethods[] = {
-    {"nativeGetWidth", "(J)I", (void*) android_graphics_Picture_getWidth},
-    {"nativeGetHeight", "(J)I", (void*) android_graphics_Picture_getHeight},
-    {"nativeConstructor", "(J)J", (void*) android_graphics_Picture_newPicture},
-    {"nativeCreateFromStream", "(Ljava/io/InputStream;[B)J", (void*)android_graphics_Picture_deserialize},
-    {"nativeBeginRecording", "(JII)J", (void*) android_graphics_Picture_beginRecording},
-    {"nativeEndRecording", "(J)V", (void*) android_graphics_Picture_endRecording},
-    {"nativeDraw", "(JJ)V", (void*) android_graphics_Picture_draw},
-    {"nativeWriteToStream", "(JLjava/io/OutputStream;[B)Z", (void*)android_graphics_Picture_serialize},
-    {"nativeDestructor","(J)V", (void*) android_graphics_Picture_killPicture}
-};
+        {"nativeGetWidth", "(J)I", (void*)android_graphics_Picture_getWidth},
+        {"nativeGetHeight", "(J)I", (void*)android_graphics_Picture_getHeight},
+        {"nativeConstructor", "(J)J", (void*)android_graphics_Picture_newPicture},
+        {"nativeCreateFromStream", "(Ljava/io/InputStream;[B)J",
+         (void*)android_graphics_Picture_deserialize},
+        {"nativeBeginRecording", "(JII)J", (void*)android_graphics_Picture_beginRecording},
+        {"nativeEndRecording", "(J)V", (void*)android_graphics_Picture_endRecording},
+        {"nativeDraw", "(JJ)V", (void*)android_graphics_Picture_draw},
+        {"nativeWriteToStream", "(JLjava/io/OutputStream;[B)Z",
+         (void*)android_graphics_Picture_serialize},
+        {"nativeDestructor", "(J)V", (void*)android_graphics_Picture_killPicture}};
 
 int register_android_graphics_Picture(JNIEnv* env) {
     return RegisterMethodsOrDie(env, "android/graphics/Picture", gMethods, NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

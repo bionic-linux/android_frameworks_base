@@ -45,12 +45,19 @@ class unique_cptr {
  public:
   using pointer = typename std::add_pointer<T>::type;
 
-  constexpr unique_cptr() : ptr_(nullptr) {}
-  constexpr explicit unique_cptr(std::nullptr_t) : ptr_(nullptr) {}
-  explicit unique_cptr(pointer ptr) : ptr_(ptr) {}
-  unique_cptr(unique_cptr&& o) noexcept : ptr_(o.ptr_) { o.ptr_ = nullptr; }
+  constexpr unique_cptr() : ptr_(nullptr) {
+  }
+  constexpr explicit unique_cptr(std::nullptr_t) : ptr_(nullptr) {
+  }
+  explicit unique_cptr(pointer ptr) : ptr_(ptr) {
+  }
+  unique_cptr(unique_cptr&& o) noexcept : ptr_(o.ptr_) {
+    o.ptr_ = nullptr;
+  }
 
-  ~unique_cptr() { std::free(reinterpret_cast<void*>(ptr_)); }
+  ~unique_cptr() {
+    std::free(reinterpret_cast<void*>(ptr_));
+  }
 
   inline unique_cptr& operator=(unique_cptr&& o) noexcept {
     if (&o == this) {
@@ -75,7 +82,9 @@ class unique_cptr {
     return result;
   }
 
-  inline pointer get() const { return ptr_; }
+  inline pointer get() const {
+    return ptr_;
+  }
 
   void reset(pointer ptr = pointer()) {
     if (ptr == ptr_) {
@@ -87,21 +96,37 @@ class unique_cptr {
     std::free(reinterpret_cast<void*>(old_ptr));
   }
 
-  inline void swap(unique_cptr& o) { std::swap(ptr_, o.ptr_); }
+  inline void swap(unique_cptr& o) {
+    std::swap(ptr_, o.ptr_);
+  }
 
-  inline explicit operator bool() const { return ptr_ != nullptr; }
+  inline explicit operator bool() const {
+    return ptr_ != nullptr;
+  }
 
-  inline typename std::add_lvalue_reference<T>::type operator*() const { return *ptr_; }
+  inline typename std::add_lvalue_reference<T>::type operator*() const {
+    return *ptr_;
+  }
 
-  inline pointer operator->() const { return ptr_; }
+  inline pointer operator->() const {
+    return ptr_;
+  }
 
-  inline bool operator==(const unique_cptr& o) const { return ptr_ == o.ptr_; }
+  inline bool operator==(const unique_cptr& o) const {
+    return ptr_ == o.ptr_;
+  }
 
-  inline bool operator!=(const unique_cptr& o) const { return ptr_ != o.ptr_; }
+  inline bool operator!=(const unique_cptr& o) const {
+    return ptr_ != o.ptr_;
+  }
 
-  inline bool operator==(std::nullptr_t) const { return ptr_ == nullptr; }
+  inline bool operator==(std::nullptr_t) const {
+    return ptr_ == nullptr;
+  }
 
-  inline bool operator!=(std::nullptr_t) const { return ptr_ != nullptr; }
+  inline bool operator!=(std::nullptr_t) const {
+    return ptr_ != nullptr;
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(unique_cptr);

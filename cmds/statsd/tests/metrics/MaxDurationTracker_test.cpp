@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "src/metrics/duration_helper/MaxDurationTracker.h"
-#include "src/condition/ConditionWizard.h"
 #include "metrics_test_helper.h"
+#include "src/condition/ConditionWizard.h"
 #include "tests/statsd_test_util.h"
 
 #include <gmock/gmock.h>
@@ -191,8 +191,7 @@ TEST(MaxDurationTrackerTest, TestCrossBucketBoundary_nested) {
     EXPECT_TRUE(buckets.find(eventKey) == buckets.end());
 
     // real stop now.
-    tracker.noteStop(DEFAULT_DIMENSION_KEY,
-                     bucketStartTimeNs + (2 * bucketSizeNs) + 5, false);
+    tracker.noteStop(DEFAULT_DIMENSION_KEY, bucketStartTimeNs + (2 * bucketSizeNs) + 5, false);
     tracker.flushIfNeeded(bucketStartTimeNs + (3 * bucketSizeNs) + 1, &buckets);
 
     EXPECT_EQ(1u, buckets[eventKey].size());
@@ -272,7 +271,7 @@ TEST(MaxDurationTrackerTest, TestAnomalyDetection) {
     alert.set_refractory_period_secs(refPeriodSec);
     sp<AlarmMonitor> alarmMonitor;
     sp<DurationAnomalyTracker> anomalyTracker =
-        new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
+            new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
     MaxDurationTracker tracker(kConfigKey, metricId, eventKey, wizard, 1, dimensionInCondition,
                                false, bucketStartTimeNs, bucketNum, bucketStartTimeNs, bucketSizeNs,
                                true, false, {anomalyTracker});
@@ -332,7 +331,7 @@ TEST(MaxDurationTrackerTest, TestAnomalyPredictedTimestamp) {
     alert.set_refractory_period_secs(refPeriodSec);
     sp<AlarmMonitor> alarmMonitor;
     sp<DurationAnomalyTracker> anomalyTracker =
-        new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
+            new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
     MaxDurationTracker tracker(kConfigKey, metricId, eventKey, wizard, 1, dimensionInCondition,
                                false, bucketStartTimeNs, bucketNum, bucketStartTimeNs, bucketSizeNs,
                                true, false, {anomalyTracker});
@@ -345,8 +344,7 @@ TEST(MaxDurationTrackerTest, TestAnomalyPredictedTimestamp) {
     EXPECT_EQ(1U, anomalyTracker->mAlarms.size());
     auto alarm = anomalyTracker->mAlarms.begin()->second;
     int64_t anomalyFireTimeSec = alarm->timestampSec;
-    EXPECT_EQ(conditionStarts2 + 36 * NS_PER_SEC,
-            (long long)anomalyFireTimeSec * NS_PER_SEC);
+    EXPECT_EQ(conditionStarts2 + 36 * NS_PER_SEC, (long long)anomalyFireTimeSec * NS_PER_SEC);
 
     // Now we test the calculation now that there's a refractory period.
     // At the correct time, declare the anomaly. This will set a refractory period. Make sure it
@@ -374,7 +372,7 @@ TEST(MaxDurationTrackerTest, TestAnomalyPredictedTimestamp) {
     tracker.noteStart(key1, true, justBeforeRefPeriodNs, conditionKey1);
     alarm = anomalyTracker->mAlarms.begin()->second;
     EXPECT_EQ(justBeforeRefPeriodNs + 40 * NS_PER_SEC,
-                (unsigned long long)(alarm->timestampSec * NS_PER_SEC));
+              (unsigned long long)(alarm->timestampSec * NS_PER_SEC));
 }
 
 // Suppose that within one tracker there are two dimensions A and B.
@@ -415,7 +413,7 @@ TEST(MaxDurationTrackerTest, TestAnomalyPredictedTimestamp_UpdatedOnStop) {
     alert.set_refractory_period_secs(refPeriodSec);
     sp<AlarmMonitor> alarmMonitor;
     sp<DurationAnomalyTracker> anomalyTracker =
-        new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
+            new DurationAnomalyTracker(alert, kConfigKey, alarmMonitor);
     MaxDurationTracker tracker(kConfigKey, metricId, eventKey, wizard, 1, dimensionInCondition,
                                false, bucketStartTimeNs, bucketNum, bucketStartTimeNs, bucketSizeNs,
                                true, false, {anomalyTracker});

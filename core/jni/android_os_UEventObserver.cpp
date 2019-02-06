@@ -19,25 +19,25 @@
 
 #include "utils/Log.h"
 
-#include "hardware_legacy/uevent.h"
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "core_jni_helpers.h"
+#include "hardware_legacy/uevent.h"
+#include "jni.h"
 
-#include <utils/Mutex.h>
-#include <utils/Vector.h>
-#include <utils/String8.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <utils/Mutex.h>
+#include <utils/String8.h>
+#include <utils/Vector.h>
 
 namespace android {
 
 static Mutex gMatchesMutex;
 static Vector<String8> gMatches;
 
-static void nativeSetup(JNIEnv *env, jclass clazz) {
+static void nativeSetup(JNIEnv* env, jclass clazz) {
     if (!uevent_init()) {
         jniThrowException(env, "java/lang/RuntimeException",
-                "Unable to open socket for UEventObserver");
+                          "Unable to open socket for UEventObserver");
     }
 }
 
@@ -61,7 +61,7 @@ static bool isMatch(const char* buffer, size_t length) {
     return false;
 }
 
-static jstring nativeWaitForNextEvent(JNIEnv *env, jclass clazz) {
+static jstring nativeWaitForNextEvent(JNIEnv* env, jclass clazz) {
     char buffer[1024];
 
     for (;;) {
@@ -98,28 +98,22 @@ static void nativeRemoveMatch(JNIEnv* env, jclass clazz, jstring matchStr) {
     for (size_t i = 0; i < gMatches.size(); i++) {
         if (gMatches.itemAt(i) == match.c_str()) {
             gMatches.removeAt(i);
-            break; // only remove first occurrence
+            break;  // only remove first occurrence
         }
     }
 }
 
 static const JNINativeMethod gMethods[] = {
-    { "nativeSetup", "()V",
-            (void *)nativeSetup },
-    { "nativeWaitForNextEvent", "()Ljava/lang/String;",
-            (void *)nativeWaitForNextEvent },
-    { "nativeAddMatch", "(Ljava/lang/String;)V",
-            (void *)nativeAddMatch },
-    { "nativeRemoveMatch", "(Ljava/lang/String;)V",
-            (void *)nativeRemoveMatch },
+        {"nativeSetup", "()V", (void*)nativeSetup},
+        {"nativeWaitForNextEvent", "()Ljava/lang/String;", (void*)nativeWaitForNextEvent},
+        {"nativeAddMatch", "(Ljava/lang/String;)V", (void*)nativeAddMatch},
+        {"nativeRemoveMatch", "(Ljava/lang/String;)V", (void*)nativeRemoveMatch},
 };
 
-
-int register_android_os_UEventObserver(JNIEnv *env)
-{
+int register_android_os_UEventObserver(JNIEnv* env) {
     FindClassOrDie(env, "android/os/UEventObserver");
 
     return RegisterMethodsOrDie(env, "android/os/UEventObserver", gMethods, NELEM(gMethods));
 }
 
-}   // namespace android
+}  // namespace android

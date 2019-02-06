@@ -16,19 +16,19 @@
 
 #define LOG_TAG "ConsumerIrService"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
+#include "jni.h"
 
-#include <stdlib.h>
-#include <utils/misc.h>
-#include <utils/Log.h>
 #include <android/hardware/ir/1.0/IConsumerIr.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
+#include <stdlib.h>
+#include <utils/Log.h>
+#include <utils/misc.h>
 
-using ::android::hardware::ir::V1_0::IConsumerIr;
-using ::android::hardware::ir::V1_0::ConsumerIrFreqRange;
 using ::android::hardware::hidl_vec;
+using ::android::hardware::ir::V1_0::ConsumerIrFreqRange;
+using ::android::hardware::ir::V1_0::IConsumerIr;
 
 namespace android {
 
@@ -40,8 +40,7 @@ static jboolean halOpen(JNIEnv* /* env */, jobject /* obj */) {
     return mHal != nullptr;
 }
 
-static jint halTransmit(JNIEnv *env, jobject /* obj */, jint carrierFrequency,
-   jintArray pattern) {
+static jint halTransmit(JNIEnv* env, jobject /* obj */, jint carrierFrequency, jintArray pattern) {
     ScopedIntArrayRO cPattern(env, pattern);
     if (cPattern.get() == NULL) {
         return -EINVAL;
@@ -53,14 +52,14 @@ static jint halTransmit(JNIEnv *env, jobject /* obj */, jint carrierFrequency,
     return success ? 0 : -1;
 }
 
-static jintArray halGetCarrierFrequencies(JNIEnv *env, jobject /* obj */) {
+static jintArray halGetCarrierFrequencies(JNIEnv* env, jobject /* obj */) {
     int len;
     hidl_vec<ConsumerIrFreqRange> ranges;
     bool success;
 
     auto cb = [&](bool s, hidl_vec<ConsumerIrFreqRange> vec) {
-            ranges = vec;
-            success = s;
+        ranges = vec;
+        success = s;
     };
     mHal->getCarrierFreqs(cb);
 
@@ -70,28 +69,28 @@ static jintArray halGetCarrierFrequencies(JNIEnv *env, jobject /* obj */) {
     len = ranges.size();
 
     int i;
-    ScopedIntArrayRW freqsOut(env, env->NewIntArray(len*2));
-    jint *arr = freqsOut.get();
+    ScopedIntArrayRW freqsOut(env, env->NewIntArray(len * 2));
+    jint* arr = freqsOut.get();
     if (arr == NULL) {
         return NULL;
     }
     for (i = 0; i < len; i++) {
-        arr[i*2] = static_cast<jint>(ranges[i].min);
-        arr[i*2+1] = static_cast<jint>(ranges[i].max);
+        arr[i * 2] = static_cast<jint>(ranges[i].min);
+        arr[i * 2 + 1] = static_cast<jint>(ranges[i].max);
     }
 
     return freqsOut.getJavaArray();
 }
 
 static const JNINativeMethod method_table[] = {
-    { "halOpen", "()Z", (void *)halOpen },
-    { "halTransmit", "(I[I)I", (void *)halTransmit },
-    { "halGetCarrierFrequencies", "()[I", (void *)halGetCarrierFrequencies},
+        {"halOpen", "()Z", (void*)halOpen},
+        {"halTransmit", "(I[I)I", (void*)halTransmit},
+        {"halGetCarrierFrequencies", "()[I", (void*)halGetCarrierFrequencies},
 };
 
-int register_android_server_ConsumerIrService(JNIEnv *env) {
-    return jniRegisterNativeMethods(env, "com/android/server/ConsumerIrService",
-            method_table, NELEM(method_table));
+int register_android_server_ConsumerIrService(JNIEnv* env) {
+    return jniRegisterNativeMethods(env, "com/android/server/ConsumerIrService", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

@@ -18,11 +18,11 @@
 #include "Log.h"
 
 #include "AnomalyTracker.h"
-#include "subscriber_util.h"
 #include "external/Perfetto.h"
 #include "guardrail/StatsdStats.h"
 #include "subscriber/IncidentdReporter.h"
 #include "subscriber/SubscriberReporter.h"
+#include "subscriber_util.h"
 
 #include <statslog.h>
 #include <time.h>
@@ -32,7 +32,7 @@ namespace os {
 namespace statsd {
 
 AnomalyTracker::AnomalyTracker(const Alert& alert, const ConfigKey& configKey)
-        : mAlert(alert), mConfigKey(configKey), mNumOfPastBuckets(mAlert.num_buckets() - 1) {
+    : mAlert(alert), mConfigKey(configKey), mNumOfPastBuckets(mAlert.num_buckets() - 1) {
     VLOG("AnomalyTracker() called");
     if (mAlert.num_buckets() <= 0) {
         ALOGE("Cannot create AnomalyTracker with %lld buckets", (long long)mAlert.num_buckets());
@@ -90,12 +90,11 @@ void AnomalyTracker::advanceMostRecentBucketTo(const int64_t& bucketNum) {
     mMostRecentBucketNum = bucketNum;
 }
 
-void AnomalyTracker::addPastBucket(const MetricDimensionKey& key,
-                                   const int64_t& bucketValue,
+void AnomalyTracker::addPastBucket(const MetricDimensionKey& key, const int64_t& bucketValue,
                                    const int64_t& bucketNum) {
     VLOG("addPastBucket(bucketValue) called.");
-    if (mNumOfPastBuckets == 0 ||
-        bucketNum < 0 || bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets) {
+    if (mNumOfPastBuckets == 0 || bucketNum < 0 ||
+        bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets) {
         return;
     }
 
@@ -120,11 +119,10 @@ void AnomalyTracker::addPastBucket(const MetricDimensionKey& key,
     }
 }
 
-void AnomalyTracker::addPastBucket(std::shared_ptr<DimToValMap> bucket,
-                                   const int64_t& bucketNum) {
+void AnomalyTracker::addPastBucket(std::shared_ptr<DimToValMap> bucket, const int64_t& bucketNum) {
     VLOG("addPastBucket(bucket) called.");
-    if (mNumOfPastBuckets == 0 ||
-            bucketNum < 0 || bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets) {
+    if (mNumOfPastBuckets == 0 || bucketNum < 0 ||
+        bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets) {
         return;
     }
 
@@ -147,7 +145,6 @@ void AnomalyTracker::subtractBucketFromSum(const shared_ptr<DimToValMap>& bucket
         subtractValueFromSum(keyValuePair.first, keyValuePair.second);
     }
 }
-
 
 void AnomalyTracker::subtractValueFromSum(const MetricDimensionKey& key,
                                           const int64_t& bucketValue) {
@@ -173,9 +170,8 @@ void AnomalyTracker::addBucketToSum(const shared_ptr<DimToValMap>& bucket) {
 
 int64_t AnomalyTracker::getPastBucketValue(const MetricDimensionKey& key,
                                            const int64_t& bucketNum) const {
-    if (bucketNum < 0 || mMostRecentBucketNum < 0
-            || bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets
-            || bucketNum > mMostRecentBucketNum) {
+    if (bucketNum < 0 || mMostRecentBucketNum < 0 ||
+        bucketNum <= mMostRecentBucketNum - mNumOfPastBuckets || bucketNum > mMostRecentBucketNum) {
         return 0;
     }
 
@@ -195,10 +191,8 @@ int64_t AnomalyTracker::getSumOverPastBuckets(const MetricDimensionKey& key) con
     return 0;
 }
 
-bool AnomalyTracker::detectAnomaly(const int64_t& currentBucketNum,
-                                   const MetricDimensionKey& key,
+bool AnomalyTracker::detectAnomaly(const int64_t& currentBucketNum, const MetricDimensionKey& key,
                                    const int64_t& currentBucketValue) {
-
     // currentBucketNum should be the next bucket after pastBuckets. If not, advance so that it is.
     if (currentBucketNum > mMostRecentBucketNum + 1) {
         advanceMostRecentBucketTo(currentBucketNum - 1);
@@ -214,15 +208,15 @@ void AnomalyTracker::declareAnomaly(const int64_t& timestampNs, const MetricDime
         return;
     }
     if (mAlert.has_refractory_period_secs()) {
-        mRefractoryPeriodEndsSec[key] = ((timestampNs + NS_PER_SEC - 1) / NS_PER_SEC) // round up
+        mRefractoryPeriodEndsSec[key] = ((timestampNs + NS_PER_SEC - 1) / NS_PER_SEC)  // round up
                                         + mAlert.refractory_period_secs();
         // TODO: If we had access to the bucket_size_millis, consider calling resetStorage()
         // if (mAlert.refractory_period_secs() > mNumOfPastBuckets * bucketSizeNs) {resetStorage();}
     }
 
     if (!mSubscriptions.empty()) {
-        ALOGI("An anomaly (%lld) %s has occurred! Informing subscribers.",
-                mAlert.id(), key.toString().c_str());
+        ALOGI("An anomaly (%lld) %s has occurred! Informing subscribers.", mAlert.id(),
+              key.toString().c_str());
         informSubscribers(key);
     } else {
         ALOGI("An anomaly has occurred! (But no subscriber for that alert.)");
@@ -248,7 +242,7 @@ bool AnomalyTracker::isInRefractoryPeriod(const int64_t& timestampNs,
                                           const MetricDimensionKey& key) const {
     const auto& it = mRefractoryPeriodEndsSec.find(key);
     if (it != mRefractoryPeriodEndsSec.end()) {
-        return timestampNs < (it->second *  (int64_t)NS_PER_SEC);
+        return timestampNs < (it->second * (int64_t)NS_PER_SEC);
     }
     return false;
 }

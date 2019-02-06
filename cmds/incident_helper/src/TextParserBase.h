@@ -27,11 +27,11 @@ using namespace std;
  * Base class for text parser
  */
 class TextParserBase {
-public:
+  public:
     String8 name;
 
-    explicit TextParserBase(String8 name) : name(name) {};
-    virtual ~TextParserBase() {};
+    explicit TextParserBase(String8 name) : name(name){};
+    virtual ~TextParserBase(){};
 
     virtual status_t Parse(const int in, const int out) const = 0;
 };
@@ -40,9 +40,9 @@ public:
  * No op parser returns what it reads
  */
 class NoopParser : public TextParserBase {
-public:
-    NoopParser() : TextParserBase(String8("NoopParser")) {};
-    ~NoopParser() {};
+  public:
+    NoopParser() : TextParserBase(String8("NoopParser")){};
+    ~NoopParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };
@@ -51,22 +51,25 @@ public:
  * This parser is used for testing only, results in timeout.
  */
 class TimeoutParser : public TextParserBase {
-public:
-    TimeoutParser() : TextParserBase(String8("TimeoutParser")) {};
-    ~TimeoutParser() {};
+  public:
+    TimeoutParser() : TextParserBase(String8("TimeoutParser")){};
+    ~TimeoutParser(){};
 
-    virtual status_t Parse(const int /** in */, const int /** out */) const { while (true); };
+    virtual status_t Parse(const int /** in */, const int /** out */) const {
+        while (true)
+            ;
+    };
 };
 
 /**
  * This parser is used for testing only, results in reversed input text.
  */
 class ReverseParser : public TextParserBase {
-public:
-    ReverseParser() : TextParserBase(String8("ReverseParser")) {};
-    ~ReverseParser() {};
+  public:
+    ReverseParser() : TextParserBase(String8("ReverseParser")){};
+    ~ReverseParser(){};
 
     virtual status_t Parse(const int in, const int out) const;
 };
 
-#endif // TEXT_PARSER_BASE_H
+#endif  // TEXT_PARSER_BASE_H

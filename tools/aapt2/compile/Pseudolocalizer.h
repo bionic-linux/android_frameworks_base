@@ -29,9 +29,14 @@ namespace aapt {
 
 class PseudoMethodImpl {
  public:
-  virtual ~PseudoMethodImpl() {}
-  virtual std::string Start() { return {}; }
-  virtual std::string End() { return {}; }
+  virtual ~PseudoMethodImpl() {
+  }
+  virtual std::string Start() {
+    return {};
+  }
+  virtual std::string End() {
+    return {};
+  }
   virtual std::string Text(const android::StringPiece& text) = 0;
   virtual std::string Placeholder(const android::StringPiece& text) = 0;
 };
@@ -46,8 +51,12 @@ class Pseudolocalizer {
 
   explicit Pseudolocalizer(Method method);
   void SetMethod(Method method);
-  std::string Start() { return impl_->Start(); }
-  std::string End() { return impl_->End(); }
+  std::string Start() {
+    return impl_->Start();
+  }
+  std::string End() {
+    return impl_->End();
+  }
   std::string Text(const android::StringPiece& text);
 
  private:

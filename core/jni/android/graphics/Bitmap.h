@@ -16,10 +16,10 @@
 #ifndef BITMAP_H_
 #define BITMAP_H_
 
-#include <jni.h>
-#include <android/bitmap.h>
 #include <SkBitmap.h>
 #include <SkImageInfo.h>
+#include <android/bitmap.h>
+#include <jni.h>
 
 namespace android {
 
@@ -33,10 +33,9 @@ enum BitmapCreateFlags {
     kBitmapCreateFlag_Premultiplied = 0x2,
 };
 
-jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
-            int bitmapCreateFlags, jbyteArray ninePatchChunk = NULL,
-            jobject ninePatchInsets = NULL, int density = -1);
-
+jobject createBitmap(JNIEnv* env, Bitmap* bitmap, int bitmapCreateFlags,
+                     jbyteArray ninePatchChunk = NULL, jobject ninePatchInsets = NULL,
+                     int density = -1);
 
 void toSkBitmap(jlong bitmapHandle, SkBitmap* outBitmap);
 
@@ -53,13 +52,12 @@ bool unlockPixels(JNIEnv* env, jobject bitmap);
 /** Reinitialize a bitmap. bitmap must already have its SkAlphaType set in
     sync with isPremultiplied
 */
-void reinitBitmap(JNIEnv* env, jobject javaBitmap, const SkImageInfo& info,
-        bool isPremultiplied);
+void reinitBitmap(JNIEnv* env, jobject javaBitmap, const SkImageInfo& info, bool isPremultiplied);
 
 int getBitmapAllocationByteCount(JNIEnv* env, jobject javaBitmap);
 
-} // namespace bitmap
+}  // namespace bitmap
 
-} // namespace android
+}  // namespace android
 
 #endif /* BITMAP_H_ */

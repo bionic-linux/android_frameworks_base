@@ -20,28 +20,23 @@
 #include <pthread.h>
 #include <string.h>
 
-
-
 class WorkerPool {
-public:
+  public:
     WorkerPool();
     ~WorkerPool();
 
-    typedef void (*WorkerCallback_t)(void *usr, uint32_t idx);
+    typedef void (*WorkerCallback_t)(void* usr, uint32_t idx);
 
     bool init(int threadCount = -1);
-    int getWorkerCount() const {return mCount;}
+    int getWorkerCount() const { return mCount; }
 
     void waitForAll() const;
     void waitFor(uint64_t) const;
-    uint64_t launchWork(WorkerCallback_t cb, void *usr, int maxThreads = -1);
+    uint64_t launchWork(WorkerCallback_t cb, void* usr, int maxThreads = -1);
 
-
-
-
-protected:
+  protected:
     class Signal {
-    public:
+      public:
         Signal();
         ~Signal();
 
@@ -52,7 +47,7 @@ protected:
         // false for timeout
         bool wait(uint64_t timeout = 0);
 
-    protected:
+      protected:
         bool mSet;
         pthread_mutex_t mMutex;
         pthread_cond_t mCondition;
@@ -62,22 +57,16 @@ protected:
     volatile int mRunningCount;
     volatile int mLaunchCount;
     uint32_t mCount;
-    pthread_t *mThreadId;
-    pid_t *mNativeThreadId;
+    pthread_t* mThreadId;
+    pid_t* mNativeThreadId;
     Signal mCompleteSignal;
-    Signal *mLaunchSignals;
+    Signal* mLaunchSignals;
     WorkerCallback_t mLaunchCallback;
-    void *mLaunchData;
+    void* mLaunchData;
 
-
-
-
-private:
-    //static void * threadProc(void *);
-    static void * helperThreadProc(void *);
-
-
+  private:
+    // static void * threadProc(void *);
+    static void* helperThreadProc(void*);
 };
-
 
 #endif

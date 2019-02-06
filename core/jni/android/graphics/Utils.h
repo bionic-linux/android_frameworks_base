@@ -21,13 +21,13 @@
 
 #include "android_util_Binder.h"
 
-#include <jni.h>
 #include <androidfw/Asset.h>
+#include <jni.h>
 
 namespace android {
 
 class AssetStreamAdaptor : public SkStreamRewindable {
-public:
+  public:
     explicit AssetStreamAdaptor(Asset*);
 
     virtual bool rewind();
@@ -40,10 +40,10 @@ public:
     virtual bool move(long offset);
     virtual bool isAtEnd() const;
 
-protected:
+  protected:
     SkStreamRewindable* onDuplicate() const override;
 
-private:
+  private:
     Asset* fAsset;
 };
 
@@ -58,18 +58,17 @@ SkMemoryStream* CopyAssetToStream(Asset*);
 /** Restore the file descriptor's offset in our destructor
  */
 class AutoFDSeek {
-public:
-    explicit AutoFDSeek(int fd) : fFD(fd) {
-        fCurr = ::lseek(fd, 0, SEEK_CUR);
-    }
+  public:
+    explicit AutoFDSeek(int fd) : fFD(fd) { fCurr = ::lseek(fd, 0, SEEK_CUR); }
     ~AutoFDSeek() {
         if (fCurr >= 0) {
             ::lseek(fFD, fCurr, SEEK_SET);
         }
     }
-private:
-    int     fFD;
-    off64_t   fCurr;
+
+  private:
+    int fFD;
+    off64_t fCurr;
 };
 
 jobject nullObjectReturn(const char msg[]);
@@ -80,6 +79,6 @@ bool isSeekable(int descriptor);
 
 JNIEnv* get_env_or_die(JavaVM* jvm);
 
-}; // namespace android
+};  // namespace android
 
 #endif  // _ANDROID_GRAPHICS_UTILS_H_

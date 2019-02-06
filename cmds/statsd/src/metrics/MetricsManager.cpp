@@ -25,8 +25,8 @@
 #include "matchers/CombinationLogMatchingTracker.h"
 #include "matchers/SimpleLogMatchingTracker.h"
 #include "metrics_manager_util.h"
-#include "stats_util.h"
 #include "stats_log_util.h"
+#include "stats_util.h"
 
 #include <log/logprint.h>
 #include <private/android_filesystem_config.h>
@@ -56,10 +56,11 @@ const int FIELD_ID_ANNOTATIONS_INT32 = 2;
 
 MetricsManager::MetricsManager(const ConfigKey& key, const StatsdConfig& config,
                                const int64_t timeBaseNs, const int64_t currentTimeNs,
-                               const sp<UidMap> &uidMap,
+                               const sp<UidMap>& uidMap,
                                const sp<AlarmMonitor>& anomalyAlarmMonitor,
                                const sp<AlarmMonitor>& periodicAlarmMonitor)
-    : mConfigKey(key), mUidMap(uidMap),
+    : mConfigKey(key),
+      mUidMap(uidMap),
       mTtlNs(config.has_ttl_in_seconds() ? config.ttl_in_seconds() * NS_PER_SEC : -1),
       mTtlEndNs(-1),
       mLastReportTimeNs(currentTimeNs),
@@ -67,19 +68,18 @@ MetricsManager::MetricsManager(const ConfigKey& key, const StatsdConfig& config,
     // Init the ttl end timestamp.
     refreshTtl(timeBaseNs);
 
-    mConfigValid =
-            initStatsdConfig(key, config, *uidMap, anomalyAlarmMonitor, periodicAlarmMonitor,
-                             timeBaseNs, currentTimeNs, mTagIds, mAllAtomMatchers,
-                             mAllConditionTrackers, mAllMetricProducers, mAllAnomalyTrackers,
-                             mAllPeriodicAlarmTrackers, mConditionToMetricMap, mTrackerToMetricMap,
-                             mTrackerToConditionMap, mNoReportMetricIds);
+    mConfigValid = initStatsdConfig(
+            key, config, *uidMap, anomalyAlarmMonitor, periodicAlarmMonitor, timeBaseNs,
+            currentTimeNs, mTagIds, mAllAtomMatchers, mAllConditionTrackers, mAllMetricProducers,
+            mAllAnomalyTrackers, mAllPeriodicAlarmTrackers, mConditionToMetricMap,
+            mTrackerToMetricMap, mTrackerToConditionMap, mNoReportMetricIds);
 
     mHashStringsInReport = config.hash_strings_in_metric_report();
 
     if (config.allowed_log_source_size() == 0) {
         mConfigValid = false;
         ALOGE("Log source whitelist is empty! This config won't get any data. Suggest adding at "
-                      "least AID_SYSTEM and AID_STATSD to the allowed_log_source field.");
+              "least AID_SYSTEM and AID_STATSD to the allowed_log_source field.");
     } else {
         for (const auto& source : config.allowed_log_source()) {
             auto it = UidMap::sAidToUidMapping.find(source);
@@ -195,14 +195,13 @@ void MetricsManager::dropData(const int64_t dropTimeNs) {
 
 void MetricsManager::onDumpReport(const int64_t dumpTimeStampNs,
                                   const bool include_current_partial_bucket,
-                                  std::set<string> *str_set,
-                                  ProtoOutputStream* protoOutput) {
+                                  std::set<string>* str_set, ProtoOutputStream* protoOutput) {
     VLOG("=========================Metric Reports Start==========================");
     // one StatsLogReport per MetricProduer
     for (const auto& producer : mAllMetricProducers) {
         if (mNoReportMetricIds.find(producer->getMetricId()) == mNoReportMetricIds.end()) {
-            uint64_t token = protoOutput->start(
-                    FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED | FIELD_ID_METRICS);
+            uint64_t token = protoOutput->start(FIELD_TYPE_MESSAGE | FIELD_COUNT_REPEATED |
+                                                FIELD_ID_METRICS);
             if (mHashStringsInReport) {
                 producer->onDumpReport(dumpTimeStampNs, include_current_partial_bucket, str_set,
                                        protoOutput);
@@ -242,8 +241,8 @@ void MetricsManager::onLogEvent(const LogEvent& event) {
 
         // Uid is 3rd from last field and must match the caller's uid,
         // unless that caller is statsd itself (statsd is allowed to spoof uids).
-        long appHookUid = event.GetLong(event.size()-2, &err);
-        if (err != NO_ERROR ) {
+        long appHookUid = event.GetLong(event.size() - 2, &err);
+        if (err != NO_ERROR) {
             VLOG("APP_BREADCRUMB_REPORTED had error when parsing the uid");
             return;
         }
@@ -256,7 +255,7 @@ void MetricsManager::onLogEvent(const LogEvent& event) {
 
         // The state must be from 0,3. This part of code must be manually updated.
         long appHookState = event.GetLong(event.size(), &err);
-        if (err != NO_ERROR ) {
+        if (err != NO_ERROR) {
             VLOG("APP_BREADCRUMB_REPORTED had error when parsing the state field");
             return;
         } else if (appHookState < 0 || appHookState > 3) {
@@ -270,7 +269,7 @@ void MetricsManager::onLogEvent(const LogEvent& event) {
 
         // Uid is the first field provided.
         long jankUid = event.GetLong(1, &err);
-        if (err != NO_ERROR ) {
+        if (err != NO_ERROR) {
             VLOG("Davey occurred had error when parsing the uid");
             return;
         }
@@ -282,7 +281,7 @@ void MetricsManager::onLogEvent(const LogEvent& event) {
         }
 
         long duration = event.GetLong(event.size(), &err);
-        if (err != NO_ERROR ) {
+        if (err != NO_ERROR) {
             VLOG("Davey occurred had error when parsing the duration");
             return;
         } else if (duration > 100000) {
@@ -362,8 +361,7 @@ void MetricsManager::onLogEvent(const LogEvent& event) {
     // For matched AtomMatchers, tell relevant metrics that a matched event has come.
     for (size_t i = 0; i < mAllAtomMatchers.size(); i++) {
         if (matcherCache[i] == MatchingState::kMatched) {
-            StatsdStats::getInstance().noteMatcherMatched(mConfigKey,
-                                                          mAllAtomMatchers[i]->getId());
+            StatsdStats::getInstance().noteMatcherMatched(mConfigKey, mAllAtomMatchers[i]->getId());
             auto pair = mTrackerToMetricMap.find(i);
             if (pair != mTrackerToMetricMap.end()) {
                 auto& metricList = pair->second;

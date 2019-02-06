@@ -46,23 +46,17 @@ class VertexFrame {
     // Return the id of the internal VBO. Returns 0 if no VBO has been
     // generated yet. The internal VBO is generated the first time data is
     // uploaded.
-    GLuint GetVboId() const {
-      return vbo_;
-    }
+    GLuint GetVboId() const { return vbo_; }
 
     // Returns true if the frame contains an allocated VBO.
-    bool HasBuffer() const {
-      return vbo_ != 0;
-    }
+    bool HasBuffer() const { return vbo_ != 0; }
 
   private:
     // Create the VBO
     bool CreateBuffer();
 
     // Returns true if the VBO has been created.
-    bool HasVBO() const {
-      return vbo_ != 0;
-    }
+    bool HasVBO() const { return vbo_ != 0; }
 
     // The internal VBO handle
     GLuint vbo_;
@@ -71,7 +65,7 @@ class VertexFrame {
     int size_;
 };
 
-} // namespace filterfw
-} // namespace android
+}  // namespace filterfw
+}  // namespace android
 
 #endif  // ANDROID_FILTERFW_CORE_VERTEXFRAME_H

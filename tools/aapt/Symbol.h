@@ -17,8 +17,8 @@
 #ifndef AAPT_SYMBOL_H
 #define AAPT_SYMBOL_H
 
-#include <utils/String8.h>
 #include <utils/String16.h>
+#include <utils/String8.h>
 
 #include "ConfigDescription.h"
 #include "SourcePos.h"
@@ -28,7 +28,8 @@
  */
 struct Symbol {
     inline Symbol();
-    inline Symbol(const android::String16& p, const android::String16& t, const android::String16& n, uint32_t i);
+    inline Symbol(const android::String16& p, const android::String16& t,
+                  const android::String16& n, uint32_t i);
     inline android::String8 toString() const;
     inline bool operator<(const Symbol& rhs) const;
 
@@ -36,7 +37,6 @@ struct Symbol {
     android::String16 type;
     android::String16 name;
     uint32_t id;
-
 };
 
 /**
@@ -56,40 +56,30 @@ struct SymbolDefinition {
 // Implementations
 //
 
-Symbol::Symbol() {
-}
+Symbol::Symbol() {}
 
-Symbol::Symbol(const android::String16& p, const android::String16& t, const android::String16& n, uint32_t i)
-    : package(p)
-    , type(t)
-    , name(n)
-    , id(i) {
-}
+Symbol::Symbol(const android::String16& p, const android::String16& t, const android::String16& n,
+               uint32_t i)
+    : package(p), type(t), name(n), id(i) {}
 
 android::String8 Symbol::toString() const {
-    return android::String8::format("%s:%s/%s (0x%08x)",
-            android::String8(package).string(),
-            android::String8(type).string(),
-            android::String8(name).string(),
-            (int) id);
+    return android::String8::format("%s:%s/%s (0x%08x)", android::String8(package).string(),
+                                    android::String8(type).string(),
+                                    android::String8(name).string(), (int)id);
 }
 
 bool Symbol::operator<(const Symbol& rhs) const {
     return (package < rhs.package) || (type < rhs.type) || (name < rhs.name) || (id < rhs.id);
 }
 
-SymbolDefinition::SymbolDefinition() {
-}
+SymbolDefinition::SymbolDefinition() {}
 
-SymbolDefinition::SymbolDefinition(const Symbol& s, const ConfigDescription& c, const SourcePos& src)
-    : symbol(s)
-    , config(c)
-    , source(src) {
-}
+SymbolDefinition::SymbolDefinition(const Symbol& s, const ConfigDescription& c,
+                                   const SourcePos& src)
+    : symbol(s), config(c), source(src) {}
 
 bool SymbolDefinition::operator<(const SymbolDefinition& rhs) const {
     return (symbol < rhs.symbol) || (config < rhs.config) || (source < rhs.source);
 }
 
-#endif // AAPT_SYMBOL_H
-
+#endif  // AAPT_SYMBOL_H

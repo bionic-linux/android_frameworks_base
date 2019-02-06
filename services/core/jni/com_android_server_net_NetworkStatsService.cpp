@@ -23,19 +23,19 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "core_jni_helpers.h"
 #include <jni.h>
 #include <nativehelper/ScopedUtfChars.h>
-#include <utils/misc.h>
 #include <utils/Log.h>
+#include <utils/misc.h>
+#include "core_jni_helpers.h"
 
 #include "android-base/unique_fd.h"
 #include "bpf/BpfUtils.h"
 #include "netdbpf/BpfNetworkStats.h"
 
-using android::bpf::Stats;
-using android::bpf::bpfGetUidStats;
 using android::bpf::bpfGetIfaceStats;
+using android::bpf::bpfGetUidStats;
+using android::bpf::Stats;
 
 namespace android {
 
@@ -74,7 +74,7 @@ static uint64_t getStatsType(struct Stats* stats, StatsType type) {
 }
 
 static int parseIfaceStats(const char* iface, struct Stats* stats) {
-    FILE *fp = fopen(QTAGUID_IFACE_STATS, "r");
+    FILE* fp = fopen(QTAGUID_IFACE_STATS, "r");
     if (fp == NULL) {
         return -1;
     }
@@ -85,10 +85,14 @@ static int parseIfaceStats(const char* iface, struct Stats* stats) {
     uint64_t rxBytes, rxPackets, txBytes, txPackets, tcpRxPackets, tcpTxPackets;
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        int matched = sscanf(buffer, "%31s %" SCNu64 " %" SCNu64 " %" SCNu64
-                " %" SCNu64 " " "%*u %" SCNu64 " %*u %*u %*u %*u "
-                "%*u %" SCNu64 " %*u %*u %*u %*u", cur_iface, &rxBytes,
-                &rxPackets, &txBytes, &txPackets, &tcpRxPackets, &tcpTxPackets);
+        int matched = sscanf(buffer,
+                             "%31s %" SCNu64 " %" SCNu64 " %" SCNu64 " %" SCNu64
+                             " "
+                             "%*u %" SCNu64
+                             " %*u %*u %*u %*u "
+                             "%*u %" SCNu64 " %*u %*u %*u %*u",
+                             cur_iface, &rxBytes, &rxPackets, &txBytes, &txPackets, &tcpRxPackets,
+                             &tcpTxPackets);
         if (matched >= 5) {
             if (matched == 7) {
                 foundTcp = true;
@@ -118,7 +122,7 @@ static int parseIfaceStats(const char* iface, struct Stats* stats) {
 }
 
 static int parseUidStats(const uint32_t uid, struct Stats* stats) {
-    FILE *fp = fopen(QTAGUID_UID_STATS, "r");
+    FILE* fp = fopen(QTAGUID_UID_STATS, "r");
     if (fp == NULL) {
         return -1;
     }
@@ -130,10 +134,10 @@ static int parseUidStats(const uint32_t uid, struct Stats* stats) {
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) {
         if (sscanf(buffer,
-                "%" SCNu32 " %31s 0x%" SCNx64 " %u %u %" SCNu64 " %" SCNu64
-                " %" SCNu64 " %" SCNu64 "",
-                &idx, iface, &tag, &cur_uid, &set, &rxBytes, &rxPackets,
-                &txBytes, &txPackets) == 9) {
+                   "%" SCNu32 " %31s 0x%" SCNx64 " %u %u %" SCNu64 " %" SCNu64 " %" SCNu64
+                   " %" SCNu64 "",
+                   &idx, iface, &tag, &cur_uid, &set, &rxBytes, &rxPackets, &txBytes,
+                   &txPackets) == 9) {
             if (uid == cur_uid && tag == 0L) {
                 stats->rxBytes += rxBytes;
                 stats->rxPackets += rxPackets;
@@ -155,14 +159,14 @@ static jlong getTotalStat(JNIEnv* env, jclass clazz, jint type, jboolean useBpfS
 
     if (useBpfStats) {
         if (bpfGetIfaceStats(NULL, &stats) == 0) {
-            return getStatsType(&stats, (StatsType) type);
+            return getStatsType(&stats, (StatsType)type);
         } else {
             return UNKNOWN;
         }
     }
 
     if (parseIfaceStats(NULL, &stats) == 0) {
-        return getStatsType(&stats, (StatsType) type);
+        return getStatsType(&stats, (StatsType)type);
     } else {
         return UNKNOWN;
     }
@@ -180,14 +184,14 @@ static jlong getIfaceStat(JNIEnv* env, jclass clazz, jstring iface, jint type,
 
     if (useBpfStats) {
         if (bpfGetIfaceStats(iface8.c_str(), &stats) == 0) {
-            return getStatsType(&stats, (StatsType) type);
+            return getStatsType(&stats, (StatsType)type);
         } else {
             return UNKNOWN;
         }
     }
 
     if (parseIfaceStats(iface8.c_str(), &stats) == 0) {
-        return getStatsType(&stats, (StatsType) type);
+        return getStatsType(&stats, (StatsType)type);
     } else {
         return UNKNOWN;
     }
@@ -199,23 +203,23 @@ static jlong getUidStat(JNIEnv* env, jclass clazz, jint uid, jint type, jboolean
 
     if (useBpfStats) {
         if (bpfGetUidStats(uid, &stats) == 0) {
-            return getStatsType(&stats, (StatsType) type);
+            return getStatsType(&stats, (StatsType)type);
         } else {
             return UNKNOWN;
         }
     }
 
     if (parseUidStats(uid, &stats) == 0) {
-        return getStatsType(&stats, (StatsType) type);
+        return getStatsType(&stats, (StatsType)type);
     } else {
         return UNKNOWN;
     }
 }
 
 static const JNINativeMethod gMethods[] = {
-    {"nativeGetTotalStat", "(IZ)J", (void*) getTotalStat},
-    {"nativeGetIfaceStat", "(Ljava/lang/String;IZ)J", (void*) getIfaceStat},
-    {"nativeGetUidStat", "(IIZ)J", (void*) getUidStat},
+        {"nativeGetTotalStat", "(IZ)J", (void*)getTotalStat},
+        {"nativeGetIfaceStat", "(Ljava/lang/String;IZ)J", (void*)getIfaceStat},
+        {"nativeGetUidStat", "(IIZ)J", (void*)getUidStat},
 };
 
 int register_android_server_net_NetworkStatsService(JNIEnv* env) {
@@ -238,4 +242,4 @@ int register_android_server_net_NetworkStatsService(JNIEnv* env) {
                                     NELEM(gMethods));
 }
 
-}
+}  // namespace android

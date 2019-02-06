@@ -27,14 +27,14 @@ public:
     SkiaVulkanReadback(renderthread::RenderThread& thread) : Readback(thread) {}
 
     virtual CopyResult copySurfaceInto(Surface& surface, const Rect& srcRect,
-            SkBitmap* bitmap) override {
-        //TODO: implement Vulkan readback.
+                                       SkBitmap* bitmap) override {
+        // TODO: implement Vulkan readback.
         return CopyResult::UnknownError;
     }
 
     virtual CopyResult copyGraphicBufferInto(GraphicBuffer* graphicBuffer,
-            SkBitmap* bitmap) override {
-        //TODO: implement Vulkan readback.
+                                             SkBitmap* bitmap) override {
+        // TODO: implement Vulkan readback.
         return CopyResult::UnknownError;
     }
 };

@@ -22,14 +22,14 @@
 #include <map>
 #include <vector>
 
-#include <ui/DisplayInfo.h>
+#include <gui/DisplayEventReceiver.h>
 #include <input/Input.h>
 #include <inputflinger/PointerControllerInterface.h>
+#include <ui/DisplayInfo.h>
 #include <utils/BitSet.h>
-#include <utils/RefBase.h>
 #include <utils/Looper.h>
+#include <utils/RefBase.h>
 #include <utils/String8.h>
-#include <gui/DisplayEventReceiver.h>
 
 namespace android {
 
@@ -57,41 +57,41 @@ struct PointerAnimation {
  * via JNI.  This interface is also mocked in the unit tests.
  */
 class PointerControllerPolicyInterface : public virtual RefBase {
-protected:
-    PointerControllerPolicyInterface() { }
-    virtual ~PointerControllerPolicyInterface() { }
+  protected:
+    PointerControllerPolicyInterface() {}
+    virtual ~PointerControllerPolicyInterface() {}
 
-public:
+  public:
     virtual void loadPointerIcon(SpriteIcon* icon) = 0;
     virtual void loadPointerResources(PointerResources* outResources) = 0;
-    virtual void loadAdditionalMouseResources(std::map<int32_t, SpriteIcon>* outResources,
+    virtual void loadAdditionalMouseResources(
+            std::map<int32_t, SpriteIcon>* outResources,
             std::map<int32_t, PointerAnimation>* outAnimationResources) = 0;
     virtual int32_t getDefaultPointerIconId() = 0;
     virtual int32_t getCustomPointerIconId() = 0;
 };
-
 
 /*
  * Tracks pointer movements and draws the pointer sprite to a surface.
  *
  * Handles pointer acceleration and animation.
  */
-class PointerController : public PointerControllerInterface, public MessageHandler,
+class PointerController : public PointerControllerInterface,
+                          public MessageHandler,
                           public LooperCallback {
-protected:
+  protected:
     virtual ~PointerController();
 
-public:
+  public:
     enum InactivityTimeout {
         INACTIVITY_TIMEOUT_NORMAL = 0,
         INACTIVITY_TIMEOUT_SHORT = 1,
     };
 
-    PointerController(const sp<PointerControllerPolicyInterface>& policy,
-            const sp<Looper>& looper, const sp<SpriteController>& spriteController);
+    PointerController(const sp<PointerControllerPolicyInterface>& policy, const sp<Looper>& looper,
+                      const sp<SpriteController>& spriteController);
 
-    virtual bool getBounds(float* outMinX, float* outMinY,
-            float* outMaxX, float* outMaxY) const;
+    virtual bool getBounds(float* outMinX, float* outMinY, float* outMaxX, float* outMaxY) const;
     virtual void move(float deltaX, float deltaY);
     virtual void setButtonState(int32_t buttonState);
     virtual int32_t getButtonState() const;
@@ -101,8 +101,8 @@ public:
     virtual void unfade(Transition transition);
 
     virtual void setPresentation(Presentation presentation);
-    virtual void setSpots(const PointerCoords* spotCoords,
-            const uint32_t* spotIdToIndex, BitSet32 spotIdBits);
+    virtual void setSpots(const PointerCoords* spotCoords, const uint32_t* spotIdToIndex,
+                          BitSet32 spotIdBits);
     virtual void clearSpots();
 
     void updatePointerIcon(int32_t iconId);
@@ -111,7 +111,7 @@ public:
     void setInactivityTimeout(InactivityTimeout inactivityTimeout);
     void reloadPointerResources();
 
-private:
+  private:
     static const size_t MAX_RECYCLED_SPRITES = 12;
     static const size_t MAX_SPOTS = 12;
 
@@ -129,12 +129,11 @@ private:
         float x, y;
 
         inline Spot(uint32_t id, const sp<Sprite>& sprite)
-                : id(id), sprite(sprite), alpha(1.0f), scale(1.0f),
-                  x(0.0f), y(0.0f), lastIcon(NULL) { }
+            : id(id), sprite(sprite), alpha(1.0f), scale(1.0f), x(0.0f), y(0.0f), lastIcon(NULL) {}
 
         void updateSprite(const SpriteIcon* icon, float x, float y);
 
-    private:
+      private:
         const SpriteIcon* lastIcon;
     };
 
@@ -211,6 +210,6 @@ private:
     void loadResources();
 };
 
-} // namespace android
+}  // namespace android
 
-#endif // _UI_POINTER_CONTROLLER_H
+#endif  // _UI_POINTER_CONTROLLER_H

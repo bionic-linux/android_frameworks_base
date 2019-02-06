@@ -24,8 +24,8 @@
 #include <log/logprint.h>
 #include <utils/RefBase.h>
 
-#include <unordered_set>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace android {
 namespace os {
@@ -43,7 +43,9 @@ public:
 
     virtual ~ConditionTracker(){};
 
-    inline const int64_t& getId() { return mConditionId; }
+    inline const int64_t& getId() {
+        return mConditionId;
+    }
 
     // Initialize this ConditionTracker. This initialization is done recursively (DFS). It can also
     // be done in the constructor, but we do it separately because (1) easy to return a bool to
@@ -96,16 +98,13 @@ public:
     virtual void isConditionMet(
             const ConditionKey& conditionParameters,
             const std::vector<sp<ConditionTracker>>& allConditions,
-            const vector<Matcher>& dimensionFields,
-            const bool isSubOutputDimensionFields,
-            const bool isPartialLink,
-            std::vector<ConditionState>& conditionCache,
+            const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
+            const bool isPartialLink, std::vector<ConditionState>& conditionCache,
             std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const = 0;
 
     virtual ConditionState getMetConditionDimension(
             const std::vector<sp<ConditionTracker>>& allConditions,
-            const vector<Matcher>& dimensionFields,
-            const bool isSubOutputDimensionFields,
+            const vector<Matcher>& dimensionFields, const bool isSubOutputDimensionFields,
             std::unordered_set<HashableDimensionKey>& dimensionsKeySet) const = 0;
 
     // return the list of LogMatchingTracker index that this ConditionTracker uses.
@@ -130,19 +129,17 @@ public:
         return mConditionId;
     }
 
-    virtual void getTrueSlicedDimensions(
-        const std::vector<sp<ConditionTracker>>& allConditions,
-        std::set<HashableDimensionKey>* dimensions) const = 0;
+    virtual void getTrueSlicedDimensions(const std::vector<sp<ConditionTracker>>& allConditions,
+                                         std::set<HashableDimensionKey>* dimensions) const = 0;
 
     virtual bool IsChangedDimensionTrackable() const = 0;
 
     virtual bool IsSimpleCondition() const = 0;
 
-    virtual bool equalOutputDimensions(
-        const std::vector<sp<ConditionTracker>>& allConditions,
-        const vector<Matcher>& dimensions) const = 0;
+    virtual bool equalOutputDimensions(const std::vector<sp<ConditionTracker>>& allConditions,
+                                       const vector<Matcher>& dimensions) const = 0;
 
-    inline ConditionState getUnSlicedPartConditionState() const  {
+    inline ConditionState getUnSlicedPartConditionState() const {
         return mUnSlicedPart;
     }
 

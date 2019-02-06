@@ -16,11 +16,11 @@
 
 #define LOG_TAG "MessageQueue-JNI"
 
-#include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <nativehelper/JNIHelp.h>
 
-#include <utils/Looper.h>
 #include <utils/Log.h>
+#include <utils/Looper.h>
 #include "android_os_MessageQueue.h"
 
 #include "core_jni_helpers.h"
@@ -28,7 +28,7 @@
 namespace android {
 
 static struct {
-    jfieldID mPtr;   // native object attached to the DVM MessageQueue
+    jfieldID mPtr;  // native object attached to the DVM MessageQueue
     jmethodID dispatchEvents;
 } gMessageQueueClassInfo;
 
@@ -37,9 +37,8 @@ static const int CALLBACK_EVENT_INPUT = 1 << 0;
 static const int CALLBACK_EVENT_OUTPUT = 1 << 1;
 static const int CALLBACK_EVENT_ERROR = 1 << 2;
 
-
 class NativeMessageQueue : public MessageQueue, public LooperCallback {
-public:
+  public:
     NativeMessageQueue();
     virtual ~NativeMessageQueue();
 
@@ -51,18 +50,15 @@ public:
 
     virtual int handleEvent(int fd, int events, void* data);
 
-private:
+  private:
     JNIEnv* mPollEnv;
     jobject mPollObj;
     jthrowable mExceptionObj;
 };
 
+MessageQueue::MessageQueue() {}
 
-MessageQueue::MessageQueue() {
-}
-
-MessageQueue::~MessageQueue() {
-}
+MessageQueue::~MessageQueue() {}
 
 bool MessageQueue::raiseAndClearException(JNIEnv* env, const char* msg) {
     if (env->ExceptionCheck()) {
@@ -75,8 +71,7 @@ bool MessageQueue::raiseAndClearException(JNIEnv* env, const char* msg) {
     return false;
 }
 
-NativeMessageQueue::NativeMessageQueue() :
-        mPollEnv(NULL), mPollObj(NULL), mExceptionObj(NULL) {
+NativeMessageQueue::NativeMessageQueue() : mPollEnv(NULL), mPollObj(NULL), mExceptionObj(NULL) {
     mLooper = Looper::getForThread();
     if (mLooper == NULL) {
         mLooper = new Looper(false);
@@ -84,8 +79,7 @@ NativeMessageQueue::NativeMessageQueue() :
     }
 }
 
-NativeMessageQueue::~NativeMessageQueue() {
-}
+NativeMessageQueue::~NativeMessageQueue() {}
 
 void NativeMessageQueue::raiseException(JNIEnv* env, const char* msg, jthrowable exceptionObj) {
     if (exceptionObj) {
@@ -132,7 +126,7 @@ void NativeMessageQueue::setFileDescriptorEvents(int fd, int events) {
             looperEvents |= Looper::EVENT_OUTPUT;
         }
         mLooper->addFd(fd, Looper::POLL_CALLBACK, looperEvents, this,
-                reinterpret_cast<void*>(events));
+                       reinterpret_cast<void*>(events));
     } else {
         mLooper->removeFd(fd);
     }
@@ -150,17 +144,16 @@ int NativeMessageQueue::handleEvent(int fd, int looperEvents, void* data) {
         events |= CALLBACK_EVENT_ERROR;
     }
     int oldWatchedEvents = reinterpret_cast<intptr_t>(data);
-    int newWatchedEvents = mPollEnv->CallIntMethod(mPollObj,
-            gMessageQueueClassInfo.dispatchEvents, fd, events);
+    int newWatchedEvents =
+            mPollEnv->CallIntMethod(mPollObj, gMessageQueueClassInfo.dispatchEvents, fd, events);
     if (!newWatchedEvents) {
-        return 0; // unregister the fd
+        return 0;  // unregister the fd
     }
     if (newWatchedEvents != oldWatchedEvents) {
         setFileDescriptorEvents(fd, newWatchedEvents);
     }
     return 1;
 }
-
 
 // ----------------------------------------------------------------------------
 
@@ -185,8 +178,8 @@ static void android_os_MessageQueue_nativeDestroy(JNIEnv* env, jclass clazz, jlo
     nativeMessageQueue->decStrong(env);
 }
 
-static void android_os_MessageQueue_nativePollOnce(JNIEnv* env, jobject obj,
-        jlong ptr, jint timeoutMillis) {
+static void android_os_MessageQueue_nativePollOnce(JNIEnv* env, jobject obj, jlong ptr,
+                                                   jint timeoutMillis) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     nativeMessageQueue->pollOnce(env, obj, timeoutMillis);
 }
@@ -202,7 +195,7 @@ static jboolean android_os_MessageQueue_nativeIsPolling(JNIEnv* env, jclass claz
 }
 
 static void android_os_MessageQueue_nativeSetFileDescriptorEvents(JNIEnv* env, jclass clazz,
-        jlong ptr, jint fd, jint events) {
+                                                                  jlong ptr, jint fd, jint events) {
     NativeMessageQueue* nativeMessageQueue = reinterpret_cast<NativeMessageQueue*>(ptr);
     nativeMessageQueue->setFileDescriptorEvents(fd, events);
 }
@@ -210,14 +203,14 @@ static void android_os_MessageQueue_nativeSetFileDescriptorEvents(JNIEnv* env, j
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gMessageQueueMethods[] = {
-    /* name, signature, funcPtr */
-    { "nativeInit", "()J", (void*)android_os_MessageQueue_nativeInit },
-    { "nativeDestroy", "(J)V", (void*)android_os_MessageQueue_nativeDestroy },
-    { "nativePollOnce", "(JI)V", (void*)android_os_MessageQueue_nativePollOnce },
-    { "nativeWake", "(J)V", (void*)android_os_MessageQueue_nativeWake },
-    { "nativeIsPolling", "(J)Z", (void*)android_os_MessageQueue_nativeIsPolling },
-    { "nativeSetFileDescriptorEvents", "(JII)V",
-            (void*)android_os_MessageQueue_nativeSetFileDescriptorEvents },
+        /* name, signature, funcPtr */
+        {"nativeInit", "()J", (void*)android_os_MessageQueue_nativeInit},
+        {"nativeDestroy", "(J)V", (void*)android_os_MessageQueue_nativeDestroy},
+        {"nativePollOnce", "(JI)V", (void*)android_os_MessageQueue_nativePollOnce},
+        {"nativeWake", "(J)V", (void*)android_os_MessageQueue_nativeWake},
+        {"nativeIsPolling", "(J)Z", (void*)android_os_MessageQueue_nativeIsPolling},
+        {"nativeSetFileDescriptorEvents", "(JII)V",
+         (void*)android_os_MessageQueue_nativeSetFileDescriptorEvents},
 };
 
 int register_android_os_MessageQueue(JNIEnv* env) {
@@ -226,10 +219,9 @@ int register_android_os_MessageQueue(JNIEnv* env) {
 
     jclass clazz = FindClassOrDie(env, "android/os/MessageQueue");
     gMessageQueueClassInfo.mPtr = GetFieldIDOrDie(env, clazz, "mPtr", "J");
-    gMessageQueueClassInfo.dispatchEvents = GetMethodIDOrDie(env, clazz,
-            "dispatchEvents", "(II)I");
+    gMessageQueueClassInfo.dispatchEvents = GetMethodIDOrDie(env, clazz, "dispatchEvents", "(II)I");
 
     return res;
 }
 
-} // namespace android
+}  // namespace android

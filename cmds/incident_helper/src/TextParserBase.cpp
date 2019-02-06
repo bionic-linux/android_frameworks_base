@@ -23,8 +23,7 @@
 using namespace android::base;
 
 // ================================================================================
-status_t NoopParser::Parse(const int in, const int out) const
-{
+status_t NoopParser::Parse(const int in, const int out) const {
     string content;
     if (!ReadFdToString(in, &content)) {
         fprintf(stderr, "[%s]Failed to read data from incidentd\n", this->name.string());
@@ -38,8 +37,7 @@ status_t NoopParser::Parse(const int in, const int out) const
 }
 
 // ================================================================================
-status_t ReverseParser::Parse(const int in, const int out) const
-{
+status_t ReverseParser::Parse(const int in, const int out) const {
     string content;
     if (!ReadFdToString(in, &content)) {
         fprintf(stderr, "[%s]Failed to read data from incidentd\n", this->name.string());

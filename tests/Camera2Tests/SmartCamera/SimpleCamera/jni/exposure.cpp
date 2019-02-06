@@ -18,16 +18,14 @@
 
 #include "exposure.h"
 
+#include <android/log.h>
+#include <jni.h>
 #include <math.h>
 #include <string.h>
-#include <jni.h>
 #include <unistd.h>
-#include <android/log.h>
 
-
-jfloat
-Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_overExposureOperator(
-    JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
+jfloat Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_overExposureOperator(
+        JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
     if (imageBuffer == 0) {
         return 0.0f;
     }
@@ -37,9 +35,8 @@ Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_overExposureOpe
     float tempLuminance = 0.0f;
 
     for (int i = 0; i < numPixels; i++) {
-        tempLuminance = (0.2126f * *(srcPtr + 4 * i) +
-                        0.7152f * *(srcPtr + 4 * i + 1) +
-                        0.0722f * *(srcPtr + 4 * i + 2));
+        tempLuminance = (0.2126f * *(srcPtr + 4 * i) + 0.7152f * *(srcPtr + 4 * i + 1) +
+                         0.0722f * *(srcPtr + 4 * i + 2));
         if (tempLuminance + 5 >= 255) {
             output++;
         }
@@ -47,9 +44,8 @@ Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_overExposureOpe
     return (static_cast<float>(output)) / numPixels;
 }
 
-jfloat
-Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_underExposureOperator(
-    JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
+jfloat Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_underExposureOperator(
+        JNIEnv* env, jclass clazz, jint width, jint height, jobject imageBuffer) {
     if (imageBuffer == 0) {
         return 0.0f;
     }
@@ -59,9 +55,8 @@ Java_androidx_media_filterfw_samples_simplecamera_ExposureFilter_underExposureOp
     float tempLuminance = 0.0f;
 
     for (int i = 0; i < numPixels; i++) {
-        tempLuminance = (0.2126f * *(srcPtr + 4 * i) +
-                        0.7152f * *(srcPtr + 4 * i + 1) +
-                        0.0722f * *(srcPtr + 4 * i + 2));
+        tempLuminance = (0.2126f * *(srcPtr + 4 * i) + 0.7152f * *(srcPtr + 4 * i + 1) +
+                         0.0722f * *(srcPtr + 4 * i + 2));
         if (tempLuminance - 5 <= 0) {
             output++;
         }

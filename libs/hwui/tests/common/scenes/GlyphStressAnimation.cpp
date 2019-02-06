@@ -42,10 +42,9 @@ public:
     void doFrame(int frameNr) override {
         const char* text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        std::unique_ptr<Canvas> canvas(
-                Canvas::create_recording_canvas(container->stagingProperties().getWidth(),
-                                                container->stagingProperties().getHeight(),
-                                                container.get()));
+        std::unique_ptr<Canvas> canvas(Canvas::create_recording_canvas(
+                container->stagingProperties().getWidth(),
+                container->stagingProperties().getHeight(), container.get()));
 
         Paint paint;
         paint.setAntiAlias(true);

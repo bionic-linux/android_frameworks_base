@@ -36,16 +36,14 @@ using ELog = EventLogHelper<log_id_t::LOG_ID_EVENTS, kEventLogEventClass>;
  *  Reads events from the event log
  */
 static void android_util_EventLog_readEvents(JNIEnv* env, jobject clazz ATTRIBUTE_UNUSED,
-                                             jintArray tags,
-                                             jobject out) {
-
+                                             jintArray tags, jobject out) {
     if (tags == NULL || out == NULL) {
         jniThrowNullPointerException(env, NULL);
         return;
     }
 
     ELog::readEvents(env, ANDROID_LOG_RDONLY | ANDROID_LOG_NONBLOCK, tags, 0, out);
- }
+}
 /*
  * In class android.util.EventLog:
  *  static native void readEventsOnWrapping(int[] tags, long timestamp, Collection<Event> output)
@@ -53,44 +51,36 @@ static void android_util_EventLog_readEvents(JNIEnv* env, jobject clazz ATTRIBUT
  *  Reads events from the event log, blocking until events after timestamp are to be overwritten.
  */
 static void android_util_EventLog_readEventsOnWrapping(JNIEnv* env, jobject clazz ATTRIBUTE_UNUSED,
-                                             jintArray tags,
-                                             jlong timestamp,
-                                             jobject out) {
+                                                       jintArray tags, jlong timestamp,
+                                                       jobject out) {
     if (tags == NULL || out == NULL) {
         jniThrowNullPointerException(env, NULL);
         return;
     }
     ELog::readEvents(env, ANDROID_LOG_RDONLY | ANDROID_LOG_NONBLOCK | ANDROID_LOG_WRAP, tags,
-            timestamp, out);
+                     timestamp, out);
 }
 
 /*
  * JNI registration.
  */
 static const JNINativeMethod gRegisterMethods[] = {
-    /* name, signature, funcPtr */
-    { "writeEvent", "(II)I", (void*) ELog::writeEventInteger },
-    { "writeEvent", "(IJ)I", (void*) ELog::writeEventLong },
-    { "writeEvent", "(IF)I", (void*) ELog::writeEventFloat },
-    { "writeEvent", "(ILjava/lang/String;)I", (void*) ELog::writeEventString },
-    { "writeEvent", "(I[Ljava/lang/Object;)I", (void*) ELog::writeEventArray },
-    { "readEvents",
-      "([ILjava/util/Collection;)V",
-      (void*) android_util_EventLog_readEvents
-    },
-    { "readEventsOnWrapping",
-      "([IJLjava/util/Collection;)V",
-      (void*) android_util_EventLog_readEventsOnWrapping
-    },
+        /* name, signature, funcPtr */
+        {"writeEvent", "(II)I", (void*)ELog::writeEventInteger},
+        {"writeEvent", "(IJ)I", (void*)ELog::writeEventLong},
+        {"writeEvent", "(IF)I", (void*)ELog::writeEventFloat},
+        {"writeEvent", "(ILjava/lang/String;)I", (void*)ELog::writeEventString},
+        {"writeEvent", "(I[Ljava/lang/Object;)I", (void*)ELog::writeEventArray},
+        {"readEvents", "([ILjava/util/Collection;)V", (void*)android_util_EventLog_readEvents},
+        {"readEventsOnWrapping", "([IJLjava/util/Collection;)V",
+         (void*)android_util_EventLog_readEventsOnWrapping},
 };
 
 int register_android_util_EventLog(JNIEnv* env) {
     ELog::Init(env);
 
-    return RegisterMethodsOrDie(
-            env,
-            "android/util/EventLog",
-            gRegisterMethods, NELEM(gRegisterMethods));
+    return RegisterMethodsOrDie(env, "android/util/EventLog", gRegisterMethods,
+                                NELEM(gRegisterMethods));
 }
 
-}; // namespace android
+};  // namespace android

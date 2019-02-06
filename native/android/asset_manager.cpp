@@ -25,8 +25,8 @@
 #include <androidfw/AssetManager2.h>
 #include <utils/threads.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
+#include "jni.h"
 
 using namespace android;
 
@@ -41,16 +41,15 @@ struct AAssetDir {
     size_t mCurFileIndex;
     String8 mCachedFileName;
 
-    explicit AAssetDir(std::unique_ptr<AssetDir> dir) :
-        mAssetDir(std::move(dir)), mCurFileIndex(0) { }
+    explicit AAssetDir(std::unique_ptr<AssetDir> dir)
+        : mAssetDir(std::move(dir)), mCurFileIndex(0) {}
 };
-
 
 // -----
 struct AAsset {
     std::unique_ptr<Asset> mAsset;
 
-    explicit AAsset(std::unique_ptr<Asset> asset) : mAsset(std::move(asset)) { }
+    explicit AAsset(std::unique_ptr<Asset> asset) : mAsset(std::move(asset)) {}
 };
 
 // -------------------- Public native C API --------------------
@@ -58,29 +57,27 @@ struct AAsset {
 /**
  * Asset Manager functionality
  */
-AAssetManager* AAssetManager_fromJava(JNIEnv* env, jobject assetManager)
-{
-    return (AAssetManager*) env->GetLongField(assetManager, gAssetManagerOffsets.mObject);
+AAssetManager* AAssetManager_fromJava(JNIEnv* env, jobject assetManager) {
+    return (AAssetManager*)env->GetLongField(assetManager, gAssetManagerOffsets.mObject);
 }
 
-AAsset* AAssetManager_open(AAssetManager* amgr, const char* filename, int mode)
-{
+AAsset* AAssetManager_open(AAssetManager* amgr, const char* filename, int mode) {
     Asset::AccessMode amMode;
     switch (mode) {
-    case AASSET_MODE_UNKNOWN:
-        amMode = Asset::ACCESS_UNKNOWN;
-        break;
-    case AASSET_MODE_RANDOM:
-        amMode = Asset::ACCESS_RANDOM;
-        break;
-    case AASSET_MODE_STREAMING:
-        amMode = Asset::ACCESS_STREAMING;
-        break;
-    case AASSET_MODE_BUFFER:
-        amMode = Asset::ACCESS_BUFFER;
-        break;
-    default:
-        return NULL;
+        case AASSET_MODE_UNKNOWN:
+            amMode = Asset::ACCESS_UNKNOWN;
+            break;
+        case AASSET_MODE_RANDOM:
+            amMode = Asset::ACCESS_RANDOM;
+            break;
+        case AASSET_MODE_STREAMING:
+            amMode = Asset::ACCESS_STREAMING;
+            break;
+        case AASSET_MODE_BUFFER:
+            amMode = Asset::ACCESS_BUFFER;
+            break;
+        default:
+            return NULL;
     }
 
     ScopedLock<AssetManager2> locked_mgr(*AssetManagerForNdkAssetManager(amgr));
@@ -91,8 +88,7 @@ AAsset* AAssetManager_open(AAssetManager* amgr, const char* filename, int mode)
     return new AAsset(std::move(asset));
 }
 
-AAssetDir* AAssetManager_openDir(AAssetManager* amgr, const char* dirName)
-{
+AAssetDir* AAssetManager_openDir(AAssetManager* amgr, const char* dirName) {
     ScopedLock<AssetManager2> locked_mgr(*AssetManagerForNdkAssetManager(amgr));
     return new AAssetDir(locked_mgr->OpenDir(dirName));
 }
@@ -101,8 +97,7 @@ AAssetDir* AAssetManager_openDir(AAssetManager* amgr, const char* dirName)
  * AssetDir functionality
  */
 
-const char* AAssetDir_getNextFileName(AAssetDir* assetDir)
-{
+const char* AAssetDir_getNextFileName(AAssetDir* assetDir) {
     const char* returnName = NULL;
     size_t index = assetDir->mCurFileIndex;
     const size_t max = assetDir->mAssetDir->getFileCount();
@@ -126,19 +121,16 @@ const char* AAssetDir_getNextFileName(AAssetDir* assetDir)
     return returnName;
 }
 
-void AAssetDir_rewind(AAssetDir* assetDir)
-{
+void AAssetDir_rewind(AAssetDir* assetDir) {
     assetDir->mCurFileIndex = 0;
 }
 
-const char* AAssetDir_getFileName(AAssetDir* assetDir, int index)
-{
+const char* AAssetDir_getFileName(AAssetDir* assetDir, int index) {
     assetDir->mCachedFileName = assetDir->mAssetDir->getFileName(index);
     return assetDir->mCachedFileName.string();
 }
 
-void AAssetDir_close(AAssetDir* assetDir)
-{
+void AAssetDir_close(AAssetDir* assetDir) {
     delete assetDir;
 }
 
@@ -146,54 +138,44 @@ void AAssetDir_close(AAssetDir* assetDir)
  * Asset functionality
  */
 
-int AAsset_read(AAsset* asset, void* buf, size_t count)
-{
+int AAsset_read(AAsset* asset, void* buf, size_t count) {
     return asset->mAsset->read(buf, (size_t)count);
 }
 
-off_t AAsset_seek(AAsset* asset, off_t offset, int whence)
-{
+off_t AAsset_seek(AAsset* asset, off_t offset, int whence) {
     return asset->mAsset->seek(offset, whence);
 }
 
-off64_t AAsset_seek64(AAsset* asset, off64_t offset, int whence)
-{
+off64_t AAsset_seek64(AAsset* asset, off64_t offset, int whence) {
     return asset->mAsset->seek(offset, whence);
 }
 
-void AAsset_close(AAsset* asset)
-{
+void AAsset_close(AAsset* asset) {
     asset->mAsset->close();
     delete asset;
 }
 
-const void* AAsset_getBuffer(AAsset* asset)
-{
+const void* AAsset_getBuffer(AAsset* asset) {
     return asset->mAsset->getBuffer(false);
 }
 
-off_t AAsset_getLength(AAsset* asset)
-{
+off_t AAsset_getLength(AAsset* asset) {
     return asset->mAsset->getLength();
 }
 
-off64_t AAsset_getLength64(AAsset* asset)
-{
+off64_t AAsset_getLength64(AAsset* asset) {
     return asset->mAsset->getLength();
 }
 
-off_t AAsset_getRemainingLength(AAsset* asset)
-{
+off_t AAsset_getRemainingLength(AAsset* asset) {
     return asset->mAsset->getRemainingLength();
 }
 
-off64_t AAsset_getRemainingLength64(AAsset* asset)
-{
+off64_t AAsset_getRemainingLength64(AAsset* asset) {
     return asset->mAsset->getRemainingLength();
 }
 
-int AAsset_openFileDescriptor(AAsset* asset, off_t* outStart, off_t* outLength)
-{
+int AAsset_openFileDescriptor(AAsset* asset, off_t* outStart, off_t* outLength) {
     off64_t outStart64, outLength64;
 
     int ret = asset->mAsset->openFileDescriptor(&outStart64, &outLength64);
@@ -203,12 +185,10 @@ int AAsset_openFileDescriptor(AAsset* asset, off_t* outStart, off_t* outLength)
     return ret;
 }
 
-int AAsset_openFileDescriptor64(AAsset* asset, off64_t* outStart, off64_t* outLength)
-{
+int AAsset_openFileDescriptor64(AAsset* asset, off64_t* outStart, off64_t* outLength) {
     return asset->mAsset->openFileDescriptor(outStart, outLength);
 }
 
-int AAsset_isAllocated(AAsset* asset)
-{
+int AAsset_isAllocated(AAsset* asset) {
     return asset->mAsset->isAllocated() ? 1 : 0;
 }

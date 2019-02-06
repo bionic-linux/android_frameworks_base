@@ -231,7 +231,8 @@ TEST_F(AssetManager2Test, FindsBagResourceFromSingleApkAssets) {
   EXPECT_EQ(0, bag->entries[2].cookie);
 }
 
-TEST_F(AssetManager2Test, FindsBagResourceFromMultipleApkAssets) {}
+TEST_F(AssetManager2Test, FindsBagResourceFromMultipleApkAssets) {
+}
 
 TEST_F(AssetManager2Test, FindsBagResourceFromSharedLibrary) {
   AssetManager2 assetmanager;
@@ -391,23 +392,21 @@ TEST_F(AssetManager2Test, ResolveDeepIdReference) {
   assetmanager.SetApkAssets({basic_assets_.get()});
 
   // Set up the resource ids
-  const uint32_t high_ref = assetmanager
-      .GetResourceId("@id/high_ref", "values", "com.android.basic");
+  const uint32_t high_ref =
+      assetmanager.GetResourceId("@id/high_ref", "values", "com.android.basic");
   ASSERT_NE(high_ref, 0u);
-  const uint32_t middle_ref = assetmanager
-      .GetResourceId("@id/middle_ref", "values", "com.android.basic");
+  const uint32_t middle_ref =
+      assetmanager.GetResourceId("@id/middle_ref", "values", "com.android.basic");
   ASSERT_NE(middle_ref, 0u);
-  const uint32_t low_ref = assetmanager
-      .GetResourceId("@id/low_ref", "values", "com.android.basic");
+  const uint32_t low_ref = assetmanager.GetResourceId("@id/low_ref", "values", "com.android.basic");
   ASSERT_NE(low_ref, 0u);
 
   // Retrieve the most shallow resource
   Res_value value;
   ResTable_config config;
   uint32_t flags;
-  ApkAssetsCookie cookie = assetmanager.GetResource(high_ref, false /*may_be_bag*/,
-                                                    0 /*density_override*/,
-                                                    &value, &config, &flags);
+  ApkAssetsCookie cookie = assetmanager.GetResource(
+      high_ref, false /*may_be_bag*/, 0 /*density_override*/, &value, &config, &flags);
   ASSERT_NE(kInvalidCookie, cookie);
   EXPECT_EQ(Res_value::TYPE_REFERENCE, value.dataType);
   EXPECT_EQ(middle_ref, value.data);

@@ -21,15 +21,15 @@
 #include <android-base/macros.h>
 #include <assert.h>
 #include <cutils/properties.h>
-#include <log/log.h>               // For LOGGER_ENTRY_MAX_PAYLOAD.
+#include <log/log.h>  // For LOGGER_ENTRY_MAX_PAYLOAD.
 #include <utils/Log.h>
 #include <utils/String8.h>
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
-#include "utils/misc.h"
-#include "core_jni_helpers.h"
 #include "android_util_Log.h"
+#include "core_jni_helpers.h"
+#include "jni.h"
+#include "utils/misc.h"
 
 namespace android {
 
@@ -47,8 +47,7 @@ static jboolean isLoggable(const char* tag, jint level) {
     return __android_log_is_loggable(level, tag, ANDROID_LOG_INFO);
 }
 
-static jboolean android_util_Log_isLoggable(JNIEnv* env, jobject clazz, jstring tag, jint level)
-{
+static jboolean android_util_Log_isLoggable(JNIEnv* env, jobject clazz, jstring tag, jint level) {
     if (tag == NULL) {
         return false;
     }
@@ -72,9 +71,8 @@ bool android_util_Log_isVerboseLogEnabled(const char* tag) {
  * In class android.util.Log:
  *  public static native int println_native(int buffer, int priority, String tag, String msg)
  */
-static jint android_util_Log_println_native(JNIEnv* env, jobject clazz,
-        jint bufID, jint priority, jstring tagObj, jstring msgObj)
-{
+static jint android_util_Log_println_native(JNIEnv* env, jobject clazz, jint bufID, jint priority,
+                                            jstring tagObj, jstring msgObj) {
     const char* tag = NULL;
     const char* msg = NULL;
 
@@ -88,14 +86,12 @@ static jint android_util_Log_println_native(JNIEnv* env, jobject clazz,
         return -1;
     }
 
-    if (tagObj != NULL)
-        tag = env->GetStringUTFChars(tagObj, NULL);
+    if (tagObj != NULL) tag = env->GetStringUTFChars(tagObj, NULL);
     msg = env->GetStringUTFChars(msgObj, NULL);
 
     int res = __android_log_buf_write(bufID, (android_LogPriority)priority, tag, msg);
 
-    if (tag != NULL)
-        env->ReleaseStringUTFChars(tagObj, tag);
+    if (tag != NULL) env->ReleaseStringUTFChars(tagObj, tag);
     env->ReleaseStringUTFChars(msgObj, msg);
 
     return res;
@@ -106,8 +102,7 @@ static jint android_util_Log_println_native(JNIEnv* env, jobject clazz,
  *  private static native int logger_entry_max_payload_native()
  */
 static jint android_util_Log_logger_entry_max_payload_native(JNIEnv* env ATTRIBUTE_UNUSED,
-                                                             jobject clazz ATTRIBUTE_UNUSED)
-{
+                                                             jobject clazz ATTRIBUTE_UNUSED) {
     return static_cast<jint>(LOGGER_ENTRY_MAX_PAYLOAD);
 }
 
@@ -115,17 +110,19 @@ static jint android_util_Log_logger_entry_max_payload_native(JNIEnv* env ATTRIBU
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
-    /* name, signature, funcPtr */
-    { "isLoggable",      "(Ljava/lang/String;I)Z", (void*) android_util_Log_isLoggable },
-    { "println_native",  "(IILjava/lang/String;Ljava/lang/String;)I", (void*) android_util_Log_println_native },
-    { "logger_entry_max_payload_native",  "()I", (void*) android_util_Log_logger_entry_max_payload_native },
+        /* name, signature, funcPtr */
+        {"isLoggable", "(Ljava/lang/String;I)Z", (void*)android_util_Log_isLoggable},
+        {"println_native", "(IILjava/lang/String;Ljava/lang/String;)I",
+         (void*)android_util_Log_println_native},
+        {"logger_entry_max_payload_native", "()I",
+         (void*)android_util_Log_logger_entry_max_payload_native},
 };
 
-int register_android_util_Log(JNIEnv* env)
-{
+int register_android_util_Log(JNIEnv* env) {
     jclass clazz = FindClassOrDie(env, "android/util/Log");
 
-    levels.verbose = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "VERBOSE", "I"));
+    levels.verbose =
+            env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "VERBOSE", "I"));
     levels.debug = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "DEBUG", "I"));
     levels.info = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "INFO", "I"));
     levels.warn = env->GetStaticIntField(clazz, GetStaticFieldIDOrDie(env, clazz, "WARN", "I"));
@@ -135,4 +132,4 @@ int register_android_util_Log(JNIEnv* env)
     return RegisterMethodsOrDie(env, "android/util/Log", gMethods, NELEM(gMethods));
 }
 
-}; // namespace android
+};  // namespace android

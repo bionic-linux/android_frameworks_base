@@ -27,7 +27,8 @@ namespace {
 // Visits each xml Node, removing URI references and nested namespaces.
 class XmlVisitor : public xml::Visitor {
  public:
-  explicit XmlVisitor(bool keep_uris) : keep_uris_(keep_uris) {}
+  explicit XmlVisitor(bool keep_uris) : keep_uris_(keep_uris) {
+  }
 
   void Visit(xml::Element* el) override {
     el->namespace_decls.clear();

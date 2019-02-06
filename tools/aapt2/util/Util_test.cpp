@@ -135,7 +135,8 @@ TEST(UtilTest, ExtractResourcePathComponents) {
   EXPECT_THAT(entry, Eq("entry"));
   EXPECT_THAT(suffix, Eq(".xml"));
 
-  ASSERT_TRUE(util::ExtractResFilePathParts("res/xml-sw600dp/entry.9.png", &prefix, &entry, &suffix));
+  ASSERT_TRUE(
+      util::ExtractResFilePathParts("res/xml-sw600dp/entry.9.png", &prefix, &entry, &suffix));
   EXPECT_THAT(prefix, Eq("res/xml-sw600dp/"));
   EXPECT_THAT(entry, Eq("entry"));
   EXPECT_THAT(suffix, Eq(".9.png"));

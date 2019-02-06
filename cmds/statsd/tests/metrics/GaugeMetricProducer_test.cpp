@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "src/metrics/GaugeMetricProducer.h"
-#include "src/stats_log_util.h"
 #include "logd/LogEvent.h"
 #include "metrics_test_helper.h"
+#include "src/stats_log_util.h"
 #include "tests/statsd_test_util.h"
 
 #include <gmock/gmock.h>
@@ -26,10 +26,10 @@
 
 using namespace testing;
 using android::sp;
+using std::make_shared;
 using std::set;
 using std::unordered_map;
 using std::vector;
-using std::make_shared;
 
 #ifdef __ANDROID__
 
@@ -89,8 +89,7 @@ TEST(GaugeMetricProducerTest, TestNoCondition) {
     EXPECT_EQ(0UL, gaugeProducer.mPastBuckets.size());
 
     allData.clear();
-    std::shared_ptr<LogEvent> event2 =
-            std::make_shared<LogEvent>(tagId, bucket3StartTimeNs + 10);
+    std::shared_ptr<LogEvent> event2 = std::make_shared<LogEvent>(tagId, bucket3StartTimeNs + 10);
     event2->write(24);
     event2->write("some value");
     event2->write(25);
@@ -296,8 +295,8 @@ TEST(GaugeMetricProducerTest, TestWithCondition) {
                 return true;
             }));
 
-    GaugeMetricProducer gaugeProducer(kConfigKey, metric, 1, wizard, tagId,
-                                      bucketStartTimeNs, bucketStartTimeNs, pullerManager);
+    GaugeMetricProducer gaugeProducer(kConfigKey, metric, 1, wizard, tagId, bucketStartTimeNs,
+                                      bucketStartTimeNs, pullerManager);
     gaugeProducer.setBucketSize(60 * NS_PER_SEC);
 
     gaugeProducer.onConditionChanged(true, bucketStartTimeNs + 8);
@@ -472,7 +471,7 @@ TEST(GaugeMetricProducerTest, TestAnomalyDetection) {
                            .mFields->begin()
                            ->mValue.int_value);
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event2->GetElapsedTimestampNs() / NS_PER_SEC) + refPeriodSec);
+              std::ceil(1.0 * event2->GetElapsedTimestampNs() / NS_PER_SEC) + refPeriodSec);
 
     std::shared_ptr<LogEvent> event3 =
             std::make_shared<LogEvent>(tagId, bucketStartTimeNs + 2 * bucketSizeNs + 10);
@@ -487,7 +486,7 @@ TEST(GaugeMetricProducerTest, TestAnomalyDetection) {
                            .mFields->begin()
                            ->mValue.int_value);
     EXPECT_EQ(anomalyTracker->getRefractoryPeriodEndsSec(DEFAULT_METRIC_DIMENSION_KEY),
-            std::ceil(1.0 * event2->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
+              std::ceil(1.0 * event2->GetElapsedTimestampNs() / NS_PER_SEC + refPeriodSec));
 
     // The event4 does not have the gauge field. Thus the current bucket value is 0.
     std::shared_ptr<LogEvent> event4 =

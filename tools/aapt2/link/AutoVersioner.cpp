@@ -28,8 +28,7 @@ using android::ConfigDescription;
 
 namespace aapt {
 
-bool ShouldGenerateVersionedResource(const ResourceEntry* entry,
-                                     const ConfigDescription& config,
+bool ShouldGenerateVersionedResource(const ResourceEntry* entry, const ConfigDescription& config,
                                      const ApiVersion sdk_version_to_generate) {
   // We assume the caller is trying to generate a version greater than the current configuration.
   CHECK(sdk_version_to_generate > config.sdkVersion);
@@ -119,8 +118,7 @@ bool AutoVersioner::Consume(IAaptContext* context, ResourceTable* table) {
               // We found attributes from a higher SDK level. Check that
               // there is no other defined resource for the version we want to
               // generate.
-              if (ShouldGenerateVersionedResource(entry.get(),
-                                                  config_value->config,
+              if (ShouldGenerateVersionedResource(entry.get(), config_value->config,
                                                   min_sdk_stripped.value())) {
                 // Let's create a new Style for this versioned resource.
                 ConfigDescription new_config(config_value->config);
@@ -131,10 +129,9 @@ bool AutoVersioner::Consume(IAaptContext* context, ResourceTable* table) {
                 new_style->SetSource(style->GetSource());
 
                 // Move the previously stripped attributes into this style.
-                new_style->entries.insert(
-                    new_style->entries.end(),
-                    std::make_move_iterator(stripped.begin()),
-                    std::make_move_iterator(stripped.end()));
+                new_style->entries.insert(new_style->entries.end(),
+                                          std::make_move_iterator(stripped.begin()),
+                                          std::make_move_iterator(stripped.end()));
 
                 // Insert the new Resource into the correct place.
                 entry->FindOrCreateValue(new_config, {})->value = std::move(new_style);

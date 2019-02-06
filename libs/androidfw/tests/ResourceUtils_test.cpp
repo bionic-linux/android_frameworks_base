@@ -57,10 +57,10 @@ TEST(ResourceUtilsTest, ExtractResourceName) {
   EXPECT_EQ("", type);
   EXPECT_EQ("foo", entry);
 
-//  ASSERT_TRUE(ExtractResourceName("@android:foo", &package, &type, &entry));
-//  EXPECT_EQ("android", package);
-//  EXPECT_EQ("", type);
-//  EXPECT_EQ("foo", entry);
+  //  ASSERT_TRUE(ExtractResourceName("@android:foo", &package, &type, &entry));
+  //  EXPECT_EQ("android", package);
+  //  EXPECT_EQ("", type);
+  //  EXPECT_EQ("foo", entry);
 
   EXPECT_FALSE(ExtractResourceName(":string/foo", &package, &type, &entry));
 

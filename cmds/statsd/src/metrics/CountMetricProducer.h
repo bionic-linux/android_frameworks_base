@@ -48,16 +48,14 @@ public:
     virtual ~CountMetricProducer();
 
 protected:
-    void onMatchedLogEventInternalLocked(
-            const size_t matcherIndex, const MetricDimensionKey& eventKey,
-            const ConditionKey& conditionKey, bool condition,
-            const LogEvent& event) override;
+    void onMatchedLogEventInternalLocked(const size_t matcherIndex,
+                                         const MetricDimensionKey& eventKey,
+                                         const ConditionKey& conditionKey, bool condition,
+                                         const LogEvent& event) override;
 
 private:
-
-    void onDumpReportLocked(const int64_t dumpTimeNs,
-                            const bool include_current_partial_bucket,
-                            std::set<string> *str_set,
+    void onDumpReportLocked(const int64_t dumpTimeNs, const bool include_current_partial_bucket,
+                            std::set<string>* str_set,
                             android::util::ProtoOutputStream* protoOutput) override;
 
     void clearPastBucketsLocked(const int64_t dumpTimeNs) override;

@@ -18,34 +18,31 @@
 #define LOG_NDEBUG 0
 #include "utils/Log.h"
 
-#include "jni.h"
 #include <nativehelper/JNIHelp.h>
 #include "android_runtime/AndroidRuntime.h"
 #include "android_runtime/Log.h"
+#include "jni.h"
 
-#include <stdio.h>
-#include <errno.h>
 #include <asm/byteorder.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <errno.h>
 #include <fcntl.h>
-#include <sys/ioctl.h>
 #include <sound/asound.h>
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-namespace android
-{
+namespace android {
 
 static jclass sFileDescriptorClass;
 static jfieldID sPipeFDField;
 
-static jint
-android_server_UsbMidiDevice_get_subdevice_count(JNIEnv *env, jobject /* thiz */,
-        jint card, jint device)
-{
-    char    path[100];
-    int     fd;
-    const   int kMaxRetries = 10;
-    const   int kSleepMicroseconds = 2000;
+static jint android_server_UsbMidiDevice_get_subdevice_count(JNIEnv* env, jobject /* thiz */,
+                                                             jint card, jint device) {
+    char path[100];
+    int fd;
+    const int kMaxRetries = 10;
+    const int kSleepMicroseconds = 2000;
 
     snprintf(path, sizeof(path), "/dev/snd/controlC%d", card);
     // This control device may not have been created yet. So we should
@@ -80,11 +77,9 @@ android_server_UsbMidiDevice_get_subdevice_count(JNIEnv *env, jobject /* thiz */
     return info.subdevices_count;
 }
 
-static jobjectArray
-android_server_UsbMidiDevice_open(JNIEnv *env, jobject thiz, jint card, jint device,
-        jint subdevice_count)
-{
-    char    path[100];
+static jobjectArray android_server_UsbMidiDevice_open(JNIEnv* env, jobject thiz, jint card,
+                                                      jint device, jint subdevice_count) {
+    char path[100];
 
     snprintf(path, sizeof(path), "/dev/snd/midiC%dD%d", card, device);
 
@@ -119,9 +114,7 @@ android_server_UsbMidiDevice_open(JNIEnv *env, jobject thiz, jint card, jint dev
     return fds;
 }
 
-static void
-android_server_UsbMidiDevice_close(JNIEnv *env, jobject thiz, jobjectArray fds)
-{
+static void android_server_UsbMidiDevice_close(JNIEnv* env, jobject thiz, jobjectArray fds) {
     // write to mPipeFD to unblock input thread
     jint pipeFD = env->GetIntField(thiz, sPipeFDField);
     write(pipeFD, &pipeFD, sizeof(pipeFD));
@@ -136,13 +129,13 @@ android_server_UsbMidiDevice_close(JNIEnv *env, jobject thiz, jobjectArray fds)
 }
 
 static JNINativeMethod method_table[] = {
-    { "nativeGetSubdeviceCount", "(II)I", (void*)android_server_UsbMidiDevice_get_subdevice_count },
-    { "nativeOpen", "(III)[Ljava/io/FileDescriptor;", (void*)android_server_UsbMidiDevice_open },
-    { "nativeClose", "([Ljava/io/FileDescriptor;)V", (void*)android_server_UsbMidiDevice_close },
+        {"nativeGetSubdeviceCount", "(II)I",
+         (void*)android_server_UsbMidiDevice_get_subdevice_count},
+        {"nativeOpen", "(III)[Ljava/io/FileDescriptor;", (void*)android_server_UsbMidiDevice_open},
+        {"nativeClose", "([Ljava/io/FileDescriptor;)V", (void*)android_server_UsbMidiDevice_close},
 };
 
-int register_android_server_UsbMidiDevice(JNIEnv *env)
-{
+int register_android_server_UsbMidiDevice(JNIEnv* env) {
     jclass clazz = env->FindClass("java/io/FileDescriptor");
     if (clazz == NULL) {
         ALOGE("Can't find java/io/FileDescriptor");
@@ -161,8 +154,8 @@ int register_android_server_UsbMidiDevice(JNIEnv *env)
         return -1;
     }
 
-    return jniRegisterNativeMethods(env, "com/android/server/usb/UsbMidiDevice",
-            method_table, NELEM(method_table));
+    return jniRegisterNativeMethods(env, "com/android/server/usb/UsbMidiDevice", method_table,
+                                    NELEM(method_table));
 }
 
-};
+};  // namespace android

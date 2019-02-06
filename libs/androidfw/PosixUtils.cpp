@@ -44,7 +44,7 @@ std::unique_ptr<std::string> ReadFile(int fd) {
   return str;
 }
 
-}
+}  // namespace
 
 namespace android {
 namespace util {
@@ -70,11 +70,11 @@ std::unique_ptr<ProcResult> ExecuteBinary(const std::vector<std::string>& argv) 
   }
   argv0[argv.size()] = nullptr;
   switch (fork()) {
-    case -1: // error
+    case -1:  // error
       free(argv0);
       PLOG(ERROR) << "fork";
       return nullptr;
-    case 0: // child
+    case 0:  // child
       close(stdout[0]);
       if (dup2(stdout[1], STDOUT_FILENO) == -1) {
         abort();
@@ -86,14 +86,14 @@ std::unique_ptr<ProcResult> ExecuteBinary(const std::vector<std::string>& argv) 
       execvp(argv0[0], const_cast<char* const*>(argv0));
       PLOG(ERROR) << "execv";
       abort();
-    default: // parent
+    default:  // parent
       free(argv0);
       close(stdout[1]);
       close(stderr[1]);
       int status;
       wait(&status);
       if (!WIFEXITED(status)) {
-          return nullptr;
+        return nullptr;
       }
       std::unique_ptr<ProcResult> result(new ProcResult());
       result->status = status;
@@ -107,6 +107,6 @@ std::unique_ptr<ProcResult> ExecuteBinary(const std::vector<std::string>& argv) 
   }
 }
 
-} // namespace util
-} // namespace android
+}  // namespace util
+}  // namespace android
 #endif

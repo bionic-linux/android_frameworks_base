@@ -21,21 +21,21 @@
 #include <utils/Log.h>
 #include <utils/String8.h>
 
+#include <android_runtime/AndroidRuntime.h>
+#include <android_runtime/android_hardware_HardwareBuffer.h>
+#include <android_runtime/android_view_Surface.h>
 #include <gui/IProducerListener.h>
 #include <gui/Surface.h>
-#include <android_runtime/AndroidRuntime.h>
-#include <android_runtime/android_view_Surface.h>
-#include <android_runtime/android_hardware_HardwareBuffer.h>
-#include <private/android/AHardwareBufferHelpers.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
+#include <private/android/AHardwareBufferHelpers.h>
 
-#include <stdint.h>
-#include <inttypes.h>
 #include <android/hardware_buffer_jni.h>
+#include <inttypes.h>
+#include <stdint.h>
 
-#define IMAGE_BUFFER_JNI_ID           "mNativeBuffer"
-#define IMAGE_FORMAT_UNKNOWN          0 // This is the same value as ImageFormat#UNKNOWN.
+#define IMAGE_BUFFER_JNI_ID "mNativeBuffer"
+#define IMAGE_FORMAT_UNKNOWN 0  // This is the same value as ImageFormat#UNKNOWN.
 // ----------------------------------------------------------------------------
 
 using namespace android;
@@ -59,7 +59,7 @@ static struct {
 // ----------------------------------------------------------------------------
 
 class JNIImageWriterContext : public BnProducerListener {
-public:
+  public:
     JNIImageWriterContext(JNIEnv* env, jobject weakThiz, jclass clazz);
 
     virtual ~JNIImageWriterContext();
@@ -80,7 +80,7 @@ public:
     void setBufferHeight(int height) { mHeight = height; }
     int getBufferHeight() { return mHeight; }
 
-private:
+  private:
     static JNIEnv* getJNIEnv(bool* needsDetach);
     static void detachJNI();
 
@@ -92,13 +92,12 @@ private:
     int mHeight;
 };
 
-JNIImageWriterContext::JNIImageWriterContext(JNIEnv* env, jobject weakThiz, jclass clazz) :
-    mWeakThiz(env->NewGlobalRef(weakThiz)),
-    mClazz((jclass)env->NewGlobalRef(clazz)),
-    mFormat(0),
-    mWidth(-1),
-    mHeight(-1) {
-}
+JNIImageWriterContext::JNIImageWriterContext(JNIEnv* env, jobject weakThiz, jclass clazz)
+    : mWeakThiz(env->NewGlobalRef(weakThiz)),
+      mClazz((jclass)env->NewGlobalRef(clazz)),
+      mFormat(0),
+      mWidth(-1),
+      mHeight(-1) {}
 
 JNIImageWriterContext::~JNIImageWriterContext() {
     ALOGV("%s", __FUNCTION__);
@@ -125,7 +124,7 @@ JNIEnv* JNIImageWriterContext::getJNIEnv(bool* needsDetach) {
     if (env == NULL) {
         JavaVMAttachArgs args = {JNI_VERSION_1_4, NULL, NULL};
         JavaVM* vm = AndroidRuntime::getJavaVM();
-        int result = vm->AttachCurrentThread(&env, (void*) &args);
+        int result = vm->AttachCurrentThread(&env, (void*)&args);
         if (result != JNI_OK) {
             ALOGE("thread attach failed: %#x", result);
             return NULL;
@@ -175,10 +174,9 @@ extern "C" {
 
 // -------------------------------Private method declarations--------------
 
-static void Image_setNativeContext(JNIEnv* env, jobject thiz,
-        sp<GraphicBuffer> buffer, int fenceFd);
-static void Image_getNativeContext(JNIEnv* env, jobject thiz,
-        GraphicBuffer** buffer, int* fenceFd);
+static void Image_setNativeContext(JNIEnv* env, jobject thiz, sp<GraphicBuffer> buffer,
+                                   int fenceFd);
+static void Image_getNativeContext(JNIEnv* env, jobject thiz, GraphicBuffer** buffer, int* fenceFd);
 static void Image_unlockIfLocked(JNIEnv* env, jobject thiz);
 
 // --------------------------ImageWriter methods---------------------------------------
@@ -187,55 +185,53 @@ static void ImageWriter_classInit(JNIEnv* env, jclass clazz) {
     ALOGV("%s:", __FUNCTION__);
     jclass imageClazz = env->FindClass("android/media/ImageWriter$WriterSurfaceImage");
     LOG_ALWAYS_FATAL_IF(imageClazz == NULL,
-            "can't find android/media/ImageWriter$WriterSurfaceImage");
-    gSurfaceImageClassInfo.mNativeBuffer = env->GetFieldID(
-            imageClazz, IMAGE_BUFFER_JNI_ID, "J");
+                        "can't find android/media/ImageWriter$WriterSurfaceImage");
+    gSurfaceImageClassInfo.mNativeBuffer = env->GetFieldID(imageClazz, IMAGE_BUFFER_JNI_ID, "J");
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mNativeBuffer == NULL,
-            "can't find android/media/ImageWriter$WriterSurfaceImage.%s", IMAGE_BUFFER_JNI_ID);
+                        "can't find android/media/ImageWriter$WriterSurfaceImage.%s",
+                        IMAGE_BUFFER_JNI_ID);
 
-    gSurfaceImageClassInfo.mNativeFenceFd = env->GetFieldID(
-            imageClazz, "mNativeFenceFd", "I");
+    gSurfaceImageClassInfo.mNativeFenceFd = env->GetFieldID(imageClazz, "mNativeFenceFd", "I");
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mNativeFenceFd == NULL,
-            "can't find android/media/ImageWriter$WriterSurfaceImage.mNativeFenceFd");
+                        "can't find android/media/ImageWriter$WriterSurfaceImage.mNativeFenceFd");
 
     gSurfaceImageClassInfo.mPlanes = env->GetFieldID(
             imageClazz, "mPlanes", "[Landroid/media/ImageWriter$WriterSurfaceImage$SurfacePlane;");
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mPlanes == NULL,
-            "can't find android/media/ImageWriter$WriterSurfaceImage.mPlanes");
+                        "can't find android/media/ImageWriter$WriterSurfaceImage.mPlanes");
 
-    gImageWriterClassInfo.postEventFromNative = env->GetStaticMethodID(
-            clazz, "postEventFromNative", "(Ljava/lang/Object;)V");
+    gImageWriterClassInfo.postEventFromNative =
+            env->GetStaticMethodID(clazz, "postEventFromNative", "(Ljava/lang/Object;)V");
     LOG_ALWAYS_FATAL_IF(gImageWriterClassInfo.postEventFromNative == NULL,
                         "can't find android/media/ImageWriter.postEventFromNative");
 
-    gImageWriterClassInfo.mWriterFormat = env->GetFieldID(
-            clazz, "mWriterFormat", "I");
+    gImageWriterClassInfo.mWriterFormat = env->GetFieldID(clazz, "mWriterFormat", "I");
     LOG_ALWAYS_FATAL_IF(gImageWriterClassInfo.mWriterFormat == NULL,
                         "can't find android/media/ImageWriter.mWriterFormat");
 
     jclass planeClazz = env->FindClass("android/media/ImageWriter$WriterSurfaceImage$SurfacePlane");
     LOG_ALWAYS_FATAL_IF(planeClazz == NULL, "Can not find SurfacePlane class");
     // FindClass only gives a local reference of jclass object.
-    gSurfacePlaneClassInfo.clazz = (jclass) env->NewGlobalRef(planeClazz);
-    gSurfacePlaneClassInfo.ctor = env->GetMethodID(gSurfacePlaneClassInfo.clazz, "<init>",
+    gSurfacePlaneClassInfo.clazz = (jclass)env->NewGlobalRef(planeClazz);
+    gSurfacePlaneClassInfo.ctor = env->GetMethodID(
+            gSurfacePlaneClassInfo.clazz, "<init>",
             "(Landroid/media/ImageWriter$WriterSurfaceImage;IILjava/nio/ByteBuffer;)V");
     LOG_ALWAYS_FATAL_IF(gSurfacePlaneClassInfo.ctor == NULL,
-            "Can not find SurfacePlane constructor");
+                        "Can not find SurfacePlane constructor");
 }
 
 static jlong ImageWriter_init(JNIEnv* env, jobject thiz, jobject weakThiz, jobject jsurface,
-        jint maxImages, jint userFormat) {
+                              jint maxImages, jint userFormat) {
     status_t res;
 
     ALOGV("%s: maxImages:%d", __FUNCTION__, maxImages);
 
     sp<Surface> surface(android_view_Surface_getSurface(env, jsurface));
     if (surface == NULL) {
-        jniThrowException(env,
-                "java/lang/IllegalArgumentException",
-                "The surface has been released");
+        jniThrowException(env, "java/lang/IllegalArgumentException",
+                          "The surface has been released");
         return 0;
-     }
+    }
     sp<IGraphicBufferProducer> bufferProducer = surface->getIGraphicBufferProducer();
 
     jclass clazz = env->GetObjectClass(thiz);
@@ -245,17 +241,17 @@ static jlong ImageWriter_init(JNIEnv* env, jobject thiz, jobject weakThiz, jobje
     }
     sp<JNIImageWriterContext> ctx(new JNIImageWriterContext(env, weakThiz, clazz));
 
-    sp<Surface> producer = new Surface(bufferProducer, /*controlledByApp*/false);
+    sp<Surface> producer = new Surface(bufferProducer, /*controlledByApp*/ false);
     ctx->setProducer(producer);
     /**
      * NATIVE_WINDOW_API_CPU isn't a good choice here, as it makes the bufferQueue not connectable
      * after disconnect. MEDIA or CAMERA are treated the same internally. The producer listener
      * will be cleared after disconnect call.
      */
-    res = producer->connect(/*api*/NATIVE_WINDOW_API_CAMERA, /*listener*/ctx);
+    res = producer->connect(/*api*/ NATIVE_WINDOW_API_CAMERA, /*listener*/ ctx);
     if (res != OK) {
-        ALOGE("%s: Connecting to surface producer interface failed: %s (%d)",
-                __FUNCTION__, strerror(-res), res);
+        ALOGE("%s: Connecting to surface producer interface failed: %s (%d)", __FUNCTION__,
+              strerror(-res), res);
         jniThrowRuntimeException(env, "Failed to connect to native window");
         return 0;
     }
@@ -291,29 +287,28 @@ static jlong ImageWriter_init(JNIEnv* env, jobject thiz, jobject weakThiz, jobje
         surfaceFormat = userFormat;
     }
     ctx->setBufferFormat(surfaceFormat);
-    env->SetIntField(thiz,
-            gImageWriterClassInfo.mWriterFormat, reinterpret_cast<jint>(surfaceFormat));
+    env->SetIntField(thiz, gImageWriterClassInfo.mWriterFormat,
+                     reinterpret_cast<jint>(surfaceFormat));
 
     if (!isFormatOpaque(surfaceFormat)) {
         res = native_window_set_usage(anw.get(), GRALLOC_USAGE_SW_WRITE_OFTEN);
         if (res != OK) {
-            ALOGE("%s: Configure usage %08x for format %08x failed: %s (%d)",
-                  __FUNCTION__, static_cast<unsigned int>(GRALLOC_USAGE_SW_WRITE_OFTEN),
-                  surfaceFormat, strerror(-res), res);
+            ALOGE("%s: Configure usage %08x for format %08x failed: %s (%d)", __FUNCTION__,
+                  static_cast<unsigned int>(GRALLOC_USAGE_SW_WRITE_OFTEN), surfaceFormat,
+                  strerror(-res), res);
             jniThrowRuntimeException(env, "Failed to SW_WRITE_OFTEN configure usage");
             return 0;
         }
     }
 
     int minUndequeuedBufferCount = 0;
-    res = anw->query(anw.get(),
-                NATIVE_WINDOW_MIN_UNDEQUEUED_BUFFERS, &minUndequeuedBufferCount);
+    res = anw->query(anw.get(), NATIVE_WINDOW_MIN_UNDEQUEUED_BUFFERS, &minUndequeuedBufferCount);
     if (res != OK) {
-        ALOGE("%s: Query producer undequeued buffer count failed: %s (%d)",
-                __FUNCTION__, strerror(-res), res);
+        ALOGE("%s: Query producer undequeued buffer count failed: %s (%d)", __FUNCTION__,
+              strerror(-res), res);
         jniThrowRuntimeException(env, "Query producer undequeued buffer count failed");
         return 0;
-     }
+    }
 
     size_t totalBufferCount = maxImages + minUndequeuedBufferCount;
     res = native_window_set_buffer_count(anw.get(), totalBufferCount);
@@ -331,15 +326,15 @@ static jlong ImageWriter_init(JNIEnv* env, jobject thiz, jobject weakThiz, jobje
 
 static void ImageWriter_dequeueImage(JNIEnv* env, jobject thiz, jlong nativeCtx, jobject image) {
     ALOGV("%s", __FUNCTION__);
-    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext *>(nativeCtx);
+    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext*>(nativeCtx);
     if (ctx == NULL || thiz == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "ImageWriterContext is not initialized");
+                          "ImageWriterContext is not initialized");
         return;
     }
 
     sp<ANativeWindow> anw = ctx->getProducer();
-    android_native_buffer_t *anb = NULL;
+    android_native_buffer_t* anb = NULL;
     int fenceFd = -1;
     status_t res = anw->dequeueBuffer(anw.get(), &anb, &fenceFd);
     if (res != OK) {
@@ -347,7 +342,7 @@ static void ImageWriter_dequeueImage(JNIEnv* env, jobject thiz, jlong nativeCtx,
         switch (res) {
             case NO_INIT:
                 jniThrowException(env, "java/lang/IllegalStateException",
-                    "Surface has been abandoned");
+                                  "Surface has been abandoned");
                 break;
             default:
                 // TODO: handle other error cases here.
@@ -371,7 +366,7 @@ static void ImageWriter_dequeueImage(JNIEnv* env, jobject thiz, jlong nativeCtx,
 
 static void ImageWriter_close(JNIEnv* env, jobject thiz, jlong nativeCtx) {
     ALOGV("%s:", __FUNCTION__);
-    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext *>(nativeCtx);
+    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext*>(nativeCtx);
     if (ctx == NULL || thiz == NULL) {
         // ImageWriter is already closed.
         return;
@@ -384,7 +379,7 @@ static void ImageWriter_close(JNIEnv* env, jobject thiz, jlong nativeCtx) {
          * connectable after disconnect. MEDIA or CAMERA are treated the same internally.
          * The producer listener will be cleared after disconnect call.
          */
-        status_t res = native_window_api_disconnect(producer, /*api*/NATIVE_WINDOW_API_CAMERA);
+        status_t res = native_window_api_disconnect(producer, /*api*/ NATIVE_WINDOW_API_CAMERA);
         /**
          * This is not an error. if client calling process dies, the window will
          * also die and all calls to it will return DEAD_OBJECT, thus it's already
@@ -392,10 +387,11 @@ static void ImageWriter_close(JNIEnv* env, jobject thiz, jlong nativeCtx) {
          */
         if (res == DEAD_OBJECT) {
             ALOGW("%s: While disconnecting ImageWriter from native window, the"
-                    " native window died already", __FUNCTION__);
+                  " native window died already",
+                  __FUNCTION__);
         } else if (res != OK) {
-            ALOGE("%s: native window disconnect failed: %s (%d)",
-                    __FUNCTION__, strerror(-res), res);
+            ALOGE("%s: native window disconnect failed: %s (%d)", __FUNCTION__, strerror(-res),
+                  res);
             jniThrowRuntimeException(env, "Native window disconnect failed");
             return;
         }
@@ -406,7 +402,7 @@ static void ImageWriter_close(JNIEnv* env, jobject thiz, jlong nativeCtx) {
 
 static void ImageWriter_cancelImage(JNIEnv* env, jobject thiz, jlong nativeCtx, jobject image) {
     ALOGV("%s", __FUNCTION__);
-    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext *>(nativeCtx);
+    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext*>(nativeCtx);
     if (ctx == NULL || thiz == NULL) {
         ALOGW("ImageWriter#close called before Image#close, consider calling Image#close first");
         return;
@@ -414,7 +410,7 @@ static void ImageWriter_cancelImage(JNIEnv* env, jobject thiz, jlong nativeCtx, 
 
     sp<ANativeWindow> anw = ctx->getProducer();
 
-    GraphicBuffer *buffer = NULL;
+    GraphicBuffer* buffer = NULL;
     int fenceFd = -1;
     Image_getNativeContext(env, image, &buffer, &fenceFd);
     if (buffer == NULL) {
@@ -431,25 +427,24 @@ static void ImageWriter_cancelImage(JNIEnv* env, jobject thiz, jlong nativeCtx, 
 }
 
 static void ImageWriter_queueImage(JNIEnv* env, jobject thiz, jlong nativeCtx, jobject image,
-        jlong timestampNs, jint left, jint top, jint right, jint bottom, jint transform,
-        jint scalingMode) {
+                                   jlong timestampNs, jint left, jint top, jint right, jint bottom,
+                                   jint transform, jint scalingMode) {
     ALOGV("%s", __FUNCTION__);
-    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext *>(nativeCtx);
+    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext*>(nativeCtx);
     if (ctx == NULL || thiz == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "ImageWriterContext is not initialized");
+                          "ImageWriterContext is not initialized");
         return;
     }
 
     status_t res = OK;
     sp<ANativeWindow> anw = ctx->getProducer();
 
-    GraphicBuffer *buffer = NULL;
+    GraphicBuffer* buffer = NULL;
     int fenceFd = -1;
     Image_getNativeContext(env, image, &buffer, &fenceFd);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return;
     }
 
@@ -495,7 +490,7 @@ static void ImageWriter_queueImage(JNIEnv* env, jobject thiz, jlong nativeCtx, j
         switch (res) {
             case NO_INIT:
                 jniThrowException(env, "java/lang/IllegalStateException",
-                    "Surface has been abandoned");
+                                  "Surface has been abandoned");
                 break;
             default:
                 // TODO: handle other error cases here.
@@ -509,20 +504,22 @@ static void ImageWriter_queueImage(JNIEnv* env, jobject thiz, jlong nativeCtx, j
 }
 
 static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nativeCtx,
-        jlong nativeBuffer, jint imageFormat, jlong timestampNs, jint left, jint top,
-        jint right, jint bottom, jint transform, jint scalingMode) {
+                                            jlong nativeBuffer, jint imageFormat, jlong timestampNs,
+                                            jint left, jint top, jint right, jint bottom,
+                                            jint transform, jint scalingMode) {
     ALOGV("%s", __FUNCTION__);
-    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext *>(nativeCtx);
+    JNIImageWriterContext* const ctx = reinterpret_cast<JNIImageWriterContext*>(nativeCtx);
     if (ctx == NULL || thiz == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "ImageWriterContext is not initialized");
+                          "ImageWriterContext is not initialized");
         return -1;
     }
 
     sp<Surface> surface = ctx->getProducer();
     status_t res = OK;
     if (isFormatOpaque(imageFormat) != isFormatOpaque(ctx->getBufferFormat())) {
-        jniThrowException(env, "java/lang/IllegalStateException",
+        jniThrowException(
+                env, "java/lang/IllegalStateException",
                 "Trying to attach an opaque image into a non-opaque ImageWriter, or vice versa");
         return -1;
     }
@@ -532,7 +529,7 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
     BufferItem* buffer = reinterpret_cast<BufferItem*>(nativeBuffer);
     if (buffer == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized or already closed");
+                          "Image is not initialized or already closed");
         return -1;
     }
 
@@ -543,7 +540,7 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
         switch (res) {
             case NO_INIT:
                 jniThrowException(env, "java/lang/IllegalStateException",
-                    "Surface has been abandoned");
+                                  "Surface has been abandoned");
                 break;
             default:
                 // TODO: handle other error cases here.
@@ -551,7 +548,7 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
         }
         return res;
     }
-    sp < ANativeWindow > anw = surface;
+    sp<ANativeWindow> anw = surface;
 
     // Step 2. Set timestamp, crop, transform and scaling mode. Note that we do not need unlock the
     // image because it was not locked.
@@ -587,13 +584,13 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
 
     // Step 3. Queue Image.
     res = anw->queueBuffer(anw.get(), buffer->mGraphicBuffer.get(), /*fenceFd*/
-            -1);
+                           -1);
     if (res != OK) {
         ALOGE("%s: Queue buffer failed: %s (%d)", __FUNCTION__, strerror(-res), res);
         switch (res) {
             case NO_INIT:
                 jniThrowException(env, "java/lang/IllegalStateException",
-                    "Surface has been abandoned");
+                                  "Surface has been abandoned");
                 break;
             default:
                 // TODO: handle other error cases here.
@@ -610,26 +607,26 @@ static jint ImageWriter_attachAndQueueImage(JNIEnv* env, jobject thiz, jlong nat
 
 // --------------------------Image methods---------------------------------------
 
-static void Image_getNativeContext(JNIEnv* env, jobject thiz,
-        GraphicBuffer** buffer, int* fenceFd) {
+static void Image_getNativeContext(JNIEnv* env, jobject thiz, GraphicBuffer** buffer,
+                                   int* fenceFd) {
     ALOGV("%s", __FUNCTION__);
     if (buffer != NULL) {
-        GraphicBuffer *gb = reinterpret_cast<GraphicBuffer *>
-                  (env->GetLongField(thiz, gSurfaceImageClassInfo.mNativeBuffer));
+        GraphicBuffer* gb = reinterpret_cast<GraphicBuffer*>(
+                env->GetLongField(thiz, gSurfaceImageClassInfo.mNativeBuffer));
         *buffer = gb;
     }
 
     if (fenceFd != NULL) {
-        *fenceFd = reinterpret_cast<jint>(env->GetIntField(
-                thiz, gSurfaceImageClassInfo.mNativeFenceFd));
+        *fenceFd = reinterpret_cast<jint>(
+                env->GetIntField(thiz, gSurfaceImageClassInfo.mNativeFenceFd));
     }
 }
 
-static void Image_setNativeContext(JNIEnv* env, jobject thiz,
-        sp<GraphicBuffer> buffer, int fenceFd) {
+static void Image_setNativeContext(JNIEnv* env, jobject thiz, sp<GraphicBuffer> buffer,
+                                   int fenceFd) {
     ALOGV("%s:", __FUNCTION__);
     GraphicBuffer* p = NULL;
-    Image_getNativeContext(env, thiz, &p, /*fenceFd*/NULL);
+    Image_getNativeContext(env, thiz, &p, /*fenceFd*/ NULL);
     if (buffer != 0) {
         buffer->incStrong((void*)Image_setNativeContext);
     }
@@ -637,7 +634,7 @@ static void Image_setNativeContext(JNIEnv* env, jobject thiz,
         p->decStrong((void*)Image_setNativeContext);
     }
     env->SetLongField(thiz, gSurfaceImageClassInfo.mNativeBuffer,
-            reinterpret_cast<jlong>(buffer.get()));
+                      reinterpret_cast<jlong>(buffer.get()));
 
     env->SetIntField(thiz, gSurfaceImageClassInfo.mNativeFenceFd, reinterpret_cast<jint>(fenceFd));
 }
@@ -647,8 +644,7 @@ static void Image_unlockIfLocked(JNIEnv* env, jobject thiz) {
     GraphicBuffer* buffer;
     Image_getNativeContext(env, thiz, &buffer, NULL);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return;
     }
 
@@ -674,8 +670,7 @@ static jint Image_getWidth(JNIEnv* env, jobject thiz) {
     GraphicBuffer* buffer;
     Image_getNativeContext(env, thiz, &buffer, NULL);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return -1;
     }
 
@@ -687,8 +682,7 @@ static jint Image_getHeight(JNIEnv* env, jobject thiz) {
     GraphicBuffer* buffer;
     Image_getNativeContext(env, thiz, &buffer, NULL);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return -1;
     }
 
@@ -700,8 +694,7 @@ static jint Image_getFormat(JNIEnv* env, jobject thiz) {
     GraphicBuffer* buffer;
     Image_getNativeContext(env, thiz, &buffer, NULL);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return 0;
     }
 
@@ -715,8 +708,7 @@ static jobject Image_getHardwareBuffer(JNIEnv* env, jobject thiz) {
     GraphicBuffer* buffer;
     Image_getNativeContext(env, thiz, &buffer, NULL);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return NULL;
     }
     AHardwareBuffer* b = AHardwareBuffer_from_GraphicBuffer(buffer);
@@ -730,27 +722,25 @@ static void Image_setFenceFd(JNIEnv* env, jobject thiz, int fenceFd) {
     env->SetIntField(thiz, gSurfaceImageClassInfo.mNativeFenceFd, reinterpret_cast<jint>(fenceFd));
 }
 
-static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image) {
+static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage* image) {
     ALOGV("%s", __FUNCTION__);
     GraphicBuffer* buffer;
     int fenceFd = -1;
     Image_getNativeContext(env, thiz, &buffer, &fenceFd);
     if (buffer == NULL) {
-        jniThrowException(env, "java/lang/IllegalStateException",
-                "Image is not initialized");
+        jniThrowException(env, "java/lang/IllegalStateException", "Image is not initialized");
         return;
     }
 
     // ImageWriter doesn't use crop by itself, app sets it, use the no crop version.
     const Rect noCrop(buffer->width, buffer->height);
-    status_t res = lockImageFromBuffer(
-            buffer, GRALLOC_USAGE_SW_WRITE_OFTEN, noCrop, fenceFd, image);
+    status_t res =
+            lockImageFromBuffer(buffer, GRALLOC_USAGE_SW_WRITE_OFTEN, noCrop, fenceFd, image);
     // Clear the fenceFd as it is already consumed by lock call.
-    Image_setFenceFd(env, thiz, /*fenceFd*/-1);
+    Image_setFenceFd(env, thiz, /*fenceFd*/ -1);
     if (res != OK) {
         jniThrowExceptionFmt(env, "java/lang/RuntimeException",
-                "lock buffer failed for format 0x%x",
-                buffer->getPixelFormat());
+                             "lock buffer failed for format 0x%x", buffer->getPixelFormat());
         return;
     }
 
@@ -760,39 +750,43 @@ static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image) 
 }
 
 static void Image_getLockedImageInfo(JNIEnv* env, LockedImage* buffer, int idx,
-        int32_t writerFormat, uint8_t **base, uint32_t *size, int *pixelStride, int *rowStride) {
+                                     int32_t writerFormat, uint8_t** base, uint32_t* size,
+                                     int* pixelStride, int* rowStride) {
     ALOGV("%s", __FUNCTION__);
 
-    status_t res = getLockedImageInfo(buffer, idx, writerFormat, base, size,
-            pixelStride, rowStride);
+    status_t res =
+            getLockedImageInfo(buffer, idx, writerFormat, base, size, pixelStride, rowStride);
     if (res != OK) {
         jniThrowExceptionFmt(env, "java/lang/UnsupportedOperationException",
                              "Pixel format: 0x%x is unsupported", buffer->flexFormat);
     }
 }
 
-static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
-        int numPlanes, int writerFormat) {
+static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz, int numPlanes,
+                                              int writerFormat) {
     ALOGV("%s: create SurfacePlane array with size %d", __FUNCTION__, numPlanes);
     int rowStride, pixelStride;
-    uint8_t *pData;
+    uint8_t* pData;
     uint32_t dataSize;
     jobject byteBuffer;
 
     int format = Image_getFormat(env, thiz);
     if (isFormatOpaque(format) && numPlanes > 0) {
         String8 msg;
-        msg.appendFormat("Format 0x%x is opaque, thus not writable, the number of planes (%d)"
-                " must be 0", format, numPlanes);
+        msg.appendFormat(
+                "Format 0x%x is opaque, thus not writable, the number of planes (%d)"
+                " must be 0",
+                format, numPlanes);
         jniThrowException(env, "java/lang/IllegalArgumentException", msg.string());
         return NULL;
     }
 
     jobjectArray surfacePlanes = env->NewObjectArray(numPlanes, gSurfacePlaneClassInfo.clazz,
-            /*initial_element*/NULL);
+                                                     /*initial_element*/ NULL);
     if (surfacePlanes == NULL) {
-        jniThrowRuntimeException(env, "Failed to create SurfacePlane arrays,"
-                " probably out of memory");
+        jniThrowRuntimeException(env,
+                                 "Failed to create SurfacePlane arrays,"
+                                 " probably out of memory");
         return NULL;
     }
     if (isFormatOpaque(format)) {
@@ -807,56 +801,57 @@ static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
     PublicFormat publicWriterFormat = static_cast<PublicFormat>(writerFormat);
     writerFormat = android_view_Surface_mapPublicFormatToHalFormat(publicWriterFormat);
     for (int i = 0; i < numPlanes; i++) {
-        Image_getLockedImageInfo(env, &lockedImg, i, writerFormat,
-                &pData, &dataSize, &pixelStride, &rowStride);
+        Image_getLockedImageInfo(env, &lockedImg, i, writerFormat, &pData, &dataSize, &pixelStride,
+                                 &rowStride);
         byteBuffer = env->NewDirectByteBuffer(pData, dataSize);
         if ((byteBuffer == NULL) && (env->ExceptionCheck() == false)) {
             jniThrowException(env, "java/lang/IllegalStateException",
-                    "Failed to allocate ByteBuffer");
+                              "Failed to allocate ByteBuffer");
             return NULL;
         }
 
         // Finally, create this SurfacePlane.
-        jobject surfacePlane = env->NewObject(gSurfacePlaneClassInfo.clazz,
-                    gSurfacePlaneClassInfo.ctor, thiz, rowStride, pixelStride, byteBuffer);
+        jobject surfacePlane =
+                env->NewObject(gSurfacePlaneClassInfo.clazz, gSurfacePlaneClassInfo.ctor, thiz,
+                               rowStride, pixelStride, byteBuffer);
         env->SetObjectArrayElement(surfacePlanes, i, surfacePlane);
     }
 
     return surfacePlanes;
 }
 
-} // extern "C"
+}  // extern "C"
 
 // ----------------------------------------------------------------------------
 
 static JNINativeMethod gImageWriterMethods[] = {
-    {"nativeClassInit",         "()V",                        (void*)ImageWriter_classInit },
-    {"nativeInit",              "(Ljava/lang/Object;Landroid/view/Surface;II)J",
-                                                              (void*)ImageWriter_init },
-    {"nativeClose",              "(J)V",                      (void*)ImageWriter_close },
-    {"nativeAttachAndQueueImage", "(JJIJIIIIII)I",          (void*)ImageWriter_attachAndQueueImage },
-    {"nativeDequeueInputImage", "(JLandroid/media/Image;)V",  (void*)ImageWriter_dequeueImage },
-    {"nativeQueueInputImage",   "(JLandroid/media/Image;JIIIIII)V",  (void*)ImageWriter_queueImage },
-    {"cancelImage",             "(JLandroid/media/Image;)V",   (void*)ImageWriter_cancelImage },
+        {"nativeClassInit", "()V", (void*)ImageWriter_classInit},
+        {"nativeInit", "(Ljava/lang/Object;Landroid/view/Surface;II)J", (void*)ImageWriter_init},
+        {"nativeClose", "(J)V", (void*)ImageWriter_close},
+        {"nativeAttachAndQueueImage", "(JJIJIIIIII)I", (void*)ImageWriter_attachAndQueueImage},
+        {"nativeDequeueInputImage", "(JLandroid/media/Image;)V", (void*)ImageWriter_dequeueImage},
+        {"nativeQueueInputImage", "(JLandroid/media/Image;JIIIIII)V",
+         (void*)ImageWriter_queueImage},
+        {"cancelImage", "(JLandroid/media/Image;)V", (void*)ImageWriter_cancelImage},
 };
 
 static JNINativeMethod gImageMethods[] = {
-    {"nativeCreatePlanes",      "(II)[Landroid/media/ImageWriter$WriterSurfaceImage$SurfacePlane;",
-                                                               (void*)Image_createSurfacePlanes },
-    {"nativeGetWidth",          "()I",                         (void*)Image_getWidth },
-    {"nativeGetHeight",         "()I",                         (void*)Image_getHeight },
-    {"nativeGetFormat",         "()I",                         (void*)Image_getFormat },
-    {"nativeGetHardwareBuffer", "()Landroid/hardware/HardwareBuffer;",
-                                                               (void*)Image_getHardwareBuffer },
+        {"nativeCreatePlanes", "(II)[Landroid/media/ImageWriter$WriterSurfaceImage$SurfacePlane;",
+         (void*)Image_createSurfacePlanes},
+        {"nativeGetWidth", "()I", (void*)Image_getWidth},
+        {"nativeGetHeight", "()I", (void*)Image_getHeight},
+        {"nativeGetFormat", "()I", (void*)Image_getFormat},
+        {"nativeGetHardwareBuffer", "()Landroid/hardware/HardwareBuffer;",
+         (void*)Image_getHardwareBuffer},
 };
 
-int register_android_media_ImageWriter(JNIEnv *env) {
-
-    int ret1 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageWriter", gImageWriterMethods, NELEM(gImageWriterMethods));
+int register_android_media_ImageWriter(JNIEnv* env) {
+    int ret1 = AndroidRuntime::registerNativeMethods(
+            env, "android/media/ImageWriter", gImageWriterMethods, NELEM(gImageWriterMethods));
 
     int ret2 = AndroidRuntime::registerNativeMethods(env,
-                   "android/media/ImageWriter$WriterSurfaceImage", gImageMethods, NELEM(gImageMethods));
+                                                     "android/media/ImageWriter$WriterSurfaceImage",
+                                                     gImageMethods, NELEM(gImageMethods));
 
     return (ret1 || ret2);
 }

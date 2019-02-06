@@ -159,15 +159,13 @@ inline ConfigDescription::ConfigDescription(ConfigDescription&& o) noexcept {
   *this = o;
 }
 
-inline ConfigDescription& ConfigDescription::operator=(
-    const android::ResTable_config& o) {
+inline ConfigDescription& ConfigDescription::operator=(const android::ResTable_config& o) {
   *static_cast<android::ResTable_config*>(this) = o;
   size = sizeof(android::ResTable_config);
   return *this;
 }
 
-inline ConfigDescription& ConfigDescription::operator=(
-    const ConfigDescription& o) {
+inline ConfigDescription& ConfigDescription::operator=(const ConfigDescription& o) {
   *static_cast<android::ResTable_config*>(this) = o;
   return *this;
 }
@@ -177,8 +175,7 @@ inline ConfigDescription& ConfigDescription::operator=(ConfigDescription&& o) no
   return *this;
 }
 
-inline bool ConfigDescription::MatchWithDensity(
-    const ConfigDescription& o) const {
+inline bool ConfigDescription::MatchWithDensity(const ConfigDescription& o) const {
   return match(o) && (density == 0 || density == o.density);
 }
 
@@ -206,8 +203,7 @@ inline bool ConfigDescription::operator>(const ConfigDescription& o) const {
   return compare(o) > 0;
 }
 
-inline ::std::ostream& operator<<(::std::ostream& out,
-                                  const ConfigDescription& o) {
+inline ::std::ostream& operator<<(::std::ostream& out, const ConfigDescription& o) {
   return out << o.toString().string();
 }
 

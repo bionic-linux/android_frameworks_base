@@ -20,10 +20,10 @@
 #include "jni.h"
 
 #include <android_runtime/Log.h>
+#include <utils/Log.h>
+#include <utils/String8.h>
 #include <utils/Timers.h>
 #include <utils/misc.h>
-#include <utils/String8.h>
-#include <utils/Log.h>
 
 extern "C" {
 #include "crypto_scrypt.h"
@@ -31,7 +31,9 @@ extern "C" {
 
 namespace android {
 
-static jbyteArray android_security_Scrypt_nativeScrypt(JNIEnv* env, jobject, jbyteArray password, jbyteArray salt, jint N, jint r, jint p, jint outLen) {
+static jbyteArray android_security_Scrypt_nativeScrypt(JNIEnv* env, jobject, jbyteArray password,
+                                                       jbyteArray salt, jint N, jint r, jint p,
+                                                       jint outLen) {
     if (!password || !salt) {
         return NULL;
     }
@@ -44,9 +46,8 @@ static jbyteArray android_security_Scrypt_nativeScrypt(JNIEnv* env, jobject, jby
     jbyte* saltPtr = (jbyte*)env->GetByteArrayElements(salt, NULL);
     jbyte* retPtr = (jbyte*)env->GetByteArrayElements(ret, NULL);
 
-    int rc = crypto_scrypt((const uint8_t *)passwordPtr, passwordLen,
-                       (const uint8_t *)saltPtr, saltLen, N, r, p, (uint8_t *)retPtr,
-                       outLen);
+    int rc = crypto_scrypt((const uint8_t*)passwordPtr, passwordLen, (const uint8_t*)saltPtr,
+                           saltLen, N, r, p, (uint8_t*)retPtr, outLen);
     env->ReleaseByteArrayElements(password, passwordPtr, JNI_ABORT);
     env->ReleaseByteArrayElements(salt, saltPtr, JNI_ABORT);
     env->ReleaseByteArrayElements(ret, retPtr, 0);
@@ -60,13 +61,12 @@ static jbyteArray android_security_Scrypt_nativeScrypt(JNIEnv* env, jobject, jby
 }
 
 static const JNINativeMethod sMethods[] = {
-     /* name, signature, funcPtr */
-    {"nativeScrypt", "([B[BIIII)[B", (void*)android_security_Scrypt_nativeScrypt},
+        /* name, signature, funcPtr */
+        {"nativeScrypt", "([B[BIIII)[B", (void*)android_security_Scrypt_nativeScrypt},
 };
 
 int register_android_security_Scrypt(JNIEnv* env) {
-    return jniRegisterNativeMethods(env, "android/security/Scrypt",
-                                    sMethods, NELEM(sMethods));
+    return jniRegisterNativeMethods(env, "android/security/Scrypt", sMethods, NELEM(sMethods));
 }
 
 } /* namespace android */

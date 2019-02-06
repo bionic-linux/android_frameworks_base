@@ -15,15 +15,15 @@
 #include "Utils.h"
 #include "core_jni_helpers.h"
 
-#include <nativehelper/JNIHelp.h>
 #include <androidfw/Asset.h>
 #include <androidfw/ResourceTypes.h>
 #include <cutils/compiler.h>
-#include <memory>
+#include <nativehelper/JNIHelp.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <memory>
 
 jfieldID gOptions_justBoundsFieldID;
 jfieldID gOptions_sampleSizeFieldID;
@@ -97,37 +97,33 @@ jstring encodedFormatToString(JNIEnv* env, SkEncodedImageFormat format) {
 }
 
 class ScaleCheckingAllocator : public SkBitmap::HeapAllocator {
-public:
-    ScaleCheckingAllocator(float scale, int size)
-            : mScale(scale), mSize(size) {
-    }
+  public:
+    ScaleCheckingAllocator(float scale, int size) : mScale(scale), mSize(size) {}
 
     virtual bool allocPixelRef(SkBitmap* bitmap) {
         // accounts for scale in final allocation, using eventual size and config
         const int bytesPerPixel = SkColorTypeBytesPerPixel(bitmap->colorType());
-        const int requestedSize = bytesPerPixel *
-                int(bitmap->width() * mScale + 0.5f) *
-                int(bitmap->height() * mScale + 0.5f);
+        const int requestedSize = bytesPerPixel * int(bitmap->width() * mScale + 0.5f) *
+                                  int(bitmap->height() * mScale + 0.5f);
         if (requestedSize > mSize) {
-            ALOGW("bitmap for alloc reuse (%d bytes) can't fit scaled bitmap (%d bytes)",
-                    mSize, requestedSize);
+            ALOGW("bitmap for alloc reuse (%d bytes) can't fit scaled bitmap (%d bytes)", mSize,
+                  requestedSize);
             return false;
         }
         return SkBitmap::HeapAllocator::allocPixelRef(bitmap);
     }
-private:
+
+  private:
     const float mScale;
     const int mSize;
 };
 
 class RecyclingPixelAllocator : public SkBitmap::Allocator {
-public:
+  public:
     RecyclingPixelAllocator(android::Bitmap* bitmap, unsigned int size)
-            : mBitmap(bitmap), mSize(size) {
-    }
+        : mBitmap(bitmap), mSize(size) {}
 
-    ~RecyclingPixelAllocator() {
-    }
+    ~RecyclingPixelAllocator() {}
 
     virtual bool allocPixelRef(SkBitmap* bitmap) {
         const SkImageInfo& info = bitmap->info();
@@ -144,7 +140,8 @@ public:
 
         if (size > mSize) {
             ALOGW("bitmap marked for reuse (%u bytes) can't fit new bitmap "
-                  "(%zu bytes)", mSize, size);
+                  "(%zu bytes)",
+                  mSize, size);
             return false;
         }
 
@@ -153,7 +150,7 @@ public:
         return true;
     }
 
-private:
+  private:
     android::Bitmap* const mBitmap;
     const unsigned int mSize;
 };
@@ -178,8 +175,8 @@ static bool needsFineScale(const SkISize fullSize, const SkISize decodedSize,
            needsFineScale(fullSize.height(), decodedSize.height(), sampleSize);
 }
 
-static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
-                        jobject padding, jobject options) {
+static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream, jobject padding,
+                        jobject options) {
     // Set default values for the options parameters.
     int sampleSize = 1;
     bool onlyDecodeSize = false;
@@ -225,7 +222,7 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
             const int targetDensity = env->GetIntField(options, gOptions_targetDensityFieldID);
             const int screenDensity = env->GetIntField(options, gOptions_screenDensityFieldID);
             if (density != 0 && targetDensity != 0 && density != screenDensity) {
-                scale = (float) targetDensity / density;
+                scale = (float)targetDensity / density;
             }
         }
     }
@@ -240,8 +237,7 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
     std::unique_ptr<SkAndroidCodec> codec;
     {
         SkCodec::Result result;
-        std::unique_ptr<SkCodec> c = SkCodec::MakeFromStream(std::move(stream), &result,
-                                                             &peeker);
+        std::unique_ptr<SkCodec> c = SkCodec::MakeFromStream(std::move(stream), &result, &peeker);
         if (!c) {
             SkString msg;
             msg.printf("Failed to create image decoder with message '%s'",
@@ -280,13 +276,13 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
 
     // Set the decode colorType
     SkColorType decodeColorType = codec->computeOutputColorType(prefColorType);
-    sk_sp<SkColorSpace> decodeColorSpace = codec->computeOutputColorSpace(
-            decodeColorType, prefColorSpace);
+    sk_sp<SkColorSpace> decodeColorSpace =
+            codec->computeOutputColorSpace(decodeColorType, prefColorSpace);
 
     // Set the options and return if the client only wants the size.
     if (options != NULL) {
-        jstring mimeType = encodedFormatToString(
-                env, (SkEncodedImageFormat)codec->getEncodedFormat());
+        jstring mimeType =
+                encodedFormatToString(env, (SkEncodedImageFormat)codec->getEncodedFormat());
         if (env->ExceptionCheck()) {
             return nullObjectReturn("OOM in encodedFormatToString()");
         }
@@ -298,12 +294,12 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
         if (isHardware) {
             configID = GraphicsJNI::kHardware_LegacyBitmapConfig;
         }
-        jobject config = env->CallStaticObjectMethod(gBitmapConfig_class,
-                gBitmapConfig_nativeToConfigMethodID, configID);
+        jobject config = env->CallStaticObjectMethod(
+                gBitmapConfig_class, gBitmapConfig_nativeToConfigMethodID, configID);
         env->SetObjectField(options, gOptions_outConfigFieldID, config);
 
         env->SetObjectField(options, gOptions_outColorSpaceFieldID,
-                GraphicsJNI::getColorSpace(env, decodeColorSpace, decodeColorType));
+                            GraphicsJNI::getColorSpace(env, decodeColorSpace, decodeColorType));
 
         if (onlyDecodeSize) {
             return nullptr;
@@ -353,8 +349,8 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
 
     SkAlphaType alphaType = codec->computeOutputAlphaType(requireUnpremultiplied);
 
-    const SkImageInfo decodeInfo = SkImageInfo::Make(size.width(), size.height(),
-            decodeColorType, alphaType, decodeColorSpace);
+    const SkImageInfo decodeInfo = SkImageInfo::Make(size.width(), size.height(), decodeColorType,
+                                                     alphaType, decodeColorSpace);
 
     // For wide gamut images, we will leave the color space on the SkBitmap.  Otherwise,
     // use the default.
@@ -372,8 +368,7 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
                 bitmapInfo.makeColorType(kAlpha_8_SkColorType).makeAlphaType(kPremul_SkAlphaType);
     }
     SkBitmap decodingBitmap;
-    if (!decodingBitmap.setInfo(bitmapInfo) ||
-            !decodingBitmap.tryAllocPixels(decodeAllocator)) {
+    if (!decodingBitmap.setInfo(bitmapInfo) || !decodingBitmap.tryAllocPixels(decodeAllocator)) {
         // SkAndroidCodec should recommend a valid SkImageInfo, so setInfo()
         // should only only fail if the calculated value for rowBytes is too
         // large.
@@ -384,11 +379,12 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
 
     // Use SkAndroidCodec to perform the decode.
     SkAndroidCodec::AndroidOptions codecOptions;
-    codecOptions.fZeroInitialized = decodeAllocator == &defaultAllocator ?
-            SkCodec::kYes_ZeroInitialized : SkCodec::kNo_ZeroInitialized;
+    codecOptions.fZeroInitialized = decodeAllocator == &defaultAllocator
+                                            ? SkCodec::kYes_ZeroInitialized
+                                            : SkCodec::kNo_ZeroInitialized;
     codecOptions.fSampleSize = sampleSize;
     SkCodec::Result result = codec->getAndroidPixels(decodeInfo, decodingBitmap.getPixels(),
-            decodingBitmap.rowBytes(), &codecOptions);
+                                                     decodingBitmap.rowBytes(), &codecOptions);
     switch (result) {
         case SkCodec::kSuccess:
         case SkCodec::kIncompleteInput:
@@ -417,7 +413,7 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
             return nullObjectReturn("ninePatchChunk == null");
         }
 
-        jbyte* array = (jbyte*) env->GetPrimitiveArrayCritical(ninePatchChunk, NULL);
+        jbyte* array = (jbyte*)env->GetPrimitiveArrayCritical(ninePatchChunk, NULL);
         if (array == NULL) {
             return nullObjectReturn("primitive array == null");
         }
@@ -465,7 +461,7 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
         // outputBitmap.  Otherwise we would blend by default, which is not
         // what we want.
         paint.setBlendMode(SkBlendMode::kSrc);
-        paint.setFilterQuality(kLow_SkFilterQuality); // bilinear filtering
+        paint.setFilterQuality(kLow_SkFilterQuality);  // bilinear filtering
 
         SkCanvas canvas(outputBitmap, SkCanvas::ColorBehavior::kLegacy);
         canvas.scale(scaleX, scaleY);
@@ -506,17 +502,16 @@ static jobject doDecode(JNIEnv* env, std::unique_ptr<SkStreamRewindable> stream,
             return nullObjectReturn("Failed to allocate a hardware bitmap");
         }
         return bitmap::createBitmap(env, hardwareBitmap.release(), bitmapCreateFlags,
-                ninePatchChunk, ninePatchInsets, -1);
+                                    ninePatchChunk, ninePatchInsets, -1);
     }
 
     // now create the java bitmap
-    return bitmap::createBitmap(env, defaultAllocator.getStorageObjAndReset(),
-            bitmapCreateFlags, ninePatchChunk, ninePatchInsets, -1);
+    return bitmap::createBitmap(env, defaultAllocator.getStorageObjAndReset(), bitmapCreateFlags,
+                                ninePatchChunk, ninePatchInsets, -1);
 }
 
 static jobject nativeDecodeStream(JNIEnv* env, jobject clazz, jobject is, jbyteArray storage,
-        jobject padding, jobject options) {
-
+                                  jobject padding, jobject options) {
     jobject bitmap = NULL;
     std::unique_ptr<SkStream> stream(CreateJavaInputStreamAdaptor(env, is, storage));
 
@@ -530,8 +525,7 @@ static jobject nativeDecodeStream(JNIEnv* env, jobject clazz, jobject is, jbyteA
 }
 
 static jobject nativeDecodeFileDescriptor(JNIEnv* env, jobject clazz, jobject fileDescriptor,
-        jobject padding, jobject bitmapFactoryOptions) {
-
+                                          jobject padding, jobject bitmapFactoryOptions) {
     NPE_CHECK_RETURN_ZERO(env, fileDescriptor);
 
     int descriptor = jniGetFDFromFileDescriptor(env, fileDescriptor);
@@ -572,24 +566,22 @@ static jobject nativeDecodeFileDescriptor(JNIEnv* env, jobject clazz, jobject fi
     // Use a buffered stream. Although an SkFILEStream can be rewound, this
     // ensures that SkImageDecoder::Factory never rewinds beyond the
     // current position of the file descriptor.
-    std::unique_ptr<SkStreamRewindable> stream(SkFrontBufferedStream::Make(std::move(fileStream),
-            SkCodec::MinBufferedBytesNeeded()));
+    std::unique_ptr<SkStreamRewindable> stream(
+            SkFrontBufferedStream::Make(std::move(fileStream), SkCodec::MinBufferedBytesNeeded()));
 
     return doDecode(env, std::move(stream), padding, bitmapFactoryOptions);
 }
 
-static jobject nativeDecodeAsset(JNIEnv* env, jobject clazz, jlong native_asset,
-        jobject padding, jobject options) {
-
+static jobject nativeDecodeAsset(JNIEnv* env, jobject clazz, jlong native_asset, jobject padding,
+                                 jobject options) {
     Asset* asset = reinterpret_cast<Asset*>(native_asset);
     // since we know we'll be done with the asset when we return, we can
     // just use a simple wrapper
     return doDecode(env, skstd::make_unique<AssetStreamAdaptor>(asset), padding, options);
 }
 
-static jobject nativeDecodeByteArray(JNIEnv* env, jobject, jbyteArray byteArray,
-        jint offset, jint length, jobject options) {
-
+static jobject nativeDecodeByteArray(JNIEnv* env, jobject, jbyteArray byteArray, jint offset,
+                                     jint length, jobject options) {
     AutoJavaByteArray ar(env, byteArray);
     return doDecode(env, skstd::make_unique<SkMemoryStream>(ar.ptr() + offset, length, false),
                     nullptr, options);
@@ -601,54 +593,49 @@ static jboolean nativeIsSeekable(JNIEnv* env, jobject, jobject fileDescriptor) {
 }
 
 jobject decodeBitmap(JNIEnv* env, void* data, size_t size) {
-    return doDecode(env, skstd::make_unique<SkMemoryStream>(data, size),
-                    nullptr, nullptr);
+    return doDecode(env, skstd::make_unique<SkMemoryStream>(data, size), nullptr, nullptr);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 static const JNINativeMethod gMethods[] = {
-    {   "nativeDecodeStream",
-        "(Ljava/io/InputStream;[BLandroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
-        (void*)nativeDecodeStream
-    },
+        {"nativeDecodeStream",
+         "(Ljava/io/InputStream;[BLandroid/graphics/Rect;Landroid/graphics/"
+         "BitmapFactory$Options;)Landroid/graphics/Bitmap;",
+         (void*)nativeDecodeStream},
 
-    {   "nativeDecodeFileDescriptor",
-        "(Ljava/io/FileDescriptor;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
-        (void*)nativeDecodeFileDescriptor
-    },
+        {"nativeDecodeFileDescriptor",
+         "(Ljava/io/FileDescriptor;Landroid/graphics/Rect;Landroid/graphics/"
+         "BitmapFactory$Options;)Landroid/graphics/Bitmap;",
+         (void*)nativeDecodeFileDescriptor},
 
-    {   "nativeDecodeAsset",
-        "(JLandroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
-        (void*)nativeDecodeAsset
-    },
+        {"nativeDecodeAsset",
+         "(JLandroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/"
+         "Bitmap;",
+         (void*)nativeDecodeAsset},
 
-    {   "nativeDecodeByteArray",
-        "([BIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
-        (void*)nativeDecodeByteArray
-    },
+        {"nativeDecodeByteArray",
+         "([BIILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;",
+         (void*)nativeDecodeByteArray},
 
-    {   "nativeIsSeekable",
-        "(Ljava/io/FileDescriptor;)Z",
-        (void*)nativeIsSeekable
-    },
+        {"nativeIsSeekable", "(Ljava/io/FileDescriptor;)Z", (void*)nativeIsSeekable},
 };
 
 int register_android_graphics_BitmapFactory(JNIEnv* env) {
     jclass options_class = FindClassOrDie(env, "android/graphics/BitmapFactory$Options");
-    gOptions_bitmapFieldID = GetFieldIDOrDie(env, options_class, "inBitmap",
-            "Landroid/graphics/Bitmap;");
+    gOptions_bitmapFieldID =
+            GetFieldIDOrDie(env, options_class, "inBitmap", "Landroid/graphics/Bitmap;");
     gOptions_justBoundsFieldID = GetFieldIDOrDie(env, options_class, "inJustDecodeBounds", "Z");
     gOptions_sampleSizeFieldID = GetFieldIDOrDie(env, options_class, "inSampleSize", "I");
     gOptions_configFieldID = GetFieldIDOrDie(env, options_class, "inPreferredConfig",
-            "Landroid/graphics/Bitmap$Config;");
+                                             "Landroid/graphics/Bitmap$Config;");
     gOptions_colorSpaceFieldID = GetFieldIDOrDie(env, options_class, "inPreferredColorSpace",
-            "Landroid/graphics/ColorSpace;");
+                                                 "Landroid/graphics/ColorSpace;");
     gOptions_premultipliedFieldID = GetFieldIDOrDie(env, options_class, "inPremultiplied", "Z");
     gOptions_mutableFieldID = GetFieldIDOrDie(env, options_class, "inMutable", "Z");
     gOptions_ditherFieldID = GetFieldIDOrDie(env, options_class, "inDither", "Z");
-    gOptions_preferQualityOverSpeedFieldID = GetFieldIDOrDie(env, options_class,
-            "inPreferQualityOverSpeed", "Z");
+    gOptions_preferQualityOverSpeedFieldID =
+            GetFieldIDOrDie(env, options_class, "inPreferQualityOverSpeed", "Z");
     gOptions_scaledFieldID = GetFieldIDOrDie(env, options_class, "inScaled", "Z");
     gOptions_densityFieldID = GetFieldIDOrDie(env, options_class, "inDensity", "I");
     gOptions_screenDensityFieldID = GetFieldIDOrDie(env, options_class, "inScreenDensity", "I");
@@ -656,21 +643,21 @@ int register_android_graphics_BitmapFactory(JNIEnv* env) {
     gOptions_widthFieldID = GetFieldIDOrDie(env, options_class, "outWidth", "I");
     gOptions_heightFieldID = GetFieldIDOrDie(env, options_class, "outHeight", "I");
     gOptions_mimeFieldID = GetFieldIDOrDie(env, options_class, "outMimeType", "Ljava/lang/String;");
-    gOptions_outConfigFieldID = GetFieldIDOrDie(env, options_class, "outConfig",
-             "Landroid/graphics/Bitmap$Config;");
-    gOptions_outColorSpaceFieldID = GetFieldIDOrDie(env, options_class, "outColorSpace",
-             "Landroid/graphics/ColorSpace;");
+    gOptions_outConfigFieldID =
+            GetFieldIDOrDie(env, options_class, "outConfig", "Landroid/graphics/Bitmap$Config;");
+    gOptions_outColorSpaceFieldID =
+            GetFieldIDOrDie(env, options_class, "outColorSpace", "Landroid/graphics/ColorSpace;");
     gOptions_mCancelID = GetFieldIDOrDie(env, options_class, "mCancel", "Z");
 
     jclass bitmap_class = FindClassOrDie(env, "android/graphics/Bitmap");
     gBitmap_ninePatchInsetsFieldID = GetFieldIDOrDie(env, bitmap_class, "mNinePatchInsets",
-            "Landroid/graphics/NinePatch$InsetStruct;");
+                                                     "Landroid/graphics/NinePatch$InsetStruct;");
 
-    gBitmapConfig_class = MakeGlobalRefOrDie(env, FindClassOrDie(env,
-            "android/graphics/Bitmap$Config"));
-    gBitmapConfig_nativeToConfigMethodID = GetStaticMethodIDOrDie(env, gBitmapConfig_class,
-            "nativeToConfig", "(I)Landroid/graphics/Bitmap$Config;");
+    gBitmapConfig_class =
+            MakeGlobalRefOrDie(env, FindClassOrDie(env, "android/graphics/Bitmap$Config"));
+    gBitmapConfig_nativeToConfigMethodID = GetStaticMethodIDOrDie(
+            env, gBitmapConfig_class, "nativeToConfig", "(I)Landroid/graphics/Bitmap$Config;");
 
-    return android::RegisterMethodsOrDie(env, "android/graphics/BitmapFactory",
-                                         gMethods, NELEM(gMethods));
+    return android::RegisterMethodsOrDie(env, "android/graphics/BitmapFactory", gMethods,
+                                         NELEM(gMethods));
 }

@@ -6,7 +6,6 @@
  * found in the LICENSE file.
  */
 
-
 #ifndef Movie_DEFINED
 #define Movie_DEFINED
 
@@ -17,7 +16,7 @@
 class SkStreamRewindable;
 
 class Movie : public SkRefCnt {
-public:
+  public:
     /** Try to create a movie from the stream. If the stream format is not
         supported, return NULL.
     */
@@ -35,10 +34,10 @@ public:
     */
     static Movie* DecodeMemory(const void* data, size_t length);
 
-    SkMSec  duration();
-    int     width();
-    int     height();
-    int     isOpaque();
+    SkMSec duration();
+    int width();
+    int height();
+    int isOpaque();
 
     /** Specify the time code (between 0...duration) to sample a bitmap
         from the movie. Returns true if this time code generated a different
@@ -50,12 +49,12 @@ public:
     // return the right bitmap for the current time code
     const SkBitmap& bitmap();
 
-protected:
+  protected:
     struct Info {
-        SkMSec  fDuration;
-        int     fWidth;
-        int     fHeight;
-        bool    fIsOpaque;
+        SkMSec fDuration;
+        int fWidth;
+        int fHeight;
+        bool fIsOpaque;
     };
 
     virtual bool onGetInfo(Info*) = 0;
@@ -65,11 +64,11 @@ protected:
     // visible for subclasses
     Movie();
 
-private:
-    Info        fInfo;
-    SkMSec      fCurrTime;
-    SkBitmap    fBitmap;
-    bool        fNeedBitmap;
+  private:
+    Info fInfo;
+    SkMSec fCurrTime;
+    SkBitmap fBitmap;
+    bool fNeedBitmap;
 
     void ensureInfo();
 
