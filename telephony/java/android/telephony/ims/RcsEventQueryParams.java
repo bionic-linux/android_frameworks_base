@@ -37,8 +37,6 @@ import java.security.InvalidParameterException;
  * The parameters to pass into
  * {@link RcsMessageStore#getRcsEvents(RcsEventQueryParams)} in order to select a
  * subset of {@link RcsEvent}s present in the message store.
- *
- * @hide - TODO: make public
  */
 public final class RcsEventQueryParams implements Parcelable {
     /**
