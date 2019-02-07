@@ -240,6 +240,7 @@ public final class SystemServer {
             "com.android.server.timedetector.TimeDetectorService$Lifecycle";
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
+    private static final String GSI_RUNNING_PROP = "gsid.image_running";
 
     private static final String UNCRYPT_PACKAGE_FILE = "/cache/recovery/uncrypt_file";
     private static final String BLOCK_MAP_FILE = "/cache/recovery/block.map";
@@ -1075,7 +1076,8 @@ public final class SystemServer {
             }
             traceEnd();
 
-            final boolean hasPdb = !SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP).equals("");
+            final boolean hasPdb = !SystemProperties.get(PERSISTENT_DATA_BLOCK_PROP).equals("")
+                                   && !SystemProperties.getBoolean(GSI_RUNNING_PROP, false);
             if (hasPdb) {
                 traceBeginAndSlog("StartPersistentDataBlock");
                 mSystemServiceManager.startService(PersistentDataBlockService.class);
