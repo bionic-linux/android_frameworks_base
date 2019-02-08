@@ -16,6 +16,24 @@
       "revId": "08964c68e49fa8b60e45706cec62e6f6b5a30da8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381ab3b3_534cae3d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-02-08T02:19:45Z",
+      "side": 1,
+      "message": "\u0027+\u0027 will be converted as IDD through PhoneNumberUtils for only MO case. But in case of MT SMS, an App will get the phonenumber started with IDD without it.",
+      "parentUuid": "9389eb0d_d48e2440",
+      "revId": "08964c68e49fa8b60e45706cec62e6f6b5a30da8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
