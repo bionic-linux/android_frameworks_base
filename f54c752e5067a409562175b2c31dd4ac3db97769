@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd2ef87_cfdf57d0",
+        "filename": "telephony/java/android/telephony/ims/RcsEventQueryParams.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-02-08T21:04:52Z",
+      "side": 1,
+      "message": "Copy-paste issue?",
+      "range": {
+        "startLine": 153,
+        "startChar": 15,
+        "endLine": 154,
+        "endChar": 24
+      },
+      "revId": "f54c752e5067a409562175b2c31dd4ac3db97769",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
