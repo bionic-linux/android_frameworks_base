@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0e4e2eb6_55e7b0ce",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2019-02-12T02:24:34Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "2a293dc4_a2596ca8",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 627,
+        "endChar": 25
+      },
+      "revId": "d2581914b30a3fe9b94aae9e74395176c7d6eb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7cd2055_c68c75e8",
         "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "d2581914b30a3fe9b94aae9e74395176c7d6eb17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a740204_d9c3f1f5",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1423906
+      },
+      "writtenOn": "2019-02-12T02:24:34Z",
+      "side": 1,
+      "message": "yes, for 3GPP2, the original (SUB) address reflects the (SUB) address of sender.\nhere origSubaddress shows the ORIGINATING_SUB_ADDRESS or DESTINATION_SUB_ADDRESS.\n\ngetOriginalAddress can returns the address of sender, but it is different from 3gpp.\nwe hope implementing a compatible API getRecipientAddress for 3gpp2, so that we havn\u0027t concern on SMS format from SmsProvider",
+      "parentUuid": "f7cd2055_c68c75e8",
+      "range": {
+        "startLine": 643,
+        "startChar": 28,
+        "endLine": 643,
+        "endChar": 42
+      },
+      "revId": "d2581914b30a3fe9b94aae9e74395176c7d6eb17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
