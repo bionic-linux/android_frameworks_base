@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc1076c_06470ff4",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-02-12T10:49:02Z",
+      "side": 1,
+      "message": "replace this with gid_index?",
+      "range": {
+        "startLine": 893,
+        "startChar": 37,
+        "endLine": 893,
+        "endChar": 45
+      },
+      "revId": "efc65b28857bce95626d84ff786c9969768648a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
