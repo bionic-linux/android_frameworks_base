@@ -1,0 +1,6 @@
+android_test {
+    name: "ImfTest",
+    // Only compile source java files in this apk.
+    srcs: ["src/**/*.java"],
+    platform_apis: true,
+}
