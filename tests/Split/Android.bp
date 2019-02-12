@@ -1,4 +1,5 @@
-// Copyright (C) 2015 The Android Open Source Project
+//
+// Copyright (C) 2014 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,25 +12,19 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-<<<<<<< HEAD
-cc_library_shared {
-    name: "libnativebench",
-    cflags: [
-        "-Wno-unused-parameter",
-        "-Wno-unused-variable",
-    ],
-=======
-// ANDROIDMK TRANSLATION WARNING: No 'include $(CLEAR_VARS)' detected before first assignment; clearing vars now
+android_test {
+    name: "Split",
 
-cc_library_shared {
-    name: "libnativebench",
-    cflags: ["-Wno-unused-parameter"],
->>>>>>> Convert Android.mk file to Android.bp
-    srcs: [
-        "Bench.cpp",
-        "WorkerPool.cpp",
-        "test.cpp",
+    srcs: ["**/*.java"],
+    sdk_version: "current",
+
+    package_splits: [
+        "mdpi-v4",
+        "hdpi-v4",
+        "xhdpi-v4",
+        "xxhdpi-v4",
     ],
-    host_ldlibs: ["-llog"],
+
 }
