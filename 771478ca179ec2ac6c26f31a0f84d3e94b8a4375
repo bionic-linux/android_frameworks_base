@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f8f99b_2a788f1a",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-02-12T01:13:59Z",
+      "side": 1,
+      "message": "These two CLs both added this:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/841640\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/844240",
+      "range": {
+        "startLine": 706,
+        "startChar": 9,
+        "endLine": 706,
+        "endChar": 42
+      },
+      "revId": "771478ca179ec2ac6c26f31a0f84d3e94b8a4375",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
