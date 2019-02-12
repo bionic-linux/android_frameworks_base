@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4bea2d74_cb883fbf",
+        "filename": "tools/aapt2/integration-tests/StaticLibTest/LibOne/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-02-12T06:24:32Z",
+      "side": 1,
+      "message": "I am not sure that I am doing the right thing here. androidmk converted this to android_library, and then I followed the recommendation in the comment and replace it with android_test. Treehugger then failed to build. No I changed this back to android_library and it builds, but is it the right thing? The only reference is by AaptTestStaticLib_App, and as a library.",
+      "parentUuid": "303817e0_99500043",
+      "revId": "bdd28863ea767efa71d1169bea73531b0adae90b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f1dfa5_4562411d",
         "filename": "tools/aapt2/integration-tests/StaticLibTest/LibTwo/Android.bp",
         "patchSetId": 1
