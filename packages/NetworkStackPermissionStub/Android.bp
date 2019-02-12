@@ -20,8 +20,8 @@ android_app {
     // TODO: mark app as hasCode=false in manifest once soong stops complaining about apps without
     // a classes.dex.
     srcs: ["src/**/*.java"],
-    platform_apis: true,
-    certificate: "platform",
+    sdk_version: "system_current",
+    certificate: "networkstack",
     privileged: true,
     manifest: "AndroidManifest.xml",
 }
