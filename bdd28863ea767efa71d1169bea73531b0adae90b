@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c67c2fa_cef761f6",
+        "filename": "tools/aapt2/integration-tests/StaticLibTest/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-02-12T00:39:19Z",
+      "side": 1,
+      "message": "Empty file?",
+      "revId": "bdd28863ea767efa71d1169bea73531b0adae90b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303817e0_99500043",
+        "filename": "tools/aapt2/integration-tests/StaticLibTest/LibOne/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-02-12T00:39:19Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "bdd28863ea767efa71d1169bea73531b0adae90b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f1dfa5_4562411d",
+        "filename": "tools/aapt2/integration-tests/StaticLibTest/LibTwo/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-02-12T00:39:19Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "bdd28863ea767efa71d1169bea73531b0adae90b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
