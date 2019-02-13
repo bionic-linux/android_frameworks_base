@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d468300a_2c1c5d5b",
+        "filename": "services/net/java/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-13T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d6669e6_827f4ad9",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8970d23_1123851e",
         "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64ff93b_22f43230",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-13T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8970d23_1123851e",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "467d256f_a13cdabb",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-13T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b30d028_1c3b4c04",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf992814_10497051",
         "filename": "services/net/java/android/net/dhcp/DhcpPacketL3Wrapper.java",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6468d370_c61e4b5a",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketL3Wrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-13T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf992814_10497051",
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +180,30 @@
       "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63be1c44_2e23d13d",
+        "filename": "services/net/java/android/net/dhcp/DhcpPacketL3Wrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-02-13T06:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3473caf_bf46afa3",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "cb9fa3d599885a62c31ff174337f61bbcb5eca7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
