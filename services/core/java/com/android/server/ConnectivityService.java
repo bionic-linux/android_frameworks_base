@@ -38,8 +38,10 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
+import static android.net.shared.LinkPropertiesParcelableUtil.toStableParcelable;
 import static android.net.shared.NetworkMonitorUtils.isValidationRequired;
 import static android.net.shared.NetworkParcelableUtil.toStableParcelable;
+import static android.net.util.PartialViewUtil.toPartial;
 import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
@@ -5170,7 +5172,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         try {
-            networkMonitor.start();
+            networkMonitor.start(toStableParcelable(nai.linkProperties),
+                    toPartial(nai.networkCapabilities).toStableParcelable());
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
@@ -5224,7 +5227,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             notifyIfacesChangedForNetworkStats();
             if (networkAgent.everConnected) {
                 try {
-                    networkAgent.networkMonitor().notifyLinkPropertiesChanged();
+                    networkAgent.networkMonitor().notifyLinkPropertiesChanged(
+                            toStableParcelable(newLp));
                 } catch (RemoteException e) {
                     e.rethrowFromSystemServer();
                 }
@@ -5466,7 +5470,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
             rematchAllNetworksAndRequests(nai, oldScore);
             try {
-                nai.networkMonitor().notifyNetworkCapabilitiesChanged();
+                nai.networkMonitor().notifyNetworkCapabilitiesChanged(
+                        toPartial(newNc).toStableParcelable());
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
@@ -5721,7 +5726,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (capabilitiesChanged) {
             try {
-                nai.networkMonitor().notifyNetworkCapabilitiesChanged();
+                nai.networkMonitor().notifyNetworkCapabilitiesChanged(
+                        toPartial(nai.networkCapabilities).toStableParcelable());
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
@@ -6125,10 +6131,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             updateLinkProperties(networkAgent, new LinkProperties(networkAgent.linkProperties),
                     null);
 
-            // Until parceled LinkProperties are sent directly to NetworkMonitor, the connect
-            // command must be sent after updating LinkProperties to maximize chances of
-            // NetworkMonitor seeing the correct LinkProperties when starting.
-            // TODO: pass LinkProperties to the NetworkMonitor in the notifyNetworkConnected call.
+            // The connect command must be sent after updating LinkProperties so that NetworkMonitor
+            // has the correct LinkProperties when starting.
             try {
                 networkAgent.networkMonitor().notifyNetworkConnected();
             } catch (RemoteException e) {
@@ -6556,7 +6560,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void logNetworkEvent(NetworkAgentInfo nai, int evtype) {
         int[] transports = nai.networkCapabilities.getTransportTypes();
-        mMetricsLog.log(nai.network.netId, transports, new NetworkEvent(evtype));
+        mMetricsLog.log(nai.network, transports, new NetworkEvent(evtype));
     }
 
     private static boolean toBool(int encodedBoolean) {

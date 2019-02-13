@@ -44,7 +44,6 @@ import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.LinkProperties;
 import android.net.Network;
-import android.net.NetworkCapabilities;
 import android.net.ProxyInfo;
 import android.net.TrafficStats;
 import android.net.Uri;
@@ -53,6 +52,7 @@ import android.net.captiveportal.CaptivePortalProbeSpec;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.NetworkEvent;
 import android.net.metrics.ValidationProbeEvent;
+import android.net.shared.NetworkCapabilitiesPartial;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.SharedLog;
@@ -253,7 +253,7 @@ public class NetworkMonitor extends StateMachine {
     @Nullable
     private final CaptivePortalProbeSpec[] mCaptivePortalFallbackSpecs;
 
-    private NetworkCapabilities mNetworkCapabilities;
+    private NetworkCapabilitiesPartial mNetworkCapabilities;
     private LinkProperties mLinkProperties;
 
     @VisibleForTesting
@@ -357,13 +357,15 @@ public class NetworkMonitor extends StateMachine {
         mDataStallMinEvaluateTime = getDataStallMinEvaluateTime();
         mDataStallValidDnsTimeThreshold = getDataStallValidDnsTimeThreshold();
         mDataStallEvaluationType = getDataStallEvalutionType();
+    }
 
-        // mLinkProperties and mNetworkCapbilities must never be null or we will NPE.
-        // Provide empty objects in case we are started and the network disconnects before
-        // we can ever fetch them.
-        // TODO: Delete ASAP.
-        mLinkProperties = new LinkProperties();
-        mNetworkCapabilities = new NetworkCapabilities(null);
+    /**
+     * Start the NetworkMonitor, which starts the underlying StateMachine.
+     */
+    public void start(LinkProperties lp, NetworkCapabilitiesPartial nc) {
+        mLinkProperties = lp;
+        mNetworkCapabilities = nc;
+        start();
     }
 
     /**
@@ -418,37 +420,19 @@ public class NetworkMonitor extends StateMachine {
     /**
      * Send a notification to NetworkMonitor indicating that link properties have changed.
      */
-    public void notifyLinkPropertiesChanged() {
+    public void notifyLinkPropertiesChanged(final LinkProperties lp) {
         getHandler().post(() -> {
-            updateLinkProperties();
-        });
-    }
-
-    private void updateLinkProperties() {
-        final LinkProperties lp = mCm.getLinkProperties(mNetwork);
-        // If null, we should soon get a message that the network was disconnected, and will stop.
-        if (lp != null) {
-            // TODO: send LinkProperties parceled in notifyLinkPropertiesChanged() and start().
             mLinkProperties = lp;
-        }
+        });
     }
 
     /**
      * Send a notification to NetworkMonitor indicating that network capabilities have changed.
      */
-    public void notifyNetworkCapabilitiesChanged() {
+    public void notifyNetworkCapabilitiesChanged(final NetworkCapabilitiesPartial nc) {
         getHandler().post(() -> {
-            updateNetworkCapabilities();
-        });
-    }
-
-    private void updateNetworkCapabilities() {
-        final NetworkCapabilities nc = mCm.getNetworkCapabilities(mNetwork);
-        // If null, we should soon get a message that the network was disconnected, and will stop.
-        if (nc != null) {
-            // TODO: send NetworkCapabilities parceled in notifyNetworkCapsChanged() and start().
             mNetworkCapabilities = nc;
-        }
+        });
     }
 
     /**
@@ -516,13 +500,6 @@ public class NetworkMonitor extends StateMachine {
     // DefaultState is the parent of all States.  It exists only to handle CMD_* messages but
     // does not entail any real state (hence no enter() or exit() routines).
     private class DefaultState extends State {
-        @Override
-        public void enter() {
-            // TODO: have those passed parceled in start() and remove this
-            updateLinkProperties();
-            updateNetworkCapabilities();
-        }
-
         @Override
         public boolean processMessage(Message message) {
             switch (message.what) {

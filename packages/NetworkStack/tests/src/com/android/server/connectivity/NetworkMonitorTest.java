@@ -20,6 +20,9 @@ import static android.net.CaptivePortal.APP_RETURN_DISMISSED;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_INVALID;
 import static android.net.INetworkMonitor.NETWORK_TEST_RESULT_VALID;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_TRUSTED;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -49,6 +52,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.captiveportal.CaptivePortalProbeResult;
 import android.net.metrics.IpConnectivityLog;
+import android.net.shared.NetworkCapabilitiesPartial;
 import android.net.util.SharedLog;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -112,19 +116,32 @@ public class NetworkMonitorTest {
 
     private static final int HANDLER_TIMEOUT_MS = 1000;
 
-    private static final LinkProperties TEST_LINKPROPERTIES = new LinkProperties();
+    private static final LinkProperties TEST_LINK_PROPERTIES = new LinkProperties();
 
-    private static final NetworkCapabilities METERED_CAPABILITIES = new NetworkCapabilities()
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .addCapability(NET_CAPABILITY_INTERNET);
-
-    private static final NetworkCapabilities NOT_METERED_CAPABILITIES = new NetworkCapabilities()
+    private static final NetworkCapabilitiesPartial METERED_CAPABILITIES =
+            addDefaultCapabilities(new NetworkCapabilitiesPartial.Builder())
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
             .addCapability(NET_CAPABILITY_INTERNET)
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+            .build();
 
-    private static final NetworkCapabilities NO_INTERNET_CAPABILITIES = new NetworkCapabilities()
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+    private static final NetworkCapabilitiesPartial NOT_METERED_CAPABILITIES =
+            addDefaultCapabilities(new NetworkCapabilitiesPartial.Builder())
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .addCapability(NET_CAPABILITY_INTERNET)
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+            .build();
+
+    private static final NetworkCapabilitiesPartial NO_INTERNET_CAPABILITIES =
+            addDefaultCapabilities(new NetworkCapabilitiesPartial.Builder())
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .build();
+
+    private static NetworkCapabilitiesPartial.Builder addDefaultCapabilities(
+            NetworkCapabilitiesPartial.Builder builder) {
+        return builder.addCapability(NET_CAPABILITY_NOT_RESTRICTED)
+                .addCapability(NET_CAPABILITY_TRUSTED)
+                .addCapability(NET_CAPABILITY_NOT_VPN);
+    }
 
     @Before
     public void setUp() throws IOException {
@@ -172,10 +189,6 @@ public class NetworkMonitorTest {
                 InetAddresses.parseNumericAddress("192.168.0.0")
         }).when(mNetwork).getAllByName(any());
 
-        // Default values. Individual tests can override these.
-        when(mCm.getLinkProperties(any())).thenReturn(TEST_LINKPROPERTIES);
-        when(mCm.getNetworkCapabilities(any())).thenReturn(METERED_CAPABILITIES);
-
         setMinDataStallEvaluateInterval(500);
         setDataStallEvaluationType(1 << DATA_STALL_EVALUATION_TYPE_DNS);
         setValidDataStallDnsTimeThreshold(500);
@@ -185,10 +198,8 @@ public class NetworkMonitorTest {
     private class WrappedNetworkMonitor extends NetworkMonitor {
         private long mProbeTime = 0;
 
-        WrappedNetworkMonitor(Context context, Network network, IpConnectivityLog logger,
-                Dependencies deps) {
-                super(context, mCallbacks, network, logger,
-                        new SharedLog("test_nm"), deps);
+        WrappedNetworkMonitor() {
+                super(mContext, mCallbacks, mNetwork, mLogger, mValidationLogger, mDependencies);
         }
 
         @Override
@@ -201,29 +212,17 @@ public class NetworkMonitorTest {
         }
     }
 
-    private WrappedNetworkMonitor makeMeteredWrappedNetworkMonitor() {
-        final WrappedNetworkMonitor nm = new WrappedNetworkMonitor(
-                mContext, mNetwork, mLogger, mDependencies);
-        when(mCm.getNetworkCapabilities(any())).thenReturn(METERED_CAPABILITIES);
-        nm.start();
-        waitForIdle(nm.getHandler());
-        return nm;
+    private WrappedNetworkMonitor makeMeteredNetworkMonitor() {
+        return makeMonitor(METERED_CAPABILITIES);
     }
 
-    private WrappedNetworkMonitor makeNotMeteredWrappedNetworkMonitor() {
-        final WrappedNetworkMonitor nm = new WrappedNetworkMonitor(
-                mContext, mNetwork, mLogger, mDependencies);
-        when(mCm.getNetworkCapabilities(any())).thenReturn(NOT_METERED_CAPABILITIES);
-        nm.start();
-        waitForIdle(nm.getHandler());
-        return nm;
+    private WrappedNetworkMonitor makeNotMeteredNetworkMonitor() {
+        return makeMonitor(NOT_METERED_CAPABILITIES);
     }
 
-    private NetworkMonitor makeMonitor() {
-        final NetworkMonitor nm = new NetworkMonitor(
-                mContext, mCallbacks, mNetwork, mLogger, mValidationLogger,
-                mDependencies);
-        nm.start();
+    private WrappedNetworkMonitor makeMonitor(NetworkCapabilitiesPartial nc) {
+        final WrappedNetworkMonitor nm = new WrappedNetworkMonitor();
+        nm.start(TEST_LINK_PROPERTIES, nc);
         waitForIdle(nm.getHandler());
         return nm;
     }
@@ -241,7 +240,7 @@ public class NetworkMonitorTest {
         setSslException(mHttpsConnection);
         setPortal302(mHttpConnection);
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -249,7 +248,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpsConnection, 204);
         setStatus(mHttpConnection, 500);
 
-        assertNotPortal(makeMonitor().isCaptivePortal());
+        assertNotPortal(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -259,7 +258,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 204);
         setStatus(mFallbackConnection, 500);
 
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -268,7 +267,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setPortal302(mFallbackConnection);
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -278,7 +277,7 @@ public class NetworkMonitorTest {
         setStatus(mFallbackConnection, 204);
 
         // Fallback probe did not see portal, HTTPS failed -> inconclusive
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -295,7 +294,7 @@ public class NetworkMonitorTest {
         // TEST_OTHER_FALLBACK_URL is third
         when(mRandom.nextInt()).thenReturn(2);
 
-        final NetworkMonitor monitor = makeMonitor();
+        final NetworkMonitor monitor = makeMeteredNetworkMonitor();
 
         // First check always uses the first fallback URL: inconclusive
         assertFailed(monitor.isCaptivePortal());
@@ -313,7 +312,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setStatus(mFallbackConnection, 404);
 
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeMeteredNetworkMonitor().isCaptivePortal());
         verify(mFallbackConnection, times(1)).getResponseCode();
         verify(mOtherFallbackConnection, never()).getResponseCode();
     }
@@ -327,7 +326,7 @@ public class NetworkMonitorTest {
         setStatus(mHttpConnection, 500);
         setPortal302(mOtherFallbackConnection);
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeMeteredNetworkMonitor().isCaptivePortal());
         verify(mOtherFallbackConnection, times(1)).getResponseCode();
         verify(mFallbackConnection, never()).getResponseCode();
     }
@@ -350,7 +349,7 @@ public class NetworkMonitorTest {
         set302(mOtherFallbackConnection, "https://www.google.com/test?q=3");
 
         // HTTPS failed, fallback spec did not see a portal -> inconclusive
-        assertFailed(makeMonitor().isCaptivePortal());
+        assertFailed(makeMeteredNetworkMonitor().isCaptivePortal());
         verify(mOtherFallbackConnection, times(1)).getResponseCode();
         verify(mFallbackConnection, never()).getResponseCode();
     }
@@ -360,7 +359,7 @@ public class NetworkMonitorTest {
         setupFallbackSpec();
         set302(mOtherFallbackConnection, "http://login.portal.example.com");
 
-        assertPortal(makeMonitor().isCaptivePortal());
+        assertPortal(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
@@ -369,20 +368,20 @@ public class NetworkMonitorTest {
         setSslException(mHttpsConnection);
         setPortal302(mHttpConnection);
 
-        assertNotPortal(makeMonitor().isCaptivePortal());
+        assertNotPortal(makeMeteredNetworkMonitor().isCaptivePortal());
     }
 
     @Test
     public void testIsDataStall_EvaluationDisabled() {
         setDataStallEvaluationType(0);
-        WrappedNetworkMonitor wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        WrappedNetworkMonitor wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
         assertFalse(wrappedMonitor.isDataStall());
     }
 
     @Test
     public void testIsDataStall_EvaluationDnsOnNotMeteredNetwork() {
-        WrappedNetworkMonitor wrappedMonitor = makeNotMeteredWrappedNetworkMonitor();
+        WrappedNetworkMonitor wrappedMonitor = makeNotMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
         makeDnsTimeoutEvent(wrappedMonitor, 5);
         assertTrue(wrappedMonitor.isDataStall());
@@ -390,7 +389,7 @@ public class NetworkMonitorTest {
 
     @Test
     public void testIsDataStall_EvaluationDnsOnMeteredNetwork() {
-        WrappedNetworkMonitor wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        WrappedNetworkMonitor wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
         assertFalse(wrappedMonitor.isDataStall());
 
@@ -401,7 +400,7 @@ public class NetworkMonitorTest {
 
     @Test
     public void testIsDataStall_EvaluationDnsWithDnsTimeoutCount() {
-        WrappedNetworkMonitor wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        WrappedNetworkMonitor wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 1000);
         makeDnsTimeoutEvent(wrappedMonitor, 3);
         assertFalse(wrappedMonitor.isDataStall());
@@ -415,7 +414,7 @@ public class NetworkMonitorTest {
 
         // Set the value to larger than the default dns log size.
         setConsecutiveDnsTimeoutThreshold(51);
-        wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 1000);
         makeDnsTimeoutEvent(wrappedMonitor, 50);
         assertFalse(wrappedMonitor.isDataStall());
@@ -427,7 +426,7 @@ public class NetworkMonitorTest {
     @Test
     public void testIsDataStall_EvaluationDnsWithDnsTimeThreshold() {
         // Test dns events happened in valid dns time threshold.
-        WrappedNetworkMonitor wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        WrappedNetworkMonitor wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
         makeDnsTimeoutEvent(wrappedMonitor, 5);
         assertFalse(wrappedMonitor.isDataStall());
@@ -436,7 +435,7 @@ public class NetworkMonitorTest {
 
         // Test dns events happened before valid dns time threshold.
         setValidDataStallDnsTimeThreshold(0);
-        wrappedMonitor = makeMeteredWrappedNetworkMonitor();
+        wrappedMonitor = makeMeteredNetworkMonitor();
         wrappedMonitor.setLastProbeTime(SystemClock.elapsedRealtime() - 100);
         makeDnsTimeoutEvent(wrappedMonitor, 5);
         assertFalse(wrappedMonitor.isDataStall());
@@ -449,9 +448,8 @@ public class NetworkMonitorTest {
         setSslException(mHttpsConnection);
         setStatus(mHttpConnection, 500);
         setStatus(mFallbackConnection, 404);
-        when(mCm.getNetworkCapabilities(any())).thenReturn(METERED_CAPABILITIES);
 
-        final NetworkMonitor nm = makeMonitor();
+        final NetworkMonitor nm = makeMeteredNetworkMonitor();
         nm.notifyNetworkConnected();
 
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
@@ -460,9 +458,7 @@ public class NetworkMonitorTest {
 
     @Test
     public void testNoInternetCapabilityValidated() throws Exception {
-        when(mCm.getNetworkCapabilities(any())).thenReturn(NO_INTERNET_CAPABILITIES);
-
-        final NetworkMonitor nm = makeMonitor();
+        final NetworkMonitor nm = makeMonitor(NO_INTERNET_CAPABILITIES);
         nm.notifyNetworkConnected();
 
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))
@@ -475,7 +471,7 @@ public class NetworkMonitorTest {
         setSslException(mHttpsConnection);
         setPortal302(mHttpConnection);
 
-        final NetworkMonitor nm = makeMonitor();
+        final NetworkMonitor nm = makeMeteredNetworkMonitor();
         nm.notifyNetworkConnected();
 
         verify(mCallbacks, timeout(HANDLER_TIMEOUT_MS).times(1))

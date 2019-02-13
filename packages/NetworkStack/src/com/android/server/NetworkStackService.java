@@ -19,6 +19,8 @@ package com.android.server;
 import static android.net.dhcp.IDhcpServer.STATUS_INVALID_ARGUMENT;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.dhcp.IDhcpServer.STATUS_UNKNOWN_ERROR;
+import static android.net.shared.LinkPropertiesParcelableUtil.fromStableParcelable;
+import static android.net.shared.NetworkCapabilitiesPartial.fromStableParcelable;
 import static android.net.shared.NetworkParcelableUtil.fromStableParcelable;
 
 import static com.android.server.util.PermissionUtil.checkDumpPermission;
@@ -34,7 +36,9 @@ import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkStackConnector;
+import android.net.LinkPropertiesParcelable;
 import android.net.Network;
+import android.net.NetworkCapabilitiesPartialParcelable;
 import android.net.NetworkParcelable;
 import android.net.PrivateDnsConfigParcel;
 import android.net.dhcp.DhcpServer;
@@ -235,9 +239,9 @@ public class NetworkStackService extends Service {
         }
 
         @Override
-        public void start() {
+        public void start(LinkPropertiesParcelable lp, NetworkCapabilitiesPartialParcelable nc) {
             checkNetworkStackCallingPermission();
-            mNm.start();
+            mNm.start(fromStableParcelable(lp), fromStableParcelable(nc));
         }
 
         @Override
@@ -289,15 +293,15 @@ public class NetworkStackService extends Service {
         }
 
         @Override
-        public void notifyLinkPropertiesChanged() {
+        public void notifyLinkPropertiesChanged(LinkPropertiesParcelable lp) {
             checkNetworkStackCallingPermission();
-            mNm.notifyLinkPropertiesChanged();
+            mNm.notifyLinkPropertiesChanged(fromStableParcelable(lp));
         }
 
         @Override
-        public void notifyNetworkCapabilitiesChanged() {
+        public void notifyNetworkCapabilitiesChanged(NetworkCapabilitiesPartialParcelable nc) {
             checkNetworkStackCallingPermission();
-            mNm.notifyNetworkCapabilitiesChanged();
+            mNm.notifyNetworkCapabilitiesChanged(fromStableParcelable(nc));
         }
     }
 }

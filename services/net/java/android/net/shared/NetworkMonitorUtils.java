@@ -25,6 +25,8 @@ import android.content.Context;
 import android.net.NetworkCapabilities;
 import android.provider.Settings;
 
+import java.util.function.Predicate;
+
 /** @hide */
 public class NetworkMonitorUtils {
 
@@ -58,17 +60,27 @@ public class NetworkMonitorUtils {
         return settingUrl != null ? settingUrl : DEFAULT_HTTP_URL;
     }
 
+    private static boolean isValidationRequired(Predicate<Integer> hasCapability) {
+        // TODO: Consider requiring validation for DUN networks.
+        return hasCapability.test(NET_CAPABILITY_INTERNET)
+                && hasCapability.test(NET_CAPABILITY_NOT_RESTRICTED)
+                && hasCapability.test(NET_CAPABILITY_TRUSTED)
+                && hasCapability.test(NET_CAPABILITY_NOT_VPN);
+    }
+
     /**
      * Return whether validation is required for a network.
-     * @param dfltNetCap Default requested network capabilities.
      * @param nc Network capabilities of the network to test.
      */
     public static boolean isValidationRequired(NetworkCapabilities nc) {
-        // TODO: Consider requiring validation for DUN networks.
-        return nc != null
-                && nc.hasCapability(NET_CAPABILITY_INTERNET)
-                && nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)
-                && nc.hasCapability(NET_CAPABILITY_TRUSTED)
-                && nc.hasCapability(NET_CAPABILITY_NOT_VPN);
+        return nc != null && isValidationRequired(nc::hasCapability);
+    }
+
+    /**
+     * Return whether validation is required for a network.
+     * @param nc Partial network capabilities of the network to test.
+     */
+    public static boolean isValidationRequired(NetworkCapabilitiesPartial nc) {
+        return nc != null && isValidationRequired(nc::hasCapability);
     }
 }
