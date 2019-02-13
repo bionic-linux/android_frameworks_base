@@ -19,11 +19,15 @@ package com.android.server.connectivity;
 import android.content.Context;
 import android.net.ConnectivityMetricsEvent;
 import android.net.IIpConnectivityMetrics;
+import android.net.INetd;
 import android.net.INetdEventCallback;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.IpConnectivityLog;
+import android.net.util.NetdService;
 import android.os.Binder;
 import android.os.Process;
+import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -84,6 +88,9 @@ final public class IpConnectivityMetrics extends SystemService {
     //  - flushing the buffer content and replacing it by a new buffer.
     private final Object mLock = new Object();
 
+    // Connector object for communicating with netd
+    private INetd mNetdService;
+
     // Implementation instance of IIpConnectivityMetrics.aidl.
     @VisibleForTesting
     public final Impl impl = new Impl();
@@ -136,10 +143,17 @@ final public class IpConnectivityMetrics extends SystemService {
     public void onBootPhase(int phase) {
         if (phase == SystemService.PHASE_SYSTEM_SERVICES_READY) {
             if (DBG) Log.d(TAG, "onBootPhase");
+
             mNetdListener = new NetdEventListenerService(getContext());
+            mNetdService = NetdService.get();
+            try {
+                mNetdService.registerEventListener(mNetdListener);
+                if (DBG) Log.d(TAG, "Register Netd event listener");
+            } catch (RemoteException | ServiceSpecificException e) {
+                Log.e(TAG, "Failed to set Netd event listener " + e);
+            }
 
             publishBinderService(SERVICE_NAME, impl);
-            publishBinderService(mNetdListener.SERVICE_NAME, mNetdListener);
 
             LocalServices.addService(Logger.class, new LoggerImpl());
         }
