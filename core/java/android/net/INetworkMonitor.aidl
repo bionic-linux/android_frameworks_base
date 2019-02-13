@@ -15,6 +15,8 @@
  */
 package android.net;
 
+import android.net.LinkPropertiesParcelable;
+import android.net.NetworkCapabiiliParcelable;
 import android.net.PrivateDnsConfigParcel;
 
 /** @hide */
@@ -32,7 +34,7 @@ oneway interface INetworkMonitor {
     // 3. a broken network (e.g. DNS failed, connect failed, HTTP request failed).
     const int NETWORK_TEST_RESULT_INVALID = 1;
 
-    void start();
+    void start(in LinkPropertiesParcelable lp, in NetworkCapabilitiesPartialParcelable nc);
     void launchCaptivePortalApp();
     void forceReevaluation(int uid);
     void notifyPrivateDnsChanged(in PrivateDnsConfigParcel config);
@@ -40,6 +42,6 @@ oneway interface INetworkMonitor {
     void notifySystemReady();
     void notifyNetworkConnected();
     void notifyNetworkDisconnected();
-    void notifyLinkPropertiesChanged();
-    void notifyNetworkCapabilitiesChanged();
+    void notifyLinkPropertiesChanged(in LinkPropertiesParcelable lp);
+    void notifyNetworkCapabilitiesChanged(in NetworkCapabilitiesPartialParcelable nc);
 }

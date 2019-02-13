@@ -22,6 +22,7 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.shared.NetworkCapabilitiesPartial;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -1456,6 +1457,16 @@ public final class NetworkCapabilities implements Parcelable {
                 return new NetworkCapabilities[size];
             }
         };
+
+    /**
+     * Create a new {@link NetworkCapabilitiesPartial} with capabilities to be used by the network
+     * stack.
+     * @hide
+     */
+    public NetworkCapabilitiesPartial toPartialCapabilities() {
+        return new NetworkCapabilitiesPartial(mNetworkCapabilities, mUnwantedNetworkCapabilities,
+                mTransportTypes, mLinkUpBandwidthKbps, mLinkDownBandwidthKbps, mSSID);
+    }
 
     @Override
     public String toString() {
