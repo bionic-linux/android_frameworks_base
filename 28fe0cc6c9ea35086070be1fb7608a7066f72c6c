@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "c80aebde_b7891c65",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-14T01:02:39Z",
+      "side": 1,
+      "message": "Do we need to move this here ? I understand that it does not make much sense to stop broadcasts about cellular latency based on a wifi setting, but who are the actual clients of this broadcast ? Maybe they only care about this information when the WiFi setting is set, so we can avoid sending unnecessary broadcasts",
+      "range": {
+        "startLine": 1489,
+        "startChar": 12,
+        "endLine": 1489,
+        "endChar": 56
+      },
+      "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622f4618_edafdd9f",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 1
