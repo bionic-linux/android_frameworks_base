@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e362ea_0559d779",
+        "filename": "test-base/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-02-14T18:13:48Z",
+      "side": 1,
+      "message": "nit: either drop the \"the\", or un-drop the \"library\":  ... for inclusion in the android.test.legacy library and must not....",
+      "range": {
+        "startLine": 83,
+        "startChar": 29,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "e79e0eb652e877b579f83e7c6a264f0389fc49d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
