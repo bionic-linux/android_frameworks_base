@@ -45,6 +45,30 @@
       "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1af23c_ef023f68",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-14T00:54:59Z",
+      "side": 1,
+      "message": "Thanks for asking. I will have a following commit for it because multi-sim part will need to rely on aosp/903218. To prevent thing being blocked, I fix cell ID part first. My idea is to track them in the same bug. This comment is used to tell other reviewer that I understand multi-sim is missing here. Do you need me to update the comment and have another bug?",
+      "parentUuid": "622f4618_edafdd9f",
+      "range": {
+        "startLine": 1512,
+        "startChar": 12,
+        "endLine": 1512,
+        "endChar": 39
+      },
+      "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
