@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e8ad002_bbc87c06",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-14T00:59:27Z",
+      "side": 1,
+      "message": "You could see the logic in original flow. If mWifiManager.isScanAlwaysAvailable() is false, it will not send the intent even it\u0027s cellular. E.g. if you do not enable WiFi, you will not receive broadcast for cell in my local testing. I think it\u0027s a previous defect. Design could not actually work w/o it.",
+      "parentUuid": "f94e72b1_3be95bf1",
+      "range": {
+        "startLine": 1489,
+        "startChar": 17,
+        "endLine": 1489,
+        "endChar": 29
+      },
+      "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622f4618_edafdd9f",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 1
