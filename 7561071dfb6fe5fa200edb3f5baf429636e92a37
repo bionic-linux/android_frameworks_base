@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a8445b_52a1762f",
+        "filename": "packages/NetworkStack/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-14T02:43:00Z",
+      "side": 1,
+      "message": "This also needs to go into some privapp-permissions-*.xml file in order for the networkstack package to be actually granted the permission, right? Is there a companion CL for that?",
+      "range": {
+        "startLine": 34,
+        "startChar": 54,
+        "endLine": 34,
+        "endChar": 81
+      },
+      "revId": "7561071dfb6fe5fa200edb3f5baf429636e92a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
