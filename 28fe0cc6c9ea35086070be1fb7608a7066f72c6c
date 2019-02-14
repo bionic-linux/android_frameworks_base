@@ -93,6 +93,30 @@
       "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a7b8f2_cbb6da0a",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-14T01:00:39Z",
+      "side": 1,
+      "message": "If you plan to track it with the same bug, then I suggest just adding the bug number here. It\u0027s nice so that if someone comes across the TODO they can get context, and likewise having the bug means that the TODO isn\u0027t forgotten. Once this part merges, you can update the bug to say \"MSIM fix still outstanding\" or something... just so it\u0027s clear to TPMs who are tracking this stuff what is still remaining. Thanks for picking this up.",
+      "parentUuid": "be1af23c_ef023f68",
+      "range": {
+        "startLine": 1512,
+        "startChar": 12,
+        "endLine": 1512,
+        "endChar": 39
+      },
+      "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
