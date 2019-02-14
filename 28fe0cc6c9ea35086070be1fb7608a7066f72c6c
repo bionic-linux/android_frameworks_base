@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "16240efd_75265fb7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-14T01:16:48Z",
+      "side": 1,
+      "message": "In fact, I have plan to use the intent to get the notification when validation is done in system app. Do we plan to keep current design? If so, maybe we could just update it as TODO of the function to remove the cellular part to prevent someone else intent to use it. Otherwise, I think the logic is kind of weird.",
+      "parentUuid": "c80aebde_b7891c65",
+      "range": {
+        "startLine": 1489,
+        "startChar": 12,
+        "endLine": 1489,
+        "endChar": 56
+      },
+      "revId": "28fe0cc6c9ea35086070be1fb7608a7066f72c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622f4618_edafdd9f",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
         "patchSetId": 1
