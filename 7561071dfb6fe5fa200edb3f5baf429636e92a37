@@ -46,6 +46,29 @@
       "revId": "7561071dfb6fe5fa200edb3f5baf429636e92a37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3ff275e_723a43f2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-02-14T07:08:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure this should be moved here now, since we don\u0027t have confirmation that the cellular broadcast is used by clients when this setting is false. But this can be changed in another CL.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 12,
+        "endLine": 1489,
+        "endChar": 56
+      },
+      "revId": "7561071dfb6fe5fa200edb3f5baf429636e92a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
