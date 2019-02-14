@@ -69,6 +69,30 @@
       "revId": "7561071dfb6fe5fa200edb3f5baf429636e92a37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a726e7f8_7e7ed0c1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-14T07:24:05Z",
+      "side": 1,
+      "message": "I will track the usage in b/124415874 to see if we could remove the cell part later.",
+      "parentUuid": "f3ff275e_723a43f2",
+      "range": {
+        "startLine": 1489,
+        "startChar": 12,
+        "endLine": 1489,
+        "endChar": 56
+      },
+      "revId": "7561071dfb6fe5fa200edb3f5baf429636e92a37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
