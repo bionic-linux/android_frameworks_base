@@ -1,5 +1,7 @@
 package junit.framework;
 
+import android.annotation.UnsupportedAppUsage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -77,6 +79,7 @@ public abstract class TestCase extends Assert implements Test {
 	/**
 	 * the name of the test case
 	 */
+	@UnsupportedAppUsage
 	private String fName;
 
 	/**

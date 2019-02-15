@@ -1,5 +1,7 @@
 package junit.framework;
 
+import android.annotation.UnsupportedAppUsage;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
@@ -294,10 +296,12 @@ public class TestSuite implements Test {
 		addTest(createTest(theClass, name));
 	}
 
+	@UnsupportedAppUsage
 	private boolean isPublicTestMethod(Method m) {
 		return isTestMethod(m) && Modifier.isPublic(m.getModifiers());
 	 }
-	 
+
+	@UnsupportedAppUsage
 	private boolean isTestMethod(Method m) {
 		return 
 			m.getParameterTypes().length == 0 && 

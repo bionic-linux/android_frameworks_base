@@ -16,6 +16,7 @@
 
 package android.test;
 
+import android.annotation.UnsupportedAppUsage;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -73,6 +74,7 @@ public class AndroidTestCase extends TestCase {
      *
      * @hide
      */
+    @UnsupportedAppUsage
     public void setTestContext(Context context) {
         mTestContext = context;
     }
@@ -80,6 +82,7 @@ public class AndroidTestCase extends TestCase {
     /**
      * @hide
      */
+    @UnsupportedAppUsage
     public Context getTestContext() {
         return mTestContext;
     }
