@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "42fc2d18_286c8c78",
+        "filename": "tools/aapt2/integration-tests/StaticLibTest/LibOne/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2019-02-15T18:24:34Z",
+      "side": 1,
+      "message": "Seems fine as a library to me. We only care that AaptTestStaticLib_LibOne\u0027s resources are linked into AaptTestStaticLib_App.",
+      "parentUuid": "4bea2d74_cb883fbf",
+      "revId": "bdd28863ea767efa71d1169bea73531b0adae90b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4f1dfa5_4562411d",
         "filename": "tools/aapt2/integration-tests/StaticLibTest/LibTwo/Android.bp",
         "patchSetId": 1
