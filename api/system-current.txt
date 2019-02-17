@@ -939,6 +939,28 @@ package android.content {
 
 }
 
+package android.content.om {
+
+  public final class OverlayInfo implements android.os.Parcelable {
+    method public int describeContents();
+    method public boolean isEnabled();
+    method public void writeToParcel(android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.content.om.OverlayInfo> CREATOR;
+    field public final String category;
+    field public final String packageName;
+    field public final String targetPackageName;
+    field public final int userId;
+  }
+
+  public class OverlayManager {
+    method public android.content.om.OverlayInfo getOverlayInfo(@NonNull String, @NonNull android.os.UserHandle);
+    method public java.util.List<android.content.om.OverlayInfo> getOverlayInfosForTarget(@Nullable String, int);
+    method public boolean setEnabled(@Nullable String, boolean, int);
+    method public boolean setEnabledExclusiveInCategory(@Nullable String, int);
+  }
+
+}
+
 package android.content.pm {
 
   public class ApplicationInfo extends android.content.pm.PackageItemInfo implements android.os.Parcelable {
