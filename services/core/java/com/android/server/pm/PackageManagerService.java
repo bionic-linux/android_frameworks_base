@@ -10947,7 +10947,13 @@ public class PackageManagerService extends IPackageManager.Stub
         }
         if ((scanFlags & SCAN_AS_PRIVILEGED) == 0) {
             // clear protected broadcasts
-            pkg.protectedBroadcasts = null;
+            if (pkg.protectedBroadcasts != null) {
+                Slog.w(TAG, "Removing protected broadcast for non priv-app " + pkg.packageName);
+                for (String name : pkg.protectedBroadcasts) {
+                    Slog.w(TAG, "Removing: " + name);
+                }
+                pkg.protectedBroadcasts = null;
+            }
             // ignore export request for single user receivers
             if (pkg.receivers != null) {
                 for (int i = pkg.receivers.size() - 1; i >= 0; --i) {
