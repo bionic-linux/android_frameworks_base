@@ -2037,7 +2037,7 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
             widget.updateSequenceNos.put(ID_VIEWS_UPDATE, requestId);
         }
         if (widget == null || widget.provider == null || widget.provider.zombie
-                || widget.host.callbacks == null || widget.host.zombie) {
+                || widget.host.callbacks == null || widget.host.zombie || updateViews == null) {
             return;
         }
 
