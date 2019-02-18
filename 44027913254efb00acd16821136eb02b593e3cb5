@@ -16,6 +16,24 @@
       "revId": "44027913254efb00acd16821136eb02b593e3cb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f10312_b6513690",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1305591
+      },
+      "writtenOn": "2019-02-18T18:02:48Z",
+      "side": 1,
+      "message": "I believe it doesn\u0027t. But we can find out easily ;)",
+      "parentUuid": "2b9752d9_11697d4e",
+      "revId": "44027913254efb00acd16821136eb02b593e3cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
