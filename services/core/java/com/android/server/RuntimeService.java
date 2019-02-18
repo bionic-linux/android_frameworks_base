@@ -23,20 +23,21 @@ import android.service.runtime.RuntimeServiceInfoProto;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
-import libcore.timezone.TimeZoneDataFiles;
-import libcore.util.CoreLibraryDebug;
-import libcore.util.DebugInfo;
-
 import com.android.internal.util.DumpUtils;
 import com.android.timezone.distro.DistroException;
 import com.android.timezone.distro.DistroVersion;
 import com.android.timezone.distro.FileUtils;
 import com.android.timezone.distro.TimeZoneDistro;
 
+import libcore.timezone.TimeZoneDataFiles;
+import libcore.util.CoreLibraryDebug;
+import libcore.util.DebugInfo;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 
 /**
  * This service exists only as a "dumpsys" target which reports information about the status of the
@@ -59,20 +60,24 @@ public class RuntimeService extends Binder {
         }
 
         boolean protoFormat = hasOption(args, "--proto");
-        ProtoOutputStream proto = null;
+        ProtoOutputStream protoOutputStream = null;
 
         DebugInfo coreLibraryDebugInfo = CoreLibraryDebug.getDebugInfo();
         addTimeZoneApkDebugInfo(coreLibraryDebugInfo);
 
+        // Probe hidden API enforcement.
+        DebugInfo runtimeDebugInfo = new DebugInfo();
+        probeApiEnforcement(runtimeDebugInfo);
+
         if (protoFormat) {
-            proto = new ProtoOutputStream(fd);
-            reportTimeZoneInfoProto(coreLibraryDebugInfo, proto);
+            protoOutputStream = new ProtoOutputStream(fd);
+            reportDebugInfoProto(protoOutputStream, coreLibraryDebugInfo, runtimeDebugInfo);
         } else {
-            reportTimeZoneInfo(coreLibraryDebugInfo, pw);
+            reportDebugInfo(pw, coreLibraryDebugInfo, runtimeDebugInfo);
         }
 
         if (protoFormat) {
-            proto.flush();
+            protoOutputStream.flush();
         }
     }
 
@@ -101,19 +106,41 @@ public class RuntimeService extends Binder {
     }
 
     /**
+     * Probe APIs that should not be accessible and report the behavior.
+     */
+    private static DebugInfo probeApiEnforcement(DebugInfo debugInfo) {
+        String debugKey = "runtime.enforcement.core_platform_api";
+        String value;
+        try {
+            Method method = System.class.getDeclaredMethod("logE", String.class);
+            value = "VISIBLE";
+//            method.invoke(null, "Probe hidden API");
+        } catch (NoSuchMethodException e) {
+            value = "NO_SUCH_METHOD";
+//        } catch (IllegalAccessException e) {
+//            value = "ILLEGAL_ACCESS";
+//        } catch (InvocationTargetException e) {
+//            value = "INVOCATION_TARGET";
+        }
+        debugInfo.addStringEntry(debugKey, value);
+        return debugInfo;
+    }
+
+    /**
      * Prints {@code coreLibraryDebugInfo} to {@code pw}.
      *
      * <p>If you change this method, make sure to modify
-     * {@link #reportTimeZoneInfoProto(DebugInfo, ProtoOutputStream)} as well.
+     * {@link #reportDebugInfoProto} as well.
      */
-    private static void reportTimeZoneInfo(DebugInfo coreLibraryDebugInfo,
-            PrintWriter pw) {
-        pw.println("Core Library Debug Info: ");
-        for (DebugInfo.DebugEntry debugEntry : coreLibraryDebugInfo.getDebugEntries()) {
-            pw.print(debugEntry.getKey());
-            pw.print(": \"");
-            pw.print(debugEntry.getStringValue());
-            pw.println("\"");
+    private static void reportDebugInfo(PrintWriter pw, DebugInfo... debugInfos) {
+        pw.println("Runtime Debug Info: ");
+        for (DebugInfo debugInfo : debugInfos) {
+            for (DebugInfo.DebugEntry debugEntry : debugInfo.getDebugEntries()) {
+                pw.print(debugEntry.getKey());
+                pw.print(": \"");
+                pw.print(debugEntry.getStringValue());
+                pw.println("\"");
+            }
         }
     }
 
@@ -121,15 +148,17 @@ public class RuntimeService extends Binder {
      * Adds {@code coreLibraryDebugInfo} to {@code protoStream}.
      *
      * <p>If you change this method, make sure to modify
-     * {@link #reportTimeZoneInfo(DebugInfo, PrintWriter)}.
+     * {@link #reportDebugInfo}.
      */
-    private static void reportTimeZoneInfoProto(
-            DebugInfo coreLibraryDebugInfo, ProtoOutputStream protoStream) {
-        for (DebugInfo.DebugEntry debugEntry : coreLibraryDebugInfo.getDebugEntries()) {
-            long entryToken = protoStream.start(RuntimeServiceInfoProto.DEBUG_ENTRY);
-            protoStream.write(DebugEntryProto.KEY, debugEntry.getKey());
-            protoStream.write(DebugEntryProto.STRING_VALUE, debugEntry.getStringValue());
-            protoStream.end(entryToken);
+    private static void reportDebugInfoProto(
+            ProtoOutputStream protoStream, DebugInfo... debugInfos) {
+        for (DebugInfo debugInfo : debugInfos) {
+            for (DebugInfo.DebugEntry debugEntry : debugInfo.getDebugEntries()) {
+                long entryToken = protoStream.start(RuntimeServiceInfoProto.DEBUG_ENTRY);
+                protoStream.write(DebugEntryProto.KEY, debugEntry.getKey());
+                protoStream.write(DebugEntryProto.STRING_VALUE, debugEntry.getStringValue());
+                protoStream.end(entryToken);
+            }
         }
     }
 
