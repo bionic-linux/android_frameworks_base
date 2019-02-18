@@ -22,6 +22,30 @@
       "revId": "19a84975ad17144ebe9bf43028381ccde70e90f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b21404_558f1226",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1042885
+      },
+      "writtenOn": "2019-02-18T15:00:58Z",
+      "side": 1,
+      "message": "\u003e Change to http://r.android.com/793302\n\nDone.",
+      "parentUuid": "763b4f15_6a97e563",
+      "range": {
+        "startLine": 9,
+        "startChar": 34,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "19a84975ad17144ebe9bf43028381ccde70e90f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
