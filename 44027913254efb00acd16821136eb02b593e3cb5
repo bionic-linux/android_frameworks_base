@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b9752d9_11697d4e",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-02-18T18:00:51Z",
+      "side": 1,
+      "message": "does this override the overall owners ? i.e, will I be able to continue approving changes to ApexManager / StagingManager ? I vaguely recall some surprising behaviour related to per-file owners but maybe i\u0027m misremembering.",
+      "revId": "44027913254efb00acd16821136eb02b593e3cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
