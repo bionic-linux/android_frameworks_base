@@ -46,6 +46,29 @@
       "revId": "19a84975ad17144ebe9bf43028381ccde70e90f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c3d01be_8335df3d",
+        "filename": "core/tests/coretests/src/android/net/UriTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-02-18T15:03:54Z",
+      "side": 1,
+      "message": "Wondering about the app compat implications of this. [I suspect the answer is \"This is fine, nobody should be relying on this edgecase behavior\"]. The original author of the change might want to make sure it ends up on release docs.",
+      "range": {
+        "startLine": 184,
+        "startChar": 22,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "19a84975ad17144ebe9bf43028381ccde70e90f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
