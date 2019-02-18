@@ -38,6 +38,8 @@ import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.TrafficStats.UID_TETHERING;
+import static android.net.util.InterfaceConfigurationParcelUtil.fromParcel;
+import static android.net.util.InterfaceConfigurationParcelUtil.toParcel;
 
 import static com.android.server.NetworkManagementService.NetdResponseCode.TtyListResult;
 import static com.android.server.NetworkManagementSocketTagger.PROP_QTAGUID_ENABLED;
@@ -62,6 +64,7 @@ import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -1034,7 +1037,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         try {
-            final InterfaceConfiguration cfg = InterfaceConfiguration.fromParcel(result);
+            final InterfaceConfiguration cfg = fromParcel(result);
             return cfg;
         } catch (IllegalArgumentException iae) {
             throw new IllegalStateException("Invalid InterfaceConfigurationParcel", iae);
@@ -1049,7 +1052,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             throw new IllegalStateException("Null LinkAddress given");
         }
 
-        final InterfaceConfigurationParcel cfgParcel = cfg.toParcel(iface);
+        final InterfaceConfigurationParcel cfgParcel = toParcel(cfg, iface);
 
         try {
             mNetdService.interfaceSetCfg(cfgParcel);
@@ -1713,12 +1716,24 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    private UidRangeParcel[] toParcelArray(UidRange[] ranges) {
+        if (ranges == null) return null;
+        final UidRangeParcel[] parcels = new UidRangeParcel[ranges.length];
+        for (int i = 0; i < ranges.length; i++) {
+            final UidRangeParcel p = new UidRangeParcel();
+            p.start = ranges[i].start;
+            p.stop = ranges[i].stop;
+            parcels[i] = p;
+        }
+        return parcels;
+    }
+
     @Override
     public void setAllowOnlyVpnForUids(boolean add, UidRange[] uidRanges)
             throws ServiceSpecificException {
         mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
         try {
-            mNetdService.networkRejectNonSecureVpn(add, uidRanges);
+            mNetdService.networkRejectNonSecureVpn(add, toParcelArray(uidRanges));
         } catch (ServiceSpecificException e) {
             Log.w(TAG, "setAllowOnlyVpnForUids(" + add + ", " + Arrays.toString(uidRanges) + ")"
                     + ": netd command failed", e);
@@ -1887,7 +1902,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
         try {
-            mNetdService.networkAddUidRanges(netId, ranges);
+            mNetdService.networkAddUidRanges(netId, toParcelArray(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1897,7 +1912,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void removeVpnUidRanges(int netId, UidRange[] ranges) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mNetdService.networkRemoveUidRanges(netId, ranges);
+            mNetdService.networkRemoveUidRanges(netId, toParcelArray(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1991,7 +2006,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         try {
-            mNetdService.socketDestroy(ranges, exemptUids);
+            mNetdService.socketDestroy(toParcelArray(ranges), exemptUids);
         } catch(RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error closing sockets after enabling chain " + chainName + ": " + e);
         }
