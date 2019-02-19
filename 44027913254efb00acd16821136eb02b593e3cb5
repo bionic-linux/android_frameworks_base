@@ -52,6 +52,24 @@
       "revId": "44027913254efb00acd16821136eb02b593e3cb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d76ac9c7_11117e16",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1305591
+      },
+      "writtenOn": "2019-02-19T10:22:28Z",
+      "side": 1,
+      "message": "ah, it is quite counterintuitive. I added Narayan and Todd to the list.",
+      "parentUuid": "5df2ba1d_eb90dfbc",
+      "revId": "44027913254efb00acd16821136eb02b593e3cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
