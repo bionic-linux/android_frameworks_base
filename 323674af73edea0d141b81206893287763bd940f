@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b81bdc10_af35d4a9",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5373,
+      "author": {
+        "id": 1362035
+      },
+      "writtenOn": "2019-02-19T20:38:45Z",
+      "side": 1,
+      "message": "Maybe horizontalStart?",
+      "revId": "323674af73edea0d141b81206893287763bd940f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fec4b2_d96bb4a8",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5374,
+      "author": {
+        "id": 1362035
+      },
+      "writtenOn": "2019-02-19T20:38:45Z",
+      "side": 1,
+      "message": "This naming indicates a boolean instead of int. It would be better to rename it as \u0027scrollX\u0027 or make it a boolean.",
+      "range": {
+        "startLine": 5374,
+        "startChar": 12,
+        "endLine": 5374,
+        "endChar": 25
+      },
+      "revId": "323674af73edea0d141b81206893287763bd940f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
