@@ -148,14 +148,19 @@ public class NetworkStackClient {
     private class NetworkStackConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            log("Network stack service connected");
+            logi("Network stack service connected");
             registerNetworkStackService(service);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            // TODO: crash/reboot the system ?
-            logWtf("Lost network stack connector", null);
+            logWtf("Lost NetworkStack", null);
+            // The system has lost its network stack (probably due to a crash in the
+            // network stack process): better crash rather than stay in a bad state where all
+            // networking is broken.
+            // onServiceDisconnected is not being called on device shutdown, so this method being
+            // called always indicates a bad state for the system server.
+            throw new IllegalStateException("Lost network stack: crashing");
         }
     };
 
@@ -211,18 +216,15 @@ public class NetworkStackClient {
         }
 
         if (intent == null) {
-            logWtf("Could not resolve the network stack", null);
-            // TODO: crash/reboot system server ?
-            return;
+            throw new IllegalStateException("Could not resolve the network stack");
         }
 
         // Start the network stack. The service will be added to the service manager in
         // NetworkStackConnection.onServiceConnected().
         if (!context.bindServiceAsUser(intent, new NetworkStackConnection(),
                 Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT, UserHandle.SYSTEM)) {
-            logWtf("Could not bind to network stack with " + intent, null);
-            return;
-            // TODO: crash/reboot system server if no network stack after a timeout ?
+            throw new IllegalStateException(
+                    "Could not bind to network stack in-process, or in app with " + intent);
         }
 
         log("Network stack service start requested");
@@ -270,6 +272,9 @@ public class NetworkStackClient {
         }
     }
 
+    /**
+     * Log a message in the local log.
+     */
     private void log(@NonNull String message) {
         synchronized (mLog) {
             mLog.log(message);
@@ -286,6 +291,15 @@ public class NetworkStackClient {
     private void loge(@NonNull String message, @Nullable Throwable e) {
         synchronized (mLog) {
             mLog.e(message, e);
+        }
+    }
+
+    /**
+     * Log a message in the local and system logs.
+     */
+    private void logi(@NonNull String message) {
+        synchronized (mLog) {
+            mLog.i(message);
         }
     }
 
