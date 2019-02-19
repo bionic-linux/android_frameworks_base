@@ -16,6 +16,7 @@
 
 package android.util;
 
+import android.annotation.NonNull;
 import android.os.IStatsManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -112,5 +113,21 @@ public final class StatsLog extends StatsLogInternal {
         }
         sService = IStatsManager.Stub.asInterface(ServiceManager.getService("stats"));
         return sService;
+    }
+
+    /**
+     * Add a log to the stats log.
+     *
+     * @param id     The id of the atom
+     * @param params The parameters of the atom's message.
+     */
+    public static void write(int id, @NonNull Object... params) {
+        switch (id) {
+            case DATA_STALL_EVENT:
+                // Refer to the defintion in frameworks/base/cmds/statsd/src/atoms.proto.
+                write(id, (int) params[0], (int) params[1], (int) params[2], (byte[]) params[3],
+                        (byte[]) params[4], (byte[]) params[5]);
+                break;
+        }
     }
 }
