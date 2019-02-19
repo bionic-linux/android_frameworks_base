@@ -36,7 +36,9 @@ import android.os.IBinder;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.text.TextUtils;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -53,6 +55,9 @@ public class NetworkStackClient {
     private static final String TAG = NetworkStackClient.class.getSimpleName();
 
     private static final int NETWORKSTACK_TIMEOUT_MS = 10_000;
+
+    // See ShutdownThread.SHUTDOWN_ACTION_PROPERTY (defined in service.core so not accessible here)
+    private static final String SHUTDOWN_ACTION_PROPERTY = "sys.shutdown.requested";
 
     private static NetworkStackClient sInstance;
 
@@ -134,16 +139,29 @@ public class NetworkStackClient {
     private class NetworkStackConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            log("Network stack service connected");
+            logi("Network stack service connected");
             registerNetworkStackService(service);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            // TODO: crash/reboot the system ?
-            logWtf("Lost network stack connector", null);
+            if (isShuttingDown()) {
+                // In practice onServiceDisconnected seems not to be called on device shutdown - but
+                // keep this check to be safe in case this assumption becomes incorrect.
+                logi("NetworkStack disconnected on shutdown");
+            } else {
+                logWtf("Lost NetworkStack", null);
+                // The system has lost its network stack (probably due to a crash in the
+                // network stack process): better crash rather than stay in a bad state where all
+                // networking is broken.
+                throw new IllegalStateException("Lost network stack: crashing");
+            }
         }
     };
+
+    private static boolean isShuttingDown() {
+        return !TextUtils.isEmpty(SystemProperties.get(SHUTDOWN_ACTION_PROPERTY, ""));
+    }
 
     private void registerNetworkStackService(@NonNull IBinder service) {
         final INetworkStackConnector connector = INetworkStackConnector.Stub.asInterface(service);
@@ -185,9 +203,7 @@ public class NetworkStackClient {
             connector = (IBinder) service.getMethod("makeConnector", Context.class)
                     .invoke(null, context);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logWtf("Could not create network stack connector from NetworkStackService", e);
-            // TODO: crash/reboot system here ?
-            return;
+            throw new IllegalStateException("Could not create network stack connector", e);
         } catch (ClassNotFoundException e) {
             // Normal behavior if stack is provided by the app: fall through
         }
@@ -206,9 +222,7 @@ public class NetworkStackClient {
         intent.setComponent(comp);
 
         if (comp == null) {
-            logWtf("Could not resolve the network stack with " + intent, null);
-            // TODO: crash/reboot system server ?
-            return;
+            throw new IllegalStateException("Could not resolve the network stack with " + intent);
         }
         final PackageManager pm = context.getPackageManager();
         int uid = -1;
@@ -231,14 +245,17 @@ public class NetworkStackClient {
 
         if (!context.bindServiceAsUser(intent, new NetworkStackConnection(),
                 Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT, UserHandle.SYSTEM)) {
-            logWtf("Could not bind to network stack in-process, or in app with " + intent, null);
-            return;
+            throw new IllegalStateException(
+                    "Could not bind to network stack in-process, or in app with " + intent);
             // TODO: crash/reboot system server if no network stack after a timeout ?
         }
 
         log("Network stack service start requested");
     }
 
+    /**
+     * Log a message in the local log.
+     */
     private void log(@NonNull String message) {
         synchronized (mLog) {
             mLog.log(message);
@@ -255,6 +272,15 @@ public class NetworkStackClient {
     private void loge(@NonNull String message, @Nullable Throwable e) {
         synchronized (mLog) {
             mLog.e(message, e);
+        }
+    }
+
+    /**
+     * Log a message in the local and system logs.
+     */
+    private void logi(@NonNull String message) {
+        synchronized (mLog) {
+            mLog.i(message);
         }
     }
 
