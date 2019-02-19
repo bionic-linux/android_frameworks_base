@@ -203,7 +203,7 @@ public class NetworkStackClient {
     private class NetworkStackConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            log("Network stack service connected");
+            logi("Network stack service connected");
             registerNetworkStackService(service);
 
             synchronized (mStartRetryLock) {
@@ -218,8 +218,13 @@ public class NetworkStackClient {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            // TODO: crash/reboot the system ?
-            logWtf("Lost network stack connector", null);
+            logWtf("Lost NetworkStack", null);
+            // The system has lost its network stack (probably due to a crash in the
+            // network stack process): better crash rather than stay in a bad state where all
+            // networking is broken.
+            // onServiceDisconnected is not being called on device shutdown, so this method being
+            // called always indicates a bad state for the system server.
+            throw new IllegalStateException("Lost network stack: crashing");
         }
     };
 
@@ -276,9 +281,7 @@ public class NetworkStackClient {
             connector = (IBinder) service.getMethod("makeConnector", Context.class)
                     .invoke(null, context);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logWtf("Could not create network stack connector from NetworkStackService", e);
-            // TODO: crash/reboot system here ?
-            return;
+            throw new IllegalStateException("Could not create network stack connector", e);
         } catch (ClassNotFoundException e) {
             // Normal behavior if stack is provided by the app: fall through
         }
@@ -297,9 +300,7 @@ public class NetworkStackClient {
         intent.setComponent(comp);
 
         if (comp == null) {
-            logWtf("Could not resolve the network stack with " + intent, null);
-            // TODO: crash/reboot system server ?
-            return;
+            throw new IllegalStateException("Could not resolve the network stack with " + intent);
         }
         final PackageManager pm = context.getPackageManager();
         int uid = -1;
@@ -322,8 +323,8 @@ public class NetworkStackClient {
 
         if (!context.bindServiceAsUser(intent, new NetworkStackConnection(),
                 Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT, UserHandle.SYSTEM)) {
-            logWtf("Could not bind to network stack in-process, or in app with " + intent, null);
-            return;
+            throw new IllegalStateException(
+                    "Could not bind to network stack in-process, or in app with " + intent);
             // TODO: crash/reboot system server if no network stack after a timeout ?
         }
 
@@ -338,6 +339,9 @@ public class NetworkStackClient {
         log("Network stack service start requested");
     }
 
+    /**
+     * Log a message in the local log.
+     */
     private void log(@NonNull String message) {
         synchronized (mLog) {
             mLog.log(message);
@@ -354,6 +358,15 @@ public class NetworkStackClient {
     private void loge(@NonNull String message, @Nullable Throwable e) {
         synchronized (mLog) {
             mLog.e(message, e);
+        }
+    }
+
+    /**
+     * Log a message in the local and system logs.
+     */
+    private void logi(@NonNull String message) {
+        synchronized (mLog) {
+            mLog.i(message);
         }
     }
 
