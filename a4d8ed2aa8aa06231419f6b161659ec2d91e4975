@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56791f86_b516fc09",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-20T11:01:01Z",
+      "side": 1,
+      "message": "redundant space?",
+      "range": {
+        "startLine": 285,
+        "startChar": 53,
+        "endLine": 285,
+        "endChar": 54
+      },
+      "revId": "a4d8ed2aa8aa06231419f6b161659ec2d91e4975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd1dd0f_faaee0a4",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-20T11:01:01Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 899,
+        "startChar": 12,
+        "endLine": 899,
+        "endChar": 22
+      },
+      "revId": "a4d8ed2aa8aa06231419f6b161659ec2d91e4975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101ef1a8_d0e3afeb",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-20T11:01:01Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 963,
+        "startChar": 56,
+        "endLine": 963,
+        "endChar": 62
+      },
+      "revId": "a4d8ed2aa8aa06231419f6b161659ec2d91e4975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
