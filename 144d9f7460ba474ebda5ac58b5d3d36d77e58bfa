@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5ebf2537_2e6bd577",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T13:59:32Z",
+      "side": 1,
+      "message": "In general, I don\u0027t find the arguments made by go/avoidwe very convincing. In this case, the we seems pretty unambigous - it refers to this class, or this code.\n\nAlso, even go/avoidwe says that the goal is not to avoid the word itself, but to ensure that the comment is clear. If you find it unclear, can you suggest alternative wording?",
+      "parentUuid": "f42abd32_79ac9999",
+      "range": {
+        "startLine": 212,
+        "startChar": 41,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d91944_65f54cee",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 10
@@ -59,6 +83,30 @@
       "writtenOn": "2019-02-20T10:29:49Z",
       "side": 1,
       "message": "Can we have a check that this is running on the connectivity service handler thread ? I couldn\u0027t find evidence of the contrary but that was a difficult search. Inside handleUpdateLinkProperties is fine for example",
+      "range": {
+        "startLine": 218,
+        "startChar": 35,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab16748e_5301b6e2",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T13:59:32Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to add such a check in this CL due to the risk of crashing other codepaths. Uploading as a separate CL on top of the stack.",
+      "parentUuid": "42d91944_65f54cee",
       "range": {
         "startLine": 218,
         "startChar": 35,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d686eb40_7588c975",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T13:59:32Z",
+      "side": 1,
+      "message": "If I understand your comment correctly, in order for there to be a race the interface must come up before the first stop(), but the notification that the interface came up must be delayed past the first stop() and the second start(), such that the second start() causes the code to go from STARTING to RUNNING on the interface that was created by the previous start.\n\nI don\u0027t think that can happen in practice. We only stop and restart clat if an IPv4 address appears and then disappears, or if clatd crashes. If an IPv4 address is added and then removed, then for a race to occur the address has to be added and removed faster than the notification of the add arrives here. I don\u0027t think that can happen because:\n\n- For links that use DHCP, addresses live for at least 60 seconds (MINIMUM_LEASE).\n- On telephony links, IP addresses are provisioned at connect time, so while it\u0027s possible that IPv4 appears after IPv6 or vice versa, addresses don\u0027t disappear once they have appeared.\n\nAs for clatd crashing, that can cause us to restart clat, but there is no accompanying asynchronous event that can cause us to stop clat. I think that to see a race we\u0027d have to suffer a clatd crash just before an IPv4 address is added, which seems really unlikely.\n\nWe cannot change the clat interface name with each start because there are lots of assumptions in various places that the interface name is \"v4-\" plus the base interface name.",
+      "parentUuid": "c18e8839_b1dc27f0",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 18
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad545420_269aca96",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 10
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "af52bbf1_aacae512",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T13:59:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad545420_269aca96",
+      "range": {
+        "startLine": 308,
+        "startChar": 92,
+        "endLine": 308,
+        "endChar": 98
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d423d719_9636e5b5",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 10
@@ -128,6 +224,30 @@
       "writtenOn": "2019-02-20T10:29:49Z",
       "side": 1,
       "message": "()\n\n...does this build ?",
+      "range": {
+        "startLine": 599,
+        "startChar": 34,
+        "endLine": 599,
+        "endChar": 35
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51e3de0_cb6645a4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T13:59:32Z",
+      "side": 1,
+      "message": "No :-). It was fixed in Ida32d5760c5aecf7aeebef08fdb596291b2ce14a. Done.",
+      "parentUuid": "d423d719_9636e5b5",
       "range": {
         "startLine": 599,
         "startChar": 34,
