@@ -487,14 +487,9 @@ public class KeepaliveTracker {
 
         TcpKeepalivePacketData packet = null;
         try {
-            TcpSocketInfo tsi = TcpKeepaliveController.switchToRepairMode(fd);
+            TcpSocketInfo tsi = TcpKeepaliveController.getTcpSocketInfo(fd);
             packet = TcpKeepalivePacketData.tcpKeepalivePacket(tsi);
         } catch (InvalidPacketException | InvalidSocketException e) {
-            try {
-                TcpKeepaliveController.switchOutOfRepairMode(fd);
-            } catch (ErrnoException e1) {
-                Log.e(TAG, "Couldn't move fd out of repair mode after failure to start keepalive");
-            }
             notifyMessenger(messenger, NO_KEEPALIVE, e.error);
             return;
         }
