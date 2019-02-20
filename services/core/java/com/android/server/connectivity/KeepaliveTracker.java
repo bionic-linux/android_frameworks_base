@@ -39,9 +39,7 @@ import android.net.NattKeepalivePacketData;
 import android.net.NetworkAgent;
 import android.net.NetworkUtils;
 import android.net.SocketKeepalive.InvalidPacketException;
-import android.net.SocketKeepalive.InvalidSocketException;
 import android.net.TcpKeepalivePacketData;
-import android.net.TcpKeepalivePacketData.TcpSocketInfo;
 import android.net.util.IpUtils;
 import android.os.Binder;
 import android.os.Handler;
@@ -482,19 +480,9 @@ public class KeepaliveTracker {
             return;
         }
 
-        TcpKeepalivePacketData packet = null;
-        try {
-            TcpSocketInfo tsi = TcpKeepaliveController.switchToRepairMode(fd);
-            packet = TcpKeepalivePacketData.tcpKeepalivePacket(tsi);
-        } catch (InvalidPacketException | InvalidSocketException e) {
-            try {
-                TcpKeepaliveController.switchOutOfRepairMode(fd);
-            } catch (ErrnoException e1) {
-                Log.e(TAG, "Couldn't move fd out of repair mode after failure to start keepalive");
-            }
-            notifyErrorCallback(cb, e.error);
-            return;
-        }
+        final TcpKeepalivePacketData packet = TcpKeepaliveController.getTcpKeepalivePacket(fd, cb);
+        if (packet == null) return;
+
         KeepaliveInfo ki = new KeepaliveInfo(cb, nai, packet, intervalSeconds,
                 KeepaliveInfo.TYPE_TCP, fd);
         Log.d(TAG, "Created keepalive: " + ki.toString());
