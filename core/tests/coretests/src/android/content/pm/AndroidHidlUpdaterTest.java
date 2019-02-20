@@ -45,7 +45,11 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
                 .targetSdkVersion(Build.VERSION_CODES.P)
                 .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE);
 
-        checkBackwardsCompatibility(before, after);
+        // no change in general
+        checkBackwardsCompatibility(before, before, 0);
+
+        // system apps have a change
+        checkBackwardsCompatibility(before, after, PackageParser.PARSE_IS_SYSTEM_DIR);
     }
 
     @Test
@@ -60,7 +64,11 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
                 .targetSdkVersion(Build.VERSION_CODES.P)
                 .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE, OTHER_LIBRARY);
 
-        checkBackwardsCompatibility(before, after);
+        // no change in general
+        checkBackwardsCompatibility(before, before, 0);
+
+        // system apps have a change
+        checkBackwardsCompatibility(before, after, PackageParser.PARSE_IS_SYSTEM_DIR);
     }
 
     @Test
@@ -69,9 +77,16 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
                 .targetSdkVersion(Build.VERSION_CODES.P)
                 .requiredLibraries(ANDROID_HIDL_MANAGER, ANDROID_HIDL_BASE);
 
+        PackageBuilder after = builder()
+                .targetSdkVersion(Build.VERSION_CODES.P);
+
+        // Regular apps should have this removed. They never used this API before, and these
+        // APIs aren't in the SDK.
+        checkBackwardsCompatibility(before, after, 0);
+
         // No change is required because although the HIDL libraries has been removed from
         // the bootclasspath the package explicitly requests it.
-        checkBackwardsCompatibility(before, before);
+        checkBackwardsCompatibility(before, before, PackageParser.PARSE_IS_SYSTEM_DIR);
     }
 
     @Test
@@ -100,5 +115,10 @@ public class AndroidHidlUpdaterTest extends PackageSharedLibraryUpdaterTest {
 
     private void checkBackwardsCompatibility(PackageBuilder before, PackageBuilder after) {
         checkBackwardsCompatibility(before, after, AndroidHidlUpdater::new);
+    }
+
+    private void checkBackwardsCompatibility(PackageBuilder before, PackageBuilder after,
+            @PackageParser.ParseFlags int flags) {
+        checkBackwardsCompatibility(before, after, AndroidHidlUpdater::new, flags);
     }
 }
