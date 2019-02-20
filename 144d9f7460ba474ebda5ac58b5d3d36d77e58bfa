@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adf390e_58f82254",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "stopClat ?",
+      "range": {
+        "startLine": 196,
+        "startChar": 25,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42abd32_79ac9999",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "range": {
+        "startLine": 212,
+        "startChar": 41,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d91944_65f54cee",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "Can we have a check that this is running on the connectivity service handler thread ? I couldn\u0027t find evidence of the contrary but that was a difficult search. Inside handleUpdateLinkProperties is fine for example",
+      "range": {
+        "startLine": 218,
+        "startChar": 35,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18e8839_b1dc27f0",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "But now without STOPPING, there is nothing expecting the interface removed message, and nothing prevents a quick start-stop-start scenario from leaving the device on a v6 network without clatd.\n\nHere is the scenario I am picturing :\n- Network comes up, CS calls clatd.start(). clatd starts, and this goes into STARTING.\n- IPv4 address appears (or any other reason), CS calls clatd.stop(). clatd stops, and this goes into IDLE.\n- IPv4 disappears, CS calls clatd.start(). clatd starts, and this goes into STARTING.\n- Notification that interface is up is delivered. This goes into RUNNING.\n- Notification that interface is down is delivered. handleInterfaceRemoved calls stop(), this goes into IDLE.\n- Notification that interface is up is delivered, ignored because !isStarting().\n- Nothing else happens and clatd is not running on this v6-only network.\n\nA possible idea to get completely rid of this issue would be to have the clatd interface change with each start, with a sequence number or something, but it looks like that\u0027d require deeper changes",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 18
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad545420_269aca96",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 308,
+        "startChar": 92,
+        "endLine": 308,
+        "endChar": 98
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d423d719_9636e5b5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "()\n\n...does this build ?",
+      "range": {
+        "startLine": 599,
+        "startChar": 34,
+        "endLine": 599,
+        "endChar": 35
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d61dad9_9e62ff4c",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-20T10:29:49Z",
+      "side": 1,
+      "message": "Curious : why 2 ?",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 37
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
