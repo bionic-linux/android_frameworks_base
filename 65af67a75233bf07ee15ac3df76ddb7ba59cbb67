@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647c3d80_7adeecfa",
+        "filename": "core/java/android/content/pm/AndroidHidlUpdater.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-02-20T10:28:00Z",
+      "side": 1,
+      "message": "Nice thing about this is you don\u0027t need to update the preopt rule :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 68
+      },
+      "revId": "65af67a75233bf07ee15ac3df76ddb7ba59cbb67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
