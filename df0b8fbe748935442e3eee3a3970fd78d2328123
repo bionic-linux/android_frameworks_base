@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef92186d_c37dff63",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T08:40:31Z",
+      "side": 1,
+      "message": "These logs are excessive for normal operation. Can you use Log.isLoggable for them instead? An example is at:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/792080/2/services/core/java/com/android/server/ConnectivityService.java",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 61
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3859b196_2b283d86",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T08:40:31Z",
+      "side": 1,
+      "message": "Why do you need this code to log all the time, given that all the logs are visible in a bugreport?\n\nIf you feel that you really need this logging, can you put it behind a Log.isLoggable check?",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14690cea_e7da8db8",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T08:40:31Z",
+      "side": 1,
+      "message": "Ditto, can this be behind a Log.isLoggable check?",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c886e0fd_cccfedac",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T08:40:31Z",
+      "side": 1,
+      "message": "In Q, mConnector is unused and this code will likely be deleted soon.",
+      "range": {
+        "startLine": 602,
+        "startChar": 28,
+        "endLine": 602,
+        "endChar": 53
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
