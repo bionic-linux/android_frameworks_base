@@ -52,6 +52,7 @@ import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.net.util.InterfaceParams;
 import android.net.util.SocketUtils;
+import android.os.Build;
 import android.os.Message;
 import android.os.SystemClock;
 import android.system.ErrnoException;
@@ -102,9 +103,9 @@ public class DhcpClient extends StateMachine {
 
     private static final String TAG = "DhcpClient";
     private static final boolean DBG = true;
-    private static final boolean STATE_DBG = false;
-    private static final boolean MSG_DBG = false;
-    private static final boolean PACKET_DBG = false;
+    private static final boolean STATE_DBG = !Build.IS_USER;
+    private static final boolean MSG_DBG = !Build.IS_USER;
+    private static final boolean PACKET_DBG = !Build.IS_USER;
 
     // Metrics events: must be kept in sync with server-side aggregation code.
     /** Represents transitions from DhcpInitState to DhcpBoundState */

@@ -31,6 +31,7 @@ import android.net.metrics.IpReachabilityEvent;
 import android.net.netlink.StructNdMsg;
 import android.net.util.InterfaceParams;
 import android.net.util.SharedLog;
+import android.os.Build;
 import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.Looper;
@@ -129,7 +130,7 @@ import java.util.Map;
  */
 public class IpReachabilityMonitor {
     private static final String TAG = "IpReachabilityMonitor";
-    private static final boolean DBG = false;
+    private static final boolean DBG = !Build.IS_USER;
     private static final boolean VDBG = false;
 
     public interface Callback {

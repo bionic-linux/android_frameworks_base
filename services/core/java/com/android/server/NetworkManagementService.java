@@ -65,6 +65,7 @@ import android.net.UidRange;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.INetworkActivityListener;
@@ -597,6 +598,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
      * existing in-memory rules.
      */
     private void prepareNativeDaemon() {
+
+        if (!Build.IS_USER) mConnector.setDebug(true);
 
         // push any existing quota or UID rules
         synchronized (mQuotaLock) {

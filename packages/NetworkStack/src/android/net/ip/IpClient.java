@@ -45,6 +45,7 @@ import android.net.shared.InitialConfiguration;
 import android.net.shared.ProvisioningConfiguration;
 import android.net.util.InterfaceParams;
 import android.net.util.SharedLog;
+import android.os.Build;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.Message;
@@ -93,7 +94,7 @@ import java.util.stream.Collectors;
  * @hide
  */
 public class IpClient extends StateMachine {
-    private static final boolean DBG = false;
+    private static final boolean DBG = !Build.IS_USER;
 
     // For message logging.
     private static final Class[] sMessageClasses = { IpClient.class, DhcpClient.class };
