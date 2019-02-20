@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8823d970_d98d6ef0",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-02-20T23:45:36Z",
+      "side": 1,
+      "message": "I am not sure if this is true for all cases. We know if the device is on IWLAN, voice/data network type returns LTE/IWLAN. But in all other cases, should you use voice network type?",
+      "range": {
+        "startLine": 1002,
+        "startChar": 48,
+        "endLine": 1002,
+        "endChar": 75
+      },
+      "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
