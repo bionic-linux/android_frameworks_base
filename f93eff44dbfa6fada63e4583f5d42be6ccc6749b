@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66eab97f_4824fc37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-20T09:03:38Z",
+      "side": 1,
+      "message": "remove \u0027s ??",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "f93eff44dbfa6fada63e4583f5d42be6ccc6749b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745a070a_723ffc6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-20T09:03:38Z",
+      "side": 1,
+      "message": "and ?",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "f93eff44dbfa6fada63e4583f5d42be6ccc6749b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1422f0b7_cc460630",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-20T09:03:38Z",
+      "side": 1,
+      "message": "For new adding error level log, please use mLog.e which log entry will be both added to the system log and dumpsys section.",
+      "range": {
+        "startLine": 415,
+        "startChar": 20,
+        "endLine": 415,
+        "endChar": 25
+      },
+      "revId": "f93eff44dbfa6fada63e4583f5d42be6ccc6749b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f54002_7a9cf6e9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-20T09:03:38Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 979,
+        "startChar": 12,
+        "endLine": 979,
+        "endChar": 15
+      },
+      "revId": "f93eff44dbfa6fada63e4583f5d42be6ccc6749b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
