@@ -3857,7 +3857,7 @@ public class PackageParser {
         // every activity info has had a chance to set it from its attributes.
         setMaxAspectRatio(owner);
 
-        PackageBackwardCompatibility.modifySharedLibraries(owner);
+        PackageBackwardCompatibility.modifySharedLibraries(owner, flags);
 
         if (hasDomainURLs(owner)) {
             owner.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_HAS_DOMAIN_URLS;

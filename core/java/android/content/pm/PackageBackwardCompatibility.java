@@ -22,6 +22,7 @@ import static android.content.pm.SharedLibraryNames.ANDROID_TEST_RUNNER;
 import static android.content.pm.SharedLibraryNames.ORG_APACHE_HTTP_LEGACY;
 
 import android.content.pm.PackageParser.Package;
+import android.content.pm.PackageParser.ParseFlags;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -127,16 +128,17 @@ public class PackageBackwardCompatibility extends PackageSharedLibraryUpdater {
      * compatibility.
      *
      * @param pkg the {@link Package} to modify.
+     * @param flags PackageParser.ParseFlags
      */
     @VisibleForTesting
-    public static void modifySharedLibraries(Package pkg) {
-        INSTANCE.updatePackage(pkg);
+    public static void modifySharedLibraries(Package pkg, @ParseFlags int flags) {
+        INSTANCE.updatePackage(pkg, flags);
     }
 
     @Override
-    public void updatePackage(Package pkg) {
+    public void updatePackage(Package pkg, @ParseFlags int flags) {
         for (PackageSharedLibraryUpdater packageUpdater : mPackageUpdaters) {
-            packageUpdater.updatePackage(pkg);
+            packageUpdater.updatePackage(pkg, flags);
         }
     }
 
@@ -161,7 +163,7 @@ public class PackageBackwardCompatibility extends PackageSharedLibraryUpdater {
     public static class AndroidTestRunnerSplitUpdater extends PackageSharedLibraryUpdater {
 
         @Override
-        public void updatePackage(Package pkg) {
+        public void updatePackage(Package pkg, @ParseFlags int flags) {
             // android.test.runner has a dependency on android.test.mock so if android.test.runner
             // is present but android.test.mock is not then add android.test.mock.
             prefixImplicitDependency(pkg, ANDROID_TEST_RUNNER, ANDROID_TEST_MOCK);
@@ -177,7 +179,7 @@ public class PackageBackwardCompatibility extends PackageSharedLibraryUpdater {
             extends PackageSharedLibraryUpdater {
 
         @Override
-        public void updatePackage(Package pkg) {
+        public void updatePackage(Package pkg, @ParseFlags int flags) {
             removeLibrary(pkg, ORG_APACHE_HTTP_LEGACY);
         }
 
@@ -192,7 +194,7 @@ public class PackageBackwardCompatibility extends PackageSharedLibraryUpdater {
             extends PackageSharedLibraryUpdater {
 
         @Override
-        public void updatePackage(Package pkg) {
+        public void updatePackage(Package pkg, @ParseFlags int flags) {
             removeLibrary(pkg, ANDROID_TEST_BASE);
         }
     }

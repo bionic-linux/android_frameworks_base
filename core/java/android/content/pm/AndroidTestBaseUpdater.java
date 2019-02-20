@@ -19,6 +19,7 @@ import static android.content.pm.SharedLibraryNames.ANDROID_TEST_BASE;
 import static android.content.pm.SharedLibraryNames.ANDROID_TEST_RUNNER;
 
 import android.content.pm.PackageParser.Package;
+import android.content.pm.PackageParser.ParseFlags;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -38,7 +39,7 @@ import com.android.internal.annotations.VisibleForTesting;
 public class AndroidTestBaseUpdater extends PackageSharedLibraryUpdater {
 
     @Override
-    public void updatePackage(Package pkg) {
+    public void updatePackage(Package pkg, @ParseFlags int flags) {
         // Packages targeted at <= O_MR1 expect the classes in the android.test.base library
         // to be accessible so this maintains backward compatibility by adding the
         // android.test.base library to those packages.

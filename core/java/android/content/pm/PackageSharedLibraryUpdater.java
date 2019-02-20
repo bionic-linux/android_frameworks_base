@@ -36,8 +36,10 @@ public abstract class PackageSharedLibraryUpdater {
      * Update the package's shared libraries.
      *
      * @param pkg the package to update.
+     * @param flags parse flags for the package being updated
      */
-    public abstract void updatePackage(PackageParser.Package pkg);
+    public abstract void updatePackage(PackageParser.Package pkg,
+            @PackageParser.ParseFlags int flags);
 
     static void removeLibrary(PackageParser.Package pkg, String libraryName) {
         pkg.usesLibraries = ArrayUtils.remove(pkg.usesLibraries, libraryName);

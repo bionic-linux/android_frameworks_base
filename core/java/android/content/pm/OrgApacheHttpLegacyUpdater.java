@@ -18,6 +18,7 @@ package android.content.pm;
 import static android.content.pm.SharedLibraryNames.ORG_APACHE_HTTP_LEGACY;
 
 import android.content.pm.PackageParser.Package;
+import android.content.pm.PackageParser.ParseFlags;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -31,7 +32,7 @@ import com.android.internal.annotations.VisibleForTesting;
 public class OrgApacheHttpLegacyUpdater extends PackageSharedLibraryUpdater {
 
     @Override
-    public void updatePackage(Package pkg) {
+    public void updatePackage(Package pkg, @ParseFlags int flags) {
         // Packages targeted at <= O_MR1 expect the classes in the org.apache.http.legacy library
         // to be accessible so this maintains backward compatibility by adding the
         // org.apache.http.legacy library to those packages.

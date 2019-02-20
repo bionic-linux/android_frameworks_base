@@ -19,6 +19,7 @@ import static android.content.pm.SharedLibraryNames.ANDROID_HIDL_BASE;
 import static android.content.pm.SharedLibraryNames.ANDROID_HIDL_MANAGER;
 
 import android.content.pm.PackageParser.Package;
+import android.content.pm.PackageParser.ParseFlags;
 import android.os.Build;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -33,7 +34,7 @@ import com.android.internal.annotations.VisibleForTesting;
 public class AndroidHidlUpdater extends PackageSharedLibraryUpdater {
 
     @Override
-    public void updatePackage(Package pkg) {
+    public void updatePackage(Package pkg, @ParseFlags int flags) {
         // This was the default <= P and is maintained for backwards compatibility.
         if (pkg.applicationInfo.targetSdkVersion <= Build.VERSION_CODES.P) {
             prefixRequiredLibrary(pkg, ANDROID_HIDL_BASE);
