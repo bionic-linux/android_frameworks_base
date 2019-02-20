@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "028afbc8_bc117ec0",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-20T11:20:37Z",
+      "side": 1,
+      "message": "How about change as below, then you won\u0027t need to define offset.\nfinal ByteBuffer fp \u003d ByteBuffer.allocate(length);\nfp.order(ByteOrder.BIG_ENDIAN);\nfp.putShort((short) srcPort);\nfp.putShort((short) dstPort);\nfp.putInt(seq);\nfp.putInt(ack);",
+      "parentUuid": "4bd1dd0f_faaee0a4",
+      "range": {
+        "startLine": 899,
+        "startChar": 12,
+        "endLine": 899,
+        "endChar": 22
+      },
+      "revId": "a4d8ed2aa8aa06231419f6b161659ec2d91e4975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "101ef1a8_d0e3afeb",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 1
