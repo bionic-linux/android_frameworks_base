@@ -22,6 +22,30 @@
       "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fddee7_ac0bab9c",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-02-20T23:58:24Z",
+      "side": 1,
+      "message": "This is only going to be used for IMS calls, could those be other network types too?",
+      "parentUuid": "8823d970_d98d6ef0",
+      "range": {
+        "startLine": 1002,
+        "startChar": 48,
+        "endLine": 1002,
+        "endChar": 75
+      },
+      "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
