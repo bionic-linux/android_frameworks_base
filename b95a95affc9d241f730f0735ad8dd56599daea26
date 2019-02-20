@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aacc6612_5baa07ec",
+        "filename": "services/net/java/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T08:03:30Z",
+      "side": 1,
+      "message": "Suggest instead:\n\n        // Wake up mMulticastTransmitter thread to interrupt a potential 1 day sleep before\n        // the thread\u0027s termination.\n        maybeNotifyMulticastTransmitter();\n        mMulticastTransmitter \u003d null;",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 9
+      },
+      "revId": "b95a95affc9d241f730f0735ad8dd56599daea26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
