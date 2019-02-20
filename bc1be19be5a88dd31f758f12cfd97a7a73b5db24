@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11edcac7_76d899ee",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4439,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-20T01:45:34Z",
+      "side": 1,
+      "message": "Might want to expand this comment to explain that doing this without the lock held does not introduce any ordering issues, because this code is only run on the handler thread?",
+      "range": {
+        "startLine": 4439,
+        "startChar": 12,
+        "endLine": 4439,
+        "endChar": 44
+      },
+      "revId": "bc1be19be5a88dd31f758f12cfd97a7a73b5db24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
