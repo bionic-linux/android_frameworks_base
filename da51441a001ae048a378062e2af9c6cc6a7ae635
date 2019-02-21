@@ -62,6 +62,30 @@
       "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa038d96_754c9527",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:58:30Z",
+      "side": 1,
+      "message": "+1 to what Junyu is saying on principle, though I think this is on the fence. I propose the best course of action now is to file a cleanup bug that we might come to solve some day, and leave it as is for now.",
+      "parentUuid": "457702c9_678787a7",
+      "range": {
+        "startLine": 283,
+        "startChar": 16,
+        "endLine": 283,
+        "endChar": 22
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

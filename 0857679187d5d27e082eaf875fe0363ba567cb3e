@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665399c5_3ed36bcf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5253,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:58:30Z",
+      "side": 1,
+      "message": "Can you now remove NetworkAgent#updateClat() ?",
+      "range": {
+        "startLine": 5253,
+        "startChar": 25,
+        "endLine": 5253,
+        "endChar": 37
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc651fe_d91e425e",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:58:30Z",
+      "side": 1,
+      "message": "like as ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86217d42_1abbdec5",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:58:30Z",
+      "side": 1,
+      "message": "and and",
+      "range": {
+        "startLine": 103,
+        "startChar": 72,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33e0f0d_5bc5e744",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:58:30Z",
+      "side": 1,
+      "message": "I think with the new way Nat464Xlat works now, it might be best to have start() private and to call update() here. That would be more realistic and it would let you verify(mNetd).resolverStartPrefix64Discovery() too.\n\nOr more precisely, at least one of tests should exercise this code path. Having start() and stop() visible for testing does make the test setup easier and may allow us to make some more focused tests, so I\u0027m happy to keep that, but I think update() should have coverage, including the check that it starts the discovery when needed.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 17
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
