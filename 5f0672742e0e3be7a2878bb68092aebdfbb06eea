@@ -46,6 +46,30 @@
       "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70af3e47_2430e491",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-21T00:03:38Z",
+      "side": 1,
+      "message": "From the code search CallAttributes#getNetworkType() can return non-PS voice attributes, in which case this logic would be wrong for all non-IMS cases.\n\nIf somehow this really is only for IMS, then I think this works for LTE, but it will almost certainly be broken again in 5G, so this proposed change is very time-limited.\n\nMy suspicion is that the correct path here is to see if the call is an IMS call, and if it\u0027s an IMS call, get the RAT for the IMS PDN... might be more work than you want to do.",
+      "parentUuid": "71fddee7_ac0bab9c",
+      "range": {
+        "startLine": 1002,
+        "startChar": 48,
+        "endLine": 1002,
+        "endChar": 75
+      },
+      "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
