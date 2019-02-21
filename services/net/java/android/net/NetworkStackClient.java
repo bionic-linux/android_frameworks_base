@@ -32,7 +32,11 @@ import android.net.dhcp.IDhcpServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
 import android.net.util.SharedLog;
 import android.os.Binder;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -40,6 +44,7 @@ import android.os.UserHandle;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -52,7 +57,15 @@ import java.util.ArrayList;
 public class NetworkStackClient {
     private static final String TAG = NetworkStackClient.class.getSimpleName();
 
-    private static final int NETWORKSTACK_TIMEOUT_MS = 10_000;
+    private static final int GET_REMOTE_CONNECTOR_TIMEOUT_MS = 10_000;
+
+    // Starting the stack can take 2~3 seconds. 10 times that sounds like a reasonable delay.
+    @VisibleForTesting
+    static final long START_RETRY_DELAY_MS = 20_000;
+    @VisibleForTesting
+    static final int MAX_START_RETRIES = 5;
+
+    private static final int MSG_RETRY_START = 1;
 
     private static NetworkStackClient sInstance;
 
@@ -64,7 +77,19 @@ public class NetworkStackClient {
     private INetworkStackConnector mConnector;
 
     @GuardedBy("mLog")
-    private final SharedLog mLog = new SharedLog(TAG);
+    private final SharedLog mLog;
+    private final Dependencies mDependencies;
+
+    private final Object mStartRetryLock = new Object();
+    // Only set when being started by the system server
+    @GuardedBy("mStartRetryLock")
+    @Nullable
+    private HandlerThread mStartRetryThread;
+    @GuardedBy("mStartRetryLock")
+    @Nullable
+    private StartRetryHandler mStartRetryHandler;
+    // Accessed only on the retry handler and in dump()
+    private volatile int mStartRetryCount = 0;
 
     private volatile boolean mNetworkStackStartRequested = false;
 
@@ -72,7 +97,51 @@ public class NetworkStackClient {
         void onNetworkStackConnected(INetworkStackConnector connector);
     }
 
-    private NetworkStackClient() { }
+    /**
+     * Dependencies of NetworkStackClient, to be overridden for testing.
+     */
+    @VisibleForTesting
+    public static class Dependencies {
+        /**
+         * Register the specified service as the network stack service in {@link ServiceManager).
+         */
+        public void addService(IBinder service) {
+            ServiceManager.addService(Context.NETWORK_STACK_SERVICE, service,
+                    false /* allowIsolated */, DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
+        }
+    }
+
+    private NetworkStackClient() {
+        this(new SharedLog(TAG), new Dependencies());
+    }
+
+    @VisibleForTesting
+    NetworkStackClient(SharedLog log, Dependencies dependencies) {
+        mLog = log;
+        mDependencies = dependencies;
+    }
+
+    private class StartRetryHandler extends Handler {
+        StartRetryHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what != MSG_RETRY_START) return;
+            // This is fundamentally race-prone as the connector could arrive at any point after a
+            // retry is scheduled. But this retry logic only intends to mitigate the impact of a
+            // timeout starting the network stack, which would leave the system in a bad state if
+            // the network stack never comes up and no retry is attempted.
+            if (mStartRetryCount >= MAX_START_RETRIES) {
+                throw new IllegalStateException("Could not start the network stack after "
+                        + MAX_START_RETRIES + " retries");
+            }
+            logWtf("Timeout starting the network stack - retrying", null);
+            mStartRetryCount++;
+            startInternal((Context) msg.obj);
+        }
+    }
 
     /**
      * Get the NetworkStackClient singleton instance.
@@ -136,6 +205,15 @@ public class NetworkStackClient {
         public void onServiceConnected(ComponentName name, IBinder service) {
             log("Network stack service connected");
             registerNetworkStackService(service);
+
+            synchronized (mStartRetryLock) {
+                if (mStartRetryHandler != null && mStartRetryThread != null) {
+                    mStartRetryHandler.removeMessages(MSG_RETRY_START);
+                    mStartRetryThread.quitSafely();
+                    mStartRetryHandler = null;
+                    mStartRetryThread = null;
+                }
+            }
         }
 
         @Override
@@ -148,9 +226,7 @@ public class NetworkStackClient {
     private void registerNetworkStackService(@NonNull IBinder service) {
         final INetworkStackConnector connector = INetworkStackConnector.Stub.asInterface(service);
 
-        ServiceManager.addService(Context.NETWORK_STACK_SERVICE, service, false /* allowIsolated */,
-                DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
-        log("Network stack service registered");
+        mDependencies.addService(service);
 
         final ArrayList<NetworkStackCallback> requests;
         synchronized (mPendingNetStackRequests) {
@@ -172,7 +248,22 @@ public class NetworkStackClient {
      * connector will then be delivered asynchronously to clients that requested it before it was
      * started.
      */
-    public void start(Context context) {
+    public void start(@NonNull Context context) {
+        final HandlerThread startThread = new HandlerThread(TAG);
+        start(context, startThread);
+    }
+
+    @VisibleForTesting
+    void start(@NonNull Context context, @NonNull HandlerThread handlerThread) {
+        synchronized (mStartRetryLock) {
+            mStartRetryThread = handlerThread;
+            mStartRetryThread.start();
+            mStartRetryHandler = new StartRetryHandler(mStartRetryThread.getLooper());
+        }
+        startInternal(context);
+    }
+
+    private void startInternal(@NonNull Context context) {
         log("Starting network stack");
         mNetworkStackStartRequested = true;
         // Try to bind in-process if the library is available
@@ -236,6 +327,14 @@ public class NetworkStackClient {
             // TODO: crash/reboot system server if no network stack after a timeout ?
         }
 
+        synchronized (mStartRetryLock) {
+            if (mStartRetryHandler != null) {
+                mStartRetryHandler.sendMessageDelayed(
+                        mStartRetryHandler.obtainMessage(MSG_RETRY_START, context),
+                        START_RETRY_DELAY_MS);
+            }
+        }
+
         log("Network stack service start requested");
     }
 
@@ -273,7 +372,7 @@ public class NetworkStackClient {
             final long before = System.currentTimeMillis();
             while ((connector = ServiceManager.getService(Context.NETWORK_STACK_SERVICE)) == null) {
                 Thread.sleep(20);
-                if (System.currentTimeMillis() - before > NETWORKSTACK_TIMEOUT_MS) {
+                if (System.currentTimeMillis() - before > GET_REMOTE_CONNECTOR_TIMEOUT_MS) {
                     loge("Timeout waiting for NetworkStack connector", null);
                     return null;
                 }
@@ -332,5 +431,6 @@ public class NetworkStackClient {
 
         pw.println();
         pw.println("pendingNetStackRequests length: " + requestsQueueLength);
+        pw.println("start retry count: " + mStartRetryCount);
     }
 }
