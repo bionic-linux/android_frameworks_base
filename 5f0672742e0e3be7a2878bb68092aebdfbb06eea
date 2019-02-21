@@ -94,6 +94,30 @@
       "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df47899_487fb12b",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-02-21T19:22:08Z",
+      "side": 1,
+      "message": "Just chatted with Jordan... he suggested an alternative approach via the ImsRegistrationListener (or whatever it\u0027s called now), which SGTM and seems technically sound.",
+      "parentUuid": "89a10989_b2fb7613",
+      "range": {
+        "startLine": 1002,
+        "startChar": 48,
+        "endLine": 1002,
+        "endChar": 75
+      },
+      "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
