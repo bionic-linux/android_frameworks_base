@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91e1e20b_799851f1",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:16:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adf390e_58f82254",
+      "range": {
+        "startLine": 196,
+        "startChar": 25,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f42abd32_79ac9999",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 10
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The reason I mentioned it is because I found it pretty ambiguous here. I don\u0027t know if this is we the control, or we the Nat464Xlat class, or we the network stack, or we the team until I read the comment pretty carefully. Here is an alternative wording :\n\n  Enter IDLE state before updating LinkProperties. handleUpdateLinkProperties ends up\n  calling fixupLinkProperties, and if this Nat464Xlat state was still RUNNING by that\n  time, fixupLinkProperties would wrongly stack the obsolete clat interface in the LP.\n\n\nIn my mind, go/avoidwe exists more to spread the awareness that the common reflex of using \"we\" in comments often has the infortunate tendency to make comments less clear. It\u0027s less about the individual places and more about making people generally steer away from the reflex ; the argument that I buy is that the habit of writing comments without \"we\" is a better habit than the habit of writing comments with \"we\".\nNow if you think your version is clearer than mine please keep the current comment. I don\u0027t feel particularly strongly about it.",
       "parentUuid": "5ebf2537_2e6bd577",
+      "range": {
+        "startLine": 212,
+        "startChar": 41,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f60a437d_adefafdc",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:16:49Z",
+      "side": 1,
+      "message": "Edited. I don\u0027t think it\u0027s OK to say \"this Nat464Xlat state\" because that would be using \"Nat464Xlat\" as an adjective, and I don\u0027t think that\u0027s correct. But otherwise followed the suggestion.\n\nThat said - I don\u0027t understand how \"we\" could be interpreted as \"we the team\" since the team can\u0027t be in RUNNING state, or communicate to ConnectivityService. RUNNING state is used elsewhere in this file, so at least to me it seems pretty clear that \"we\" here refers to this code - or the control flow or the network stack, because in this file they\u0027re basically synonymous. But in any case, the offending \"we\" is gone.",
+      "parentUuid": "596d6ac1_3e3399e3",
       "range": {
         "startLine": 212,
         "startChar": 41,
@@ -226,6 +274,30 @@
       "side": 1,
       "message": "\u003e We only stop and restart clat if an IPv4 address appears and then disappears\n\nIt\u0027s pretty difficult to prove this. I think it\u0027s true, but the code allows for many other possibilities :\n\n- NetworkInfo#skip464xlat changes values (I don\u0027t think this ever happens to a given network, but then again it\u0027s all in OEM code)\n- NetworkInfo#mNetworkType changes in the lifetime of the network (I don\u0027t think that ever happens)\n- The network gets out of {CONNECTED,SUSPENDED} state and then back in (I don\u0027t think any agent does that, and CS might give them a pretty hard time if they do)\n\nThere\u0027s also the fact that AIUI binder calls are in principle susceptible to unbounded delays. But it may be reasonable to say that if that delay exceeds 60 seconds everything is probably broken anyway.\n\nSo all right, it\u0027s probably okay. Maybe I\u0027d suggest to add a comment that the start-stop-start-before-first-start-notification case would trip this if it ever happened but that it doesn\u0027t.",
       "parentUuid": "d686eb40_7588c975",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 18
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98648eed_ae82acd7",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:16:49Z",
+      "side": 1,
+      "message": "Per in-person discussion: the current code also suffers from this race. If we do start-stop-start, and the first interface up notification is delayed for so long that it arrives after the second start, then the current code will also get very confused.\n\nOnce all the CLs in this patch series are merged, it will be possible to make things better, because:\n\n1. We will only remain in STARTING state for long enough for netd to fork/exec clatd and for clatd to create the tun interface. That\u0027s much better than the current state, where we stay in STARTING state until a NAT64 is detected (which may never happen).\n2. Once clatd is started, it\u0027s pretty much guaranteed to start unless there is a local error (which likely means the interface has gone down because the network is disappearing). Thus it is possible to treat this as an error condition instead of as an expected steady state.",
+      "parentUuid": "1fb387c8_800674af",
       "range": {
         "startLine": 302,
         "startChar": 12,
