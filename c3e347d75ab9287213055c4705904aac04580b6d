@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbcf4fe6_edd65b79",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83daefd7_63f838ad",
+      "range": {
+        "startLine": 5161,
+        "startChar": 8,
+        "endLine": 5161,
+        "endChar": 97
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa45426c_540e7a83",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-21T06:43:58Z",
       "side": 1,
       "message": "This looks unintentionally empty",
+      "range": {
+        "startLine": 5200,
+        "startChar": 4,
+        "endLine": 5200,
+        "endChar": 5
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1f28ce_20cb378b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5200,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "Oops. Removed.",
+      "parentUuid": "fa45426c_540e7a83",
       "range": {
         "startLine": 5200,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d65d6f0_85f23d10",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfd1241f_7a96f1b7",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

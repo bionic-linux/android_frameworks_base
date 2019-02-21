@@ -22,6 +22,30 @@
       "revId": "096465037005778636ad23005ade76fb4013e04a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1324e0_0a0abf64",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "In the current code, ConnectivityService is responsible for calling its handleUpdateLinkProperties method, which may or may not start clatd depending on other bits of state kept in LinkProperties, NetworkAgentInfo, and this class.\n\nIt\u0027s possible to move the call to handleUpdateLinkProperties into this method, but since it\u0027s just a setter I feel that that it\u0027s not appropriate for this method to take additional action.",
+      "parentUuid": "cfe62741_36396a96",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 20
+      },
+      "revId": "096465037005778636ad23005ade76fb4013e04a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

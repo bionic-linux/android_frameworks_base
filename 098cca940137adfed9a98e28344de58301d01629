@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fadeede7_bf80a35a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "hasGlobalIPv6Address() is pretty important too though. You\u0027re definitely not using NAT64 if you don\u0027t have IPv6 :-)",
+      "parentUuid": "79c8bb05_e56e26f5",
+      "range": {
+        "startLine": 104,
+        "startChar": 54,
+        "endLine": 104,
+        "endChar": 68
+      },
+      "revId": "098cca940137adfed9a98e28344de58301d01629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da03faf4_cc065912",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2019-02-21T09:12:17Z",
       "side": 1,
       "message": "not sure how expensive for example getNat64Prefix() is... perhaps instead of having supported connected booleans, just implement early return up above?\n\npublic requiresClat() {\n  if !Array.contains(TYPES) return false;\n  if !Array.contains(STATES) return false;\n\n  ...\n}\n\nin general perhaps just doing an early return for isNat64Network as well?",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "098cca940137adfed9a98e28344de58301d01629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec98d34_3aa585df",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:26:15Z",
+      "side": 1,
+      "message": "Actually I think the variable names add clarity because they explain why each of the tests does what it does.",
+      "parentUuid": "da03faf4_cc065912",
       "range": {
         "startLine": 109,
         "startChar": 15,
