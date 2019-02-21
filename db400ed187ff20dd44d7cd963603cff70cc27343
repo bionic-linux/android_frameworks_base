@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a0805ff_efcd8fa4",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-02-21T11:02:37Z",
+      "side": 0,
+      "message": "Remove turing off repair mode here to avoid turning off repair mode twice, the caller(KeepaliveTracker.startTcpKeepalive) already handle this.",
+      "revId": "db400ed187ff20dd44d7cd963603cff70cc27343",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
