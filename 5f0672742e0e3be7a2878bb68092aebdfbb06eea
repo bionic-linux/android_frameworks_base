@@ -70,6 +70,30 @@
       "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a10989_b2fb7613",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-02-21T19:00:14Z",
+      "side": 1,
+      "message": "Ideally we want the CallQuality/Attributes to be extensible to include CS calls in the future, but currently we are unable to get CS call quality info from the modem, so we don\u0027t report anything. The only working flow is for IMS calls and I don\u0027t see that changing soon, so I think it\u0027s okay to just get it working for IMS calls.",
+      "parentUuid": "70af3e47_2430e491",
+      "range": {
+        "startLine": 1002,
+        "startChar": 48,
+        "endLine": 1002,
+        "endChar": 75
+      },
+      "revId": "5f0672742e0e3be7a2878bb68092aebdfbb06eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
