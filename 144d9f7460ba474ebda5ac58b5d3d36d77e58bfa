@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "596d6ac1_3e3399e3",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:17:22Z",
+      "side": 1,
+      "message": "The reason I mentioned it is because I found it pretty ambiguous here. I don\u0027t know if this is we the control, or we the Nat464Xlat class, or we the network stack, or we the team until I read the comment pretty carefully. Here is an alternative wording :\n\n  Enter IDLE state before updating LinkProperties. handleUpdateLinkProperties ends up\n  calling fixupLinkProperties, and if this Nat464Xlat state was still RUNNING by that\n  time, fixupLinkProperties would wrongly stack the obsolete clat interface in the LP.\n\n\nIn my mind, go/avoidwe exists more to spread the awareness that the common reflex of using \"we\" in comments often has the infortunate tendency to make comments less clear. It\u0027s less about the individual places and more about making people generally steer away from the reflex ; the argument that I buy is that the habit of writing comments without \"we\" is a better habit than the habit of writing comments with \"we\".\nNow if you think your version is clearer than mine please keep the current comment. I don\u0027t feel particularly strongly about it.",
+      "parentUuid": "5ebf2537_2e6bd577",
+      "range": {
+        "startLine": 212,
+        "startChar": 41,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d91944_65f54cee",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 10
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "96500f25_0ec61550",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:17:22Z",
+      "side": 1,
+      "message": "Fair enough, thanks.",
+      "parentUuid": "ab16748e_5301b6e2",
+      "range": {
+        "startLine": 218,
+        "startChar": 35,
+        "endLine": 218,
+        "endChar": 61
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18e8839_b1dc27f0",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 10
@@ -163,6 +211,30 @@
       "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb387c8_800674af",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:17:22Z",
+      "side": 1,
+      "message": "\u003e We only stop and restart clat if an IPv4 address appears and then disappears\n\nIt\u0027s pretty difficult to prove this. I think it\u0027s true, but the code allows for many other possibilities :\n\n- NetworkInfo#skip464xlat changes values (I don\u0027t think this ever happens to a given network, but then again it\u0027s all in OEM code)\n- NetworkInfo#mNetworkType changes in the lifetime of the network (I don\u0027t think that ever happens)\n- The network gets out of {CONNECTED,SUSPENDED} state and then back in (I don\u0027t think any agent does that, and CS might give them a pretty hard time if they do)\n\nThere\u0027s also the fact that AIUI binder calls are in principle susceptible to unbounded delays. But it may be reasonable to say that if that delay exceeds 60 seconds everything is probably broken anyway.\n\nSo all right, it\u0027s probably okay. Maybe I\u0027d suggest to add a comment that the start-stop-start-before-first-start-notification case would trip this if it ever happened but that it doesn\u0027t.",
+      "parentUuid": "d686eb40_7588c975",
+      "range": {
+        "startLine": 302,
+        "startChar": 12,
+        "endLine": 302,
+        "endChar": 18
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +329,30 @@
       "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05f788e_82ad8ae9",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:17:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c51e3de0_cb6645a4",
+      "range": {
+        "startLine": 599,
+        "startChar": 34,
+        "endLine": 599,
+        "endChar": 35
+      },
+      "revId": "144d9f7460ba474ebda5ac58b5d3d36d77e58bfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
