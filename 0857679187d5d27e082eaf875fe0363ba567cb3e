@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "75cd61ea_c041a5fd",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc651fe_d91e425e",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 33
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86217d42_1abbdec5",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7e650b1b_14361109",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86217d42_1abbdec5",
+      "range": {
+        "startLine": 103,
+        "startChar": 72,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d33e0f0d_5bc5e744",
         "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
         "patchSetId": 3
@@ -82,6 +130,30 @@
       "writtenOn": "2019-02-21T06:58:30Z",
       "side": 1,
       "message": "I think with the new way Nat464Xlat works now, it might be best to have start() private and to call update() here. That would be more realistic and it would let you verify(mNetd).resolverStartPrefix64Discovery() too.\n\nOr more precisely, at least one of tests should exercise this code path. Having start() and stop() visible for testing does make the test setup easier and may allow us to make some more focused tests, so I\u0027m happy to keep that, but I think update() should have coverage, including the check that it starts the discovery when needed.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 17
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea0d78f_72ffd145",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "I thought about that and even started to write it, but then realized that it would require a combinatorial increase in tests that need to be written and maintained.\n\nIn order to be correct, a black box test would have to test all possible combinations of inputs in all possible orderings and check that the actual transition (or no transition) matches the expected behaviour. But that is overkill, because the only things that can *actually* happen when something changes is that start() or stop() or startPrefixDiscovery() get called. So in the end we\u0027d have a lot more lines of test code to maintain with no substantial increase in test coverage.\n\nThere is already more realistic test coverage in ConnectivityServiceTest. Does that cover the cases that you think should be tested here? If not, I can try to add more coverage in this file.",
+      "parentUuid": "d33e0f0d_5bc5e744",
       "range": {
         "startLine": 184,
         "startChar": 12,

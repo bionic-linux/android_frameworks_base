@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0df077e2_f9df52d6",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "3fc9e01a_87319dac",
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ba4bac_29408697",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aba3ff_c527009d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ba4bac_29408697",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,30 @@
       "side": 1,
       "message": "+1 to what Junyu is saying on principle, though I think this is on the fence. I propose the best course of action now is to file a cleanup bug that we might come to solve some day, and leave it as is for now.",
       "parentUuid": "457702c9_678787a7",
+      "range": {
+        "startLine": 283,
+        "startChar": 16,
+        "endLine": 283,
+        "endChar": 22
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e429372_861cd4da",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-21T15:37:19Z",
+      "side": 1,
+      "message": "Yes, it would be better for this to be a state machine.\n\nI\u0027d prefer to do that after this change though. A rewrite using a state machine is a larger change, and it would be better to do it at a time when we are not also changing the expected behaviour. That way, we can leverage the existing tests to help ensure that the rewrite has the same behaviour as the current code.\n\nAdded a TODO for this.",
+      "parentUuid": "fa038d96_754c9527",
       "range": {
         "startLine": 283,
         "startChar": 16,
