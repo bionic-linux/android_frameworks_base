@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83daefd7_63f838ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:43:58Z",
+      "side": 1,
+      "message": "You may actually even want to check this is happening before the interfaceRemoved call, now that it\u0027s supposed to remove the stacked links even before the notification.",
+      "range": {
+        "startLine": 5161,
+        "startChar": 8,
+        "endLine": 5161,
+        "endChar": 97
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa45426c_540e7a83",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5200,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:43:58Z",
+      "side": 1,
+      "message": "This looks unintentionally empty",
+      "range": {
+        "startLine": 5200,
+        "startChar": 4,
+        "endLine": 5200,
+        "endChar": 5
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd1241f_7a96f1b7",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-21T06:43:58Z",
+      "side": 1,
+      "message": "This isn\u0027t testing anything any more, as correctly noted in l.129 this would be false for other reasons anyway. Move l.125~129 to l.139 and adjust the expectation on the 2nd call ?",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 126,
+        "endChar": 48
+      },
+      "revId": "c3e347d75ab9287213055c4705904aac04580b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
