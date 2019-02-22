@@ -152,6 +152,30 @@
       "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9264c22_e139d50a",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-22T09:06:01Z",
+      "side": 1,
+      "message": "While there is nothing wrong with a TODO, I think in this case this observation is pretty obvious to essentially anyone looking at this method. I\u0027d be happier if we had a bug tracking it, then we can safely forget about it now and go our merry way reviewing followups.",
+      "parentUuid": "9e429372_861cd4da",
+      "range": {
+        "startLine": 283,
+        "startChar": 16,
+        "endLine": 283,
+        "endChar": 22
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
