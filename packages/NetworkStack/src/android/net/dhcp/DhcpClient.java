@@ -497,6 +497,12 @@ public class DhcpClient extends StateMachine {
 
     private void acceptDhcpResults(DhcpResults results, String msg) {
         mDhcpLease = results;
+        if (mDhcpLease.dnsServers.size() == 0) {
+            Log.d(TAG, "Add default dns");
+            mDhcpLease.addDns("8.8.8.8");
+            mDhcpLease.addDns("8.8.4.4");
+        }
+
         mOffer = null;
         Log.d(TAG, msg + " lease: " + mDhcpLease);
         notifySuccess();
