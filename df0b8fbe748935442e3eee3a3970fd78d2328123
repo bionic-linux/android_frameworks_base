@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69b48ddb_5a05cc2f",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2019-02-22T02:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef92186d_c37dff63",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 61
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3859b196_2b283d86",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608f688b_c15de55e",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2019-02-22T02:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3859b196_2b283d86",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ece5fb39_585bdf9b",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpReachabilityMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2019-02-22T02:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14690cea_e7da8db8",
+      "range": {
+        "startLine": 133,
+        "startChar": 39,
+        "endLine": 133,
+        "endChar": 53
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c886e0fd_cccfedac",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe52471_b1faff64",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2019-02-22T02:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c886e0fd_cccfedac",
+      "range": {
+        "startLine": 602,
+        "startChar": 28,
+        "endLine": 602,
+        "endChar": 53
+      },
+      "revId": "df0b8fbe748935442e3eee3a3970fd78d2328123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
