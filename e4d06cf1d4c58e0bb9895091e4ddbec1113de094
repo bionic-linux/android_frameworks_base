@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7dd5b0d_fc97d3a0",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-02-22T09:52:54Z",
+      "side": 1,
+      "message": "If check tcp here, we only need to check once for all keepalive filters.\nHowever, it will be generated even there\u0027s no keepalive filter.\nAny idea to save these instructions when there\u0027s no keepalive filter?",
+      "range": {
+        "startLine": 1198,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
