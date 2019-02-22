@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e74e93c_0a143e6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-02-22T15:42:47Z",
+      "side": 1,
+      "message": "No, we have to keep it.\nYes, it\u0027s only needed for APK update.\nSee http://go/tzdroid-updates-retirement",
+      "parentUuid": "6eca70ff_2c2df1d5",
+      "revId": "766ba5854bdce0af22c3fd8eadf628af31b984b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cad73b6_01e6826a",
         "filename": "services/core/java/com/android/server/RuntimeService.java",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2019-02-22T15:10:14Z",
       "side": 1,
       "message": "Just wonder why it\u0027s added in this CL. Is this related to timezone?",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "766ba5854bdce0af22c3fd8eadf628af31b984b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74193ac_edec6880",
+        "filename": "services/core/java/com/android/server/RuntimeService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-02-22T15:42:47Z",
+      "side": 1,
+      "message": "Sorry! Nothing to do with this change. git add -A mistake. Will remove.",
+      "parentUuid": "4cad73b6_01e6826a",
       "range": {
         "startLine": 68,
         "startChar": 11,
