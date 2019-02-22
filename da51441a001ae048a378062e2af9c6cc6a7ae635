@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "c2530792_d1da40b0",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-02-22T09:29:28Z",
+      "side": 1,
+      "message": "Nits: \nSorry to bother this again.\nBy looking at the descriptions of two functions:\n1. Determines whether a network requires clat.\n2. Determines whether a network should start clat.\n\nBy looking at the change I know what you are doing, and know the difference between the two.\nBut maybe it is not true for who just see this function.\nIs it better we add more description for them?\nOr is it better we change the name to canStartClat() or something to reduce the ambiguity?",
+      "parentUuid": "02aba3ff_c527009d",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "457702c9_678787a7",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 1
