@@ -988,10 +988,12 @@ public abstract class DhcpPacket {
         clientMac = new byte[addrLen];
         packet.get(clientMac);
 
-        // skip over address padding (16 octets allocated)
-        packet.position(packet.position() + (16 - addrLen)
-                        + 64    // skip server host name (64 chars)
-                        + 128); // skip boot file name (128 chars)
+        packet.position(packet.position() + (16 - addrLen));
+        vendorInfo = readAsciiString(packet, 64, false);
+        if (!vendorInfo.isEmpty()){
+            vendorInfo = "hostname:" + vendorInfo;
+        }
+        packet.position(packet.position() + 128);
 
         // Ensure this is a DHCP packet with a magic cookie, and not BOOTP. http://b/31850211
         if (packet.remaining() < 4) {
