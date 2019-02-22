@@ -1571,6 +1571,13 @@ public class IpClient extends StateMachine {
                     stopDhcpAction();
                     break;
 
+                case DhcpClient.CMD_TRY_CACHED_IP:
+                    StaticIpConfiguration staticIpConfiguration = new StaticIpConfiguration();
+                    staticIpConfiguration.domains = "CMD_TRY_CACHED_IP";
+                    DhcpResults dhcpResults = new DhcpResults(staticIpConfiguration);
+                    mCallback.onNewDhcpResults(dhcpResults);
+                    break;
+
                 case DhcpClient.CMD_PRE_DHCP_ACTION:
                     if (mConfiguration.mRequestedPreDhcpActionMs > 0) {
                         ensureDhcpAction();

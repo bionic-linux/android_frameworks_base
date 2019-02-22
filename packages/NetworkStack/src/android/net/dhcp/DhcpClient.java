@@ -148,6 +148,7 @@ public class DhcpClient extends StateMachine {
     public static final int CMD_CLEAR_LINKADDRESS           = PUBLIC_BASE + 7;
     public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
     public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
+    public static final int CMD_TRY_CACHED_IP               = PUBLIC_BASE + 10;
 
     /* Message.arg1 arguments to CMD_POST_DHCP_ACTION notification */
     public static final int DHCP_SUCCESS = 1;
@@ -752,6 +753,10 @@ public class DhcpClient extends StateMachine {
             long alarmTime = now + timeout;
             mKickAlarm.schedule(alarmTime);
             mTimer *= 2;
+            // try cached ip solution after kicking 3 times.
+            if (mTimer > (8 * FIRST_TIMEOUT_MS)) {
+                mController.sendMessage(CMD_TRY_CACHED_IP);
+            }
             if (mTimer > MAX_TIMEOUT_MS) {
                 mTimer = MAX_TIMEOUT_MS;
             }
