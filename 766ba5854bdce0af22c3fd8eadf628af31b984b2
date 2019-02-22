@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eca70ff_2c2df1d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-22T15:10:14Z",
+      "side": 1,
+      "message": "QQ: is it possible to remove RulesManagersService entirely?  Is it only needed for APK update?",
+      "revId": "766ba5854bdce0af22c3fd8eadf628af31b984b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cad73b6_01e6826a",
+        "filename": "services/core/java/com/android/server/RuntimeService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-22T15:10:14Z",
+      "side": 1,
+      "message": "Just wonder why it\u0027s added in this CL. Is this related to timezone?",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "766ba5854bdce0af22c3fd8eadf628af31b984b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66321f80_e97dff0e",
+        "filename": "services/core/java/com/android/server/RuntimeService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-02-22T15:10:14Z",
+      "side": 1,
+      "message": "nit: why keeping it in comment?",
+      "range": {
+        "startLine": 119,
+        "startChar": 37,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "766ba5854bdce0af22c3fd8eadf628af31b984b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
