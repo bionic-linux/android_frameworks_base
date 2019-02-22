@@ -365,6 +365,10 @@ public class AudioEffect {
      * @hide
      */
     public NativeEventHandler mNativeEventHandler = null;
+    /**
+     * Lock to synchronize access to AudioEffect
+     */
+    private static final Object sEffectLock = new Object();
 
     // --------------------------------------------------------------------------
     // Constructor, Finalize
@@ -409,23 +413,25 @@ public class AudioEffect {
         int[] id = new int[1];
         Descriptor[] desc = new Descriptor[1];
         // native initialization
-        int initResult = native_setup(new WeakReference<AudioEffect>(this),
-                type.toString(), uuid.toString(), priority, audioSession, id,
-                desc, ActivityThread.currentOpPackageName());
-        if (initResult != SUCCESS && initResult != ALREADY_EXISTS) {
-            Log.e(TAG, "Error code " + initResult
-                    + " when initializing AudioEffect.");
-            switch (initResult) {
-            case ERROR_BAD_VALUE:
-                throw (new IllegalArgumentException("Effect type: " + type
-                        + " not supported."));
-            case ERROR_INVALID_OPERATION:
-                throw (new UnsupportedOperationException(
-                        "Effect library not loaded"));
-            default:
-                throw (new RuntimeException(
-                        "Cannot initialize effect engine for type: " + type
-                                + " Error: " + initResult));
+        synchronized (sEffectLock) {
+            int initResult = native_setup(new WeakReference<AudioEffect>(this),
+                    type.toString(), uuid.toString(), priority, audioSession, id,
+                    desc, ActivityThread.currentOpPackageName());
+            if (initResult != SUCCESS && initResult != ALREADY_EXISTS) {
+                Log.e(TAG, "Error code " + initResult
+                        + " when initializing AudioEffect.");
+                switch (initResult) {
+                case ERROR_BAD_VALUE:
+                    throw (new IllegalArgumentException("Effect type: " + type
+                            + " not supported."));
+                case ERROR_INVALID_OPERATION:
+                    throw (new UnsupportedOperationException(
+                            "Effect library not loaded"));
+                default:
+                    throw (new RuntimeException(
+                            "Cannot initialize effect engine for type: " + type
+                                    + " Error: " + initResult));
+                }
             }
         }
         mId = id[0];
@@ -1232,14 +1238,16 @@ public class AudioEffect {
     @SuppressWarnings("unused")
     private static void postEventFromNative(Object effect_ref, int what,
             int arg1, int arg2, Object obj) {
-        AudioEffect effect = (AudioEffect) ((WeakReference) effect_ref).get();
-        if (effect == null) {
-            return;
-        }
-        if (effect.mNativeEventHandler != null) {
-            Message m = effect.mNativeEventHandler.obtainMessage(what, arg1,
-                    arg2, obj);
-            effect.mNativeEventHandler.sendMessage(m);
+        synchronized (sEffectLock) {
+            AudioEffect effect = (AudioEffect) ((WeakReference) effect_ref).get();
+            if (effect == null) {
+                return;
+            }
+            if (effect.mNativeEventHandler != null) {
+                Message m = effect.mNativeEventHandler.obtainMessage(what, arg1,
+                        arg2, obj);
+                effect.mNativeEventHandler.sendMessage(m);
+            }
         }
 
     }
