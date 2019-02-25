@@ -187,6 +187,30 @@
       "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ebc69e_c1f2f688",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-25T02:28:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"checking that the call to to resolverStartPrefix64Discovery actually happens\". It\u0027s tested in this CL, no? For example:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/906909/7/tests/net/java/com/android/server/ConnectivityServiceTest.java#5122",
+      "parentUuid": "3774baa1_f4fd922b",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 17
+      },
+      "revId": "0857679187d5d27e082eaf875fe0363ba567cb3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
