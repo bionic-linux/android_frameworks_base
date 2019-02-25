@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae260a19_194d8070",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-25T04:16:58Z",
+      "side": 1,
+      "message": "This is done in l.5178 and the mock is not reset, so IIUC this is not useful",
+      "range": {
+        "startLine": 5190,
+        "startChar": 36,
+        "endLine": 5190,
+        "endChar": 45
+      },
+      "revId": "11ee595d4ee98c723868822cefed3c9828b0dc01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f468bd_97f4dba8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-25T04:16:58Z",
+      "side": 1,
+      "message": "While this is correct here, I think it\u0027s easier to understand the comment in ll.5172~5173 if it\u0027s moved to l.5179",
+      "range": {
+        "startLine": 5191,
+        "startChar": 36,
+        "endLine": 5191,
+        "endChar": 65
+      },
+      "revId": "11ee595d4ee98c723868822cefed3c9828b0dc01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -248,6 +248,30 @@
       "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f3b4fe_3500c1b0",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-02-25T04:16:58Z",
+      "side": 1,
+      "message": "Thanks !",
+      "parentUuid": "402cfb67_de5d01a1",
+      "range": {
+        "startLine": 283,
+        "startChar": 16,
+        "endLine": 283,
+        "endChar": 22
+      },
+      "revId": "da51441a001ae048a378062e2af9c6cc6a7ae635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
