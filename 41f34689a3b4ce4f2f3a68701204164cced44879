@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5de734_d95e9703",
+        "filename": "services/net/java/android/net/shared/NetworkCapabilitiesPartial.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-25T02:15:14Z",
+      "side": 1,
+      "message": "Do we need to update it to 2019?",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59a2c7b_bfbeef22",
+        "filename": "services/net/java/android/net/shared/NetworkCapabilitiesPartial.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-25T02:15:14Z",
+      "side": 1,
+      "message": "Not sure the purpose. Do you like only mention about this three fields? I mean that SignalStrength\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000, EstablishingVpnAppUid\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000 are not included, either.\n\nFor the network specifier, I should put it into NetworkCapabilitiesPartial then.",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 66
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017ec74f_c4b2d981",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-25T02:15:14Z",
+      "side": 1,
+      "message": "Do we have plan already to do it? in Q? This may consider the interaction with telephony side and data stall detection.",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5505b483_6110db47",
+        "filename": "services/net/java/android/net/util/PartialViewUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-02-25T02:15:14Z",
+      "side": 1,
+      "message": "2019?",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
