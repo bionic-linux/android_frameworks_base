@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2a4d1966_25119186",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-26T15:00:18Z",
+      "side": 1,
+      "message": "Currently I believe this cannot happen. See Dns64Configuration::startPrefixDiscovery. The thread exits as soon as a prefix is discovered. Calling startPrefixDiscovery twice invalidates the existing attempt and notifies that the prefix is now null. stopPrefixDiscovery stops the thread and notifies that the prefix is now null.\n\nAdded a comment.",
+      "parentUuid": "f8e3e45a_0ac28863",
+      "range": {
+        "startLine": 290,
+        "startChar": 16,
+        "endLine": 290,
+        "endChar": 22
+      },
+      "revId": "89731787a63756f9123e238ea37e524bb7c440d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ae97db0_6b580ca7",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 9
@@ -82,6 +106,30 @@
       "writtenOn": "2019-02-26T14:20:33Z",
       "side": 1,
       "message": "Nits: period at the end.",
+      "range": {
+        "startLine": 5181,
+        "startChar": 72,
+        "endLine": 5181,
+        "endChar": 75
+      },
+      "revId": "89731787a63756f9123e238ea37e524bb7c440d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c68be2_52427d6b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-26T15:00:18Z",
+      "side": 1,
+      "message": "Removed because it was actually incorrect.",
+      "parentUuid": "927a3343_91a24c0e",
       "range": {
         "startLine": 5181,
         "startChar": 72,
