@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ce4c8736_d5b383f5",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-02-27T11:10:49Z",
+      "side": 1,
+      "message": "can reword as \u0027if start() gets called, then stop(), ...\u0027",
+      "parentUuid": "1ae97db0_6b580ca7",
+      "range": {
+        "startLine": 372,
+        "startChar": 20,
+        "endLine": 372,
+        "endChar": 22
+      },
+      "revId": "89731787a63756f9123e238ea37e524bb7c440d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "927a3343_91a24c0e",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 9
