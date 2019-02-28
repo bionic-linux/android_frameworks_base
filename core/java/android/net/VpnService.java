@@ -513,6 +513,7 @@ public class VpnService extends Service {
          * Sets an HTTP proxy for the VPN network. This proxy is only a recommendation
          * and it is possible that some apps will ignore it.
          */
+        @NonNull
         public Builder setHttpProxy(@NonNull ProxyInfo proxyInfo) {
             mConfig.proxyInfo = proxyInfo;
             return this;
