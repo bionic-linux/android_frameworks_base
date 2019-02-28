@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4e977a4_2348ac12",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6391,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-28T17:25:57Z",
+      "side": 1,
+      "message": "Right now it uses pretty much everything in NetworkState (except networkId and subscriberId).\nIn general though, I think we should create a custom wrapper to pass all these arguments to avoid this growing list of args.",
+      "parentUuid": "97ae70bd_b313cfe9",
+      "range": {
+        "startLine": 6391,
+        "startChar": 59,
+        "endLine": 6391,
+        "endChar": 77
+      },
+      "revId": "c7e6a7be57ad6f00eac6d50b232efd5fe5d3dd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf60569_a60dc61e",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c7e6a7be57ad6f00eac6d50b232efd5fe5d3dd64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6ece21_b1c4fc24",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4282,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-02-28T17:25:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aaf60569_a60dc61e",
+      "range": {
+        "startLine": 4282,
+        "startChar": 8,
+        "endLine": 4282,
+        "endChar": 53
+      },
+      "revId": "c7e6a7be57ad6f00eac6d50b232efd5fe5d3dd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
