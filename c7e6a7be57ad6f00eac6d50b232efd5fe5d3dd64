@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ae70bd_b313cfe9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6391,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-28T09:39:24Z",
+      "side": 1,
+      "message": "Consider adding a TODO to do something simpler than getAllNetworkState(). NSS doesn\u0027t need all the information in getAllNetworkState, right?",
+      "range": {
+        "startLine": 6391,
+        "startChar": 59,
+        "endLine": 6391,
+        "endChar": 77
+      },
+      "revId": "c7e6a7be57ad6f00eac6d50b232efd5fe5d3dd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf60569_a60dc61e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4282,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-02-28T09:39:24Z",
+      "side": 1,
+      "message": "Nit: this is not very realistic because on real NetworkAgents immediately send their LinkProperties on connect(). Maybe add a TODO to MockNetworkAgent to store LinkProperties so that they can be passed to CS when the MockNetworkAgent connects?",
+      "range": {
+        "startLine": 4282,
+        "startChar": 8,
+        "endLine": 4282,
+        "endChar": 53
+      },
+      "revId": "c7e6a7be57ad6f00eac6d50b232efd5fe5d3dd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
