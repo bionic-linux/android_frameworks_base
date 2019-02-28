@@ -26,6 +26,7 @@ import android.os.UserHandle;
  */
 interface IRingtonePlayer {
     /** Used for Ringtone.java playback */
+    @UnsupportedAppUsage
     oneway void play(IBinder token, in Uri uri, in AudioAttributes aa, float volume, boolean looping);
     oneway void stop(IBinder token);
     boolean isPlaying(IBinder token);
