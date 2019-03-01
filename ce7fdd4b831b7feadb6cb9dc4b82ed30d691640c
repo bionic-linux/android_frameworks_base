@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87a0b72_144d878c",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-01T12:35:09Z",
+      "side": 1,
+      "message": "Is it possible that the device is running a 4.8+ kernel but still lacks one of the necessary options ?",
+      "range": {
+        "startLine": 185,
+        "startChar": 19,
+        "endLine": 185,
+        "endChar": 75
+      },
+      "revId": "ce7fdd4b831b7feadb6cb9dc4b82ed30d691640c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
