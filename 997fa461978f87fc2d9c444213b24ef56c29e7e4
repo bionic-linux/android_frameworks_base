@@ -22,6 +22,30 @@
       "revId": "997fa461978f87fc2d9c444213b24ef56c29e7e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f91440c_cb354ef5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2019-03-01T14:24:28Z",
+      "side": 1,
+      "message": "As this is the only code that needs the annotation but does not have access to the annotations (and we are not likely to have any more) then it seems like a bit of overkill to add specific support for it in the build to make current include the annotation on top of the public SDK.\n\nThe reason the annotation cannot be used in the source is because it builds the android.test.legacy library which is provided in the SDK and meant to be statically included in an APK and so builds against the current. I did get an agreement in principle from the androidx.test team to add an androidx.test.legacy library to their stuff which would be distributed through the Google Maven repository. Once we did that then we could potentially remove the android.test.legacy from the SDK and merge this code back into the original source.\n\nCurrently, the runtime hiddenapi checks are only performed on the bootclassloader, so classes in a shared library have no protection against being accessed by reflection. I raised http://b/126519737 to cover that mainly as a place for me to ensure that information about what API methods need to be checked is not lost. So, once we remove android.test.base from the bootclassloader then we could potentially just remove the whole test-base/hiddenapi/ directory.\n\nThe reason why I need to remove the entries from the file is because they prevent me removing android.test.base from the bootclasspath. Basically, the hiddenapi information for the android.test.base (of which the entries in config/hiddenapi-greylist.txt are part) must only be gathered when android.test.base is in the bootclassloader or either the build or tests will break. Without this change the entries in config/hiddenapi-greylist.txt would break the build when REMOVE_ATB_FROM_BCP\u003dtrue because it would detect that they are not in the bootclassloader. This change fixes that because the hiddenapi information is only gathered from android.test.base-hiddenapi (and android.test.base) when android.test.base in on the bootclasspath.",
+      "parentUuid": "9a37750e_4243d954",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "997fa461978f87fc2d9c444213b24ef56c29e7e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
