@@ -72,6 +72,9 @@ public class IpMemoryStoreDatabase {
         public static final String COLNAME_ASSIGNEDV4ADDRESS = "assignedV4Address";
         public static final String COLTYPE_ASSIGNEDV4ADDRESS = "INTEGER";
 
+        public static final String COLNAME_ASSIGNEDV4ADDRESSEXPIRY = "assignedV4AddressExpiry";
+        public static final String COLTYPE_ASSIGNEDV4ADDRESSEXPIRY = "INTEGER DEFAULT -1";
+
         // Please note that the group hint is only a *hint*, hence its name. The client can offer
         // this information to nudge the grouping in the decision it thinks is right, but it can't
         // decide for the memory store what is the same L3 network.
@@ -86,13 +89,14 @@ public class IpMemoryStoreDatabase {
         public static final String COLTYPE_MTU = "INTEGER DEFAULT -1";
 
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "
-                + TABLENAME                 + " ("
-                + COLNAME_L2KEY             + " " + COLTYPE_L2KEY + " PRIMARY KEY NOT NULL, "
-                + COLNAME_EXPIRYDATE        + " " + COLTYPE_EXPIRYDATE        + ", "
-                + COLNAME_ASSIGNEDV4ADDRESS + " " + COLTYPE_ASSIGNEDV4ADDRESS + ", "
-                + COLNAME_GROUPHINT         + " " + COLTYPE_GROUPHINT         + ", "
-                + COLNAME_DNSADDRESSES      + " " + COLTYPE_DNSADDRESSES      + ", "
-                + COLNAME_MTU               + " " + COLTYPE_MTU               + ")";
+                + TABLENAME                       + " ("
+                + COLNAME_L2KEY                   + " " + COLTYPE_L2KEY + " PRIMARY KEY NOT NULL, "
+                + COLNAME_EXPIRYDATE              + " " + COLTYPE_EXPIRYDATE        + ", "
+                + COLNAME_ASSIGNEDV4ADDRESS       + " " + COLTYPE_ASSIGNEDV4ADDRESS + ", "
+                + COLNAME_ASSIGNEDV4ADDRESSEXPIRY + " " + COLTYPE_ASSIGNEDV4ADDRESSEXPIRY + ", "
+                + COLNAME_GROUPHINT               + " " + COLTYPE_GROUPHINT         + ", "
+                + COLNAME_DNSADDRESSES            + " " + COLTYPE_DNSADDRESSES      + ", "
+                + COLNAME_MTU                     + " " + COLTYPE_MTU               + ")";
         public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLENAME;
     }
 
@@ -204,6 +208,10 @@ public class IpMemoryStoreDatabase {
             values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS,
                     inet4AddressToIntHTH(attributes.assignedV4Address));
         }
+        if (null != attributes.assignedV4AddressExpiry) {
+            values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSEXPIRY,
+                    attributes.assignedV4AddressExpiry);
+        }
         if (null != attributes.groupHint) {
             values.put(NetworkAttributesContract.COLNAME_GROUPHINT, attributes.groupHint);
         }
@@ -251,12 +259,17 @@ public class IpMemoryStoreDatabase {
         final NetworkAttributes.Builder builder = new NetworkAttributes.Builder();
         final int assignedV4AddressInt = getInt(cursor,
                 NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS, 0);
+        final int assignedV4AddressExpiry = getInt(cursor,
+                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSEXPIRY, -1);
         final String groupHint = getString(cursor, NetworkAttributesContract.COLNAME_GROUPHINT);
         final byte[] dnsAddressesBlob =
                 getBlob(cursor, NetworkAttributesContract.COLNAME_DNSADDRESSES);
         final int mtu = getInt(cursor, NetworkAttributesContract.COLNAME_MTU, -1);
         if (0 != assignedV4AddressInt) {
             builder.setAssignedV4Address(intToInet4AddressHTH(assignedV4AddressInt));
+        }
+        if (assignedV4AddressExpiry >= 0) {
+            builder.setAssignedV4AddressExpiry(assignedV4AddressExpiry);
         }
         builder.setGroupHint(groupHint);
         if (null != dnsAddressesBlob) {
