@@ -30,6 +30,7 @@ import android.net.ipmemorystore.Blob;
  */
 parcelable NetworkAttributesParcelable {
     byte[] assignedV4Address;
+    int assignedV4AddressDuration;
     String groupHint;
     Blob[] dnsAddresses;
     int mtu;

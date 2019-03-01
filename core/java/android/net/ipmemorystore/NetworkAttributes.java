@@ -60,6 +60,11 @@ public class NetworkAttributes {
     public final Inet4Address assignedV4Address;
     private static final float WEIGHT_ASSIGNEDV4ADDR = 300.0f;
 
+    // The lease duration of v4 address allocated from DHCP server.
+    @Nullable
+    public final Integer assignedV4AddressDuration;
+    private static final float WEIGHT_ASSIGNEDV4ADDRDURATION = 300.0f;
+
     // Optionally supplied by the client if it has an opinion on L3 network. For example, this
     // could be a hash of the SSID + security type on WiFi.
     @Nullable
@@ -81,6 +86,7 @@ public class NetworkAttributes {
     /** @hide */
     @VisibleForTesting
     public static final float TOTAL_WEIGHT = WEIGHT_ASSIGNEDV4ADDR
+            + WEIGHT_ASSIGNEDV4ADDRDURATION
             + WEIGHT_GROUPHINT
             + WEIGHT_DNSADDRESSES
             + WEIGHT_MTU;
@@ -89,11 +95,13 @@ public class NetworkAttributes {
     @VisibleForTesting
     public NetworkAttributes(
             @Nullable final Inet4Address assignedV4Address,
+            @Nullable final Integer assignedV4AddressDuration,
             @Nullable final String groupHint,
             @Nullable final List<InetAddress> dnsAddresses,
             @Nullable final Integer mtu) {
         if (mtu != null && mtu < 0) throw new IllegalArgumentException("MTU can't be negative");
         this.assignedV4Address = assignedV4Address;
+        this.assignedV4AddressDuration = assignedV4AddressDuration;
         this.groupHint = groupHint;
         this.dnsAddresses = null == dnsAddresses ? null :
                 Collections.unmodifiableList(new ArrayList<>(dnsAddresses));
@@ -105,6 +113,8 @@ public class NetworkAttributes {
         // The call to the other constructor must be the first statement of this constructor,
         // so everything has to be inline
         this((Inet4Address) getByAddressOrNull(parcelable.assignedV4Address),
+                parcelable.assignedV4AddressDuration >= 0
+                        ? parcelable.assignedV4AddressDuration : null,
                 parcelable.groupHint,
                 blobArrayToInetAddressList(parcelable.dnsAddresses),
                 parcelable.mtu >= 0 ? parcelable.mtu : null);
@@ -150,6 +160,8 @@ public class NetworkAttributes {
         final NetworkAttributesParcelable parcelable = new NetworkAttributesParcelable();
         parcelable.assignedV4Address =
                 (null == assignedV4Address) ? null : assignedV4Address.getAddress();
+        parcelable.assignedV4AddressDuration =
+                (null == assignedV4AddressDuration) ? -1 : assignedV4AddressDuration;
         parcelable.groupHint = groupHint;
         parcelable.dnsAddresses = inetAddressListToBlobArray(dnsAddresses);
         parcelable.mtu = (null == mtu) ? -1 : mtu;
@@ -168,6 +180,8 @@ public class NetworkAttributes {
     public float getNetworkGroupSamenessConfidence(@NonNull final NetworkAttributes o) {
         final float samenessScore =
                 samenessContribution(WEIGHT_ASSIGNEDV4ADDR, assignedV4Address, o.assignedV4Address)
+                + samenessContribution(WEIGHT_ASSIGNEDV4ADDRDURATION, assignedV4AddressDuration,
+                      o.assignedV4AddressDuration)
                 + samenessContribution(WEIGHT_GROUPHINT, groupHint, o.groupHint)
                 + samenessContribution(WEIGHT_DNSADDRESSES, dnsAddresses, o.dnsAddresses)
                 + samenessContribution(WEIGHT_MTU, mtu, o.mtu);
@@ -189,6 +203,8 @@ public class NetworkAttributes {
         @Nullable
         private Inet4Address mAssignedAddress;
         @Nullable
+        private Integer mAssignedAddressDuration;
+        @Nullable
         private String mGroupHint;
         @Nullable
         private List<InetAddress> mDnsAddresses;
@@ -202,6 +218,20 @@ public class NetworkAttributes {
          */
         public Builder setAssignedV4Address(@Nullable final Inet4Address assignedV4Address) {
             mAssignedAddress = assignedV4Address;
+            return this;
+        }
+
+        /**
+         * Set the lease duration of assigned address.
+         * @param assignedV4AddressDuration The lease duration of assigned address.
+         * @return This builder.
+         */
+        public Builder setAssignedV4AddressDuration(
+                @Nullable final Integer assignedV4AddressDuration) {
+            if (null != assignedV4AddressDuration && assignedV4AddressDuration < 0) {
+                throw new IllegalArgumentException("IPv4 address lease duration can't be negative");
+            }
+            mAssignedAddressDuration = assignedV4AddressDuration;
             return this;
         }
 
@@ -248,14 +278,15 @@ public class NetworkAttributes {
          * @return The built NetworkAttributes object.
          */
         public NetworkAttributes build() {
-            return new NetworkAttributes(mAssignedAddress, mGroupHint, mDnsAddresses, mMtu);
+            return new NetworkAttributes(mAssignedAddress, mAssignedAddressDuration,
+                  mGroupHint, mDnsAddresses, mMtu);
         }
     }
 
     /** @hide */
     public boolean isEmpty() {
-        return (null == assignedV4Address) && (null == groupHint)
-                && (null == dnsAddresses) && (null == mtu);
+        return (null == assignedV4Address) && (null == assignedV4AddressDuration)
+                && (null == groupHint) && (null == dnsAddresses) && (null == mtu);
     }
 
     @Override
@@ -263,6 +294,7 @@ public class NetworkAttributes {
         if (!(o instanceof NetworkAttributes)) return false;
         final NetworkAttributes other = (NetworkAttributes) o;
         return Objects.equals(assignedV4Address, other.assignedV4Address)
+                && Objects.equals(assignedV4AddressDuration, other.assignedV4AddressDuration)
                 && Objects.equals(groupHint, other.groupHint)
                 && Objects.equals(dnsAddresses, other.dnsAddresses)
                 && Objects.equals(mtu, other.mtu);
@@ -270,7 +302,8 @@ public class NetworkAttributes {
 
     @Override
     public int hashCode() {
-        return Objects.hash(assignedV4Address, groupHint, dnsAddresses, mtu);
+        return Objects.hash(assignedV4Address, assignedV4AddressDuration,
+              groupHint, dnsAddresses, mtu);
     }
 
     /** Pretty print */
@@ -284,6 +317,13 @@ public class NetworkAttributes {
             resultJoiner.add(assignedV4Address.toString());
         } else {
             nullFields.add("assignedV4Addr");
+        }
+
+        if (null != assignedV4AddressDuration) {
+            resultJoiner.add("assignedV4AddressDuration :");
+            resultJoiner.add(assignedV4AddressDuration.toString());
+        } else {
+            nullFields.add("assignedV4AddressDuration");
         }
 
         if (null != groupHint) {

@@ -72,6 +72,9 @@ public class IpMemoryStoreDatabase {
         public static final String COLNAME_ASSIGNEDV4ADDRESS = "assignedV4Address";
         public static final String COLTYPE_ASSIGNEDV4ADDRESS = "INTEGER";
 
+        public static final String COLNAME_ASSIGNEDV4ADDRESSDURATION = "assignedV4AddressDuration";
+        public static final String COLTYPE_ASSIGNEDV4ADDRESSDURATION = "INTEGER DEFAULT -1";
+
         // Please note that the group hint is only a *hint*, hence its name. The client can offer
         // this information to nudge the grouping in the decision it thinks is right, but it can't
         // decide for the memory store what is the same L3 network.
@@ -90,6 +93,7 @@ public class IpMemoryStoreDatabase {
                 + COLNAME_L2KEY             + " " + COLTYPE_L2KEY + " PRIMARY KEY NOT NULL, "
                 + COLNAME_EXPIRYDATE        + " " + COLTYPE_EXPIRYDATE        + ", "
                 + COLNAME_ASSIGNEDV4ADDRESS + " " + COLTYPE_ASSIGNEDV4ADDRESS + ", "
+                + COLNAME_ASSIGNEDV4ADDRESSDURATION + " " + COLTYPE_ASSIGNEDV4ADDRESSDURATION + ", "
                 + COLNAME_GROUPHINT         + " " + COLTYPE_GROUPHINT         + ", "
                 + COLNAME_DNSADDRESSES      + " " + COLTYPE_DNSADDRESSES      + ", "
                 + COLNAME_MTU               + " " + COLTYPE_MTU               + ")";
@@ -204,6 +208,10 @@ public class IpMemoryStoreDatabase {
             values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS,
                     inet4AddressToIntHTH(attributes.assignedV4Address));
         }
+        if (null != attributes.assignedV4AddressDuration) {
+            values.put(NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSDURATION,
+                    attributes.assignedV4AddressDuration);
+        }
         if (null != attributes.groupHint) {
             values.put(NetworkAttributesContract.COLNAME_GROUPHINT, attributes.groupHint);
         }
@@ -251,12 +259,17 @@ public class IpMemoryStoreDatabase {
         final NetworkAttributes.Builder builder = new NetworkAttributes.Builder();
         final int assignedV4AddressInt = getInt(cursor,
                 NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS, 0);
+        final int assignedV4AddressDuration = getInt(cursor,
+                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSDURATION, -1);
         final String groupHint = getString(cursor, NetworkAttributesContract.COLNAME_GROUPHINT);
         final byte[] dnsAddressesBlob =
                 getBlob(cursor, NetworkAttributesContract.COLNAME_DNSADDRESSES);
         final int mtu = getInt(cursor, NetworkAttributesContract.COLNAME_MTU, -1);
         if (0 != assignedV4AddressInt) {
             builder.setAssignedV4Address(intToInet4AddressHTH(assignedV4AddressInt));
+        }
+        if (assignedV4AddressDuration >= 0) {
+            builder.setAssignedV4AddressDuration(assignedV4AddressDuration);
         }
         builder.setGroupHint(groupHint);
         if (null != dnsAddressesBlob) {
