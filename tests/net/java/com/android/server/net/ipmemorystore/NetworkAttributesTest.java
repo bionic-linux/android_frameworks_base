@@ -57,6 +57,7 @@ public class NetworkAttributesTest {
         final NetworkAttributes na =
                 new NetworkAttributes(
                         (Inet4Address) Inet4Address.getByAddress(new byte[] {1, 2, 3, 4}),
+                        7200,
                         "some hint",
                         Arrays.asList(Inet4Address.getByAddress(new byte[] {5, 6, 7, 8}),
                                 Inet4Address.getByAddress(new byte[] {9, 0, 1, 2})),
