@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a37750e_4243d954",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-03-01T13:52:09Z",
+      "side": 1,
+      "message": "Suggestion: Is it about time we did something about this? i.e. the problem of not being able to use the annotation directly in source?\n\nIf we could actually annotate the real source that would be ideal. I think annotating using stubs is an ok fallback when there are other reasons not to annotate the code, e.g. when it would mean carrying patches over upstream. For at least some of the ones in this commit, those arguments do not apply so it\u0027s mostly because the annotation isn\u0027t in the compiler classpath, which we can do something about.\n\nWhile it\u0027s not something we want app developers to use it seems like something we could add there with appropriate documentation and it would save a fair amount of pain: the hidden API annotation stubs are ok, but I don\u0027t think they\u0027re an enormous saving over having entries in the .txt file. If it\u0027s a matter of expressibility being greater with annotations then a different .txt format would solve that without so much verbosity. \n\nAlternatively, perhaps \"current\" could include the annotation on top of the public SDK (a bit like lambda stubs is provided for compilation but not SDK).",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "997fa461978f87fc2d9c444213b24ef56c29e7e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
