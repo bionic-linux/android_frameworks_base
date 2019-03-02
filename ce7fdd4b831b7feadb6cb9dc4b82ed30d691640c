@@ -22,6 +22,30 @@
       "revId": "ce7fdd4b831b7feadb6cb9dc4b82ed30d691640c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e109a3fc_c189a5c6",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-03-02T01:44:39Z",
+      "side": 1,
+      "message": "Well, technically you could always compile the kernel without networking or tcp/ip support...\nbut I wouldn\u0027t really worry too much about it.  :-)",
+      "parentUuid": "a87a0b72_144d878c",
+      "range": {
+        "startLine": 185,
+        "startChar": 19,
+        "endLine": 185,
+        "endChar": 75
+      },
+      "revId": "ce7fdd4b831b7feadb6cb9dc4b82ed30d691640c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
