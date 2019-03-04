@@ -92,6 +92,30 @@
       "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40993b1a_ba8777d1",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-04T14:36:58Z",
+      "side": 1,
+      "message": "The API visibility rules are indeed confusing. They are:\n\n(1.) For public API, everything is public by default unless annotated @hide\n(2.) For other APIs (test, system, CorePlatformApi, ...), everything is private unless annotated @TestApi, @SystemApi, @CorePlatformApi etc.\n\nI think someone was working on making (1.) opt-in rather than opt-out, I don\u0027t know the status.\n\nFor the specific issue here, the stuff in Settings is annotated @SystemApi @TestApi, so it\u0027s part of that APIs, but this field here is not, so it is not part of those APIs. Therefore you need to either (a) make the field part of @SystemApi @TestApi, or (b) not refer to it from javadoc for @SystemApi @TestApi fields. In case of (a), you\u0027d need to move the field out of this class NetworkMonitor because NetworkMonitor as a whole is not part of those APIs and shouldn\u0027t become part of those APIs just because of some field.\n\nIn this particular case, the class NetworkMonitor is private as a whole, so you should not add any of its members to @SystemApi @TestApi.\n\n\nHow to fix this: I don\u0027t know which of the following are feasible, but, if feasible, the following is what think are the options ranked from most desirable to least desirable:\n(1.) Don\u0027t make DATA_STALL_EVALUATION_TYPE part of any API, so you don\u0027t need to make DATA_STALL_EVALUATION_TYPE_DNS part of that API.\n(2.) If that\u0027s not possible, then consider if DATA_STALL_EVALUATION_TYPE can be useful without needing to know about / refer to DATA_STALL_EVALUATION_TYPE_DNS. If yes, then drop the reference in the javadoc.\n(3.) Else, move DATA_STALL_EVALUATION_TYPE_DNS to some other class and make it part of @SystemApi @TestApi",
+      "parentUuid": "46d281c2_7bdbf20a",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
