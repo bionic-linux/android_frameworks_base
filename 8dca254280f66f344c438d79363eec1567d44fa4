@@ -68,6 +68,30 @@
       "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d281c2_7bdbf20a",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-04T13:16:12Z",
+      "side": 1,
+      "message": "Sorry that I do not fully understand the scope of API review here. \nI am a little confused combining with comment in Settings.java, The definition in Settings is also @hide. Looks that the visibility is different as this API here. May I know that we need the constant here to be public and not @hide here is caused by DATA_STALL_EVALUATION_TYPE is marked as systemapi in Settings.java?",
+      "parentUuid": "57e46fb3_81c03e3d",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
