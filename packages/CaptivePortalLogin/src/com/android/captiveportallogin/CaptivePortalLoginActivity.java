@@ -435,7 +435,13 @@ public class CaptivePortalLoginActivity extends Activity {
             }
             final URL url = makeURL(urlString);
             Log.d(TAG, "onPageStarted: " + sanitizeURL(url));
-            mHostname = host(url);
+            // Don't set mHostname if hostname is equal to the hostname of probing url(mUrl).
+            // Some WIFI APs(e.g. Aruba WIFI AP) may redirect to the probing url(mUrl) along with
+            // special parameter first then redirect to the real log-in page(b/123208856), it will
+            // make onPageStarted get unexpected hostname.
+            if (!host(url).equals(host(mUrl))) {
+                mHostname = host(url);
+            }
             // For internally generated pages, leave URL bar listing prior URL as this is the URL
             // the page refers to.
             if (!urlString.startsWith(INTERNAL_ASSETS)) {
@@ -487,10 +493,16 @@ public class CaptivePortalLoginActivity extends Activity {
             final String host = host(url);
             Log.d(TAG, String.format("SSL error: %s, url: %s, certificate: %s",
                     sslErrorName(error), sanitizeURL(url), error.getCertificate()));
-            if (url == null || !Objects.equals(host, mHostname)) {
+            if (url == null
+                    // Checking mHostname is not null for below two reasons because there is no
+                    // guarantee that onReceivedSslError will be called after onPageStarted
+                    // (b/122991421, b/126764244), it means mHostname may be null and
+                    // cause SSL error page cannot show normally.
+                    || (mHostname != null && !Objects.equals(host, mHostname))) {
                 // Ignore ssl errors for resources coming from a different hostname than the page
                 // that we are currently loading, and only cancel the request.
                 handler.cancel();
+                Log.d(TAG, "onReceivedSslError: host = " + host + ", mHostname = " + mHostname);
                 return;
             }
             logMetricsEvent(MetricsEvent.CAPTIVE_PORTAL_LOGIN_ACTIVITY_SSL_ERROR);
