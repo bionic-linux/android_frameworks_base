@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616b2c2f_faef9e58",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10478,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-04T12:35:07Z",
+      "side": 1,
+      "message": "conciseness nit for here and below: consider changing\n\n   \"greater or equal than\" -\u003e \"{@code \u003e\u003d}\"\n   \"0 or less than 0\" -\u003e \"{@code \u003c\u003d 0}\"\n   \"larger than 0\" -\u003e \"{@code \u003e 0}\"\n\n? Up to you.",
+      "range": {
+        "startLine": 10478,
+        "startChar": 80,
+        "endLine": 10478,
+        "endChar": 96
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4955a894_36938079",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10513,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-04T12:35:07Z",
+      "side": 1,
+      "message": "DATA_STALL_EVALUATION_TYPE_* is private. Either it needs to have the same visibility as this API here, or we can\u0027t refer to it from this documentation. Also, there are multiple files called \"NetworkMonitor.java\". You\u0027d need to say {@link com.android.server.connectivity.NetworkMonitor} in order to be precise.\n\nAlso, \"is calculated from\" is super vague. If I understand correctly what you meant with the previous version of this documentation then what you\u0027re saying is that to use the detection signal DATA_STALL_EVALUATION_TYPE_DNS, once should set the bit at the *index* DATA_STALL_EVALUATION_TYPE_DNS to 1, ie.:\n\n 1 \u003c\u003c DATA_STALL_EVALUATION_TYPE_DNS\n\n? I don\u0027t see how that makes sense:\n  1.) If DATA_STALL_EVALUATION_TYPE_DNS was an _index_, then why are we starting the numbering at 1 rather than 0? It seems to make more sense to define future DATA_STALL_EVALUATION_TYPE_* values to directly be a power of 2, rather than the index / exponent.\n(I also don\u0027t understand the semantics of DEFAULT_DATA_STALL_EVALUATION_TYPES).\n\n  2.) Since there\u0027s only a single constant defined right now, there\u0027s nothing stopping you from defining the DEFAULT_DATA_STALL_EVALUATION_TYPE_* to be the bitmask / power of two.\n\nIf you did that, then this documentation could just become something like:\n\nThis is a bitmask constructed by bitwise-or-ing (ie. {@code |}) the DATA_STALL_EVALUATION_TYPE_* values from {@link com.android.server.connectivity.NetworkMonitor}.",
+      "range": {
+        "startLine": 10513,
+        "startChar": 67,
+        "endLine": 10513,
+        "endChar": 86
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e46fb3_81c03e3d",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-03-04T12:35:07Z",
+      "side": 1,
+      "message": "Changing this constant to public isn\u0027t enough, because the entire class is @hide.\n\nYou also shouldn\u0027t make the class part of the API just because you want to use this one constant. Perhaps this constant should move to a different class that is already part of the API?",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
