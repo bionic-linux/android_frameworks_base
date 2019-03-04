@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c107d8d_70c0e97c",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T07:10:30Z",
+      "side": 1,
+      "message": "Meh, just create the builder in this function instead of always passing a clean one.\nBetter yet : remove this function and call new NetworkCapabilities().toPartial().",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 77
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb5de734_d95e9703",
         "filename": "services/net/java/android/net/shared/NetworkCapabilitiesPartial.java",
         "patchSetId": 2
@@ -48,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "987aae56_1918bd35",
+        "filename": "services/net/java/android/net/shared/NetworkCapabilitiesPartial.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T07:10:30Z",
+      "side": 1,
+      "message": "DO WANT\n\nBut. The fact that it\u0027s partial is an implementation detail. In fact, I\u0027ve wanted such an object for some time, and as much as possible I\u0027d like to convert uses of the dragon that are NetworkCapabilities to such an immutable object. That is the defining difference between this and the legacy NC.\n\nTherefore, I think this should have a more vanilla name. Something like NetCaps. It\u0027s kind of maybe a bit confusing with NetworkCapabilities, but at least it will encourage conversion and it\u0027s obvious that it\u0027s the same thing. Maybe we can find a less confusing name.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80145c46_483c1418",
+        "filename": "services/net/java/android/net/shared/NetworkCapabilitiesPartial.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T07:10:30Z",
+      "side": 1,
+      "message": "While there is nothing wrong with this builder, and you kind of can\u0027t help it because it can\u0027t live in the same package as the old NC, I think we need better interop between the old NC and this. NC needs to gain a #toPartial method (or #toNetCaps or whatever we name this) enabling NC to be used as a builder for this in the practice. Also NCP should get a #toNetworkCapabilities method.\n\nWe can\u0027t change public API, but eventually I want this class to be the one that\u0027s sent to apps, with ConnectivityManager converting it to a legacy NC object in the callbacks and all.",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 31
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "017ec74f_c4b2d981",
         "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
         "patchSetId": 2
@@ -71,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "29aa38ed_10eb66d1",
+        "filename": "services/net/java/android/net/shared/NetworkMonitorUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T07:10:30Z",
+      "side": 1,
+      "message": "While I generally like lambdas I think in this particular case it\u0027s less readable than something like\n\nnc !\u003d null \u0026\u0026 VALIDATION_CAPS.all({cap -\u003e nc.hasCapability(cap)});",
+      "range": {
+        "startLine": 84,
+        "startChar": 29,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5505b483_6110db47",
         "filename": "services/net/java/android/net/util/PartialViewUtil.java",
         "patchSetId": 2
@@ -87,6 +179,29 @@
         "startChar": 17,
         "endLine": 2,
         "endChar": 21
+      },
+      "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fda251d_c29ad0f1",
+        "filename": "services/net/java/android/net/util/PartialViewUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T07:10:30Z",
+      "side": 1,
+      "message": "I would much prefer this lives in NC and/or NCP.",
+      "range": {
+        "startLine": 36,
+        "startChar": 45,
+        "endLine": 36,
+        "endChar": 54
       },
       "revId": "41f34689a3b4ce4f2f3a68701204164cced44879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
