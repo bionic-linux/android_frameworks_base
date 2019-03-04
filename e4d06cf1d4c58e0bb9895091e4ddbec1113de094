@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "13dbb283_b4b413cf",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:38:16Z",
+      "side": 1,
+      "message": "Suggest calling this mPortSeqAckFingerprint",
+      "range": {
+        "startLine": 886,
+        "startChar": 31,
+        "endLine": 886,
+        "endChar": 42
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7dd5b0d_fc97d3a0",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 2
@@ -18,6 +41,53 @@
         "startChar": 8,
         "endLine": 1199,
         "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e9dfa8_9a152117",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:38:16Z",
+      "side": 1,
+      "message": "How about just :\n\nif (mKeepalizeAcks.size() \u003c\u003d 0) return; // No filters\n\n...at the start of this function ?",
+      "parentUuid": "c7dd5b0d_fc97d3a0",
+      "range": {
+        "startLine": 1198,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262192b8_b8a86fe0",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T06:38:16Z",
+      "side": 1,
+      "message": "Do you want to add the check for TCP here too ?",
+      "range": {
+        "startLine": 1292,
+        "startChar": 17,
+        "endLine": 1292,
+        "endChar": 43
       },
       "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
