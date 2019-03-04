@@ -70,6 +70,30 @@
       "revId": "997fa461978f87fc2d9c444213b24ef56c29e7e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0782dd33_b5d6ceb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-03-04T13:45:16Z",
+      "side": 1,
+      "message": "Thanks for the context. I think API enforcement for libraries is something we could look at in future. Not clear how high priority that would should be?",
+      "parentUuid": "cf73bb8b_8116fdf1",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "997fa461978f87fc2d9c444213b24ef56c29e7e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
