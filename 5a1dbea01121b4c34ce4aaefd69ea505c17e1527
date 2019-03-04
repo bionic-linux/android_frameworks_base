@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e008368_dbb72568",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "Please also run the existing IP memory store tests",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a9a72c_4a3e9e99",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3525,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "Does this pass checkdoc ? I don\u0027t think the tools will find this class.",
+      "range": {
+        "startLine": 3525,
+        "startChar": 14,
+        "endLine": 3525,
+        "endChar": 33
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c1c255_2654b03f",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "You need to give an existing fully qualified class name here I think.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a78efe_908dd3cf",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "If this is called before makeConnector, you\u0027ll NPE the network stack into oblivion and the system with it.",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 25
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595896f9_2478af9a",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "Should this be lazy ? Note that this constructor will make a disk access.\nI\u0027m personally happy with this because creating the connector is already an asynchronous operation anyway, but maybe +reminv@ has objections ?",
+      "range": {
+        "startLine": 128,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 60
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a805e32e_0f9de48c",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "Like on the other file",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5307397b_de0cf194",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "Just use com.android.internal.util.Preconditions.checkNotNull :\n\nmContext \u003d checkNotNull(context);",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ebccab_27c6fb3e",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "illegalArgumentStatus ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673b8457_38c42dbd",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "No I don\u0027t think that\u0027s right, especially now that this code can be called from either inside or outside of the system server.\n\n- In this case neither InterruptedException nor ExecutionException should ever happen because this is a CompletableFuture that you\u0027re handling yourself. Therefore internalErrorStatus() would be a good choice, but not with ILLEGAL_ARGUMENT.\n\n\n\nAs for RemoteException, why are you not getting it any more ? This should still be possible, seeing as IIpMemoryStore is still used. I\u0027m surprised this builds.\n- If you\u0027re in the system server, either ignore or possibly call #onComplete like you did, but with an appropriate error code (ILLEGAL_ARGUMENT isn\u0027t appropriate here).\n- If you\u0027re outside of the system server, then #rethrowFromSystemServer is right I think.\n\nThe same thing applies to the callbacks, and all the other instances of this code below.",
+      "range": {
+        "startLine": 88,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19aca21b_47e959ca",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-04T09:29:26Z",
+      "side": 1,
+      "message": "If you don\u0027t need this any more remove it, don\u0027t leave it commented out.",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
