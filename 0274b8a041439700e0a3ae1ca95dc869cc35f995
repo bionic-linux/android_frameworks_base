@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56bd2ab0_ff54dd91",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10515,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T06:44:59Z",
+      "side": 1,
+      "message": "You need a symbolic constant here. Which means you probably need to move DATA_STALL_EVALUATION_TYPE_DNS from NetworkMonitor to here.",
+      "range": {
+        "startLine": 10515,
+        "startChar": 12,
+        "endLine": 10515,
+        "endChar": 14
+      },
+      "revId": "0274b8a041439700e0a3ae1ca95dc869cc35f995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
