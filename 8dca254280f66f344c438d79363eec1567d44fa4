@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "136232e1_cd171451",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10478,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-05T06:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616b2c2f_faef9e58",
+      "range": {
+        "startLine": 10478,
+        "startChar": 80,
+        "endLine": 10478,
+        "endChar": 96
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4955a894_36938079",
         "filename": "core/java/android/provider/Settings.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954d344b_84b2c590",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10513,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-05T06:05:32Z",
+      "side": 1,
+      "message": "Thanks for the comments. I could use bitmask to do bitwise-or-ing calculation in my logic. That\u0027s the thought here. I agree with you that the index should start from 0. I\u0027ll update it.",
+      "parentUuid": "4955a894_36938079",
+      "range": {
+        "startLine": 10513,
+        "startChar": 67,
+        "endLine": 10513,
+        "endChar": 86
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,30 @@
       "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe56dd98_aad394c4",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-05T06:05:32Z",
+      "side": 1,
+      "message": "Thanks for the detailed information. It\u0027s very helpful. We need it to be a SystemApi in Settings. We do not have a proper class which is part of @SystemApi/@TestApi. I think option 2 may be best for the case.",
+      "parentUuid": "40993b1a_ba8777d1",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 10
+      },
+      "revId": "8dca254280f66f344c438d79363eec1567d44fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
