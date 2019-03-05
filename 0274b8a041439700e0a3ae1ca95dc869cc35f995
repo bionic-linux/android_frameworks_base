@@ -22,6 +22,30 @@
       "revId": "0274b8a041439700e0a3ae1ca95dc869cc35f995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c4c51d_795251c9",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10515,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-05T07:57:42Z",
+      "side": 1,
+      "message": "Thanks for the review and suggestion.",
+      "parentUuid": "56bd2ab0_ff54dd91",
+      "range": {
+        "startLine": 10515,
+        "startChar": 12,
+        "endLine": 10515,
+        "endChar": 14
+      },
+      "revId": "0274b8a041439700e0a3ae1ca95dc869cc35f995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
