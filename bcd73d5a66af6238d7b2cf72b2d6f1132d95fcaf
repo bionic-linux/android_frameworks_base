@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e2dfc94_f4cd87f8",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 10512,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-05T09:16:45Z",
+      "side": 1,
+      "message": "This contradicts the rest of the comment and the literal value of the constant. It looks like you only copied the description from Tobias\u0027 comment but did not follow with the change he suggested. Original comment :\n\n  Since there\u0027s only a single constant defined right now, there\u0027s nothing stopping you from defining the DEFAULT_DATA_STALL_EVALUATION_TYPE_* to be the bitmask / power of two.\n\nConcretely, that would mean you declare DATA_STALL_EVALUATION_TYPE_DNS \u003d 1 and you replace the doc below with :\n\n  Valid values :\n     {@link DATA_STALL_EVALUATION_TYPE_DNS} : Use dns as a signal.\n\n\n\nWhen we later add new constants, say FOO and BAR and QUX for the sake of the argument, they take power of 2 values :\nDATA_STALL_EVALUTATION_TYPE_FOO \u003d 2\nDATA_STALL_EVALUTATION_TYPE_BAR \u003d 4\nDATA_STALL_EVALUTATION_TYPE_QUX \u003d 8",
+      "range": {
+        "startLine": 10511,
+        "startChar": 52,
+        "endLine": 10512,
+        "endChar": 68
+      },
+      "revId": "bcd73d5a66af6238d7b2cf72b2d6f1132d95fcaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
