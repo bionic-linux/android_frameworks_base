@@ -380,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "7afd0a8c_890e2655",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-05T04:34:31Z",
+      "side": 1,
+      "message": "It depends on how you want to deal with mRedirectionHostname \u003d\u003d \"\" which is not equal to null.",
+      "parentUuid": "06494eb7_8ee6000b",
+      "range": {
+        "startLine": 501,
+        "startChar": 24,
+        "endLine": 501,
+        "endChar": 44
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4ccd715_b0ceee92",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
