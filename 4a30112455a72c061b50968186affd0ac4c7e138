@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbdcf158_fcebde13",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-05T14:35:16Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right to put this in vendorInfo. vendorInfo is used for the contents of the vendor info option. But this is the sname field. Also, if you put the sname field in vendorInfo, and the server sends a vendor info option, the information we write to vendorInfo here will be overwritten.\n\nInstead, why not add a new \"serverName\" field to DhcpPacket? Then whatever code you have can pick it up. If you need to transport the server name in DhcpResults as well, then you can add it there too.",
+      "range": {
+        "startLine": 992,
+        "startChar": 8,
+        "endLine": 992,
+        "endChar": 56
+      },
+      "revId": "4a30112455a72c061b50968186affd0ac4c7e138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fff222_87afdcd5",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-05T14:35:16Z",
+      "side": 1,
+      "message": ";  // skip boot file name",
+      "range": {
+        "startLine": 996,
+        "startChar": 48,
+        "endLine": 996,
+        "endChar": 49
+      },
+      "revId": "4a30112455a72c061b50968186affd0ac4c7e138",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

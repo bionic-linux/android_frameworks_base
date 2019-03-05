@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45103bfa_483f383d",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpPacket.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-05T14:35:16Z",
+      "side": 0,
+      "message": "Maintain this comment?",
+      "range": {
+        "startLine": 991,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 58
+      },
+      "revId": "b1e0d2f5c93b4403a7696ed1e77399059fbe0af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
