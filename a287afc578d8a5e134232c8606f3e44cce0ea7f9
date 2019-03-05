@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "7c17b6eb_cc7a22fe",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-05T02:28:36Z",
+      "side": 1,
+      "message": "I\u0027d rather avoid mentioning particular vendors, this could also become incorrect if that vendor changes their products.",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 47
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3985bb05_9e34566e",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
