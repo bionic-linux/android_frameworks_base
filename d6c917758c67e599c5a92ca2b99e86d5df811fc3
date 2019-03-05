@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7709648c_30e41aff",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-05T05:14:27Z",
+      "side": 1,
+      "message": "It will build fail if you don\u0027t remove TAG.",
+      "range": {
+        "startLine": 415,
+        "startChar": 27,
+        "endLine": 415,
+        "endChar": 30
+      },
+      "revId": "d6c917758c67e599c5a92ca2b99e86d5df811fc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
