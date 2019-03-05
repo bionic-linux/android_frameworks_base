@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8db70e46_0d2c4783",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T04:03:16Z",
+      "side": 1,
+      "message": "I think the loading page is what you try to redirect.",
+      "parentUuid": "30a50932_2925102f",
+      "range": {
+        "startLine": 411,
+        "startChar": 11,
+        "endLine": 411,
+        "endChar": 71
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba5e8e27_1741d658",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "46db6b4c_cda3570a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T04:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745ea29a_a4c1bf46",
+      "range": {
+        "startLine": 438,
+        "startChar": 25,
+        "endLine": 438,
+        "endChar": 34
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c17b6eb_cc7a22fe",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
@@ -116,6 +164,30 @@
       "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d220c73_b5f64c75",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T04:03:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c17b6eb_cc7a22fe",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 47
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "738ad1d9_7152eaf4",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T04:03:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c856216_1c31bc17",
+      "range": {
+        "startLine": 442,
+        "startChar": 17,
+        "endLine": 442,
+        "endChar": 26
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f461681_c970256a",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
@@ -248,6 +344,30 @@
       "writtenOn": "2019-03-05T02:23:33Z",
       "side": 1,
       "message": "is it better to use TextUtils.isEmpty and TextUtils.equals ?",
+      "range": {
+        "startLine": 501,
+        "startChar": 24,
+        "endLine": 501,
+        "endChar": 44
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06494eb7_8ee6000b",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T04:03:16Z",
+      "side": 1,
+      "message": "I can use TextUtils instead, but may I know what\u0027s the benefit to use TextUtils?\nIt\u0027s more safer or more faster or...?",
+      "parentUuid": "603dc49d_c010272a",
       "range": {
         "startLine": 501,
         "startChar": 24,
