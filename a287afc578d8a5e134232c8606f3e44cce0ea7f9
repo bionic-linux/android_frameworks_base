@@ -404,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "2338a447_bfbd7c4a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-05T05:58:50Z",
+      "side": 1,
+      "message": "Got it. I think TextUtils is more useful.",
+      "parentUuid": "7afd0a8c_890e2655",
+      "range": {
+        "startLine": 501,
+        "startChar": 24,
+        "endLine": 501,
+        "endChar": 44
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ccd715_b0ceee92",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 4
