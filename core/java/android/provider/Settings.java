@@ -10475,8 +10475,9 @@ public final class Settings {
 
         /**
          * The threshold value for the number of consecutive dns timeout events received to be a
-         * signal of data stall. Set the value to 0 or less than 0 to disable. Note that the value
-         * should be larger than 0 if the DNS data stall detection is enabled.
+         * signal of data stall. The number of consecutive timeouts needs to be {@code >=} this
+         * threshold to be considered a data stall. Set the value to {@code <= 0} to disable. Note
+         * that the value should be {@code > 0} if the DNS data stall detection is enabled.
          *
          * @hide
          */
@@ -10507,8 +10508,11 @@ public final class Settings {
                 "data_stall_valid_dns_time_threshold";
 
         /**
-         * Which data stall detection signal to use. Possible values are a union of the powers of 2
-         * of DATA_STALL_EVALUATION_TYPE_*.
+         * Which data stall detection signal to use.
+         *
+         * Type: int
+         * Valid values:
+         *   1: Use dns timeout count to detect data stall.
          *
          * @hide
          */

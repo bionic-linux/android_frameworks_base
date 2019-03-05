@@ -114,7 +114,7 @@ public class NetworkMonitorTest {
     private static final String TEST_OTHER_FALLBACK_URL = "http://otherfallback.google.com/gen_204";
     private static final String TEST_MCCMNC = "123456";
 
-    private static final int DATA_STALL_EVALUATION_TYPE_DNS = 1;
+    private static final int DATA_STALL_EVALUATION_TYPE_DNS = 0;
     private static final int RETURN_CODE_DNS_SUCCESS = 0;
     private static final int RETURN_CODE_DNS_TIMEOUT = 255;
     private static final int DEFAULT_DNS_TIMEOUT_THRESHOLD = 5;
