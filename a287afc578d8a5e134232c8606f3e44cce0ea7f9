@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5e8e27_1741d658",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-05T02:05:25Z",
+      "side": 1,
+      "message": "mRedirectionHostname",
+      "range": {
+        "startLine": 438,
+        "startChar": 25,
+        "endLine": 438,
+        "endChar": 34
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3985bb05_9e34566e",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-05T02:05:25Z",
+      "side": 1,
+      "message": "If urlString is invalid URL, url will be null object and then result in null point exception here.",
+      "range": {
+        "startLine": 442,
+        "startChar": 17,
+        "endLine": 442,
+        "endChar": 26
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f461681_c970256a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-05T02:05:25Z",
+      "side": 1,
+      "message": "mRedirectionHostname",
+      "range": {
+        "startLine": 497,
+        "startChar": 32,
+        "endLine": 497,
+        "endChar": 41
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ccd715_b0ceee92",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-05T02:05:25Z",
+      "side": 1,
+      "message": "mRedirectionHostname",
+      "range": {
+        "startLine": 506,
+        "startChar": 69,
+        "endLine": 506,
+        "endChar": 78
+      },
+      "revId": "a287afc578d8a5e134232c8606f3e44cce0ea7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
