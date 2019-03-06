@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66908fd6_871ccd97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "atest FrameworksNetTests covers the existing IP memory store tests now :)",
+      "parentUuid": "8e008368_dbb72568",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a9a72c_4a3e9e99",
         "filename": "core/java/android/content/Context.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be8b44d_68e4e8d7",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3525,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "59a9a72c_4a3e9e99",
+      "range": {
+        "startLine": 3525,
+        "startChar": 14,
+        "endLine": 3525,
+        "endChar": 33
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "752e5272_11ff3bf3",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c0c1c255_2654b03f",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55a78efe_908dd3cf",
         "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e79d12_26723ef9",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "yes, add NPE check in the getIpMemeoryStore() method. Thanks.",
+      "parentUuid": "55a78efe_908dd3cf",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 25
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e714c7c7_b4be0a98",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a805e32e_0f9de48c",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5307397b_de0cf194",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 3
@@ -160,6 +280,30 @@
       "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584de064_248de43e",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "The reason is that importing Preconditions class at this file is not allowed. Let\u0027s see the path of Preconditions class: core/java/com/android/internal/util/Preconditions. However, IpMemoryStoreClient.java has been moved to /service/net/java/android/net/ directory. I have no idea how to import a class from a different repo, then compiler will say \"error: cannot find symbol\". So any suggestion to deal with this case? Thanks.",
+      "parentUuid": "5307397b_de0cf194",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "ee59318a_50c74ecc",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Thinking of the below comments, maybe it\u0027s better to keep interalErrorStatus() name. So that I return the ERROR_GENERIC instead of ERROR_ILLEGAL_ARGUMENT here. Does this make sense?",
+      "parentUuid": "c0ebccab_27c6fb3e",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "673b8457_38c42dbd",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 3
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "79cb8221_0e5d81d2",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Please have a check in the new patch. Thanks.",
+      "parentUuid": "673b8457_38c42dbd",
+      "range": {
+        "startLine": 88,
+        "startChar": 32,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19aca21b_47e959ca",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 3
@@ -229,6 +421,30 @@
       "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4dda51_e5fdec91",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-06T06:43:42Z",
+      "side": 1,
+      "message": "Oops, removed.",
+      "parentUuid": "19aca21b_47e959ca",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
