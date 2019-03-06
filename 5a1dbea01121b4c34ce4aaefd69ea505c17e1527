@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2395f4eb_a6b7608f",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "Well you could move it to shared, but it\u0027s in /internal/, so it\u0027s probably not the best idea in the world. Let\u0027s keep your current code.",
+      "parentUuid": "584de064_248de43e",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ebccab_27c6fb3e",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 3
@@ -342,6 +366,30 @@
       "side": 1,
       "message": "Thinking of the below comments, maybe it\u0027s better to keep interalErrorStatus() name. So that I return the ERROR_GENERIC instead of ERROR_ILLEGAL_ARGUMENT here. Does this make sense?",
       "parentUuid": "c0ebccab_27c6fb3e",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "5a1dbea01121b4c34ce4aaefd69ea505c17e1527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8703e2e6_8dd147fb",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "Yes, that makes sense I think. Thanks.",
+      "parentUuid": "ee59318a_50c74ecc",
       "range": {
         "startLine": 60,
         "startChar": 29,

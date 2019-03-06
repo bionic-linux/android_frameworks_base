@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e378248f_128fffdf",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 0,
+      "message": "Why remove this ? Your patch 3 used to comment the member, and removing it would have been fine, but it\u0027s both or neither. Either you remove this code and remove the member, or keep the member and keep the code.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "92c55f03c6629079df5653b1a661e33b01ac69c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

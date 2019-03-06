@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b019fa_a3ebe9b0",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "This will kill the NetworkStack app. I think Log.e is more appropriate.\n\nSure, in this case the remote side is the system server and therefore if it dies the network stack is going down anyway, but it\u0027s not the job of the memory store to do that :)",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27af218e_09fc2987",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "Uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuum no. I don\u0027t think it\u0027s fine returning null from here. Clients will be caching that.\n\nWhat is the context that is used to call makeConnector ? It looks to me like onBind below is the only caller (in which case makeConnector should be private btw).\n\nIt looks likely we should require an instance of the connector to get the network stack from inside the network stack.\n\nAlternatively, it\u0027s fine making callers wait, since this is just used inside a place where it\u0027s expected to block anyway. You can accomplish this with something like a CompleteableFuture or a ConditionVariable or something.",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c245e9eb_fdc4ebb8",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "So IIUC our conversation, the conclusion was that we should say Log.e here too. This here is in the system server, we\u0027re talking to a client app, you\u0027re supposed to ignore RemoteExceptions.\n\nWhat you\u0027ve written is perfect for a public manager class, but that\u0027s not what this class here is at this moment",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3a0dce_f30eb1bc",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-06T11:36:24Z",
+      "side": 1,
+      "message": "I think naming this ERROR_UNKNOWN is probably more descriptive. We actually don\u0027t know what happened.",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
