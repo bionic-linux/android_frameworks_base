@@ -46,6 +46,30 @@
       "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b360acb_8c7dd41f",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T07:31:33Z",
+      "side": 1,
+      "message": "Well, Lorenzo\u0027s suggestion is better. In theory, mWifiTetherRequested would be cleared when wifi part is down. So it is safe to don\u0027t change mWifiTetherRequested if startSoftAp/stopSoftAp fail.",
+      "parentUuid": "d9d4554b_1f961eb8",
+      "range": {
+        "startLine": 440,
+        "startChar": 12,
+        "endLine": 440,
+        "endChar": 32
+      },
+      "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
