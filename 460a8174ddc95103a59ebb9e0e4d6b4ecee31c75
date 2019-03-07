@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbdd8b32_fd05bac9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-07T06:08:10Z",
+      "side": 1,
+      "message": "Is it safe to access this outside the synchronized block?\n\nHow about something like this instead? Seems more readable as well. Mark, think it\u0027s correct?\n\n        try {\n            synchronized (mPublicSync) {\n                final WifiManager mgr \u003d getWifiManager();\n                if (mgr \u003d\u003d null) {\n                    mLog.e(\"setWifiTethering: failed to get WifiManager!\");\n                    return TETHER_ERROR_SERVICE_UNAVAIL;\n                }\n\n                if ((enable \u0026\u0026 mgr.startSoftAp(null /* use existing wifi config */)) ||\n                    (!enable \u0026\u0026 mgr.stopSoftAp())) {\n                    mWifiTetherRequested \u003d enable;\n                    return TETHER_ERROR_NO_ERROR;\n                }\n\n                return TETHER_ERROR_MASTER_ERRROR;\n            }\n        } finally {\n            Binder.restoreCallingIdentity(ident);\n        }",
+      "range": {
+        "startLine": 440,
+        "startChar": 12,
+        "endLine": 440,
+        "endChar": 32
+      },
+      "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
