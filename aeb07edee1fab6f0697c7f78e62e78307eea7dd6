@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2353d50_5d99c5ae",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2019-03-07T16:45:01Z",
+      "side": 1,
+      "message": "You should put view.getUrl() into a temporary instead of calling it twice here - it\u0027s possible for it to change while this function is executing which could make the logging very confusing.",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
