@@ -408,8 +408,6 @@ public class CaptivePortalLoginActivity extends Activity {
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
                     getResources().getDisplayMetrics());
         private int mPagesLoaded;
-        // the host of the page that this webview is currently loading. Can be null when undefined.
-        private String mHostname;
 
         // If we haven't finished cleaning up the history, don't allow going back.
         public boolean allowBack() {
@@ -435,7 +433,6 @@ public class CaptivePortalLoginActivity extends Activity {
             }
             final URL url = makeURL(urlString);
             Log.d(TAG, "onPageStarted: " + sanitizeURL(url));
-            mHostname = host(url);
             // For internally generated pages, leave URL bar listing prior URL as this is the URL
             // the page refers to.
             if (!urlString.startsWith(INTERNAL_ASSETS)) {
@@ -483,13 +480,13 @@ public class CaptivePortalLoginActivity extends Activity {
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            final URL url = makeURL(error.getUrl());
-            final String host = host(url);
-            Log.d(TAG, String.format("SSL error: %s, url: %s, certificate: %s",
-                    sslErrorName(error), sanitizeURL(url), error.getCertificate()));
-            if (url == null || !Objects.equals(host, mHostname)) {
-                // Ignore ssl errors for resources coming from a different hostname than the page
-                // that we are currently loading, and only cancel the request.
+            Log.d(TAG, String.format("SSL error: %s, viewUrl: %s, sslUrl: %s, certificate: %s",
+                    sslErrorName(error), sanitizeURL(makeURL(view.getUrl())),
+                    sanitizeURL(makeURL(error.getUrl())), error.getCertificate()));
+            if (TextUtils.isEmpty(error.getUrl())
+                    // Ignore SSL errors from resources by comparing the current top frame url with
+                    // SSL url.
+                    || !TextUtils.equals(error.getUrl(), view.getUrl())) {
                 handler.cancel();
                 return;
             }
