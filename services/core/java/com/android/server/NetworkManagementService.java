@@ -1290,6 +1290,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         // The RouteInfo constructor truncates the LinkAddress to a network prefix, thus making it
         // suitable to use as a route destination.
         routes.add(new RouteInfo(getInterfaceConfig(iface).getLinkAddress(), null, iface));
+        // IPv6 link local should be activated regardless of DHCP support.
+        routes.add(new RouteInfo(new IpPrefix("fe80::/64"), null, iface));
         addInterfaceToLocalNetwork(iface, routes);
     }
 
