@@ -22,6 +22,30 @@
       "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d4554b_1f961eb8",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-07T07:15:44Z",
+      "side": 1,
+      "message": "Good point for lock. Yes, your version is more readable. I just thinking how to deal with mWifiTetherRequested when startSoftAp/stopSoftAp fail. Should we always reset mWifiTetherRequested to false ??",
+      "parentUuid": "cbdd8b32_fd05bac9",
+      "range": {
+        "startLine": 440,
+        "startChar": 12,
+        "endLine": 440,
+        "endChar": 32
+      },
+      "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
