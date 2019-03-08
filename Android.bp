@@ -489,6 +489,7 @@ java_defaults {
         "telecomm/java/com/android/internal/telecom/IPhoneAccountSuggestionService.aidl",
         "telecomm/java/com/android/internal/telecom/ITelecomService.aidl",
         "telecomm/java/com/android/internal/telecom/RemoteServiceCallback.aidl",
+        "telephony/java/android/telephony/ICarrierConfigHook.aidl",
         "telephony/java/android/telephony/data/IDataService.aidl",
         "telephony/java/android/telephony/data/IDataServiceCallback.aidl",
         "telephony/java/android/telephony/data/IQualifiedNetworksService.aidl",

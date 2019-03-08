@@ -17,6 +17,7 @@
 package com.android.internal.telephony;
 
 import android.os.PersistableBundle;
+import android.telephony.ICarrierConfigHook;
 
 /**
  * Interface used to interact with the CarrierConfigLoader
@@ -34,4 +35,7 @@ interface ICarrierConfigLoader {
 
     String getDefaultCarrierServicePackageName();
 
+    boolean registerCarrierConfigHook(in ICarrierConfigHook hook);
+    boolean unregisterCarrierConfigHook(in ICarrierConfigHook hook);
+    void onCarrierConfigHookComplete(in int generation);
 }
