@@ -694,6 +694,48 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58054d54_da52ef91",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T08:44:42Z",
+      "side": 1,
+      "message": "Oh, I see. General case, application should explicit specify ifindex in sin6_scope_id when it bind the socket.",
+      "parentUuid": "9b3acdd9_02b4787f",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2d5f0f_43dbee22",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T08:44:42Z",
+      "side": 1,
+      "message": "Thanks explanation, +1 for adding to addInterfaceToLocalNetwork.",
+      "parentUuid": "7d273832_a270d286",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
