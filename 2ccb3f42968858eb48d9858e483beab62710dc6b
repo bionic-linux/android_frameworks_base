@@ -844,6 +844,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12dcb30_d78680e9",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T10:22:36Z",
+      "side": 1,
+      "message": "It will still return EEXISTS with NLM_F_EXCL while adding exact the same entry again.\n\n03-08 18:19:18.866   796  1151 I netd    : networkAddRoute(fe80::/64, rndis0, 99, null) \u003c0ms\u003e\n03-08 18:19:18.866   796  1151 E Netd    : Error adding route fe80::/64 -\u003e (null) rndis0 to table 97: File exists",
+      "parentUuid": "510bf8a3_54b71753",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
