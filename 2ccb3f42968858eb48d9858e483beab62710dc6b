@@ -592,6 +592,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a55186_f996ae06",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T07:19:53Z",
+      "side": 1,
+      "message": "Good point. I checked and to add the second route we need to clear NLM_F_EXCL. Maybe do something like this in RouteController.cpp?\n\n     uint16_t flags \u003d (action \u003d\u003d RTM_NEWROUTE) ? NETLINK_ROUTE_CREATE_FLAGS : NETLINK_REQUEST_FLAGS;\n+\n+    // Allow creating multiple link-local routes in the same table, so we can make IPv6\n+    // work on all interfaces in the local_network table.\n+    if (family \u003d\u003d AF_INET6 \u0026\u0026 IN6_IS_ADDR_LINKLOCAL(reinterpret_cast\u003cin6_addr *\u003e(rawAddr))) {\n+        flags ~\u003d NLM_EXCL;\n+    }\n+\n     int ret \u003d sendNetlinkRequest(action, flags, iov, ARRAY_SIZE(iov), nullptr);",
+      "parentUuid": "013efebd_df1ea0f7",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
