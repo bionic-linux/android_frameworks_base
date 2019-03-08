@@ -634,6 +634,30 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3acdd9_02b4787f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-03-08T07:56:04Z",
+      "side": 1,
+      "message": "no, not SO_BINDTODEVICE.  you set the ifindex in the addr struct (aka scope)\n\nhttp://man7.org/linux/man-pages/man7/ipv6.7.html\nstruct sockaddr_in6 {\n...\n               struct in6_addr sin6_addr;     /* IPv6 address */\n               uint32_t        sin6_scope_id; /* Scope ID (new in 2.4) */\n           };",
+      "parentUuid": "beb58c6b_5b1559ec",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
