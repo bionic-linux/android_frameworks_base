@@ -20,7 +20,7 @@ import android.annotation.UnsupportedAppUsage;
 
 /**
  * Interface that provides trusted time information, possibly coming from an NTP
- * server. Implementations may cache answers until {@link #forceRefresh()}.
+ * server. Implementations may cache answers until {@link #forceSync()}.
  *
  * @hide
  */
@@ -28,6 +28,13 @@ public interface TrustedTime {
     /**
      * Force update with an external trusted time source, returning {@code true}
      * when successful.
+     */
+    @UnsupportedAppUsage
+    boolean forceSync(boolean mode);
+
+    /**
+     * Force update the cached time with an external trusted time source,
+     * returning {@code true} when successful.
      */
     @UnsupportedAppUsage
     public boolean forceRefresh();

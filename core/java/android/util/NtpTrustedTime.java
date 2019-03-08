@@ -50,6 +50,7 @@ public class NtpTrustedTime implements TrustedTime {
     private long mCachedNtpTime;
     private long mCachedNtpElapsedRealtime;
     private long mCachedNtpCertainty;
+    private boolean mLegacy = true;
 
     private NtpTrustedTime(String server, long timeout) {
         if (LOGD) Log.d(TAG, "creating NtpTrustedTime using " + server);
@@ -84,6 +85,19 @@ public class NtpTrustedTime implements TrustedTime {
     @Override
     @UnsupportedAppUsage
     public boolean forceRefresh() {
+        // Beyond the legacy mode, refresh the time only when the time has ever been cached.
+        return (mLegacy || hasCache()) ? forceSync() : false;
+    }
+
+    @Override
+    @UnsupportedAppUsage
+    public boolean forceSync(boolean mode) {
+        // Set the forceSync mode and following
+        mLegacy = !mode;
+        return !mLegacy ? forceSync() : false;
+    }
+
+    private boolean forceSync() {
         // We can't do this at initialization time: ConnectivityService might not be running yet.
         synchronized (this) {
             if (mCM == null) {
