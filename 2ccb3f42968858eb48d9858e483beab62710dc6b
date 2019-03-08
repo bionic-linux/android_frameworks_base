@@ -377,6 +377,30 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a172bca2_f1611472",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T03:58:53Z",
+      "side": 1,
+      "message": "Does it also mean I cannot add this routing in p2p service if p2p does support ipv6 tethering with DHCP fully?",
+      "parentUuid": "144cfd84_4af0a6b2",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
