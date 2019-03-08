@@ -84,6 +84,12 @@ public class NtpTrustedTime implements TrustedTime {
     @Override
     @UnsupportedAppUsage
     public boolean forceRefresh() {
+        return this.hasCache() ? forceSync() : false;
+    }
+
+    @Override
+    @UnsupportedAppUsage
+    public boolean forceSync() {
         // We can't do this at initialization time: ConnectivityService might not be running yet.
         synchronized (this) {
             if (mCM == null) {
