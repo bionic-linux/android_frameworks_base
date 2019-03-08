@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c3d87d_4af27810",
+        "filename": "Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Can we remove the files from here ? Clients of IpMemoryStore (both services.net and networkstack) should be using ipmemorystore-client, which already includes the interfaces",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 842,
+        "endChar": 56
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccd8134_03e8d1dc",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3529,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Is this string still necessary ?",
+      "range": {
+        "startLine": 3523,
+        "startChar": 0,
+        "endLine": 3529,
+        "endChar": 73
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919a9a96_a62d9760",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Nit: moving it to a separate file might make imports cleaner",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 72
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6bb461_26405301",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Is this code still necessary since the service is obtained from the NetworkStackServiceManager ?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad49563_c0bf3b65",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "How about a method that returns the manager class, by creating one each time or using a cached one ? Should each client have a different instance of NetworkStackIpMemoryStore referencing the service or could we cache one manager class ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 9
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee074590_47117774",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Nit: is the cast necessary ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827c9142_0057428f",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "This no longer has abstract methods, maybe just setting the constructor protected would be more appropriate ?\n\nI find the contract of the class a little unusual (clients need to call mService.complete), although I guess it may be the most efficient way. Having an abstract method \"fetchIpMemoryStore(Future\u003c\u003e service)\" would make it a little clearer for implementations, but for the current implementation, we\u0027d be storing another reference to the service just for that, which is not idea.\nIn any case, maybe documenting what implementations should do in the class javadoc would be enough.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca63206d_3767a613",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Should this be protected ? I\u0027ve been bitten by package-private on stuff built separately (although there may have been a reason for that that does not apply here). Should we force clients to be in android.net to extend this ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b935c4_0b1a6d4f",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "I\u0027m thinking one alternative would be to send a callback saying it failed, and ignore the RemoteException if that callback fails to be delivered, since most clients of this class should be using a StatusListener in the same process so no RemoteException can be thrown.\nGranted, this assumes stuff about clients and only moves the problem though... So I think this is fine as-is too.",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 62
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b54a0ceb_2082b823",
+        "filename": "tests/net/Android.mk",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Do we need this ? I don\u0027t think the framework tests should link against the in-process network stack",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042dc37f_1d49603a",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "Should this move to com.android.server.connectivity.ipmemorystore instead ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f85a831_3c817d66",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/RelevanceUtilsTests.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T07:14:08Z",
+      "side": 1,
+      "message": "connectivity ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
