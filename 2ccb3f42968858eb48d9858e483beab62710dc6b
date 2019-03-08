@@ -401,6 +401,30 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89555b65_37a64e5e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T04:29:07Z",
+      "side": 1,
+      "message": "One proposal is separate the routing table. Create table p2p-p2p0-X and put the routing to this table. But each table need one netid, I think p2p service don\u0027t create networkAgent right ? Or we can simply blocked p2p and tethering enabled at the same time ??\n\nMaciej/Lorenzo, any better idea to support link local route for different interfaces ??",
+      "parentUuid": "a172bca2_f1611472",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
