@@ -46,6 +46,30 @@
       "revId": "92c55f03c6629079df5653b1a661e33b01ac69c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de1ecd93_9290463a",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T06:17:33Z",
+      "side": 0,
+      "message": "I see. Because this is testing the version of the client that lives in the framework I don\u0027t think it\u0027s possible technically to move it to the network stack app, and unfortunately we probably need to have some coverage of that part of the code too now that it might be getting some logic.\n\nBut it\u0027s out of scope for this change, so let\u0027s keep what\u0027s you\u0027ve written for now.",
+      "parentUuid": "44251b1e_ddd4aa68",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "92c55f03c6629079df5653b1a661e33b01ac69c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
