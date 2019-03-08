@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "17f9f6ce_ad094003",
+        "filename": "Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T09:38:14Z",
+      "side": 1,
+      "message": "Oh I see... Maybe a filegroup would be nice to avoid repeating the filenames then, but not sure that\u0027s supported. I guess it\u0027s fine as-is.",
+      "parentUuid": "719f8f2a_43f95480",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 842,
+        "endChar": 56
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ccd8134_03e8d1dc",
         "filename": "core/java/android/content/Context.java",
         "patchSetId": 8
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "39cfa3b7_d4e3eca4",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T09:38:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89bb1b8e_e0a3ff95",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad49563_c0bf3b65",
         "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
         "patchSetId": 8
@@ -210,6 +258,30 @@
       "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d92255f_931c1cc2",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T09:38:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5f5920a_bc5ae8e9",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 9
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +461,30 @@
       "side": 1,
       "message": "I think what\u0027s written here is simply a more efficient way of writing exactly what you\u0027re describing.\n\nThe listener is declared to throw RemoteException anyway so we have to catch regardless. On one side, the service call is guaranteed not to throw, on the other the listener is ; in all cases, the correct thing to do is to Log.e. If we ever have a public implementation of the client then yeah, this would need to rethrowFromSystemServer, but we don\u0027t have that for Q.\n\nWhat you see this is the result of Xiao and I thinking about all solutions, and we believe this is both simplest and most correct.",
       "parentUuid": "d5b935c4_0b1a6d4f",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 62
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85a61eac_809abc23",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-08T09:38:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f1a54ac_ec2d1be0",
       "range": {
         "startLine": 85,
         "startChar": 12,
