@@ -610,6 +610,30 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb58c6b_5b1559ec",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2019-03-08T07:53:26Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need different metrics for fe80::/64 routes.\nYou can totally have multiples, although possibly need some appropriate netlink flags (I see Lorenzo mentions no EXCL flag)\n\nAlso there really is no reason not to have link local ipv6 routes.\nIt\u0027s really a bug that we don\u0027t always have them.\n\n(I think pretty much the only interfaces where we don\u0027t/shouldn\u0027t have them are lo and v4-* clat interfaces)\n\nThe only part that\u0027s confusing is exactly which table they should be in.\n(on a normal linux config they\u0027d be automatically added by the kernel to the default table, but Android\u0027s setup is significantly more complex)",
+      "parentUuid": "6231a4bd_7517f65c",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
