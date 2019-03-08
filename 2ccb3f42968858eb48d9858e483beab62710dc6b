@@ -826,6 +826,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510bf8a3_54b71753",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T10:20:26Z",
+      "side": 1,
+      "message": "no worry, I tried and there is still one entry.\nIt seems that routing table would handle exact the same entries.",
+      "parentUuid": "b6ba4eec_e7d49ff6",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
