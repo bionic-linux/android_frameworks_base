@@ -808,6 +808,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ba4eec_e7d49ff6",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T10:08:35Z",
+      "side": 1,
+      "message": "Sorry for inaccuracy. Yes, I mean multiple routes to the link-local prefixes on the same interface.\ne.g.\nfe80::/64 dev wlan1 proto static metric 1024 pref medium\nfe80::/64 dev wlan1 proto static metric 1024 pref medium",
+      "parentUuid": "102a1ba5_29fc61f4",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
