@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a4530c_bae6f26e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T09:56:01Z",
+      "side": 1,
+      "message": "Consider just doing:\n\n    // IPv6 link local should be activated always.\n    routes.add(new RouteInfo(new IpPrefix(\"fe80::/64\"), null, iface));\n\nbefore the for loop above.",
+      "range": {
+        "startLine": 2511,
+        "startChar": 0,
+        "endLine": 2513,
+        "endChar": 0
+      },
+      "revId": "086779de1125bc4a0f44220cf8c56e5d5521862d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
