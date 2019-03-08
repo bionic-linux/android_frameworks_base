@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f6216f_1e99853f",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T05:57:33Z",
+      "side": 1,
+      "message": "Sorry I misled you completely with my comment (for the record, what you wrote is the natural thing to write considering what I told you). I\u0027m sorry about this.\n\nAfter we spoke offline I took the liberty of uploading a new patchset. Can you please take a look at it and see if you see any issues/mistakes/design inefficiencies ?",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "8040ef79b1e076213053f3197c72805a06e7282e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
