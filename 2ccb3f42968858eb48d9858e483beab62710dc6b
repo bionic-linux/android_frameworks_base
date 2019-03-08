@@ -658,6 +658,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1e9610_85d26e84",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T08:13:31Z",
+      "side": 1,
+      "message": "Well, SO_BINDTODEVICE will work too. But you can only use that if you have CAP_NET_ADMIN.\n\nThe correct routing table for the link-local routes is \"the same routing table as all the other routes for these interfaces\". At the moment that means the local_network table.",
+      "parentUuid": "13a55186_f996ae06",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
