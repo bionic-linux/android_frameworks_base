@@ -425,6 +425,47 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1ff086_5017c792",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T05:05:49Z",
+      "side": 1,
+      "message": "Should this code be moved to addInterfaceToLocalNetwork instead?",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373872d6_9366d5f2",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T05:05:49Z",
+      "side": 1,
+      "message": "It\u0027s fine to have multiple routes to fe80::/64 in the same table, as long as they are for different interfaces. Link-local addresses are scoped addresses - they are only meaningful for a specific interface.\n\nApplications that use link-load addresses must understand that they can only be used if the application explicitly specifies the interface.",
+      "parentUuid": "89555b65_37a64e5e",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
