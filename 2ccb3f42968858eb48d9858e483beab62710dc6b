@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "2452bea6_41d2bdf2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae1c2b6_9d3b810b",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd8924d0_61dec1e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3356095e_a97befbf",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7f689b_ce45498e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -117,6 +165,78 @@
     },
     {
       "key": {
+        "uuid": "4ef191d3_e4d8f390",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a26b930_20cd3b4f",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2608751e_8d286f11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26782a59_5cf28fd0",
+      "range": {
+        "startLine": 9,
+        "startChar": 64,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a36a91e_f37c6188",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7f689b_ce45498e",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3053c9_be580def",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2019-03-08T01:30:15Z",
       "side": 1,
       "message": "could you clarify for me which ip route table this ends up in?\nhow does it pick the right one?",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625f56ef_bbe83d35",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T02:18:24Z",
+      "side": 1,
+      "message": "For hotspot case:\n\nThis would be added as \"fe80::/64 dev wlan1 table local_network\" to the local_network routing table\n         \nip rules:\n\n10500:  from all iif lo oif wlan1 uidrange 0-0 lookup local_network \n14000:  from all iif lo oif wlan1 lookup local_network \n\nIf someone sends packets to fe80:: link local via wlan1, it would match rule 10400, query local_network table, then match the newly added routing.",
+      "parentUuid": "2e3053c9_be580def",
       "range": {
         "startLine": 1294,
         "startChar": 0,
