@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24561d5a_1f7aaebd",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T03:42:14Z",
+      "side": 0,
+      "message": "Currently, we shouldn\u0027t move adding link local route out of here. Not all of tethering support ipv6 tethering. This event promise only added link local to ipv6 tethering supported downstream.",
+      "revId": "65087f4705d47b83983f32c0e9f6e99b8af23e14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

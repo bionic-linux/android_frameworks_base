@@ -353,6 +353,30 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144cfd84_4af0a6b2",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T03:42:14Z",
+      "side": 1,
+      "message": "It is not suitable to adding ipv6 link local route here. Currently, not all of tethering support ipv6 and ipv6 tethering don\u0027t support for multiple downstream. If you add link local route here.\nSee below use case: enable bt tethering first, then enable hotspot. \nYou may possible see below case in local_network table.\nfe80::/64 dev bt-pan proto static metric 1024 pref medium\nfe80::/64 dev wlan1 proto static metric 1024 pref medium\n\nThen, ipv6 tethering will broken since fe80::/64 always match bt-pan even ipv6 don\u0027t support for bt-pan.",
+      "parentUuid": "3a14db2c_41cbea71",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
