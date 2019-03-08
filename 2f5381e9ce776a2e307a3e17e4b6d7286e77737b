@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "518aa757_6ec6edcf",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3529,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Nice catch.",
+      "parentUuid": "5ccd8134_03e8d1dc",
+      "range": {
+        "startLine": 3523,
+        "startChar": 0,
+        "endLine": 3529,
+        "endChar": 73
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "919a9a96_a62d9760",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 8
@@ -118,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "89bb1b8e_e0a3ff95",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Of course not :)",
+      "parentUuid": "1f6bb461_26405301",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ad49563_c0bf3b65",
         "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
         "patchSetId": 8
@@ -129,6 +177,30 @@
       "writtenOn": "2019-03-08T07:14:08Z",
       "side": 1,
       "message": "How about a method that returns the manager class, by creating one each time or using a cached one ? Should each client have a different instance of NetworkStackIpMemoryStore referencing the service or could we cache one manager class ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 9
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f5920a_bc5ae8e9",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Each client should have an instance of the manager class.\nThe reason for this is that it lets us do useful stuff in the manager class in the future, possibly keeping state. Manager classes typically grow to need to do this.",
+      "parentUuid": "5ad49563_c0bf3b65",
       "range": {
         "startLine": 211,
         "startChar": 8,
@@ -164,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "fd51326d_056cd7a9",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee074590_47117774",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "827c9142_0057428f",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 8
@@ -184,6 +280,30 @@
       "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ed4d06_ce194936",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "You are right, the contract is stupid and can be made much better. Done.",
+      "parentUuid": "827c9142_0057428f",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "efed841a_c2b8d6ae",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Moot.",
+      "parentUuid": "ca63206d_3767a613",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5b935c4_0b1a6d4f",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 8
@@ -221,6 +365,30 @@
       "writtenOn": "2019-03-08T07:14:08Z",
       "side": 1,
       "message": "I\u0027m thinking one alternative would be to send a callback saying it failed, and ignore the RemoteException if that callback fails to be delivered, since most clients of this class should be using a StatusListener in the same process so no RemoteException can be thrown.\nGranted, this assumes stuff about clients and only moves the problem though... So I think this is fine as-is too.",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 62
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1a54ac_ec2d1be0",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "I think what\u0027s written here is simply a more efficient way of writing exactly what you\u0027re describing.\n\nThe listener is declared to throw RemoteException anyway so we have to catch regardless. On one side, the service call is guaranteed not to throw, on the other the listener is ; in all cases, the correct thing to do is to Log.e. If we ever have a public implementation of the client then yeah, this would need to rethrowFromSystemServer, but we don\u0027t have that for Q.\n\nWhat you see this is the result of Xiao and I thinking about all solutions, and we believe this is both simplest and most correct.",
+      "parentUuid": "d5b935c4_0b1a6d4f",
       "range": {
         "startLine": 85,
         "startChar": 12,
@@ -256,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "3aaff178_c88d74af",
+        "filename": "tests/net/Android.mk",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b54a0ceb_2082b823",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042dc37f_1d49603a",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
         "patchSetId": 8
@@ -279,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "40639e13_2718be31",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/IpMemoryStoreServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042dc37f_1d49603a",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f85a831_3c817d66",
         "filename": "tests/net/java/com/android/server/net/ipmemorystore/RelevanceUtilsTests.java",
         "patchSetId": 8
@@ -299,6 +515,30 @@
       "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec7d12a_452bb515",
+        "filename": "tests/net/java/com/android/server/net/ipmemorystore/RelevanceUtilsTests.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-08T09:15:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f85a831_3c817d66",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
