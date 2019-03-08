@@ -754,6 +754,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bb3559_fa383530",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-08T09:53:06Z",
+      "side": 1,
+      "message": "As Maze\u0027s comment \"there really is no reason not to have link local ipv6 routes\".\nWe should always append it. That is why I +1 with Lorenzo\u0027s suggestion for adding it into addInterfaceToLocalNetwork.\n\nDoes anyone know whether we still can prevent duplicated routing after clear EXCL flag ??\nI don\u0027t familiar with this behavior, just wondering know if we need to add the protection for duplicated routing.",
+      "parentUuid": "d31247e4_3b21f034",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
