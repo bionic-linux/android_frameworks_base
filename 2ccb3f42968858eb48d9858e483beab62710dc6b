@@ -736,6 +736,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31247e4_3b21f034",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T08:49:14Z",
+      "side": 1,
+      "message": "IMHO, addInterfaceToLocalNetwork is an utility function (it just adds interface and puts all prepared routes to routing table), this kind of route setup should be put in tetherInterface.\n\nAnyway, I move it to addInterfaceToLocalNetwork.",
+      "parentUuid": "7d273832_a270d286",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
