@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "719f8f2a_43f95480",
+        "filename": "Android.bp",
+        "patchSetId": 8
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T07:34:16Z",
+      "side": 1,
+      "message": "IIpMemoryStoreCallbacks will be used in the INetworkStackConnector.aidl, also in the auto generated INetworkStackConnector.java. If we remove these files, compiler will say:\n\nout/soong/.intermediates/frameworks/base/networkstack-aidl-interfaces-java-gen-4/gen/android/net/INetworkStackConnector.java:240: error: cannot find symbol\n  public void fetchIpMemoryStore(android.net.IIpMemoryStoreCallbacks cb) throws android.os.RemoteException;\n                                            ^\n  symbol:   class IIpMemoryStoreCallbacks\n  location: package android.net",
+      "parentUuid": "c2c3d87d_4af27810",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 842,
+        "endChar": 56
+      },
+      "revId": "2f5381e9ce776a2e307a3e17e4b6d7286e77737b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ccd8134_03e8d1dc",
         "filename": "core/java/android/content/Context.java",
         "patchSetId": 8
