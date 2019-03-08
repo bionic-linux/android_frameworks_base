@@ -466,6 +466,24 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce30a4f_8e3a5543",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-08T05:07:08Z",
+      "side": 1,
+      "message": "Also, where do we delete these routes? Should we remove them in removeInterfaceFromLocalNetwork?",
+      "parentUuid": "df1ff086_5017c792",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
