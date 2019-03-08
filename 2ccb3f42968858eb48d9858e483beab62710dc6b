@@ -484,6 +484,48 @@
       "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151d97ac_e130dd22",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T06:17:50Z",
+      "side": 1,
+      "message": "What Mark said is right, but not all as he mentioned.\nIf there is a \"fe80::/64\" prefix in local_network table, another entries with the same prefix cannot be added.\n\nAs a result, it would indeed break another tethering with real IPv6 support.",
+      "parentUuid": "373872d6_9366d5f2",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1294,
+        "endChar": 74
+      },
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19b5526_f4e17462",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-03-08T06:17:50Z",
+      "side": 1,
+      "message": "I think a separate table as Mark mentioned could settle this link local routing once and for all.\n\nBy the way, I don\u0027t see reverse operations in untether function or disable IpServer part, but I observe that even I manually add some routing entries for wlan1(hostpot) by ip cli, they are removed automatically after turning hotspot off.\n\nIt seems that clean up is done in somewhere generically.",
+      "parentUuid": "4ce30a4f_8e3a5543",
+      "revId": "2ccb3f42968858eb48d9858e483beab62710dc6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
