@@ -22,6 +22,30 @@
       "revId": "92c55f03c6629079df5653b1a661e33b01ac69c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44251b1e_ddd4aa68",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T04:12:08Z",
+      "side": 0,
+      "message": "When we run \"atest FrameworksNetTests\" with this CL, it says \"java.lang.SecurityException: Only the system server should try to bind to the network stack.\" Because FrameworksNetTests.apk cannot access network stack directly, this member will cause atest failure. I think maybe we can move this uni test to network stack tests directory. But taking into account to the timing, I can do that in the following CL soon. Thought?",
+      "parentUuid": "e378248f_128fffdf",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "92c55f03c6629079df5653b1a661e33b01ac69c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

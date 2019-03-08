@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "910f1ed3_31bc141f",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T04:12:08Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "b3b019fa_a3ebe9b0",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27af218e_09fc2987",
         "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09889f1_f0d07314",
+        "filename": "packages/NetworkStack/src/com/android/server/NetworkStackService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T04:12:08Z",
+      "side": 1,
+      "message": "Using ConditionVariable to synchronize the makeConnector() and getIpMemoryStore() to make sure sConnector won\u0027t return null. Please have a check about this method.Thanks.",
+      "parentUuid": "27af218e_09fc2987",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2fc16532_50d91a3a",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T04:12:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c245e9eb_fdc4ebb8",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc3a0dce_f30eb1bc",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8440121d_7515a07b",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-08T04:12:08Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "cc3a0dce_f30eb1bc",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "0f2dac3c9fcff101cf95a191c68768d66706de17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
