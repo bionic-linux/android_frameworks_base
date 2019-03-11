@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "500ff178_3e5ebd62",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c411195_78da9617",
+      "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8b5d09_ee157a99",
         "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2019-03-11T05:06:50Z",
       "side": 1,
       "message": "Do you think if it\u0027s better to rename \"blob\" to \"blobParcelable\"? indicate that blob is also the parcelable object.",
+      "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f42296d_903b3108",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-11T14:42:36Z",
+      "side": 1,
+      "message": "I considered it, but because Blob is simply a wrapped byte[], I thought there was little point in making a wrapper for a wrapper. Nothing in there is final, the array is modifiable, anyone who has a ref to the Blob can touch the insides, but anyone who can see the insides can also touch the ref so...\n\nSo for the client view of this, I think the point is exactly the other way around : we prefer to avoid clients having to deal with *Parcelable classes. If this is the exception, I prefer it to be the exception to the stable AIDL files being called *Parcelable and for the client to have a uniform interface, rather than for all stable AIDL files to be consistent but have the client deal with the inconsistency.\n\nIf you feel strongly then maybe we should just make a wrapper for Blob, too.",
+      "parentUuid": "0e8b5d09_ee157a99",
       "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
