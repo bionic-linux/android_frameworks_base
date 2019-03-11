@@ -4800,6 +4800,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 quality = PASSWORD_QUALITY_UNSPECIFIED;
             }
             final PasswordMetrics metrics = PasswordMetrics.computeForPassword(password);
+<<<<<<< HEAD   (bee0cb Merge "Add a static to get the Ip Memory Store")
             realQuality = metrics.quality;
             if (quality != PASSWORD_QUALITY_UNSPECIFIED) {
 
@@ -4812,7 +4813,18 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                     return false;
                 }
                 quality = Math.max(realQuality, quality);
+=======
+            final int realQuality = metrics.quality;
+            if (realQuality < quality
+                    && quality != DevicePolicyManager.PASSWORD_QUALITY_COMPLEX) {
+                Slog.w(LOG_TAG, "resetPassword: password quality 0x"
+                        + Integer.toHexString(realQuality)
+                        + " does not meet required quality 0x"
+                        + Integer.toHexString(quality));
+                return false;
+>>>>>>> BRANCH (33e0de Snap for 5240760 from 988624eda2c566551f75b48231cdeff2b0142d)
             }
+            quality = Math.max(realQuality, quality);
             int length = getPasswordMinimumLength(null, userHandle, /* parent */ false);
             if (password.length() < length) {
                 Slog.w(LOG_TAG, "resetPassword: password length " + password.length()
@@ -4898,7 +4910,11 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 result = mLockPatternUtils.setLockCredentialWithToken(password,
                         TextUtils.isEmpty(password) ? LockPatternUtils.CREDENTIAL_TYPE_NONE
                                 : LockPatternUtils.CREDENTIAL_TYPE_PASSWORD,
+<<<<<<< HEAD   (bee0cb Merge "Add a static to get the Ip Memory Store")
                         realQuality, tokenHandle, token, userHandle);
+=======
+                        quality, tokenHandle, token, userHandle);
+>>>>>>> BRANCH (33e0de Snap for 5240760 from 988624eda2c566551f75b48231cdeff2b0142d)
             }
             boolean requireEntry = (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
             if (requireEntry) {
