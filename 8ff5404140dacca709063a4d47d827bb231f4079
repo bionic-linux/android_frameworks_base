@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c411195_78da9617",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-11T05:06:50Z",
+      "side": 1,
+      "message": "nit: 2019? and other new added files.",
+      "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8b5d09_ee157a99",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-11T05:06:50Z",
+      "side": 1,
+      "message": "Do you think if it\u0027s better to rename \"blob\" to \"blobParcelable\"? indicate that blob is also the parcelable object.",
+      "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
