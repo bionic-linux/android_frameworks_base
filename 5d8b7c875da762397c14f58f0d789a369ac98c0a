@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1bf8b7_9dec2b1c",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3530,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-12T08:36:37Z",
+      "side": 0,
+      "message": "Since we delete this string here, and this sting will be used in the IpMemoryStoreClient. Probably build might fail. maybe need to wait for other relevant CLs merged first and then rebase.",
+      "revId": "5d8b7c875da762397c14f58f0d789a369ac98c0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
