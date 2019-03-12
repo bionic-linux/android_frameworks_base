@@ -2491,6 +2491,31 @@ public class CarrierConfigManager {
     public static final String KEY_5G_ICON_CONFIGURATION_STRING =
             "5g_icon_configuration_string";
 
+    /**
+     * The parent subscription for the subscription associated to this config.
+     *
+     * A subscription grouped to a parent will generally be subsumed by the parent for purposes of
+     * APIs and UI behavior. If unset (default), then this subscription will not be grouped to a
+     * parent subscription and can instead be considered to be grouped only with itself.
+     *
+     * @hide
+     */
+    public static final String KEY_PARENT_SUBSCRIPTION_INT = "key_parent_subscription_int";
+
+    /**
+    * A boolean property indicating whether this subscription should be managed as an opportunistic
+    * subscription.
+    *
+    * If true, then this subscription will be selected based on available coverage and will not be
+    * available for a user in settings menus for selecting macro network providers. If unset,
+    * defaults to “false”.
+    *
+    * @hide
+    */
+    public static final String KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL =
+            "key_is_opportunistic_subscription_bool";
+
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2875,6 +2900,8 @@ public class CarrierConfigManager {
                 });
         sDefaults.putString(KEY_5G_ICON_CONFIGURATION_STRING,
                 "connected_mmwave:None,connected:5G,not_restricted:None,restricted:None");
+        sDefaults.putInt(KEY_PARENT_SUBSCRIPTION_INT, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+        sDefaults.putBoolean(KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL, false);
     }
 
     /**
