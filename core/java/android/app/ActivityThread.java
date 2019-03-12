@@ -3156,7 +3156,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         final Activity a = performLaunchActivity(r, customIntent);
 
-        if (a != null) {
+        if (a != null && !r.finishing) {
             r.createdConfig = new Configuration(mConfiguration);
             reportSizeConfigurations(r);
             if (!r.activity.mFinished && pendingActions != null) {
@@ -3850,7 +3850,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         if (localLOGV) {
             Slog.v(TAG, "Performing resume of " + r + " finished=" + r.activity.mFinished);
         }
-        if (r == null || r.activity.mFinished) {
+        if (r == null || r.activity.mFinished || && !r.finishing) {
             return null;
         }
         if (r.getLifecycleState() == ON_RESUME) {
@@ -3951,7 +3951,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                 throw e.rethrowFromSystemServer();
             }
         }
-        if (r.window == null && !a.mFinished && willBeVisible) {
+        if (r.window == null && !a.mFinished && willBeVisible && !r.finishing) {
             r.window = r.activity.getWindow();
             View decor = r.window.getDecorView();
             decor.setVisibility(View.INVISIBLE);
