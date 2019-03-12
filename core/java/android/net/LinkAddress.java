@@ -108,7 +108,7 @@ public class LinkAddress implements Parcelable {
      * Per RFC 4193 section 8, fc00::/7 identifies these addresses.
      */
     private boolean isIPv6ULA() {
-        if (isIPv6()) {
+        if (isIpv6()) {
             byte[] bytes = address.getAddress();
             return ((bytes[0] & (byte)0xfe) == (byte)0xfc);
         }
@@ -121,7 +121,7 @@ public class LinkAddress implements Parcelable {
      */
     @TestApi
     @SystemApi
-    public boolean isIPv6() {
+    public boolean isIpv6() {
         return address instanceof Inet6Address;
     }
 
@@ -131,7 +131,7 @@ public class LinkAddress implements Parcelable {
      */
     @TestApi
     @SystemApi
-    public boolean isIPv4() {
+    public boolean isIpv4() {
         return address instanceof Inet4Address;
     }
 

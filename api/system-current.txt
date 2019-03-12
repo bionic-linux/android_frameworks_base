@@ -3143,8 +3143,8 @@ package android.net {
     ctor public LinkAddress(@NonNull String);
     ctor public LinkAddress(String, int, int);
     method public boolean isGlobalPreferred();
-    method public boolean isIPv4();
-    method public boolean isIPv6();
+    method public boolean isIpv4();
+    method public boolean isIpv6();
     method public boolean isSameAddressAs(android.net.LinkAddress);
   }
 
