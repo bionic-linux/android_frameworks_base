@@ -1153,7 +1153,7 @@ public class IpClient extends StateMachine {
 
     private boolean applyInitialConfig(InitialConfiguration config) {
         // TODO: also support specifying a static IPv4 configuration in InitialConfiguration.
-        for (LinkAddress addr : findAll(config.ipAddresses, LinkAddress::isIPv6)) {
+        for (LinkAddress addr : findAll(config.ipAddresses, LinkAddress::isIpv6)) {
             if (!mInterfaceCtrl.addAddress(addr)) return false;
         }
 
