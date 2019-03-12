@@ -853,8 +853,10 @@ class ActivityStarter {
                 || stack.getResumedActivity().info.applicationInfo.uid != realCallingUid)) {
             if (!mService.checkAppSwitchAllowedLocked(callingPid, callingUid,
                     realCallingPid, realCallingUid, "Activity start")) {
-                mController.addPendingActivityLaunch(new PendingActivityLaunch(r,
-                        sourceRecord, startFlags, stack, callerApp));
+                if (!stack.isActivityTypeHome()) {
+                    mController.addPendingActivityLaunch(new PendingActivityLaunch(r,
+                            sourceRecord, startFlags, stack, callerApp));
+                }
                 ActivityOptions.abort(checkedOptions);
                 return ActivityManager.START_SWITCHES_CANCELED;
             }
