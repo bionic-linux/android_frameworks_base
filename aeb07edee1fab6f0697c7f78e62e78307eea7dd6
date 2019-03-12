@@ -51,6 +51,24 @@
       "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe2927e_74dd6381",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-12T09:18:47Z",
+      "side": 1,
+      "message": "The problem is there is no guarantee that onPageStated() will be called before onReceivedSslError(), so mHostname will not be set if onReceivedSslError() is called before onPageStated().\nIt will make CaptivePortalLogin app cannot show SSL error page to user normally, but just show the blank page to user.\n\nRichard suggested that we could add one more overloading method - shouldOverrideUrlLoading() to get the URL which will be loaded in the current webview.\nAnd we could compare the error.getUrl() with the url which is coming from shouldOverrideUrlLoading() to check if the SSL error is coming from login page or resources.\nSomething like:\nString mLoadingUrl;\n@Override\npublic boolean shouldOverrideUrlLoading(WebView webView, String newUrl) {\n    mLoadingUrl \u003d newUrl;\n    return false;\n}\n\n@Override\npublic void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {\n    if (TextUtils.isEmpty(error.getUrl())\n            || !TextUtils.equals(error.getUrl(), mLoadingUrl)) {\n        handler.cancel();\n        return;\n    }\n    ...\n}\n\nRichard, if I\u0027m wrong please correct me directly.",
+      "parentUuid": "07fe3630_c9b68e42",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
