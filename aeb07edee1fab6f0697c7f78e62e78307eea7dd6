@@ -87,6 +87,24 @@
       "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86a3bb7_65d1415c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2019-03-12T17:55:01Z",
+      "side": 1,
+      "message": "All WebView callbacks are invoked on the UI thread unless otherwise documented.\n\nChecking if the URL is the same should be fine; checking the host isn\u0027t really gaining anything as I mentioned in my earlier comment (the same SSL connection is typically reused anyway and if it\u0027s accepted/rejected by your callback it will apply the same answer to all requests)\n\nYou can check WebResourceRequest.isForMainFrame() to see if it\u0027s a main frame navigation or not.",
+      "parentUuid": "e52e16e6_658ca43c",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
