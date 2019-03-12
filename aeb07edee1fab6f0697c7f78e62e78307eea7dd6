@@ -69,6 +69,24 @@
       "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52e16e6_658ca43c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T09:57:20Z",
+      "side": 1,
+      "message": "Actually, all I was saying is: currently the code checks if the error URL is the same as view URL. But the previous code only checked if the *host* of the two URLs was the same.\n\nFWIW it looks like we already override shouldOverrideUrlLoading. So if Richard thinks that\u0027s a better way to do this, then we can set mHostname in shouldOverrideUrlLoading instead of in on PageStarted. One thing that worries me about that is that the documentation says \"Note: This method may be called for subframes [...]\". Is that what we want?\n\nRichard, is it safe to write to an instance member variable in shouldOverrideUrlLoading()? Is it guaranteed that that function will only ever be called on the same thread?",
+      "parentUuid": "efe2927e_74dd6381",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
