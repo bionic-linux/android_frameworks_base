@@ -3180,7 +3180,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
     private void reportSizeConfigurations(ActivityClientRecord r) {
         Configuration[] configurations = r.activity.getResources().getSizeConfigurations();
-        if (configurations == null) {
+        if (configurations == null || r.activity.mFinished) {
             return;
         }
         SparseIntArray horizontal = new SparseIntArray();
@@ -3951,7 +3951,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                 throw e.rethrowFromSystemServer();
             }
         }
-        if (r.window == null && !a.mFinished && willBeVisible) {
+        if (r.window == null && !a.mFinished && willBeVisible && !r.finishing) {
             r.window = r.activity.getWindow();
             View decor = r.window.getDecorView();
             decor.setVisibility(View.INVISIBLE);
