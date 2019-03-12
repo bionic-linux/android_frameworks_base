@@ -69,6 +69,24 @@
       "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd2e287_fc2c2cb3",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-12T02:07:16Z",
+      "side": 1,
+      "message": "I see, thanks for explaining this point. yes, let\u0027s keep as it is now.",
+      "parentUuid": "6f42296d_903b3108",
+      "revId": "8ff5404140dacca709063a4d47d827bb231f4079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
