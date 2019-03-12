@@ -2549,6 +2549,34 @@ public class CarrierConfigManager {
     public static final String KEY_5G_ICON_CONFIGURATION_STRING =
             "5g_icon_configuration_string";
 
+    /**
+     * The UUID of a Group of related subscriptions in which to place the current subscription.
+     *
+     * A grouped subscription will behave for billing purposes and other UI purposes as though it
+     * is a transparent extension of other subscriptions in the group.
+     * <p>If unset (default), then this subscription will not be grouped and can instead be
+     * considered to be grouped only with itself. If set to 0000-0000-0000-0000, then the
+     * subscription will be removed from any current group.
+     *
+     * @hide
+     */
+    public static final String KEY_SUBSCRIPTION_GROUP_UUID_STRING =
+            "key_subscription_group_uuid_string";
+
+    /**
+    * A boolean property indicating whether this subscription should be managed as an opportunistic
+    * subscription.
+    *
+    * If true, then this subscription will be selected based on available coverage and will not be
+    * available for a user in settings menus for selecting macro network providers. If unset,
+    * defaults to “false”.
+    *
+    * @hide
+    */
+    public static final String KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL =
+            "key_is_opportunistic_subscription_bool";
+
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -2939,6 +2967,8 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_AUTO_CANCEL_CS_REJECT_NOTIFICATION, false);
         sDefaults.putBoolean(KEY_ALWAYS_SHOW_PRIMARY_SIGNAL_BAR_IN_OPPORTUNISTIC_NETWORK_BOOLEAN,
                 false);
+        sDefaults.putString(KEY_SUBSCRIPTION_GROUP_UUID_STRING, "");
+        sDefaults.putBoolean(KEY_IS_OPPORTUNISTIC_SUBSCRIPTION_BOOL, false);
     }
 
     /**
