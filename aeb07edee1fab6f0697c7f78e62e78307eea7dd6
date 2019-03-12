@@ -16,6 +16,41 @@
       "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bed815d_dd56b59d",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T08:47:18Z",
+      "side": 1,
+      "message": "+1. Something like:\n\n    String viewURL \u003d view.getUrl();\n    String errorURL \u003d error.getUrl();\n    Log.d(TAG, ...);\n    if (TextUtils.isEmpty(errorURL)) {\n        ...",
+      "parentUuid": "f2353d50_5d99c5ae",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fe3630_c9b68e42",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-12T08:47:18Z",
+      "side": 1,
+      "message": "This is a change in behaviour. The previous code suppressed the SSL error if the hostname matched. The new code suppresses the SSL error if the URL matches. Is there a reason to change the behaviour? Do we know what will happen if we change the behaviour?",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
