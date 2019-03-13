@@ -4,6 +4,9 @@ android_app {
     privileged: true,
     manifest: "system/AndroidManifest.xml",
     required: ["privapp-permissions-test.xml"],
+    dex_preopt: {
+        enabled: false,
+    },
 }
 
 prebuilt_etc {
@@ -19,6 +22,9 @@ android_app {
     manifest: "vendor/AndroidManifest.xml",
     vendor: true,
     required: ["vendorprivapp-permissions-test.xml"],
+    dex_preopt: {
+        enabled: false,
+    },
 }
 
 prebuilt_etc {
@@ -35,6 +41,9 @@ android_app {
     manifest: "product/AndroidManifest.xml",
     product_specific: true,
     required: ["productprivapp-permissions-test.xml"],
+    dex_preopt: {
+        enabled: false,
+    },
 }
 
 prebuilt_etc {
