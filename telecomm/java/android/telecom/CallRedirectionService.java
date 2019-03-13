@@ -71,7 +71,8 @@ public abstract class CallRedirectionService extends Service {
      *
      * <p>The implemented {@link CallRedirectionService} can call {@link #placeCallUnmodified()},
      * {@link #redirectCall(Uri, PhoneAccountHandle, boolean)}, and {@link #cancelCall()} only
-     * from here.
+     * from here. Any response Telecom will receive corresponds to the latest request from this
+     * method.
      *
      * @param handle the phone number dialed by the user, represented in E.164 format if possible
      * @param initialPhoneAccount the {@link PhoneAccountHandle} on which the call will be placed.
@@ -91,13 +92,15 @@ public abstract class CallRedirectionService extends Service {
      * no changes are required to the outgoing call, and that the call should be placed as-is.
      *
      * <p>This can only be called from implemented
-     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
+     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}. The response corresponds to the
+     * latest request via {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
      *
      */
     public final void placeCallUnmodified() {
         try {
             mCallRedirectionAdapter.placeCallUnmodified();
         } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
         }
     }
 
@@ -109,7 +112,8 @@ public abstract class CallRedirectionService extends Service {
      * replies Telecom a handle for an emergency number.
      *
      * <p>This can only be called from implemented
-     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
+     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}. The response corresponds to the
+     * latest request via {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
      *
      * @param handle the new phone number to dial
      * @param targetPhoneAccount the {@link PhoneAccountHandle} to use when placing the call.
@@ -126,6 +130,7 @@ public abstract class CallRedirectionService extends Service {
         try {
             mCallRedirectionAdapter.redirectCall(handle, targetPhoneAccount, confirmFirst);
         } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
         }
     }
 
@@ -135,13 +140,15 @@ public abstract class CallRedirectionService extends Service {
      * an outgoing call should be canceled entirely.
      *
      * <p>This can only be called from implemented
-     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
+     * {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}. The response corresponds to the
+     * latest request via {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)}.
      *
      */
     public final void cancelCall() {
         try {
             mCallRedirectionAdapter.cancelCall();
         } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
         }
     }
 
