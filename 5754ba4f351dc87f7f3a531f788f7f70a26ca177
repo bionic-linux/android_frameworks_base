@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1184a280_5e7970c0",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-03-13T11:50:18Z",
+      "side": 1,
+      "message": "To be clear : you want to do this for apps targeting the next major release after Q, right ? The risk in doing things this way is that if there\u0027s a smaller API bump (e.g something like Q_MR1, then we may inadvertently apply it there). I\u0027d suggest changing it to \u003d\u003d CUR_DEVELOPMENT now with a TODO to amend it later whenever Build.VERSION_CODES.R is available.",
+      "range": {
+        "startLine": 768,
+        "startChar": 19,
+        "endLine": 768,
+        "endChar": 64
+      },
+      "revId": "5754ba4f351dc87f7f3a531f788f7f70a26ca177",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
