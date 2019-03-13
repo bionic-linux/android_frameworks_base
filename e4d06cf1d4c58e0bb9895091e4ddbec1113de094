@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00ca867a_e3460fea",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-13T12:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13dbb283_b4b413cf",
+      "range": {
+        "startLine": 886,
+        "startChar": 31,
+        "endLine": 886,
+        "endChar": 42
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7dd5b0d_fc97d3a0",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e7062fdb_6ad47138",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-13T12:19:26Z",
+      "side": 1,
+      "message": "Offline discussed, in case of IPv4 and IPv6 are supported, for example, the mKeepaliveAcks.size() will grater than 0 if only add a v6 keepalive filter.\nAbove case still add these instructions when generateV4KeepaliveFilters() is called.\nThus we need a method to check is there any keepalive ack in mKeepaliveAcks.\n\nadd a method static \u003cT\u003e boolean any(SparseArray\u003cT\u003e arr, Predicate\u003cT\u003e fn) to check mKeepaliveAcks contains v4/v6 ack or not.\n\nThe difference from discussion is that I put any() method into NetworkStackUtils instead of creating a new class CollectionUtils.",
+      "parentUuid": "e3e9dfa8_9a152117",
+      "range": {
+        "startLine": 1198,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "262192b8_b8a86fe0",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e60a776_d1c6a8a9",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-13T12:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262192b8_b8a86fe0",
+      "range": {
+        "startLine": 1292,
+        "startChar": 17,
+        "endLine": 1292,
+        "endChar": 43
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
