@@ -16,6 +16,24 @@
       "revId": "ba83487b460af129f5cbf6d49c2a162b06931c90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a59ac4_fa2d1210",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1344584
+      },
+      "writtenOn": "2019-03-14T17:05:19Z",
+      "side": 1,
+      "message": "Because otherwise \u0027mma\u0027 in frameworks/base fails with:\nFAILED: /sda/asmundak/xyz/aosp/soong/.intermediates/frameworks/base/tests/privapp-permissions/PrivAppPermissionTest/android_common/dexpreopt/oat/arm64/package.invocation /sda/asmundak/xyz/aosp/soong/.intermediates/frameworks/base/tests/privapp-permissions/PrivAppPermissionTest/android_common/dexpreopt/oat/arm64/package.odex /sda/asmundak/xyz/aosp/soong/.intermediates/frameworks/base/tests/privapp-permissions/PrivAppPermissionTest/android_common/dexpreopt/oat/arm64/package.vdex\ndex2oatd E 03-13 15:57:58   646   646 oat_writer.cc:567] No dex files in zip file \u0027/system/priv-app/PrivAppPermissionTest/PrivAppPermissionTest.apk\u0027: Entry not found",
+      "parentUuid": "12257a9d_62b8f200",
+      "revId": "ba83487b460af129f5cbf6d49c2a162b06931c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
