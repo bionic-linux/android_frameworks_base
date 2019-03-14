@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "2763eaa0_264471ef",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-03-14T18:05:52Z",
+      "side": 1,
+      "message": "I think \"Some subscription APIs need work with a usable subscription ID\" needs to be changed to \"Some subscription APIs require a usable subscription ID\"",
+      "parentUuid": "2b6b771a_3534bcbd",
+      "revId": "3641022578947823c7dd976c5209baf0c06ab863",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc0b8990_3aa624a1",
         "filename": "telephony/java/android/telephony/SubscriptionManager.java",
         "patchSetId": 1
@@ -330,6 +348,30 @@
       "side": 1,
       "message": "Would word it in another way.",
       "parentUuid": "5b24b404_b160ec7d",
+      "range": {
+        "startLine": 2291,
+        "startChar": 22,
+        "endLine": 2291,
+        "endChar": 24
+      },
+      "revId": "3641022578947823c7dd976c5209baf0c06ab863",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017d3cd5_a0eb858b",
+        "filename": "telephony/java/android/telephony/SubscriptionManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2291,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-03-14T18:05:52Z",
+      "side": 1,
+      "message": "How about \"This value is a valid and usable subscription ID.\"",
+      "parentUuid": "8edbda54_4ab9ccd9",
       "range": {
         "startLine": 2291,
         "startChar": 22,
