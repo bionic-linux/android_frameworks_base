@@ -102,9 +102,6 @@ public class NetworkAttributes {
             @Nullable final List<InetAddress> dnsAddresses,
             @Nullable final Integer mtu) {
         if (mtu != null && mtu < 0) throw new IllegalArgumentException("MTU can't be negative");
-        if (assignedV4AddressExpiry != null && assignedV4AddressExpiry <= 0) {
-            throw new IllegalArgumentException("lease expiry can't be negative or zero");
-        }
         this.assignedV4Address = assignedV4Address;
         this.assignedV4AddressExpiry = assignedV4AddressExpiry;
         this.groupHint = groupHint;
@@ -118,8 +115,7 @@ public class NetworkAttributes {
         // The call to the other constructor must be the first statement of this constructor,
         // so everything has to be inline
         this((Inet4Address) getByAddressOrNull(parcelable.assignedV4Address),
-                parcelable.assignedV4AddressExpiry > 0
-                        ? parcelable.assignedV4AddressExpiry : null,
+                parcelable.assignedV4AddressExpiry >= 0 ? parcelable.assignedV4AddressExpiry : null,
                 parcelable.groupHint,
                 blobArrayToInetAddressList(parcelable.dnsAddresses),
                 parcelable.mtu >= 0 ? parcelable.mtu : null);
@@ -127,6 +123,7 @@ public class NetworkAttributes {
 
     @Nullable
     private static InetAddress getByAddressOrNull(@Nullable final byte[] address) {
+        if (null == address) return null;
         try {
             return InetAddress.getByAddress(address);
         } catch (UnknownHostException e) {
@@ -166,7 +163,7 @@ public class NetworkAttributes {
         parcelable.assignedV4Address =
                 (null == assignedV4Address) ? null : assignedV4Address.getAddress();
         parcelable.assignedV4AddressExpiry =
-                (null == assignedV4AddressExpiry) ? 0 : assignedV4AddressExpiry;
+                (null == assignedV4AddressExpiry) ? -1 : assignedV4AddressExpiry;
         parcelable.groupHint = groupHint;
         parcelable.dnsAddresses = inetAddressListToBlobArray(dnsAddresses);
         parcelable.mtu = (null == mtu) ? -1 : mtu;
@@ -227,15 +224,14 @@ public class NetworkAttributes {
         }
 
         /**
-         * Set the lease expiry timestamp of assigned v4 address.
+         * Set the lease expiry timestamp of assigned v4 address. Long.MAX_VALUE is used
+         * to represent "infinite lease".
+         *
          * @param assignedV4AddressExpiry The lease expiry timestamp of assigned v4 address.
          * @return This builder.
          */
         public Builder setAssignedV4AddressExpiry(
                 @Nullable final Long assignedV4AddressExpiry) {
-            if (null != assignedV4AddressExpiry && assignedV4AddressExpiry <= 0) {
-                throw new IllegalArgumentException("lease expiry can't be negative or zero");
-            }
             mAssignedAddressExpiry = assignedV4AddressExpiry;
             return this;
         }
