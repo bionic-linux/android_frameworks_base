@@ -149,6 +149,9 @@ public class DhcpClient extends StateMachine {
     public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
     public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
 
+    /* command from controller to enter DHCP INIT-REBOOT state */
+    public static final int CMD_INIT_REBOOT_DHCP            = PUBLIC_BASE + 10;
+
     /* Message.arg1 arguments to CMD_POST_DHCP_ACTION notification */
     public static final int DHCP_SUCCESS = 1;
     public static final int DHCP_FAILURE = 2;
@@ -217,6 +220,7 @@ public class DhcpClient extends StateMachine {
     private DhcpResults mDhcpLease;
     private long mDhcpLeaseExpiry;
     private DhcpResults mOffer;
+    private Inet4Address mLastAssginedV4Address;
 
     // Milliseconds SystemClock timestamps used to record transition times to DhcpBoundState.
     private long mLastInitEnterTime;
@@ -237,6 +241,7 @@ public class DhcpClient extends StateMachine {
     private State mDhcpRebootingState = new DhcpRebootingState();
     private State mWaitBeforeStartState = new WaitBeforeStartState(mDhcpInitState);
     private State mWaitBeforeRenewalState = new WaitBeforeRenewalState(mDhcpRenewingState);
+    private State mWaitBeforeInitRebootState = new WaitBeforeInitRebootState(mDhcpInitRebootState);
 
     private WakeupMessage makeWakeupMessage(String cmdName, int cmd) {
         cmdName = DhcpClient.class.getSimpleName() + "." + mIfaceName + "." + cmdName;
@@ -263,8 +268,9 @@ public class DhcpClient extends StateMachine {
                 addState(mWaitBeforeRenewalState, mDhcpHaveLeaseState);
                 addState(mDhcpRenewingState, mDhcpHaveLeaseState);
                 addState(mDhcpRebindingState, mDhcpHaveLeaseState);
-            addState(mDhcpInitRebootState, mDhcpState);
             addState(mDhcpRebootingState, mDhcpState);
+        addState(mWaitBeforeInitRebootState, mDhcpState);
+        addState(mDhcpInitRebootState, mDhcpState);
 
         setInitialState(mStoppedState);
 
@@ -282,6 +288,17 @@ public class DhcpClient extends StateMachine {
 
     public void registerForPreDhcpNotification() {
         mRegisteredForPreDhcpNotification = true;
+    }
+
+    /**
+     * pass the last assigned address to DHCP client
+     * from IpClient
+     * TODO: use state machine message argument instead
+     * @hide
+     */
+    public void registerLastAssignedV4Address(
+             final Inet4Address lastAssginedV4Address) {
+        mLastAssginedV4Address = lastAssginedV4Address;
     }
 
     public static DhcpClient makeDhcpClient(
@@ -604,6 +621,14 @@ public class DhcpClient extends StateMachine {
                         transitionTo(mDhcpInitState);
                     }
                     return HANDLED;
+                case CMD_INIT_REBOOT_DHCP:
+                    if (mRegisteredForPreDhcpNotification) {
+                        Log.d(TAG, "transition to wait before init reboot state");
+                        transitionTo(mWaitBeforeInitRebootState);
+                    } else {
+                        transitionTo(mDhcpInitRebootState);
+                    }
+                    return HANDLED;
                 default:
                     return NOT_HANDLED;
             }
@@ -611,14 +636,21 @@ public class DhcpClient extends StateMachine {
     }
 
     class WaitBeforeStartState extends WaitBeforeOtherState {
-        public WaitBeforeStartState(State otherState) {
+        WaitBeforeStartState(State otherState) {
             super();
             mOtherState = otherState;
         }
     }
 
     class WaitBeforeRenewalState extends WaitBeforeOtherState {
-        public WaitBeforeRenewalState(State otherState) {
+        WaitBeforeRenewalState(State otherState) {
+            super();
+            mOtherState = otherState;
+        }
+    }
+
+    class WaitBeforeInitRebootState extends WaitBeforeOtherState {
+        WaitBeforeInitRebootState(State otherState) {
             super();
             mOtherState = otherState;
         }
@@ -1032,7 +1064,56 @@ public class DhcpClient extends StateMachine {
         }
     }
 
-    class DhcpInitRebootState extends LoggingState {
+    class DhcpInitRebootState extends PacketRetransmittingState {
+        DhcpInitRebootState() {
+            mTimeout = DHCP_TIMEOUT_MS / 2;
+        }
+
+        @Override
+        public void enter() {
+            super.enter();
+            Log.d(TAG, "enter dhcp init reboot state");
+            startNewTransaction();
+        }
+
+        // RFC 2131 4.3.2 describes generated DHCPREQUEST message during
+        // INIT-REBOOT state:
+        // 'server identifier' MUST NOT be filled in, 'requested IP address'
+        // option MUST be filled in with client's notion of its previously
+        // assigned address. 'ciaddr' MUST be zero. The client is seeking to
+        // verify a previously allocated, cached configuration. Server SHOULD
+        // send a DHCPNAK message to the client if the 'requested IP address'
+        // is incorrect, or is on the wrong network.
+        protected boolean sendPacket() {
+            Log.d(TAG, "send request from init reboot state");
+            return sendRequestPacket(
+                     INADDR_ANY,                                       // ciaddr
+                     mLastAssginedV4Address,                           // DHCP_REQUESTED_IP
+                     null,                                             // DHCP_SERVER_IDENTIFIER
+                     INADDR_BROADCAST);                                // packet destination address
+        }
+
+        protected void receivePacket(DhcpPacket packet) {
+            if (!isValidPacket(packet)) return;
+            if ((packet instanceof DhcpAckPacket)) {
+                DhcpResults results = packet.toDhcpResults();
+                if (results != null) {
+                    setDhcpLeaseExpiry(packet);
+                    acceptDhcpResults(results, "Confirmed");
+                    transitionTo(mConfiguringInterfaceState);
+                }
+            } else if (packet instanceof DhcpNakPacket) {
+                Log.d(TAG, "Received NAK, returning to INIT");
+                mOffer = null;
+                transitionTo(mDhcpInitState);
+            }
+        }
+
+        @Override
+        protected void timeout() {
+            // After sending REQUESTs unsuccessfully for a while, go back to init.
+            transitionTo(mDhcpInitState);
+        }
     }
 
     class DhcpRebootingState extends LoggingState {

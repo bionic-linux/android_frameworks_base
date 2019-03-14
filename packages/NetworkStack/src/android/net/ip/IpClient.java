@@ -37,6 +37,12 @@ import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
+import android.net.ipmemorystore.IOnNetworkAttributesRetrieved;
+import android.net.ipmemorystore.IOnStatusListener;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.NetworkAttributesParcelable;
+import android.net.ipmemorystore.Status;
+import android.net.ipmemorystore.StatusParcelable;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.shared.InitialConfiguration;
@@ -66,6 +72,7 @@ import com.android.server.NetworkStackService.NetworkStackServiceManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Collection;
 import java.util.List;
@@ -73,6 +80,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -365,6 +373,9 @@ public class IpClient extends StateMachine {
     private ApfFilter mApfFilter;
     private boolean mMulticastFiltering;
     private long mStartTimeMillis;
+    private String mCurrentBssid;
+    private boolean mLastDhcpLeaseValid;
+    private Inet4Address mLastAssignedV4Address;
 
     /**
      * Reading the snapshot is an asynchronous operation initiated by invoking
@@ -373,6 +384,8 @@ public class IpClient extends StateMachine {
      * signals when a new snapshot is ready.
      */
     private final ConditionVariable mApfDataSnapshotComplete = new ConditionVariable();
+
+    private final ConditionVariable mIpMemoryStoreCv = new ConditionVariable();
 
     public static class Dependencies {
         /**
@@ -603,6 +616,12 @@ public class IpClient extends StateMachine {
             doImmediateProvisioningFailure(IpManagerEvent.ERROR_INTERFACE_NOT_FOUND);
             return;
         }
+
+        Log.d(mTag, "start PROVISIONING");
+
+        // TODO: save the real bssid
+        //mCurrentBssid = req.mBssidName;
+        Log.d(mTag, "startProv current bssid: " + "googleguest");
 
         mCallback.setNeighborDiscoveryOffload(true);
         sendMessage(CMD_START, new android.net.shared.ProvisioningConfiguration(req));
@@ -1129,6 +1148,57 @@ public class IpClient extends StateMachine {
         mCallback.onProvisioningFailure(new LinkProperties(mLinkProperties));
     }
 
+    // Helper method to make an IOnNetworkAttributesRetrievedListener
+    private interface OnNetworkAttributesRetrievedListener  {
+        void onNetworkAttributesRetrieved(Status status, String l2Key, NetworkAttributes attr);
+    }
+    private IOnNetworkAttributesRetrieved onNetworkAttributesRetrieved(
+            final OnNetworkAttributesRetrievedListener functor) {
+        return new IOnNetworkAttributesRetrieved() {
+            @Override
+            public void onNetworkAttributesRetrieved(final StatusParcelable status,
+                    final String l2Key, final NetworkAttributesParcelable attributes)
+                    throws RemoteException {
+                        functor.onNetworkAttributesRetrieved(new Status(status), l2Key,
+                                null == attributes ? null : new NetworkAttributes(attributes));
+                    }
+            @Override
+            public IBinder asBinder() {
+                return null;
+
+            }
+        };
+    }
+
+    // Helper method to factorize condition variable for IpMemoryStore
+    private void doLatched(final Consumer<ConditionVariable> functor) {
+        mIpMemoryStoreCv.close();
+        functor.accept(mIpMemoryStoreCv);
+        mIpMemoryStoreCv.block();
+    }
+
+    private void checkLastDhcpLease(Status status, String l2key,
+            NetworkAttributes attributes) {
+        Log.d(mTag, "checkLastDhcpLease");
+        if (!status.isSuccess()) {
+            Log.d(mTag, "retrieve status: " + status.resultCode);
+            mLastDhcpLeaseValid = false;
+            return;
+        }
+
+        final int currentTime = (int) SystemClock.elapsedRealtime() / 1000;
+        if (attributes.assignedV4Address != null
+                && (currentTime <= attributes.assignedV4AddressExpiry)) {
+            mLastAssignedV4Address = attributes.assignedV4Address;
+            mLastDhcpLeaseValid = true;
+            Log.d(mTag, "address: " + attributes.assignedV4Address
+                    + "lease: " + attributes.assignedV4AddressExpiry);
+        } else {
+            Log.d(mTag, "address invalid or expired");
+            mLastDhcpLeaseValid = false;
+        }
+    }
+
     private boolean startIPv4() {
         // If we have a StaticIpConfiguration attempt to apply it and
         // handle the result accordingly.
@@ -1139,10 +1209,26 @@ public class IpClient extends StateMachine {
                 return false;
             }
         } else {
-            // Start DHCPv4.
+            // retrieve the network attributes corresponding to l2key
+            doLatched(mIpMemoryStoreCv -> mIpMemoryStore.retrieveNetworkAttributes("googleguest",
+                    onNetworkAttributesRetrieved((status, key, attr) -> {
+                        checkLastDhcpLease(status, key, attr);
+                        mIpMemoryStoreCv.open();
+                    })));
+
             mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceParams);
             mDhcpClient.registerForPreDhcpNotification();
-            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
+            if (mLastDhcpLeaseValid) {
+                Log.d(mTag, "enter DHCP INIT REBOOT state");
+                // enter the DHCP Init-Reboot state
+                // TODO:pass the last assigned address with message argument
+                mDhcpClient.registerLastAssignedV4Address(mLastAssignedV4Address);
+                mDhcpClient.sendMessage(DhcpClient.CMD_INIT_REBOOT_DHCP);
+            } else {
+                Log.d(mTag, "start DHCPv4");
+                // Start DHCPv4.
+                mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
+            }
         }
 
         return true;
@@ -1316,7 +1402,6 @@ public class IpClient extends StateMachine {
         @Override
         public void enter() {
             mStartTimeMillis = SystemClock.elapsedRealtime();
-
             if (mConfiguration.mProvisioningTimeoutMs > 0) {
                 final long alarmTime = SystemClock.elapsedRealtime()
                         + mConfiguration.mProvisioningTimeoutMs;
@@ -1486,6 +1571,41 @@ public class IpClient extends StateMachine {
             }
         }
 
+        /** Helper method to make a vanilla IOnStatusListener */
+        private IOnStatusListener onStatus(Consumer<Status> functor) {
+            return new IOnStatusListener() {
+                @Override
+                public void onComplete(final StatusParcelable statusParcelable)
+                        throws RemoteException {
+                    functor.accept(new Status(statusParcelable));
+                }
+                @Override
+                public IBinder asBinder() {
+                    return null;
+                }
+            };
+        }
+
+        private void storeDhcpLeaseInfo(DhcpResults lease) {
+            final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+            final Integer expiry = new Integer(
+                    (int) (lease.leaseDuration + SystemClock.elapsedRealtime() / 1000));
+            na.setAssignedV4Address((Inet4Address) lease.ipAddress.getAddress());
+            na.setAssignedV4AddressExpiry(expiry);
+            na.setGroupHint("hint1");
+            na.setMtu(lease.mtu);
+            na.setDnsAddresses(lease.dnsServers);
+
+            Log.d(mTag, "post DHCP current bssid: " + "googleguest");
+            doLatched(mIpMemoryStoreCv -> mIpMemoryStore.storeNetworkAttributes(
+                    "googleguest", na.build(),
+                    onStatus(status -> {
+                        Log.d("Store status : " + status.resultCode,
+                                Boolean.toString(status.isSuccess()));
+                        mIpMemoryStoreCv.open();
+                    })));
+        }
+
         @Override
         public boolean processMessage(Message msg) {
             switch (msg.what) {
@@ -1614,6 +1734,7 @@ public class IpClient extends StateMachine {
                     switch (msg.arg1) {
                         case DhcpClient.DHCP_SUCCESS:
                             handleIPv4Success((DhcpResults) msg.obj);
+                            storeDhcpLeaseInfo((DhcpResults) msg.obj);
                             break;
                         case DhcpClient.DHCP_FAILURE:
                             handleIPv4Failure();
