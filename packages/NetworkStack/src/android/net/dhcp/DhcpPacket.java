@@ -1281,6 +1281,8 @@ public abstract class DhcpPacket {
         results.leaseDuration = (mLeaseTime != null) ? mLeaseTime : INFINITE_LEASE;
         results.mtu = (mMtu != null && MIN_MTU <= mMtu && mMtu <= MAX_MTU) ? mMtu : 0;
         results.serverHostName = mServerHostName;
+        results.leaseExpiry = (mLeaseTime != null) ? System.currentTimeMillis() + mLeaseTime * 1000
+                : Long.MAX_VALUE;
 
         return results;
     }

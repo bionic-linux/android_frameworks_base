@@ -38,6 +38,8 @@ import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.OnStatusListener;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.shared.InitialConfiguration;
@@ -68,6 +70,7 @@ import com.android.server.NetworkStackService.NetworkStackServiceManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Collection;
 import java.util.List;
@@ -77,7 +80,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 
 /**
  * IpClient
@@ -105,6 +107,9 @@ public class IpClient extends StateMachine {
     private static final ConcurrentHashMap<String, SharedLog> sSmLogs = new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<String, LocalLog> sPktLogs = new ConcurrentHashMap<>();
     private final NetworkStackIpMemoryStore mIpMemoryStore;
+
+    // constant to represent this DHCP lease has been expired.
+    private static final long EXPIRED_LEASE = 1L;
 
     /**
      * Dump all state machine and connectivity packet logs to the specified writer.
@@ -394,6 +399,22 @@ public class IpClient extends StateMachine {
         public INetd getNetd(Context context) {
             return INetd.Stub.asInterface((IBinder) context.getSystemService(Context.NETD_SERVICE));
         }
+
+        /**
+         * Get a IpMemoryStore instance.
+         */
+        public NetworkStackIpMemoryStore getIpMemoryStore(Context context,
+                NetworkStackServiceManager nssManager) {
+            return new NetworkStackIpMemoryStore(context, nssManager.getIpMemoryStoreService());
+        }
+
+        /**
+         * Get a DhcpClient instance.
+         */
+        public DhcpClient getDhcpClient(Context context, StateMachine controller,
+                InterfaceParams ifParams, NetworkStackIpMemoryStore ipMemoryStore) {
+            return DhcpClient.makeDhcpClient(context, controller, ifParams, ipMemoryStore);
+        }
     }
 
     public IpClient(Context context, String ifName, IIpClientCallbacks callback,
@@ -418,8 +439,7 @@ public class IpClient extends StateMachine {
         mShutdownLatch = new CountDownLatch(1);
         mCm = mContext.getSystemService(ConnectivityManager.class);
         mObserverRegistry = observerRegistry;
-        mIpMemoryStore =
-                new NetworkStackIpMemoryStore(context, nssManager.getIpMemoryStoreService());
+        mIpMemoryStore = deps.getIpMemoryStore(context, nssManager);
 
         sSmLogs.putIfAbsent(mInterfaceName, new SharedLog(MAX_LOG_RECORDS, mTag));
         mLog = sSmLogs.get(mInterfaceName);
@@ -1104,10 +1124,6 @@ public class IpClient extends StateMachine {
             return true;
         }
         final int delta = setLinkProperties(newLp);
-        // Most of the attributes stored in the memory store are deduced from
-        // the link properties, therefore when the properties update the memory
-        // store record should be updated too.
-        maybeSaveNetworkToIpMemoryStore();
         if (sendCallbacks) {
             dispatchCallback(delta, newLp);
         }
@@ -1123,7 +1139,9 @@ public class IpClient extends StateMachine {
             Log.d(mTag, "onNewDhcpResults(" + Objects.toString(dhcpResults) + ")");
         }
         mCallback.onNewDhcpResults(dhcpResults);
-        maybeSaveNetworkToIpMemoryStore();
+        if (mConfiguration.mStaticIpConfig == null) {
+            maybeSaveLeaseToIpMemoryStore();
+        }
         dispatchCallback(delta, newLp);
     }
 
@@ -1140,6 +1158,7 @@ public class IpClient extends StateMachine {
             Log.d(mTag, "onNewDhcpResults(null)");
         }
         mCallback.onNewDhcpResults(null);
+        setLeaseExpiredToIpMemoryStore();
 
         handleProvisioningFailure();
     }
@@ -1182,9 +1201,10 @@ public class IpClient extends StateMachine {
             }
         } else {
             // Start DHCPv4.
-            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceParams);
+            mDhcpClient = mDependencies.getDhcpClient(mContext, IpClient.this, mInterfaceParams,
+                    mIpMemoryStore);
             mDhcpClient.registerForPreDhcpNotification();
-            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
+            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP, mL2Key);
         }
 
         return true;
@@ -1254,8 +1274,44 @@ public class IpClient extends StateMachine {
         mInterfaceCtrl.clearAllAddresses();
     }
 
-    private void maybeSaveNetworkToIpMemoryStore() {
-        // TODO : implement this
+    private void maybeSaveLeaseToIpMemoryStore() {
+        final String l2Key = mL2Key;
+        final String groupHint = mGroupHint;
+        if (l2Key == null || mDhcpResults == null) return;
+        final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+        if (mDhcpResults.ipAddress != null) {
+            na.setAssignedV4Address((Inet4Address) mDhcpResults.ipAddress.getAddress());
+        }
+        na.setAssignedV4AddressExpiry(mDhcpResults.leaseExpiry);
+        na.setGroupHint(groupHint);
+        na.setDnsAddresses(mDhcpResults.dnsServers);
+        na.setMtu(mDhcpResults.mtu);
+
+        final OnStatusListener listener;
+        if (DBG) {
+            listener = status -> Log.d(mTag, "store network attributes status: "
+                    + status.isSuccess());
+        } else {
+            listener = null;
+        }
+        mIpMemoryStore.storeNetworkAttributes(l2Key, na.build(), listener);
+    }
+
+    private void setLeaseExpiredToIpMemoryStore() {
+        final String l2Key = mL2Key;
+        if (l2Key == null) return;
+        final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+        // TODO: clear out the address and lease instead of storing an expired lease
+        na.setAssignedV4AddressExpiry(EXPIRED_LEASE);
+
+        final OnStatusListener listener;
+        if (DBG) {
+            listener = status -> Log.d(mTag, "clear lease expiry status: "
+                    + status.isSuccess());
+        } else {
+            listener = null;
+        }
+        mIpMemoryStore.storeNetworkAttributes(l2Key, na.build(), listener);
     }
 
     class StoppedState extends State {
@@ -1369,7 +1425,6 @@ public class IpClient extends StateMachine {
         @Override
         public void enter() {
             mStartTimeMillis = SystemClock.elapsedRealtime();
-
             if (mConfiguration.mProvisioningTimeoutMs > 0) {
                 final long alarmTime = SystemClock.elapsedRealtime()
                         + mConfiguration.mProvisioningTimeoutMs;
@@ -1426,7 +1481,6 @@ public class IpClient extends StateMachine {
                 case EVENT_PROVISIONING_TIMEOUT:
                     handleProvisioningFailure();
                     break;
-
                 default:
                     // It's safe to process messages out of order because the
                     // only message that can both
