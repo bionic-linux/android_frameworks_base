@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa67d8b_25216486",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-03-14T05:14:23Z",
+      "side": 1,
+      "message": "Lets reword this a first sentence bit to further address the feedback:\n\nTelecom calls this method once upon binding to a {@link CallRedirectionService} to inform it of a new outgoing call which is being placed.",
+      "revId": "26cf87448ac3128c8cc5b319ead048533b2f818d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c03fff_217fa182",
+        "filename": "telecomm/java/android/telecom/CallRedirectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-03-14T05:14:23Z",
+      "side": 1,
+      "message": "Lets word this as:\nCalls to these methods are assumed by the Telecom framework to be the response for the phone call for which {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)} was invoked by Telecom.  The Telecom framework will only invoke {@link #onPlaceCall(Uri, PhoneAccountHandle, boolean)} once each time it binds to a {@link CallRedirectionService}.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "26cf87448ac3128c8cc5b319ead048533b2f818d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
