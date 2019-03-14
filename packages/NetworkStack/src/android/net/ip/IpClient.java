@@ -17,6 +17,7 @@
 package android.net.ip;
 
 import static android.net.RouteInfo.RTN_UNICAST;
+import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
 import static android.net.shared.IpConfigurationParcelableUtil.toStableParcelable;
 
 import static com.android.server.util.PermissionUtil.checkNetworkStackCallingPermission;
@@ -37,6 +38,8 @@ import android.net.TcpKeepalivePacketDataParcelable;
 import android.net.apf.ApfCapabilities;
 import android.net.apf.ApfFilter;
 import android.net.dhcp.DhcpClient;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.OnStatusListener;
 import android.net.metrics.IpConnectivityLog;
 import android.net.metrics.IpManagerEvent;
 import android.net.shared.InitialConfiguration;
@@ -67,6 +70,7 @@ import com.android.server.NetworkStackService.NetworkStackServiceManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Collection;
 import java.util.List;
@@ -76,7 +80,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 
 /**
  * IpClient
@@ -393,6 +396,14 @@ public class IpClient extends StateMachine {
         public INetd getNetd(Context context) {
             return INetd.Stub.asInterface((IBinder) context.getSystemService(Context.NETD_SERVICE));
         }
+
+        /**
+         * Get an IpMemoryStore instance.
+         */
+        public NetworkStackIpMemoryStore getIpMemoryStore(Context context,
+                NetworkStackServiceManager nssManager) {
+            return new NetworkStackIpMemoryStore(context, nssManager.getIpMemoryStoreService());
+        }
     }
 
     public IpClient(Context context, String ifName, IIpClientCallbacks callback,
@@ -417,8 +428,7 @@ public class IpClient extends StateMachine {
         mShutdownLatch = new CountDownLatch(1);
         mCm = mContext.getSystemService(ConnectivityManager.class);
         mObserverRegistry = observerRegistry;
-        mIpMemoryStore =
-                new NetworkStackIpMemoryStore(context, nssManager.getIpMemoryStoreService());
+        mIpMemoryStore = deps.getIpMemoryStore(mContext, nssManager);
 
         sSmLogs.putIfAbsent(mInterfaceName, new SharedLog(MAX_LOG_RECORDS, mTag));
         mLog = sSmLogs.get(mInterfaceName);
@@ -618,6 +628,10 @@ public class IpClient extends StateMachine {
             doImmediateProvisioningFailure(IpManagerEvent.ERROR_INTERFACE_NOT_FOUND);
             return;
         }
+
+        // just for testing, remove this once wifi state machine
+        // passes acutal l2key and group hint to IpClient
+        setL2KeyAndGroupHint("l2Key1", "hint");
 
         mCallback.setNeighborDiscoveryOffload(true);
         sendMessage(CMD_START, new android.net.shared.ProvisioningConfiguration(req));
@@ -1092,7 +1106,16 @@ public class IpClient extends StateMachine {
         // Most of the attributes stored in the memory store are deduced from
         // the link properties, therefore when the properties update the memory
         // store record should be updated too.
-        maybeSaveNetworkToIpMemoryStore();
+        switch (delta) {
+            case PROV_CHANGE_GAINED_PROVISIONING:
+            case PROV_CHANGE_STILL_PROVISIONED:
+                maybeSaveNetworkToIpMemoryStore();
+                break;
+            case PROV_CHANGE_LOST_PROVISIONING:
+            case PROV_CHANGE_STILL_NOT_PROVISIONED:
+            default:
+                // do nothing
+        }
         if (sendCallbacks) {
             dispatchCallback(delta, newLp);
         }
@@ -1108,7 +1131,17 @@ public class IpClient extends StateMachine {
             Log.d(mTag, "onNewDhcpResults(" + Objects.toString(dhcpResults) + ")");
         }
         mCallback.onNewDhcpResults(dhcpResults);
-        maybeSaveNetworkToIpMemoryStore();
+        switch (delta) {
+            case PROV_CHANGE_GAINED_PROVISIONING:
+            case PROV_CHANGE_STILL_PROVISIONED:
+                maybeSaveNetworkToIpMemoryStore();
+                break;
+            case PROV_CHANGE_LOST_PROVISIONING:
+            case PROV_CHANGE_STILL_NOT_PROVISIONED:
+            default:
+                // do nothing
+        }
+
         dispatchCallback(delta, newLp);
     }
 
@@ -1167,9 +1200,10 @@ public class IpClient extends StateMachine {
             }
         } else {
             // Start DHCPv4.
-            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceParams);
+            mDhcpClient = DhcpClient.makeDhcpClient(mContext, IpClient.this, mInterfaceParams,
+                            mIpMemoryStore);
             mDhcpClient.registerForPreDhcpNotification();
-            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP);
+            mDhcpClient.sendMessage(DhcpClient.CMD_START_DHCP, mL2Key);
         }
 
         return true;
@@ -1240,7 +1274,26 @@ public class IpClient extends StateMachine {
     }
 
     private void maybeSaveNetworkToIpMemoryStore() {
-        // TODO : implement this
+        final NetworkAttributes.Builder na = new NetworkAttributes.Builder();
+        if (mL2Key == null) return;
+        if (mDhcpResults != null) {
+            final long assignedV4AddressExpiry;
+            na.setAssignedV4Address((Inet4Address) mDhcpResults.ipAddress.getAddress());
+            na.setMtu(mDhcpResults.mtu);
+            na.setDnsAddresses(mDhcpResults.dnsServers);
+            assignedV4AddressExpiry = (mDhcpResults.leaseDuration == INFINITE_LEASE)
+                    ? INFINITE_LEASE : mDhcpResults.leaseDuration * 1000
+                    + System.currentTimeMillis();
+            na.setAssignedV4AddressExpiry(assignedV4AddressExpiry);
+        }
+        na.setGroupHint(mGroupHint);
+        final OnStatusListener listener;
+        if (DBG) {
+            listener = status -> Log.d(mTag, "store status: " + status.isSuccess());
+        } else {
+            listener = null;
+        }
+        mIpMemoryStore.storeNetworkAttributes(mL2Key, na.build(), listener);
     }
 
     class StoppedState extends State {
@@ -1354,7 +1407,6 @@ public class IpClient extends StateMachine {
         @Override
         public void enter() {
             mStartTimeMillis = SystemClock.elapsedRealtime();
-
             if (mConfiguration.mProvisioningTimeoutMs > 0) {
                 final long alarmTime = SystemClock.elapsedRealtime()
                         + mConfiguration.mProvisioningTimeoutMs;
@@ -1411,7 +1463,6 @@ public class IpClient extends StateMachine {
                 case EVENT_PROVISIONING_TIMEOUT:
                     handleProvisioningFailure();
                     break;
-
                 default:
                     // It's safe to process messages out of order because the
                     // only message that can both

@@ -55,6 +55,7 @@ import com.android.internal.R;
 import com.android.server.NetworkObserver;
 import com.android.server.NetworkObserverRegistry;
 import com.android.server.NetworkStackService;
+import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -98,6 +99,7 @@ public class IpClientTest {
     @Mock private ContentResolver mContentResolver;
     @Mock private NetworkStackService.NetworkStackServiceManager mNetworkStackServiceManager;
     @Mock private NetworkStackIpMemoryStore mIpMemoryStore;
+    @Mock private IpMemoryStoreService mIpMemoryStoreService;
 
     private NetworkObserver mObserver;
     private InterfaceParams mIfParams;
@@ -113,6 +115,10 @@ public class IpClientTest {
         when(mResources.getInteger(R.integer.config_networkAvoidBadWifi))
                 .thenReturn(DEFAULT_AVOIDBADWIFI_CONFIG_VALUE);
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
+        when(mNetworkStackServiceManager.getIpMemoryStoreService())
+                .thenReturn(mIpMemoryStoreService);
+        when(mDependencies.getIpMemoryStore(mContext, mNetworkStackServiceManager))
+                .thenReturn(mIpMemoryStore);
 
         mIfParams = null;
     }
@@ -149,8 +155,7 @@ public class IpClientTest {
 
     private void verifyNetworkAttributesStored(final String l2Key,
             final NetworkAttributes attributes) {
-        // TODO : when storing is implemented, turn this on
-        // verify(mIpMemoryStore).storeNetworkAttributes(eq(l2Key), eq(attributes), any());
+        verify(mIpMemoryStore).storeNetworkAttributes(eq(l2Key), eq(attributes), any());
     }
 
     @Test
