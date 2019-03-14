@@ -25,6 +25,7 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.SntpClient;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.TextUtils;
 
@@ -50,6 +51,12 @@ public class NtpTrustedTime implements TrustedTime {
     private long mCachedNtpTime;
     private long mCachedNtpElapsedRealtime;
     private long mCachedNtpCertainty;
+    private boolean mLegacy;
+
+    private boolean mBackupmode = false;
+    private String mBackupServer = "";
+    private int mNtpRetries = 0;
+    private int mNtpRetriesMax = 0;
 
     private NtpTrustedTime(String server, long timeout) {
         if (LOGD) Log.d(TAG, "creating NtpTrustedTime using " + server);
@@ -76,6 +83,20 @@ public class NtpTrustedTime implements TrustedTime {
             final String server = secureServer != null ? secureServer : defaultServer;
             sSingleton = new NtpTrustedTime(server, timeout);
             sContext = context;
+
+            final String sserver_prop = Settings.Global.getString(
+                    resolver, Settings.Global.NTP_SERVER_2);
+
+            final String backupServer = SystemProperties.get(sserver_prop);
+
+            if ((null != backupServer) && (0 < backupServer.length())) {
+                int retryMax = res.getInteger(com.android.internal.R.integer.config_ntpRetry);
+                if (0 < retryMax) {
+                    sSingleton.mNtpRetriesMax = retryMax;
+                    sSingleton.mBackupServer = (backupServer.trim()).replace("\"", "");
+                }
+            }
+
         }
 
         return sSingleton;
@@ -117,6 +138,12 @@ public class NtpTrustedTime implements TrustedTime {
 
         if (LOGD) Log.d(TAG, "forceRefresh() from cache miss");
         final SntpClient client = new SntpClient();
+        String targetServer = mServer;
+        if (getBackupmode()) {
+            setBackupmode(false);
+            targetServer = mBackupServer;
+        }
+        if (LOGD) Log.d(TAG, "Ntp Server to access at:" + targetServer);
         if (client.requestTime(mServer, (int) mTimeout, network)) {
             mHasCache = true;
             mCachedNtpTime = client.getNtpTime();
@@ -124,6 +151,7 @@ public class NtpTrustedTime implements TrustedTime {
             mCachedNtpCertainty = client.getRoundTripTime() / 2;
             return true;
         } else {
+            countInBackupmode();
             return false;
         }
     }
@@ -174,5 +202,33 @@ public class NtpTrustedTime implements TrustedTime {
     @UnsupportedAppUsage
     public long getCachedNtpTimeReference() {
         return mCachedNtpElapsedRealtime;
+    }
+
+    private void setBackupmode(boolean mode) {
+        if (isBackupSupported()) {
+            mBackupmode = mode;
+        }
+        if (LOGD) Log.d(TAG, "setBackupmode() set the backup mode to be:" + mBackupmode);
+    }
+
+    private boolean getBackupmode() {
+        return mBackupmode;
+    }
+
+    private boolean isBackupSupported() {
+        return mLegacy ? false : (((0 < mNtpRetriesMax)
+                && (null != mBackupServer)
+                && (0 != mBackupServer.length())));
+    }
+
+    private void countInBackupmode() {
+        if (isBackupSupported()) {
+            mNtpRetries++;
+            if (mNtpRetries >= mNtpRetriesMax) {
+                mNtpRetries = 0;
+                setBackupmode(true);
+            }
+        }
+        if (LOGD) Log.d(TAG, "countInBackupmode() with mode: " + isBackupSupported());
     }
 }
