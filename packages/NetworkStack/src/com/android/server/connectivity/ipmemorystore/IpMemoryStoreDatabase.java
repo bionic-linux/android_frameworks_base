@@ -73,7 +73,7 @@ public class IpMemoryStoreDatabase {
         public static final String COLTYPE_ASSIGNEDV4ADDRESS = "INTEGER";
 
         public static final String COLNAME_ASSIGNEDV4ADDRESSEXPIRY = "assignedV4AddressExpiry";
-        // The lease expiry timestamp in uint of milliseconds
+        // The lease expiry timestamp in uint of milliseconds since the Epoch.
         public static final String COLTYPE_ASSIGNEDV4ADDRESSEXPIRY = "BIGINT";
 
         // Please note that the group hint is only a *hint*, hence its name. The client can offer
