@@ -34,6 +34,8 @@ import static android.net.util.NetworkStackUtils.CAPTIVE_PORTAL_FALLBACK_PROBE_S
 import static android.net.util.NetworkStackUtils.CAPTIVE_PORTAL_OTHER_FALLBACK_URLS;
 import static android.net.util.NetworkStackUtils.CAPTIVE_PORTAL_USE_HTTPS;
 
+import static com.android.testlib.TestLib.waitForIdle;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
@@ -420,7 +422,7 @@ public class NetworkMonitorTest {
         final WrappedNetworkMonitor nm = new WrappedNetworkMonitor();
         nm.start();
         setNetworkCapabilities(nm, nc);
-        waitForIdle(nm.getHandler());
+        waitForIdle(nm.getHandler(), HANDLER_TIMEOUT_MS);
         mCreatedNetworkMonitors.add(nm);
         return nm;
     }
@@ -437,15 +439,7 @@ public class NetworkMonitorTest {
 
     private void setNetworkCapabilities(NetworkMonitor nm, NetworkCapabilities nc) {
         nm.notifyNetworkCapabilitiesChanged(nc);
-        waitForIdle(nm.getHandler());
-    }
-
-    private void waitForIdle(Handler handler) {
-        final ConditionVariable cv = new ConditionVariable(false);
-        handler.post(cv::open);
-        if (!cv.block(HANDLER_TIMEOUT_MS)) {
-            fail("Timed out waiting for handler");
-        }
+        waitForIdle(nm.getHandler(), HANDLER_TIMEOUT_MS);
     }
 
     @Test
@@ -1125,7 +1119,7 @@ public class NetworkMonitorTest {
         } catch (RemoteException e) {
             fail("Unexpected exception: " + e);
         }
-        waitForIdle(monitor.getHandler());
+        waitForIdle(monitor.getHandler(), HANDLER_TIMEOUT_MS);
 
         return monitor;
     }

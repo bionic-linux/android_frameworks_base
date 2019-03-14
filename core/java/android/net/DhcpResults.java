@@ -66,6 +66,10 @@ public final class DhcpResults implements Parcelable {
 
     public String serverHostName;
 
+    // TODO: missing to add this field in the DhcpResultsParcelable aidl so far
+    // due to the frozen aidl version, need to add back in the following CL.
+    public long leaseExpiry;
+
     public DhcpResults() {
         super();
     }
@@ -100,6 +104,7 @@ public final class DhcpResults implements Parcelable {
             leaseDuration = source.leaseDuration;
             mtu = source.mtu;
             serverHostName = source.serverHostName;
+            leaseExpiry = source.leaseExpiry;
         }
     }
 
@@ -133,6 +138,7 @@ public final class DhcpResults implements Parcelable {
         leaseDuration = 0;
         mtu = 0;
         serverHostName = null;
+        leaseExpiry = 0;
     }
 
     @Override
@@ -141,7 +147,8 @@ public final class DhcpResults implements Parcelable {
 
         str.append(" DHCP server ").append(serverAddress);
         str.append(" Vendor info ").append(vendorInfo);
-        str.append(" lease ").append(leaseDuration).append(" seconds");
+        str.append(" lease ").append(leaseDuration).append(" seconds")
+                .append(" expires at ").append(leaseExpiry);
         if (mtu != 0) str.append(" MTU ").append(mtu);
         str.append(" Servername ").append(serverHostName);
 
@@ -161,6 +168,7 @@ public final class DhcpResults implements Parcelable {
                 && Objects.equals(vendorInfo, target.vendorInfo)
                 && Objects.equals(serverHostName, target.serverHostName)
                 && leaseDuration == target.leaseDuration
+                && leaseExpiry == target.leaseExpiry
                 && mtu == target.mtu;
     }
 
@@ -186,6 +194,7 @@ public final class DhcpResults implements Parcelable {
         InetAddressUtils.parcelInetAddress(dest, serverAddress, flags);
         dest.writeString(vendorInfo);
         dest.writeString(serverHostName);
+        dest.writeLong(leaseExpiry);
     }
 
     @Override
@@ -201,6 +210,7 @@ public final class DhcpResults implements Parcelable {
         dhcpResults.serverAddress = (Inet4Address) InetAddressUtils.unparcelInetAddress(in);
         dhcpResults.vendorInfo = in.readString();
         dhcpResults.serverHostName = in.readString();
+        dhcpResults.leaseExpiry = in.readLong();
         return dhcpResults;
     }
 
@@ -304,5 +314,13 @@ public final class DhcpResults implements Parcelable {
 
     public void setMtu(int mtu) {
         this.mtu = mtu;
+    }
+
+    public long getLeaseExpiry() {
+        return leaseExpiry;
+    }
+
+    public void setLeaseExpiry(long expiry) {
+        leaseExpiry = expiry;
     }
 }
