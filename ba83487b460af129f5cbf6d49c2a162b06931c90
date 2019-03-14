@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12257a9d_62b8f200",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2019-03-14T17:00:20Z",
+      "side": 1,
+      "message": "Why?\n\nI\u0027m also wondering if we can detect this case in android_app (I know it gets more difficult with libraries/etc, but these all have no libraries and no source files)",
+      "revId": "ba83487b460af129f5cbf6d49c2a162b06931c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
