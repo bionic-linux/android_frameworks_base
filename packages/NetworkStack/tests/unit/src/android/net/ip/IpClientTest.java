@@ -16,6 +16,10 @@
 
 package android.net.ip;
 
+import static android.net.dhcp.DhcpClient.CMD_POST_DHCP_ACTION;
+import static android.net.dhcp.DhcpClient.DHCP_SUCCESS;
+import static android.net.dhcp.DhcpPacket.INFINITE_LEASE;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,6 +40,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.DhcpResults;
 import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -43,6 +48,7 @@ import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.NetworkStackIpMemoryStore;
 import android.net.RouteInfo;
+import android.net.dhcp.DhcpClient;
 import android.net.ipmemorystore.NetworkAttributes;
 import android.net.shared.InitialConfiguration;
 import android.net.shared.ProvisioningConfiguration;
@@ -55,6 +61,8 @@ import com.android.internal.R;
 import com.android.server.NetworkObserver;
 import com.android.server.NetworkObserverRegistry;
 import com.android.server.NetworkStackService;
+import com.android.server.connectivity.ipmemorystore.IpMemoryStoreService;
+import com.android.testutils.HandlerUtilsKt;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -63,11 +71,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 /**
  * Tests for IpClient.
@@ -98,6 +109,9 @@ public class IpClientTest {
     @Mock private ContentResolver mContentResolver;
     @Mock private NetworkStackService.NetworkStackServiceManager mNetworkStackServiceManager;
     @Mock private NetworkStackIpMemoryStore mIpMemoryStore;
+    @Mock private IpMemoryStoreService mIpMemoryStoreService;
+    @Mock private InterfaceParams mInterfaceParams;
+    @Mock private DhcpClient mDhcpClient;
 
     private NetworkObserver mObserver;
     private InterfaceParams mIfParams;
@@ -113,6 +127,12 @@ public class IpClientTest {
         when(mResources.getInteger(R.integer.config_networkAvoidBadWifi))
                 .thenReturn(DEFAULT_AVOIDBADWIFI_CONFIG_VALUE);
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
+        when(mNetworkStackServiceManager.getIpMemoryStoreService())
+                .thenReturn(mIpMemoryStoreService);
+        when(mDependencies.getInterfaceParams(any())).thenReturn(mInterfaceParams);
+        when(mDependencies.getIpMemoryStore(mContext, mNetworkStackServiceManager))
+                .thenReturn(mIpMemoryStore);
+        when(mDependencies.getDhcpClient(any(), any(), any(), any())).thenReturn(mDhcpClient);
 
         mIfParams = null;
     }
@@ -149,8 +169,43 @@ public class IpClientTest {
 
     private void verifyNetworkAttributesStored(final String l2Key,
             final NetworkAttributes attributes) {
-        // TODO : when storing is implemented, turn this on
-        // verify(mIpMemoryStore).storeNetworkAttributes(eq(l2Key), eq(attributes), any());
+        verify(mIpMemoryStore).storeNetworkAttributes(eq(l2Key), eq(attributes), any());
+    }
+
+    private DhcpResults makeDhcpResults(final LinkAddress address,
+            final ArrayList<InetAddress> dnsServers, final int duration, final int mtu,
+            final long expiry) {
+        DhcpResults results = new DhcpResults();
+        results.ipAddress = address;
+        results.dnsServers.addAll(dnsServers);
+        results.leaseDuration = duration;
+        results.mtu = mtu;
+        results.leaseExpiry = expiry;
+
+        return results;
+    }
+
+    private void checkAndVerifyProvisioningWithDhcpLease(final IpClient ipc,
+            final LinkAddress address, final Integer leaseDuration, final Long leaseExpiry)
+            throws Exception {
+        final ArrayList<InetAddress> dnsServers = new ArrayList<>();
+        dnsServers.add((InetAddress) InetAddress.getByName("8.8.8.8"));
+        dnsServers.add((InetAddress) InetAddress.getByName("8.8.4.4"));
+        DhcpResults lease = makeDhcpResults(address, dnsServers,
+                (leaseDuration == null) ? INFINITE_LEASE : leaseDuration,
+                1500, (leaseExpiry == null) ? Long.MAX_VALUE : leaseExpiry);
+
+        ipc.sendMessage(CMD_POST_DHCP_ACTION, DHCP_SUCCESS, 0, new DhcpResults(lease));
+
+        HandlerUtilsKt.waitForIdle(ipc.getHandler(), TEST_TIMEOUT_MS);
+
+        verifyNetworkAttributesStored(TEST_L2KEY, new NetworkAttributes.Builder()
+                .setAssignedV4Address((Inet4Address) address.getAddress())
+                .setAssignedV4AddressExpiry(lease.leaseExpiry)
+                .setMtu(lease.mtu)
+                .setGroupHint(TEST_GROUPHINT)
+                .setDnsAddresses(lease.dnsServers)
+                .build());
     }
 
     @Test
@@ -271,9 +326,6 @@ public class IpClientTest {
         LinkProperties want = linkproperties(links(addresses), routes(prefixes));
         want.setInterfaceName(iface);
         verify(mCb, timeout(TEST_TIMEOUT_MS).times(1)).onProvisioningSuccess(want);
-        verifyNetworkAttributesStored(l2Key, new NetworkAttributes.Builder()
-                .setGroupHint(groupHint)
-                .build());
 
         ipc.shutdown();
         verify(mNetd, timeout(TEST_TIMEOUT_MS).times(1)).interfaceSetEnableIPv6(iface, false);
@@ -281,6 +333,30 @@ public class IpClientTest {
         verify(mCb, timeout(TEST_TIMEOUT_MS).times(1))
                 .onLinkPropertiesChange(makeEmptyLinkProperties(iface));
         verifyNoMoreInteractions(mIpMemoryStore);
+    }
+
+    @Test
+    public void testProvisioningWithDhcpLease() throws Exception {
+        final String iface = TEST_IFNAME;
+        final IpClient ipc = makeIpClient(iface);
+        ProvisioningConfiguration config = new ProvisioningConfiguration.Builder()
+                .withoutIpReachabilityMonitor()
+                .build();
+
+        ipc.startProvisioning(config);
+        verify(mCb, times(1)).setNeighborDiscoveryOffload(true);
+        verify(mCb, timeout(TEST_TIMEOUT_MS).times(1)).setFallbackMulticastFilter(false);
+        verify(mCb, never()).onProvisioningFailure(any());
+        ipc.setL2KeyAndGroupHint(TEST_L2KEY, TEST_GROUPHINT);
+
+        checkAndVerifyProvisioningWithDhcpLease(ipc, new LinkAddress("192.168.1.2/24"),
+                3600, System.currentTimeMillis() + 3_600_000);
+        checkAndVerifyProvisioningWithDhcpLease(ipc, new LinkAddress("10.1.1.2/27"),
+                INFINITE_LEASE, Long.MAX_VALUE);
+        checkAndVerifyProvisioningWithDhcpLease(ipc, new LinkAddress("172.16.1.2/24"),
+                null, Long.MAX_VALUE);
+        checkAndVerifyProvisioningWithDhcpLease(ipc, new LinkAddress("172.16.1.3/24"),
+                null, null);
     }
 
     @Test
