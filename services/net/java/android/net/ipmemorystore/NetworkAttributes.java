@@ -127,6 +127,7 @@ public class NetworkAttributes {
 
     @Nullable
     private static InetAddress getByAddressOrNull(@Nullable final byte[] address) {
+        if (null == address) return null;
         try {
             return InetAddress.getByAddress(address);
         } catch (UnknownHostException e) {
