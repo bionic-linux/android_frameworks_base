@@ -73,7 +73,8 @@ public class IpMemoryStoreDatabase {
         public static final String COLTYPE_ASSIGNEDV4ADDRESS = "INTEGER";
 
         public static final String COLNAME_ASSIGNEDV4ADDRESSEXPIRY = "assignedV4AddressExpiry";
-        // The lease expiry timestamp in uint of milliseconds
+        // The lease expiry timestamp in uint of milliseconds since the Epoch. Long.MAX_VALUE
+        // is used to represent "infinite lease".
         public static final String COLTYPE_ASSIGNEDV4ADDRESSEXPIRY = "BIGINT";
 
         // Please note that the group hint is only a *hint*, hence its name. The client can offer
@@ -296,7 +297,7 @@ public class IpMemoryStoreDatabase {
         final int assignedV4AddressInt = getInt(cursor,
                 NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESS, 0);
         final long assignedV4AddressExpiry = getLong(cursor,
-                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSEXPIRY, 0);
+                NetworkAttributesContract.COLNAME_ASSIGNEDV4ADDRESSEXPIRY, -1L);
         final String groupHint = getString(cursor, NetworkAttributesContract.COLNAME_GROUPHINT);
         final byte[] dnsAddressesBlob =
                 getBlob(cursor, NetworkAttributesContract.COLNAME_DNSADDRESSES);
