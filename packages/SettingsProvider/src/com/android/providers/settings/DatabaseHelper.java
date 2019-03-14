@@ -28,8 +28,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.media.AudioSystem;
 import android.media.AudioManager;
+import android.media.AudioSystem;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Environment;
@@ -2630,6 +2630,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
                     R.integer.def_heads_up_enabled);
 
             loadSetting(stmt, Settings.Global.DEVICE_NAME, getDefaultDeviceName());
+
+            loadStringSetting(stmt, Settings.Global.NTP_SERVER_2,
+                    R.string.def_ntp_server_2);
 
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
