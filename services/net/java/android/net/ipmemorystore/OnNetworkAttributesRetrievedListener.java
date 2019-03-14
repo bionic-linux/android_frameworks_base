@@ -38,8 +38,8 @@ public interface OnNetworkAttributesRetrievedListener {
                     final String l2Key,
                     final NetworkAttributesParcelable networkAttributesParcelable) {
                 listener.onNetworkAttributesRetrieved(
-                        new Status(statusParcelable), l2Key,
-                        new NetworkAttributes(networkAttributesParcelable));
+                        new Status(statusParcelable), l2Key, null == networkAttributesParcelable
+                            ? null : new NetworkAttributes(networkAttributesParcelable));
             }
         };
     }

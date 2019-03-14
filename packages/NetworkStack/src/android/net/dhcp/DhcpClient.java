@@ -45,8 +45,12 @@ import static com.android.server.util.NetworkStackConstants.IPV4_ADDR_ANY;
 
 import android.content.Context;
 import android.net.DhcpResults;
+import android.net.NetworkStackIpMemoryStore;
 import android.net.TrafficStats;
 import android.net.ip.IpClient;
+import android.net.ipmemorystore.NetworkAttributes;
+import android.net.ipmemorystore.OnNetworkAttributesRetrievedListener;
+import android.net.ipmemorystore.Status;
 import android.net.metrics.DhcpClientEvent;
 import android.net.metrics.DhcpErrorEvent;
 import android.net.metrics.IpConnectivityLog;
@@ -59,6 +63,7 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.util.EventLog;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 
 import com.android.internal.util.HexDump;
@@ -75,6 +80,7 @@ import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A DHCPv4 client.
@@ -117,6 +123,7 @@ public class DhcpClient extends StateMachine {
     private static final int SECONDS = 1000;
     private static final int FIRST_TIMEOUT_MS   =   2 * SECONDS;
     private static final int MAX_TIMEOUT_MS     = 128 * SECONDS;
+    private static final int IPMEMORYSTORE_TIMEOUT_MS = 1 * SECONDS;
 
     // This is not strictly needed, since the client is asynchronous and implements exponential
     // backoff. It's maintained for backwards compatibility with the previous DHCP code, which was
@@ -150,6 +157,7 @@ public class DhcpClient extends StateMachine {
     public static final int CMD_CLEAR_LINKADDRESS           = PUBLIC_BASE + 7;
     public static final int CMD_CONFIGURE_LINKADDRESS       = PUBLIC_BASE + 8;
     public static final int EVENT_LINKADDRESS_CONFIGURED    = PUBLIC_BASE + 9;
+    public static final int EVENT_CONFIGURATION_OBTAINED    = PUBLIC_BASE + 10;
 
     /* Message.arg1 arguments to CMD_POST_DHCP_ACTION notification */
     public static final int DHCP_SUCCESS = 1;
@@ -219,6 +227,12 @@ public class DhcpClient extends StateMachine {
     private DhcpResults mDhcpLease;
     private long mDhcpLeaseExpiry;
     private DhcpResults mOffer;
+    private Inet4Address mLastAssignedIpv4Address;
+    private OnNetworkAttributesRetrievedListener mGetLastIpAddressCallback;
+    private NetworkStackIpMemoryStore mIpMemoryStore;
+    private AtomicInteger mSequenceNumber = new AtomicInteger(0);
+    private String mL2Key;
+    private boolean mLastAssignedIpv4AddressValid;
 
     // Milliseconds SystemClock timestamps used to record transition times to DhcpBoundState.
     private long mLastInitEnterTime;
@@ -237,7 +251,8 @@ public class DhcpClient extends StateMachine {
     private State mDhcpRebindingState = new DhcpRebindingState();
     private State mDhcpInitRebootState = new DhcpInitRebootState();
     private State mDhcpRebootingState = new DhcpRebootingState();
-    private State mWaitBeforeStartState = new WaitBeforeStartState(mDhcpInitState);
+    private State mObtainingConfigurationState = new ObtainingConfigurationState();
+    private State mWaitBeforeStartState = new WaitBeforeStartState(mObtainingConfigurationState);
     private State mWaitBeforeRenewalState = new WaitBeforeRenewalState(mDhcpRenewingState);
 
     private WakeupMessage makeWakeupMessage(String cmdName, int cmd) {
@@ -253,6 +268,7 @@ public class DhcpClient extends StateMachine {
         mController = controller;
         mIfaceName = iface;
 
+        // CHECKSTYLE:OFF IndentationCheck
         addState(mStoppedState);
         addState(mDhcpState);
             addState(mDhcpInitState, mDhcpState);
@@ -267,6 +283,8 @@ public class DhcpClient extends StateMachine {
                 addState(mDhcpRebindingState, mDhcpHaveLeaseState);
             addState(mDhcpInitRebootState, mDhcpState);
             addState(mDhcpRebootingState, mDhcpState);
+            addState(mObtainingConfigurationState, mDhcpState);
+        // CHECKSTYLE:ON IndentationCheck
 
         setInitialState(mStoppedState);
 
@@ -600,10 +618,14 @@ public class DhcpClient extends StateMachine {
         public boolean processMessage(Message message) {
             switch (message.what) {
                 case CMD_START_DHCP:
+                    final Pair<String, NetworkStackIpMemoryStore> args = (Pair<String,
+                            NetworkStackIpMemoryStore>) message.obj;
+                    mL2Key = args.first;
+                    mIpMemoryStore = args.second;
                     if (mRegisteredForPreDhcpNotification) {
                         transitionTo(mWaitBeforeStartState);
                     } else {
-                        transitionTo(mDhcpInitState);
+                        transitionTo(mObtainingConfigurationState);
                     }
                     return HANDLED;
                 default:
@@ -613,14 +635,21 @@ public class DhcpClient extends StateMachine {
     }
 
     class WaitBeforeStartState extends WaitBeforeOtherState {
-        public WaitBeforeStartState(State otherState) {
+        WaitBeforeStartState(State otherState) {
             super();
             mOtherState = otherState;
         }
     }
 
     class WaitBeforeRenewalState extends WaitBeforeOtherState {
-        public WaitBeforeRenewalState(State otherState) {
+        WaitBeforeRenewalState(State otherState) {
+            super();
+            mOtherState = otherState;
+        }
+    }
+
+    class WaitBeforeInitRebootState extends WaitBeforeOtherState {
+        WaitBeforeInitRebootState(State otherState) {
             super();
             mOtherState = otherState;
         }
@@ -763,6 +792,61 @@ public class DhcpClient extends StateMachine {
                 long alarmTime = SystemClock.elapsedRealtime() + mTimeout;
                 mTimeoutAlarm.schedule(alarmTime);
             }
+        }
+    }
+
+    class ObtainingConfigurationState extends LoggingState {
+        @Override
+        public void enter() {
+            super.enter();
+            mLastAssignedIpv4Address = null;
+            int sequenceNumber = mSequenceNumber.get();
+
+            // Set a timeout for retrieving network attributes operation
+            sendMessageDelayed(
+                    obtainMessage(EVENT_CONFIGURATION_OBTAINED, sequenceNumber, 0, null),
+                    IPMEMORYSTORE_TIMEOUT_MS);
+
+            mGetLastIpAddressCallback = new OnNetworkAttributesRetrievedListener() {
+                @Override
+                public void onNetworkAttributesRetrieved(Status status, String l2Key,
+                        NetworkAttributes attributes) {
+                    final long currentTime = System.currentTimeMillis();
+                    if (!status.isSuccess() || attributes == null) return;
+                    if (attributes.assignedV4Address != null
+                            && (currentTime < attributes.assignedV4AddressExpiry
+                                  || attributes.assignedV4AddressExpiry == Long.MAX_VALUE)) {
+                        if (DBG) {
+                            Log.d(TAG, "l2key: " + l2Key
+                                    + " lease address: " + attributes.assignedV4Address
+                                    + " lease expiry: " + attributes.assignedV4AddressExpiry
+                                    + " current time: " + currentTime);
+                        }
+                        mLastAssignedIpv4AddressValid = true;
+                        sendMessage(obtainMessage(EVENT_CONFIGURATION_OBTAINED, sequenceNumber, 0,
+                                attributes.assignedV4Address));
+                    }
+                }
+            };
+            mIpMemoryStore.retrieveNetworkAttributes(mL2Key, mGetLastIpAddressCallback);
+        }
+
+        @Override
+        public boolean processMessage(Message message) {
+            if (message.what != EVENT_CONFIGURATION_OBTAINED) {
+                deferMessage(message);
+                return NOT_HANDLED;
+            }
+
+            // stale message check
+            if (message.arg1 != mSequenceNumber.get()) return NOT_HANDLED;
+
+            // Ensure no future messages (e.g., the timeout we set above) are processed.
+            mSequenceNumber.getAndIncrement();
+
+            mLastAssignedIpv4Address = (Inet4Address) message.obj;
+            transitionTo(mLastAssignedIpv4AddressValid ? mDhcpInitRebootState : mDhcpInitState);
+            return HANDLED;
         }
     }
 
@@ -1034,7 +1118,30 @@ public class DhcpClient extends StateMachine {
         }
     }
 
-    class DhcpInitRebootState extends LoggingState {
+    class DhcpInitRebootState extends DhcpRequestingState {
+        @Override
+        public void enter() {
+            super.enter();
+            startNewTransaction();
+        }
+
+        // RFC 2131 4.3.2 describes generated DHCPREQUEST message during
+        // INIT-REBOOT state:
+        // 'server identifier' MUST NOT be filled in, 'requested IP address'
+        // option MUST be filled in with client's notion of its previously
+        // assigned address. 'ciaddr' MUST be zero. The client is seeking to
+        // verify a previously allocated, cached configuration. Server SHOULD
+        // send a DHCPNAK message to the client if the 'requested IP address'
+        // is incorrect, or is on the wrong network.
+        @Override
+        protected boolean sendPacket() {
+            Log.d(TAG, "send DHCPREQUEST from INIT-REBOOT state");
+            return sendRequestPacket(
+                     INADDR_ANY,                                       // ciaddr
+                     mLastAssignedIpv4Address,                         // DHCP_REQUESTED_IP
+                     null,                                             // DHCP_SERVER_IDENTIFIER
+                     INADDR_BROADCAST);                                // packet destination address
+        }
     }
 
     class DhcpRebootingState extends LoggingState {
