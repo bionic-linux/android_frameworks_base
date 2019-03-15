@@ -64,6 +64,7 @@ import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityManager;
+import android.net.IDnsResolver;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetd;
 import android.net.INetdEventCallback;
@@ -110,6 +111,7 @@ import android.net.metrics.NetworkEvent;
 import android.net.netlink.InetDiagMessage;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
+import android.net.util.DnsResolverService;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
 import android.os.Binder;
@@ -294,6 +296,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private int mDefaultInetConditionPublished = 0;
 
     private INetworkManagementService mNMS;
+    @VisibleForTesting
+    protected IDnsResolver mDnsResolver;
     @VisibleForTesting
     protected INetd mNetd;
     private INetworkStatsService mStatsService;
@@ -848,6 +852,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mProxyTracker = makeProxyTracker();
 
         mNetd = NetdService.getInstance();
+        mDnsResolver = DnsResolverService.getInstance();
         mKeyStore = KeyStore.getInstance();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -5370,8 +5375,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         final NetworkAgentInfo nai = new NetworkAgentInfo(messenger, new AsyncChannel(),
                 new Network(reserveNetId()), new NetworkInfo(networkInfo), lp, nc, currentScore,
-                mContext, mTrackerHandler, new NetworkMisc(networkMisc), this, mNetd, mNMS,
-                factorySerialNumber);
+                mContext, mTrackerHandler, new NetworkMisc(networkMisc), this, mNetd, mDnsResolver,
+                mNMS, factorySerialNumber);
         // Make sure the network capabilities reflect what the agent info says.
         nai.networkCapabilities = mixInCapabilities(nai, nc);
         final String extraInfo = networkInfo.getExtraInfo();

@@ -105,6 +105,7 @@ import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.ConnectivityManager.PacketKeepaliveCallback;
 import android.net.ConnectivityManager.TooManyRequestsException;
 import android.net.ConnectivityThread;
+import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
@@ -255,6 +256,7 @@ public class ConnectivityServiceTest {
     @Mock INetworkManagementService mNetworkManagementService;
     @Mock INetworkStatsService mStatsService;
     @Mock INetworkPolicyManager mNpm;
+    @Mock IDnsResolver mMockDnsResolver;
     @Mock INetd mMockNetd;
     @Mock NetworkStackClient mNetworkStack;
 
@@ -1055,9 +1057,10 @@ public class ConnectivityServiceTest {
 
         public WrappedConnectivityService(Context context, INetworkManagementService netManager,
                 INetworkStatsService statsService, INetworkPolicyManager policyManager,
-                IpConnectivityLog log, INetd netd) {
+                IpConnectivityLog log, INetd netd, IDnsResolver dnsResolver) {
             super(context, netManager, statsService, policyManager, log);
             mNetd = netd;
+            mDnsResolver = dnsResolver;
             mLingerDelayMs = TEST_LINGER_DELAY_MS;
         }
 
@@ -1220,7 +1223,8 @@ public class ConnectivityServiceTest {
                 mStatsService,
                 mNpm,
                 mock(IpConnectivityLog.class),
-                mMockNetd);
+                mMockNetd,
+                mMockDnsResolver);
 
         final ArgumentCaptor<INetworkPolicyListener> policyListenerCaptor =
                 ArgumentCaptor.forClass(INetworkPolicyListener.class);
@@ -5659,7 +5663,7 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         mCellNetworkAgent.connect(true);
         networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
-        verify(mMockNetd, times(1)).resolverStartPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
 
         // Switching default network updates TCP buffer sizes.
         verifyTcpBufferSizeChange(ConnectivityService.DEFAULT_TCP_BUFFER_SIZES);
@@ -5669,17 +5673,19 @@ public class ConnectivityServiceTest {
         cellLp.addLinkAddress(myIpv4);
         mCellNetworkAgent.sendLinkProperties(cellLp);
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
-        verify(mMockNetd, times(1)).resolverStopPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(1)).stopPrefix64Discovery(cellNetId);
 
         verifyNoMoreInteractions(mMockNetd);
+        verifyNoMoreInteractions(mMockDnsResolver);
         reset(mMockNetd);
+        reset(mMockDnsResolver);
 
         // Remove IPv4 address. Expect prefix discovery to be started again.
         cellLp.removeLinkAddress(myIpv4);
         cellLp.removeRoute(new RouteInfo(myIpv4, null, MOBILE_IFNAME));
         mCellNetworkAgent.sendLinkProperties(cellLp);
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
-        verify(mMockNetd, times(1)).resolverStartPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
 
         // When NAT64 prefix discovery succeeds, LinkProperties are updated and clatd is started.
         Nat464Xlat clat = mService.getNat464Xlat(mCellNetworkAgent);
@@ -5716,7 +5722,7 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
         verify(mMockNetd, times(1)).clatdStop(MOBILE_IFNAME);
-        verify(mMockNetd, times(1)).resolverStopPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(1)).stopPrefix64Discovery(cellNetId);
 
         // As soon as stop is called, the linkproperties lose the stacked interface.
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
@@ -5731,7 +5737,9 @@ public class ConnectivityServiceTest {
         networkCallback.assertNoCallback();
 
         verifyNoMoreInteractions(mMockNetd);
+        verifyNoMoreInteractions(mMockDnsResolver);
         reset(mMockNetd);
+        reset(mMockDnsResolver);
 
         // Stopping prefix discovery causes netd to tell us that the NAT64 prefix is gone.
         mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, false /* added */,
@@ -5745,7 +5753,7 @@ public class ConnectivityServiceTest {
         cellLp.removeDnsServer(InetAddress.getByName("8.8.8.8"));
         mCellNetworkAgent.sendLinkProperties(cellLp);
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
-        verify(mMockNetd, times(1)).resolverStartPrefix64Discovery(cellNetId);
+        verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
         mService.mNetdEventCallback.onNat64PrefixEvent(cellNetId, true /* added */,
                 kNat64PrefixString, 96);
         networkCallback.expectCallback(CallbackState.LINK_PROPERTIES, mCellNetworkAgent);
