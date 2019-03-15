@@ -170,6 +170,9 @@ public class LocalBluetoothProfileManager {
              BluetoothPbap.ACTION_CONNECTION_STATE_CHANGED);
 
         if (DEBUG) Log.d(TAG, "LocalBluetoothProfileManager construction complete");
+        // Here adds some new ACTION to mProfileIntentFilter.
+        // So, we need registerProfileIntentReceiver again.
+        mEventManager.registerProfileIntentReceiver();
     }
 
     /**
