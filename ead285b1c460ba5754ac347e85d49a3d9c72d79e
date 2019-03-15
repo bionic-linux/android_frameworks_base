@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa66ee3_98ef259e",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T14:25:56Z",
+      "side": 1,
+      "message": "Hm, but this blocks. This is problematic actually.",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "ead285b1c460ba5754ac347e85d49a3d9c72d79e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf671c3_a221360a",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-15T14:25:56Z",
+      "side": 1,
+      "message": "We probably can\u0027t afford to block here.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "ead285b1c460ba5754ac347e85d49a3d9c72d79e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
