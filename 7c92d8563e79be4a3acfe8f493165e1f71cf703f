@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c3665f7_5af7e807",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2019-03-15T19:09:21Z",
+      "side": 1,
+      "message": "Just to check my understanding, the right place to call this in ClientModeImpl is L2ConnectedState case CMD_ASSOCIATED_BSSID - sounds right?",
+      "range": {
+        "startLine": 527,
+        "startChar": 20,
+        "endLine": 527,
+        "endChar": 40
+      },
+      "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
