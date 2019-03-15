@@ -45,6 +45,7 @@ import android.annotation.NonNull;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetdUnsolicitedEventListener;
 import android.net.INetworkManagementEventObserver;
@@ -62,6 +63,7 @@ import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
+import android.net.util.DnsResolverService;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -157,6 +159,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     private final SystemServices mServices;
 
     private INetd mNetdService;
+    private IDnsResolver mDnsResolverService;
 
     private final NetdUnsolicitedEventListener mNetdUnsolicitedEventListener;
 
@@ -507,6 +510,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     private void connectNativeNetdService() {
         mNetdService = mServices.getNetd();
+        // DnsResolverService must be up because NetdService is up
+        mDnsResolverService = DnsResolverService.getInstance();
         try {
             mNetdService.registerUnsolicitedEventListener(mNetdUnsolicitedEventListener);
             if (DBG) Slog.d(TAG, "Register unsolicited event listener");
@@ -1605,20 +1610,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     }
 
     @Override
-    public void setDnsConfigurationForNetwork(int netId, String[] servers, String[] domains,
-                    int[] params, String tlsHostname, String[] tlsServers) {
-        mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
-
-        final String[] tlsFingerprints = new String[0];
-        try {
-            mNetdService.setResolverConfiguration(
-                    netId, servers, domains, params, tlsHostname, tlsServers, tlsFingerprints);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void addVpnUidRanges(int netId, UidRange[] ranges) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
@@ -2072,21 +2063,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             mNetdService.networkCreateVpn(netId, secure);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
-        }
-    }
-
-    @Override
-    public void removeNetwork(int netId) {
-        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
-
-        try {
-            mNetdService.networkDestroy(netId);
-        } catch (ServiceSpecificException e) {
-            Log.w(TAG, "removeNetwork(" + netId + "): ", e);
-            throw e;
-        } catch (RemoteException e) {
-            Log.w(TAG, "removeNetwork(" + netId + "): ", e);
-            throw e.rethrowAsRuntimeException();
         }
     }
 
