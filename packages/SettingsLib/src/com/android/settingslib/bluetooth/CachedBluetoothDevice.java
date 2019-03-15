@@ -365,9 +365,16 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
 
     public int getProfileConnectionState(LocalBluetoothProfile profile) {
         if (mProfileConnectionState.get(profile) == null) {
-            // If cache is empty make the binder call to get the state
-            int state = profile.getConnectionStatus(mDevice);
-            mProfileConnectionState.put(profile, state);
+            // When profile is not ready, the state is always DISCONNECTED.
+            // That is not accurate. We should not put it to cache map.
+            // Otherwise, when profile is ready, we can't put the accureate state to cache.
+            if (profile != null && profile.isProfileReady()) {
+                // If cache is empty make the binder call to get the state
+                int state = profile.getConnectionStatus(mDevice);
+                mProfileConnectionState.put(profile, state);
+            } else {
+                return BluetoothProfile.STATE_DISCONNECTED;
+            }
         }
         return mProfileConnectionState.get(profile);
     }
