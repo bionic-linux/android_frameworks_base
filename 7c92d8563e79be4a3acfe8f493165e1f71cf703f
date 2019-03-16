@@ -22,6 +22,23 @@
       "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9db938e_fba812f0",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-16T09:54:39Z",
+      "side": 1,
+      "message": "Do we need to store the network info to IpMemoryStore here? for example, maybe at this moment we haven\u0027t obtained the assigned IPv4 address, a repeated call will occur in the handleIPv4Success().",
+      "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
