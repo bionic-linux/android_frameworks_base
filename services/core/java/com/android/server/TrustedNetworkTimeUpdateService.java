@@ -34,6 +34,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.NtpTrustedTime;
@@ -55,9 +56,9 @@ import java.io.PrintWriter;
  * available.
  * </p>
  */
-public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUpdateService {
+public class TrustedNetworkTimeUpdateService extends Binder implements NetworkTimeUpdateService {
 
-    private static final String TAG = "NetworkTimeUpdateService";
+    private static final String TAG = "TrustedNetworkTimeUpdateService";
     private static final boolean DBG = false;
 
     private static final int EVENT_AUTO_TIME_CHANGED = 1;
@@ -65,7 +66,7 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     private static final int EVENT_NETWORK_CHANGED = 3;
 
     private static final String ACTION_POLL =
-            "com.android.server.NetworkTimeUpdateService.action.POLL";
+            "com.android.server.TrustedNetworkTimeUpdateService.action.POLL";
 
     private static final int POLL_REQUEST = 0;
 
@@ -98,7 +99,7 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     // connection to happen.
     private int mTryAgainCounter;
 
-    public OldNetworkTimeUpdateService(Context context) {
+    public TrustedNetworkTimeUpdateService(Context context) {
         mContext = context;
         mTime = NtpTrustedTime.getInstance(context);
         mAlarmManager = mContext.getSystemService(AlarmManager.class);
@@ -143,10 +144,10 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
 
     private void registerForAlarms() {
         mContext.registerReceiver(
-            new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    mHandler.obtainMessage(EVENT_POLL_NETWORK_TIME).sendToTarget();
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        mHandler.obtainMessage(EVENT_POLL_NETWORK_TIME).sendToTarget();
                 }
             }, new IntentFilter(ACTION_POLL));
     }
@@ -166,8 +167,18 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     private void onPollNetworkTimeUnderWakeLock(int event) {
         // Force an NTP fix when outdated
         if (mTime.getCacheAge() >= mPollingIntervalMs) {
-            if (DBG) Log.d(TAG, "Stale NTP fix; forcing refresh");
-            mTime.forceRefresh();
+            //if (DBG) Log.d(TAG, "Stale NTP fix; forcing refresh");
+            //mTime.forceRefresh();
+            boolean mVersion = false;
+            final String curVersion = SystemProperties.get("persist.vendor.ntp.mode");
+            if ((null != curVersion)
+                    && (!curVersion.equals(""))
+                    && (0 < strlen(curVersion))
+                    && (curVersion.equals("version2"))) {
+                mVersion = true;
+            }
+            if (DBG) Log.d(TAG, "Stale NTP fix; forcing refresh " + mVersion + ".");
+            mTime.forceSync(mVersion);
         }
 
         if (mTime.getCacheAge() < mPollingIntervalMs) {
@@ -256,7 +267,7 @@ public class OldNetworkTimeUpdateService extends Binder implements NetworkTimeUp
     /** Handler to do the network accesses on */
     private class MyHandler extends Handler {
 
-        public MyHandler(Looper l) {
+        MyHandler(Looper l) {
             super(l);
         }
 
