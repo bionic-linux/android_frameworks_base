@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa6240a1_6c214cd8",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-17T06:50:39Z",
+      "side": 1,
+      "message": "Yes, that sounds right. I\u0027m not an expert at ClientModeImpl so I can\u0027t swear there aren\u0027t other places where this has to be called, but yes : this has to be called whenever the L2Key changes, therefore whenever the BSSID changes.",
+      "parentUuid": "4c3665f7_5af7e807",
+      "range": {
+        "startLine": 527,
+        "startChar": 20,
+        "endLine": 527,
+        "endChar": 40
+      },
+      "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9db938e_fba812f0",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0b09b1_d7923af6",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-17T06:50:39Z",
+      "side": 1,
+      "message": "Yes, but we don\u0027t know whether we are going to get a v4 address at all, and even if we don\u0027t we have to save what we know about the network.\nBut you do raise a good point : when this is called, are we sure there aren\u0027t other members that haven\u0027t been updated yet ? This is especially important when doing failed roaming attempts, where we don\u0027t want to prematurely save stale data. In which case we don\u0027t want to save this here, but wait for the NUD check.\n\nI suggest this part would have to be addressed in the followup change that actually saves to the store. But for the time being I replaced this call with a comment.",
+      "parentUuid": "a9db938e_fba812f0",
+      "revId": "7c92d8563e79be4a3acfe8f493165e1f71cf703f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
