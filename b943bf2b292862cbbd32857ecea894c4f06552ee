@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c654cf4f_d1b9ead2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/NetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-18T08:21:46Z",
+      "side": 1,
+      "message": "Per comment in other CL, this should be nri.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 42,
+        "endLine": 1618,
+        "endChar": 45
+      },
+      "revId": "b943bf2b292862cbbd32857ecea894c4f06552ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
