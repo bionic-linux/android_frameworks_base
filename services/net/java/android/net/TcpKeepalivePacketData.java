@@ -167,8 +167,9 @@ public class TcpKeepalivePacketData extends KeepalivePacketData implements Parce
                 tcpWndScale);
     }
 
-    /* Parcelable Implementation. */
-    /* Note that this object implements parcelable (and needs to keep doing this as it inherits
+    /**
+     * Parcelable Implementation.
+     * Note that this object implements parcelable (and needs to keep doing this as it inherits
      * from a class that does), but should usually be parceled as a stable parcelable using
      * the toStableParcelable() and fromStableParcelable() methods.
      */
