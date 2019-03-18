@@ -62,6 +62,7 @@ import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.TetherStatsParcel;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
 import android.os.Binder;
@@ -80,6 +81,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.telephony.DataConnectionRealTimeInfo;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -1023,6 +1025,46 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    /**
+     * Convert InterfaceConfiguration to InterfaceConfigurationParcel with given ifname.
+     */
+    private static InterfaceConfigurationParcel toStableParcel(InterfaceConfiguration cfg,
+            String iface) {
+        InterfaceConfigurationParcel cfgParcel = new InterfaceConfigurationParcel();
+        cfgParcel.ifName = iface;
+        String hwAddr = cfg.getHardwareAddress();
+        if (!TextUtils.isEmpty(hwAddr)) {
+            cfgParcel.hwAddr = hwAddr;
+        } else {
+            cfgParcel.hwAddr = "";
+        }
+        cfgParcel.ipv4Addr = cfg.getLinkAddress().getAddress().getHostAddress();
+        cfgParcel.prefixLength = cfg.getLinkAddress().getPrefixLength();
+        ArrayList<String> flags = new ArrayList<>();
+        for (String flag : cfg.getFlags()) {
+            flags.add(flag);
+        }
+        cfgParcel.flags = flags.toArray(new String[0]);
+
+        return cfgParcel;
+    }
+
+    /**
+     * Construct InterfaceConfiguration from InterfaceConfigurationParcel.
+     */
+    public static InterfaceConfiguration fromStableParcel(InterfaceConfigurationParcel p) {
+        InterfaceConfiguration cfg = new InterfaceConfiguration();
+        cfg.setHardwareAddress(p.hwAddr);
+
+        final InetAddress addr = NetworkUtils.numericToInetAddress(p.ipv4Addr);
+        cfg.setLinkAddress(new LinkAddress(addr, p.prefixLength));
+        for (String flag : p.flags) {
+            cfg.setFlag(flag);
+        }
+
+        return cfg;
+    }
+
     @Override
     public InterfaceConfiguration getInterfaceConfig(String iface) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
@@ -1034,7 +1076,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
 
         try {
-            final InterfaceConfiguration cfg = InterfaceConfiguration.fromParcel(result);
+            final InterfaceConfiguration cfg = fromStableParcel(result);
             return cfg;
         } catch (IllegalArgumentException iae) {
             throw new IllegalStateException("Invalid InterfaceConfigurationParcel", iae);
@@ -1049,7 +1091,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             throw new IllegalStateException("Null LinkAddress given");
         }
 
-        final InterfaceConfigurationParcel cfgParcel = cfg.toParcel(iface);
+        final InterfaceConfigurationParcel cfgParcel = toStableParcel(cfg, iface);
 
         try {
             mNetdService.interfaceSetCfg(cfgParcel);
@@ -1713,12 +1755,21 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         }
     }
 
+    private static UidRangeParcel[] uidRangestoStableParcels(UidRange[] ranges) {
+        UidRangeParcel[] stableRanges = new UidRangeParcel[ranges.length];
+        for (int i = 0; i < ranges.length; i++) {
+            stableRanges[i].start = ranges[i].start;
+            stableRanges[i].stop = ranges[i].stop;
+        }
+        return stableRanges;
+    }
+
     @Override
     public void setAllowOnlyVpnForUids(boolean add, UidRange[] uidRanges)
             throws ServiceSpecificException {
         mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
         try {
-            mNetdService.networkRejectNonSecureVpn(add, uidRanges);
+            mNetdService.networkRejectNonSecureVpn(add, uidRangestoStableParcels(uidRanges));
         } catch (ServiceSpecificException e) {
             Log.w(TAG, "setAllowOnlyVpnForUids(" + add + ", " + Arrays.toString(uidRanges) + ")"
                     + ": netd command failed", e);
@@ -1887,7 +1938,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
 
         try {
-            mNetdService.networkAddUidRanges(netId, ranges);
+            mNetdService.networkAddUidRanges(netId, uidRangestoStableParcels(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1897,7 +1948,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub
     public void removeVpnUidRanges(int netId, UidRange[] ranges) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            mNetdService.networkRemoveUidRanges(netId, ranges);
+            mNetdService.networkRemoveUidRanges(netId, uidRangestoStableParcels(ranges));
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
@@ -1935,19 +1986,21 @@ public class NetworkManagementService extends INetworkManagementService.Stub
 
     private void closeSocketsForFirewallChainLocked(int chain, String chainName) {
         // UID ranges to close sockets on.
-        UidRange[] ranges;
+        UidRangeParcel[] ranges;
         // UID ranges whose sockets we won't touch.
         int[] exemptUids;
 
         int numUids = 0;
         if (DBG) Slog.d(TAG, "Closing sockets after enabling chain " + chainName);
         if (getFirewallType(chain) == FIREWALL_WHITELIST) {
+            // TODO: is there a better way of finding all existing users? If so, we could
+            // specify their ranges here.
+            UidRangeParcel nonSystemUsers = new UidRangeParcel();
+            nonSystemUsers.start = Process.FIRST_APPLICATION_UID;
+            nonSystemUsers.stop = Integer.MAX_VALUE;
+
             // Close all sockets on all non-system UIDs...
-            ranges = new UidRange[] {
-                // TODO: is there a better way of finding all existing users? If so, we could
-                // specify their ranges here.
-                new UidRange(Process.FIRST_APPLICATION_UID, Integer.MAX_VALUE),
-            };
+            ranges = new UidRangeParcel[] { nonSystemUsers };
             // ... except for the UIDs that have allow rules.
             synchronized (mRulesLock) {
                 final SparseIntArray rules = getUidFirewallRulesLR(chain);
@@ -1973,11 +2026,11 @@ public class NetworkManagementService extends INetworkManagementService.Stub
             // Close sockets for every UID that has a deny rule...
             synchronized (mRulesLock) {
                 final SparseIntArray rules = getUidFirewallRulesLR(chain);
-                ranges = new UidRange[rules.size()];
+                ranges = new UidRangeParcel[rules.size()];
                 for (int i = 0; i < ranges.length; i++) {
                     if (rules.valueAt(i) == FIREWALL_RULE_DENY) {
                         int uid = rules.keyAt(i);
-                        ranges[numUids] = new UidRange(uid, uid);
+                        ranges[numUids].start = ranges[numUids].stop = uid;
                         numUids++;
                     }
                 }
