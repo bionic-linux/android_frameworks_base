@@ -856,7 +856,6 @@ aidl_interface {
     name: "networkstack-aidl-framework",
     local_include_dir: "core/java",
     srcs: [
-        "core/java/android/net/TcpKeepalivePacketDataParcelable.aidl",
         "core/java/android/net/IIpMemoryStore.aidl",
         "core/java/android/net/ipmemorystore/**/*.aidl",
     ],
