@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff2ab5a_3600b3a4",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 40426,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T07:39:58Z",
+      "side": 1,
+      "message": "The change to libcore should be uploaded in the same topic too (treehugger is complaining).\nYou\u0027ll also probably have to run:\nmake -jXX core-platform-api-stubs-update-current-api\nto update the core platform API file",
+      "range": {
+        "startLine": 40426,
+        "startChar": 35,
+        "endLine": 40426,
+        "endChar": 43
+      },
+      "revId": "2a39360007411d6cc2ac5f2272de011376e1a743",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250b7ac1_ebc94a09",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3270,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T07:39:58Z",
+      "side": 1,
+      "message": "This needs to be nonnull (toString assumes that all list items are non-null).",
+      "range": {
+        "startLine": 3270,
+        "startChar": 37,
+        "endLine": 3270,
+        "endChar": 45
+      },
+      "revId": "2a39360007411d6cc2ac5f2272de011376e1a743",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8833d8b3_ef57c30d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 3350,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T07:39:58Z",
+      "side": 1,
+      "message": "I think this should be @NonNull because an error message will be logged if null is passed, even though this will not throw.",
+      "range": {
+        "startLine": 3350,
+        "startChar": 135,
+        "endLine": 3350,
+        "endChar": 143
+      },
+      "revId": "2a39360007411d6cc2ac5f2272de011376e1a743",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
