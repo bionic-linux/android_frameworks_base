@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "031268ac_150273ad",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-18T07:10:14Z",
+      "side": 1,
+      "message": "Can we change:\nIIpMemoryStore getService()\nto:\nvoid getService(Consumer\u003cIIpMemoryStore\u003e cb) {\n  mService.thenAccept(cb)\n}\n? I\u0027m not too good with the future API though.",
+      "parentUuid": "1aa66ee3_98ef259e",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "ead285b1c460ba5754ac347e85d49a3d9c72d79e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcf671c3_a221360a",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 13
