@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a633ee9b_06566f94",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-18T22:41:29Z",
+      "side": 1,
+      "message": "Nullable",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db506e5_3bcc6ff5",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-18T22:41:29Z",
+      "side": 1,
+      "message": "Nullable",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6b7df2_fdb6ec2f",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-18T22:41:29Z",
+      "side": 1,
+      "message": "NonNull",
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39680182_c6ec5ffa",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-18T22:41:29Z",
+      "side": 1,
+      "message": "Nullable",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368d49c0_0962561d",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-18T22:41:29Z",
+      "side": 1,
+      "message": "While you\u0027re here can you please also annotate this member ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 11
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
