@@ -105,6 +105,24 @@
       "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a727be0_50b0a80a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-18T02:27:21Z",
+      "side": 1,
+      "message": "Richard, thanks for your suggestion.\nThe new change is working for b/123208856!",
+      "parentUuid": "d86a3bb7_65d1415c",
+      "revId": "aeb07edee1fab6f0697c7f78e62e78307eea7dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
