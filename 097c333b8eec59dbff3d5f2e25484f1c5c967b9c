@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf159b9_e023ef22",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T02:25:35Z",
+      "side": 1,
+      "message": "This might be better placed in the shared lib, which would be useful in case the NetworkStack app wants to talk to netd too (and allows having tests).\nThat said, considering that our plan is to have AIDL do the conversion automatically in R, it\u0027s not a big deal as the code should move away anyway.",
+      "range": {
+        "startLine": 1031,
+        "startChar": 48,
+        "endLine": 1031,
+        "endChar": 62
+      },
+      "revId": "097c333b8eec59dbff3d5f2e25484f1c5c967b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6fc3bc9_5ee06e0a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T02:25:35Z",
+      "side": 1,
+      "message": "Nit: capital T\nI can fix that when adding my tests change",
+      "range": {
+        "startLine": 1758,
+        "startChar": 45,
+        "endLine": 1758,
+        "endChar": 46
+      },
+      "revId": "097c333b8eec59dbff3d5f2e25484f1c5c967b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4100ece1_54cedca0",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T02:25:35Z",
+      "side": 1,
+      "message": "Unrelated to this change, but I\u0027m wondering how this code behaves in multi-user scenarios. For example here Bluetooth would be considered system when used under user 0 (UID 1002) but not if used under user 1 (UID 101002).",
+      "range": {
+        "startLine": 1999,
+        "startChar": 12,
+        "endLine": 1999,
+        "endChar": 26
+      },
+      "revId": "097c333b8eec59dbff3d5f2e25484f1c5c967b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
