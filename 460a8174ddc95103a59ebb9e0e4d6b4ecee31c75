@@ -70,6 +70,30 @@
       "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72710bf7_93c9367c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1226402
+      },
+      "writtenOn": "2019-03-19T03:24:07Z",
+      "side": 1,
+      "message": "Thanks for your review. We update the patch according to your suggestion.",
+      "parentUuid": "4b360acb_8c7dd41f",
+      "range": {
+        "startLine": 440,
+        "startChar": 12,
+        "endLine": 440,
+        "endChar": 32
+      },
+      "revId": "460a8174ddc95103a59ebb9e0e4d6b4ecee31c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
