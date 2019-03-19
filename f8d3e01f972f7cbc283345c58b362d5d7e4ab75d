@@ -22,6 +22,53 @@
       "revId": "f8d3e01f972f7cbc283345c58b362d5d7e4ab75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58ebb98a_eed1c467",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-19T10:19:43Z",
+      "side": 1,
+      "message": "There are more ways that string equality for URLs to be equal. ISTM that URL#equals() handles this in a better way than TextUtils#equals, and therefore this might actually regress.\n\nCould you make mMainFrameUrl a URL object and keep comparing to makeUrl(error.getUrl()) ?",
+      "range": {
+        "startLine": 500,
+        "startChar": 24,
+        "endLine": 500,
+        "endChar": 40
+      },
+      "revId": "f8d3e01f972f7cbc283345c58b362d5d7e4ab75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080d3495_f1787925",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-19T10:19:43Z",
+      "side": 1,
+      "message": "See how Lorenzo already raised this concern in PS7.\nIn any case, it today\u0027s meeting I think we concluded this was fine.",
+      "parentUuid": "4cc28ca4_45a56e07",
+      "range": {
+        "startLine": 500,
+        "startChar": 41,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "f8d3e01f972f7cbc283345c58b362d5d7e4ab75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
