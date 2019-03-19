@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d28392_187e0c69",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T09:53:09Z",
+      "side": 1,
+      "message": "network with captive portal?",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "fb56f56fe20f55b891b3631039ee48a2f40e877c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
