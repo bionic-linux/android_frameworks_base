@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e50be9a0_a3e35ae5",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-19T06:52:44Z",
+      "side": 1,
+      "message": "checked with Jean offline, we can keep this code as it is now, and address this in the following CL.",
+      "parentUuid": "031268ac_150273ad",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "ead285b1c460ba5754ac347e85d49a3d9c72d79e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf671c3_a221360a",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 13
