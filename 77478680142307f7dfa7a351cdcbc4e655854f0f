@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52d57493_0709e734",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T09:58:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cf40a4_ad414c29",
+      "range": {
+        "startLine": 43,
+        "startChar": 74,
+        "endLine": 43,
+        "endChar": 81
+      },
+      "revId": "77478680142307f7dfa7a351cdcbc4e655854f0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2860d0a5_66c2b1c1",
         "filename": "core/java/android/net/CaptivePortal.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "77478680142307f7dfa7a351cdcbc4e655854f0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e6be5e_e6ec2c2a",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T09:58:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2860d0a5_66c2b1c1",
+      "range": {
+        "startLine": 52,
+        "startChar": 74,
+        "endLine": 52,
+        "endChar": 81
+      },
+      "revId": "77478680142307f7dfa7a351cdcbc4e655854f0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
