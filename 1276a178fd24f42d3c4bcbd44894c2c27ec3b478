@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac39cd4_036cadf1",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T14:46:06Z",
+      "side": 0,
+      "message": "What was this used for? Only to connect to netd the first time?",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 61
+      },
+      "revId": "1276a178fd24f42d3c4bcbd44894c2c27ec3b478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48cd52e_adbd0df0",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-19T14:46:06Z",
+      "side": 0,
+      "message": "Is this still used?",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 100
+      },
+      "revId": "1276a178fd24f42d3c4bcbd44894c2c27ec3b478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
