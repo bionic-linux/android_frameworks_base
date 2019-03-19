@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3663f890_3c57cc56",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T01:22:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a633ee9b_06566f94",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0db506e5_3bcc6ff5",
         "filename": "core/java/android/net/StaticIpConfiguration.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a1141ff6_15f4e420",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T01:22:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0db506e5_3bcc6ff5",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6b7df2_fdb6ec2f",
         "filename": "core/java/android/net/StaticIpConfiguration.java",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8716877f_156236f6",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T01:22:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf6b7df2_fdb6ec2f",
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "5dcfa02f_05d909af",
+        "filename": "core/java/android/net/StaticIpConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T01:22:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "39680182_c6ec5ffa",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368d49c0_0962561d",
         "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eeecbbd_528e66ff",
+        "filename": "core/java/android/net/metrics/IpConnectivityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-03-19T01:22:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "368d49c0_0962561d",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 11
+      },
+      "revId": "d27ef4af105a61af37b572e9798ee73f9cc981aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
