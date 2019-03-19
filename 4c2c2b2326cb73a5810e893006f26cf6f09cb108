@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dbcee6d_bd024d16",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-19T06:25:15Z",
+      "side": 1,
+      "message": "I\u0027d like the original code more, since the function here actually switch its mode.\nBy the name of getDetailTcpInfo, caller might not be aware of the side effect that the socket is switched to repair mode.",
+      "range": {
+        "startLine": 133,
+        "startChar": 33,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "4c2c2b2326cb73a5810e893006f26cf6f09cb108",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
