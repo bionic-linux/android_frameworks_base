@@ -57,6 +57,7 @@ import android.media.session.ISessionCallback;
 import android.media.session.ISessionManager;
 import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
+import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -423,6 +425,22 @@ public class MediaSessionService extends SystemService implements Monitor {
         if (DEBUG) {
             Log.d(TAG, "Destroying " + session);
         }
+        /* When media session is closed unexpectedly, wrong Playback state is kept.
+         * So this changes Playback state to PAUSE, if the closed session is active.
+         */
+        if (session.isPlaybackActive()) {
+            PlaybackState.Builder stateBuilder =
+                    new PlaybackState.Builder().setState(PlaybackState.STATE_PAUSED,
+                        session.getPlaybackState().getPosition(),
+                        session.getPlaybackState().getPlaybackSpeed(),
+                        SystemClock.elapsedRealtime());
+            try {
+                session.getSessionBinder().setPlaybackState(stateBuilder.build());
+            } catch (RemoteException e) {
+                Log.wtf(TAG, "Dead object in destroySessionLocked.", e);
+            }
+        }
+
         FullUserRecord user = getFullUserRecordLocked(session.getUserId());
         if (mGlobalPrioritySession == session) {
             mGlobalPrioritySession = null;
