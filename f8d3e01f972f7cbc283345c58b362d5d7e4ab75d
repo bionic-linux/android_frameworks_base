@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cc28ca4_45a56e07",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-19T07:26:51Z",
+      "side": 1,
+      "message": "We were comparing the hostname but are now comparing the whole URL - this is probably fine since a SSL error would likely be shown on all URLs in the hostname. But just wanted to make sure this is well identified here.",
+      "range": {
+        "startLine": 500,
+        "startChar": 41,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "f8d3e01f972f7cbc283345c58b362d5d7e4ab75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
