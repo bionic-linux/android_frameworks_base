@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6671302_bad878f8",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T06:36:18Z",
+      "side": 1,
+      "message": "Why not say mMainFrameUrl is a URL and not call toString() in line 485, instead of re-creating it from the string here ?",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
