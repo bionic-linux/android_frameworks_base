@@ -156,26 +156,35 @@ public class IpSecServiceTest {
 
     @Test
     public void testOpenAndCloseUdpEncapsulationSocket() throws Exception {
-        int localport = findUnusedPort();
+        for (int i = 0; i < 3; i++) {
+            int localport = findUnusedPort();
 
-        IpSecUdpEncapResponse udpEncapResp =
-                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
-        assertNotNull(udpEncapResp);
-        assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
-        assertEquals(localport, udpEncapResp.port);
+            IpSecUdpEncapResponse udpEncapResp =
+                    mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+            assertNotNull(udpEncapResp);
+            if (udpEncapResp.status == IpSecManager.Status.RESOURCE_UNAVAILABLE) {
+                continue; // Retry up to 3 times to reduce possibility for port-bind failures.
+            }
 
-        mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
-        udpEncapResp.fileDescriptor.close();
+            assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
+            assertEquals(localport, udpEncapResp.port);
 
-        // Verify quota and RefcountedResource objects cleaned up
-        IpSecService.UserRecord userRecord =
-                mIpSecService.mUserResourceTracker.getUserRecord(Os.getuid());
-        assertEquals(0, userRecord.mSocketQuotaTracker.mCurrent);
-        try {
-            userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(udpEncapResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
+            mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
+            udpEncapResp.fileDescriptor.close();
 
+            // Verify quota and RefcountedResource objects cleaned up
+            IpSecService.UserRecord userRecord =
+                    mIpSecService.mUserResourceTracker.getUserRecord(Os.getuid());
+            assertEquals(0, userRecord.mSocketQuotaTracker.mCurrent);
+            try {
+                userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(
+                        udpEncapResp.resourceId);
+                fail("Expected IllegalArgumentException on attempt to access deleted resource");
+            } catch (IllegalArgumentException expected) {
+
+            }
+
+            break;
         }
     }
 
@@ -204,12 +213,11 @@ public class IpSecServiceTest {
 
     @Test
     public void testOpenUdpEncapsulationSocketAfterClose() throws Exception {
-        int localport = findUnusedPort();
         IpSecUdpEncapResponse udpEncapResp =
-                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+                mIpSecService.openUdpEncapsulationSocket(0, new Binder());
         assertNotNull(udpEncapResp);
         assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
-        assertEquals(localport, udpEncapResp.port);
+        int localport = udpEncapResp.port;
 
         mIpSecService.closeUdpEncapsulationSocket(udpEncapResp.resourceId);
         udpEncapResp.fileDescriptor.close();
@@ -226,12 +234,11 @@ public class IpSecServiceTest {
      */
     @Test
     public void testUdpEncapPortNotReleased() throws Exception {
-        int localport = findUnusedPort();
         IpSecUdpEncapResponse udpEncapResp =
-                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+                mIpSecService.openUdpEncapsulationSocket(0, new Binder());
         assertNotNull(udpEncapResp);
         assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
-        assertEquals(localport, udpEncapResp.port);
+        int localport = udpEncapResp.port;
 
         udpEncapResp.fileDescriptor.close();
 
@@ -273,14 +280,11 @@ public class IpSecServiceTest {
 
     @Test
     public void testOpenUdpEncapsulationSocketTwice() throws Exception {
-        int localport = findUnusedPort();
-
         IpSecUdpEncapResponse udpEncapResp =
-                mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+                mIpSecService.openUdpEncapsulationSocket(0, new Binder());
         assertNotNull(udpEncapResp);
         assertEquals(IpSecManager.Status.OK, udpEncapResp.status);
-        assertEquals(localport, udpEncapResp.port);
-        mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
+        int localport = udpEncapResp.port;
 
         IpSecUdpEncapResponse testUdpEncapResp =
                 mIpSecService.openUdpEncapsulationSocket(localport, new Binder());
