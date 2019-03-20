@@ -46,6 +46,30 @@
       "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d43d7424_fd20db5a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2019-03-20T17:50:27Z",
+      "side": 1,
+      "message": "Oh, sorry, I missed this - you should *not* assume that the request URI is a URL, despite the naming of the method on WebResourceRequest. It returns a Uri because that is the correct type: it can, for example, be the data: scheme or another non-URL scheme.",
+      "parentUuid": "ab634b78_0db94e18",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
