@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32564b15_a24b3be8",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 40485,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-20T14:08:39Z",
+      "side": 1,
+      "message": "Actually I think this should be @Nullable. The implementation does:\n\n    return NET_IPV4_FALLBACK(env, ssize_t, sendto, javaFd, javaInetAddress, port,\n                             NULL_ADDR_OK, bytes.get() + byteOffset, byteCount, flags);\n\nand I think a null destination address is well-defined to mean, \"send to the address the socket is connected to, or return an error if the socket is not connected\".",
+      "range": {
+        "startLine": 40485,
+        "startChar": 101,
+        "endLine": 40485,
+        "endChar": 132
+      },
+      "revId": "6a2fdabd7f4a6d22bbe1c1951f7eefe882f56491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3ecb80_a4a57089",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3360,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-20T14:08:39Z",
+      "side": 1,
+      "message": "FWIW I don\u0027t see any guarantee that this is @NonNull. Maybe we should change the CaptivePortalProbeSpec constructor to throw NullPointerException if it is passed a null encodedSpec?",
+      "range": {
+        "startLine": 3360,
+        "startChar": 11,
+        "endLine": 3360,
+        "endChar": 19
+      },
+      "revId": "6a2fdabd7f4a6d22bbe1c1951f7eefe882f56491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b475d10_07174f97",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3362,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-20T14:08:39Z",
+      "side": 1,
+      "message": "Ditto, should we change the CaptivePortalProbeSpec constructor to throw NullPointerException if it is passed a null url?",
+      "range": {
+        "startLine": 3362,
+        "startChar": 12,
+        "endLine": 3362,
+        "endChar": 19
+      },
+      "revId": "6a2fdabd7f4a6d22bbe1c1951f7eefe882f56491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2a3ca9_a0772a0f",
+        "filename": "core/java/android/net/captiveportal/CaptivePortalProbeSpec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-20T14:08:39Z",
+      "side": 1,
+      "message": "Throw if these are null? Consider using Preconditions.checkNotNull.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "6a2fdabd7f4a6d22bbe1c1951f7eefe882f56491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
