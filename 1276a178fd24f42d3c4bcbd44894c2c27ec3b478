@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5993a48_8776dd59",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-20T06:07:16Z",
+      "side": 0,
+      "message": "used for reconnecting to netd which won\u0027t happen now",
+      "parentUuid": "5ac39cd4_036cadf1",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 61
+      },
+      "revId": "1276a178fd24f42d3c4bcbd44894c2c27ec3b478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d48cd52e_adbd0df0",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1276a178fd24f42d3c4bcbd44894c2c27ec3b478",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48f8a13_a51f70ab",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-20T06:07:16Z",
+      "side": 0,
+      "message": "No, remove it. \nDone",
+      "parentUuid": "d48cd52e_adbd0df0",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 100
+      },
+      "revId": "1276a178fd24f42d3c4bcbd44894c2c27ec3b478",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
