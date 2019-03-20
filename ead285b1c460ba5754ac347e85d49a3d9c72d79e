@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "09395be9_296aa2e5",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T03:32:16Z",
+      "side": 1,
+      "message": "I think Rémi\u0027s idea is a good way to accomplish this.\n\nAs is it has a fatal flaw : it enqueues all the work on getting the service and makes no guarantees as to what order this should be called in (which is problematic for the memory store as you might want to store something then read it immediately after). But it\u0027s fixable, by making sure every call is added at the end of the next one instead. (Of course, we can\u0027t return it and call get() on it or we still block).\n\nIt\u0027s a bit difficult to realize however. The last stage will have to be stored in some member which would have to be synchronized (and not just volatile, because there will be a read and a write to this member (by the way, the best implementation of this would probably be to use an AtomicReference and getAndUpdate, but that\u0027s still doing the synchronization internally).\n\nNow, is this much different from having a queue of Consumer\u003cIIpMemoryStore\u003e, and is it easier to understand ? For sure that API is a lot less known than a simple queue. I expect calling thenAccept on an already completed CompletableFuture calls it immediately which is great because it frees us of the difficult synchronization problem of when to run the queue (which also requires the same locking). We\u0027d have to check at least that the new CompletableFuture does not hold a ref to the old one, otherwise we have a nice memory leak on our hands, and that calling thenAccept() on a completed future actually calls the followup immediately (hopefully synchronously).\n\n\nIn the end both implementations are very similar – the queue requires locking to make sure it\u0027s executed while the CompletionStage#thenAccept requires locking when setting the new top of the queue. The queue is a better known API, but I also feel it\u0027s more difficult to get right, and with the atomic reference the CompletableStage solution is fewer lines of code. My hunch is that the #thenAccept implementation would be less error-prone, and though less known would benefit from more knowers :)\n\nSo we\u0027re looking at something like :\n\n  CompletableFuture\u003cIIpMemoryStore\u003e mService;\n  AtomicReference\u003cCompletableFuture\u003cIIpMemoryStore\u003e\u003e mTailNode;\n  // Constructor unchanged, remove getService\n  protected void enqueue(Consumer\u003cIIpMemoryStore\u003e cb) {\n    mTailNote.getAndUpdate(futureStore -\u003e futureStore.thenAccept(cb))\n  }\n\nAnd change all the calls like this :\n  - getService().storeNetworkAttributes(l2Key, attributes.toParcelable(), listener);\n  + enqueue({ service -\u003e service.storeNetworkAttributes(/* same arguments */) })\n\nIt doesn\u0027t look too bad actually. But I think we need to write ample comment to explain why we\u0027re doing this and how it works, as well as making sure that calling thenAccept on a completed future immediately calls the thing and that this does not leak.",
+      "parentUuid": "e50be9a0_a3e35ae5",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "ead285b1c460ba5754ac347e85d49a3d9c72d79e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf671c3_a221360a",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 13
