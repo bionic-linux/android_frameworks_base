@@ -22,6 +22,30 @@
       "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab634b78_0db94e18",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-03-20T06:53:18Z",
+      "side": 1,
+      "message": "Because WebResourceRequest#getUrl() is returning Uri but not URL, and there is no toURL() method in android.net.Uri, so I convert it to String first then make an URL.",
+      "parentUuid": "d6671302_bad878f8",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
