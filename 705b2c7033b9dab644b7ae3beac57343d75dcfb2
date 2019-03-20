@@ -22,6 +22,30 @@
       "revId": "705b2c7033b9dab644b7ae3beac57343d75dcfb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6931f512_63b282c7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5352,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-03-20T22:05:23Z",
+      "side": 1,
+      "message": "It seems like the most correct I can get. This is technically a nullable function, but if everything is going smoothly it won\u0027t return null.",
+      "parentUuid": "401a8621_83c0a0fa",
+      "range": {
+        "startLine": 5351,
+        "startChar": 78,
+        "endLine": 5352,
+        "endChar": 61
+      },
+      "revId": "705b2c7033b9dab644b7ae3beac57343d75dcfb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
