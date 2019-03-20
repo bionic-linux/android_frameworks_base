@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "71090614_a02b3682",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T08:48:04Z",
+      "side": 1,
+      "message": "No but I mean, CollectionUtils already exists. You could have simply added it to the framework-networkstack-shared-srcs target in frameworks/base/Android.bp and use it as is, instead of writing a new one.",
+      "parentUuid": "e7062fdb_6ad47138",
+      "range": {
+        "startLine": 1198,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "262192b8_b8a86fe0",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 2

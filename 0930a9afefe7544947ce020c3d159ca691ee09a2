@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42296eac_1a23cf58",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T08:48:04Z",
+      "side": 1,
+      "message": "This will do nothing if there are no V4 acks, so I suggest you cut this code too.\n\nif (!NetworkStackUtils.any(...)) return;\n\n// the rest of the code",
+      "range": {
+        "startLine": 1205,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 47
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7036cc9a_d95a0cbb",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T08:48:04Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 1307,
+        "startChar": 7,
+        "endLine": 1310,
+        "endChar": 9
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ad47bb_80c102a6",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T08:48:04Z",
+      "side": 1,
+      "message": "Use 0, it\u0027s safer *and faster*.",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
