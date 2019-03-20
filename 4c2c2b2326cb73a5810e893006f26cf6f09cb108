@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "65c4e094_39cf72b9",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T09:46:36Z",
+      "side": 1,
+      "message": "You are replacing escaping of management of repair mode by escaping of the callback. It is much better, but I think you can solve both by having something like :\n\n    public static TcpKeepalivePacketData getTcpKeepalivePacket(@NonNull FileDescriptor fd) {\n        try {\n            final TcpSocketInfo tsi \u003d getDetailTcpInfo(fd);\n            return TcpKeepalivePacketData.tcpKeepalivePacket(tsi);\n        } catch (InvalidPacketException | InvalidSocketException e) {\n            switchOutOfRepairMode(fd);\n            throw e;\n        }\n    }\n\nThen outside you could catch again to call notifyErrorCallback.",
+      "range": {
+        "startLine": 112,
+        "startChar": 49,
+        "endLine": 112,
+        "endChar": 73
+      },
+      "revId": "4c2c2b2326cb73a5810e893006f26cf6f09cb108",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dbcee6d_bd024d16",
         "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
         "patchSetId": 5
@@ -18,6 +41,53 @@
         "startChar": 33,
         "endLine": 133,
         "endChar": 49
+      },
+      "revId": "4c2c2b2326cb73a5810e893006f26cf6f09cb108",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a71cbc_6b88cc6f",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T09:46:36Z",
+      "side": 1,
+      "message": "Strongly agree with Junyu. A function called \"get*\" is never expected to have side effects, especially not crippling side effects like this. Conversely a function called \"switchToRepairMode\" can be reasonably expected to return something like TcpSocketInfo.",
+      "parentUuid": "3dbcee6d_bd024d16",
+      "range": {
+        "startLine": 133,
+        "startChar": 33,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "4c2c2b2326cb73a5810e893006f26cf6f09cb108",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb6aa19_d5a3f023",
+        "filename": "services/core/java/com/android/server/connectivity/TcpKeepaliveController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-20T09:46:36Z",
+      "side": 1,
+      "message": "may ? Well is there or is there not ?\n\nSuggested wording : \"Fatal: receive queue of this socket is not empty\".",
+      "range": {
+        "startLine": 197,
+        "startChar": 49,
+        "endLine": 197,
+        "endChar": 59
       },
       "revId": "4c2c2b2326cb73a5810e893006f26cf6f09cb108",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
