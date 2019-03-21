@@ -142,6 +142,30 @@
       "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b3301e3_0111b032",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2019-03-21T21:31:05Z",
+      "side": 1,
+      "message": "All of these methods return URIs, even the ones called getUrl; sorry. Our API design does not do a good job of distinguishing these two things, developers are generally not too aware of the differences anyway, and even Chromium internals don\u0027t really bother to distinguish too much and mostly just handle everything as if it were a URI.\n\nWhile it\u0027s unlikely that a non-URL scheme will actually generate an SSL error, it\u0027s probably not an issue to handle it just in case. I don\u0027t think there is actually any problem with just comparing them as strings - by the time we pass them back to you in callbacks they should have been through Chromium\u0027s internal canonicalization already and won\u0027t change.",
+      "parentUuid": "d6430cb5_a4bcabda",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
