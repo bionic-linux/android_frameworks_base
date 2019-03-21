@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f3ec42_d32ebf13",
+        "filename": "core/java/android/net/captiveportal/CaptivePortalProbeSpec.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-21T10:38:56Z",
+      "side": 1,
+      "message": "You don\u0027t need this. NullPointerException is an unchecked exception and doesn\u0027t need to be declared. Also, all the args are annotated with @NonNull, so passing null is a clear programming error.",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "79b380cfe713480d6bcbc7655911e83d3025b3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
