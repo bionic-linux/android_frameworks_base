@@ -118,6 +118,30 @@
       "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6430cb5_a4bcabda",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-21T19:59:49Z",
+      "side": 1,
+      "message": "Well then, as SslError#getUrl() returns a String, it sounds like we should keep mMainFrameUrl as an instance of android.net.Uri, and make errorUrl an instance of the same class constructed with Uri.parse.\n\n...and defer to android.net.Uri#equals, which does .toString() anyway. *sigh*\n\nI vote we keep the current code. At least it has some meaningful comparison of URLs. If the Uri we get out of WebResourceRequest is not actually a URL, I don\u0027t think it\u0027s possible that it equals() the URL of the error.",
+      "parentUuid": "df04cbab_24bdc5f6",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
