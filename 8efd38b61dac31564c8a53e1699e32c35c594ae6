@@ -94,6 +94,30 @@
       "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df04cbab_24bdc5f6",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2019-03-21T19:12:45Z",
+      "side": 1,
+      "message": "It probably won\u0027t, no, but it seems better to be safe and just treat it as the type it actually is, especially since this is for debug logging; it would be annoying if you had a problem and couldn\u0027t see what the cause was because the debug logging wasn\u0027t printing the URI correctly :)",
+      "parentUuid": "9c7d7636_0e079a6c",
+      "range": {
+        "startLine": 495,
+        "startChar": 38,
+        "endLine": 495,
+        "endChar": 59
+      },
+      "revId": "8efd38b61dac31564c8a53e1699e32c35c594ae6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
