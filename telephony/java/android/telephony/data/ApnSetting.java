@@ -19,15 +19,18 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.hardware.radio.V1_5.ApnTypes;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.provider.Telephony;
 import android.provider.Telephony.Carriers;
 import android.telephony.Annotation.ApnType;
 import android.telephony.Annotation.NetworkType;
+import android.telephony.CarrierConfigManager;
 import android.telephony.Rlog;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
@@ -40,6 +43,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1051,12 +1055,39 @@ public class ApnSetting implements Parcelable {
             && !TextUtils.isEmpty(mMvnoMatchData);
     }
 
+    /**
+     * @return True if should exclude capability of this apn type.
+     */
+    private boolean shouldExcludeCapability(String type, int subId, Context context) {
+        if (mApnTypeBitmask != TYPE_ALL) {
+            return false;
+        }
+        CarrierConfigManager configManager = (CarrierConfigManager)
+                context.getSystemService(context.CARRIER_CONFIG_SERVICE);
+        if (configManager != null) {
+            final PersistableBundle carrierConfig = configManager.getConfigForSubId(subId);
+            if (carrierConfig != null) {
+                String[] exculdeTypes = carrierConfig.getStringArray(CarrierConfigManager
+                        .KEY_EXCLUDE_CAPABILITY_FROM_TYPE_ALL_APN_TYPES_STRINGS);
+                if (exculdeTypes != null && Arrays.asList(exculdeTypes).contains(type)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean hasApnType(int type) {
         return (mApnTypeBitmask & type) == type;
     }
 
     /** @hide */
-    public boolean canHandleType(@ApnType int type) {
+    public boolean canHandleType(@ApnType int type, int subId, Context context) {
+        String apnType = getApnTypeString(type);
+        if (shouldExcludeCapability(apnType, subId, context)) {
+            // Don't allow apn of "*" and empty type to handle
+            return false;
+        }
         if (!mCarrierEnabled) {
             return false;
         }
@@ -1190,9 +1221,9 @@ public class ApnSetting implements Parcelable {
      * @return True if two APN settings are similar
      * @hide
      */
-    public boolean similar(ApnSetting other) {
-        return (!this.canHandleType(TYPE_DUN)
-            && !other.canHandleType(TYPE_DUN)
+    public boolean similar(ApnSetting other, int subId, Context context) {
+        return (!this.canHandleType(TYPE_DUN, subId, context)
+            && !other.canHandleType(TYPE_DUN, subId, context)
             && Objects.equals(this.mApnName, other.mApnName)
             && !typeSameAny(this, other)
             && xorEqualsString(this.mProxyAddress, other.mProxyAddress)
