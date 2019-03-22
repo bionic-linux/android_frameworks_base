@@ -34,6 +34,24 @@
       "revId": "ba83487b460af129f5cbf6d49c2a162b06931c90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0c92bc4_ebafa01f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-03-22T17:23:26Z",
+      "side": 1,
+      "message": "The answer should go in the commit message.\n\nThis is caused by this TODO:\nhttp://cs/android/build/soong/java/dexpreopt.go?l\u003d85\u0026rcl\u003d79e3e79ee8fd06f5257a3875799143f554fce917\n\nWhich we should probably fix rather than annotating all the modules.",
+      "parentUuid": "80a59ac4_fa2d1210",
+      "revId": "ba83487b460af129f5cbf6d49c2a162b06931c90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
