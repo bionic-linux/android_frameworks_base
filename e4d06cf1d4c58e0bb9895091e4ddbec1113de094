@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "aa0837dc_3d367448",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-22T20:52:00Z",
+      "side": 1,
+      "message": "After a chat :\nCollectionUtils in internal depends on ArrayUtils which depends on internal Dalvik stuff. Disentangling this mess is well beyond the scope of this patch, so let\u0027s give up on this and keep your code.",
+      "parentUuid": "71090614_a02b3682",
+      "range": {
+        "startLine": 1198,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 69
+      },
+      "revId": "e4d06cf1d4c58e0bb9895091e4ddbec1113de094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "262192b8_b8a86fe0",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 2
