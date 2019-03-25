@@ -170,10 +170,11 @@ public class InetDiagSocketTest {
          * {protocol, local, remote} socket result in receiving a valid UID.
          */
         TcpConnection tcp = new TcpConnection(to, from);
+        InetSocketAddress addr = new InetSocketAddress(
+                tcp.socketDomain == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY, 0);
         checkConnectionOwnerUid(tcp.protocol, tcp.local, tcp.remote, true);
-        checkConnectionOwnerUid(IPPROTO_UDP, tcp.local, tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, new InetSocketAddress(0), tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, tcp.local, new InetSocketAddress(0), false);
+        checkConnectionOwnerUid(tcp.protocol, addr, tcp.remote, false);
+        checkConnectionOwnerUid(tcp.protocol, tcp.local, addr, false);
         tcp.close();
 
         /**
@@ -182,10 +183,13 @@ public class InetDiagSocketTest {
          */
         UdpConnection udp = new UdpConnection(to,from);
         checkConnectionOwnerUid(udp.protocol, udp.local, udp.remote, true);
-        checkConnectionOwnerUid(udp.protocol, udp.local, new InetSocketAddress(0), true);
-        checkConnectionOwnerUid(IPPROTO_TCP, udp.local, udp.remote, false);
-        checkConnectionOwnerUid(udp.protocol, new InetSocketAddress(findLikelyFreeUdpPort(udp)),
-                udp.remote, false);
+        addr = new InetSocketAddress(
+                udp.socketDomain == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY, 0);
+        checkConnectionOwnerUid(udp.protocol, udp.local, addr, true);
+        addr = new InetSocketAddress(
+                udp.socketDomain == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY,
+                        findLikelyFreeUdpPort(udp));
+        checkConnectionOwnerUid(udp.protocol, addr, udp.remote, false);
         udp.close();
     }
 
