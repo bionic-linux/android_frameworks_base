@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "438b0ebe_b0034135",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-25T15:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42296eac_1a23cf58",
+      "range": {
+        "startLine": 1205,
+        "startChar": 0,
+        "endLine": 1211,
+        "endChar": 47
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7036cc9a_d95a0cbb",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847b816a_571c80c6",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-25T15:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7036cc9a_d95a0cbb",
+      "range": {
+        "startLine": 1307,
+        "startChar": 7,
+        "endLine": 1310,
+        "endChar": 9
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "Yeah I must have been really tired. This is not new code and this is a conversion to a primitive array. This comment is completely irrelevant.\n\nPlease ignore this and sorry for the confusion \u003c.\u003c",
       "parentUuid": "95ad47bb_80c102a6",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "0930a9afefe7544947ce020c3d159ca691ee09a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bab5f1c_e2ab4bb6",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-03-25T15:49:40Z",
+      "side": 1,
+      "message": "Ignore",
+      "parentUuid": "32e2df25_fa551c53",
       "range": {
         "startLine": 54,
         "startChar": 30,
