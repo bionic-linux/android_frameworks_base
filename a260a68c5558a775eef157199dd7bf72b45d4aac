@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2528380_82dd1a4b",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "Assigned",
+      "range": {
+        "startLine": 223,
+        "startChar": 30,
+        "endLine": 223,
+        "endChar": 38
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3654579_e775eb3c",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "Can/should this extend DhcpRequestingState?\n\nAlternatively, can DhcpInitRebootState and DhcpRequestingState both inherit from another base class, such as WaitingForAckState? That way you don\u0027t have to duplicate the receivePacket method.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 30,
+        "endLine": 1067,
+        "endChar": 63
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe12b71_f7427309",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "It seems strange to have IpClient decide whether to start in INIT state or INIT-REBOOT state. That seems like it belongs in DhcpClient, not here.\n\nIt seems easiest to implement this by adding a new state (\"ObtainingConfigurationState\"?) to DhcpClient, and update all code that currently transitions to mDhcpInitState so that it goes into mObtainingConfigurationState instead of going into mDhcpInitState.\n\nObtainingConfigurationState would call deferMessage() for all messages except a EVENT_CONFIGURATION_OBTAINED which would pass in the previously assigned IPv4 address (or null if the memory store did not have any previously assigned IPv4 address). In ObtainingConfigurationState#enter you could set a timer to send yourself a EVENT_CONFIGURATION_OBTAINED with null as a timeout.\n\nPer in-person discussion looks like the simplest way to do this is to construct the callback inside the state machine state, so something like:\n\n\n    private AtomicInteger mSequenceNumber \u003d new AtomicInteger(0);\n\n    public void enter() {\n        super.enter();\n\n        mLastAssignedIpv4Address \u003d null;\n\n        int sequenceNumber \u003d mSequenceNumber.getAndIncrement();\n\n        // Set a timeout.\n        sendMessageDelayed(\n                obtainMessage(EVENT_CONFIGURATION_OBTAINED, sequenceNumber, 0, null),\n                IPMEMORYSTORE_TIMEOUT_MS);\n\n        mGetLastIpAddressCallback \u003d new IOnNetworkAttributesRetrieved() {\n            @Override\n            public void onNetworkAttributesRetrieved(StatusParcelable status,\n                    String l2Key, NetworkAttributesParcelable attributes) throws RemoteException {\n                ...\n                ...\n                sendMessage(obtainMessage(EVENT_CONFIGURATION_OBTAINED, sequenceNumber, 0,\n                        attributes.assignedV4Address));\n            }\n        };\n\n        mIpMemoryStore.retrieveNetworkAttributes(..., mGetLastIpAddressCallback);\n    }\n\n    public void processMessage(Message msg) {\n        if (msg.what !\u003d EVENT_CONFIGURATION_OBTAINED) {\n            deferMessage(msg);\n            return;\n        }\n\n        // Set last IPv4 address parameters.\n        if (msg.arg1 !\u003d mSequenceNumber.get()) return;  // Stale message.\n\n        // Ensure no future messages (e.g., the timeout we set above) are processed.\n        mSequenceNumber.getAndIncrement();  \n\n        mLastAssignedIpv4Address \u003d ...;\n    }",
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c009e1c_fb4b1f46",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "Presumably this should be the L2 key that\u0027s passed into IpClient?",
+      "range": {
+        "startLine": 1213,
+        "startChar": 84,
+        "endLine": 1213,
+        "endChar": 95
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044151a2_e828fb9d",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "What should this be?",
+      "range": {
+        "startLine": 1595,
+        "startChar": 29,
+        "endLine": 1595,
+        "endChar": 34
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34432352_ee0f9425",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-25T09:48:49Z",
+      "side": 1,
+      "message": "Is there a reason to make this operation synchronous under latch? We don\u0027t really care if the store succeeds or fails, right?",
+      "range": {
+        "startLine": 1603,
+        "startChar": 0,
+        "endLine": 1604,
+        "endChar": 70
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
