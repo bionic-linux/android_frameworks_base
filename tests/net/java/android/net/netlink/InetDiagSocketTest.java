@@ -26,6 +26,8 @@ import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 import static android.system.OsConstants.SOCK_STREAM;
 
+import static com.android.internal.util.TestUtils.findFreePort;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -63,7 +65,9 @@ public class InetDiagSocketTest {
     private final String TAG = "InetDiagSocketTest";
     private ConnectivityManager mCm;
     private Context mContext;
-    private final static int SOCKET_TIMEOUT_MS = 100;
+
+    private static final int MAX_RETRY = 10;
+    private static final int SOCKET_TIMEOUT_MS = 100;
 
     @Before
     public void setUp() throws Exception {
@@ -73,35 +77,38 @@ public class InetDiagSocketTest {
     }
 
     private class Connection {
-        public int socketDomain;
+        public int family;
         public int socketType;
+        public int socketProtocol;
         public InetAddress localAddress;
         public InetAddress remoteAddress;
-        public InetAddress localhostAddress;
         public InetSocketAddress local;
         public InetSocketAddress remote;
-        public int protocol;
         public FileDescriptor localFd;
         public FileDescriptor remoteFd;
 
         public FileDescriptor createSocket() throws Exception {
-            return Os.socket(socketDomain, socketType, protocol);
+            return Os.socket(family, socketType, socketProtocol);
         }
 
-        public Connection(String to, String from) throws Exception {
+        Connection(String to, String from, int type, int protocol) throws Exception {
+            socketType = type;
+            socketProtocol = protocol;
             remoteAddress = InetAddress.getByName(to);
+
             if (from != null) {
                 localAddress = InetAddress.getByName(from);
             } else {
-                localAddress = (remoteAddress instanceof Inet4Address) ?
-                        Inet4Address.getByName("localhost") : Inet6Address.getByName("::");
+                if (remoteAddress instanceof Inet4Address) {
+                    localAddress = Inet4Address.getByName("localhost");
+                } else {
+                    localAddress = Inet6Address.getByName("::1");
+                }
             }
             if ((localAddress instanceof Inet4Address) && (remoteAddress instanceof Inet4Address)) {
-                socketDomain = AF_INET;
-                localhostAddress = Inet4Address.getByName("localhost");
+                family = AF_INET;
             } else {
-                socketDomain = AF_INET6;
-                localhostAddress = Inet6Address.getByName("::");
+                family = AF_INET6;
             }
         }
 
@@ -112,9 +119,7 @@ public class InetDiagSocketTest {
 
     private class TcpConnection extends Connection {
         public TcpConnection(String to, String from) throws Exception {
-            super(to, from);
-            protocol = IPPROTO_TCP;
-            socketType = SOCK_STREAM;
+            super(to, from, SOCK_STREAM, IPPROTO_TCP);
 
             remoteFd = createSocket();
             Os.bind(remoteFd, remoteAddress, 0);
@@ -122,9 +127,10 @@ public class InetDiagSocketTest {
             int remotePort = ((InetSocketAddress) Os.getsockname(remoteFd)).getPort();
 
             localFd = createSocket();
-            Os.bind(localFd, localAddress, 0);
-            Os.connect(localFd, remoteAddress, remotePort);
+            int localPort = findFreePort(MAX_RETRY, socketType, socketProtocol);
+            Os.bind(localFd, localAddress, localPort);
 
+            Os.connect(localFd, remoteAddress, remotePort);
             local = (InetSocketAddress) Os.getsockname(localFd);
             remote = (InetSocketAddress) Os.getpeername(localFd);
         }
@@ -134,15 +140,16 @@ public class InetDiagSocketTest {
             Os.close(remoteFd);
         }
     }
+
     private class UdpConnection extends Connection {
         public UdpConnection(String to, String from) throws Exception {
-            super(to, from);
-            protocol = IPPROTO_UDP;
-            socketType = SOCK_DGRAM;
+            super(to, from, SOCK_DGRAM, IPPROTO_UDP);
 
             remoteFd = null;
+
             localFd = createSocket();
-            Os.bind(localFd, localAddress, 0);
+            int localPort = findFreePort(MAX_RETRY, socketType, socketProtocol);
+            Os.bind(localFd, localAddress, localPort);
 
             Os.connect(localFd, remoteAddress, 7);
             local = (InetSocketAddress) Os.getsockname(localFd);
@@ -171,10 +178,11 @@ public class InetDiagSocketTest {
          * {protocol, local, remote} socket result in receiving a valid UID.
          */
         TcpConnection tcp = new TcpConnection(to, from);
-        checkConnectionOwnerUid(tcp.protocol, tcp.local, tcp.remote, true);
-        checkConnectionOwnerUid(IPPROTO_UDP, tcp.local, tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, new InetSocketAddress(0), tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, tcp.local, new InetSocketAddress(0), false);
+        InetSocketAddress addr = new InetSocketAddress(
+                tcp.family == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY, 0);
+        checkConnectionOwnerUid(tcp.socketProtocol, tcp.local, tcp.remote, true);
+        checkConnectionOwnerUid(tcp.socketProtocol, addr, tcp.remote, false);
+        checkConnectionOwnerUid(tcp.socketProtocol, tcp.local, addr, false);
         tcp.close();
 
         /**
@@ -182,11 +190,14 @@ public class InetDiagSocketTest {
          * partial match {protocol, local} should return a valid UID.
          */
         UdpConnection udp = new UdpConnection(to,from);
-        checkConnectionOwnerUid(udp.protocol, udp.local, udp.remote, true);
-        checkConnectionOwnerUid(udp.protocol, udp.local, new InetSocketAddress(0), true);
-        checkConnectionOwnerUid(IPPROTO_TCP, udp.local, udp.remote, false);
-        checkConnectionOwnerUid(udp.protocol, new InetSocketAddress(findLikelyFreeUdpPort(udp)),
-                udp.remote, false);
+        checkConnectionOwnerUid(udp.socketProtocol, udp.local, udp.remote, true);
+        addr = new InetSocketAddress(
+                udp.family == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY, 0);
+        checkConnectionOwnerUid(udp.socketProtocol, udp.local, addr, true);
+        addr = new InetSocketAddress(
+                udp.family == AF_INET6 ? Inet6Address.ANY : Inet4Address.ANY,
+                        findLikelyFreeUdpPort(udp));
+        checkConnectionOwnerUid(udp.socketProtocol, addr, udp.remote, false);
         udp.close();
     }
 
