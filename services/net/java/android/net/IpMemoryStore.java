@@ -23,6 +23,8 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Manager class used to communicate with the ip memory store service in the network stack,
@@ -30,23 +32,39 @@ import java.util.concurrent.ExecutionException;
  * @hide
 */
 public class IpMemoryStore extends IpMemoryStoreClient {
-    private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final AtomicReference<CompletableFuture<IIpMemoryStore>> mTailNode;
 
     public IpMemoryStore(@NonNull final Context context) {
         super(context);
         mService = new CompletableFuture<>();
+        mTailNode = new AtomicReference<CompletableFuture<IIpMemoryStore>>(mService);
         getNetworkStackClient().fetchIpMemoryStore(
                 new IIpMemoryStoreCallbacks.Stub() {
                     @Override
-                    public void onIpMemoryStoreFetched(final IIpMemoryStore memoryStore) {
+                    public void onIpMemoryStoreFetched(@NonNull final IIpMemoryStore memoryStore) {
                         mService.complete(memoryStore);
                     }
                 });
     }
 
+    /*
+     *  If the IpMemoryStore is ready, this function will run the request synchronously.
+     *  Otherwise, it will enqueue the requests for execution immediately after the
+     *  service becomes ready. The requests are guaranteed to be executed in the order
+     *  they are sumbitted by leveraging AtomicReference and getAndUpdate synchonized
+     *  mechanism. By calling CompletableFuture#thenAccept immediately on a new completed
+     *  CompletableFuture will also avoid the memory leak issue of referencing a mistaken
+     *  old one.
+     */
     @Override
-    protected IIpMemoryStore getService() throws InterruptedException, ExecutionException {
-        return mService.get();
+    protected void runWhenServiceReady(Consumer<IIpMemoryStore> cb) throws ExecutionException {
+        mTailNode.getAndUpdate(future -> future.handle((store, exception) -> {
+            // an exception would be never thrown in above Future, store should be
+            // always non-null.
+            cb.accept(store);
+            return store;
+        }));
     }
 
     @VisibleForTesting
