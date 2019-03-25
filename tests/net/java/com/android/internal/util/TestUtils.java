@@ -16,6 +16,12 @@
 
 package com.android.internal.util;
 
+import static android.system.OsConstants.AF_INET;
+import static android.system.OsConstants.AF_INET6;
+import static android.system.OsConstants.EADDRINUSE;
+import static android.system.OsConstants.IPPROTO_IPV6;
+import static android.system.OsConstants.IPV6_V6ONLY;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -26,7 +32,14 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.system.ErrnoException;
+import android.system.Os;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetSocketAddress;
 import java.util.concurrent.Executor;
 
 public final class TestUtils {
@@ -80,5 +93,35 @@ public final class TestUtils {
         p.setDataPosition(0);
         T dest = creator.createFromParcel(p);
         assertEquals(source, dest);
+    }
+
+    /*
+     * This function finda free port by creating two temp sockets, one is IPv6 with socket
+     * option IPV6_V6ONLY and another one is IPv4 socket, bind to a single port. Then return
+     * the port number.
+     * */
+    public static int findFreePort(int maxRetry, int type, int protocol) throws Exception {
+        for (int i = maxRetry; i > 0; i--) {
+            try {
+                FileDescriptor probeV4Sk = Os.socket(AF_INET, type, protocol);
+                FileDescriptor probeV6Sk = Os.socket(AF_INET6, type, protocol);
+
+                Os.setsockoptInt(probeV6Sk, IPPROTO_IPV6, IPV6_V6ONLY, 1);
+                Os.bind(probeV4Sk, Inet4Address.ANY, 0);
+
+                int port = ((InetSocketAddress) Os.getsockname(probeV4Sk)).getPort();
+                Os.bind(probeV6Sk, Inet6Address.ANY, port);
+
+                Os.close(probeV4Sk);
+                Os.close(probeV6Sk);
+                return port;
+            } catch (ErrnoException e) {
+                if (e.errno == EADDRINUSE) {
+                    continue;
+                }
+                throw e.rethrowAsIOException();
+            }
+        }
+        throw new IOException("Failed " + maxRetry + " attempts to bind to a port");
     }
 }
