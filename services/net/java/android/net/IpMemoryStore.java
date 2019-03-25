@@ -23,6 +23,8 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Manager class used to communicate with the ip memory store service in the network stack,
@@ -30,23 +32,41 @@ import java.util.concurrent.ExecutionException;
  * @hide
 */
 public class IpMemoryStore extends IpMemoryStoreClient {
-    private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final AtomicReference<CompletableFuture<IIpMemoryStore>> mTailNode;
 
     public IpMemoryStore(@NonNull final Context context) {
         super(context);
         mService = new CompletableFuture<>();
+        mTailNode = new AtomicReference<CompletableFuture<IIpMemoryStore>>(mService);
         getNetworkStackClient().fetchIpMemoryStore(
                 new IIpMemoryStoreCallbacks.Stub() {
                     @Override
-                    public void onIpMemoryStoreFetched(final IIpMemoryStore memoryStore) {
+                    public void onIpMemoryStoreFetched(@NonNull final IIpMemoryStore memoryStore) {
                         mService.complete(memoryStore);
                     }
                 });
     }
 
+    /*
+     *  This API enqueues the requests for IpMemoryStore service running in a separate
+     *  thread before the IpMemoryStore is not ready. And once the IpMemoryStore service
+     *  gets ready, this API would be synchronous call.
+     *
+     *  Leveraging AtomicReference and getAndUpdate to make guarantees for the requests
+     *  order. Calling CompletionStage#thenAccept on an already completed CompletableFuture
+     *  immediately to achieve synchronization.
+     *
+     *  Meanwhile ensure that calling CompletableFuture#thenAccept on one completed
+     *  CompletableFuture immediately will avoid the memory leak due to a mistaken reference
+     *  to the old return value of AtomicReference#getAndUpdate.
+     */
     @Override
-    protected IIpMemoryStore getService() throws InterruptedException, ExecutionException {
-        return mService.get();
+    protected void runWhenServiceReady(Consumer<IIpMemoryStore> cb) throws ExecutionException {
+        mTailNode.getAndUpdate(future -> future.handle((store, exception) -> {
+            cb.accept(store);
+            return store;
+        }));
     }
 
     @VisibleForTesting
