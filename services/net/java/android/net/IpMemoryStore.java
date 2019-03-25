@@ -23,6 +23,8 @@ import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Manager class used to communicate with the ip memory store service in the network stack,
@@ -30,7 +32,9 @@ import java.util.concurrent.ExecutionException;
  * @hide
 */
 public class IpMemoryStore extends IpMemoryStoreClient {
-    private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final CompletableFuture<IIpMemoryStore> mService;
+    @NonNull private final AtomicReference<CompletableFuture<IIpMemoryStore>> mTailNode =
+            new AtomicReference<>();
 
     public IpMemoryStore(@NonNull final Context context) {
         super(context);
@@ -44,9 +48,22 @@ public class IpMemoryStore extends IpMemoryStoreClient {
                 });
     }
 
-    @Override
-    protected IIpMemoryStore getService() throws InterruptedException, ExecutionException {
-        return mService.get();
+    /*
+     *  leverage AtomicReference and getAndUpdate to make guarantees for the order
+     *  which the IpMemoryStore service APIs should be called in. This API enqueues
+     *  each API call in order. And Calling CompletionStage#thenAccept on an already
+     *  completed CompletableFuture immediately to achieve synchronization.
+     *
+     *  Previously CompletableFuture#get() will be blocked until the CompletableFuture
+     *  #complete() occurs. Making sure that calling CompletableFuture#thenAccept on a
+     *  completed CompletableFuture immediately will avoid the memory leak due to a
+     *  mistakn reference to the old return value of AtomicReference#getAndUpdate.
+     */
+    protected void enqueue(Consumer<IIpMemoryStore> cb) throws ExecutionException {
+        mTailNode.getAndUpdate(futureStore -> {
+            futureStore.thenAccept(cb);
+            return futureStore;
+        });
     }
 
     @VisibleForTesting

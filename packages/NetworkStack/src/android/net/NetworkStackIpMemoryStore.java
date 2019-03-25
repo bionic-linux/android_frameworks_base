@@ -19,6 +19,11 @@ package android.net;
 import android.annotation.NonNull;
 import android.content.Context;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+
 /**
  * service used to communicate with the ip memory store service in network stack,
  * which is running in the same module.
@@ -27,6 +32,8 @@ import android.content.Context;
  */
 public class NetworkStackIpMemoryStore extends IpMemoryStoreClient {
     @NonNull private final IIpMemoryStore mService;
+    @NonNull private final AtomicReference<CompletableFuture<IIpMemoryStore>> mTailNode =
+                     new AtomicReference<>();
 
     public NetworkStackIpMemoryStore(@NonNull final Context context,
             @NonNull final IIpMemoryStore service) {
@@ -35,8 +42,10 @@ public class NetworkStackIpMemoryStore extends IpMemoryStoreClient {
     }
 
     @Override
-    @NonNull
-    protected IIpMemoryStore getService() {
-        return mService;
+    protected void enqueue(Consumer<IIpMemoryStore> cb) throws ExecutionException {
+        mTailNode.getAndUpdate(futureStore -> {
+            futureStore.thenAccept(cb);
+            return futureStore;
+        });
     }
 }
