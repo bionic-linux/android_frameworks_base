@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "4227043a_66f344c7",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Will fit on one line (also, here too \"assigned\")",
+      "range": {
+        "startLine": 300,
+        "startChar": 36,
+        "endLine": 300,
+        "endChar": 44
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d679de_19e1e3c8",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Maybe if (DBG)",
+      "range": {
+        "startLine": 626,
+        "startChar": 24,
+        "endLine": 626,
+        "endChar": 27
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3654579_e775eb3c",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 1
@@ -41,6 +87,75 @@
         "startChar": 30,
         "endLine": 1067,
         "endChar": 63
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c863914f_cf39248d",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Please don\u0027t log this in AOSP, even temporarily :)",
+      "range": {
+        "startLine": 624,
+        "startChar": 51,
+        "endLine": 624,
+        "endChar": 62
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa13b82_aed27f40",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Won\u0027t this fit on one line ?",
+      "range": {
+        "startLine": 1181,
+        "startChar": 13,
+        "endLine": 1181,
+        "endChar": 41
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74acbd7e_2549b116",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Ouch : cast has higher precedence than division, so what you wrote is the same as :\n\n  ((int) SystemClock.elapsedRealTime()) / 1000;",
+      "range": {
+        "startLine": 1189,
+        "startChar": 32,
+        "endLine": 1189,
+        "endChar": 67
       },
       "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -88,6 +203,71 @@
     },
     {
       "key": {
+        "uuid": "24bd6d10_41e1a776",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "Has to",
+      "parentUuid": "9c009e1c_fb4b1f46",
+      "range": {
+        "startLine": 1213,
+        "startChar": 84,
+        "endLine": 1213,
+        "endChar": 95
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5945f742_b94e19ad",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "+1. I also want to point out that it\u0027s almost certainly not fine to block the thread running IpClient.",
+      "parentUuid": "ebe12b71_f7427309",
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00da816c_a0110fae",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "We should probably rebase on top of aosp/906908 to avoid this lot of boilerplate.",
+      "range": {
+        "startLine": 1575,
+        "startChar": 7,
+        "endLine": 1587,
+        "endChar": 9
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "044151a2_e828fb9d",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -111,6 +291,30 @@
     },
     {
       "key": {
+        "uuid": "8b955c23_bac16a78",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "This should simply not be specified, at least if the function is called storeDhcpLeaseInfo because the group hint has nothing to do with DHCP.\n\nIf we want to repurpose this function to a more general storing of the network, then rebase on top of aosp/930218 and use mGroupHint.",
+      "parentUuid": "044151a2_e828fb9d",
+      "range": {
+        "startLine": 1595,
+        "startChar": 29,
+        "endLine": 1595,
+        "endChar": 34
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34432352_ee0f9425",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -122,6 +326,30 @@
       "writtenOn": "2019-03-25T09:48:49Z",
       "side": 1,
       "message": "Is there a reason to make this operation synchronous under latch? We don\u0027t really care if the store succeeds or fails, right?",
+      "range": {
+        "startLine": 1603,
+        "startChar": 0,
+        "endLine": 1604,
+        "endChar": 70
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912193a3_5062c677",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T12:17:20Z",
+      "side": 1,
+      "message": "+1, just fire and forget. The memory store will even let you pass null for the listener specifically to support this use case (as opposed to readers where listeners are non-null)",
+      "parentUuid": "34432352_ee0f9425",
       "range": {
         "startLine": 1603,
         "startChar": 0,
