@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "404dc22f_812b2d97",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T21:34:43Z",
+      "side": 1,
+      "message": "private too ?",
+      "range": {
+        "startLine": 895,
+        "startChar": 8,
+        "endLine": 895,
+        "endChar": 14
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98b0efbc_74d15284",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 4
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Looks like currently apf program not support addJumpIfBytesEqual\nWe don\u0027t have such method addJumpIfBytesEqual(Register register, byte[] bytes, String target)\nto compare equal byte sequence.\n\naddJumpIfBytesNotEqual(Register.R0, ETH_BROADCAST_MAC_ADDRESS, mCountAndPassLabel)\nthis method is defined as,\naddJumpIfBytesNotEqual(Register register, byte[] bytes, String target)\nit inputs byte[] array as the second parameter and ETH_BROADCAST_MAC_ADDRESS \u003d {0xff, 0xff, 0xff, 0xff, 0xff, 0xff}",
       "parentUuid": "98b0efbc_74d15284",
+      "range": {
+        "startLine": 1179,
+        "startChar": 12,
+        "endLine": 1179,
+        "endChar": 96
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e272af_de8ea229",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T21:34:43Z",
+      "side": 1,
+      "message": "I expect you can replace\nmaybeSetupCounter(DROPPED)\naddJumpIfBytesEqual(mCountAndDrop)\n\nwith\n\naddJumpIfBytesNotEqual(continue)\nmaybeSetupCounter(DROPPED)\naddJump(mCountAndDrop)\ndefineLabel(continue)\n\nThere is probably a way to do this more efficiently though (for sure if you have the V4KeepaliveFilters at the top you can just setup PASSED and jump to mCountAndPass instead of defining a label)",
+      "parentUuid": "f1a3f0f4_ab2df027",
       "range": {
         "startLine": 1179,
         "startChar": 12,
