@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e8c27e_d2dfc328",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-26T03:37:23Z",
+      "side": 1,
+      "message": "Should this not be:\nreturn futureStore.thenAccept(cb)\n?\n\nAlso, it\u0027s not clear to me whether thenAccept() or thenAcceptAsync() should be used here. Do you know the difference ? Are we sure that thenAccept() is what should be used ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ba58d2_985a6d3d",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-26T03:37:23Z",
+      "side": 1,
+      "message": "It looks like you have the same implementation in both child classes: do you actually need to have this method abstract ? Could you have a single implementation directly here ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 91
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74532cb2_bcad2231",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-26T03:37:23Z",
+      "side": 1,
+      "message": "How about \"enqueueUntilServiceReady\" ? I think a more explicit name could clarify that only the request is being put in some IpMemoryStoreClient queue, not the callback to the client.\n\nE.g. at first I was not sure whether:\n - mService.storeNetworkAttributes *and* IOnStatusListener#onComplete are run on the queue\n - or only mService.storeNetworkAttributes is queued if the service is not ready, with onComplete being run in a random (Binder) thread.",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1b73e7_dbf65251",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-26T03:37:23Z",
+      "side": 1,
+      "message": "I think we should always log something here",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
