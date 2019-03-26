@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "1c346964_016e60bb",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T09:30:25Z",
+      "side": 1,
+      "message": "CompletableFuture#thenAccept() has below definition:\n\n    public CompletionStage\u003cVoid\u003e thenAccept(Consumer\u003c? super T\u003e action)\n\nHowever, AtomicReference#getAndUpdate should return the same type defined as mTailNode object, that\u0027s CompletableFuture\u003cIIpMemoryStore\u003e. Otherwise, we have an compile problem, \"cannot covert the CompletableFuture\u003cvoid\u003e to CompletableFuture\u003cIIpMemoryStore\u003e type\".\n\nYes, will add one unit test for this to double check the order.",
+      "parentUuid": "c4692dbf_85fc50c3",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ba58d2_985a6d3d",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 1
