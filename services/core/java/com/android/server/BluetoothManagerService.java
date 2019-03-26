@@ -1098,6 +1098,12 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             if (psc == null) {
                 return;
             }
+            try {
+                mContext.unbindService(psc);
+            } catch (IllegalArgumentException e) {
+                Slog.e(TAG, "Unable to unbind service with intent: " + psc.mIntent, e);
+            }
+            mProfileServices.remove(new Integer(bluetoothProfile));
             psc.removeProxy(proxy);
         }
     }
