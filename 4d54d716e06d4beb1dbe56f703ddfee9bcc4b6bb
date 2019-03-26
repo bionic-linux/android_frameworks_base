@@ -46,6 +46,30 @@
       "revId": "4d54d716e06d4beb1dbe56f703ddfee9bcc4b6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd62a0c_2ac971d0",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-03-26T23:56:20Z",
+      "side": 1,
+      "message": "MediaSessionService doesn\u0027t keep the status of destroyed sessions.\nIf there is an issue for the status update of destroyed sessions, it happens because the MediaController app doesn\u0027t handle the onSessionDestroy() callback.\n\nSo, I think the right fix for this issue should be landed in the MediaController app (which is the carkit?).",
+      "parentUuid": "a2e9dabf_7e192652",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 461,
+        "endChar": 28
+      },
+      "revId": "4d54d716e06d4beb1dbe56f703ddfee9bcc4b6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
