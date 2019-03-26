@@ -141,15 +141,7 @@ public final class BluetoothHearingAid implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        try {
-                            mServiceLock.writeLock().lock();
-                            mService = null;
-                            mContext.unbindService(mConnection);
-                        } catch (Exception re) {
-                            Log.e(TAG, "", re);
-                        } finally {
-                            mServiceLock.writeLock().unlock();
-                        }
+                        doUnbind();
                     } else {
                         try {
                             mServiceLock.readLock().lock();
@@ -197,17 +189,7 @@ public final class BluetoothHearingAid implements BluetoothProfile {
         }
     }
 
-    /*package*/ void close() {
-        mServiceListener = null;
-        IBluetoothManager mgr = mAdapter.getBluetoothManager();
-        if (mgr != null) {
-            try {
-                mgr.unregisterStateChangeCallback(mBluetoothStateChangeCallback);
-            } catch (Exception e) {
-                Log.e(TAG, "", e);
-            }
-        }
-
+    private void doUnbind() {
         try {
             mServiceLock.writeLock().lock();
             if (mService != null) {
@@ -219,6 +201,19 @@ public final class BluetoothHearingAid implements BluetoothProfile {
         } finally {
             mServiceLock.writeLock().unlock();
         }
+    }
+
+    /*package*/ void close() {
+        mServiceListener = null;
+        IBluetoothManager mgr = mAdapter.getBluetoothManager();
+        if (mgr != null) {
+            try {
+                mgr.unregisterStateChangeCallback(mBluetoothStateChangeCallback);
+            } catch (Exception e) {
+                Log.e(TAG, "", e);
+            }
+        }
+        doUnbind();
     }
 
     /**
@@ -714,12 +709,7 @@ public final class BluetoothHearingAid implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            try {
-                mServiceLock.writeLock().lock();
-                mService = null;
-            } finally {
-                mServiceLock.writeLock().unlock();
-            }
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.HEARING_AID);
             }

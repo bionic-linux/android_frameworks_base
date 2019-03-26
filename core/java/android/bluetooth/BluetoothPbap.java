@@ -118,16 +118,7 @@ public class BluetoothPbap implements BluetoothProfile {
                     log("onBluetoothStateChange: up=" + up);
                     if (!up) {
                         log("Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                if (mService != null) {
-                                    mService = null;
-                                    mContext.unbindService(mConnection);
-                                }
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -173,6 +164,19 @@ public class BluetoothPbap implements BluetoothProfile {
         return true;
     }
 
+    private void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                try {
+                    mService = null;
+                    mContext.unbindService(mConnection);
+                } catch (Exception re) {
+                    Log.e(TAG, "", re);
+                }
+            }
+        }
+    }
+
     protected void finalize() throws Throwable {
         try {
             close();
@@ -196,17 +200,7 @@ public class BluetoothPbap implements BluetoothProfile {
                 Log.e(TAG, "", e);
             }
         }
-
-        synchronized (mConnection) {
-            if (mService != null) {
-                try {
-                    mService = null;
-                    mContext.unbindService(mConnection);
-                } catch (Exception re) {
-                    Log.e(TAG, "", re);
-                }
-            }
-        }
+        doUnbind();
         mServiceListener = null;
     }
 
@@ -312,7 +306,7 @@ public class BluetoothPbap implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             log("Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected();
             }

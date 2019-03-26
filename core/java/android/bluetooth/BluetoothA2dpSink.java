@@ -135,14 +135,7 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                mService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -190,6 +183,19 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
         return true;
     }
 
+    private void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                try {
+                    mService = null;
+                    mContext.unbindService(mConnection);
+                } catch (Exception re) {
+                    Log.e(TAG, "", re);
+                }
+            }
+        }
+    }
+
     /*package*/ void close() {
         mServiceListener = null;
         IBluetoothManager mgr = mAdapter.getBluetoothManager();
@@ -201,16 +207,7 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
             }
         }
 
-        synchronized (mConnection) {
-            if (mService != null) {
-                try {
-                    mService = null;
-                    mContext.unbindService(mConnection);
-                } catch (Exception re) {
-                    Log.e(TAG, "", re);
-                }
-            }
-        }
+        doUnbind();
     }
 
     @Override
@@ -499,7 +496,7 @@ public final class BluetoothA2dpSink implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.A2DP_SINK);
             }

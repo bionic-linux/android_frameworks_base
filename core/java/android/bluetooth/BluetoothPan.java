@@ -157,6 +157,19 @@ public final class BluetoothPan implements BluetoothProfile {
         return true;
     }
 
+    private void doUnbind() {
+        synchronized (mConnection) {
+            if (mPanService != null) {
+                try {
+                    mPanService = null;
+                    mContext.unbindService(mConnection);
+                } catch (Exception re) {
+                    Log.e(TAG, "", re);
+                }
+            }
+        }
+    }
+
     @UnsupportedAppUsage
     /*package*/ void close() {
         if (VDBG) log("close()");
@@ -169,17 +182,7 @@ public final class BluetoothPan implements BluetoothProfile {
                 Log.w(TAG, "Unable to unregister BluetoothStateChangeCallback", re);
             }
         }
-
-        synchronized (mConnection) {
-            if (mPanService != null) {
-                try {
-                    mPanService = null;
-                    mContext.unbindService(mConnection);
-                } catch (Exception re) {
-                    Log.e(TAG, "", re);
-                }
-            }
-        }
+        doUnbind();
         mServiceListener = null;
     }
 
@@ -211,14 +214,7 @@ public final class BluetoothPan implements BluetoothProfile {
                         }
                     } else {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                mPanService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     }
                 }
             };
@@ -393,7 +389,7 @@ public final class BluetoothPan implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "BluetoothPAN Proxy object disconnected");
-            mPanService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.PAN);
             }

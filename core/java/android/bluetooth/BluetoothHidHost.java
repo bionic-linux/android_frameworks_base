@@ -230,16 +230,7 @@ public final class BluetoothHidHost implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                if (mService != null) {
-                                    mService = null;
-                                    mContext.unbindService(mConnection);
-                                }
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -288,17 +279,7 @@ public final class BluetoothHidHost implements BluetoothProfile {
         return true;
     }
 
-    /*package*/ void close() {
-        if (VDBG) log("close()");
-        IBluetoothManager mgr = mAdapter.getBluetoothManager();
-        if (mgr != null) {
-            try {
-                mgr.unregisterStateChangeCallback(mBluetoothStateChangeCallback);
-            } catch (Exception e) {
-                Log.e(TAG, "", e);
-            }
-        }
-
+    private void doUnbind() {
         synchronized (mConnection) {
             if (mService != null) {
                 try {
@@ -309,6 +290,19 @@ public final class BluetoothHidHost implements BluetoothProfile {
                 }
             }
         }
+    }
+
+    /*package*/ void close() {
+        if (VDBG) log("close()");
+        IBluetoothManager mgr = mAdapter.getBluetoothManager();
+        if (mgr != null) {
+            try {
+                mgr.unregisterStateChangeCallback(mBluetoothStateChangeCallback);
+            } catch (Exception e) {
+                Log.e(TAG, "", e);
+            }
+        }
+        doUnbind();
         mServiceListener = null;
     }
 
@@ -518,7 +512,7 @@ public final class BluetoothHidHost implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.HID_HOST);
             }

@@ -101,14 +101,7 @@ public final class BluetoothSap implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                mService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -155,6 +148,19 @@ public final class BluetoothSap implements BluetoothProfile {
         return true;
     }
 
+    private void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                try {
+                    mService = null;
+                    mContext.unbindService(mConnection);
+                } catch (Exception re) {
+                    Log.e(TAG, "", re);
+                }
+            }
+        }
+    }
+
     protected void finalize() throws Throwable {
         try {
             close();
@@ -180,17 +186,7 @@ public final class BluetoothSap implements BluetoothProfile {
                 Log.e(TAG, "", e);
             }
         }
-
-        synchronized (mConnection) {
-            if (mService != null) {
-                try {
-                    mService = null;
-                    mContext.unbindService(mConnection);
-                } catch (Exception re) {
-                    Log.e(TAG, "", re);
-                }
-            }
-        }
+        doUnbind();
         mServiceListener = null;
     }
 
@@ -422,7 +418,7 @@ public final class BluetoothSap implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) log("Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.SAP);
             }
