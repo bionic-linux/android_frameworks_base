@@ -25,6 +25,122 @@
     },
     {
       "key": {
+        "uuid": "15a43c40_631a0162",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "Answers to Rémi\u0027s questions on the other file. There is no reason to do it here where we always have the service. This here should just be :\n\n  cb(mService);\n\nThis will never block.",
+      "parentUuid": "52e8c27e_d2dfc328",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5aedc2_0f192581",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "There is no point discussing old designs in comments. Future readers of this code don\u0027t care how it was broken before you fixed it.\n\nIt\u0027s nice to provide context for code reviewers, but they should go in the cover comment for the change, not in comments on the code.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04071ff5_e1232aa8",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "Did you actually check this ? I can\u0027t tell from your wording.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 81
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe6b037_1786966c",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "To answer Rémi\u0027s question :\n\nWe want to use thenAccept() and not thenAcceptAsync(). The difference is that thenAccept() will run on the same thread as the completing stage if not completed and inline if already completed. thenAcceptAsync() will lob it to the \"default async facility\", which for CompletableFuture is normally the ForkJoinPool.\n\nTo give you the same explanation in pseudocode :\nonComplete:\n  while (!enqueuedTasks.isEmpty())\n    if (wasAsync)\n      defaultExecutor.execute({ enqueuedTasks.poll() })\n    else\n      enqueuedTasks.poll()\n\nTherefore this code here is okay.",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4692dbf_85fc50c3",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "This returns the wrong future and breaks the call ordering.\n\n  return futureStore.thenAccept(cb);\n\nWe should have a unit test for order.",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ba58d2_985a6d3d",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 1
@@ -59,6 +175,30 @@
       "writtenOn": "2019-03-26T03:37:23Z",
       "side": 1,
       "message": "How about \"enqueueUntilServiceReady\" ? I think a more explicit name could clarify that only the request is being put in some IpMemoryStoreClient queue, not the callback to the client.\n\nE.g. at first I was not sure whether:\n - mService.storeNetworkAttributes *and* IOnStatusListener#onComplete are run on the queue\n - or only mService.storeNetworkAttributes is queued if the service is not ready, with onComplete being run in a random (Binder) thread.",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcfe9aa_c73463bb",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T09:08:22Z",
+      "side": 1,
+      "message": "I agree that \"enqueue\" is not the best name, but I think \"enqueueUntilServiceReady\" is worse. Maybe something like \"runOrEnqueue\" ? Or \"runWhenServiceReady\" ?\n\nThe point is, this enqueues if the service is not ready, but otherwise it\u0027s synchronous. The enqueuing regime is actually very short-lived, and once the store is available everything is synchronous.",
+      "parentUuid": "74532cb2_bcad2231",
       "range": {
         "startLine": 51,
         "startChar": 28,
