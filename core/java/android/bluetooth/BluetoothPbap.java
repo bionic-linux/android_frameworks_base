@@ -118,16 +118,7 @@ public class BluetoothPbap implements BluetoothProfile {
                     log("onBluetoothStateChange: up=" + up);
                     if (!up) {
                         log("Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                if (mService != null) {
-                                    mService = null;
-                                    mContext.unbindService(mConnection);
-                                }
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -171,6 +162,19 @@ public class BluetoothPbap implements BluetoothProfile {
             return false;
         }
         return true;
+    }
+
+    private void doUnbind() {
+        synchronized (mConnection) {
+            try {
+                if (mService != null) {
+                    mService = null;
+                    mContext.unbindService(mConnection);
+                }
+            } catch (Exception re) {
+                Log.e(TAG, "", re);
+            }
+        }
     }
 
     protected void finalize() throws Throwable {
@@ -312,7 +316,7 @@ public class BluetoothPbap implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             log("Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected();
             }

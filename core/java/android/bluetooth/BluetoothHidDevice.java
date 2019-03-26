@@ -425,7 +425,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
 
                 public void onServiceDisconnected(ComponentName className) {
                     Log.d(TAG, "onServiceDisconnected()");
-                    mService = null;
+                    doUnbind();
                     if (mServiceListener != null) {
                         mServiceListener.onServiceDisconnected(BluetoothProfile.HID_DEVICE);
                     }
@@ -462,13 +462,15 @@ public final class BluetoothHidDevice implements BluetoothProfile {
         return true;
     }
 
-    void doUnbind() {
-        if (mService != null) {
-            mService = null;
-            try {
-                mContext.unbindService(mConnection);
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "Unable to unbind HidDevService", e);
+    private void doUnbind() {
+        synchronized (mConnection) {
+            if (mService != null) {
+                mService = null;
+                try {
+                    mContext.unbindService(mConnection);
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "Unable to unbind HidDevService", e);
+                }
             }
         }
     }
@@ -483,9 +485,7 @@ public final class BluetoothHidDevice implements BluetoothProfile {
             }
         }
 
-        synchronized (mConnection) {
-            doUnbind();
-        }
+        doUnbind();
         mServiceListener = null;
     }
 

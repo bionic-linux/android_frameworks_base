@@ -65,14 +65,7 @@ public final class BluetoothPbapClient implements BluetoothProfile {
                         if (VDBG) {
                             Log.d(TAG, "Unbinding service...");
                         }
-                        synchronized (mConnection) {
-                            try {
-                                mService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -121,6 +114,17 @@ public final class BluetoothPbapClient implements BluetoothProfile {
             return false;
         }
         return true;
+    }
+
+    private void doUnbind() {
+        synchronized (mConnection) {
+            try {
+                mService = null;
+                mContext.unbindService(mConnection);
+            } catch (Exception re) {
+                Log.e(TAG, "", re);
+            }
+        }
     }
 
     protected void finalize() throws Throwable {
@@ -306,7 +310,7 @@ public final class BluetoothPbapClient implements BluetoothProfile {
             if (DBG) {
                 log("Proxy object disconnected");
             }
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.PBAP_CLIENT);
             }
