@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b0efbc_74d15284",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-03-26T06:28:41Z",
+      "side": 1,
+      "message": "Can we do this now?\n\nUntested example:\n\nif (mMulticastFilter) {\n\n    ...\n\n    // If any keepalive filter matches, drop\n    generateV4KeepaliveFilters(gen);\n\n    // If L2 broadcast packet, drop.\n    gen.addLoadImmediate(Register.R0, ETH_DEST_ADDR_OFFSET);\n    maybeSetupCounter(gen, Counter.DROPPED_IPV4_L2_BROADCAST);\n    gen.addJumpIfBytesEqual(Register.R0, ETH_BROADCAST_MAC_ADDRESS, mCountAndDropLabel);\n\n    // Otherwise, this is an IPv4 unicast, pass\n    maybeSetupCounter(gen, Counter.PASSED_IPV4_UNICAST);\n    gen.addJump(mCountAndPassLabel);\n} else {\n    // If any keepalive filter matches, drop\n    generateV4KeepaliveFilters(gen);\n\n    // Otherwise, pass.\n    maybeSetupCounter(gen, Counter.PASSED_IPV4);\n    gen.addJump(mCountAndPassLabel);\n}\n\n\nBut actually... is it necessary to test for L2 broadcast after the keepalives? If we could swap the order, we could simplify things to:\n\n\n    if (mMulticastFilter) {\n\n        ...\n\n        // If L2 broadcast packet, drop.\n        gen.addLoadImmediate(Register.R0, ETH_DEST_ADDR_OFFSET);\n        maybeSetupCounter(gen, Counter.DROPPED_IPV4_L2_BROADCAST);\n        gen.addJumpIfBytesEqual(Register.R0, ETH_BROADCAST_MAC_ADDRESS, mCountAndDropLabel);\n\n        pass_counter \u003d Counter.PASSED_IPV4_UNICAST;\n    } else {\n        pass_counter \u003d Counter.PASSED_IPV4;\n    }\n\n    // If any keepalive filter matches, drop\n    generateV4KeepaliveFilters(gen);\n\n    // Otherwise, pass.\n    maybeSetupCounter(gen, pass_counter);\n    gen.addJump(mCountAndPassLabel);\n\nIn fact, I not really sure why we count PASSED_IPV4_UNICAST and PASSED_IPV4 separately... I guess it helps us figure out which path we took exactly, but it\u0027s not crucial.",
+      "range": {
+        "startLine": 1179,
+        "startChar": 12,
+        "endLine": 1179,
+        "endChar": 96
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8822299_152163fd",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-03-26T06:28:41Z",
+      "side": 1,
+      "message": "TCP",
+      "range": {
+        "startLine": 1202,
+        "startChar": 18,
+        "endLine": 1202,
+        "endChar": 21
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5faa022_d3b1fec7",
+        "filename": "packages/NetworkStack/tests/src/android/net/apf/ApfTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-03-26T06:28:41Z",
+      "side": 1,
+      "message": "Not really used?",
+      "range": {
+        "startLine": 1009,
+        "startChar": 4,
+        "endLine": 1009,
+        "endChar": 75
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
