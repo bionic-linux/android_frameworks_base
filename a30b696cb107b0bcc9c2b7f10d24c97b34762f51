@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5257dad2_26839eec",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T22:22:23Z",
+      "side": 1,
+      "message": "This is a strange way to define a callback. A callback is triggered upon some event and should be named by that event. Here you are naming it after what it is doing in the concrete implementation. In fact, it\u0027s not for EntitlementManager to decide tethering should be closed : EntitlementManager\u0027s job is to manage entitlement, so it should simply report that entitlement failed. Thus I think this should read :\n\nCallback fired when UI entitlement failed\n\nor something.",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21e7944_d357fdc5",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T22:22:23Z",
+      "side": 1,
+      "message": "If we think we want to expand this to report UI and silent, success and failure with different functions we can call this OnEntitlementStatusCallback.\nOr we can decide to report with only one function and call this OnEntitlementStatusListener.\n\n(we should also rename the registering function above)\n\nI think eventually we want to have a single function like :\n\n  void onEntitlementStatus(int downstream, boolean ui, int subscription, boolean success)\n\n...but this is not public or system api so we can change that whenever we want, therefore having all these unused parameters right now is probably a drawback rather than an advantage.\n\nSo what about :\n\npublic interface OnUiEntitlementFailedListener {\n  void onUiEntitlementFailed(int downstream)\n}\n\n...with a comment that we may want to expand this to void onEntitlementStatus(int downstream, boolean ui, int subscription, boolean success) later",
+      "range": {
+        "startLine": 138,
+        "startChar": 21,
+        "endLine": 138,
+        "endChar": 29
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18300df4_1f0f6405",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T22:22:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you call this even if fail ? I understand it will end up being removed after tethering is stopped, but as far as EntitlementManager is concerned, at this point it\u0027s still running so it should still be added.",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 40
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d0fae3_0f1d4d00",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T22:22:23Z",
+      "side": 1,
+      "message": "This is very ad-hoc and not very flexible. I think it\u0027s more flexible to say something like :\n\n  @Mock private OnUiEntitlementFailedListener mEntitlementFailedListener;\n\nAnd in setup :\n\n  mEnMgr.setOnUiEntitlementFailedListener(mEntitlementFailedListener);\n\n...then you can verify the calls with\n\n  verify(mEntitlementFailedListener, times(xxx)).onUiEntitlementFailed(xxx);",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
