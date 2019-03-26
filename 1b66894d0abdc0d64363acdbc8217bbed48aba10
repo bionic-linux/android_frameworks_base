@@ -187,6 +187,30 @@
       "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ac7338_db931f0f",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T21:06:47Z",
+      "side": 1,
+      "message": "The weights are to compute network sameness : the weight should be as high as the correlation between \"the value of this column is the same\" and \"this is the same L3 network\".\n\nIn this case, the expiry does not correlate or barely : the fact that it\u0027s not the same expiry doesn\u0027t imply it\u0027s a different network, and the fact that it\u0027s the same expiry doesn\u0027t imply it\u0027s the same network.\n\nTherefore the weight should just be zero.",
+      "parentUuid": "5156d1ec_263635ec",
+      "range": {
+        "startLine": 66,
+        "startChar": 61,
+        "endLine": 66,
+        "endChar": 66
+      },
+      "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
