@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9b3cfe0_eb54be00",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T08:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbff0edd_391bd86c",
+      "range": {
+        "startLine": 76,
+        "startChar": 70,
+        "endLine": 76,
+        "endChar": 77
+      },
+      "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c18005_e05cadcd",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8caedda_de91d621",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T08:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c18005_e05cadcd",
+      "range": {
+        "startLine": 141,
+        "startChar": 50,
+        "endLine": 141,
+        "endChar": 51
+      },
+      "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "46efd4d9_266fd874",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T08:58:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a645dfe_befa109c",
+      "range": {
+        "startLine": 160,
+        "startChar": 12,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a72ac237_648a4e94",
         "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-03-22T10:58:54Z",
       "side": 1,
       "message": "Why 300 ?!",
+      "range": {
+        "startLine": 66,
+        "startChar": 61,
+        "endLine": 66,
+        "endChar": 66
+      },
+      "revId": "1b66894d0abdc0d64363acdbc8217bbed48aba10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5156d1ec_263635ec",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T08:58:56Z",
+      "side": 1,
+      "message": "Actually I just followed assignedV4Address column weight. :)\n\nSeems that Design doc doesn\u0027t describe how to compute a weight value for a new added column. Could you please advise how the weight value comes. And I should also modify \"TOTAL_WEIGHT_CUTOFF\" value as well.\n\nTOTAL_WEIGHT_CUTOFF threshold value should be 60% of the TOTAL_WEIGHT. Once we add a new column, the total weight also changes.",
+      "parentUuid": "a72ac237_648a4e94",
       "range": {
         "startLine": 66,
         "startChar": 61,
