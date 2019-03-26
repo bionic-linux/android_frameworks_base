@@ -16,6 +16,7 @@
 
 package android.nfc.cardemulation;
 
+import android.annotation.RequiresPermission;
 import android.annotation.NonNull;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -360,6 +361,7 @@ public final class CardEmulation {
      * @param service The component name of the service
      * @return whether the registration was successful.
      */
+    @RequiresPermission(android.Manifest.permission.BIND_NFC_SERVICE)
     public boolean unsetOffHostForService(@NonNull ComponentName service) {
         NfcAdapter adapter = NfcAdapter.getDefaultAdapter(mContext);
         if (adapter == null) {
@@ -391,7 +393,9 @@ public final class CardEmulation {
      * through the manifest, or dynamically by using this API),
      * it will be replaced with this one. All AIDs registered by
      * this service will be re-routed to this Secure Element if
-     * successful.
+     * successful. AIDs that was statically assigned using manifest
+     * will re-route to off-host SE that stated in manifest after NFC
+     * toggle.
      *
      * <p>Note that you can only set off-host SE for a service that
      * is running under the same UID as the caller of this API. Typically
@@ -406,6 +410,7 @@ public final class CardEmulation {
      * @param offHostSecureElement Secure Element to register the AID to
      * @return whether the registration was successful.
      */
+    @RequiresPermission(android.Manifest.permission.BIND_NFC_SERVICE)
     public boolean setOffHostForService(@NonNull ComponentName service,
             @NonNull String offHostSecureElement) {
         boolean validSecureElement = false;
