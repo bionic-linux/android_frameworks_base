@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35ecfb53_d43770a0",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1470254
+      },
+      "writtenOn": "2019-03-26T11:59:35Z",
+      "side": 1,
+      "message": "Thank you for your correction!",
+      "parentUuid": "c4097dfa_580e90d8",
+      "range": {
+        "startLine": 428,
+        "startChar": 46,
+        "endLine": 428,
+        "endChar": 69
+      },
+      "revId": "091a0f0fcb9dec828068e7d1b2a719fa4de9fe8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9df5db8_88a96272",
         "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2e7e20c0_7d679be2",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1470254
+      },
+      "writtenOn": "2019-03-26T11:59:35Z",
+      "side": 1,
+      "message": "Oh, it\u0027s my mistake!\nI agree with your opinion.\nThank you for your correction!",
+      "parentUuid": "b9df5db8_88a96272",
+      "range": {
+        "startLine": 435,
+        "startChar": 16,
+        "endLine": 435,
+        "endChar": 89
+      },
+      "revId": "091a0f0fcb9dec828068e7d1b2a719fa4de9fe8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ca793a_23da3951",
         "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-26T06:21:11Z",
       "side": 1,
       "message": "It seems unnatural to notify \u0027pause\u0027 state to controllers of dead sessions.",
+      "range": {
+        "startLine": 436,
+        "startChar": 43,
+        "endLine": 436,
+        "endChar": 59
+      },
+      "revId": "091a0f0fcb9dec828068e7d1b2a719fa4de9fe8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f83f27_ce70ba3b",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1470254
+      },
+      "writtenOn": "2019-03-26T11:59:35Z",
+      "side": 1,
+      "message": "Controllers registered in this session will be notified about \"SessionDestroy\", and will be cleared.\nSo all related controllers need to be notified about \"PlaybackStateUpdate\" to keep proper playback state.\nSo I think sending notification to all controller is required.",
+      "parentUuid": "e8ca793a_23da3951",
       "range": {
         "startLine": 436,
         "startChar": 43,
