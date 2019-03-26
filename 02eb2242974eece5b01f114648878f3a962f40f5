@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a43df2ad_881848a3",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T09:02:32Z",
+      "side": 1,
+      "message": "Explain why. Is it guaranteed that netdservice will be started after dnsresolverservice, because system/netd/server/main.cpp starts one before the other? If so, say so here... but also, is there a comment in that file explaining that we should not change the ordering in the future? Might want to add one.\n\nAlso, there\u0027s a reason why mNetdService is retrieved via mServices.getNetd() instead of by a static method (like NetdService.getInstance()): mServices can be mocked out and/or replaced in tests. You probably want to do the same here.\n\nBut... see below. I think this code isn\u0027t really needed anyway.",
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cede1b26_5db00915",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T09:02:32Z",
+      "side": 1,
+      "message": "There\u0027s only one caller of this, right? If so, I\u0027d just move this code to the caller and delete this method.",
+      "range": {
+        "startLine": 1612,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 5
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7b93bd_d0575bf8",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T09:02:32Z",
+      "side": 1,
+      "message": "Ditto, there\u0027s only one caller, right? Would just move this code to ConnectivityService. If/when you do, make sure you combine the two catch clauses into just one, using something like:\n\n    } catch (RemoteException | ServiceSpecificException e) {",
+      "range": {
+        "startLine": 2082,
+        "startChar": 0,
+        "endLine": 2097,
+        "endChar": 5
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4051f37_09b01c7e",
+        "filename": "services/net/java/android/net/util/DnsResolverService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-26T09:02:32Z",
+      "side": 1,
+      "message": "Do we need an entire DnsResolverService class just for these two lines? It looks like there\u0027s only going to be one instance of these anyway, in ConnectivityService.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
