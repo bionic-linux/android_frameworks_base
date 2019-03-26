@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "d8ded28a_14f854f8",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-26T21:02:23Z",
+      "side": 1,
+      "message": "Just to make sure we share a common understanding : in the next patchset, sure, but not in a subsequent patch – we don\u0027t want this checked in in AOSP at any point.",
+      "parentUuid": "2af1f191_67795140",
+      "range": {
+        "startLine": 624,
+        "startChar": 51,
+        "endLine": 624,
+        "endChar": 62
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa13b82_aed27f40",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
