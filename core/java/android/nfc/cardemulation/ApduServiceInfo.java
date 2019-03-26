@@ -432,7 +432,6 @@ public final class ApduServiceInfo implements Parcelable {
         mDynamicAidGroups.put(aidGroup.getCategory(), aidGroup);
     }
 
-    @UnsupportedAppUsage
     public void setOffHostSecureElement(String offHost) {
         mOffHostName = offHost;
     }
@@ -441,7 +440,6 @@ public final class ApduServiceInfo implements Parcelable {
      * Resets the off host Secure Element to statically defined
      * by the service in the manifest file.
      */
-    @UnsupportedAppUsage
     public void unsetOffHostSecureElement() {
         mOffHostName = mStaticOffHostName;
     }
@@ -581,10 +579,9 @@ public final class ApduServiceInfo implements Parcelable {
             pw.println("    On Host Service");
         } else {
             pw.println("    Off-host Service");
-            pw.println("        " + "Current off-host SE" + mOffHostName
-                    + " static off-host: " + mOffHostName);
+            pw.println("        " + "Current off-host SE:" + mOffHostName
+                    + " static off-host SE:" + mStaticOffHostName);
         }
-        pw.println("    Static off-host Secure Element:");
         pw.println("    Static AID groups:");
         for (AidGroup group : mStaticAidGroups.values()) {
             pw.println("        Category: " + group.category);
