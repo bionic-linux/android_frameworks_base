@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "2af1f191_67795140",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-26T14:20:42Z",
+      "side": 1,
+      "message": "Just for testing, remove this in the next patch. And all logs are used for testing as well. To track if the code runs normally and enters the correct the state or not. Will clean up all these stuff.",
+      "parentUuid": "c863914f_cf39248d",
+      "range": {
+        "startLine": 624,
+        "startChar": 51,
+        "endLine": 624,
+        "endChar": 62
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaa13b82_aed27f40",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
