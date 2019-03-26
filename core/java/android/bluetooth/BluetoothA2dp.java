@@ -222,17 +222,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        try {
-                            mServiceLock.writeLock().lock();
-                            if (mService != null) {
-                                mService = null;
-                                mContext.unbindService(mConnection);
-                            }
-                        } catch (Exception re) {
-                            Log.e(TAG, "", re);
-                        } finally {
-                            mServiceLock.writeLock().unlock();
-                        }
+                        doUnbind();
                     } else {
                         try {
                             mServiceLock.readLock().lock();
@@ -279,6 +269,20 @@ public final class BluetoothA2dp implements BluetoothProfile {
             return false;
         }
         return true;
+    }
+
+    private void doUnbind() {
+        try {
+            mServiceLock.writeLock().lock();
+            if (mService != null) {
+                mContext.unbindService(mConnection);
+            }
+        } catch (Exception re) {
+            Log.e(TAG, "", re);
+        } finally {
+            mService = null;
+            mServiceLock.writeLock().unlock();
+        }
     }
 
     @UnsupportedAppUsage
@@ -917,12 +921,7 @@ public final class BluetoothA2dp implements BluetoothProfile {
 
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            try {
-                mServiceLock.writeLock().lock();
-                mService = null;
-            } finally {
-                mServiceLock.writeLock().unlock();
-            }
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.A2DP);
             }

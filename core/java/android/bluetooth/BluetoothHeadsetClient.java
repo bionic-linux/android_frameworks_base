@@ -378,14 +378,7 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
                     if (DBG) Log.d(TAG, "onBluetoothStateChange: up=" + up);
                     if (!up) {
                         if (VDBG) Log.d(TAG, "Unbinding service...");
-                        synchronized (mConnection) {
-                            try {
-                                mService = null;
-                                mContext.unbindService(mConnection);
-                            } catch (Exception re) {
-                                Log.e(TAG, "", re);
-                            }
-                        }
+                        doUnbind();
                     } else {
                         synchronized (mConnection) {
                             try {
@@ -433,6 +426,17 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
             return false;
         }
         return true;
+    }
+
+    private void doUnbind() {
+        synchronized (mConnection) {
+            try {
+                mService = null;
+                mContext.unbindService(mConnection);
+            } catch (Exception re) {
+                Log.e(TAG, "", re);
+            }
+        }
     }
 
     /**
@@ -1095,7 +1099,7 @@ public final class BluetoothHeadsetClient implements BluetoothProfile {
         @Override
         public void onServiceDisconnected(ComponentName className) {
             if (DBG) Log.d(TAG, "Proxy object disconnected");
-            mService = null;
+            doUnbind();
             if (mServiceListener != null) {
                 mServiceListener.onServiceDisconnected(BluetoothProfile.HEADSET_CLIENT);
             }
