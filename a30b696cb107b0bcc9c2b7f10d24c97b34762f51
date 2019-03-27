@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce8d33bf_f156a30e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-27T04:15:24Z",
+      "side": 1,
+      "message": "Done, thanks wording suggestion.",
+      "parentUuid": "5257dad2_26839eec",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a21e7944_d357fdc5",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4d3425_d7ea75be",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-27T04:15:24Z",
+      "side": 1,
+      "message": "Done, make sense.",
+      "parentUuid": "a21e7944_d357fdc5",
+      "range": {
+        "startLine": 138,
+        "startChar": 21,
+        "endLine": 138,
+        "endChar": 29
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "67414c90_2eae2e39",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-27T04:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18300df4_1f0f6405",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 40
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d0fae3_0f1d4d00",
         "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48d5454_fb2cba8e",
+        "filename": "tests/net/java/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-27T04:15:24Z",
+      "side": 1,
+      "message": "Done. Indeed, your suggestion is better. Thanks.",
+      "parentUuid": "c4d0fae3_0f1d4d00",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "a30b696cb107b0bcc9c2b7f10d24c97b34762f51",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
