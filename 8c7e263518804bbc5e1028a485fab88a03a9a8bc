@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6225291_0466b921",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-03-27T20:27:24Z",
+      "side": 1,
+      "message": "What about clearing these in onDestroy() instead of the change in getStateWithUpdatedPosition()?",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "8c7e263518804bbc5e1028a485fab88a03a9a8bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
