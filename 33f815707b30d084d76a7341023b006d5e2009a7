@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "665cebd1_9c36e2ea",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-27T12:00:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f012e8a5_8c7f6007",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c79878_d838c80b",
         "filename": "services/net/java/android/net/util/DnsResolverService.java",
         "patchSetId": 4
