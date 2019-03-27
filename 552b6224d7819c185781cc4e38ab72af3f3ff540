@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a73a52_bc893814",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-27T05:37:47Z",
+      "side": 1,
+      "message": "I think the comment should mention the unit (seconds ? milliseconds ? timespan or timestamp since X)",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 65
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54693f92_ca1730ca",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-27T05:37:47Z",
+      "side": 1,
+      "message": "Should we not store a timestamp in this field instead of a remaining time ? How can we calculate whether a lease has expired after it is stored ?\n\nEven without a timestamp, I think DHCP uses a 32-bit unsigned int, so Integer would not be enough.",
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe68d2c_d7cfbe30",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-27T05:37:47Z",
+      "side": 1,
+      "message": "This could lead to hard to reproduce crashes, if a lease is stored just before it expires and/or the clients of this constructor are doing some calculations do determine remaining time.\nHow about snapping to 0 or null when the expiry is \u003c 0 ? Is storing a 0 expiry a problem ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 89
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
