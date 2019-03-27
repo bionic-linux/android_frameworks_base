@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ecfc94_ff38511e",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:31:31Z",
+      "side": 1,
+      "message": "OBSERVED UiEnitlementFailed",
+      "range": {
+        "startLine": 237,
+        "startChar": 31,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d1d8f9_bd60b28c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:31:31Z",
+      "side": 1,
+      "message": "More like, \"Non-UI check\" for the same reason – it\u0027s none of EM\u0027s business what the listener does with this info, what\u0027s interesting here is that it\u0027s not the UI check.",
+      "range": {
+        "startLine": 357,
+        "startChar": 24,
+        "endLine": 357,
+        "endChar": 57
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e84239_169cc60e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:31:31Z",
+      "side": 1,
+      "message": "\"forUiCheck\" or similar",
+      "range": {
+        "startLine": 576,
+        "startChar": 64,
+        "endLine": 576,
+        "endChar": 73
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
