@@ -175,6 +175,30 @@
       "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da14bfc_6018f50b",
+        "filename": "services/net/java/android/net/util/DnsResolverService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-27T09:02:39Z",
+      "side": 1,
+      "message": "I\u0027d just call getService in CS.I don\u0027t think we need one of these anywhere else.",
+      "parentUuid": "8e7a9ffb_94c57f2d",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

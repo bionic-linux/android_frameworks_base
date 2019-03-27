@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c4c57e5_b399cf9e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-27T09:02:39Z",
+      "side": 1,
+      "message": "Unused. Remove.",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dac63d2_4787d329",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-27T09:02:39Z",
+      "side": 1,
+      "message": "FWIW, I don\u0027t think we don\u0027t use these anywhere. Up to you whether you want to remove them in this CL. It might actually be easier to do so in this CL than in a follow-up. But up to you.",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
