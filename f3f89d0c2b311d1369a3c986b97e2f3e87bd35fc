@@ -46,6 +46,30 @@
       "revId": "f3f89d0c2b311d1369a3c986b97e2f3e87bd35fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36425e5a_83e16c77",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1141529
+      },
+      "writtenOn": "2019-03-27T03:45:03Z",
+      "side": 1,
+      "message": "Yeah true. I got carried seeing this code.",
+      "parentUuid": "de0b0edc_df4ead35",
+      "range": {
+        "startLine": 1886,
+        "startChar": 51,
+        "endLine": 1886,
+        "endChar": 52
+      },
+      "revId": "f3f89d0c2b311d1369a3c986b97e2f3e87bd35fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
