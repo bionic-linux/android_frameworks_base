@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee170e2_350661c0",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-03-27T16:19:39Z",
+      "side": 1,
+      "message": "Should this be doUnbind?",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 9
+      },
+      "revId": "ba6255a92e325df2771855f20a4f6518aed7b673",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a186e9e_1fc217a4",
+        "filename": "core/java/android/bluetooth/BluetoothA2dpSink.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-03-27T16:19:39Z",
+      "side": 1,
+      "message": "doUnbind() ?",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 13
+      },
+      "revId": "ba6255a92e325df2771855f20a4f6518aed7b673",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
