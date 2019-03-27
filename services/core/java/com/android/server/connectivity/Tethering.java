@@ -1103,8 +1103,11 @@ public class Tethering extends BaseNetworkObserver {
         if (VDBG) Log.d(TAG, "setUsbTethering(" + enable + ")");
         UsbManager usbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
         synchronized (mPublicSync) {
-            usbManager.setCurrentFunctions(enable ? UsbManager.FUNCTION_RNDIS
-                    : UsbManager.FUNCTION_NONE);
+            if (enable) {
+                usbManager.setCurrentFunctions(UsbManager.FUNCTION_RNDIS);
+            } else if ((usbManager.getCurrentFunctions() & UsbManager.FUNCTION_RNDIS) != 0) {
+                usbManager.setCurrentFunctions(UsbManager.FUNCTION_NONE);
+            }
         }
         return TETHER_ERROR_NO_ERROR;
     }
