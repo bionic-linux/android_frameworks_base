@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c1ec4974_504292fb",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:11:03Z",
+      "side": 1,
+      "message": "If you make this a Long then I suggest storing in milliseconds for consistency with all Java timestamps (including the expiry in the memory store).\n\n+reminv@ : I think the word \"expiry\" pretty clearly points to a timestamp rather than a duration ? At least that\u0027s how I have been using it. If you feel that\u0027s not clean maybe we should say ExpiryDate or something ?",
+      "parentUuid": "70294b8f_99420e75",
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe68d2c_d7cfbe30",
         "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 4
@@ -128,6 +146,53 @@
       "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70db2072_d082ab85",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:11:03Z",
+      "side": 1,
+      "message": "Likewise, as long as this is a timestamp I don\u0027t see a problem with this code.",
+      "parentUuid": "43f1093f_858d60e2",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 89
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d67686e_be6610e1",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-27T19:11:03Z",
+      "side": 1,
+      "message": "Maybe it doesn\u0027t matter but I suspect this might be the code that had Rémi think this is relative. Suggest System.currentTimeMillis() + 7_200_000 with comment \"// two hours in the future\", just to avoid confusion.",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
