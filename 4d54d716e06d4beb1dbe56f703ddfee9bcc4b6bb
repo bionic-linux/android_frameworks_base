@@ -70,6 +70,30 @@
       "revId": "4d54d716e06d4beb1dbe56f703ddfee9bcc4b6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040e6047_5a2bac64",
+        "filename": "services/core/java/com/android/server/media/MediaSessionService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2019-03-27T05:40:56Z",
+      "side": 1,
+      "message": "\u003e Yes, this will notify \"SessionDestroy\" to all controllers.\n\u003e I\u0027m sorry but your comment is not clear to me.\n\u003e I think changing state to PAUSE does not affect on handling \"onSessionDestroy()\".\n\u003e Can you give some more explanations?\n\nHi Joonghong,\nSince the bluetooth uses MediaController, the BT component itself can respond to onSessionDestroyed(). In other words, it can set the proper state internally when onSessionDestroyed() is called (and possibly throw away the MediaController).\n\nSo the current bug should be handled by the Bluetooth side, rather than setting a fake state to controllers. We can consider this CL as an alternative when BT team has no good solution.",
+      "parentUuid": "4dd62a0c_2ac971d0",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 461,
+        "endChar": 28
+      },
+      "revId": "4d54d716e06d4beb1dbe56f703ddfee9bcc4b6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
