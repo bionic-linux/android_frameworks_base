@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "054c9f3e_03bb75fe",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T09:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03991a39_185ea34e",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dac63d2_4787d329",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 4
@@ -95,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "f012e8a5_8c7f6007",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T09:43:29Z",
+      "side": 1,
+      "message": "It might need extra clean-up in netd, do in other CL",
+      "parentUuid": "7dac63d2_4787d329",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1e7b0fc_6fc12d78",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T09:43:29Z",
+      "side": 1,
+      "message": "netd handle tlsFingerprints internally, so we don\u0027t need this parameter in binder call.",
+      "parentUuid": "1ac6fe74_6d4eac89",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c79878_d838c80b",
         "filename": "services/net/java/android/net/util/DnsResolverService.java",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47e5b10_2445ea10",
+        "filename": "services/net/java/android/net/util/DnsResolverService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T09:43:29Z",
+      "side": 1,
+      "message": "Deleted",
+      "parentUuid": "73c79878_d838c80b",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
