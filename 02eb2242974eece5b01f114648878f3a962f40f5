@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bf91947_f26e7e08",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T03:05:39Z",
+      "side": 1,
+      "message": "make sense, thanks",
+      "parentUuid": "a43df2ad_881848a3",
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cede1b26_5db00915",
         "filename": "services/core/java/com/android/server/NetworkManagementService.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fd336a_ec33f937",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T03:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cede1b26_5db00915",
+      "range": {
+        "startLine": 1612,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 5
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "416f1083_b8eb1328",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2097,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T03:05:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b7b93bd_d0575bf8",
+      "range": {
+        "startLine": 2082,
+        "startChar": 0,
+        "endLine": 2097,
+        "endChar": 5
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4051f37_09b01c7e",
         "filename": "services/net/java/android/net/util/DnsResolverService.java",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2019-03-26T09:02:32Z",
       "side": 1,
       "message": "Do we need an entire DnsResolverService class just for these two lines? It looks like there\u0027s only going to be one instance of these anyway, in ConnectivityService.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7a9ffb_94c57f2d",
+        "filename": "services/net/java/android/net/util/DnsResolverService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-03-27T03:05:39Z",
+      "side": 1,
+      "message": "These 2 go on this way in ConnectivityService.\n        mNetd \u003d NetdService.getInstance();\n        mKeyStore \u003d KeyStore.getInstance();\nTBH, I have not idea about it.\nConnectivityService is constructed after NMS, so getting IDnsResolver in ConnectivityService could be guaranteed now.\nI am not sure if we will need some blocking method like NetdService here in the future once NMS is not existed or other condition.\nAny suggestions? We definitely could just use getService to retrieve IDnsResolver in ConnectivityService now.",
+      "parentUuid": "e4051f37_09b01c7e",
       "range": {
         "startLine": 42,
         "startChar": 0,
