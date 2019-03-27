@@ -131,6 +131,23 @@
     },
     {
       "key": {
+        "uuid": "a8d615b0_047a1238",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-27T09:29:49Z",
+      "side": 1,
+      "message": "Nits: Given that you are touching this function.\nI\u0027ll suggest add nullability annotations.",
+      "revId": "02eb2242974eece5b01f114648878f3a962f40f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4051f37_09b01c7e",
         "filename": "services/net/java/android/net/util/DnsResolverService.java",
         "patchSetId": 3
