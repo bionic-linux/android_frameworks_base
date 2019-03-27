@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03991a39_185ea34e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-27T09:26:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "6c4c57e5_b399cf9e",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dac63d2_4787d329",
         "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
         "patchSetId": 4
@@ -41,6 +65,52 @@
         "startChar": 45,
         "endLine": 359,
         "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac6fe74_6d4eac89",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-27T09:26:37Z",
+      "side": 1,
+      "message": "sorry for lack of context,\nwhat is the additional parameter?",
+      "range": {
+        "startLine": 359,
+        "startChar": 45,
+        "endLine": 359,
+        "endChar": 60
+      },
+      "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c79878_d838c80b",
+        "filename": "services/net/java/android/net/util/DnsResolverService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-03-27T09:26:37Z",
+      "side": 1,
+      "message": "IDnsResolver?",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 23
       },
       "revId": "33f815707b30d084d76a7341023b006d5e2009a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
