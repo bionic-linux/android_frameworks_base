@@ -71,6 +71,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.ip.IpServer;
+import android.net.ip.UniqueLocalAddressController;
 import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
@@ -189,6 +190,7 @@ public class Tethering extends BaseNetworkObserver {
     private final Handler mHandler;
     private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
             new RemoteCallbackList<>();
+    private final UniqueLocalAddressController mUlaController;
 
     private volatile TetheringConfiguration mConfig;
     private InterfaceSet mCurrentUpstreamIfaceSet;
@@ -227,6 +229,7 @@ public class Tethering extends BaseNetworkObserver {
         mUpstreamNetworkMonitor = deps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new HashSet<>();
+        mUlaController = new UniqueLocalAddressController();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -1138,7 +1141,7 @@ public class Tethering extends BaseNetworkObserver {
             addState(mSetDnsForwardersErrorState);
 
             mNotifyList = new ArrayList<>();
-            mIPv6TetheringCoordinator = deps.getIPv6TetheringCoordinator(mNotifyList, mLog);
+            mIPv6TetheringCoordinator = deps.getIPv6TetheringCoordinator(mLog);
             mOffload = new OffloadWrapper();
 
             setInitialState(mInitialState);
@@ -1311,10 +1314,10 @@ public class Tethering extends BaseNetworkObserver {
         private void handleInterfaceServingStateActive(int mode, IpServer who) {
             if (mNotifyList.indexOf(who) < 0) {
                 mNotifyList.add(who);
-                mIPv6TetheringCoordinator.addActiveDownstream(who, mode);
             }
 
             if (mode == IpServer.STATE_TETHERED) {
+                mIPv6TetheringCoordinator.addActiveDownstream(who);
                 // No need to notify OffloadController just yet as there are no
                 // "offload-able" prefixes to pass along. This will handled
                 // when the TISM informs Tethering of its LinkProperties.
@@ -1914,7 +1917,7 @@ public class Tethering extends BaseNetworkObserver {
         final TetherState tetherState = new TetherState(
                 new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
-                             mDeps.getIpServerDependencies()));
+                             mDeps.getIpServerDependencies(), mUlaController));
         mTetherStates.put(iface, tetherState);
         tetherState.ipServer.start();
     }
@@ -1928,6 +1931,7 @@ public class Tethering extends BaseNetworkObserver {
         tetherState.ipServer.stop();
         mLog.log("removing TetheringInterfaceStateMachine for: " + iface);
         mTetherStates.remove(iface);
+        if (mTetherStates.isEmpty()) mUlaController.clearSubnetCounter();
     }
 
     private static String[] copy(String[] strarray) {

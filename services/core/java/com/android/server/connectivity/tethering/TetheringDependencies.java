@@ -26,9 +26,6 @@ import android.telephony.SubscriptionManager;
 import com.android.internal.util.StateMachine;
 import com.android.server.connectivity.MockableSystemProperties;
 
-import java.util.ArrayList;
-
-
 /**
  * Capture tethering dependencies, for injection.
  *
@@ -53,9 +50,8 @@ public class TetheringDependencies {
     /**
      * Get a reference to the IPv6TetheringCoordinator to be used by tethering.
      */
-    public IPv6TetheringCoordinator getIPv6TetheringCoordinator(
-            ArrayList<IpServer> notifyList, SharedLog log) {
-        return new IPv6TetheringCoordinator(notifyList, log);
+    public IPv6TetheringCoordinator getIPv6TetheringCoordinator(SharedLog log) {
+        return new IPv6TetheringCoordinator(log);
     }
 
     /**

@@ -151,7 +151,6 @@ public class TetheringTest {
     @Mock private WifiManager mWifiManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
     @Mock private UpstreamNetworkMonitor mUpstreamNetworkMonitor;
-    @Mock private IPv6TetheringCoordinator mIPv6TetheringCoordinator;
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
     @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
@@ -160,6 +159,7 @@ public class TetheringTest {
             spy(new MockIpServerDependencies());
     private final MockTetheringDependencies mTetheringDependencies =
             new MockTetheringDependencies();
+    private IPv6TetheringCoordinator mIPv6TetheringCoordinator;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
@@ -236,12 +236,10 @@ public class TetheringTest {
 
     public class MockTetheringDependencies extends TetheringDependencies {
         StateMachine upstreamNetworkMonitorMasterSM;
-        ArrayList<IpServer> ipv6CoordinatorNotifyList;
         int isTetheringSupportedCalls;
 
         public void reset() {
             upstreamNetworkMonitorMasterSM = null;
-            ipv6CoordinatorNotifyList = null;
             isTetheringSupportedCalls = 0;
         }
 
@@ -258,9 +256,8 @@ public class TetheringTest {
         }
 
         @Override
-        public IPv6TetheringCoordinator getIPv6TetheringCoordinator(
-                ArrayList<IpServer> notifyList, SharedLog log) {
-            ipv6CoordinatorNotifyList = notifyList;
+        public IPv6TetheringCoordinator getIPv6TetheringCoordinator(SharedLog log) {
+            mIPv6TetheringCoordinator = spy(new IPv6TetheringCoordinator(log));
             return mIPv6TetheringCoordinator;
         }
 
@@ -508,6 +505,8 @@ public class TetheringTest {
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mNMService, times(1)).setIpForwardingEnabled(true);
         verify(mNMService, times(1)).startTethering(any(String[].class));
+        verify(mNMService, times(1)).addInterfaceToLocalNetwork(eq(TEST_WLAN_IFNAME), any());
+        verify(mIPv6TetheringCoordinator, times(0)).addActiveDownstream(any(IpServer.class));
         verifyNoMoreInteractions(mNMService);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_LOCAL_ONLY);
@@ -530,6 +529,7 @@ public class TetheringTest {
                 .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
         verify(mNMService, times(1)).stopTethering();
         verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mNMService, times(1)).removeRoutesFromLocalNetwork(any());
         verifyNoMoreInteractions(mNMService);
         verifyNoMoreInteractions(mWifiManager);
         // Asking for the last error after the per-interface state machine
@@ -537,30 +537,13 @@ public class TetheringTest {
         assertEquals(TETHER_ERROR_UNKNOWN_IFACE, mTethering.getLastTetherError(TEST_WLAN_IFNAME));
     }
 
-    /**
-     * Send CMD_IPV6_TETHER_UPDATE to IpServers as would be done by IPv6TetheringCoordinator.
-     */
-    private void sendIPv6TetherUpdates(NetworkState upstreamState) {
-        // IPv6TetheringCoordinator must have been notified of downstream
-        verify(mIPv6TetheringCoordinator, times(1)).addActiveDownstream(
-                argThat(sm -> sm.linkProperties().getInterfaceName().equals(TEST_USB_IFNAME)),
-                eq(IpServer.STATE_TETHERED));
-
-        for (IpServer ipSrv :
-                mTetheringDependencies.ipv6CoordinatorNotifyList) {
-            NetworkState ipv6OnlyState = buildMobileUpstreamState(false, true, false);
-            ipSrv.sendMessage(IpServer.CMD_IPV6_TETHER_UPDATE, 0, 0,
-                    upstreamState.linkProperties.isIpv6Provisioned()
-                            ? ipv6OnlyState.linkProperties
-                            : null);
-        }
-        mLooper.dispatchAll();
-    }
-
     private void runUsbTethering(NetworkState upstreamState) {
         prepareUsbTethering(upstreamState);
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
+        // IPv6TetheringCoordinator must have been notified of downstream
+        verify(mIPv6TetheringCoordinator, times(1)).addActiveDownstream(
+                argThat(sm -> sm.linkProperties().getInterfaceName().equals(TEST_USB_IFNAME)));
     }
 
     @Test
@@ -571,7 +554,6 @@ public class TetheringTest {
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
-        sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, never()).buildNewRa(any(), notNull());
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
     }
@@ -582,7 +564,6 @@ public class TetheringTest {
         mTethering = makeTethering();
         final NetworkState upstreamState = buildMobileIPv4UpstreamState();
         runUsbTethering(upstreamState);
-        sendIPv6TetherUpdates(upstreamState);
 
         verify(mIpServerDependencies, never()).makeDhcpServer(any(), any(), any());
     }
@@ -594,8 +575,6 @@ public class TetheringTest {
 
         verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-
-        sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }
@@ -609,8 +588,6 @@ public class TetheringTest {
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mRouterAdvertisementDaemon, times(1)).start();
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
-
-        sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }
@@ -626,8 +603,6 @@ public class TetheringTest {
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME,
                 TEST_XLAT_MOBILE_IFNAME);
-
-        sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
         verify(mNetd, times(1)).tetherApplyDnsInterfaces();
     }

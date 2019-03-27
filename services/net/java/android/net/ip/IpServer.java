@@ -189,6 +189,8 @@ public class IpServer extends StateMachine {
     private final int mInterfaceType;
     private final LinkProperties mLinkProperties;
     private final boolean mUsingLegacyDhcp;
+    private final short mSubnetId;
+    private final UniqueLocalAddressController mUlaController;
 
     private final Dependencies mDeps;
 
@@ -213,7 +215,8 @@ public class IpServer extends StateMachine {
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetworkManagementService nMService, INetworkStatsService statsService,
-            Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
+            Callback callback, boolean usingLegacyDhcp, Dependencies deps,
+            UniqueLocalAddressController ulaController) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
@@ -229,6 +232,8 @@ public class IpServer extends StateMachine {
         resetLinkProperties();
         mLastError = ConnectivityManager.TETHER_ERROR_NO_ERROR;
         mServingMode = STATE_AVAILABLE;
+        mUlaController = ulaController;
+        mSubnetId = mUlaController.getNewSubnetId();
 
         mInitialState = new InitialState();
         mLocalHotspotState = new LocalHotspotState();
@@ -667,6 +672,7 @@ public class IpServer extends StateMachine {
     private void resetLinkProperties() {
         mLinkProperties.clear();
         mLinkProperties.setInterfaceName(mIfaceName);
+        mLastIPv6LinkProperties = null;
     }
 
     class InitialState extends State {
@@ -759,10 +765,6 @@ public class IpServer extends StateMachine {
                     transitionTo(mUnavailableState);
                     if (DBG) Log.d(TAG, "Untethered (ifdown)" + mIfaceName);
                     break;
-                case CMD_IPV6_TETHER_UPDATE:
-                    updateUpstreamIPv6LinkProperties((LinkProperties) message.obj);
-                    sendLinkProperties();
-                    break;
                 case CMD_IP_FORWARDING_ENABLE_ERROR:
                 case CMD_IP_FORWARDING_DISABLE_ERROR:
                 case CMD_START_TETHERING_ERROR:
@@ -791,6 +793,9 @@ public class IpServer extends StateMachine {
                 transitionTo(mInitialState);
             }
 
+            LinkProperties lp = mUlaController.getUniqueLocalConfig(mSubnetId);
+            updateUpstreamIPv6LinkProperties(lp);
+
             if (DBG) Log.d(TAG, "Local hotspot " + mIfaceName);
             sendInterfaceState(STATE_LOCAL_ONLY);
         }
@@ -805,6 +810,7 @@ public class IpServer extends StateMachine {
                     mLog.e("CMD_TETHER_REQUESTED while in local-only hotspot mode.");
                     break;
                 case CMD_TETHER_CONNECTION_CHANGED:
+                case CMD_IPV6_TETHER_UPDATE:
                     // Ignored in local hotspot state.
                     break;
                 default:
@@ -909,6 +915,10 @@ public class IpServer extends StateMachine {
                             return true;
                         }
                     }
+                    break;
+                case CMD_IPV6_TETHER_UPDATE:
+                    updateUpstreamIPv6LinkProperties((LinkProperties) message.obj);
+                    sendLinkProperties();
                     break;
                 default:
                     return false;
