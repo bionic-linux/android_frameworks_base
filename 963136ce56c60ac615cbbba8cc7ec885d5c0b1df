@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc11b6c_83497625",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-27T15:24:26Z",
+      "side": 0,
+      "message": "Here is wrong. subnet id should be put in 7th and 8th byte. Correct this part as below in new ULA controller.\n\nbytes[6] \u003d (byte) (subnetId \u003e\u003e 8);\nbytes[7] \u003d (byte) subnetId;",
+      "range": {
+        "startLine": 277,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 35
+      },
+      "revId": "963136ce56c60ac615cbbba8cc7ec885d5c0b1df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
