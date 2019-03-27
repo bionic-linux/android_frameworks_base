@@ -24,6 +24,7 @@ import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_TETHER_IFACE_ERROR;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.ip.IpServer.STATE_AVAILABLE;
+import static android.net.ip.IpServer.STATE_LOCAL_ONLY;
 import static android.net.ip.IpServer.STATE_TETHERED;
 import static android.net.ip.IpServer.STATE_UNAVAILABLE;
 import static android.net.shared.Inet4AddressUtils.intToInet4AddressHTH;
@@ -42,6 +43,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -80,6 +82,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -88,6 +91,7 @@ public class IpServerTest {
     private static final String UPSTREAM_IFACE = "upstream0";
     private static final String UPSTREAM_IFACE2 = "upstream1";
     private static final int DHCP_LEASE_TIME_SECS = 3600;
+    private static final short SUB_NET_ID = 3;
 
     private static final InterfaceParams TEST_IFACE_PARAMS = new InterfaceParams(
             IFACE_NAME, 42 /* index */, MacAddress.ALL_ZEROS_ADDRESS, 1500 /* defaultMtu */);
@@ -109,7 +113,10 @@ public class IpServerTest {
     private final TestLooper mLooper = new TestLooper();
     private final ArgumentCaptor<LinkProperties> mLinkPropertiesCaptor =
             ArgumentCaptor.forClass(LinkProperties.class);
+    private final ArgumentCaptor<LinkProperties> mV6OnlyLinkProperties =
+            ArgumentCaptor.forClass(LinkProperties.class);
     private IpServer mIpServer;
+    private UniqueLocalAddressController mUlaController;
 
     private void initStateMachine(int interfaceType) throws Exception {
         initStateMachine(interfaceType, false /* usingLegacyDhcp */);
@@ -130,10 +137,12 @@ public class IpServerTest {
         when(mDependencies.getRouterAdvertisementDaemon(any())).thenReturn(mRaDaemon);
         when(mDependencies.getInterfaceParams(IFACE_NAME)).thenReturn(TEST_IFACE_PARAMS);
         when(mDependencies.getNetdService()).thenReturn(mNetd);
+        when(mUlaController.getNewSubnetId()).thenReturn(SUB_NET_ID);
 
         mIpServer = new IpServer(
                 IFACE_NAME, mLooper.getLooper(), interfaceType, mSharedLog,
-                mNMService, mStatsService, mCallback, usingLegacyDhcp, mDependencies);
+                mNMService, mStatsService, mCallback, usingLegacyDhcp,
+                mDependencies, mUlaController);
         mIpServer.start();
         // Starting the state machine always puts us in a consistent state and notifies
         // the rest of the world that we've changed from an unknown to available state.
@@ -163,13 +172,14 @@ public class IpServerTest {
     @Before public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(mSharedLog.forSubComponent(anyString())).thenReturn(mSharedLog);
+        mUlaController = spy(new UniqueLocalAddressController());
     }
 
     @Test
     public void startsOutAvailable() {
         mIpServer = new IpServer(IFACE_NAME, mLooper.getLooper(),
                 TETHERING_BLUETOOTH, mSharedLog, mNMService, mStatsService, mCallback,
-                false /* usingLegacyDhcp */, mDependencies);
+                false /* usingLegacyDhcp */, mDependencies, mUlaController);
         mIpServer.start();
         mLooper.dispatchAll();
         verify(mCallback).updateInterfaceState(
@@ -440,6 +450,27 @@ public class IpServerTest {
         assertEquals(DHCP_LEASE_TIME_SECS, params.dhcpLeaseTimeSecs);
     }
 
+    @Test
+    public void canBeLocalHotspot() throws Exception {
+        initStateMachine(TETHERING_WIFI);
+
+        dispatchCommand(IpServer.CMD_TETHER_REQUESTED, STATE_LOCAL_ONLY);
+        InOrder inOrder = inOrder(mCallback, mNMService, mUlaController);
+        inOrder.verify(mNMService).getInterfaceConfig(IFACE_NAME);
+        inOrder.verify(mNMService).setInterfaceConfig(IFACE_NAME, mInterfaceConfiguration);
+        inOrder.verify(mNMService).tetherInterface(IFACE_NAME);
+        inOrder.verify(mUlaController).getUniqueLocalConfig(SUB_NET_ID);
+        inOrder.verify(mNMService).addInterfaceToLocalNetwork(eq(IFACE_NAME), any());
+        inOrder.verify(mCallback).updateInterfaceState(
+                mIpServer, STATE_LOCAL_ONLY, TETHER_ERROR_NO_ERROR);
+        inOrder.verify(mCallback).updateLinkProperties(
+                eq(mIpServer), mLinkPropertiesCaptor.capture());
+        assertIPv4AddressAndDirectlyConnectedRoute(mLinkPropertiesCaptor.getValue());
+        assertIPv6AddressAndDirectlyConnectedRoute(mLinkPropertiesCaptor.getValue());
+        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+
+    }
+
     /**
      * Send a command to the state machine under test, and run the event loop to idle.
      *
@@ -488,6 +519,23 @@ public class IpServerTest {
         assertTrue("missing directly connected route: '" + directlyConnected.toString() + "'",
                    lp.getRoutes().contains(directlyConnected));
     }
+
+    private void assertIPv6AddressAndDirectlyConnectedRoute(LinkProperties lp) {
+        // Find the first IPv6 LinkAddress.
+        LinkAddress addr6 = null;
+        for (LinkAddress addr : lp.getLinkAddresses()) {
+            if (!(addr.getAddress() instanceof Inet6Address)) continue;
+            addr6 = addr;
+            break;
+        }
+        assertNotNull("missing IPv6 address", addr6);
+
+        // Assert the presence of the associated directly connected route.
+        final RouteInfo directlyConnected = new RouteInfo(addr6, null, lp.getInterfaceName());
+        assertTrue("missing directly connected route: '" + directlyConnected.toString() + "'",
+                   lp.getRoutes().contains(directlyConnected));
+    }
+
 
     private void assertNoAddressesNorRoutes(LinkProperties lp) {
         assertTrue(lp.getLinkAddresses().isEmpty());
