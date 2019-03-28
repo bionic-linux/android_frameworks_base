@@ -46,6 +46,30 @@
       "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87e83002_fe049d90",
+        "filename": "core/xsd/permission.xsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2019-03-28T15:42:27Z",
+      "side": 1,
+      "message": "Sorry. I was not clear. The way I understand https://www.w3schools.com/xml/el_sequence.asp sequence implies an order. Of course these elements do not need in order. Hence sequence seems to be the wrong type.",
+      "parentUuid": "d22e3914_68a0237a",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
