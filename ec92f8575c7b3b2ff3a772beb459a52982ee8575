@@ -140,6 +140,30 @@
       "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422ec625_370d0464",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-03-28T08:36:47Z",
+      "side": 1,
+      "message": "Sure, that\u0027s a fair point.",
+      "parentUuid": "73c8f388_1396fa28",
+      "range": {
+        "startLine": 576,
+        "startChar": 64,
+        "endLine": 576,
+        "endChar": 73
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
