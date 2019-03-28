@@ -22,6 +22,30 @@
       "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22e3914_68a0237a",
+        "filename": "core/xsd/permission.xsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-03-28T05:58:27Z",
+      "side": 1,
+      "message": "When I test it on crosshatch device, we don\u0027t need to change.\nI\u0027ll try to test it on other device and then if we need to change, I\u0027ll upload the CL.",
+      "parentUuid": "54ce84fa_4226ee55",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
