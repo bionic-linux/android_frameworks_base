@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "292bbbfd_40373ff6",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-28T09:02:58Z",
+      "side": 1,
+      "message": "I don\u0027t think the javadoc for this class is being built then. Otherwise it would fail. That\u0027s fine though.",
+      "parentUuid": "c4d26460_bac8ef5e",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b1e177e_f0abdac3",
         "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
         "patchSetId": 1
