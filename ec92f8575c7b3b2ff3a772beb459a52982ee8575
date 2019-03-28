@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08c5cc9d_18152363",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-28T03:40:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28ecfc94_ff38511e",
+      "range": {
+        "startLine": 237,
+        "startChar": 31,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d1d8f9_bd60b28c",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c76436a3_f02a9d72",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-28T03:40:39Z",
+      "side": 1,
+      "message": "Ack, indeed.",
+      "parentUuid": "60d1d8f9_bd60b28c",
+      "range": {
+        "startLine": 357,
+        "startChar": 24,
+        "endLine": 357,
+        "endChar": 57
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93e84239_169cc60e",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2019-03-27T19:31:31Z",
       "side": 1,
       "message": "\"forUiCheck\" or similar",
+      "range": {
+        "startLine": 576,
+        "startChar": 64,
+        "endLine": 576,
+        "endChar": 73
+      },
+      "revId": "ec92f8575c7b3b2ff3a772beb459a52982ee8575",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c8f388_1396fa28",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-03-28T03:40:39Z",
+      "side": 1,
+      "message": "How about \"notifyFail\". In line.652, getLatestTetheringEntitlementResult API may also launch UI check and I don\u0027t prefer allow this API has chance to stopTethering.",
+      "parentUuid": "93e84239_169cc60e",
       "range": {
         "startLine": 576,
         "startChar": 64,
