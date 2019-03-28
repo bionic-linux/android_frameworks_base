@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4d26460_bac8ef5e",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-28T08:37:15Z",
+      "side": 1,
+      "message": "Yes, it\u0027s compiled. I think it will not fail link to the class in aosp. And yes, it should be @link. Sorry for that.",
+      "parentUuid": "5cbb6723_14e4355d",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b1e177e_f0abdac3",
         "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ee3c9f38_0a2dd81f",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-28T08:37:15Z",
+      "side": 1,
+      "message": "DeviceConfig provide a base API, getProperty(), which is similar to mine. The only difference is DeviceConfig.getProperty() accept only two params, namespace and name.\n\nThere are also 5 different extended APIs, getString(), getBoolean, getInt(), getLong(), get Float(). These 5 APIs will accept 3 params which include a default value param. Then these 5 APi will called getProperty().\n\nI think it will be enough to have current implementation to access the base API with minimal change.",
+      "parentUuid": "2b1e177e_f0abdac3",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e2430d6_4a692111",
         "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2019-03-28T07:06:16Z",
       "side": 1,
       "message": "Do you need anything else to be able to call into the DeviceConfig API? For example, does calling that API take a Context pointer? If so, then I think this method will need a Context as well.",
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680f99d7_af9b337b",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-03-28T08:37:15Z",
+      "side": 1,
+      "message": "No, it does not need take a context. That\u0027s what we needed now to get the value from DeviceConfig.",
+      "parentUuid": "7e2430d6_4a692111",
       "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
