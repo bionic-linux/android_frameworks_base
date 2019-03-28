@@ -22,6 +22,30 @@
       "revId": "8c7e263518804bbc5e1028a485fab88a03a9a8bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40603d5_f03e2c24",
+        "filename": "services/core/java/com/android/server/media/MediaSessionRecord.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1470254
+      },
+      "writtenOn": "2019-03-28T07:13:24Z",
+      "side": 1,
+      "message": "I know your intention that these class member variables are related to MediaController, but initializing class member variables of destroying instance partially seems to be not a good approach.\nI think this MediaSessionRecord instance should not work something additionally after destruction and these class member variables including others should be freed together with this class instance.\nThe problem of the function \"getStateWithUpdatedPosition()\" is on changing Playback information then return an updated Playback information that is wrong actually because the media session is already destroyed.",
+      "parentUuid": "d6225291_0466b921",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "8c7e263518804bbc5e1028a485fab88a03a9a8bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
