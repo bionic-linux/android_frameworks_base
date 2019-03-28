@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbb6723_14e4355d",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-28T07:06:16Z",
+      "side": 1,
+      "message": "Nit: does this compile? DeviceConfig doesn\u0027t exist in AOSP, right? Also should it be @link instead of @Link?",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1e177e_f0abdac3",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-28T07:06:16Z",
+      "side": 1,
+      "message": "Do we think that there will be things we need to fetch that are not strings? Or does DeviceConfig only provide strings?",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2430d6_4a692111",
+        "filename": "packages/NetworkStack/src/android/net/util/NetworkStackUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-28T07:06:16Z",
+      "side": 1,
+      "message": "Do you need anything else to be able to call into the DeviceConfig API? For example, does calling that API take a Context pointer? If so, then I think this method will need a Context as well.",
+      "revId": "d6456fe9ee2df6671b110233a082d43f48016147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
