@@ -21,6 +21,7 @@ from collections import defaultdict
 import os
 import sys
 import re
+import functools
 
 # Names of flags recognized by the `hiddenapi` tool.
 FLAG_WHITELIST = "whitelist"
@@ -32,8 +33,23 @@ FLAG_CORE_PLATFORM_API = "core-platform-api"
 FLAG_PUBLIC_API = "public-api"
 FLAG_SYSTEM_API = "system-api"
 FLAG_TEST_API = "test-api"
+FLAG_GREYLIST_PACKAGES = "greylist-packages"
 
-# List of all known flags.
+# List containing all the flags recognized by the `hiddenapi` tool.
+COMMAND_LINE_FLAGS = [
+    FLAG_WHITELIST,
+    FLAG_GREYLIST,
+    FLAG_BLACKLIST,
+    FLAG_GREYLIST_MAX_O,
+    FLAG_GREYLIST_MAX_P,
+    FLAG_CORE_PLATFORM_API,
+    FLAG_PUBLIC_API,
+    FLAG_SYSTEM_API,
+    FLAG_TEST_API,
+    FLAG_GREYLIST_PACKAGES,
+]
+
+# List of all flags representing a type of API list.
 FLAGS_API_LIST = [
     FLAG_WHITELIST,
     FLAG_GREYLIST,
@@ -41,7 +57,7 @@ FLAGS_API_LIST = [
     FLAG_GREYLIST_MAX_O,
     FLAG_GREYLIST_MAX_P,
 ]
-ALL_FLAGS = FLAGS_API_LIST + [
+ALL_SIGNATURE_FLAGS = FLAGS_API_LIST + [
     FLAG_CORE_PLATFORM_API,
     FLAG_PUBLIC_API,
     FLAG_SYSTEM_API,
@@ -49,7 +65,16 @@ ALL_FLAGS = FLAGS_API_LIST + [
     ]
 
 FLAGS_API_LIST_SET = set(FLAGS_API_LIST)
-ALL_FLAGS_SET = set(ALL_FLAGS)
+ALL_SIGNATURE_FLAGS_SET = set(ALL_SIGNATURE_FLAGS)
+
+# List of all flags which correspond to files containing package names
+ALL_PACKAGE_FLAGS = [FLAG_GREYLIST_PACKAGES]
+
+# Dict mapping the package file to the API list signatures in that package
+# should belong to
+PACKAGE_FLAG_TO_LIST = {
+    FLAG_GREYLIST_PACKAGES: FLAG_GREYLIST,
+}
 
 # Suffix used in command line args to express that only known and
 # otherwise unassigned entries should be assign the given flag.
@@ -78,6 +103,9 @@ SERIALIZATION_REGEX = re.compile(r'.*->(' + '|'.join(SERIALIZATION_PATTERNS) + r
 HAS_NO_API_LIST_ASSIGNED = lambda api, flags: not FLAGS_API_LIST_SET.intersection(flags)
 IS_SERIALIZATION = lambda api, flags: SERIALIZATION_REGEX.match(api)
 
+# Regex used to match the package name of an api.
+PACKAGE_NAME_REGEX = re.compile(r'^L([a-z/0-9_]+[a-z0-9_])')
+
 def get_args():
     """Parses command line arguments.
 
@@ -89,7 +117,7 @@ def get_args():
     parser.add_argument('--csv', nargs='*', default=[], metavar='CSV_FILE',
         help='CSV files to be merged into output')
 
-    for flag in ALL_FLAGS:
+    for flag in COMMAND_LINE_FLAGS:
         ignore_conflicts_flag = flag + FLAG_IGNORE_CONFLICTS_SUFFIX
         parser.add_argument('--' + flag, dest=flag, nargs='*', default=[], metavar='TXT_FILE',
             help='lists of entries with flag "' + flag + '"')
@@ -128,6 +156,22 @@ def write_lines(filename, lines):
     with open(filename, 'w') as f:
         f.writelines(lines)
 
+
+def extract_package(signature):
+    """Extracts the package from a signature.
+
+    Args:
+        signature (string): JNI signature of a method or field.
+
+    Returns:
+        The package name of the class containing the field/method.
+    """
+    match = PACKAGE_NAME_REGEX.match(signature)
+    if not match:
+        return None
+    return match.group(1).replace('/', '.')
+
+
 class FlagsDict:
     def __init__(self):
         self._dict_keyset = set()
@@ -144,12 +188,12 @@ class FlagsDict:
 
     def _check_flags_set(self, flags_subset, source):
         assert isinstance(flags_subset, set)
-        assert flags_subset.issubset(ALL_FLAGS_SET), (
+        assert flags_subset.issubset(ALL_SIGNATURE_FLAGS_SET), (
             "Error processing: {}\n"
             "The following flags were not recognized: \n"
             "{}\n"
             "Please visit go/hiddenapi for more information.").format(
-                source, "\n".join(flags_subset - ALL_FLAGS_SET))
+                source, "\n".join(flags_subset - ALL_SIGNATURE_FLAGS_SET))
 
     def filter_apis(self, filter_fn):
         """Returns APIs which match a given predicate.
@@ -206,7 +250,7 @@ class FlagsDict:
         self._dict_keyset.update([ csv[0] for csv in csv_values ])
 
         # Check that all flags are known.
-        csv_flags = set(reduce(lambda x, y: set(x).union(y), [ csv[1:] for csv in csv_values ], []))
+        csv_flags = set(functools.reduce(lambda x, y: set(x).union(y), [ csv[1:] for csv in csv_values ], []))
         self._check_flags_set(csv_flags, source)
 
         # Iterate over all CSV lines, find entry in dict and append flags to it.
@@ -222,7 +266,7 @@ class FlagsDict:
         """Assigns a flag to given subset of entries.
 
         Args:
-            flag (string): One of ALL_FLAGS.
+            flag (string): One of ALL_SIG.
             apis (set): Subset of APIs to receive the flag.
             source (string): Origin of `entries_subset`. Will be printed in error messages.
 
@@ -259,16 +303,26 @@ def main(argv):
     flags.assign_flag(FLAG_WHITELIST, flags.filter_apis(IS_SERIALIZATION))
 
     # (2) Merge text files with a known flag into the dictionary.
-    for flag in ALL_FLAGS:
+    for flag in ALL_SIGNATURE_FLAGS:
         for filename in args[flag]:
             flags.assign_flag(flag, read_lines(filename), filename)
+
+    # Mark third party APIs as greylist (or some other list, as specified in the
+    # PACKAGE_FLAG_TO_LIST dictionary)
+    for package_flag in ALL_PACKAGE_FLAGS:
+        for filename in args[package_flag]:
+            packages_needing_list = set(read_lines(filename))
+            should_add_signature_to_list = lambda sig,_: extract_package(
+                sig) in packages_needing_list
+        valid_entries = flags.filter_apis(should_add_signature_to_list)
+        flags.assign_flag(PACKAGE_FLAG_TO_LIST[package_flag], valid_entries)
 
     # Merge text files where conflicts should be ignored.
     # This will only assign the given flag if:
     # (a) the entry exists, and
     # (b) it has not been assigned any other flag.
     # Because of (b), this must run after all strict assignments have been performed.
-    for flag in ALL_FLAGS:
+    for flag in ALL_SIGNATURE_FLAGS:
         for filename in args[flag + FLAG_IGNORE_CONFLICTS_SUFFIX]:
             valid_entries = flags.get_valid_subset_of_unassigned_apis(read_lines(filename))
             flags.assign_flag(flag, valid_entries, filename)
