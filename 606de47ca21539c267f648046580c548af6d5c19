@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1e923e90_ec4e8a08",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5aedc2_0f192581",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04071ff5_e1232aa8",
         "filename": "services/net/java/android/net/IpMemoryStore.java",
         "patchSetId": 1
@@ -92,6 +116,30 @@
       "revId": "606de47ca21539c267f648046580c548af6d5c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853aefbe_891b932a",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "Thanks for pointing out. I add two unit tests to verify this. Done.",
+      "parentUuid": "04071ff5_e1232aa8",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 81
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0ef83c15_573518ac",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "Thanks for advising new method.",
+      "parentUuid": "54626227_c7db2be3",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 30
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ba58d2_985a6d3d",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 1
@@ -259,6 +331,54 @@
     },
     {
       "key": {
+        "uuid": "c1be729c_521ed376",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "How about \"enqueueRequest\"? I also add more explanation here to clarify how this API works.",
+      "parentUuid": "2dcfe9aa_c73463bb",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f39171_dac82635",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "ah, you\u0027re correct, that\u0027s the problem. I found that we still need to encapsulate one abstract function for both child classes. Since we have different implementation in both child classes for variable mTailNode.getAndUpdate(). So here I keep this, please take a look at the new patch. Thanks.",
+      "parentUuid": "39ba58d2_985a6d3d",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 91
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e1b73e7_dbf65251",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 1
@@ -279,6 +399,30 @@
       "revId": "606de47ca21539c267f648046580c548af6d5c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199b977d_b26fbdf6",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T03:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e1b73e7_dbf65251",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
