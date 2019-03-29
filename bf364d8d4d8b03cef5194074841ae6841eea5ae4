@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4728fd84_92254a3c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2561,
+      "author": {
+        "id": 1006780
+      },
+      "writtenOn": "2019-03-29T17:53:35Z",
+      "side": 1,
+      "message": "can we add TODOs to unhide in a future platform release? (since Tycho is expected to set these)",
+      "revId": "bf364d8d4d8b03cef5194074841ae6841eea5ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
