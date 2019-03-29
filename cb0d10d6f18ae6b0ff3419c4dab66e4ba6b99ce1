@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7d6e853c_8fe1972b",
+        "filename": "config/hiddenapi-greylist-packages.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T18:14:45Z",
+      "side": 1,
+      "message": "Ok, thanks for double checking",
+      "parentUuid": "c50e0f17_09be79dd",
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7abb65e2_d7ef5daf",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
