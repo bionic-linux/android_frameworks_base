@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "8ac6c028_412595c2",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "I think \"enqueueRequest\" does not well indicate that the request will either be run immediately, or queued if it\u0027s not. I\u0027d prefer \"runWhenServiceReady\".",
+      "parentUuid": "c1be729c_521ed376",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "606de47ca21539c267f648046580c548af6d5c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e1b73e7_dbf65251",
         "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
         "patchSetId": 1

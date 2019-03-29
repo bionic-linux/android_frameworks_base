@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6d7d779_7f0696f7",
+        "filename": "packages/NetworkStack/src/android/net/NetworkStackIpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "I think Jean meant that you don\u0027t need an AtomicReference, you can just call:\ncb.accept(mService)\n\ndirectly, since mService is final and initialized at construction.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b598f94_51215ae9",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "Can this stay private ? I can\u0027t find where it\u0027s used outside of this class.",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2334a80c_53729fed",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "store might be null, this would NPE with some of the current code. How about something like:\nif (store \u003d\u003d null) {\n  Log.e(TAG, \"Error fetching IpMemoryStore\", exception);\n  return null;\n}\n\ncb.accept(store);\nreturn store;",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2247bc_98dc3250",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "This refers to the implementation in IpMemoryStore.java: how about moving it there ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab227675_66e55346",
+        "filename": "services/net/java/android/net/IpMemoryStoreClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "I think we should have at least a generic message here",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5483a73_f163dbdf",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "Can you verify that the arguments match what was passed previously ?",
+      "range": {
+        "startLine": 92,
+        "startChar": 62,
+        "endLine": 92,
+        "endChar": 81
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b59dfd_832f7894",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "A Blob TEST_DATA constant could be useful to avoid repeating it in other tests",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 75
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af3fdb5_0ab62c92",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "How about \"TEST_OTHER_DATA_NAME\" ?",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 71
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21f34ca_5ec9f6ba",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "Could you instead do something like:\n(in the class attributes)\n@Captor ArgumentCaptor\u003cIIpMemoryStoreCallbacks\u003e mCbCaptor;\n\n(in this test)\ndoNothing().when(mNetworkStackClient).fetchIpMemoryStore(mCbCaptor.capture());\n\nThen instead of Thread.sleep(1000):\nmCbCaptor.get().onIpMemoryStoreFetched(mMockService);\n--\u003e Then just verify in order\n\nThis avoids flakyness in the test in case setup takes more than 200ms, and avoids waiting for 1s for the test to succeed.",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 63
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a67c52_aa758fe0",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "This is used in other tests: how about factoring it out to a TEST_NETWORK_ATTRIBUTES constant ?",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 50
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd18dc9c_4d2736e6",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-03-29T07:10:14Z",
+      "side": 1,
+      "message": "Is this needed considering that it\u0027s already verified in inOrder ?",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 80
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
