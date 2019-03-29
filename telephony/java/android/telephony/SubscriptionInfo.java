@@ -16,6 +16,7 @@
 
 package android.telephony;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
@@ -189,6 +190,12 @@ public class SubscriptionInfo implements Parcelable {
     private int mSubscriptionType;
 
     /**
+     * The carrier package that manages this subscription.
+     * <p>The managing package can be empty if the managing package is unknown.
+     */
+    private String mCarrierPackageName;
+
+    /**
      * @hide
      */
     public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
@@ -224,6 +231,22 @@ public class SubscriptionInfo implements Parcelable {
             @Nullable UiccAccessRule[] accessRules, String cardString, int cardId,
             boolean isOpportunistic, @Nullable String groupUUID, boolean isMetered,
             boolean isGroupDisabled, int carrierId, int profileClass, int subType) {
+       this(id, iccId, simSlotIndex, displayName, carrierName, nameSource, iconTint, number,
+               roaming, icon, mcc, mnc, countryIso, isEmbedded, accessRules, cardString,
+               cardId, isOpportunistic, groupUUID, isMetered, isGroupDisabled, carrierId,
+               profileClass, subType, "");
+    }
+
+    /**
+     * @hide
+     */
+    public SubscriptionInfo(int id, String iccId, int simSlotIndex, CharSequence displayName,
+            CharSequence carrierName, int nameSource, int iconTint, String number, int roaming,
+            Bitmap icon, String mcc, String mnc, String countryIso, boolean isEmbedded,
+            @Nullable UiccAccessRule[] accessRules, String cardString, int cardId,
+            boolean isOpportunistic, @Nullable String groupUUID, boolean isMetered,
+            boolean isGroupDisabled, int carrierId, int profileClass, int subType,
+            String carrierPackageName) {
         this.mId = id;
         this.mIccId = iccId;
         this.mSimSlotIndex = simSlotIndex;
@@ -248,6 +271,7 @@ public class SubscriptionInfo implements Parcelable {
         this.mCarrierId = carrierId;
         this.mProfileClass = profileClass;
         this.mSubscriptionType = subType;
+        this.mCarrierPackageName = carrierPackageName;
     }
 
     /**
@@ -484,6 +508,18 @@ public class SubscriptionInfo implements Parcelable {
     }
 
     /**
+     * Returns the name of the last known package that was authorized to manage this subscription,
+     * if known; otherwise, it returns an empty String.
+     *
+     * @return the carrier package name.
+     * @hide
+     */
+    @NonNull
+    public String getCarrierPackageName() {
+        return mCarrierPackageName;
+    }
+
+    /**
      * @return the profile class of this subscription.
      * @hide
      */
@@ -628,11 +664,13 @@ public class SubscriptionInfo implements Parcelable {
             int carrierid = source.readInt();
             int profileClass = source.readInt();
             int subType = source.readInt();
+            String carrierPackageName = source.readString();
 
             return new SubscriptionInfo(id, iccId, simSlotIndex, displayName, carrierName,
                     nameSource, iconTint, number, dataRoaming, iconBitmap, mcc, mnc, countryIso,
                     isEmbedded, accessRules, cardString, cardId, isOpportunistic, groupUUID,
-                    isMetered, isGroupDisabled, carrierid, profileClass, subType);
+                    isMetered, isGroupDisabled, carrierid, profileClass, subType,
+                    carrierPackageName);
         }
 
         @Override
@@ -667,6 +705,7 @@ public class SubscriptionInfo implements Parcelable {
         dest.writeInt(mCarrierId);
         dest.writeInt(mProfileClass);
         dest.writeInt(mSubscriptionType);
+        dest.writeString(mCarrierPackageName);
     }
 
     @Override
