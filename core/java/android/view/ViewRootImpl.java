@@ -2262,8 +2262,12 @@ public final class ViewRootImpl implements ViewParent,
 
     @Override
     public void onDescendantInvalidated(@NonNull View child, @NonNull View descendant) {
+<<<<<<< HEAD   (3bd28b Merge "Ringtone picker to handle RESULT_CANCELED from Add ri)
         // TODO: Re-enable after camera is fixed or consider targetSdk checking this
         // checkThread();
+=======
+        checkThread();
+>>>>>>> CHANGE (78704e Add missing checkThread)
         if ((descendant.mPrivateFlags & PFLAG_DRAW_ANIMATION) != 0) {
             mIsAnimating = true;
         }
