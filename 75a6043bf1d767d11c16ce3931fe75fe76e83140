@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b83dfea8_37810002",
+        "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-03-29T05:51:14Z",
+      "side": 1,
+      "message": "Jean\u0027s suggestion looks good to me. In fact, this arrangement might even reduce the number of instructions per packet, on average (typical size vs speed trade-off for code generators).\n\nFor ease of review, let\u0027s submit this change as is, and try to optimize this sequence in a followup change.",
+      "parentUuid": "c5e272af_de8ea229",
+      "range": {
+        "startLine": 1179,
+        "startChar": 12,
+        "endLine": 1179,
+        "endChar": 96
+      },
+      "revId": "75a6043bf1d767d11c16ce3931fe75fe76e83140",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8822299_152163fd",
         "filename": "packages/NetworkStack/src/android/net/apf/ApfFilter.java",
         "patchSetId": 4
