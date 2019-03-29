@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "fd8a08f1_8f56fc0f",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T07:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1ec4974_504292fb",
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe68d2c_d7cfbe30",
         "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 4
@@ -173,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "6c393898_6405e266",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T07:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70db2072_d082ab85",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 89
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d67686e_be6610e1",
         "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
         "patchSetId": 4
@@ -193,6 +235,30 @@
       "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f3aa02_0c79a8f7",
+        "filename": "tests/net/java/android/net/ipmemorystore/ParcelableTests.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-03-29T07:59:57Z",
+      "side": 1,
+      "message": "Good suggestion. Should make this point more clear. Done.",
+      "parentUuid": "8d67686e_be6610e1",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "552b6224d7819c185781cc4e38ab72af3f3ff540",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
