@@ -2262,8 +2262,7 @@ public final class ViewRootImpl implements ViewParent,
 
     @Override
     public void onDescendantInvalidated(@NonNull View child, @NonNull View descendant) {
-        // TODO: Re-enable after camera is fixed or consider targetSdk checking this
-        // checkThread();
+        checkThread();
         if ((descendant.mPrivateFlags & PFLAG_DRAW_ANIMATION) != 0) {
             mIsAnimating = true;
         }
