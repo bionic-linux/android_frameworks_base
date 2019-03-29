@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46b516e_d68b61e6",
+        "filename": "config/greylist-packages.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T15:53:01Z",
+      "side": 1,
+      "message": "Give the file the same prefix: hiddenapi-greylist-packages.txt",
+      "revId": "3ef19a1b56c81bea9922d18aadeae03b8e1f4851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22a024c_7e30e06b",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T15:53:01Z",
+      "side": 1,
+      "message": "This is pretty restrictive. We might not have other symbols than that in our package names but OEMs might. According to spec you can definitely count on it not having\n\n  ; - \u003c \u003e\n\nYou have to separate the class name from the package name, but that\u0027s easy. You actually don\u0027t even need a regex. Just split it using \u0027;-\u003e\u0027. It\u0027s guaranteed to be unique in the string.",
+      "range": {
+        "startLine": 107,
+        "startChar": 35,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "3ef19a1b56c81bea9922d18aadeae03b8e1f4851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890873a6_67f27caa",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T15:53:01Z",
+      "side": 1,
+      "message": "You could follow this example. It creates --whitelist-ignore, --greylist-ignore, etc automatically. You would save yourself creating COMMAND_LINE_FLAGS, ALL_SIGNATURE_FLAGS and PACKAGE_FLAG_TO_LIST, and we\u0027d automatically get flags for all the api lists.",
+      "revId": "3ef19a1b56c81bea9922d18aadeae03b8e1f4851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93070ff6_24bb4a4c",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T15:53:01Z",
+      "side": 1,
+      "message": "two empty lines",
+      "revId": "3ef19a1b56c81bea9922d18aadeae03b8e1f4851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50cd3d3_00dcc974",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-03-29T15:53:01Z",
+      "side": 1,
+      "message": "two empty lines",
+      "revId": "3ef19a1b56c81bea9922d18aadeae03b8e1f4851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
