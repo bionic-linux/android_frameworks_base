@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c50e0f17_09be79dd",
+        "filename": "config/hiddenapi-greylist-packages.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-29T18:13:18Z",
+      "side": 1,
+      "message": "It shouldn\u0027t. readline only returns strings ending in \u0027\\n\u0027, unless the file does not end in a newline - therefore readlines will stop when hitting an empty string (and not return it).\nhttps://docs.python.org/3/tutorial/inputoutput.html?highlight\u003dreadlines#methods-of-file-objects\n\nAlso pre-commit hook complains about files not ending in a newline.",
+      "parentUuid": "9536d157_c4165269",
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7abb65e2_d7ef5daf",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2921be7_1b9be814",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-29T18:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7abb65e2_d7ef5daf",
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4ef07994_87c36fc4",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-29T18:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07976f80_adaa3769",
+      "range": {
+        "startLine": 247,
+        "startChar": 34,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "754a97e7_83dae6f9",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "66bfc7d8_1d48954c",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-29T18:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754a97e7_83dae6f9",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 71
+      },
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98ace58e_710d4bc6",
         "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
         "patchSetId": 2
@@ -102,6 +186,30 @@
       "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582746f0_4147a8cf",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-03-29T18:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ace58e_710d4bc6",
+      "range": {
+        "startLine": 299,
+        "startChar": 26,
+        "endLine": 299,
+        "endChar": 30
+      },
+      "revId": "cb0d10d6f18ae6b0ff3419c4dab66e4ba6b99ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
