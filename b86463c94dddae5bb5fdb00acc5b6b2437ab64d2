@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73c538d_aa3fd536",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T03:00:33Z",
+      "side": 1,
+      "message": "For clarity, can you remove this?",
+      "range": {
+        "startLine": 426,
+        "startChar": 0,
+        "endLine": 426,
+        "endChar": 45
+      },
+      "revId": "b86463c94dddae5bb5fdb00acc5b6b2437ab64d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08d1d14_493c50c9",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-03-29T03:00:33Z",
+      "side": 1,
+      "message": "Can you remove this?",
+      "range": {
+        "startLine": 446,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 20
+      },
+      "revId": "b86463c94dddae5bb5fdb00acc5b6b2437ab64d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
