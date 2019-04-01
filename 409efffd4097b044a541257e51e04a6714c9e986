@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c4d95b0_1b391b02",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-04-01T14:24:38Z",
+      "side": 1,
+      "message": "Had to add this extra check - several APIs get marked as whitelist before this point thru --public-api",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 59
+      },
+      "revId": "409efffd4097b044a541257e51e04a6714c9e986",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
