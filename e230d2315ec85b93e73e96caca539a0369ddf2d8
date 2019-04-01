@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5fe31af_6e6638ce",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T08:06:23Z",
+      "side": 1,
+      "message": "Nit: technically I think (?) this is not parcelable, so maybe toBinderInterface or something similar would me more correct ? The primary usage of the returned value is not to be parcelable I think, it\u0027s to be usable as a cross-process callback.\n\nI\u0027m also thinking that if you make this class an interface and this method static, this could allow defining the callback as lambda:\ntoBinderInterface((status, l2Key, blob) -\u003e whatever);\nJust an idea, just keep the current design if you prefer.",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 53
+      },
+      "revId": "e230d2315ec85b93e73e96caca539a0369ddf2d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
