@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c49e144_c4b4b346",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-01T06:23:29Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "95b22aa7_766d63bc",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea5c8ab_349ea35c",
         "filename": "services/net/java/android/net/IpMemoryStore.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bf8906_89da0a2e",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-01T06:23:29Z",
+      "side": 1,
+      "message": "rewrite the comments, please take a look.",
+      "parentUuid": "6ea5c8ab_349ea35c",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 47
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "759d6c2f_fe71dcdb",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-01T06:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f06072_b2a67d97",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa61056_bd033ddf",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61064b85_a360489c",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-01T06:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa61056_bd033ddf",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 22
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
