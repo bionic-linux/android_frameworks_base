@@ -70,6 +70,30 @@
       "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e207d1e_a0a1af23",
+        "filename": "core/xsd/permission.xsd",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1187124
+      },
+      "writtenOn": "2019-04-01T04:46:45Z",
+      "side": 1,
+      "message": "I thought that \"sequence\" was the most appropriate of \"all\", \"choice\" and \"sequence\".\nIf these elements are in any order and any count, I will change to \"\u003cxs:choice minOccurs\u003d\"0\" maxOccurs\u003d\"unbounded\"\u003e",
+      "parentUuid": "87e83002_fe049d90",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "79f306ec0657da334cdb36cfcdfa1a6944c0519d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
