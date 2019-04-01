@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b22aa7_766d63bc",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this English\n\nSuggested wording, assuming this is what you mean :\n\nIf the IpMemoryStore is ready, this function will run the request synchronously. Otherwise it will enqueue the request for execution immediately after the service becomes ready. The requests are guaranteed to be executed in the order they are sumbitted.\n\nDoes this match what you meant ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea5c8ab_349ea35c",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "I also don\u0027t understand this",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 47
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f06072_b2a67d97",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "Sorry I also don\u0027t understand this English",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 64
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa61056_bd033ddf",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "hint ?",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 22
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690145bb_0a85d5a1",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "This is awesome, thanks",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "9c21e16709bdae97cf846caac569100e6709bb3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

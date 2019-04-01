@@ -568,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "5d2133a9_79ec8930",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-01T00:16:33Z",
+      "side": 1,
+      "message": "This is because stable parcelables don\u0027t even implement equals() \u003e.\u003e\n\nYou could create NetworkAttribute objects from the parcelables and test for that. They do implement equals() correctly.",
+      "parentUuid": "02318974_3f3eed82",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 50
+      },
+      "revId": "0f4397c21bf0614a0bb6f29b10b2aa2f8b2078c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd18dc9c_4d2736e6",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 3
