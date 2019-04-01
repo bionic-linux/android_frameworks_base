@@ -22,6 +22,53 @@
       "revId": "385ccb05c834053c3867d7750e2d9eb71f0adcf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83b6aed_4e3eefde",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T07:24:25Z",
+      "side": 1,
+      "message": "Also, can you document what should be used for infinite leases: leave this field null ? Or have some special value to differentiate between \"infinite lease\" and \"server did not specify expiry\" ?\nPersonally I\u0027d prefer option 2, with Long.MAX_VALUE meaning \"infinite lease\"",
+      "parentUuid": "dcb7eeea_8e842b0f",
+      "range": {
+        "startLine": 76,
+        "startChar": 38,
+        "endLine": 76,
+        "endChar": 61
+      },
+      "revId": "385ccb05c834053c3867d7750e2d9eb71f0adcf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d268d388_bd30037c",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T07:24:25Z",
+      "side": 1,
+      "message": "Should we duplicate the other documentation comments here ? (\"lease expiry timestamp in milliseconds since epoch\" and explain the difference between null (default) and infinite lease if any)",
+      "range": {
+        "startLine": 230,
+        "startChar": 11,
+        "endLine": 230,
+        "endChar": 65
+      },
+      "revId": "385ccb05c834053c3867d7750e2d9eb71f0adcf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
