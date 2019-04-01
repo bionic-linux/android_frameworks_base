@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "921de566_c9b174e9",
+        "filename": "config/hiddenapi-greylist-max-o.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 120257,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-04-01T14:30:14Z",
+      "side": 0,
+      "message": "Hmm, how did these get here in the first place? We thought this whole package was whitelisted in P but it wasn\u0027t. These two methods were dark grey. We will need to keep it that way because an app using it would not work on P anyway.",
+      "revId": "f3736d67f85fd9a48451e165c70e16b1c3fa6856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
