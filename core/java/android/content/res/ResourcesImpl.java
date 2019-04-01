@@ -1345,7 +1345,7 @@ public class ResourcesImpl {
                 @StyleRes int defStyleRes) {
             Trace.traceBegin(Trace.TRACE_TAG_RESOURCES, "obtainStyledAttributes");
             TypedArray array;
-            synchronized (mKey) {
+            //synchronized (mKey) {
                 final int len = attrs.length;
                 array = TypedArray.obtain(wrapper.getResources(), len);
 
@@ -1358,7 +1358,7 @@ public class ResourcesImpl {
                         array.mDataAddress, array.mIndicesAddress);
                 array.mTheme = wrapper;
                 array.mXml = parser;
-            }
+            //}
             Trace.traceEnd(Trace.TRACE_TAG_RESOURCES);
             return array;
         }

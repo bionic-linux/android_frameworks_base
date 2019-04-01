@@ -469,7 +469,7 @@ public final class AssetManager implements AutoCloseable {
     boolean getResourceValue(@AnyRes int resId, int densityDpi, @NonNull TypedValue outValue,
             boolean resolveRefs) {
         Preconditions.checkNotNull(outValue, "outValue");
-        synchronized (this) {
+        //synchronized (this) {
             ensureValidLocked();
             final int cookie = nativeGetResourceValue(
                     mObject, resId, (short) densityDpi, outValue, resolveRefs);
@@ -485,7 +485,7 @@ public final class AssetManager implements AutoCloseable {
                 outValue.string = mApkAssets[cookie - 1].getStringFromPool(outValue.data);
             }
             return true;
-        }
+        //}
     }
 
     /**
@@ -995,14 +995,14 @@ public final class AssetManager implements AutoCloseable {
             @Nullable XmlBlock.Parser parser, @NonNull int[] inAttrs, long outValuesAddress,
             long outIndicesAddress) {
         Preconditions.checkNotNull(inAttrs, "inAttrs");
-        synchronized (this) {
+        //synchronized (this) {
             // Need to synchronize on AssetManager because we will be accessing
             // the native implementation of AssetManager.
             ensureValidLocked();
             nativeApplyStyle(mObject, themePtr, defStyleAttr, defStyleRes,
                     parser != null ? parser.mParseState : 0, inAttrs, outValuesAddress,
                     outIndicesAddress);
-        }
+        //}
     }
 
     @UnsupportedAppUsage

@@ -48,11 +48,12 @@ import java.util.Arrays;
 public class TypedArray {
 
     static TypedArray obtain(Resources res, int len) {
-        TypedArray attrs = res.mTypedArrayPool.acquire();
-        if (attrs == null) {
-            attrs = new TypedArray(res);
-        }
+        // TypedArray attrs = res.mTypedArrayPool.acquire();
+        // if (attrs == null) {
+        //     attrs = new TypedArray(res);
+        // }
 
+        TypedArray attrs = new TypedArray(res);
         attrs.mRecycled = false;
         // Reset the assets, which may have changed due to configuration changes
         // or further resource loading.
@@ -1161,7 +1162,7 @@ public class TypedArray {
         mTheme = null;
         mAssets = null;
 
-        mResources.mTypedArrayPool.release(this);
+        //mResources.mTypedArrayPool.release(this);
     }
 
     /**
