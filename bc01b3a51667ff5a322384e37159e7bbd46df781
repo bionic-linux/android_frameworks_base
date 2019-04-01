@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39fdefa5_286e03ec",
+        "filename": "core/java/android/bluetooth/BluetoothHearingAid.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-01T15:42:51Z",
+      "side": 1,
+      "message": "doUnbind()",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 9
+      },
+      "revId": "bc01b3a51667ff5a322384e37159e7bbd46df781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
