@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d64c8be_e55655ff",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T07:50:12Z",
+      "side": 1,
+      "message": "How about using a parcelable here (L2Info.aidl ?), is there other reasons not to use it apart from the fact that it\u0027s annoying to work with parcelables ?\n\nI think the IpMemoryStoreClient could still have a method called setL2KeyAndGroupHint, but it could put both in a parcel before sending it. This way if we change L2Info later, we don\u0027t need to maintain multiple overrides of setL2KeyAndGroupHint in IIpMemoryStore.aidl.\nLet me know what you think.",
+      "range": {
+        "startLine": 530,
+        "startChar": 20,
+        "endLine": 530,
+        "endChar": 40
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfec6b9_526ab295",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T07:50:12Z",
+      "side": 1,
+      "message": "I\u0027m not too clear on why this should be saved here and in handleIPv4Success, and not in some other places: I guess I\u0027d probably get it if I spent time looking at IpClient lifecycle, but I think a comment would help make it easier to understand.",
+      "range": {
+        "startLine": 1559,
+        "startChar": 20,
+        "endLine": 1559,
+        "endChar": 51
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db15298d_a0555ed8",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-01T07:50:12Z",
+      "side": 1,
+      "message": "RunningState is a child of StartedState which has the same handler, and this switch returns NOT_HANDLED for commands that are not in the list, so maybe this case is not needed ?",
+      "range": {
+        "startLine": 1574,
+        "startChar": 16,
+        "endLine": 1583,
+        "endChar": 17
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
