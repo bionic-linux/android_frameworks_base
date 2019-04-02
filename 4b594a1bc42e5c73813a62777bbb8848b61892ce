@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1886eb2_a8d0c590",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-02T03:03:45Z",
+      "side": 1,
+      "message": "I think YAGNI. The L2Key is stored as a string in the database and all the memory store APIs rely on it being a string. The group hint, while also a string in the DB, is a lot less pervasive, but likewise, I can\u0027t see a world where we would want to change it transparently. If we ever want to change it, we almost certainly will want to deprecate the old column.",
+      "parentUuid": "0d64c8be_e55655ff",
+      "range": {
+        "startLine": 530,
+        "startChar": 20,
+        "endLine": 530,
+        "endChar": 40
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adfec6b9_526ab295",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1c563b1f_043d607f",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-02T03:03:45Z",
+      "side": 1,
+      "message": "Added a comment explaining why it\u0027s needed here.\n\nI can\u0027t write a comment saying why it\u0027s not needed in other places for two reasons :\n\n- I can\u0027t be sure it\u0027s true.\n- There is no way such a comment will stay up-to-date.\n- There is no point writing a comment here about what should be done elsewhere, because a future implementor by nature is not looking at \"somewhere else\"",
+      "parentUuid": "adfec6b9_526ab295",
+      "range": {
+        "startLine": 1559,
+        "startChar": 20,
+        "endLine": 1559,
+        "endChar": 51
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db15298d_a0555ed8",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ca8725_33106595",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-02T03:03:45Z",
+      "side": 1,
+      "message": "Done. The comment migrated to the parent state and was updated accordingly, WDYT ?",
+      "parentUuid": "db15298d_a0555ed8",
+      "range": {
+        "startLine": 1574,
+        "startChar": 16,
+        "endLine": 1583,
+        "endChar": 17
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
