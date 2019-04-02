@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3dd8ab9c_787ca83d",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-02T07:29:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1886eb2_a8d0c590",
+      "range": {
+        "startLine": 530,
+        "startChar": 20,
+        "endLine": 530,
+        "endChar": 40
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adfec6b9_526ab295",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Done. The comment migrated to the parent state and was updated accordingly, WDYT ?",
       "parentUuid": "db15298d_a0555ed8",
+      "range": {
+        "startLine": 1574,
+        "startChar": 16,
+        "endLine": 1583,
+        "endChar": 17
+      },
+      "revId": "4b594a1bc42e5c73813a62777bbb8848b61892ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "450ea12b_9deda581",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-02T07:29:56Z",
+      "side": 1,
+      "message": "Looks good - thanks !",
+      "parentUuid": "57ca8725_33106595",
       "range": {
         "startLine": 1574,
         "startChar": 16,
