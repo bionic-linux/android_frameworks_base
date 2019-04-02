@@ -45,6 +45,30 @@
       "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26ce932_b0616e25",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2019-04-02T22:05:32Z",
+      "side": 1,
+      "message": "BluetoothA2dp.java is the one I\u0027m referring to having the mService \u003d null in the finally block.",
+      "parentUuid": "a6ed3325_3715a2b3",
+      "range": {
+        "startLine": 391,
+        "startChar": 19,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
