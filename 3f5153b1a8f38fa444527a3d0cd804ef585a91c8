@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8727f1bf_c1a22083",
+        "filename": "core/java/android/bluetooth/BluetoothAvrcpController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2019-04-02T21:36:24Z",
+      "side": 1,
+      "message": "We shouldn\u0027t catch general Exception, why not RemoteException?\n\nI see it was like that before too, but I wanted to point it out.",
+      "range": {
+        "startLine": 160,
+        "startChar": 20,
+        "endLine": 160,
+        "endChar": 33
+      },
+      "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6ed3325_3715a2b3",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2019-04-02T21:36:24Z",
+      "side": 1,
+      "message": "why is this set to null here vs in finally like in the other files?  I think it\u0027ll accomplish the same thing, I just like consistency.",
+      "range": {
+        "startLine": 391,
+        "startChar": 19,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
