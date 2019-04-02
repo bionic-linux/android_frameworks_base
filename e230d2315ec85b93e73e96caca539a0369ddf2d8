@@ -70,6 +70,30 @@
       "revId": "e230d2315ec85b93e73e96caca539a0369ddf2d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51576925_6e74d539",
+        "filename": "services/net/java/android/net/ipmemorystore/OnBlobRetrievedListener.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-02T07:58:53Z",
+      "side": 1,
+      "message": "Chatted offline.\nThanks, your point makes a lot of sense. Done, PTAL.",
+      "parentUuid": "8c528d6d_91cefe3e",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 53
+      },
+      "revId": "e230d2315ec85b93e73e96caca539a0369ddf2d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
