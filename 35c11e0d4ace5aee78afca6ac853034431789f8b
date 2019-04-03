@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "136baeab_b67b1b1d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2576,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-03T21:59:29Z",
+      "side": 1,
+      "message": "If we can\u0027t make this claim, then callers (such as SysUi) have to first get info about the subscription, then check if it\u0027s in a group, and then treat it differently. Ideally they should be able to start operating on groups, so from a usability standpoint it makes a massive difference. This is part of the reason I don\u0027t like the group ID ever being null instead of being a random value... people can\u0027t actually iterate through subscriptions by group; however, I made this patch assuming we were going to fix that problem (it\u0027s not even hard to fix). Since I don\u0027t think we\u0027re going to fix it in Q, I\u0027ll remove this and file another bug.",
+      "parentUuid": "2f925e5c_68acabc7",
+      "range": {
+        "startLine": 2575,
+        "startChar": 77,
+        "endLine": 2576,
+        "endChar": 48
+      },
+      "revId": "35c11e0d4ace5aee78afca6ac853034431789f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f625818a_2a7cf74c",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 6
