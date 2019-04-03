@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f925e5c_68acabc7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2576,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-04-03T03:37:50Z",
+      "side": 1,
+      "message": "not grouped and grouped with itself are different. it creates ambiguity on what happens if unset. is there a reason we want to put it this way?",
+      "range": {
+        "startLine": 2575,
+        "startChar": 77,
+        "endLine": 2576,
+        "endChar": 48
+      },
+      "revId": "35c11e0d4ace5aee78afca6ac853034431789f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f625818a_2a7cf74c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-04-03T03:37:50Z",
+      "side": 1,
+      "message": "it makes more sense is more consistent with other configs to be null",
+      "range": {
+        "startLine": 2993,
+        "startChar": 64,
+        "endLine": 2993,
+        "endChar": 66
+      },
+      "revId": "35c11e0d4ace5aee78afca6ac853034431789f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
