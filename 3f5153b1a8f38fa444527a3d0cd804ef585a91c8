@@ -69,6 +69,30 @@
       "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7925cbf4_103a8e56",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-03T16:57:06Z",
+      "side": 1,
+      "message": "How about we take this chance to move all binder related methods (doBind, doUnbind, mServiceListner etc..) to a separate class e.g. BluetoothProfileConnector to fix the different coding style problem in each profile?",
+      "parentUuid": "b26ce932_b0616e25",
+      "range": {
+        "startLine": 391,
+        "startChar": 19,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "3f5153b1a8f38fa444527a3d0cd804ef585a91c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
