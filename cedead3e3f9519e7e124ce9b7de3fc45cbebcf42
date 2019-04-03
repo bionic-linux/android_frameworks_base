@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d068168a_906a5645",
+        "filename": "packages/NetworkStack/tests/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-03T09:25:09Z",
+      "side": 1,
+      "message": "notice that one error when running atest, should be android.net.NetworkStackIpMemoryStore instead?",
+      "revId": "cedead3e3f9519e7e124ce9b7de3fc45cbebcf42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
