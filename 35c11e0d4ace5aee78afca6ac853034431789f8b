@@ -69,6 +69,30 @@
       "revId": "35c11e0d4ace5aee78afca6ac853034431789f8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3d6876_d4784a92",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-04T00:40:24Z",
+      "side": 1,
+      "message": "Actually I think for Strings there are more \"\" than null. There are 48 empty string instances and 3 null instances (KEY_CONFIG_IMS_PACKAGE_OVERRIDE_STRING, KEY_CALL_REDIRECTION_SERVICE_COMPONENT_NAME_STRING, IMSI_KEY_DOWNLOAD_URL_STRING).",
+      "parentUuid": "f625818a_2a7cf74c",
+      "range": {
+        "startLine": 2993,
+        "startChar": 64,
+        "endLine": 2993,
+        "endChar": 66
+      },
+      "revId": "35c11e0d4ace5aee78afca6ac853034431789f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
