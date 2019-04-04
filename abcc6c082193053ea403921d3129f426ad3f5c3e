@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7fb8059_c7ba106f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-04-04T02:20:22Z",
+      "side": 1,
+      "message": "nit",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "abcc6c082193053ea403921d3129f426ad3f5c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7659036_96284d63",
         "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
         "patchSetId": 2
