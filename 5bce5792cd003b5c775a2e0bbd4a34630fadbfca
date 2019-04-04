@@ -16,6 +16,24 @@
       "revId": "5bce5792cd003b5c775a2e0bbd4a34630fadbfca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f1514f_ce29c309",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-04-04T01:01:56Z",
+      "side": 1,
+      "message": "Done. Was trying to avoid keeping state across multiple possible attempts.\n\nI think it\u0027s logically identical, based on the continue-if-resource-unavailable statement; it skips right back if openUdpEncapsulationSocket() is not successful.",
+      "parentUuid": "5105a79b_46f0f4d6",
+      "revId": "5bce5792cd003b5c775a2e0bbd4a34630fadbfca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
