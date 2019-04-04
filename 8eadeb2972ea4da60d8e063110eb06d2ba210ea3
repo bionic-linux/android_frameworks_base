@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20746810_1ed4c04e",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1220282
+      },
+      "writtenOn": "2019-04-04T17:24:49Z",
+      "side": 1,
+      "message": "else { ... }",
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
