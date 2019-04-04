@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7659036_96284d63",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-04T02:16:24Z",
+      "side": 1,
+      "message": "I think that to be representative, this should be finding a free port in the same way as the service does, with an IPv4-only socket. Something like this maybe?\n\n    try {\n        FileDescriptor fd \u003d Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);\n        Os.bind(fd, InetAddress.getByName(\"0.0.0.0\"), 0);\n        return ((InetSocketAddress) Os.getsockname(fd)).getPort();\n    } finally {\n        Os.close(fd);\n    }",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 45
+      },
+      "revId": "abcc6c082193053ea403921d3129f426ad3f5c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
