@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9f6c7a_410aea30",
+        "filename": "packages/NetworkStack/tests/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-05T07:22:49Z",
+      "side": 1,
+      "message": "Actually this is not being exercised since mIpMemoryStore is not injected anywhere.\nBut I guess that\u0027s part of the TODO to fix once storing is implemented ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 44,
+        "endLine": 100,
+        "endChar": 58
+      },
+      "revId": "3cab290648a0a0f6e5f6c64c2225b3661aabba2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
