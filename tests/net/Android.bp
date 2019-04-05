@@ -19,7 +19,6 @@ java_defaults {
         "android.test.mock",
     ],
     jni_libs: [
-        "ld-android",
         "libartbase",
         "libbacktrace",
         "libbase",
@@ -49,7 +48,6 @@ java_defaults {
         "libselinux",
         "libui",
         "libutils",
-        "libvintf",
         "libvndksupport",
         "libtinyxml2",
         "libunwindstack",
