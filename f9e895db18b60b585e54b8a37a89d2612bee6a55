@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7906f89_4d295f84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-04-08T09:19:00Z",
+      "side": 1,
+      "message": "Nit: this may probably need to run NetworkStackTests",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "f9e895db18b60b585e54b8a37a89d2612bee6a55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
