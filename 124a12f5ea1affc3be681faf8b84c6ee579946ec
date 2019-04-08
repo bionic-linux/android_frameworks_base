@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7263c80_ad0cac38",
+        "filename": "services/net/java/android/net/ipmemorystore/OnNetworkAttributesRetrievedListener.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-08T09:49:08Z",
+      "side": 1,
+      "message": "Should we also check if the networkAttributesParcelable is null or not? For example, IpMemoryStoreService has an exception when retrieving the network attributes, will return:\n\nlistener.onNetworkAttributesRetrieved(makeStatus(ERROR_GENERIC), l2Key, null);\n\nthen new NetworkAttributes(networkAttributesParcelable) will cause a reference with null object.",
+      "revId": "124a12f5ea1affc3be681faf8b84c6ee579946ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
