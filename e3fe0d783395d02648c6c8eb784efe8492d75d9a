@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3a9ad00_2a2c83e3",
+        "filename": "core/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-04-08T18:46:59Z",
+      "side": 1,
+      "message": "where is this enforced? I can find android.Manifest.permission.NFC enforced but not this one?\n\nSame question for setOffHostForService",
+      "range": {
+        "startLine": 364,
+        "startChar": 5,
+        "endLine": 364,
+        "endChar": 69
+      },
+      "revId": "e3fe0d783395d02648c6c8eb784efe8492d75d9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
