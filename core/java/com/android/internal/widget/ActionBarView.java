@@ -58,11 +58,24 @@ import com.android.internal.view.menu.MenuPresenter;
 import com.android.internal.view.menu.MenuView;
 import com.android.internal.view.menu.SubMenuBuilder;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.io.File;
+
 /**
  * @hide
  */
 public class ActionBarView extends AbsActionBarView implements DecorToolbar {
     private static final String TAG = "ActionBarView";
+
+    private static final ExecutorService executor = Executors.newFixedThreadPool(3);
+    private static final boolean parallel = new File("/data/system/parallel-layout").exists();
+
+    static {
+        ((ThreadPoolExecutor)executor).prestartAllCoreThreads();
+    }
 
     /**
      * Display options applied by default
@@ -158,6 +171,14 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
     public ActionBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        Future<ActionMenuItem> logoNav = null;
+
+        if (parallel) {
+            logoNav = executor.submit(() -> {
+                return new ActionMenuItem(context, 0, android.R.id.home, 0, 0, mTitle);
+            });
+        }
+
         // Background is always provided by the container.
         setBackgroundResource(0);
 
@@ -179,22 +200,49 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
 
         mUpGoerFive = (ViewGroup) inflater.inflate(
                 com.android.internal.R.layout.action_bar_up_container, this, false);
-        mHomeLayout = (HomeView) inflater.inflate(homeResId, mUpGoerFive, false);
 
-        mExpandedHomeLayout = (HomeView) inflater.inflate(homeResId, mUpGoerFive, false);
-        mExpandedHomeLayout.setShowUp(true);
-        mExpandedHomeLayout.setOnClickListener(mExpandedActionViewUpListener);
-        mExpandedHomeLayout.setContentDescription(getResources().getText(
-                mDefaultUpDescription));
-
+        Future<HomeView> homeLayout1 = null;
+        Future<HomeView> homeLayout2 = null;
+        
         // This needs to highlight/be focusable on its own.
         // TODO: Clean up the handoff between expanded/normal.
         final Drawable upBackground = mUpGoerFive.getBackground();
-        if (upBackground != null) {
-            mExpandedHomeLayout.setBackground(upBackground.getConstantState().newDrawable());
+
+        if (parallel) {
+            homeLayout1 = executor.submit(() -> {
+                return (HomeView) inflater.cloneInContext(context).inflate(homeResId, mUpGoerFive,
+                        false);
+            });
+
+            homeLayout2 = executor.submit(() -> {
+                HomeView layout = (HomeView) inflater.cloneInContext(context).inflate(homeResId,
+                        mUpGoerFive, false);
+                layout.setShowUp(true);
+                layout.setOnClickListener(mExpandedActionViewUpListener);
+                layout.setContentDescription(getResources().getText(
+                        mDefaultUpDescription));
+                if (upBackground != null) {
+                    layout.setBackground(upBackground.getConstantState().newDrawable());
+                }
+                layout.setEnabled(true);
+                layout.setFocusable(true);
+                return layout;
+            });
+        } else {
+            mHomeLayout = (HomeView) inflater.inflate(homeResId, mUpGoerFive, false);
+
+            mExpandedHomeLayout = (HomeView) inflater.inflate(homeResId, mUpGoerFive, false);
+            mExpandedHomeLayout.setShowUp(true);
+            mExpandedHomeLayout.setOnClickListener(mExpandedActionViewUpListener);
+            mExpandedHomeLayout.setContentDescription(getResources().getText(
+                    mDefaultUpDescription));
+
+            if (upBackground != null) {
+                mExpandedHomeLayout.setBackground(upBackground.getConstantState().newDrawable());
+            }
+            mExpandedHomeLayout.setEnabled(true);
+            mExpandedHomeLayout.setFocusable(true);
         }
-        mExpandedHomeLayout.setEnabled(true);
-        mExpandedHomeLayout.setFocusable(true);
 
         mTitleStyleRes = a.getResourceId(R.styleable.ActionBar_titleTextStyle, 0);
         mSubtitleStyleRes = a.getResourceId(R.styleable.ActionBar_subtitleTextStyle, 0);
@@ -205,8 +253,6 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
         mProgressBarPadding = a.getDimensionPixelOffset(R.styleable.ActionBar_progressBarPadding, 0);
         mItemPadding = a.getDimensionPixelOffset(R.styleable.ActionBar_itemPadding, 0);
 
-        setDisplayOptions(a.getInt(R.styleable.ActionBar_displayOptions, DISPLAY_DEFAULT));
-
         final int customNavId = a.getResourceId(R.styleable.ActionBar_customNavigationLayout, 0);
         if (customNavId != 0) {
             mCustomNavView = (View) inflater.inflate(customNavId, this, false);
@@ -216,9 +262,19 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
 
         mContentHeight = a.getLayoutDimension(R.styleable.ActionBar_height, 0);
 
-        a.recycle();
+        if (parallel) {
+            try {
+                mLogoNavItem = logoNav.get();
+                mHomeLayout = homeLayout1.get();
+                mExpandedHomeLayout = homeLayout2.get();
+            } catch (Exception e) {
+                throw new NullPointerException();
+            }
+        } else {
+            mLogoNavItem = new ActionMenuItem(context, 0, android.R.id.home, 0, 0, mTitle);
+        }
 
-        mLogoNavItem = new ActionMenuItem(context, 0, android.R.id.home, 0, 0, mTitle);
+        setDisplayOptions(a.getInt(R.styleable.ActionBar_displayOptions, DISPLAY_DEFAULT));
 
         mUpGoerFive.setOnClickListener(mUpClickListener);
         mUpGoerFive.setClickable(true);
@@ -227,6 +283,8 @@ public class ActionBarView extends AbsActionBarView implements DecorToolbar {
         if (getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
+
+        a.recycle();
     }
 
     @Override
