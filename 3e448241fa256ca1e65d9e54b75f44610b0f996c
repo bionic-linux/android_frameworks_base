@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64be14ca_b61cd498",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthCdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "why not\n    @IntRange(from \u003d SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to \u003d SIGNAL_STRENGTH_GREAT)",
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f49de51_0c2aedd8",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthGsm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf656d5_c6d256de",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1b3c8a_1c9117f1",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthNr.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015c5a5f_9fb23b12",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b89eb7_21052a7f",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthTdscdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 145,
+        "startChar": 77,
+        "endLine": 145,
+        "endChar": 88
+      },
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a8f0e8_56330b55",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce056b21_83583d58",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthWcdma.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2019-04-09T17:53:14Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 202,
+        "startChar": 77,
+        "endLine": 202,
+        "endChar": 88
+      },
+      "revId": "3e448241fa256ca1e65d9e54b75f44610b0f996c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
