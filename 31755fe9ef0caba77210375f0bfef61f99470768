@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "a663b0c6_1113d051",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T14:15:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6141a399_4a8b1cb3",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3c34380_b5b34951",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T14:15:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6bddd9_1e51afe7",
+      "range": {
+        "startLine": 120,
+        "startChar": 59,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe3ef54_a4da1c43",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 2
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e91d074_7bf6641a",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T14:15:59Z",
+      "side": 1,
+      "message": "Added a comment to explain why there\u0027s a local copy.",
+      "parentUuid": "2fe3ef54_a4da1c43",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "479ad45d_3b3760f3",
         "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2019-04-09T07:39:18Z",
       "side": 1,
       "message": "Not sure if this could cause the test to hang a little since the CV is not opened - but the timeout is 1s and it\u0027s a failure case, so I guess that\u0027s fine either way.",
+      "range": {
+        "startLine": 253,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 61
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd788179_4feec6cf",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T14:15:59Z",
+      "side": 1,
+      "message": "I could rewrite it as:\n\n            final boolean wasRemoved \u003d mCreatedNetworkMonitors.remove(this);\n            mQuitCv.open();\n            assertFalse(wasRemoved);\n\nbut that has the problem that the test may pass and then get an exception later, resulting in confusing messages like this:\n\n[1/21] com.android.server.connectivity.NetworkMonitorTest#testIsCaptivePortal_IgnorePortals: PASSED (1.886s)\nRUNNER ERROR: Instrumentation run failed due to \u0027Process crashed.\u0027\n\nLeft as is.",
+      "parentUuid": "479ad45d_3b3760f3",
       "range": {
         "startLine": 253,
         "startChar": 12,
