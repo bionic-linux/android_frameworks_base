@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6141a399_4a8b1cb3",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T07:39:18Z",
+      "side": 1,
+      "message": "WrappedNetworkMonitor to avoid casting to call awaitQuit ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 34
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6bddd9_1e51afe7",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T07:39:18Z",
+      "side": 1,
+      "message": "Maybe put the assignments in @Before to ensure that they are reset between each test (so it\u0027s easy to find failing tests)",
+      "range": {
+        "startLine": 120,
+        "startChar": 59,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe3ef54_a4da1c43",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T07:39:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary since HashSet is directly iterable",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 46
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479ad45d_3b3760f3",
+        "filename": "packages/NetworkStack/tests/src/com/android/server/connectivity/NetworkMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T07:39:18Z",
+      "side": 1,
+      "message": "Not sure if this could cause the test to hang a little since the CV is not opened - but the timeout is 1s and it\u0027s a failure case, so I guess that\u0027s fine either way.",
+      "range": {
+        "startLine": 253,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 61
+      },
+      "revId": "31755fe9ef0caba77210375f0bfef61f99470768",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
