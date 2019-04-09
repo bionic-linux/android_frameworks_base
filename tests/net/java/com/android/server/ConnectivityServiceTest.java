@@ -4867,7 +4867,9 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         mCellNetworkAgent.connect(false);
         waitForIdle();
-        // CS tells netd about the empty DNS config for this network.
+        verify(mMockDnsResolver, times(1)).createNetworkCache(
+                eq(mCellNetworkAgent.getNetwork().netId));
+        // CS tells dnsresolver about the empty DNS config for this network.
         verify(mMockDnsResolver, atLeastOnce()).setResolverConfiguration(
                 anyInt(), eq(EMPTY_STRING_ARRAY), any(), any(), eq(""),
                 eq(EMPTY_STRING_ARRAY), eq(EMPTY_STRING_ARRAY));
@@ -4957,6 +4959,8 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.sendLinkProperties(cellLp);
         mCellNetworkAgent.connect(false);
         waitForIdle();
+        verify(mMockDnsResolver, times(1)).createNetworkCache(
+                eq(mCellNetworkAgent.getNetwork().netId));
         verify(mMockDnsResolver, atLeastOnce()).setResolverConfiguration(
                 anyInt(), mStringArrayCaptor.capture(), any(), any(),
                 eq(""), tlsServers.capture(), eq(EMPTY_STRING_ARRAY));
@@ -5830,12 +5834,17 @@ public class ConnectivityServiceTest {
         cellLp.addRoute(new RouteInfo(myIpv6, null, MOBILE_IFNAME));
         reset(mNetworkManagementService);
         reset(mMockDnsResolver);
+        reset(mMockNetd);
         when(mNetworkManagementService.getInterfaceConfig(CLAT_PREFIX + MOBILE_IFNAME))
                 .thenReturn(getClatInterfaceConfig(myIpv4));
 
         // Connect with ipv6 link properties. Expect prefix discovery to be started.
         mCellNetworkAgent.sendLinkProperties(cellLp);
         mCellNetworkAgent.connect(true);
+
+        verify(mMockNetd, times(1)).networkCreatePhysical(eq(cellNetId), anyInt());
+        verify(mMockDnsResolver, times(1)).createNetworkCache(eq(cellNetId));
+
         networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         verify(mMockDnsResolver, times(1)).startPrefix64Discovery(cellNetId);
 
@@ -5851,7 +5860,6 @@ public class ConnectivityServiceTest {
         verify(mMockDnsResolver, atLeastOnce()).setResolverConfiguration(
                 eq(cellNetId), eq(EMPTY_STRING_ARRAY), any(), any(),
                 eq(""), eq(EMPTY_STRING_ARRAY), eq(EMPTY_STRING_ARRAY));
-
         verifyNoMoreInteractions(mMockNetd);
         verifyNoMoreInteractions(mMockDnsResolver);
         reset(mMockNetd);
@@ -6029,7 +6037,7 @@ public class ConnectivityServiceTest {
         verify(mNetworkManagementService, times(0)).removeIdleTimer(eq(MOBILE_IFNAME));
         verify(mMockNetd, times(1)).networkDestroy(eq(mCellNetworkAgent.getNetwork().netId));
         verify(mMockDnsResolver, times(1))
-                .clearResolverConfiguration(eq(mCellNetworkAgent.getNetwork().netId));
+                .destroyNetworkCache(eq(mCellNetworkAgent.getNetwork().netId));
 
         // Disconnect wifi
         ConditionVariable cv = waitForConnectivityBroadcasts(1);

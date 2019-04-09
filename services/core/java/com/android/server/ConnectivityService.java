@@ -3064,6 +3064,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // long time.
             try {
                 mNetd.networkDestroy(nai.network.netId);
+                mDnsResolver.destroyNetworkCache(nai.network.netId);
             } catch (RemoteException | ServiceSpecificException e) {
                 loge("Exception destroying network: " + e);
             }
@@ -6476,14 +6477,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             try {
                 // This should never fail.  Specifying an already in use NetID will cause failure.
                 if (networkAgent.isVPN()) {
-                    mNMS.createVirtualNetwork(networkAgent.network.netId,
+                    mNetd.networkCreateVpn(networkAgent.network.netId,
                             (networkAgent.networkMisc == null ||
                                 !networkAgent.networkMisc.allowBypass));
                 } else {
-                    mNMS.createPhysicalNetwork(networkAgent.network.netId,
+                    mNetd.networkCreatePhysical(networkAgent.network.netId,
                             getNetworkPermission(networkAgent.networkCapabilities));
                 }
-            } catch (Exception e) {
+                mDnsResolver.createNetworkCache(networkAgent.network.netId);
+            } catch (RemoteException | ServiceSpecificException e) {
                 loge("Error creating network " + networkAgent.network.netId + ": "
                         + e.getMessage());
                 return;
