@@ -671,6 +671,22 @@ public class CarrierConfigManager {
     public static final String KEY_CARRIER_DATA_SERVICE_WLAN_PACKAGE_OVERRIDE_STRING
             = "carrier_data_service_wlan_package_override_string";
 
+    /**
+     * Override the device's configuration for the cellular data service class to use
+     * for this SIM card.
+     * @hide
+     */
+    public static final String KEY_CARRIER_DATA_SERVICE_WWAN_CLASS_OVERRIDE_STRING =
+            "carrier_data_service_wwan_class_override_string";
+
+    /**
+     * Override the device's configuration for the IWLAN data service class to use
+     * for this SIM card.
+     * @hide
+     */
+    public static final String KEY_CARRIER_DATA_SERVICE_WLAN_CLASS_OVERRIDE_STRING =
+            "carrier_data_service_wlan_class_override_string";
+
     /** Flag specifying whether VoLTE TTY is supported. */
     public static final String KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
             = "carrier_volte_tty_supported_bool";

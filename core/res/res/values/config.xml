@@ -2752,6 +2752,14 @@
          empty string is passed in -->
     <string name="config_wlan_data_service_package" translatable="false"></string>
 
+    <!-- Cellular data service class name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_wwan_data_service_class" translatable="false">com.android.internal.telephony.dataconnection.CellularDataService</string>
+
+        <!-- IWLAN data service class name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_wlan_data_service_class" translatable="false"></string>
+
     <bool name="config_networkSamplingWakesDevice">true</bool>
 
     <!-- Home (non-roaming) values for CDMA roaming indicator.
