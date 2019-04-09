@@ -29,6 +29,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
@@ -82,7 +83,7 @@ public final class EntitlementManagerTest {
     @Mock private MockableSystemProperties mSystemProperties;
     @Mock private Resources mResources;
     @Mock private SharedLog mLog;
-    @Mock private EntitlementManager.OnUiEntitlementFailedListener mEntitlementFailedListener;
+    @Mock private EntitlementManager.OnEntitlementCallback mEntitlementCallback;
 
     // Like so many Android system APIs, these cannot be mocked because it is marked final.
     // We have to use the real versions.
@@ -161,7 +162,7 @@ public final class EntitlementManagerTest {
         mSM = new TestStateMachine();
         mEnMgr = new WrappedEntitlementManager(mMockContext, mSM, mLog, EVENT_EM_UPDATE,
                 mSystemProperties);
-        mEnMgr.setOnUiEntitlementFailedListener(mEntitlementFailedListener);
+        mEnMgr.setOnEntitlementCallback(mEntitlementCallback);
         mEnMgr.updateConfiguration(
                 new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID));
     }
@@ -186,7 +187,7 @@ public final class EntitlementManagerTest {
         // Act like the CarrierConfigManager is present and ready unless told otherwise.
         when(mContext.getSystemService(Context.CARRIER_CONFIG_SERVICE))
                 .thenReturn(mCarrierConfigManager);
-        when(mCarrierConfigManager.getConfig()).thenReturn(mCarrierConfig);
+        when(mCarrierConfigManager.getConfigForSubId(anyInt())).thenReturn(mCarrierConfig);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL, true);
         mCarrierConfig.putBoolean(CarrierConfigManager.KEY_CARRIER_CONFIG_APPLIED_BOOL, true);
     }
@@ -476,16 +477,25 @@ public final class EntitlementManagerTest {
         setupForRequiredProvisioning();
         mEnMgr.updateConfiguration(new TetheringConfiguration(mMockContext, mLog,
                 INVALID_SUBSCRIPTION_ID));
-        verify(mEntitlementFailedListener, times(0)).onUiEntitlementFailed(TETHERING_WIFI);
+        verify(mEntitlementCallback, times(0)).onUiEntitlementFailed(TETHERING_WIFI);
         mEnMgr.fakeEntitlementResult = TETHER_ERROR_PROVISION_FAILED;
         mEnMgr.notifyUpstream(true);
         mLooper.dispatchAll();
         mEnMgr.startProvisioningIfNeeded(TETHERING_WIFI, true);
         mLooper.dispatchAll();
         assertEquals(1, mEnMgr.uiProvisionCount);
-        verify(mEntitlementFailedListener, times(1)).onUiEntitlementFailed(TETHERING_WIFI);
+        verify(mEntitlementCallback, times(1)).onUiEntitlementFailed(TETHERING_WIFI);
     }
 
+    @Test
+    public void testEntitlementCallbackWhenUiProvisioningStarting() {
+        setupForRequiredProvisioning();
+        mEnMgr.updateConfiguration(new TetheringConfiguration(mMockContext, mLog,
+                INVALID_SUBSCRIPTION_ID));
+        mEnMgr.startProvisioningIfNeeded(TETHERING_WIFI, true);
+        mLooper.dispatchAll();
+        verify(mEntitlementCallback, times(1)).onBeforeProvisioning();
+    }
 
     public class TestStateMachine extends StateMachine {
         public final ArrayList<Message> messages = new ArrayList<>();

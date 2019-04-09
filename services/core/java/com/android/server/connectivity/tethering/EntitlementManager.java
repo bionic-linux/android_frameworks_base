@@ -76,6 +76,7 @@ public class EntitlementManager {
     protected static final String DISABLE_PROVISIONING_SYSPROP_KEY = "net.tethering.noprovisioning";
     private static final String ACTION_PROVISIONING_ALARM =
             "com.android.server.connectivity.tethering.PROVISIONING_RECHECK_ALARM";
+    private static final String EXTRA_SUBID = "subId";
 
     // {@link ComponentName} of the Service used to run tether provisioning.
     private static final ComponentName TETHER_SERVICE = ComponentName.unflattenFromString(
@@ -108,7 +109,7 @@ public class EntitlementManager {
     private boolean mCellularUpstreamPermitted = true;
     private boolean mUsingCellularAsUpstream = false;
     private boolean mNeedReRunProvisioningUi = false;
-    private OnUiEntitlementFailedListener mListener;
+    private OnEntitlementCallback mCallback;
 
     public EntitlementManager(Context ctx, StateMachine tetherMasterSM, SharedLog log,
             int permissionChangeMessageCode, MockableSystemProperties systemProperties) {
@@ -129,18 +130,23 @@ public class EntitlementManager {
                 null, mHandler);
     }
 
-    public void setOnUiEntitlementFailedListener(final OnUiEntitlementFailedListener listener) {
-        mListener = listener;
+    public void setOnEntitlementCallback(final OnEntitlementCallback callback) {
+        mCallback = callback;
     }
 
-    /** Callback fired when UI entitlement failed. */
-    public interface OnUiEntitlementFailedListener {
+    /** Callback fired when entitlement status changed */
+    public static class OnEntitlementCallback {
         /**
          * Ui entitlement check fails in |downstream|.
          *
          * @param downstream  tethering type from ConnectivityManager.TETHERING_{@code *}.
          */
-        void onUiEntitlementFailed(int downstream);
+        public void onUiEntitlementFailed(int downstream) {}
+
+        /**
+         * Callback to update something which would decide whether provisioning is needed.
+         */
+        public void onBeforeProvisioning() {}
     }
 
     /**
@@ -176,6 +182,7 @@ public class EntitlementManager {
 
         if (!mCurrentTethers.contains(type)) mCurrentTethers.add(type);
 
+        mCallback.onBeforeProvisioning();
         if (isTetherProvisioningRequired()) {
             // If provisioning is required and the result is not available yet,
             // cellular upstream should not be allowed.
@@ -237,6 +244,7 @@ public class EntitlementManager {
         mUsingCellularAsUpstream = isCellular;
 
         if (mUsingCellularAsUpstream) {
+            mCallback.onBeforeProvisioning();
             handleMaybeRunProvisioning();
         }
     }
@@ -320,7 +328,7 @@ public class EntitlementManager {
                 .getSystemService(Context.CARRIER_CONFIG_SERVICE);
         if (configManager == null) return null;
 
-        final PersistableBundle carrierConfig = configManager.getConfig();
+        final PersistableBundle carrierConfig = configManager.getConfigForSubId(mConfig.subId);
 
         if (CarrierConfigManager.isConfigForIdentifiedCarrier(carrierConfig)) {
             return carrierConfig;
@@ -359,6 +367,7 @@ public class EntitlementManager {
         intent.putExtra(EXTRA_ADD_TETHER_TYPE, type);
         intent.putExtra(EXTRA_RUN_PROVISION, true);
         intent.putExtra(EXTRA_PROVISION_CALLBACK, receiver);
+        intent.putExtra(EXTRA_SUBID, mConfig.subId);
         intent.setComponent(TETHER_SERVICE);
         final long ident = Binder.clearCallingIdentity();
         try {
@@ -386,6 +395,7 @@ public class EntitlementManager {
         Intent intent = new Intent(Settings.ACTION_TETHER_PROVISIONING);
         intent.putExtra(EXTRA_ADD_TETHER_TYPE, type);
         intent.putExtra(EXTRA_PROVISION_CALLBACK, receiver);
+        intent.putExtra(EXTRA_SUBID, mConfig.subId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final long ident = Binder.clearCallingIdentity();
         try {
@@ -578,7 +588,7 @@ public class EntitlementManager {
                 int updatedCacheValue = updateEntitlementCacheValue(type, resultCode);
                 addDownstreamMapping(type, updatedCacheValue);
                 if (updatedCacheValue == TETHER_ERROR_PROVISION_FAILED && notifyFail) {
-                    mListener.onUiEntitlementFailed(type);
+                    mCallback.onUiEntitlementFailed(type);
                 }
                 if (receiver != null) receiver.send(updatedCacheValue, null);
             }
