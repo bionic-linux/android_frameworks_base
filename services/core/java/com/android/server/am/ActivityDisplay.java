@@ -164,8 +164,11 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
         // TODO: Keep in sync with WindowContainer.positionChildAt(), once we change that to adjust
         //       the position internally, also update the logic here
         mStacks.remove(stack);
-        final int insertPosition = getTopInsertPosition(stack, position);
+        int insertPosition = getTopInsertPosition(stack, position);
         mStacks.add(insertPosition, stack);
+        if (insertPosition == mStacks.size() - 1) {
+            insertPosition = POSITION_TOP;
+        }
         mWindowContainerController.positionChildAt(stack.getWindowContainerController(),
                 insertPosition);
         onStackOrderChanged();
