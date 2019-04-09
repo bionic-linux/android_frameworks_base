@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3db472_cd2ffdc8",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3299,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T08:07:01Z",
+      "side": 1,
+      "message": "We need to be careful with this. The TAG_SYSTEM_xxx value fall into two categories: tags that are used by the system when impersonating an application (e.g., NetworkMonitor when an app forces revalidation using reportNetworkConnectivity), and tags that are used by the system when performing traffic for its own purposes (e.g., DHCP).\n\nThe first of these two types of tags is associated with the impersonated application\u0027s UID. It is clearly documented that there can only be 256 of these tags; the trafficstats documentation says:\n\n\u003d\u003d\u003d\u003d\u003d\nTags between 0xFFFFFF00 and 0xFFFFFFFF are reserved and used internally by system services like DownloadManager when performing traffic on behalf of an application.\n\u003d\u003d\u003d\u003d\u003d\n\nSo I don\u0027t think we can say that the range is 4096 entries long.\n\nOne option would be to keep the existing tags as is, and use a very short range like 16 or 32 values, saying that new tag values are allowed in this range *only* if those tag values are used for traffic that is impersonating app traffic (so, for example, TAG_SYSTEM_DHCP and TAG_SYSTEM_DHCP_SERVER would not be allowed into this range if they weren\u0027t already). If the range is full then we can define another one in the future (or just reserve the 16 or 32 next values informally). Maybe you could call this TAG_SYSTEM_IMPERSONATION_RANGE.\n\nThen, in code that is shared between system and networkstack (either TrafficStatsConstants, or, if you move those constants to another AIDL file, that file), you would define another range (TAG_NETWOKSTACK_RANGE, perhaps?) that was clearly documented to include *only* traffic that is not for impersonation (such as DHCP and DHCP_SERVER).\n\nNot sure what to do about DHCP and DHCP_SERVER. These don\u0027t use impersonation. So perhaps we could just move these to the new non-impersonation range. But perhaps that\u0027s too much change for now and we can just leave them as is.",
+      "range": {
+        "startLine": 3299,
+        "startChar": 59,
+        "endLine": 3299,
+        "endChar": 64
+      },
+      "revId": "2b8325334389eb4d3ae8b39cd66ac0428f130fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd9d6fe_a4ee85a0",
+        "filename": "core/java/com/android/internal/util/TrafficStatsConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T08:07:01Z",
+      "side": 1,
+      "message": "Should these be AIDL constants instead?",
+      "revId": "2b8325334389eb4d3ae8b39cd66ac0428f130fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
