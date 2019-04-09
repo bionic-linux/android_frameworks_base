@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7d3d7a_93fa221b",
+        "filename": "tests/net/smoketest/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T01:17:53Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t qualify this as a hack, it\u0027s a valid test (checking that the library is well-formed). It\u0027s unfortunate that we have to do this though.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "2e6c6716278caaa2fb39ffdf379e73b03b68d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d515d7_7ad98083",
+        "filename": "tests/net/smoketest/java/SmokeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-09T01:17:53Z",
+      "side": 1,
+      "message": "Nit: I think System.loadLibrary could just go in here - otherwise this is not actually testing loading the JNI",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "2e6c6716278caaa2fb39ffdf379e73b03b68d4d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
