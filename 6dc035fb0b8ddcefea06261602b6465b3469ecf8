@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce854c2b_32d402a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "remove WIP?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6899ced0_5280d18a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "I think it\u0027s the time to link it.",
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75794581_0537fde1",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "It looks like you are using 2 fds in 1 connection object.\nIs it simpler if we just create/retry 2 connections inside checkGetConnectionOwnerUid?",
+      "range": {
+        "startLine": 93,
+        "startChar": 30,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09323fe0_90781b39",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "It is inconsistent that we have sk and socket at the same time.\nMaybe it is better we use socket here?",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3016ddb_fb7fd99c",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "is it better to use v4LocalAddress and v6LocalAddress?",
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8001a0ec_7b042270",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "Can we hide this into Connection class?",
+      "range": {
+        "startLine": 147,
+        "startChar": 27,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c20330f_565e365f",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-09T04:40:08Z",
+      "side": 1,
+      "message": "If it is truely fixed, then @Test should be added back to enable it.",
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
