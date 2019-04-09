@@ -90,6 +90,31 @@ public class TrafficStats {
     public static final int UID_TETHERING = -5;
 
     /**
+     * Tag values between these ranges are reserved for system use.
+     */
+    // Give 12 bits to the system as 256 might become too narrow in the future.
+    // Also don't use the top 16 ones to give some leeway in the future to use these "more"
+    // special values, as these tags don't particularly need them.
+    // Please note there is no enforcement of these constants, so do not rely on them to
+    // determine that the caller is a system caller.
+    /** @hide */
+    @SystemApi
+    public static final int TAG_SYSTEM_RANGE_START = 0xFFFFF000;
+    /** @hide */
+    @SystemApi
+    public static final int TAG_SYSTEM_RANGE_END = 0xFFFFFFF0;
+
+    /**
+     * Tag values between these ranges are reserved for the system network stack.
+     */
+    /** @hide */
+    @SystemApi
+    public static final int TAG_SYSTEM_NETWORK_STACK_RANGE_START = 0xFFFFFF40;
+    /** @hide */
+    @SystemApi
+    public static final int TAG_SYSTEM_NETWORK_STACK_RANGE_END = 0xFFFFFF60;
+
+    /**
      * Default tag value for {@link DownloadManager} traffic.
      *
      * @hide
@@ -126,27 +151,6 @@ public class TrafficStats {
      * @hide
      */
     public static final int TAG_SYSTEM_APP = 0xFFFFFF05;
-
-    /** @hide */
-    @SystemApi
-    @TestApi
-    public static final int TAG_SYSTEM_DHCP = 0xFFFFFF40;
-    /** @hide */
-    public static final int TAG_SYSTEM_NTP = 0xFFFFFF41;
-    /** @hide */
-    @SystemApi
-    @TestApi
-    public static final int TAG_SYSTEM_PROBE = 0xFFFFFF42;
-    /** @hide */
-    public static final int TAG_SYSTEM_NEIGHBOR = 0xFFFFFF43;
-    /** @hide */
-    public static final int TAG_SYSTEM_GPS = 0xFFFFFF44;
-    /** @hide */
-    public static final int TAG_SYSTEM_PAC = 0xFFFFFF45;
-    /** @hide */
-    @SystemApi
-    @TestApi
-    public static final int TAG_SYSTEM_DHCP_SERVER = 0xFFFFFF46;
 
     private static INetworkStatsService sStatsService;
 
