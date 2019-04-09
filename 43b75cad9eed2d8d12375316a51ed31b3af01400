@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3730611c_c1d5f01b",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-09T09:18:07Z",
+      "side": 0,
+      "message": "You probably still want these return statements?",
+      "revId": "43b75cad9eed2d8d12375316a51ed31b3af01400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
