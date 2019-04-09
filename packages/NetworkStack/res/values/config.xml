@@ -2,4 +2,8 @@
 <resources>
     <!-- Captive portal http url -->
     <string name="config_captive_portal_http_url" translatable="false">http://connectivitycheck.gstatic.com/generate_204</string>
+    <!-- Customized default DNS servers IPv4 address -->
+    <string-array name="config_default_dns_servers" translatable="false">
+        <item></item>
+    </string-array>
 </resources>

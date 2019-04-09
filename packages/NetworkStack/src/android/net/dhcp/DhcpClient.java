@@ -66,12 +66,15 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
+import com.android.networkstack.R;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Random;
@@ -498,6 +501,18 @@ public class DhcpClient extends StateMachine {
 
     private void acceptDhcpResults(DhcpResults results, String msg) {
         mDhcpLease = results;
+        if (mDhcpLease.dnsServers.isEmpty()) {
+            // add configured default dns servers
+            String[] dnsServersList =
+                    mContext.getResources().getStringArray(R.array.config_default_dns_servers);
+            for (final String dnsServer : dnsServersList) {
+                try {
+                    mDhcpLease.dnsServers.add(InetAddress.getByName(dnsServer));
+                } catch (UnknownHostException e) {
+                    Log.d(TAG, "Cannot get IP address of host: " + dnsServer, e);
+                }
+            }
+        }
         mOffer = null;
         Log.d(TAG, msg + " lease: " + mDhcpLease);
         notifySuccess();
