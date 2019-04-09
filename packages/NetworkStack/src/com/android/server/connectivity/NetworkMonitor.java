@@ -84,6 +84,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBufferIndices;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.internal.util.TrafficStatsConstants;
 import com.android.networkstack.R;
 
 import java.io.IOException;
@@ -1394,7 +1395,8 @@ public class NetworkMonitor extends StateMachine {
         int httpResponseCode = CaptivePortalProbeResult.FAILED_CODE;
         String redirectUrl = null;
         final Stopwatch probeTimer = new Stopwatch().start();
-        final int oldTag = TrafficStats.getAndSetThreadStatsTag(TrafficStats.TAG_SYSTEM_PROBE);
+        final int oldTag = TrafficStats.getAndSetThreadStatsTag(
+                TrafficStatsConstants.TAG_SYSTEM_PROBE);
         try {
             urlConnection = (HttpURLConnection) mNetwork.openConnection(url);
             urlConnection.setInstanceFollowRedirects(probeType == ValidationProbeEvent.PROBE_PAC);
