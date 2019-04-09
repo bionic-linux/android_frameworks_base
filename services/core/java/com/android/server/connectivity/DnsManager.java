@@ -262,12 +262,6 @@ public class DnsManager {
     }
 
     public void removeNetwork(Network network) {
-        try {
-            mDnsResolver.clearResolverConfiguration(network.netId);
-        } catch (RemoteException | ServiceSpecificException e) {
-            Slog.e(TAG, "Error clearing DNS configuration: " + e);
-            return;
-        }
         mPrivateDnsMap.remove(network.netId);
         mPrivateDnsValidationMap.remove(network.netId);
     }
