@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82763631_ce2e0b02",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "c2528380_82dd1a4b",
+      "range": {
+        "startLine": 223,
+        "startChar": 30,
+        "endLine": 223,
+        "endChar": 38
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4227043a_66f344c7",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a8a00e_f6d75c5c",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4227043a_66f344c7",
+      "range": {
+        "startLine": 300,
+        "startChar": 36,
+        "endLine": 300,
+        "endChar": 44
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d34b64c7_816b5d97",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Yes, updated.",
+      "parentUuid": "90d679de_19e1e3c8",
+      "range": {
+        "startLine": 626,
+        "startChar": 24,
+        "endLine": 626,
+        "endChar": 27
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3654579_e775eb3c",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23fac02_e4424bbf",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Yes, updated. Actually we can reuse the same \"receivePacket()\" function with DhcpRequestingState, both of these two state process the same incoming ACK/NAK packets. Just override the enter() and sendPacket(), to avoid the duplicated code.",
+      "parentUuid": "a3654579_e775eb3c",
+      "range": {
+        "startLine": 1067,
+        "startChar": 30,
+        "endLine": 1067,
+        "endChar": 63
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "e1e8d60a_e053f8a2",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Yes, this indeed makes sense. :)",
+      "parentUuid": "d8ded28a_14f854f8",
+      "range": {
+        "startLine": 624,
+        "startChar": 51,
+        "endLine": 624,
+        "endChar": 62
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa13b82_aed27f40",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "62b76916_d776d39c",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa13b82_aed27f40",
+      "range": {
+        "startLine": 1181,
+        "startChar": 13,
+        "endLine": 1181,
+        "endChar": 41
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74acbd7e_2549b116",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -208,6 +352,30 @@
       "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a73ed8f_d0d11c06",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Oh, yes, since now we just store the expiry in milliseconds, so here we don\u0027t need the cast neither.",
+      "parentUuid": "74acbd7e_2549b116",
+      "range": {
+        "startLine": 1189,
+        "startChar": 32,
+        "endLine": 1189,
+        "endChar": 67
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +461,48 @@
     },
     {
       "key": {
+        "uuid": "6090c911_05d26e70",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Updated.Please take a review for the new patch. Thanks!",
+      "parentUuid": "5945f742_b94e19ad",
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaf8058d_5904356a",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24bd6d10_41e1a776",
+      "range": {
+        "startLine": 1213,
+        "startChar": 84,
+        "endLine": 1213,
+        "endChar": 95
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00da816c_a0110fae",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -313,6 +523,30 @@
       "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3795d72a_59880b1b",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "yes, updated this interface.",
+      "parentUuid": "00da816c_a0110fae",
+      "range": {
+        "startLine": 1575,
+        "startChar": 7,
+        "endLine": 1587,
+        "endChar": 9
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -363,6 +597,30 @@
     },
     {
       "key": {
+        "uuid": "28cadbdd_0adc429b",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b955c23_bac16a78",
+      "range": {
+        "startLine": 1595,
+        "startChar": 29,
+        "endLine": 1595,
+        "endChar": 34
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34432352_ee0f9425",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 1
@@ -398,6 +656,30 @@
       "side": 1,
       "message": "+1, just fire and forget. The memory store will even let you pass null for the listener specifically to support this use case (as opposed to readers where listeners are non-null)",
       "parentUuid": "34432352_ee0f9425",
+      "range": {
+        "startLine": 1603,
+        "startChar": 0,
+        "endLine": 1604,
+        "endChar": 70
+      },
+      "revId": "a260a68c5558a775eef157199dd7bf72b45d4aac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceac5ecd_90cdd7c3",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-09T03:08:38Z",
+      "side": 1,
+      "message": "Yes, we can pass in \"null\" directly. But from the perspective of easier debugging, maybe we can add \"if (DBG)\" here to enable debug log for callback.",
+      "parentUuid": "912193a3_5062c677",
       "range": {
         "startLine": 1603,
         "startChar": 0,
