@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e06dfff_3d9af7b6",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27250,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "Naming nit - exceptions are implicitly an error, so this could just be DnsException not DnsErrorException",
+      "range": {
+        "startLine": 27250,
+        "startChar": 34,
+        "endLine": 27250,
+        "endChar": 51
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c79531_77ecbcb3",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "What does a TLS failure from dns-over-tls look like? I don\u0027t know of any errno that matches this...",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e229fd_86ecd577",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "nit - can be an expression lambda, no need for {}",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0ca4bc_133bd486",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to do synchronous network I/O?",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881a6800_c9ddc42a",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "I know this is only 2 millis, but it\u0027s still extremely weird to see a method that\u0027s supposed to be async calling thread.sleep inline - plus the interrupt handling is wrong. If the current thread is interrupted, this method will silently clear that interrupt and not sleep, and won\u0027t restore the interrupt.",
+      "range": {
+        "startLine": 349,
+        "startChar": 25,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb225cf_d007aad8",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "Isn\u0027t going through the main thread and then back to the user\u0027s executor going to introduce significant latency? The UI thread is pretty busy, especially at startup. For a DNS request that gets fired off early in a process lifetime, this could cause a hundreds of ms delay.",
+      "range": {
+        "startLine": 403,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156bbcc_ec84f6e8",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-09T15:46:34Z",
+      "side": 1,
+      "message": "We really should not call the user\u0027s callback while holding locks... if the callback blocks (which it\u0027s totally allowed to do, it\u0027s running on the app-provided executor) that will cause the cancellationsignal to block in its onCancel method.",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
