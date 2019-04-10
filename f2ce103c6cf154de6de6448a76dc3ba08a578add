@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23ea0f3b_3f35d6d7",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 27250,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e06dfff_3d9af7b6",
+      "range": {
+        "startLine": 27250,
+        "startChar": 34,
+        "endLine": 27250,
+        "endChar": 51
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c79531_77ecbcb3",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57bcbff_5ae0d110",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "Native resolver has not reported any specific error for dns-over-tls, it is treated as generic DNS query error.",
+      "parentUuid": "d7c79531_77ecbcb3",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e4f6a32_8c3e9015",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4e229fd_86ecd577",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 36
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a0ca4bc_133bd486",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2019-04-09T15:46:34Z",
       "side": 1,
       "message": "Isn\u0027t this going to do synchronous network I/O?",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a054a3_c165d794",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "yeah, is is necessary to check connectivity, we probably don\u0027t want to query the connection type which device can\u0027t use.\nAlso add another overload API, then user could choose what they want to use. \nHowever, I guess this one is the most useful one because most of apps only want a async version of getAddressByName...",
+      "parentUuid": "2a0ca4bc_133bd486",
       "range": {
         "startLine": 325,
         "startChar": 34,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "be4e57f6_de4b123f",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "I think the sleep time is necessary even it is weird... since we can\u0027t control gateways.\nI would like to treat InterruptedException as query failed. what do you think about it?",
+      "parentUuid": "881a6800_c9ddc42a",
+      "range": {
+        "startLine": 349,
+        "startChar": 25,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfb225cf_d007aad8",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "08fca39b_e0c8a5f2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "If UI thread is pretty busy(system busy?), could the apps still gain enough resource to run DNS request without delay in its executor? \nIn the other words, could we really avoid this problem by doing all things in user\u0027s executor? Does this problem only happen at startup?\nNo idea of it...",
+      "parentUuid": "bfb225cf_d007aad8",
+      "range": {
+        "startLine": 403,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0156bbcc_ec84f6e8",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2019-04-09T15:46:34Z",
       "side": 1,
       "message": "We really should not call the user\u0027s callback while holding locks... if the callback blocks (which it\u0027s totally allowed to do, it\u0027s running on the app-provided executor) that will cause the cancellationsignal to block in its onCancel method.",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7370f763_1611f930",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-10T07:51:01Z",
+      "side": 1,
+      "message": "We need to use the lock to restrict the order between cancel and resNetworkResult for avoiding race.\nAnd resNetworkResult will be ran in app-provided executor, so I guess it is no matter to call callback while holding locks.\nBut yeah, it really could block onCancel method of cancellationsignal. \nAny suggestion for it, or app should keep their executor clear...",
+      "parentUuid": "0156bbcc_ec84f6e8",
       "range": {
         "startLine": 417,
         "startChar": 47,
