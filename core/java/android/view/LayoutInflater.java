@@ -1012,7 +1012,10 @@ public abstract class LayoutInflater {
                 if (parser.getDepth() == 0) {
                     throw new InflateException("<include /> cannot be the root element");
                 }
-                parseInclude(parser, context, parent, attrs);
+                if (!(parent instanceof ViewGroup)) {
+                    throw new InflateException("<include /> can only be used inside of a ViewGroup");
+                }
+                parseInclude(parser, context, (ViewGroup)parent, attrs);
             } else if (TAG_MERGE.equals(name)) {
                 throw new InflateException("<merge /> must be the root element");
             } else {
@@ -1049,27 +1052,7 @@ public abstract class LayoutInflater {
         consumeChildElements(parser);
     }
 
-    @UnsupportedAppUsage
-    private void parseInclude(XmlPullParser parser, Context context, View parent,
-            AttributeSet attrs) throws XmlPullParserException, IOException {
-        int type;
-
-        if (!(parent instanceof ViewGroup)) {
-            throw new InflateException("<include /> can only be used inside of a ViewGroup");
-        }
-
-        // Apply a theme wrapper, if requested. This is sort of a weird
-        // edge case, since developers think the <include> overwrites
-        // values in the AttributeSet of the included View. So, if the
-        // included View has a theme attribute, we'll need to ignore it.
-        final TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);
-        final int themeResId = ta.getResourceId(0, 0);
-        final boolean hasThemeOverride = themeResId != 0;
-        if (hasThemeOverride) {
-            context = new ContextThemeWrapper(context, themeResId);
-        }
-        ta.recycle();
-
+    private int resolveLayout(Context context, AttributeSet attrs) {
         // If the layout is pointing to a theme attribute, we have to
         // massage the value to get a resource identifier out of it.
         int layout = attrs.getAttributeResourceValue(null, ATTR_LAYOUT, 0);
@@ -1101,86 +1084,114 @@ public abstract class LayoutInflater {
                 + "reference. The layout ID " + value + " is not valid.");
         }
 
+        return layout;
+    }
+
+    private int getThemeResId(Context context, AttributeSet attrs) {
+        // Apply a theme wrapper, if requested. This is sort of a weird
+        // edge case, since developers think the <include> overwrites
+        // values in the AttributeSet of the included View. So, if the
+        // included View has a theme attribute, we'll need to ignore it.
+        final TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);
+        final int themeResId = ta.getResourceId(0, 0);
+        ta.recycle();
+        return themeResId;
+    }
+
+    @UnsupportedAppUsage
+    private void parseInclude(XmlPullParser parser, Context context, ViewGroup parent,
+            AttributeSet attrs) throws XmlPullParserException, IOException {
+        final int themeResId = getThemeResId(context, attrs);
+        final boolean hasThemeOverride = themeResId != 0;
+        if (hasThemeOverride) {
+            context = new ContextThemeWrapper(context, themeResId);
+        }
+        int layout = resolveLayout(context, attrs);
+
         final View precompiled = tryInflatePrecompiled(layout, context.getResources(),
             (ViewGroup) parent, /*attachToRoot=*/true);
         if (precompiled == null) {
-            final XmlResourceParser childParser = context.getResources().getLayout(layout);
-
-            try {
-                final AttributeSet childAttrs = Xml.asAttributeSet(childParser);
-
-                while ((type = childParser.next()) != XmlPullParser.START_TAG &&
-                    type != XmlPullParser.END_DOCUMENT) {
-                    // Empty.
-                }
-
-                if (type != XmlPullParser.START_TAG) {
-                    throw new InflateException(childParser.getPositionDescription() +
-                        ": No start tag found!");
-                }
-
-                final String childName = childParser.getName();
-
-                if (TAG_MERGE.equals(childName)) {
-                    // The <merge> tag doesn't support android:theme, so
-                    // nothing special to do here.
-                    rInflate(childParser, parent, context, childAttrs, false);
-                } else {
-                    final View view = createViewFromTag(parent, childName,
-                        context, childAttrs, hasThemeOverride);
-                    final ViewGroup group = (ViewGroup) parent;
-
-                    final TypedArray a = context.obtainStyledAttributes(
-                        attrs, R.styleable.Include);
-                    final int id = a.getResourceId(R.styleable.Include_id, View.NO_ID);
-                    final int visibility = a.getInt(R.styleable.Include_visibility, -1);
-                    a.recycle();
-
-                    // We try to load the layout params set in the <include /> tag.
-                    // If the parent can't generate layout params (ex. missing width
-                    // or height for the framework ViewGroups, though this is not
-                    // necessarily true of all ViewGroups) then we expect it to throw
-                    // a runtime exception.
-                    // We catch this exception and set localParams accordingly: true
-                    // means we successfully loaded layout params from the <include>
-                    // tag, false means we need to rely on the included layout params.
-                    ViewGroup.LayoutParams params = null;
-                    try {
-                        params = group.generateLayoutParams(attrs);
-                    } catch (RuntimeException e) {
-                        // Ignore, just fail over to child attrs.
-                    }
-                    if (params == null) {
-                        params = group.generateLayoutParams(childAttrs);
-                    }
-                    view.setLayoutParams(params);
-
-                    // Inflate all children.
-                    rInflateChildren(childParser, view, childAttrs, true);
-
-                    if (id != View.NO_ID) {
-                        view.setId(id);
-                    }
-
-                    switch (visibility) {
-                        case 0:
-                            view.setVisibility(View.VISIBLE);
-                            break;
-                        case 1:
-                            view.setVisibility(View.INVISIBLE);
-                            break;
-                        case 2:
-                            view.setVisibility(View.GONE);
-                            break;
-                    }
-
-                    group.addView(view);
-                }
-            } finally {
-                childParser.close();
-            }
+            parseIncludeInner(context, parent, attrs, layout, hasThemeOverride);
         }
         LayoutInflater.consumeChildElements(parser);
+    }
+
+    private void parseIncludeInner(Context context, ViewGroup parent, AttributeSet attrs,
+            int layout, boolean hasThemeOverride) throws IOException, XmlPullParserException {
+        final XmlResourceParser childParser = context.getResources().getLayout(layout);
+        try {
+            final AttributeSet childAttrs = Xml.asAttributeSet(childParser);
+            
+            int type;
+            while ((type = childParser.next()) != XmlPullParser.START_TAG &&
+                    type != XmlPullParser.END_DOCUMENT) {
+                // Empty.
+            }
+
+            if (type != XmlPullParser.START_TAG) {
+                throw new InflateException(childParser.getPositionDescription() +
+                        ": No start tag found!");
+            }
+
+            final String childName = childParser.getName();
+
+            if (TAG_MERGE.equals(childName)) {
+                // The <merge> tag doesn't support android:theme, so
+                // nothing special to do here.
+                rInflate(childParser, parent, context, childAttrs, false);
+            } else {
+                final View view = createViewFromTag(parent, childName,
+                        context, childAttrs, hasThemeOverride);
+
+                final TypedArray a = context.obtainStyledAttributes(
+                        attrs, R.styleable.Include);
+                final int id = a.getResourceId(R.styleable.Include_id, View.NO_ID);
+                final int visibility = a.getInt(R.styleable.Include_visibility, -1);
+                a.recycle();
+
+                // We try to load the layout params set in the <include /> tag.
+                // If the parent can't generate layout params (ex. missing width
+                // or height for the framework ViewGroups, though this is not
+                // necessarily true of all ViewGroups) then we expect it to throw
+                // a runtime exception.
+                // We catch this exception and set localParams accordingly: true
+                // means we successfully loaded layout params from the <include>
+                // tag, false means we need to rely on the included layout params.
+                ViewGroup.LayoutParams params = null;
+                try {
+                    params = parent.generateLayoutParams(attrs);
+                } catch (RuntimeException e) {
+                    // Ignore, just fail over to child attrs.
+                }
+                if (params == null) {
+                    params = parent.generateLayoutParams(childAttrs);
+                }
+                view.setLayoutParams(params);
+
+                // Inflate all children.
+                rInflateChildren(childParser, view, childAttrs, true);
+
+                if (id != View.NO_ID) {
+                    view.setId(id);
+                }
+
+                switch (visibility) {
+                    case 0:
+                        view.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        view.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        view.setVisibility(View.GONE);
+                        break;
+                }
+
+                parent.addView(view);
+            }
+        } finally {
+            childParser.close();
+        }
     }
 
     /**
