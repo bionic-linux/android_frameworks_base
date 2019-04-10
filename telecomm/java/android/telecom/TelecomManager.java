@@ -18,7 +18,6 @@ import static android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE;
 
 import android.Manifest;
 import android.annotation.IntDef;
-import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SuppressAutoDoc;
