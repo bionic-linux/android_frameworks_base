@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86319fa4_9b56df63",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-10T11:59:56Z",
+      "side": 1,
+      "message": "Because this is a callback I\u0027m not too happy about having \"maybe\" in here. Callbacks warn you of something that happened ; \"maybe\" in there would mean you don\u0027t know whether it happened, which kind of defeats the purpose.\nThe \"maybe\" style is usually (reluctantly) used to do something if needed. Callbacks *must not* be called after what the receiver should do, they have to be called after the thing that happened.",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 44
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e49e30_bd0ed0b7",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-10T11:59:56Z",
+      "side": 1,
+      "message": "See, here the problem is apparent : you are calling this in many cases where it\u0027s not needed. I suggest this should be called onStartProvisioning (or onBeforeProvisioning in this case maybe, because it has to be done before provisioning starts ?) and only ever called when provisioning is actually started, not every time this function is called.",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
