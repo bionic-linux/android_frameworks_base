@@ -842,6 +842,30 @@
     },
     {
       "key": {
+        "uuid": "a7d51780_a828db02",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T14:21:33Z",
+      "side": 1,
+      "message": "\u003e Do you have an alternative that is simple to implement? If not, I think we should leave it as is. We\u0027re running out of time to make big changes.\n\u003e \n\u003e FTR I\u0027m fine with this for the following reasons:\n\u003e \n\u003e 1. As for blocking the main thread on this callback arriving: it is standard behaviour for APIs to run callbacks on the main thread. In fact, it is the default to do so if an Executor is not provided - http://go/android-api/L1 . Also, that sounds like a mistake that the  app developer will make at most once. If they do this, their app deadlocks, and they stop doing it. We can certainly document \n\u003e \n\u003e 2. As for direct executor, we had a discussion on this topic in the API council chat room (https://chat.google.com/room/AAAATnZMo34/JG1L5BINhbM , or search the room for \"onFileDescriptorEventListener\"). I was advocating that we should \"document that the executor will always be called on the app\u0027s main thread, so the executor must not run inline or it will cause jank\".\n\u003e \n\u003e Adam (who was the one who suggested running on the main thread in the first place) was pretty clearly opposed to that. His position was that it was not necessary to document that the executor was going to be called on the main thread, and that things like directExecutor are inherently unsafe.\n\u003e \n\u003e 3. I do see the latency argument on startup (though blocking the main thread for hundreds of milliseconds doesn\u0027t seem like a good user experience) and in fact the original signature took Handler which does not have this problem. The problem is that I don\u0027t see how we can square all three of a) \"don\u0027t run on main thread\", b) general API guidelines to use Executor, c) \"don\u0027t waste resources to start a new thread\".\nBlocking for hundreds of MS is unavoidable on a low end phone - inflate any interesting view hierarchy and the combination of classloading+inflation+measure+layout+draw on the first frame will take that long. Ideally we\u0027d have some central dispatcher for FD operations that wasn\u0027t also busy rendering UI. But we don\u0027t, and more importantly this API as structured could be refactored to use a system like that if it ever materialized in the future.\n\u003e \n\u003e I think it\u0027s pretty clear that there is no consensus on this topic even within council, and I don\u0027t think it\u0027s reasonable for us to flip-flop on this.\nI agree, sorry for my lack of knowledge of the precedent :-)",
+      "parentUuid": "a5f558ed_32e9ef99",
+      "range": {
+        "startLine": 403,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0156bbcc_ec84f6e8",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -1006,6 +1030,30 @@
       "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63e5fe94_2501b2c4",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T14:21:33Z",
+      "side": 1,
+      "message": "\u003e Fair enough.\n\u003e \n\u003e FWIW, the concern with not locking was that if the user does something like:\n\u003e \n\u003e     DnsResolver.Callback\u003cList\u003cInetAddress\u003e\u003e callback \u003d ...\n\u003e     query(network,\"www.google.com\", FLAG_DEFAULT, executor, cancellationSignal, callback);\n\u003e     ...\n\u003e     // Ouch, a timeout happened! Cancel the query and try again.\n\u003e     // Don\u0027t bother to create a new callback object; the query has been cancelled, right?\n\u003e     cancellationSignal.cancel();\n\u003e     query(network,\"www.googleapis.com\", FLAG_DEFAULT, executor, cancellationSignal, callback);\n\u003e \n\u003e then after the second query c.onAnswer() might get called with the result of the first query. This could happen if cancel() is called after the lambda checks the cancellation signal but before it calls the user callback.\nNote that in this code, the second query will never return any value because it has an already cancelled signal object passed in to it. Other designs, such as Future.cancel(), give cancel a return value so that the canceller can know if the operation was terminated with a cancel - that avoids this potential race. But cancellationsignal provides neither that guarantee nor that return value, so the use case here is fine. As an example, it would not be unreasonable to call cancel() from the UI thread; but if you are doing a blocking network operation in your callback (after all, it\u0027s on your own executor) then you\u0027d block the UI thread on network I/O.\n\u003e \n\u003e That said, ISTM that if the executor is single-threaded, this cannot happen. And if the executor is multithreaded (e.g., a thread pool), then using the same callback for two different queries seems a bit reckless even in the presence of manual synchronization.\nThis would still happen with a single threaded executor, but that\u0027s not a problem.",
+      "parentUuid": "8f91421f_875eeb00",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
