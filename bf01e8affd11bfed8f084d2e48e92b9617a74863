@@ -46,6 +46,30 @@
       "revId": "bf01e8affd11bfed8f084d2e48e92b9617a74863",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9985dc3_92c5c50d",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-04-11T07:47:55Z",
+      "side": 1,
+      "message": "Yes, good suggestion.Updated.",
+      "parentUuid": "d4fe96bb_ee77d771",
+      "range": {
+        "startLine": 510,
+        "startChar": 46,
+        "endLine": 510,
+        "endChar": 67
+      },
+      "revId": "bf01e8affd11bfed8f084d2e48e92b9617a74863",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
