@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "a0d14841_f7378e79",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-11T14:06:11Z",
+      "side": 1,
+      "message": "The purpose of anotherLocalFd is when localFd is v4 socket, then use anotherLocalFd to create a v6 socket and bind to the same port.\nThis socket does not connect to any remote socket.",
+      "parentUuid": "75794581_0537fde1",
+      "range": {
+        "startLine": 93,
+        "startChar": 30,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09323fe0_90781b39",
         "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
         "patchSetId": 4
@@ -76,6 +100,30 @@
       "writtenOn": "2019-04-09T04:40:08Z",
       "side": 1,
       "message": "It is inconsistent that we have sk and socket at the same time.\nMaybe it is better we use socket here?",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3c3de9_93317c9f",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-11T14:06:11Z",
+      "side": 1,
+      "message": "It might be proper to be named as family.",
+      "parentUuid": "09323fe0_90781b39",
       "range": {
         "startLine": 97,
         "startChar": 29,
@@ -105,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "3c4fa7dd_e23adebc",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-11T14:06:11Z",
+      "side": 1,
+      "message": "localFd will bind to localAddress and localFd may create as v4 or v6 socket.\nlocalFd is the socket we want to connect to remote socket.",
+      "parentUuid": "e3016ddb_fb7fd99c",
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8001a0ec_7b042270",
         "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
         "patchSetId": 4
@@ -128,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "6e3bfb0d_64244125",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-11T14:06:11Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "8001a0ec_7b042270",
+      "range": {
+        "startLine": 147,
+        "startChar": 27,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c20330f_565e365f",
         "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
         "patchSetId": 4
@@ -139,6 +229,24 @@
       "writtenOn": "2019-04-09T04:40:08Z",
       "side": 1,
       "message": "If it is truely fixed, then @Test should be added back to enable it.",
+      "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0593d45_13f8b581",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-11T14:06:11Z",
+      "side": 1,
+      "message": "I\u0027ll run the test again to check is there other case we are missing.",
+      "parentUuid": "5c20330f_565e365f",
       "revId": "6dc035fb0b8ddcefea06261602b6465b3469ecf8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
