@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "55432df3_0bfd7284",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-11T02:07:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82f23b16_b34914f1",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "951a4c90_a05980a3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-11T02:07:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1eab37b_e3f0cd77",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 47
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86319fa4_9b56df63",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e493bc7_bdcf2253",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-11T02:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db5db70_5d12b146",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 44
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
