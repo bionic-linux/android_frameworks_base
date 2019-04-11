@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "caf42dae_5e88bb6c",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3299,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-11T14:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3db472_cd2ffdc8",
+      "range": {
+        "startLine": 3299,
+        "startChar": 59,
+        "endLine": 3299,
+        "endChar": 64
+      },
+      "revId": "2b8325334389eb4d3ae8b39cd66ac0428f130fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cd9d6fe_a4ee85a0",
         "filename": "core/java/com/android/internal/util/TrafficStatsConstants.java",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2019-04-09T08:07:01Z",
       "side": 1,
       "message": "Should these be AIDL constants instead?",
+      "revId": "2b8325334389eb4d3ae8b39cd66ac0428f130fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0523411a_508378d2",
+        "filename": "core/java/com/android/internal/util/TrafficStatsConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-11T14:09:28Z",
+      "side": 1,
+      "message": "Probably not. They are not really part of the contractual interface between the system and the network stack (and not passed to one of the AIDLs that describe this interface), instead they are part of the contract of the system API, with the NetworkStack just being a client of that API.\n\nAt least that\u0027s my assessment of it, but it certainly is subjective and I don\u0027t feel strongly. Please feel free to insist if you think they should be in an AIDL after all.",
+      "parentUuid": "1cd9d6fe_a4ee85a0",
       "revId": "2b8325334389eb4d3ae8b39cd66ac0428f130fe7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
