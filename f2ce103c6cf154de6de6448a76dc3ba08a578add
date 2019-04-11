@@ -532,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "b4ab21ee_fc8baed5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-11T09:35:04Z",
+      "side": 1,
+      "message": "we use DGRAM socket with UDP here so it doesn\u0027t get flagged as networking. \nAlso verified under strictmode manually.",
+      "parentUuid": "466cf332_111f31b3",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881a6800_c9ddc42a",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -639,6 +663,30 @@
       "side": 1,
       "message": "My problem isn\u0027t the delay, it\u0027s that you\u0027re blocking in what\u0027s supposed to be an async method. You should not block, and if you don\u0027t block you won\u0027t need to handle InterruptedException at all.\n\nIf you do want to/have to handle interruptedexception, the correct thing here is to use a construct like this:\nhttps://cs.corp.google.com/piper///depot/google3/third_party/java_src/google_common/current/java/com/google/common/util/concurrent/Uninterruptibles.java?q\u003dsleepuninterruptibly\u0026sq\u003d-file:google3/experimental\u0026g\u003d0\u0026l\u003d355\n\nSo that you basically ignore the interrupt, but don\u0027t swallow it.",
       "parentUuid": "be4e57f6_de4b123f",
+      "range": {
+        "startLine": 349,
+        "startChar": 25,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5961327_f03911e5",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-11T09:35:04Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "3dff0ddc_2e25a854",
       "range": {
         "startLine": 349,
         "startChar": 25,
@@ -886,6 +934,30 @@
       "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d3dc88_6044f2c2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-11T09:35:04Z",
+      "side": 1,
+      "message": "Got it, release the lock before call user callback",
+      "parentUuid": "271c9009_3125b1dc",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
