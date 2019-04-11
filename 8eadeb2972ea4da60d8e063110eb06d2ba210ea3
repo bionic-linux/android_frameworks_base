@@ -16,6 +16,121 @@
       "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72022014_9017e036",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-11T12:44:34Z",
+      "side": 1,
+      "message": "This is actually not an error right? Do we really need this log?",
+      "range": {
+        "startLine": 1084,
+        "startChar": 15,
+        "endLine": 1084,
+        "endChar": 77
+      },
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db54b604_ce2f5d6f",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-11T12:44:34Z",
+      "side": 1,
+      "message": "Can we remove or lower the level of this and other warning logs in this CL?",
+      "range": {
+        "startLine": 1104,
+        "startChar": 0,
+        "endLine": 1104,
+        "endChar": 82
+      },
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50fc590_16251755",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-11T12:44:34Z",
+      "side": 1,
+      "message": "This is duplicate as getProxyCount() \u003d\u003d 0 at line 1107",
+      "range": {
+        "startLine": 1261,
+        "startChar": 0,
+        "endLine": 1261,
+        "endChar": 85
+      },
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f230ced_0d29e808",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-11T12:44:34Z",
+      "side": 1,
+      "message": "Can we move these to line 1110?",
+      "range": {
+        "startLine": 1262,
+        "startChar": 20,
+        "endLine": 1268,
+        "endChar": 21
+      },
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21607a28_a53fad89",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-04-11T12:44:34Z",
+      "side": 1,
+      "message": "mProxies should never be null",
+      "range": {
+        "startLine": 1282,
+        "startChar": 0,
+        "endLine": 1282,
+        "endChar": 35
+      },
+      "revId": "8eadeb2972ea4da60d8e063110eb06d2ba210ea3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
