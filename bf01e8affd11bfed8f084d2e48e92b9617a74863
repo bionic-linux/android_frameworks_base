@@ -22,6 +22,30 @@
       "revId": "bf01e8affd11bfed8f084d2e48e92b9617a74863",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fe96bb_ee77d771",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-11T06:07:25Z",
+      "side": 1,
+      "message": "Reasoning: InetAddress.getByName may do a DNS lookup for a hostname, which will likely not succeed if there is no DNS server.",
+      "parentUuid": "cfbc5cc9_60dad2e5",
+      "range": {
+        "startLine": 510,
+        "startChar": 46,
+        "endLine": 510,
+        "endChar": 67
+      },
+      "revId": "bf01e8affd11bfed8f084d2e48e92b9617a74863",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
