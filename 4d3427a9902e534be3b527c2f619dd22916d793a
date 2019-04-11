@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "358a92ca_8f1eb6ce",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-11T08:07:12Z",
+      "side": 1,
+      "message": "Same thing : define by what is happening, not by what you want the listener to do.\n\n\"Called when provisioning is about to begin.\"",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 90
+      },
+      "revId": "4d3427a9902e534be3b527c2f619dd22916d793a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
