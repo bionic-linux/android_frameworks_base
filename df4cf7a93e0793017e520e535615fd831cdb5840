@@ -235,6 +235,30 @@
       "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b819e392_582aada4",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-11T08:45:31Z",
+      "side": 1,
+      "message": "The real purpose of this is re-examine subId because subId change intent may be losing and may be delay. Thus, we don\u0027t know whether we are base on correct subId. Maybe provisioning would come from needed to don\u0027t needed after this callback and vice versa.\nI think we need to call this whatever provisioning is needed or not. And follow up your suggestion name \"onBeforeProvisioning\".",
+      "parentUuid": "ea96d940_d99df62a",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

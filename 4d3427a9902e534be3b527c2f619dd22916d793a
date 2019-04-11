@@ -22,6 +22,30 @@
       "revId": "4d3427a9902e534be3b527c2f619dd22916d793a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd18144b_913c7519",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-11T08:45:31Z",
+      "side": 1,
+      "message": "Ack, make sense. Thanks suggestion.",
+      "parentUuid": "358a92ca_8f1eb6ce",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 90
+      },
+      "revId": "4d3427a9902e534be3b527c2f619dd22916d793a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
