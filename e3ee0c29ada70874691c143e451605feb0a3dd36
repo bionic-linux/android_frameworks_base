@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07f375c1_81999c64",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-11T03:57:46Z",
+      "side": 1,
+      "message": "Make the comment more accurate.\nI think query succeeded means we have available answer for the query.",
+      "parentUuid": "b4cc7823_97ca407a",
+      "range": {
+        "startLine": 265,
+        "startChar": 12,
+        "endLine": 265,
+        "endChar": 30
+      },
+      "revId": "e3ee0c29ada70874691c143e451605feb0a3dd36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29934284_3683339d",
         "filename": "core/jni/android_net_NetUtils.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e3ee0c29ada70874691c143e451605feb0a3dd36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60464ff_da0b70fc",
+        "filename": "core/jni/android_net_NetUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-11T03:57:46Z",
+      "side": 1,
+      "message": "Opps, sorry for this...",
+      "parentUuid": "29934284_3683339d",
+      "range": {
+        "startLine": 294,
+        "startChar": 11,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "e3ee0c29ada70874691c143e451605feb0a3dd36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
