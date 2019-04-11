@@ -508,6 +508,30 @@
     },
     {
       "key": {
+        "uuid": "466cf332_111f31b3",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T04:07:48Z",
+      "side": 1,
+      "message": "Is strictmode smart enough to see that? Perhaps add a test that verifies that it doesn\u0027t get flagged as networking. \n\nhttps://developer.android.com/reference/android/os/StrictMode.ThreadPolicy.Builder#detectNetwork()",
+      "parentUuid": "6824eec4_4737310e",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "881a6800_c9ddc42a",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -591,6 +615,30 @@
       "side": 1,
       "message": "OK, Roll back first",
       "parentUuid": "400901f8_32873ea1",
+      "range": {
+        "startLine": 349,
+        "startChar": 25,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dff0ddc_2e25a854",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T04:07:48Z",
+      "side": 1,
+      "message": "My problem isn\u0027t the delay, it\u0027s that you\u0027re blocking in what\u0027s supposed to be an async method. You should not block, and if you don\u0027t block you won\u0027t need to handle InterruptedException at all.\n\nIf you do want to/have to handle interruptedexception, the correct thing here is to use a construct like this:\nhttps://cs.corp.google.com/piper///depot/google3/third_party/java_src/google_common/current/java/com/google/common/util/concurrent/Uninterruptibles.java?q\u003dsleepuninterruptibly\u0026sq\u003d-file:google3/experimental\u0026g\u003d0\u0026l\u003d355\n\nSo that you basically ignore the interrupt, but don\u0027t swallow it.",
+      "parentUuid": "be4e57f6_de4b123f",
       "range": {
         "startLine": 349,
         "startChar": 25,
@@ -698,6 +746,30 @@
     },
     {
       "key": {
+        "uuid": "626fde1a_fca72549",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T04:07:48Z",
+      "side": 1,
+      "message": "Yes, the user-provided executor may be something that just runs tasks inline, or has its own dedicated thread pool. The problem is not just at startup.\n\nIt\u0027s true that using the main thread as a listener does solve the problem of requiring a handler, but it also introduces the problem of needless latency, and if someone is lazy and blocks the main thread on this callback arriving, it could cause deadlock.",
+      "parentUuid": "08fca39b_e0c8a5f2",
+      "range": {
+        "startLine": 403,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0156bbcc_ec84f6e8",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -781,6 +853,30 @@
       "side": 1,
       "message": "Yeah, that\u0027s what I mean. We must ensure the ordering of these evets(fdEvnet, onCancel(), user callback()), otherwise it is possible that user can call onCancel() but still get the callback.",
       "parentUuid": "6fedd730_7005e9ed",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271c9009_3125b1dc",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2019-04-11T04:07:48Z",
+      "side": 1,
+      "message": "You do not need to hold the lock while calling the callback. You could do your cancellation checking, release the lock, then call the callback. It is pretty much never a good idea to call into app code while holding locks.\n\nCancel doesn\u0027t indicate whether it succeeded or failed - nothing else in android offers the guarantee you\u0027re offering. There\u0027s no benefit to providing an ordering between cancel and the callback, and the cost is deadlock.",
+      "parentUuid": "7370f763_1611f930",
       "range": {
         "startLine": 417,
         "startChar": 47,
