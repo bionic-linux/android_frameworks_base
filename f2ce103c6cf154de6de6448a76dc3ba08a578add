@@ -818,6 +818,30 @@
     },
     {
       "key": {
+        "uuid": "a5f558ed_32e9ef99",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-11T14:00:48Z",
+      "side": 1,
+      "message": "Do you have an alternative that is simple to implement? If not, I think we should leave it as is. We\u0027re running out of time to make big changes.\n\nFTR I\u0027m fine with this for the following reasons:\n\n1. As for blocking the main thread on this callback arriving: it is standard behaviour for APIs to run callbacks on the main thread. In fact, it is the default to do so if an Executor is not provided - http://go/android-api/L1 . Also, that sounds like a mistake that the  app developer will make at most once. If they do this, their app deadlocks, and they stop doing it. We can certainly document \n\n2. As for direct executor, we had a discussion on this topic in the API council chat room (https://chat.google.com/room/AAAATnZMo34/JG1L5BINhbM , or search the room for \"onFileDescriptorEventListener\"). I was advocating that we should \"document that the executor will always be called on the app\u0027s main thread, so the executor must not run inline or it will cause jank\".\n\nAdam (who was the one who suggested running on the main thread in the first place) was pretty clearly opposed to that. His position was that it was not necessary to document that the executor was going to be called on the main thread, and that things like directExecutor are inherently unsafe.\n\n3. I do see the latency argument on startup (though blocking the main thread for hundreds of milliseconds doesn\u0027t seem like a good user experience) and in fact the original signature took Handler which does not have this problem. The problem is that I don\u0027t see how we can square all three of a) \"don\u0027t run on main thread\", b) general API guidelines to use Executor, c) \"don\u0027t waste resources to start a new thread\".\n\nI think it\u0027s pretty clear that there is no consensus on this topic even within council, and I don\u0027t think it\u0027s reasonable for us to flip-flop on this.",
+      "parentUuid": "626fde1a_fca72549",
+      "range": {
+        "startLine": 403,
+        "startChar": 15,
+        "endLine": 403,
+        "endChar": 42
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0156bbcc_ec84f6e8",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 1
@@ -949,6 +973,30 @@
       "side": 1,
       "message": "Got it, release the lock before call user callback",
       "parentUuid": "271c9009_3125b1dc",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 54
+      },
+      "revId": "f2ce103c6cf154de6de6448a76dc3ba08a578add",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f91421f_875eeb00",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-11T14:00:48Z",
+      "side": 1,
+      "message": "Fair enough.\n\nFWIW, the concern with not locking was that if the user does something like:\n\n    DnsResolver.Callback\u003cList\u003cInetAddress\u003e\u003e callback \u003d ...\n    query(network,\"www.google.com\", FLAG_DEFAULT, executor, cancellationSignal, callback);\n    ...\n    // Ouch, a timeout happened! Cancel the query and try again.\n    // Don\u0027t bother to create a new callback object; the query has been cancelled, right?\n    cancellationSignal.cancel();\n    query(network,\"www.googleapis.com\", FLAG_DEFAULT, executor, cancellationSignal, callback);\n\nthen after the second query c.onAnswer() might get called with the result of the first query. This could happen if cancel() is called after the lambda checks the cancellation signal but before it calls the user callback.\n\nThat said, ISTM that if the executor is single-threaded, this cannot happen. And if the executor is multithreaded (e.g., a thread pool), then using the same callback for two different queries seems a bit reckless even in the presence of manual synchronization.",
+      "parentUuid": "d2d3dc88_6044f2c2",
       "range": {
         "startLine": 417,
         "startChar": 47,

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454988ab_10f9c313",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-11T14:00:48Z",
+      "side": 1,
+      "message": "This makes it look like we can call both onAnswer and onError if we do two queries and get a SERVFAIL for the first query and an exception for the second query. That seems wrong - it feels like we should either only call the answer callback with the query that succeeded, or only call the exception callback.",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 13
+      },
+      "revId": "45dbad42109041d1ad9f13b2eb3a50d10abcdae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea43137f_bfe89c52",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-11T14:00:48Z",
+      "side": 1,
+      "message": "Nit: the documentation says that if at least one query succeeded, rcode will be 0. So maybe:\n\n    // If at least one query succeeded, return an rcode of 0.\n    // Otherwise, arbitrarily return the first rcode received.\n    if (mReceivedAnswerCount \u003d\u003d 0 || rcode \u003d\u003d 0) {\n        mRcode \u003d rcode;\n    }",
+      "range": {
+        "startLine": 288,
+        "startChar": 12,
+        "endLine": 288,
+        "endChar": 27
+      },
+      "revId": "45dbad42109041d1ad9f13b2eb3a50d10abcdae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
