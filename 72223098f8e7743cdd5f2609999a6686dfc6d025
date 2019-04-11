@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabefc4d_dfe993e1",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-11T04:22:11Z",
+      "side": 1,
+      "message": "Invalid default DNS server",
+      "range": {
+        "startLine": 512,
+        "startChar": 32,
+        "endLine": 512,
+        "endChar": 61
+      },
+      "revId": "72223098f8e7743cdd5f2609999a6686dfc6d025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
