@@ -259,6 +259,30 @@
       "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8928de2_ee7c7d3d",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T04:41:29Z",
+      "side": 1,
+      "message": "\u003e The real purpose of this is re-examine subId because subId change intent may be losing and may be delay. Thus, we don\u0027t know whether we are base on correct subId. Maybe provisioning would come from needed to don\u0027t needed after this callback and vice versa.\n\nI don\u0027t think this is okay from a design stand point because it violates separation of responsibility. You can\u0027t have a callback that\u0027s driven by the receiving end. One of two things is true :\n\n➀ Either EntitlementManager is observing an event and needs to tell its clients about it so that they can react on stuff that happened.\n → In this case, this is a callback. The callback is named after what happened, and it\u0027s called when and only when that thing happens.\n • This is driven by EntitlementManager. The \"real purpose\" in such a design is really to let clients know about the event, because they need to know.\n • The callback should fire only when the event actually happens.\n • It\u0027s not fine to have a callback design if \"the real purpose is to re-examine subId\".\n\n➁ Or Tethering needs to re-examine the subIds regularly.\n → In this case, Tethering needs to own the lifecycle of this.\n • Tethering needs to drive those changes and know when it should re-examine the subId.\n • EntitlementManager can of course be a part of this workflow, but either it\u0027s in charge of deciding or it\u0027s not.\n\n\nIf I understand your code correctly, it looks to me like ➀ is correct, and the subId should be updated if and only if entitlement is *really* going to start. If that is true, then the current design and the current name are fine, but you need to not call this when it\u0027s not happening.\n\nWhat is driving this ? Specifically *WHY* is this a good time to re-examine the subId ?",
+      "parentUuid": "b819e392_582aada4",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
