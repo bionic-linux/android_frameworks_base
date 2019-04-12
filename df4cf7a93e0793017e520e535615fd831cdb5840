@@ -283,6 +283,30 @@
       "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d751a1a_650fc72e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-12T08:12:45Z",
+      "side": 1,
+      "message": "Per talk in VC, let us move this callback into isTetherProvisioningRequired() to avoid violating separation of responsibility. But this also let this callback trigger more frequently. Here is the data from my local test.\nHow many times callback would be called for each operation.\n1. enable tethering: 2 times\n2. Switch Default data subscription: 4 times\n3. SIM hotswap: 7 times\n4. disable tethering: 3 times\nThe looks acceptable. I will upload the change later.",
+      "parentUuid": "e8928de2_ee7c7d3d",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "df4cf7a93e0793017e520e535615fd831cdb5840",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
