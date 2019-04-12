@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55e7c98_e9f7c81b",
+        "filename": "tests/net/util/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:35:35Z",
+      "side": 1,
+      "message": "Out of curiosity : why this change ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 40,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "f5fcf1995b6d1110daa596197fbbd7877d1a3551",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
