@@ -16,15 +16,12 @@
 
 package android.net;
 
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-
-import android.net.IpPrefix;
-import android.net.RouteInfo;
 import android.os.Parcel;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import junit.framework.TestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+
+import java.net.InetAddress;
 
 public class RouteInfoTest extends TestCase {
 
