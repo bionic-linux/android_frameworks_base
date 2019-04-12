@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdacf3ee_bc572203",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "This member is write-only. Please remove.",
+      "range": {
+        "startLine": 231,
+        "startChar": 49,
+        "endLine": 231,
+        "endChar": 74
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1b005b_82e0d138",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "As discussed on the next file, please make this @NonNull final.",
+      "range": {
+        "startLine": 232,
+        "startChar": 38,
+        "endLine": 232,
+        "endChar": 52
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247cdebf_cac0acba",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "Maybe you need a more explicit name, that would clarify what sequence this is ?",
+      "range": {
+        "startLine": 233,
+        "startChar": 26,
+        "endLine": 233,
+        "endChar": 41
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdf1cc2_8cb9833f",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "Suggest making this a different message, e.g. EVENT_CONFIGURATION_TIMEOUT.",
+      "range": {
+        "startLine": 800,
+        "startChar": 34,
+        "endLine": 800,
+        "endChar": 62
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db89acd1_b277f285",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "This test is not useful. Any long is \u003c\u003d Long.MAX_VALUE, so if this is true, currentTime \u003c attributes.assignedV4AddressExpiry is true.",
+      "range": {
+        "startLine": 811,
+        "startChar": 37,
+        "endLine": 811,
+        "endChar": 89
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062ccdc9_9c31d57c",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "If you\u0027ve deferred it then it\u0027s been handled I think ? Returning NOT_HANDLED will make the message bubble up. If the state above also defers it or otherwise handles it you\u0027ll have a duplicated message.",
+      "range": {
+        "startLine": 831,
+        "startChar": 23,
+        "endLine": 831,
+        "endChar": 34
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64931e1f_df68f299",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "In this case, the StateMachine state code is always running on the same thread, so you don\u0027t have to have synchronization at all. You can just make mSequenceNumber an int.\n\nBut if that was not the case, let me point out your synchronization does not work. There is a good reason why getAndIncrement is atomic. What happens if this thread is preempted in line 836 ? If you didn\u0027t have the StateMachine guarantee, then you could be reentered in another thread, and actually read a stale event.",
+      "range": {
+        "startLine": 834,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 46
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0828280d_d212e83e",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "On your local disk sure, but please don\u0027t submit this",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 630,
+        "endChar": 46
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3d937c_9fd8f08f",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "A bit of a detail but I think it\u0027s safer to do the positive check here. Even better, write this with a switch :\n\nswitch (delta) {\n  case PROV_CHANGE_GAINED_PROVISIONING:\n  case PROV_CHANGE_STILL_PROVISIONED:\n    maybeSaveNetworkToIpMemoryStore();\n  case PROV_CHANGE_LOST_PROVISIONING:\n  case PROV_CHANGE_STILL_NOT_PROVISIONED:\n    // Do nothing\n}\n\nThis will clarify for future implementors that they need to handle this appropriately.",
+      "range": {
+        "startLine": 1105,
+        "startChar": 21,
+        "endLine": 1105,
+        "endChar": 50
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6ccd66_57281099",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "Rather than passing this inside a message I think you should pass it to makeDhcpClient. That way you don\u0027t have any awkward dangerous null period, and the member can be @NonNull final to prove it.",
+      "range": {
+        "startLine": 1188,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 59
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150cde91_823a3465",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "This does nothing if !DBG, so let\u0027s not create the three classes and the capture :\n\nfinal OnStatusListener listener;\nif (!DBG) {\n    listener \u003d null;\n} else {\n    listener \u003d new OnStatusListener() {\n        @Override\n        public void onComplete(final Status status) {\n            Log.d(...);\n        }\n    };\n}\nmIpMemoryStore.storeNetworkAttributes(mL2Key, na.build(), listener);",
+      "range": {
+        "startLine": 1273,
+        "startChar": 16,
+        "endLine": 1279,
+        "endChar": 17
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7167e1a_284937a9",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "This is not the value of Long.MAX_VALUE.",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 22
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc5ce4d_5348c698",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:12:03Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 232,
+        "startChar": 59,
+        "endLine": 232,
+        "endChar": 69
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
