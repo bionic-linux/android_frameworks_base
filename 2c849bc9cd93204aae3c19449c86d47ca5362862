@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "961b841f_cc5320f5",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "If this never happens I think you can afford to remove this test. But if you think it\u0027s safer, I won\u0027t oppose. Up to you.",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "544df489_4c4dd854",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "Just have this method throw Exception and let it bubble up. Then you can just write :\n\nreturn new NetworkAttributes.Builder()\n        .setGroupHint(hint)\n        .setMtu(mtu)\n        .build();",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b595a5_2d04f6a6",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "This is @NonNull, please heed the compiler warnings",
+      "range": {
+        "startLine": 119,
+        "startChar": 48,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac986bb_98312a07",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "Please just pass an argument to startIpMemoryStore() instead of copy-pasting the code.",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 10
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09713c4_bed7c386",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "This test is fine as is, but I think the important thing is to test that throwing an exception in one of the callbacks still doesn\u0027t undermine the guarantees. Can you please pass at least one exception-throwing listeners in the calls in ll.206~209 ?\n(or alternatively write a separate test that does it)",
+      "range": {
+        "startLine": 196,
+        "startChar": 16,
+        "endLine": 196,
+        "endChar": 53
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a448bace_b23e4b79",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-12T07:32:22Z",
+      "side": 1,
+      "message": "All of these are subclasses of Exception, so since you list Exception you don\u0027t need any of them",
+      "range": {
+        "startLine": 197,
+        "startChar": 19,
+        "endLine": 197,
+        "endChar": 80
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
