@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23b62844_28457580",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "IMPERSONATION?",
+      "range": {
+        "startLine": 3296,
+        "startChar": 49,
+        "endLine": 3296,
+        "endChar": 58
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437c9cf9_cfd4e33f",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72445d33_22e0e458",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "Does _SYSTEM_ add anything here? What if we just called this TAG_NETWORK_STACK_RANGE_START?",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463c8454_37cc4f66",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "Suggest just repeating the documentation we have elsewhere in this file:\n\nTags between 0xFFFFFF00 and 0xFFFFFFFF are reserved and used internally by system services like DownloadManager when performing traffic on behalf of an application.",
+      "range": {
+        "startLine": 106,
+        "startChar": 22,
+        "endLine": 106,
+        "endChar": 23
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc404e8_6bc9faa2",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "SYSTEM_IMPERSONATION_RANGE?",
+      "range": {
+        "startLine": 112,
+        "startChar": 32,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd17e90_4a8b3744",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "It looks like we\u0027re reserving 1/8th of the total reserved tag space for the network stack. That seems like a lot. 16 maybe?",
+      "range": {
+        "startLine": 118,
+        "startChar": 43,
+        "endLine": 118,
+        "endChar": 73
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e778e3_1637664a",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-12T08:32:57Z",
+      "side": 1,
+      "message": "NETWORK_STACK_IMPERSONATION",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 56
+      },
+      "revId": "0e60626938756a91fd022811279548ac7b45951e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
