@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b670c41d_4a3c1bd9",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2019-04-12T11:00:43Z",
+      "side": 1,
+      "message": "Does property_get_bool() work here? ie is this binary or one of a set?",
+      "range": {
+        "startLine": 1015,
+        "startChar": 4,
+        "endLine": 1015,
+        "endChar": 17
+      },
+      "revId": "1e58e8e3d76ae15b684689a808b4cd3194706781",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
