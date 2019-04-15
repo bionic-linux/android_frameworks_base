@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c62a40fb_4998ede9",
+        "filename": "core/java/android/net/TrafficStats.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:30:51Z",
+      "side": 1,
+      "message": "Considering the API freeze timing, I think we should keep this in here with @hide for the time being until aosp/940248 can be reviewed (otherwise it will block this change).",
+      "range": {
+        "startLine": 168,
+        "startChar": 28,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "ce69a2da3c4c662faae0bfc5f7b4772dfc67320d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
