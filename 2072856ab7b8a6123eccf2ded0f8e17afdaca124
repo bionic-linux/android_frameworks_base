@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb57488_bd5a4a57",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T08:27:28Z",
+      "side": 1,
+      "message": "I think there was a misunderstanding.\n\nThis is the right place to do this, but it can\u0027t be a callback. It\u0027s far too obscure to rely on the callback doing something inline, especially something as tightly coupled as updating a member. Design-wise, it\u0027s still the same issue : a callback is to TELL clients about something. The class publishing the callback cannot rely on the clients doing something for them, which this is still doing.\n\nWhat you need to do is just to read the configuration here instead of relying on mConfig. In fact, I suggest you take this opportunity to completely remove mConfig and just read it every time it\u0027s needed. When you do this, be careful to never do it with a lock held, as this is an IPC.\n\n\nIf you really object to this design, an alternative is to have a different member than mCallback which would be something like :\n\n  interface ConfigurationFetcher {\n    TetheringConfiguration fetchConfiguration();\n  }\n\n...and then pass the Tethering object for this. This at least makes it clear that it is not a callback and that the method is synchronous, as it would RETURN the object.",
+      "range": {
+        "startLine": 283,
+        "startChar": 18,
+        "endLine": 283,
+        "endChar": 48
+      },
+      "revId": "2072856ab7b8a6123eccf2ded0f8e17afdaca124",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
