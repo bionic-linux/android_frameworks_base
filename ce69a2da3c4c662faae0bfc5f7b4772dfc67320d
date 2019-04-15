@@ -22,6 +22,29 @@
       "revId": "ce69a2da3c4c662faae0bfc5f7b4772dfc67320d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44d48106_b3a691ec",
+        "filename": "core/java/com/android/internal/util/TrafficStatsConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-15T09:31:55Z",
+      "side": 1,
+      "message": "IMPERSONATION ? Maybe this can be fixed separately",
+      "range": {
+        "startLine": 39,
+        "startChar": 68,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "ce69a2da3c4c662faae0bfc5f7b4772dfc67320d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
