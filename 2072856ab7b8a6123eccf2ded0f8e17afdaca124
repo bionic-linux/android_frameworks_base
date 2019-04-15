@@ -22,6 +22,30 @@
       "revId": "2072856ab7b8a6123eccf2ded0f8e17afdaca124",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da42222c_3a261640",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-15T13:58:28Z",
+      "side": 1,
+      "message": "Thank you for explanation and suggestion about this. Yeah, I misunderstanding your concern for callback part. As your suggestion, it already be improved. Now mConfig is removed and EntitlementManager will fetch TetheringConfiguration every time :)",
+      "parentUuid": "6eb57488_bd5a4a57",
+      "range": {
+        "startLine": 283,
+        "startChar": 18,
+        "endLine": 283,
+        "endChar": 48
+      },
+      "revId": "2072856ab7b8a6123eccf2ded0f8e17afdaca124",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
