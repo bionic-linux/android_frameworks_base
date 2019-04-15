@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba6bd50c_3c2a3915",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "Style guide forbids * imports, please set up your IDE to not do this :)\n(Settings \u003e Editor \u003e Code style \u003e Kotlin \u003e Imports \u003e Use single name import)",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a44295_25ba5401",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "Style guide says ascii-sorted imports : did you add this manually ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518299ca_0aa10c18",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "This looks to me like it\u0027s testing the specific implementation, and really not calling the function as it\u0027s intended to be called. In other words, this is a change-detector test.\n\nMaybe it means the implementation of errorCodeWithOption should actually test that\n(0xFFFF0000 \u0026 errorCode) | (0xFF \u0026 option) \u003d\u003d errorCode + option\n...and bail otherwise",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 85
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b001a14_2855f739",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "Could you please put this in a local instead of re-creating the list every time ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c938d334_2d3b1fa0",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "it.getInt(null) ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 27,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7aa971_9a9d10d3",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-15T05:36:14Z",
+      "side": 1,
+      "message": "You can also use the extension method String.format :\n\n\"Invalid string ...\".format(intValue)\n\nAlso while I like string interpolation I would argue that mixing it with format makes it harder to read, so in this case I\u0027d suggest :\n\n\"Invalid string for error 0x%08X (field %s): %s\".format(intValue, it.name, stringValue)",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
