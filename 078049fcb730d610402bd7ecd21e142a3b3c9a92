@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "316efe12_91d23efb",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T07:12:01Z",
+      "side": 1,
+      "message": "This is now unused, better remove",
+      "range": {
+        "startLine": 103,
+        "startChar": 45,
+        "endLine": 103,
+        "endChar": 52
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e86a3f_f3ebdf26",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T07:12:01Z",
+      "side": 1,
+      "message": "an object that encapsulates",
+      "range": {
+        "startLine": 302,
+        "startChar": 21,
+        "endLine": 302,
+        "endChar": 47
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321740fc_27babc93",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-16T07:12:01Z",
+      "side": 1,
+      "message": "This entire thing will fit on the previous line",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 44
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
