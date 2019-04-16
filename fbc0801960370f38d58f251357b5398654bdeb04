@@ -22,6 +22,30 @@
       "revId": "fbc0801960370f38d58f251357b5398654bdeb04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2114b78_64e96906",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-16T10:51:59Z",
+      "side": 1,
+      "message": "Done. Its my fault. I upload the old local branch...",
+      "parentUuid": "ab1b228c_8a0a177e",
+      "range": {
+        "startLine": 103,
+        "startChar": 45,
+        "endLine": 103,
+        "endChar": 52
+      },
+      "revId": "fbc0801960370f38d58f251357b5398654bdeb04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
