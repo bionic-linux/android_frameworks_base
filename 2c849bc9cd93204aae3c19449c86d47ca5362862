@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "948286ef_27e0f4ea",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-04-16T01:21:32Z",
+      "side": 1,
+      "message": "Personally I\u0027d prefer to have the check with the comment, as it\u0027s hard to follow that exception is never null otherwise",
+      "parentUuid": "961b841f_cc5320f5",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "544df489_4c4dd854",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 9
