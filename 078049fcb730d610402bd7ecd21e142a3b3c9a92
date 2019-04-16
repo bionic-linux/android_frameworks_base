@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b434f6cd_7b7254ff",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-16T07:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "316efe12_91d23efb",
+      "range": {
+        "startLine": 103,
+        "startChar": 45,
+        "endLine": 103,
+        "endChar": 52
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96e86a3f_f3ebdf26",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5cc61d12_e31ac59c",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-16T07:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "96e86a3f_f3ebdf26",
+      "range": {
+        "startLine": 302,
+        "startChar": 21,
+        "endLine": 302,
+        "endChar": 47
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321740fc_27babc93",
         "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb5840d_09efa70f",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-04-16T07:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "321740fc_27babc93",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 44
+      },
+      "revId": "078049fcb730d610402bd7ecd21e142a3b3c9a92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
