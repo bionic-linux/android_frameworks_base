@@ -3478,6 +3478,10 @@ public class ConnectivityManager {
                     break;
                 }
                 case CALLBACK_UNAVAIL: {
+                    synchronized (sCallbacks) {
+                        sCallbacks.remove(request);
+                        callback.networkRequest = ALREADY_UNREGISTERED;
+                    }
                     callback.onUnavailable();
                     break;
                 }
@@ -3995,8 +3999,10 @@ public class ConnectivityManager {
         synchronized (sCallbacks) {
             Preconditions.checkArgument(networkCallback.networkRequest != null,
                     "NetworkCallback was not registered");
-            Preconditions.checkArgument(networkCallback.networkRequest != ALREADY_UNREGISTERED,
-                    "NetworkCallback was already unregistered");
+            if (networkCallback.networkRequest == ALREADY_UNREGISTERED) {
+                Log.d(TAG, "NetworkCallback was already unregistered");
+                return;
+            }
             for (Map.Entry<NetworkRequest, NetworkCallback> e : sCallbacks.entrySet()) {
                 if (e.getValue() == networkCallback) {
                     reqs.add(e.getKey());
