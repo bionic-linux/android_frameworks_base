@@ -20,12 +20,11 @@ import static android.net.NetworkUtils.resNetworkCancel;
 import static android.net.NetworkUtils.resNetworkQuery;
 import static android.net.NetworkUtils.resNetworkResult;
 import static android.net.NetworkUtils.resNetworkSend;
+import static android.net.util.DnsUtils.haveIpv4;
+import static android.net.util.DnsUtils.haveIpv6;
+import static android.net.util.DnsUtils.rfc6724Sort;
 import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_ERROR;
 import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
-import static android.system.OsConstants.AF_INET;
-import static android.system.OsConstants.AF_INET6;
-import static android.system.OsConstants.IPPROTO_UDP;
-import static android.system.OsConstants.SOCK_DGRAM;
 
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
@@ -34,18 +33,12 @@ import android.annotation.Nullable;
 import android.os.CancellationSignal;
 import android.os.Looper;
 import android.system.ErrnoException;
-import android.system.Os;
 import android.util.Log;
 
-import libcore.io.IoUtils;
-
 import java.io.FileDescriptor;
-import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -252,14 +245,16 @@ public final class DnsResolver {
 
     private class InetAddressAnswerAccumulator implements Callback<byte[]> {
         private final List<InetAddress> mAllAnswers;
+        private final Network mNetwork;
         private int mRcode;
         private DnsException mDnsException;
         private final Callback<? super List<InetAddress>> mUserCallback;
         private final int mTargetAnswerCount;
         private int mReceivedAnswerCount = 0;
 
-        InetAddressAnswerAccumulator(int size,
+        InetAddressAnswerAccumulator(@Nullable Network network, int size,
                 @NonNull Callback<? super List<InetAddress>> callback) {
+            mNetwork = network;
             mTargetAnswerCount = size;
             mAllAnswers = new ArrayList<>();
             mUserCallback = callback;
@@ -280,8 +275,7 @@ public final class DnsResolver {
         private void maybeReportAnswer() {
             if (++mReceivedAnswerCount != mTargetAnswerCount) return;
             if (mAllAnswers.isEmpty() && maybeReportError()) return;
-            // TODO: Do RFC6724 sort.
-            mUserCallback.onAnswer(mAllAnswers, mRcode);
+            mUserCallback.onAnswer(rfc6724Sort(mNetwork, mAllAnswers), mRcode);
         }
 
         @Override
@@ -308,7 +302,7 @@ public final class DnsResolver {
 
     /**
      * Send a DNS query with the specified name on a network with both IPv4 and IPv6,
-     * get back a set of InetAddresses asynchronously.
+     * get back a set of InetAddresses with rfc6724 sorting style asynchronously.
      *
      * This method will examine the connection ability on given network, and query IPv4
      * and IPv6 if connection is available.
@@ -377,7 +371,7 @@ public final class DnsResolver {
         } else v4fd = null;
 
         final InetAddressAnswerAccumulator accumulator =
-                new InetAddressAnswerAccumulator(queryCount, callback);
+                new InetAddressAnswerAccumulator(network, queryCount, callback);
 
         synchronized (lock)  {
             if (queryIpv6) {
@@ -398,7 +392,7 @@ public final class DnsResolver {
 
     /**
      * Send a DNS query with the specified name and query type, get back a set of
-     * InetAddresses asynchronously.
+     * InetAddresses with rfc6724 sorting style asynchronously.
      *
      * The answer will be provided asynchronously through the provided {@link Callback}.
      *
@@ -431,7 +425,7 @@ public final class DnsResolver {
             return;
         }
         final InetAddressAnswerAccumulator accumulator =
-                new InetAddressAnswerAccumulator(1, callback);
+                new InetAddressAnswerAccumulator(network, 1, callback);
         synchronized (lock)  {
             registerFDListener(executor, queryfd, accumulator, cancellationSignal, lock);
             if (cancellationSignal == null) return;
@@ -498,38 +492,6 @@ public final class DnsResolver {
                 cancelQuery(queryfd);
             }
         });
-    }
-
-    // These two functions match the behaviour of have_ipv4 and have_ipv6 in the native resolver.
-    private boolean haveIpv4(@Nullable Network network) {
-        final SocketAddress addrIpv4 =
-                new InetSocketAddress(InetAddresses.parseNumericAddress("8.8.8.8"), 0);
-        return checkConnectivity(network, AF_INET, addrIpv4);
-    }
-
-    private boolean haveIpv6(@Nullable Network network) {
-        final SocketAddress addrIpv6 =
-                new InetSocketAddress(InetAddresses.parseNumericAddress("2000::"), 0);
-        return checkConnectivity(network, AF_INET6, addrIpv6);
-    }
-
-    private boolean checkConnectivity(@Nullable Network network,
-            int domain, @NonNull SocketAddress addr) {
-        final FileDescriptor socket;
-        try {
-            socket = Os.socket(domain, SOCK_DGRAM, IPPROTO_UDP);
-        } catch (ErrnoException e) {
-            return false;
-        }
-        try {
-            if (network != null) network.bindSocket(socket);
-            Os.connect(socket, addr);
-        } catch (IOException | ErrnoException e) {
-            return false;
-        } finally {
-            IoUtils.closeQuietly(socket);
-        }
-        return true;
     }
 
     private static class DnsAddressAnswer extends DnsPacket {
