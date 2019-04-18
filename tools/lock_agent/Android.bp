@@ -51,9 +51,9 @@ java_library {
     installable: true,
 }
 
-sh_binary {
+cc_binary {
     name: "start_with_lockagent",
-    src: "start_with_lockagent.sh",
+    srcs: ["start_with_lockagent.cpp"],
     required: [
         "liblockagent",
         "lockagent",
