@@ -27,9 +27,13 @@ import android.util.TimingsTraceLog;
 import android.util.Slog;
 import dalvik.system.VMRuntime;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFileAttributes;
 
 import libcore.io.IoUtils;
 
@@ -104,36 +108,32 @@ public class WrapperInit {
     public static void execApplication(String invokeWith, String niceName,
             int targetSdkVersion, String instructionSet, FileDescriptor pipeFd,
             String[] args) {
-        StringBuilder command = new StringBuilder(invokeWith);
-
-        final String appProcess;
-        if (VMRuntime.is64BitInstructionSet(instructionSet)) {
-            appProcess = "/system/bin/app_process64";
-        } else {
-            appProcess = "/system/bin/app_process32";
-        }
-        command.append(' ');
-        command.append(appProcess);
-
+        String[] cmdArgs = new String[6 + (niceName != null ? 1 : 0) + 3 + args.length];
+        cmdArgs[0] = invokeWith;
+        cmdArgs[1] = VMRuntime.is64BitInstructionSet(instructionSet) ? "/system/bin/app_process64"
+                : "/system/bin/app_process32";
         // Generate bare minimum of debug information to be able to backtrace through JITed code.
         // We assume that if the invoke wrapper is used, backtraces are desirable:
         //  * The wrap.sh script can only be used by debuggable apps, which would enable this flag
         //    without the script anyway (the fork-zygote path).  So this makes the two consistent.
         //  * The wrap.* property can only be used on userdebug builds and is likely to be used by
         //    developers (e.g. enable debug-malloc), in which case backtraces are also useful.
-        command.append(" -Xcompiler-option --generate-mini-debug-info");
+        cmdArgs[2] = "-Xcompiler-option";
+        cmdArgs[3] = "--generate-mini-debug-info";
 
-        command.append(" /system/bin --application");
+        cmdArgs[4] = "/system/bin";
+        cmdArgs[5] = "--application";
+
+        int i = 6;
         if (niceName != null) {
-            command.append(" '--nice-name=").append(niceName).append("'");
+            cmdArgs[i++] = "--nice-name=" + niceName;
         }
-        command.append(" com.android.internal.os.WrapperInit ");
-        command.append(pipeFd != null ? pipeFd.getInt$() : 0);
-        command.append(' ');
-        command.append(targetSdkVersion);
-        Zygote.appendQuotedShellArgs(command, args);
+        cmdArgs[i++] = "com.android.internal.os.WrapperInit";
+        cmdArgs[i++] = String.valueOf(pipeFd != null ? pipeFd.getInt$() : 0);
+        cmdArgs[i++] = String.valueOf(targetSdkVersion);
+        System.arraycopy(args, 0, cmdArgs, i, args.length);
         preserveCapabilities();
-        Zygote.execShell(command.toString());
+        execShell(cmdArgs);
     }
 
     /**
@@ -222,6 +222,53 @@ public class WrapperInit {
                             + i, ex);
                 }
             }
+        }
+    }
+
+    /**
+     * Executes the given arguments as a shell invocation.
+     *
+     * If the filename (args[0]) denotes a shell file, attempt to execute directly. Otherwise
+     * derive a command string by concatenating and quoting args, and invoke
+     * "/system/bin/sh -c &lt;command&gt;" using the exec() system call.
+     *
+     * This method throws a runtime exception if exec() failed, otherwise, this
+     * method never returns.
+     *
+     * @param args The (shell) command to execute.
+     */
+    private static void execShell(String[] args) {
+        // If the command is a shell file, run it directly. This allows writing selinux policies for
+        // it.
+        //
+        // This is more complicated than it looks like. To run with exec, it really needs to be a
+        // single executable (c.f. wrap's "logwrapper wrap," for example), and it must denote a
+        // full path, as PATH is not involved. Approximate by checking that the file exists and
+        // ends in ".sh".
+        try {
+            File f = new File(args[0]);
+            if (f.exists() && Files.isExecutable(f.toPath())) {
+                Slog.e("Zygote", "Executing non-sh path");
+                Os.execv(args[0], args);
+            }
+        } catch (Exception ignored) {
+            // Attempt running with sh explicitly.
+        }
+
+        // Collapse the args. Quote everything but the first arg, which may actually not be a
+        // single arg.
+        StringBuilder sb = new StringBuilder();
+        sb.append(args[0]);
+        for (int i = 1; i < args.length; i++) {
+            sb.append(" '").append(args[i].replace("'", "'\\''")).append("'");
+        }
+
+        String[] shArgs = { "/system/bin/sh", "-c", sb.toString() };
+        Slog.e("Zygote", "Executing sh path: >" + sb.toString() + "<");
+        try {
+            Os.execv(shArgs[0], shArgs);
+        } catch (ErrnoException e) {
+            throw new RuntimeException(e);
         }
     }
 }
