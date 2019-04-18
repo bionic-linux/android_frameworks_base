@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d432dbaf_ad962a85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-04-18T01:55:51Z",
+      "side": 1,
+      "message": "Nits: maybe \"Merged-In: I8c70503cf1d9f1d06f30a1936d2d88857d0cff53\" is better since it don\u0027t depend on the auto merge graph.\nBut this will work, too.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "e987ba6ccd24af2e0308e7dfa0535167aaae7a01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
