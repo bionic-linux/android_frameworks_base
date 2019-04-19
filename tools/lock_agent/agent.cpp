@@ -81,7 +81,7 @@ class Transformer {
 public:
     explicit Transformer(std::shared_ptr<ir::DexFile> dexIr) : dexIr_(dexIr) {}
 
-    bool transform() {
+    bool transform(bool insertDumpIntoDump) {
         bool classModified = false;
 
         std::unique_ptr<ir::Builder> builder;
@@ -127,6 +127,10 @@ public:
             CodeIr c(method.get(), dexIr_);
             bool methodModified = false;
 
+            if (insertDumpIntoDump && strncmp("dump", method->decl->name->c_str(), 5) == 0) {
+                methodModified = insertDump(&c);
+            }
+
             HookVisitor visitor(this, &c);
             for (auto it = c.instructions.begin(); it != c.instructions.end(); ++it) {
                 lir::Instruction* fi = *it;
@@ -160,10 +164,58 @@ private:
         }
     }
 
+    void prepareDump() {
+        // Insert "void LockHook.dump(PrintWriter pw)" into
+        // "void dump(FileDescriptor fd, PrintWriter pw, String[] args)."
+        // Shared types with PrePost are void and LookHook.
+
+        prepareBuilder();
+
+        if (voidType_ == nullptr) {
+            voidType_ = builder_->GetType("V");
+        }
+        if (hookType_ == nullptr) {
+            hookType_ = builder_->GetType("Lcom/android/lock_checker/LockHook;");
+        }
+    }
+
     void prepareBuilder() {
         if (builder_ == nullptr) {
             builder_ = std::unique_ptr<ir::Builder>(new ir::Builder(dexIr_));
         }
+    }
+
+    bool insertDump(CodeIr* cIr) {
+        prepareDump();
+        ir::Type* printWriterType = builder_->GetType("Ljava/io/PrintWriter;");
+        // Expect void dump(FileDescriptor fd, PrintWriter pw, String[] args).
+        if (cIr->ir_method->code->ins_count != 4) {
+            // Expect 4 ins: this, fd, pw, args.
+            LOG(ERROR) << "Method dump does not have four ins as expected.";
+            return false;
+        }
+        u4 param_reg = cIr->ir_method->code->registers - 2;
+
+        // Insert at the front (before first Bytecode).
+        struct BytecodeConvertingVisitor : public lir::Visitor {
+          lir::Bytecode* out = nullptr;
+          bool Visit(lir::Bytecode* bytecode) {
+            out = bytecode;
+            return true;
+          }
+        };
+        for (auto instr : cIr->instructions) {
+            BytecodeConvertingVisitor visitor;
+            instr->Accept(&visitor);
+            auto bytecode = visitor.out;
+            if (bytecode == nullptr) {
+              continue;
+            }
+            addCall(cIr, bytecode, OP_INVOKE_STATIC_RANGE, hookType_, "dump", voidType_,
+                    printWriterType, param_reg);
+            return true;
+        }
+        return false;
     }
 
     static void addInst(CodeIr* cIr, lir::Instruction* instructionAfter, Opcode opcode,
@@ -215,7 +267,7 @@ private:
 };
 
 std::pair<dex::u1*, size_t> maybeTransform(const char* name, size_t classDataLen,
-        const unsigned char* classData, dex::Writer::Allocator* allocator) {
+        const unsigned char* classData, dex::Writer::Allocator* allocator, bool insertDump) {
     // Isolate byte code of class class. This is needed as Android usually gives us more
     // than the class we need.
     dex::Reader reader(classData, classDataLen);
@@ -227,7 +279,7 @@ std::pair<dex::u1*, size_t> maybeTransform(const char* name, size_t classDataLen
 
     {
         Transformer transformer(ir);
-        if (!transformer.transform()) {
+        if (!transformer.transform(insertDump)) {
             return std::make_pair(nullptr, 0);
         }
     }
@@ -262,6 +314,8 @@ void transformHook(jvmtiEnv* jvmtiEnv, JNIEnv* env ATTRIBUTE_UNUSED,
         return;
     }
 
+    bool isActivityManager = strncmp("com/android/server/am/ActivityManagerService", name, 45) == 0;
+
     class JvmtiAllocator: public dex::Writer::Allocator {
     public:
         explicit JvmtiAllocator(::jvmtiEnv* jvmti) :
@@ -283,7 +337,7 @@ void transformHook(jvmtiEnv* jvmtiEnv, JNIEnv* env ATTRIBUTE_UNUSED,
     };
     JvmtiAllocator allocator(jvmtiEnv);
     std::pair<dex::u1*, size_t> result = maybeTransform(name, classDataLen, classData,
-            &allocator);
+            &allocator, isActivityManager);
 
     if (result.second > 0) {
         *newClassData = result.first;
@@ -457,7 +511,7 @@ int locktest_main(int argc, char *argv[]) {
     NewDeleteAllocator allocator;
 
     std::pair<dex::u1*, size_t> result = maybeTransform(argv[2], statBuf.st_size,
-            reinterpret_cast<unsigned char*>(data.get()), &allocator);
+            reinterpret_cast<unsigned char*>(data.get()), &allocator, false);
 
     if (result.second == 0) {
         LOG(INFO) << "No transformation";
