@@ -108,7 +108,7 @@ public class KeepaliveTracker {
      * All information about this keepalive is known at construction time except the slot number,
      * which is only returned when the hardware has successfully started the keepalive.
      */
-    class KeepaliveInfo implements IBinder.DeathRecipient {
+    public class KeepaliveInfo implements IBinder.DeathRecipient {
         // Bookkeeping data.
         private final ISocketKeepaliveCallback mCallback;
         private final int mUid;
@@ -348,6 +348,9 @@ public class KeepaliveTracker {
                 switch (mType) {
                     case TYPE_NATT:
                         mNai.asyncChannel
+                                .sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, mType,
+                                        mPacket);
+                        mNai.asyncChannel
                                 .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
                         break;
                     case TYPE_TCP:
@@ -358,7 +361,7 @@ public class KeepaliveTracker {
                             return;
                         }
                         mNai.asyncChannel
-                                .sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, 0 /* Unused */,
+                                .sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, mType,
                                         mPacket);
                         // TODO: check result from apf and notify of failure as needed.
                         mNai.asyncChannel
@@ -397,6 +400,7 @@ public class KeepaliveTracker {
                     mStartedState = STOPPING;
                     if (mType == TYPE_NATT) {
                         mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
+                        mNai.asyncChannel.sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER, mSlot);
                     } else if (mType == TYPE_TCP) {
                         mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
                         mNai.asyncChannel.sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER, mSlot);
