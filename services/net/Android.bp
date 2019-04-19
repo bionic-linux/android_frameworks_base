@@ -35,6 +35,7 @@ aidl_interface {
         "java/android/net/InitialConfigurationParcelable.aidl",
         "java/android/net/PrivateDnsConfigParcel.aidl",
         "java/android/net/ProvisioningConfigurationParcelable.aidl",
+        "java/android/net/NattKeepalivePacketDataParcelable.aidl",
         "java/android/net/TcpKeepalivePacketDataParcelable.aidl",
         "java/android/net/dhcp/DhcpServingParamsParcel.aidl",
         "java/android/net/dhcp/IDhcpServer.aidl",

@@ -29,6 +29,7 @@ import android.net.INetd;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.NattKeepalivePacketDataParcelable;
 import android.net.NetworkStackIpMemoryStore;
 import android.net.ProvisioningConfigurationParcelable;
 import android.net.ProxyInfo;
@@ -548,9 +549,16 @@ public class IpClient extends StateMachine {
             IpClient.this.setMulticastFilter(enabled);
         }
         @Override
-        public void addKeepalivePacketFilter(int slot, TcpKeepalivePacketDataParcelable pkt) {
+        public void addTcpKeepalivePacketFilter(int slot, int type,
+                TcpKeepalivePacketDataParcelable pkt) {
             checkNetworkStackCallingPermission();
-            IpClient.this.addKeepalivePacketFilter(slot, pkt);
+            IpClient.this.addTcpKeepalivePacketFilter(slot, type, pkt);
+        }
+        @Override
+        public void addNattKeepalivePacketFilter(int slot, int type,
+                NattKeepalivePacketDataParcelable pkt) {
+            checkNetworkStackCallingPermission();
+            IpClient.this.addNattKeepalivePacketFilter(slot, type, pkt);
         }
         @Override
         public void removeKeepalivePacketFilter(int slot) {
@@ -686,11 +694,21 @@ public class IpClient extends StateMachine {
     }
 
     /**
-     * Called by WifiStateMachine to add keepalive packet filter before setting up
+     * Called by WifiStateMachine to add TCP keepalive packet filter before setting up
      * keepalive offload.
      */
-    public void addKeepalivePacketFilter(int slot, @NonNull TcpKeepalivePacketDataParcelable pkt) {
-        sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF, slot, 0 /* Unused */, pkt);
+    public void addTcpKeepalivePacketFilter(int slot, int type,
+            @NonNull TcpKeepalivePacketDataParcelable pkt) {
+        sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF, slot, type, pkt);
+    }
+
+    /**
+     *  Called by WifiStateMachine to add NATT keepalive packet filter before setting up
+     *  keepalive offload.
+     */
+    public void addNattKeepalivePacketFilter(int slot, int type,
+            @NonNull NattKeepalivePacketDataParcelable pkt) {
+        sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF, slot, type, pkt);
     }
 
     /**
@@ -1602,9 +1620,18 @@ public class IpClient extends StateMachine {
 
                 case CMD_ADD_KEEPALIVE_PACKET_FILTER_TO_APF: {
                     final int slot = msg.arg1;
+                    final int type = msg.arg2;
+                    // See KeepaliveTracker.KeepaliveInfo for TYPE_NATT definition.
+                    final int typeNatt = 1;
+
                     if (mApfFilter != null) {
-                        mApfFilter.addKeepalivePacketFilter(slot,
-                                (TcpKeepalivePacketDataParcelable) msg.obj);
+                        if (type == typeNatt) {
+                            mApfFilter.addNattKeepalivePacketFilter(slot,
+                                    (NattKeepalivePacketDataParcelable) msg.obj);
+                        } else {
+                            mApfFilter.addTcpKeepalivePacketFilter(slot,
+                                    (TcpKeepalivePacketDataParcelable) msg.obj);
+                        }
                     }
                     break;
                 }
