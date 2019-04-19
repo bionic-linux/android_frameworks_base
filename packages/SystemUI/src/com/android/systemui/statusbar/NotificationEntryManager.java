@@ -913,6 +913,21 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
 
     public void updateNotificationRanking(NotificationListenerService.RankingMap ranking) {
         mNotificationData.updateRanking(ranking);
+
+        ArrayList<NotificationData.Entry> activeNotifications =
+                mNotificationData.getActiveNotifications();
+        final int size = activeNotifications.size();
+        for (int i = 0; i < size; i++) {
+            NotificationData.Entry ent = activeNotifications.get(i);
+            String key = ent.row.getStatusBarNotification().getKey();
+            boolean isLowPriority = mNotificationData.isAmbient(key);
+            boolean wasLowPriority = ent.row.isLowPriority();
+            if (wasLowPriority != isLowPriority) {
+                ent.row.setIsLowPriority(isLowPriority);
+                ent.row.updateNotification(ent);
+            }
+        }
+
         updateNotifications();
     }
 
