@@ -265,6 +265,13 @@ public class LockHook {
     }
 
     /**
+     * Dump stats without indent.
+     */
+    public static void dump(PrintWriter pw) {
+        dump(pw, "");
+    }
+
+    /**
      * Dump stats to logcat.
      */
     public static void dump() {
