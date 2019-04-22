@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca82113_2a44c622",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-22T08:48:11Z",
+      "side": 1,
+      "message": "Let\u0027s be symmetric here : because you pass the NAI to createNativeNetwork, also pass the NAI to destroyNativeNetwork. Maybe also move destroy below create.",
+      "range": {
+        "startLine": 3073,
+        "startChar": 38,
+        "endLine": 3073,
+        "endChar": 41
+      },
+      "revId": "f51442448ceb3794b2814fade5c559a7f7872bdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
