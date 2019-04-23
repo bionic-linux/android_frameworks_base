@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4d3561c_cb33da72",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-23T14:32:13Z",
+      "side": 1,
+      "message": "Using aosp/947437 commit to add more descriptions.",
+      "parentUuid": "20369ce1_4980fe0f",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "a7b8452e883c6f2a6a4b6e592150c7607ac6f81b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920719bc_f9bc9b49",
         "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-04-23T05:48:58Z",
       "side": 1,
       "message": "As pointed out in the previous patchset, do you want to improve the implementation of errorCodeWithOption to make sure that errorCode has all the lower bits to 0 and option has all the upper bits to 0 ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "a7b8452e883c6f2a6a4b6e592150c7607ac6f81b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c9d839_f5a48067",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-23T14:32:13Z",
+      "side": 1,
+      "message": "Yes, I can do that. Let\u0027s use another commit to improve the implementation of errorCodeWithOption.",
+      "parentUuid": "920719bc_f9bc9b49",
       "range": {
         "startLine": 40,
         "startChar": 24,

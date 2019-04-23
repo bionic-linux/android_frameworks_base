@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "91aab2b8_d5be9804",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-04-23T14:32:13Z",
+      "side": 1,
+      "message": "I\u0027m using IntelliJ too. Maybe I can check my Kotlin settings first to see if anything is wrong there.",
+      "parentUuid": "85f33197_55f52489",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518299ca_0aa10c18",
         "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
         "patchSetId": 3
