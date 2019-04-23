@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df2f252f_c6d47cc1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T06:19:16Z",
+      "side": 1,
+      "message": "still \"partially\"",
+      "range": {
+        "startLine": 1144,
+        "startChar": 60,
+        "endLine": 1144,
+        "endChar": 68
+      },
+      "revId": "89a9a37c59da82930d2d255324b0e7b9d655ec33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
