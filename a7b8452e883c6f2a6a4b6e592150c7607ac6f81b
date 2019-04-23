@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20369ce1_4980fe0f",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T05:48:58Z",
+      "side": 1,
+      "message": "Suggest adding that you need to do this because it\u0027s protected in DhcpPacket\n\nAlso maybe just // comments rather than javadoc for a private constant",
+      "range": {
+        "startLine": 17,
+        "startChar": 41,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "a7b8452e883c6f2a6a4b6e592150c7607ac6f81b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920719bc_f9bc9b49",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T05:48:58Z",
+      "side": 1,
+      "message": "As pointed out in the previous patchset, do you want to improve the implementation of errorCodeWithOption to make sure that errorCode has all the lower bits to 0 and option has all the upper bits to 0 ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "a7b8452e883c6f2a6a4b6e592150c7607ac6f81b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

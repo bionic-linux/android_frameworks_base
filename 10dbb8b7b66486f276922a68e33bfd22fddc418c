@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "85f33197_55f52489",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T05:48:58Z",
+      "side": 1,
+      "message": "I see. AFAICT the style guide is what IntelliJ (which I\u0027m using) does by default. What IDE are you using ? Maybe we need to reach out to the people making it ? You\u0027ll suffer a lot if you have to fix the imports manually every time.",
+      "parentUuid": "01bd8bf7_db712109",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "10dbb8b7b66486f276922a68e33bfd22fddc418c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518299ca_0aa10c18",
         "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
         "patchSetId": 3
