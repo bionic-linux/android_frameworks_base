@@ -232,6 +232,29 @@
     },
     {
       "key": {
+        "uuid": "b88227b7_a5a51861",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:24:02Z",
+      "side": 1,
+      "message": "Please don\u0027t store this if the L2Key is null. Please note that we NEED to put it into a local first because this is a mutable member. Something like :\n\n  final String l2Key \u003d mL2Key;\n  if (l2Key \u003d\u003d null) return;\n  if (!mDcpResults !\u003d null) {\n    ...\n  }\n  setGroupHint\n  final OnStatusListener listener;\n  if (DBG) {\n    listener \u003d status -\u003e Log.d(...)\n  } else {\n    listener \u003d null;\n  }\n  mIpMemoryStore.storeNetworkAttributes(l2Key, na.build(), listener);\n\n(note how the last line is using the local, NOT the member).",
+      "range": {
+        "startLine": 1272,
+        "startChar": 23,
+        "endLine": 1272,
+        "endChar": 45
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "150cde91_823a3465",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 4
