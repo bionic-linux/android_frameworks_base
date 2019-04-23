@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "a452f395_cff06cca",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:09:57Z",
+      "side": 1,
+      "message": "With the new changes :\n\n  } else {\n    listener \u003d status -\u003e Log.d(...);\n  }",
+      "parentUuid": "150cde91_823a3465",
+      "range": {
+        "startLine": 1273,
+        "startChar": 16,
+        "endLine": 1279,
+        "endChar": 17
+      },
+      "revId": "f0ea9d81c9b7acfdef3121757528a089e8cf4efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7167e1a_284937a9",
         "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
         "patchSetId": 4
