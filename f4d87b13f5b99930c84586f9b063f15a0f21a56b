@@ -71,6 +71,53 @@
     },
     {
       "key": {
+        "uuid": "70275590_8b85b870",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:51:32Z",
+      "side": 1,
+      "message": "When I say \"call the DnsProxyListener getaddrinfo() method\", I think I mean:\n\n- Factor out to some common method the code that sends the query to the proxy and the code that parses the response (right now I think this is in android_getaddrinfo_proxy), and call that via JNI, or:\n- Write another implementation of that code in Java.\n\nIn any case we would poll() on the fd via the FD event listener like we do now.",
+      "parentUuid": "83f48063_b50f4239",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1097e8df_db19f201",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:51:32Z",
+      "side": 1,
+      "message": "Note that this will not be instant - it will involve opening a UNIX socket to netd, sending the fd over it so that netd can mark it, and getting the fd back. This operation is single-threaded inside netd, and while it\u0027s pretty fast (benchmarks say a few thousand of these per second IIRC) the time might add up, because we call this many times (one per destination IP address). FOr non-cached queries it probably doesn\u0027t matter, but it might slow down cached queries.",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 22
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bced8b16_986a1d14",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 1
