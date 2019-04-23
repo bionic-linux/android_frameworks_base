@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83cc83a7_e6b1a84a",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:34:29Z",
+      "side": 1,
+      "message": "Consider putting the ternary operator clauses in () to improve readability. Technically this almost certainly isn\u0027t necessary because the only operators that have lower precedence than ? are assignments like +\u003d or \u003d, but it doesn\u0027t hurt.",
+      "range": {
+        "startLine": 126,
+        "startChar": 25,
+        "endLine": 126,
+        "endChar": 75
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1357a035_dfba82fc",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:34:29Z",
+      "side": 1,
+      "message": "This is so unexpected that it might be worth logging an error.",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f48063_b50f4239",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:34:29Z",
+      "side": 1,
+      "message": "Ouch. :-(\n\nWhat this means is that if the default network changes while the addresses are being sorted then the results will be incorrect.\n\nAnd it occurs to me that there\u0027s an even bigger problem than this one, too: the DnsResolver#query() method that does two DNS queries (i.e., the one that calls this code) needs to get the right netId before doing the queries, because otherwise if the default network changes while it is running, it could end up doing the A query on one network and the AAAA on another network.\n\nFor this CL, we could just refuse to allow users to pass a null netId to that method until we fix the problem.\n\nAs for fixing the problem... I think one way to do it would be: if the passed-in network is null, set it explicitly in the code to the app\u0027s current default network for DNS. The following might work:\n1. Get a pointer to ConnectivityService via ServiceManager.getService (see TrafficStats#getStatsService for an example of how to do this) and call getActiveNetwork on it.\n2. Pass that network to getNetworkForResolv() in libnetd_client.\n\nEven that might not work in the case of a split tunnel VPN. The rules for this are very complex; take a look at NetworkController::getNetworkForDnsLocked. Given all the complexity and the risk of the two implementations getting out of sync, it might be simpler to just add an IPC to DnsProxyListener (or even to FwmarkServer) to return the network for DNS resolution.\n\nHowever, it\u0027s already the case that split-tunnel VPNs don\u0027t behave properly in some situations. So perhaps this is fine.\n\nYet another option would be just to delegate all this to netd entirely, and have the IPv4+IPv6 query() method just call the DnsProxyListener getaddrinfo() method. This will have other side effects such as send the two DNS queries in series instead of in parallel, and processing the domain search list. On the other hand, maybe perfect consistency with getaddrinfo is actually what we want here.\n\nThoughts?",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bced8b16_986a1d14",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:34:29Z",
+      "side": 1,
+      "message": "Can this actually happen? The documentation for Inet6Address states \"Java will never return an IPv4-mapped address. These classes can take an IPv4-mapped address as input, both in byte array and text representation. However, it will be converted into an IPv4 address.\"\n\nWhere do these addresses come from? The source addresses come from Os.getsockname(), right? Looking at doGetSockName and sockaddrToInetAddress, it looks like those never return IPv6-mapped addresses either. And looks like destinations come from InetAddress.getByAddress in DnsAddressAnswer#getAddresses. And InetAddress#getByAddress calls convertFromIPv4MappedAddress, which does the same.\n\nNot sure what to do about this. Either we can leave this code in here, but add a comment that says it\u0027s not necessary due to the analysis above... or we can delete this code and add a comment to findLabel explaining that we don\u0027t need it.",
+      "range": {
+        "startLine": 225,
+        "startChar": 27,
+        "endLine": 225,
+        "endChar": 48
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b634151_8e599058",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-23T09:34:29Z",
+      "side": 1,
+      "message": "Can you use numberOfLeadingZeros here? \"x \u003d srcByte[i] ^ dstByte[i]\" will ensure that any identical bits get forced to zero. So the first non-zero bit in x is the first bit where srcByte[i] and dstByte[i] differ. Maybe just:\n\n    int x \u003d srcByte[i] ^ dstByte[i];\n    return i * CHAR_BIT + numberOfLeadingZeros(x);\n\nAlso, due to the fact that Java bytes are signed, do you need to do something like:\n\n    int x \u003d BitUtils.uint8(srcByte[i]) ^ BitUtils.uint8(dstByte[i]);\n\nNot sure how to unit test for this.",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 13
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
