@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a3380374_4b83128c",
+        "filename": "services/net/java/android/net/IpMemoryStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Fair enough. Let\u0027s keep this code.",
+      "parentUuid": "948286ef_27e0f4ea",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "544df489_4c4dd854",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 9
@@ -60,6 +84,30 @@
       "writtenOn": "2019-04-12T07:32:22Z",
       "side": 1,
       "message": "Just have this method throw Exception and let it bubble up. Then you can just write :\n\nreturn new NetworkAttributes.Builder()\n        .setGroupHint(hint)\n        .setMtu(mtu)\n        .build();",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdbb862_ce7f32e9",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Something like :\n\nbuildTestNetworkAttributes(...) throws Exception {\n  return new NetworkAttributes.Builder()\n          .set...\n          .build();",
+      "parentUuid": "544df489_4c4dd854",
       "range": {
         "startLine": 102,
         "startChar": 7,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "159706b5_5ee9a282",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Something like :\n\n  mStore.retrieveNetworkAttributes(l2Key, attributes -\u003e assertEquals(attributes, TEST_NETWORK_ATTRIBUTES))",
+      "parentUuid": "b9b595a5_2d04f6a6",
+      "range": {
+        "startLine": 119,
+        "startChar": 48,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ac986bb_98312a07",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 9
@@ -106,6 +178,30 @@
       "writtenOn": "2019-04-12T07:32:22Z",
       "side": 1,
       "message": "Please just pass an argument to startIpMemoryStore() instead of copy-pasting the code.",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 10
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35776578_8e188b3b",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Something like :\n\n  private void startIpMemoryStore(boolean supplyService) {\n    if (supplyService) {\n      doAnswer(invocation -\u003e {\n              ((IIpMemoryStoreCallbacks) invocation.getArgument(0))\n                      .onIpMemoryStoreFetched(mMockService);\n              return null;\n      }).when(mNetworkStackClient).fetchIpMemoryStore(any());\n    } else {\n      doNothing().when(mNetworkStackClient).fetchIpMemoryStore(mCbCaptore.capture())\n    }\n    mStore \u003d new IpMemoryStore(mMockContext) {\n            @Override\n            protected NetworkStackClient getNetworkStackClient() {\n                return mNetworkStackClient;\n            }\n        };\n    }\n\n...then call it with :\n\n  startIpMemoryStore(true /* supplyService */);\n\nin other changes, and in this one with false, and keep the rest.\n\nYou may choose to return the argument captor instead of putting it in a member. Neither of those solutions are great (it\u0027s not great to have a member with a role that\u0027s not obvious, but on the other hand if you return it the return value is only useful if you pass false).",
+      "parentUuid": "7ac986bb_98312a07",
       "range": {
         "startLine": 163,
         "startChar": 8,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c6f40723_9bcd12dc",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "e.g. in l.207\n\n  mStore.retrieveNetworkAttributes(l2Key, attributes -\u003e throw new RuntimeException(\"test\"));",
+      "parentUuid": "e09713c4_bed7c386",
+      "range": {
+        "startLine": 196,
+        "startChar": 16,
+        "endLine": 196,
+        "endChar": 53
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a448bace_b23e4b79",
         "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
         "patchSetId": 9
@@ -157,6 +277,53 @@
         "startChar": 19,
         "endLine": 197,
         "endChar": 80
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77011e19_79f159c3",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Something like :\n\n  testEnqueuedIpMsRequestsWithException() throws Exception {\n\nSame thing on all other methods in this file that list Exception as being thrown",
+      "parentUuid": "a448bace_b23e4b79",
+      "range": {
+        "startLine": 197,
+        "startChar": 19,
+        "endLine": 197,
+        "endChar": 80
+      },
+      "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d652879_289b653c",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-04-23T08:57:12Z",
+      "side": 1,
+      "message": "Also please never pass null to @NonNull arguments. The compiler is supposed to warn. It\u0027s fine to pass a functor that does nothing (though in this case, because it\u0027s testing for exceptions, I would encourage you to pass a functor that throws here like in my comment in l.197.",
+      "range": {
+        "startLine": 209,
+        "startChar": 73,
+        "endLine": 209,
+        "endChar": 77
       },
       "revId": "2c849bc9cd93204aae3c19449c86d47ca5362862",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
