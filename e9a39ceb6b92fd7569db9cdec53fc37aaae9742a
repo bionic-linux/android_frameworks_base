@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dbf5ab1_d38736ca",
+        "filename": "core/java/android/bluetooth/BluetoothA2dp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-24T12:04:05Z",
+      "side": 0,
+      "message": "It looks like a lot of locking is no longer needed.  How do we verify that?",
+      "range": {
+        "startLine": 226,
+        "startChar": 28,
+        "endLine": 226,
+        "endChar": 60
+      },
+      "revId": "e9a39ceb6b92fd7569db9cdec53fc37aaae9742a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91910736_2ec2544b",
+        "filename": "core/java/android/bluetooth/BluetoothHeadset.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-24T12:04:05Z",
+      "side": 1,
+      "message": "I would expect doBind() and doUnbind() to both be private (or not)",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 11
+      },
+      "revId": "62d248275515489c3ffb686c5db0e74df7fefe3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4870351_07c66639",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-24T12:04:05Z",
+      "side": 1,
+      "message": "spelling: logWarn\n\nIs this used anywhere?  I would only define the ones that are needed.",
+      "range": {
+        "startLine": 259,
+        "startChar": 16,
+        "endLine": 259,
+        "endChar": 25
+      },
+      "revId": "62d248275515489c3ffb686c5db0e74df7fefe3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
