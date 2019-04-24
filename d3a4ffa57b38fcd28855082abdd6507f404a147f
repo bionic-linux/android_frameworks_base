@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "977b6647_5c171ce2",
+        "filename": "wifi/tests/runtests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126614
+      },
+      "writtenOn": "2019-04-24T19:57:17Z",
+      "side": 1,
+      "message": "My testing with\n\n  lunch aosp_blueline-userdebug\n\nindicates that this should be TARGET_ARCH instead of TARGET_ARCH_VARIANT",
+      "range": {
+        "startLine": 22,
+        "startChar": 82,
+        "endLine": 22,
+        "endChar": 101
+      },
+      "revId": "d3a4ffa57b38fcd28855082abdd6507f404a147f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
