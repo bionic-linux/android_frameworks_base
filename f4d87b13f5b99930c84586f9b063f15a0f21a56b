@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1c5d499_e2720121",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83cc83a7_e6b1a84a",
+      "range": {
+        "startLine": 126,
+        "startChar": 25,
+        "endLine": 126,
+        "endChar": 75
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1357a035_dfba82fc",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 1
@@ -45,6 +69,54 @@
       "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c1ce79_3007d8eb",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1357a035_dfba82fc",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6134ff04_9b40a44f",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1357a035_dfba82fc",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "77888343_6f77040b",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Not sure I understand it well,\nIf the network is null, we could choose the default one to perform both of v4/v6 query.\nDnsProxyListener will use the same netId to get networkContext between v4 and v6 query.\nIf the network is changed during query, I saw the difference as below.\nAnything I missed?\n\ngetaddrinfo:\n       mark(networkcontext) is set in DnsProxyListener    (once)\n    querying:\n       setsockopt is called before querying in res_send.cpp(send_dg/send_vc, or tls)\n Suddenly, network changed\n    sorting:\n       setsockopt is called in getaddrinfo.cpp (_find_src_addr)\n---------------------------------------------------------------------------------\nDnsResolver#query:\n       mark(networkcontext) is set in DnsProxyListener    (twice, but must be the same networkcontext)\n    querying:\n       setsockopt is called before querying in res_send.cpp(send_dg/send_vc, or tls)       \n Suddenly, network changed\n    sorting:\n       setsockopt is called here (findSrcAddress)     (SelectNetwork checking in FwServer will fail, so no setsockopt will not be called, we will get no srcAddress)",
+      "parentUuid": "70275590_8b85b870",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 32
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1097e8df_db19f201",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 1
@@ -106,6 +202,30 @@
       "writtenOn": "2019-04-23T09:51:32Z",
       "side": 1,
       "message": "Note that this will not be instant - it will involve opening a UNIX socket to netd, sending the fd over it so that netd can mark it, and getting the fd back. This operation is single-threaded inside netd, and while it\u0027s pretty fast (benchmarks say a few thousand of these per second IIRC) the time might add up, because we call this many times (one per destination IP address). FOr non-cached queries it probably doesn\u0027t matter, but it might slow down cached queries.",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 22
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde25753_f49ec603",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "So we might want to have a way to bypass the checking, right?\nAdd a method for finding srcAddress in netdclient could do that. But I wonder if it is allowed.",
+      "parentUuid": "1097e8df_db19f201",
       "range": {
         "startLine": 174,
         "startChar": 15,
@@ -141,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "98fb33e9_adf3e967",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Thanks, I don\u0027t notice that.\nDone",
+      "parentUuid": "bced8b16_986a1d14",
+      "range": {
+        "startLine": 225,
+        "startChar": 27,
+        "endLine": 225,
+        "endChar": 48
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b634151_8e599058",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 1
@@ -161,6 +305,30 @@
       "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594a193e_8f07f2c1",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-04-24T07:27:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8b634151_8e599058",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 13
+      },
+      "revId": "f4d87b13f5b99930c84586f9b063f15a0f21a56b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
