@@ -22,6 +22,30 @@
       "revId": "d3a4ffa57b38fcd28855082abdd6507f404a147f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d555720e_b77ec197",
+        "filename": "wifi/tests/runtests.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1480558
+      },
+      "writtenOn": "2019-04-25T14:09:31Z",
+      "side": 1,
+      "message": "You\u0027re probably right. I thought that _VARIANT was needed for the _64 in my aosp_x86_64-eng build, but it seems that I was just looking at the wrong variable (TARGET_2ND_ARCH\u003dx86 vs TARGET_2ND_ARCH_VARIANT\u003dx86_64). Both TARGET_ARCH and TARGET_ARCH_VARIANT seem to equal x86_64 in this build.",
+      "parentUuid": "977b6647_5c171ce2",
+      "range": {
+        "startLine": 22,
+        "startChar": 82,
+        "endLine": 22,
+        "endChar": 101
+      },
+      "revId": "d3a4ffa57b38fcd28855082abdd6507f404a147f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
