@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299693a6_a1bc77f2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3100,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-25T04:49:11Z",
+      "side": 1,
+      "message": "Hmm... so if networkDestroy throws an exception, we won\u0027t destroy the DNS cache. Should we attempt to do so anyway? I can see problems either way. Perhaps it doesn\u0027t matter.",
+      "range": {
+        "startLine": 3100,
+        "startChar": 10,
+        "endLine": 3100,
+        "endChar": 15
+      },
+      "revId": "a24d5d8f8b21140ab97fc5ff790fbbaa31dd7e14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
