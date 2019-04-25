@@ -8795,7 +8795,7 @@ public class PackageManagerService extends IPackageManager.Stub
             if (realPkgName != null) {
                 ensurePackageRenamed(pkg, renamedPkgName);
             }
-            final PackageSetting originalPkgSetting = getOriginalPackageLocked(pkg, renamedPkgName);
+            final PackageSetting originalPkgSetting = getOriginalPackageLocked(pkg);
             final PackageSetting installedPkgSetting = mSettings.getPackageLPr(pkg.packageName);
             pkgSetting = originalPkgSetting == null ? installedPkgSetting : originalPkgSetting;
             pkgAlreadyExists = pkgSetting != null;
@@ -10239,13 +10239,12 @@ public class PackageManagerService extends IPackageManager.Stub
     private PackageParser.Package scanPackageNewLI(@NonNull PackageParser.Package pkg,
             final @ParseFlags int parseFlags, @ScanFlags int scanFlags, long currentTime,
             @Nullable UserHandle user) throws PackageManagerException {
-
         final String renamedPkgName = mSettings.getRenamedPackageLPr(pkg.mRealPackage);
         final String realPkgName = getRealPackageName(pkg, renamedPkgName);
         if (realPkgName != null) {
             ensurePackageRenamed(pkg, renamedPkgName);
         }
-        final PackageSetting originalPkgSetting = getOriginalPackageLocked(pkg, renamedPkgName);
+        final PackageSetting originalPkgSetting = getOriginalPackageLocked(pkg);
         final PackageSetting pkgSetting = mSettings.getPackageLPr(pkg.packageName);
         final PackageSetting disabledPkgSetting =
                 mSettings.getDisabledSystemPkgLPr(pkg.packageName);
@@ -10318,7 +10317,6 @@ public class PackageManagerService extends IPackageManager.Stub
         final PackageSetting pkgSetting = result.pkgSetting;
         final List<String> changedAbiCodePath = result.changedAbiCodePath;
         final boolean newPkgSettingCreated = (result.pkgSetting != request.pkgSetting);
-
         if (newPkgSettingCreated) {
             if (originalPkgSetting != null) {
                 mSettings.addRenamedPackageLPw(pkg.packageName, originalPkgSetting.name);
@@ -10530,9 +10528,8 @@ public class PackageManagerService extends IPackageManager.Stub
      * shared user [if any].
      */
     @GuardedBy("mPackages")
-    private @Nullable PackageSetting getOriginalPackageLocked(@NonNull PackageParser.Package pkg,
-            @Nullable String renamedPkgName) {
-        if (!isPackageRenamed(pkg, renamedPkgName)) {
+    private @Nullable PackageSetting getOriginalPackageLocked(@NonNull PackageParser.Package pkg) {
+        if (pkg.mOriginalPackages == null) {
             return null;
         }
         for (int i = pkg.mOriginalPackages.size() - 1; i >= 0; --i) {
