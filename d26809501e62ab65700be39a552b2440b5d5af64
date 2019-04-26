@@ -22,6 +22,30 @@
       "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6935dc_928a246f",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-26T13:17:58Z",
+      "side": 1,
+      "message": "My understanding is that volatile guarantees visibility across threads, but not atomicity.  So if we have a race condition:\n\n     Thread 1 : if (mService !\u003d null) {\n\n     Thread 2 : mService \u003d null;\n\n     Thread 1 :   mService.connect(device);\n\nvolatile just guarantees that we\u0027ll have a null-pointer exception (mService will be null in both threads)",
+      "parentUuid": "15a21f45_17f92855",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
