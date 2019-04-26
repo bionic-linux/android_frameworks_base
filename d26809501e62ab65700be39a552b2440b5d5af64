@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a21f45_17f92855",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-26T13:13:16Z",
+      "side": 1,
+      "message": "Moving the locking discussion (removal of locks in A2DP) here:\n\nMyles:\n  It looks like a lot of locking is no longer needed.  How do we verify that?\n\nUgo:\n  According to the original implementation CL, this writeLock was meant fix NPE for methods that access mService after checking nullness.\nI think we can remove it since mService is now been defined in BluetoothProfileConnector as volatile.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
