@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b557774e_30ca0513",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-29T11:01:36Z",
+      "side": 1,
+      "message": "Why does this need to be public? If for testing, then should it be marked @VisibleForTesting?",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "e93718143b0370a2a2b49d57358b7105cfcc2ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69174768_f2012a98",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-29T11:01:36Z",
+      "side": 1,
+      "message": "If we don\u0027t add this code, and also don\u0027t add the corresponding CMD_REMOVE_KEEPALIVE_PACKET_FILTER below, then I think it might be possible to submit this CL without requiring changes in wifi code.",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 41
+      },
+      "revId": "e93718143b0370a2a2b49d57358b7105cfcc2ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
