@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "392ac2eb_32452261",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1635,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-29T13:03:43Z",
+      "side": 1,
+      "message": "else if (type \u003d\u003d TYPE_TCP) {",
+      "range": {
+        "startLine": 1635,
+        "startChar": 26,
+        "endLine": 1635,
+        "endChar": 32
+      },
+      "revId": "9eeaa3aa9e44cbb4deb0fb7cb5028daf1b1cc6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
