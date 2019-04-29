@@ -125,6 +125,17 @@ public @interface UnsupportedAppUsage {
     String implicitMember() default "";
 
     /**
+     * Public API alternatives to this API.
+     *
+     * <p>If non-empty, the string must be a Javadoc formatted description of the public API
+     * alternative(s) to this API. The explanation must contain valid link tags to public API
+     * methods or fields.
+     *
+     * @return A Javadoc formatted string.
+     */
+    String publicAlternatives() default "";
+
+    /**
      * Container for {@link UnsupportedAppUsage} that allows it to be applied repeatedly to types.
      */
     @Retention(CLASS)
