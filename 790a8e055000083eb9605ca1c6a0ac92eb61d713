@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2e542d_e25893c1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-04-29T12:16:19Z",
+      "side": 1,
+      "message": "Is it safe to take the sCallbacks lock, release it, and take it again here? Are no guarantees of atomicity necessary between the sCallbacks.get() call above and this remove()?\n\nFor example, what happens if the app calls unregisterNetworkCallback between line 3452 and here?\n\nIf this would cause a problem, then maybe you could move this code into the synchronized block in line 3452. Might be worth doing that anyway, actually.",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
