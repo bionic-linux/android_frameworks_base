@@ -22,6 +22,30 @@
       "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04daeb71_e633cece",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-04-29T14:33:01Z",
+      "side": 1,
+      "message": "Seems safe as-is:\n- If removed then another remove has no further impact\n- The state modification to ALREADY_UNREGISTERED would be a race, but are synchronized\n\nMoving the code further up would be architecturally problematic. Line 3452 is generic, then the switch is specific behavior. I\u0027d rather keep the two separate.",
+      "parentUuid": "7a2e542d_e25893c1",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
