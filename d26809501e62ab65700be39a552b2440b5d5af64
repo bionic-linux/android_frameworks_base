@@ -120,6 +120,29 @@
     },
     {
       "key": {
+        "uuid": "4e670cf2_2ef21112",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-04-30T22:10:49Z",
+      "side": 1,
+      "message": "instead of switching based on input, use the class hirearchy as your implicit switch:\n\ndefine getServiceInterface as abstract, force every instantiation to provide an implementation.\n\nprovide the service name and profile name as arguments in the constructor.\n\nMake this class generic so you can use T instead of object, and avoid the cast after every call to getService.",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 5
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf56158b_83f678fb",
         "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
         "patchSetId": 7
