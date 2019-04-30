@@ -346,7 +346,7 @@ public final class SmsManager {
             // SMS and possibly fail later in the SMS sending process.
             ISms iSms = getISmsServiceOrThrow();
             iSms.sendTextForSubscriber(getSubscriptionId(), ActivityThread.currentPackageName(),
-                    destinationAddress,
+                    Binder.getCallingUid(), destinationAddress,
                     scAddress, text, sentIntent, deliveryIntent,
                     persistMessage);
         } catch (RemoteException ex) {
@@ -638,7 +638,7 @@ public final class SmsManager {
             try {
                 ISms iSms = getISmsServiceOrThrow();
                 iSms.sendMultipartTextForSubscriber(getSubscriptionId(),
-                        ActivityThread.currentPackageName(),
+                        ActivityThread.currentPackageName(), Binder.getCallingUid(),
                         destinationAddress, scAddress, parts,
                         sentIntents, deliveryIntents, persistMessage);
             } catch (RemoteException ex) {

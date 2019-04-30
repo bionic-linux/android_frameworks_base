@@ -58,7 +58,7 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
-    public void sendTextForSubscriber(int subId, String callingPkg, String destAddr,
+    public void sendTextForSubscriber(int subId, String callingPkg, int callingUid, String destAddr,
             String scAddr, String text, PendingIntent sentIntent,
             PendingIntent deliveryIntent, boolean persistMessageForNonDefaultSmsApp) {
         throw new UnsupportedOperationException();
@@ -86,7 +86,7 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
-    public void sendMultipartTextForSubscriber(int subId, String callingPkg,
+    public void sendMultipartTextForSubscriber(int subId, String callingPkg, int callingUid,
             String destinationAddress, String scAddress,
             List<String> parts, List<PendingIntent> sentIntents,
             List<PendingIntent> deliveryIntents, boolean persistMessageForNonDefaultSmsApp) {

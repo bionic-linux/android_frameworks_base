@@ -154,8 +154,8 @@ interface ISms {
      *   by a non-default SMS app. Currently only the carrier app can set this
      *   parameter to false to skip auto message persistence.
      */
-    void sendTextForSubscriber(in int subId, String callingPkg, in String destAddr,
-            in String scAddr, in String text, in PendingIntent sentIntent,
+    void sendTextForSubscriber(in int subId, String callingPkg, in int externalCallingUid,
+            in String destAddr, in String scAddr, in String text, in PendingIntent sentIntent,
             in PendingIntent deliveryIntent, in boolean persistMessageForNonDefaultSmsApp);
 
     /**
@@ -279,7 +279,7 @@ interface ISms {
      *   by a non-default SMS app. Currently only the carrier app can set this
      *   parameter to false to skip auto message persistence.
      */
-    void sendMultipartTextForSubscriber(in int subId, String callingPkg,
+    void sendMultipartTextForSubscriber(in int subId, String callingPkg, in int externalCallingUid,
             in String destinationAddress, in String scAddress,
             in List<String> parts, in List<PendingIntent> sentIntents,
             in List<PendingIntent> deliveryIntents, in boolean persistMessageForNonDefaultSmsApp);
