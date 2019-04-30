@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1fab692_348acc91",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2757,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-04-30T18:05:48Z",
+      "side": 1,
+      "message": "It\u0027s better to have only the class name \"CellularDataService\" in the configuration. And append it to to the package name for a full class name.",
+      "range": {
+        "startLine": 2757,
+        "startChar": 71,
+        "endLine": 2757,
+        "endChar": 136
+      },
+      "revId": "da28aceb42ccdd494f15b16e93f05f9ebe06210d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbfbb14_bab44a77",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3503,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-04-30T18:05:48Z",
+      "side": 1,
+      "message": "Need same thing for these two.",
+      "range": {
+        "startLine": 3500,
+        "startChar": 0,
+        "endLine": 3503,
+        "endChar": 91
+      },
+      "revId": "da28aceb42ccdd494f15b16e93f05f9ebe06210d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27e0c27_36d30ef0",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-04-30T18:05:48Z",
+      "side": 1,
+      "message": "Need same thing for network service and qualified networks service as well.",
+      "range": {
+        "startLine": 674,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 62
+      },
+      "revId": "da28aceb42ccdd494f15b16e93f05f9ebe06210d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
