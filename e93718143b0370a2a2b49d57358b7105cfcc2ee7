@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f65113ba_4214c04a",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-04-30T03:51:23Z",
+      "side": 1,
+      "message": "The reason is to use TYPE_NATT and TYPE_TCP in WifiStateMachine.\nChanging to be public so that we don\u0027t need to add additional definition.",
+      "parentUuid": "b557774e_30ca0513",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "e93718143b0370a2a2b49d57358b7105cfcc2ee7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69174768_f2012a98",
         "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
         "patchSetId": 4
