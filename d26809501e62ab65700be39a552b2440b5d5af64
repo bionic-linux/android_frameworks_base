@@ -70,6 +70,76 @@
       "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a085c233_183ffc45",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-30T13:49:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03df3d15_192f4d71",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c607a478_4e9148a1",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-30T13:49:24Z",
+      "side": 1,
+      "message": "Too verbose?  Remove?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 57
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf56158b_83f678fb",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2019-04-30T13:49:24Z",
+      "side": 1,
+      "message": "This is also unused.  Please remove.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 5
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
