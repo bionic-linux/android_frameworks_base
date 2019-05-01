@@ -46,6 +46,30 @@
       "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce58baa_05c896e6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-01T01:30:23Z",
+      "side": 1,
+      "message": "Hmm. This still bothers me, but I can\u0027t come up with a solid argument against it.\n\nGenerally, accessing the same data structure twice in the same operation under two different locks is incorrect because state may have changed in the meantime. But I think in this case the code is correct. So the best I can come up with is that putting another synchronized block lock here requires more thought in code review and in future refactoring to maintain correctness.\n\nFor example, if someone copy+pastes this other synchronized block, and then does something in it that *does* require atomicity with the get above, they\u0027ll will have added a bug. If all the code that touches sCallbacks in this function is in the same lock, then there will be no such misleading code to copy+paste.\n\nPhilosophically, I don\u0027t think it\u0027s true that it\u0027s an architectural issue to move the code; I think architecture is more about class structure, threading, and locking than it is about separating code blocks. But you\u0027re right that separating the code blocks would make things a bit more brittle.\n\nMaybe leave the code as is and add a comment here explaining that this extra synchronized block is safe because removes are idempotent and the remove doesn\u0027t do anything if the callback has already been removed?",
+      "parentUuid": "04daeb71_e633cece",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
