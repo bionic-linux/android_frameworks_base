@@ -701,6 +701,89 @@ public abstract class LayoutInflater {
     }
 
     /**
+     * @hide for use by zygote
+     */
+    public static void preloadCommonViewConstructors() {
+        // Gathered from a trace of several apps.
+        final String[] commonPrefixes = {
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.view.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.widget.",
+            "android.view.",
+            "android.widget.",
+            "android.view.",
+            "android.widget.",
+        };
+
+        final String[] commonNames = {
+            "CheckBox",
+            "Button",
+            "ImageButton",
+            "TextureView",
+            "ProgressBar",
+            "ViewFlipper",
+            "ActionMenuView",
+            "RelativeLayout",
+            "ImageView",
+            "EditText",
+            "TextView",
+            "ScrollView",
+            "Toolbar",
+            "Space",
+            "ListView",
+            "View",
+            "FrameLayout",
+            "ViewStub",
+            "LinearLayout",
+        };
+
+        for (int i = 0; i < commonNames.length; i++) {
+            try {
+                loadViewConstructor(commonNames[i], commonPrefixes[i], BOOT_CLASS_LOADER);
+            } catch (ClassNotFoundException e) {
+                // ignore
+            } catch (NoSuchMethodException e) {
+                // ignore
+            }
+        }
+    }
+
+    private static Constructor<? extends View> loadViewConstructor(String name, String prefix,
+            ClassLoader loader) throws ClassNotFoundException, NoSuchMethodException {
+        String classname = prefix != null ? (prefix + name) : name;
+        String isboot = loader == BOOT_CLASS_LOADER ? " is_boot" : " not_boot";
+        Trace.traceBegin(Trace.TRACE_TAG_VIEW, "Constructor Lookup: " + classname + isboot);
+        // Class not found in the cache, see if it's real, and try to add it
+        Class<? extends View> clazz = Class.forName(classname, false,
+                loader).asSubclass(View.class);
+
+        // Skip this,
+        // if (mFilter != null && clazz != null) {
+        // boolean allowed = mFilter.onLoadClass(clazz);
+        // if (!allowed) {
+        // failNotAllowed(name, prefix, attrs);
+        // }
+        // }
+        Constructor<? extends View> constructor = clazz.getConstructor(mConstructorSignature);
+        constructor.setAccessible(true);
+        sConstructorMap.put(name, constructor);
+        Trace.traceEnd(Trace.TRACE_TAG_VIEW);
+        return constructor;
+    }
+
+    /**
      * Low-level function for instantiating a view by name. This attempts to
      * instantiate a view class of the given <var>name</var> found in this
      * LayoutInflater's ClassLoader.
@@ -720,47 +803,35 @@ public abstract class LayoutInflater {
     public final View createView(String name, String prefix, AttributeSet attrs)
             throws ClassNotFoundException, InflateException {
         Constructor<? extends View> constructor = sConstructorMap.get(name);
-        if (constructor != null && !verifyClassLoader(constructor)) {
-            constructor = null;
-            sConstructorMap.remove(name);
-        }
-        Class<? extends View> clazz = null;
+        // if (constructor != null && !verifyClassLoader(constructor)) {
+        //     constructor = null;
+        //     sConstructorMap.remove(name);
+        // }
 
+        Class<? extends View> clazz = null;
         try {
             Trace.traceBegin(Trace.TRACE_TAG_VIEW, name);
 
             if (constructor == null) {
-                // Class not found in the cache, see if it's real, and try to add it
-                clazz = Class.forName(prefix != null ? (prefix + name) : name, false,
-                        mContext.getClassLoader()).asSubclass(View.class);
+                constructor = loadViewConstructor(name, prefix, mContext.getClassLoader());
+            } // If we have a filter, apply it to cached constructor
+            if (mFilter != null) {
+                // Have we seen this name before?
+                Boolean allowedState = mFilterMap.get(name);
+                if (allowedState == null) {
+                    // New class -- remember whether it is allowed
+                    clazz = Class
+                            .forName(prefix != null ? (prefix + name) : name, false,
+                                    mContext.getClassLoader())
+                            .asSubclass(View.class);
 
-                if (mFilter != null && clazz != null) {
-                    boolean allowed = mFilter.onLoadClass(clazz);
+                    boolean allowed = clazz != null && mFilter.onLoadClass(clazz);
+                    mFilterMap.put(name, allowed);
                     if (!allowed) {
                         failNotAllowed(name, prefix, attrs);
                     }
-                }
-                constructor = clazz.getConstructor(mConstructorSignature);
-                constructor.setAccessible(true);
-                sConstructorMap.put(name, constructor);
-            } else {
-                // If we have a filter, apply it to cached constructor
-                if (mFilter != null) {
-                    // Have we seen this name before?
-                    Boolean allowedState = mFilterMap.get(name);
-                    if (allowedState == null) {
-                        // New class -- remember whether it is allowed
-                        clazz = Class.forName(prefix != null ? (prefix + name) : name, false,
-                                mContext.getClassLoader()).asSubclass(View.class);
-
-                        boolean allowed = clazz != null && mFilter.onLoadClass(clazz);
-                        mFilterMap.put(name, allowed);
-                        if (!allowed) {
-                            failNotAllowed(name, prefix, attrs);
-                        }
-                    } else if (allowedState.equals(Boolean.FALSE)) {
-                        failNotAllowed(name, prefix, attrs);
-                    }
+                } else if (allowedState.equals(Boolean.FALSE)) {
+                    failNotAllowed(name, prefix, attrs);
                 }
             }
 

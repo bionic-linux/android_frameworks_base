@@ -49,6 +49,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TimingsTraceLog;
+import android.view.LayoutInflater;
 import android.webkit.WebViewFactory;
 import android.widget.TextView;
 
@@ -157,6 +158,11 @@ public class ZygoteInit {
         Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
         preloadSharedLibraries();
         preloadTextResources();
+
+        if (new File("/data/system/preload-constructors").exists()) {
+            LayoutInflater.preloadCommonViewConstructors();
+        }
+
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
         WebViewFactory.prepareWebViewInZygote();
