@@ -49,6 +49,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TimingsTraceLog;
+import android.view.LayoutInflater;
 import android.webkit.WebViewFactory;
 import android.widget.TextView;
 
@@ -327,6 +328,10 @@ public class ZygoteInit {
 
             Log.i(TAG, "...preloaded " + count + " classes in "
                     + (SystemClock.uptimeMillis() - startTime) + "ms.");
+
+            if (new File("/data/system/preload-constructors").exists()) {
+                LayoutInflater.preloadCommonViewConstructors();
+            }
         } catch (IOException e) {
             Log.e(TAG, "Error reading " + PRELOADED_CLASSES + ".", e);
         } finally {
