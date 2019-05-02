@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4e7dbb0_fd1d8373",
+        "filename": "packages/SettingsLib/tests/integ/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-05-02T17:25:46Z",
+      "side": 1,
+      "message": "This is an automated conversion, we generally don\u0027t touch the date.",
+      "parentUuid": "f8c352eb_d6fd29be",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "1ee5d90cef92e7c41a33fa90ffa1fc10a7ef0077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60ed1d2d_6226804c",
         "filename": "packages/SettingsLib/tests/robotests/Android.bp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-02T17:12:41Z",
       "side": 1,
       "message": "Just curious where is this defined?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "1ee5d90cef92e7c41a33fa90ffa1fc10a7ef0077",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16426a6a_274753f6",
+        "filename": "packages/SettingsLib/tests/robotests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2019-05-02T17:25:46Z",
+      "side": 1,
+      "message": "This was just added in aosp/955198, it\u0027s now visible at go/Android.bp",
+      "parentUuid": "60ed1d2d_6226804c",
       "range": {
         "startLine": 32,
         "startChar": 0,
