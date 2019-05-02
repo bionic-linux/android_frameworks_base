@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224155cf_78aa8eb4",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2019-05-02T22:22:30Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem related to the CL description, is this needed?",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 56
+      },
+      "revId": "2d82ad99117d08083d7e067bc10380a6f0ac4c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
