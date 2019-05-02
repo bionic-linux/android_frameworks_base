@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "41458650_dcb25ffa",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-05-02T10:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c607a478_4e9148a1",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 57
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e670cf2_2ef21112",
         "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
         "patchSetId": 7
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "48150dfc_1426faf9",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-05-02T10:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e670cf2_2ef21112",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 5
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf56158b_83f678fb",
         "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
         "patchSetId": 7
@@ -163,6 +211,30 @@
       "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d852ce3d_fce088b0",
+        "filename": "core/java/android/bluetooth/BluetoothProfileConnector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2019-05-02T10:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf56158b_83f678fb",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 5
+      },
+      "revId": "d26809501e62ab65700be39a552b2440b5d5af64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
