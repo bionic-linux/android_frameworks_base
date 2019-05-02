@@ -34,6 +34,24 @@
       "revId": "08964c68e49fa8b60e45706cec62e6f6b5a30da8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e419367_410108fb",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-05-02T05:02:08Z",
+      "side": 1,
+      "message": "Is this really required? What is the downside of not doing this? I am not sure how messaging apps handle this currently.",
+      "parentUuid": "381ab3b3_534cae3d",
+      "revId": "08964c68e49fa8b60e45706cec62e6f6b5a30da8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
