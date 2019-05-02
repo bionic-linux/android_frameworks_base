@@ -348,6 +348,9 @@ public class KeepaliveTracker {
                 switch (mType) {
                     case TYPE_NATT:
                         mNai.asyncChannel
+                                .sendMessage(CMD_ADD_KEEPALIVE_PACKET_FILTER, slot, 0 /* Unused */,
+                                        mPacket);
+                        mNai.asyncChannel
                                 .sendMessage(CMD_START_SOCKET_KEEPALIVE, slot, mInterval, mPacket);
                         break;
                     case TYPE_TCP:
@@ -397,6 +400,7 @@ public class KeepaliveTracker {
                     mStartedState = STOPPING;
                     if (mType == TYPE_NATT) {
                         mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
+                        mNai.asyncChannel.sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER, mSlot);
                     } else if (mType == TYPE_TCP) {
                         mNai.asyncChannel.sendMessage(CMD_STOP_SOCKET_KEEPALIVE, mSlot);
                         mNai.asyncChannel.sendMessage(CMD_REMOVE_KEEPALIVE_PACKET_FILTER, mSlot);
