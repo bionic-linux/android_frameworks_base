@@ -22,6 +22,30 @@
       "revId": "2d82ad99117d08083d7e067bc10380a6f0ac4c7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b160da75_49c9b4a2",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1351305
+      },
+      "writtenOn": "2019-05-02T22:46:03Z",
+      "side": 1,
+      "message": "You are right. This is something left behind. Cleaned up.",
+      "parentUuid": "224155cf_78aa8eb4",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 56
+      },
+      "revId": "2d82ad99117d08083d7e067bc10380a6f0ac4c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
