@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67e91e33_8e01e068",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-07T03:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e67e9aa6_32b512fb",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "56b9915cc47268a9d36d6ab4dd97f19d423d63db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d526f50c_1783bc94",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "56b9915cc47268a9d36d6ab4dd97f19d423d63db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1eb5028_da5b789e",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-07T03:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d526f50c_1783bc94",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "56b9915cc47268a9d36d6ab4dd97f19d423d63db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
