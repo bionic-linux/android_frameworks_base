@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e67e9aa6_32b512fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T02:47:01Z",
+      "side": 1,
+      "message": "typo? looks like rfc6727 talks about packet sampling?",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "56b9915cc47268a9d36d6ab4dd97f19d423d63db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d526f50c_1783bc94",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-05-07T02:47:01Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "56b9915cc47268a9d36d6ab4dd97f19d423d63db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
