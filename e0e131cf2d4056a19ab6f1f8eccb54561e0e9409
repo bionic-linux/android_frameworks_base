@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22607fd_dac652a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-05-07T11:04:49Z",
+      "side": 1,
+      "message": "DropBoxManagerService",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "e0e131cf2d4056a19ab6f1f8eccb54561e0e9409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf87e531_3ef47b87",
+        "filename": "services/core/java/com/android/server/DropBoxManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-05-07T11:04:49Z",
+      "side": 1,
+      "message": "This would throw if maxAvailable \u003e Integer.MAX_VALUE, which would be needless because in those cases, maximum will always be smaller so should be chosen. \n\nThis can be avoided eg. if you replace line 866 with:\n\nlong maxAvailableLong \u003d nonreserved * quotaPercent / 100;\nint maxAvailable \u003d Math.toIntExact(Math.max(0, Math.min(maxAvailableLong, Integer.MAX_VALUE)));",
+      "range": {
+        "startLine": 868,
+        "startChar": 51,
+        "endLine": 868,
+        "endChar": 80
+      },
+      "revId": "e0e131cf2d4056a19ab6f1f8eccb54561e0e9409",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
