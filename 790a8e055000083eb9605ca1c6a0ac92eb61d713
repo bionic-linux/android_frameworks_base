@@ -94,6 +94,30 @@
       "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2523fb7_0c6f4782",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-07T06:41:52Z",
+      "side": 1,
+      "message": "Wait. Reading this makes me realize there IS a case where that\u0027s bad.\nWe allow reusing a callback after it\u0027s been unregistered ( https://cs.corp.google.com/android/frameworks/base/core/java/android/net/ConnectivityManager.java?q\u003dconnectivitymanager.java\u0026dr\u0026l\u003d3538 ). So if between the get() and this, the app unregisters and registers again with the same callback, this will wrongly remove it.",
+      "parentUuid": "96ac1a97_cbd3c973",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
