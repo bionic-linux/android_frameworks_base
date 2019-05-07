@@ -118,6 +118,30 @@
       "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d1ddad6_bb333758",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2019-05-07T21:15:17Z",
+      "side": 1,
+      "message": "OK - moving the code up to the single synchronization block (per Lorenzo\u0027s original suggestion).\n\nHowever: there is still a race condition possible due to this re-use.\n- App unregisters and re-registers the callback\n- All the while the service is executing an onUnavailable\n\nThe issue is with the architecture - ideally there shouldn\u0027t be an app-side registry (which duplicates information on the service side). The only list should be maintained by the service.",
+      "parentUuid": "d2523fb7_0c6f4782",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
