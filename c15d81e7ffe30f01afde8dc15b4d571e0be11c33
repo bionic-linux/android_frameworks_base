@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfddeb4_11a68b47",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "getAllInterfaceNames ?",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210ca7ad_692c7939",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "getAllAddresses too maybe ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 27,
+        "endLine": 84,
+        "endChar": 39
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc36731_6608da44",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "and getAllRoutes",
+      "range": {
+        "startLine": 90,
+        "startChar": 27,
+        "endLine": 90,
+        "endChar": 36
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6a468f_de51210f",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "Also test for :\n\nlinkAddresses\nisProvisioned\nisIpV4Provisioned\nisIpV6Provisioned\nisPrivateDnsActive\ngetStackedLinks",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e2d1dc_03858f0c",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "works",
+      "range": {
+        "startLine": 392,
+        "startChar": 24,
+        "endLine": 392,
+        "endChar": 28
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd317544_06925f07",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "Also make sure lp.getRoutes does not contain a route through wlan0 now",
+      "range": {
+        "startLine": 396,
+        "startChar": 8,
+        "endLine": 396,
+        "endChar": 20
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e475e6c_a216820a",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "How about Arrays.asList(LINKADDRV4)\n\n(it returns a List instead of an ArrayList, but your code is fine with that)",
+      "range": {
+        "startLine": 552,
+        "startChar": 53,
+        "endLine": 552,
+        "endChar": 71
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bae2a97_3225ba13",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "Also assertLinkPropertiesEqual(lp, new LinkProperties(lp)) and assertLinkPropertiesEqual(lp, new LinkProperties())",
+      "range": {
+        "startLine": 942,
+        "startChar": 8,
+        "endLine": 942,
+        "endChar": 18
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2b0960_aa082663",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "Arrays.asList(DNS1, DNS2);",
+      "range": {
+        "startLine": 951,
+        "startChar": 50,
+        "endLine": 951,
+        "endChar": 68
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1574a2e4_70230c7b",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "test",
+      "range": {
+        "startLine": 1017,
+        "startChar": 16,
+        "endLine": 1017,
+        "endChar": 21
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de0f9cd_fd52cae5",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T09:13:22Z",
+      "side": 1,
+      "message": "What you\u0027ve written is fine, but you could also have combined all these methods into a single one I think. Something like :\n\n  final LP lp \u003d makeTestObject()\n\n  assertFalse(hasV6Route())\n  addRoute(GATEWAY61)\n  assertTrue(hasV6Route())\n\n  assertEquals(lp.httpProxy, buildProxy...)\n\n  assertEquals(PRIV_DNS_SERVER_NAME, lp.getPrivateDnsServerName())\n\netc.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 34,
+        "endLine": 1033,
+        "endChar": 48
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
