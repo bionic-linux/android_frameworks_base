@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4caa58de_55fefc87",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 11
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41fa89_d421a0b1",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "final please.",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 11
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682931c7_5ee6bb1d",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Why do this ? The last assigned IPv4 address is still what it used to be isn\u0027t it ?",
+      "range": {
+        "startLine": 810,
+        "startChar": 12,
+        "endLine": 810,
+        "endChar": 44
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3805de24_778770c5",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Let\u0027s do this before getting current time",
+      "range": {
+        "startLine": 820,
+        "startChar": 16,
+        "endLine": 820,
+        "endChar": 18
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabebdec_3833f1a1",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "This sounds error-prone. Consider someone who wants to change your code later. They see this boolean valid, and wonder why you\u0027re not just nulling out the address member. So they\u0027d be left wondering valid in what sense, and coming here, it\u0027s valid in the sense that when we looked it up it was not expired.\n\nInstead, I suggest you have a long mLastAssignedIpv4AddressExpiry member. That has three advantages :\n- It\u0027s a lot clearer what this member means.\n- It stays correct with the passage of time.\n- You never have to reset it.",
+      "range": {
+        "startLine": 830,
+        "startChar": 20,
+        "endLine": 830,
+        "endChar": 57
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d3dc50_33cf48d3",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "But this is not a timeout. My comment was not about renaming this. It was about making it a different message. You have a CONFIGURATION_OBTAINED event, and a CONFIGURATION_TIMEOUT event.",
+      "range": {
+        "startLine": 831,
+        "startChar": 46,
+        "endLine": 831,
+        "endChar": 73
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb87692f_c69817e0",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "My previous comment is still relevant. This synchronization is not necessary because all is happening on the same thread, and if it wasn\u0027t all happening on the same thread it would not work.",
+      "range": {
+        "startLine": 849,
+        "startChar": 12,
+        "endLine": 849,
+        "endChar": 51
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f7f02f_7845c6ce",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "So wait, you are assigning mLastAssignedIpv4Address here but mLastAssignedIpv4AddressValid in l.830 ? That sounds very error-prone. You should either assign them both in the handler for network attributes, or assign them both here.",
+      "range": {
+        "startLine": 851,
+        "startChar": 12,
+        "endLine": 851,
+        "endChar": 36
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a14892_e014af84",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "No, please keep using the argument rather than the member. This is for safety. If you have the choice between using a local and a member which should contain the same thing, you should always use the local and never the member.\n\n(the reason is that members may change at arbitrary points in time in future multi-threaded code, so it\u0027s always safer to use the local. The exception is the very very rare case where you want to pick up any change in the member in already multithreaded code)\n(another way of getting the feel for this is that the member has a much reduced scope and lifetime than the member, therefore it\u0027s less risky to use)",
+      "range": {
+        "startLine": 431,
+        "startChar": 47,
+        "endLine": 431,
+        "endChar": 55
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d26ce7_197bd2ae",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Likewise, please remove this before submitting. Now WiFi is calling the method, so things should be working now.",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 634,
+        "endChar": 47
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3533e348_6f784a83",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to provide a default: clause here (hence why you\u0027re explicitly listing LOST and STILL_NOT). You *could* remove LOST and STILL_NOT and keep default:, but I think it\u0027s clearer to remove default: and keep LOST and STILL_NOT.\n\nIn principle this is to get the compiler to tell you when you add a value but you forget to update the switch. In practice you don\u0027t get this advantage here unfortunately because we\u0027re just using const ints. But I still think it\u0027s useful to mimic the style as it communicates to developers that this switch is meant to be updated when a new constant is added.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 12,
+        "endLine": 1116,
+        "endChar": 19
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ed90f0_3e8cded7",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Same",
+      "range": {
+        "startLine": 1141,
+        "startChar": 12,
+        "endLine": 1141,
+        "endChar": 19
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2bf3bc_8dc30241",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "As I was saying you MUST put it in a local before using it, because it\u0027s mutable (and then you MUST abstain from using the member in the function, because you need the value seen at every use of the value to be the same). Please refer to the example code I wrote in my previous comment.",
+      "range": {
+        "startLine": 1296,
+        "startChar": 46,
+        "endLine": 1296,
+        "endChar": 52
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ee3ee1_11642fd2",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Oh no, I don\u0027t think 0xffffffff is a good choice for INFINITE_LEASE. 0xffffffff is the 19th of February 1970 at 17:02 UTC.\nNo, I think Long.MAX_VALUE was a good choice, but simply pointing out that Long.MAX_VALUE is 0x7fffffffffffffff (which by the way is in 292 million years, so I think we can assume we\u0027re safe :p )\n\nIn this case you can just remove the literal value I think, it doesn\u0027t bring anything.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2604a2e2_d1a07169",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:37:09Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 232,
+        "startChar": 43,
+        "endLine": 232,
+        "endChar": 53
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
