@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7751930b_dc97de6e",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-08T07:51:20Z",
+      "side": 1,
+      "message": "(moot now that you\u0027ve made it an int)\n(but still necessary for the mIpMemoryStore member)",
+      "parentUuid": "4caa58de_55fefc87",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 11
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed41fa89_d421a0b1",
         "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
         "patchSetId": 6
