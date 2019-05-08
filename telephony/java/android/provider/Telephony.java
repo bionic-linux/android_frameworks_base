@@ -2925,6 +2925,11 @@ public final class Telephony {
             }
 
             /**
+             * The name of addr table.
+             */
+            public static final String TABLE_ADDR = "addr";
+
+            /**
              * The ID of MM which this address entry belongs to.
              * <P>Type: INTEGER (long)</P>
              */
@@ -2972,10 +2977,15 @@ public final class Telephony {
             }
 
             /**
+             * The name of part table.
+             */
+            public static final String TABLE_PART = "part";
+
+            /**
              * The {@code content://} style URL for this table. Can be appended with a part ID to
              * address individual parts.
              */
-            public static final Uri CONTENT_URI = Uri.withAppendedPath(Mms.CONTENT_URI, "part");
+            public static final Uri CONTENT_URI = Uri.withAppendedPath(Mms.CONTENT_URI, TABLE_PART);
 
             /**
              * The identifier of the message which this part belongs to.
