@@ -142,6 +142,30 @@
       "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b9fce2_b0edf377",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-08T13:45:45Z",
+      "side": 1,
+      "message": "Actually, I think it\u0027s the other way around: it can\u0027t be done on the service side, because there is no synchronous access to service-side data. (The service is just an event loop.) The only place where synchronous calls can have immediate effect is client-side data.\n\nAs for the race, are you saying the problem scenario is the following?\n\n1. App calls unregisterNetworkCallback. Unregister request is queued on CS handler. Unregister completes.\n2. Unavailable timer fires. CALLBACK_UNAVAIL message is sent to app messenger.\n3. App calls requestNetwork with same callback object.\n4. Message from #3 arrives and app gets onUnavailable callback, even though the request timeout has not yet fired.\n\nCan 3 actually happen, though? requestNetwork will allocate a new request ID, so the onUnavailable will be ignored.",
+      "parentUuid": "5d1ddad6_bb333758",
+      "range": {
+        "startLine": 3481,
+        "startChar": 20,
+        "endLine": 3481,
+        "endChar": 47
+      },
+      "revId": "790a8e055000083eb9605ca1c6a0ac92eb61d713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
