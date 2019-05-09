@@ -732,15 +732,17 @@ public class StateMachineTest extends TestCase {
         lr = smPassEntryDataTest.getLogRec(0);
         assertEquals(TEST_CMD_1, lr.getWhat());
         assertEquals(smPassEntryDataTest.mParentState2, lr.getState());
+        assertEquals(CHILD_1_ENTRY_DATA, lr.getEntryData());
 
         lr = smPassEntryDataTest.getLogRec(1);
         assertEquals(TEST_CMD_2, lr.getWhat());
         assertEquals(smPassEntryDataTest.mChildState1, lr.getState());
+        assertEquals(CHILD_2_ENTRY_DATA, lr.getEntryData());
 
         lr = smPassEntryDataTest.getLogRec(2);
         assertEquals(TEST_CMD_1, lr.getWhat());
         assertEquals(smPassEntryDataTest.mChildState2, lr.getState());
-        // TODO: Record entry data in StateMachine.LogRec and add test here.
+        assertEquals(CHILD_1_ENTRY_DATA, lr.getEntryData());
     }
 
     /**

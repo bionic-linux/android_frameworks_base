@@ -457,6 +457,7 @@ public class StateMachine {
         private IState mState;
         private IState mOrgState;
         private IState mDstState;
+        private Object mEntryData;
 
         /**
          * Constructor
@@ -467,20 +468,36 @@ public class StateMachine {
          * did not processes the message.
          * @param transToState is the state that was transitioned to after the message was
          * processed.
+         * @param entryData is the data that would be passed to the destination state after the
+         * message was processed.
          */
-        LogRec(StateMachine sm, Message msg, String info, IState state, IState orgState,
-                IState transToState) {
-            update(sm, msg, info, state, orgState, transToState);
+        LogRec(
+                StateMachine sm,
+                Message msg,
+                String info,
+                IState state,
+                IState orgState,
+                IState transToState,
+                Object entryData) {
+            update(sm, msg, info, state, orgState, transToState, entryData);
         }
 
         /**
          * Update the information in the record.
+         *
          * @param state that handled the message
          * @param orgState is the first state the received the message
          * @param dstState is the state that was the transition target when logging
+         * @param entryData is the data that would be passed to the destination state when logging
          */
-        public void update(StateMachine sm, Message msg, String info, IState state, IState orgState,
-                IState dstState) {
+        public void update(
+                StateMachine sm,
+                Message msg,
+                String info,
+                IState state,
+                IState orgState,
+                IState dstState,
+                Object entryData) {
             mSm = sm;
             mTime = System.currentTimeMillis();
             mWhat = (msg != null) ? msg.what : 0;
@@ -488,6 +505,7 @@ public class StateMachine {
             mState = state;
             mOrgState = orgState;
             mDstState = dstState;
+            mEntryData = entryData;
         }
 
         /**
@@ -532,6 +550,14 @@ public class StateMachine {
             return mOrgState;
         }
 
+        /**
+         * @return the entry data that will be passed to the destination state if a
+         * transition is occurring and the entry data is set, otherwise null.
+         */
+        public Object getEntryData() {
+            return mEntryData;
+        }
+
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -546,6 +572,8 @@ public class StateMachine {
             sb.append(" dest=");
             sb.append(mDstState == null ? "<null>" : mDstState.getName());
             sb.append(" what=");
+            sb.append(" entryData=");
+            sb.append(mEntryData == null ? "<null>" : mEntryData.toString());
             String what = mSm != null ? mSm.getWhatToString(mWhat) : "";
             if (TextUtils.isEmpty(what)) {
                 sb.append(mWhat);
@@ -661,20 +689,29 @@ public class StateMachine {
          * did not processes the message.
          * @param transToState is the state that was transitioned to after the message was
          * processed.
+         * @param entryData is the data that would be passed to the destination state after
+         * the message was processed.
          *
          */
-        synchronized void add(StateMachine sm, Message msg, String messageInfo, IState state,
-                IState orgState, IState transToState) {
+        synchronized void add(
+                StateMachine sm,
+                Message msg,
+                String messageInfo,
+                IState state,
+                IState orgState,
+                IState transToState,
+                Object entryData) {
             mCount += 1;
             if (mLogRecVector.size() < mMaxSize) {
-                mLogRecVector.add(new LogRec(sm, msg, messageInfo, state, orgState, transToState));
+                mLogRecVector.add(
+                        new LogRec(sm, msg, messageInfo, state, orgState, transToState, entryData));
             } else {
                 LogRec pmi = mLogRecVector.get(mOldestIndex);
                 mOldestIndex += 1;
                 if (mOldestIndex >= mMaxSize) {
                     mOldestIndex = 0;
                 }
-                pmi.update(sm, msg, messageInfo, state, orgState, transToState);
+                pmi.update(sm, msg, messageInfo, state, orgState, transToState, entryData);
             }
         }
     }
@@ -858,12 +895,12 @@ public class StateMachine {
                 /** Record only if there is a transition */
                 if (mDestState != null) {
                     mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState,
-                            orgState, mDestState);
+                            orgState, mDestState, mEntryData);
                 }
             } else if (recordLogMsg) {
                 /** Record message */
                 mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState, orgState,
-                        mDestState);
+                        mDestState, mEntryData);
             }
 
             State destState = mDestState;
@@ -1614,7 +1651,7 @@ public class StateMachine {
         SmHandler smh = mSmHandler;
         if (smh == null) return;
         smh.mLogRecords.add(this, smh.getCurrentMessage(), string, smh.getCurrentState(),
-                smh.mStateStack[smh.mStateStackTopIndex].state, smh.mDestState);
+                smh.mStateStack[smh.mStateStackTopIndex].state, smh.mDestState, smh.mEntryData);
     }
 
     /**
