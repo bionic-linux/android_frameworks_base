@@ -68,6 +68,30 @@
       "revId": "a489a8d495b7c5d704a28ce5a42dea3a1d70685b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10502be9_e9072139",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-09T11:39:03Z",
+      "side": 1,
+      "message": "ah, yes, missing retrieveNetworkAttributes check in order. Let me update this in a following CL. Thanks!",
+      "parentUuid": "dbe897fe_2abae7b8",
+      "range": {
+        "startLine": 323,
+        "startChar": 37,
+        "endLine": 323,
+        "endChar": 46
+      },
+      "revId": "a489a8d495b7c5d704a28ce5a42dea3a1d70685b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
