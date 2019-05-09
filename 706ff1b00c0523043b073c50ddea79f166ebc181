@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb625b71_17544d91",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-09T03:52:00Z",
+      "side": 1,
+      "message": "I\u0027m okay with what you wrote but for what it\u0027s worth, because there are only two possible cases, I find the following a bit easier to read :\n\n  if (TYPE_TCP \u003d\u003d mType) {\n    mTcpController.stopSocketMonitor(mSlot);\n  }\n  mNai.asyncChannel.sendMessage(...);\n  mNai.asyncChannel.sendMessage(...);\n\nThe drawback is that it won\u0027t Log.wtf if the type is unexpected.\n\nFor the time being, please don\u0027t bother changing this though.",
+      "range": {
+        "startLine": 400,
+        "startChar": 23,
+        "endLine": 407,
+        "endChar": 34
+      },
+      "revId": "706ff1b00c0523043b073c50ddea79f166ebc181",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
