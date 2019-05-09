@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97e1f39_ffb325c1",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-09T04:33:44Z",
+      "side": 1,
+      "message": "Nit : because this is a single statement you don\u0027t need the braces : you could have written :\n\n  mStore.storeNetworkAttributes(l2Key, TEST_NETWORK_ATTRIBUTES,\n    status -\u003e assertTrue(\"Store not successful : \" + status.resultCode, status.isSuccess()));",
+      "range": {
+        "startLine": 118,
+        "startChar": 26,
+        "endLine": 118,
+        "endChar": 27
+      },
+      "revId": "a489a8d495b7c5d704a28ce5a42dea3a1d70685b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5a447f_36289edb",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-09T04:33:44Z",
+      "side": 1,
+      "message": "true /* supplyService */",
+      "range": {
+        "startLine": 138,
+        "startChar": 27,
+        "endLine": 138,
+        "endChar": 31
+      },
+      "revId": "a489a8d495b7c5d704a28ce5a42dea3a1d70685b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe897fe_2abae7b8",
+        "filename": "tests/net/java/android/net/IpMemoryStoreTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-09T04:33:44Z",
+      "side": 1,
+      "message": "Presumably mMockService should still have gotten a call to retrieveNetworkAttributes right ?",
+      "range": {
+        "startLine": 323,
+        "startChar": 37,
+        "endLine": 323,
+        "endChar": 46
+      },
+      "revId": "a489a8d495b7c5d704a28ce5a42dea3a1d70685b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
