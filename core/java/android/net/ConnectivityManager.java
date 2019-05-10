@@ -1347,6 +1347,20 @@ public class ConnectivityManager {
         }
     }
 
+
+    /**
+    * Return whether wifi is in use. wlan0 would be busy if true.
+    * @hide
+    */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    public boolean isWifiInUse() {
+        try {
+            return mService.isWifiInUse();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Gets a URL that can be used for resolving whether a captive portal is present.
      * 1. This URL should respond with a 204 response to a GET request to indicate no captive

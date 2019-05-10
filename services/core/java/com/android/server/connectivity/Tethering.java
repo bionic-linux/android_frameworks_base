@@ -76,6 +76,8 @@ import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.net.util.VersionedBroadcastListener;
 import android.net.wifi.WifiManager;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -135,6 +137,7 @@ public class Tethering extends BaseNetworkObserver {
     private final static boolean DBG = false;
     private final static boolean VDBG = false;
 
+    protected static final String TETHER_WIFI_INTERFACE = "wlan0";
     private static final Class[] messageClasses = {
             Tethering.class, TetherMasterSM.class, IpServer.class
     };
@@ -470,6 +473,26 @@ public class Tethering extends BaseNetworkObserver {
         }, BluetoothProfile.PAN);
     }
 
+
+    private boolean isWifiOnGoing() {
+
+        WifiManager wifiMgr = getWifiManager();
+        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+
+        if (wifiInfo != null && SupplicantState.isConnecting(wifiInfo.getSupplicantState())) {
+            if (DBG) Log.d(TAG, "isWifiOnGoing SupplicantState.isConnecting is true");
+        }
+
+        if (getConnectivityManager().isWifiInUse() || (wifiInfo != null &&
+             SupplicantState.isConnecting(wifiInfo.getSupplicantState()))) {
+                 if (DBG) Log.d(TAG, "isWifiOnGoing return true");
+                 return true;
+        }
+
+        if (DBG) Log.d(TAG, "isWifiOnGoing return false");
+        return false;
+    }
+
     public int tether(String iface) {
         return tether(iface, IpServer.STATE_TETHERED);
     }
@@ -493,7 +516,16 @@ public class Tethering extends BaseNetworkObserver {
             // return an error.
             //
             // TODO: reexamine the threading and messaging model.
-            tetherState.ipServer.sendMessage(IpServer.CMD_TETHER_REQUESTED, requestedState);
+
+            if (iface != null && iface.equals(TETHER_WIFI_INTERFACE) && isWifiOnGoing()) {
+                if (DBG) Log.d(TAG, "Tether: wifi ongoing,sendMessage EVENT_DEALY_TETHER_REQUESTED after 500ms");
+                mTetherMasterSM.sendMessageDelayed(
+                    mTetherMasterSM.obtainMessage(TetherMasterSM.EVENT_DEALY_TETHER_REQUESTED, requestedState, 0, iface), 500);
+            } else {
+                if (DBG) Log.d(TAG, "Tether:  sendMessage CMD_TETHER_REQUESTED at once");
+                tetherState.ipServer.sendMessage(IpServer.CMD_TETHER_REQUESTED, requestedState);
+            }
+
             return TETHER_ERROR_NO_ERROR;
         }
     }
@@ -1060,6 +1092,7 @@ public class Tethering extends BaseNetworkObserver {
         static final int EVENT_IFACE_UPDATE_LINKPROPERTIES      = BASE_MASTER + 7;
         // Events from EntitlementManager to choose upstream again.
         static final int EVENT_UPSTREAM_PERMISSION_CHANGED      = BASE_MASTER + 8;
+        static final int EVENT_DEALY_TETHER_REQUESTED      = BASE_MASTER + 9;
 
         private final State mInitialState;
         private final State mTetherModeAliveState;
@@ -1130,6 +1163,25 @@ public class Tethering extends BaseNetworkObserver {
                         final IpServer who = (IpServer) message.obj;
                         if (VDBG) Log.d(TAG, "Tether Mode unrequested by " + who);
                         handleInterfaceServingStateInactive(who);
+                        break;
+                    }
+                    case EVENT_DEALY_TETHER_REQUESTED: {
+                        String tetherInterface = (String)message.obj;
+                        if (DBG) Log.d(TAG, "InitialState: interface to tether is " + tetherInterface);
+                        TetherState tetherState = mTetherStates.get(tetherInterface);
+                        if (tetherState == null) {
+                            Log.e(TAG, "InitialState: Tried to Tether an unknown iface: " + tetherInterface);
+                            return HANDLED;
+                        }
+                        if (tetherInterface != null && tetherInterface.equals(TETHER_WIFI_INTERFACE) &&
+                             isWifiOnGoing()) {
+                            if (DBG) Log.d(TAG, "InitialState: wifi still ongoing, sendMessage EVENT_DEALY_TETHER_REQUESTED after 500ms");
+                            mTetherMasterSM.sendMessageDelayed(
+                                mTetherMasterSM.obtainMessage(TetherMasterSM.EVENT_DEALY_TETHER_REQUESTED, message.arg1, 0, tetherInterface), 500);
+                        } else {
+                            if (DBG) Log.d(TAG, "InitialState:  sendMessage CMD_TETHER_REQUESTED");
+                            tetherState.ipServer.sendMessage(IpServer.CMD_TETHER_REQUESTED, message.arg1);
+                        }
                         break;
                     }
                     case EVENT_IFACE_UPDATE_LINKPROPERTIES:
@@ -1494,6 +1546,26 @@ public class Tethering extends BaseNetworkObserver {
                         updateUpstreamWanted();
                         if (mUpstreamWanted) {
                             handleUpstreamNetworkMonitorCallback(message.arg1, message.obj);
+                        }
+                        break;
+                    }
+
+                    case EVENT_DEALY_TETHER_REQUESTED: {
+                        String tetherInterface = (String)message.obj;
+                        if (DBG) Log.d(TAG, "TetherModeAliveState: interface to thether is " + tetherInterface);
+                        TetherState tetherState = mTetherStates.get(tetherInterface);
+                        if (tetherState == null) {
+                            Log.e(TAG, "TetherModeAliveState: Tried to Tether an unknown iface: " + tetherInterface);
+                            return HANDLED;
+                        }
+                        if (tetherInterface != null && tetherInterface.equals(TETHER_WIFI_INTERFACE) &&
+                             isWifiOnGoing()) {
+                            if (DBG) Log.d(TAG, "TetherModeAliveState: wifi still ongoing, sendMessage EVENT_DEALY_TETHER_REQUESTED after 500ms");
+                            mTetherMasterSM.sendMessageDelayed(
+                                mTetherMasterSM.obtainMessage(TetherMasterSM.EVENT_DEALY_TETHER_REQUESTED, message.arg1, 0, tetherInterface), 500);
+                        } else {
+                            if (DBG) Log.d(TAG, "TetherModeAliveState:  sendMessage CMD_TETHER_REQUESTED");
+                            tetherState.ipServer.sendMessage(IpServer.CMD_TETHER_REQUESTED, message.arg1);
                         }
                         break;
                     }
