@@ -62,6 +62,8 @@ interface IConnectivityManager
 
     boolean isNetworkSupported(int networkType);
 
+    boolean isWifiInUse();
+
     @UnsupportedAppUsage
     LinkProperties getActiveLinkProperties();
     LinkProperties getLinkPropertiesForType(int networkType);

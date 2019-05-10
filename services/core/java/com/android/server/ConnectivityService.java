@@ -1537,6 +1537,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return getLinkProperties(getNetworkAgentInfoForNetwork(network));
     }
 
+   @Override
+   public boolean isWifiInUse() {
+       enforceAccessPermission();
+       int netId = 0xff;
+
+       synchronized (mNetworkForNetId) {
+       for (int i = 0; i < mNetIdInUse.size(); ++i) {
+            netId = mNetIdInUse.keyAt(i);
+            log("isWifiInUse: netId is " + netId + ", isWifi is " + mNetIdIsWifi.get(netId));
+            if (mNetIdIsWifi.get(netId)) {
+                log("isWifiInUse: return true ");
+                return true;
+            }
+        }
+        }
+        return false;
+   }
+
     private LinkProperties getLinkProperties(NetworkAgentInfo nai) {
         if (nai == null) {
             return null;
@@ -2968,6 +2986,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     synchronized (mNetworkForNetId) {
                         mNetworkForNetId.remove(nai.network.netId);
                         mNetIdInUse.delete(nai.network.netId);
+                        if (mNetIdIsWifi.get(nai.network.netId)) {
+                            mNetIdIsWifi.delete(nai.network.netId);
+                        }
                     }
                     // Just in case.
                     mLegacyTypeTracker.remove(nai, wasDefault);
@@ -3074,7 +3095,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDnsManager.removeNetwork(nai.network);
         }
         synchronized (mNetworkForNetId) {
+            //netd has completed the handling of removeNetwork here
+            if (DBG) log("disconnectAndDestroyNetwork: delete netId from mNetIdInUse");
             mNetIdInUse.delete(nai.network.netId);
+            if (mNetIdIsWifi.get(nai.network.netId)) {
+                if (DBG) log("disconnectAndDestroyNetwork: delete netId from mNetIdIsWifi");
+                mNetIdIsWifi.delete(nai.network.netId);
+            }
         }
     }
 
@@ -5349,6 +5376,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // there may not be a strict 1:1 correlation between the two.
     @GuardedBy("mNetworkForNetId")
     private final SparseBooleanArray mNetIdInUse = new SparseBooleanArray();
+    private final SparseBooleanArray mNetIdIsWifi = new SparseBooleanArray();
 
     // NetworkAgentInfo keyed off its connecting messenger
     // TODO - eval if we can reduce the number of lists/hashmaps/sparsearrays
@@ -5444,13 +5472,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             int currentScore, NetworkMisc networkMisc, int factorySerialNumber) {
         enforceConnectivityInternalPermission();
 
+        int netId =reserveNetId();
         LinkProperties lp = new LinkProperties(linkProperties);
         lp.ensureDirectlyConnectedRoutes();
         // TODO: Instead of passing mDefaultRequest, provide an API to determine whether a Network
         // satisfies mDefaultRequest.
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         final NetworkAgentInfo nai = new NetworkAgentInfo(messenger, new AsyncChannel(),
-                new Network(reserveNetId()), new NetworkInfo(networkInfo), lp, nc, currentScore,
+                new Network(netId), new NetworkInfo(networkInfo), lp, nc, currentScore,
                 mContext, mTrackerHandler, new NetworkMisc(networkMisc), this, mNetd, mDnsResolver,
                 mNMS, factorySerialNumber);
         // Make sure the network capabilities reflect what the agent info says.
@@ -5459,6 +5488,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final String name = TextUtils.isEmpty(extraInfo)
                 ? nai.networkCapabilities.getSSID() : extraInfo;
         if (DBG) log("registerNetworkAgent " + nai);
+        if (mNetIdInUse.get(netId)) {
+            if (nai.networkCapabilities != null &&
+                nai.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                if (DBG) log("registerNetworkAgent: put netId " + netId + " to mNetIdIsWifi");
+                mNetIdIsWifi.put(netId, true);
+            }
+        }
+
         final long token = Binder.clearCallingIdentity();
         try {
             getNetworkStack().makeNetworkMonitor(
