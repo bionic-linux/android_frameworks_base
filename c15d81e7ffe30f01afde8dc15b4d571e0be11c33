@@ -516,6 +516,30 @@
       "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9214b69_dc7de16b",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T03:00:33Z",
+      "side": 1,
+      "message": "Fair enough. Thanks.",
+      "parentUuid": "9c1cf878_985773b3",
+      "range": {
+        "startLine": 1033,
+        "startChar": 34,
+        "endLine": 1033,
+        "endChar": 48
+      },
+      "revId": "c15d81e7ffe30f01afde8dc15b4d571e0be11c33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
