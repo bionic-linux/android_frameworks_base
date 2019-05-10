@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "ce26f961_fc86b2e7",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "Ah I see. But then we do have to convert when we store, because we can\u0027t afford to use 0xffffffff to represent an infinite lease in the memory store. When we read from the packet, if the lease expiry is 0xffffffff, use whatever the memory store uses to represent an infinite lease (presumably Long.MAX_VALUE).",
+      "parentUuid": "8b3c1256_d1d30f74",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "cc29168c3f3f2d1512d93a776a704f55aefe9f73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2604a2e2_d1a07169",
         "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
         "patchSetId": 6

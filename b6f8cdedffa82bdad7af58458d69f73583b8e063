@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d4c594_140706ed",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "Sounds like a bad idea.\n\nHandling this case is part of the reason why we made it a timestamp. If you get a timeout, then you can still tell from the timestamp whether it\u0027s valid. Resetting it, AIUI, never helps you avoid entering INIT-REBOOT in a case where you should not, it only prevents you from doing so when you should. That\u0027s why I mentioned in my comment on l.830 of patchset 6 \"you never have to reset it\".\n\nNote that if you really wanted to do this, you could simply transitionTo(mDhpcInitState) when you receive EVENT_CONFIGURATION_TIMEOUT. It\u0027s a lot clearer than using members to do this (after all you are in a state machine, members are difficult to follow here). But in this case I think it\u0027s better to use whatever previous value there was if you time out anyway.",
+      "range": {
+        "startLine": 811,
+        "startChar": 12,
+        "endLine": 812,
+        "endChar": 80
+      },
+      "revId": "b6f8cdedffa82bdad7af58458d69f73583b8e063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63203b63_2cf38404",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "I\u0027m only realizing this now, but I don\u0027t think this lambda is going to run on the state machine thread. Therefore you have visibility issues with the members. I *think* it\u0027s okay in practice because sendMessage ends up putting a message in the looper queue in this thread, and the message has to be dequeued on the state machine thread, and IIRC in the queue we use in the looper enqueueing happens-before dequeueing. It may still be safer (and more natural) to pass the retrieved attributes in the message (with sendMessage(int, int, int, Object) where you\u0027d call sendMessage(EVENT_CONFIGURATION_OBTAINED, sequenceNumber, 0 /* unused */, attributes)), and then assign the member upon message reception.",
+      "range": {
+        "startLine": 834,
+        "startChar": 20,
+        "endLine": 834,
+        "endChar": 31
+      },
+      "revId": "b6f8cdedffa82bdad7af58458d69f73583b8e063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f653446e_e2d1d465",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "When you get CONFIGURATION_OBTAINED you should removeMessages(EVENT_CONFIGURATION_TIMEOUT) to prevent the timeout message to reach for no good reason. I understand it\u0027s ignored by other states, but it\u0027s still clearer to clean it up I think. (do this after checking for the sequence number to avoid clearing a newer timeout).",
+      "range": {
+        "startLine": 845,
+        "startChar": 21,
+        "endLine": 845,
+        "endChar": 49
+      },
+      "revId": "b6f8cdedffa82bdad7af58458d69f73583b8e063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c95c80a_6f7e5eb9",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this is an accurate depiction of what we are after here. Instead, the intent is to go to init-reboot if the lease was still valid.",
+      "range": {
+        "startLine": 853,
+        "startChar": 23,
+        "endLine": 854,
+        "endChar": 50
+      },
+      "revId": "b6f8cdedffa82bdad7af58458d69f73583b8e063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f7e51a_9477ef88",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-10T02:28:58Z",
+      "side": 1,
+      "message": "You need to write a unit test for INFINITE_LEASE, because it\u0027s not working here. As you mentioned, INFINITE_LEASE is 0xffffffff (and must stay that way, because that\u0027s what the packet contains). But in the network attributes the expiry is stored in milliseconds from the Epoch, so that\u0027s some time in Feb 1970. Therefore you\u0027ll always think the expiry is in the past, and you\u0027ll never go to INIT-REBOOT.\n\nThe test in l.1298 of course is right, but in this case we need to use whatever value we want to use to represent the infinite lease in the memory store. There are three choices that I think make sense :\n- Long.MAX_VALUE. That\u0027s almost 300 million years in the future, and you never have to care about it.\n- Just don\u0027t special case let the code compute 0xffffffff * 1000. That\u0027s about 70 years from the current timestamp, so it should be fine too.\n- Use a non-sensical value as a sentinel (-1 for example). That means you\u0027d have to test for it explicitly at the read site.\n\nI favor Long.MAX_VALUE.",
+      "range": {
+        "startLine": 1299,
+        "startChar": 22,
+        "endLine": 1299,
+        "endChar": 36
+      },
+      "revId": "b6f8cdedffa82bdad7af58458d69f73583b8e063",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
