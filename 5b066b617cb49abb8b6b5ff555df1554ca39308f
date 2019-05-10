@@ -22,6 +22,30 @@
       "revId": "5b066b617cb49abb8b6b5ff555df1554ca39308f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46f5203_945c322d",
+        "filename": "core/java/android/widget/Magnifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1023114
+      },
+      "writtenOn": "2019-05-10T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb75314_9efeef7e",
+      "range": {
+        "startLine": 490,
+        "startChar": 71,
+        "endLine": 490,
+        "endChar": 82
+      },
+      "revId": "5b066b617cb49abb8b6b5ff555df1554ca39308f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
