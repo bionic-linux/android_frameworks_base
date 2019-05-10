@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b011962_a161ff00",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2019-05-10T17:59:14Z",
+      "side": 1,
+      "message": "The android.view package is not supposed to know about the android.widget package. I\u0027m not sure how to resolve this.",
+      "range": {
+        "startLine": 706,
+        "startChar": 27,
+        "endLine": 706,
+        "endChar": 41
+      },
+      "revId": "fc511e724c7382dadc5aa93a2d3bb24361cc24aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d37eab3_838dee75",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2019-05-10T17:59:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t properly handle the case where the name and the prefix don\u0027t match. For example, if I attempted to load \"my.company.Button\" it would load the wrong one, right?\n\nYou may need to call fastCreateView at a higher level, where we attempt to load from \"android.view\" and then \"android.widget\". That code appears to be in PhoneLayoutInflater. That may also solve the dependency graph problem I mentioned above.",
+      "range": {
+        "startLine": 809,
+        "startChar": 39,
+        "endLine": 809,
+        "endChar": 43
+      },
+      "revId": "fc511e724c7382dadc5aa93a2d3bb24361cc24aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
