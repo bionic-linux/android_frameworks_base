@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd36dc60_4aefa110",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1456193
+      },
+      "writtenOn": "2019-05-13T10:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cba887_361cd463",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "4c2fb04ce80c98a61b30d9fbbde1ab4e172fc5a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2078b089_451845d3",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-11T00:28:24Z",
       "side": 1,
       "message": "To match existing interfaces, we should just expose the content URI.",
+      "range": {
+        "startLine": 2928,
+        "startChar": 0,
+        "endLine": 2931,
+        "endChar": 0
+      },
+      "revId": "4c2fb04ce80c98a61b30d9fbbde1ab4e172fc5a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d6d185_676920f7",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1456193
+      },
+      "writtenOn": "2019-05-13T10:48:41Z",
+      "side": 1,
+      "message": "Actual Uri is dynamically formed while using in MmsTest \u0026 MmsPartTest.",
+      "parentUuid": "2078b089_451845d3",
       "range": {
         "startLine": 2928,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "4c2fb04ce80c98a61b30d9fbbde1ab4e172fc5a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3a5c37_db38483f",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2982,
+      "author": {
+        "id": 1456193
+      },
+      "writtenOn": "2019-05-13T10:48:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a469033e_b20274a7",
+      "range": {
+        "startLine": 2980,
+        "startChar": 0,
+        "endLine": 2982,
+        "endChar": 59
+      },
+      "revId": "4c2fb04ce80c98a61b30d9fbbde1ab4e172fc5a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
