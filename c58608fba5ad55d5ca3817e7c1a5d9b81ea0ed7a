@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "3be20d57_f5f8ec52",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5495,
+      "author": {
+        "id": 1495016
+      },
+      "writtenOn": "2019-05-13T02:04:02Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "8ce6ad12_2516d5cf",
+      "range": {
+        "startLine": 5495,
+        "startChar": 16,
+        "endLine": 5495,
+        "endChar": 28
+      },
+      "revId": "c58608fba5ad55d5ca3817e7c1a5d9b81ea0ed7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3609266b_82026a16",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -53,6 +77,30 @@
       "writtenOn": "2019-05-10T08:35:16Z",
       "side": 1,
       "message": "Don\u0027t hardcode itnerface name. You can use TetheringConfiguration#tetherableWifiRegexs.",
+      "range": {
+        "startLine": 140,
+        "startChar": 34,
+        "endLine": 140,
+        "endChar": 55
+      },
+      "revId": "c58608fba5ad55d5ca3817e7c1a5d9b81ea0ed7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4a9dec_4493d4f1",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1495016
+      },
+      "writtenOn": "2019-05-13T02:04:02Z",
+      "side": 1,
+      "message": "OK.modify later.",
+      "parentUuid": "3609266b_82026a16",
       "range": {
         "startLine": 140,
         "startChar": 34,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "8abbb8b4_c7775e10",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1495016
+      },
+      "writtenOn": "2019-05-13T02:04:02Z",
+      "side": 1,
+      "message": "tethering may be canceled,then mTetherStates.get(tetherInterface) is null.So the handling of EVENT_DEALY_TETHER_REQUESTED would just return.",
+      "parentUuid": "c7597a9d_96d129fb",
+      "range": {
+        "startLine": 523,
+        "startChar": 20,
+        "endLine": 523,
+        "endChar": 127
+      },
+      "revId": "c58608fba5ad55d5ca3817e7c1a5d9b81ea0ed7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "443b0b87_d929ca41",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
@@ -99,6 +171,30 @@
       "writtenOn": "2019-05-10T08:35:16Z",
       "side": 1,
       "message": "This looks has chance to enter infinite loops if  isWifiOnGoing() keep be true.",
+      "range": {
+        "startLine": 1176,
+        "startChar": 24,
+        "endLine": 1177,
+        "endChar": 47
+      },
+      "revId": "c58608fba5ad55d5ca3817e7c1a5d9b81ea0ed7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44903149_d48e4788",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1495016
+      },
+      "writtenOn": "2019-05-13T02:04:02Z",
+      "side": 1,
+      "message": "if iswifiOnGoing keeps true,then there is a bug to fix in other modules.",
+      "parentUuid": "443b0b87_d929ca41",
       "range": {
         "startLine": 1176,
         "startChar": 24,
