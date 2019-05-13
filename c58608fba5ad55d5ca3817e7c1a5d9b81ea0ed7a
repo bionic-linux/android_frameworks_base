@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae09f84e_6036a9f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1495016
+      },
+      "writtenOn": "2019-05-13T02:22:32Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "84d99895_c9efafd2",
+      "revId": "c58608fba5ad55d5ca3817e7c1a5d9b81ea0ed7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce6ad12_2516d5cf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
