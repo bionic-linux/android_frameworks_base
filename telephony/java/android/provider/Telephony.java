@@ -2925,6 +2925,11 @@ public final class Telephony {
             }
 
             /**
+             * The name of addr table.
+             */
+            public static final String TABLE_ADDR = "addr";
+
+            /**
              * The ID of MM which this address entry belongs to.
              * <P>Type: INTEGER (long)</P>
              */
@@ -2970,6 +2975,11 @@ public final class Telephony {
              */
             private Part() {
             }
+
+            /**
+             * The name of part table.
+             */
+            public static final String TABLE_PART = "part";
 
             /**
              * The {@code content://} style URL for this table. Can be appended with a part ID to
