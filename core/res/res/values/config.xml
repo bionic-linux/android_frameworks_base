@@ -4368,4 +4368,14 @@
     <!-- Boolean indicating whether frameworks needs to reset cell broadcast geo-fencing
          check after reboot or airplane mode toggling -->
     <bool translatable="false" name="reset_geo_fencing_check_after_boot_or_apm">false</bool>
+
+    <!-- pdp data retry for cause 29, 33 and 55-->
+    <bool name="config_enable_retry_for_pdp_reject_29_33_55">false</bool>
+    <!--pdp data reject retry delay in ms can be configured here -->
+    <integer name="data_retry_delay_ms">-1</integer>
+    <!-- pdp data reject dialog string for cause 29, 33 and 55-->
+    <string name="data_conn_status_title"></string>
+    <string name="user_authentication_failed"></string>
+    <string name="service_not_subscribed"></string>
+    <string name="multi_conn_to_same_pdn_not_allowed"></string>
 </resources>
