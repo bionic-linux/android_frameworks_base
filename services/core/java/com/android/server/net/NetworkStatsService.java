@@ -312,7 +312,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private Handler mHandler;
     private Handler.Callback mHandlerCallback;
 
-    private volatile boolean mSystemReady;
+    @GuardedBy("mStatsLock")
+    private boolean mSystemReady;
     private long mPersistThreshold = 2 * MB_IN_BYTES;
     private long mGlobalAlertBytes;
 
@@ -394,14 +395,16 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     public void systemReady() {
-        mSystemReady = true;
-
-        if (!isBandwidthControlEnabled()) {
-            Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
-            return;
-        }
+        final boolean bandwidthControlEnabled = isBandwidthControlEnabled();
 
         synchronized (mStatsLock) {
+            mSystemReady = true;
+
+            if (!bandwidthControlEnabled) {
+                Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
+                return;
+            }
+
             // create data recorders along with historical rotators
             mDevRecorder = buildRecorder(PREFIX_DEV, mSettings.getDevConfig(), false);
             mXtRecorder = buildRecorder(PREFIX_XT, mSettings.getXtConfig(), false);
@@ -1816,8 +1819,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private void assertSystemReady() {
-        if (!mSystemReady) {
-            throw new IllegalStateException("System not ready");
+        synchronized (mStatsLock) {
+            if (!mSystemReady) {
+                throw new IllegalStateException("System not ready");
+            }
         }
     }
 
