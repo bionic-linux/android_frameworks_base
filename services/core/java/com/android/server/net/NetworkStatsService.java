@@ -373,14 +373,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     public void systemReady() {
-        mSystemReady = true;
-
-        if (!isBandwidthControlEnabled()) {
-            Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
-            return;
-        }
-
         synchronized (mStatsLock) {
+            mSystemReady = true;
+
             // create data recorders along with historical rotators
             mDevRecorder = buildRecorder(PREFIX_DEV, mSettings.getDevConfig(), false);
             mXtRecorder = buildRecorder(PREFIX_XT, mSettings.getXtConfig(), false);
@@ -408,6 +403,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final IntentFilter pollFilter = new IntentFilter(ACTION_NETWORK_STATS_POLL);
         mContext.registerReceiver(mPollReceiver, pollFilter, READ_NETWORK_USAGE_HISTORY, mHandler);
 
+        //  schedule periodic pall alarm based on {@link NetworkStatsSettings#getPollInterval()}.
+        final PendingIntent pollIntent =
+                PendingIntent.getBroadcast(mContext, 0, new Intent(ACTION_NETWORK_STATS_POLL), 0);
+        final long currentRealtime = SystemClock.elapsedRealtime();
+        mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, currentRealtime,
+                mSettings.getPollInterval(), pollIntent);
+
         // listen for uid removal to clean stats
         final IntentFilter removedFilter = new IntentFilter(ACTION_UID_REMOVED);
         mContext.registerReceiver(mRemovedReceiver, removedFilter, null, mHandler);
@@ -426,7 +428,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             // ignored; service lives in system_server
         }
 
-        registerPollAlarmLocked();
         registerGlobalAlert();
     }
 
@@ -487,23 +488,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     /**
-     * Clear any existing {@link #ACTION_NETWORK_STATS_POLL} alarms, and
-     * reschedule based on current {@link NetworkStatsSettings#getPollInterval()}.
-     */
-    private void registerPollAlarmLocked() {
-        if (mPollIntent != null) {
-            mAlarmManager.cancel(mPollIntent);
-        }
-
-        mPollIntent = PendingIntent.getBroadcast(
-                mContext, 0, new Intent(ACTION_NETWORK_STATS_POLL), 0);
-
-        final long currentRealtime = SystemClock.elapsedRealtime();
-        mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, currentRealtime,
-                mSettings.getPollInterval(), mPollIntent);
-    }
-
-    /**
      * Register for a global alert that is delivered through
      * {@link INetworkManagementEventObserver} once a threshold amount of data
      * has been transferred.
@@ -548,8 +532,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private INetworkStatsSession openSessionInternal(final int flags, final String callingPackage) {
-        assertBandwidthControlEnabled();
-
         final int callingUid = Binder.getCallingUid();
         final int usedFlags = isRateLimitedForPoll(callingUid)
                 ? flags & (~NetworkStatsManager.FLAG_POLL_ON_OPEN)
@@ -742,7 +724,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private long getNetworkTotalBytes(NetworkTemplate template, long start, long end) {
         assertSystemReady();
-        assertBandwidthControlEnabled();
 
         // NOTE: if callers want to get non-augmented data, they should go
         // through the public API
@@ -753,7 +734,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private NetworkStats getNetworkUidBytes(NetworkTemplate template, long start, long end) {
         assertSystemReady();
-        assertBandwidthControlEnabled();
 
         final NetworkStatsCollection uidComplete;
         synchronized (mStatsLock) {
@@ -768,7 +748,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         if (Binder.getCallingUid() != uid) {
             mContext.enforceCallingOrSelfPermission(ACCESS_NETWORK_STATE, TAG);
         }
-        assertBandwidthControlEnabled();
 
         // TODO: switch to data layer stats once kernel exports
         // for now, read network layer stats and flatten across all ifaces
@@ -855,7 +834,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             NetworkState[] networkStates,
             String activeIface) {
         checkNetworkStackPermission(mContext);
-        assertBandwidthControlEnabled();
 
         final long token = Binder.clearCallingIdentity();
         try {
@@ -868,7 +846,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @Override
     public void forceUpdate() {
         mContext.enforceCallingOrSelfPermission(READ_NETWORK_USAGE_HISTORY, TAG);
-        assertBandwidthControlEnabled();
 
         final long token = Binder.clearCallingIdentity();
         try {
@@ -879,8 +856,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private void advisePersistThreshold(long thresholdBytes) {
-        assertBandwidthControlEnabled();
-
         // clamp threshold into safe range
         mPersistThreshold = MathUtils.constrain(thresholdBytes, 128 * KB_IN_BYTES, 2 * MB_IN_BYTES);
         if (LOGV) {
@@ -1736,24 +1711,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void assertSystemReady() {
         if (!mSystemReady) {
             throw new IllegalStateException("System not ready");
-        }
-    }
-
-    private void assertBandwidthControlEnabled() {
-        if (!isBandwidthControlEnabled()) {
-            throw new IllegalStateException("Bandwidth module disabled");
-        }
-    }
-
-    private boolean isBandwidthControlEnabled() {
-        final long token = Binder.clearCallingIdentity();
-        try {
-            return mNetworkManager.isBandwidthControlEnabled();
-        } catch (RemoteException e) {
-            // ignored; service lives in system_server
-            return false;
-        } finally {
-            Binder.restoreCallingIdentity(token);
         }
     }
 
