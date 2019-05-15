@@ -394,14 +394,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     public void systemReady() {
-        mSystemReady = true;
-
-        if (!isBandwidthControlEnabled()) {
-            Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
-            return;
-        }
-
         synchronized (mStatsLock) {
+            mSystemReady = true;
+
+            if (!isBandwidthControlEnabled()) {
+                Slog.w(TAG, "bandwidth controls disabled, unable to track stats");
+                return;
+            }
+
             // create data recorders along with historical rotators
             mDevRecorder = buildRecorder(PREFIX_DEV, mSettings.getDevConfig(), false);
             mXtRecorder = buildRecorder(PREFIX_XT, mSettings.getXtConfig(), false);
