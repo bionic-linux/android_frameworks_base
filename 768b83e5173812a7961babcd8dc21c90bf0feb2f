@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71841ede_7e2e6b00",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-16T06:39:05Z",
+      "side": 1,
+      "message": "Yes I considered that but didn\u0027t want to make a bigger change than necessary initially.\n\nThis also requires to check that callers of assertSystemReady() can all take the lock safely, which apparently is the case since all callers I found acquires mStatsLock shortly after assertSystemReady() anyway.\n\nDone.",
+      "parentUuid": "4c4e088b_9e51cc1b",
+      "range": {
+        "startLine": 315,
+        "startChar": 12,
+        "endLine": 315,
+        "endChar": 20
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e17d44b_522095cd",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "19d45d1c_3ea84918",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-16T06:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e17d44b_522095cd",
+      "range": {
+        "startLine": 400,
+        "startChar": 17,
+        "endLine": 400,
+        "endChar": 42
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "682a3d5e_f22198ba",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c435182c_8f0920a7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-16T06:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "682a3d5e_f22198ba",
+      "range": {
+        "startLine": 1819,
+        "startChar": 13,
+        "endLine": 1819,
+        "endChar": 25
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
