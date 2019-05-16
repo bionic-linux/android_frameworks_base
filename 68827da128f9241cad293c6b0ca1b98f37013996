@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9959fb_0185de0e",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T08:02:24Z",
+      "side": 1,
+      "message": "LogRec is a single record right ? What\u0027s wrong with making it LogRec\u003cT\u003e, mState could be an IState\u003cT\u003e, and mEntryData would be a T. You\u0027d have to keep mOrgState and mDstState an unchecked IState unfortunately, but that\u0027s still better than everything unchecked.\n\nYou\u0027ll have to cast to a T in l.707, but at least you get static guarantees that the types match.",
+      "range": {
+        "startLine": 460,
+        "startChar": 16,
+        "endLine": 460,
+        "endChar": 22
+      },
+      "revId": "68827da128f9241cad293c6b0ca1b98f37013996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031e383e_239a0f72",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T08:02:24Z",
+      "side": 1,
+      "message": "Please stick to the local code style, rather than imposing a foreign code style on code you touch. This style is not forbidden by the android style guide AFAICT, but I don\u0027t really remember seeing it anywhere except in Varun\u0027s and your code. None of the files around this file have this style either, and if there is one thing the style guide is adamant about, that\u0027s : stick to the local style.",
+      "range": {
+        "startLine": 474,
+        "startChar": 10,
+        "endLine": 481,
+        "endChar": 35
+      },
+      "revId": "68827da128f9241cad293c6b0ca1b98f37013996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669b4bb1_885d6049",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T08:02:24Z",
+      "side": 1,
+      "message": "Likewise in this patch please @Nullable or what you add.",
+      "range": {
+        "startLine": 557,
+        "startChar": 15,
+        "endLine": 557,
+        "endChar": 21
+      },
+      "revId": "68827da128f9241cad293c6b0ca1b98f37013996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c312d4_f6b2c7bb",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T08:02:24Z",
+      "side": 1,
+      "message": "Did you test this ?\n\ndest\u003dSomeState what\u003dentryData\u003d\u003cnull\u003e(0x14)\n\nYou want to move these two lines above the log for what\u003d or below the log for its value.",
+      "range": {
+        "startLine": 575,
+        "startChar": 13,
+        "endLine": 576,
+        "endChar": 77
+      },
+      "revId": "68827da128f9241cad293c6b0ca1b98f37013996",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
