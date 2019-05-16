@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c4e088b_9e51cc1b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T06:03:22Z",
+      "side": 1,
+      "message": "The only place where volatile is useful now is for the read in assertSystemReady, and it otherwise causes useless monitor enters/exits. It\u0027s almost certainly better to remove this volatile, mark the variable with @GuardedBy(\"mStatsLock\"), and lock assertSystemReady (I put a comment there).",
+      "range": {
+        "startLine": 315,
+        "startChar": 12,
+        "endLine": 315,
+        "endChar": 20
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e17d44b_522095cd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T06:03:22Z",
+      "side": 1,
+      "message": "This guy here is doing a nice two-way IPC to NMS. I don\u0027t think it should be done with the lock held.\nI think you should start with calling this out of the lock and store its result in a local, then enter the synchronized block to set mSystemReady to true and return if the boolean is false.",
+      "range": {
+        "startLine": 400,
+        "startChar": 17,
+        "endLine": 400,
+        "endChar": 42
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682a3d5e_f22198ba",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-16T06:03:22Z",
+      "side": 1,
+      "message": "If you remove the volatile, then this needs a monitor enter if it\u0027s going to observe the write to this field. synchronized(mStatsLock)",
+      "range": {
+        "startLine": 1819,
+        "startChar": 13,
+        "endLine": 1819,
+        "endChar": 25
+      },
+      "revId": "768b83e5173812a7961babcd8dc21c90bf0feb2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
