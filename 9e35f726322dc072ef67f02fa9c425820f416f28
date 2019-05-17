@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e345c1_4da91109",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "In which state(s) are this value meaningful? Ideally, they would only be non-null/non-zero in those states, and null in all other states.\n\nLooks like perhaps they should be set to non-null/non-zero (if available) in ObtainingconfigurationState#processMessage, and set to null/zero in DhcpInitRebootState#exit.",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 48
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1415f04_43c39a6e",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "I think the code would be easier to understand if we clearly separated success from timeout. They are two logically separate cases, and explicitly separating them makes them easier to think about and reason about. Additionally, it would let us unindent some code. Something like:\n\n    case EVENT_CONFIGURATION_TIMEOUT:\n        if (message.arg1 \u003d\u003d mRetrieveNetworkAttributeSequenceNumber++) {\n            transitionTo(mDhcpInitState);\n        }\n        return HANDLED;\n\n    case EVENT_CONFIGURATION_OBTAINED:\n        // Ignore stale messages.\n        if (message.arg1 !\u003d mRetrieveNetworkAttributeSequenceNumber++) return HANDLED;\n\n        NetworkAttributes attributes \u003d (NetworkAttributes) message.obj;\n        mLastAssignedIpv4Address \u003d attributes.assignedV4Address;\n        mLastAssignedIpv4AddressExpiry \u003d attributes.assignedV4AddressExpiry;\n\n        transitionTo(System.currentTimeMillis() \u003c mLastAssignedIpv4AddressExpiry\n                ? mDhcpInitRebootState : mDhcpInitState);\n        return HANDLED;",
+      "range": {
+        "startLine": 839,
+        "startChar": 0,
+        "endLine": 839,
+        "endChar": 49
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09383742_1aee651e",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "Why NOT_HANDLED? NOT_HANDLED means that this message should be processed by the parent state. But the correct thing to do is just to ignore this message, because it\u0027s stale, right? If so, just return HANDLED.",
+      "range": {
+        "startLine": 842,
+        "startChar": 88,
+        "endLine": 842,
+        "endChar": 99
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d026e3_b901a53a",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "Why do this? Those messages will be safely ignored because their sequence numbers are out of date.",
+      "range": {
+        "startLine": 844,
+        "startChar": 24,
+        "endLine": 844,
+        "endChar": 38
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab19cb9a_9f0d362f",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "This if statement depends on the value of mLastAssignedIpv4AddressExpiry, but it is not easy to understand what the value of mLastAssignedIpv4AddressExpiry is. You should either set this explicitly to zero or add a comment to clarify what the value is.",
+      "range": {
+        "startLine": 853,
+        "startChar": 20,
+        "endLine": 853,
+        "endChar": 92
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0840cf8b_347ab330",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s useful to list these cases. They don\u0027t run any code, and if in the future we add new enum values, we\u0027ll likely forget to add them here anyway. If we do want to make it explicit that there are other cases, then I\u0027d just add:\n\n    default:\n        // Do nothing.\n        break;\n\neven though it\u0027s not necessary. Actually, I\u0027d suggest dropping the switch statement altogether and doing something like:\n\n    if (delta \u003d\u003d PROV_CHANGE_GAINED_PROVISIONING || PROV_CHANGE_STILL_PROVISIONED) {\n        maybeSaveNetworkToIpMemoryStore();\n    }\n\nor even\n\n    private static boolean isProvisioned(int provisioningChange) {\n        switch (delta) {\n            case PROV_CHANGE_GAINED_PROVISIONING:\n            case PROV_CHANGE_STILL_PROVISIONED:\n                return true;\n            default:\n                return false;\n        }\n    }\n\nand then, here and elsewhere:\n\n    if (isProvisioned(delta)) {\n        maybeSaveNetworkToIpMemoryStore();\n    }",
+      "range": {
+        "startLine": 1129,
+        "startChar": 0,
+        "endLine": 1131,
+        "endChar": 29
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c91fe8_e64fed59",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1153,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 29
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3361295b_3c79bd23",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "Should we also clear the DHCP results in the memory store at this time?",
+      "range": {
+        "startLine": 1173,
+        "startChar": 18,
+        "endLine": 1173,
+        "endChar": 40
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3167de2c_156c9fc1",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-17T03:55:34Z",
+      "side": 1,
+      "message": "In general, this is incorrect. The expiry time of the IPv4 address is not the lease duration plus the current timestamp. It is the lease duration plus the timestamp when the offer was received. Unfortunately I don\u0027t think we have this information here.\n\nIf what we\u0027re trying to do is save the DHCP lease into the memory store, then why don\u0027t we just do that whenever we get a new DHCP lease? The comments around line 1675 suggests that the right place to do that is when we receive CMD_POST_DHCP_ACTION, or perhaps in handleIPv4Success or handleIPv4Failure().\n\nIt looks like the current code is almost correct, as long as this function is only called from handleIPv4Success. It\u0027s definitely not correct to call it from handleLinkPropertiesUpdate, because that function can be called at any time while the network is connected.",
+      "range": {
+        "startLine": 1298,
+        "startChar": 0,
+        "endLine": 1300,
+        "endChar": 49
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
