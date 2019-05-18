@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2bd0cb80_4f95a995",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1396528
+      },
+      "writtenOn": "2019-05-18T00:37:48Z",
+      "side": 1,
+      "message": "Ah, I see. Perhaps we could do:\n\npublic static Uri getAddrUriForMessage(String messageId)\n\nor something.\n\nSimilar to https://developer.android.com/reference/android/provider/Settings.System.html#getUriFor(java.lang.String). This might help the user of the API create the correct URIs more easily.\n\nSame for below.",
+      "parentUuid": "b0d6d185_676920f7",
+      "range": {
+        "startLine": 2928,
+        "startChar": 0,
+        "endLine": 2931,
+        "endChar": 0
+      },
+      "revId": "4c2fb04ce80c98a61b30d9fbbde1ab4e172fc5a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a469033e_b20274a7",
         "filename": "telephony/java/android/provider/Telephony.java",
         "patchSetId": 1
