@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cad41194_4408232f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-20T01:05:47Z",
+      "side": 1,
+      "message": "Let me do this in a follow up patches, because there are unfortunately more callers than just NetworkStatsService. It is not immediately clear if this is doable on aosp actually.\n\nTo begin with I just removed it here.",
+      "parentUuid": "1571e23f_53a7708e",
+      "range": {
+        "startLine": 398,
+        "startChar": 48,
+        "endLine": 398,
+        "endChar": 76
+      },
+      "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44dda2aa_a3a9984e",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "44580545_f3f14d0e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-20T01:05:47Z",
+      "side": 1,
+      "message": "registerPollAlarmLocked: after double checking, agreed it does not look like it needs to take the lock (which it didn\u0027t took anyway) so I removed \"Locked\" from the name.\n\nregisterGlobalAlert: it directly goes to INetworkManagerService and seems to be reentrant w.r.t the local state of NetworkStatsService. I imagine that INetworkService.setGlobalAlert itself is reentrant, so the only issue I can see with a race would be that the wrong setGlobalAlert call goes last and sets an incorrect threshold.",
+      "parentUuid": "44dda2aa_a3a9984e",
+      "range": {
+        "startLine": 425,
+        "startChar": 8,
+        "endLine": 425,
+        "endChar": 9
+      },
+      "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1733c01d_b1c21b25",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee8e085_af5750a4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-20T01:05:47Z",
+      "side": 1,
+      "message": "Undone changes of patch set #2.",
+      "parentUuid": "1733c01d_b1c21b25",
+      "range": {
+        "startLine": 1822,
+        "startChar": 8,
+        "endLine": 1822,
+        "endChar": 20
+      },
+      "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
