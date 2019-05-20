@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f306f64_1cb5eefb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-20T04:32:39Z",
+      "side": 1,
+      "message": "It is a bit tricky to reason about moving mSystemReady \u003d true at the end of the method not for concurrency reason but because in case this methods throws an exception, the system would behave differently.\n\nAt the moment SystemServer calls this with a try catch all that silences any error and moves forwards. If this happen the network stats is still \"ready\" but probably in an incorrect state. Moving mSystemReady might put the network stats into a different kind of incorrect state if systemReady() fails.\n\nI feel this is a bit out of scope for this change.",
+      "parentUuid": "d01a6509_aedb241c",
+      "range": {
+        "startLine": 398,
+        "startChar": 12,
+        "endLine": 398,
+        "endChar": 32
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68a04f06_7593fe13",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-20T02:50:38Z",
       "side": 1,
       "message": "AFAICS this can never happen in current code. Suggest removing, replacing with:\n\n    if (mPollIntent !\u003d null) {\n        throw IllegalStateException(...);\n    }\n\nor, perhaps even better, moving the body of this method into systemReady so it\u0027s clear how it is sequenced with the other operations performed in that method.",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0ab0fb_8b196dea",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-20T04:32:39Z",
+      "side": 1,
+      "message": "I considered moving it inside systemReady() and removing that branch, but I didn\u0027t because I saw that shutdownLocked() sets mSystemReady to false, and I was wondering if this service must support being restarted.\n\nIf yes then registerPollAlarm definitely needs to chancel the previous alarm. One could argue that cancelling the existing alarm would be better done in shutdownLocked() however, but at that point we are a bit beyond the original scope of this bug fix.",
+      "parentUuid": "68a04f06_7593fe13",
       "range": {
         "startLine": 510,
         "startChar": 0,
