@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01a6509_aedb241c",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-20T02:50:38Z",
+      "side": 1,
+      "message": "Nit: I wonder if instead of putting this in the synchronized block we can just move mSystemReady to the end of the method, or close to the end of the method. In fact, ISTM that assigning mSystemReady here is very similar or identical to assigning it just after this synchronized block.\n\nThat said, you\u0027re clearly making the more correct than it was before, so maybe there is no need to do anything else.",
+      "range": {
+        "startLine": 398,
+        "startChar": 12,
+        "endLine": 398,
+        "endChar": 32
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a04f06_7593fe13",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-20T02:50:38Z",
+      "side": 1,
+      "message": "AFAICS this can never happen in current code. Suggest removing, replacing with:\n\n    if (mPollIntent !\u003d null) {\n        throw IllegalStateException(...);\n    }\n\nor, perhaps even better, moving the body of this method into systemReady so it\u0027s clear how it is sequenced with the other operations performed in that method.",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

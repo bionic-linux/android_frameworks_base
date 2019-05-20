@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f3b21c9_d611b1fe",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-20T02:50:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cad41194_4408232f",
+      "range": {
+        "startLine": 398,
+        "startChar": 48,
+        "endLine": 398,
+        "endChar": 76
+      },
+      "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44dda2aa_a3a9984e",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "registerPollAlarmLocked: after double checking, agreed it does not look like it needs to take the lock (which it didn\u0027t took anyway) so I removed \"Locked\" from the name.\n\nregisterGlobalAlert: it directly goes to INetworkManagerService and seems to be reentrant w.r.t the local state of NetworkStatsService. I imagine that INetworkService.setGlobalAlert itself is reentrant, so the only issue I can see with a race would be that the wrong setGlobalAlert call goes last and sets an incorrect threshold.",
       "parentUuid": "44dda2aa_a3a9984e",
+      "range": {
+        "startLine": 425,
+        "startChar": 8,
+        "endLine": 425,
+        "endChar": 9
+      },
+      "revId": "364890f7f23611623c30612ea27ad35653aa88d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14f5d53a_e4f9e207",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-20T02:50:38Z",
+      "side": 1,
+      "message": "Ack. It looks like mGlobalAlertBytes is modified by advisePersistThreshold, which ends up being called by updateNetworkRulesNL, or by the global alert firing. Both of these happen quite frequently, so even if there is a race on boot, then the global alert will likely be set to the correct value soon afterwards.",
+      "parentUuid": "44580545_f3f14d0e",
       "range": {
         "startLine": 425,
         "startChar": 8,
