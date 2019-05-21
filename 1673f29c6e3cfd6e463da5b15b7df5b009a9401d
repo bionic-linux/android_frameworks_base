@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54248c94_3ffc48d1",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-21T15:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a289f08c_06a558f6",
+      "range": {
+        "startLine": 1065,
+        "startChar": 22,
+        "endLine": 1065,
+        "endChar": 36
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb86d4a6_4f4adf11",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6c0b726d_7513bdd9",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-21T15:33:53Z",
+      "side": 1,
+      "message": "handleIPv4Success also gets called when static IP address configuration is applied as L.1205 except after DHCP succeeds. Definitely we don\u0027t want to store the static IP info to memory store. Maybe we can check if \"mConfiguration.mStaticIpConfig\" is null or not to distinguish different cases. Thought?",
+      "parentUuid": "cb86d4a6_4f4adf11",
+      "range": {
+        "startLine": 1148,
+        "startChar": 8,
+        "endLine": 1148,
+        "endChar": 35
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cb51d4_f0a40f73",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba30206_47e891d7",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-21T15:33:53Z",
+      "side": 1,
+      "message": "Yes, should check mDhcpResult null or NonNull earlier. Updated.",
+      "parentUuid": "10cb51d4_f0a40f73",
+      "range": {
+        "startLine": 1288,
+        "startChar": 8,
+        "endLine": 1288,
+        "endChar": 35
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
