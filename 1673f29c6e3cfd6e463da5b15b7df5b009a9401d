@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a289f08c_06a558f6",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-21T08:51:37Z",
+      "side": 1,
+      "message": "Per in-person, this is incorrect. The authoritative source for IP addresses is netlink (see comment above), and setting IP addresses here is likely to result in race conditions.",
+      "range": {
+        "startLine": 1065,
+        "startChar": 22,
+        "endLine": 1065,
+        "endChar": 36
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb86d4a6_4f4adf11",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-21T08:51:37Z",
+      "side": 1,
+      "message": "Any reason to do this only if isProvisioned returns true? It might be that this function is only get called just after DHCP succeeds. If so, then we can do this any time this function is called. Can you check?",
+      "range": {
+        "startLine": 1148,
+        "startChar": 8,
+        "endLine": 1148,
+        "endChar": 35
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cb51d4_f0a40f73",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-21T08:51:37Z",
+      "side": 1,
+      "message": "What happens when this is null? What ends up being stored in the memory store? Does it store an empty lease? If so, can we use this function to clear the lease when DHCP fails?",
+      "range": {
+        "startLine": 1288,
+        "startChar": 8,
+        "endLine": 1288,
+        "endChar": 35
+      },
+      "revId": "1673f29c6e3cfd6e463da5b15b7df5b009a9401d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
