@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97b7e499_427881e5",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-05-21T16:05:41Z",
+      "side": 1,
+      "message": "Because BlinkLayout extends FrameLayout, we already have a dependency on framework. Fortunately, I was able to move fastCreateView to PhoneLayoutInflater, so we don\u0027t add any new dependencies.",
+      "parentUuid": "4b011962_a161ff00",
+      "range": {
+        "startLine": 706,
+        "startChar": 27,
+        "endLine": 706,
+        "endChar": 41
+      },
+      "revId": "fc511e724c7382dadc5aa93a2d3bb24361cc24aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d37eab3_838dee75",
         "filename": "core/java/android/view/LayoutInflater.java",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "fc511e724c7382dadc5aa93a2d3bb24361cc24aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798cfb64_3e38aa58",
+        "filename": "core/java/android/view/LayoutInflater.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1335232
+      },
+      "writtenOn": "2019-05-21T16:05:41Z",
+      "side": 1,
+      "message": "Moving this to PhoneLayoutInflater worked fine.",
+      "parentUuid": "8741a80b_26562451",
+      "range": {
+        "startLine": 809,
+        "startChar": 39,
+        "endLine": 809,
+        "endChar": 43
+      },
+      "revId": "fc511e724c7382dadc5aa93a2d3bb24361cc24aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
