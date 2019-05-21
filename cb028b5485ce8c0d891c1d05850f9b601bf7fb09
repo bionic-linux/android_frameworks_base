@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b97818_776b8b9a",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 2777,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-05-21T21:01:47Z",
+      "side": 1,
+      "message": "empty here",
+      "range": {
+        "startLine": 2777,
+        "startChar": 71,
+        "endLine": 2777,
+        "endChar": 90
+      },
+      "revId": "cb028b5485ce8c0d891c1d05850f9b601bf7fb09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f01b8c4_54c93f08",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3515,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-05-21T21:01:47Z",
+      "side": 1,
+      "message": "empty here",
+      "range": {
+        "startLine": 3515,
+        "startChar": 74,
+        "endLine": 3515,
+        "endChar": 96
+      },
+      "revId": "cb028b5485ce8c0d891c1d05850f9b601bf7fb09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
