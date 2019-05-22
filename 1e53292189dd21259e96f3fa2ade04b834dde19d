@@ -189,6 +189,30 @@
       "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d0b111e_61b58ceb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T06:17:20Z",
+      "side": 1,
+      "message": "To be clear, all I\u0027m suggesting here is that we remove this null check and move lines 514-519 to systemReady. That should only take a few minutes.",
+      "parentUuid": "b8c40987_6e07a22f",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
