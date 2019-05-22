@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be402cd9_16ef7be1",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T14:28:01Z",
+      "side": 1,
+      "message": "Consider a helper function such as:\n\n    private int getQueryNetwork(Network network) throws ErrnoException {\n        final Network queryNetwork \u003d (network !\u003d null) ? network : new Network(getDnsNetId());\n        return network.getNetIdForResolv();\n    }",
+      "range": {
+        "startLine": 336,
+        "startChar": 12,
+        "endLine": 336,
+        "endChar": 84
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3b289b_0b56304f",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T14:28:01Z",
+      "side": 1,
+      "message": "My initial thought here was that if getDnsNetId fails with EOPNOTSUP then we should use a null netId instead of failing the lookup completely.\n\nHowever, this is a configuration error that occurs when the system is incompatible with the mainline module. Do we have test coverage for query(null, ...) in CTS and in unit tests? If so, then we can probably just prevent this from happening, and leave the code as you have it here.",
+      "range": {
+        "startLine": 338,
+        "startChar": 12,
+        "endLine": 338,
+        "endChar": 88
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cdbbc5_0ea0b27c",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T14:28:01Z",
+      "side": 1,
+      "message": "It looks like this can only happen when queryIpv4 and queryIpv6 are both false? If so, then suggest adding a comment to explain. Something like:\n\n    // This can only happen if queryIpv4 and queryIpv6 are both false.\n    // This almost certainly means that queryNetwork does not exist or no longer exists.\n\nAlso, if this can only happen in that case, consider putting this code on line 343, just after you set haveIpv4 and haveIpv6.",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 379,
+        "endChar": 27
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf5d7de_4a49bebf",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T14:28:01Z",
+      "side": 1,
+      "message": "This will become incorrect if someone changes the import of numberOfLeadingZeros at the top of the file. Consider dropping that import and explicitly using doing:\n\n    return i * CHAR_BIT + (Integer.numberOfLeadingZeros(x) - 24);  // Java ints are 32 bits",
+      "range": {
+        "startLine": 335,
+        "startChar": 34,
+        "endLine": 335,
+        "endChar": 64
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
