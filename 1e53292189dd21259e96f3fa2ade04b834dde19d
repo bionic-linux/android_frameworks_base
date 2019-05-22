@@ -237,6 +237,30 @@
       "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e23ba400_bddeb705",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T07:00:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this object can be reused. I think shutdownLocked only exists so that apps that call methods on shutdown don\u0027t end up running queries while the system is shutting down. AFAICS NetworkStatsService is only instantiated by SystemServer.java and systemReady is only ever called once on that instance.",
+      "parentUuid": "9e852e8d_5d305fd4",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
