@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784ee54e_d1a6e083",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-05-22T10:41:16Z",
+      "side": 1,
+      "message": "I suspect this may be a bit too restrictive. In some cases, public alternatives may be something from AndroidX or a 3P library (i.e. not something in the SDK)",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "75025048dbfb459126b1230f43f910a6cae6917a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
