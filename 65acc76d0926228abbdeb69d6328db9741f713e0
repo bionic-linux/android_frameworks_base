@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f59f8f_8b69a778",
+        "filename": "services/core/java/com/android/server/connectivity/NetdEventListenerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T10:21:50Z",
+      "side": 1,
+      "message": "Nit: is this throws clause needed?",
+      "range": {
+        "startLine": 309,
+        "startChar": 37,
+        "endLine": 309,
+        "endChar": 59
+      },
+      "revId": "65acc76d0926228abbdeb69d6328db9741f713e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
