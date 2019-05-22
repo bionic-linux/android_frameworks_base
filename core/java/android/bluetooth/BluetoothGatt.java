@@ -1353,7 +1353,6 @@ public final class BluetoothGatt implements BluetoothProfile {
     /**
      * Clears the internal cache and forces a refresh of the services from the
      * remote device.
-     * @hide
      */
     public boolean refresh() {
         if (DBG) Log.d(TAG, "refresh() - device: " + mDevice.getAddress());
