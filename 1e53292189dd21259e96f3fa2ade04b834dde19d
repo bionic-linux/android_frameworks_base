@@ -141,6 +141,30 @@
       "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83af6c4d_e79f3aec",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-22T03:09:32Z",
+      "side": 1,
+      "message": "SGTM. Care to upload a follow-up as well, then?",
+      "parentUuid": "d15fd7b5_e02e4c87",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
