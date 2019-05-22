@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd1834bc_fb9895f6",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "How about logging the error here ?\n\nAlso you should cut the wait. Otherwise this is imposing a one second delay to connection to every unknown network.",
+      "range": {
+        "startLine": 818,
+        "startChar": 63,
+        "endLine": 818,
+        "endChar": 69
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752c6399_a8bc37f2",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "I don\u0027t think you should be testing for this. If the lease has expired, because of this test, you don\u0027t print the debug log (which is unfortunate) and you impose a one second delay to full functionality. You\u0027re already testing for this in l.864 ; if you just remove the test, you solve all these problems, the code is simpler, and you have better separation of responsibility.",
+      "range": {
+        "startLine": 821,
+        "startChar": 24,
+        "endLine": 821,
+        "endChar": 75
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53216a26_95069195",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you\u0027re removing this ; when link properties are updated we do need to save the network don\u0027t we ?",
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a64eae_97c3731b",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "Did you want to address Lorenzo\u0027s concern from patchset 10 ?",
+      "range": {
+        "startLine": 1276,
+        "startChar": 0,
+        "endLine": 1278,
+        "endChar": 45
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda3a74d_ee54eee0",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "Can you please add a TODO to instead clear out the address and the lease, rather than storing an expired lease ?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 11,
+        "endLine": 1296,
+        "endChar": 37
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea137ac_cf3503d6",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "expiry",
+      "range": {
+        "startLine": 1300,
+        "startChar": 58,
+        "endLine": 1300,
+        "endChar": 64
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a9f573_5b8ad855",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "You\u0027re going to break existing code all over the place. If you do this any code that does not set an expiry will reset the expiry to -1. By design here null means unset and you\u0027re breaking this contract.\n\nIn retrospect what this means is I should have written a test to make sure null continues to mean unset",
+      "range": {
+        "startLine": 251,
+        "startChar": 9,
+        "endLine": 253,
+        "endChar": 9
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee004bf_c0439a6c",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "Hm, why \u003e\u003d 0 ? You\u0027re using -1, and both should behave the same so I don\u0027t understand why this change has this shape instead of \u003e\u003d -1.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 100
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac63779_f5110491",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "Exactly as I said above : the old code was encoding null as 0, and everything else as its value.\nThis code is now encoding null as -1, and 0 as 0.\n\nI expect most of the code was relying on the fact that the parceled object used 0 for null, have you checked all the client code to make sure it\u0027s happy with this change in semantics ?",
+      "range": {
+        "startLine": 166,
+        "startChar": 52,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

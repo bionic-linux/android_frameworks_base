@@ -590,6 +590,29 @@
       "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b37d62b_f5390140",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-22T07:00:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to remove this sanity check. Instead, please make an ALREADY_EXPIRED value and either :\n• Set it to 0 instead of -1. After all 0 and -1 will work in the exact same way\n• Update the code to explicitly allow -1 here\n\nIn any case we\u0027ll need to be very careful here, as at this time 0 means \"no data\" in the parceled object because the parceled object has a vanilla long. You\u0027ll need to have a test that null stays null, that ALREADY_EXPIRED stays ALREADY_EXPIRED, and that positive values keep their values through the round trip.",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
