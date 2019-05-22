@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f19ceb67_144bc871",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-22T00:49:29Z",
+      "side": 1,
+      "message": "To summarize, I prefer to keep this change at just moving \u0027mSystemReady \u003d true\u0027 inside synchronized. Marking the comment as resolved. Let me know if this is fine.",
+      "parentUuid": "6f306f64_1cb5eefb",
+      "range": {
+        "startLine": 398,
+        "startChar": 12,
+        "endLine": 398,
+        "endChar": 32
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a04f06_7593fe13",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15fd7b5_e02e4c87",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-05-22T00:49:29Z",
+      "side": 1,
+      "message": "Similarly, I would prefer to keep the body of this function as is in this patch.",
+      "parentUuid": "4b0ab0fb_8b196dea",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 9
+      },
+      "revId": "1e53292189dd21259e96f3fa2ade04b834dde19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
