@@ -22,6 +22,30 @@
       "revId": "75025048dbfb459126b1230f43f910a6cae6917a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21292bf6_8c685a59",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-05-22T16:14:14Z",
+      "side": 1,
+      "message": "Perhaps we could use the link tag fully, as it supports labels as well - i.e. allow the alternatives to be of the form {@link foo.bar.Baz#bat public-api}, {@link foo.bar.Baz#bat androidx} or {@link foo.bar.Baz#bat 3p} (and perhaps more labels, while making public-api default). That would mean that there couldn\u0027t be any validation at this step, so hopefully it wouldn\u0027t be used as a workaround against providing alternatives.",
+      "parentUuid": "784ee54e_d1a6e083",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "75025048dbfb459126b1230f43f910a6cae6917a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
