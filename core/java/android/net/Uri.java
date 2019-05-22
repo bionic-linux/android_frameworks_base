@@ -188,6 +188,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *
      * @return the decoded scheme-specific-part
      */
+    @Nullable
     public abstract String getSchemeSpecificPart();
 
     /**
@@ -200,6 +201,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *
      * @return the encoded scheme-specific-part
      */
+    @Nullable
     public abstract String getEncodedSchemeSpecificPart();
 
     /**
@@ -325,6 +327,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *
      * @return decoded path segments, each without a leading or trailing '/'
      */
+    @NonNull
     public abstract List<String> getPathSegments();
 
     /**
@@ -452,6 +455,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @throws NullPointerException if uriString is null
      * @return Uri for this given uri string
      */
+    @NonNull
     public static Uri parse(String uriString) {
         return new StringUri(uriString);
     }
@@ -466,6 +470,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @throws NullPointerException if file is null
      * @return a Uri for the given file
      */
+    @NonNull
     public static Uri fromFile(File file) {
         if (file == null) {
             throw new NullPointerException("file");
@@ -571,10 +576,12 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return ssp == null ? ssp = Part.fromEncoded(parseSsp()) : ssp;
         }
 
+        @Nullable
         public String getEncodedSchemeSpecificPart() {
             return getSsp().getEncoded();
         }
 
+        @Nullable
         public String getSchemeSpecificPart() {
             return getSsp().getDecoded();
         }
@@ -611,6 +618,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
 
         private PathPart path;
 
+        @NonNull
         private PathPart getPathPart() {
             return path == null
                     ? path = PathPart.fromEncoded(parsePath())
@@ -625,6 +633,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return getPathPart().getEncoded();
         }
 
+        @NonNull
         public List<String> getPathSegments() {
             return getPathPart().getPathSegments();
         }
@@ -840,6 +849,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *
      * @see Builder if you don't want the ssp and fragment to be encoded
      */
+    @NonNull
     public static Uri fromParts(String scheme, String ssp,
             String fragment) {
         if (scheme == null) {
@@ -902,10 +912,12 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return this.scheme;
         }
 
+        @Nullable
         public String getEncodedSchemeSpecificPart() {
             return ssp.getEncoded();
         }
 
+        @Nullable
         public String getSchemeSpecificPart() {
             return ssp.getDecoded();
         }
@@ -942,6 +954,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return fragment.getEncoded();
         }
 
+        @NonNull
         public List<String> getPathSegments() {
             return Collections.emptyList();
         }
@@ -1228,15 +1241,18 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
 
         private Part ssp;
 
+        @NonNull
         private Part getSsp() {
             return ssp == null
                     ? ssp = Part.fromEncoded(makeSchemeSpecificPart()) : ssp;
         }
 
+        @Nullable
         public String getEncodedSchemeSpecificPart() {
             return getSsp().getEncoded();
         }
 
+        @Nullable
         public String getSchemeSpecificPart() {
             return getSsp().getDecoded();
         }
@@ -1299,6 +1315,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return this.fragment.getEncoded();
         }
 
+        @NonNull
         public List<String> getPathSegments() {
             return this.path.getPathSegments();
         }
@@ -1598,6 +1615,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *
      * @return a set of decoded names
      */
+    @NonNull
     public Set<String> getQueryParameterNames() {
         if (isOpaque()) {
             throw new UnsupportedOperationException(NOT_HIERARCHICAL);
@@ -1638,6 +1656,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @throws NullPointerException if key is null
      * @return a list of decoded values
      */
+    @NonNull
     public List<String> getQueryParameters(String key) {
         if (isOpaque()) {
             throw new UnsupportedOperationException(NOT_HIERARCHICAL);
@@ -1786,6 +1805,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @see android.content.Intent#setData
      * @see android.content.Intent#setDataAndNormalize
      */
+    @NonNull
     public Uri normalizeScheme() {
         String scheme = getScheme();
         if (scheme == null) return this;  // give up
@@ -1847,6 +1867,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @return an encoded version of s suitable for use as a URI component,
      *  or null if s is null
      */
+    @Nullable
     public static String encode(String s) {
         return encode(s, null);
     }
@@ -1864,6 +1885,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @return an encoded version of s suitable for use as a URI component,
      *  or null if s is null
      */
+    @Nullable
     public static String encode(String s, String allow) {
         if (s == null) {
             return null;
@@ -1968,6 +1990,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @return the given string with escaped octets decoded, or null if
      *  s is null
      */
+    @Nullable
     public static String decode(String s) {
         if (s == null) {
             return null;
@@ -2000,6 +2023,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
 
         abstract String getEncoded();
 
+        @Nullable
         final String getDecoded() {
             @SuppressWarnings("StringEquality")
             boolean hasDecoded = decoded != NOT_CACHED;
@@ -2049,6 +2073,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
             return false;
         }
 
+        @Nullable
         String getEncoded() {
             @SuppressWarnings("StringEquality")
             boolean hasEncoded = encoded != NOT_CACHED;
@@ -2170,6 +2195,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
          * @return parsed path segments or null if this isn't a hierarchical
          *  URI
          */
+        @NonNull
         PathSegments getPathSegments() {
             if (pathSegments != null) {
                 return pathSegments;
@@ -2332,6 +2358,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      *  the path
      * @throws NullPointerException if baseUri is null
      */
+    @NonNull
     public static Uri withAppendedPath(Uri baseUri, String pathSegment) {
         Builder builder = baseUri.buildUpon();
         builder = builder.appendEncodedPath(pathSegment);
@@ -2347,6 +2374,7 @@ public abstract class Uri implements Parcelable, Comparable<Uri> {
      * @hide
      */
     @UnsupportedAppUsage
+    @NonNull
     public Uri getCanonicalUri() {
         if ("file".equals(getScheme())) {
             final String canonicalPath;
