@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c0750ca1_7521bfb2",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-23T09:05:28Z",
+      "side": 1,
+      "message": "Yes please :-)",
+      "parentUuid": "72cb2cde_65c1e978",
+      "range": {
+        "startLine": 338,
+        "startChar": 12,
+        "endLine": 338,
+        "endChar": 88
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04cdbbc5_0ea0b27c",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
