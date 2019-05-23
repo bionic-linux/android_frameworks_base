@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9ba9c94_c5ef8a5d",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-05-23T14:43:24Z",
+      "side": 1,
+      "message": "here and in several places below: I don\u0027t understand why you\u0027ve marked anything that returns the values of getSsp().get{Encoded,Decoded}() as @Nullable. The only situation in which I can see encode(s) / decode(s) ever return null is if s.isEmpty(), but that will only ever be allowed for EmptyPart, which returns \"\" (not null) from both getEncoded() and getDecoded().\n\nSo I\u0027m not sure that any of these methods ever return null? Could you\n\n(a) demonstrate them returning null as part of UriTest, or\n(b) check whether it is possible to construct a Part where one of { getEncoded(), getDecoded() } returns \"\" and the other returns null? If that\u0027s possible, then that seems like a potential problem to me? I don\u0027t understand why encode(\"\") or decode(\"\") ever were designed to return null, it seems to me that they should be returning \"\".\n\nThoughts / insights?",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 13
+      },
+      "revId": "853c7a7a52a83ed17105835d5c884b50691697ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
