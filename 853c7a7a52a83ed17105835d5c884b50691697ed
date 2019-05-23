@@ -22,6 +22,30 @@
       "revId": "853c7a7a52a83ed17105835d5c884b50691697ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ae7f2a_6c59b984",
+        "filename": "core/java/android/net/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2019-05-23T14:59:40Z",
+      "side": 1,
+      "message": "My static analysis concurs with Tobias\u0027",
+      "parentUuid": "c9ba9c94_c5ef8a5d",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 13
+      },
+      "revId": "853c7a7a52a83ed17105835d5c884b50691697ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
