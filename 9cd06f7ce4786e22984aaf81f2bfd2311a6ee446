@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4cdc2a8_d9aa8bf5",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1318036
+      },
+      "writtenOn": "2019-05-23T22:37:09Z",
+      "side": 1,
+      "message": "!TextUtils.isEmpty() can be used here",
+      "range": {
+        "startLine": 762,
+        "startChar": 12,
+        "endLine": 762,
+        "endChar": 42
+      },
+      "revId": "9cd06f7ce4786e22984aaf81f2bfd2311a6ee446",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
