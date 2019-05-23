@@ -46,6 +46,30 @@
       "revId": "75025048dbfb459126b1230f43f910a6cae6917a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a039c122_ee13ef29",
+        "filename": "core/java/android/annotation/UnsupportedAppUsage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1059815
+      },
+      "writtenOn": "2019-05-23T01:36:07Z",
+      "side": 1,
+      "message": "Or maybe if it\u0027s not resolvable in the build, it shouldn\u0027t be marked {@link} but just {@code}?",
+      "parentUuid": "21292bf6_8c685a59",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "75025048dbfb459126b1230f43f910a6cae6917a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
