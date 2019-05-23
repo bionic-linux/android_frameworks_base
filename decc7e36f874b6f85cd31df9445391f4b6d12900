@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85f022f5_260ca25d",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-23T03:24:57Z",
+      "side": 1,
+      "message": "we need to store the network for checking connectivity or passing to InetAddressAnswerAccumulator\n\nSo the helper function seems not really useful IMO.",
+      "parentUuid": "be402cd9_16ef7be1",
+      "range": {
+        "startLine": 336,
+        "startChar": 12,
+        "endLine": 336,
+        "endChar": 84
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c3b289b_0b56304f",
         "filename": "core/java/android/net/DnsResolver.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-22T14:28:01Z",
       "side": 1,
       "message": "My initial thought here was that if getDnsNetId fails with EOPNOTSUP then we should use a null netId instead of failing the lookup completely.\n\nHowever, this is a configuration error that occurs when the system is incompatible with the mainline module. Do we have test coverage for query(null, ...) in CTS and in unit tests? If so, then we can probably just prevent this from happening, and leave the code as you have it here.",
+      "range": {
+        "startLine": 338,
+        "startChar": 12,
+        "endLine": 338,
+        "endChar": 88
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cb2cde_65c1e978",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-23T03:24:57Z",
+      "side": 1,
+      "message": "we don\u0027t have that test yet, probably add one?",
+      "parentUuid": "8c3b289b_0b56304f",
       "range": {
         "startLine": 338,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3c078506_2c3fa005",
+        "filename": "core/java/android/net/DnsResolver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-23T03:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cdbbc5_0ea0b27c",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 379,
+        "endChar": 27
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bf5d7de_4a49bebf",
         "filename": "core/java/android/net/util/DnsUtils.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47400945_0768fea2",
+        "filename": "core/java/android/net/util/DnsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-05-23T03:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf5d7de_4a49bebf",
+      "range": {
+        "startLine": 335,
+        "startChar": 34,
+        "endLine": 335,
+        "endChar": 64
+      },
+      "revId": "decc7e36f874b6f85cd31df9445391f4b6d12900",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
