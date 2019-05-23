@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ecc7ab_6e83e0f5",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-23T13:44:03Z",
+      "side": 1,
+      "message": "Do we need this here? We\u0027re moving towards deprecating CONNECTIVITY_INTERNAL completely, and if it\u0027s not strictly necessary I\u0027d prefer not to add this line.",
+      "range": {
+        "startLine": 1577,
+        "startChar": 0,
+        "endLine": 1577,
+        "endChar": 78
+      },
+      "revId": "e7706080c7a60cae37619d4124249f27fc6f3985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
