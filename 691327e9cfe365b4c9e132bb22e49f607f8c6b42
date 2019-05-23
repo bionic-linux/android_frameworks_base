@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533980f6_b2be650b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-23T10:09:26Z",
+      "side": 1,
+      "message": "Is there a reason you put this before we register the receiver for it? If so, perhaps put it before the tetherFilter receiver registration, so that all the receivers are registered together?",
+      "range": {
+        "startLine": 423,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 0
+      },
+      "revId": "691327e9cfe365b4c9e132bb22e49f607f8c6b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
