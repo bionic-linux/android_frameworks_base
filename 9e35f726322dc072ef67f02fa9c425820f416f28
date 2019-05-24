@@ -613,6 +613,30 @@
       "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a013cb_95bf5e10",
+        "filename": "services/net/java/android/net/ipmemorystore/NetworkAttributes.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-24T04:11:27Z",
+      "side": 1,
+      "message": "don\u0027t change this sanity check in the new patch, keep the same as it is.",
+      "parentUuid": "8b37d62b_f5390140",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "9e35f726322dc072ef67f02fa9c425820f416f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
