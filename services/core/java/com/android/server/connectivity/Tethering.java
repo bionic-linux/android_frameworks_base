@@ -1439,7 +1439,11 @@ public class Tethering extends BaseNetworkObserver {
                         IpServer who = (IpServer) message.obj;
                         if (VDBG) Log.d(TAG, "Tether Mode unrequested by " + who);
                         handleInterfaceServingStateInactive(who);
-
+                        if (who.interfaceType() == TETHERING_WIFI
+                                && who.lastError() == TETHER_ERROR_NO_ERROR) {
+                            getWifiManager().updateInterfaceIpState(
+                                    who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED);
+                        }
                         if (mNotifyList.isEmpty()) {
                             // This transitions us out of TetherModeAliveState,
                             // either to InitialState or an error state.
