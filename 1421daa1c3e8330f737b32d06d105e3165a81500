@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c887b9_081e2aa8",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 0,
+      "message": "Why remove this ?",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 37
+      },
+      "revId": "1421daa1c3e8330f737b32d06d105e3165a81500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

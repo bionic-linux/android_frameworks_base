@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "265d9655_ec4b6eae",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 1,
+      "message": "Let\u0027s just say EVENT_CONFIGURATION_*",
+      "range": {
+        "startLine": 842,
+        "startChar": 39,
+        "endLine": 842,
+        "endChar": 76
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7626b28_576a2d6d",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 1,
+      "message": "Wait, why ? You are ignoring the passed argument, and accepting absolutely anything at all in the attributes.\n\nI understand you might need something else than eq(attributes), but this is far too permissive to be a useful test.",
+      "range": {
+        "startLine": 170,
+        "startChar": 65,
+        "endLine": 170,
+        "endChar": 68
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0ce5ed_b0729e13",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 1,
+      "message": "Can we not duplicate this code please ?",
+      "range": {
+        "startLine": 173,
+        "startChar": 17,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

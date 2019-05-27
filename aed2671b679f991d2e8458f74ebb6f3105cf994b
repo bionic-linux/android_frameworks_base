@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "1e9d09fd_8dba2e60",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 1,
+      "message": "I don\u0027t see how that follows. Whether you call this in l.1117 or not, this code should be fixed.",
+      "parentUuid": "6d9731b3_ac5e516c",
+      "range": {
+        "startLine": 1276,
+        "startChar": 0,
+        "endLine": 1278,
+        "endChar": 45
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eda3a74d_ee54eee0",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 15
@@ -307,6 +331,30 @@
       "side": 1,
       "message": "This is incorrect. Noticed this error when running unit test. Removed.",
       "parentUuid": "a6a9f573_5b8ad855",
+      "range": {
+        "startLine": 251,
+        "startChar": 9,
+        "endLine": 253,
+        "endChar": 9
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3118228_856b9065",
+        "filename": "packages/NetworkStack/src/com/android/server/connectivity/ipmemorystore/IpMemoryStoreDatabase.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T09:01:53Z",
+      "side": 1,
+      "message": "Oh, so I *did* write these tests :) Good, thanks.",
+      "parentUuid": "a1798cb5_500be9fb",
       "range": {
         "startLine": 251,
         "startChar": 9,
