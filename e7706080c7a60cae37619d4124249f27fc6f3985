@@ -22,6 +22,30 @@
       "revId": "e7706080c7a60cae37619d4124249f27fc6f3985",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3b079d_8cc843c6",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-27T07:38:45Z",
+      "side": 1,
+      "message": "No, CONNECTIVITY_USE_RESTRICTED_NETWORKS is enough. Removed.",
+      "parentUuid": "41ecc7ab_6e83e0f5",
+      "range": {
+        "startLine": 1577,
+        "startChar": 0,
+        "endLine": 1577,
+        "endChar": 78
+      },
+      "revId": "e7706080c7a60cae37619d4124249f27fc6f3985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
