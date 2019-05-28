@@ -1973,4 +1973,20 @@ interface ITelephony {
     boolean isDataEnabledForApn(int apnType, int subId, String callingPackage);
 
     boolean isApnMetered(int apnType, int subId);
+
+    /**
+     * Enqueue a pending sms Consumer, which will answer with the user specified selection for an
+     * outgoing SmsManager operation.
+     */
+    oneway void enqueueSmsPickResult(String callingPackage, IIntegerConsumer subIdResult);
+
+    /**
+     * Returns the MMS user agent.
+     */
+    String getMmsUserAgent(int subId);
+
+    /**
+     * Returns the MMS user agent profile URL.
+     */
+    String getMmsUAProfUrl(int subId);
 }
