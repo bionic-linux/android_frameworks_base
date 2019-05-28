@@ -22,6 +22,98 @@
       "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c01d2081_09969309",
+        "filename": "packages/NetworkStack/tests/lib/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-28T12:44:12Z",
+      "side": 1,
+      "message": "Some email a while back mentions that mockito-target-extended requires JNI libs libdexmakerjvmtiagent and libstaticjvmtiagent, maybe they should be added here ? Not sure if having JNI libs in this shared lib could create issues (probably fine as long as it compiles and everything passes ?)\nWe have some tests (FrameworksNetTests in particular) that don\u0027t use extended mockito, so this change may change some test behavior as final stuff that was not mocked will now be mocked. Not a problem if all passes though, but I don\u0027t know which lib will end up being used in the end, since FrameworksNetTests still includes mockito-target-minus-junit4.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737b956f_66933768",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-28T12:44:12Z",
+      "side": 1,
+      "message": "Nit: the error message could be standardized with the format below (so including the timeout)",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e258c11_6bb28707",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-28T12:44:12Z",
+      "side": 1,
+      "message": "Just curious: is it possible to use cv::open like above here too ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79f2250f_21275cec",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-05-28T12:44:12Z",
+      "side": 1,
+      "message": "The toString() method for ThreadPoolExecutor looks pretty big, how about just \"The executor\" ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
