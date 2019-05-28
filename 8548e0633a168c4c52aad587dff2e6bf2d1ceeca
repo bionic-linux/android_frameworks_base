@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06b55db_96df5137",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T09:14:12Z",
+      "side": 1,
+      "message": "Architecturally, this lib could be in many places.\n\nThe reason we decided to put it under the NetworkStack directory is to give us a maximum of control on this, as well as minimizing the number of cases where we\u0027ll have to use topics. Framework test code can depend on this and should continue to be able to depend on this when the mainline modules move to a separate gerrit project. Initially as more of our code is in frameworks/base this may lead to more topics, but we want to move as much stuff to the network stack as we can going forward anyway.",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
