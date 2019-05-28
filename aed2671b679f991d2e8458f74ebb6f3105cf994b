@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "3a4522cb_89a2a048",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-28T04:49:32Z",
+      "side": 1,
+      "message": "Done.Add \"LeaseExpiry\" element in DhcpResults class, use this element instead.",
+      "parentUuid": "1e9d09fd_8dba2e60",
+      "range": {
+        "startLine": 1276,
+        "startChar": 0,
+        "endLine": 1278,
+        "endChar": 45
+      },
+      "revId": "aed2671b679f991d2e8458f74ebb6f3105cf994b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda3a74d_ee54eee0",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 15

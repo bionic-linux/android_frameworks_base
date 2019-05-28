@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc5efc40_1b9748c6",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-28T04:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "265d9655_ec4b6eae",
+      "range": {
+        "startLine": 842,
+        "startChar": 39,
+        "endLine": 842,
+        "endChar": 76
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7626b28_576a2d6d",
         "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ec0eee7c_d14f293e",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-28T04:49:32Z",
+      "side": 1,
+      "message": "changed to eq(attributes) after we add leaseExpiry field in the DhcpResults class.",
+      "parentUuid": "f7626b28_576a2d6d",
+      "range": {
+        "startLine": 170,
+        "startChar": 65,
+        "endLine": 170,
+        "endChar": 68
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0ce5ed_b0729e13",
         "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9525685_c236c922",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-28T04:49:32Z",
+      "side": 1,
+      "message": "Moved to tests/lib common place and compile as library, which is also available for other unit test.",
+      "parentUuid": "0e0ce5ed_b0729e13",
+      "range": {
+        "startLine": 173,
+        "startChar": 17,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "9b4e16b0375cdef0d93172c783ca200a58c2a5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
