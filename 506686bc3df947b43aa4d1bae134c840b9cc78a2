@@ -22,6 +22,30 @@
       "revId": "506686bc3df947b43aa4d1bae134c840b9cc78a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a292d9_12f33acd",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T09:37:54Z",
+      "side": 1,
+      "message": "It is safe as far as I can tell. PermissionMonitor is not a system service ; it is merely an abstraction of a behavior that is used by ConnectivityService. Its responsibilities include keeping track of stuff, which has no side effects, and keeping netd up-to-date, which is the dangerous part. This test is expleting this by passing a mock for the netd service handle.\n\nThat being said, the above need not stay true in principle. If the implementation of PermissionMonitor starts having side effects on the passed context then this test may have observable non-hermetic effects on the device. The test app does have a few scary permissions like WRITE_SECURE_SETTINGS and NETWORK_STACK, and it certainly can happen that in the future just creating an instance of PermissionMonitor might be change to have side effects. \n\nThat being said, the worst that can happen is this test puts the device in a bad state. I think we\u0027d find out about this reasonably quickly. Therefore for the time being, I think it\u0027s fine keeping this.\n\nGoing forward, mitigation strategies may include cutting out a dependencies object for PermissionMonitor and gate everything to a mock except the few methods that are really needed here.",
+      "parentUuid": "8cbe9b22_8132fee8",
+      "range": {
+        "startLine": 659,
+        "startChar": 42,
+        "endLine": 659,
+        "endChar": 63
+      },
+      "revId": "506686bc3df947b43aa4d1bae134c840b9cc78a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
