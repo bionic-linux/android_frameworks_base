@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "69bb159c_bc2de415",
+        "filename": "packages/NetworkStack/tests/lib/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T13:35:27Z",
+      "side": 1,
+      "message": "Actually this is not needed (at this point yet at least) and I prefer to have as few external dependencies as possible in this lib, so removed.",
+      "parentUuid": "c01d2081_09969309",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "737b956f_66933768",
         "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "27ef76ca_15c44e66",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T13:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "737b956f_66933768",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e258c11_6bb28707",
         "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
         "patchSetId": 1
@@ -82,6 +130,30 @@
       "writtenOn": "2019-05-28T12:44:12Z",
       "side": 1,
       "message": "Just curious: is it possible to use cv::open like above here too ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da539ba0_73441e6f",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T13:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e258c11_6bb28707",
       "range": {
         "startLine": 46,
         "startChar": 20,
@@ -114,6 +186,30 @@
       "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9f595b_922fb99d",
+        "filename": "packages/NetworkStack/tests/lib/src/com/android/testutils/HandlerUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T13:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f2250f_21275cec",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "8548e0633a168c4c52aad587dff2e6bf2d1ceeca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
