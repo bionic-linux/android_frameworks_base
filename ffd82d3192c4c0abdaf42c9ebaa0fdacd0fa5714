@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2aaf25_dbe5e98e",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:59:02Z",
+      "side": 1,
+      "message": "I said _* because it\u0027s also true of _TIMEOUT :)",
+      "range": {
+        "startLine": 842,
+        "startChar": 60,
+        "endLine": 842,
+        "endChar": 98
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50f18fe_089495d6",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:59:02Z",
+      "side": 1,
+      "message": "Maybe we only want to do this when mDhcpResults.ipAddress is not null",
+      "range": {
+        "startLine": 1285,
+        "startChar": 11,
+        "endLine": 1285,
+        "endChar": 37
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8d5bb5_b7c3cb33",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-28T11:59:02Z",
+      "side": 1,
+      "message": "Good, now how about adding a test for an infinite lease, and a test for no lease ?",
+      "range": {
+        "startLine": 302,
+        "startChar": 16,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
