@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbe9b22_8132fee8",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-05-28T08:18:21Z",
+      "side": 1,
+      "message": "Is it safe to create a PermissionMonitor using the real context? Will it perform dangerous operations on the system, e.g., by interacting with real system services?",
+      "range": {
+        "startLine": 659,
+        "startChar": 42,
+        "endLine": 659,
+        "endChar": 63
+      },
+      "revId": "506686bc3df947b43aa4d1bae134c840b9cc78a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
