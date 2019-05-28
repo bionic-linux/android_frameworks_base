@@ -5,11 +5,9 @@ cc_binary {
 
     multilib: {
         lib32: {
-            version_script: ":art_sigchain_version_script32.txt",
             suffix: "32",
         },
         lib64: {
-            version_script: ":art_sigchain_version_script64.txt",
             suffix: "64",
         },
     },
@@ -32,8 +30,6 @@ cc_binary {
         // See b/21032018 for more details.
         "libwilhelm",
     ],
-
-    whole_static_libs: ["libsigchain"],
 
     compile_multilib: "both",
 
