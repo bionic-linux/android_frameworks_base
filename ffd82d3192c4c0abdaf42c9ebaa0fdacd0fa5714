@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb97b419_1e7bf70e",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-29T01:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2aaf25_dbe5e98e",
+      "range": {
+        "startLine": 842,
+        "startChar": 60,
+        "endLine": 842,
+        "endChar": 98
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b50f18fe_089495d6",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "89c87c40_46e6ae53",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-29T01:55:34Z",
+      "side": 1,
+      "message": "Yes, should also move this line to if() statement.",
+      "parentUuid": "b50f18fe_089495d6",
+      "range": {
+        "startLine": 1285,
+        "startChar": 11,
+        "endLine": 1285,
+        "endChar": 37
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8d5bb5_b7c3cb33",
         "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9ce6c8_b655a750",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-29T01:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8d5bb5_b7c3cb33",
+      "range": {
+        "startLine": 302,
+        "startChar": 16,
+        "endLine": 302,
+        "endChar": 40
+      },
+      "revId": "ffd82d3192c4c0abdaf42c9ebaa0fdacd0fa5714",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
