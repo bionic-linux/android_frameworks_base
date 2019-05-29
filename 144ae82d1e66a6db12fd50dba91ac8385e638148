@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90aee273_78168a8c",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T12:25:17Z",
+      "side": 1,
+      "message": "Yeah but sorry it is still true of _OBTAINED and _INVALID. I really think the simplest is to say\n\n  // Ignore any stale EVENT_CONFIGURATION_* message with this sequence number.",
+      "range": {
+        "startLine": 842,
+        "startChar": 60,
+        "endLine": 842,
+        "endChar": 67
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88551256_c05d8027",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T12:25:17Z",
+      "side": 1,
+      "message": "This is the same code as above with the exception of the value you pass to leaseExpiry. Can you just make a helper method that contains this code and takes the expiry as an argument ?\n\nThen you can call it once with System.currentTimeMillis() + 3_600_000, once with Long.MAX_VALUE and once with null.",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 53
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f686bb1d_9a6abb3d",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T12:25:17Z",
+      "side": 1,
+      "message": "Is it expected to have a duration of 3600 and an expiry of Long.MAX_VALUE ? I think makeDhcpResult should try and get close to real usage, where you pass only the duration and the expiry is deduced automatically.",
+      "range": {
+        "startLine": 362,
+        "startChar": 28,
+        "endLine": 362,
+        "endChar": 32
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
