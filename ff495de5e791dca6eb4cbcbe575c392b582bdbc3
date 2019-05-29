@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66d2008f_889be86c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T09:51:07Z",
+      "side": 1,
+      "message": "overridden",
+      "range": {
+        "startLine": 487,
+        "startChar": 72,
+        "endLine": 487,
+        "endChar": 81
+      },
+      "revId": "ff495de5e791dca6eb4cbcbe575c392b582bdbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbdac20_ac8f0b7c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-05-29T09:51:07Z",
+      "side": 1,
+      "message": "Yes, apparently shouldOverrideUrlLoading(WebView, String) is not called any more, except by the default implementation of shouldOverrideUrlLoading(WebView, WebResourceRequest). We should delete it and inline it here.",
+      "range": {
+        "startLine": 489,
+        "startChar": 15,
+        "endLine": 489,
+        "endChar": 45
+      },
+      "revId": "ff495de5e791dca6eb4cbcbe575c392b582bdbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
