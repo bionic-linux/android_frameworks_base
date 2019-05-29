@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2a4c21d_1af12c8c",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-05-29T10:11:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66d2008f_889be86c",
+      "range": {
+        "startLine": 487,
+        "startChar": 72,
+        "endLine": 487,
+        "endChar": 81
+      },
+      "revId": "ff495de5e791dca6eb4cbcbe575c392b582bdbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dbdac20_ac8f0b7c",
         "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-05-29T09:51:07Z",
       "side": 1,
       "message": "Yes, apparently shouldOverrideUrlLoading(WebView, String) is not called any more, except by the default implementation of shouldOverrideUrlLoading(WebView, WebResourceRequest). We should delete it and inline it here.",
+      "range": {
+        "startLine": 489,
+        "startChar": 15,
+        "endLine": 489,
+        "endChar": 45
+      },
+      "revId": "ff495de5e791dca6eb4cbcbe575c392b582bdbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ccc8cd_90a8006a",
+        "filename": "packages/CaptivePortalLogin/src/com/android/captiveportallogin/CaptivePortalLoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-05-29T10:11:13Z",
+      "side": 1,
+      "message": "Agree that we should delete deprecated one and inline it here. I have talked with Lorenzo in person about this. It would be more safe that still keep deprecated one in this stage.",
+      "parentUuid": "2dbdac20_ac8f0b7c",
       "range": {
         "startLine": 489,
         "startChar": 15,
