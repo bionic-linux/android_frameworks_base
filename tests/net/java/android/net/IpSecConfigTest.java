@@ -16,12 +16,11 @@
 
 package android.net;
 
+import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import android.os.Parcel;
 
 import androidx.test.filters.SmallTest;
 
@@ -89,23 +88,15 @@ public class IpSecConfigTest {
         IpSecConfig original = getSampleConfig();
         IpSecConfig copy = new IpSecConfig(original);
 
-        assertTrue(IpSecConfig.equals(original, copy));
+        assertEquals(original, copy);
         assertFalse(original == copy);
     }
 
     @Test
-    public void testParcelUnparcel() throws Exception {
+    public void testParcelUnparcel() {
         assertParcelingIsLossless(new IpSecConfig());
 
         IpSecConfig c = getSampleConfig();
         assertParcelingIsLossless(c);
-    }
-
-    private void assertParcelingIsLossless(IpSecConfig ci) throws Exception {
-        Parcel p = Parcel.obtain();
-        ci.writeToParcel(p, 0);
-        p.setDataPosition(0);
-        IpSecConfig co = IpSecConfig.CREATOR.createFromParcel(p);
-        assertTrue(IpSecConfig.equals(co, ci));
     }
 }
