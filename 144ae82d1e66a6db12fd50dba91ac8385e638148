@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7b1ad89_1a7da104",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-30T08:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90aee273_78168a8c",
+      "range": {
+        "startLine": 842,
+        "startChar": 60,
+        "endLine": 842,
+        "endChar": 67
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88551256_c05d8027",
         "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f968716b_56e1800c",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-30T08:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88551256_c05d8027",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 53
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f686bb1d_9a6abb3d",
         "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
         "patchSetId": 19
@@ -68,6 +116,30 @@
       "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b0b36b_3d853c83",
+        "filename": "packages/NetworkStack/tests/unit/src/android/net/ip/IpClientTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-05-30T08:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f686bb1d_9a6abb3d",
+      "range": {
+        "startLine": 362,
+        "startChar": 28,
+        "endLine": 362,
+        "endChar": 32
+      },
+      "revId": "144ae82d1e66a6db12fd50dba91ac8385e638148",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
