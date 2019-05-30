@@ -155,8 +155,7 @@ public final class IpSecTransform implements AutoCloseable {
     @VisibleForTesting
     public static boolean equals(IpSecTransform lhs, IpSecTransform rhs) {
         if (lhs == null || rhs == null) return (lhs == rhs);
-        return IpSecConfig.equals(lhs.getConfig(), rhs.getConfig())
-                && lhs.mResourceId == rhs.mResourceId;
+        return lhs.getConfig().equals(rhs.getConfig()) && lhs.mResourceId == rhs.mResourceId;
     }
 
     /**

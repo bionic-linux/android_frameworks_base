@@ -1,16 +1,16 @@
 package android.net.metrics
 
-import android.net.metrics.DhcpErrorEvent.errorCodeWithOption
 import android.net.metrics.DhcpErrorEvent.DHCP_INVALID_OPTION_LENGTH
+import android.net.metrics.DhcpErrorEvent.errorCodeWithOption
 import androidx.test.filters.SmallTest
 import androidx.test.runner.AndroidJUnit4
-import com.android.internal.util.TestUtils.parcelingRoundTrip
-import java.lang.reflect.Modifier
+import com.android.testutils.parcelingRoundTrip
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.reflect.Modifier
 
 private const val TEST_ERROR_CODE = 12345
 //DHCP Optional Type: DHCP Subnet Mask (Copy from DhcpPacket.java due to it's protected)
