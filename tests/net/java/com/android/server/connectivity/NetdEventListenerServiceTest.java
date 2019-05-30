@@ -19,8 +19,9 @@ package com.android.server.connectivity;
 import static android.net.metrics.INetdEventListener.EVENT_GETADDRINFO;
 import static android.net.metrics.INetdEventListener.EVENT_GETHOSTBYNAME;
 
+import static com.android.testutils.MoreAssertsKt.assertContains;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -527,10 +528,6 @@ public class NetdEventListenerServiceTest {
         PrintWriter writer = new PrintWriter(buffer);
         mService.list(writer);
         return buffer.toString().split("\\n");
-    }
-
-    static void assertContains(String got, String want) {
-        assertTrue(got + " did not contain \"" + want + "\"", got.contains(want));
     }
 
     static <T> T[] remove(T[] array, T[] filtered) {
