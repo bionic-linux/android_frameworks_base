@@ -16,6 +16,9 @@
 
 package android.net;
 
+import static com.android.testutils.MoreAssertsKt.assertLinkPropertiesEqual;
+import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -30,8 +33,6 @@ import android.util.ArraySet;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
-
-import com.android.internal.util.TestUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -121,49 +122,6 @@ public class LinkPropertiesTest {
         lp.setTcpBufferSizes(TCP_BUFFER_SIZES);
         lp.setNat64Prefix(new IpPrefix("2001:db8:0:64::/96"));
         return lp;
-    }
-
-    public void assertLinkPropertiesEqual(LinkProperties source, LinkProperties target) {
-        // Check implementation of equals(), element by element.
-        assertTrue(source.isIdenticalInterfaceName(target));
-        assertTrue(target.isIdenticalInterfaceName(source));
-
-        assertTrue(source.isIdenticalAddresses(target));
-        assertTrue(target.isIdenticalAddresses(source));
-
-        assertTrue(source.isIdenticalDnses(target));
-        assertTrue(target.isIdenticalDnses(source));
-
-        assertTrue(source.isIdenticalPrivateDns(target));
-        assertTrue(target.isIdenticalPrivateDns(source));
-
-        assertTrue(source.isIdenticalValidatedPrivateDnses(target));
-        assertTrue(target.isIdenticalValidatedPrivateDnses(source));
-
-        assertTrue(source.isIdenticalPcscfs(target));
-        assertTrue(target.isIdenticalPcscfs(source));
-
-        assertTrue(source.isIdenticalRoutes(target));
-        assertTrue(target.isIdenticalRoutes(source));
-
-        assertTrue(source.isIdenticalHttpProxy(target));
-        assertTrue(target.isIdenticalHttpProxy(source));
-
-        assertTrue(source.isIdenticalStackedLinks(target));
-        assertTrue(target.isIdenticalStackedLinks(source));
-
-        assertTrue(source.isIdenticalMtu(target));
-        assertTrue(target.isIdenticalMtu(source));
-
-        assertTrue(source.isIdenticalTcpBufferSizes(target));
-        assertTrue(target.isIdenticalTcpBufferSizes(source));
-
-        // Check result of equals().
-        assertTrue(source.equals(target));
-        assertTrue(target.equals(source));
-
-        // Check hashCode.
-        assertEquals(source.hashCode(), target.hashCode());
     }
 
     @Test
@@ -942,13 +900,13 @@ public class LinkPropertiesTest {
 
         source.setNat64Prefix(new IpPrefix("2001:db8:1:2:64:64::/96"));
 
-        TestUtils.assertParcelingIsLossless(source);
+        assertParcelingIsLossless(source);
     }
 
     @Test
     public void testParcelUninitialized() throws Exception {
         LinkProperties empty = new LinkProperties();
-        TestUtils.assertParcelingIsLossless(empty);
+        assertParcelingIsLossless(empty);
     }
 
     @Test
