@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd5bbfe_5d917d13",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-03T08:05:10Z",
+      "side": 1,
+      "message": "Does this import sort correctly? As I remembered, style guide says ascii-sorted imports.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26624a8f_0c76c7ad",
+        "filename": "tests/net/common/java/android/net/metrics/ValidationProbeEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-03T08:05:10Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
