@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361a0c1c_ac4ae540",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T14:41:10Z",
+      "side": 0,
+      "message": "IIRC this was very much intentional.\n\nThe idea was that if the connectivity code tried to send a keepalive through a NetworkAgent that had not overridden addKeepalivePacketFilter (such as Ethernet, bluetooth tethering, ...), then it would get an error. That error would then go to the user callback object, which would call onError. Without this line of code, the error would just never happen and the user would never get either onStarted or onError.\n\nIs this code really not necessary any more?",
+      "range": {
+        "startLine": 513,
+        "startChar": 8,
+        "endLine": 513,
+        "endChar": 76
+      },
+      "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

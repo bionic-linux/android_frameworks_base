@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3b60ab5_d86c47bc",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T14:41:10Z",
+      "side": 1,
+      "message": "Prefer InetAddresses.parseNumericAddress.",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 61
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989dd13e_7b5b1059",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T14:41:10Z",
+      "side": 1,
+      "message": "This can throw IllegalArgumentException. What should we do here? Ignore it and write an address of InetAddress.getLoopbackAddress()? Something else?",
+      "range": {
+        "startLine": 102,
+        "startChar": 41,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e5f0ff_2b4867f4",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T14:41:10Z",
+      "side": 1,
+      "message": "Is it safe to return null from createFromParcel? Are there other creators that do this?",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
