@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "9df21516_b7a0b010",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T09:43:41Z",
+      "side": 1,
+      "message": "Per in-person, move the code in setLeaseExpiredToIpMemoryStore to here?",
+      "range": {
+        "startLine": 521,
+        "startChar": 33,
+        "endLine": 521,
+        "endChar": 34
+      },
+      "revId": "9a542d97b786522e19a5b45781ee39ed03ba3ee1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becf0877_7fda63b7",
+        "filename": "packages/NetworkStack/src/android/net/dhcp/DhcpClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T09:43:41Z",
+      "side": 1,
+      "message": "Per in-person, maybe write to the IP memory store here? In other words, move the code currently in IpClient#maybeSaveLeaseToIpMemoryStore to here? Or to BoundState#enter? Or in notifySuccess?",
+      "range": {
+        "startLine": 541,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 24
+      },
+      "revId": "9a542d97b786522e19a5b45781ee39ed03ba3ee1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17b122aa_b373bee5",
         "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
         "patchSetId": 20
