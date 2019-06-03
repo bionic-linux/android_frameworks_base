@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e59c6e_e2e38a10",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T08:57:24Z",
+      "side": 1,
+      "message": "Per in-person, let\u0027s not make any changes to frameworks/base/core but restrict changes only to the module.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 0
+      },
+      "revId": "9a542d97b786522e19a5b45781ee39ed03ba3ee1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b122aa_b373bee5",
+        "filename": "packages/NetworkStack/src/android/net/ip/IpClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-03T08:57:24Z",
+      "side": 1,
+      "message": "handleIPv4Success can happen on renew as well as on initial connect. Is it possible that mConfiguration has changed since the network connected? Or that mConfiguration.mStaticIpConfig has changed?",
+      "range": {
+        "startLine": 1142,
+        "startChar": 8,
+        "endLine": 1142,
+        "endChar": 53
+      },
+      "revId": "9a542d97b786522e19a5b45781ee39ed03ba3ee1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
