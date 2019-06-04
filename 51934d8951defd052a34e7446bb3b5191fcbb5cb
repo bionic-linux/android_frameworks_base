@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "58947456_ce8e31cc",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-04T10:02:38Z",
+      "side": 1,
+      "message": "Per VC meeting: ignore and just let the exception go back to the caller?",
+      "parentUuid": "989dd13e_7b5b1059",
+      "range": {
+        "startLine": 102,
+        "startChar": 41,
+        "endLine": 102,
+        "endChar": 61
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3e5f0ff_2b4867f4",
         "filename": "core/java/android/net/NattKeepalivePacketData.java",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "No, but not sure how to properly handle this case.\nMaybe define an static EMPTY object and return it here?",
       "parentUuid": "c3e5f0ff_2b4867f4",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ba6058_2664c14c",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-04T10:02:38Z",
+      "side": 1,
+      "message": "Per VC meeting: throw new IllegalArgumentException(\"Invalid NAT-T keepalive data\");",
+      "parentUuid": "f89a6fdc_8baf125f",
       "range": {
         "startLine": 109,
         "startChar": 24,
