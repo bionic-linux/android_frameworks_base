@@ -68,6 +68,30 @@
       "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89a6fdc_8baf125f",
+        "filename": "core/java/android/net/NattKeepalivePacketData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T02:47:12Z",
+      "side": 1,
+      "message": "No, but not sure how to properly handle this case.\nMaybe define an static EMPTY object and return it here?",
+      "parentUuid": "c3e5f0ff_2b4867f4",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "51934d8951defd052a34e7446bb3b5191fcbb5cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

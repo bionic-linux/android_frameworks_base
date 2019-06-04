@@ -22,6 +22,30 @@
       "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d36c53_8b185494",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T02:47:12Z",
+      "side": 0,
+      "message": "IIUC, we do not check the result of calling it. And we keep invoking subsequent start keepalive process: https://cs.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/KeepaliveTracker.java?q\u003dKeepaliveTracker\u0026dr\u003dCSs\u0026l\u003d329.\nThus, without this error, user will still get callback when startSocketKeepalive started or failed, right?\nCurrently, this line is misinterpreted by KeepaliveTracker that start keepalive is failing while we just don\u0027t support APF for telephony.\nMaybe we need a proper mechanism to report error from APF and stop subsequent process of starting keepalive. See b/123985919\nAny thoughts?",
+      "parentUuid": "361a0c1c_ac4ae540",
+      "range": {
+        "startLine": 513,
+        "startChar": 8,
+        "endLine": 513,
+        "endChar": 76
+      },
+      "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
