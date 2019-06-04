@@ -30,13 +30,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.platform.helpers.IAppHelper;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.Until;
 import android.util.Rational;
 import android.view.Surface;
+
+import androidx.test.InstrumentationRegistry;
 
 import com.android.server.wm.flicker.TransitionRunner.TransitionBuilder;
 
@@ -214,10 +215,10 @@ class CommonTransitions {
 
     static TransitionBuilder resizeSplitScreen(IAppHelper testAppTop, IAppHelper testAppBottom,
             UiDevice device, Rational startRatio, Rational stopRatio) {
-        String testTag = "resizeSplitScreen_" + testAppTop.getLauncherName() + "_" +
-                testAppBottom.getLauncherName() + "_" +
-                startRatio.toString().replace("/", ":") + "_to_" +
-                stopRatio.toString().replace("/", ":");
+        String testTag = "resizeSplitScreen_" + testAppTop.getLauncherName() + "_"
+                + testAppBottom.getLauncherName() + "_"
+                + startRatio.toString().replace("/", ":") + "_to_"
+                + stopRatio.toString().replace("/", ":");
         return TransitionRunner.newBuilder()
                 .withTag(testTag)
                 .runBeforeAll(AutomationUtils::wakeUpAndGoToHomeScreen)
@@ -229,7 +230,7 @@ class CommonTransitions {
                 .runBefore(() -> launchSplitScreen(device))
                 .runBefore(() -> {
                     UiObject2 snapshot = device.findObject(
-                            By.res("com.google.android.apps.nexuslauncher", "snapshot"));
+                            By.res(device.getLauncherPackageName(), "snapshot"));
                     snapshot.click();
                 })
                 .runBefore(() -> AutomationUtils.resizeSplitScreen(device, startRatio))
