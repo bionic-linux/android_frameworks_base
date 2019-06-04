@@ -49,11 +49,11 @@ class WindowUtils {
         Rect displayBounds = getDisplayBounds();
         int currentDisplayRotation = getCurrentRotation();
 
-        boolean displayIsRotated = (currentDisplayRotation == Surface.ROTATION_90 ||
-                currentDisplayRotation == Surface.ROTATION_270);
+        boolean displayIsRotated = (currentDisplayRotation == Surface.ROTATION_90
+                || currentDisplayRotation == Surface.ROTATION_270);
 
-        boolean requestedDisplayIsRotated = requestedRotation == Surface.ROTATION_90 ||
-                requestedRotation == Surface.ROTATION_270;
+        boolean requestedDisplayIsRotated = requestedRotation == Surface.ROTATION_90
+                || requestedRotation == Surface.ROTATION_270;
 
         // if the current orientation changes with the requested rotation,
         // flip height and width of display bounds.
@@ -69,11 +69,11 @@ class WindowUtils {
         Rect displayBounds = getDisplayBounds();
         int currentDisplayRotation = getCurrentRotation();
 
-        boolean displayIsRotated = currentDisplayRotation == Surface.ROTATION_90 ||
-                currentDisplayRotation == Surface.ROTATION_270;
+        boolean displayIsRotated = currentDisplayRotation == Surface.ROTATION_90
+                || currentDisplayRotation == Surface.ROTATION_270;
 
-        boolean requestedAppIsRotated = requestedRotation == Surface.ROTATION_90 ||
-                requestedRotation == Surface.ROTATION_270;
+        boolean requestedAppIsRotated = requestedRotation == Surface.ROTATION_90
+                || requestedRotation == Surface.ROTATION_270;
 
         // display size will change if the display is reflected. Flip height and width of app if the
         // requested rotation is different from the current rotation.

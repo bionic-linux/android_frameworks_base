@@ -3,7 +3,7 @@
  * Copyright 2018 Google Inc. All Rights Reserved.
  -->
 <configuration description="Config for WindowManager Flicker Tests">
-    <target_preparer class="com.google.android.tradefed.targetprep.GoogleDeviceSetup">
+    <target_preparer class="com.android.tradefed.targetprep.DeviceSetup">
         <!-- keeps the screen on during tests -->
         <option name="screen-always-on" value="on" />
         <!-- prevents the phone from restarting -->

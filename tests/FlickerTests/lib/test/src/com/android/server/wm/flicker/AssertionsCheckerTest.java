@@ -18,9 +18,14 @@ package com.android.server.wm.flicker;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import com.android.server.wm.flicker.Assertions.Result;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,8 @@ import java.util.List;
  * Contains {@link AssertionsChecker} tests.
  * To run this test: {@code atest FlickerLibTest:AssertionsCheckerTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AssertionsCheckerTest {
 
     /**
@@ -157,25 +164,25 @@ public class AssertionsCheckerTest {
     }
 
     static class SimpleEntry implements ITraceEntry {
-        long timestamp;
-        int data;
+        long mTimestamp;
+        int mData;
 
         SimpleEntry(long timestamp, int data) {
-            this.timestamp = timestamp;
-            this.data = data;
+            this.mTimestamp = timestamp;
+            this.mData = data;
         }
 
         @Override
         public long getTimestamp() {
-            return timestamp;
+            return mTimestamp;
         }
 
         Result isData42() {
-            return new Result(this.data == 42, this.timestamp, "is42", "");
+            return new Result(this.mData == 42, this.mTimestamp, "is42", "");
         }
 
         Result isData0() {
-            return new Result(this.data == 0, this.timestamp, "is42", "");
+            return new Result(this.mData == 0, this.mTimestamp, "is42", "");
         }
     }
 }
