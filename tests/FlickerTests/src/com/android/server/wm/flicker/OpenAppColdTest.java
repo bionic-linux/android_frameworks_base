@@ -20,13 +20,15 @@ import static com.android.server.wm.flicker.CommonTransitions.getOpenAppCold;
 import static com.android.server.wm.flicker.WindowUtils.getDisplayBounds;
 import static com.android.server.wm.flicker.WmTraceSubject.assertThat;
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test cold launch app from launcher.
@@ -34,16 +36,17 @@ import org.junit.runner.RunWith;
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OpenAppColdTest extends FlickerTestBase {
 
     public OpenAppColdTest() {
-        this.testApp = new StandardAppHelper(InstrumentationRegistry.getInstrumentation(),
+        this.mTestApp = new StandardAppHelper(InstrumentationRegistry.getInstrumentation(),
                 "com.android.server.wm.flicker.testapp", "SimpleApp");
     }
 
     @Before
     public void runTransition() {
-        super.runTransition(getOpenAppCold(testApp, uiDevice).build());
+        super.runTransition(getOpenAppCold(mTestApp, mUiDevice).build());
     }
 
     @Test
@@ -73,7 +76,7 @@ public class OpenAppColdTest extends FlickerTestBase {
                 .showsAppWindowOnTop(
                         "com.google.android.apps.nexuslauncher/.NexusLauncherActivity")
                 .then()
-                .showsAppWindowOnTop(testApp.getPackage())
+                .showsAppWindowOnTop(mTestApp.getPackage())
                 .forAllEntries());
     }
 
