@@ -21,13 +21,18 @@ import static com.android.server.wm.nano.WindowManagerTraceFileProto.MAGIC_NUMBE
 
 import static com.google.common.truth.Truth.assertThat;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import com.android.server.wm.nano.WindowManagerTraceFileProto;
 
 import com.google.common.io.Files;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.io.File;
 
@@ -35,6 +40,8 @@ import java.io.File;
  * Contains {@link WindowManagerTraceMonitor} tests.
  * To run this test: {@code atest FlickerLibTest:WindowManagerTraceMonitorTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WindowManagerTraceMonitorTest {
     private WindowManagerTraceMonitor mWindowManagerTraceMonitor;
 

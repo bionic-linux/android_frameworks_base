@@ -350,8 +350,8 @@ public class LayersTrace {
         }
 
         boolean isVisible() {
-            return (!isActiveBufferEmpty() || isColorLayer()) &&
-                    !isHidden() && this.mProto.color.a > 0 && !isVisibleRegionEmpty();
+            return (!isActiveBufferEmpty() || isColorLayer())
+                    && !isHidden() && this.mProto.color.a > 0 && !isVisibleRegionEmpty();
         }
 
         boolean isColorLayer() {

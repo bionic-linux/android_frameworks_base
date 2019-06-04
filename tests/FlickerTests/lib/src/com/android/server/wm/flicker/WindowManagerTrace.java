@@ -44,7 +44,7 @@ public class WindowManagerTrace {
     private static final int DEFAULT_DISPLAY = 0;
     private final List<Entry> mEntries;
     @Nullable
-    final private Path mSource;
+    private final Path mSource;
 
     private WindowManagerTrace(List<Entry> entries, Path source) {
         this.mEntries = entries;
@@ -220,8 +220,8 @@ public class WindowManagerTrace {
                             for (WindowStateProto windowState : token.windowToken.windows) {
                                 if (windowState.windowContainer.visible) {
                                     return new Result(true /* success */, getTimestamp(),
-                                            assertionName, "Window " + token.name +
-                                            "is visible");
+                                            assertionName, "Window " + token.name
+                                            + "is visible");
                                 }
                             }
                         }

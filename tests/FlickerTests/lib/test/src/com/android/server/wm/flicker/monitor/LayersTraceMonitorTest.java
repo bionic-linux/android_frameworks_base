@@ -23,11 +23,16 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.surfaceflinger.nano.Layerstrace.LayersTraceFileProto;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import com.google.common.io.Files;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.io.File;
 
@@ -35,6 +40,8 @@ import java.io.File;
  * Contains {@link LayersTraceMonitor} tests.
  * To run this test: {@code atest FlickerLibTest:LayersTraceMonitorTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LayersTraceMonitorTest {
     private LayersTraceMonitor mLayersTraceMonitor;
 

@@ -26,6 +26,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import android.os.Environment;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import com.android.server.wm.flicker.TransitionRunner.TransitionBuilder;
 import com.android.server.wm.flicker.TransitionRunner.TransitionResult;
 import com.android.server.wm.flicker.monitor.LayersTraceMonitor;
@@ -34,7 +36,10 @@ import com.android.server.wm.flicker.monitor.WindowAnimationFrameStatsMonitor;
 import com.android.server.wm.flicker.monitor.WindowManagerTraceMonitor;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -48,6 +53,8 @@ import java.util.List;
  * Contains {@link TransitionRunner} tests.
  * {@code atest FlickerLibTest:TransitionRunnerTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TransitionRunnerTest {
     @Mock
     private SimpleUiTransitions mTransitionsMock;

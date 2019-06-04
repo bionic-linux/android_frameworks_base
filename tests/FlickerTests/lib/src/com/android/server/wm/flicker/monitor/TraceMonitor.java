@@ -23,7 +23,6 @@ import android.os.RemoteException;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 /**
@@ -46,7 +45,6 @@ public abstract class TraceMonitor implements ITransitionMonitor {
      * does not have security privileges to access /data/misc/wmtrace.
      *
      * @param testTag suffix added to trace name used to identify trace
-     *
      * @return Path to saved trace file
      */
     @Override

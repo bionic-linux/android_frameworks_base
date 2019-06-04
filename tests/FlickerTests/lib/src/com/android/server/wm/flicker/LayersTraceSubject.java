@@ -26,9 +26,8 @@ import com.android.server.wm.flicker.Assertions.Result;
 import com.android.server.wm.flicker.LayersTrace.Entry;
 import com.android.server.wm.flicker.TransitionRunner.TransitionResult;
 
-import com.google.common.truth.FailureStrategy;
+import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
-import com.google.common.truth.SubjectFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,19 +37,13 @@ import java.util.stream.Collectors;
  */
 public class LayersTraceSubject extends Subject<LayersTraceSubject, LayersTrace> {
     // Boiler-plate Subject.Factory for LayersTraceSubject
-    private static final SubjectFactory<LayersTraceSubject, LayersTrace> FACTORY =
-            new SubjectFactory<LayersTraceSubject, LayersTrace>() {
-                @Override
-                public LayersTraceSubject getSubject(
-                        FailureStrategy fs, @Nullable LayersTrace target) {
-                    return new LayersTraceSubject(fs, target);
-                }
-            };
+    private static final Subject.Factory<LayersTraceSubject, LayersTrace> FACTORY =
+            (fm, target) -> new LayersTraceSubject(fm, target);
 
     private AssertionsChecker<Entry> mChecker = new AssertionsChecker<>();
 
-    private LayersTraceSubject(FailureStrategy fs, @Nullable LayersTrace subject) {
-        super(fs, subject);
+    private LayersTraceSubject(FailureMetadata fm, @Nullable LayersTrace subject) {
+        super(fm, subject);
     }
 
     // User-defined entry point
@@ -66,7 +59,7 @@ public class LayersTraceSubject extends Subject<LayersTraceSubject, LayersTrace>
     }
 
     // Static method for getting the subject factory (for use with assertAbout())
-    public static SubjectFactory<LayersTraceSubject, LayersTrace> entries() {
+    public static Subject.Factory<LayersTraceSubject, LayersTrace> entries() {
         return FACTORY;
     }
 

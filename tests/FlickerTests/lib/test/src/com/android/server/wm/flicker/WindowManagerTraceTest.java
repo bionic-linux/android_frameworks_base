@@ -20,15 +20,22 @@ import static com.android.server.wm.flicker.TestFileUtils.readTestFile;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import androidx.test.runner.AndroidJUnit4;
+
 import com.android.server.wm.flicker.Assertions.Result;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 /**
  * Contains {@link WindowManagerTrace} tests.
  * To run this test: {@code atest FlickerLibTest:WindowManagerTraceTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WindowManagerTraceTest {
     private WindowManagerTrace mTrace;
 
