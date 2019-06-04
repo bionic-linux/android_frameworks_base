@@ -20,13 +20,16 @@ import static com.android.server.wm.flicker.CommonTransitions.editTextLoseFocusT
 import static com.android.server.wm.flicker.WindowUtils.getDisplayBounds;
 
 import android.platform.helpers.IAppHelper;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.LargeTest;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test IME window closing back to app window transitions.
@@ -34,6 +37,7 @@ import org.junit.runner.RunWith;
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CloseImeWindowToAppTest extends FlickerTestBase {
 
     private static final String IME_WINDOW_TITLE = "InputMethod";
@@ -43,7 +47,7 @@ public class CloseImeWindowToAppTest extends FlickerTestBase {
 
     @Before
     public void runTransition() {
-        super.runTransition(editTextLoseFocusToApp(uiDevice)
+        super.runTransition(editTextLoseFocusToApp(mUiDevice)
                 .includeJankyRuns().build());
     }
 

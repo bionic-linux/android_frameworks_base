@@ -26,10 +26,15 @@ import static org.junit.Assert.fail;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.test.InstrumentationRegistry;
 import android.view.WindowManager;
 
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
+
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +43,8 @@ import java.util.stream.Collectors;
  * Contains {@link LayersTrace} tests.
  * To run this test: {@code atest FlickerLibTest:LayersTraceTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LayersTraceTest {
     private static LayersTrace readLayerTraceFromFile(String relativePath) {
         try {

@@ -25,7 +25,7 @@ import android.view.FrameStats;
 /**
  * Monitors {@link android.view.WindowAnimationFrameStats} to detect janky frames.
  *
- * Adapted from {@link android.support.test.jank.internal.WindowAnimationFrameStatsMonitorImpl}
+ * Adapted from {@link androidx.test.jank.internal.WindowAnimationFrameStatsMonitorImpl}
  * using the same threshold to determine jank.
  */
 public class WindowAnimationFrameStatsMonitor implements ITransitionMonitor {
@@ -36,8 +36,8 @@ public class WindowAnimationFrameStatsMonitor implements ITransitionMonitor {
     // Maximum normalized frame duration before the frame is considered a pause
     private static final double PAUSE_THRESHOLD = 15.0f;
     private Instrumentation mInstrumentation;
-    private FrameStats stats;
-    private int numJankyFrames;
+    private FrameStats mStats;
+    private int mNumJankyFrames;
     private long mLongestFrameNano = 0L;
 
 
@@ -49,23 +49,23 @@ public class WindowAnimationFrameStatsMonitor implements ITransitionMonitor {
     }
 
     private void analyze() {
-        int frameCount = stats.getFrameCount();
-        long refreshPeriodNano = stats.getRefreshPeriodNano();
+        int frameCount = mStats.getFrameCount();
+        long refreshPeriodNano = mStats.getRefreshPeriodNano();
 
         // Skip first frame
         for (int i = 2; i < frameCount; i++) {
             // Handle frames that have not been presented.
-            if (stats.getFramePresentedTimeNano(i) == UNDEFINED_TIME_NANO) {
+            if (mStats.getFramePresentedTimeNano(i) == UNDEFINED_TIME_NANO) {
                 // The animation must not have completed. Warn and break out of the loop.
                 Log.w(TAG, "Skipping fenced frame.");
                 break;
             }
-            long frameDurationNano = stats.getFramePresentedTimeNano(i) -
-                    stats.getFramePresentedTimeNano(i - 1);
+            long frameDurationNano = mStats.getFramePresentedTimeNano(i)
+                    - mStats.getFramePresentedTimeNano(i - 1);
             double normalized = (double) frameDurationNano / refreshPeriodNano;
             if (normalized < PAUSE_THRESHOLD) {
                 if (normalized > 1.0f + MAX_ERROR) {
-                    numJankyFrames++;
+                    mNumJankyFrames++;
                 }
                 mLongestFrameNano = Math.max(mLongestFrameNano, frameDurationNano);
             }
@@ -75,26 +75,26 @@ public class WindowAnimationFrameStatsMonitor implements ITransitionMonitor {
     @Override
     public void start() {
         // Clear out any previous data
-        numJankyFrames = 0;
+        mNumJankyFrames = 0;
         mLongestFrameNano = 0;
         mInstrumentation.getUiAutomation().clearWindowAnimationFrameStats();
     }
 
     @Override
     public void stop() {
-        stats = mInstrumentation.getUiAutomation().getWindowAnimationFrameStats();
+        mStats = mInstrumentation.getUiAutomation().getWindowAnimationFrameStats();
         analyze();
     }
 
     public boolean jankyFramesDetected() {
-        return stats.getFrameCount() > 0 && numJankyFrames > 0;
+        return mStats.getFrameCount() > 0 && mNumJankyFrames > 0;
     }
 
     @Override
     public String toString() {
-        return stats.toString() +
-                " RefreshPeriodNano:" + stats.getRefreshPeriodNano() +
-                " NumJankyFrames:" + numJankyFrames +
-                " LongestFrameNano:" + mLongestFrameNano;
+        return mStats.toString()
+                + " RefreshPeriodNano:" + mStats.getRefreshPeriodNano()
+                + " NumJankyFrames:" + mNumJankyFrames
+                + " LongestFrameNano:" + mLongestFrameNano;
     }
 }

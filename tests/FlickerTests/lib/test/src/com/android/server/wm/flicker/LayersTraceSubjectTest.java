@@ -25,7 +25,12 @@ import static org.junit.Assert.fail;
 
 import android.graphics.Rect;
 
+import androidx.test.runner.AndroidJUnit4;
+
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import java.nio.file.Paths;
 
@@ -33,6 +38,8 @@ import java.nio.file.Paths;
  * Contains {@link LayersTraceSubject} tests.
  * To run this test: {@code atest FlickerLibTest:LayersTraceSubjectTest}
  */
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LayersTraceSubjectTest {
     private static final Rect displayRect = new Rect(0, 0, 1440, 2880);
 

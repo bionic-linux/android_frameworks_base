@@ -17,13 +17,11 @@
 package com.android.server.wm.flicker;
 
 import static android.os.SystemClock.sleep;
-import static android.system.helpers.OverviewHelper.isRecentsInLauncher;
 import static android.view.Surface.ROTATION_0;
 
 import static com.android.compatibility.common.util.SystemUtil.runShellCommand;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -31,7 +29,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.launcherhelper.LauncherStrategyFactory;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.Configurator;
@@ -69,7 +66,7 @@ public class AutomationUtils {
      * This removes some delays when using the UIAutomator library required to create fast UI
      * transitions.
      */
-    static void setFastWait() {
+    void setFastWait() {
         Configurator.getInstance().setWaitForIdleTimeout(0);
     }
 
@@ -80,11 +77,13 @@ public class AutomationUtils {
         Configurator.getInstance().setWaitForIdleTimeout(10000);
     }
 
-    public static boolean isQuickstepEnabled(UiDevice device) {
-        return device.findObject(By.res(SYSTEMUI_PACKAGE, "recent_apps")) == null;
+    static boolean isQuickstepEnabled(UiDevice device) {
+        boolean enabled = device.findObject(By.res(SYSTEMUI_PACKAGE, "recent_apps")) == null;
+        Log.d(TAG, "Quickstep enabled: " + enabled);
+        return enabled;
     }
 
-    public static void openQuickstep(UiDevice device) {
+    static void openQuickstep(UiDevice device) {
         if (isQuickstepEnabled(device)) {
             int height = device.getDisplayHeight();
             UiObject2 navBar = device.findObject(By.res(SYSTEMUI_PACKAGE, "navigation_bar_frame"));
@@ -104,22 +103,25 @@ public class AutomationUtils {
                     navBarVisibleBounds.centerX(), navBarVisibleBounds.centerY(),
                     navBarVisibleBounds.centerX(), height * 2 / 3,
                     (navBarVisibleBounds.centerY() - height * 2 / 3) / 100); // 100 px/step
-        } else {
+        }
+
+        // use a long timeout to wait until recents populated
+        BySelector recentsSysUISelector = By.res(
+                device.getLauncherPackageName(), "overview_panel");
+        UiObject2 recents = device.wait(Until.findObject(recentsSysUISelector), FIND_TIMEOUT);
+
+        // Quickstep detection is flaky on AOSP, UIDevice doesn't always find SysUI elements
+        // If it couldn't find, try pressing 'recent items' button
+        if (recents == null) {
             try {
                 device.pressRecentApps();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
+            recents = device.wait(Until.findObject(recentsSysUISelector), FIND_TIMEOUT);
         }
-        BySelector RECENTS = By.res(SYSTEMUI_PACKAGE, "recents_view");
 
-        // use a long timeout to wait until recents populated
-        if (device.wait(
-                Until.findObject(isRecentsInLauncher()
-                        ? getLauncherOverviewSelector(device) : RECENTS),
-                10000) == null) {
-            fail("Recents didn't appear");
-        }
+        assertNotNull("Recent items didn't appear", recents);
         device.waitForIdle();
     }
 
@@ -127,13 +129,24 @@ public class AutomationUtils {
         if (isQuickstepEnabled(device)) {
             openQuickstep(device);
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 device.swipe(device.getDisplayWidth() / 2,
                         device.getDisplayHeight() / 2, device.getDisplayWidth(),
                         device.getDisplayHeight() / 2,
                         5);
 
-                BySelector clearAllSelector = By.res("com.google.android.apps.nexuslauncher",
+                BySelector noRecentItemsSelector = getLauncherOverviewSelector(device)
+                        .desc("No recent items");
+                UiObject2 noRecentItems = device.wait(
+                        Until.findObject(noRecentItemsSelector), 100);
+
+                // If "No recent items"  is displayed, there're no apps to remove
+                if (noRecentItems != null) {
+                    return;
+                }
+
+                // If "Clear all"  button appears, use it
+                BySelector clearAllSelector = By.res(device.getLauncherPackageName(),
                         "clear_all_button");
                 UiObject2 clearAllButton = device.wait(Until.findObject(clearAllSelector), 100);
                 if (clearAllButton != null) {
@@ -151,61 +164,67 @@ public class AutomationUtils {
     private static void longPressRecents(UiDevice device) {
         BySelector recentsSelector = By.res(SYSTEMUI_PACKAGE, "recent_apps");
         UiObject2 recentsButton = device.wait(Until.findObject(recentsSelector), FIND_TIMEOUT);
-        assertNotNull("Unable to find recents button", recentsButton);
+        assertNotNull("Unable to find 'recent items' button", recentsButton);
         recentsButton.click(LONG_PRESS_TIMEOUT);
     }
 
     public static void launchSplitScreen(UiDevice device) {
-        String mLauncherPackage = LauncherStrategyFactory.getInstance(device)
-                .getLauncherStrategy().getSupportedLauncherPackage();
-
         if (isQuickstepEnabled(device)) {
             // Quickstep enabled
             openQuickstep(device);
-
-            BySelector overviewIconSelector = By.res(mLauncherPackage, "icon")
-                    .clazz(View.class);
-            UiObject2 overviewIcon = device.wait(Until.findObject(overviewIconSelector),
-                    FIND_TIMEOUT);
-            assertNotNull("Unable to find app icon in Overview", overviewIcon);
-            overviewIcon.click();
-
-            BySelector splitscreenButtonSelector = By.text("Split screen");
-            UiObject2 splitscreenButton = device.wait(Until.findObject(splitscreenButtonSelector),
-                    FIND_TIMEOUT);
-            assertNotNull("Unable to find Split screen button in Overview", overviewIcon);
-            splitscreenButton.click();
         } else {
-            // Classic long press recents
-            longPressRecents(device);
+            try {
+                device.pressRecentApps();
+            } catch (RemoteException e) {
+                Log.e(TAG, "launchSplitScreen", e);
+            }
         }
+
+        BySelector overviewIconSelector = By.res(device.getLauncherPackageName(), "icon")
+                .clazz(View.class);
+        UiObject2 overviewIcon = device.wait(Until.findObject(overviewIconSelector),
+                FIND_TIMEOUT);
+        assertNotNull("Unable to find app icon in Overview", overviewIcon);
+        overviewIcon.click();
+
+        BySelector splitScreenButtonSelector = By.text("Split screen");
+        UiObject2 splitScreenButton = device.wait(Until.findObject(splitScreenButtonSelector),
+                FIND_TIMEOUT);
+        assertNotNull("Unable to find Split screen button in Overview", splitScreenButton);
+        splitScreenButton.click();
+
         // Wait for animation to complete.
         sleep(2000);
+
+        UiObject2 divider = device.wait(
+                Until.findObject(getSplitScreenDividerSelector()), FIND_TIMEOUT);
+        assertNotNull("Unable to find Split screen divider", divider);
+    }
+
+    private static BySelector getSplitScreenDividerSelector() {
+        return By.res(SYSTEMUI_PACKAGE, "docked_divider_handle");
     }
 
     public static void exitSplitScreen(UiDevice device) {
-        if (isQuickstepEnabled(device)) {
-            // Quickstep enabled
-            BySelector dividerSelector = By.res(SYSTEMUI_PACKAGE, "docked_divider_handle");
-            UiObject2 divider = device.wait(Until.findObject(dividerSelector), FIND_TIMEOUT);
-            assertNotNull("Unable to find Split screen divider", divider);
+        // Quickstep enabled
+        UiObject2 divider = device.wait(
+                Until.findObject(getSplitScreenDividerSelector()), FIND_TIMEOUT);
+        assertNotNull("Unable to find Split screen divider", divider);
 
-            // Drag the split screen divider to the top of the screen
-            divider.drag(new Point(device.getDisplayWidth() / 2, 0), 400);
-        } else {
-            // Classic long press recents
-            longPressRecents(device);
-        }
+        // Drag the split screen divider to the top of the screen
+        divider.drag(new Point(device.getDisplayWidth() / 2, 0), 400);
         // Wait for animation to complete.
         sleep(2000);
     }
 
     static void resizeSplitScreen(UiDevice device, Rational windowHeightRatio) {
-        BySelector dividerSelector = By.res(SYSTEMUI_PACKAGE, "docked_divider_handle");
+        BySelector dividerSelector = getSplitScreenDividerSelector();
         UiObject2 divider = device.wait(Until.findObject(dividerSelector), FIND_TIMEOUT);
         assertNotNull("Unable to find Split screen divider", divider);
+
         int destHeight =
                 (int) (WindowUtils.getDisplayBounds().height() * windowHeightRatio.floatValue());
+
         // Drag the split screen divider to so that the ratio of top window height and bottom
         // window height is windowHeightRatio
         device.drag(divider.getVisibleBounds().centerX(), divider.getVisibleBounds().centerY(),
@@ -217,20 +236,28 @@ public class AutomationUtils {
         sleep(2000);
     }
 
+    private static BySelector getPipWindowSelector() {
+        return By.res(SYSTEMUI_PACKAGE, "background");
+    }
+
     static void closePipWindow(UiDevice device) {
-        UiObject2 pipWindow = device.findObject(
-                By.res(SYSTEMUI_PACKAGE, "background"));
+        UiObject2 pipWindow = device.findObject(getPipWindowSelector());
+        assertNotNull("PIP window not found", pipWindow);
+
         pipWindow.click();
+
         UiObject2 exitPipObject = device.findObject(
                 By.res(SYSTEMUI_PACKAGE, "dismiss"));
+        assertNotNull("PIP window dismiss button not found", pipWindow);
+
         exitPipObject.click();
         // Wait for animation to complete.
         sleep(2000);
     }
 
     static void expandPipWindow(UiDevice device) {
-        UiObject2 pipWindow = device.findObject(
-                By.res(SYSTEMUI_PACKAGE, "background"));
+        UiObject2 pipWindow = device.findObject(getPipWindowSelector());
+        assertNotNull("PIP window not found", pipWindow);
         pipWindow.click();
         pipWindow.click();
     }
