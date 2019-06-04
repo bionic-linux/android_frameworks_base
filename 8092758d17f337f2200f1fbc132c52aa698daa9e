@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c646b1f_2c95eb23",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 1,
+      "message": "I had to do this for IpSecConfig because I had a choice between doing it or not doing the refactoring. Here, nothing is calling this in the tests I\u0027m touching, so I\u0027m not forced to do it ; therefore I favored avoiding changes.\n\nThat being said, it\u0027s the best time to do this, and it\u0027s a nice cleanup. Done.",
+      "parentUuid": "71edce19_55e17031",
+      "range": {
+        "startLine": 156,
+        "startChar": 26,
+        "endLine": 156,
+        "endChar": 32
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a41801b_fa37a77e",
         "filename": "tests/net/common/java/android/net/IpPrefixTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c151cd_0500f3ab",
+        "filename": "tests/net/common/java/android/net/IpPrefixTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "8a41801b_fa37a77e",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 361,
+        "endChar": 5
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9464aaa0_5744894b",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5dea4f5_19fa5e8d",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfd5bbfe_5d917d13",
         "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "df1c40c6_0b801104",
+        "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 1,
+      "message": "Nice catch ; my IDE was misconfigured.",
+      "parentUuid": "cfd5bbfe_5d917d13",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26624a8f_0c76c7ad",
         "filename": "tests/net/common/java/android/net/metrics/ValidationProbeEventTest.kt",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedb0e37_d4799169",
+        "filename": "tests/net/common/java/android/net/metrics/ValidationProbeEventTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26624a8f_0c76c7ad",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

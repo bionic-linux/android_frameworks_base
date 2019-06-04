@@ -22,6 +22,30 @@
       "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c80637_97565f0a",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-04T16:57:32Z",
+      "side": 0,
+      "message": "It looks to me like the original code was written like this exactly for the reason you mention : when calling explicitly you can eschew testing for null.\n\nThe problem with this scheme is that it works with nothing at all in the Java world. With the old code you can\u0027t use assertEquals() with IpSecConfig objects. You can\u0027t search for one in a collection. None of the standard tools work.\n\nCase in point : look at IpSecConfigTest in this change. It used to call this explicitly and that\u0027s the *only* difference with every other instance of this check. Keeping this we *must* write a custom parcelable round trip method for every object that works like this.\n\nI am a bit worried that this change may have other repercussions actually, because this is an object that is already used in multiple places. But the old code had equals defer to Object.equals, which only tests equality of reference. I don\u0027t think this is a very dangerous change (and it\u0027s not meant to go in Q).",
+      "parentUuid": "6b1c7d8d_15ae1854",
+      "range": {
+        "startLine": 338,
+        "startChar": 26,
+        "endLine": 338,
+        "endChar": 32
+      },
+      "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
