@@ -70,6 +70,30 @@
       "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c4ebca_0e845846",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T10:31:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "95e79469_f43040fb",
+      "range": {
+        "startLine": 513,
+        "startChar": 8,
+        "endLine": 513,
+        "endChar": 76
+      },
+      "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
