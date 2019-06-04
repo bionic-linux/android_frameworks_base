@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b1c7d8d_15ae1854",
+        "filename": "core/java/android/net/IpSecConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T06:15:18Z",
+      "side": 0,
+      "message": "Question, what is the benefit of non-static type of equals?\nI like the original version more since we don\u0027t have to care about nullability of lhs(or rhs).\nBut don\u0027t have strong opinion about this.",
+      "range": {
+        "startLine": 338,
+        "startChar": 26,
+        "endLine": 338,
+        "endChar": 32
+      },
+      "revId": "95ae9c0b370ca9048d16e67c0d11ae54ca84ed7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

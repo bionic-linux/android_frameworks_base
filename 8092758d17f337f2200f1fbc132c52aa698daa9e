@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "71edce19_55e17031",
+        "filename": "core/java/android/net/IpSecTransform.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T06:15:18Z",
+      "side": 1,
+      "message": "given that you are changing the equals of config.\ndo you want to also refactor this into non-static equals?",
+      "range": {
+        "startLine": 156,
+        "startChar": 26,
+        "endLine": 156,
+        "endChar": 32
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a41801b_fa37a77e",
+        "filename": "tests/net/common/java/android/net/IpPrefixTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T06:15:18Z",
+      "side": 1,
+      "message": "do we want to assertFieldCountEquals here?",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 361,
+        "endChar": 5
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dea4f5_19fa5e8d",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-04T06:15:18Z",
+      "side": 1,
+      "message": "do we want to assertFieldCountEquals here?",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "8092758d17f337f2200f1fbc132c52aa698daa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfd5bbfe_5d917d13",
         "filename": "tests/net/common/java/android/net/metrics/DhcpErrorEventTest.kt",
         "patchSetId": 3
