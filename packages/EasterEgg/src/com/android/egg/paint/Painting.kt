@@ -105,7 +105,8 @@ public class Painting : View, SpotFilter.Plotter {
         private val pt = Paint()
         override fun run() {
             val c = _paintCanvas
-            if (c != null) {
+            val b = bitmap
+            if (c != null && b != null) {
                 pt.colorFilter =
                     if (paperColor.and(0xFF) > 0x80)
                         FADE_TO_WHITE_CF
@@ -113,7 +114,7 @@ public class Painting : View, SpotFilter.Plotter {
                         FADE_TO_BLACK_CF
 
                 synchronized(_bitmapLock) {
-                    c.drawBitmap(bitmap, 0f, 0f, pt)
+                    c.drawBitmap(b, 0f, 0f, pt)
                 }
                 invalidate()
             }
@@ -263,6 +264,7 @@ public class Painting : View, SpotFilter.Plotter {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        val bitmap = bitmap
         bitmap?.let {
             canvas.drawBitmap(bitmap, 0f, 0f, _drawPaint);
         }
@@ -349,8 +351,11 @@ public class Painting : View, SpotFilter.Plotter {
     fun invertContents() {
         val invertPaint = Paint()
         invertPaint.colorFilter = INVERT_CF
-        synchronized(_bitmapLock) {
-            _paintCanvas?.drawBitmap(bitmap, 0f, 0f, invertPaint)
+        val bitmap = bitmap
+        if (bitmap != null) {
+            synchronized(_bitmapLock) {
+                _paintCanvas?.drawBitmap(bitmap!!, 0f, 0f, invertPaint)
+            }
         }
         invalidate()
     }
