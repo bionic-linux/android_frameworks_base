@@ -81,6 +81,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Executor;
 
+import dalvik.system.PathClassLoader;
+
 /**
  * Interface to global information about an application environment.  This is
  * an abstract class whose implementation is provided by
@@ -728,6 +730,29 @@ public abstract class Context {
      * Return a class loader you can use to retrieve classes in this package.
      */
     public abstract ClassLoader getClassLoader();
+
+    private static final String COMPILED_VIEW_DEX_FILE_NAME = "/compiled_view.dex";
+
+    private boolean mPrecompiledViewLoaded = false;
+    private ClassLoader mPrecompiledClassLoader = null;
+    
+    /** @hide */
+    public final ClassLoader getPrecompiledViewLoader() {
+            if (!mPrecompiledViewLoaded) {
+                    try {
+                    final ClassLoader parent = getClassLoader();
+                    String dexFile = getCodeCacheDir() + COMPILED_VIEW_DEX_FILE_NAME;
+                    if (new File(dexFile).exists()) {
+                            mPrecompiledClassLoader = new PathClassLoader(dexFile, parent);
+                    }
+                    mPrecompiledViewLoaded = true;
+                }
+                catch (Throwable e) {
+                        // ignore
+                }
+            }
+            return mPrecompiledClassLoader;
+    }
 
     /** Return the name of this application's package. */
     public abstract String getPackageName();

@@ -230,7 +230,6 @@ public abstract class LayoutInflater {
      */
     protected LayoutInflater(Context context) {
         mContext = context;
-        initPrecompiledViews();
     }
 
     /**
@@ -247,7 +246,6 @@ public abstract class LayoutInflater {
         mFactory2 = original.mFactory2;
         mPrivateFactory = original.mPrivateFactory;
         setFilter(original.mFilter);
-        initPrecompiledViews();
     }
 
     /**
@@ -389,32 +387,21 @@ public abstract class LayoutInflater {
         }
     }
 
+    private static final boolean sUsePrecompiledViews = SystemProperties
+            .getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false);
+
     private void initPrecompiledViews() {
-        initPrecompiledViews(
-                SystemProperties.getBoolean(USE_PRECOMPILED_LAYOUT_SYSTEM_PROPERTY, false));
+        initPrecompiledViews(sUsePrecompiledViews);
     }
 
     private void initPrecompiledViews(boolean enablePrecompiledViews) {
         mUseCompiledView = enablePrecompiledViews;
-        try {
-            if (mUseCompiledView) {
-                mPrecompiledClassLoader = mContext.getClassLoader();
-                String dexFile = mContext.getCodeCacheDir() + COMPILED_VIEW_DEX_FILE_NAME;
-                if (new File(dexFile).exists()) {
-                    mPrecompiledClassLoader = new PathClassLoader(dexFile, mPrecompiledClassLoader);
-                } else {
-                    // If the precompiled layout file doesn't exist, then disable precompiled
-                    // layouts.
-                    mUseCompiledView = false;
-                }
-            }
-        } catch (Throwable e) {
-            if (DEBUG) {
-                Log.e(TAG, "Failed to initialized precompiled views layouts", e);
-            }
-            mUseCompiledView = false;
+        if (mUseCompiledView) {
+            mPrecompiledClassLoader = mContext.getPrecompiledViewLoader();
         }
-        if (!mUseCompiledView) {
+        if (mPrecompiledClassLoader == null) {
+            mUseCompiledView = false;
+        } else if (!mUseCompiledView) {
             mPrecompiledClassLoader = null;
         }
     }
@@ -501,6 +488,8 @@ public abstract class LayoutInflater {
     private @Nullable
     View tryInflatePrecompiled(@LayoutRes int resource, Resources res, @Nullable ViewGroup root,
         boolean attachToRoot) {
+        // Ensure precompiled views are initialized. This is a no-op if they already are.
+        initPrecompiledViews();
         if (!mUseCompiledView) {
             return null;
         }
