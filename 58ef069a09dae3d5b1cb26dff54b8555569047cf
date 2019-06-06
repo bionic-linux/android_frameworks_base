@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564e88fa_c697fef0",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-06T16:07:12Z",
+      "side": 1,
+      "message": "This should be template so you can enforce that transToState and entryData have compatible types.\nAlso, state and orgState should have their own type parameters so that the compiler can enforce their bounds if any.\n\n  synchronized void \u003cS, O, T\u003e add(..., IState\u003cS\u003e state, IState\u003cO\u003e orgState, IState\u003cT\u003e transToState, T entryData)",
+      "range": {
+        "startLine": 688,
+        "startChar": 26,
+        "endLine": 688,
+        "endChar": 29
+      },
+      "revId": "58ef069a09dae3d5b1cb26dff54b8555569047cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
