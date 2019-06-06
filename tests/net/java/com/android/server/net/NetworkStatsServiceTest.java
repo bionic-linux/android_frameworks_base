@@ -23,7 +23,6 @@ import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.TYPE_WIMAX;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
-import static android.net.NetworkStats.DEFAULT_NETWORK_NO;
 import static android.net.NetworkStats.DEFAULT_NETWORK_YES;
 import static android.net.NetworkStats.IFACE_ALL;
 import static android.net.NetworkStats.INTERFACES_ALL;
@@ -42,7 +41,6 @@ import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 import static android.net.NetworkStatsHistory.FIELD_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileAll;
-import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.net.TrafficStats.UID_REMOVED;
@@ -56,7 +54,6 @@ import static com.android.server.net.NetworkStatsService.ACTION_NETWORK_STATS_PO
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -98,7 +95,6 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.server.net.NetworkStatsService.NetworkStatsSettings;
@@ -129,12 +125,8 @@ import java.util.Objects;
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class NetworkStatsServiceTest {
+public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private static final String TAG = "NetworkStatsServiceTest";
-
-    private static final String TEST_IFACE = "test0";
-    private static final String TEST_IFACE2 = "test1";
-    private static final String TUN_IFACE = "test_nss_tun0";
 
     private static final long TEST_START = 1194220800000L;
 
@@ -145,11 +137,6 @@ public class NetworkStatsServiceTest {
     private static NetworkTemplate sTemplateWifi = buildTemplateWifiWildcard();
     private static NetworkTemplate sTemplateImsi1 = buildTemplateMobileAll(IMSI_1);
     private static NetworkTemplate sTemplateImsi2 = buildTemplateMobileAll(IMSI_2);
-
-    private static final int UID_RED = 1001;
-    private static final int UID_BLUE = 1002;
-    private static final int UID_GREEN = 1003;
-    private static final int UID_VPN = 1004;
 
     private static final Network WIFI_NETWORK =  new Network(100);
     private static final Network MOBILE_NETWORK =  new Network(101);
@@ -216,12 +203,9 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectSystemReady();
 
-        assertNull(mService.getTunAdjustedStats());
         mService.systemReady();
-        // Verify that system ready fetches realtime stats and initializes tun adjusted stats.
+        // Verify that system ready fetches realtime stats
         verify(mNetManager).getNetworkStatsUidDetail(UID_ALL, INTERFACES_ALL);
-        assertNotNull("failed to initialize TUN adjusted stats", mService.getTunAdjustedStats());
-        assertEquals(0, mService.getTunAdjustedStats().size());
 
         mSession = mService.openSession();
         assertNotNull("openSession() failed", mSession);
@@ -257,7 +241,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
@@ -301,7 +285,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
@@ -375,8 +359,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // modify some number on wifi, and trigger poll event
         incrementCurrentTime(2 * HOUR_IN_MILLIS);
@@ -417,8 +400,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
 
         // create some traffic on first network
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -453,7 +435,7 @@ public class NetworkStatsServiceTest {
                 .addValues(TEST_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 512L, 4L, 0L, 0L, 0L));
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
         forcePollAndWaitForIdle();
 
 
@@ -493,8 +475,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -552,8 +533,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
 
         // create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -580,7 +560,7 @@ public class NetworkStatsServiceTest {
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 512L, 4L, 512L, 4L, 0L));
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
         forcePollAndWaitForIdle();
 
 
@@ -610,8 +590,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // create some traffic for two apps
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -669,7 +648,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         NetworkStats.Entry entry1 = new NetworkStats.Entry(
                 TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L);
@@ -713,7 +692,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         NetworkStats.Entry uidStats = new NetworkStats.Entry(
                 TEST_IFACE, UID_BLUE, SET_DEFAULT, 0xF00D, 1024L, 8L, 512L, 4L, 0L);
@@ -741,8 +720,12 @@ public class NetworkStatsServiceTest {
         // mNetManager#getNetworkStatsUidDetail(UID_ALL, INTERFACES_ALL) has following invocations:
         // 1) NetworkStatsService#systemReady from #setUp.
         // 2) mService#forceUpdateIfaces in the test above.
-        // 3) Finally, mService#getDetailedUidStats.
-        verify(mNetManager, times(3)).getNetworkStatsUidDetail(UID_ALL, INTERFACES_ALL);
+        //
+        // Additionally, we should have one call for
+        // 1) mService#getDetailedUidStats with the augmented ifaceFilter
+        verify(mNetManager, times(2)).getNetworkStatsUidDetail(UID_ALL, INTERFACES_ALL);
+        verify(mNetManager, times(1)).getNetworkStatsUidDetail(
+                eq(UID_ALL), eq(NetworkStatsFactory.augmentWithStackedInterfaces(ifaceFilter)));
         assertTrue(ArrayUtils.contains(stats.getUniqueIfaces(), TEST_IFACE));
         assertTrue(ArrayUtils.contains(stats.getUniqueIfaces(), stackedIface));
         assertEquals(2, stats.size());
@@ -759,8 +742,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // create some initial traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -817,8 +799,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // create some initial traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -858,8 +839,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
 
         // Create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -897,8 +877,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
-
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states));
 
         // create some tethering traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -930,481 +909,6 @@ public class NetworkStatsServiceTest {
     }
 
     @Test
-    public void vpnRewriteTrafficThroughItself() throws Exception {
-        // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        expectDefaultSettings();
-        NetworkState[] networkStates = new NetworkState[] {buildWifiState(), buildVpnState()};
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        //
-        // 1000 bytes (100 packets) were sent, and 2000 bytes (200 packets) were received by UID_RED
-        // over VPN.
-        // 500 bytes (50 packets) were sent, and 1000 bytes (100 packets) were received by UID_BLUE
-        // over VPN.
-        //
-        // VPN UID rewrites packets read from TUN back to TUN, plus some of its own traffic
-        // (100 bytes).
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 5)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 2000L, 200L, 1000L, 100L, 1L)
-                .addValues(TUN_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 1000L, 100L, 500L, 50L, 1L)
-                // VPN rewrites all the packets read from TUN + 100 additional bytes of VPN's
-                // own traffic.
-                .addValues(TUN_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 0L, 0L, 1600L, 160L, 2L)
-                // VPN sent 1760 bytes over WiFi in foreground (SET_FOREGROUND) i.e. 1600
-                // bytes (160 packets) + 1 byte/packet overhead (=160 bytes).
-                .addValues(TEST_IFACE, UID_VPN, SET_FOREGROUND, TAG_NONE, 0L, 0L, 1760L, 176L, 1L)
-                // VPN received 3300 bytes over WiFi in background (SET_DEFAULT) i.e. 3000 bytes
-                // (300 packets) + 1 byte/packet encryption overhead (=300 bytes).
-                .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 3300L, 300L, 0L, 0L, 1L));
-
-        forcePollAndWaitForIdle();
-
-        // Verify increased TUN usage by UID_VPN does not get attributed to other apps.
-        NetworkStats tunStats =
-                mService.getDetailedUidStats(new String[] {TUN_IFACE});
-        assertValues(
-                tunStats, TUN_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 2000L, 200L, 1000L, 100L, 1);
-        assertValues(
-                tunStats, TUN_IFACE, UID_BLUE, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 1000L, 100L, 500L, 50L, 1);
-        assertValues(
-                tunStats, TUN_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 0L, 0L, 1600L, 160L, 2);
-
-        // Verify correct attribution over WiFi.
-        assertUidTotal(sTemplateWifi, UID_RED, 2000L, 200L, 1000L, 100L, 1);
-        assertUidTotal(sTemplateWifi, UID_BLUE, 1000L, 100L, 500L, 50L, 1);
-        assertUidTotal(sTemplateWifi, UID_VPN, 300L, 0L, 260L, 26L, 2);
-    }
-
-    @Test
-    public void vpnWithOneUnderlyingIface() throws Exception {
-        // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        expectDefaultSettings();
-        NetworkState[] networkStates = new NetworkState[] {buildWifiState(), buildVpnState()};
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent, and 2000 bytes (200 packets) were received by UID_RED
-        // over VPN.
-        // 500 bytes (50 packets) were sent, and 1000 bytes (100 packets) were received by UID_BLUE
-        // over VPN.
-        // VPN sent 1650 bytes (150 packets), and received 3300 (300 packets) over WiFi.
-        // Of 1650 bytes sent over WiFi, expect 1000 bytes attributed to UID_RED, 500 bytes
-        // attributed to UID_BLUE, and 150 bytes attributed to UID_VPN.
-        // Of 3300 bytes received over WiFi, expect 2000 bytes attributed to UID_RED, 1000 bytes
-        // attributed to UID_BLUE, and 300 bytes attributed to UID_VPN.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 2000L, 200L, 1000L, 100L, 1L)
-                .addValues(TUN_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 1000L, 100L, 500L, 50L, 1L)
-                // VPN received 3300 bytes over WiFi in background (SET_DEFAULT).
-                .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 3300L, 300L, 0L, 0L, 1L)
-                // VPN sent 1650 bytes over WiFi in foreground (SET_FOREGROUND).
-                .addValues(TEST_IFACE, UID_VPN, SET_FOREGROUND, TAG_NONE, 0L, 0L, 1650L, 150L, 1L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 2000L, 200L, 1000L, 100L, 1);
-        assertUidTotal(sTemplateWifi, UID_BLUE, 1000L, 100L, 500L, 50L, 1);
-        assertUidTotal(sTemplateWifi, UID_VPN, 300L, 0L, 150L, 0L, 2);
-    }
-
-    @Test
-    public void vpnWithOneUnderlyingIfaceAndOwnTraffic() throws Exception {
-        // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        expectDefaultSettings();
-        NetworkState[] networkStates = new NetworkState[] {buildWifiState(), buildVpnState()};
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent, and 2000 bytes (200 packets) were received by UID_RED
-        // over VPN.
-        // 500 bytes (50 packets) were sent, and 1000 bytes (100 packets) were received by UID_BLUE
-        // over VPN.
-        // Additionally, the VPN sends 6000 bytes (600 packets) of its own traffic into the tun
-        // interface (passing that traffic to the VPN endpoint), and receives 5000 bytes (500
-        // packets) from it. Including overhead that is 6600/5500 bytes.
-        // VPN sent 8250 bytes (750 packets), and received 8800 (800 packets) over WiFi.
-        // Of 8250 bytes sent over WiFi, expect 1000 bytes attributed to UID_RED, 500 bytes
-        // attributed to UID_BLUE, and 6750 bytes attributed to UID_VPN.
-        // Of 8800 bytes received over WiFi, expect 2000 bytes attributed to UID_RED, 1000 bytes
-        // attributed to UID_BLUE, and 5800 bytes attributed to UID_VPN.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 2000L, 200L, 1000L, 100L, 1L)
-                .addValues(TUN_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 1000L, 100L, 500L, 50L, 1L)
-                .addValues(TUN_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 5000L, 500L, 6000L, 600L, 1L)
-                // VPN received 8800 bytes over WiFi in background (SET_DEFAULT).
-                .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 8800L, 800L, 0L, 0L, 1L)
-                // VPN sent 8250 bytes over WiFi in foreground (SET_FOREGROUND).
-                .addValues(TEST_IFACE, UID_VPN, SET_FOREGROUND, TAG_NONE, 0L, 0L, 8250L, 750L, 1L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 2000L, 200L, 1000L, 100L, 1);
-        assertUidTotal(sTemplateWifi, UID_BLUE, 1000L, 100L, 500L, 50L, 1);
-        assertUidTotal(sTemplateWifi, UID_VPN, 5800L, 500L, 6750L, 600L, 2);
-    }
-
-    @Test
-    public void vpnWithOneUnderlyingIface_withCompression() throws Exception {
-        // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        expectDefaultSettings();
-        NetworkState[] networkStates = new NetworkState[] {buildWifiState(), buildVpnState()};
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent/received by UID_RED over VPN.
-        // 3000 bytes (300 packets) were sent/received by UID_BLUE over VPN.
-        // VPN sent/received 1000 bytes (100 packets) over WiFi.
-        // Of 1000 bytes over WiFi, expect 250 bytes attributed UID_RED and 750 bytes to UID_BLUE,
-        // with nothing attributed to UID_VPN for both rx/tx traffic.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 1L)
-                .addValues(TUN_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 3000L, 300L, 3000L, 300L, 1L)
-                .addValues(
-                    TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 0L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 250L, 25L, 250L, 25L, 0);
-        assertUidTotal(sTemplateWifi, UID_BLUE, 750L, 75L, 750L, 75L, 0);
-        assertUidTotal(sTemplateWifi, UID_VPN, 0L, 0L, 0L, 0L, 0);
-    }
-
-    @Test
-    public void vpnWithTwoUnderlyingIfaces_packetDuplication() throws Exception {
-        // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
-        // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
-        // Additionally, VPN is duplicating traffic across both WiFi and Cell.
-        expectDefaultSettings();
-        NetworkState[] networkStates =
-                new NetworkState[] {
-                    buildWifiState(), buildMobile4gState(TEST_IFACE2), buildVpnState()
-                };
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent/received by UID_RED and UID_BLUE over VPN.
-        // VPN sent/received 4400 bytes (400 packets) over both WiFi and Cell (8800 bytes in total).
-        // Of 8800 bytes over WiFi/Cell, expect:
-        // - 500 bytes rx/tx each over WiFi/Cell attributed to both UID_RED and UID_BLUE.
-        // - 1200 bytes rx/tx each over WiFi/Cell for VPN_UID.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 4)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 2L)
-                .addValues(TUN_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 2L)
-                .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 2200L, 200L, 2200L, 200L, 2L)
-                .addValues(
-                    TEST_IFACE2, UID_VPN, SET_DEFAULT, TAG_NONE, 2200L, 200L, 2200L, 200L, 2L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 500L, 50L, 500L, 50L, 1);
-        assertUidTotal(sTemplateWifi, UID_BLUE, 500L, 50L, 500L, 50L, 1);
-        assertUidTotal(sTemplateWifi, UID_VPN, 1200L, 100L, 1200L, 100L, 2);
-
-        assertUidTotal(buildTemplateMobileWildcard(), UID_RED, 500L, 50L, 500L, 50L, 1);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_BLUE, 500L, 50L, 500L, 50L, 1);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_VPN, 1200L, 100L, 1200L, 100L, 2);
-    }
-
-    @Test
-    public void vpnWithTwoUnderlyingIfaces_splitTraffic() throws Exception {
-        // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
-        // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
-        // Additionally, VPN is arbitrarily splitting traffic across WiFi and Cell.
-        expectDefaultSettings();
-        NetworkState[] networkStates =
-                new NetworkState[] {
-                    buildWifiState(), buildMobile4gState(TEST_IFACE2), buildVpnState()
-                };
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent, and 500 bytes (50 packets) received by UID_RED over
-        // VPN.
-        // VPN sent 660 bytes (60 packets) over WiFi and 440 bytes (40 packets) over Cell.
-        // And, it received 330 bytes (30 packets) over WiFi and 220 bytes (20 packets) over Cell.
-        // For UID_RED, expect 600 bytes attributed over WiFi and 400 bytes over Cell for sent (tx)
-        // traffic. For received (rx) traffic, expect 300 bytes over WiFi and 200 bytes over Cell.
-        //
-        // For UID_VPN, expect 60 bytes attributed over WiFi and 40 bytes over Cell for tx traffic.
-        // And, 30 bytes over WiFi and 20 bytes over Cell for rx traffic.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 3)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 500L, 50L, 1000L, 100L, 2L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 330L, 30L, 660L, 60L, 1L)
-              .addValues(TEST_IFACE2, UID_VPN, SET_DEFAULT, TAG_NONE, 220L, 20L, 440L, 40L, 1L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 300L, 30L, 600L, 60L, 1);
-        assertUidTotal(sTemplateWifi, UID_VPN, 30L, 0L, 60L, 0L, 1);
-
-        assertUidTotal(buildTemplateMobileWildcard(), UID_RED, 200L, 20L, 400L, 40L, 1);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_VPN, 20L, 0L, 40L, 0L, 1);
-    }
-
-    @Test
-    public void vpnWithTwoUnderlyingIfaces_splitTrafficWithCompression() throws Exception {
-        // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
-        // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
-        // Additionally, VPN is arbitrarily splitting compressed traffic across WiFi and Cell.
-        expectDefaultSettings();
-        NetworkState[] networkStates =
-                new NetworkState[] {
-                    buildWifiState(), buildMobile4gState(TEST_IFACE2), buildVpnState()
-                };
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface:
-        // 1000 bytes (100 packets) were sent/received by UID_RED over VPN.
-        // VPN sent/received 600 bytes (60 packets) over WiFi and 200 bytes (20 packets) over Cell.
-        // For UID_RED, expect 600 bytes attributed over WiFi and 200 bytes over Cell for both
-        // rx/tx.
-        // UID_VPN gets nothing attributed to it (avoiding negative stats).
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 4)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 1L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 600L, 60L, 600L, 60L, 0L)
-              .addValues(TEST_IFACE2, UID_VPN, SET_DEFAULT, TAG_NONE, 200L, 20L, 200L, 20L, 0L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 600L, 60L, 600L, 60L, 0);
-        assertUidTotal(sTemplateWifi, UID_VPN, 0L, 0L, 0L, 0L, 0);
-
-        assertUidTotal(buildTemplateMobileWildcard(), UID_RED, 200L, 20L, 200L, 20L, 0);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_VPN, 0L, 0L, 0L, 0L, 0);
-    }
-
-    @Test
-    public void vpnWithIncorrectUnderlyingIface() throws Exception {
-        // WiFi and Cell networks are connected and VPN is using Cell (which has TEST_IFACE2),
-        // but has declared only WiFi (TEST_IFACE) in its underlying network set.
-        expectDefaultSettings();
-        NetworkState[] networkStates =
-                new NetworkState[] {
-                    buildWifiState(), buildMobile4gState(TEST_IFACE2), buildVpnState()
-                };
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectNetworkStatsUidDetail(buildEmptyStats());
-        expectBandwidthControlCheck();
-
-        mService.forceUpdateIfaces(
-                new Network[] {WIFI_NETWORK, VPN_NETWORK},
-                vpnInfos,
-                networkStates,
-                getActiveIface(networkStates));
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were sent/received by UID_RED over VPN.
-        // VPN sent/received 1100 bytes (100 packets) over Cell.
-        // Of 1100 bytes over Cell, expect all of it attributed to UID_VPN for both rx/tx traffic.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 2)
-                .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 1000L, 100L, 1L)
-                .addValues(
-                    TEST_IFACE2, UID_VPN, SET_DEFAULT, TAG_NONE, 1100L, 100L, 1100L, 100L, 1L));
-
-        forcePollAndWaitForIdle();
-
-        assertUidTotal(sTemplateWifi, UID_RED, 0L, 0L, 0L, 0L, 0);
-        assertUidTotal(sTemplateWifi, UID_VPN, 0L, 0L, 0L, 0L, 0);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_RED, 0L, 0L, 0L, 0L, 0);
-        assertUidTotal(buildTemplateMobileWildcard(), UID_VPN, 1100L, 100L, 1100L, 100L, 1);
-    }
-
-    @Test
-    public void recordSnapshot_migratesTunTrafficAndUpdatesTunAdjustedStats() throws Exception {
-        assertEquals(0, mService.getTunAdjustedStats().size());
-        // VPN using WiFi (TEST_IFACE).
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectBandwidthControlCheck();
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were downloaded by UID_RED over VPN.
-        // VPN received 1100 bytes (100 packets) over WiFi.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 2)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 0L, 0L, 0L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 1100L, 100L, 0L, 0L, 0L));
-
-        // this should lead to NSS#recordSnapshotLocked
-        mService.forceUpdateIfaces(
-                new Network[0], vpnInfos, new NetworkState[0], null /* activeIface */);
-
-        // Verify TUN adjusted stats have traffic migrated correctly.
-        // Of 1100 bytes VPN received over WiFi, expect 1000 bytes attributed to UID_RED and 100
-        // bytes attributed to UID_VPN.
-        NetworkStats tunAdjStats = mService.getTunAdjustedStats();
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 1000L, 100L, 0L, 0L, 0);
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 100L, 0L, 0L, 0L, 0);
-    }
-
-    @Test
-    public void getDetailedUidStats_migratesTunTrafficAndUpdatesTunAdjustedStats()
-            throws Exception {
-        assertEquals(0, mService.getTunAdjustedStats().size());
-        // VPN using WiFi (TEST_IFACE).
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectBandwidthControlCheck();
-        mService.forceUpdateIfaces(
-                new Network[0], vpnInfos, new NetworkState[0], null /* activeIface */);
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were downloaded by UID_RED over VPN.
-        // VPN received 1100 bytes (100 packets) over WiFi.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 2)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 0L, 0L, 0L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 1100L, 100L, 0L, 0L, 0L));
-
-        mService.getDetailedUidStats(INTERFACES_ALL);
-
-        // Verify internally maintained TUN adjusted stats
-        NetworkStats tunAdjStats = mService.getTunAdjustedStats();
-        // Verify stats for TEST_IFACE (WiFi):
-        // Of 1100 bytes VPN received over WiFi, expect 1000 bytes attributed to UID_RED and 100
-        // bytes attributed to UID_VPN.
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 1000L, 100L, 0L, 0L, 0);
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 100L, 0L, 0L, 0L, 0);
-        // Verify stats for TUN_IFACE; only UID_RED should have usage on it.
-        assertValues(
-                tunAdjStats, TUN_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 1000L, 100L, 0L, 0L, 0);
-        assertValues(
-                tunAdjStats, TUN_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 0L, 0L, 0L, 0L, 0);
-
-        // lets assume that since last time, VPN received another 1100 bytes (same assumptions as
-        // before i.e. UID_RED downloaded another 1000 bytes).
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        // Note - NetworkStatsFactory returns counters that are monotonically increasing.
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 2)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 2000L, 200L, 0L, 0L, 0L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 2200L, 200L, 0L, 0L, 0L));
-
-        mService.getDetailedUidStats(INTERFACES_ALL);
-
-        tunAdjStats = mService.getTunAdjustedStats();
-        // verify TEST_IFACE stats:
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 2000L, 200L, 0L, 0L, 0);
-        assertValues(
-                tunAdjStats, TEST_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 200L, 0L, 0L, 0L, 0);
-        // verify TUN_IFACE stats:
-        assertValues(
-                tunAdjStats, TUN_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 2000L, 200L, 0L, 0L, 0);
-        assertValues(
-                tunAdjStats, TUN_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 0L, 0L, 0L, 0L, 0);
-    }
-
-    @Test
-    public void getDetailedUidStats_returnsCorrectStatsWithVpnRunning() throws Exception {
-        // VPN using WiFi (TEST_IFACE).
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
-        expectBandwidthControlCheck();
-        mService.forceUpdateIfaces(
-                new Network[0], vpnInfos, new NetworkState[0], null /* activeIface */);
-        // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
-        // overhead per packet):
-        // 1000 bytes (100 packets) were downloaded by UID_RED over VPN.
-        // VPN received 1100 bytes (100 packets) over WiFi.
-        incrementCurrentTime(HOUR_IN_MILLIS);
-        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 2)
-              .addValues(TUN_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1000L, 100L, 0L, 0L, 0L)
-              .addValues(TEST_IFACE, UID_VPN, SET_DEFAULT, TAG_NONE, 1100L, 100L, 0L, 0L, 0L));
-
-        // Query realtime stats for TEST_IFACE.
-        NetworkStats queriedStats =
-                mService.getDetailedUidStats(new String[] {TEST_IFACE});
-
-        assertEquals(HOUR_IN_MILLIS, queriedStats.getElapsedRealtime());
-        // verify that returned stats are only for TEST_IFACE and VPN traffic is migrated correctly.
-        assertEquals(new String[] {TEST_IFACE}, queriedStats.getUniqueIfaces());
-        assertValues(
-                queriedStats, TEST_IFACE, UID_RED, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 1000L, 100L, 0L, 0L, 0);
-        assertValues(
-                queriedStats, TEST_IFACE, UID_VPN, SET_ALL, TAG_NONE, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, 100L, 0L, 0L, 0L, 0);
-    }
-
-    @Test
     public void testRegisterUsageCallback() throws Exception {
         // pretend that wifi network comes online; service should ask about full
         // network state, and poll any existing interfaces before updating.
@@ -1414,7 +918,7 @@ public class NetworkStatsServiceTest {
         expectNetworkStatsUidDetail(buildEmptyStats());
         expectBandwidthControlCheck();
 
-        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+        mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states));
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
@@ -1634,59 +1138,6 @@ public class NetworkStatsServiceTest {
         }
     }
 
-    private static void assertValues(NetworkStats stats, String iface, int uid, int set,
-            int tag, int metered, int roaming, int defaultNetwork, long rxBytes, long rxPackets,
-            long txBytes, long txPackets, int operations) {
-        final NetworkStats.Entry entry = new NetworkStats.Entry();
-        final int[] sets;
-        if (set == SET_ALL) {
-            sets = new int[] { SET_ALL, SET_DEFAULT, SET_FOREGROUND };
-        } else {
-            sets = new int[] { set };
-        }
-
-        final int[] roamings;
-        if (roaming == ROAMING_ALL) {
-            roamings = new int[] { ROAMING_ALL, ROAMING_YES, ROAMING_NO };
-        } else {
-            roamings = new int[] { roaming };
-        }
-
-        final int[] meterings;
-        if (metered == METERED_ALL) {
-            meterings = new int[] { METERED_ALL, METERED_YES, METERED_NO };
-        } else {
-            meterings = new int[] { metered };
-        }
-
-        final int[] defaultNetworks;
-        if (defaultNetwork == DEFAULT_NETWORK_ALL) {
-            defaultNetworks = new int[] { DEFAULT_NETWORK_ALL, DEFAULT_NETWORK_YES,
-                    DEFAULT_NETWORK_NO };
-        } else {
-            defaultNetworks = new int[] { defaultNetwork };
-        }
-
-        for (int s : sets) {
-            for (int r : roamings) {
-                for (int m : meterings) {
-                    for (int d : defaultNetworks) {
-                        final int i = stats.findIndex(iface, uid, s, tag, m, r, d);
-                        if (i != -1) {
-                            entry.add(stats.getValues(i, null));
-                        }
-                    }
-                }
-            }
-        }
-
-        assertEquals("unexpected rxBytes", rxBytes, entry.rxBytes);
-        assertEquals("unexpected rxPackets", rxPackets, entry.rxPackets);
-        assertEquals("unexpected txBytes", txBytes, entry.txBytes);
-        assertEquals("unexpected txPackets", txPackets, entry.txPackets);
-        assertEquals("unexpected operations", operations, entry.operations);
-    }
-
     private static void assertValues(NetworkStatsHistory stats, long start, long end, long rxBytes,
             long rxPackets, long txBytes, long txPackets, int operations) {
         final NetworkStatsHistory.Entry entry = stats.getValues(start, end, null);
@@ -1750,14 +1201,6 @@ public class NetworkStatsServiceTest {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TUN_IFACE);
         return new NetworkState(info, prop, new NetworkCapabilities(), VPN_NETWORK, null, null);
-    }
-
-    private static VpnInfo createVpnInfo(String[] underlyingIfaces) {
-        VpnInfo info = new VpnInfo();
-        info.ownerUid = UID_VPN;
-        info.vpnIface = TUN_IFACE;
-        info.underlyingIfaces = underlyingIfaces;
-        return info;
     }
 
     private long getElapsedRealtime() {
