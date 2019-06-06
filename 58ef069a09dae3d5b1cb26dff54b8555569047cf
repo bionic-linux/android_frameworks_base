@@ -22,6 +22,30 @@
       "revId": "58ef069a09dae3d5b1cb26dff54b8555569047cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1ac682_4294f545",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2019-06-06T22:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564e88fa_c697fef0",
+      "range": {
+        "startLine": 688,
+        "startChar": 26,
+        "endLine": 688,
+        "endChar": 29
+      },
+      "revId": "58ef069a09dae3d5b1cb26dff54b8555569047cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
