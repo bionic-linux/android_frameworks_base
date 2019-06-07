@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80fcb6b9_ed586f4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1040443
+      },
+      "writtenOn": "2019-06-07T10:39:49Z",
+      "side": 1,
+      "message": "I *think* Merged-In: (Change ID of downstream) is safer because the infra takes case. when you DO NOT MERGE you have to reason on the various automerger paths.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "ed3a55b62a3ee3f4585f2854a4ea346411a22a9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
