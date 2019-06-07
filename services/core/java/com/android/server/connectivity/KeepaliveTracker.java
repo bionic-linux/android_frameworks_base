@@ -151,6 +151,7 @@ public class KeepaliveTracker {
         private static final int STARTING = 2;
         private static final int STARTED = 3;
         private static final int STOPPING = 4;
+        private static final int ERROR_CLEANUP = 5;
         private int mStartedState = NOT_STARTED;
 
         KeepaliveInfo(@NonNull ISocketKeepaliveCallback callback,
@@ -210,6 +211,7 @@ public class KeepaliveTracker {
                 case STARTING : return "STARTING";
                 case STARTED : return "STARTED";
                 case STOPPING : return "STOPPING";
+                case ERROR_CLEANUP : return "ERROR_CLEANUP";
             }
             throw new IllegalArgumentException("Unknown state");
         }
@@ -373,10 +375,12 @@ public class KeepaliveTracker {
                     cleanupStoppedKeepalive(mNai, mSlot);
                     break;
                 case STOPPING:
-                    // Keepalive is already in stopping state, ignore.
+                case ERROR_CLEANUP:
+                    // Already stopping. This can happen if the client asked for stopping
+                    // exactly as some data was received, for example.
                     return;
                 default:
-                    mStartedState = STOPPING;
+                    mStartedState = reason == SUCCESS ? STOPPING : ERROR_CLEANUP;
                     switch (mType) {
                         case TYPE_TCP:
                             mTcpController.stopSocketMonitor(mSlot);
@@ -403,19 +407,13 @@ public class KeepaliveTracker {
                 }
             }
 
-            if (reason == SUCCESS) {
-                try {
-                    mCallback.onStopped();
-                } catch (RemoteException e) {
-                    Log.w(TAG, "Discarded onStop callback: " + reason);
-                }
-            } else if (reason == DATA_RECEIVED) {
+            if (reason == DATA_RECEIVED) {
                 try {
                     mCallback.onDataReceived();
                 } catch (RemoteException e) {
                     Log.w(TAG, "Discarded onDataReceived callback: " + reason);
                 }
-            } else {
+            } else if (reason != SUCCESS) {
                 notifyErrorCallback(mCallback, reason);
             }
 
@@ -465,7 +463,7 @@ public class KeepaliveTracker {
     public void handleStopAllKeepalives(NetworkAgentInfo nai, int reason) {
         final HashMap<Integer, KeepaliveInfo> networkKeepalives = mKeepalives.get(nai);
         if (networkKeepalives != null) {
-            final ArrayList<KeepaliveInfo> kalist = new ArrayList(networkKeepalives.values());
+            final ArrayList<KeepaliveInfo> kalist = new ArrayList<>(networkKeepalives.values());
             for (KeepaliveInfo ki : kalist) {
                 ki.stop(reason);
                 // Clean up keepalives since the network agent is disconnected and unable to pass
@@ -522,7 +520,7 @@ public class KeepaliveTracker {
                     invalidKeepalives.add(Pair.create(slot, error));
                 }
             }
-            for (Pair<Integer, Integer> slotAndError: invalidKeepalives) {
+            for (Pair<Integer, Integer> slotAndError : invalidKeepalives) {
                 handleStopKeepalive(nai, slotAndError.first, slotAndError.second);
             }
         }
@@ -576,11 +574,26 @@ public class KeepaliveTracker {
                 handleStopKeepalive(nai, slot, reason);
             }
         } else if (KeepaliveInfo.STOPPING == ki.mStartedState) {
-            // The message indicated result of stopping : clean up keepalive slots.
+            // The message indicated result of stopping after normal shutdown : clean up the
+            // keepalive slot.
             Log.d(TAG, "Stopped keepalive " + slot + " on " + nai.name()
                     + " stopped: " + reason);
             ki.mStartedState = KeepaliveInfo.NOT_STARTED;
             cleanupStoppedKeepalive(nai, slot);
+            // Call onStopped after everything has been cleaned up.
+            try {
+                ki.mCallback.onStopped();
+            } catch (RemoteException e) {
+                Log.w(TAG, "Discarded onStop callback: " + reason);
+            }
+        } else if (KeepaliveInfo.ERROR_CLEANUP == ki.mStartedState) {
+            // The message indicated result of stopping after error shutdown : clean up the
+            // keepalive slot.
+            Log.d(TAG, "Cleaned up keepalive " + slot + " on " + nai.name()
+                    + " stopped: " + reason);
+            ki.mStartedState = KeepaliveInfo.NOT_STARTED;
+            cleanupStoppedKeepalive(nai, slot);
+            // The callback was already sent onError, don't send onStopped.
         } else {
             Log.wtf(TAG, "Event " + message.what + "," + slot + "," + reason
                     + " for keepalive in wrong state: " + ki.toString());

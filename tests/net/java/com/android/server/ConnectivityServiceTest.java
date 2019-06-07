@@ -570,7 +570,12 @@ public class ConnectivityServiceTest {
 
                 @Override
                 public void stopSocketKeepalive(Message msg) {
-                    onSocketKeepaliveEvent(msg.arg1, mStopKeepaliveError);
+                    // Simulate this operation taking a little time.
+                    final int error = mStopKeepaliveError;
+                    final int arg = msg.arg1;
+                    mHandlerThread.getThreadHandler().post(() -> {
+                        onSocketKeepaliveEvent(arg, error);
+                    });
                 }
 
                 @Override
@@ -4185,6 +4190,7 @@ public class ConnectivityServiceTest {
         callback.expectStarted();
         mWiFiNetworkAgent.setStopKeepaliveError(PacketKeepalive.SUCCESS);
         ka.stop();
+        waitForIdle();
         callback.expectStopped();
 
         // Check that deleting the IP address stops the keepalive.
@@ -4228,6 +4234,7 @@ public class ConnectivityServiceTest {
 
         // Now stop the first one and create a third. This also gets slot 1.
         ka.stop();
+        waitForIdle();
         callback.expectStopped();
 
         mWiFiNetworkAgent.setExpectedKeepaliveSlot(1);
@@ -4237,9 +4244,11 @@ public class ConnectivityServiceTest {
         callback3.expectStarted();
 
         ka2.stop();
+        waitForIdle();
         callback2.expectStopped();
 
         ka3.stop();
+        waitForIdle();
         callback3.expectStopped();
     }
 
