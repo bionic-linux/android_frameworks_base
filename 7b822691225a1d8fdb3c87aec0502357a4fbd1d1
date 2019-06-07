@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290c5fde_e0495fff",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-07T17:34:49Z",
+      "side": 1,
+      "message": "I was thinking you\u0027d store it as a Destination, but as you wish. This is fine too.",
+      "range": {
+        "startLine": 495,
+        "startChar": 12,
+        "endLine": 496,
+        "endChar": 76
+      },
+      "revId": "7b822691225a1d8fdb3c87aec0502357a4fbd1d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e2c6e27_ff2505c6",
+        "filename": "core/java/com/android/internal/util/StateMachine.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-07T17:34:49Z",
+      "side": 1,
+      "message": "Please avoid using bare types without a very, *very* strong reason",
+      "range": {
+        "startLine": 684,
+        "startChar": 43,
+        "endLine": 684,
+        "endChar": 54
+      },
+      "revId": "7b822691225a1d8fdb3c87aec0502357a4fbd1d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
