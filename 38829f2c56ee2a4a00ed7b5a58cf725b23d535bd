@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ba3c5f7_c19a2848",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-10T02:41:42Z",
+      "side": 1,
+      "message": "for data received \u0026 error, since we are still releasing slot after receiving events,\nI think it is the same that we need to defer the callback?",
+      "range": {
+        "startLine": 410,
+        "startChar": 16,
+        "endLine": 410,
+        "endChar": 22
+      },
+      "revId": "38829f2c56ee2a4a00ed7b5a58cf725b23d535bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7d82e5_77c23a08",
+        "filename": "services/core/java/com/android/server/connectivity/KeepaliveTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-10T02:41:42Z",
+      "side": 1,
+      "message": "Can a callback be received after we run this?\nIf not, does it lead to flaky for the deferred callback case?",
+      "range": {
+        "startLine": 420,
+        "startChar": 12,
+        "endLine": 420,
+        "endChar": 32
+      },
+      "revId": "38829f2c56ee2a4a00ed7b5a58cf725b23d535bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
