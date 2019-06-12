@@ -1231,7 +1231,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public NetworkStats getNetworkStatsDetail() {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            return mStatsFactory.readNetworkStatsDetail(UID_ALL, null, TAG_ALL, null);
+            return mStatsFactory.readNetworkStatsDetail(UID_ALL, null, TAG_ALL);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -1540,7 +1540,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     public NetworkStats getNetworkStatsUidDetail(int uid, String[] ifaces) {
         mContext.enforceCallingOrSelfPermission(CONNECTIVITY_INTERNAL, TAG);
         try {
-            return mStatsFactory.readNetworkStatsDetail(uid, ifaces, TAG_ALL, null);
+            return mStatsFactory.readNetworkStatsDetail(uid, ifaces, TAG_ALL);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
