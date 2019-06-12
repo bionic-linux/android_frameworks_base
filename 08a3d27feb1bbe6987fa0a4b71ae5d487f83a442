@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ffad711c_4d1e3115",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-12T15:59:36Z",
+      "side": 1,
+      "message": "Can you also add 129264869?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49f6ce45_1f8da1e4",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5a966838_5a5f7e28",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6802,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-12T15:59:36Z",
+      "side": 1,
+      "message": "\u003e Am I missing something ? If I\u0027m not, it means we need to write a new test for this case.\n\nThe *gazillion* traffic should theoretically be bounded to 2MB (practically it can be \u003e\u003e 2MB) due to global alert threshold set.\n\n\u003e I don\u0027t think your change is introducing this – Varun\u0027s change already had this bug.\n\nYes, this has been a long existing bug (even before my changes). I have thought about fixing this for a long time. Anyways, I\u0027ve filed b/135113409. I\u0027m thinking maybe we should punt it for R, given that all this accounting is already too complex and too many changes related to this are already been made in Q? WDYT?",
+      "parentUuid": "49f6ce45_1f8da1e4",
+      "range": {
+        "startLine": 6802,
+        "startChar": 20,
+        "endLine": 6802,
+        "endChar": 37
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf3e9ce_1e0eee41",
         "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
         "patchSetId": 3
@@ -36,6 +83,30 @@
       "writtenOn": "2019-06-12T14:04:22Z",
       "side": 1,
       "message": "Do we want to keep this comment ? We\u0027re going the other way around with this change.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 72
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc76043_e78fc9c7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-12T15:59:36Z",
+      "side": 1,
+      "message": "This is probably necessary for now as some of the 464xlat adj is also performed in NSS (for tether traffic and video telephony traffic). So, its in context to that: http://cs/aosp-master/frameworks/base/services/core/java/com/android/server/net/NetworkStatsService.java?l\u003d1664",
+      "parentUuid": "eaf3e9ce_1e0eee41",
       "range": {
         "startLine": 94,
         "startChar": 4,
