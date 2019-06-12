@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f6ce45_1f8da1e4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6802,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T14:04:22Z",
+      "side": 1,
+      "message": "You bet it does, and if I understand this correctly, you have an inversion here, because you\u0027re going to count the traffic *so far* with the *new* vpn info. Example :\n\n• Device only has cellular.\n• VPN is established. Cellular is its underlying network.\n• A gazillion traffic happens.\n• Wifi connects. The VPN sets its new underlying network to wifi.\n• This method is called. The code updates the VPN info to say the VPN is now underlied by Wifi.\n• Now force update interfaces and count the traffic.\n• Turns out, the VPN has done a gazillion traffic on the cellular interface.\n• But cellular does not underly it, so the VPN is blamed for a gazillion traffic.\n\nAm I missing something ? If I\u0027m not, it means we need to write a new test for this case.\n\nOf course in practice it probably wouldn\u0027t matter too much because readNetworkStats is called regularly anyway while underlying interfaces probably don\u0027t change that often, and there are small (few milliseconds) gaps where traffic can go accounted with wrong interfaces anyway. I think at worst that means 2MB are blamed to the wrong place, since for quota we poll at most every 2MB IIRC.\n\nI don\u0027t think your change is introducing this – Varun\u0027s change already had this bug.",
+      "range": {
+        "startLine": 6802,
+        "startChar": 20,
+        "endLine": 6802,
+        "endChar": 37
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf3e9ce_1e0eee41",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T14:04:22Z",
+      "side": 1,
+      "message": "Do we want to keep this comment ? We\u0027re going the other way around with this change.",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 72
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
