@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f17266e_b4de5b97",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "Style guide says no * imports, please just import RTMGRP_NEIGH",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b67af651_84f5f141",
         "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2019-06-10T09:39:55Z",
       "side": 1,
       "message": "123 /* portId */\nor pull this out into a constant",
+      "range": {
+        "startLine": 35,
+        "startChar": 61,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fb926a_b2c7ab7b",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "Constant please",
+      "parentUuid": "b67af651_84f5f141",
       "range": {
         "startLine": 35,
         "startChar": 61,
@@ -41,6 +88,98 @@
         "startChar": 84,
         "endLine": 46,
         "endChar": 87
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b25551_65e6787c",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "Can you please also check the members ?\nassertEquals(pkAddress.sll_protocol, ETH_P_IPV6)\nifindex\nhatype\npkttype\naddr",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd90554_759adf3d",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "You have this problem because 0xff does not fit into a byte. How about :\n\nval ff \u003d 0xff.toByte()\n...123, byteArrayOf(ff, ff, ff, ff, ff, ff))\n\n\nAlternatively you can define a helper :\n\npublic fun byteArrayOfInts(vararg ints: Int) \u003d ByteArray(ints.size) { i -\u003e ints[i].toByte() }",
+      "range": {
+        "startLine": 49,
+        "startChar": 78,
+        "endLine": 49,
+        "endChar": 91
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71cabb4_2affadb1",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "Same : please check the members. To increase safety when checking sll_addr you should probably have some less special value (it\u0027s more likely that you get 0xff,ff,ff,ff,ff,ff by chance than most values that you\u0027d chose arbitrarily)",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54f6cdf_7bb06086",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-12T03:34:57Z",
+      "side": 1,
+      "message": "Please also make sure that SocketUtils.closeSocket(null) does not throw. Also that it does not throw if called again on the same socket, and that the socket is still invalid after a second close.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 5
       },
       "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
