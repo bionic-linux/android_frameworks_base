@@ -16,6 +16,7 @@
 
 package com.android.server.net;
 
+import static android.net.NetworkStats.INTERFACES_ALL;
 import static android.net.NetworkStats.SET_ALL;
 import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
@@ -269,13 +270,20 @@ public class NetworkStatsFactory {
      */
     @Deprecated
     public NetworkStats readNetworkStatsDetail() throws IOException {
-        return readNetworkStatsDetail(UID_ALL, null, TAG_ALL, null);
+        return readNetworkStatsDetail(UID_ALL, INTERFACES_ALL, TAG_ALL);
     }
 
-    public NetworkStats readNetworkStatsDetail(int limitUid, String[] limitIfaces, int limitTag,
-            NetworkStats lastStats) throws IOException {
-        final NetworkStats stats =
-              readNetworkStatsDetailInternal(limitUid, limitIfaces, limitTag, lastStats);
+    /**
+     * Reads the detailed UID stats based on the provided parameters
+     *
+     * @param limitUid the UID to limit this query to
+     * @param limitIfaces the interfaces that we care about
+     * @param limitTag the tags for which to query
+     * @return the NetworkStats instance containing network statistics at the present time.
+     */
+    public NetworkStats readNetworkStatsDetail(int limitUid, String[] limitIfaces, int limitTag)
+            throws IOException {
+        final NetworkStats stats = readNetworkStatsDetailInternal(limitUid, limitIfaces, limitTag);
 
         // No locking here: apply464xlatAdjustments behaves fine with an add-only ConcurrentHashMap.
         // TODO: remove this and only apply adjustments in NetworkStatsService.
@@ -297,17 +305,10 @@ public class NetworkStatsFactory {
         }
     }
 
-    // TODO: delete the lastStats parameter
     private NetworkStats readNetworkStatsDetailInternal(int limitUid, String[] limitIfaces,
-            int limitTag, NetworkStats lastStats) throws IOException {
+            int limitTag) throws IOException {
         if (USE_NATIVE_PARSING) {
-            final NetworkStats stats;
-            if (lastStats != null) {
-                stats = lastStats;
-                stats.setElapsedRealtime(SystemClock.elapsedRealtime());
-            } else {
-                stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
-            }
+            final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
             if (mUseBpfStats) {
                 synchronized (mPersistSnapshot) {
                     try {
