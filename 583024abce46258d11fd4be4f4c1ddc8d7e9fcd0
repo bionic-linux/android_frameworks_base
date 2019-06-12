@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e2052d3_dd92a2af",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-12T02:00:02Z",
+      "side": 1,
+      "message": "Should we be doing a null/empty check for all of the interface names?",
+      "range": {
+        "startLine": 4399,
+        "startChar": 34,
+        "endLine": 4400,
+        "endChar": 63
+      },
+      "revId": "583024abce46258d11fd4be4f4c1ddc8d7e9fcd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e588d78_c75b0138",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2019-06-12T02:00:02Z",
+      "side": 1,
+      "message": "Should we call this mTunAnd464xLatAdjustedStats? - since it is maintaining both",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 42
+      },
+      "revId": "583024abce46258d11fd4be4f4c1ddc8d7e9fcd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
