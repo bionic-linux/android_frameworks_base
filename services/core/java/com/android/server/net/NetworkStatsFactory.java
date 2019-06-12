@@ -16,6 +16,7 @@
 
 package com.android.server.net;
 
+import static android.net.NetworkStats.INTERFACES_ALL;
 import static android.net.NetworkStats.SET_ALL;
 import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
@@ -33,6 +34,7 @@ import android.os.SystemClock;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ProcFileReader;
 
@@ -70,9 +72,24 @@ public class NetworkStatsFactory {
 
     private INetd mNetdService;
 
-    // A persistent Snapshot since device start for eBPF stats
-    @GuardedBy("mPersistSnapshot")
-    private final NetworkStats mPersistSnapshot;
+    /**
+     * Guards persistent data access in this class
+     *
+     * <p>In order to prevent deadlocks, critical sections protected by this lock SHALL NOT call out
+     * to other code that will acquire other locks within the system server. See b/134244752.
+     */
+    private static final Object sPersistentDataLock = new Object();
+
+    /** Set containing info about active VPNs and their underlying networks. */
+    private static volatile VpnInfo[] sVpnInfos = new VpnInfo[0];
+
+    // A persistent snapshot of cumulative stats since device start
+    @GuardedBy("sPersistentDataLock")
+    private NetworkStats mPersistSnapshot;
+
+    // The persistent snapshot of tun-adjusted stats since device start
+    @GuardedBy("sPersistentDataLock")
+    private NetworkStats mTunAdjustedStats;
 
     // TODO: only do adjustments in NetworkStatsService and remove this.
     /**
@@ -88,6 +105,19 @@ public class NetworkStatsFactory {
         if (stackedIface != null && baseIface != null) {
             sStackedIfaces.put(stackedIface, baseIface);
         }
+    }
+
+    /**
+     * Set active VPN information for data usage migration purposes
+     *
+     * <p>Traffic on TUN-based VPNs inherently all appear to be originated from the VPN providing
+     * app's UID. This method is used to support migration of VPN data usage, ensuring data is
+     * accurately billed to the real owner of the traffic.
+     *
+     * @param vpnArray The snapshot of the currently-running VPNs.
+     */
+    public static void updateVpnInfos(VpnInfo[] vpnArray) {
+        sVpnInfos = vpnArray.clone();
     }
 
     /**
@@ -146,6 +176,7 @@ public class NetworkStatsFactory {
         mStatsXtUid = new File(procRoot, "net/xt_qtaguid/stats");
         mUseBpfStats = useBpfStats;
         mPersistSnapshot = new NetworkStats(SystemClock.elapsedRealtime(), -1);
+        mTunAdjustedStats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
     }
 
     public NetworkStats readBpfNetworkStatsDev() throws IOException {
@@ -263,11 +294,6 @@ public class NetworkStatsFactory {
         return stats;
     }
 
-    /**
-     * @deprecated Use NetworkStatsService#getDetailedUidStats which also accounts for
-     * VPN traffic
-     */
-    @Deprecated
     public NetworkStats readNetworkStatsDetail() throws IOException {
         return readNetworkStatsDetail(UID_ALL, null, TAG_ALL);
     }
@@ -284,14 +310,10 @@ public class NetworkStatsFactory {
             throws IOException {
         final NetworkStats stats = readNetworkStatsDetailInternal(limitUid, limitIfaces, limitTag);
 
-        // No locking here: apply464xlatAdjustments behaves fine with an add-only ConcurrentHashMap.
-        // TODO: remove this and only apply adjustments in NetworkStatsService.
-        stats.apply464xlatAdjustments(sStackedIfaces, mUseBpfStats);
-
         return stats;
     }
 
-    @GuardedBy("mPersistSnapshot")
+    @GuardedBy("sPersistentDataLock")
     private void requestSwapActiveStatsMapLocked() throws RemoteException {
         // Ask netd to do a active map stats swap. When the binder call successfully returns,
         // the system server should be able to safely read and clean the inactive map
@@ -306,10 +328,17 @@ public class NetworkStatsFactory {
 
     private NetworkStats readNetworkStatsDetailInternal(int limitUid, String[] limitIfaces,
             int limitTag) throws IOException {
-        if (USE_NATIVE_PARSING) {
-            final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
-            if (mUseBpfStats) {
-                synchronized (mPersistSnapshot) {
+        // In order to prevent deadlocks, anything protected by this lock MUST NOT call out to other
+        // code that will acquire other locks within the system server. See b/134244752.
+        synchronized (sPersistentDataLock) {
+            // Take a reference. If this gets swapped out, we still have the old reference.
+            final VpnInfo[] vpnArray = sVpnInfos;
+            // Take a defensive copy. mPersistSnapshot is mutated in some cases below
+            final NetworkStats prev = mPersistSnapshot.clone();
+
+            if (USE_NATIVE_PARSING) {
+                final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(), -1);
+                if (mUseBpfStats) {
                     try {
                         requestSwapActiveStatsMapLocked();
                     } catch (RemoteException e) {
@@ -318,30 +347,64 @@ public class NetworkStatsFactory {
                     // Stats are always read from the inactive map, so they must be read after the
                     // swap
                     if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), UID_ALL,
-                            null, TAG_ALL, mUseBpfStats) != 0) {
+                            INTERFACES_ALL, TAG_ALL, mUseBpfStats) != 0) {
                         throw new IOException("Failed to parse network stats");
                     }
+
+                    // BPF stats are incremental; fold into mPersistSnapshot.
                     mPersistSnapshot.setElapsedRealtime(stats.getElapsedRealtime());
                     mPersistSnapshot.combineAllValues(stats);
-                    NetworkStats result = mPersistSnapshot.clone();
-                    result.filter(limitUid, limitIfaces, limitTag);
-                    return result;
+                } else {
+                    if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), UID_ALL,
+                            INTERFACES_ALL, TAG_ALL, mUseBpfStats) != 0) {
+                        throw new IOException("Failed to parse network stats");
+                    }
+                    if (SANITY_CHECK_NATIVE) {
+                        final NetworkStats javaStats = javaReadNetworkStatsDetail(mStatsXtUid,
+                                UID_ALL, INTERFACES_ALL, TAG_ALL);
+                        assertEquals(javaStats, stats);
+                    }
+
+                    mPersistSnapshot = stats;
                 }
             } else {
-                if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), limitUid,
-                        limitIfaces, limitTag, mUseBpfStats) != 0) {
-                    throw new IOException("Failed to parse network stats");
-                }
-                if (SANITY_CHECK_NATIVE) {
-                    final NetworkStats javaStats = javaReadNetworkStatsDetail(mStatsXtUid, limitUid,
-                            limitIfaces, limitTag);
-                    assertEquals(javaStats, stats);
-                }
-                return stats;
+                mPersistSnapshot = javaReadNetworkStatsDetail(mStatsXtUid, UID_ALL, INTERFACES_ALL,
+                        TAG_ALL);
             }
-        } else {
-            return javaReadNetworkStatsDetail(mStatsXtUid, limitUid, limitIfaces, limitTag);
+
+            // Migrate data usage over a VPN to the TUN network. This must be done before 464xlat
+            // adjustments to make sure apps are billed for 464 overhead.
+            NetworkStats adjustedStats = adjustForTunAnd464Xlat(mPersistSnapshot, prev, vpnArray);
+
+            // Filter return values
+            adjustedStats.filter(limitUid, limitIfaces, limitTag);
+            return adjustedStats;
         }
+    }
+
+    @GuardedBy("sPersistentDataLock")
+    private NetworkStats adjustForTunAnd464Xlat(
+            NetworkStats uidDetailStats, NetworkStats previousStats, VpnInfo[] vpnArray) {
+        // Calculate delta from last snapshot
+        final NetworkStats delta = uidDetailStats.subtract(previousStats);
+
+        // No locking here: apply464xlatAdjustments behaves fine with an add-only
+        // ConcurrentHashMap.
+        delta.apply464xlatAdjustments(sStackedIfaces, mUseBpfStats);
+
+        // Apply VPN traffic
+        for (VpnInfo info : vpnArray) {
+            delta.migrateTun(info.ownerUid, info.vpnIface, info.underlyingIfaces);
+        }
+
+        // Filter out debug entries as that may lead to over counting.
+        delta.filterDebugEntries();
+
+        // Update mTunAdjustedStats with migrated delta.
+        mTunAdjustedStats.combineAllValues(delta);
+        mTunAdjustedStats.setElapsedRealtime(uidDetailStats.getElapsedRealtime());
+
+        return mTunAdjustedStats.clone();
     }
 
     /**
