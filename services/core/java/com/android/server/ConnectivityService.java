@@ -192,6 +192,7 @@ import com.android.server.net.BaseNetdEventCallback;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.net.NetworkPolicyManagerInternal;
+import com.android.server.net.NetworkStatsFactory;
 import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
@@ -4395,8 +4396,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             List<String> interfaces = new ArrayList<>();
             for (Network network : underlyingNetworks) {
                 LinkProperties lp = getLinkProperties(network);
-                if (lp != null && !TextUtils.isEmpty(lp.getInterfaceName())) {
-                    interfaces.add(lp.getInterfaceName());
+                if (lp != null) {
+                    for (String iface : lp.getAllInterfaceNames()) {
+                        if (!TextUtils.isEmpty(iface)) {
+                            interfaces.add(iface);
+                        }
+                    }
                 }
             }
             if (!interfaces.isEmpty()) {
@@ -6793,9 +6798,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (activeLinkProperties != null) {
             activeIface = activeLinkProperties.getInterfaceName();
         }
+
+        // CAUTION: Ordering matters between updateVpnInfos() call and forceUpdateIfaces(), which
+        // triggers a new poll.
+        NetworkStatsFactory.updateVpnInfos(getAllVpnInfo());
         try {
             mStatsService.forceUpdateIfaces(
-                    getDefaultNetworks(), getAllVpnInfo(), getAllNetworkState(), activeIface);
+                    getDefaultNetworks(), getAllNetworkState(), activeIface);
         } catch (Exception ignored) {
         }
     }
