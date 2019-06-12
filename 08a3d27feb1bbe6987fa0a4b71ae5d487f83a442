@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "15367206_93579d74",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6802,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-06-12T21:43:05Z",
+      "side": 1,
+      "message": "Concur that this is a potential race. I think the only way we\u0027d be able to fix it is if we do a poll-update-poll entirely atomically.\n\nI\u0027m not sure about the performance implications of this, since we\u0027re doing two polls, and blocking all other threads from acquiring the lock while we do so.\n\nAddressing in subsequent changes sounds like the safe option, specifically so we can ensure this TUN adjustment works as expected in the field (without additional changes). I\u0027ll leave the call to Jean/Lorenzo",
+      "parentUuid": "5a966838_5a5f7e28",
+      "range": {
+        "startLine": 6802,
+        "startChar": 20,
+        "endLine": 6802,
+        "endChar": 37
+      },
+      "revId": "08a3d27feb1bbe6987fa0a4b71ae5d487f83a442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf3e9ce_1e0eee41",
         "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
         "patchSetId": 3
