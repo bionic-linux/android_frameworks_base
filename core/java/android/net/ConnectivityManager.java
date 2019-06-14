@@ -627,7 +627,8 @@ public class ConnectivityManager {
      * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562,
+            publicAlternatives = "Use {@link NetworkCapabilities#NET_CAPABILITY_FOTA} instead.")
     public static final int TYPE_MOBILE_FOTA = 10;
 
     /**
@@ -645,7 +646,8 @@ public class ConnectivityManager {
      * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562,
+            publicAlternatives = "Use {@link NetworkCapabilities#NET_CAPABILITY_CBS} instead.")
     public static final int TYPE_MOBILE_CBS  = 12;
 
     /**
@@ -674,7 +676,8 @@ public class ConnectivityManager {
      * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562,
+            publicAlternatives = "Use {@link NetworkCapabilities#NET_CAPABILITY_EIMS} instead.")
     public static final int TYPE_MOBILE_EMERGENCY = 15;
 
     /**
@@ -867,7 +870,9 @@ public class ConnectivityManager {
      * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562,
+            publicAlternatives = "Use {@link ConnectivityManager$NetworkCallback} and "
+            + "{@link NetworkCapabilities#TRANSPORT_CELLULAR} instead.")
     public static boolean isNetworkTypeMobile(int networkType) {
         switch (networkType) {
             case TYPE_MOBILE:
@@ -1279,7 +1284,8 @@ public class ConnectivityManager {
      *             app is blocked by policy from using this network.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 109783091)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 109783091,
+            publicAlternatives = "Use {@code getLinkProperties(getActiveNetwork())} instead.")
     public LinkProperties getActiveLinkProperties() {
         try {
             return mService.getActiveLinkProperties();

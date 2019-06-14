@@ -980,7 +980,10 @@ public class TrafficStats {
      * Interfaces are never removed from this list, so counters should always be
      * monotonic.
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562)
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 130143562,
+            publicAlternatives = "Use {@link android.app.usage.NetworkStatsManager}, "
+            + "{@link #getMobileRxPackets}, {@link #getMobileRxBytes}, "
+            + "{@link #getMobileTxPackets} or {@link #getMobileTxBytes}instead.")
     private static String[] getMobileIfaces() {
         try {
             return getStatsService().getMobileIfaces();
