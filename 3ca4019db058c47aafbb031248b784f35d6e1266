@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0f12157_b002fda9",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f17266e_b4de5b97",
+      "range": {
+        "startLine": 22,
+        "startChar": 34,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b67af651_84f5f141",
         "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c0fa6f0d_adeee91b",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3fb926a_b2c7ab7b",
+      "range": {
+        "startLine": 35,
+        "startChar": 61,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5323a21_ccf2aec6",
         "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
         "patchSetId": 2
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e4756275_fa31ca96",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5323a21_ccf2aec6",
+      "range": {
+        "startLine": 46,
+        "startChar": 84,
+        "endLine": 46,
+        "endChar": 87
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b25551_65e6787c",
         "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
         "patchSetId": 2
@@ -106,6 +178,30 @@
       "writtenOn": "2019-06-12T03:34:57Z",
       "side": 1,
       "message": "Can you please also check the members ?\nassertEquals(pkAddress.sll_protocol, ETH_P_IPV6)\nifindex\nhatype\npkttype\naddr",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d2864a_b289f64e",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "As discussion f2f, these members can\u0027t be accessed by no @libcore.api.CorePlatformApi annotation even they are public.\nAnd I tried to create/bind a packet socket with pkAddress to verify the parameters I set as you suggested. But it got permission denied.\nSo I think we probably can verify the object which is instance of PacketSocketAddress only.",
+      "parentUuid": "69b25551_65e6787c",
       "range": {
         "startLine": 47,
         "startChar": 8,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "9a86d642_80d88574",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fd90554_759adf3d",
+      "range": {
+        "startLine": 49,
+        "startChar": 78,
+        "endLine": 49,
+        "endChar": 91
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71cabb4_2affadb1",
         "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
         "patchSetId": 2
@@ -152,6 +272,30 @@
       "writtenOn": "2019-06-12T03:34:57Z",
       "side": 1,
       "message": "Same : please check the members. To increase safety when checking sll_addr you should probably have some less special value (it\u0027s more likely that you get 0xff,ff,ff,ff,ff,ff by chance than most values that you\u0027d chose arbitrarily)",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 18
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e127666_ed980474",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "a71cabb4_2affadb1",
       "range": {
         "startLine": 51,
         "startChar": 8,
@@ -184,6 +328,30 @@
       "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbef7d3_97faeb60",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-14T07:35:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b54f6cdf_7bb06086",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "3ca4019db058c47aafbb031248b784f35d6e1266",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
