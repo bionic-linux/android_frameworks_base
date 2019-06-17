@@ -371,7 +371,7 @@ import android.sysprop.VoldProperties;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.format.Time;
+import android.text.format.TimeMigrationUtils;
 import android.text.style.SuggestionSpan;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -6315,9 +6315,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 tracesFile = File.createTempFile("app_slow", null, tracesDir);
 
                 StringBuilder sb = new StringBuilder();
-                Time tobj = new Time();
-                tobj.set(System.currentTimeMillis());
-                sb.append(tobj.format("%Y-%m-%d %H:%M:%S"));
+                sb.append(TimeMigrationUtils.formatMillisAsDateTime(System.currentTimeMillis()));
                 sb.append(": ");
                 TimeUtils.formatDuration(SystemClock.uptimeMillis()-startTime, sb);
                 sb.append(" since ");
