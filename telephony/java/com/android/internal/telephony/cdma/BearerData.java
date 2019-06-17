@@ -20,7 +20,6 @@ import android.content.res.Resources;
 import android.telephony.SmsCbCmasInfo;
 import android.telephony.cdma.CdmaSmsCbProgramData;
 import android.telephony.cdma.CdmaSmsCbProgramResults;
-import android.text.format.Time;
 import android.telephony.Rlog;
 
 import com.android.internal.telephony.GsmAlphabet;
@@ -32,8 +31,10 @@ import com.android.internal.telephony.uicc.IccUtils;
 import com.android.internal.util.BitwiseInputStream;
 import com.android.internal.util.BitwiseOutputStream;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.TimeZone;
 
 /**
  * An object to encode and decode CDMA SMS bearer data.
@@ -228,10 +229,23 @@ public final class BearerData {
     /**
      * 6-byte-field, see 3GPP2 C.S0015-B, v2, 4.5.4
      */
-    public static class TimeStamp extends Time {
+    public static class TimeStamp {
+
+        private int mSecond;
+        private int mMinute;
+        private int mHour;
+        private int mMonthDay;
+
+        /** Month [1-12] */
+        private int mMonth;
+
+        /** Full year. For example, 1970. */
+        private int mYear;
+
+        private ZoneId mZoneId;
 
         public TimeStamp() {
-            super(TimeZone.getDefault().getID());   // 3GPP2 timestamps use the local timezone
+            mZoneId = ZoneId.systemDefault();   // 3GPP2 timestamps use the local timezone
         }
 
         public static TimeStamp fromByteArray(byte[] data) {
@@ -239,35 +253,43 @@ public final class BearerData {
             // C.S0015-B v2.0, 4.5.4: range is 1996-2095
             int year = IccUtils.cdmaBcdByteToInt(data[0]);
             if (year > 99 || year < 0) return null;
-            ts.year = year >= 96 ? year + 1900 : year + 2000;
+            ts.mYear = year >= 96 ? year + 1900 : year + 2000;
             int month = IccUtils.cdmaBcdByteToInt(data[1]);
             if (month < 1 || month > 12) return null;
-            ts.month = month - 1;
+            ts.mMonth = month;
             int day = IccUtils.cdmaBcdByteToInt(data[2]);
             if (day < 1 || day > 31) return null;
-            ts.monthDay = day;
+            ts.mMonthDay = day;
             int hour = IccUtils.cdmaBcdByteToInt(data[3]);
             if (hour < 0 || hour > 23) return null;
-            ts.hour = hour;
+            ts.mHour = hour;
             int minute = IccUtils.cdmaBcdByteToInt(data[4]);
             if (minute < 0 || minute > 59) return null;
-            ts.minute = minute;
+            ts.mMinute = minute;
             int second = IccUtils.cdmaBcdByteToInt(data[5]);
             if (second < 0 || second > 59) return null;
-            ts.second = second;
+            ts.mSecond = second;
             return ts;
         }
+
+        public long toMillis() {
+            LocalDateTime localDateTime =
+                    LocalDateTime.of(mYear, mMonth, mMonthDay, mHour, mMinute, mSecond);
+            Instant instant = localDateTime.toInstant(mZoneId.getRules().getOffset(localDateTime));
+            return instant.toEpochMilli();
+        }
+
 
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
             builder.append("TimeStamp ");
-            builder.append("{ year=" + year);
-            builder.append(", month=" + month);
-            builder.append(", day=" + monthDay);
-            builder.append(", hour=" + hour);
-            builder.append(", minute=" + minute);
-            builder.append(", second=" + second);
+            builder.append("{ mYear=" + mYear);
+            builder.append(", mMonth=" + mMonth);
+            builder.append(", mMonthDay=" + mMonthDay);
+            builder.append(", mHour=" + mHour);
+            builder.append(", mMinute=" + mMinute);
+            builder.append(", mSecond=" + mSecond);
             builder.append(" }");
             return builder.toString();
         }
