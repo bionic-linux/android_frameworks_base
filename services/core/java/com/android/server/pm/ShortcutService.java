@@ -78,7 +78,7 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManagerInternal;
 import android.text.TextUtils;
-import android.text.format.Time;
+import android.text.format.TimeMigrationUtils;
 import android.util.ArraySet;
 import android.util.AtomicFile;
 import android.util.KeyValueListParser;
@@ -3941,9 +3941,7 @@ public class ShortcutService extends IShortcutService.Stub {
     }
 
     static String formatTime(long time) {
-        Time tobj = new Time();
-        tobj.set(time);
-        return tobj.format("%Y-%m-%d %H:%M:%S");
+        return TimeMigrationUtils.formatMillisAsDateTime(time);
     }
 
     private void dumpCurrentTime(PrintWriter pw) {
