@@ -16,6 +16,24 @@
       "revId": "3f2aa4190dbe2e4779110e47e47df90e4e4992cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9aebbf5_c116686f",
+        "filename": "core/java/com/android/internal/http/HttpDateTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-06-18T16:10:38Z",
+      "side": 0,
+      "message": "No. I missed the @UnsupportedAppUsage. Alternatively I can remove the use of Time but I\u0027ll check.",
+      "parentUuid": "87efcd73_1ff24f97",
+      "revId": "3f2aa4190dbe2e4779110e47e47df90e4e4992cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
