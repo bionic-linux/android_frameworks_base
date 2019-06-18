@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445960f4_ade10686",
+        "filename": "tests/net/common/java/android/net/util/SocketUtilsTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-18T09:26:11Z",
+      "side": 1,
+      "message": "To avoid having variables like pkAddress1, 2, 3... one thing you can do is :\n\n  SocketUtils.makePacketSocketAddress(...).let {\n    assertTrue(...)\n  }\n\nThat lets you limit the scope of the value and not declare a variable.\n\nDon\u0027t bother for this change though, it\u0027s done already. It\u0027s just a nugget for you in the future.",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "8b400032ac1159d14e373aef17b0c17d95a67241",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
