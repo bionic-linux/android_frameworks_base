@@ -46,6 +46,30 @@
       "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1791923_76c183c1",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-06-18T13:17:50Z",
+      "side": 1,
+      "message": "Is it more proper to say it is supported if device with Radio hal version \u003e\u003d 1.1?",
+      "parentUuid": "eaff6b5f_96c03d53",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
