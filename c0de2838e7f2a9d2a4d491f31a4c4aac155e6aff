@@ -22,6 +22,30 @@
       "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaff6b5f_96c03d53",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-18T02:49:41Z",
+      "side": 1,
+      "message": "As you mentioned in another commit, aosp/780485 suggest that it was acceptable to launch a P device with IRadio 1.0. But keepalives are supported until 1.1 aosp/403276\nDoes it mean that we can only say it is true for devices launching starting from Q?",
+      "parentUuid": "7f9ffdea_b241a59d",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
