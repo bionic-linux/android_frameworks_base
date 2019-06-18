@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87efcd73_1ff24f97",
+        "filename": "core/java/com/android/internal/http/HttpDateTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2019-06-18T15:49:44Z",
+      "side": 0,
+      "message": "Have you checked to see what app usages there are of this and whether it is safe to remove it?",
+      "revId": "3f2aa4190dbe2e4779110e47e47df90e4e4992cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
