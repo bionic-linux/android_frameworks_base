@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "dd6731e2_ecbbb005",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3102,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-06-19T10:00:56Z",
+      "side": 1,
+      "message": "nit: Just noticed that we have two styles to check exception. I think we should have another commit to unify the style with assertThrows().",
+      "range": {
+        "startLine": 3096,
+        "startChar": 8,
+        "endLine": 3102,
+        "endChar": 9
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c560230f_9f8ce22b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
