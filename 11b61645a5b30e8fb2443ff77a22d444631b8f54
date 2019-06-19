@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f34b4543_0c51bc77",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "Does this mean assertParcelSane?",
+      "range": {
+        "startLine": 321,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 0
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7a553d_2ca95c09",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "assertParcelSane?",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 33
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ef13c8_ae437b06",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "assertParcelSane?",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 33
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b021bd7_37452872",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "assertNotSame?",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63ae84f_82a1cdc1",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "assertParcelSane?",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 33
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87a0572_b07dba3d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "Can we use this? I guess it is unlikely.\nhttps://cs.corp.google.com/aosp-master/frameworks/base/core/java/com/android/internal/util/FunctionalUtils.java?type\u003dcs\u0026q\u003dThrowingConsumer\u0026sq\u003dpackage:aosp-master\u0026g\u003d0\u0026l\u003d100",
+      "range": {
+        "startLine": 202,
+        "startChar": 29,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c560230f_9f8ce22b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3527,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-19T04:51:59Z",
+      "side": 1,
+      "message": "nit: I like the original naming more since it is more straightforward to me, but no strong opinion.",
+      "range": {
+        "startLine": 3527,
+        "startChar": 8,
+        "endLine": 3527,
+        "endChar": 26
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
