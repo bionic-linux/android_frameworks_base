@@ -70,6 +70,30 @@
       "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9af7ef_cde149c0",
+        "filename": "core/java/android/net/SocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T16:32:44Z",
+      "side": 1,
+      "message": "Ideally yes but we don\u0027t know of a way to test for this outside of telephony. If we find one it\u0027s better to test for IRadio 1.1",
+      "parentUuid": "f1791923_76c183c1",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "c0de2838e7f2a9d2a4d491f31a4c4aac155e6aff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
