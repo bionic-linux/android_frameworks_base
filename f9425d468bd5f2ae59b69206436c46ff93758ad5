@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "837382de_63bfbf6c",
+        "filename": "tools/lock_agent/java/com/android/lock_checker/LockHook.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-06-19T16:59:36Z",
+      "side": 1,
+      "message": "nit: why do you use SomeArgs btw?",
+      "revId": "f9425d468bd5f2ae59b69206436c46ff93758ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
