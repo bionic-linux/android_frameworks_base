@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5389777_76f8cd52",
+        "filename": "tools/lock_agent/crasher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-06-19T18:37:44Z",
+      "side": 1,
+      "message": "Could you comment when it\u0027ll be useful? (As opposed to having a caller do a log by themselves?)",
+      "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
