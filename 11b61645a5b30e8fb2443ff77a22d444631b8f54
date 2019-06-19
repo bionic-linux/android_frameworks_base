@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a66c177_bc78496b",
+        "filename": "tests/net/common/java/android/net/LinkAddressTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "Good catch, thanks !",
+      "parentUuid": "f34b4543_0c51bc77",
+      "range": {
+        "startLine": 321,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 0
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7a553d_2ca95c09",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd8daa7_50df054c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "Done (but not above so as not to duplicate the constant.",
+      "parentUuid": "3a7a553d_2ca95c09",
+      "range": {
+        "startLine": 273,
+        "startChar": 8,
+        "endLine": 273,
+        "endChar": 33
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1e4eb06_1d0ccbfe",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ef13c8_ae437b06",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 33
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b021bd7_37452872",
         "filename": "tests/net/java/android/net/IpSecConfigTest.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63059a52_0f744afe",
+        "filename": "tests/net/java/android/net/IpSecConfigTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "Indeed, my IDE even had that suggestion.",
+      "parentUuid": "2b021bd7_37452872",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "a597c6b3_2ba4f97d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "We can actually use it here, but it\u0027s disputable. The main reason is that as  com.android.internal.util class, many of our tests can\u0027t use that at all. If many of our tests can\u0027t use that, do we want the ones that can use the internal.utils tool, or the one that we have to make for ourselves anyway ?\n\nFor pure ownership reasons I tend to prefer to use our own tool across all our tests. But I don\u0027t feel strongly, so if you strongly think we should use the internal.utils version please tell me and I\u0027ll change it.",
+      "parentUuid": "f87a0572_b07dba3d",
+      "range": {
+        "startLine": 202,
+        "startChar": 29,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6731e2_ecbbb005",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "2d501648_644950e7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "Done in aosp/986043",
+      "parentUuid": "dd6731e2_ecbbb005",
+      "range": {
+        "startLine": 3096,
+        "startChar": 8,
+        "endLine": 3102,
+        "endChar": 9
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c560230f_9f8ce22b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -183,6 +327,30 @@
       "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006337cd_eafa9ce4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3527,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-06-19T14:48:50Z",
+      "side": 1,
+      "message": "I don\u0027t feel very strongly either, but the reason I changed it is because I found the new name clearer. I\u0027m not sure what it means to assert a \"time limit\" but I understand what it means to assert that \"this code runs in at most xxx\".\n\nKeeping the new name accordingly, but if other reviewers also think the old name is better I\u0027m happy to change it back.",
+      "parentUuid": "c560230f_9f8ce22b",
+      "range": {
+        "startLine": 3527,
+        "startChar": 8,
+        "endLine": 3527,
+        "endChar": 26
+      },
+      "revId": "11b61645a5b30e8fb2443ff77a22d444631b8f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
