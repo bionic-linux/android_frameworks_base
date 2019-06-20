@@ -88,6 +88,24 @@
       "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90284a49_9534b92e",
+        "filename": "tools/lock_agent/crasher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T19:33:00Z",
+      "side": 1,
+      "message": "Obviously there are ways to manually interact with tombstoned, but it seems a lot easier this way (and doesn\u0027t require a dependency) :-)",
+      "parentUuid": "08777e03_cae7cf02",
+      "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
