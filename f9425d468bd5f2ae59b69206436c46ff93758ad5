@@ -16,6 +16,24 @@
       "revId": "f9425d468bd5f2ae59b69206436c46ff93758ad5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8370a46c_90c37937",
+        "filename": "tools/lock_agent/java/com/android/lock_checker/LockHook.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T16:20:14Z",
+      "side": 1,
+      "message": "Copied from your original code. :-)\n\nMind if I leave this for now and clean up in a follow-up?",
+      "parentUuid": "837382de_63bfbf6c",
+      "revId": "f9425d468bd5f2ae59b69206436c46ff93758ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
