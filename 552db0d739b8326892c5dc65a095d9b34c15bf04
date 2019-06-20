@@ -16,6 +16,24 @@
       "revId": "552db0d739b8326892c5dc65a095d9b34c15bf04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50bf352_86c12c21",
+        "filename": "tools/lock_agent/agent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T19:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df2fef7b_a6b40d68",
+      "revId": "552db0d739b8326892c5dc65a095d9b34c15bf04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
