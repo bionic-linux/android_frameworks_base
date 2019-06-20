@@ -70,6 +70,24 @@
       "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08777e03_cae7cf02",
+        "filename": "tools/lock_agent/crasher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-06-20T18:50:26Z",
+      "side": 1,
+      "message": "So in the java side, we have Log.wtf() which would crash but Slog.wtf() which wouldn\u0027t. Native should have something similar. :)",
+      "parentUuid": "89fd8d31_c57e7313",
+      "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
