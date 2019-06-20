@@ -16,6 +16,24 @@
       "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c7213a_8278bb89",
+        "filename": "tools/lock_agent/crasher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T17:50:33Z",
+      "side": 1,
+      "message": "This is a helper to deal with a multi-threaded fork. The problem is that the agent most likely runs in a non-single-threaded program. Then the set of operations you\u0027re allowed to do after fork (until exec) is *very* small. E.g., one should not allocate anything etc. That potentially precludes simple things like LOG (because there\u0027s no real guarantee how that\u0027s implemented).\n\nSo I moved the code into its own binary, so that it\u0027s a simple (double) fork-and-exec for the agent.\n\nDoes that make sense? Do you want me to add this blurb into the code?",
+      "parentUuid": "e5389777_76f8cd52",
+      "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
