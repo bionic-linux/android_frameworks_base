@@ -22,6 +22,30 @@
       "revId": "c14044cbb5661572d7f5e1399b3f1ccab92c7e55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b95853b_dd14e0f0",
+        "filename": "tools/lock_agent/java/com/android/lock_checker/LockHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T23:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9b27de_a5025f11",
+      "range": {
+        "startLine": 194,
+        "startChar": 20,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "c14044cbb5661572d7f5e1399b3f1ccab92c7e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
