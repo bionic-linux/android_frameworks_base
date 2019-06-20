@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9b27de_a5025f11",
+        "filename": "tools/lock_agent/java/com/android/lock_checker/LockHook.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-06-20T21:43:33Z",
+      "side": 1,
+      "message": "There are other processes on the system UID, like settings. ActivityThread.isSystem() is probably the right check.",
+      "range": {
+        "startLine": 194,
+        "startChar": 20,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "c14044cbb5661572d7f5e1399b3f1ccab92c7e55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
