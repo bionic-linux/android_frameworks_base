@@ -34,6 +34,24 @@
       "revId": "3f2aa4190dbe2e4779110e47e47df90e4e4992cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b29031_850e3dd5",
+        "filename": "core/java/com/android/internal/http/HttpDateTime.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-06-20T13:01:18Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c9aebbf5_c116686f",
+      "revId": "3f2aa4190dbe2e4779110e47e47df90e4e4992cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
