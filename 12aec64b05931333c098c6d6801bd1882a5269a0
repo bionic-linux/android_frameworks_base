@@ -52,6 +52,24 @@
       "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd8d31_c57e7313",
+        "filename": "tools/lock_agent/crasher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1041833
+      },
+      "writtenOn": "2019-06-20T18:38:20Z",
+      "side": 1,
+      "message": "Sorry, yeah. For the reporting pipeline, I don\u0027t want to crash, but I want something that\u0027s picked up. :-)",
+      "parentUuid": "f04df5ea_0ed17b07",
+      "revId": "12aec64b05931333c098c6d6801bd1882a5269a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
