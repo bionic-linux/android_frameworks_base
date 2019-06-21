@@ -22,6 +22,30 @@
       "revId": "c49809db11bfe6f2ab222089dfad9afac863741b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1d6381_b3051844",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-06-21T05:10:39Z",
+      "side": 1,
+      "message": "With the missing patches now in AOSP, these test cases are gone in the latest patchset.",
+      "parentUuid": "be4b0dae_b573b252",
+      "range": {
+        "startLine": 1067,
+        "startChar": 8,
+        "endLine": 1067,
+        "endChar": 35
+      },
+      "revId": "c49809db11bfe6f2ab222089dfad9afac863741b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
