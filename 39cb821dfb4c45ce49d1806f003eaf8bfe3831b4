@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdbf8e57_bc3bda58",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-24T13:56:11Z",
+      "side": 1,
+      "message": "Hmm. If I\u0027m reading the AlarmManager documentation correctly, this will fire an alarm immediately. The alarm will trigger mPollReceiver, which will do:\n\n            // on background handler thread, and verified UPDATE_DEVICE_STATS\n            // permission above.\n            performPoll(FLAG_PERSIST_ALL);\n\n            // verify that we\u0027re watching global alert\n            registerGlobalAlert();\n\nThere\u0027s a chance that this registerGlobalAlert will race with the registerGlobalAlert at line 431. I think that\u0027s fine though. The two calls will end up calling INetd.bandwidthSetGlobalAlert (), and that holds a lock, so they will just run one after the other.\n\nDoes that match your reading of the code as well? Is there something else that could go wrong here? Also, to a large extent the current code already has this problem.",
+      "range": {
+        "startLine": 410,
+        "startChar": 73,
+        "endLine": 410,
+        "endChar": 88
+      },
+      "revId": "39cb821dfb4c45ce49d1806f003eaf8bfe3831b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
