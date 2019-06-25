@@ -22,6 +22,30 @@
       "revId": "39cb821dfb4c45ce49d1806f003eaf8bfe3831b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9100c1d9_6b5b6366",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1107893
+      },
+      "writtenOn": "2019-06-25T01:53:57Z",
+      "side": 1,
+      "message": "To minimize any effect, I moved that block of code where registerPollAlarmLocked was so that this is strictly just inlining the function.\n\nYes I agree with your analysis, assuming INetd.bandwidthSetGlobalAlert() is idempotent.\n\nTaking a step back, why is registerGlobalAlert() retriggered on every stats poll ? That seems like a blind attempt at repairing situations where registerGlobalAlert() was not called but should have been.\n\nWouldn\u0027t it be clearer to always do INetd.bandwidthSetGlobalAlert() whenever mGlobalAlertBytes is changed and only when it is changed ? AFAIU this seems to be the invariant the code wants to achieve. Maybe that\u0027s the case, but it is hard to tell at first glance.",
+      "parentUuid": "cdbf8e57_bc3bda58",
+      "range": {
+        "startLine": 410,
+        "startChar": 73,
+        "endLine": 410,
+        "endChar": 88
+      },
+      "revId": "39cb821dfb4c45ce49d1806f003eaf8bfe3831b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
