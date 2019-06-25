@@ -19,6 +19,8 @@ package com.android.server;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -207,12 +209,8 @@ public class IpSecServiceParameterizedTest {
         // Verify quota and RefcountedResource objects cleaned up
         IpSecService.UserRecord userRecord = mIpSecService.mUserResourceTracker.getUserRecord(mUid);
         assertEquals(0, userRecord.mSpiQuotaTracker.mCurrent);
-        try {
-            userRecord.mSpiRecords.getRefcountedResourceOrThrow(spiResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        assertThrows("Able to access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mSpiRecords.getRefcountedResourceOrThrow(spiResp.resourceId));
     }
 
     @Test
@@ -242,12 +240,8 @@ public class IpSecServiceParameterizedTest {
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mSpiQuotaTracker.mCurrent);
-        try {
-            userRecord.mSpiRecords.getRefcountedResourceOrThrow(spiResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        assertThrows("Able to access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mSpiRecords.getRefcountedResourceOrThrow(spiResp.resourceId));
     }
 
     private int getNewSpiResourceId(String remoteAddress, int returnSpi) throws Exception {
@@ -359,12 +353,8 @@ public class IpSecServiceParameterizedTest {
 
             verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp, udpSock.port);
         } else {
-            try {
-                IpSecTransformResponse createTransformResp =
-                        mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
-                fail("Expected IllegalArgumentException on attempt to use UDP Encap in IPv6");
-            } catch (IllegalArgumentException expected) {
-            }
+            assertThrows("Use UDP encap in IPv6", IllegalArgumentException.class, () ->
+                    mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage"));
         }
     }
 
@@ -385,12 +375,8 @@ public class IpSecServiceParameterizedTest {
 
             verifyTransformNetdCalledForCreatingSA(ipSecConfig, createTransformResp, udpSock.port);
         } else {
-            try {
-                IpSecTransformResponse createTransformResp =
-                        mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
-                fail("Expected IllegalArgumentException on attempt to use UDP Encap in IPv6");
-            } catch (IllegalArgumentException expected) {
-            }
+            assertThrows("Use UDP encap in IPv6", IllegalArgumentException.class, () ->
+                    mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage"));
         }
     }
 
@@ -405,19 +391,13 @@ public class IpSecServiceParameterizedTest {
         assertEquals(IpSecManager.Status.OK, createTransformResp.status);
 
         // Attempting to create transform a second time with the same SPIs should throw an error...
-        try {
-                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
-                fail("IpSecService should have thrown an error for reuse of SPI");
-        } catch (IllegalStateException expected) {
-        }
+        assertThrows("Reuse of SPI", IllegalStateException.class, () ->
+                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage"));
 
         // ... even if the transform is deleted
         mIpSecService.deleteTransform(createTransformResp.resourceId);
-        try {
-                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
-                fail("IpSecService should have thrown an error for reuse of SPI");
-        } catch (IllegalStateException expected) {
-        }
+        assertThrows("Reuse of SPI", IllegalStateException.class, () ->
+                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage"));
     }
 
     @Test
@@ -426,8 +406,7 @@ public class IpSecServiceParameterizedTest {
         addDefaultSpisAndRemoteAddrToIpSecConfig(ipSecConfig);
         addAuthAndCryptToIpSecConfig(ipSecConfig);
 
-        IpSecTransformResponse createTransformResp =
-                mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
+        mIpSecService.createTransform(ipSecConfig, new Binder(), "blessedPackage");
         IpSecService.UserRecord userRecord = mIpSecService.mUserResourceTracker.getUserRecord(mUid);
         assertEquals(1, userRecord.mSpiQuotaTracker.mCurrent);
         mIpSecService.releaseSecurityParameterIndex(ipSecConfig.getSpiResourceId());
@@ -483,13 +462,9 @@ public class IpSecServiceParameterizedTest {
                         anyInt());
         assertEquals(0, userRecord.mSpiQuotaTracker.mCurrent);
 
-        try {
-            userRecord.mTransformRecords.getRefcountedResourceOrThrow(
-                    createTransformResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        assertThrows("Access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mTransformRecords.getRefcountedResourceOrThrow(
+                        createTransformResp.resourceId));
     }
 
     @Test
@@ -520,13 +495,9 @@ public class IpSecServiceParameterizedTest {
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTransformQuotaTracker.mCurrent);
-        try {
-            userRecord.mTransformRecords.getRefcountedResourceOrThrow(
-                    createTransformResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        assertThrows("Access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mTransformRecords.getRefcountedResourceOrThrow(
+                        createTransformResp.resourceId));
     }
 
     @Test
@@ -610,12 +581,9 @@ public class IpSecServiceParameterizedTest {
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTunnelQuotaTracker.mCurrent);
         verify(mMockNetd).ipSecRemoveTunnelInterface(eq(createTunnelResp.interfaceName));
-        try {
-            userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
-                    createTunnelResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-        }
+        assertThrows("Access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
+                        createTunnelResp.resourceId));
     }
 
     @Test
@@ -633,12 +601,9 @@ public class IpSecServiceParameterizedTest {
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mTunnelQuotaTracker.mCurrent);
         verify(mMockNetd).ipSecRemoveTunnelInterface(eq(createTunnelResp.interfaceName));
-        try {
-            userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
-                    createTunnelResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-        }
+        assertThrows("Access deleted resource", IllegalArgumentException.class, () ->
+                userRecord.mTunnelInterfaceRecords.getRefcountedResourceOrThrow(
+                        createTunnelResp.resourceId));
     }
 
     @Test
@@ -702,11 +667,7 @@ public class IpSecServiceParameterizedTest {
     @Ignore
     @Test
     public void testAddTunnelFailsForBadPackageName() throws Exception {
-        try {
-            IpSecTunnelInterfaceResponse createTunnelResp =
-                    createAndValidateTunnel(mSourceAddr, mDestinationAddr, "badPackage");
-            fail("Expected a SecurityException for badPackage.");
-        } catch (SecurityException expected) {
-        }
+        assertThrows("Bad package name", SecurityException.class, () ->
+                createAndValidateTunnel(mSourceAddr, mDestinationAddr, "badPackage"));
     }
 }
