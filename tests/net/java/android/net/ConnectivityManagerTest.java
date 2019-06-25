@@ -32,10 +32,11 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
@@ -288,8 +289,8 @@ public class ConnectivityManagerTest {
         manager.requestNetwork(request, callback, handler);
 
         // callback is already registered, reregistration should fail.
-        Class<IllegalArgumentException> wantException = IllegalArgumentException.class;
-        expectThrowable(() -> manager.requestNetwork(request, callback), wantException);
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.requestNetwork(request, callback));
 
         manager.unregisterNetworkCallback(callback);
         verify(mService, times(1)).releaseNetworkRequest(request);
@@ -308,31 +309,35 @@ public class ConnectivityManagerTest {
         NetworkCallback nullCallback = null;
         PendingIntent nullIntent = null;
 
-        mustFail(() -> { manager.requestNetwork(null, callback); });
-        mustFail(() -> { manager.requestNetwork(request, nullCallback); });
-        mustFail(() -> { manager.requestNetwork(request, callback, null); });
-        mustFail(() -> { manager.requestNetwork(request, callback, -1); });
-        mustFail(() -> { manager.requestNetwork(request, nullIntent); });
+        assertThrows(NullPointerException.class, () -> manager.requestNetwork(null, callback));
+        assertThrows(NullPointerException.class, () ->
+                manager.requestNetwork(request, nullCallback));
+        assertThrows(NullPointerException.class, () ->
+                manager.requestNetwork(request, callback, null));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.requestNetwork(request, callback, -1));
+        assertThrows(NullPointerException.class, () -> manager.requestNetwork(request, nullIntent));
 
-        mustFail(() -> { manager.registerNetworkCallback(null, callback, handler); });
-        mustFail(() -> { manager.registerNetworkCallback(request, null, handler); });
-        mustFail(() -> { manager.registerNetworkCallback(request, callback, null); });
-        mustFail(() -> { manager.registerNetworkCallback(request, nullIntent); });
+        assertThrows(NullPointerException.class, () ->
+                manager.registerNetworkCallback(null, callback, handler));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerNetworkCallback(request, null, handler));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerNetworkCallback(request, callback, null));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerNetworkCallback(request, nullIntent));
 
-        mustFail(() -> { manager.registerDefaultNetworkCallback(null, handler); });
-        mustFail(() -> { manager.registerDefaultNetworkCallback(callback, null); });
+        assertThrows(NullPointerException.class, () ->
+                manager.registerDefaultNetworkCallback(null, handler));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerDefaultNetworkCallback(callback, null));
 
-        mustFail(() -> { manager.unregisterNetworkCallback(nullCallback); });
-        mustFail(() -> { manager.unregisterNetworkCallback(nullIntent); });
-        mustFail(() -> { manager.releaseNetworkRequest(nullIntent); });
-    }
-
-    static void mustFail(Runnable fn) {
-        try {
-            fn.run();
-            fail();
-        } catch (Exception expected) {
-        }
+        assertThrows(NullPointerException.class, () ->
+                manager.unregisterNetworkCallback(nullCallback));
+        assertThrows(NullPointerException.class, () ->
+                manager.unregisterNetworkCallback(nullIntent));
+        assertThrows(NullPointerException.class, () ->
+                manager.releaseNetworkRequest(nullIntent));
     }
 
     static Message makeMessage(NetworkRequest req, int messageType) {
@@ -352,17 +357,5 @@ public class ConnectivityManagerTest {
         NetworkRequest request = new NetworkRequest.Builder().clearCapabilities().build();
         return new NetworkRequest(request.networkCapabilities, ConnectivityManager.TYPE_NONE,
                 requestId, NetworkRequest.Type.NONE);
-    }
-
-    static void expectThrowable(Runnable block, Class<? extends Throwable> throwableType) {
-        try {
-            block.run();
-        } catch (Throwable t) {
-            if (t.getClass().equals(throwableType)) {
-                return;
-            }
-            fail("expected exception of type " + throwableType + ", but was " + t.getClass());
-        }
-        fail("expected exception of type " + throwableType);
     }
 }

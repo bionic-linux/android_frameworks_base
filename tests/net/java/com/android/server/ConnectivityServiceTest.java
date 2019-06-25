@@ -3122,7 +3122,7 @@ public class ConnectivityServiceTest {
 
         class NonParcelableSpecifier extends NetworkSpecifier {
             public boolean satisfiedBy(NetworkSpecifier other) { return false; }
-        };
+        }
         class ParcelableSpecifier extends NonParcelableSpecifier implements Parcelable {
             @Override public int describeContents() { return 0; }
             @Override public void writeToParcel(Parcel p, int flags) {}
@@ -3151,7 +3151,7 @@ public class ConnectivityServiceTest {
             Parcel parcelR = Parcel.obtain();
             parcelR.unmarshall(bytes, 0, bytes.length);
             parcelR.setDataPosition(0);
-            NetworkRequest rereadNr = NetworkRequest.CREATOR.createFromParcel(parcelR);
+            NetworkRequest.CREATOR.createFromParcel(parcelR);
         });
     }
 

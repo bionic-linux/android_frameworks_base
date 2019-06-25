@@ -16,7 +16,7 @@
 
 package android.net;
 
-import static org.junit.Assert.fail;
+import static com.android.testutils.MiscAssertsKt.assertThrows;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -42,26 +42,13 @@ public class UidRangeTest {
 
     @Test
     public void testNegativeUidsDisallowed() {
-        try {
-            new UidRange(-2, 100);
-            fail("Exception not thrown for negative start UID");
-        } catch (IllegalArgumentException expected) {
-        }
-
-        try {
-            new UidRange(-200, -100);
-            fail("Exception not thrown for negative stop UID");
-        } catch (IllegalArgumentException expected) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> new UidRange(-2, 100));
+        assertThrows(IllegalArgumentException.class, () -> new UidRange(-200, -100));
     }
 
     @Test
     public void testStopLessThanStartDisallowed() {
         final int x = 4195000;
-        try {
-            new UidRange(x, x - 1);
-            fail("Exception not thrown for negative-length UID range");
-        } catch (IllegalArgumentException expected) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> new UidRange(x, x - 1));
     }
 }

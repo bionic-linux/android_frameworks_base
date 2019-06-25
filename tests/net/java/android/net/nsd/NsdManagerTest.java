@@ -16,9 +16,10 @@
 
 package android.net.nsd;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -275,15 +276,20 @@ public class NsdManagerTest {
 
         // Service registration
         //  - invalid arguments
-        mustFail(() -> { manager.unregisterService(null); });
-        mustFail(() -> { manager.registerService(null, -1, null); });
-        mustFail(() -> { manager.registerService(null, PROTOCOL, listener1); });
-        mustFail(() -> { manager.registerService(invalidService, PROTOCOL, listener1); });
-        mustFail(() -> { manager.registerService(validService, -1, listener1); });
-        mustFail(() -> { manager.registerService(validService, PROTOCOL, null); });
+        assertThrows(NullPointerException.class, () -> manager.unregisterService(null));
+        assertThrows(NullPointerException.class, () -> manager.registerService(null, -1, null));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerService(null, PROTOCOL, listener1));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.registerService(invalidService, PROTOCOL, listener1));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.registerService(validService, -1, listener1));
+        assertThrows(NullPointerException.class, () ->
+                manager.registerService(validService, PROTOCOL, null));
         manager.registerService(validService, PROTOCOL, listener1);
         //  - listener already registered
-        mustFail(() -> { manager.registerService(validService, PROTOCOL, listener1); });
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.registerService(validService, PROTOCOL, listener1));
         manager.unregisterService(listener1);
         // TODO: make listener immediately reusable
         //mustFail(() -> { manager.unregisterService(listener1); });
@@ -291,14 +297,19 @@ public class NsdManagerTest {
 
         // Discover service
         //  - invalid arguments
-        mustFail(() -> { manager.stopServiceDiscovery(null); });
-        mustFail(() -> { manager.discoverServices(null, -1, null); });
-        mustFail(() -> { manager.discoverServices(null, PROTOCOL, listener2); });
-        mustFail(() -> { manager.discoverServices("a_service", -1, listener2); });
-        mustFail(() -> { manager.discoverServices("a_service", PROTOCOL, null); });
+        assertThrows(NullPointerException.class, () -> manager.stopServiceDiscovery(null));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.discoverServices(null, -1, null));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.discoverServices(null, PROTOCOL, listener2));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.discoverServices("a_service", -1, listener2));
+        assertThrows(NullPointerException.class, () ->
+                manager.discoverServices("a_service", PROTOCOL, null));
         manager.discoverServices("a_service", PROTOCOL, listener2);
         //  - listener already registered
-        mustFail(() -> { manager.discoverServices("another_service", PROTOCOL, listener2); });
+        assertThrows(IllegalArgumentException.class, () ->
+                    manager.discoverServices("another_service", PROTOCOL, listener2));
         manager.stopServiceDiscovery(listener2);
         // TODO: make listener immediately reusable
         //mustFail(() -> { manager.stopServiceDiscovery(listener2); });
@@ -306,21 +317,15 @@ public class NsdManagerTest {
 
         // Resolver service
         //  - invalid arguments
-        mustFail(() -> { manager.resolveService(null, null); });
-        mustFail(() -> { manager.resolveService(null, listener3); });
-        mustFail(() -> { manager.resolveService(invalidService, listener3); });
-        mustFail(() -> { manager.resolveService(validService, null); });
+        assertThrows(NullPointerException.class, () -> manager.resolveService(null, null));
+        assertThrows(NullPointerException.class, () -> manager.resolveService(null, listener3));
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.resolveService(invalidService, listener3));
+        assertThrows(NullPointerException.class, () -> manager.resolveService(validService, null));
         manager.resolveService(validService, listener3);
         //  - listener already registered:w
-        mustFail(() -> { manager.resolveService(validService, listener3); });
-    }
-
-    public void mustFail(Runnable fn) {
-        try {
-            fn.run();
-            fail();
-        } catch (Exception expected) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                manager.resolveService(validService, listener3));
     }
 
     NsdManager makeManager() {
