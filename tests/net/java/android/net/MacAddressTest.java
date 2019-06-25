@@ -16,11 +16,12 @@
 
 package android.net;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -219,18 +220,10 @@ public class MacAddressTest {
         };
 
         for (String s : invalidStringAddresses) {
-            try {
-                MacAddress mac = MacAddress.fromString(s);
-                fail("MacAddress.fromString(" + s + ") should have failed, but returned " + mac);
-            } catch (IllegalArgumentException excepted) {
-            }
+            assertThrows(IllegalArgumentException.class, () -> MacAddress.fromString(s));
         }
 
-        try {
-            MacAddress mac = MacAddress.fromString(null);
-            fail("MacAddress.fromString(null) should have failed, but returned " + mac);
-        } catch (NullPointerException excepted) {
-        }
+        assertThrows(NullPointerException.class, () -> MacAddress.fromString(null));
 
         byte[][] invalidBytesAddresses = {
             {},
@@ -239,19 +232,10 @@ public class MacAddressTest {
         };
 
         for (byte[] b : invalidBytesAddresses) {
-            try {
-                MacAddress mac = MacAddress.fromBytes(b);
-                fail("MacAddress.fromBytes(" + Arrays.toString(b)
-                        + ") should have failed, but returned " + mac);
-            } catch (IllegalArgumentException excepted) {
-            }
+            assertThrows(IllegalArgumentException.class, () -> MacAddress.fromBytes(b));
         }
 
-        try {
-            MacAddress mac = MacAddress.fromBytes(null);
-            fail("MacAddress.fromBytes(null) should have failed, but returned " + mac);
-        } catch (NullPointerException excepted) {
-        }
+        assertThrows(NullPointerException.class, () -> MacAddress.fromBytes(null));
     }
 
     /**
