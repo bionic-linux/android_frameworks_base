@@ -46,6 +46,30 @@
       "revId": "39cb821dfb4c45ce49d1806f003eaf8bfe3831b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca7cd725_656688c9",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-06-25T05:45:11Z",
+      "side": 1,
+      "message": "Thanks for moving. It Shouldn\u0027t Matter, but, well. :-)\n\nI think the alert is one-shot, so registerGlobalAlert needs to be called whenever the alert fires. We don\u0027t always retrigger it on every poll, right? We only trigger it a) on construction, b) when the alert fires, c) when advisePersistThreshold is called and the alert threshold might have changed? Or am I misreading?",
+      "parentUuid": "9100c1d9_6b5b6366",
+      "range": {
+        "startLine": 410,
+        "startChar": 73,
+        "endLine": 410,
+        "endChar": 88
+      },
+      "revId": "39cb821dfb4c45ce49d1806f003eaf8bfe3831b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
