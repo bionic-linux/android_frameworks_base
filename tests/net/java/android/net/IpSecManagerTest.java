@@ -16,13 +16,15 @@
 
 package android.net;
 
+import static android.net.IpSecManager.INVALID_SECURITY_PARAMETER_INDEX;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -115,7 +117,7 @@ public class IpSecManagerTest {
                 new IpSecSpiResponse(IpSecManager.Status.OK, DUMMY_RESOURCE_ID, DROID_SPI);
         when(mMockIpSecService.allocateSecurityParameterIndex(
                         eq(GOOGLE_DNS_4.getHostAddress()),
-                        eq(IpSecManager.INVALID_SECURITY_PARAMETER_INDEX),
+                        eq(INVALID_SECURITY_PARAMETER_INDEX),
                         anyObject()))
                 .thenReturn(spiResp);
 
@@ -140,11 +142,8 @@ public class IpSecManagerTest {
                         anyString(), anyInt(), anyObject()))
                 .thenReturn(spiResp);
 
-        try {
-            mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4);
-            fail("ResourceUnavailableException was not thrown");
-        } catch (IpSecManager.ResourceUnavailableException e) {
-        }
+        assertThrows(IpSecManager.ResourceUnavailableException.class, () ->
+                mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4));
     }
 
     /*
@@ -157,11 +156,8 @@ public class IpSecManagerTest {
                         anyString(), anyInt(), anyObject()))
                 .thenReturn(spiResp);
 
-        try {
-            mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4);
-            fail("ResourceUnavailableException was not thrown");
-        } catch (IpSecManager.ResourceUnavailableException e) {
-        }
+        assertThrows(IpSecManager.ResourceUnavailableException.class, () ->
+                mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4));
     }
 
     /*
@@ -169,11 +165,8 @@ public class IpSecManagerTest {
      */
     @Test
     public void testRequestAllocInvalidSpi() throws Exception {
-        try {
-            mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4, 0);
-            fail("Able to allocate invalid spi");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecManager.allocateSecurityParameterIndex(GOOGLE_DNS_4, 0));
     }
 
     @Test
@@ -249,11 +242,8 @@ public class IpSecManagerTest {
 
     @Test
     public void testOpenEncapsulationSocketWithInvalidPort() throws Exception {
-        try {
-            mIpSecManager.openUdpEncapsulationSocket(IpSecManager.INVALID_SECURITY_PARAMETER_INDEX);
-            fail("IllegalArgumentException was not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecManager.openUdpEncapsulationSocket(INVALID_SECURITY_PARAMETER_INDEX));
     }
 
     // TODO: add test when applicable transform builder interface is available

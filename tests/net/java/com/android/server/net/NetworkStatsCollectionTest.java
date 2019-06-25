@@ -28,11 +28,11 @@ import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 
 import static com.android.server.net.NetworkStatsCollection.multiplySafe;
+import static com.android.testutils.MiscAssertsKt.assertThrows;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
@@ -251,13 +251,10 @@ public class NetworkStatsCollectionTest {
         // Verify security check in getHistory.
         assertNotNull(collection.getHistory(buildTemplateMobileAll(TEST_IMSI), null, myUid, SET_DEFAULT,
                 TAG_NONE, 0, 0L, 0L, NetworkStatsAccess.Level.DEFAULT, myUid));
-        try {
+
+        assertThrows(SecurityException.class, () ->
             collection.getHistory(buildTemplateMobileAll(TEST_IMSI), null, otherUidInSameUser,
-                    SET_DEFAULT, TAG_NONE, 0, 0L, 0L, NetworkStatsAccess.Level.DEFAULT, myUid);
-            fail("Should have thrown SecurityException for accessing different UID");
-        } catch (SecurityException e) {
-            // expected
-        }
+                    SET_DEFAULT, TAG_NONE, 0, 0L, 0L, NetworkStatsAccess.Level.DEFAULT, myUid));
 
         // Verify appropriate aggregation in getSummary.
         assertSummaryTotal(collection, buildTemplateMobileAll(TEST_IMSI), 32, 0, 0, 0,

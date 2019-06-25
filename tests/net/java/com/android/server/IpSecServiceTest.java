@@ -21,6 +21,8 @@ import static android.system.OsConstants.EADDRINUSE;
 import static android.system.OsConstants.IPPROTO_UDP;
 import static android.system.OsConstants.SOCK_DGRAM;
 
+import static com.android.testutils.MiscAssertsKt.assertThrows;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -138,11 +140,8 @@ public class IpSecServiceTest {
 
     @Test
     public void testReleaseInvalidSecurityParameterIndex() throws Exception {
-        try {
-            mIpSecService.releaseSecurityParameterIndex(1);
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecService.releaseSecurityParameterIndex(1));
     }
 
     /** This function finds an available port */
@@ -182,12 +181,9 @@ public class IpSecServiceTest {
         IpSecService.UserRecord userRecord =
                 mIpSecService.mUserResourceTracker.getUserRecord(Os.getuid());
         assertEquals(0, userRecord.mSocketQuotaTracker.mCurrent);
-        try {
-            userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(udpEncapResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        final int resId = udpEncapResp.resourceId;
+        assertThrows(IllegalArgumentException.class, () ->
+                userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(resId));
     }
 
     @Test
@@ -205,12 +201,9 @@ public class IpSecServiceTest {
 
         // Verify quota and RefcountedResource objects cleaned up
         assertEquals(0, userRecord.mSocketQuotaTracker.mCurrent);
-        try {
-            userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(udpEncapResp.resourceId);
-            fail("Expected IllegalArgumentException on attempt to access deleted resource");
-        } catch (IllegalArgumentException expected) {
-
-        }
+        final int resId = udpEncapResp.resourceId;
+        assertThrows(IllegalArgumentException.class, () ->
+                userRecord.mEncapSocketRecords.getRefcountedResourceOrThrow(resId));
     }
 
     @Test
@@ -267,17 +260,13 @@ public class IpSecServiceTest {
 
     @Test
     public void testOpenUdpEncapsulationSocketPortRange() throws Exception {
-        try {
-            mIpSecService.openUdpEncapsulationSocket(TEST_UDP_ENCAP_INVALID_PORT, new Binder());
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecService.openUdpEncapsulationSocket(TEST_UDP_ENCAP_INVALID_PORT,
+                        new Binder()));
 
-        try {
-            mIpSecService.openUdpEncapsulationSocket(TEST_UDP_ENCAP_PORT_OUT_RANGE, new Binder());
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecService.openUdpEncapsulationSocket(TEST_UDP_ENCAP_PORT_OUT_RANGE,
+                        new Binder()));
     }
 
     @Test
@@ -298,67 +287,58 @@ public class IpSecServiceTest {
 
     @Test
     public void testCloseInvalidUdpEncapsulationSocket() throws Exception {
-        try {
-            mIpSecService.closeUdpEncapsulationSocket(1);
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () ->
+                mIpSecService.closeUdpEncapsulationSocket(1));
     }
 
     @Test
     public void testValidateAlgorithmsAuth() {
         // Validate that correct algorithm type succeeds
-        IpSecConfig config = new IpSecConfig();
+        final IpSecConfig config = new IpSecConfig();
         config.setAuthentication(AUTH_ALGO);
         mIpSecService.validateAlgorithms(config);
 
         // Validate that incorrect algorithm types fails
         for (IpSecAlgorithm algo : new IpSecAlgorithm[] {CRYPT_ALGO, AEAD_ALGO}) {
-            try {
-                config = new IpSecConfig();
-                config.setAuthentication(algo);
-                mIpSecService.validateAlgorithms(config);
-                fail("Did not throw exception on invalid algorithm type");
-            } catch (IllegalArgumentException expected) {
-            }
+            assertThrows(IllegalArgumentException.class, () -> {
+                final IpSecConfig conf = new IpSecConfig();
+                conf.setAuthentication(algo);
+                mIpSecService.validateAlgorithms(conf);
+            });
         }
     }
 
     @Test
     public void testValidateAlgorithmsCrypt() {
         // Validate that correct algorithm type succeeds
-        IpSecConfig config = new IpSecConfig();
+        final IpSecConfig config = new IpSecConfig();
         config.setEncryption(CRYPT_ALGO);
         mIpSecService.validateAlgorithms(config);
 
         // Validate that incorrect algorithm types fails
         for (IpSecAlgorithm algo : new IpSecAlgorithm[] {AUTH_ALGO, AEAD_ALGO}) {
-            try {
-                config = new IpSecConfig();
-                config.setEncryption(algo);
-                mIpSecService.validateAlgorithms(config);
-                fail("Did not throw exception on invalid algorithm type");
-            } catch (IllegalArgumentException expected) {
-            }
+            assertThrows(IllegalArgumentException.class, () -> {
+                final IpSecConfig conf = new IpSecConfig();
+                conf.setEncryption(algo);
+                mIpSecService.validateAlgorithms(conf);
+            });
         }
     }
 
     @Test
     public void testValidateAlgorithmsAead() {
         // Validate that correct algorithm type succeeds
-        IpSecConfig config = new IpSecConfig();
+        final IpSecConfig config = new IpSecConfig();
         config.setAuthenticatedEncryption(AEAD_ALGO);
         mIpSecService.validateAlgorithms(config);
 
         // Validate that incorrect algorithm types fails
         for (IpSecAlgorithm algo : new IpSecAlgorithm[] {AUTH_ALGO, CRYPT_ALGO}) {
-            try {
-                config = new IpSecConfig();
-                config.setAuthenticatedEncryption(algo);
-                mIpSecService.validateAlgorithms(config);
-                fail("Did not throw exception on invalid algorithm type");
-            } catch (IllegalArgumentException expected) {
-            }
+            assertThrows(IllegalArgumentException.class, () -> {
+                final IpSecConfig conf = new IpSecConfig();
+                conf.setAuthenticatedEncryption(algo);
+                mIpSecService.validateAlgorithms(conf);
+            });
         }
     }
 
@@ -373,58 +353,38 @@ public class IpSecServiceTest {
 
     @Test
     public void testValidateAlgorithmsNoAlgorithms() {
-        IpSecConfig config = new IpSecConfig();
-        try {
-            mIpSecService.validateAlgorithms(config);
-            fail("Expected exception; no algorithms specified");
-        } catch (IllegalArgumentException expected) {
-        }
+        final IpSecConfig conf = new IpSecConfig();
+        assertThrows(IllegalArgumentException.class, () -> mIpSecService.validateAlgorithms(conf));
     }
 
     @Test
     public void testValidateAlgorithmsAeadWithAuth() {
-        IpSecConfig config = new IpSecConfig();
-        config.setAuthenticatedEncryption(AEAD_ALGO);
-        config.setAuthentication(AUTH_ALGO);
-        try {
-            mIpSecService.validateAlgorithms(config);
-            fail("Expected exception; both AEAD and auth algorithm specified");
-        } catch (IllegalArgumentException expected) {
-        }
+        final IpSecConfig conf = new IpSecConfig();
+        conf.setAuthenticatedEncryption(AEAD_ALGO);
+        conf.setAuthentication(AUTH_ALGO);
+        assertThrows(IllegalArgumentException.class, () -> mIpSecService.validateAlgorithms(conf));
     }
 
     @Test
     public void testValidateAlgorithmsAeadWithCrypt() {
-        IpSecConfig config = new IpSecConfig();
-        config.setAuthenticatedEncryption(AEAD_ALGO);
-        config.setEncryption(CRYPT_ALGO);
-        try {
-            mIpSecService.validateAlgorithms(config);
-            fail("Expected exception; both AEAD and crypt algorithm specified");
-        } catch (IllegalArgumentException expected) {
-        }
+        final IpSecConfig conf = new IpSecConfig();
+        conf.setAuthenticatedEncryption(AEAD_ALGO);
+        conf.setEncryption(CRYPT_ALGO);
+        assertThrows(IllegalArgumentException.class, () -> mIpSecService.validateAlgorithms(conf));
     }
 
     @Test
     public void testValidateAlgorithmsAeadWithAuthAndCrypt() {
-        IpSecConfig config = new IpSecConfig();
-        config.setAuthenticatedEncryption(AEAD_ALGO);
-        config.setAuthentication(AUTH_ALGO);
-        config.setEncryption(CRYPT_ALGO);
-        try {
-            mIpSecService.validateAlgorithms(config);
-            fail("Expected exception; AEAD, auth and crypt algorithm specified");
-        } catch (IllegalArgumentException expected) {
-        }
+        final IpSecConfig conf = new IpSecConfig();
+        conf.setAuthenticatedEncryption(AEAD_ALGO);
+        conf.setAuthentication(AUTH_ALGO);
+        conf.setEncryption(CRYPT_ALGO);
+        assertThrows(IllegalArgumentException.class, () -> mIpSecService.validateAlgorithms(conf));
     }
 
     @Test
     public void testDeleteInvalidTransform() throws Exception {
-        try {
-            mIpSecService.deleteTransform(1);
-            fail("IllegalArgumentException not thrown");
-        } catch (IllegalArgumentException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> mIpSecService.deleteTransform(1));
     }
 
     @Test
@@ -442,19 +402,9 @@ public class IpSecServiceTest {
         String[] invalidAddresses =
                 new String[] {"www.google.com", "::", "2001::/64", "0.0.0.0", ""};
         for (String address : invalidAddresses) {
-            try {
-                IpSecSpiResponse spiResp =
-                        mIpSecService.allocateSecurityParameterIndex(
-                                address, DROID_SPI, new Binder());
-                fail("Invalid address was passed through IpSecService validation: " + address);
-            } catch (IllegalArgumentException e) {
-            } catch (Exception e) {
-                fail(
-                        "Invalid InetAddress was not caught in validation: "
-                                + address
-                                + ", Exception: "
-                                + e);
-            }
+            assertThrows(IllegalArgumentException.class, () ->
+                    mIpSecService.allocateSecurityParameterIndex(
+                            address, DROID_SPI, new Binder()));
         }
     }
 
@@ -653,11 +603,7 @@ public class IpSecServiceTest {
         }
 
         // Check that resource exhaustion triggers an exception
-        try {
-            mIpSecService.reserveNetId();
-            fail("Did not throw error for all netIds reserved");
-        } catch (IllegalStateException expected) {
-        }
+        assertThrows(IllegalStateException.class, () -> mIpSecService.reserveNetId());
 
         // Now release one and try again
         int releasedNetId =
