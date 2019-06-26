@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da14a335_80690a19",
+        "filename": "tests/net/java/android/net/MacAddressTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-06-26T07:57:28Z",
+      "side": 0,
+      "message": "I feel we lose some error messages that might be helpful for future debugging.\nShould we add an assertThrows that takes message?",
+      "range": {
+        "startLine": 224,
+        "startChar": 16,
+        "endLine": 224,
+        "endChar": 97
+      },
+      "revId": "b92b18b9b9bc90e3734652e5d6c5b217cd31bf39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
