@@ -33,6 +33,7 @@
 #include <string>
 #include <vector>
 
+#if 0
 namespace {
 
 using namespace tinyxml2;
@@ -92,8 +93,10 @@ void CompileLayout(XMLDocument* xml, Builder* builder) {
 }
 
 }  // end namespace
+#endif
 
 int main(int argc, char** argv) {
+#if 0
   constexpr size_t kProgramName = 0;
   constexpr size_t kFileNameParam = 1;
   constexpr size_t kNumRequiredArgs = 1;
@@ -168,5 +171,9 @@ int main(int argc, char** argv) {
 
     CompileLayout(&xml, &builder);
   }
+#else
+  (void) argc;
+  (void) argv;
+#endif
   return 0;
 }

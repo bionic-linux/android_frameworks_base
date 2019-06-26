@@ -173,7 +173,7 @@ cc_library_shared {
         "libmediametrics",
         "libmediaplayer2",
         "libmediautils",
-        "libnativehelper",
+        "libnativehelper_not_ndk",
         "libnetd_client",
         "libprocessgroup",
         "libstagefright_esds",
