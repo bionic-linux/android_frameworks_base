@@ -50,7 +50,6 @@ import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_TASK_ON_HOME;
-import static android.content.pm.ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT;
 import static android.content.pm.PackageManager.FEATURE_ACTIVITIES_ON_SECONDARY_DISPLAYS;
 import static android.content.pm.PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT;
 import static android.content.pm.PackageManager.FEATURE_LEANBACK_ONLY;
@@ -476,6 +475,7 @@ import com.android.server.vr.VrManagerInternal;
 import com.android.server.wm.PinnedStackWindowController;
 import com.android.server.wm.WindowManagerService;
 
+import dalvik.system.DexFile;
 import dalvik.system.VMRuntime;
 
 import com.google.android.collect.Lists;
@@ -2924,7 +2924,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         private String mExemptionsStr;
         private List<String> mExemptions = Collections.emptyList();
         private int mLogSampleRate = -1;
-        @HiddenApiEnforcementPolicy private int mPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
+        @HiddenApiEnforcementPolicy private int mPolicy = DexFile.API_ENFORCEMENT_POLICY_DEFAULT;
 
         public HiddenApiSettings(Handler handler, Context context) {
             super(handler);
@@ -2981,11 +2981,11 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         private @HiddenApiEnforcementPolicy int getValidEnforcementPolicy(String settingsKey) {
             int policy = Settings.Global.getInt(mContext.getContentResolver(), settingsKey,
-                    ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT);
+                    DexFile.API_ENFORCEMENT_POLICY_DEFAULT);
             if (ApplicationInfo.isValidHiddenApiEnforcementPolicy(policy)) {
                 return policy;
             } else {
-                return ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT;
+                return DexFile.API_ENFORCEMENT_POLICY_DEFAULT;
             }
         }
 
