@@ -1303,16 +1303,13 @@ public final class SystemServer {
             }
             traceEnd();
 
-            final boolean useNewTimeServices = true;
-            if (useNewTimeServices) {
-                traceBeginAndSlog("StartTimeDetectorService");
-                try {
-                    mSystemServiceManager.startService(TIME_DETECTOR_SERVICE_CLASS);
-                } catch (Throwable e) {
-                    reportWtf("starting StartTimeDetectorService service", e);
-                }
-                traceEnd();
+            traceBeginAndSlog("StartTimeDetectorService");
+            try {
+                mSystemServiceManager.startService(TIME_DETECTOR_SERVICE_CLASS);
+            } catch (Throwable e) {
+                reportWtf("starting StartTimeDetectorService service", e);
             }
+            traceEnd();
 
             if (!isWatch) {
                 traceBeginAndSlog("StartSearchManagerService");
