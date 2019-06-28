@@ -37,6 +37,7 @@ public final class CompatConfig {
 
     @VisibleForTesting
     public CompatConfig() {
+        addChange(new CompatChange(135010838L, "TEST_CHANGE", 0, true));
     }
 
     /**
