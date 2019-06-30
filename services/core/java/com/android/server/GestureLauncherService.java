@@ -346,12 +346,17 @@ public class GestureLauncherService extends SystemService {
         return configSet;
     }
 
+    public static boolean isCameraButtonLaunchEnabled(Resources resources) {
+        return resources.getBoolean(
+                com.android.internal.R.bool.config_cameraButtonLaunchEnabled);
+    }
+
     /**
      * Whether GestureLauncherService should be enabled according to system properties.
      */
     public static boolean isGestureLauncherEnabled(Resources resources) {
         return isCameraLaunchEnabled(resources) || isCameraDoubleTapPowerEnabled(resources) ||
-                isCameraLiftTriggerEnabled(resources);
+                isCameraLiftTriggerEnabled(resources) || isCameraButtonLaunchEnabled(resources);
     }
 
     public boolean interceptPowerKeyDown(KeyEvent event, boolean interactive,
@@ -391,6 +396,12 @@ public class GestureLauncherService extends SystemService {
         mMetricsLogger.histogram("power_double_tap_interval", (int) powerTapInterval);
         outLaunched.value = launched;
         return intercept && launched;
+    }
+
+    public boolean interceptCameraKeyPress() {
+        Slog.i(TAG, "Camera button long-press detected, launching camera.");
+        return handleCameraGesture(false /* useWakelock */,
+                StatusBarManager.CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON);
     }
 
     /**
