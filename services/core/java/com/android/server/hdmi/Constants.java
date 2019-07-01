@@ -426,6 +426,16 @@ final class Constants {
 
     static final int DISABLED = 0;
     static final int ENABLED = 1;
+    static final int EARC_INVALID = -1;
+
+    // This is matched with status of TX IDLE1, TXIDLE2 and TX ARC.
+    static final int EARC_NOT_ENABLED = 0;
+
+    // This is matched with status of TX DISC1 and TX DISC2.
+    static final int EARC_WAITING = 1;
+
+    // This is matched with status of TX DISC2.
+    static final int EARC_ENABLED = 2;
 
     private Constants() {
         /* cannot be instantiated */

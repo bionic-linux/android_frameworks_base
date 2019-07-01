@@ -391,6 +391,18 @@ final class HdmiCecController {
     }
 
     /**
+     * Return the eARC status of the specified port
+     *
+     * @param port port number to check eARC status
+     * @return eArcState; not_enabled/waiting/enabled
+     */
+    @ServiceThreadOnly
+    int getEarcStatus(int port) {
+        assertRunOnServiceThread();
+        return nativeGetEarcStatus(mNativePtr, port);
+    }
+
+    /**
      * Return the connection status of the specified port
      *
      * @param port port number to check connection status
@@ -671,6 +683,13 @@ final class HdmiCecController {
     }
 
     @ServiceThreadOnly
+    private void handleEarcStatus(int port, int status) {
+        assertRunOnServiceThread();
+        Slog.i(TAG, "onEarcStatus " + port + ":" + status);
+        mService.onEarcStatus(port, status);
+    }
+
+    @ServiceThreadOnly
     private void addMessageToHistory(boolean isReceived, HdmiCecMessage message) {
         assertRunOnServiceThread();
         MessageHistoryRecord record = new MessageHistoryRecord(isReceived, message);
@@ -724,6 +743,7 @@ final class HdmiCecController {
     private static native void nativeSetLanguage(long controllerPtr, String language);
     private static native void nativeEnableAudioReturnChannel(long controllerPtr,
         int port, boolean flag);
+    private static native int nativeGetEarcStatus(long controllerPtr, int port);
     private static native boolean nativeIsConnected(long controllerPtr, int port);
 
     private static final class NativeWrapperImpl implements NativeWrapper {

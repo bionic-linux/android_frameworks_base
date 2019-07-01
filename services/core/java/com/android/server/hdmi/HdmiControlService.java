@@ -1004,6 +1004,12 @@ public class HdmiControlService extends SystemService {
         mHandler.postAtFrontOfQueue(runnable);
     }
 
+    @ServiceThreadOnly
+    int getEarcStatus(int portId) {
+        assertRunOnServiceThread();
+        return mCecController.getEarcStatus(portId);
+    }
+
     private void assertRunOnServiceThread() {
         if (Looper.myLooper() != mHandler.getLooper()) {
             throw new IllegalStateException("Should run on service thread.");
@@ -1123,6 +1129,25 @@ public class HdmiControlService extends SystemService {
             device.onHotplug(portId, connected);
         }
         announceHotplugEvent(portId, connected);
+    }
+
+    /**
+     * Called when a new eARC Status event is issued.
+     *
+     * @param portId hdmi port number where eARC status event issued.
+     * @param changed eARC status
+     */
+    @ServiceThreadOnly
+    void onEarcStatus(int portId, int status) {
+        assertRunOnServiceThread();
+
+        if (portId != Constants.INVALID_PORT_ID) {
+            if (mPortInfoMap.get(portId).isArcSupported()) {
+                for (HdmiCecLocalDevice device : mCecController.getLocalDeviceList()) {
+                    device.onEarcStatus(portId, status);
+                }
+            }
+        }
     }
 
     /**
