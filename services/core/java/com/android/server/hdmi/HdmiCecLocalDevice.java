@@ -759,6 +759,15 @@ abstract class HdmiCecLocalDevice {
     void onHotplug(int portId, boolean connected) {
     }
 
+    /**
+     * Called when a eARC event issued.
+     *
+     * @param portId id of port where a eARC event happened
+     * @param status eARC status of port on the event
+     */
+    void onEarcStatus(int portId, int status) {
+    }
+
     final HdmiControlService getService() {
         return mService;
     }

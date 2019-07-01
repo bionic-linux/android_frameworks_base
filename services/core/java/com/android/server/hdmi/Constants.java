@@ -242,6 +242,10 @@ final class Constants {
 
     static final int DISABLED = 0;
     static final int ENABLED = 1;
+    static final int EARC_INVALID = -1;
+    static final int EARC_NOT_ENABLED = 0;
+    static final int EARC_WAITING = 1;
+    static final int EARC_ENABLED = 2;
 
     private Constants() { /* cannot be instantiated */ }
 }

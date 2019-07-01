@@ -24,18 +24,22 @@ import android.os.Looper;
 import android.os.MessageQueue;
 import android.util.Slog;
 import android.util.SparseArray;
+
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.IoThreadOnly;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.DevicePollingCallback;
+
+import libcore.util.EmptyArray;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.concurrent.ArrayBlockingQueue;
-import libcore.util.EmptyArray;
+import java.util.function.Predicate;
+
 import sun.util.locale.LanguageTag;
 
 /**
@@ -365,6 +369,18 @@ final class HdmiCecController {
     }
 
     /**
+     * Return the eARC status of the specified port
+     *
+     * @param port port number to check eARC status
+     * @return eArcState; not_enabled/waiting/enabled
+     */
+    @ServiceThreadOnly
+    int getEarcStatus(int port) {
+        assertRunOnServiceThread();
+        return nativeGetEarcStatus(mNativePtr, port);
+    }
+
+    /**
      * Return the connection status of the specified port
      *
      * @param port port number to check connection status
@@ -644,6 +660,13 @@ final class HdmiCecController {
     }
 
     @ServiceThreadOnly
+    private void handleEarcStatus(int port, int status) {
+        assertRunOnServiceThread();
+        Slog.i(TAG, "onEarcStatus " + port + ":" + status);
+        mService.onEarcStatus(port, status);
+    }
+
+    @ServiceThreadOnly
     private void addMessageToHistory(boolean isReceived, HdmiCecMessage message) {
         assertRunOnServiceThread();
         MessageHistoryRecord record = new MessageHistoryRecord(isReceived, message);
@@ -681,6 +704,7 @@ final class HdmiCecController {
     private static native void nativeSetOption(long controllerPtr, int flag, boolean enabled);
     private static native void nativeSetLanguage(long controllerPtr, String language);
     private static native void nativeEnableAudioReturnChannel(long controllerPtr, int port, boolean flag);
+    private static native int nativeGetEarcStatus(long controllerPtr, int port);
     private static native boolean nativeIsConnected(long controllerPtr, int port);
 
     private final class MessageHistoryRecord {

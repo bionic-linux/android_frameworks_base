@@ -24,6 +24,9 @@
 #include <android/hardware/tv/cec/1.0/IHdmiCec.h>
 #include <android/hardware/tv/cec/1.0/IHdmiCecCallback.h>
 #include <android/hardware/tv/cec/1.0/types.h>
+#include <android/hardware/tv/earc/1.0/IHdmiEarc.h>
+#include <android/hardware/tv/earc/1.0/IHdmiEarcCallback.h>
+#include <android/hardware/tv/earc/1.0/types.h>
 #include <android_os_MessageQueue.h>
 #include <android_runtime/AndroidRuntime.h>
 #include <android_runtime/Log.h>
@@ -31,6 +34,7 @@
 #include <utils/Errors.h>
 #include <utils/Looper.h>
 #include <utils/RefBase.h>
+#include <utils/Vector.h>
 
 using ::android::hardware::tv::cec::V1_0::CecLogicalAddress;
 using ::android::hardware::tv::cec::V1_0::CecMessage;
@@ -42,6 +46,10 @@ using ::android::hardware::tv::cec::V1_0::MaxLength;
 using ::android::hardware::tv::cec::V1_0::OptionKey;
 using ::android::hardware::tv::cec::V1_0::Result;
 using ::android::hardware::tv::cec::V1_0::SendMessageResult;
+using ::android::hardware::tv::earc::V1_0::IHdmiEarc;
+using ::android::hardware::tv::earc::V1_0::IHdmiEarcCallback;
+using ::android::hardware::tv::earc::V1_0::EarcStatus;
+using ::android::hardware::tv::earc::V1_0::EarcEvent;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::hardware::hidl_vec;
@@ -52,11 +60,13 @@ namespace android {
 static struct {
     jmethodID handleIncomingCecCommand;
     jmethodID handleHotplug;
+    jmethodID handleEarcStatus;
 } gHdmiCecControllerClassInfo;
 
 class HdmiCecController {
 public:
-    HdmiCecController(sp<IHdmiCec> hdmiCec, jobject callbacksObj, const sp<Looper>& looper);
+    HdmiCecController(sp<IHdmiCec> hdmiCec, sp<IHdmiEarc> hdmiEarc,
+            jobject callbacksObj, const sp<Looper>& looper);
     ~HdmiCecController();
 
     // Send message to other device. Note that it runs in IO thread.
@@ -81,6 +91,8 @@ public:
     void enableAudioReturnChannel(int port, bool flag);
     // Whether to hdmi device is connected to the given port.
     bool isConnected(int port);
+    // Whether to hdmi device is eArc Status to the given port.
+    int getEarcStatus(int port);
 
     jobject getCallbacksObj() const {
         return mCallbacksObj;
@@ -95,12 +107,21 @@ private:
     private:
         HdmiCecController* mController;
     };
+    class HdmiEarcCallback : public IHdmiEarcCallback {
+    public:
+        HdmiEarcCallback(HdmiCecController* controller) : mController(controller) {};
+        Return<void> onEarcEvent(const EarcEvent& event)  override;
+    private:
+        HdmiCecController* mController;
+    };
 
     static const int INVALID_PHYSICAL_ADDRESS = 0xFFFF;
 
     sp<IHdmiCec> mHdmiCec;
+    sp<IHdmiEarc> mHdmiEarc;
     jobject mCallbacksObj;
     sp<IHdmiCecCallback> mHdmiCecCallback;
+    sp<IHdmiEarcCallback> mHdmiEarcCallback;
     sp<Looper> mLooper;
 };
 
@@ -109,7 +130,8 @@ class HdmiCecEventHandler : public MessageHandler {
 public:
     enum EventType {
         CEC_MESSAGE,
-        HOT_PLUG
+        HOT_PLUG,
+        EARC_STATUS
     };
 
     HdmiCecEventHandler(HdmiCecController* controller, const CecMessage& cecMessage)
@@ -120,6 +142,10 @@ public:
             : mController(controller),
               mHotplugEvent(hotplugEvent) {}
 
+    HdmiCecEventHandler(HdmiCecController* controller, const EarcEvent& earcEvent)
+            : mController(controller),
+              mEarcStatusEvent(earcEvent) {}
+
     virtual ~HdmiCecEventHandler() {}
 
     void handleMessage(const Message& message) {
@@ -129,6 +155,9 @@ public:
             break;
         case EventType::HOT_PLUG:
             propagateHotplugEvent(mHotplugEvent);
+            break;
+        case EventType::EARC_STATUS:
+            propagateEarcStatusEvent(mEarcStatusEvent);
             break;
         default:
             // TODO: add more type whenever new type is introduced.
@@ -164,6 +193,17 @@ private:
         checkAndClearExceptionFromCallback(env, __FUNCTION__);
     }
 
+    void propagateEarcStatusEvent(const EarcEvent& event) {
+        // Note that this method should be called in service thread.
+        JNIEnv* env = AndroidRuntime::getJNIEnv();
+        jint port = static_cast<jint>(event.portId);
+        jint status = static_cast<jint>(event.status);
+        env->CallVoidMethod(mController->getCallbacksObj(),
+                gHdmiCecControllerClassInfo.handleEarcStatus, port, status);
+
+        checkAndClearExceptionFromCallback(env, __FUNCTION__);
+    }
+
     // static
     static void checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodName) {
         if (env->ExceptionCheck()) {
@@ -176,22 +216,33 @@ private:
     HdmiCecController* mController;
     CecMessage mCecMessage;
     HotplugEvent mHotplugEvent;
+    EarcEvent mEarcStatusEvent;
 };
 
-HdmiCecController::HdmiCecController(sp<IHdmiCec> hdmiCec,
+HdmiCecController::HdmiCecController(sp<IHdmiCec> hdmiCec, sp<IHdmiEarc> hdmiEarc,
         jobject callbacksObj, const sp<Looper>& looper)
-        : mHdmiCec(hdmiCec),
+        : mHdmiCec(hdmiCec), mHdmiEarc(hdmiEarc),
           mCallbacksObj(callbacksObj),
           mLooper(looper) {
     mHdmiCecCallback = new HdmiCecCallback(this);
     Return<void> ret = mHdmiCec->setCallback(mHdmiCecCallback);
     if (!ret.isOk()) {
-        ALOGE("Failed to set a cec callback.");
+        ALOGE("HdmiCecCallback Failed to set a cec callback.");
+    }
+
+    mHdmiEarcCallback = new HdmiEarcCallback(this);
+    ret = mHdmiEarc->setCallback(mHdmiEarcCallback);
+    if (!ret.isOk()) {
+        ALOGE("HdmiEarcCallback Failed to set a cec callback.");
     }
 }
 
 HdmiCecController::~HdmiCecController() {
     Return<void> ret = mHdmiCec->setCallback(nullptr);
+    if (!ret.isOk()) {
+        ALOGE("Failed to set a cec callback.");
+    }
+    ret = mHdmiEarc->setCallback(nullptr);
     if (!ret.isOk()) {
         ALOGE("Failed to set a cec callback.");
     }
@@ -307,6 +358,15 @@ void HdmiCecController::enableAudioReturnChannel(int port, bool enabled) {
     }
 }
 
+// Whether to hdmi device is eArc status to the given port.
+int HdmiCecController::getEarcStatus(int port) {
+    Return<EarcStatus> ret = mHdmiEarc->get_earc_status(port);
+    if (!ret.isOk()) {
+        ALOGE("Failed to get eARC status.");
+    }
+    return static_cast<int>((EarcStatus) ret);
+}
+
 // Whether to hdmi device is connected to the given port.
 bool HdmiCecController::isConnected(int port) {
     Return<bool> ret = mHdmiCec->isConnected(port);
@@ -328,6 +388,12 @@ Return<void> HdmiCecController::HdmiCecCallback::onHotplugEvent(const HotplugEve
     return Void();
 }
 
+Return<void> HdmiCecController::HdmiEarcCallback::onEarcEvent(const EarcEvent& event) {
+    sp<HdmiCecEventHandler> handler(new HdmiCecEventHandler(mController, event));
+    mController->mLooper->sendMessage(handler, HdmiCecEventHandler::EventType::EARC_STATUS);
+    return Void();
+}
+
 //------------------------------------------------------------------------------
 #define GET_METHOD_ID(var, clazz, methodName, methodDescriptor) \
         var = env->GetMethodID(clazz, methodName, methodDescriptor); \
@@ -341,11 +407,16 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject callbacksObj,
         ALOGE("Couldn't get tv.cec service.");
         return 0;
     }
+    sp<IHdmiEarc> hdmiEarc = IHdmiEarc::getService();
+    if (hdmiEarc == nullptr) {
+        ALOGE("Couldn't get hdmiEarc service.");
+    }
+
     sp<MessageQueue> messageQueue =
             android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
 
     HdmiCecController* controller = new HdmiCecController(
-            hdmiCec,
+            hdmiCec, hdmiEarc,
             env->NewGlobalRef(callbacksObj),
             messageQueue->getLooper());
 
@@ -353,6 +424,8 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject callbacksObj,
             "handleIncomingCecCommand", "(II[B)V");
     GET_METHOD_ID(gHdmiCecControllerClassInfo.handleHotplug, clazz,
             "handleHotplug", "(IZ)V");
+    GET_METHOD_ID(gHdmiCecControllerClassInfo.handleEarcStatus, clazz,
+            "handleEarcStatus", "(II)V");
 
     return reinterpret_cast<jlong>(controller);
 }
@@ -426,6 +499,11 @@ static void nativeEnableAudioReturnChannel(JNIEnv* env, jclass clazz, jlong cont
     controller->enableAudioReturnChannel(port, enabled == JNI_TRUE);
 }
 
+static jint nativeGetEarcStatus(JNIEnv* env, jclass clazz, jlong controllerPtr, jint port) {
+    HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
+    return controller->getEarcStatus(port);
+}
+
 static jboolean nativeIsConnected(JNIEnv* env, jclass clazz, jlong controllerPtr, jint port) {
     HdmiCecController* controller = reinterpret_cast<HdmiCecController*>(controllerPtr);
     return controller->isConnected(port) ? JNI_TRUE : JNI_FALSE ;
@@ -448,6 +526,7 @@ static const JNINativeMethod sMethods[] = {
     { "nativeSetOption", "(JIZ)V", (void *) nativeSetOption },
     { "nativeSetLanguage", "(JLjava/lang/String;)V", (void *) nativeSetLanguage },
     { "nativeEnableAudioReturnChannel", "(JIZ)V", (void *) nativeEnableAudioReturnChannel },
+    { "nativeGetEarcStatus", "(JI)I", (void *) nativeGetEarcStatus },
     { "nativeIsConnected", "(JI)Z", (void *) nativeIsConnected },
 };
 

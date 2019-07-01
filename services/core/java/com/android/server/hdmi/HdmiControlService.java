@@ -18,6 +18,7 @@ package com.android.server.hdmi;
 
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_ADD_DEVICE;
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE;
+
 import static com.android.server.hdmi.Constants.DISABLED;
 import static com.android.server.hdmi.Constants.ENABLED;
 import static com.android.server.hdmi.Constants.OPTION_MHL_ENABLE;
@@ -67,6 +68,7 @@ import android.util.ArraySet;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
@@ -75,6 +77,9 @@ import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiCecController.AllocateAddressCallback;
 import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
 import com.android.server.hdmi.HdmiCecLocalDevice.PendingActionClearedCallback;
+
+import libcore.util.EmptyArray;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -84,7 +89,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import libcore.util.EmptyArray;
 
 /**
  * Provides a service for sending and processing HDMI control messages,
@@ -861,6 +865,12 @@ public final class HdmiControlService extends SystemService {
         mHandler.postAtFrontOfQueue(runnable);
     }
 
+    @ServiceThreadOnly
+    int getEarcStatus(int portId) {
+        assertRunOnServiceThread();
+        return mCecController.getEarcStatus(portId);
+    }
+
     private void assertRunOnServiceThread() {
         if (Looper.myLooper() != mHandler.getLooper()) {
             throw new IllegalStateException("Should run on service thread.");
@@ -971,6 +981,25 @@ public final class HdmiControlService extends SystemService {
             device.onHotplug(portId, connected);
         }
         announceHotplugEvent(portId, connected);
+    }
+
+    /**
+     * Called when a new eARC Status event is issued.
+     *
+     * @param portId hdmi port number where eARC status event issued.
+     * @param changed eARC status
+     */
+    @ServiceThreadOnly
+    void onEarcStatus(int portId, int status) {
+        assertRunOnServiceThread();
+
+        if (portId != Constants.INVALID_PORT_ID) {
+            if (mPortInfoMap.get(portId).isArcSupported()) {
+                for (HdmiCecLocalDevice device : mCecController.getLocalDeviceList()) {
+                    device.onEarcStatus(portId, status);
+                }
+            }
+        }
     }
 
     /**
