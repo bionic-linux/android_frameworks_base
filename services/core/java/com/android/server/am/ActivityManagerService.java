@@ -32,7 +32,6 @@ import static android.app.ActivityManagerInternal.ALLOW_FULL_ONLY;
 import static android.app.ActivityManagerInternal.ALLOW_NON_FULL;
 import static android.app.AppOpsManager.OP_NONE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.pm.ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT;
 import static android.content.pm.PackageManager.GET_PROVIDERS;
 import static android.content.pm.PackageManager.GET_SHARED_LIBRARY_FILES;
 import static android.content.pm.PackageManager.MATCH_ALL;
@@ -366,6 +365,7 @@ import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
+import dalvik.system.DexFile;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -2266,7 +2266,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         private List<String> mExemptions = Collections.emptyList();
         private int mLogSampleRate = -1;
         private int mStatslogSampleRate = -1;
-        @HiddenApiEnforcementPolicy private int mPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
+        @HiddenApiEnforcementPolicy private int mPolicy = DexFile.API_ENFORCEMENT_POLICY_DEFAULT;
 
         /**
          * Sampling rate for hidden API access event logs with libmetricslogger, as an integer in
@@ -2366,11 +2366,11 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         private @HiddenApiEnforcementPolicy int getValidEnforcementPolicy(String settingsKey) {
             int policy = Settings.Global.getInt(mContext.getContentResolver(), settingsKey,
-                    ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT);
+                    DexFile.API_ENFORCEMENT_POLICY_DEFAULT);
             if (ApplicationInfo.isValidHiddenApiEnforcementPolicy(policy)) {
                 return policy;
             } else {
-                return ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT;
+                return DexFile.API_ENFORCEMENT_POLICY_DEFAULT;
             }
         }
 

@@ -40,6 +40,8 @@ import android.util.proto.ProtoOutputStream;
 import com.android.internal.util.ArrayUtils;
 import com.android.server.SystemConfig;
 
+import dalvik.system.DexFile;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.Collator;
@@ -1255,53 +1257,28 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public String zygotePreloadName;
 
     /**
-     * Represents the default policy. The actual policy used will depend on other properties of
-     * the application, e.g. the target SDK version.
-     * @hide
-     */
-    public static final int HIDDEN_API_ENFORCEMENT_DEFAULT = -1;
-    /**
-     * No API enforcement; the app can access the entire internal private API. Only for use by
-     * system apps.
-     * @hide
-     */
-    public static final int HIDDEN_API_ENFORCEMENT_DISABLED = 0;
-    /**
-     * No API enforcement, but enable the detection logic and warnings. Observed behaviour is the
-     * same as {@link #HIDDEN_API_ENFORCEMENT_DISABLED} but you may see warnings in the log when
-     * APIs are accessed.
-     * @hide
-     * */
-    public static final int HIDDEN_API_ENFORCEMENT_JUST_WARN = 1;
-    /**
-     * Dark grey list enforcement. Enforces the dark grey and black lists
-     * @hide
-     */
-    public static final int HIDDEN_API_ENFORCEMENT_ENABLED = 2;
-
-    private static final int HIDDEN_API_ENFORCEMENT_MIN = HIDDEN_API_ENFORCEMENT_DEFAULT;
-    private static final int HIDDEN_API_ENFORCEMENT_MAX = HIDDEN_API_ENFORCEMENT_ENABLED;
-
-    /**
      * Values in this IntDef MUST be kept in sync with enum hiddenapi::EnforcementPolicy in
      * art/runtime/hidden_api.h
      * @hide
      */
-    @IntDef(prefix = { "HIDDEN_API_ENFORCEMENT_" }, value = {
-            HIDDEN_API_ENFORCEMENT_DEFAULT,
-            HIDDEN_API_ENFORCEMENT_DISABLED,
-            HIDDEN_API_ENFORCEMENT_JUST_WARN,
-            HIDDEN_API_ENFORCEMENT_ENABLED,
+    @IntDef(value = {
+            DexFile.API_ENFORCEMENT_POLICY_DEFAULT,
+            DexFile.API_ENFORCEMENT_POLICY_DISABLED,
+            DexFile.API_ENFORCEMENT_POLICY_JUST_WARN,
+            DexFile.API_ENFORCEMENT_POLICY_ENABLED,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface HiddenApiEnforcementPolicy {}
 
     /** @hide */
     public static boolean isValidHiddenApiEnforcementPolicy(int policy) {
-        return policy >= HIDDEN_API_ENFORCEMENT_MIN && policy <= HIDDEN_API_ENFORCEMENT_MAX;
+        return policy == DexFile.API_ENFORCEMENT_POLICY_DEFAULT
+                || policy == DexFile.API_ENFORCEMENT_POLICY_DISABLED
+                || policy == DexFile.API_ENFORCEMENT_POLICY_JUST_WARN
+                || policy == DexFile.API_ENFORCEMENT_POLICY_ENABLED;
     }
 
-    private int mHiddenApiPolicy = HIDDEN_API_ENFORCEMENT_DEFAULT;
+    private int mHiddenApiPolicy = DexFile.API_ENFORCEMENT_POLICY_DEFAULT;
 
     public void dump(Printer pw, String prefix) {
         dump(pw, prefix, DUMP_FLAG_ALL);
@@ -1883,12 +1860,12 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public @HiddenApiEnforcementPolicy int getHiddenApiEnforcementPolicy() {
         if (isAllowedToUseHiddenApis()) {
-            return HIDDEN_API_ENFORCEMENT_DISABLED;
+            return DexFile.API_ENFORCEMENT_POLICY_DISABLED;
         }
-        if (mHiddenApiPolicy != HIDDEN_API_ENFORCEMENT_DEFAULT) {
+        if (mHiddenApiPolicy != DexFile.API_ENFORCEMENT_POLICY_DEFAULT) {
             return mHiddenApiPolicy;
         }
-        return HIDDEN_API_ENFORCEMENT_ENABLED;
+        return DexFile.API_ENFORCEMENT_POLICY_ENABLED;
     }
 
     /**
@@ -1907,8 +1884,8 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * This will have no effect if this app is not subject to hidden API enforcement, i.e. if it
      * is on the package whitelist.
      *
-     * @param policy configured policy for this app, or {@link #HIDDEN_API_ENFORCEMENT_DEFAULT}
-     *        if nothing configured.
+     * @param policy configured policy for this app, or
+     *        {@link DexFile.API_ENFORCEMENT_POLICY_DEFAULT} if nothing configured.
      * @hide
      */
     public void maybeUpdateHiddenApiEnforcementPolicy(@HiddenApiEnforcementPolicy int policy) {
