@@ -17,13 +17,14 @@
 package com.android.server.signedconfig;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Slog;
 import android.util.StatsLog;
+
+import dalvik.system.DexFile;
 
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
@@ -42,10 +43,10 @@ class GlobalSettingsConfigApplicator {
             )));
 
     private static final Map<String, String> HIDDEN_API_POLICY_KEY_MAP = makeMap(
-            "DEFAULT", String.valueOf(ApplicationInfo.HIDDEN_API_ENFORCEMENT_DEFAULT),
-            "DISABLED", String.valueOf(ApplicationInfo.HIDDEN_API_ENFORCEMENT_DISABLED),
-            "JUST_WARN", String.valueOf(ApplicationInfo.HIDDEN_API_ENFORCEMENT_JUST_WARN),
-            "ENABLED", String.valueOf(ApplicationInfo.HIDDEN_API_ENFORCEMENT_ENABLED)
+            "DEFAULT", String.valueOf(DexFile.API_ENFORCEMENT_POLICY_DEFAULT),
+            "DISABLED", String.valueOf(DexFile.API_ENFORCEMENT_POLICY_DISABLED),
+            "JUST_WARN", String.valueOf(DexFile.API_ENFORCEMENT_POLICY_JUST_WARN),
+            "ENABLED", String.valueOf(DexFile.API_ENFORCEMENT_POLICY_ENABLED)
     );
 
     private static final Map<String, Map<String, String>> KEY_VALUE_MAPPERS = makeMap(
