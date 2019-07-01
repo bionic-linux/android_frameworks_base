@@ -889,6 +889,19 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return oldStatus;
     }
 
+    @ServiceThreadOnly
+    int getEarcStatus() {
+        int status = Constants.EARC_INVALID;
+        assertRunOnServiceThread();
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr != null) {
+            status = mService.getEarcStatus(avr.getPortId());
+        } else {
+            Slog.w(TAG, "Failed to get eArc status; No AVR device.");
+        }
+        return status;
+    }
+
     /**
      * Switch hardware ARC circuit in the system.
      */
@@ -970,6 +983,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
         // Terminate opposite action and start action if not exist.
         if (enabled) {
+            int earcStatus = getEarcStatus();
+            if (earcStatus != Constants.EARC_NOT_ENABLED) {
+                Slog.w(TAG, "Failed to start arc action; eARC Enabled.");
+                return;
+            }
             removeAction(RequestArcTerminationAction.class);
             if (!hasAction(RequestArcInitiationAction.class)) {
                 addAndStartAction(new RequestArcInitiationAction(this, info.getLogicalAddress()));
@@ -1065,6 +1083,11 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     protected boolean handleInitiateArc(HdmiCecMessage message) {
         assertRunOnServiceThread();
 
+        if (getEarcStatus() != Constants.EARC_NOT_ENABLED) {
+            mService.maySendFeatureAbortCommand(message, Constants.ABORT_NOT_IN_CORRECT_MODE);
+            Slog.w(TAG, "Failed to start arc action; eARC Enabled.");
+            return true;
+        }
         if (!canStartArcUpdateAction(message.getSource(), true)) {
             HdmiDeviceInfo avrDeviceInfo = getAvrDeviceInfo();
             if (avrDeviceInfo == null) {
@@ -1564,6 +1587,29 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             // "pollAllDevicesNow" cleans up timer and start poll action immediately.
             // It covers seq #40, #43.
             hotplugActions.get(0).pollAllDevicesNow();
+        }
+    }
+
+    @Override
+    @ServiceThreadOnly
+    void onEarcStatus(int portId, int status) {
+        assertRunOnServiceThread();
+
+        switch(status) {
+            case Constants.EARC_NOT_ENABLED:
+                if (isConnected(portId) && isArcFeatureEnabled(portId)
+                        && !hasAction(SetArcTransmissionStateAction.class)) {
+                    startArcAction(true);
+                }
+                break;
+            case Constants.EARC_WAITING:
+                if (isArcEstablished()) {
+                    startArcAction(false);
+                }
+                break;
+            case Constants.EARC_ENABLED:
+            default:
+                break;
         }
     }
 
