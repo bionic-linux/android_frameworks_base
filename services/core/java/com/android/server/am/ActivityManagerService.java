@@ -349,6 +349,7 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
+import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.ShellCallback;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -368,6 +369,7 @@ import android.service.voice.IVoiceInteractionSession;
 import android.service.voice.VoiceInteractionManagerInternal;
 import android.sysprop.DisplayProperties;
 import android.sysprop.VoldProperties;
+import android.system.suspend.ISuspendControlService;
 import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -488,11 +490,13 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -688,6 +692,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     private static final int MAX_BUGREPORT_TITLE_SIZE = 50;
 
     private static final int NATIVE_DUMP_TIMEOUT_MS = 2000; // 2 seconds;
+
+    private static ISuspendControlService sSuspendControlService = null;
 
     /** All system services */
     SystemServiceManager mSystemServiceManager;
@@ -6280,7 +6286,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
-        // Lastly, dump stacks for all extra PIDs from the CPU tracker.
+        // Dump stacks for all extra PIDs from the CPU tracker.
         if (extraPids != null) {
             for (int pid : extraPids) {
                 if (DEBUG_ANR) Slog.d(TAG, "Collecting stacks for extra pid " + pid);
@@ -6298,6 +6304,32 @@ public class ActivityManagerService extends IActivityManager.Stub
                     Slog.d(TAG, "Done with extra pid " + pid + " in " + timeTaken + "ms");
                 }
             }
+        }
+
+        // Lastly, dump SystemSuspend kernel stack traces.
+        if (sSuspendControlService == null) {
+            try {
+                sSuspendControlService = ISuspendControlService.Stub.asInterface(
+                    ServiceManager.getServiceOrThrow("suspend_control"));
+            } catch (ServiceNotFoundException e) {
+                Slog.w(TAG, "Required service suspend_control not available", e);
+                return;
+            }
+        }
+
+        try {
+            String traces = sSuspendControlService.getStackTraces();
+            // Append kernel traces to tracesFile
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(tracesFile, true))) {
+                writer.newLine();
+                writer.write(traces);
+            } catch (IOException e) {
+                Slog.w(TAG, "Failed to write SystemSuspend kernel traces to ANR trace file", e);
+                return;
+            }
+        } catch (RemoteException e) {
+            Slog.w(TAG, "Failed to obtain SystemSuspend kernel traces", e);
+            return;
         }
     }
 
