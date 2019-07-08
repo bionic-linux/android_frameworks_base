@@ -19,6 +19,7 @@ package android.media;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -52,37 +53,37 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * @hide
      * An unknown type of player
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_UNKNOWN = -1;
     /**
      * @hide
      * Player backed by a java android.media.AudioTrack player
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_JAM_AUDIOTRACK = 1;
     /**
      * @hide
      * Player backed by a java android.media.MediaPlayer player
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_JAM_MEDIAPLAYER = 2;
     /**
      * @hide
      * Player backed by a java android.media.SoundPool player
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_JAM_SOUNDPOOL = 3;
     /**
      * @hide
      * Player backed by a C OpenSL ES AudioPlayer player with a BufferQueue source
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_SLES_AUDIOPLAYER_BUFFERQUEUE = 11;
     /**
      * @hide
      * Player backed by a C OpenSL ES AudioPlayer player with a URI or FD source
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_TYPE_SLES_AUDIOPLAYER_URI_FD = 12;
 
     /**
@@ -126,37 +127,37 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * @hide
      * An unknown player state
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_UNKNOWN = -1;
     /**
      * @hide
      * The resources of the player have been released, it cannot play anymore
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_RELEASED = 0;
     /**
      * @hide
      * The state of a player when it's created
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_IDLE = 1;
     /**
      * @hide
      * The state of a player that is actively playing
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_STARTED = 2;
     /**
      * @hide
      * The state of a player where playback is paused
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_PAUSED = 3;
     /**
      * @hide
      * The state of a player where playback is stopped
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int PLAYER_STATE_STOPPED = 4;
 
     /** @hide */
@@ -259,7 +260,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * Return the uid of the client application that created this player.
      * @return the uid of the client
      */
-    @SystemApi
+    @SystemApi @TestApi
     public int getClientUid() {
         return mClientUid;
     }
@@ -269,7 +270,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * Return the pid of the client application that created this player.
      * @return the pid of the client
      */
-    @SystemApi
+    @SystemApi @TestApi
     public int getClientPid() {
         return mClientPid;
     }
@@ -284,7 +285,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * {@link #PLAYER_TYPE_UNKNOWN}.
      * @return the type of the player.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public @PlayerType int getPlayerType() {
         switch (mPlayerType) {
             case PLAYER_TYPE_AAUDIO:
@@ -304,7 +305,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * {@link #PLAYER_STATE_UNKNOWN}.
      * @return the state of the player.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public @PlayerState int getPlayerState() {
         return mPlayerState;
     }
@@ -314,7 +315,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * Return an identifier unique for the lifetime of the player.
      * @return a player interface identifier
      */
-    @SystemApi
+    @SystemApi @TestApi
     public int getPlayerInterfaceId() {
         return mPlayerIId;
     }
@@ -324,7 +325,7 @@ public final class AudioPlaybackConfiguration implements Parcelable {
      * Return a proxy for the player associated with this playback configuration
      * @return a proxy player
      */
-    @SystemApi
+    @SystemApi @TestApi
     public PlayerProxy getPlayerProxy() {
         final IPlayerShell ips;
         synchronized (this) {

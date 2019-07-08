@@ -325,7 +325,7 @@ public final class AudioFocusRequest {
      * focus request being successful.
      * @return whether this request will lock focus.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public boolean locksFocus() {
         return (mFlags & AudioManager.AUDIOFOCUS_FLAG_LOCK)
                 == AudioManager.AUDIOFOCUS_FLAG_LOCK;
@@ -528,7 +528,7 @@ public final class AudioFocusRequest {
          * @param focusLocked true when locking focus
          * @return this {@code Builder} instance
          */
-        @SystemApi
+        @SystemApi @TestApi
         public @NonNull Builder setLocksFocus(boolean focusLocked) {
             mFocusLocked = focusLocked;
             return this;

@@ -17,6 +17,7 @@
 package android.media;
 
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -26,7 +27,7 @@ import java.util.Objects;
  * @hide
  * A class to encapsulate information about an audio focus owner or request.
  */
-@SystemApi
+@SystemApi @TestApi
 public final class AudioFocusInfo implements Parcelable {
 
     private final AudioAttributes mAttributes;

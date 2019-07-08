@@ -18,6 +18,7 @@ package android.media;
 
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.media.VolumeShaper;
 import android.os.RemoteException;
 import android.util.Log;
@@ -29,7 +30,7 @@ import java.util.Objects;
  * Class to remotely control a player.
  * @hide
  */
-@SystemApi
+@SystemApi @TestApi
 public class PlayerProxy {
 
     private final static String TAG = "PlayerProxy";

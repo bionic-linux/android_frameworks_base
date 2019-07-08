@@ -19,6 +19,7 @@ package android.media;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Bundle;
@@ -305,7 +306,7 @@ public final class AudioAttributes implements Parcelable {
      * be compatible with its use as a broadcast for surrounding people and/or devices.
      * Ensures audibility with no or minimal post-processing applied.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public final static int FLAG_BEACON = 0x1 << 3;
 
     /**
@@ -319,21 +320,21 @@ public final class AudioAttributes implements Parcelable {
      * To be used with capture preset MediaRecorder.AudioSource.HOTWORD or
      * MediaRecorder.AudioSource.VOICE_RECOGNITION.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public final static int FLAG_HW_HOTWORD = 0x1 << 5;
 
     /**
      * @hide
      * Flag requesting audible playback even under limited interruptions.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public final static int FLAG_BYPASS_INTERRUPTION_POLICY = 0x1 << 6;
 
     /**
      * @hide
      * Flag requesting audible playback even when the underlying stream is muted.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public final static int FLAG_BYPASS_MUTE = 0x1 << 7;
 
     /**
@@ -412,7 +413,7 @@ public final class AudioAttributes implements Parcelable {
      * @return one of the values that can be set in {@link Builder#setCapturePreset(int)} or a
      *    negative value if none has been set.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public int getCapturePreset() {
         return mSource;
     }
@@ -432,7 +433,7 @@ public final class AudioAttributes implements Parcelable {
      * Internal use only
      * @return a combined mask of all flags
      */
-    @SystemApi
+    @SystemApi @TestApi
     public int getAllFlags() {
         return (mFlags & FLAG_ALL);
     }
@@ -442,7 +443,7 @@ public final class AudioAttributes implements Parcelable {
      * Return the Bundle of data.
      * @return a copy of the Bundle for this instance, may be null.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public Bundle getBundle() {
         if (mBundle == null) {
             return mBundle;
@@ -634,7 +635,7 @@ public final class AudioAttributes implements Parcelable {
          * @param bundle a non-null Bundle
          * @return the same builder instance
          */
-        @SystemApi
+        @SystemApi @TestApi
         public Builder addBundle(@NonNull Bundle bundle) {
             if (bundle == null) {
                 throw new IllegalArgumentException("Illegal null bundle");
@@ -740,7 +741,7 @@ public final class AudioAttributes implements Parcelable {
          *     {@link MediaRecorder.AudioSource#UNPROCESSED}
          * @return the same Builder instance.
          */
-        @SystemApi
+        @SystemApi @TestApi
         public Builder setCapturePreset(int preset) {
             switch (preset) {
                 case MediaRecorder.AudioSource.DEFAULT:
@@ -764,7 +765,7 @@ public final class AudioAttributes implements Parcelable {
          * @param preset
          * @return the same Builder instance.
          */
-        @SystemApi
+        @SystemApi @TestApi
         public Builder setInternalCapturePreset(int preset) {
             if ((preset == MediaRecorder.AudioSource.HOTWORD)
                     || (preset == MediaRecorder.AudioSource.REMOTE_SUBMIX)

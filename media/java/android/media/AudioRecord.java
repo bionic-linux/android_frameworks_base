@@ -16,19 +16,10 @@
 
 package android.media;
 
-import java.io.IOException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.ref.WeakReference;
-import java.nio.ByteBuffer;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.ActivityThread;
 import android.os.Binder;
@@ -39,12 +30,20 @@ import android.os.Message;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Pair;
 
 import com.android.internal.annotations.GuardedBy;
+
+import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The AudioRecord class manages the audio resources for Java applications
@@ -320,7 +319,7 @@ public class AudioRecord implements AudioRouting
      *   construction.
      * @throws IllegalArgumentException
      */
-    @SystemApi
+    @SystemApi @TestApi
     public AudioRecord(AudioAttributes attributes, AudioFormat format, int bufferSizeInBytes,
             int sessionId) throws IllegalArgumentException {
         mRecordingState = RECORDSTATE_STOPPED;
@@ -524,7 +523,7 @@ public class AudioRecord implements AudioRouting
          * @return the same Builder instance.
          * @throws IllegalArgumentException
          */
-        @SystemApi
+        @SystemApi @TestApi
         public Builder setAudioAttributes(@NonNull AudioAttributes attributes)
                 throws IllegalArgumentException {
             if (attributes == null) {
@@ -583,7 +582,7 @@ public class AudioRecord implements AudioRouting
          * @return the same Builder instance.
          * @throws IllegalArgumentException
          */
-        @SystemApi
+        @SystemApi @TestApi
         public Builder setSessionId(int sessionId) throws IllegalArgumentException {
             if (sessionId < 0) {
                 throw new IllegalArgumentException("Invalid session ID " + sessionId);

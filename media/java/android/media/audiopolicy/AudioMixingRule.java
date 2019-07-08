@@ -17,6 +17,7 @@
 package android.media.audiopolicy;
 
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.media.AudioAttributes;
 import android.os.Parcel;
@@ -40,7 +41,7 @@ import java.util.Objects;
  *         .build();
  * </pre>
  */
-@SystemApi
+@SystemApi @TestApi
 public class AudioMixingRule {
 
     private AudioMixingRule(int mixType, ArrayList<AudioMixMatchCriterion> criteria) {

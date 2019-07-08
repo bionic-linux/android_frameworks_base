@@ -19,6 +19,7 @@ package android.media.audiopolicy;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioAttributes;
@@ -48,7 +49,7 @@ import java.util.List;
  * @hide
  * AudioPolicy provides access to the management of audio routing and audio focus.
  */
-@SystemApi
+@SystemApi @TestApi
 public class AudioPolicy {
 
     private static final String TAG = "AudioPolicy";

@@ -520,8 +520,42 @@ package android.location {
 
 package android.media {
 
+  public final class AudioAttributes implements android.os.Parcelable {
+    method public int getAllFlags();
+    method public android.os.Bundle getBundle();
+    method public int getCapturePreset();
+    field public static final int FLAG_BEACON = 8; // 0x8
+    field public static final int FLAG_BYPASS_INTERRUPTION_POLICY = 64; // 0x40
+    field public static final int FLAG_BYPASS_MUTE = 128; // 0x80
+    field public static final int FLAG_HW_HOTWORD = 32; // 0x20
+  }
+
+  public static class AudioAttributes.Builder {
+    method public android.media.AudioAttributes.Builder addBundle(@NonNull android.os.Bundle);
+    method public android.media.AudioAttributes.Builder setCapturePreset(int);
+    method public android.media.AudioAttributes.Builder setInternalCapturePreset(int);
+  }
+
+  public final class AudioFocusInfo implements android.os.Parcelable {
+    method public int describeContents();
+    method public android.media.AudioAttributes getAttributes();
+    method public String getClientId();
+    method public int getClientUid();
+    method public int getFlags();
+    method public int getGainRequest();
+    method public int getLossReceived();
+    method public String getPackageName();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.media.AudioFocusInfo> CREATOR;
+  }
+
   public final class AudioFocusRequest {
     method @Nullable public android.media.AudioManager.OnAudioFocusChangeListener getOnAudioFocusChangeListener();
+    method public boolean locksFocus();
+  }
+
+  public static final class AudioFocusRequest.Builder {
+    method @NonNull public android.media.AudioFocusRequest.Builder setLocksFocus(boolean);
   }
 
   public final class AudioFormat implements android.os.Parcelable {
@@ -531,10 +565,64 @@ package android.media {
     method public static boolean isEncodingLinearPcm(int);
   }
 
+  public class AudioManager {
+    method @Deprecated public int abandonAudioFocus(android.media.AudioManager.OnAudioFocusChangeListener, android.media.AudioAttributes);
+    method public void clearAudioServerStateCallback();
+    method @RequiresPermission("android.permission.MODIFY_AUDIO_ROUTING") public int dispatchAudioFocusChange(@NonNull android.media.AudioFocusInfo, int, @NonNull android.media.audiopolicy.AudioPolicy);
+    method public boolean isAudioServerRunning();
+    method public boolean isHdmiSystemAudioSupported();
+    method @RequiresPermission("android.permission.MODIFY_AUDIO_ROUTING") public int registerAudioPolicy(@NonNull android.media.audiopolicy.AudioPolicy);
+    method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public int requestAudioFocus(android.media.AudioManager.OnAudioFocusChangeListener, @NonNull android.media.AudioAttributes, int, int) throws java.lang.IllegalArgumentException;
+    method @Deprecated @RequiresPermission(anyOf={android.Manifest.permission.MODIFY_PHONE_STATE, "android.permission.MODIFY_AUDIO_ROUTING"}) public int requestAudioFocus(android.media.AudioManager.OnAudioFocusChangeListener, @NonNull android.media.AudioAttributes, int, int, android.media.audiopolicy.AudioPolicy) throws java.lang.IllegalArgumentException;
+    method @RequiresPermission("android.permission.MODIFY_AUDIO_ROUTING") public int requestAudioFocus(@NonNull android.media.AudioFocusRequest, @Nullable android.media.audiopolicy.AudioPolicy);
+    method public void setAudioServerStateCallback(@NonNull java.util.concurrent.Executor, @NonNull android.media.AudioManager.AudioServerStateCallback);
+    method @RequiresPermission("android.permission.MODIFY_AUDIO_ROUTING") public void setFocusRequestResult(@NonNull android.media.AudioFocusInfo, int, @NonNull android.media.audiopolicy.AudioPolicy);
+    method @RequiresPermission("android.permission.MODIFY_AUDIO_ROUTING") public void unregisterAudioPolicyAsync(@NonNull android.media.audiopolicy.AudioPolicy);
+    field public static final int AUDIOFOCUS_FLAG_DELAY_OK = 1; // 0x1
+    field public static final int AUDIOFOCUS_FLAG_LOCK = 4; // 0x4
+    field public static final int AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS = 2; // 0x2
+  }
+
+  public abstract static class AudioManager.AudioServerStateCallback {
+    ctor public AudioManager.AudioServerStateCallback();
+    method public void onAudioServerDown();
+    method public void onAudioServerUp();
+  }
+
+  public final class AudioPlaybackConfiguration implements android.os.Parcelable {
+    method public int getClientPid();
+    method public int getClientUid();
+    method public int getPlayerInterfaceId();
+    method public android.media.PlayerProxy getPlayerProxy();
+    method public int getPlayerState();
+    method public int getPlayerType();
+    field public static final int PLAYER_STATE_IDLE = 1; // 0x1
+    field public static final int PLAYER_STATE_PAUSED = 3; // 0x3
+    field public static final int PLAYER_STATE_RELEASED = 0; // 0x0
+    field public static final int PLAYER_STATE_STARTED = 2; // 0x2
+    field public static final int PLAYER_STATE_STOPPED = 4; // 0x4
+    field public static final int PLAYER_STATE_UNKNOWN = -1; // 0xffffffff
+    field public static final int PLAYER_TYPE_JAM_AUDIOTRACK = 1; // 0x1
+    field public static final int PLAYER_TYPE_JAM_MEDIAPLAYER = 2; // 0x2
+    field public static final int PLAYER_TYPE_JAM_SOUNDPOOL = 3; // 0x3
+    field public static final int PLAYER_TYPE_SLES_AUDIOPLAYER_BUFFERQUEUE = 11; // 0xb
+    field public static final int PLAYER_TYPE_SLES_AUDIOPLAYER_URI_FD = 12; // 0xc
+    field public static final int PLAYER_TYPE_UNKNOWN = -1; // 0xffffffff
+  }
+
   public final class AudioPresentation {
     ctor public AudioPresentation(int, int, @NonNull java.util.Map<java.lang.String,java.lang.String>, @NonNull String, int, boolean, boolean, boolean);
     method public int getPresentationId();
     method public int getProgramId();
+  }
+
+  public class AudioRecord implements android.media.AudioRouting {
+    ctor public AudioRecord(android.media.AudioAttributes, android.media.AudioFormat, int, int) throws java.lang.IllegalArgumentException;
+  }
+
+  public static class AudioRecord.Builder {
+    method public android.media.AudioRecord.Builder setAudioAttributes(@NonNull android.media.AudioAttributes) throws java.lang.IllegalArgumentException;
+    method public android.media.AudioRecord.Builder setSessionId(int) throws java.lang.IllegalArgumentException;
   }
 
   public final class BufferingParams implements android.os.Parcelable {
@@ -561,6 +649,9 @@ package android.media {
   public final class PlaybackParams implements android.os.Parcelable {
     method public int getAudioStretchMode();
     method public android.media.PlaybackParams setAudioStretchMode(int);
+  }
+
+  public class PlayerProxy {
   }
 
   public static final class VolumeShaper.Configuration.Builder {
@@ -595,6 +686,88 @@ package android.media.audiofx {
 
   public static interface AudioEffect.OnParameterChangeListener {
     method public void onParameterChange(android.media.audiofx.AudioEffect, int, byte[], byte[]);
+  }
+
+}
+
+package android.media.audiopolicy {
+
+  public class AudioMix {
+    method public int getMixState();
+    field public static final int MIX_STATE_DISABLED = -1; // 0xffffffff
+    field public static final int MIX_STATE_IDLE = 0; // 0x0
+    field public static final int MIX_STATE_MIXING = 1; // 0x1
+    field public static final int ROUTE_FLAG_LOOP_BACK = 2; // 0x2
+    field public static final int ROUTE_FLAG_RENDER = 1; // 0x1
+  }
+
+  public static class AudioMix.Builder {
+    ctor public AudioMix.Builder(android.media.audiopolicy.AudioMixingRule) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMix build() throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMix.Builder setDevice(@NonNull android.media.AudioDeviceInfo) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMix.Builder setFormat(android.media.AudioFormat) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMix.Builder setRouteFlags(int) throws java.lang.IllegalArgumentException;
+  }
+
+  public class AudioMixingRule {
+    field public static final int RULE_MATCH_ATTRIBUTE_CAPTURE_PRESET = 2; // 0x2
+    field public static final int RULE_MATCH_ATTRIBUTE_USAGE = 1; // 0x1
+    field public static final int RULE_MATCH_UID = 4; // 0x4
+  }
+
+  public static class AudioMixingRule.Builder {
+    ctor public AudioMixingRule.Builder();
+    method public android.media.audiopolicy.AudioMixingRule.Builder addMixRule(int, Object) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMixingRule.Builder addRule(android.media.AudioAttributes, int) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMixingRule build();
+    method public android.media.audiopolicy.AudioMixingRule.Builder excludeMixRule(int, Object) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioMixingRule.Builder excludeRule(android.media.AudioAttributes, int) throws java.lang.IllegalArgumentException;
+  }
+
+  public class AudioPolicy {
+    method public int attachMixes(@NonNull java.util.List<android.media.audiopolicy.AudioMix>);
+    method public android.media.AudioRecord createAudioRecordSink(android.media.audiopolicy.AudioMix) throws java.lang.IllegalArgumentException;
+    method public android.media.AudioTrack createAudioTrackSource(android.media.audiopolicy.AudioMix) throws java.lang.IllegalArgumentException;
+    method public int detachMixes(@NonNull java.util.List<android.media.audiopolicy.AudioMix>);
+    method public int getFocusDuckingBehavior();
+    method public int getStatus();
+    method public int setFocusDuckingBehavior(int) throws java.lang.IllegalArgumentException, java.lang.IllegalStateException;
+    method public void setRegistration(String);
+    method public String toLogFriendlyString();
+    field public static final int FOCUS_POLICY_DUCKING_DEFAULT = 0; // 0x0
+    field public static final int FOCUS_POLICY_DUCKING_IN_APP = 0; // 0x0
+    field public static final int FOCUS_POLICY_DUCKING_IN_POLICY = 1; // 0x1
+    field public static final int POLICY_STATUS_REGISTERED = 2; // 0x2
+    field public static final int POLICY_STATUS_UNREGISTERED = 1; // 0x1
+  }
+
+  public abstract static class AudioPolicy.AudioPolicyFocusListener {
+    ctor public AudioPolicy.AudioPolicyFocusListener();
+    method public void onAudioFocusAbandon(android.media.AudioFocusInfo);
+    method public void onAudioFocusGrant(android.media.AudioFocusInfo, int);
+    method public void onAudioFocusLoss(android.media.AudioFocusInfo, boolean);
+    method public void onAudioFocusRequest(android.media.AudioFocusInfo, int);
+  }
+
+  public abstract static class AudioPolicy.AudioPolicyStatusListener {
+    ctor public AudioPolicy.AudioPolicyStatusListener();
+    method public void onMixStateUpdate(android.media.audiopolicy.AudioMix);
+    method public void onStatusChange();
+  }
+
+  public abstract static class AudioPolicy.AudioPolicyVolumeCallback {
+    method public void onVolumeAdjustment(int);
+  }
+
+  public static class AudioPolicy.Builder {
+    ctor public AudioPolicy.Builder(android.content.Context);
+    method public android.media.audiopolicy.AudioPolicy.Builder addMix(@NonNull android.media.audiopolicy.AudioMix) throws java.lang.IllegalArgumentException;
+    method public android.media.audiopolicy.AudioPolicy build();
+    method public void setAudioPolicyFocusListener(android.media.audiopolicy.AudioPolicy.AudioPolicyFocusListener);
+    method public void setAudioPolicyStatusListener(android.media.audiopolicy.AudioPolicy.AudioPolicyStatusListener);
+    method public android.media.audiopolicy.AudioPolicy.Builder setAudioPolicyVolumeCallback(@NonNull android.media.audiopolicy.AudioPolicy.AudioPolicyVolumeCallback);
+    method public android.media.audiopolicy.AudioPolicy.Builder setIsAudioFocusPolicy(boolean);
+    method public android.media.audiopolicy.AudioPolicy.Builder setLooper(@NonNull android.os.Looper) throws java.lang.IllegalArgumentException;
   }
 
 }

@@ -25,6 +25,7 @@ import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -2495,7 +2496,7 @@ public class AudioManager {
      * the system is in a state where focus cannot change, but be granted focus later when
      * this condition ends.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int AUDIOFOCUS_FLAG_DELAY_OK = 0x1 << 0;
     /**
      * @hide
@@ -2507,7 +2508,7 @@ public class AudioManager {
      * content, such as audio book or podcast players, ducking may never be acceptable, and will
      * thus always pause. This flag enables them to be declared as such whenever they request focus.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int AUDIOFOCUS_FLAG_PAUSES_ON_DUCKABLE_LOSS = 0x1 << 1;
     /**
      * @hide
@@ -2516,7 +2517,7 @@ public class AudioManager {
      * {@link android.media.audiopolicy.AudioPolicy} in
      * {@link #requestAudioFocus(OnAudioFocusChangeListener, AudioAttributes, int, int, AudioPolicy)}
      */
-    @SystemApi
+    @SystemApi @TestApi
     public static final int AUDIOFOCUS_FLAG_LOCK     = 0x1 << 2;
     /** @hide */
     public static final int AUDIOFOCUS_FLAGS_APPS = AUDIOFOCUS_FLAG_DELAY_OK
@@ -2590,7 +2591,7 @@ public class AudioManager {
      *     without the {@link #AUDIOFOCUS_FLAG_DELAY_OK} flag.
      * @throws IllegalArgumentException
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public int requestAudioFocus(OnAudioFocusChangeListener l,
             @NonNull AudioAttributes requestAttributes,
@@ -2630,7 +2631,7 @@ public class AudioManager {
      * @throws IllegalArgumentException
      * @deprecated use {@link #requestAudioFocus(AudioFocusRequest, AudioPolicy)}
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(anyOf= {
             android.Manifest.permission.MODIFY_PHONE_STATE,
             android.Manifest.permission.MODIFY_AUDIO_ROUTING
@@ -2692,7 +2693,7 @@ public class AudioManager {
      * @throws NullPointerException if the AudioFocusRequest is null
      * @throws IllegalArgumentException when trying to lock focus without an AudioPolicy
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int requestAudioFocus(@NonNull AudioFocusRequest afr, @Nullable AudioPolicy ap) {
         if (afr == null) {
@@ -2860,7 +2861,7 @@ public class AudioManager {
      * @param requestResult the result to the focus request to be passed to the requester
      * @param ap a valid registered {@link AudioPolicy} configured as a focus policy.
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public void setFocusRequestResult(@NonNull AudioFocusInfo afi,
             @FocusRequestResult int requestResult, @NonNull AudioPolicy ap) {
@@ -2899,7 +2900,7 @@ public class AudioManager {
      *     if there was an error sending the request.
      * @throws NullPointerException if the {@link AudioFocusInfo} or {@link AudioPolicy} are null.
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int dispatchAudioFocusChange(@NonNull AudioFocusInfo afi, int focusChange,
             @NonNull AudioPolicy ap) {
@@ -2952,7 +2953,7 @@ public class AudioManager {
      * @return {@link #AUDIOFOCUS_REQUEST_FAILED} or {@link #AUDIOFOCUS_REQUEST_GRANTED}
      * @deprecated use {@link #abandonAudioFocusRequest(AudioFocusRequest)}
      */
-    @SystemApi
+    @SystemApi @TestApi
     @SuppressLint("Doclava125") // no permission enforcement, but only "undoes" what would have been
                                 // done by a matching requestAudioFocus
     public int abandonAudioFocus(OnAudioFocusChangeListener l, AudioAttributes aa) {
@@ -3161,7 +3162,7 @@ public class AudioManager {
      *    {@link android.Manifest.permission#MODIFY_AUDIO_ROUTING} permission,
      *    {@link #SUCCESS} otherwise.
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public int registerAudioPolicy(@NonNull AudioPolicy policy) {
         if (policy == null) {
@@ -3187,7 +3188,7 @@ public class AudioManager {
      * @hide
      * @param policy the non-null {@link AudioPolicy} to unregister.
      */
-    @SystemApi
+    @SystemApi @TestApi
     @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
     public void unregisterAudioPolicyAsync(@NonNull AudioPolicy policy) {
         if (policy == null) {
@@ -4244,7 +4245,7 @@ public class AudioManager {
      *
      * @hide
      */
-    @SystemApi
+    @SystemApi @TestApi
     @SuppressLint("Doclava125") // FIXME is this still used?
     public boolean isHdmiSystemAudioSupported() {
         try {
@@ -4974,7 +4975,7 @@ public class AudioManager {
      * @hide
      * Abstract class to receive event notification about audioserver process state.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public abstract static class AudioServerStateCallback {
         public void onAudioServerDown() { }
         public void onAudioServerUp() { }
@@ -5014,7 +5015,7 @@ public class AudioManager {
      * @param stateCallback the callback to receive the audio server state changes
      *        To remove the callabck, pass a null reference for both executor and stateCallback.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public void setAudioServerStateCallback(@NonNull Executor executor,
             @NonNull AudioServerStateCallback stateCallback) {
         if (stateCallback == null) {
@@ -5045,7 +5046,7 @@ public class AudioManager {
      * @hide
      * Unregisters the callback for notification of audio server state changes.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public void clearAudioServerStateCallback() {
         synchronized (mAudioServerStateCbLock) {
             if (mAudioServerStateCb != null) {
@@ -5067,7 +5068,7 @@ public class AudioManager {
      * Checks if native audioservice is running or not.
      * @return true if native audioservice runs, false otherwise.
      */
-    @SystemApi
+    @SystemApi @TestApi
     public boolean isAudioServerRunning() {
         final IAudioService service = getService();
         try {
