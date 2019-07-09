@@ -800,4 +800,13 @@ interface IActivityManager {
      * started from the shell.
      */
     void stopDelegateShellPermissionIdentity();
+
+    /**
+     * Retrieves the set of disabled changes for thr calling app. Any change ID not in the returned
+     * array is by default enabled for this app.
+     *
+     * @return A sorted long array of change IDs. We use a primitive array to minimize memory
+     *      footprint.
+     */
+    long[] getDisabledCompatibilityChanges();
 }

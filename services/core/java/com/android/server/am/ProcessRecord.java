@@ -17,16 +17,9 @@
 package com.android.server.am;
 
 import static android.app.ActivityManager.PROCESS_STATE_NONEXISTENT;
+
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
-
-import android.util.ArraySet;
-import android.util.DebugUtils;
-import android.util.EventLog;
-import android.util.Slog;
-import com.android.internal.app.procstats.ProcessStats;
-import com.android.internal.app.procstats.ProcessState;
-import com.android.internal.os.BatteryStatsImpl;
 
 import android.app.ActivityManager;
 import android.app.Dialog;
@@ -43,8 +36,17 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.util.ArrayMap;
+import android.util.ArraySet;
+import android.util.DebugUtils;
+import android.util.EventLog;
+import android.util.Slog;
 import android.util.TimeUtils;
 import android.util.proto.ProtoOutputStream;
+
+import com.android.internal.app.procstats.ProcessState;
+import com.android.internal.app.procstats.ProcessStats;
+import com.android.internal.os.BatteryStatsImpl;
+import com.android.server.compat.CompatConfig;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -233,6 +235,8 @@ final class ProcessRecord {
     long startTime;
     // This will be same as {@link #uid} usually except for some apps used during factory testing.
     int startUid;
+
+    long[] disabledCompatChanges;
 
     void setStartParams(int startUid, String hostingType, String hostingNameStr, String seInfo,
             long startTime) {
@@ -491,6 +495,12 @@ final class ProcessRecord {
             pw.print(prefix); pw.println("Receivers:");
             for (int i=0; i<receivers.size(); i++) {
                 pw.print(prefix); pw.print("  - "); pw.println(receivers.valueAt(i));
+            }
+        }
+        if (disabledCompatChanges != null && disabledCompatChanges.length > 0) {
+            pw.print(prefix); pw.println("Disabled compat changes:");
+            for (int i = 0; i < disabledCompatChanges.length; ++i) {
+                pw.print(prefix); pw.print("  - "); pw.println(disabledCompatChanges[i]);
             }
         }
     }
@@ -865,5 +875,12 @@ final class ProcessRecord {
 
     boolean hasForegroundServices() {
         return foregroundServices;
+    }
+
+    synchronized long[] getDisabledCompatChanges() {
+        if (disabledCompatChanges == null) {
+            disabledCompatChanges = CompatConfig.get().getDisabledChanges(info);
+        }
+        return disabledCompatChanges;
     }
 }

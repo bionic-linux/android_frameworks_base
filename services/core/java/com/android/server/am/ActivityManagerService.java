@@ -27262,6 +27262,21 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    @Override
+    public long[] getDisabledCompatibilityChanges() {
+        synchronized (mPidsSelfLocked) {
+            int pid = Binder.getCallingPid();
+            ProcessRecord r = mPidsSelfLocked.get(pid);
+            if (r == null) {
+                Slog.w(TAG, "No process record for calling PID " + pid);
+                return new long[0];
+            }
+            long[] d = r.getDisabledCompatChanges();
+            Slog.d(TAG, "Disabled changes for " + pid + ": " + d.length);
+            return d;
+        }
+    }
+
     private class ShellDelegate implements CheckOpsDelegate, CheckPermissionDelegate {
         private final String mTargetPackageName;
         private final int mTargetUid;

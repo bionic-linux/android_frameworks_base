@@ -6609,6 +6609,7 @@ public final class ActivityThread extends ClientTransactionHandler {
             final IActivityManager mgr = ActivityManager.getService();
             try {
                 mgr.attachApplication(mAppThread, startSeq);
+                AppCompatCallbacks.install(mgr.getDisabledCompatibilityChanges());
             } catch (RemoteException ex) {
                 throw ex.rethrowFromSystemServer();
             }
