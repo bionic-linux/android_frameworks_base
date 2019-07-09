@@ -267,6 +267,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @GuardedBy("mStatsLock")
     private Network[] mDefaultNetworks = new Network[0];
 
+    /** Set containing info about active VPNs and their underlying networks. */
+    @GuardedBy("mStatsLock")
+    private VpnInfo[] mVpnInfos = new VpnInfo[0];
+
     private final DropBoxNonMonotonicObserver mNonMonotonicObserver =
             new DropBoxNonMonotonicObserver();
 
@@ -829,14 +833,26 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @Override
     public void forceUpdateIfaces(
             Network[] defaultNetworks,
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
             NetworkState[] networkStates,
             String activeIface,
             VpnInfo[] vpnInfos) {
         checkNetworkStackPermission(mContext);
+=======
+            VpnInfo[] vpnArray,
+            NetworkState[] networkStates,
+            String activeIface) {
+        mContext.enforceCallingOrSelfPermission(READ_NETWORK_USAGE_HISTORY, TAG);
+        assertBandwidthControlEnabled();
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         final long token = Binder.clearCallingIdentity();
         try {
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
             updateIfaces(defaultNetworks, networkStates, activeIface);
+=======
+            updateIfaces(defaultNetworks, vpnArray, networkStates, activeIface);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -1104,11 +1120,19 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     private void updateIfaces(
             Network[] defaultNetworks,
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
+=======
+            VpnInfo[] vpnArray,
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
             NetworkState[] networkStates,
             String activeIface) {
         synchronized (mStatsLock) {
             mWakeLock.acquire();
             try {
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
+=======
+                mVpnInfos = vpnArray;
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
                 mActiveIface = activeIface;
                 updateIfacesLocked(defaultNetworks, networkStates);
             } finally {
@@ -1252,6 +1276,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
         // For per-UID stats, pass the VPN info so VPN traffic is reattributed to responsible apps.
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
+=======
+        VpnInfo[] vpnArray = mVpnInfos;
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUid");
         mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);

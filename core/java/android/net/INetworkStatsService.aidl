@@ -66,9 +66,15 @@ interface INetworkStatsService {
     /** Force update of ifaces. */
     void forceUpdateIfaces(
          in Network[] defaultNetworks,
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
          in NetworkState[] networkStates,
          in String activeIface,
          in VpnInfo[] vpnInfos);
+=======
+         in VpnInfo[] vpnArray,
+         in NetworkState[] networkStates,
+         in String activeIface);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
     /** Force update of statistics. */
     @UnsupportedAppUsage
     void forceUpdate();

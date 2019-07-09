@@ -981,7 +981,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         intentFilter.addAction(Intent.ACTION_USER_REMOVED);
         intentFilter.addAction(Intent.ACTION_USER_UNLOCKED);
         mContext.registerReceiverAsUser(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                 mIntentReceiver,
+=======
+                mUserIntentReceiver,
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
                 UserHandle.ALL,
                 intentFilter,
                 null /* broadcastPermission */,
@@ -4810,7 +4814,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void onUserAdded(int userId) {
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mPermissionMonitor.onUserAdded(userId);
+=======
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         Network defaultNetwork = getNetwork(getDefaultNetwork());
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
@@ -4824,7 +4831,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void onUserRemoved(int userId) {
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mPermissionMonitor.onUserRemoved(userId);
+=======
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         Network defaultNetwork = getNetwork(getDefaultNetwork());
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
@@ -4833,6 +4843,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 vpn.onUserRemoved(userId);
                 NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
                 updateVpnCapabilities(vpn, nc);
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
             }
         }
     }
@@ -4883,6 +4894,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Slog.d(TAG, "Removing always-on VPN package " + packageName + " for user "
                         + userId);
                 vpn.setAlwaysOnPackage(null, false, null);
+=======
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
             }
         }
     }
@@ -5430,8 +5443,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
     @VisibleForTesting
     protected boolean isDefaultNetwork(NetworkAgentInfo nai) {
+=======
+    private boolean isDefaultNetwork(NetworkAgentInfo nai) {
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         return nai == getDefaultNetwork();
     }
 
@@ -6809,11 +6826,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (activeLinkProperties != null) {
             activeIface = activeLinkProperties.getInterfaceName();
         }
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
 
         final VpnInfo[] vpnInfos = getAllVpnInfo();
+=======
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         try {
             mStatsService.forceUpdateIfaces(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                     getDefaultNetworks(), getAllNetworkState(), activeIface, vpnInfos);
+=======
+                    getDefaultNetworks(), getAllVpnInfo(), getAllNetworkState(), activeIface);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         } catch (Exception ignored) {
         }
     }

@@ -570,7 +570,11 @@ public class VpnTest {
         final NetworkCapabilities caps = new NetworkCapabilities();
 
         Vpn.applyUnderlyingCapabilities(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                 mConnectivityManager, new Network[] {}, caps, false /* isAlwaysMetered */);
+=======
+                mConnectivityManager, new Network[] {}, caps);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
         assertFalse(caps.hasTransport(TRANSPORT_WIFI));
@@ -581,10 +585,14 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
         Vpn.applyUnderlyingCapabilities(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                 mConnectivityManager,
                 new Network[] {mobile},
                 caps,
                 false /* isAlwaysMetered */);
+=======
+                mConnectivityManager, new Network[] {mobile}, caps);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertTrue(caps.hasTransport(TRANSPORT_CELLULAR));
         assertFalse(caps.hasTransport(TRANSPORT_WIFI));
@@ -595,6 +603,7 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
         Vpn.applyUnderlyingCapabilities(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                 mConnectivityManager, new Network[] {wifi}, caps, false /* isAlwaysMetered */);
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
@@ -607,6 +616,9 @@ public class VpnTest {
 
         Vpn.applyUnderlyingCapabilities(
                 mConnectivityManager, new Network[] {wifi}, caps, true /* isAlwaysMetered */);
+=======
+                mConnectivityManager, new Network[] {wifi}, caps);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
         assertTrue(caps.hasTransport(TRANSPORT_WIFI));
@@ -617,10 +629,14 @@ public class VpnTest {
         assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
 
         Vpn.applyUnderlyingCapabilities(
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
                 mConnectivityManager,
                 new Network[] {mobile, wifi},
                 caps,
                 false /* isAlwaysMetered */);
+=======
+                mConnectivityManager, new Network[] {mobile, wifi}, caps);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         assertTrue(caps.hasTransport(TRANSPORT_VPN));
         assertTrue(caps.hasTransport(TRANSPORT_CELLULAR));
         assertTrue(caps.hasTransport(TRANSPORT_WIFI));

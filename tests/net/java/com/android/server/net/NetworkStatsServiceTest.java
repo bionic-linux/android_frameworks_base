@@ -243,7 +243,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
@@ -286,7 +290,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);
@@ -359,7 +367,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // modify some number on wifi, and trigger poll event
         incrementCurrentTime(2 * HOUR_IN_MILLIS);
@@ -399,7 +412,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some traffic on first network
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -433,7 +451,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 512L, 4L, 512L, 4L, 0L)
                 .addValues(TEST_IFACE, UID_BLUE, SET_DEFAULT, TAG_NONE, 512L, 4L, 0L, 0L, 0L));
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         forcePollAndWaitForIdle();
 
 
@@ -472,7 +494,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -529,7 +556,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -555,7 +587,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1024L, 8L, 1024L, 8L, 0L)
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, 0xF00D, 512L, 4L, 512L, 4L, 0L));
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         forcePollAndWaitForIdle();
 
 
@@ -584,7 +620,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some traffic for two apps
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -641,7 +682,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         NetworkStats.Entry entry1 = new NetworkStats.Entry(
                 TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 50L, 5L, 50L, 5L, 0L);
@@ -684,7 +729,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         NetworkStats.Entry uidStats = new NetworkStats.Entry(
                 TEST_IFACE, UID_BLUE, SET_DEFAULT, 0xF00D, 1024L, 8L, 512L, 4L, 0L);
@@ -738,7 +787,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some initial traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -794,7 +848,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some initial traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -833,7 +892,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // Create some traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -870,7 +934,12 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_MOBILE, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, new VpnInfo[0], states, getActiveIface(states));
+
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // create some tethering traffic
         incrementCurrentTime(HOUR_IN_MILLIS);
@@ -910,7 +979,11 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(buildEmptyStats());
 
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         mService.forceUpdateIfaces(NETWORKS_WIFI, states, getActiveIface(states), new VpnInfo[0]);
+=======
+        mService.forceUpdateIfaces(NETWORKS_WIFI, new VpnInfo[0], states, getActiveIface(states));
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         // verify service has empty history for wifi
         assertNetworkTotal(sTemplateWifi, 0L, 0L, 0L, 0L, 0);

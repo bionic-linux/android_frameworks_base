@@ -488,6 +488,7 @@
     <string name="notification_tap_again" msgid="7590196980943943842">"খুলিবলৈ পুনৰাই টিপক"</string>
     <string name="keyguard_unlock" msgid="8043466894212841998">"আনলক কৰিবলৈ ওপৰলৈ ছোৱাইপ কৰক"</string>
     <string name="do_disclosure_generic" msgid="5615898451805157556">"আপোনাৰ প্ৰতিষ্ঠানে এই ডিভাইচটো পৰিচালনা কৰে"</string>
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
     <!-- no translation found for do_disclosure_with_name (5640615509915445501) -->
     <skip />
     <!-- no translation found for phone_hint (4872890986869209950) -->
@@ -515,6 +516,23 @@
     <skip />
     <!-- no translation found for keyguard_indication_charging_time_slowly (955252797961724952) -->
     <skip />
+=======
+    <string name="do_disclosure_with_name" msgid="5640615509915445501">"এই ডিভাইচটো <xliff:g id="ORGANIZATION_NAME">%s</xliff:g>ৰ দ্বাৰা পৰিচালিত।"</string>
+    <string name="phone_hint" msgid="4872890986869209950">"ফ\'নৰ বাবে আইকনৰপৰা ছোৱাইপ কৰক"</string>
+    <string name="voice_hint" msgid="8939888732119726665">"কণ্ঠধ্বনিৰে সহায়ৰ বাবে আইকনৰ পৰা ছোৱাইপ কৰক"</string>
+    <string name="camera_hint" msgid="7939688436797157483">"কেমেৰা খুলিবলৈ আইকনৰপৰা ছোৱাইপ কৰক"</string>
+    <string name="interruption_level_none_with_warning" msgid="5114872171614161084">"সম্পূর্ণ নিৰৱতা। এই কার্যই স্ক্ৰীণ ৰীডাৰসমূহকো নিৰৱ কৰিব।"</string>
+    <string name="interruption_level_none" msgid="6000083681244492992">"সম্পূর্ণ নিৰৱতা"</string>
+    <string name="interruption_level_priority" msgid="6426766465363855505">"কেৱল গুৰুত্বপূৰ্ণ"</string>
+    <string name="interruption_level_alarms" msgid="5226306993448328896">"কেৱল এলাৰ্মসমূহ"</string>
+    <string name="interruption_level_none_twoline" msgid="3957581548190765889">"সম্পূর্ণ \n নিৰৱতা"</string>
+    <string name="interruption_level_priority_twoline" msgid="1564715335217164124">"কেৱল\nগুৰুত্বপূৰ্ণ"</string>
+    <string name="interruption_level_alarms_twoline" msgid="3266909566410106146">"কেৱল\nএলাৰ্মসমূহ"</string>
+    <string name="keyguard_indication_charging_time_wireless" msgid="5376059837186496558">"<xliff:g id="PERCENTAGE">%2$s</xliff:g> • বেঁতাৰৰ জৰিয়তে চ্চাৰ্জ কৰি থকা হৈছে (সম্পূৰ্ণ হ’বলৈ <xliff:g id="CHARGING_TIME_LEFT">%1$s</xliff:g> বাকী)"</string>
+    <string name="keyguard_indication_charging_time" msgid="2056340799276374421">"<xliff:g id="PERCENTAGE">%2$s</xliff:g> • চ্চাৰ্জ কৰি থকা হৈছে (সম্পূৰ্ণ হ\'বলৈ <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g> বাকী)"</string>
+    <string name="keyguard_indication_charging_time_fast" msgid="7767562163577492332">"<xliff:g id="PERCENTAGE">%2$s</xliff:g> • দ্ৰুতগতিৰে চ্চাৰ্জ কৰি থকা হৈছে (সম্পূৰ্ণ হ\'বলৈ <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g> বাকী)"</string>
+    <string name="keyguard_indication_charging_time_slowly" msgid="3769655133567307069">"<xliff:g id="PERCENTAGE">%2$s</xliff:g> • লাহে লাহে চ্চাৰ্জ কৰি থকা হৈছে (সম্পূৰ্ণ হ\'বলৈ <xliff:g id="CHARGING_TIME_LEFT">%s</xliff:g> বাকী)"</string>
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
     <string name="accessibility_multi_user_switch_switcher" msgid="7305948938141024937">"ব্যৱহাৰকাৰী সলনি কৰক"</string>
     <string name="accessibility_multi_user_switch_switcher_with_current" msgid="8434880595284601601">"ব্যৱহাৰকাৰী সলনি কৰক, বৰ্তমানৰ ব্যৱহাৰকাৰী <xliff:g id="CURRENT_USER_NAME">%s</xliff:g>"</string>
     <!-- no translation found for accessibility_multi_user_switch_inactive (1424081831468083402) -->

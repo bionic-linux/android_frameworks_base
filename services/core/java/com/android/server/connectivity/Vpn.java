@@ -288,6 +288,7 @@ public class Vpn {
             // null underlying networks means to track the default.
             underlyingNetworks = new Network[] { defaultNetwork };
         }
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
         // Only apps targeting Q and above can explicitly declare themselves as metered.
         final boolean isAlwaysMetered = mIsPackageTargetingAtLeastQ && mConfig.isMetered;
 
@@ -296,6 +297,13 @@ public class Vpn {
                 underlyingNetworks,
                 mNetworkCapabilities,
                 isAlwaysMetered);
+=======
+
+        applyUnderlyingCapabilities(
+                mContext.getSystemService(ConnectivityManager.class),
+                underlyingNetworks,
+                mNetworkCapabilities);
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
 
         return new NetworkCapabilities(mNetworkCapabilities);
     }
@@ -304,8 +312,12 @@ public class Vpn {
     public static void applyUnderlyingCapabilities(
             ConnectivityManager cm,
             Network[] underlyingNetworks,
+<<<<<<< HEAD   (90fc97 Merge "Update Settingslib owners")
             NetworkCapabilities caps,
             boolean isAlwaysMetered) {
+=======
+            NetworkCapabilities caps) {
+>>>>>>> BRANCH (5c3946 Snap for 5622519 from b869620327dabaebe715a7d8fb3d12cdddd5a2)
         int[] transportTypes = new int[] { NetworkCapabilities.TRANSPORT_VPN };
         int downKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
         int upKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
