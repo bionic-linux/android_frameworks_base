@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae4cd4f_882c343b",
+        "filename": "tests/net/java/android/net/MacAddressTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-07-10T10:12:10Z",
+      "side": 1,
+      "message": "want to reserve message for this?",
+      "range": {
+        "startLine": 236,
+        "startChar": 12,
+        "endLine": 236,
+        "endChar": 24
+      },
+      "revId": "77268ddbc963d427a4acf9589975c5466e025cd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
