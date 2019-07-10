@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3500fb5a_54307a94",
+        "filename": "core/java/android/bluetooth/BluetoothHeadsetClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2019-07-10T18:50:50Z",
+      "side": 1,
+      "message": "It would be helpful if you can list the format of the vendor command event such as what EXTRAS are included and how does an AT command translate to a vendor event like this.",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "c21a1563a15e096e9495c39ff4ca4e89fc768448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
