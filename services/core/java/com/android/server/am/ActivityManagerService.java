@@ -466,6 +466,7 @@ import com.android.server.am.NeededUriGrantsProto;
 import com.android.server.am.ProcessOomProto;
 import com.android.server.am.ProcessToGcProto;
 import com.android.server.am.StickyBroadcastProto;
+import com.android.server.compat.CompatConfig;
 import com.android.server.firewall.IntentFirewall;
 import com.android.server.job.JobSchedulerInternal;
 import com.android.server.pm.Installer;
@@ -2739,6 +2740,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
             ServiceManager.addService("permission", new PermissionController(this));
             ServiceManager.addService("processinfo", new ProcessInfoService(this));
+            ServiceManager.addService("compatinfo", new CompatBinder(this), true);
 
             ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(
                     "android", STOCK_PM_FLAGS | MATCH_SYSTEM_ONLY);
@@ -2878,6 +2880,22 @@ public class ActivityManagerService extends IActivityManager.Stub
         @Override
         protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
             PriorityDump.dump(mPriorityDumper, fd, pw, args);
+        }
+    }
+
+    static class CompatBinder extends Binder {
+        ActivityManagerService mActivityManagerService;
+        CompatBinder(ActivityManagerService activityManagerService) {
+            mActivityManagerService = activityManagerService;
+        }
+
+        @Override
+        protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+            if (!DumpUtils.checkDumpAndUsageStatsPermission(mActivityManagerService.mContext,
+                    "compatinfo", pw)) {
+                return;
+            }
+            CompatConfig.get().dumpConfig(pw);
         }
     }
 
