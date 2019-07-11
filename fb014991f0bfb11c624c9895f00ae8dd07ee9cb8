@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6d9470_e32b4187",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-11T10:15:13Z",
+      "side": 1,
+      "message": "Nit: addValidatedMockDnsResponses / addValidatedMockResponses ? Since they don\u0027t clear responses, they add some.",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b443b786_0c41421c",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-11T10:15:13Z",
+      "side": 1,
+      "message": "Since this test only differs from the above one by this parameter, could you factor the code out to reduce duplication ?",
+      "range": {
+        "startLine": 250,
+        "startChar": 17,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b153a4ee_b5da0348",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-11T10:15:13Z",
+      "side": 1,
+      "message": "Would mock work here ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 38,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84978702_b9c80742",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-11T10:15:13Z",
+      "side": 1,
+      "message": "Is it not enough to mock the resolver here ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82a821a_78727072",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-11T10:15:13Z",
+      "side": 1,
+      "message": "This will cause TestNetworkMonitor to use the same networks for \"bypass private DNS\" and no bypass, so if we introduce a bug where we use the wrong network in NetworkMonitor, the test may still pass.\nHow about keeping separate networks for both, so the test can differentiate what\u0027s happening ? Or any other way to make sure the DNS request is only mocked on either the cleartext or possibly-private-dns network ?",
+      "range": {
+        "startLine": 122,
+        "startChar": 39,
+        "endLine": 122,
+        "endChar": 51
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
