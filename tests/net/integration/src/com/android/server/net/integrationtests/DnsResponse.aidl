@@ -16,12 +16,4 @@
 
 package com.android.server.net.integrationtests;
 
-import com.android.server.net.integrationtests.DnsResponse;
-import com.android.server.net.integrationtests.HttpResponse;
-
-interface INetworkStackInstrumentation {
-    void clearAllState();
-    void addHttpResponse(in HttpResponse response);
-    void addDnsResponse(in DnsResponse response);
-    List<String> getRequestUrls();
-}
+parcelable DnsResponse;
