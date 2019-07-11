@@ -29,7 +29,10 @@ import kotlin.test.fail
 class NetworkStackInstrumentationConnector : INetworkStackInstrumentation.Stub() {
     private val httpResponses = Collections.synchronizedMap(
             HashMap<String, ConcurrentLinkedQueue<HttpResponse>>())
+    private val dnsResponses = Collections.synchronizedMap(
+            HashMap<String, ConcurrentLinkedQueue<DnsResponse>>())
     private val httpRequestUrls = Collections.synchronizedList(ArrayList<String>())
+    private val dnsRequestUrls = Collections.synchronizedList(ArrayList<String>())
 
     /**
      * Called when an HTTP request is being processed by NetworkMonitor. Returns the response that
@@ -43,12 +46,24 @@ class NetworkStackInstrumentationConnector : INetworkStackInstrumentation.Stub()
     }
 
     /**
+     * Called when an DNS request is being processed by NetworkMonitor. Returns the response that
+     * should be simulated.
+     */
+    fun processDnsRequest(host: String): DnsResponse {
+        dnsRequestUrls.add(host)
+        return dnsResponses[host]?.poll()
+                ?: fail("No mocked dns response for request: $host. Responses are: $dnsResponses")
+    }
+
+    /**
      * Clear all state of this connector. This is intended for use between two tests, so all state
      * should be reset as if the connector was just created.
      */
     override fun clearAllState() {
         httpResponses.clear()
         httpRequestUrls.clear()
+        dnsResponses.clear()
+        dnsRequestUrls.clear()
     }
 
     /**
@@ -59,6 +74,16 @@ class NetworkStackInstrumentationConnector : INetworkStackInstrumentation.Stub()
      */
     override fun addHttpResponse(response: HttpResponse) {
         httpResponses.computeIfAbsent(response.requestUrl) { ConcurrentLinkedQueue() }.add(response)
+    }
+
+    /**
+     * Add a response to a future DNS request.
+     *
+     * <p>For any subsequent DNS query, the first response with a matching URL will be used
+     * to mock the query response.
+     */
+    override fun addDnsResponse(response: DnsResponse) {
+        dnsResponses.computeIfAbsent(response.host) { ConcurrentLinkedQueue() }.add(response)
     }
 
     /**
