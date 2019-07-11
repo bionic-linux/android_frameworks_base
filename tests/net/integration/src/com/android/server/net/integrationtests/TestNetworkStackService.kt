@@ -19,10 +19,15 @@ package com.android.server.net.integrationtests
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.DnsResolver
+import android.net.DnsResolver.TYPE_A
+import android.net.DnsResolver.TYPE_AAAA
 import android.net.INetworkMonitorCallbacks
+import android.net.InetAddresses
 import android.net.Network
 import android.net.metrics.IpConnectivityLog
 import android.net.util.SharedLog
+import android.networkstack.util.FakeDns
 import android.os.IBinder
 import androidx.annotation.GuardedBy
 import com.android.networkstack.metrics.DataStallStatsUtils
@@ -32,6 +37,7 @@ import com.android.server.connectivity.NetworkMonitor
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
+import java.net.InetAddress
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLConnection
@@ -62,17 +68,19 @@ class TestNetworkStackService : Service() {
         override fun checkNetworkStackCallingPermission() = Unit
     }
 
-    private class NetworkMonitorDeps(val privateDnsBypassNetwork: Network) :
+    private class NetworkMonitorDeps(val privateDnsBypassNetwork: Network, val dnsr: DnsResolver) :
             NetworkMonitor.Dependencies() {
         override fun getPrivateDnsBypassNetwork(network: Network?) = privateDnsBypassNetwork
         override fun sendNetworkConditionsBroadcast(context: Context, broadcast: Intent) = Unit
+        override fun getDnsResolver() = dnsr
     }
 
     private inner class TestNetworkStackConnector(context: Context) :
             NetworkStackService.NetworkStackConnector(context, ConnectorDeps()) {
 
-        private val network = Network(TEST_NETID)
-        private val privateDnsBypassNetwork = TestNetwork(TEST_NETID)
+        private val network = TestNetwork(TEST_NETID)
+        private val mockDnsResolver = spy(DnsResolver::class.java)
+        private val fakeDns = FakeDns(mockDnsResolver).also{ it.startMocking() }
 
         private inner class TestNetwork(netId: Int) : Network(netId) {
             override fun openConnection(url: URL): URLConnection {
@@ -84,6 +92,20 @@ class TestNetworkStackService : Service() {
                 doReturn(response.redirectUrl).`when`(connection).getHeaderField("location")
                 return connection
             }
+
+            override fun getAllByName(host: String): Array<InetAddress> {
+                return arrayOf(InetAddresses.parseNumericAddress("1.2.3.4"))
+            }
+        }
+
+        private inner class TestNetworkMonitor(c: Context, cb: INetworkMonitorCallbacks, n: Network,
+                logger: IpConnectivityLog, slog: SharedLog, deps: Dependencies,
+                utils: DataStallStatsUtils) : NetworkMonitor(c, cb, n, logger, slog, deps, utils) {
+            override fun sendDnsProbeWithTimeout(host: String, timeoutMs: Int): Array<InetAddress> {
+                val response = instrumentationConnector.processDnsRequest(host)
+                fakeDns.setAnswer(response.host, arrayOf(response.responseAddr), response.type)
+                return super.sendDnsProbeWithTimeout(host, timeoutMs)
+            }
         }
 
         override fun makeNetworkMonitor(
@@ -91,10 +113,13 @@ class TestNetworkStackService : Service() {
             name: String?,
             cb: INetworkMonitorCallbacks
         ) {
-            val nm = NetworkMonitor(this@TestNetworkStackService, cb,
+            fakeDns.setAnswer(TEST_PRIVATE_DNS_HOST_NAME, arrayOf("8.8.8.8"), TYPE_A)
+            fakeDns.setAnswer(TEST_PRIVATE_DNS_HOST_NAME, arrayOf("2001:db8::1"), TYPE_AAAA)
+
+            val nm = TestNetworkMonitor(this@TestNetworkStackService, cb,
                     this.network,
                     mock(IpConnectivityLog::class.java), mock(SharedLog::class.java),
-                    NetworkMonitorDeps(privateDnsBypassNetwork),
+                    NetworkMonitorDeps(this.network, mockDnsResolver),
                     mock(DataStallStatsUtils::class.java))
             cb.onNetworkMonitorCreated(NetworkMonitorBinder(nm, ConnectorDeps()))
         }
