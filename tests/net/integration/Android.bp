@@ -55,7 +55,6 @@ java_library {
         "androidx.annotation_annotation",
         "androidx.test.rules",
         "junit",
-        "mockito-target-minus-junit4",
         "net-tests-utils",
     ],
     libs: [
