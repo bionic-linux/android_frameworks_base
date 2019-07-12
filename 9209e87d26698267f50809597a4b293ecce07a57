@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd58c162_2e8c2ab8",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2978,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-07-12T00:10:54Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of doing this? Its a constant that is anyway expected to be nonnull. We don\u0027t do this for other CONTENT_URI constants.",
+      "revId": "9209e87d26698267f50809597a4b293ecce07a57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
