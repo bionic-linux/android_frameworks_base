@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c502a68b_c858746d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-12T12:52:59Z",
+      "side": 1,
+      "message": "may be better to do this inside SystemServer.startOtherServices()\n\nAlso, if we\u0027re doing this, it may make sense to move away from the static CompatConfig.sInstance, and bind to the service instead when we need do. Maybe investigate as a follow-up.",
+      "range": {
+        "startLine": 2743,
+        "startChar": 27,
+        "endLine": 2743,
+        "endChar": 37
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51aa62a8_efa7e054",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-12T12:52:59Z",
+      "side": 1,
+      "message": "make this a top level class inside the com.android.server.compat class",
+      "range": {
+        "startLine": 2886,
+        "startChar": 17,
+        "endLine": 2886,
+        "endChar": 29
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d29816f_8682fed5",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 2
@@ -36,6 +82,30 @@
       "writtenOn": "2019-07-12T12:25:54Z",
       "side": 1,
       "message": "Does LongSparseArray.toString() print something non-readable? Would pw.println(mChanges) be sufficient?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ab4570_b3d8d6bb",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-12T12:52:59Z",
+      "side": 1,
+      "message": "We might want to make it easier to read. If LongSparseArray.toString() does do something sensible, it will print it all on one line which is not nice.\n\nAndrei, do you have some sample output from this?",
+      "parentUuid": "e07215c6_e230862c",
       "range": {
         "startLine": 180,
         "startChar": 0,
