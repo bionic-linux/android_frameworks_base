@@ -1073,6 +1073,19 @@ final class SystemServiceRegistry {
                         return new DynamicAndroidManager(
                                 IDynamicAndroidService.Stub.asInterface(b));
                     }});
+
+        registerService(Context.TOOLBAR_SERVICE, ToolbarManager.class,
+                new CachedServiceFetcher<ToolbarManager>() {
+                    @Override
+                    public ToolbarManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.TOOLBAR_SERVICE);
+                        return new ToolbarManager(ctx.getOuterContext(),
+                                IToolbarManager.Stub.asInterface(b));
+                    }
+                });
+        //CHECKSTYLE:ON IndentationCheck
     }
 
     /**
