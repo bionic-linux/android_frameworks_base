@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376c77a4_7c56fc61",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-07-16T17:08:29Z",
+      "side": 1,
+      "message": "As per discussion with Hall on 7/12 I think we should probably do one of two things:\n1) Move all the telephony-specific stuff into some kind of container so that it doesn\u0027t pollute the top-level LinkProperties (and because I expect more of it); or,\n2) Keep the telephony stuff in telephony and put it all in PreciseDataConnectionState.\n\nThere are some pieces of info we could put in PreciseDataConnectionState that would never make it to LinkProperties because in failure cases there will be no Network and thus no LinkProperties, but there can still be a PreciseDataConnectionState for a failure.",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "12b0192de7a19f9a750d9f206e1e50e4d4dfedd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
