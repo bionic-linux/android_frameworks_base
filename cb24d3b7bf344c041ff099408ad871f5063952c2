@@ -22,6 +22,30 @@
       "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23de7a9_a0e7a2e2",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-07-17T09:58:05Z",
+      "side": 1,
+      "message": "is it possible to use method at this point?\n(* could be used...)\nplease kindly let me know if there is sample for this.",
+      "parentUuid": "7f226c16_00cbf8dc",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
