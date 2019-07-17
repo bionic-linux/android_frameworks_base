@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f226c16_00cbf8dc",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-07-17T09:07:47Z",
+      "side": 1,
+      "message": "%\" str(PATH_MAX) \"s ?",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
