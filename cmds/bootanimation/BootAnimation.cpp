@@ -16,6 +16,9 @@
 
 #define LOG_NDEBUG 0
 #define LOG_TAG "BootAnimation"
+#define ANIM_PATH_MAX 255
+#define STR(x)    #x
+#define STRTO(x) STR(x)
 
 #include <stdint.h>
 #include <inttypes.h>
@@ -658,7 +661,7 @@ bool BootAnimation::parseAnimationDesc(Animation& animation)
             animation.width = width;
             animation.height = height;
             animation.fps = fps;
-        } else if (sscanf(l, " %c %d %d %s #%6s %16s %16s",
+        } else if (sscanf(l, " %c %d %d %" STRTO(ANIM_PATH_MAX) "s #%6s %16s %16s",
                           &pathType, &count, &pause, path, color, clockPos1, clockPos2) >= 4) {
             //ALOGD("> type=%c, count=%d, pause=%d, path=%s, color=%s, clockPos1=%s, clockPos2=%s",
             //    pathType, count, pause, path, color, clockPos1, clockPos2);
