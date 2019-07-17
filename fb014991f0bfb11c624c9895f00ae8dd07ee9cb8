@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2e0f41c3_0101a257",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-17T05:59:19Z",
+      "side": 1,
+      "message": "I mean, since DNS replies are already mocked with FakeDns / mockDnsResolver, is it also necessary to mock this method ? Or would it be possible to just use the DNS resolver mocks ?",
+      "parentUuid": "cb3724d1_565b3e86",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f82a821a_78727072",
         "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
         "patchSetId": 2
@@ -234,6 +258,30 @@
       "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05d984d_79860318",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/TestNetworkStackService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-07-17T05:59:19Z",
+      "side": 1,
+      "message": "Thanks - sounds good here with the two networks in any case.",
+      "parentUuid": "f6cc4372_8318faf9",
+      "range": {
+        "startLine": 122,
+        "startChar": 39,
+        "endLine": 122,
+        "endChar": 51
+      },
+      "revId": "fb014991f0bfb11c624c9895f00ae8dd07ee9cb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
