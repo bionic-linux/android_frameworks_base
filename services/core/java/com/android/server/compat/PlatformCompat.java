@@ -16,15 +16,33 @@
 
 package com.android.server.compat;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Slog;
+
+import com.android.internal.util.DumpUtils;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * System server internal API for gating and reporting compatibility changes.
  */
-public class PlatformCompat {
+public class PlatformCompat extends IPlatformCompat.Stub {
 
     private static final String TAG = "Compatibility";
+
+    private final Context mContext;
+
+    public PlatformCompat(Context context) {
+        mContext = context;
+    }
+
+    @Override
+    protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, "platform_compat", pw)) return;
+        // TODO: Dump info about compatibility changes.
+    }
 
     /**
      * Reports that a compatibility change is affecting an app process now.
@@ -36,7 +54,8 @@ public class PlatformCompat {
      * @param changeId The ID of the compatibility change taking effect.
      * @param appInfo Representing the affected app.
      */
-    public static void reportChange(long changeId, ApplicationInfo appInfo) {
+    @Override
+    public void reportChange(long changeId, ApplicationInfo appInfo) {
         Slog.d(TAG, "Compat change reported: " + changeId + "; UID " + appInfo.uid);
         // TODO log via StatsLog
     }
@@ -57,7 +76,8 @@ public class PlatformCompat {
      * @param appInfo Representing the app in question.
      * @return {@code true} if the change is enabled for the current app.
      */
-    public static boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
+    @Override
+    public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
         if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
             reportChange(changeId, appInfo);
             return true;
