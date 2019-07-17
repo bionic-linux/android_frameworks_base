@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6b9449d_c4c7b761",
+        "filename": "tools/dump-coverage/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060646
+      },
+      "writtenOn": "2019-07-17T00:08:47Z",
+      "side": 1,
+      "message": "nit: Add /coverage-file.ec here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 55,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "069ee8265ad0d52f6dd301c90b8fc2080f7ce585",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
