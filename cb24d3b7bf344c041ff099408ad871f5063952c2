@@ -46,6 +46,30 @@
       "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5cc7da_f6ff7690",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-07-17T10:08:58Z",
+      "side": 1,
+      "message": "STR could be a macro here. You may define it if not available. e.g. \n\n#define STR(x) #x\n\nYou may also need to include linux/limits.h for PATH_MAX.",
+      "parentUuid": "c23de7a9_a0e7a2e2",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
