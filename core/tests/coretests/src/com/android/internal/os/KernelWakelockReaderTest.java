@@ -68,12 +68,7 @@ public class KernelWakelockReaderTest extends TestCase {
     private WakeLockInfo createWakeLockInfo(String name, int activeCount, long totalTime) {
         WakeLockInfo info = new WakeLockInfo();
         info.name = name;
-        info.pid = 1;
         info.activeCount = activeCount;
-        info.isActive = true;
-        info.activeSince = 0;
-        info.lastChange = 0;
-        info.maxTime = 0;
         info.totalTime = totalTime;
         return info;
     }
@@ -89,7 +84,7 @@ public class KernelWakelockReaderTest extends TestCase {
                                                         byte[] buffer, WakeLockInfo[] wlStats) {
         mReader.updateVersion(staleStats);
         mReader.parseProcWakelocks(buffer, buffer.length, true, staleStats);
-        mReader.getNativeWakelockStats(wlStats, staleStats);
+        mReader.updateWakelockStats(wlStats, staleStats);
         return mReader.removeOldStats(staleStats);
     }
 
@@ -196,10 +191,10 @@ public class KernelWakelockReaderTest extends TestCase {
         assertFalse(staleStats.containsKey("Fakelock"));
     }
 
-// -------------------- Native (SystemSuspend) Wakelock Stats Test -------------------
+// -------------------- SystemSuspend Wakelock Stats Test -------------------
     @SmallTest
     public void testEmptyWakeLockInfoList() {
-        KernelWakelockStats staleStats = mReader.getNativeWakelockStats(new WakeLockInfo[0],
+        KernelWakelockStats staleStats = mReader.updateWakelockStats(new WakeLockInfo[0],
                 new KernelWakelockStats());
 
         assertTrue(staleStats.isEmpty());
@@ -210,7 +205,7 @@ public class KernelWakelockReaderTest extends TestCase {
         WakeLockInfo[] wlStats = new WakeLockInfo[1];
         wlStats[0] = createWakeLockInfo("WakeLock", 20, 10000);
 
-        KernelWakelockStats staleStats = mReader.getNativeWakelockStats(wlStats,
+        KernelWakelockStats staleStats = mReader.updateWakelockStats(wlStats,
                 new KernelWakelockStats());
 
         assertEquals(1, staleStats.size());
@@ -228,7 +223,7 @@ public class KernelWakelockReaderTest extends TestCase {
         wlStats[0] = createWakeLockInfo("WakeLock1", 10, 1000);
         wlStats[1] = createWakeLockInfo("WakeLock2", 20, 2000);
 
-        KernelWakelockStats staleStats = mReader.getNativeWakelockStats(wlStats,
+        KernelWakelockStats staleStats = mReader.updateWakelockStats(wlStats,
                 new KernelWakelockStats());
 
         assertEquals(2, staleStats.size());
