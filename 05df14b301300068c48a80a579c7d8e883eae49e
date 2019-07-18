@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58166d71_825b8a0a",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T17:51:36Z",
+      "side": 1,
+      "message": "make the indent consistent\n\n(I think spaces not tabs is the norm, unless it\u0027s different for AIDL vs Java?)",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "05df14b301300068c48a80a579c7d8e883eae49e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
