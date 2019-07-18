@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "a1bbdb27_4ece9300",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2019-07-18T16:04:12Z",
+      "side": 1,
+      "message": "Should this be @hide @SystemApi ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b02d7a0_e0bfbbf3",
         "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
         "patchSetId": 1
