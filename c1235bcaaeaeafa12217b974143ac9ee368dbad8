@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "421ffe8a_fea9c6f0",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T15:08:12Z",
+      "side": 1,
+      "message": "this can go in SystemServer.java",
+      "range": {
+        "startLine": 2743,
+        "startChar": 12,
+        "endLine": 2743,
+        "endChar": 26
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b02d7a0_e0bfbbf3",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T15:08:12Z",
+      "side": 1,
+      "message": "copy the javadoc from PlatformCompat to here",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6536d36_d17700b8",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T15:08:12Z",
+      "side": 1,
+      "message": "I wonder if we should add a PlatformCompatService class that extends IPlatformCompat.Stub; ot seems all (most?) other services in system_server have an XxxService like names.\n\nNot clear if we should rename this class or add another?",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb13dd67_09edce97",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 1
