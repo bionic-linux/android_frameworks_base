@@ -259,6 +259,30 @@
       "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25d48fc7_9ff075a7",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T16:39:04Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s necessary - when generating a bug report, \u0027signposts\u0027 are added automatically:\n$ adb shell dumpsys\n#lines omitted\nDUMP OF SERVICE platform_compat:\n# contents of report\n--------- 0.000s was the duration of dumpsys platform_compat, ending at: 2019-07-18 17:35:51\n-------------------------------------------------------------------------------\n#lines omitted\n\n(Unfortunately, this change is dependent on the adb command CL, so I no longer have that set up)",
+      "parentUuid": "6e75fdda_d8f775d3",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
