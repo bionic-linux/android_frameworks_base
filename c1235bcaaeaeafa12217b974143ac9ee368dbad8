@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a20fd75_65419807",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T16:03:12Z",
+      "side": 1,
+      "message": "If the .aidl file remains where it is, then this .bp file is where I\u0027d have to define the filegroup (no other .aidl files exist in this directory subtree). So I\u0027d have to move that as well elsewhere in the hierarchy; I have no idea where it should belong, so I will happily take suggestions :).",
+      "parentUuid": "b69e61d1_7188b033",
+      "range": {
+        "startLine": 84,
+        "startChar": 11,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "421ffe8a_fea9c6f0",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "19892a62_14ed089b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T16:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "421ffe8a_fea9c6f0",
+      "range": {
+        "startLine": 2743,
+        "startChar": 12,
+        "endLine": 2743,
+        "endChar": 26
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b02d7a0_e0bfbbf3",
         "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb5f887_1385f2c0",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T16:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b02d7a0_e0bfbbf3",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af873cd9_0409af09",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T16:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb13dd67_09edce97",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
