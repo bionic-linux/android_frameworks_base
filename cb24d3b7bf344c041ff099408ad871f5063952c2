@@ -70,6 +70,30 @@
       "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e767daff_c3fd5aeb",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-07-18T00:55:13Z",
+      "side": 1,
+      "message": "Let me check one more thing.\nMax of path is defined like below.\n\u003estatic const int ANIM_ENTRY_NAME_MAX \u003d 256;\n\u003echar path[ANIM_ENTRY_NAME_MAX];\n\nand your recommendation is 4096 (PATH_MAX in linux/limits.h) which is not available to avoid overflow.\n\nDo you mean #define new PATH_MAX and use it maybe?\ni.e) \n#define ANIM_PATH_MAX 255\n#define STR(x) #x\n#define STRTO(x) STR(x)\n\n%\" STRTO(ANIM_PATH_MAX) \"s?\n\nThanks always.",
+      "parentUuid": "eb5cc7da_f6ff7690",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
