@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "316f51b3_459e1c11",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2894,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T13:03:56Z",
+      "side": 1,
+      "message": "You can confirm with adb `adb bugreport`.",
+      "parentUuid": "0ef5ed67_6dfb9a2d",
+      "range": {
+        "startLine": 2894,
+        "startChar": 0,
+        "endLine": 2894,
+        "endChar": 12
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e07215c6_e230862c",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 2
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "$ adb shell am compat enable 42 foo.bar.baz\nWarning! Change 42 is not known yet. Enabling it could have no effect.\nEnabled change 42 for foo.bar.baz.\n$ adb shell dumpsys compatinfo\nChangeId(42; packageOverrides\u003d{foo.bar.baz\u003dtrue})",
       "parentUuid": "14ab4570_b3d8d6bb",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e75fdda_d8f775d3",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T13:03:56Z",
+      "side": 1,
+      "message": "We should put some \"signposting\" around this to make it easier to find, and probably indentation.\n\ncompare to:\n$ adb shell dumpsys activity\nACTIVITY MANAGER SETTINGS (dumpsys activity settings) activity_manager_constants:\n  max_cached_processes\u003d32\n  background_settle_time\u003d60000\n\nMay want to follow the lead set elsewhere, e.g.:\nhttp://cs/android/frameworks/base/services/core/java/com/android/server/am/ActivityManagerConstants.java?l\u003d518\u0026rcl\u003d450b33111c3a9f9021916a97efadd63afcef668d",
+      "parentUuid": "b2d62123_1906a388",
       "range": {
         "startLine": 180,
         "startChar": 0,
