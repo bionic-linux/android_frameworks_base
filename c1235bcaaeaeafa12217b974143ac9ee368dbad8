@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b69e61d1_7188b033",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-18T14:16:49Z",
+      "side": 1,
+      "message": "define this next to the aidl file itself? No other *_aidl is defined here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 11,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb13dd67_09edce97",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-18T14:16:49Z",
+      "side": 1,
+      "message": "nit: move this method to the end, it\u0027s easier to scan/read the file when public/api methods are at the top I think? i.e. usually you\u0027d see toString(), hashcode() implemented at the very bottom as well.",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
