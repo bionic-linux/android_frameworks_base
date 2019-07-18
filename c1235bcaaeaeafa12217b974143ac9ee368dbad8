@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ee2150f_e4fec6bb",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-18T17:50:06Z",
+      "side": 1,
+      "message": "It should just an @hide (if that\u0027s necessary here?)\n\nIt\u0027s an internal API, not @SystemApi. We currently only expect it to be used by platform code.",
+      "parentUuid": "a1bbdb27_4ece9300",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b02d7a0_e0bfbbf3",
         "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
         "patchSetId": 1
