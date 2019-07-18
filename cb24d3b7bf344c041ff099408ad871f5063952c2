@@ -118,6 +118,30 @@
       "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5376ff_59747db6",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2019-07-18T01:15:10Z",
+      "side": 1,
+      "message": "\u003eI don\u0027t know why we define ANIM_PATH_MAX instead of just using PATH_MAX. (This code does not belong to me)\n\nTo use PATH_MAX, below definition also need to be changed.\n\u003echar path[ANIM_ENTRY_NAME_MAX];→char path[PATH_MAX];\nthen I think it will be fine.\n\nbut ANIM_ENTRY_NAME_MAX is already used some places and I`m not sure no problem with changing to PATH_MAX.",
+      "parentUuid": "7e0ce92f_93ccbde3",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
