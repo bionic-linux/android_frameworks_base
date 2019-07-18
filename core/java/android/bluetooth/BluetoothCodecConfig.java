@@ -428,6 +428,46 @@ public final class BluetoothCodecConfig implements Parcelable {
     }
 
     /**
+     * Checks whether a value set presented by a bitmask has zero or single bit
+     *
+     * @param valueSet the value set presented by a bitmask
+     * @return true if the valueSet contains zero or single bit, otherwise false.
+     */
+    private static boolean hasSingleBit(int valueSet) {
+        return (valueSet == 0 || (valueSet & (valueSet - 1)) == 0);
+    }
+
+    /**
+     * Checks whether the object contains none or single sample rate.
+     *
+     * @return true if the object contains none or single sample rate, otherwise false.
+     */
+    @UnsupportedAppUsage
+    public boolean hasSingleSampleRate() {
+        return hasSingleBit(mSampleRate);
+    }
+
+    /**
+     * Checks whether the object contains none or single bits per sample.
+     *
+     * @return true if the object contains none or single bits per sample, otherwise false.
+     */
+    @UnsupportedAppUsage
+    public boolean hasSingleBitsPerSample() {
+        return hasSingleBit(mBitsPerSample);
+    }
+
+    /**
+     * Checks whether the object contains none or single channel mode.
+     *
+     * @return true if the object contains none or single channel mode, otherwise false.
+     */
+    @UnsupportedAppUsage
+    public boolean hasSingleChannelMode() {
+        return hasSingleBit(mChannelMode);
+    }
+
+    /**
      * Checks whether the audio feeding parameters are same.
      *
      * @param other the codec config to compare against
