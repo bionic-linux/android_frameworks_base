@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f06a38d2_6df73cc7",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T11:40:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c502a68b_c858746d",
+      "range": {
+        "startLine": 2743,
+        "startChar": 27,
+        "endLine": 2743,
+        "endChar": 37
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51aa62a8_efa7e054",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "326bd665_bc9a8665",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T11:40:12Z",
+      "side": 1,
+      "message": "Moved this change to http://aosp/1074209 .",
+      "parentUuid": "51aa62a8_efa7e054",
+      "range": {
+        "startLine": 2886,
+        "startChar": 17,
+        "endLine": 2886,
+        "endChar": 29
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d29816f_8682fed5",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef5ed67_6dfb9a2d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2894,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T11:40:12Z",
+      "side": 1,
+      "message": "Running \u0027adb shell dumpsys\u0027 will yield this compat information; AFAIK, that is the command that is run to generate a bug report.",
+      "parentUuid": "1d29816f_8682fed5",
+      "range": {
+        "startLine": 2894,
+        "startChar": 0,
+        "endLine": 2894,
+        "endChar": 12
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +187,30 @@
       "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d62123_1906a388",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-18T11:40:12Z",
+      "side": 1,
+      "message": "$ adb shell am compat enable 42 foo.bar.baz\nWarning! Change 42 is not known yet. Enabling it could have no effect.\nEnabled change 42 for foo.bar.baz.\n$ adb shell dumpsys compatinfo\nChangeId(42; packageOverrides\u003d{foo.bar.baz\u003dtrue})",
+      "parentUuid": "14ab4570_b3d8d6bb",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 13
+      },
+      "revId": "0dcc18c08a588528956667dc1fd53b52c05bb967",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
