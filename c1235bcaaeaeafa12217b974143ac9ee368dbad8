@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ff6975dd_7ef6b21c",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-19T11:57:49Z",
+      "side": 1,
+      "message": "Oh, my bad.. I didn\u0027t realize this was the only Android.bp on the path, and given that we don\u0027t have individual .bp files under java/** it makes sense.\n\n(This isn\u0027t something you\u0027d do in google3, old habits).",
+      "parentUuid": "1a20fd75_65419807",
+      "range": {
+        "startLine": 84,
+        "startChar": 11,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "421ffe8a_fea9c6f0",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 1
