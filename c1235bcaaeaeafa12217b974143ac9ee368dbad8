@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "aa07407a_0b99de49",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2019-07-19T08:37:22Z",
+      "side": 1,
+      "message": "Platform code, but not in system server itself? Which processes?\n\nI think @hide is appropriate: go/android-api-rules-engagement",
+      "parentUuid": "7ee2150f_e4fec6bb",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b02d7a0_e0bfbbf3",
         "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
         "patchSetId": 1
