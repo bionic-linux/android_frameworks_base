@@ -16,6 +16,24 @@
       "revId": "345b1d53443e7d6d2c4b5df8e3bc91e4394e7a98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61bd06d_bcd0b472",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-07-22T11:17:06Z",
+      "side": 1,
+      "message": "They can be. This check only applies if they have not been updated.\n\nThere is also a isUpdatedSystemApp() method, but I\u0027m not sure if we should use that. Updates via play feel like a bit of a grey area here.\n\nThe main intent here is for packages like \"android\" and others never updated via Play. Mainline is another issue of course...\n\nI think the bottom line is we may have to iterate on this to get it right. I think this CL is an improvement on where we were before. It\u0027s probably not the final solution.",
+      "parentUuid": "bd867dfb_4a6b562b",
+      "revId": "345b1d53443e7d6d2c4b5df8e3bc91e4394e7a98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
