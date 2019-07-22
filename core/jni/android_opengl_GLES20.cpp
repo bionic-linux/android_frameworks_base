@@ -799,6 +799,22 @@ exit:
     }
 }
 
+/* void glCompressedTexImage2D ( GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, GLsizei offset ) */
+static void
+android_glCompressedTexImage2D__IIIIIIII
+  (JNIEnv *_env, jobject _this, jint target, jint level, jint internalformat, jint width, jint height, jint border, jint imageSize, jint offset) {
+    glCompressedTexImage2D(
+        (GLenum)target,
+        (GLint)level,
+        (GLenum)internalformat,
+        (GLsizei)width,
+        (GLsizei)height,
+        (GLint)border,
+        (GLsizei)imageSize,
+        reinterpret_cast<GLvoid *>(offset)
+    );
+}
+
 /* void glCompressedTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data ) */
 static void
 android_glCompressedTexSubImage2D__IIIIIIIILjava_nio_Buffer_2
@@ -841,6 +857,23 @@ exit:
     if (_exception) {
         jniThrowException(_env, _exceptionType, _exceptionMessage);
     }
+}
+
+/* void glCompressedTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, GLsizei offset ) */
+static void
+android_glCompressedTexSubImage2D__IIIIIIIII
+  (JNIEnv *_env, jobject _this, jint target, jint level, jint xoffset, jint yoffset, jint width, jint height, jint format, jint imageSize, jint offset) {
+    glCompressedTexSubImage2D(
+        (GLenum)target,
+        (GLint)level,
+        (GLint)xoffset,
+        (GLint)yoffset,
+        (GLsizei)width,
+        (GLsizei)height,
+        (GLenum)format,
+        (GLsizei)imageSize,
+        reinterpret_cast<GLvoid *>(offset)
+    );
 }
 
 /* void glCopyTexImage2D ( GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border ) */
@@ -4607,6 +4640,23 @@ android_glTexImage2D__IIIIIIIILjava_nio_Buffer_2
     }
 }
 
+/* void glTexImage2D ( GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, GLsizei offset ) */
+static void
+android_glTexImage2D__IIIIIIIII
+  (JNIEnv *_env, jobject _this, jint target, jint level, jint internalformat, jint width, jint height, jint border, jint format, jint type, jint offset) {
+    glTexImage2D(
+        (GLenum)target,
+        (GLint)level,
+        (GLint)internalformat,
+        (GLsizei)width,
+        (GLsizei)height,
+        (GLint)border,
+        (GLenum)format,
+        (GLenum)type,
+        reinterpret_cast<GLvoid *>(offset)
+    );
+}
+
 /* void glTexParameterf ( GLenum target, GLenum pname, GLfloat param ) */
 static void
 android_glTexParameterf__IIF
@@ -4853,6 +4903,23 @@ android_glTexSubImage2D__IIIIIIIILjava_nio_Buffer_2
     if (_exception) {
         jniThrowException(_env, _exceptionType, _exceptionMessage);
     }
+}
+
+/* void glTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei offset ) */
+static void
+android_glTexSubImage2D__IIIIIIIII
+  (JNIEnv *_env, jobject _this, jint target, jint level, jint xoffset, jint yoffset, jint width, jint height, jint format, jint type, jint offset) {
+    glTexSubImage2D(
+        (GLenum)target,
+        (GLint)level,
+        (GLint)xoffset,
+        (GLint)yoffset,
+        (GLsizei)width,
+        (GLsizei)height,
+        (GLenum)format,
+        (GLenum)type,
+        reinterpret_cast<GLvoid *>(offset)
+    );
 }
 
 /* void glUniform1f ( GLint location, GLfloat x ) */
@@ -6503,7 +6570,9 @@ static const JNINativeMethod methods[] = {
 {"glColorMask", "(ZZZZ)V", (void *) android_glColorMask__ZZZZ },
 {"glCompileShader", "(I)V", (void *) android_glCompileShader__I },
 {"glCompressedTexImage2D", "(IIIIIIILjava/nio/Buffer;)V", (void *) android_glCompressedTexImage2D__IIIIIIILjava_nio_Buffer_2 },
+{"glCompressedTexImage2D", "(IIIIIIII)V", (void *) android_glCompressedTexImage2D__IIIIIIII },
 {"glCompressedTexSubImage2D", "(IIIIIIIILjava/nio/Buffer;)V", (void *) android_glCompressedTexSubImage2D__IIIIIIIILjava_nio_Buffer_2 },
+{"glCompressedTexSubImage2D", "(IIIIIIIII)V", (void *) android_glCompressedTexSubImage2D__IIIIIIIII },
 {"glCopyTexImage2D", "(IIIIIIII)V", (void *) android_glCopyTexImage2D__IIIIIIII },
 {"glCopyTexSubImage2D", "(IIIIIIII)V", (void *) android_glCopyTexSubImage2D__IIIIIIII },
 {"glCreateProgram", "()I", (void *) android_glCreateProgram__ },
@@ -6620,6 +6689,7 @@ static const JNINativeMethod methods[] = {
 {"glStencilOp", "(III)V", (void *) android_glStencilOp__III },
 {"glStencilOpSeparate", "(IIII)V", (void *) android_glStencilOpSeparate__IIII },
 {"glTexImage2D", "(IIIIIIIILjava/nio/Buffer;)V", (void *) android_glTexImage2D__IIIIIIIILjava_nio_Buffer_2 },
+{"glTexImage2D", "(IIIIIIIII)V", (void *) android_glTexImage2D__IIIIIIIII },
 {"glTexParameterf", "(IIF)V", (void *) android_glTexParameterf__IIF },
 {"glTexParameterfv", "(II[FI)V", (void *) android_glTexParameterfv__II_3FI },
 {"glTexParameterfv", "(IILjava/nio/FloatBuffer;)V", (void *) android_glTexParameterfv__IILjava_nio_FloatBuffer_2 },
@@ -6627,6 +6697,7 @@ static const JNINativeMethod methods[] = {
 {"glTexParameteriv", "(II[II)V", (void *) android_glTexParameteriv__II_3II },
 {"glTexParameteriv", "(IILjava/nio/IntBuffer;)V", (void *) android_glTexParameteriv__IILjava_nio_IntBuffer_2 },
 {"glTexSubImage2D", "(IIIIIIIILjava/nio/Buffer;)V", (void *) android_glTexSubImage2D__IIIIIIIILjava_nio_Buffer_2 },
+{"glTexSubImage2D", "(IIIIIIIII)V", (void *) android_glTexSubImage2D__IIIIIIIII },
 {"glUniform1f", "(IF)V", (void *) android_glUniform1f__IF },
 {"glUniform1fv", "(II[FI)V", (void *) android_glUniform1fv__II_3FI },
 {"glUniform1fv", "(IILjava/nio/FloatBuffer;)V", (void *) android_glUniform1fv__IILjava_nio_FloatBuffer_2 },

@@ -587,14 +587,10 @@ android_glTexSubImage3D__IIIIIIIIIILjava_nio_Buffer_2
     jint _remaining;
     GLvoid *pixels = (GLvoid *) 0;
 
-    if (!pixels_buf) {
-        _exception = 1;
-        _exceptionType = "java/lang/IllegalArgumentException";
-        _exceptionMessage = "pixels == null";
-        goto exit;
+    if (pixels_buf) {
+        pixels = (GLvoid *)getPointer(_env, pixels_buf, (jarray*)&_array, &_remaining, &_bufferOffset);
     }
-    pixels = (GLvoid *)getPointer(_env, pixels_buf, (jarray*)&_array, &_remaining, &_bufferOffset);
-    if (pixels == NULL) {
+    if (pixels_buf && pixels == NULL) {
         char * _pixelsBase = (char *)_env->GetPrimitiveArrayCritical(_array, (jboolean *) 0);
         pixels = (GLvoid *) (_pixelsBase + _bufferOffset);
     }
@@ -611,8 +607,6 @@ android_glTexSubImage3D__IIIIIIIIIILjava_nio_Buffer_2
         (GLenum)type,
         (GLvoid *)pixels
     );
-
-exit:
     if (_array) {
         releasePointer(_env, _array, pixels, JNI_FALSE);
     }

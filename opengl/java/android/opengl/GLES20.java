@@ -501,6 +501,19 @@ public class GLES20 {
         java.nio.Buffer data
     );
 
+    // C function void glCompressedTexImage2D ( GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, GLsizei offset )
+
+    public static native void glCompressedTexImage2D(
+        int target,
+        int level,
+        int internalformat,
+        int width,
+        int height,
+        int border,
+        int imageSize,
+        int offset
+    );
+
     // C function void glCompressedTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data )
 
     public static native void glCompressedTexSubImage2D(
@@ -513,6 +526,20 @@ public class GLES20 {
         int format,
         int imageSize,
         java.nio.Buffer data
+    );
+
+    // C function void glCompressedTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, GLsizei offset )
+
+    public static native void glCompressedTexSubImage2D(
+        int target,
+        int level,
+        int xoffset,
+        int yoffset,
+        int width,
+        int height,
+        int format,
+        int imageSize,
+        int offset
     );
 
     // C function void glCopyTexImage2D ( GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border )
@@ -1445,6 +1472,20 @@ public class GLES20 {
         java.nio.Buffer pixels
     );
 
+    // C function void glTexImage2D ( GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, GLsizei offset )
+
+    public static native void glTexImage2D(
+        int target,
+        int level,
+        int internalformat,
+        int width,
+        int height,
+        int border,
+        int format,
+        int type,
+        int offset
+    );
+
     // C function void glTexParameterf ( GLenum target, GLenum pname, GLfloat param )
 
     public static native void glTexParameterf(
@@ -1507,6 +1548,20 @@ public class GLES20 {
         int format,
         int type,
         java.nio.Buffer pixels
+    );
+
+    // C function void glTexSubImage2D ( GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, GLsizei offset )
+
+    public static native void glTexSubImage2D(
+        int target,
+        int level,
+        int xoffset,
+        int yoffset,
+        int width,
+        int height,
+        int format,
+        int type,
+        int offset
     );
 
     // C function void glUniform1f ( GLint location, GLfloat x )
