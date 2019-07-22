@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd867dfb_4a6b562b",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-07-22T10:56:27Z",
+      "side": 1,
+      "message": "OOC, system apps are never updated via Play, are they?",
+      "revId": "345b1d53443e7d6d2c4b5df8e3bc91e4394e7a98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
