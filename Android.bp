@@ -723,6 +723,8 @@ java_defaults {
         "--multi-dex",
     ],
 
+    plugins: ["compat-changeid-annotation-processor"],
+
 }
 
 filegroup {
