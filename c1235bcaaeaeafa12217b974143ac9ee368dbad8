@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9013f5fa_1b3b4175",
+        "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-23T10:04:11Z",
+      "side": 1,
+      "message": "@SystemApi isn\u0027t currently supported by .aidl AFAIK. Will change to @hide.",
+      "parentUuid": "a1bbdb27_4ece9300",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "c1235bcaaeaeafa12217b974143ac9ee368dbad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b02d7a0_e0bfbbf3",
         "filename": "services/core/java/com/android/server/compat/IPlatformCompat.aidl",
         "patchSetId": 1
