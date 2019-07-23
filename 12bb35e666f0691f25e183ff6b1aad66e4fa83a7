@@ -22,6 +22,30 @@
       "revId": "12bb35e666f0691f25e183ff6b1aad66e4fa83a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498ea589_60c89587",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2019-07-23T11:49:16Z",
+      "side": 1,
+      "message": "I add @UnsupportedAppUsage because aosp/983243 uses those functions, and do you mean I don\u0027t need to add these annotations?",
+      "parentUuid": "98ab5769_00ec5071",
+      "range": {
+        "startLine": 445,
+        "startChar": 5,
+        "endLine": 445,
+        "endChar": 24
+      },
+      "revId": "12bb35e666f0691f25e183ff6b1aad66e4fa83a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
