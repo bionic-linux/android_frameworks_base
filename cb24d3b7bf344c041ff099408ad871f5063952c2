@@ -142,6 +142,30 @@
       "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8404348_6c998b7b",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-07-23T02:13:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad5376ff_59747db6",
+      "range": {
+        "startLine": 661,
+        "startChar": 40,
+        "endLine": 661,
+        "endChar": 45
+      },
+      "revId": "cb24d3b7bf344c041ff099408ad871f5063952c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
