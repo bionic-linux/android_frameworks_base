@@ -1066,11 +1066,13 @@ public class FileUtils {
     public static long roundStorageSize(long size) {
         long val = 1;
         long pow = 1;
-        while ((val * pow) < size) {
+        long pow1024 = 1;
+        while ((val * pow1024) < size) {
             val <<= 1;
             if (val > 512) {
                 val = 1;
                 pow *= 1000;
+                pow1024 *= 1024;
             }
         }
         return val * pow;
