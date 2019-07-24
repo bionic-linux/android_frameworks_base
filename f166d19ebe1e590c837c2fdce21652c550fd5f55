@@ -22,6 +22,30 @@
       "revId": "f166d19ebe1e590c837c2fdce21652c550fd5f55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcae4933_61ce76fd",
+        "filename": "core/tests/coretests/src/com/android/internal/os/KernelWakelockReaderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2019-07-24T22:16:02Z",
+      "side": 1,
+      "message": "Discussed offline. Need to check the conversion from ms to us.",
+      "parentUuid": "9cf50126_1b9c3d80",
+      "range": {
+        "startLine": 206,
+        "startChar": 65,
+        "endLine": 206,
+        "endChar": 80
+      },
+      "revId": "f166d19ebe1e590c837c2fdce21652c550fd5f55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
