@@ -17,7 +17,7 @@
 #ifndef LAYOUT_VALIDATION_H_
 #define LAYOUT_VALIDATION_H_
 
-#include "dex_builder.h"
+#include "xml_parsing.h"
 
 #include <string>
 
@@ -30,15 +30,17 @@ class LayoutValidationVisitor {
  public:
   void VisitStartDocument() const {}
   void VisitEndDocument() const {}
-  void VisitStartTag(const std::u16string& name);
+  void VisitStartTag(std::u16string_view name, const AttributeSet& attrs);
   void VisitEndTag() const {}
 
-  const std::string& message() const { return message_; }
+  const std::string_view message() const { return message_; }
   bool can_compile() const { return can_compile_; }
+  bool can_compile_xml_free() const { return can_compile() && can_compile_xml_free_; }
 
  private:
   std::string message_{"Okay"};
   bool can_compile_{true};
+  bool can_compile_xml_free_{true};
 };
 
 }  // namespace startop

@@ -55,7 +55,19 @@ class ResXmlVisitorAdapter {
           depth++;
           size_t name_length = 0;
           const char16_t* name = parser_->getElementName(&name_length);
-          visitor->VisitStartTag(std::u16string{name, name_length});
+
+          AttributeSet attrs{};
+
+          // TODO: read the attributes into the AttributeSet.
+          const size_t attr_count{parser_->getAttributeCount()};
+          LOG(INFO) << "Resource has " << attr_count << " attributes";
+          for (size_t i = 0; i < attr_count; ++i) {
+            size_t name_length{};
+            const auto* name = parser_->getAttributeName(i, &name_length);
+            attrs.push_back(Attribute{std::u16string_view{name, name_length}});
+          }
+
+          visitor->VisitStartTag(std::u16string{name, name_length}, attrs);
           break;
         }
         case ResXMLParser::END_TAG:
@@ -71,10 +83,17 @@ class ResXmlVisitorAdapter {
   ResXMLParser* parser_;
 };
 
-bool CanCompileLayout(ResXMLParser* parser) {
+bool CanCompileLayout(ResXMLParser* parser, bool* xml_free = nullptr) {
   ResXmlVisitorAdapter adapter{parser};
   LayoutValidationVisitor visitor;
   adapter.Accept(&visitor);
+
+  if (visitor.can_compile_xml_free()) {
+    LOG(INFO) << "XML Free Layout Compilation Supported";
+  }
+  if (xml_free != nullptr) {
+    *xml_free = visitor.can_compile_xml_free();
+  }
 
   return visitor.can_compile();
 }
@@ -117,7 +136,9 @@ void CompileApkAssetsLayouts(const std::unique_ptr<const android::ApkAssets>& as
                        /*copy_data=*/true);
         android::ResXMLParser parser{xml_tree};
         parser.restart();
-        if (CanCompileLayout(&parser)) {
+        bool xml_free = false;
+        if (CanCompileLayout(&parser, &xml_free)) {
+          LOG(INFO) << "XML Free mode: " << xml_free;
           parser.restart();
           const std::string layout_name = startop::util::FindLayoutNameFromFilename(layout_path);
           ResXmlVisitorAdapter adapter{&parser};
@@ -128,7 +149,7 @@ void CompileApkAssetsLayouts(const std::unique_ptr<const android::ApkAssets>& as
                   dex::Prototype{dex::TypeDescriptor::FromClassname("android.view.View"),
                                  dex::TypeDescriptor::FromClassname("android.content.Context"),
                                  dex::TypeDescriptor::Int()}));
-              DexViewBuilder builder(&methods.back());
+              DexViewBuilder builder(&methods.back(), xml_free);
               builder.Start();
               LayoutCompilerVisitor visitor{&builder};
               adapter.Accept(&visitor);

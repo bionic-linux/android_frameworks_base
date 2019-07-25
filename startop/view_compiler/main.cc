@@ -71,7 +71,8 @@ class XmlVisitorAdapter : public XMLVisitor {
   bool VisitEnter(const XMLElement& element, const XMLAttribute* /*firstAttribute*/) override {
     visitor_->VisitStartTag(
         std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(
-            element.Name()));
+            element.Name()),
+        startop::AttributeSet{});
     return true;
   }
 

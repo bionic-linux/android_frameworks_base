@@ -17,6 +17,7 @@
 #define TINYXML_LAYOUT_PARSER_H_
 
 #include "tinyxml2.h"
+#include "xml_parsing.h"
 
 #include <codecvt>
 #include <locale>
@@ -43,7 +44,8 @@ class TinyXmlVisitorAdapter : public tinyxml2::XMLVisitor {
                   const tinyxml2::XMLAttribute* /*firstAttribute*/) override {
     visitor_->VisitStartTag(
         std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.from_bytes(
-            element.Name()));
+            element.Name()),
+        AttributeSet{});
     return true;
   }
 

@@ -18,6 +18,7 @@
 #define DEX_LAYOUT_COMPILER_H_
 
 #include "dex_builder.h"
+#include "xml_parsing.h"
 
 #include <codecvt>
 #include <locale>
@@ -34,7 +35,7 @@ class LayoutCompilerVisitor {
 
   void VisitStartDocument() { builder_->Start(); }
   void VisitEndDocument() { builder_->Finish(); }
-  void VisitStartTag(const std::u16string& name) {
+  void VisitStartTag(const std::u16string& name, const AttributeSet&) {
     parent_stack_.push_back(ViewEntry{
         std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>{}.to_bytes(name), {}});
   }
@@ -70,7 +71,7 @@ class LayoutCompilerVisitor {
 
 class DexViewBuilder {
  public:
-  DexViewBuilder(dex::MethodBuilder* method);
+  DexViewBuilder(dex::MethodBuilder* method, bool xml_free = false);
 
   void Start();
   void Finish();
@@ -94,6 +95,7 @@ class DexViewBuilder {
   void BuildTryCreateView(dex::Value dest, dex::Value parent, dex::Value classname);
 
   dex::MethodBuilder* method_;
+  const bool xml_free_;
 
   // Parameters to the generated method
   dex::Value const context_;

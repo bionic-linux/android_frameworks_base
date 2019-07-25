@@ -42,8 +42,9 @@ const TypeDescriptor kXmlResourceParser =
     TypeDescriptor::FromClassname("android.content.res.XmlResourceParser");
 }  // namespace
 
-DexViewBuilder::DexViewBuilder(dex::MethodBuilder* method)
+DexViewBuilder::DexViewBuilder(dex::MethodBuilder* method, bool xml_free)
     : method_{method},
+      xml_free_(xml_free),
       context_{Value::Parameter(0)},
       resid_{Value::Parameter(1)},
       inflater_{method->AllocRegister()},
@@ -103,6 +104,10 @@ void DexViewBuilder::BuildXmlNext() {
 }
 
 void DexViewBuilder::Start() {
+  if (xml_free_) {
+    return;
+  }
+
   BuildGetLayoutInflater(/*dest=*/inflater_);
   BuildGetResources(/*dest=*/xml_);
   BuildGetLayoutResource(/*dest=*/xml_, /*resources=*/xml_, resid_);
@@ -134,33 +139,42 @@ void DexViewBuilder::BuildTryCreateView(Value dest, Value parent, Value classnam
 void DexViewBuilder::StartView(const std::string& name, bool is_viewgroup) {
   bool const is_root_view = view_stack_.empty();
 
-  // Advance to start tag
-  BuildXmlNext();
+  if (!xml_free_) {
+    // Advance to start tag
+    BuildXmlNext();
+  }
 
   LiveRegister view = AcquireRegister();
-  // try to create the view using the factories
-  method_->BuildConstString(classname_tmp_,
-                            name);  // TODO: the need to fully qualify the classname
-  if (is_root_view) {
-    LiveRegister null = AcquireRegister();
-    method_->BuildConst4(null, 0);
-    BuildTryCreateView(/*dest=*/view, /*parent=*/null, classname_tmp_);
+
+  if (!xml_free_) {
+    // try to create the view using the factories
+    method_->BuildConstString(classname_tmp_,
+                              name);  // TODO: the need to fully qualify the classname
+    if (is_root_view) {
+      LiveRegister null = AcquireRegister();
+      method_->BuildConst4(null, 0);
+      BuildTryCreateView(/*dest=*/view, /*parent=*/null, classname_tmp_);
+    } else {
+      BuildTryCreateView(/*dest=*/view, /*parent=*/GetCurrentView(), classname_tmp_);
+    }
+    Value label = method_->MakeLabel();
+    // branch if not null
+    method_->AddInstruction(
+        Instruction::OpWithArgs(Instruction::Op::kBranchNEqz, /*dest=*/{}, view, label));
+    method_->BuildNew(view,
+                      TypeDescriptor::FromClassname(ResolveName(name)),
+                      Prototype{TypeDescriptor::Void(), kContext, kAttributeSet},
+                      context_,
+                      attrs_);
+    method_->AddInstruction(
+        Instruction::OpWithArgs(Instruction::Op::kBindLabel, /*dest=*/{}, label));
   } else {
-    BuildTryCreateView(/*dest=*/view, /*parent=*/GetCurrentView(), classname_tmp_);
+    // In XML-free mode, just allocate the view object.
+    method_->BuildNew(view,
+                      TypeDescriptor::FromClassname(ResolveName(name)),
+                      Prototype{TypeDescriptor::Void(), kContext},
+                      context_);
   }
-  auto label = method_->MakeLabel();
-  // branch if not null
-  method_->AddInstruction(
-      Instruction::OpWithArgs(Instruction::Op::kBranchNEqz, /*dest=*/{}, view, label));
-
-  // If null, create the class directly.
-  method_->BuildNew(view,
-                    TypeDescriptor::FromClassname(ResolveName(name)),
-                    Prototype{TypeDescriptor::Void(), kContext, kAttributeSet},
-                    context_,
-                    attrs_);
-
-  method_->AddInstruction(Instruction::OpWithArgs(Instruction::Op::kBindLabel, /*dest=*/{}, label));
 
   if (is_viewgroup) {
     // Cast to a ViewGroup so we can add children later.
@@ -170,9 +184,18 @@ void DexViewBuilder::StartView(const std::string& name, bool is_viewgroup) {
 
   if (!is_root_view) {
     // layout_params = parent.generateLayoutParams(attrs);
+    //
+    // TODO: if XML free, build the layout parameters directly, because we're hardcore!
     LiveRegister layout_params{AcquireRegister()};
-    method_->AddInstruction(Instruction::InvokeVirtualObject(
-        generate_layout_params_.id, layout_params, GetCurrentView(), attrs_));
+    Value parent = GetCurrentView();  // The parent is still the current view, since we haven't
+                                      // pushed the in progress view to the view stack yet.
+    if (xml_free_) {
+      // For now, use null for LayoutParams, until we can generate proper ones.
+      method_->BuildConst4(layout_params, 0);
+    } else {
+      method_->AddInstruction(Instruction::InvokeVirtualObject(
+          generate_layout_params_.id, layout_params, parent, attrs_));
+    }
     view_stack_.push_back({std::move(view), std::move(layout_params)});
   } else {
     view_stack_.push_back({std::move(view), {}});
@@ -186,8 +209,11 @@ void DexViewBuilder::FinishView() {
     // parent.add(view, layout_params)
     method_->AddInstruction(Instruction::InvokeVirtual(
         add_view_.id, /*dest=*/{}, GetParentView(), GetCurrentView(), GetCurrentLayoutParams()));
-    // xml.next(); // end tag
-    method_->AddInstruction(Instruction::InvokeInterface(xml_next_.id, {}, xml_));
+
+    if (!xml_free_) {
+      // xml.next(); // end tag
+      method_->AddInstruction(Instruction::InvokeInterface(xml_next_.id, {}, xml_));
+    }
   }
   PopViewStack();
 }

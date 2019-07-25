@@ -64,7 +64,7 @@ class TypeDescriptor {
 
   // Creates a type descriptor from a fully-qualified class name. For example, it turns the class
   // name java.lang.Object into the descriptor Ljava/lang/Object.
-  static TypeDescriptor FromClassname(const std::string& name);
+  static TypeDescriptor FromClassname(const std::string_view& name);
 
   // Return the full descriptor, such as I or Ljava/lang/Object
   const std::string& descriptor() const { return descriptor_; }

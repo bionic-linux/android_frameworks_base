@@ -125,7 +125,6 @@ std::ostream& operator<<(std::ostream& out, const Value& value) {
   } else if (value.is_immediate()) {
     out << "Immediate(" << value.value() << ")";
   } else if (value.is_string()) {
-    out << "String(" << value.value() << ")";
   } else if (value.is_label()) {
     out << "Label(" << value.value() << ")";
   } else if (value.is_type()) {
@@ -177,8 +176,9 @@ void WriteTestDexFile(const string& filename) {
   out_file.write(image.ptr<const char>(), image.size());
 }
 
-TypeDescriptor TypeDescriptor::FromClassname(const std::string& name) {
-  return TypeDescriptor{art::DotToDescriptor(name.c_str())};
+TypeDescriptor TypeDescriptor::FromClassname(const std::string_view& name) {
+  // TODO: don't materialize a string copy here.
+  return TypeDescriptor{art::DotToDescriptor(std::string(name).c_str())};
 }
 
 DexBuilder::DexBuilder() : dex_file_{std::make_shared<ir::DexFile>()} {

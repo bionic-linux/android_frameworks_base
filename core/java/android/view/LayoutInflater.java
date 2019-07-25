@@ -415,10 +415,11 @@ public abstract class LayoutInflater {
         }
     }
 
+    private static final boolean PRECOMPILED_VIEWS_ENABLED = SystemProperties
+            .getBoolean(USE_PRECOMPILED_LAYOUT, false);
+
     private void initPrecompiledViews() {
-        // Precompiled layouts are not supported in this release.
-        boolean enabled = false;
-        initPrecompiledViews(enabled);
+        initPrecompiledViews(PRECOMPILED_VIEWS_ENABLED);
     }
 
     private void initPrecompiledViews(boolean enablePrecompiledViews) {
@@ -576,7 +577,7 @@ public abstract class LayoutInflater {
 
             return view;
         } catch (Throwable e) {
-            if (DEBUG) {
+            if (true || DEBUG) {
                 Log.e(TAG, "Failed to use precompiled view", e);
             }
         } finally {

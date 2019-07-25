@@ -16,11 +16,19 @@
 
 #include "layout_validation.h"
 
+#include "android-base/logging.h"
 #include "android-base/stringprintf.h"
 
 namespace startop {
 
-void LayoutValidationVisitor::VisitStartTag(const std::u16string& name) {
+constexpr std::u16string_view SUPPORTED_ATTRIBUTES[] = {
+  u"id",
+  u"layout_width",
+  u"layout_height",
+};
+
+void LayoutValidationVisitor::VisitStartTag(const std::u16string_view name, const AttributeSet& attrs) {
+  LOG(INFO) << "Checking tag " << std::u16string{name}.c_str();
   if (0 == name.compare(u"merge")) {
     message_ = "Merge tags are not supported";
     can_compile_ = false;
@@ -36,6 +44,25 @@ void LayoutValidationVisitor::VisitStartTag(const std::u16string& name) {
   if (0 == name.compare(u"fragment")) {
     message_ = "Fragment tags are not supported";
     can_compile_ = false;
+  }
+
+  // If we still support the XML-free fast path, make sure none of the
+  // attributes here invalidate it.
+  if (can_compile_xml_free()) {
+    for (const Attribute& attr : attrs) {
+      LOG(INFO) << "  Checking attribute " << std::u16string{attr.name()}.c_str();
+      bool is_supported = false;
+      for(auto supported_attribute : SUPPORTED_ATTRIBUTES) {
+        if (0 == attr.name().compare(supported_attribute)) {
+          is_supported = true;
+          break;
+        }
+      }
+      if (!is_supported) {
+        can_compile_xml_free_ = false;
+        break;
+      }
+    }
   }
 }
 
