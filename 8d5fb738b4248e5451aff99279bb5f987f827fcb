@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7390ff9_b3fdf205",
+        "filename": "api/removed.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2019-07-25T18:42:46Z",
+      "side": 1,
+      "message": "Looks like @Deprecated API in removed.txt is not a new thing",
+      "range": {
+        "startLine": 6,
+        "startChar": 11,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "8d5fb738b4248e5451aff99279bb5f987f827fcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
