@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51783b09_7484b074",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-07-25T17:18:02Z",
+      "side": 1,
+      "message": "Define this for other tables as well, at least Addr above? Also, these table names are defined in MmsProvider. We should probably get rid of those or reuse these values there, maybe as a separate CL.",
+      "revId": "a15ee4d12b0de8ae6f12214bfce257b4f911cbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
