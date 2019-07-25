@@ -69,6 +69,30 @@
       "revId": "dbadf0696204429ab9a7e7c959ae57038256ae4f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc2608c_de4963b7",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-07-25T12:43:23Z",
+      "side": 1,
+      "message": "There are other calls to ServiceManager.addService elsewhere; I\u0027m not _certain_ of the difference. As I\u0027ve already merged this change further upstream, I\u0027m going to go ahead and merge this change and then switch to mSystemServiceManager in a follow-up (which should not require the painful triple CP).",
+      "parentUuid": "0a1064e8_e28c1f5e",
+      "range": {
+        "startLine": 981,
+        "startChar": 12,
+        "endLine": 981,
+        "endChar": 37
+      },
+      "revId": "dbadf0696204429ab9a7e7c959ae57038256ae4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
