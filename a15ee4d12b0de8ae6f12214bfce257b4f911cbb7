@@ -16,6 +16,24 @@
       "revId": "a15ee4d12b0de8ae6f12214bfce257b4f911cbb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99aa0043_a5309810",
+        "filename": "telephony/java/android/provider/Telephony.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1456193
+      },
+      "writtenOn": "2019-07-26T08:56:42Z",
+      "side": 1,
+      "message": "To reuse we need to define this as public, should we define all here with public modifier?",
+      "parentUuid": "51783b09_7484b074",
+      "revId": "a15ee4d12b0de8ae6f12214bfce257b4f911cbb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
