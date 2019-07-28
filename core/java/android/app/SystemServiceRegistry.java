@@ -107,6 +107,7 @@ import android.os.BatteryStats;
 import android.os.Build;
 import android.os.DeviceIdleManager;
 import android.os.DropBoxManager;
+import android.os.GestureLauncherManager;
 import android.os.HardwarePropertiesManager;
 import android.os.IBatteryPropertiesRegistrar;
 import android.os.IBinder;
@@ -115,6 +116,7 @@ import android.os.IHardwarePropertiesManager;
 import android.os.IPowerManager;
 import android.os.IRecoverySystem;
 import android.os.ISystemUpdateManager;
+import android.os.IGestureLauncher;
 import android.os.IUserManager;
 import android.os.IncidentManager;
 import android.os.PowerManager;
@@ -996,6 +998,17 @@ final class SystemServiceRegistry {
                                 ServiceManager.getServiceOrThrow(
                                         Context.DEVICE_IDLE_CONTROLLER));
                         return new DeviceIdleManager(ctx.getOuterContext(), service);
+                    }});
+
+        registerService(Context.GESTURE_LAUNCHER_SERVICE, GestureLauncherManager.class,
+                new CachedServiceFetcher<GestureLauncherManager>() {
+                    @Override
+                    public GestureLauncherManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.GESTURE_LAUNCHER_SERVICE);
+                        IGestureLauncher service = IGestureLauncher.Stub.asInterface(b);
+                        return new GestureLauncherManager(service);
                     }});
     }
 
