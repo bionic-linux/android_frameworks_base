@@ -22,6 +22,7 @@ import android.os.Trace;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.NoSuchElementException;
 
 /**
  * Helper class for reporting boot and shutdown timing metrics.
@@ -69,8 +70,12 @@ public class TimingsTraceLog {
             Slog.w(mTag, "traceEnd called more times than traceBegin");
             return;
         }
-        Pair<String, Long> event = mStartTimes.pop();
-        logDuration(event.first, (SystemClock.elapsedRealtime() - event.second));
+        try {
+            Pair<String, Long> event = mStartTimes.pop();
+            logDuration(event.first, (SystemClock.elapsedRealtime() - event.second));
+        } catch (NoSuchElementException e) {
+            Slog.w(mTag, "Timings trace log acquisition failure.");
+        }
     }
 
     private void assertSameThread() {
