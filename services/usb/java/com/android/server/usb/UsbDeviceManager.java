@@ -1909,6 +1909,18 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
                     return;
                 }
                 try {
+                    /**
+                     * Usb Gadget HAL must be set to FUNCTION_NONE configuration before setting new
+                     * one. This is necessary because existing HAL must finish it's work before adbd
+                     * restarting.
+                     * This sequence of actions is used in the absence of Usb Gadget HAL.
+                     * It prevents the race condition between Usb Gadget HAL and adbd.
+                     */
+                    UsbGadgetCallback usbGadgetCallback = new UsbGadgetCallback(mCurrentRequest,
+                            config, chargingFunctions);
+                    mGadgetProxy.setCurrentUsbFunctions(UsbManager.FUNCTION_NONE, usbGadgetCallback,
+                            SET_FUNCTIONS_TIMEOUT_MS - SET_FUNCTIONS_LEEWAY_MS);
+
                     if ((config & UsbManager.FUNCTION_ADB) != 0) {
                         /**
                          * Start adbd if ADB function is included in the configuration.
@@ -1920,8 +1932,6 @@ public class UsbDeviceManager implements ActivityManagerInternal.ScreenObserver 
                          */
                         setSystemProperty(CTL_STOP, ADBD);
                     }
-                    UsbGadgetCallback usbGadgetCallback = new UsbGadgetCallback(mCurrentRequest,
-                            config, chargingFunctions);
                     mGadgetProxy.setCurrentUsbFunctions(config, usbGadgetCallback,
                             SET_FUNCTIONS_TIMEOUT_MS - SET_FUNCTIONS_LEEWAY_MS);
                     sendMessageDelayed(MSG_SET_FUNCTIONS_TIMEOUT, chargingFunctions,
