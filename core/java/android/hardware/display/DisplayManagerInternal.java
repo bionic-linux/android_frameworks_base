@@ -57,6 +57,11 @@ public abstract class DisplayManagerInternal {
             boolean waitForNegativeProximity);
 
     /**
+     * Called by the power manager to switch user.
+     */
+    public abstract void switchUser(int newUserId);
+
+    /**
      * Returns true if the proximity sensor screen-off function is available.
      */
     public abstract boolean isProximitySensorAvailable();

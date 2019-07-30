@@ -3781,6 +3781,7 @@ public final class PowerManagerService extends SystemService
         public void onReceive(Context context, Intent intent) {
             synchronized (mLock) {
                 handleSettingsChangedLocked();
+                mDisplayManagerInternal.switchUser(intent.getIntExtra(Intent.EXTRA_USER_HANDLE, 0));
             }
         }
     }

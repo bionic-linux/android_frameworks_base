@@ -384,8 +384,7 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
-    @Override
-    public void onSwitchUser(@UserIdInt int newUserId) {
+    public void switchUserInternal(@UserIdInt int newUserId) {
         final int userSerial = getUserManager().getUserSerialNumber(newUserId);
         synchronized (mSyncRoot) {
             if (mCurrentUserId != newUserId) {
@@ -2196,6 +2195,11 @@ public final class DisplayManagerService extends SystemService {
                 return mDisplayPowerController.requestPowerState(request,
                         waitForNegativeProximity);
             }
+        }
+
+        @Override
+        public void switchUser(int newUserId) {
+            switchUserInternal(newUserId);
         }
 
         @Override
