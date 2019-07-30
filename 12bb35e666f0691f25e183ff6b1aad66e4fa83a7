@@ -70,6 +70,30 @@
       "revId": "12bb35e666f0691f25e183ff6b1aad66e4fa83a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "043506f3_6c394582",
+        "filename": "core/java/android/bluetooth/BluetoothCodecConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2019-07-30T02:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "111d9b45_6f3bbb50",
+      "range": {
+        "startLine": 445,
+        "startChar": 5,
+        "endLine": 445,
+        "endChar": 24
+      },
+      "revId": "12bb35e666f0691f25e183ff6b1aad66e4fa83a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
