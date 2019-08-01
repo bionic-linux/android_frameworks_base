@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b24839a5_21d287f7",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2019-08-01T17:18:39Z",
+      "side": 1,
+      "message": "This is a asynchronous call. You have to wait for the callback to return (or timeout) before calling in 1935.\n\nThe functions are set to NONE at the hal implementation level before setting new one. (For reference, Return\u003cvoid\u003e UsbGadget::setCurrentUsbFunctions @ https://android.googlesource.com/device/google/wahoo/+/master/usb/UsbGadget.cpp)\n\nDo you have a similar HAL implementation ?",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
