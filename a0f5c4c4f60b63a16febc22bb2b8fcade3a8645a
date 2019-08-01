@@ -46,6 +46,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4c6ebda_c620527b",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2019-08-01T18:22:21Z",
+      "side": 1,
+      "message": "\u003e\u003e I saw patches for your HAL with sleeps about 5000-100000us,\n\u003e\u003e but with my patch there is no need in sleeps at all.\nThe delay is for port partner\u0027s dwc controller to recognize that pull up was removed.\nsetCurrentUsbFunctions goes through HIDL binder IPC and this would probably introduce a delay and maybe that\u0027s why you no-longer see the issue.\n\nGiven that setCurrentUsbFunctions is asynchronous, adbd might still be started or stopped before the gadget is teared down.\n\nadbd writes into the functionfs ep0 and hal monitors for the ep1/ep2 to show up before pulling up the gadget by writing into the UDC configfs node. Given this, what exact race do you see at the hal implementation level ?",
+      "parentUuid": "4b999f1f_5bdacd6b",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
