@@ -22,6 +22,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b999f1f_5bdacd6b",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-08-01T17:49:54Z",
+      "side": 1,
+      "message": "Yes. This HAL implementation was used as template.\nI saw patches for your HAL with sleeps about 5000-100000us,\nbut with my patch there is no need in sleeps at all.\n\nThe behavior was tested this way:\nvery fast switching between the data transfer modes and it works\nright as expected.\nIn case of sleeps and fast switching behavior is unexpected when\nthe time between switching is less then sleep time.",
+      "parentUuid": "b24839a5_21d287f7",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
