@@ -744,6 +744,9 @@ abstract class HdmiCecLocalDevice {
     @ServiceThreadOnly
     void addAndStartAction(final HdmiCecFeatureAction action) {
         assertRunOnServiceThread();
+        if ((mService.isPowerStandby() || !mService.isAddressAllocated()) && mDeviceType == HdmiDeviceInfo.DEVICE_TV){
+            return;
+        }
         mActions.add(action);
         if (mService.isPowerStandby() || !mService.isAddressAllocated()) {
             Slog.i(TAG, "Not ready to start action. Queued for deferred start:" + action);
