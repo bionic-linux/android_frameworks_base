@@ -586,19 +586,27 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
                 }
             }
 
-            setFirewallEnabled(mFirewallEnabled);
+            try {
+                if (mNetdService != null && mNetdService.isAlive()) {
+                    setFirewallEnabled(mFirewallEnabled);
 
-            syncFirewallChainLocked(FIREWALL_CHAIN_NONE, "");
-            syncFirewallChainLocked(FIREWALL_CHAIN_STANDBY, "standby ");
-            syncFirewallChainLocked(FIREWALL_CHAIN_DOZABLE, "dozable ");
-            syncFirewallChainLocked(FIREWALL_CHAIN_POWERSAVE, "powersave ");
+                    syncFirewallChainLocked(FIREWALL_CHAIN_NONE, "");
+                    syncFirewallChainLocked(FIREWALL_CHAIN_STANDBY, "standby ");
+                    syncFirewallChainLocked(FIREWALL_CHAIN_DOZABLE, "dozable ");
+                    syncFirewallChainLocked(FIREWALL_CHAIN_POWERSAVE, "powersave ");
 
-            final int[] chains =
-                    {FIREWALL_CHAIN_STANDBY, FIREWALL_CHAIN_DOZABLE, FIREWALL_CHAIN_POWERSAVE};
-            for (int chain : chains) {
-                if (getFirewallChainState(chain)) {
-                    setFirewallChainEnabled(chain, true);
+                    final int[] chains =
+                            {FIREWALL_CHAIN_STANDBY, FIREWALL_CHAIN_DOZABLE, FIREWALL_CHAIN_POWERSAVE};
+                    for (int chain : chains) {
+                        if (getFirewallChainState(chain)) {
+                            setFirewallChainEnabled(chain, true);
+                        }
+                    }
                 }
+            } catch (RemoteException e) {
+                Log.e(TAG, "Netd unreachable:" + e);
+            } catch (IllegalStateException | IllegalArgumentException e) {
+                Log.e(TAG, "Error set/sync firewall:" + e);
             }
         }
 
