@@ -70,6 +70,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1f81460_a2ddcc3d",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-08-06T09:53:55Z",
+      "side": 1,
+      "message": "Thank you for attention to asynchronous function setCurrentUsbFunctions, I resolved this\nby new patch set.\n\nAbout adbd problem: as I mentioned before, when the switching between data transfer modes is\nhappening, ep1 and ep2 are removed from /dev/ffs*/adb/ for a little time interval. But these endpoints are in the EndpointList variable in Usb Gadget HAL. So for orderly work we need to\nmake variables \"fresh\" like in the case of property:sys.usb.configfs\u003d1.\nFor example, in UsbDeviceManager when property:sys.usb.configfs\u003d1 there is firstly setting all\nto \"none\" and then applying new configuration.",
+      "parentUuid": "e4c6ebda_c620527b",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
