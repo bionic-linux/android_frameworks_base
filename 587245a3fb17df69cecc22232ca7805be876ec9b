@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66bd5b70_70710e08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1203210
+      },
+      "writtenOn": "2019-08-06T15:04:39Z",
+      "side": 1,
+      "message": "Maybe mention http://r.android.com/1096198 here to make this easier to understand?",
+      "revId": "587245a3fb17df69cecc22232ca7805be876ec9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
