@@ -1051,6 +1051,25 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
         }
+
+        String[] currentIfaces = null;
+        try {
+            currentIfaces = listInterfaces();
+        } catch (Exception e) {
+            Log.e(TAG, "Error listing Interfaces :" + e);
+        }
+        boolean found = false;
+        if (currentIfaces != null) {
+            for (String currIface : currentIfaces) {
+                if (currIface.equals(iface)) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found)
+            return;
+
         List<RouteInfo> routes = new ArrayList<>();
         // The RouteInfo constructor truncates the LinkAddress to a network prefix, thus making it
         // suitable to use as a route destination.
