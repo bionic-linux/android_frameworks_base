@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29afbeac_7ad5db3b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-06T06:53:20Z",
+      "side": 1,
+      "message": "It looks like MTK is seeking a notify-polling model but not a full passive-stats-receiving solution.\nIs MTK ok for both models? If not, what is MTK consideration.",
+      "range": {
+        "startLine": 1031,
+        "startChar": 16,
+        "endLine": 1031,
+        "endChar": 77
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b23de11_eb8117aa",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-06T06:53:20Z",
+      "side": 1,
+      "message": "question: is this for VT?\nIf so, what happened when telephonyManager.getVtDataUsage(STATS_PER_UID);",
+      "range": {
+        "startLine": 1243,
+        "startChar": 29,
+        "endLine": 1243,
+        "endChar": 50
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee8e4d3_001ae44a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-06T06:53:20Z",
+      "side": 1,
+      "message": "Cannot follow this clearly, what case is MTK dealing with?\nIt looks like \"If something goes wrong, adjust the usage in MTKTelephonyManagerEx.\"",
+      "range": {
+        "startLine": 1255,
+        "startChar": 16,
+        "endLine": 1264,
+        "endChar": 17
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
