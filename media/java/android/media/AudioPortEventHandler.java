@@ -19,10 +19,10 @@ package android.media;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.os.Message;
-import java.util.ArrayList;
+
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 /**
  * The AudioPortEventHandler handles AudioManager.OnAudioPortUpdateListener callbacks
@@ -33,6 +33,7 @@ import java.lang.ref.WeakReference;
 class AudioPortEventHandler {
     private Handler mHandler;
     private HandlerThread mHandlerThread;
+    private final Object mLock = new Object();
     private final ArrayList<AudioManager.OnAudioPortUpdateListener> mListeners =
             new ArrayList<AudioManager.OnAudioPortUpdateListener>();
 
@@ -53,7 +54,7 @@ class AudioPortEventHandler {
     private long mJniCallback;
 
     void init() {
-        synchronized (this) {
+        synchronized (mLock) {
             if (mHandler != null) {
                 return;
             }
@@ -66,7 +67,7 @@ class AudioPortEventHandler {
                     @Override
                     public void handleMessage(Message msg) {
                         ArrayList<AudioManager.OnAudioPortUpdateListener> listeners;
-                        synchronized (this) {
+                        synchronized (mLock) {
                             if (msg.what == AUDIOPORT_EVENT_NEW_LISTENER) {
                                 listeners = new ArrayList<AudioManager.OnAudioPortUpdateListener>();
                                 if (mListeners.contains(msg.obj)) {
@@ -152,7 +153,7 @@ class AudioPortEventHandler {
     private native void native_finalize();
 
     void registerListener(AudioManager.OnAudioPortUpdateListener l) {
-        synchronized (this) {
+        synchronized (mLock) {
             mListeners.add(l);
         }
         if (mHandler != null) {
@@ -162,7 +163,7 @@ class AudioPortEventHandler {
     }
 
     void unregisterListener(AudioManager.OnAudioPortUpdateListener l) {
-        synchronized (this) {
+        synchronized (mLock) {
             mListeners.remove(l);
         }
     }
