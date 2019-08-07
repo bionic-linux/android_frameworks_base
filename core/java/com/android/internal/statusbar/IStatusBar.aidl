@@ -106,6 +106,12 @@ oneway interface IStatusBar
     void onCameraLaunchGestureDetected(int source);
 
     /**
+     * Invoke a vibration effect for launching the camera application triggered
+     * by a gesture.
+     */
+    void vibrateForCameraGesture();
+
+    /**
      * Shows the picture-in-picture menu if an activity is in picture-in-picture mode.
      */
     void showPictureInPictureMenu();

@@ -198,6 +198,7 @@ import android.media.session.MediaSessionLegacyHelper;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.FactoryTest;
+import android.os.GestureLauncherManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.IDeviceIdleController;
@@ -541,6 +542,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // to hold wakelocks during dispatch and eliminating the critical path.
     volatile boolean mPowerKeyHandled;
     volatile boolean mBackKeyHandled;
+    volatile boolean mCameraKeyHandled;
+    volatile boolean mCameraLongPressMsgSent = false;
     volatile boolean mBeganFromNonInteractive;
     volatile int mPowerKeyPressCounter;
     volatile boolean mEndCallKeyHandled;
@@ -799,6 +802,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     ShortcutManager mShortcutManager;
     PowerManager.WakeLock mBroadcastWakeLock;
     PowerManager.WakeLock mPowerKeyWakeLock;
+    PowerManager.WakeLock mCameraButtonWakeLock;
     boolean mHavePendingMediaKeyRepeatWithWakeLock;
 
     private int mCurrentUserId;
@@ -846,6 +850,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_POWER_VERY_LONG_PRESS = 28;
     private static final int MSG_NOTIFY_USER_ACTIVITY = 29;
     private static final int MSG_RINGER_TOGGLE_CHORD = 30;
+    private static final int MSG_CAMERA_LONG_PRESS = 31;
 
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_STATUS = 0;
     private static final int MSG_REQUEST_TRANSIENT_BARS_ARG_NAVIGATION = 1;
@@ -955,6 +960,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             android.Manifest.permission.USER_ACTIVITY);
                 case MSG_RINGER_TOGGLE_CHORD:
                     handleRingerChordGesture();
+                    break;
+                case MSG_CAMERA_LONG_PRESS:
+                    cameraLongPress((Long)msg.obj, msg.arg1 != 0);
+                    if (mCameraButtonWakeLock.isHeld()) {
+                        mCameraButtonWakeLock.release();
+                    }
                     break;
             }
         }
@@ -1666,6 +1677,29 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    private void cameraLongPress(long eventTime, boolean interactive) {
+        mCameraKeyHandled = true;
+        // Only handle the non-interactive case (i.e. screen off). Interactive
+        // case is handled by PhoneFallbackEventHandler already.
+        if (!interactive) {
+            GestureLauncherManager gestureManager = (GestureLauncherManager)
+                    mContext.getSystemService(Context.GESTURE_LAUNCHER_SERVICE);
+            if (gestureManager.isCameraButtonLaunchSettingEnabled()) {
+                wakeUp(eventTime, mAllowTheaterModeWakeFromWakeGesture /*wakeInTheaterMode*/,
+                        "android.policy:GESTURE" /*reason*/);
+
+                if (gestureManager != null) {
+                    gestureManager.handleCameraGesture(
+                            StatusBarManager.CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON);
+                } else {
+                    Log.w(TAG, "cameraLongPress: failed to get gestureManager");
+                }
+            } else {
+                Log.i(TAG, "cameraLongPress: disabled");
+            }
+        }
+    }
+
     private void accessibilityShortcutActivated() {
         mAccessibilityShortcutController.performAccessibilityShortcut();
     }
@@ -2078,6 +2112,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 "PhoneWindowManager.mBroadcastWakeLock");
         mPowerKeyWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 "PhoneWindowManager.mPowerKeyWakeLock");
+        mCameraButtonWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "PhoneWindowManager.mCameraButtonWakeLock");
         mEnableShiftMenuBugReports = "1".equals(SystemProperties.get("ro.debuggable"));
         mSupportAutoRotation = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_supportAutoRotation);
@@ -6386,6 +6422,40 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             showPictureInPictureMenu(event);
                         }
                         result &= ~ACTION_PASS_TO_USER;
+                    }
+                }
+                break;
+            }
+            case KeyEvent.KEYCODE_CAMERA: {
+                if (down) {
+                    // Reset camera key state for long press
+                    mCameraKeyHandled = false;
+
+                    // Acquire WakeLock to keep listening for long-press
+                    if (!mCameraButtonWakeLock.isHeld()) {
+                        mCameraButtonWakeLock.acquire();
+                    }
+
+                    if (!mCameraLongPressMsgSent) {
+                        // Only initiate sending MSG_CAMERA_LONG_PRESS once per key down
+                        mCameraLongPressMsgSent = true;
+                        Message msg = mHandler.obtainMessage(MSG_CAMERA_LONG_PRESS,
+                                interactive ? 1 : 0 /* arg1 */,
+                                0 /* arg2, unused */,
+                                event.getEventTime() /* msg.obj */);
+                        msg.setAsynchronous(true);
+                        mHandler.sendMessageDelayed(msg,
+                                ViewConfiguration.get(mContext).getDeviceGlobalActionKeyTimeout());
+                    }
+                } else /* (up) */ {
+                    mCameraLongPressMsgSent = false;
+                    if (mCameraButtonWakeLock.isHeld()) {
+                        mCameraButtonWakeLock.release();
+                    }
+                    if (!mCameraKeyHandled) {
+                        // Reset long press state
+                        mCameraKeyHandled = true;
+                        mHandler.removeMessages(MSG_CAMERA_LONG_PRESS);
                     }
                 }
                 break;
