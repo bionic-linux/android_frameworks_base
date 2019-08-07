@@ -93,6 +93,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_SHOW_CHARGING_ANIMATION       = 44 << MSG_SHIFT;
     private static final int MSG_SHOW_PINNING_TOAST_ENTER_EXIT = 45 << MSG_SHIFT;
     private static final int MSG_SHOW_PINNING_TOAST_ESCAPE     = 46 << MSG_SHIFT;
+    private static final int MSG_VIBRATE_FOR_CAMERA_GESTURE    = 47 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -143,6 +144,7 @@ public class CommandQueue extends IStatusBar.Stub {
         default void showAssistDisclosure() { }
         default void startAssist(Bundle args) { }
         default void onCameraLaunchGestureDetected(int source) { }
+        default void vibrateForCameraGesture() { }
         default void showPictureInPictureMenu() { }
         default void setTopAppHidesStatusBar(boolean topAppHidesStatusBar) { }
 
@@ -426,6 +428,14 @@ public class CommandQueue extends IStatusBar.Stub {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_CAMERA_LAUNCH_GESTURE);
             mHandler.obtainMessage(MSG_CAMERA_LAUNCH_GESTURE, source, 0).sendToTarget();
+        }
+    }
+
+    @Override
+    public void vibrateForCameraGesture() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_VIBRATE_FOR_CAMERA_GESTURE);
+            mHandler.obtainMessage(MSG_VIBRATE_FOR_CAMERA_GESTURE, 0).sendToTarget();
         }
     }
 
@@ -795,6 +805,11 @@ public class CommandQueue extends IStatusBar.Stub {
                 case MSG_SHOW_PINNING_TOAST_ESCAPE:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).showPinningEscapeToast();
+                    }
+                    break;
+                case MSG_VIBRATE_FOR_CAMERA_GESTURE:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).vibrateForCameraGesture();
                     }
                     break;
             }

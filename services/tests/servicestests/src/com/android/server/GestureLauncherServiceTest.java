@@ -170,7 +170,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_firstPowerDownCameraPowerGestureOnInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS +
                 GestureLauncherService.CAMERA_POWER_DOUBLE_TAP_MAX_TIME_MS - 1;
@@ -190,7 +190,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOffInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -234,7 +234,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalMidBoundsCameraPowerGestureOffInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -280,7 +280,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalOutOfBoundsCameraPowerGestureOffInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -325,7 +325,7 @@ public class GestureLauncherServiceTest {
     testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOnInteractiveSetupComplete() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
         withUserSetupCompleteValue(true);
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
@@ -373,7 +373,7 @@ public class GestureLauncherServiceTest {
     testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOnInteractiveSetupIncomplete() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
         withUserSetupCompleteValue(false);
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
@@ -420,7 +420,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalMidBoundsCameraPowerGestureOnInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -466,7 +466,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalOutOfBoundsCameraPowerGestureOnInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -510,7 +510,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOffNotInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -554,7 +554,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalMidBoundsCameraPowerGestureOffNotInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -599,7 +599,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalOutOfBoundsCameraPowerGestureOffNotInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(false);
         withCameraDoubleTapPowerDisableSettingValue(1);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -643,7 +643,7 @@ public class GestureLauncherServiceTest {
     testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOnNotInteractiveSetupComplete() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
         withUserSetupCompleteValue(true);
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
@@ -690,7 +690,7 @@ public class GestureLauncherServiceTest {
     testInterceptPowerKeyDown_intervalInBoundsCameraPowerGestureOnNotInteractiveSetupIncomplete() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
         withUserSetupCompleteValue(false);
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
@@ -735,7 +735,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalMidBoundsCameraPowerGestureOnNotInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -781,7 +781,7 @@ public class GestureLauncherServiceTest {
     public void testInterceptPowerKeyDown_intervalOutOfBoundsCameraPowerGestureOnNotInteractive() {
         withCameraDoubleTapPowerEnableConfigValue(true);
         withCameraDoubleTapPowerDisableSettingValue(0);
-        mGestureLauncherService.updateCameraDoubleTapPowerEnabled();
+        mGestureLauncherService.updateCameraSettingEnabled();
 
         long eventTime = INITIAL_EVENT_TIME_MILLIS;
         KeyEvent keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,

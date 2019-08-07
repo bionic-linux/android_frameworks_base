@@ -100,6 +100,15 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public static final String CAMERA_LAUNCH_SOURCE_WIGGLE = "wiggle_gesture";
     public static final String CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP = "power_double_tap";
     public static final String CAMERA_LAUNCH_SOURCE_LIFT_TRIGGER = "lift_to_launch_ml";
+    public static final String CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON = "camera_button";
+
+    public static final String[] CAMERA_LAUNCH_SOURCES = {
+        CAMERA_LAUNCH_SOURCE_AFFORDANCE,
+        CAMERA_LAUNCH_SOURCE_WIGGLE,
+        CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP,
+        CAMERA_LAUNCH_SOURCE_LIFT_TRIGGER,
+        CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON
+    };
 
     public static final String EXTRA_CAMERA_LAUNCH_SOURCE
             = "com.android.systemui.camera_launch_source";
@@ -111,6 +120,11 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     private static final Intent SECURE_CAMERA_INTENT =
             new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE)
+                    .addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+    public static final Intent INSECURE_CAMERA_GESTURE_INTENT =
+            new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_GESTURE);
+    private static final Intent SECURE_CAMERA_GESTURE_INTENT =
+            new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA_GESTURE_SECURE)
                     .addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
     public static final Intent INSECURE_CAMERA_INTENT =
             new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
@@ -382,6 +396,15 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         return mRightButton.getIntent();
     }
 
+    private Intent getCameraGestureIntent() {
+        KeyguardUpdateMonitor updateMonitor = KeyguardUpdateMonitor.getInstance(mContext);
+        boolean canSkipBouncer = updateMonitor.getUserCanSkipBouncer(
+                KeyguardUpdateMonitor.getCurrentUser());
+        boolean secure = mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser());
+        return (secure && !canSkipBouncer)
+            ? SECURE_CAMERA_GESTURE_INTENT : INSECURE_CAMERA_GESTURE_INTENT;
+    }
+
     /**
      * Resolves the intent to launch the camera application.
      */
@@ -505,11 +528,17 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     public void launchCamera(String source) {
-        final Intent intent = getCameraIntent();
-        intent.putExtra(EXTRA_CAMERA_LAUNCH_SOURCE, source);
+        final Intent intent;
+        if (source == CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON) {
+            intent = getCameraGestureIntent();
+        } else {
+            intent = getCameraIntent();
+        }
+        intent.putExtra(EXTRA_CAMERA_LAUNCH_SOURCE, CAMERA_LAUNCH_SOURCES[source]);
         boolean wouldLaunchResolverActivity = PreviewInflater.wouldLaunchResolverActivity(
                 mContext, intent, KeyguardUpdateMonitor.getCurrentUser());
-        if (intent == SECURE_CAMERA_INTENT && !wouldLaunchResolverActivity) {
+        if ((intent == SECURE_CAMERA_INTENT || intent == SECURE_CAMERA_GESTURE_INTENT)
+                && !wouldLaunchResolverActivity) {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {

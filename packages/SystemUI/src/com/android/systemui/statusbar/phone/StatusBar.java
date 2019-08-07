@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.phone;
 
+import static android.app.StatusBarManager.CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON;
 import static android.app.StatusBarManager.WINDOW_STATE_HIDDEN;
 import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.app.StatusBarManager.windowStateToString;
@@ -37,6 +38,10 @@ import static com.android.systemui.statusbar.phone.BarTransitions.MODE_SEMI_TRAN
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSLUCENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_TRANSPARENT;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_WARNING;
+import static com.android.systemui.statusbar.phone.KeyguardBottomAreaView.INSECURE_CAMERA_INTENT;
+import static com.android.systemui.statusbar.phone.KeyguardBottomAreaView.INSECURE_CAMERA_GESTURE_INTENT;
+import static com.android.systemui.statusbar.phone.KeyguardBottomAreaView.EXTRA_CAMERA_LAUNCH_SOURCE;
+import static com.android.systemui.statusbar.phone.KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCES;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -2985,7 +2990,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     null /* remoteAnimation */));
             options.setDisallowEnterPictureInPictureWhileLaunching(
                     disallowEnterPictureInPictureWhileLaunching);
-            if (intent == KeyguardBottomAreaView.INSECURE_CAMERA_INTENT) {
+            if (intent == INSECURE_CAMERA_INTENT
+                    || intent == INSECURE_CAMERA_GESTURE_INTENT) {
                 // Normally an activity will set it's requested rotation
                 // animation on its window. However when launching an activity
                 // causes the orientation to change this is too late. In these cases
@@ -4595,7 +4601,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mWakefulnessLifecycle.getWakefulness();
     }
 
-    private void vibrateForCameraGesture() {
+    @Override
+    public void vibrateForCameraGesture() {
         // Make sure to pass -1 for repeat so VibratorService doesn't stop us when going to sleep.
         mVibrator.vibrate(mCameraLaunchGestureVibePattern, -1 /* repeat */);
     }
@@ -4658,6 +4665,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     @Override
     public void onCameraLaunchGestureDetected(int source) {
         mLastCameraLaunchSource = source;
+        final Intent cameraIntent = source == CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON
+                ? INSECURE_CAMERA_GESTURE_INTENT
+                : INSECURE_CAMERA_INTENT;
+        intent.putExtra(EXTRA_CAMERA_LAUNCH_SOURCE, CAMERA_LAUNCH_SOURCES[source]);
         if (isGoingToSleep()) {
             if (DEBUG_CAMERA_LIFT) Slog.d(TAG, "Finish going to sleep before launching camera");
             mLaunchCameraOnFinishedGoingToSleep = true;
@@ -4676,7 +4687,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         vibrateForCameraGesture();
         if (!mStatusBarKeyguardViewManager.isShowing()) {
-            startActivityDismissingKeyguard(KeyguardBottomAreaView.INSECURE_CAMERA_INTENT,
+            startActivityDismissingKeyguard(cameraIntent,
                     false /* onlyProvisioned */, true /* dismissShade */,
                     true /* disallowEnterPictureInPictureWhileLaunching */, null /* callback */, 0);
         } else {

@@ -19,12 +19,14 @@ package com.android.internal.policy;
 import android.annotation.UnsupportedAppUsage;
 import android.app.KeyguardManager;
 import android.app.SearchManager;
+import android.app.StatusBarManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.session.MediaSessionManager;
+import android.os.GestureLauncherManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -52,10 +54,18 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
     SearchManager mSearchManager;
     TelephonyManager mTelephonyManager;
     MediaSessionManager mMediaSessionManager;
+    StatusBarManager mStatusBarManager;
+    GestureLauncherManager mGestureManager;
+
+    // Whether to launch the camera application on camera button long-press
+    private boolean mCameraButtonLaunchEnabled;
 
     @UnsupportedAppUsage
     public PhoneFallbackEventHandler(Context context) {
         mContext = context;
+        if (mGestureManager == null) {
+            mGestureManager = new GestureLauncherManager(context);
+        }
     }
 
     public void setView(View v) {
@@ -144,22 +154,27 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
             }
 
             case KeyEvent.KEYCODE_CAMERA: {
-                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
-                    break;
-                }
                 if (event.getRepeatCount() == 0) {
                     dispatcher.startTracking(event, this);
                 } else if (event.isLongPress() && dispatcher.isTracking(event)) {
                     dispatcher.performedLongPress(event);
                     if (isUserSetupComplete()) {
-                        mView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        updateCameraLongPressEnabled();
                         sendCloseSystemWindows();
-                        // Broadcast an intent that the Camera button was longpressed
-                        Intent intent = new Intent(Intent.ACTION_CAMERA_BUTTON, null);
-                        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-                        intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
-                        mContext.sendOrderedBroadcastAsUser(intent, UserHandle.CURRENT_OR_SELF,
-                                null, null, null, 0, null, null);
+                        if (mCameraButtonLaunchEnabled) {
+                            getStatusBarManager().onCameraLaunchGestureDetected(
+                                    StatusBarManager.CAMERA_LAUNCH_SOURCE_CAMERA_BUTTON);
+                        } else {
+                            mView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        }
+                        if (!isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                            // Broadcast an intent that the Camera button was longpressed
+                            Intent intent = new Intent(Intent.ACTION_CAMERA_BUTTON, null);
+                            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                            intent.putExtra(Intent.EXTRA_KEY_EVENT, event);
+                            mContext.sendOrderedBroadcastAsUser(intent, UserHandle.CURRENT_OR_SELF,
+                                    null, null, null, 0, null, null);
+                        }
                     } else {
                         Log.i(TAG, "Not dispatching CAMERA long press because user "
                                 + "setup is in progress.");
@@ -325,6 +340,14 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
         return mMediaSessionManager;
     }
 
+    StatusBarManager getStatusBarManager() {
+        if (mStatusBarManager == null) {
+            mStatusBarManager =
+                (StatusBarManager) mContext.getSystemService(Context.STATUS_BAR_SERVICE);
+        }
+        return mStatusBarManager;
+    }
+
     void sendCloseSystemWindows() {
         PhoneWindow.sendCloseSystemWindows(mContext, null);
     }
@@ -336,6 +359,14 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
 
     private void handleMediaKeyEvent(KeyEvent keyEvent) {
         getMediaSessionManager().dispatchMediaKeyEventAsSystemService(keyEvent);
+    }
+
+    @UnsupportedAppUsage
+    void updateCameraLongPressEnabled() {
+        boolean enabled = mGestureManager.isCameraButtonLaunchSettingEnabled();
+        synchronized (this) {
+            mCameraButtonLaunchEnabled = enabled;
+        }
     }
 
     private boolean isUserSetupComplete() {

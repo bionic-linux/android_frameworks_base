@@ -453,6 +453,26 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
     // From IStatusBarService
     // ================================================================================
     @Override
+    public void onCameraLaunchGestureDetected(int source) {
+        if (mBar != null) {
+            try {
+                mBar.onCameraLaunchGestureDetected(source);
+            } catch (RemoteException e) {
+            }
+        }
+    }
+
+    @Override
+    public void vibrateForCameraGesture() {
+        if (mBar != null) {
+            try {
+                mBar.vibrateForCameraGesture();
+            } catch (RemoteException e) {
+            }
+        }
+    }
+
+    @Override
     public void expandNotificationsPanel() {
         enforceExpandStatusBar();
 
