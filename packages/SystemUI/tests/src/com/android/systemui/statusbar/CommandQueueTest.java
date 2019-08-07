@@ -294,6 +294,13 @@ public class CommandQueueTest extends SysuiTestCase {
     }
 
     @Test
+    public void testVibrateForCameraGesture() {
+        mCommandQueue.vibrateForCameraGesture();
+        waitForIdleSync();
+        verify(mCallbacks).vibrateForCameraGesture();
+    }
+
+    @Test
     public void testShowPipMenu() {
         mCommandQueue.showPictureInPictureMenu();
         waitForIdleSync();
