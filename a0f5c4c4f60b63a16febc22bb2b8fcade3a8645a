@@ -94,6 +94,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dfa3079_ebd465ba",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2019-08-07T21:45:25Z",
+      "side": 1,
+      "message": "mEndpointList is static list that maintains the list of endpoints for a specific ffs function. In this instance adb. usb hal uses this list to see if the userspace gadget functions(or ffs functions) have written their descriptors before pulling up the gadget. So the endpoints are never meant to be removed from the list.\n\n  bool descriptorWritten \u003d true;\n  for (int i \u003d 0; i \u003c static_cast\u003cint\u003e(usbGadget-\u003emEndpointList.size()); i++) {\n    if (access(usbGadget-\u003emEndpointList.at(i).c_str(), R_OK)) {\n      descriptorWritten \u003d false;\n      break;\n    }\n  }\n\nnot sure how much of your implementation is same as https://android.googlesource.com/device/google/wahoo/+/master/usb/UsbGadget.cpp. If its the same, Can you share the logs and the code file ?",
+      "parentUuid": "b1f81460_a2ddcc3d",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
