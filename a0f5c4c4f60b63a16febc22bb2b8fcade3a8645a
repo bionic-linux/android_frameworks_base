@@ -118,6 +118,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "732c6e4d_404cf8dc",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-08-08T16:39:58Z",
+      "side": 1,
+      "message": "1) I mean that ep1 and ep2 are removed not from mEndpointList but files removed from directory /dev/usb-ffs/adb/. You can check it with \"while true; do ls; done\" and switching data transfer modes very fast. You\u0027ll see that ep1 and ep2 are not present in directory when switching is happen.\n\n2) The TRUE way to fix the order is to add tearDownGadget function into the Usb Gadget intergace (it\u0027ll be more logical because now setCurrentUsbFunctions does two logical works - tearing down and setting).\nIn this case it\u0027ll be possible to kick all existing connections by calling tearDownGadget, then start/stop adb and then setting the current function in Usb Gadget HAL as it works now without Gadget HAl.\n\nBut for now my patch can fix this problem of order. I saw in UsbDeviceManager implementation without HAL there was a try to remove setting configfs to NONE everytime switching is happen, but then that commit was revert, so I can make a conclusion this order must be observed.\n\n3) Our implementation is the same as yours, even logs. Please find our log attached below when my patch is merged. Writing to UDC variable killed adbd, you can check it by passing \"none\" to UDC variable in shell.\n\n07-31 15:36:28.322  2812  2831 D UsbDeviceManager: setUsbConfig(5) request:57\n07-31 15:36:28.322  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: Tearing down Gadget\n07-31 15:36:28.323  7754 23849 I adbd    : UsbFfs: connection terminated: read 1272 failed with error Cannot send after transport endpoint shutdown\n07-31 15:36:28.323  7754  7754 I adbd    : UsbFfs: offline\n07-31 15:36:28.330  7754 23827 E adbd    : failed to send interruption signal to worker: No such process\n07-31 15:36:28.335  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: mMonitor destroyed\n07-31 15:36:28.348  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: Tearing down Gadget\n07-31 15:36:28.348  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: Gadget cannot be pulled down: /config/usb_gadget/g1/UDC\n07-31 15:36:28.348  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: mMonitor not running\n07-31 15:36:28.348  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: setCurrentUsbFunctions mtp\n07-31 15:36:28.349  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: setCurrentUsbFunctions Adb\n07-31 15:36:28.349  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: Service started\n07-31 15:36:28.352  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: monitorFfs signalled true\n07-31 15:36:28.352  2416  2416 I android.hardware.usb.gadget@1.0-service.renesas: Usb Gadget setcurrent functions called successfully\n07-31 15:36:28.788  7754  7754 I adbd    : destroying transport UsbFfs\n07-31 15:36:28.789  7754  7754 I adbd    : UsbFfsConnection being destroyed\n07-31 15:36:28.861  7754  7755 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0\n07-31 15:36:28.877  2416 26588 I android.hardware.usb.gadget@1.0-service.renesas: GADGET pulled up\n07-31 15:36:28.887  7754  7755 I adbd    : UsbFfsConnection constructed\n07-31 15:36:28.887  7754 26615 I adbd    : USB event: FUNCTIONFS_BIND\n07-31 15:36:29.328  7754 26615 I adbd    : USB event: FUNCTIONFS_ENABLE\n07-31 15:36:29.944  7754  7754 I adbd    : UsbFfs: already offline",
+      "parentUuid": "7dfa3079_ebd465ba",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
