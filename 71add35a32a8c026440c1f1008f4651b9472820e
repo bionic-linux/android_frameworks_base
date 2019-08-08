@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e0c1918_b4bfe098",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-08-08T11:13:26Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5d0db8_942ea426",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-08-08T11:13:26Z",
+      "side": 1,
+      "message": "What about \"Fix a lock issue in AudioPortEventHandler\"?",
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c76e2d6_4e740f10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-08-08T11:13:26Z",
+      "side": 1,
+      "message": "a lock",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c576dd11_e62974b8",
+        "filename": "media/java/android/media/AudioPortEventHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-08-08T11:13:26Z",
+      "side": 1,
+      "message": "Could you add follows for mLosteners?\n\n@GuardedBy(\"mLock\")",
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f61895c_2ff7999a",
+        "filename": "media/java/android/media/AudioPortEventHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2019-08-08T11:13:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t init() be a synchronized method instead of this?",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
