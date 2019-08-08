@@ -102,6 +102,30 @@
       "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdda8aa0_f43c732f",
+        "filename": "media/java/android/media/AudioPortEventHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2019-08-08T21:40:51Z",
+      "side": 1,
+      "message": "this is fine, in general we prefer to keep the synchronization internally, to avoid putting it in the API contract.",
+      "parentUuid": "6f61895c_2ff7999a",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "71add35a32a8c026440c1f1008f4651b9472820e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
