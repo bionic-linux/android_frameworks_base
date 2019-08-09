@@ -732,7 +732,8 @@ public final class BluetoothSocket implements Closeable {
                     + " MaxRxPktSize: " + mMaxRxPacketSize + " MaxTxPktSize: " + mMaxTxPacketSize);
         }
         if (status != 0) {
-            throw new IOException("Connection failure, status: " + status);
+            //use new exception to report the Bluetooth connecting error code.
+            throw new BluetoothIOException("Connection failure, status: " + status, status);
         }
         return RemoteAddr;
     }
