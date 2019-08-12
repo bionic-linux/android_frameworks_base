@@ -1451,7 +1451,7 @@ droiddoc {
 }
 
 droiddoc {
-    name: "ds-docs",
+    name: "ds-docs-java",
     defaults: ["framework-docs-default"],
     srcs: [
         ":framework-doc-stubs",
@@ -1494,8 +1494,6 @@ droiddoc {
 java_genrule {
     name: "ds-docs-switched",
     tools: [
-      "zip2zip",
-      "merge_zips",
       "switcher4",
       "soong_zip",
     ],
@@ -1504,8 +1502,11 @@ java_genrule {
     dist: {
         targets: ["docs"],
     },
-    cmd: "unzip $$(dirname $(location :ds-docs-java))/ds-docs-java-docs.zip -d $(genDir) && unzip $$(dirname $(location :ds-docs-kt))/ds-docs-kt-docs.zip -d $(genDir)/en/reference/kotlin && " +
-         "(cd $$(dirname $(location switcher4)) && ./$$(basename $(location switcher4)) --work) && $(location soong_zip) -o $(out) -D $(genDir)",
+    cmd: "unzip $$(dirname $(location :ds-docs-java))/ds-docs-java-docs.zip -d $(genDir) && " +
+         "unzip $$(dirname $(location :ds-docs-kt))/ds-docs-kt-docs.zip -d $(genDir)/en/reference/kotlin && " +
+         "SWITCHER=$$(cd $$(dirname $(location switcher4)) && pwd)/$$(basename $(location switcher4)) && " +
+         "(cd $(genDir)/en/reference && $$SWITCHER --work platform) && " +
+         "$(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)",
 }
 
 
