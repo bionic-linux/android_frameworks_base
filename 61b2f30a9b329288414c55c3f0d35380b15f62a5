@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "617ed090_6cf77ec8",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 91
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2019-08-14T17:19:04Z",
+      "side": 1,
+      "message": "Can you remove this logging and just expand the crash message below?",
+      "range": {
+        "startLine": 803,
+        "startChar": 12,
+        "endLine": 807,
+        "endChar": 28
+      },
+      "revId": "61b2f30a9b329288414c55c3f0d35380b15f62a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
