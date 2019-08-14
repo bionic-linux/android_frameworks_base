@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86365ca9_4d1cadbe",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-08-14T00:59:55Z",
+      "side": 1,
+      "message": "What if eARC is in discovery process but fails to be enabled?\nWhat\u0027s the boundary of the EARC_NOT_ENABLED and EARC_WAITING?",
+      "range": {
+        "startLine": 1005,
+        "startChar": 40,
+        "endLine": 1005,
+        "endChar": 56
+      },
+      "revId": "57c6d1d130b8e699e9f515fbb47b0d385eb030cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
