@@ -22,6 +22,30 @@
       "revId": "94e9880406862a1d8bea03e3597dc4f8186ca035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69952ad_5e2d90c6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1293920
+      },
+      "writtenOn": "2019-08-15T11:35:16Z",
+      "side": 1,
+      "message": "For findFirstAvailableUpstreamByType is defined as a static method, cannot reference any non-static field, just as below:\n\n    private static TypeStatePair findFirstAvailableUpstreamByType(\n            Iterable\u003cNetworkState\u003e netStates, Iterable\u003cInteger\u003e preferredTypes) {",
+      "parentUuid": "eca2cd96_20952591",
+      "range": {
+        "startLine": 215,
+        "startChar": 52,
+        "endLine": 215,
+        "endChar": 60
+      },
+      "revId": "94e9880406862a1d8bea03e3597dc4f8186ca035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
