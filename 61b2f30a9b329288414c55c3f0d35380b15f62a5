@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "60594ee2_8bfd89bc",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 91
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000322
+      },
+      "writtenOn": "2019-08-15T00:47:03Z",
+      "side": 1,
+      "message": "Style: make this \u0027final\u0027.",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 30
+      },
+      "revId": "61b2f30a9b329288414c55c3f0d35380b15f62a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "617ed090_6cf77ec8",
         "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
         "patchSetId": 91
