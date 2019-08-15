@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "5540efdb_ccf836dc",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-15T11:39:42Z",
+      "side": 1,
+      "message": "How often/In what condition does MTK send this intent?\nI\u0027m assuming the threshold is small so the lost of precision is reasonably small.",
+      "parentUuid": "4d246722_325041af",
+      "range": {
+        "startLine": 1031,
+        "startChar": 16,
+        "endLine": 1031,
+        "endChar": 77
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d012e9_710a7bf5",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-15T11:39:42Z",
+      "side": 1,
+      "message": "Is it time consuming?\nIf so then it might not be good to call it here.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 16,
+        "endLine": 1033,
+        "endChar": 34
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b23de11_eb8117aa",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -136,6 +183,29 @@
         "startChar": 16,
         "endLine": 1264,
         "endChar": 17
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a9533e_7ea71623",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-15T11:39:42Z",
+      "side": 1,
+      "message": "It looks like MTK doesn\u0027t call performPoll and broadcast ACTION_NETWORK_STATS_UPDATED to let NetworkPolicyManagerService check against warning/limit bytes.\nWhen there is only traffic consumed by modem,\nis it possible to miss warning/limit dialog when it is actually over the warning/limit?",
+      "range": {
+        "startLine": 1269,
+        "startChar": 8,
+        "endLine": 1269,
+        "endChar": 21
       },
       "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
