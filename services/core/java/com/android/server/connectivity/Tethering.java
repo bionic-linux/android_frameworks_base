@@ -455,7 +455,12 @@ public class Tethering extends BaseNetworkObserver {
 
             @Override
             public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                ((BluetoothPan) proxy).setBluetoothTethering(enable);
+                final long identityToken = Binder.clearCallingIdentity();
+                try {
+                    ((BluetoothPan) proxy).setBluetoothTethering(enable);
+                } finally {
+                    Binder.restoreCallingIdentity(identityToken);
+                }
                 // TODO: Enabling bluetooth tethering can fail asynchronously here.
                 // We should figure out a way to bubble up that failure instead of sending success.
                 final int result = (((BluetoothPan) proxy).isTetheringOn() == enable)
