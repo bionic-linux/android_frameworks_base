@@ -46,6 +46,30 @@
       "revId": "94e9880406862a1d8bea03e3597dc4f8186ca035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbaf6dcc_0366d00e",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-16T07:26:38Z",
+      "side": 1,
+      "message": "Ohh, how could I miss that. Since #findFirstAvailableUpstreamByType() is private function and it only be used in here which is not a static function. I think change #findFirstAvailableUpstreamByType() to be non-static would be better instead of creating new argument.",
+      "parentUuid": "a69952ad_5e2d90c6",
+      "range": {
+        "startLine": 215,
+        "startChar": 52,
+        "endLine": 215,
+        "endChar": 60
+      },
+      "revId": "94e9880406862a1d8bea03e3597dc4f8186ca035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
