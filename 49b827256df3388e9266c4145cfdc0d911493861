@@ -22,6 +22,30 @@
       "revId": "49b827256df3388e9266c4145cfdc0d911493861",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6440aca5_9463a44a",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1397448
+      },
+      "writtenOn": "2019-08-16T03:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec057cfe_ef8749f4",
+      "range": {
+        "startLine": 799,
+        "startChar": 26,
+        "endLine": 799,
+        "endChar": 46
+      },
+      "revId": "49b827256df3388e9266c4145cfdc0d911493861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
