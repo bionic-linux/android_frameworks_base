@@ -166,6 +166,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7d9746_efbe6412",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2019-08-16T02:11:40Z",
+      "side": 1,
+      "message": "Apologies for the delay.\n\n\u003e\u003e You\u0027ll see that ep1 and ep2 are not present in directory when switching is happen.\nYes this I would expect as well. The monitor logic in the hal implementation was written around this.\n\n\u003e\u003eBut for now my patch can fix this problem of order.\nThis is fine as well. Setting function to none was anyways meant to do that\n\nThe problem here is that using a CV to block would block the message handler queue as well. Ideally you should be posting messages without blocking the message handler queue as setUsbConfig can be called through the message handler queue.\n\nAlso, can you post the logs without your patch when you hit the race and gadget stack does not get configured ?",
+      "parentUuid": "97ffc0f9_b3c3afc9",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
