@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e247b1_9e3583ca",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-19T11:36:55Z",
+      "side": 1,
+      "message": "Is this actually necessary ?",
+      "range": {
+        "startLine": 458,
+        "startChar": 50,
+        "endLine": 458,
+        "endChar": 70
+      },
+      "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
