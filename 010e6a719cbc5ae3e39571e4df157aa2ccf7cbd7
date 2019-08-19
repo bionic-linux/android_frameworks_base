@@ -22,6 +22,30 @@
       "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ce8aaa_e7f509a5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-19T12:40:17Z",
+      "side": 1,
+      "message": "The package name query is implemented in BluetoothPan. So the package would always be android system in this case.\n#startTethering from settings would not fail just because we are lucky that settings uid is the same as system. If other app which uid is 12345 call #startTethering, we will have problem at ConnectivityManager#enforceTetherChangePermission() because the system uid 10000 is not same as its actually uid 12345.",
+      "parentUuid": "47e247b1_9e3583ca",
+      "range": {
+        "startLine": 458,
+        "startChar": 50,
+        "endLine": 458,
+        "endChar": 70
+      },
+      "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
