@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2690d84_8d10dd57",
+        "filename": "services/core/java/com/android/server/hdmi/Constants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-08-20T01:21:16Z",
+      "side": 1,
+      "message": "Can we have more documentation here to show the mapping between the states in the specification and the states here in the Constants?",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 0
+      },
+      "revId": "57c6d1d130b8e699e9f515fbb47b0d385eb030cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86365ca9_4d1cadbe",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
         "patchSetId": 1
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "\u003eWhat if eARC is in discovery process but fails to be enabled?\n\u003eWhat\u0027s the boundary of the EARC_NOT_ENABLED and EARC_WAITING?\nWe assumed that TX IDLE2 is EARC_NOT_ENABLED,\nand TXDISC1/2 is EARC_WAITING at \"Figure 9-22:eARC TX diagram\" in \"HDMI specification 2.1 section 9.5.3.2.\"\n\nARC could be initiated in only TX IDLE2 that is EARC_NOT_ENABLED status.",
       "parentUuid": "86365ca9_4d1cadbe",
+      "range": {
+        "startLine": 1005,
+        "startChar": 40,
+        "endLine": 1005,
+        "endChar": 56
+      },
+      "revId": "57c6d1d130b8e699e9f515fbb47b0d385eb030cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9c773a_6ffd1d3c",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1345588
+      },
+      "writtenOn": "2019-08-20T01:21:16Z",
+      "side": 1,
+      "message": "If a source device that does not support eARC sends out an Initiate ARC CEC command to the sink when the sink is still at IDLE1, the message will be ignored. Does that mean the Source device will never handle ARC init from the source device if the eARC init is never started from the Sink side?\n\nWhen will we pull the HPD for eARC init?",
+      "parentUuid": "635b7b2c_e95e4127",
       "range": {
         "startLine": 1005,
         "startChar": 40,
