@@ -24,6 +24,7 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServerCallbacks;
+import android.net.dnsproxy.IDnsProxyServerCallbacks;
 import android.net.ip.IIpClientCallbacks;
 import android.net.util.SharedLog;
 import android.os.Binder;
@@ -165,6 +166,21 @@ public class NetworkStackClient {
         requestConnector(connector -> {
             try {
                 connector.makeNetworkMonitor(network, name, cb);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        });
+    }
+
+    /**
+     * Create a DnsProxy server according to the specified parameters.
+     *
+     * <p>The server will be returned asynchronously through the provided callbacks.
+     */
+    public void makeDnsProxyServer(final String ifName, final IDnsProxyServerCallbacks cb) {
+        requestConnector(connector -> {
+            try {
+                connector.makeDnsProxyServer(ifName, cb);
             } catch (RemoteException e) {
                 e.rethrowFromSystemServer();
             }
