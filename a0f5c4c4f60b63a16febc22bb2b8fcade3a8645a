@@ -214,6 +214,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9679416b_dec61ec5",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-08-21T14:57:56Z",
+      "side": 1,
+      "message": "Also I want to propose to set ctl.stop property to \"adbd\" value before tearing down gadget and then do ctl.start after setting functions to none. So the order will be the following:\n1. stop adbd\n2. set functions to none (tearDownGadget)\n3. start adbd if required\n4. set required functions without tearDownGadget\n\nThis order requires changes in HAL implementation - tearDown will be only in case of setting functions to None. So we turn off all processes and then configure it as in case of HAL absence.",
+      "parentUuid": "ec99fa15_b337069e",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
