@@ -55,3 +55,7 @@ key 315   BUTTON_START
 
 # Xbox key
 key 172   BUTTON_MODE
+
+# Xbox key (newer firmware)
+key 316   BUTTON_MODE
+
