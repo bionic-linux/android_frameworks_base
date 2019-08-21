@@ -46,6 +46,30 @@
       "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db3cdce5_911bd468",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-08-21T12:27:05Z",
+      "side": 1,
+      "message": "Do we like to add test for this? Maybe not in this commit since it\u0027s the target commit for fixing the bug.",
+      "parentUuid": "a2ce8aaa_e7f509a5",
+      "range": {
+        "startLine": 458,
+        "startChar": 50,
+        "endLine": 458,
+        "endChar": 70
+      },
+      "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
