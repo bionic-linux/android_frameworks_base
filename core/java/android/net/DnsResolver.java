@@ -533,28 +533,28 @@ public final class DnsResolver {
 
         DnsAddressAnswer(@NonNull byte[] data) throws ParseException {
             super(data);
-            if ((mHeader.flags & (1 << 15)) == 0) {
+            if ((getHeader().flags & (1 << 15)) == 0) {
                 throw new ParseException("Not an answer packet");
             }
-            if (mHeader.getRecordCount(QDSECTION) == 0) {
+            if (getHeader().getRecordCount(QDSECTION) == 0) {
                 throw new ParseException("No question found");
             }
             // Expect only one question in question section.
-            mQueryType = mRecords[QDSECTION].get(0).nsType;
+            mQueryType = getRecord(QDSECTION).get(0).nsType;
         }
 
         public @NonNull List<InetAddress> getAddresses() {
             final List<InetAddress> results = new ArrayList<InetAddress>();
-            if (mHeader.getRecordCount(ANSECTION) == 0) return results;
+            if (getHeader().getRecordCount(ANSECTION) == 0) return results;
 
-            for (final DnsRecord ansSec : mRecords[ANSECTION]) {
+            for (final DnsRecord ansSec : getRecord(ANSECTION)) {
                 // Only support A and AAAA, also ignore answers if query type != answer type.
                 int nsType = ansSec.nsType;
                 if (nsType != mQueryType || (nsType != TYPE_A && nsType != TYPE_AAAA)) {
                     continue;
                 }
                 try {
-                    results.add(InetAddress.getByAddress(ansSec.getRR()));
+                    results.add(InetAddress.getByAddress(ansSec.getResourceData()));
                 } catch (UnknownHostException e) {
                     if (DBG) {
                         Log.w(TAG, "rr to address fail");

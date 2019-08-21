@@ -16,12 +16,17 @@
 
 package android.net;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.text.TextUtils;
 
 import com.android.internal.util.BitUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
@@ -35,8 +40,13 @@ import java.util.List;
  *
  * @hide
  */
+@SystemApi
+@TestApi
 public abstract class DnsPacket {
-    public class DnsHeader {
+    /**
+     * Class of DnsHeader for DNS protocol based on RFC 1035.
+     */
+    public static class DnsHeader {
         private static final String TAG = "DnsHeader";
         public final int id;
         public final int flags;
@@ -62,11 +72,76 @@ public abstract class DnsPacket {
             }
         }
 
+        private DnsHeader(int id, int flags, int rcode, @NonNull int[] recordCount) {
+            this.id = id;
+            this.flags = flags;
+            this.rcode = rcode;
+            mRecordCount = recordCount;
+        }
+
         /**
-         * Get record count by type.
+         * Builder of DnsHeader.
          */
-        public int getRecordCount(int type) {
-            return mRecordCount[type];
+        public static final class Builder {
+            private int mId;
+            private int mFlags;
+            private int mRcode;
+            private int[] mRecordCount = new int[NUM_SECTIONS];
+
+            /**
+             * Set id of DnsHeader.
+             */
+            @NonNull
+            public Builder setId(int id) {
+                mId = id;
+                return this;
+            }
+
+            /**
+             * Set flags of DnsHeader.
+             */
+            @NonNull
+            public Builder setFlags(int flags) {
+                mFlags = flags;
+                return this;
+            }
+            /**
+             * Set rcode of DnsHeader.
+             */
+            @NonNull
+            public Builder setRcode(int rcode) {
+                mRcode = rcode;
+                return this;
+            }
+
+            /**
+             * Set rcord count of DnsHeader.
+             * The default value of all record counts are 0.
+             * @throws IllegalArgumentException if |count| < 0.
+             */
+            @NonNull
+            public Builder setRecordCount(@DnsSection int sec, int count) {
+                if (sec > DnsPacket.ARSECTION || sec < DnsPacket.QDSECTION) {
+                    throw new IllegalArgumentException("Bad sec: " + sec);
+                }
+                if (count < 0) throw new IllegalArgumentException("Bad record count: " + count);
+                mRecordCount[sec] = count;
+                return this;
+            }
+            /**
+             * Create a new {@link DnsHeader}.
+             */
+            @NonNull
+            public DnsHeader build() {
+                return new DnsHeader(mId, mFlags, mRcode, mRecordCount);
+            }
+        }
+
+        /**
+         * Get record count by section.
+         */
+        public int getRecordCount(@DnsSection int sec) {
+            return mRecordCount[sec];
         }
     }
 
@@ -76,7 +151,7 @@ public abstract class DnsPacket {
      * DNS questions (No TTL/RDATA)
      * DNS resource records (With TTL/RDATA)
      */
-    public class DnsRecord {
+    public static class DnsRecord {
         private static final int MAXNAMESIZE = 255;
         private static final int MAXLABELSIZE = 63;
         private static final int MAXLABELCOUNT = 128;
@@ -87,11 +162,14 @@ public abstract class DnsPacket {
 
         private static final String TAG = "DnsRecord";
 
-        public final String dName;
+        @NonNull public final String dName;
         public final int nsType;
         public final int nsClass;
         public final long ttl;
-        private final byte[] mRdata;
+        /**
+         * This member will be null only if this record is a DNS question.
+         */
+        @Nullable private final byte[] mRdata;
 
         /**
          * Create a new DnsRecord from a positioned ByteBuffer.
@@ -125,11 +203,83 @@ public abstract class DnsPacket {
             }
         }
 
+        DnsRecord(@NonNull String dName, int nsType, int nsClass,
+                long ttl, @Nullable byte[] rdata) {
+            this.dName = dName;
+            this.nsType = nsType;
+            this.nsClass = nsClass;
+            this.ttl = ttl;
+            mRdata = rdata;
+        }
+
         /**
-         * Get a copy of rdata.
+         * Builder of DnsRecord.
+         */
+        public static final class Builder {
+            private String mDName;
+            private int mNsType;
+            private int mNsClass;
+            private long mTtl;
+            private byte[] mRdata;
+
+            /**
+             * Set domain name of DnsRecord.
+             */
+            @NonNull
+            public Builder setDomainName(@NonNull String name) {
+                mDName = name;
+                return this;
+            }
+
+            /**
+             * Set nsType of DnsRecord.
+             */
+            @NonNull
+            public Builder setNsType(@DnsRecordType int nsType) {
+                mNsType = nsType;
+                return this;
+            }
+            /**
+             * Set nsClass of DnsRecord.
+             */
+            @NonNull
+            public Builder setNsClass(@DnsRecordClass int nsClass) {
+                mNsClass = nsClass;
+                return this;
+            }
+
+            /**
+             * Set ttl of DnsRecord.
+             */
+            @NonNull
+            public Builder setTtl(long ttl) {
+                mTtl = ttl;
+                return this;
+            }
+
+            /**
+             * Set resource data of DnsRecord.
+             */
+            @NonNull
+            public Builder setResourceData(@Nullable byte[] rData) {
+                mRdata = rData;
+                return this;
+            }
+
+            /**
+             * Create a new {@link DnsRecord}.
+             */
+            @NonNull
+            public DnsRecord build() {
+                return new DnsRecord(mDName, mNsType, mNsClass, mTtl, mRdata);
+            }
+        }
+
+        /**
+         * Get a copy of mRdata.
          */
         @Nullable
-        public byte[] getRR() {
+        public byte[] getResourceData() {
             return (mRdata == null) ? null : mRdata.clone();
         }
 
@@ -199,12 +349,73 @@ public abstract class DnsPacket {
     public static final int ANSECTION = 1;
     public static final int NSSECTION = 2;
     public static final int ARSECTION = 3;
+    /** @hide */
+    @IntDef(value = {QDSECTION, ANSECTION, NSSECTION, ARSECTION})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DnsSection {}
+
+    public static final int DR_TYPE_A = 1;
+    public static final int DR_TYPE_NS = 2;
+    public static final int DR_TYPE_MD = 3;
+    public static final int DR_TYPE_MF = 4;
+    public static final int DR_TYPE_CNAME = 5;
+    public static final int DR_TYPE_SOA = 6;
+    public static final int DR_TYPE_TXT = 16;
+    public static final int DR_TYPE_AAAA = 28;
+    /** @hide */
+    @IntDef(prefix = { "DR_TYPE_" }, value = {
+            DR_TYPE_A,
+            DR_TYPE_NS,
+            DR_TYPE_MD,
+            DR_TYPE_MF,
+            DR_TYPE_CNAME,
+            DR_TYPE_SOA,
+            DR_TYPE_TXT,
+            DR_TYPE_AAAA
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DnsRecordType {}
+
+    public static final int DR_CLASS_IN = 1;
+    public static final int DR_CLASS_CS = 2;
+    public static final int DR_CLASS_CH = 3;
+    public static final int DR_CLASS_HS = 4;
+    /** @hide */
+    @IntDef(prefix = { "DR_CLASS_" }, value = {
+            DR_CLASS_IN,
+            DR_CLASS_CS,
+            DR_CLASS_CH,
+            DR_CLASS_HS
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DnsRecordClass {}
+
     private static final int NUM_SECTIONS = ARSECTION + 1;
 
     private static final String TAG = DnsPacket.class.getSimpleName();
 
-    protected final DnsHeader mHeader;
-    protected final List<DnsRecord>[] mRecords;
+    private final DnsHeader mHeader;
+    private final List<DnsRecord>[] mRecords;
+
+    /**
+     * Get DnsHeader. Note that this method returns the internal member.
+     * Caller should not mutate the content of the returned value otherwise
+     * it might cause undefined behavior.
+     */
+    @NonNull
+    public DnsHeader getHeader() {
+        return mHeader;
+    }
+
+    /**
+     * Get DnsRecord. Note that this method returns the internal member.
+     * Caller should not mutate the content of the returned value otherwise
+     * it might cause undefined behavior.
+     */
+    @NonNull
+    public List<DnsRecord> getRecord(@DnsSection int sec) {
+        return mRecords[sec];
+    }
 
     protected DnsPacket(@NonNull byte[] data) throws ParseException {
         if (null == data) throw new ParseException("Parse header failed, null input data");
