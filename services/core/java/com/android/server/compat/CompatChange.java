@@ -48,7 +48,7 @@ public final class CompatChange {
     }
 
     /**
-     * @param changeId Unique ID for the change. See {@link android.compat.Compatibility}.
+     * @param changeId Unique ID for the change. See {@link android.compat.inapp.Compatibility}.
      * @param name Short descriptive name.
      * @param enableAfterTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledAfter};
      *                             -1 if the change is always enabled.
