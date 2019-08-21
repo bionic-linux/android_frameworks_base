@@ -55,6 +55,17 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
+    public boolean isChangeEnabled(long changeId, int uid, String packageName) {
+        ApplicationInfo appInfo = getPackageManager().getApplicationInfoAsUser(packageName,
+                0, uid);
+        if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
+            reportChange(changeId, appInfo);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, "platform_compat", pw)) return;
         CompatConfig.get().dumpConfig(pw);
