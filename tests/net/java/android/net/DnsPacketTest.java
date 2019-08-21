@@ -55,13 +55,6 @@ public class DnsPacketTest {
         TestDnsPacket(byte[] data) throws ParseException {
             super(data);
         }
-
-        public DnsHeader getHeader() {
-            return mHeader;
-        }
-        public List<DnsRecord> getRecordList(int secType) {
-            return mRecords[secType];
-        }
     }
 
     @Test
@@ -103,12 +96,12 @@ public class DnsPacketTest {
 
         // Record part
         List<DnsPacket.DnsRecord> qdRecordList =
-                packet.getRecordList(DnsPacket.QDSECTION);
+                packet.getRecord(DnsPacket.QDSECTION);
         assertEquals(qdRecordList.size(), 1);
         assertRecordParses(qdRecordList.get(0), "www.google.com", 1, 1, 0, null);
 
         List<DnsPacket.DnsRecord> anRecordList =
-                packet.getRecordList(DnsPacket.ANSECTION);
+                packet.getRecord(DnsPacket.ANSECTION);
         assertEquals(anRecordList.size(), 1);
         assertRecordParses(anRecordList.get(0), "www.google.com", 1, 1, 0x12b,
                 new byte[]{ (byte) 0xac, (byte) 0xd9, (byte) 0xa1, (byte) 0x84 });
@@ -145,12 +138,12 @@ public class DnsPacketTest {
 
         // Record part
         List<DnsPacket.DnsRecord> qdRecordList =
-                packet.getRecordList(DnsPacket.QDSECTION);
+                packet.getRecord(DnsPacket.QDSECTION);
         assertEquals(qdRecordList.size(), 1);
         assertRecordParses(qdRecordList.get(0), "www.google.com", 28, 1, 0, null);
 
         List<DnsPacket.DnsRecord> anRecordList =
-                packet.getRecordList(DnsPacket.ANSECTION);
+                packet.getRecord(DnsPacket.ANSECTION);
         assertEquals(anRecordList.size(), 1);
         assertRecordParses(anRecordList.get(0), "www.google.com", 28, 1, 0x37,
                 new byte[]{ 0x24, 0x04, 0x68, 0x00, 0x40, 0x05, 0x08, 0x0d,
