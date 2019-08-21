@@ -190,6 +190,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec99fa15_b337069e",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-08-21T10:32:46Z",
+      "side": 1,
+      "message": "Apologies for the delay.\n\nI attached logs below where switching data transfer mode caused undefined behavior.\n\n08-20 11:01:27.396  2823  2842 I UsbDeviceManager: Setting USB config to \n08-20 11:01:27[  505.365312] android_work: sent uevent USB_STATE\u003dDISCONNECTED\n.396  2823  2842 D UsbDeviceManager: setUsbConfig(1) request:3\n08-20 11:01:27.409  2434  2434 I android.hardware.usb.gadget@1.0-service: setCurrentUsbFunctions None\n08-20 11:01:27.413  2434  4955 I android.hardware.usb.gadget@1.0-service: event\u003d1 on fd\u003d7\n08-20 11:01:27.413  4626  4954 E d.process.medi: read ERROR: fd \u003d 40, n \u003d -1: Cannot send after transport endpoint shutdown\n08-20 11:01:27.413  4626  4954 E MtpServer: request read returned -1, errno: 108\n08-20 11:01:27.413  2434  2434 I android.hardware.usb.gadget@1.0-service: mMonitor destroyed\n08-20 11:01:27.413  3910  4959 I adbd    : USB event: FUNCTIONFS_UNBIND\n08-20 11:01:27.413  3910  4959 W adbd    : received FUNCTIONFS_UNBIND while still enabled?\n08-20 11:01:27.416  3910  4962 I adbd    : UsbFfs: connection terminated: read 2 failed with error Cannot send after transport endpoint shutdown\n08-20 11:01:27.416  3910  3910 I adbd    : UsbFfs: offline\n08-20 11:01:27.416  3910  3910 I adbd    : destroying transport UsbFfs\n08-20 11:01:27.417  3910  3910 I adbd    : UsbFfsConnection being destroyed\n08-20 11:01:27.446  2434  2434 I android.hardware.usb.gadget@1.0-service: setCurrentUsbFunctions Adb\n08-20 11:01:27.446  2434  2434 I android.hardware.usb.gadget@1.0-service: Service started\n08-20 11:01:27.446  2434  2434 I android.hardware.usb.gadget@1.0-service: Mainthread in Cv\n08-20 11:01:27.449  2434  2434 I android.hardware.usb.gadget@1.0-servic[  505.502191] configfs-gadget e6590000.usb: failed to start g1: -19\ne: monit[  505.502379] android_work: did not send uevent (0 0           (null))\norFfs signalled [  505.502546] read descriptors\ntrue\n08-20 11:0[  505.502553] read strings\n1:27.449  2434  2434 I android.hardware.usb.gadget@1.0-service: Usb Gadget setcurrent functions called successfully\n08-20 11:01:27.449  2823  3228 E UsbDeviceManager: notifyCurrentFunction request:3 status:0\n08-20 11:01:27.551  2434  4974 I android.hardware.usb.gadget@1.0-service: event\u003d1 on fd\u003d6\n08-20 11:01:27.551  2434  4974 E android.hardware.usb.gadget@1.0-service:     wd \u003d 1; \n08-20 11:01:27.551  2434  4974 E android.hardware.usb.gadget@1.0-service: mask \u003d \n08-20 11:01:27.551  2434  4974 E android.hardware.usb.gadget@1.0-service: IN_CLOSE_WRITE \n08-20 11:01:27.551  2434  4974 E android.hardware.usb.gadget@1.0-service: \n08-20 11:01:27.551  2434  4974 E android.hardware.usb.gadget@1.0-service:         name \u003d ep0\n08-20 11:01:27.553  3910  3950 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0\n08-20 11:01:27.555  3910  3950 I adbd    : UsbFfsConnection constructed\n08-20 11:01:27.560  2434  4974 E android.hardware.usb.gadget@1.0-service:     wd \u003d 1; \n08-20 11:01:27.560  2434  4974 E android.hardware.usb.gadget@1.0-service: mask \u003d \n08-20 11:01:27.560  2434  4974 E android.hardware.usb.gadget@1.0-service: IN_CLOSE_NOWRITE \n08-20 11:01:27.560  2434  4974 E android.hardware.usb.gadget@1.0-service: \n08-20 11:01:27.560  2434  4974 E android.hardware.usb.gadget@1.0-service:         name \u003d ep1\n08-20 11:01:27.560  3910  4977 I adbd    : USB event: FUNCTIONFS_BIND\n08-20 11:01:27.561  2434  4974 I android.hardware.usb.gadget@1.0-service: GADGET pulled up\n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service:     wd \u003d 1; \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: mask \u003d \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: IN_CLOSE_WRITE \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service:         name \u003d ep2\n08-20 11:01:27.561  2434  4974 I android.hardware.usb.gadget@1.0-service: event\u003d1 on fd\u003d6\n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service:     wd \u003d 1; \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: mask \u003d \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: IN_DELETE \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service:         name \u003d ep1\n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service:     wd \u003d 1; \n08-20 11:01:27.561  2434  4974 E android.hardware.usb.gadget@1.0-service: mask \u003d \n08-20 11:01:27.561  2434  4974 E android.hardware.[  505.773259] Internal error: Attempting to execute userspace memory: 86000004 [#1] PREEMPT SMP",
+      "parentUuid": "cd7d9746_efbe6412",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
