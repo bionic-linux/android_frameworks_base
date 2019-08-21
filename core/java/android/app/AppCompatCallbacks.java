@@ -16,7 +16,7 @@
 
 package android.app;
 
-import android.compat.Compatibility;
+import android.compat.inapp.Compatibility;
 import android.os.Process;
 import android.util.Log;
 
