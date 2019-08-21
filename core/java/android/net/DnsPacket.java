@@ -18,6 +18,8 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.text.TextUtils;
 
 import com.android.internal.util.BitUtils;
@@ -35,8 +37,13 @@ import java.util.List;
  *
  * @hide
  */
+@SystemApi
+@TestApi
 public abstract class DnsPacket {
-    public class DnsHeader {
+    /**
+     * Class of DnsHeader for DNS protocol based on RFC 1035.
+     */
+    public static class DnsHeader {
         private static final String TAG = "DnsHeader";
         public final int id;
         public final int flags;
@@ -62,6 +69,65 @@ public abstract class DnsPacket {
             }
         }
 
+        DnsHeader(int id, int flags, int rcode, @NonNull int[] recordCount) {
+            this.id = id;
+            this.flags = flags;
+            this.rcode = rcode;
+            mRecordCount = recordCount;
+        }
+
+        /**
+         * Builder of DnsHeader.
+         */
+        public static final class Builder {
+            private int mId;
+            private int mFlags;
+            private int mRcode;
+            private int[] mRecordCount;
+
+            /**
+             * Set id of DnsHeader.
+             */
+            @NonNull
+            public Builder setId(int id) {
+                mId = id;
+                return this;
+            }
+
+            /**
+             * Set flags of DnsHeader.
+             */
+            @NonNull
+            public Builder setFlags(int flags) {
+                mFlags = flags;
+                return this;
+            }
+            /**
+             * Set setRcode of DnsHeader.
+             */
+            @NonNull
+            public Builder setRcode(int rcode) {
+                mRcode = rcode;
+                return this;
+            }
+
+            /**
+             * Set setRcode of DnsHeader.
+             */
+            @NonNull
+            public Builder setRecordCount(@NonNull int[] recordCount) {
+                mRecordCount = recordCount;
+                return this;
+            }
+            /**
+             * Create a new {@link DnsHeader}.
+             */
+            @NonNull
+            public DnsHeader build() {
+                return new DnsHeader(mId, mFlags, mRcode, mRecordCount);
+            }
+        }
+
         /**
          * Get record count by type.
          */
@@ -76,7 +142,7 @@ public abstract class DnsPacket {
      * DNS questions (No TTL/RDATA)
      * DNS resource records (With TTL/RDATA)
      */
-    public class DnsRecord {
+    public static class DnsRecord {
         private static final int MAXNAMESIZE = 255;
         private static final int MAXLABELSIZE = 63;
         private static final int MAXLABELCOUNT = 128;
@@ -122,6 +188,78 @@ public abstract class DnsPacket {
             } else {
                 ttl = 0;
                 mRdata = null;
+            }
+        }
+
+        DnsRecord(@NonNull String dName, int nsType, int nsClass,
+                long ttl, @Nullable byte[] rdata) {
+            this.dName = dName;
+            this.nsType = nsType;
+            this.nsClass = nsClass;
+            this.ttl = ttl;
+            mRdata = rdata;
+        }
+
+        /**
+         * Builder of DnsRecord.
+         */
+        public static final class Builder {
+            private String mDName;
+            private int mNsType;
+            private int mNsClass;
+            private long mTtl;
+            private byte[] mRdata;
+
+            /**
+             * Set domain name of DnsRecord.
+             */
+            @NonNull
+            public Builder setDomainName(@NonNull String name) {
+                mDName = name;
+                return this;
+            }
+
+            /**
+             * Set nsType of DnsRecord.
+             */
+            @NonNull
+            public Builder setNsType(int nsType) {
+                mNsType = nsType;
+                return this;
+            }
+            /**
+             * Set nsClass of DnsRecord.
+             */
+            @NonNull
+            public Builder setNsClass(int nsClass) {
+                mNsClass = nsClass;
+                return this;
+            }
+
+            /**
+             * Set ttl of DnsRecord.
+             */
+            @NonNull
+            public Builder setTtl(long ttl) {
+                mTtl = ttl;
+                return this;
+            }
+
+            /**
+             * Set resource data of DnsRecord.
+             */
+            @NonNull
+            public Builder setResourceData(@Nullable byte[] rData) {
+                mRdata = rData;
+                return this;
+            }
+
+            /**
+             * Create a new {@link DnsRecord}.
+             */
+            @NonNull
+            public DnsRecord build() {
+                return new DnsRecord(mDName, mNsType, mNsClass, mTtl, mRdata);
             }
         }
 
@@ -203,8 +341,24 @@ public abstract class DnsPacket {
 
     private static final String TAG = DnsPacket.class.getSimpleName();
 
-    protected final DnsHeader mHeader;
-    protected final List<DnsRecord>[] mRecords;
+    private final DnsHeader mHeader;
+    private final List<DnsRecord>[] mRecords;
+
+    /**
+     * Get DnsHeader
+     */
+    @NonNull
+    public DnsHeader getHeader() {
+        return mHeader;
+    }
+
+    /**
+     * Get all DnsRecord
+     */
+    @NonNull
+    public List<DnsRecord>[] getRecords() {
+        return mRecords;
+    }
 
     protected DnsPacket(@NonNull byte[] data) throws ParseException {
         if (null == data) throw new ParseException("Parse header failed, null input data");
