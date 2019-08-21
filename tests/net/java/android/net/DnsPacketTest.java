@@ -56,11 +56,8 @@ public class DnsPacketTest {
             super(data);
         }
 
-        public DnsHeader getHeader() {
-            return mHeader;
-        }
         public List<DnsRecord> getRecordList(int secType) {
-            return mRecords[secType];
+            return getRecords()[secType];
         }
     }
 
