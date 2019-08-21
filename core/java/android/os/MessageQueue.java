@@ -62,7 +62,6 @@ public final class MessageQueue {
 
     // The next barrier token.
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
-    @UnsupportedAppUsage
     private int mNextBarrierToken;
 
     private native static long nativeInit();
