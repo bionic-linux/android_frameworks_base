@@ -92,6 +92,7 @@ public class TetheringConfiguration {
     public final String[] legacyDhcpRanges;
     public final String[] defaultIPv4DNS;
     public final boolean enableLegacyDhcpServer;
+    public final boolean enableLegacyDnsProxyServer;
 
     public final String[] provisioningApp;
     public final String provisioningAppNoUi;
@@ -120,6 +121,7 @@ public class TetheringConfiguration {
         legacyDhcpRanges = getLegacyDhcpRanges(res);
         defaultIPv4DNS = copy(DEFAULT_IPV4_DNS);
         enableLegacyDhcpServer = getEnableLegacyDhcpServer(ctx);
+        enableLegacyDnsProxyServer = getEnableLegacyDnsProxyServer();
 
         provisioningApp = getResourceStringArray(res, config_mobile_hotspot_provision_app);
         provisioningAppNoUi = getProvisioningAppNoUi(res);
@@ -171,6 +173,9 @@ public class TetheringConfiguration {
 
         pw.print("enableLegacyDhcpServer: ");
         pw.println(enableLegacyDhcpServer);
+
+        pw.print("enableLegacyDnsProxyServer: ");
+        pw.println(enableLegacyDnsProxyServer);
     }
 
     public String toString() {
@@ -187,6 +192,7 @@ public class TetheringConfiguration {
         sj.add(String.format("provisioningApp:%s", makeString(provisioningApp)));
         sj.add(String.format("provisioningAppNoUi:%s", provisioningAppNoUi));
         sj.add(String.format("enableLegacyDhcpServer:%s", enableLegacyDhcpServer));
+        sj.add(String.format("enableLegacyDnsProxyServer:%s", enableLegacyDnsProxyServer));
         return String.format("TetheringConfiguration{%s}", sj.toString());
     }
 
@@ -328,6 +334,10 @@ public class TetheringConfiguration {
         final ContentResolver cr = ctx.getContentResolver();
         final int intVal = Settings.Global.getInt(cr, TETHER_ENABLE_LEGACY_DHCP_SERVER, 0);
         return intVal != 0;
+    }
+
+    private static boolean getEnableLegacyDnsProxyServer() {
+        return true;
     }
 
     private Resources getResources(Context ctx, int subId) {
