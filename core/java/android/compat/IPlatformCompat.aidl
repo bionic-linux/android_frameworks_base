@@ -22,7 +22,7 @@ import android.content.pm.ApplicationInfo;
  * Platform private API for talking with the PlatformCompat service.
  *
  * <p> Should be used for gating and logging from non-app processes.
- * For app processes please use android.compat.Compatibility API.
+ * For app processes please use android.compat.inapp.Compatibility API.
  *
  * {@hide}
  */
