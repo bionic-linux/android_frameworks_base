@@ -70,6 +70,30 @@
       "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5d5a047_2f2d5dc5",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-21T12:57:45Z",
+      "side": 1,
+      "message": "No, the test for this point is not in my plan. I don\u0027t think we need to test whether we clear calling identify here.",
+      "parentUuid": "db3cdce5_911bd468",
+      "range": {
+        "startLine": 458,
+        "startChar": 50,
+        "endLine": 458,
+        "endChar": 70
+      },
+      "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
