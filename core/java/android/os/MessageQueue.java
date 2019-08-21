@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * but rather through {@link Handler} objects associated with the Looper.
  *
  * <p>You can retrieve the MessageQueue for the current thread with
- * {@link Looper#myQueue() Looper.myQueue()}.
+ * {@link Looper#myQueue() Looper.myQueue()}.fdsfs
  */
 public final class MessageQueue {
     private static final String TAG = "MessageQueue";
