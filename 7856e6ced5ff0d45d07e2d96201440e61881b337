@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c53e63b4_99201b93",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1293920
+      },
+      "writtenOn": "2019-08-21T01:48:02Z",
+      "side": 1,
+      "message": "Our threshold is same as global alert, default is 2MB. Will changed with SIM card data limit.\nThis broadcast send about several minutes/once.",
+      "parentUuid": "5540efdb_ccf836dc",
+      "range": {
+        "startLine": 1031,
+        "startChar": 16,
+        "endLine": 1031,
+        "endChar": 77
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28d012e9_710a7bf5",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "writtenOn": "2019-08-15T11:39:42Z",
       "side": 1,
       "message": "Is it time consuming?\nIf so then it might not be good to call it here.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 16,
+        "endLine": 1033,
+        "endChar": 34
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22467d7a_7ea83e00",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1293920
+      },
+      "writtenOn": "2019-08-21T01:48:02Z",
+      "side": 1,
+      "message": "UpdateLatencyStats()  will get NetworkStats from telephony, and do some compare.\nThrough the NetworkStats’s entry size should be 1, this will not consume much time.\nI think it’s OK to call it in receiver.",
+      "parentUuid": "28d012e9_710a7bf5",
       "range": {
         "startLine": 1033,
         "startChar": 16,
@@ -201,6 +249,30 @@
       "writtenOn": "2019-08-15T11:39:42Z",
       "side": 1,
       "message": "It looks like MTK doesn\u0027t call performPoll and broadcast ACTION_NETWORK_STATS_UPDATED to let NetworkPolicyManagerService check against warning/limit bytes.\nWhen there is only traffic consumed by modem,\nis it possible to miss warning/limit dialog when it is actually over the warning/limit?",
+      "range": {
+        "startLine": 1269,
+        "startChar": 8,
+        "endLine": 1269,
+        "endChar": 21
+      },
+      "revId": "7856e6ced5ff0d45d07e2d96201440e61881b337",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45447502_219a2a26",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1293920
+      },
+      "writtenOn": "2019-08-21T01:48:02Z",
+      "side": 1,
+      "message": "I agree with performPoll() should be called after UpdateLatencyStats().",
+      "parentUuid": "07a9533e_7ea71623",
       "range": {
         "startLine": 1269,
         "startChar": 8,
