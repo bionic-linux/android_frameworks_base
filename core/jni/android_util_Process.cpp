@@ -715,14 +715,14 @@ void android_os_Process_readProcLines(JNIEnv* env, jobject clazz, jstring fileSt
         return;
     }
 
-    //ALOGI("Clearing %" PRId32 " sizes", count);
-    for (i=0; i<count; i++) {
-        sizesArray[i] = 0;
-    }
-
     int fd = open(file.string(), O_RDONLY | O_CLOEXEC);
 
     if (fd >= 0) {
+        //ALOGI("Clearing %" PRId32 " sizes", count);
+        for (i=0; i<count; i++) {
+            sizesArray[i] = 0;
+        }
+
         const size_t BUFFER_SIZE = 4096;
         char* buffer = (char*)malloc(BUFFER_SIZE);
         int len = read(fd, buffer, BUFFER_SIZE-1);
