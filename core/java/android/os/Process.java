@@ -654,7 +654,7 @@ public class Process {
     /**
      * Returns a uid for a currently running process.
      * @param pid the process id
-     * @return the uid of the process, or -1 if the process is not running.
+     * @return the uid of the process, or 0 if the process is not running.
      * @hide pending API council review
      */
     @UnsupportedAppUsage
@@ -669,7 +669,7 @@ public class Process {
     /**
      * Returns the parent process id for a currently running process.
      * @param pid the process id
-     * @return the parent process id of the process, or -1 if the process is not running.
+     * @return the parent process id of the process, or 0 if the process is not running.
      * @hide
      */
     @UnsupportedAppUsage
@@ -684,7 +684,7 @@ public class Process {
     /**
      * Returns the thread group leader id for a currently running thread.
      * @param tid the thread id
-     * @return the thread group leader id of the thread, or -1 if the thread is not running.
+     * @return the thread group leader id of the thread, or 0 if the thread is not running.
      *         This is same as what getpid(2) would return if called by tid.
      * @hide
      */
