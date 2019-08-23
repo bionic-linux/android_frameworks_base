@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdd97277_131f0108",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-08-23T06:03:54Z",
+      "side": 1,
+      "message": "I know you want to keep use legacy one first. Could you add the control flag (maybe reference DhcpServer which is control by settings at line.334~337) ? It would be helpful for local testing.\n\ne.g.\n    private static boolean getEnableLegacyDnsProxyServer(Context ctx) {\n        final ContentResolver cr \u003d ctx.getContentResolver();\n        // Default enable legacy dns proxy server.\n        final int intVal \u003d Settings.Global.getInt(cr, TETHER_ENABLE_LEGACY_DNSP_ROXY_SERVER, 1);\n        return intVal !\u003d 0;\n    }",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
