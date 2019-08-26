@@ -16,9 +16,10 @@
 
 package android.net;
 
-import android.annotation.UnsupportedAppUsage;
+import static android.net.NetworkStack.checkNetworkStackPermission;
+
+import android.annotation.SystemApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -51,6 +52,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * request that passes their current filters.
  * @hide
  **/
+@SystemApi
 public class NetworkFactory extends Handler {
     /** @hide */
     public static class SerialNumber {
@@ -137,7 +139,6 @@ public class NetworkFactory extends Handler {
     private Messenger mMessenger = null;
     private int mSerialNumber;
 
-    @UnsupportedAppUsage
     public NetworkFactory(Looper looper, Context context, String logTag,
             NetworkCapabilities filter) {
         super(looper);
@@ -147,6 +148,7 @@ public class NetworkFactory extends Handler {
     }
 
     public void register() {
+        enforceNetworkStackPermission();
         if (DBG) log("Registering NetworkFactory");
         if (mMessenger == null) {
             mMessenger = new Messenger(this);
@@ -156,6 +158,7 @@ public class NetworkFactory extends Handler {
     }
 
     public void unregister() {
+        enforceNetworkStackPermission();
         if (DBG) log("Unregistering NetworkFactory");
         if (mMessenger != null) {
             ConnectivityManager.from(mContext).unregisterNetworkFactory(mMessenger);
@@ -215,6 +218,10 @@ public class NetworkFactory extends Handler {
         }
     }
 
+    private void enforceNetworkStackPermission() {
+        checkNetworkStackPermission(mContext);
+    }
+
     private class NetworkRequestInfo {
         public final NetworkRequest request;
         public int score;
@@ -242,6 +249,7 @@ public class NetworkFactory extends Handler {
      * @param score the score of the NetworkAgent currently satisfying this request.
      * @param servingFactorySerialNumber the serial number of the NetworkFactory that
      *         created the NetworkAgent currently satisfying this request.
+     * @hide
      */
     // TODO : remove this method. It is a stopgap measure to help sheperding a number
     // of dependent changes that would conflict throughout the automerger graph. Having this
@@ -260,6 +268,7 @@ public class NetworkFactory extends Handler {
      * @param score the score of the NetworkAgent currently satisfying this request.
      * @param servingFactorySerialNumber the serial number of the NetworkFactory that
      *         created the NetworkAgent currently satisfying this request.
+     * @hide
      */
     @VisibleForTesting
     protected void handleAddRequest(NetworkRequest request, int score,
@@ -285,6 +294,7 @@ public class NetworkFactory extends Handler {
         evalRequest(n);
     }
 
+    /** @hide */
     @VisibleForTesting
     protected void handleRemoveRequest(NetworkRequest request) {
         NetworkRequestInfo n = mNetworkRequests.get(request.requestId);
@@ -324,6 +334,7 @@ public class NetworkFactory extends Handler {
      * @return {@code true} to accept the request.
      */
     public boolean acceptRequest(NetworkRequest request, int score) {
+        enforceNetworkStackPermission();
         return true;
     }
 
@@ -430,31 +441,36 @@ public class NetworkFactory extends Handler {
         if (--mRefCount == 0) stopNetwork();
     }
 
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setScoreFilter(int score) {
+        enforceNetworkStackPermission();
         sendMessage(obtainMessage(CMD_SET_SCORE, score, 0));
     }
 
     public void setCapabilityFilter(NetworkCapabilities netCap) {
+        enforceNetworkStackPermission();
         sendMessage(obtainMessage(CMD_SET_FILTER, new NetworkCapabilities(netCap)));
     }
 
+    /** @hide */
     @VisibleForTesting
     protected int getRequestCount() {
         return mNetworkRequests.size();
     }
 
     public int getSerialNumber() {
+        enforceNetworkStackPermission();
         return mSerialNumber;
     }
 
+    /** @hide */
     protected void log(String s) {
         Log.d(LOG_TAG, s);
     }
 
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
+
+        enforceNetworkStackPermission();
         pw.println(toString());
         pw.increaseIndent();
         for (int i = 0; i < mNetworkRequests.size(); i++) {
