@@ -16,9 +16,8 @@
 
 package android.net;
 
-import android.annotation.UnsupportedAppUsage;
+import android.annotation.SystemApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -51,6 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * request that passes their current filters.
  * @hide
  **/
+@SystemApi
 public class NetworkFactory extends Handler {
     /** @hide */
     public static class SerialNumber {
@@ -137,7 +137,6 @@ public class NetworkFactory extends Handler {
     private Messenger mMessenger = null;
     private int mSerialNumber;
 
-    @UnsupportedAppUsage
     public NetworkFactory(Looper looper, Context context, String logTag,
             NetworkCapabilities filter) {
         super(looper);
@@ -242,6 +241,7 @@ public class NetworkFactory extends Handler {
      * @param score the score of the NetworkAgent currently satisfying this request.
      * @param servingFactorySerialNumber the serial number of the NetworkFactory that
      *         created the NetworkAgent currently satisfying this request.
+     * @hide
      */
     // TODO : remove this method. It is a stopgap measure to help sheperding a number
     // of dependent changes that would conflict throughout the automerger graph. Having this
@@ -260,6 +260,7 @@ public class NetworkFactory extends Handler {
      * @param score the score of the NetworkAgent currently satisfying this request.
      * @param servingFactorySerialNumber the serial number of the NetworkFactory that
      *         created the NetworkAgent currently satisfying this request.
+     * @hide
      */
     @VisibleForTesting
     protected void handleAddRequest(NetworkRequest request, int score,
@@ -285,6 +286,7 @@ public class NetworkFactory extends Handler {
         evalRequest(n);
     }
 
+    /** @hide */
     @VisibleForTesting
     protected void handleRemoveRequest(NetworkRequest request) {
         NetworkRequestInfo n = mNetworkRequests.get(request.requestId);
@@ -390,7 +392,7 @@ public class NetworkFactory extends Handler {
      * Post a command, on this NetworkFactory Handler, to re-evaluate all
      * oustanding requests. Can be called from a factory implementation.
      */
-    protected void reevaluateAllRequests() {
+    public void reevaluateAllRequests() {
         post(() -> {
             evalRequests();
         });
@@ -405,7 +407,7 @@ public class NetworkFactory extends Handler {
      * Note: this should only be called by factory which KNOWS that it is the ONLY factory which
      * is able to fulfill this request!
      */
-    protected void releaseRequestAsUnfulfillableByAnyFactory(NetworkRequest r) {
+    public void releaseRequestAsUnfulfillableByAnyFactory(NetworkRequest r) {
         post(() -> {
             if (DBG) log("releaseRequestAsUnfulfillableByAnyFactory: " + r);
             Message msg = obtainMessage(EVENT_UNFULFILLABLE_REQUEST, r);
@@ -417,20 +419,23 @@ public class NetworkFactory extends Handler {
         });
     }
 
+    /** @hide */
     // override to do simple mode (request independent)
     protected void startNetwork() { }
+    /** @hide */
     protected void stopNetwork() { }
 
+    /** @hide */
     // override to do fancier stuff
     protected void needNetworkFor(NetworkRequest networkRequest, int score) {
         if (++mRefCount == 1) startNetwork();
     }
 
+    /** @hide */
     protected void releaseNetworkFor(NetworkRequest networkRequest) {
         if (--mRefCount == 0) stopNetwork();
     }
 
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void setScoreFilter(int score) {
         sendMessage(obtainMessage(CMD_SET_SCORE, score, 0));
     }
@@ -439,6 +444,7 @@ public class NetworkFactory extends Handler {
         sendMessage(obtainMessage(CMD_SET_FILTER, new NetworkCapabilities(netCap)));
     }
 
+    /** @hide */
     @VisibleForTesting
     protected int getRequestCount() {
         return mNetworkRequests.size();
@@ -448,11 +454,11 @@ public class NetworkFactory extends Handler {
         return mSerialNumber;
     }
 
+    /** @hide */
     protected void log(String s) {
         Log.d(LOG_TAG, s);
     }
 
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
         pw.println(toString());
