@@ -3185,6 +3185,22 @@ package android.net {
     field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 24; // 0x18
   }
 
+  public class NetworkFactory extends android.os.Handler {
+    ctor public NetworkFactory(android.os.Looper, android.content.Context, String, android.net.NetworkCapabilities);
+    method public boolean acceptRequest(android.net.NetworkRequest, int);
+    method public void dump(java.io.FileDescriptor, java.io.PrintWriter, String[]);
+    method public int getSerialNumber();
+    method public void reevaluateAllRequests();
+    method public void register();
+    method public void releaseRequestAsUnfulfillableByAnyFactory(android.net.NetworkRequest);
+    method public void setCapabilityFilter(android.net.NetworkCapabilities);
+    method public void setScoreFilter(int);
+    method public void unregister();
+    field public static final int CMD_CANCEL_REQUEST = 536577; // 0x83001
+    field public static final int CMD_REQUEST_NETWORK = 536576; // 0x83000
+    field public static final int EVENT_UNFULFILLABLE_REQUEST = 536580; // 0x83004
+  }
+
   public class NetworkKey implements android.os.Parcelable {
     ctor public NetworkKey(android.net.WifiKey);
     method public int describeContents();
