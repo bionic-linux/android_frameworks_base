@@ -268,7 +268,15 @@ public abstract class PanelView extends FrameLayout {
         }
 
         // On expanding, single mouse click expands the panel instead of dragging.
-        if (isFullyCollapsed() && event.isFromSource(InputDevice.SOURCE_MOUSE)) {
+        if (isFullyCollapsed() && event.isFromSource(InputDevice.SOURCE_MOUSE) && !mTracking) {
+            /*
+             * When you drag the notification panel down, the system dispatches touch events from
+             * StatusBarWindowView.onInterceptTouchEvent(...) to PanelView.onTouchEvent(...) so
+             * you can't set the 'mMotionAborted' to 'false' in PanelView.onInterceptTouchEvent(...)
+             */
+            if (mMotionAborted && event.getAction() == MotionEvent.ACTION_DOWN) {
+                mMotionAborted = false;
+            }
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 expand(true);
             }
