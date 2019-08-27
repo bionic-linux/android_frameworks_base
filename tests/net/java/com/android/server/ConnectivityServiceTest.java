@@ -85,8 +85,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.AdditionalAnswers.delegatesTo;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
@@ -947,8 +949,19 @@ public class ConnectivityServiceTest {
         volatile boolean mConfigRestrictsAvoidBadWifi;
         volatile int mConfigMeteredMultipathPreference;
 
-        WrappedMultinetworkPolicyTracker(Context c, Handler h, Runnable r) {
+        private final Context mContext;
+        private BroadcastReceiver mConfigChangedReceiver;
+        private Handler mBroadcastHandler;
+
+        private WrappedMultinetworkPolicyTracker(Context c, Handler h, Runnable r) {
             super(c, h, r);
+            mContext = c;
+        }
+
+        static WrappedMultinetworkPolicyTracker newInstance(Context c, Handler h, Runnable r) {
+            // delegatesTo instead of spy avoids issues with visibility of the Context subclass
+            final Context spyContext = mock(Context.class, delegatesTo(c));
+            return new WrappedMultinetworkPolicyTracker(spyContext, h, r);
         }
 
         @Override
@@ -959,6 +972,26 @@ public class ConnectivityServiceTest {
         @Override
         public int configMeteredMultipathPreference() {
             return mConfigMeteredMultipathPreference;
+        }
+
+        @Override
+        public void start() {
+            super.start();
+
+            final ArgumentCaptor<BroadcastReceiver> configChangeCaptor = ArgumentCaptor.forClass(
+                    BroadcastReceiver.class);
+            final ArgumentCaptor<Handler> handlerCaptor = ArgumentCaptor.forClass(Handler.class);
+            verify(mContext).registerReceiverAsUser(configChangeCaptor.capture(),
+                    eq(UserHandle.ALL),
+                    argThat(filter -> filter.hasAction(Intent.ACTION_CONFIGURATION_CHANGED)),
+                    any(), handlerCaptor.capture());
+            mConfigChangedReceiver = configChangeCaptor.getValue();
+            mBroadcastHandler = handlerCaptor.getValue();
+        }
+
+        void notifyConfigChanged() {
+            mBroadcastHandler.post(() -> mConfigChangedReceiver.onReceive(
+                    mContext, new Intent(Intent.ACTION_CONFIGURATION_CHANGED)));
         }
     }
 
@@ -1056,7 +1089,7 @@ public class ConnectivityServiceTest {
         doReturn(mIpConnectivityMetrics).when(deps).getIpConnectivityMetrics();
         doReturn(true).when(deps).hasService(Context.ETHERNET_SERVICE);
         doAnswer(inv -> {
-            mPolicyTracker = new WrappedMultinetworkPolicyTracker(
+            mPolicyTracker = WrappedMultinetworkPolicyTracker.newInstance(
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
             return mPolicyTracker;
         }).when(deps).makeMultinetworkPolicyTracker(any(), any(), any());
@@ -3139,7 +3172,7 @@ public class ConnectivityServiceTest {
         String[] values = new String[] {null, "0", "1"};
         for (int i = 0; i < values.length; i++) {
             Settings.Global.putInt(cr, settingName, 1);
-            mPolicyTracker.reevaluate();
+            mPolicyTracker.notifyConfigChanged();
             waitForIdle();
             String msg = String.format("config=false, setting=%s", values[i]);
             assertTrue(mService.avoidBadWifi());
@@ -3149,19 +3182,19 @@ public class ConnectivityServiceTest {
         mPolicyTracker.mConfigRestrictsAvoidBadWifi = true;
 
         Settings.Global.putInt(cr, settingName, 0);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         waitForIdle();
         assertFalse(mService.avoidBadWifi());
         assertFalse(mPolicyTracker.shouldNotifyWifiUnvalidated());
 
         Settings.Global.putInt(cr, settingName, 1);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         waitForIdle();
         assertTrue(mService.avoidBadWifi());
         assertFalse(mPolicyTracker.shouldNotifyWifiUnvalidated());
 
         Settings.Global.putString(cr, settingName, null);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         waitForIdle();
         assertFalse(mService.avoidBadWifi());
         assertTrue(mPolicyTracker.shouldNotifyWifiUnvalidated());
@@ -3191,7 +3224,7 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(validatedWifiRequest, validatedWifiCallback);
 
         Settings.Global.putInt(cr, Settings.Global.NETWORK_AVOID_BAD_WIFI, 0);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
 
         // Bring up validated cell.
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
@@ -3224,13 +3257,13 @@ public class ConnectivityServiceTest {
         // Simulate switching to a carrier that does not restrict avoiding bad wifi, and expect
         // that we switch back to cell.
         mPolicyTracker.mConfigRestrictsAvoidBadWifi = false;
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         defaultCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
         assertEquals(mCm.getActiveNetwork(), cellNetwork);
 
         // Switch back to a restrictive carrier.
         mPolicyTracker.mConfigRestrictsAvoidBadWifi = true;
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         defaultCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         assertEquals(mCm.getActiveNetwork(), wifiNetwork);
 
@@ -3259,7 +3292,7 @@ public class ConnectivityServiceTest {
 
         // Simulate the user selecting "switch" and checking the don't ask again checkbox.
         Settings.Global.putInt(cr, Settings.Global.NETWORK_AVOID_BAD_WIFI, 1);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
 
         // We now switch to cell.
         defaultCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
@@ -3272,11 +3305,11 @@ public class ConnectivityServiceTest {
         // Simulate the user turning the cellular fallback setting off and then on.
         // We switch to wifi and then to cell.
         Settings.Global.putString(cr, Settings.Global.NETWORK_AVOID_BAD_WIFI, null);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         defaultCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         assertEquals(mCm.getActiveNetwork(), wifiNetwork);
         Settings.Global.putInt(cr, Settings.Global.NETWORK_AVOID_BAD_WIFI, 1);
-        mPolicyTracker.reevaluate();
+        mPolicyTracker.notifyConfigChanged();
         defaultCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
         assertEquals(mCm.getActiveNetwork(), cellNetwork);
 
@@ -3300,7 +3333,7 @@ public class ConnectivityServiceTest {
             for (String setting: Arrays.asList(null, "0", "2", "1")) {
                 mPolicyTracker.mConfigMeteredMultipathPreference = config;
                 Settings.Global.putString(cr, settingName, setting);
-                mPolicyTracker.reevaluate();
+                mPolicyTracker.notifyConfigChanged();
                 waitForIdle();
 
                 final int expected = (setting != null) ? Integer.parseInt(setting) : config;
