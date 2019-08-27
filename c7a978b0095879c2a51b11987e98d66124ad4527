@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6c128b1_5f9cb482",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-27T07:38:12Z",
+      "side": 1,
+      "message": "This is for Data SMS.\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/telephony/java/com/android/internal/telephony/cdma/SmsMessage.java#292",
+      "parentUuid": "866910dd_e39458e1",
+      "revId": "c7a978b0095879c2a51b11987e98d66124ad4527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6aaad8e1_0791164a",
         "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2019-08-26T20:16:47Z",
       "side": 1,
       "message": "And specs/reason for this as well?",
+      "range": {
+        "startLine": 662,
+        "startChar": 16,
+        "endLine": 666,
+        "endChar": 17
+      },
+      "revId": "c7a978b0095879c2a51b11987e98d66124ad4527",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8f9aea_d0749ac0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/BearerData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-08-27T07:38:12Z",
+      "side": 1,
+      "message": "ENCODING_OCTET is set for Data SMS only currently.",
+      "parentUuid": "6aaad8e1_0791164a",
       "range": {
         "startLine": 662,
         "startChar": 16,
