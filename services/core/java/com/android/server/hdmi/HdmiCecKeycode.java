@@ -252,6 +252,7 @@ final class HdmiCecKeycode {
             new KeycodeEntry(UNSUPPORTED_KEYCODE, CEC_KEYCODE_LEFT_DOWN),
             new KeycodeEntry(KeyEvent.KEYCODE_HOME, CEC_KEYCODE_ROOT_MENU),
             new KeycodeEntry(KeyEvent.KEYCODE_SETTINGS, CEC_KEYCODE_SETUP_MENU),
+            new KeycodeEntry(KeyEvent.KEYCODE_MENU, CEC_KEYCODE_SETUP_MENU),
             new KeycodeEntry(KeyEvent.KEYCODE_TV_CONTENTS_MENU, CEC_KEYCODE_CONTENTS_MENU, false),
             // No Android keycode defined for CEC_KEYCODE_FAVORITE_MENU
             new KeycodeEntry(UNSUPPORTED_KEYCODE, CEC_KEYCODE_FAVORITE_MENU),
