@@ -94,6 +94,30 @@
       "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b76ee5_52e3a1d8",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-08-27T09:49:12Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining what the calling identity is before you clear it?\n\nBased on your comments it sounds like the calling identity is the app that called ConnectivityManager#startTethering (or however else we can get here) and that you clear the identity to ensure that PanService#setBluetoothTethering sees the system server as the calling identity. But that\u0027s not super clear (and I\u0027m not sure I understood it correctly anyway). So a comment might help.",
+      "parentUuid": "e5d5a047_2f2d5dc5",
+      "range": {
+        "startLine": 458,
+        "startChar": 50,
+        "endLine": 458,
+        "endChar": 70
+      },
+      "revId": "010e6a719cbc5ae3e39571e4df157aa2ccf7cbd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
