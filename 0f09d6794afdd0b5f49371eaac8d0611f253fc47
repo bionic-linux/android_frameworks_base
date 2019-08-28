@@ -22,6 +22,30 @@
       "revId": "0f09d6794afdd0b5f49371eaac8d0611f253fc47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c37a72e_30db007b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-28T07:33:58Z",
+      "side": 1,
+      "message": "This is b/78787392; I\u0027m not sure it will be fixed in the short term. The short term alternative forces tests to compile against hidden APIs instead of system, which is not great - this change does not fix any test that needs to run against Q though...",
+      "parentUuid": "181899ec_73fe20b3",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "0f09d6794afdd0b5f49371eaac8d0611f253fc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
