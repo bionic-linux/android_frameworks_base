@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df3af322_af3b47d3",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-28T05:35:49Z",
+      "side": 1,
+      "message": "nit: Is it possible that future users need to mock more functions?\nIf so, do we want to name it DepedenciesImpl \u0026 Dependencies to generalize it?",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 89
+      },
+      "revId": "1148dbd10adc198bf359d037c0a759b5cf9a6cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
