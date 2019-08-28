@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b24faac4_0bbcec6b",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-28T09:52:15Z",
+      "side": 1,
+      "message": "Fair enough. Maybe it\u0027s not best, but it\u0027s easiest and I agree there should be no user-visible drawbacks.",
+      "parentUuid": "89406038_00c0684f",
+      "range": {
+        "startLine": 460,
+        "startChar": 68,
+        "endLine": 460,
+        "endChar": 84
+      },
+      "revId": "8eeaeb157f1a05932af3de46d0146b6e8ccf8aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf44770_41bdaf69",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 2
