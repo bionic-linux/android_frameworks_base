@@ -15,6 +15,7 @@
  */
 package android.net;
 
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
@@ -26,6 +27,7 @@ import android.os.Parcelable;
  * @hide
  */
 @TestApi
+@SystemApi
 public final class TestNetworkInterface implements Parcelable {
     private final ParcelFileDescriptor mFileDescriptor;
     private final String mInterfaceName;

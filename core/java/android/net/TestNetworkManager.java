@@ -16,6 +16,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -28,6 +29,7 @@ import com.android.internal.util.Preconditions;
  * @hide
  */
 @TestApi
+@SystemApi
 public class TestNetworkManager {
     @NonNull private static final String TAG = TestNetworkManager.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @SystemApi
     public void teardownTestNetwork(@NonNull Network network) {
         try {
             mService.teardownTestNetwork(network.netId);
@@ -63,6 +66,8 @@ public class TestNetworkManager {
      * @param binder A binder object guarding the lifecycle of this test network.
      * @hide
      */
+    @TestApi
+    @SystemApi
     public void setupTestNetwork(
             @NonNull LinkProperties lp, boolean isMetered, @NonNull IBinder binder) {
         Preconditions.checkNotNull(lp, "Invalid LinkProperties");
@@ -81,6 +86,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @SystemApi
     public void setupTestNetwork(@NonNull String iface, @NonNull IBinder binder) {
         try {
             mService.setupTestNetwork(iface, null, true, binder);
@@ -98,6 +104,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @SystemApi
     public TestNetworkInterface createTunInterface(@NonNull LinkAddress[] linkAddrs) {
         try {
             return mService.createTunInterface(linkAddrs);
@@ -114,6 +121,7 @@ public class TestNetworkManager {
      * @hide
      */
     @TestApi
+    @SystemApi
     public TestNetworkInterface createTapInterface() {
         try {
             return mService.createTapInterface();
