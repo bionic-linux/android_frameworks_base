@@ -16,6 +16,24 @@
       "revId": "7848449da16a1c3d3093d6cf92bbd037f1da391e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981bf973_2bf9c87e",
+        "filename": "core/java/android/view/textclassifier/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1138403
+      },
+      "writtenOn": "2019-08-28T15:43:38Z",
+      "side": 1,
+      "message": "samsellem@google.com",
+      "parentUuid": "b04be8b9_7b9abff0",
+      "revId": "7848449da16a1c3d3093d6cf92bbd037f1da391e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
