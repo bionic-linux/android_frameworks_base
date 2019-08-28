@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9258b3e6_79e2f6f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-28T01:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0768b88a_fe3de1fc",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "13276e3a19486cf30e4f1ded728e9f22156761e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "270776c8_e7f267ad",
         "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "91486a7d_fcaaf769",
+        "filename": "core/java/android/net/util/MultinetworkPolicyTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-28T01:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "270776c8_e7f267ad",
+      "range": {
+        "startLine": 166,
+        "startChar": 47,
+        "endLine": 166,
+        "endChar": 51
+      },
+      "revId": "13276e3a19486cf30e4f1ded728e9f22156761e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8a8bc3_91260355",
         "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "13276e3a19486cf30e4f1ded728e9f22156761e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95db9e7_d69ad737",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-08-28T01:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8a8bc3_91260355",
+      "range": {
+        "startLine": 72,
+        "startChar": 48,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "13276e3a19486cf30e4f1ded728e9f22156761e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
