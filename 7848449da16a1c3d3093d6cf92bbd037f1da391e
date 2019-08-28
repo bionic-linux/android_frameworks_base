@@ -34,6 +34,24 @@
       "revId": "7848449da16a1c3d3093d6cf92bbd037f1da391e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158a6f90_41ded1e4",
+        "filename": "core/java/android/view/textclassifier/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1060841
+      },
+      "writtenOn": "2019-08-28T16:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981bf973_2bf9c87e",
+      "revId": "7848449da16a1c3d3093d6cf92bbd037f1da391e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
