@@ -19,6 +19,7 @@ package com.android.server.compat;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Slog;
+import android.util.StatsLog;
 
 import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.util.DumpUtils;
@@ -39,18 +40,26 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         mContext = context;
     }
 
+    private void reportChange(long changeId, ApplicationInfo appInfo, boolean enabled) {
+        int uid = appInfo.uid;
+        Slog.d(TAG,
+                "Compat change reported: " + changeId + "; UID " + uid + "; enabled: " + enabled);
+        StatsLog.write(StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED, uid, changeId,
+                enabled, /*from_server*/true);
+    }
+
     @Override
     public void reportChange(long changeId, ApplicationInfo appInfo) {
-        Slog.d(TAG, "Compat change reported: " + changeId + "; UID " + appInfo.uid);
-        // TODO log via StatsLog
+        reportChange(changeId, appInfo, true);
     }
 
     @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
         if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
-            reportChange(changeId, appInfo);
+            reportChange(changeId, appInfo, true);
             return true;
         }
+        reportChange(changeId, appInfo, false);
         return false;
     }
 
