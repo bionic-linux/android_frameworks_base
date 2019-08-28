@@ -19,6 +19,7 @@ package android.app;
 import android.compat.Compatibility;
 import android.os.Process;
 import android.util.Log;
+import android.util.StatsLog;
 
 import java.util.Arrays;
 
@@ -47,17 +48,26 @@ public final class AppCompatCallbacks extends Compatibility.Callbacks {
         Arrays.sort(mDisabledChanges);
     }
 
+    private void reportChange(long changeId, boolean enabled) {
+        int uid = Process.myUid();
+        Log.d(TAG,
+                "Compat change reported: " + changeId + "; UID " + uid + "; enabled: " + enabled);
+        StatsLog.write(StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED, uid, changeId,
+                enabled, /*source*/StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__SOURCE__APP_PROCESS);
+
+    }
+
     protected void reportChange(long changeId) {
-        Log.d(TAG, "Compat change reported: " + changeId + "; UID " + Process.myUid());
-        // TODO log via StatsLog
+        reportChange(changeId, true);
     }
 
     protected boolean isChangeEnabled(long changeId) {
         if (Arrays.binarySearch(mDisabledChanges, changeId) < 0) {
             // Not present in the disabled array
-            reportChange(changeId);
+            reportChange(changeId, true);
             return true;
         }
+        reportChange(changeId, false);
         return false;
     }
 
