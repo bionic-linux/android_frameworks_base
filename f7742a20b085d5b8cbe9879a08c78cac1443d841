@@ -22,6 +22,30 @@
       "revId": "f7742a20b085d5b8cbe9879a08c78cac1443d841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e48ee484_7380d274",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-29T04:33:34Z",
+      "side": 1,
+      "message": "I understand your concern.\n\nMaybe it\u0027s better for me to write this kind of concrete comment as a resolved gerrit comment on the code. That will certainly help reviewers. The drawback is that anyone who looks at the commit one year from now will not benefit from this, but maybe it\u0027s less important than review friction ; after all, as long as gerrit works, people can still look at comment history on any given patch.\n\nI\u0027ll try to remember this going forward. In this case, I\u0027ll just submit as is in the interest of expediency.",
+      "parentUuid": "22afa46e_187fe3e5",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "f7742a20b085d5b8cbe9879a08c78cac1443d841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
