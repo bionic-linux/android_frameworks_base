@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22afa46e_187fe3e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-29T03:09:30Z",
+      "side": 1,
+      "message": "Nit: Looks like you are writing the code comment here instead of general description, the detail you described is useless until I see the code, but it do help me to understand your logic.\nUnfortunately we are not adding code comment when removing it.\nSo my suggestion is we split it into 2 paragraph where first one is description and the other is the detail.\n\nBut given that this is just clean up, maybe it is not worth to put your time here. Feel free to ignore.",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "f7742a20b085d5b8cbe9879a08c78cac1443d841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
