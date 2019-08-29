@@ -16,6 +16,24 @@
       "revId": "cc55cca98505c740acf8702e720378311197e46e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a993d0a5_e9e3eab6",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-08-29T20:09:53Z",
+      "side": 0,
+      "message": "I don\u0027t think unconditional branches should be in the codebase.  Is there an actual condition we could branch on?  If not, I support removing it.  Maybe we could have a document describing various debugging/development scenarios with suggestions for what to trace/log?",
+      "parentUuid": "75dac57d_896de5ed",
+      "revId": "cc55cca98505c740acf8702e720378311197e46e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
