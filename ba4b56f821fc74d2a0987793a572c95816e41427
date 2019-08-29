@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48b690a7_a0d2694a",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-29T08:18:32Z",
+      "side": 1,
+      "message": "mDeps ? I don\u0027t want to have to rename this member when it does more than provide the intent any more than you want to rename the type.",
+      "range": {
+        "startLine": 80,
+        "startChar": 31,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24a245a_35b10d5c",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-29T08:18:32Z",
+      "side": 1,
+      "message": "Any specific reason you make this nullable and have this logic here instead of passing new DependenciesImpl() in l.83 ?",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc10348e_afc2cace",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-29T08:18:32Z",
+      "side": 1,
+      "message": "Is protected enough ?",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 10
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567c9611_8a122714",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-29T08:18:32Z",
+      "side": 1,
+      "message": "throw e;\n\n...instead ? That\u0027s the more appropriate exception, and then you can even make uid final (with a blank final)",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
