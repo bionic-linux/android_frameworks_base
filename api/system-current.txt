@@ -9560,6 +9560,35 @@ package android.telephony.mbms.vendor {
 
 }
 
+package android.timezone {
+
+  public final class CountryTimeZones {
+    method public android.icu.util.TimeZone getDefaultTimeZone();
+    method public String getDefaultTimeZoneId();
+    method public java.util.List<android.timezone.CountryTimeZones.TimeZoneMapping> getEffectiveTimeZoneMappingsAt(long);
+    method public boolean hasUtcZone(long);
+    method public boolean isForCountryCode(String);
+    method public android.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(int, Boolean, Integer, long, android.icu.util.TimeZone);
+  }
+
+  public static final class CountryTimeZones.OffsetResult {
+    ctor public CountryTimeZones.OffsetResult(android.icu.util.TimeZone, boolean);
+    method public boolean getIsOnlyMatch();
+    method public android.icu.util.TimeZone getTimeZone();
+  }
+
+  public static final class CountryTimeZones.TimeZoneMapping {
+    method public android.icu.util.TimeZone getTimeZone();
+    method public String getTimeZoneId();
+  }
+
+  public final class TimeZoneFinder {
+    method public static android.timezone.TimeZoneFinder getInstance();
+    method public android.timezone.CountryTimeZones lookupCountryTimeZones(String);
+  }
+
+}
+
 package android.util {
 
   public class EventLog {
