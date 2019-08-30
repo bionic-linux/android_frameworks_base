@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "08e226b4_fbd1c55d",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-08-30T01:43:30Z",
+      "side": 1,
+      "message": "I think this is answered before at https://android-review.googlesource.com/c/platform/frameworks/base/+/986825/19/services/net/java/android/net/ConnectivityModuleConnector.java#90\nSee if that works for you.",
+      "parentUuid": "c24a245a_35b10d5c",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc10348e_afc2cace",
         "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
         "patchSetId": 3
