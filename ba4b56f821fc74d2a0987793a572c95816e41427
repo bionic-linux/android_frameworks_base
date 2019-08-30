@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1d9c0c26_3614da14",
+        "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-30T03:40:03Z",
+      "side": 1,
+      "message": "Replied there.",
+      "parentUuid": "08e226b4_fbd1c55d",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "ba4b56f821fc74d2a0987793a572c95816e41427",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc10348e_afc2cace",
         "filename": "services/net/java/android/net/ConnectivityModuleConnector.java",
         "patchSetId": 3
