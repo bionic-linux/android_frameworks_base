@@ -46,6 +46,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5b4eff_27552499",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-08-30T12:48:22Z",
+      "side": 1,
+      "message": "You should be able to use NetworkStackUtils.getDeviceConfigProperty right now, and it will work without you having to come back here when it\u0027s available.",
+      "parentUuid": "4a6e3d57_107d13af",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
