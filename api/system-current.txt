@@ -9784,6 +9784,51 @@ package android.telephony.mbms.vendor {
 
 }
 
+package android.timezone {
+
+  public final class CountryTimeZones {
+    method @Nullable public android.icu.util.TimeZone getDefaultTimeZone();
+    method public boolean getDefaultTimeZoneBoost();
+    method @Nullable public String getDefaultTimeZoneId();
+    method @NonNull public java.util.List<android.timezone.CountryTimeZones.TimeZoneMapping> getEffectiveTimeZoneMappingsAt(long);
+    method public boolean hasUtcZone(long);
+    method public boolean isForCountryCode(@NonNull String);
+    method @Nullable public android.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(int, @Nullable Boolean, @Nullable Integer, long, @Nullable android.icu.util.TimeZone);
+  }
+
+  public static final class CountryTimeZones.OffsetResult {
+    ctor public CountryTimeZones.OffsetResult(@NonNull android.icu.util.TimeZone, boolean);
+    method public boolean getIsOnlyMatch();
+    method @NonNull public android.icu.util.TimeZone getTimeZone();
+  }
+
+  public static final class CountryTimeZones.TimeZoneMapping {
+    method @Nullable public android.icu.util.TimeZone getTimeZone();
+    method @NonNull public String getTimeZoneId();
+  }
+
+  public class TelephonyLookup {
+    method @NonNull public static android.timezone.TelephonyLookup getInstance();
+    method @Nullable public android.timezone.TelephonyNetworkFinder getTelephonyNetworkFinder();
+  }
+
+  public class TelephonyNetwork {
+    method @NonNull public String getCountryIsoCode();
+    method @NonNull public String getMcc();
+    method @NonNull public String getMnc();
+  }
+
+  public class TelephonyNetworkFinder {
+    method @Nullable public android.timezone.TelephonyNetwork findNetworkByMccMnc(@NonNull String, @NonNull String);
+  }
+
+  public final class TimeZoneFinder {
+    method @NonNull public static android.timezone.TimeZoneFinder getInstance();
+    method @Nullable public android.timezone.CountryTimeZones lookupCountryTimeZones(@NonNull String);
+  }
+
+}
+
 package android.util {
 
   public class EventLog {
