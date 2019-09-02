@@ -70,6 +70,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4058e0c7_349d27bd",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-02T03:38:28Z",
+      "side": 1,
+      "message": "Also no boolean flags should be pushed from the server, only int flags to compare with the module\u0027s version (so flags value X means \"enable this feature for module version \u003e\u003d X\").\n\nThis is important to ensure that when modules get rolled back, the features don\u0027t remain enabled on a version where they haven\u0027t been tested properly.\n\nXiao is working on this (probably including some utilities to check the flag values properly), so maybe you can see together with him ?",
+      "parentUuid": "3b5b4eff_27552499",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
