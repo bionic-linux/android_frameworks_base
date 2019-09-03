@@ -94,6 +94,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a3a589_efbe6eee",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-09-03T12:09:46Z",
+      "side": 1,
+      "message": "\u003e You should be able to use NetworkStackUtils.getDev\n\nNot sure I understand correctly, we don\u0027t build NetworkStackUtils here, right?\n\u003e Also no boolean flags should be pushed from the server ...\n    Sounds a good approach, I will update it in ag/9242558 since no DeviceConfig here.",
+      "parentUuid": "4058e0c7_349d27bd",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
