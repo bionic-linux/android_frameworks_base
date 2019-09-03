@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49dac3ef_06bb11a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:55:59Z",
+      "side": 1,
+      "message": "Do you like to also test cts?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cab5b41_10326231",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:55:59Z",
+      "side": 1,
+      "message": "probably you should not hide this?",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529f8a0a_5819410b",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:55:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d2e31f_2ac184a3",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:55:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 428,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c90b30_dac63587",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-09-03T12:55:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
