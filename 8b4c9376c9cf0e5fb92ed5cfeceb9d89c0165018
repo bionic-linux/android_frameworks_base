@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "730cfed4_54af9002",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-09-04T01:51:16Z",
+      "side": 0,
+      "message": "nit: keep this space",
+      "revId": "8b4c9376c9cf0e5fb92ed5cfeceb9d89c0165018",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

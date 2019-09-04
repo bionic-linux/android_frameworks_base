@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0aec886_c7ac7261",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/PanelView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-09-04T01:51:16Z",
+      "side": 1,
+      "message": "is this part really necessary? We have logic below to unset the motionAborted part and it feels wrong to have this in multiple places. The onInterceptTouchEvent() part should already unset the motionAborted flag. I don\u0027t see us passing the touch from theStatusBarWindowView.onInterceptTouchEvent(...) to PanelView.onTouchEvent(...) in our code. Where is this happening?",
+      "revId": "ee351e136333c867a41dd5289c1b6e265771deec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
