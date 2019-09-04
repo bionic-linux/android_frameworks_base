@@ -25,6 +25,98 @@
     },
     {
       "key": {
+        "uuid": "e738375d_c01d841b",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-04T06:14:55Z",
+      "side": 1,
+      "message": "Also, *all* @SystemApi calls need to be protected with a permission. In this case, the caller of these methods should hold either NETWORK_STACK or MAINLINE_NETWORK_STACK. Unfortunately this will need to be checked for all calls.\n\nTo give you more context : with this change, any app can access the constructor of this class through reflection and define a network. As you can imagine this is pretty bad :)",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785f6d53_3d6ef460",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-04T06:14:55Z",
+      "side": 1,
+      "message": "Sorry to impose, but everything that is @SystemApi (and public) needs to have CTS coverage. You\u0027ll need to be adding CTS for everything that you add as SystemApi that is not already covered there.\nIn some cases moving unit tests to CTS may be enough.",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb97f8d_73826d64",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-04T06:14:55Z",
+      "side": 1,
+      "message": "I think this should stay protected. Non-subclasses have no business calling this.",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a988a08a_d870d7ab",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-04T06:14:55Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cab5b41_10326231",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -36,6 +128,30 @@
       "writtenOn": "2019-09-03T12:55:59Z",
       "side": 1,
       "message": "probably you should not hide this?",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09f185e_1d47e36e",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-04T06:14:55Z",
+      "side": 1,
+      "message": "+1\n(but keep it protected)",
+      "parentUuid": "1cab5b41_10326231",
       "range": {
         "startLine": 422,
         "startChar": 4,
