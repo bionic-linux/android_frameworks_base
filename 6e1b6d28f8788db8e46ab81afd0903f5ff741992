@@ -237,6 +237,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d4edf3_07312aa5",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-09T08:56:25Z",
+      "side": 1,
+      "message": "I\u0027m suspecting context.getPackageName() would still return the right value when the package is running in the system server process - but you might want to check ?\nSince the above pattern from Xiao is going to be the same for all features, I think we need a utility class to implement it (I think Xiao started looking at that ?)",
+      "parentUuid": "c6fcd639_f2f734e3",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 19
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
