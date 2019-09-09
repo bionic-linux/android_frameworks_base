@@ -189,6 +189,54 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "beb00cb3_1eb5eef6",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-09-09T08:43:39Z",
+      "side": 1,
+      "message": "1\u003e - This would be consistent with development practices at other points in the development cycle\n    I think it is better to have 2 different pratices for pure mainline and Android R if the release procedure is  much differnce.\n\u003e - This will allow A/B testing at least on dogfood images, so you can measure impact of the feature - assuming you have metrics you\u0027d like to verify.\n    Having metrics would be good, but we don\u0027t have any data in legacy mode. So we prabably don\u0027t need to do A/B tesing, maybe just measure some items under new DnsProxyServer? Any thoughts? I think we could add it later just before enalbing new path if we want.",
+      "parentUuid": "eea5e050_737221c2",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fcd639_f2f734e3",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-09-09T08:43:39Z",
+      "side": 1,
+      "message": "I see. In system server, looks like we could use \"com.android.networkstack\" as package name, right?\nDo we need to check if it is inprocess or not?",
+      "parentUuid": "58ddeed0_d485fb79",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 19
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
