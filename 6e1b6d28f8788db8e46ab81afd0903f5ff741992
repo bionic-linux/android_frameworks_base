@@ -166,6 +166,29 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ddeed0_d485fb79",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1406251
+      },
+      "writtenOn": "2019-09-09T05:35:40Z",
+      "side": 1,
+      "message": "If a flag is required, we can determine whether or not to enable it by comparing the package version and flag version, maybe something like below:\n\nfinal long packageVersion \u003d context.getPackageManager().getPackageInfo(context.getPackageName(), 0).getLongVersionCode();\nfinal int flagVersion \u003d NetworkStackUtils.getDeviceConfigPropertyInt(nameSpace, flagName, defaultValue);\nreturn (flagVersion !\u003d 0 \u0026\u0026 packageVersion \u003e\u003d (long) flagVersion);",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 19
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
