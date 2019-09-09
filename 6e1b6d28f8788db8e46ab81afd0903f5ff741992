@@ -142,6 +142,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea5e050_737221c2",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-09-09T04:44:39Z",
+      "side": 1,
+      "message": "Right now the latest plan is to have the APK in the system image for R builds; so basically R builds get the latest version of what you merge here.\nIt\u0027s true that because this feature would only be used on R, you can ship it as any platform feature, without a flag rollout. But this is only because you happen to implement it early in R cycle, so you know that with a flag rollout it would 100% well before R is released anyway.\nI\u0027d still encourage having a flag for the feature because:\n - This would be consistent with development practices at other points in the development cycle\n - This will allow A/B testing at least on dogfood images, so you can measure impact of the feature - assuming you have metrics you\u0027d like to verify.",
+      "parentUuid": "1ecadffb_d0d06c8b",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 20
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
