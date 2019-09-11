@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab38b7d4_de7b4110",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-09-11T20:12:25Z",
+      "side": 1,
+      "message": "Can you please put a javadoc block for this extra (I realize the rest aren\u0027t formatted correct) which indicates the expected content of this extra and its type?  It looks like its a string array of strings.  What would each string entry be?  A basic phone number?  A URI?  Is the number in E164 format or some other format?",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 74
+      },
+      "revId": "b74da8e49e71bdc1f3affd01f196b45a6e9184da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
