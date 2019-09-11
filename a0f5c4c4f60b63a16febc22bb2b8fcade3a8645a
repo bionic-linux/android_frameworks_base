@@ -238,6 +238,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ad4c23_e3081aac",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1410110
+      },
+      "writtenOn": "2019-09-11T10:41:54Z",
+      "side": 1,
+      "message": "I saw your patch https://android.googlesource.com/device/google/crosshatch/+/c537c9e5b7f99603bb24b67b0fee5c5b1d7c79af for crosshatch. Why did you apply it only for crosshatch, not for wahoo?",
+      "parentUuid": "9679416b_dec61ec5",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
