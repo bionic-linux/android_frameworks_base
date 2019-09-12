@@ -24,6 +24,7 @@ import android.util.StatsLog;
 
 import com.android.internal.compat.ChangeReporter;
 import com.android.internal.compat.IPlatformCompat;
+import com.android.internal.compat.ParcelableCompatibilityChangeConfig;
 import com.android.internal.util.DumpUtils;
 
 import java.io.FileDescriptor;
@@ -78,6 +79,17 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             return true;
         }
         return isChangeEnabled(changeId, appInfo);
+    }
+
+    @Override
+    public void setOverrides(ParcelableCompatibilityChangeConfig overrides, String packageName) {
+        CompatConfig.get().addAppOverrides(overrides, packageName);
+    }
+
+    @Override
+    public void clearOverrides(String packageName) {
+        CompatConfig config = CompatConfig.get();
+        config.removePackageOverrides(packageName);
     }
 
     @Override

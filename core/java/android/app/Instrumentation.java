@@ -19,6 +19,7 @@ package android.app;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -55,6 +56,8 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManagerGlobal;
 
+import com.android.internal.compat.IPlatformCompat;
+import com.android.internal.compat.ParcelableCompatibilityChangeConfig;
 import com.android.internal.content.ReferrerIntent;
 
 import java.io.File;
@@ -62,6 +65,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Base class for implementing application instrumentation code.  When running
@@ -2194,6 +2198,53 @@ public class Instrumentation {
                 startPerformanceSnapshot();
             }
             onStart();
+        }
+    }
+
+    /**
+     * {@hide}
+     * Sets overrides for compatibility changes in the system server at test time.
+     *
+     * <p>Instead of using this method directly, consider using
+     * {@code android.compat.CompatChangeRule} and its annotations instead.
+     *
+     * @param enabled changes to be forced enabled.
+     * @param disabled changes to be force disabled.
+     *
+     */
+    @TestApi
+    public void setCompatChanges(Set<Long> enabled, Set<Long> disabled) {
+        IPlatformCompat platformCompat = IPlatformCompat.Stub
+                .asInterface(ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE));
+        if (platformCompat == null) {
+            throw new IllegalStateException("Could not get IPlatformCompat service!");
+        }
+        try {
+            platformCompat.setOverrides(new ParcelableCompatibilityChangeConfig(enabled, disabled),
+                                        getTargetContext().getPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+
+    }
+
+    /**
+     * {@hide}
+     * Removes overrides set at test time. Instead of using this method directly, consider using
+     * {@code android.compat.CompatChangeRule} and its annotations instead.
+     *
+     */
+    @TestApi
+    public void clearCompatChanges() {
+        IPlatformCompat platformCompat = IPlatformCompat.Stub.asInterface(ServiceManager
+                .getService(Context.PLATFORM_COMPAT_SERVICE));
+        if (platformCompat == null) {
+            throw new IllegalStateException("Could not get IPlatformCompat service!");
+        }
+        try {
+            platformCompat.clearOverrides(getTargetContext().getPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 

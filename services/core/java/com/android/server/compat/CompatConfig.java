@@ -25,6 +25,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.compat.ParcelableCompatibilityChangeConfig;
 import com.android.server.compat.config.Change;
 import com.android.server.compat.config.XmlParser;
 
@@ -36,6 +37,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 /**
@@ -167,6 +170,27 @@ public final class CompatConfig {
     }
 
     /**
+     * Overrides the enabled state for a given change and app. This method is intended to be used
+     * *only* for debugging purposes.
+     *
+     * <p>Note, package overrides are not persistent and will be lost on system or runtime restart.
+     *
+     * @param overrides list of overrides to default changes config.
+     * @param packageName app for which the overrides will be applied.
+     */
+    public void addAppOverrides(
+            ParcelableCompatibilityChangeConfig overrides, String packageName) {
+        synchronized (mChanges) {
+            for (Long changeId: overrides.enabledChanges()) {
+                addOverride(changeId, packageName, true);
+            }
+            for (Long changeId: overrides.disabledChanges()) {
+                addOverride(changeId, packageName, false);
+            }
+        }
+    }
+
+    /**
      * Removes an override previously added via {@link #addOverride(long, String, boolean)}. This
      * restores the default behaviour for the given change and app, once any app processes have been
      * restarted.
@@ -188,6 +212,22 @@ public final class CompatConfig {
     }
 
     /**
+     * Removes all overrides previously added via {@link #addOverride(long, String, boolean)} or
+     * {@link #addAppOverrides(ParcelableCompatibilityChangeConfig, String)} for a certain package.
+     * This restores the default behaviour for the given change and app, once
+     * any app processes have been restarted.
+     *
+     * @param packageName The package for which the overrides should be purged.
+     */
+    public void removePackageOverrides(String packageName) {
+        synchronized (mChanges) {
+            for (int i = 0; i < mChanges.size(); ++i) {
+                mChanges.valueAt(i).removePackageOverride(packageName);
+            }
+        }
+    }
+
+    /**
     * Dumps the current list of compatibility config information.
     *
     * @param pw The {@link PrintWriter} instance to which the information will be dumped.
@@ -203,6 +243,24 @@ public final class CompatConfig {
                 pw.println(c.toString());
             }
         }
+    }
+
+    /**
+     * Dumps the config for a given app.
+     *
+     * @param applicationInfo the {@link ApplicationInfo} for which the info should be dumped.
+     * @return A {@link Map} which contains the compat config info for the given app.
+     */
+
+    public Map<Long, Boolean> dumpAppConfig(ApplicationInfo applicationInfo) {
+        Map<Long, Boolean> state = new HashMap<>();
+        synchronized (mChanges) {
+            for (int i = 0; i < mChanges.size(); ++i) {
+                CompatChange c = mChanges.valueAt(i);
+                state.put(c.getId(), c.isEnabled(applicationInfo));
+            }
+        }
+        return state;
     }
 
     CompatConfig initConfigFromLib(File libraryDir) {

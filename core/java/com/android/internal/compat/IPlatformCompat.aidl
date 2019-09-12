@@ -17,6 +17,9 @@
 package com.android.internal.compat;
 
 import android.content.pm.ApplicationInfo;
+import java.util.Map;
+
+parcelable ParcelableCompatibilityChangeConfig;
 
 /**
  * Platform private API for talking with the PlatformCompat service.
@@ -95,4 +98,21 @@ interface IPlatformCompat
      * @return {@code true} if the change is enabled for the current app.
      */
     boolean isChangeEnabledByPackageName(long changeId, in String packageName);
+
+    /**
+     * Add overrides to compatibility changes.
+     *
+     * @param overrides Parcelable containing the compat change overrides to be applied.
+     * @param packageName The package name of the app whose changes will be overridden.
+     *
+     */
+    void setOverrides(in ParcelableCompatibilityChangeConfig overrides, in String packageName);
+
+    /**
+     * Revert overrides to compatibility changes.
+     *
+     * @param packageName The package name of the app whose overrides will be cleared.
+     *
+     */
+    void clearOverrides(in String packageName);
 }
