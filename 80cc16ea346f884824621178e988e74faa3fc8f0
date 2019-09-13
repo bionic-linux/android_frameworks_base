@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3ae914_e7ffe192",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "Can you detail what this problem is, or link to a bug number ?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 51
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b4b7ca_3f062d8c",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "Any reason to do this ? I don\u0027t really see why it\u0027s bad to not reset it.",
+      "range": {
+        "startLine": 1934,
+        "startChar": 52,
+        "endLine": 1934,
+        "endChar": 70
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8a3bff_7f1fa3f7",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "The way this is passed and ends up here is far too complex. For a good while I thought this was always 1, and then I thought it was an implementation detail of mUlaController. Now I understand it\u0027s a snapshot of the state of mUlaController which is owned by Tethering at IpServer instanciating time, and therefore I don\u0027t think passing it as the current state of mUlaController is sufficiently easy to understand.\n\nThe concrete design problem here, as I see it, is that all instances of IpServer end up sharing the state of ULAC, namely the next subnet Id. Another way to realize this is that you felt the way to reset this counter when there are no IpServers left, but what the link between \"no IP servers\" and \"reset the counter\" is extremely unobvious.\n\nThe most obvious way to fix this is to simply remove the subnet counter from ULAC, and move it into Tethering. Or, if you really don\u0027t care what its value is but only that it\u0027s a different value for each IpServer, you can also afford to make it a static member of IpServer and just get the next one with each new instance. Then ULAC is immutable and that\u0027s just less opportunities to mess up.",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a29f8a_a9bd211a",
+        "filename": "services/net/java/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "This is not necessary right ? If you don\u0027t pick this up it will just bubble up and end up being ignored.\n\nI\u0027m happy keeping it here if you think it helps understanding.",
+      "range": {
+        "startLine": 813,
+        "startChar": 21,
+        "endLine": 813,
+        "endChar": 44
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad540e43_e052206e",
+        "filename": "services/net/java/android/net/ip/UniqueLocalAddressController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "Also say this is not thread-safe (it\u0027s not, at least in l.49)",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 2
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6475c885_b110d923",
+        "filename": "services/net/java/android/net/ip/UniqueLocalAddressController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "This comment used to make sense but it is not understandable in this new context. Can you please update it ?",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5f3312_7c80433a",
+        "filename": "services/net/java/android/net/ip/UniqueLocalAddressController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "Suggest specifying this prefix is unique only in the sense that it\u0027s very unlikely to be reused (40-bits entropy)",
+      "range": {
+        "startLine": 86,
+        "startChar": 19,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab0fc55_751c93d0",
+        "filename": "tests/net/java/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:20:12Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be a spy. There are many ways to arrive at this conclusion.\n\n• You\u0027re using this for partial mocking (you want to override the behavior of one method, but use the rest). This is a code smell and is not normally used in stable code you control (https://static.javadoc.io/org.mockito/mockito-core/3.0.0/org/mockito/Mockito.html#partial_mocks)\n• You\u0027re using this in two places : stubbing out getNewSubnetId() and checking for getUniqueLocalConfig(). But :\n  • getNewSubnetId() is better dealt with by subclassing and overriding. Spies are not a substitute for subclassing, and actually in this case it\u0027s arguable even subclassing is not advisable because ULA is an implementation detail of IpServer.\n  • Even more strongly getUniqueLocalConfig() is very much an implementation detail of IpServer. You should not test that it\u0027s called, as it\u0027s not at all an externally observable effect of this flow.\n\nI think instead you should leave ULA alone and create a new instance of it in IpServer and not even pass it as an argument. Then, the test should just verify the LP that have been passed to the callback.\nIn checking the address of the LP, one of two things must be true : either the subnet is an implementation detail of IpClient (and all matters is that it\u0027s unique) and you don\u0027t care ; or it has specific constraints (like strictly increasing or something) and you check for them.",
+      "range": {
+        "startLine": 175,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
