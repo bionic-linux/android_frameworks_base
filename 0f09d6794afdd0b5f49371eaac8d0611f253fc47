@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c36c9144_447ca7f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T01:46:22Z",
+      "side": 1,
+      "message": "Can you at least give more details on exactly what tests need to use this ? This is only making this more broadly available and you don\u0027t say specifically what tests need this, don\u0027t explain why it\u0027s worse to keep this hidden not to have the tests... If this causes any trouble in the future, people looking to figure out what the point was don\u0027t have enough information to make an informed call.",
+      "parentUuid": "afb41337_2a35f213",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "0f09d6794afdd0b5f49371eaac8d0611f253fc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f7e8c1e_d12d63f3",
         "filename": "api/test-current.txt",
         "patchSetId": 1
