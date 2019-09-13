@@ -183,6 +183,30 @@
       "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b669bf_1f828497",
+        "filename": "tests/net/java/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-13T03:22:46Z",
+      "side": 1,
+      "message": "Sorry, this comment is outdated ; I understood better after I wrote it. You should not create the instance in IpServer, contrary to what I wrote. However, if you follow my other comments or otherwise fix the issues they point to, you will not need to stub getNewSubnetId() any more.\n\nThe rest of the comment stands : ULAC is an implementation detail and we should test observable behavior instead.",
+      "parentUuid": "fab0fc55_751c93d0",
+      "range": {
+        "startLine": 175,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "80cc16ea346f884824621178e988e74faa3fc8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
