@@ -262,6 +262,30 @@
       "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3659e4d2_6720e125",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1042384
+      },
+      "writtenOn": "2019-09-15T02:36:23Z",
+      "side": 1,
+      "message": "The bug was noticed with crosshatch. Good catch ! Probably might be affecting wahoo as well. Does that fix your issue. I am on travel hence the delay in responses. Apologies !",
+      "parentUuid": "76ad4c23_e3081aac",
+      "range": {
+        "startLine": 1921,
+        "startChar": 33,
+        "endLine": 1921,
+        "endChar": 55
+      },
+      "revId": "a0f5c4c4f60b63a16febc22bb2b8fcade3a8645a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
