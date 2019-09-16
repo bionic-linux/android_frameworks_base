@@ -123,6 +123,7 @@ public class RemoteCallbackList<E extends IInterface> {
             IBinder binder = callback.asBinder();
             try {
                 Callback cb = new Callback(callback, cookie);
+                unregister(callback);
                 binder.linkToDeath(cb, 0);
                 mCallbacks.put(binder, cb);
                 return true;
@@ -421,9 +422,11 @@ public class RemoteCallbackList<E extends IInterface> {
 
     /** @hide */
     public void dump(PrintWriter pw, String prefix) {
-        pw.print(prefix); pw.print("callbacks: "); pw.println(mCallbacks.size());
-        pw.print(prefix); pw.print("killed: "); pw.println(mKilled);
-        pw.print(prefix); pw.print("broadcasts count: "); pw.println(mBroadcastCount);
+        synchronized (mCallbacks) {
+            pw.print(prefix); pw.print("callbacks: "); pw.println(mCallbacks.size());
+            pw.print(prefix); pw.print("killed: "); pw.println(mKilled);
+            pw.print(prefix); pw.print("broadcasts count: "); pw.println(mBroadcastCount);
+        }
     }
 
     private void logExcessiveCallbacks() {

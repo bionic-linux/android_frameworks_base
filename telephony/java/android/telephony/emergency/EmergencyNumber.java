@@ -22,6 +22,7 @@ import android.hardware.radio.V1_4.EmergencyNumberSource;
 import android.hardware.radio.V1_4.EmergencyServiceCategory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.CarrierConfigManager;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.Rlog;
 
@@ -282,7 +283,7 @@ public final class EmergencyNumber implements Parcelable, Comparable<EmergencyNu
         dest.writeInt(mEmergencyCallRouting);
     }
 
-    public static final Parcelable.Creator<EmergencyNumber> CREATOR =
+    public static final @android.annotation.NonNull Parcelable.Creator<EmergencyNumber> CREATOR =
             new Parcelable.Creator<EmergencyNumber>() {
                 @Override
                 public EmergencyNumber createFromParcel(Parcel in) {
@@ -300,6 +301,9 @@ public final class EmergencyNumber implements Parcelable, Comparable<EmergencyNu
      *
      * The character in the number string is only the dial pad
      * character('0'-'9', '*', '+', or '#'). For example: 911.
+     *
+     * If the number starts with carrier prefix, the carrier prefix is configured in
+     * {@link CarrierConfigManager#KEY_EMERGENCY_NUMBER_PREFIX_STRING_ARRAY}.
      *
      * @return the dialing number.
      */

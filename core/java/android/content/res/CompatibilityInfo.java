@@ -32,8 +32,8 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 /**
- * CompatibilityInfo class keeps the information about compatibility mode that the application is
- * running under.
+ * CompatibilityInfo class keeps the information about the screen compatibility mode that the
+ * application is running under.
  * 
  *  {@hide} 
  */
@@ -613,7 +613,7 @@ public class CompatibilityInfo implements Parcelable {
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public static final Parcelable.Creator<CompatibilityInfo> CREATOR
+    public static final @android.annotation.NonNull Parcelable.Creator<CompatibilityInfo> CREATOR
             = new Parcelable.Creator<CompatibilityInfo>() {
         @Override
         public CompatibilityInfo createFromParcel(Parcel source) {

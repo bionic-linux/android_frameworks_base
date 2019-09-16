@@ -24,6 +24,7 @@ import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.annotation.TestApi;
 import android.content.Context;
 import android.util.Log;
 
@@ -43,6 +44,7 @@ import java.util.concurrent.Executor;
  * @hide
  */
 @SystemApi
+@TestApi
 @SystemService(Context.BUGREPORT_SERVICE)
 public final class BugreportManager {
 
@@ -232,23 +234,6 @@ public final class BugreportManager {
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
-        }
-
-        // Old methods; should go away
-        @Override
-        public void onProgressUpdated(int progress) throws RemoteException {
-            // TODO(b/111441001): remove from interface
-        }
-
-        @Override
-        public void onMaxProgressUpdated(int maxProgress) throws RemoteException {
-            // TODO(b/111441001): remove from interface
-        }
-
-        @Override
-        public void onSectionComplete(String title, int status, int size, int durationMs)
-                throws RemoteException {
-            // TODO(b/111441001): remove from interface
         }
     }
 }
