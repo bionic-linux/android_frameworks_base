@@ -64,7 +64,6 @@ public final class MessageQueue {
 
     // The next barrier token.
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
-    @UnsupportedAppUsage
     private int mNextBarrierToken;
 
     private native static long nativeInit();
@@ -267,7 +266,7 @@ public final class MessageQueue {
     }
 
     // Called from native code.
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29)
     private int dispatchEvents(int fd, int events) {
         // Get the file descriptor record and any state that might change.
         final FileDescriptorRecord record;
@@ -317,6 +316,7 @@ public final class MessageQueue {
     }
 
     @UnsupportedAppUsage
+    @Nullable
     Message next() {
         // Return here if the message loop has already quit and been disposed.
         // This can happen if the application tries to restart a looper after quit
@@ -617,6 +617,7 @@ public final class MessageQueue {
     }
 
     @UnsupportedAppUsage
+    @NotNull
     boolean hasMessages(Handler h, Runnable r, Object object) {
         if (h == null) {
             return false;
