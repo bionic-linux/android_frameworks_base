@@ -44,14 +44,13 @@ public final class MessageQueue {
     private static final boolean DEBUG = false;
 
     // True if the message queue can be quit.
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 28)
     private final boolean mQuitAllowed;
 
     @UnsupportedAppUsage
     @SuppressWarnings("unused")
     private long mPtr; // used by native code
 
-    @UnsupportedAppUsage
     Message mMessages;
     @UnsupportedAppUsage
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
@@ -64,7 +63,6 @@ public final class MessageQueue {
 
     // The next barrier token.
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
-    @UnsupportedAppUsage
     private int mNextBarrierToken;
 
     private native static long nativeInit();
@@ -267,7 +265,7 @@ public final class MessageQueue {
     }
 
     // Called from native code.
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29)
     private int dispatchEvents(int fd, int events) {
         // Get the file descriptor record and any state that might change.
         final FileDescriptorRecord record;
