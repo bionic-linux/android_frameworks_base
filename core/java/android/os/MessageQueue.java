@@ -267,7 +267,7 @@ public final class MessageQueue {
     }
 
     // Called from native code.
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29)
     private int dispatchEvents(int fd, int events) {
         // Get the file descriptor record and any state that might change.
         final FileDescriptorRecord record;
