@@ -70,7 +70,7 @@ public final class MessageQueue {
     private native static long nativeInit();
     private native static void nativeDestroy(long ptr);
     @UnsupportedAppUsage
-    private native void nativePollOnce(long ptr, int timeoutMillis); /*non-static for callbacks*/
+    private native void nativePollOnce(long ptr, int timeoutMillis, int i); /*non-static for callbacks*/
     private native static void nativeWake(long ptr);
     private native static boolean nativeIsPolling(long ptr);
     private native static void nativeSetFileDescriptorEvents(long ptr, int fd, int events);
@@ -267,7 +267,7 @@ public final class MessageQueue {
     }
 
     // Called from native code.
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29)
     private int dispatchEvents(int fd, int events) {
         // Get the file descriptor record and any state that might change.
         final FileDescriptorRecord record;
