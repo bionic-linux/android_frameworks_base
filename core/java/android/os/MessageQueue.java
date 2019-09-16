@@ -66,8 +66,6 @@ public final class MessageQueue {
 
     private native static long nativeInit();
     private native static void nativeDestroy(long ptr);
-    @UnsupportedAppUsage
-    private native void nativePollOnce(long ptr, int timeoutMillis); /*non-static for callbacks*/
     private native static void nativeWake(long ptr);
     private native static boolean nativeIsPolling(long ptr);
     private native static void nativeSetFileDescriptorEvents(long ptr, int fd, int events);
@@ -313,7 +311,6 @@ public final class MessageQueue {
         return newWatchedEvents;
     }
 
-    @UnsupportedAppUsage
     Message next() {
         // Return here if the message loop has already quit and been disposed.
         // This can happen if the application tries to restart a looper after quit
@@ -466,7 +463,7 @@ public final class MessageQueue {
      * @hide
      */
     @UnsupportedAppUsage
-    public int postSyncBarrier() {
+    public int postSyncBarrier(int i) {
         return postSyncBarrier(SystemClock.uptimeMillis());
     }
 
@@ -613,7 +610,7 @@ public final class MessageQueue {
         }
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = 29)
     boolean hasMessages(Handler h, Runnable r, Object object) {
         if (h == null) {
             return false;
