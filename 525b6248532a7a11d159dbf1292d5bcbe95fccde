@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b24d70fa_c0a414d1",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-17T10:17:47Z",
+      "side": 1,
+      "message": "This is never going to be called again right ? If netd is not alive then this will simply skip configuring the firewall chains.",
+      "range": {
+        "startLine": 590,
+        "startChar": 57,
+        "endLine": 590,
+        "endChar": 64
+      },
+      "revId": "525b6248532a7a11d159dbf1292d5bcbe95fccde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
