@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde5af9f_d7faeb95",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-17T10:30:34Z",
+      "side": 1,
+      "message": "So this is getting the list of interfaces synchronously from netd. But from the log it seems either something is removing that interface concurrently right, or tetherInterfaceAdd is failing silently.\n\n• If it\u0027s the former, then whatever is removing that interface can do it after the call to listInterfaces() and therefore the bug is not fixed.\n• If it\u0027s the latter, then this is not the right fix : the right fix should be for tetherInterfaceAdd to always either succeed or throw.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 28,
+        "endLine": 1057,
+        "endChar": 42
+      },
+      "revId": "518f4df200f3567c6ba263b3a89c676a04f06d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7299f125_a4aa1fdf",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-17T10:30:34Z",
+      "side": 1,
+      "message": "Maybe you can replace all this with ArrayUtils.contains()",
+      "range": {
+        "startLine": 1062,
+        "startChar": 7,
+        "endLine": 1069,
+        "endChar": 9
+      },
+      "revId": "518f4df200f3567c6ba263b3a89c676a04f06d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
