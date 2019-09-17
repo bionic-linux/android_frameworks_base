@@ -894,8 +894,10 @@ metalava_framework_docs_args += " --replace-documentation " +
 
 packages_to_document = [
     "android",
+    "dalvik",
     "java",
     "javax",
+    "junit",
     "org.apache.http",
     "org.json",
     "org.w3c.dom",
@@ -1503,4 +1505,29 @@ genrule {
     dist: {
         targets: ["droidcore"],
     },
+}
+
+// TODO(b/141149570) remove this
+filegroup {
+    name: "framework-mediadrm-sources",
+    srcs: ["media/java/android/media/MediaDrm.java"],
+    path: "media/java",
+}
+
+// TODO(b/141149570) remove this
+filegroup {
+    name: "framework-test-mock-sources",
+    srcs: [
+        "core/java/android/app/IApplicationThread.aidl",
+        "core/java/android/app/IServiceConnection.aidl",
+        "core/java/android/content/IContentProvider.java",
+        "core/java/android/content/pm/InstantAppInfo.java",
+        "core/java/android/content/pm/IntentFilterVerificationInfo.aidl",
+        "core/java/android/content/pm/KeySet.java",
+        "core/java/android/content/pm/PackageManager.java",
+        "core/java/android/content/pm/dex/ArtManager.java",
+        "core/java/android/os/storage/VolumeInfo.java",
+        "core/java/android/view/DisplayAdjustments.java",
+    ],
+    path: "core/java",
 }

@@ -18,7 +18,9 @@ java_sdk_library {
     name: "com.android.location.provider",
     srcs: [
         "java/**/*.java",
-        ":framework-all-sources",
+        // TODO(b/141149570) remove the need for this
+        ":framework-location-sources",
     ],
+    libs: ["framework-all"],
     api_packages: ["com.android.location.provider"],
 }

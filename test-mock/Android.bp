@@ -21,8 +21,11 @@ java_sdk_library {
 
     srcs: [
         "src/**/*.java",
-        ":framework-all-sources",
+        // TODO(b/141149570) remove these
+        ":framework-test-mock-sources",
+        ":framework_native_aidl",
     ],
+    libs: ["framework-all"],
 
     api_packages: [
         "android.test.mock",

@@ -18,7 +18,9 @@ java_sdk_library {
     name: "com.android.mediadrm.signer",
     srcs: [
         "java/**/*.java",
-        ":framework-all-sources",
+        // TODO(b/141149570) remove this
+        ":framework-mediadrm-sources",
     ],
+    libs: ["framework-all"],
     api_packages: ["com.android.mediadrm.signer"],
 }
