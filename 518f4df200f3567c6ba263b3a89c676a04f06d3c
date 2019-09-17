@@ -45,6 +45,29 @@
       "revId": "518f4df200f3567c6ba263b3a89c676a04f06d3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb390707_07fdc310",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-09-17T10:34:20Z",
+      "side": 1,
+      "message": "This returns silently without raising any error. Therefore if this condition is ever hit, the caller thinks the call worked (maybe the tethering UI/notification/etc is shown), entitlement may be requested, but tethering is not actually started.",
+      "range": {
+        "startLine": 1071,
+        "startChar": 12,
+        "endLine": 1071,
+        "endChar": 18
+      },
+      "revId": "518f4df200f3567c6ba263b3a89c676a04f06d3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
