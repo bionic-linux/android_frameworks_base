@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49fa0819_9126a2ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49dac3ef_06bb11a0",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e738375d_c01d841b",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6f9378eb_19a9c824",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e738375d_c01d841b",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb97f8d_73826d64",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "641f3d54_e887f7c5",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb97f8d_73826d64",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 395,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a988a08a_d870d7ab",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -114,6 +186,30 @@
       "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81740ac_896d22d7",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a988a08a_d870d7ab",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "272b900d_c74865d8",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09f185e_1d47e36e",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "529f8a0a_5819410b",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -184,6 +304,30 @@
       "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4681e2_a639ab36",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529f8a0a_5819410b",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "10d01b48_5fdcfe36",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d2e31f_2ac184a3",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 428,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96c90b30_dac63587",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 2
@@ -230,6 +398,30 @@
       "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e54a83_56e69f66",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-09-17T11:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c90b30_dac63587",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 16
+      },
+      "revId": "aa4a8d0721e4a8fa0562b17e49d98cf623322136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
