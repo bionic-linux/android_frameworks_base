@@ -18,6 +18,7 @@ package com.android.server.compat;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.util.Slog;
 import android.util.StatsLog;
 
@@ -43,9 +44,33 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         mChangeReporter = new ChangeReporter();
     }
 
+    private ApplicationInfo getAppInfoFromUID(int uid) {
+        String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
+        if (packages.length == 0) {
+            throw new IllegalArgumentException("Couldn't find a package with the provided UID");
+        }
+        if (packages.length > 1) {
+            throw new IllegalArgumentException("Found more than one package with the provided UID");
+        }
+        ApplicationInfo appInfo;
+        try {
+            appInfo = mContext.getPackageManager().getApplicationInfo(packages[0], 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "Couldn't find an installed package with the provided UID");
+        }
+        return appInfo;
+    }
+
     @Override
     public void reportChange(long changeId, ApplicationInfo appInfo) {
         reportChange(changeId, appInfo, StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__LOGGED);
+    }
+
+    @Override
+    public void reportChangeByUID(long changeId, int uid) {
+        ApplicationInfo appInfo = getAppInfoFromUID(uid);
+        reportChange(changeId, appInfo);
     }
 
     @Override
@@ -58,6 +83,12 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         reportChange(changeId, appInfo,
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__DISABLED);
         return false;
+    }
+
+    @Override
+    public boolean isChangeEnabledByUID(long changeId, int uid) {
+        ApplicationInfo appInfo = getAppInfoFromUID(uid);
+        return isChangeEnabled(changeId, appInfo);
     }
 
     @Override

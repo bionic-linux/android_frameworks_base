@@ -37,9 +37,28 @@ interface IPlatformCompat
      * that {@link #isChangeEnabled(long, ApplicationInfo)} returns {@code true}.
      *
      * @param changeId The ID of the compatibility change taking effect.
-     * @param appInfo Representing the affected app.
+     * @param appInfo  Representing the affected app.
      */
     void reportChange(long changeId, in ApplicationInfo appInfo);
+
+    /**
+     * Reports that a compatibility change is affecting an app process now.
+     *
+     * <p>Same as the previous option, except it recieves a UID instead of an appInfo object, and
+     * finds an app info object based on the UID and one package assosiated with it. Do not use if
+     * there's more than one package assosiated with the UID.
+     *
+     * <p>Note: for changes that are gated using {@link #isChangeEnabled(long, ApplicationInfo)},
+     * you do not need to call this API directly. The change will be reported for you in the case
+     * that {@link #isChangeEnabled(long, ApplicationInfo)} returns {@code true}.
+     *
+     * @param changeId The ID of the compatibility change taking effect.
+     * @param uid      The UID of the affected app.
+     * @throws IllegalArgumentException if there are no packages assosiated with the provided UID,
+     *                                  or there is more than one.
+     */
+     void reportChangeByUID(long changeId, int uid);
+
 
     /**
      * Query if a given compatibility change is enabled for an app process. This method should
@@ -54,8 +73,32 @@ interface IPlatformCompat
      * directly.
      *
      * @param changeId The ID of the compatibility change in question.
-     * @param appInfo Representing the app in question.
+     * @param appInfo  Representing the app in question.
      * @return {@code true} if the change is enabled for the current app.
      */
     boolean isChangeEnabled(long changeId, in ApplicationInfo appInfo);
+
+    /**
+     * Query if a given compatibility change is enabled for an app process. This method should
+     * be called when implementing functionality on behalf of the affected app.
+     *
+     * <p>Same as the previous option, except it recieves a UID instead of an appInfo object, and
+     * finds an app info object based on the UID and one package assosiated with it. Do not use if
+     * there's more than one package assosiated with the UID.
+     *
+     * <p>If this method returns {@code true}, the calling code should implement the compatibility
+     * change, resulting in differing behaviour compared to earlier releases. If this method returns
+     * {@code false}, the calling code should behave as it did in earlier releases.
+     *
+     * <p>When this method returns {@code true}, it will also report the change as
+     * {@link #reportChange(long, ApplicationInfo)} would, so there is no need to call that method
+     * directly.
+     *
+     * @param changeId The ID of the compatibility change in question.
+     * @param uid      The UID of the app in question.
+     * @return {@code true} if the change is enabled for the current app.
+     * @throws IllegalArgumentException if there are no packages assosiated with the provided UID,
+     *                                  or there is more than one.
+     */
+    boolean isChangeEnabledByUID(long changeId, int uid);
 }
