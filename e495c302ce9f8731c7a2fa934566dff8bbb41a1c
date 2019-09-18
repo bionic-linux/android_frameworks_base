@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e4a9a2_fa0641b2",
+        "filename": "services/core/java/com/android/server/integrity/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1547934
+      },
+      "writtenOn": "2019-09-18T15:21:46Z",
+      "side": 1,
+      "message": "Missing bjy@",
+      "revId": "e495c302ce9f8731c7a2fa934566dff8bbb41a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
