@@ -18,6 +18,7 @@ package com.android.server.compat;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.util.Slog;
 import android.util.StatsLog;
 
@@ -49,6 +50,18 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
+    public void reportChangeByPackage(long changeId, String packageName) {
+        ApplicationInfo appInfo;
+        try {
+            appInfo = mContext.getPackageManager().getApplicationInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Slog.e(TAG, "Couldn't find an installed package with the provided name " + packageName);
+            return;
+        }
+        reportChange(changeId, appInfo);
+    }
+
+    @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
         if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
             reportChange(changeId, appInfo,
@@ -58,6 +71,18 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         reportChange(changeId, appInfo,
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__DISABLED);
         return false;
+    }
+
+    @Override
+    public boolean isChangeEnabledByPackage(long changeId, String packageName) {
+        ApplicationInfo appInfo;
+        try {
+            appInfo = mContext.getPackageManager().getApplicationInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Slog.e(TAG, "Couldn't find an installed package with the provided name " + packageName);
+            return true;
+        }
+        return isChangeEnabled(changeId, appInfo);
     }
 
     @Override
