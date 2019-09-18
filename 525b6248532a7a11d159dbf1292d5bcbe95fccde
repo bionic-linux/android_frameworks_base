@@ -22,6 +22,30 @@
       "revId": "525b6248532a7a11d159dbf1292d5bcbe95fccde",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01db2a1_0a235822",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1539550
+      },
+      "writtenOn": "2019-09-18T07:44:26Z",
+      "side": 1,
+      "message": "Yes, I think this is not a good solution for error handling.\nOur fix main purpose is we don\u0027t want the NetworkManagementService.java is the main killer and let device reboot.\nSo I think google can use another method to fix this problem.",
+      "parentUuid": "b24d70fa_c0a414d1",
+      "range": {
+        "startLine": 590,
+        "startChar": 57,
+        "endLine": 590,
+        "endChar": 64
+      },
+      "revId": "525b6248532a7a11d159dbf1292d5bcbe95fccde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
