@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b698177e_955f4f39",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-09-18T00:27:58Z",
+      "side": 1,
+      "message": "may be better as: \"while the device is both roaming and not registered for IMS\".\n\nThe current wording makes it seem like it could be used when in a roaming network or unregistered.",
+      "range": {
+        "startLine": 509,
+        "startChar": 24,
+        "endLine": 509,
+        "endChar": 73
+      },
+      "revId": "c63eceea6df1d4c51223fc63866b62d3aa306a56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
