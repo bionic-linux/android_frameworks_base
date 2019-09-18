@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7740f9ef_81bfb8e8",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-18T10:07:18Z",
+      "side": 1,
+      "message": "IIUC the check should be done in service side, not in NetworkFactory which is in client process.\nwhat we need to do in NetworkFactory is declare the permission needed for system apis.",
+      "range": {
+        "startLine": 445,
+        "startChar": 8,
+        "endLine": 445,
+        "endChar": 37
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
