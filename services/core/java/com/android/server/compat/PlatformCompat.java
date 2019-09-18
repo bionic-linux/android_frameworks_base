@@ -18,6 +18,7 @@ package com.android.server.compat;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.util.Slog;
 import android.util.StatsLog;
 
@@ -49,6 +50,12 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
+    public void reportChangeByPackage(long changeId, String packageName) {
+        ApplicationInfo appInfo = getAppInfoFromPackageName(packageName);
+        reportChange(changeId, appInfo);
+    }
+
+    @Override
     public boolean isChangeEnabled(long changeId, ApplicationInfo appInfo) {
         if (CompatConfig.get().isChangeEnabled(changeId, appInfo)) {
             reportChange(changeId, appInfo,
@@ -58,6 +65,12 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         reportChange(changeId, appInfo,
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__STATE__DISABLED);
         return false;
+    }
+
+    @Override
+    public boolean isChangeEnabledByPackage(long changeId, String packageName) {
+        ApplicationInfo appInfo = getAppInfoFromPackageName(packageName);
+        return isChangeEnabled(changeId, appInfo);
     }
 
     @Override
@@ -73,5 +86,16 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         mChangeReporter.reportChange(uid, changeId,
                 state, /* source */
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__SOURCE__SYSTEM_SERVER);
+    }
+
+    private ApplicationInfo getAppInfoFromPackageName(String packageName) {
+        ApplicationInfo appInfo;
+        try {
+            appInfo = mContext.getPackageManager().getApplicationInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "Couldn't find an installed package with the provided UID");
+        }
+        return appInfo;
     }
 }
