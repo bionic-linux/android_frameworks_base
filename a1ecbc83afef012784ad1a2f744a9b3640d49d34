@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf8ef78c_a5f1eef9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-19T09:13:24Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d70f3a3_8f7fe352",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-19T09:13:24Z",
+      "side": 1,
+      "message": "Do we want to list several cts that is related to this change?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7740f9ef_81bfb8e8",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -18,6 +64,52 @@
         "startChar": 8,
         "endLine": 445,
         "endChar": 37
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a8be6f_c7d10990",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-19T09:13:24Z",
+      "side": 1,
+      "message": "I don\u0027t see any place other then subclass calls into it.\nmaybe it can be protected?",
+      "range": {
+        "startLine": 449,
+        "startChar": 16,
+        "endLine": 449,
+        "endChar": 35
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c87d34_90f203e9",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-09-19T09:13:24Z",
+      "side": 1,
+      "message": "Can this be protected?\nlooks like this will only be called by inherited class?",
+      "range": {
+        "startLine": 470,
+        "startChar": 4,
+        "endLine": 470,
+        "endChar": 10
       },
       "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
