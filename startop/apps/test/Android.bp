@@ -21,7 +21,8 @@ android_app {
         "src/LayoutInflationActivity.java",
         "src/ComplexLayoutInflationActivity.java",
         "src/FrameLayoutInflationActivity.java",
+        "src/InteractiveBenchmarkActivity.java",
         "src/TextViewInflationActivity.java",
     ],
-    platform_apis: true,
+    sdk_version: "26", // Android O (8.0) and higher
 }
