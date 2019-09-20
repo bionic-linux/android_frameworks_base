@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f25ba318_8d5c0c21",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53caae6f_da06e7ea",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d7c4943_047b079f",
         "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1c5af171_ff81ac4f",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "Artur: aidl doesn\u0027t support that.\nERROR: frameworks/base/core/java/com/android/internal/compat/IPlatformCompat.aidl:60.10-23: attempt to redefine method reportChange:\n\n\nNarayan:\nactually packageName is enough to get the application info, updated the api to only get packageName. WDYT?",
+      "parentUuid": "3ba48ea5_7c1f3280",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75974b98_934ca572",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33abe0e9_6feef759",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75974b98_934ca572",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "cafa95cc_2838410d",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "Depends on the provided UID, which may be illegal",
+      "parentUuid": "2cb5a5eb_0025ba52",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1d62fa_5bf98c4b",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 2
@@ -129,6 +225,30 @@
       "writtenOn": "2019-09-19T08:11:16Z",
       "side": 1,
       "message": "I don\u0027t think we should be throwing any exceptions at all. Throwing exceptions means there is potentially a significant side-effect calling these methods, thus people may want to try-catch every call to PlatformCompat. Given that we are providing an \"easy-to-use\" utility here, we should try to avoid that... Maybe just log that something unexpected happened, and continue as usual?",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3e5a7d_584bde58",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "But what does that mean? what would isChangeEnabled should return in that case?",
+      "parentUuid": "3d1d62fa_5bf98c4b",
       "range": {
         "startLine": 50,
         "startChar": 22,
@@ -161,6 +281,30 @@
       "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cd8ec7_03c129a2",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-20T12:16:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8618f237_966bec55",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 34
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
