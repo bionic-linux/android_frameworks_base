@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18367648_343b9b71",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3040,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-09-20T07:43:28Z",
+      "side": 1,
+      "message": "I think instead of using this permission we should allow only the default SMS app to read/modify the SMSC address.",
+      "range": {
+        "startLine": 3040,
+        "startChar": 52,
+        "endLine": 3040,
+        "endChar": 68
+      },
+      "revId": "662be124418bea1ba33627d794853dd0d4df6cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1384b9e1_22e2bf46",
+        "filename": "telephony/java/com/android/internal/telephony/ISms.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-09-20T07:43:28Z",
+      "side": 1,
+      "message": "delete extra line",
+      "revId": "662be124418bea1ba33627d794853dd0d4df6cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
