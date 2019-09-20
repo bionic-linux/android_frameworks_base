@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "53caae6f_da06e7ea",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-09-20T03:51:17Z",
+      "side": 1,
+      "message": "associated",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d7c4943_047b079f",
         "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2019-09-19T08:11:16Z",
       "side": 1,
       "message": "just overload the method? Java allows method with the same name, as long as arguments are different; so you can keep this as reportChange()",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba48ea5_7c1f3280",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-09-20T03:51:17Z",
+      "side": 1,
+      "message": "what about things that use android:sharedUid ? we\u0027d then have multiple packages under the same UID. This is somewhat common, especially for system components. How do you feel about providing a String packageName in addition to the UID ? We can validate in the service that the package name maps to one of those under the UID.\n\n@yamasani / @toddke : what\u0027s the usual pattern for this sort of thing ?",
+      "parentUuid": "4d7c4943_047b079f",
       "range": {
         "startLine": 60,
         "startChar": 10,
