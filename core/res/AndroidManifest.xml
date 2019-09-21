@@ -2000,6 +2000,16 @@
     <permission android:name="android.permission.BIND_INCALL_SERVICE"
         android:protectionLevel="signature|privileged" />
 
+    <!-- Allows the app to put a call into the background so that the app can process audio from
+         the call. This permission does not grant access to the audio streams themselves -
+         it only allows the app to make the call less conspicuous to the user.
+    -->
+    <permission android:name="android.permission.BACKGROUND_CALL_AUDIO"
+        android:permissionGroup="android.permission-group.UNDEFINED"
+        android:label="@string/permlab_backgroundCallAudio"
+        android:description="@string/permdesc_backgroundCallAudio"
+        android:protectionLevel="dangerous" />
+
     <!-- Allows the app to request network scans from telephony.
          <p>Not for use by third-party applications.
          @SystemApi @hide-->
