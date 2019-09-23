@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity.tethering;
+package com.android.server.connectivity;
 
 import static android.net.ConnectivityManager.EXTRA_ADD_TETHER_TYPE;
 import static android.net.ConnectivityManager.EXTRA_PROVISION_CALLBACK;
@@ -55,8 +55,6 @@ import android.util.SparseIntArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.StateMachine;
-import com.android.server.connectivity.MockableSystemProperties;
-import com.android.server.connectivity.TetheringConfiguration;
 
 import java.io.PrintWriter;
 
@@ -88,7 +86,6 @@ public class EntitlementManager {
     private static final int EVENT_MAYBE_RUN_PROVISIONING = 3;
     private static final int EVENT_GET_ENTITLEMENT_VALUE = 4;
 
-
     // The ArraySet contains enabled downstream types, ex:
     // {@link ConnectivityManager.TETHERING_WIFI}
     // {@link ConnectivityManager.TETHERING_USB}
@@ -113,7 +110,6 @@ public class EntitlementManager {
 
     public EntitlementManager(Context ctx, StateMachine tetherMasterSM, SharedLog log,
             int permissionChangeMessageCode, MockableSystemProperties systemProperties) {
-
         mContext = ctx;
         mLog = log.forSubComponent(TAG);
         mCurrentTethers = new ArraySet<Integer>();
@@ -139,7 +135,7 @@ public class EntitlementManager {
         /**
          * Ui entitlement check fails in |downstream|.
          *
-         * @param downstream  tethering type from ConnectivityManager.TETHERING_{@code *}.
+         * @param downstream tethering type from ConnectivityManager.TETHERING_{@code *}.
          */
         void onUiEntitlementFailed(int downstream);
     }
@@ -663,7 +659,6 @@ public class EntitlementManager {
 
     private void handleGetLatestTetheringEntitlementValue(int downstream, ResultReceiver receiver,
             boolean showEntitlementUi) {
-
         final TetheringConfiguration config = mFetcher.fetchTetheringConfiguration();
         if (!isTetherProvisioningRequired(config)) {
             receiver.send(TETHER_ERROR_NO_ERROR, null);
