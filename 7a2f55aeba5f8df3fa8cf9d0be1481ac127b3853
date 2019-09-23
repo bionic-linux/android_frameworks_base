@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "c99b48c1_99f42a34",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-23T15:00:58Z",
+      "side": 1,
+      "message": "I changed it to be true by default, so the cpp version will have the same behaviours. WDYT?",
+      "parentUuid": "3b3e5a7d_584bde58",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "7a2f55aeba5f8df3fa8cf9d0be1481ac127b3853",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8618f237_966bec55",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 2
