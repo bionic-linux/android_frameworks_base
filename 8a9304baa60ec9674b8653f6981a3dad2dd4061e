@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f731f00_fdbea530",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-24T17:31:39Z",
+      "side": 1,
+      "message": "so, ultimately we do pass UID to statslog.. what does it do for uids with multiple packages?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
