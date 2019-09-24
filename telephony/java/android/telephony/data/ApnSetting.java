@@ -181,6 +181,9 @@ public class ApnSetting implements Parcelable {
     public static final int MVNO_TYPE_GID = 2;
     /** MVNO type for ICCID. */
     public static final int MVNO_TYPE_ICCID = 3;
+    /** UNISOC:MVNO type for PNN. */
+    /** @hide */
+    public static final int MVNO_TYPE_PNN = 4;
 
     /** @hide */
     @IntDef(prefix = { "MVNO_TYPE_" }, value = {
@@ -188,6 +191,7 @@ public class ApnSetting implements Parcelable {
         MVNO_TYPE_IMSI,
         MVNO_TYPE_GID,
         MVNO_TYPE_ICCID,
+        MVNO_TYPE_PNN,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface MvnoType {}
@@ -246,11 +250,13 @@ public class ApnSetting implements Parcelable {
         MVNO_TYPE_STRING_MAP.put("imsi", MVNO_TYPE_IMSI);
         MVNO_TYPE_STRING_MAP.put("gid", MVNO_TYPE_GID);
         MVNO_TYPE_STRING_MAP.put("iccid", MVNO_TYPE_ICCID);
+        MVNO_TYPE_STRING_MAP.put("pnn", MVNO_TYPE_PNN);
         MVNO_TYPE_INT_MAP = new ArrayMap<Integer, String>();
         MVNO_TYPE_INT_MAP.put(MVNO_TYPE_SPN, "spn");
         MVNO_TYPE_INT_MAP.put(MVNO_TYPE_IMSI, "imsi");
         MVNO_TYPE_INT_MAP.put(MVNO_TYPE_GID, "gid");
         MVNO_TYPE_INT_MAP.put(MVNO_TYPE_ICCID, "iccid");
+        MVNO_TYPE_INT_MAP.put(MVNO_TYPE_PNN, "pnn");
     }
 
     private final String mEntryName;
