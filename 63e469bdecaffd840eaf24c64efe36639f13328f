@@ -22,6 +22,30 @@
       "revId": "63e469bdecaffd840eaf24c64efe36639f13328f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fa201c_a71d92a4",
+        "filename": "tests/BootImageProfileTest/src/com/android/bootimageprofile/BootImageProfileTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-09-24T22:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85db1044_cbd637f3",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "63e469bdecaffd840eaf24c64efe36639f13328f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
