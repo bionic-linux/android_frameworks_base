@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85db1044_cbd637f3",
+        "filename": "tests/BootImageProfileTest/src/com/android/bootimageprofile/BootImageProfileTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2019-09-24T22:05:55Z",
+      "side": 1,
+      "message": "use \"0\".equals() in case \u0027s\u0027 is null.",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "63e469bdecaffd840eaf24c64efe36639f13328f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
