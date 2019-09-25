@@ -87,6 +87,30 @@
       "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "909511a0_c2567e08",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-09-25T11:20:10Z",
+      "side": 1,
+      "message": "The adb command and hence overrides are by package name so we use it when gating. Also, applicationInfo contains the targetSDK information we also need for gating (both handled inside CompatChange).",
+      "parentUuid": "3eb2e515_908687d2",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
