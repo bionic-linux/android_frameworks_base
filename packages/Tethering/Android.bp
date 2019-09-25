@@ -26,6 +26,7 @@ java_defaults {
         "androidx.annotation_annotation",
         "netd_aidl_interface-java",
         "networkstack-aidl-interfaces-java",
+        "android.hardware.tetheroffload.control-V1.0-java",
         "tethering-library",
     ],
     manifest: "AndroidManifestBase.xml",
@@ -37,15 +38,43 @@ android_library {
     defaults: ["TetheringAndroidLibraryDefaults"],
 }
 
+cc_library_shared {
+    name: "libtetheroffloadjni",
+    srcs: [
+        "jni/com_android_server_connectivity_OffloadHardwareInterface.cpp",
+    ],
+    shared_libs: [
+        "libnativehelper",
+        "libcutils",
+        "android.hardware.tetheroffload.config@1.0",
+    ],
+    static_libs: [
+        "liblog",
+        "libbase",
+        "libhidlbase",
+        "libutils",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+}
+
 // Common defaults for compiling the actual APK.
 java_defaults {
     name: "TetheringAppDefaults",
     platform_apis: true,
     privileged: true,
+    jni_libs: [
+        "libtetheroffloadjni",
+    ],
     resource_dirs: [
         "res",
     ],
     jarjar_rules: "jarjar-rules-shared.txt",
+    use_embedded_native_libs: true,
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
