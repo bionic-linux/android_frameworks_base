@@ -108,7 +108,6 @@ import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.server.LocalServices;
 import com.android.server.connectivity.tethering.IPv6TetheringCoordinator;
-import com.android.server.connectivity.tethering.OffloadController;
 import com.android.server.connectivity.tethering.TetheringDependencies;
 import com.android.server.connectivity.tethering.TetheringInterfaceUtils;
 import com.android.server.net.BaseNetworkObserver;

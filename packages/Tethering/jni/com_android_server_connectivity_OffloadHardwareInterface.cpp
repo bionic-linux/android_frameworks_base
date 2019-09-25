@@ -87,7 +87,7 @@ hidl_handle handleFromFileDescriptor(base::unique_fd fd) {
 
 }  // namespace
 
-static jboolean android_server_connectivity_tethering_OffloadHardwareInterface_configOffload(
+static jboolean android_server_connectivity_OffloadHardwareInterface_configOffload(
         JNIEnv* /* env */) {
     sp<IOffloadConfig> configInterface = IOffloadConfig::getService();
     if (configInterface.get() == nullptr) {
@@ -136,12 +136,12 @@ static jboolean android_server_connectivity_tethering_OffloadHardwareInterface_c
 static const JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
     { "configOffload", "()Z",
-      (void*) android_server_connectivity_tethering_OffloadHardwareInterface_configOffload },
+      (void*) android_server_connectivity_OffloadHardwareInterface_configOffload },
 };
 
-int register_android_server_connectivity_tethering_OffloadHardwareInterface(JNIEnv* env) {
+int register_android_server_connectivity_OffloadHardwareInterface(JNIEnv* env) {
     return jniRegisterNativeMethods(env,
-            "com/android/server/connectivity/tethering/OffloadHardwareInterface",
+            "com/android/server/connectivity/OffloadHardwareInterface",
             gMethods, NELEM(gMethods));
 }
 
