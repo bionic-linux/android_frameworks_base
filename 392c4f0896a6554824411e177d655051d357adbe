@@ -46,6 +46,30 @@
       "revId": "392c4f0896a6554824411e177d655051d357adbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dff82e_dc6c170e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-09-25T18:13:38Z",
+      "side": 1,
+      "message": "It\u0027s not sufficient until after https://android-review.googlesource.com/c/platform/build/+/1128076 lands. By default, leaks aren\u0027t detected now",
+      "parentUuid": "42270b02_db09df81",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "392c4f0896a6554824411e177d655051d357adbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
