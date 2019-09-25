@@ -94,6 +94,30 @@
       "revId": "392c4f0896a6554824411e177d655051d357adbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb24dc5a_e1edde75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-09-25T20:49:13Z",
+      "side": 1,
+      "message": "Also, you will want to run aapt2 (not just build it)",
+      "parentUuid": "d3bcfeb3_cfa1eec4",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "392c4f0896a6554824411e177d655051d357adbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
