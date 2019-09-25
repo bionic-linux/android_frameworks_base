@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a81ef2_af02f584",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/SmsMessage.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2019-09-25T03:27:54Z",
+      "side": 1,
+      "message": "Is this for China Telecom LMS only? If yes, I think we should add new CarrierConfig for it.\nAnd according to the CT requirement, TELESERVICE_WMT and encoding type 7BIT_ASCII or UNICODE_16 should be used for LMS.",
+      "range": {
+        "startLine": 868,
+        "startChar": 19,
+        "endLine": 868,
+        "endChar": 71
+      },
+      "revId": "0f697a56470ad110d4cd9e83fd58dd6742206fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
