@@ -22,6 +22,30 @@
       "revId": "392c4f0896a6554824411e177d655051d357adbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42270b02_db09df81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2019-09-25T16:27:10Z",
+      "side": 1,
+      "message": "I ran \"m -j aapt2 SANITIZE_TARGET\u003daddress\" and the build succeeded. Is that sufficient? I updated the commit message.",
+      "parentUuid": "07e9098a_1531df88",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "392c4f0896a6554824411e177d655051d357adbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
