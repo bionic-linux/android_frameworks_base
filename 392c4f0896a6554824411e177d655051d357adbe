@@ -70,6 +70,30 @@
       "revId": "392c4f0896a6554824411e177d655051d357adbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bcfeb3_cfa1eec4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-09-25T18:13:58Z",
+      "side": 1,
+      "message": "Also, if you apply this CL, you will manually have to unset ASAN_OPTIONS.",
+      "parentUuid": "52dff82e_dc6c170e",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "392c4f0896a6554824411e177d655051d357adbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
