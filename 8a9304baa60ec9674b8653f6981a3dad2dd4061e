@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "79e96dc7_3eeab9ac",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "ambiguous; and depends on the order :-) Either use {@link } or reword this.",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015bd8ff_899ad254",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "{@link ApplicationInfo}",
+      "range": {
+        "startLine": 46,
+        "startChar": 87,
+        "endLine": 46,
+        "endChar": 94
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c8e255_3da1f653",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e51b16_e112c7ed",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "nit: PackageName?",
+      "range": {
+        "startLine": 53,
+        "startChar": 16,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af36c7f_9de7c7be",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "nit: \"No installed package \" + packageName",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 83
+      },
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf156a48_b21f9531",
         "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
         "patchSetId": 4
@@ -13,6 +128,47 @@
       "writtenOn": "2019-09-25T11:17:52Z",
       "side": 1,
       "message": "also, apparently package name may have different UIDs under different UserHandle on the device. What do?",
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3060565d_baef98f7",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "Discussed offline.",
+      "parentUuid": "bf156a48_b21f9531",
+      "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ae8d9cf_03463325",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-09-25T11:36:29Z",
+      "side": 1,
+      "message": "nit: you could extract this into a private method getApplicationInfo()",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 9
+      },
       "revId": "8a9304baa60ec9674b8653f6981a3dad2dd4061e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
