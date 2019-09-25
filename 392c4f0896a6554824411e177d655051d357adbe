@@ -118,6 +118,30 @@
       "revId": "392c4f0896a6554824411e177d655051d357adbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba4c831_1ab742db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2019-09-25T20:59:00Z",
+      "side": 1,
+      "message": "I will apply the CL. Can you give me a command to manually unset ASAN_OPTIONS when building aapt2?",
+      "parentUuid": "bb24dc5a_e1edde75",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "392c4f0896a6554824411e177d655051d357adbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
