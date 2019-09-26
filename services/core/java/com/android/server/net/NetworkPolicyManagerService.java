@@ -218,14 +218,16 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.os.RoSystemProperties;
+<<<<<<< HEAD   (3d427f Handle 5G meteredness in telephony framework)
 import com.android.internal.os.SomeArgs;
 import com.android.internal.telephony.PhoneConstants;
+=======
+>>>>>>> CHANGE (80b73b 5G meteredness for telephony framework)
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ConcurrentUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.internal.util.Preconditions;
 import com.android.internal.util.StatLogger;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
@@ -387,6 +389,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int MSG_SUBSCRIPTION_OVERRIDE = 16;
     private static final int MSG_METERED_RESTRICTED_PACKAGES_CHANGED = 17;
     private static final int MSG_SET_NETWORK_TEMPLATE_ENABLED = 18;
+    private static final int MSG_SUBSCRIPTION_PLANS_CHANGED = 19;
 
     private static final int UID_MSG_STATE_CHANGED = 100;
     private static final int UID_MSG_GONE = 101;
@@ -3062,6 +3065,34 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mContext.enforceCallingOrSelfPermission(MANAGE_SUBSCRIPTION_PLANS, TAG);
     }
 
+    private void enforceSubscriptionPlanValidity(SubscriptionPlan[] plans) {
+        // nothing to check if no plans
+        if (plans.length == 0) {
+            return;
+        }
+
+        long applicableNetworkTypes = 0;
+        boolean allNetworks = false;
+        for (SubscriptionPlan plan : plans) {
+            if (plan.getNetworkTypes() == null) {
+                allNetworks = true;
+            } else {
+                if ((applicableNetworkTypes & plan.getNetworkTypesBitMask()) != 0) {
+                    throw new IllegalArgumentException(
+                            "Multiple subscription plans defined for a single network type.");
+                } else {
+                    applicableNetworkTypes |= plan.getNetworkTypesBitMask();
+                }
+            }
+        }
+
+        // ensure at least one plan applies for every network type
+        if (!allNetworks) {
+            throw new IllegalArgumentException(
+                    "No generic subscription plan that applies to all network types.");
+        }
+    }
+
     @Override
     public SubscriptionPlan[] getSubscriptionPlans(int subId, String callingPackage) {
         enforceSubscriptionPlanAccess(subId, Binder.getCallingUid(), callingPackage);
@@ -3226,6 +3257,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     @Override
     public void setSubscriptionPlans(int subId, SubscriptionPlan[] plans, String callingPackage) {
         enforceSubscriptionPlanAccess(subId, Binder.getCallingUid(), callingPackage);
+        enforceSubscriptionPlanValidity(plans);
 
         for (SubscriptionPlan plan : plans) {
             Preconditions.checkNotNull(plan);
@@ -3254,6 +3286,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
             intent.putExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX, subId);
             mContext.sendBroadcast(intent, android.Manifest.permission.MANAGE_SUBSCRIPTION_PLANS);
+            mHandler.sendMessage(
+                    mHandler.obtainMessage(MSG_SUBSCRIPTION_PLANS_CHANGED, subId, 0, plans));
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -3280,7 +3314,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     @Override
     public void setSubscriptionOverride(int subId, int overrideMask, int overrideValue,
-            long networkTypeMask, long timeoutMillis, String callingPackage) {
+            long timeoutMillis, String callingPackage) {
         enforceSubscriptionPlanAccess(subId, Binder.getCallingUid(), callingPackage);
 
         // We can only override when carrier told us about plans
@@ -3298,16 +3332,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final boolean overrideEnabled = Settings.Global.getInt(mContext.getContentResolver(),
                 NETPOLICY_OVERRIDE_ENABLED, 1) != 0;
         if (overrideEnabled || overrideValue == 0) {
-            SomeArgs args = SomeArgs.obtain();
-            args.arg1 = subId;
-            args.arg2 = overrideMask;
-            args.arg3 = overrideValue;
-            args.arg4 = networkTypeMask;
-            mHandler.sendMessage(mHandler.obtainMessage(MSG_SUBSCRIPTION_OVERRIDE, args));
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_SUBSCRIPTION_OVERRIDE,
+                    overrideMask, overrideValue, subId));
             if (timeoutMillis > 0) {
-                args.arg3 = 0;
-                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SUBSCRIPTION_OVERRIDE, args),
-                        timeoutMillis);
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SUBSCRIPTION_OVERRIDE,
+                        overrideMask, 0, subId), timeoutMillis);
             }
         }
     }
@@ -4441,11 +4470,20 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     private void dispatchSubscriptionOverride(INetworkPolicyListener listener, int subId,
-            int overrideMask, int overrideValue, long networkTypeMask) {
+            int overrideMask, int overrideValue) {
         if (listener != null) {
             try {
-                listener.onSubscriptionOverride(subId, overrideMask, overrideValue,
-                        networkTypeMask);
+                listener.onSubscriptionOverride(subId, overrideMask, overrideValue);
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
+
+    private void dispatchSubscriptionPlansChanged(INetworkPolicyListener listener, int subId,
+            SubscriptionPlan[] plans) {
+        if (listener != null) {
+            try {
+                listener.onSubscriptionPlansChanged(subId, plans);
             } catch (RemoteException ignored) {
             }
         }
@@ -4546,16 +4584,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     return true;
                 }
                 case MSG_SUBSCRIPTION_OVERRIDE: {
-                    final SomeArgs args = (SomeArgs) msg.obj;
-                    final int subId = (int) args.arg1;
-                    final int overrideMask = (int) args.arg2;
-                    final int overrideValue = (int) args.arg3;
-                    final long networkTypeMask = (long) args.arg4;
+                    final int overrideMask = msg.arg1;
+                    final int overrideValue = msg.arg2;
+                    final int subId = (int) msg.obj;
                     final int length = mListeners.beginBroadcast();
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
-                        dispatchSubscriptionOverride(listener, subId, overrideMask, overrideValue,
-                                networkTypeMask);
+                        dispatchSubscriptionOverride(listener, subId, overrideMask, overrideValue);
                     }
                     mListeners.finishBroadcast();
                     return true;
@@ -4570,6 +4605,17 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     final NetworkTemplate template = (NetworkTemplate) msg.obj;
                     final boolean enabled = msg.arg1 != 0;
                     setNetworkTemplateEnabledInner(template, enabled);
+                    return true;
+                }
+                case MSG_SUBSCRIPTION_PLANS_CHANGED: {
+                    final SubscriptionPlan[] plans = (SubscriptionPlan[]) msg.obj;
+                    final int subId = msg.arg1;
+                    final int length = mListeners.beginBroadcast();
+                    for (int i = 0; i < length; i++) {
+                        final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
+                        dispatchSubscriptionPlansChanged(listener, subId, plans);
+                    }
+                    mListeners.finishBroadcast();
                     return true;
                 }
                 default: {

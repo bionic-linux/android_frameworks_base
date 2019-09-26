@@ -2647,7 +2647,27 @@ public class CarrierConfigManager {
             "opportunistic_network_data_switch_hysteresis_time_long";
 
     /**
+<<<<<<< HEAD   (3d427f Handle 5G meteredness in telephony framework)
      * Controls time in milli seconds until DcTracker reevaluates 5G connection state.
+=======
+     * Controls hysteresis time in milli seconds for which OpportunisticNetworkService
+     * will wait before switching data from opportunistic network to primary network.
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_DATA_SWITCH_EXIT_HYSTERESIS_TIME_LONG =
+            "opportunistic_network_data_switch_exit_hysteresis_time_long";
+
+    /**
+     * Controls whether to do ping test before switching data to opportunistic network.
+     * This carrier config is used to disable this feature.
+     * @hide
+     */
+    public static final String KEY_PING_TEST_BEFORE_DATA_SWITCH_BOOL =
+            "ping_test_before_data_switch_bool";
+
+    /**
+     * Controls time in milliseconds until DcTracker reevaluates 5G connection state.
+>>>>>>> CHANGE (80b73b 5G meteredness for telephony framework)
      * @hide
      */
     public static final String KEY_5G_WATCHDOG_TIME_MS_LONG =
