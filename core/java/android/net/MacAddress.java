@@ -85,9 +85,6 @@ public final class MacAddress implements Parcelable {
     private static final long OUI_MASK = MacAddress.fromString("ff:ff:ff:0:0:0").mAddr;
     private static final long NIC_MASK = MacAddress.fromString("0:0:0:ff:ff:ff").mAddr;
     private static final MacAddress BASE_GOOGLE_MAC = MacAddress.fromString("da:a1:19:0:0:0");
-    /** Default wifi MAC address used for a special purpose **/
-    private static final MacAddress DEFAULT_MAC_ADDRESS =
-            MacAddress.fromString(WifiInfo.DEFAULT_MAC_ADDRESS);
 
     // Internal representation of the MAC address as a single 8 byte long.
     // The encoding scheme sets the two most significant bytes to 0. The 6 bytes of the
@@ -364,7 +361,16 @@ public final class MacAddress implements Parcelable {
      * @hide
      */
     public static @NonNull MacAddress createRandomUnicastAddress() {
-        return createRandomUnicastAddress(null, new SecureRandom());
+        SecureRandom r = new SecureRandom();
+        long addr = r.nextLong() & VALID_LONG_MASK;
+        addr |= LOCALLY_ASSIGNED_MASK;
+        addr &= ~MULTICAST_MASK;
+        MacAddress mac = new MacAddress(addr);
+        // WifiInfo.DEFAULT_MAC_ADDRESS is being used for another purpose, so do not use it here.
+        if (mac.toString().equals(WifiInfo.DEFAULT_MAC_ADDRESS)) {
+            return createRandomUnicastAddress();
+        }
+        return mac;
     }
 
     /**
@@ -374,23 +380,18 @@ public final class MacAddress implements Parcelable {
      * The locally assigned bit is always set to 1. The multicast bit is always set to 0.
      *
      * @param base a base MacAddress whose OUI is used for generating the random address.
-     *             If base == null then the OUI will also be randomized.
      * @param r a standard Java Random object used for generating the random address.
      * @return a random locally assigned MacAddress.
      *
      * @hide
      */
     public static @NonNull MacAddress createRandomUnicastAddress(MacAddress base, Random r) {
-        long addr;
-        if (base == null) {
-            addr = r.nextLong() & VALID_LONG_MASK;
-        } else {
-            addr = (base.mAddr & OUI_MASK) | (NIC_MASK & r.nextLong());
-        }
+        long addr = (base.mAddr & OUI_MASK) | (NIC_MASK & r.nextLong());
         addr |= LOCALLY_ASSIGNED_MASK;
         addr &= ~MULTICAST_MASK;
         MacAddress mac = new MacAddress(addr);
-        if (mac.equals(DEFAULT_MAC_ADDRESS)) {
+        // WifiInfo.DEFAULT_MAC_ADDRESS is being used for another purpose, so do not use it here.
+        if (mac.toString().equals(WifiInfo.DEFAULT_MAC_ADDRESS)) {
             return createRandomUnicastAddress(base, r);
         }
         return mac;
