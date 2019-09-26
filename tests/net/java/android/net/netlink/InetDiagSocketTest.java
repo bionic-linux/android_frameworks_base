@@ -45,7 +45,6 @@ import androidx.test.runner.AndroidJUnit4;
 import libcore.util.HexEncoding;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -157,14 +156,6 @@ public class InetDiagSocketTest {
         assertEquals(expectedUid, uid);
     }
 
-    private int findLikelyFreeUdpPort(UdpConnection conn) throws Exception {
-        UdpConnection udp = new UdpConnection(conn.remoteAddress.getHostAddress(),
-                conn.localAddress.getHostAddress());
-        final int localPort = udp.local.getPort();
-        udp.close();
-        return localPort;
-    }
-
     public void checkGetConnectionOwnerUid(String to, String from) throws Exception {
         /**
          * For TCP connections, create a test connection and verify that this
@@ -172,9 +163,6 @@ public class InetDiagSocketTest {
          */
         TcpConnection tcp = new TcpConnection(to, from);
         checkConnectionOwnerUid(tcp.protocol, tcp.local, tcp.remote, true);
-        checkConnectionOwnerUid(IPPROTO_UDP, tcp.local, tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, new InetSocketAddress(0), tcp.remote, false);
-        checkConnectionOwnerUid(tcp.protocol, tcp.local, new InetSocketAddress(0), false);
         tcp.close();
 
         /**
@@ -184,13 +172,9 @@ public class InetDiagSocketTest {
         UdpConnection udp = new UdpConnection(to,from);
         checkConnectionOwnerUid(udp.protocol, udp.local, udp.remote, true);
         checkConnectionOwnerUid(udp.protocol, udp.local, new InetSocketAddress(0), true);
-        checkConnectionOwnerUid(IPPROTO_TCP, udp.local, udp.remote, false);
-        checkConnectionOwnerUid(udp.protocol, new InetSocketAddress(findLikelyFreeUdpPort(udp)),
-                udp.remote, false);
         udp.close();
     }
 
-    @Ignore
     @Test
     public void testGetConnectionOwnerUid() throws Exception {
         checkGetConnectionOwnerUid("::", null);
@@ -201,6 +185,13 @@ public class InetDiagSocketTest {
         checkGetConnectionOwnerUid("127.0.0.1", "127.0.0.2");
         checkGetConnectionOwnerUid("::1", null);
         checkGetConnectionOwnerUid("::1", "::1");
+
+        /* Verify fix for b/141603906 */
+        final InetSocketAddress src = new InetSocketAddress(0);
+        final InetSocketAddress dst = new InetSocketAddress(0);
+        for (int i = 1; i <= 100000; i++) {
+            mCm.getConnectionOwnerUid(IPPROTO_TCP, src, dst);
+        }
     }
 
     // Hexadecimal representation of InetDiagReqV2 request.
