@@ -18,7 +18,6 @@ package android.net.netlink;
 
 import static android.net.netlink.StructNlMsgHdr.NLM_F_DUMP;
 import static android.net.netlink.StructNlMsgHdr.NLM_F_REQUEST;
-import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.AF_INET6;
 import static android.system.OsConstants.IPPROTO_TCP;
@@ -28,6 +27,7 @@ import static android.system.OsConstants.SOCK_STREAM;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -45,7 +45,6 @@ import androidx.test.runner.AndroidJUnit4;
 import libcore.util.HexEncoding;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -152,9 +151,13 @@ public class InetDiagSocketTest {
 
     private void checkConnectionOwnerUid(int protocol, InetSocketAddress local,
                                          InetSocketAddress remote, boolean expectSuccess) {
-        final int expectedUid = expectSuccess ? Process.myUid() : INVALID_UID;
         final int uid = mCm.getConnectionOwnerUid(protocol, local, remote);
-        assertEquals(expectedUid, uid);
+
+        if (expectSuccess) {
+            assertEquals(Process.myUid(), uid);
+        } else {
+            assertNotEquals(Process.myUid(), uid);
+        }
     }
 
     private int findLikelyFreeUdpPort(UdpConnection conn) throws Exception {
@@ -190,7 +193,6 @@ public class InetDiagSocketTest {
         udp.close();
     }
 
-    @Ignore
     @Test
     public void testGetConnectionOwnerUid() throws Exception {
         checkGetConnectionOwnerUid("::", null);
@@ -201,6 +203,16 @@ public class InetDiagSocketTest {
         checkGetConnectionOwnerUid("127.0.0.1", "127.0.0.2");
         checkGetConnectionOwnerUid("::1", null);
         checkGetConnectionOwnerUid("::1", "::1");
+    }
+
+    /* Verify fix for b/141603906 */
+    @Test
+    public void testB141603906() throws Exception {
+        final InetSocketAddress src = new InetSocketAddress(0);
+        final InetSocketAddress dst = new InetSocketAddress(0);
+        for (int i = 1; i <= 100000; i++) {
+            mCm.getConnectionOwnerUid(IPPROTO_TCP, src, dst);
+        }
     }
 
     // Hexadecimal representation of InetDiagReqV2 request.
