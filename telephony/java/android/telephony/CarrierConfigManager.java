@@ -2647,7 +2647,7 @@ public class CarrierConfigManager {
             "opportunistic_network_data_switch_hysteresis_time_long";
 
     /**
-     * Controls time in milli seconds until DcTracker reevaluates 5G connection state.
+     * Controls time in milliseconds until DcTracker reevaluates 5G connection state.
      * @hide
      */
     public static final String KEY_5G_WATCHDOG_TIME_MS_LONG =
