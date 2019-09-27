@@ -22,6 +22,30 @@
       "revId": "54b72d013fdb59e118a7322d013a4f12efba7f69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d585c7f7_0735cddb",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2019-09-27T11:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b31c872_7baeb404",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 9
+      },
+      "revId": "54b72d013fdb59e118a7322d013a4f12efba7f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
