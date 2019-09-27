@@ -70,6 +70,8 @@ public final class Telecom extends BaseCommand {
     private static final String COMMAND_SET_SIM_COUNT = "set-sim-count";
     private static final String COMMAND_GET_SIM_CONFIG = "get-sim-config";
     private static final String COMMAND_GET_MAX_PHONES = "get-max-phones";
+    private static final String COMMAND_SET_TEST_EMERGENCY_PHONE_ACCOUNT_PACKAGE_FILTER =
+            "set-test-emergency-phone-account-package-filter";
 
     private ComponentName mComponent;
     private String mAccountId;
@@ -83,7 +85,7 @@ public final class Telecom extends BaseCommand {
                 + "usage: telecom set-phone-account-enabled <COMPONENT> <ID> <USER_SN>\n"
                 + "usage: telecom set-phone-account-disabled <COMPONENT> <ID> <USER_SN>\n"
                 + "usage: telecom register-phone-account <COMPONENT> <ID> <USER_SN> <LABEL>\n"
-                + "usage: telecom set-user-selected-outgoing-phone-account <COMPONENT> <ID> "
+                + "usage: telecom set-user-selected-outgoing-phone-account [-e] <COMPONENT> <ID> "
                 + "<USER_SN>\n"
                 + "usage: telecom set-test-call-redirection-app <PACKAGE>\n"
                 + "usage: telecom set-test-call-screening-app <PACKAGE>\n"
@@ -100,6 +102,7 @@ public final class Telecom extends BaseCommand {
                 + "usage: telecom set-sim-count <COUNT>\n"
                 + "usage: telecom get-sim-config\n"
                 + "usage: telecom get-max-phones\n"
+                + "usage: telecom set-emer-phone-account-filter <PACKAGE>\n"
                 + "\n"
                 + "telecom set-phone-account-enabled: Enables the given phone account, if it has"
                         + " already been registered with Telecom.\n"
@@ -123,6 +126,10 @@ public final class Telecom extends BaseCommand {
                         + " or \"\" for single SIM\n"
                 + "\n"
                 + "telecom get-max-phones: Get the max supported phones from the modem.\n"
+                + "telecom set-test-emergency-phone-account-package-filter <PACKAGE>: sets a"
+                        + " package name that will be used for test emergency calls. To clear,"
+                        + " send an empty package name. Real emergency calls will still be placed"
+                        + " over Telephony.\n"
         );
     }
 
@@ -208,6 +215,9 @@ public final class Telecom extends BaseCommand {
             case COMMAND_GET_MAX_PHONES:
                 runGetMaxPhones();
                 break;
+            case COMMAND_SET_TEST_EMERGENCY_PHONE_ACCOUNT_PACKAGE_FILTER:
+                runSetEmergencyPhoneAccountPackageFilter();
+                break;
             default:
                 Log.w(this, "onRun: unknown command: %s", command);
                 throw new IllegalArgumentException ("unknown command '" + command + "'");
@@ -234,19 +244,23 @@ public final class Telecom extends BaseCommand {
     }
 
     private void runRegisterSimPhoneAccount() throws RemoteException {
+        final String option = nextOption();
+        final boolean isEmergencyAccount = !TextUtils.isEmpty(option) && "-e".equals(option);
         final PhoneAccountHandle handle = getPhoneAccountHandleFromArgs();
         final String label = nextArgRequired();
         final String address = nextArgRequired();
+        int capabilities = PhoneAccount.CAPABILITY_CALL_PROVIDER
+                | PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION
+                | (isEmergencyAccount ? PhoneAccount.CAPABILITY_PLACE_EMERGENCY_CALLS : 0);
         PhoneAccount account = PhoneAccount.builder(
             handle, label)
-            .setAddress(Uri.parse(address))
-            .setSubscriptionAddress(Uri.parse(address))
-            .setCapabilities(PhoneAccount.CAPABILITY_CALL_PROVIDER |
-                    PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION)
-            .setShortDescription(label)
-            .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
-            .addSupportedUriScheme(PhoneAccount.SCHEME_VOICEMAIL)
-            .build();
+                .setAddress(Uri.parse(address))
+                .setSubscriptionAddress(Uri.parse(address))
+                .setCapabilities(capabilities)
+                .setShortDescription(label)
+                .addSupportedUriScheme(PhoneAccount.SCHEME_TEL)
+                .addSupportedUriScheme(PhoneAccount.SCHEME_VOICEMAIL)
+                .build();
         mTelecomService.registerPhoneAccount(account);
         System.out.println("Success - " + handle + " registered.");
     }
@@ -336,6 +350,18 @@ public final class Telecom extends BaseCommand {
         } else {
             System.out.println("1");
         }
+    }
+
+    private void runSetEmergencyPhoneAccountPackageFilter() throws RemoteException {
+        String packageName = mArgs.getNextArg();
+        if (TextUtils.isEmpty(packageName)) {
+            mTelecomService.setTestEmergencyPhoneAccountPackageNameFilter(null);
+            System.out.println("Success - filter cleared");
+        } else {
+            mTelecomService.setTestEmergencyPhoneAccountPackageNameFilter(packageName);
+            System.out.println("Success = filter set to " + packageName);
+        }
+
     }
 
     private PhoneAccountHandle getPhoneAccountHandleFromArgs() throws RemoteException {
