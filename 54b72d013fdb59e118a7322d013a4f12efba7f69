@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b31c872_7baeb404",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-09-27T09:46:08Z",
+      "side": 1,
+      "message": "Instead of removing the @Ignore on this test, can you move this loop to its own test? Something like:\n\n    @Test\n    public void testGetConnectionOwnerUidNoLeaks() throws Exception {\n        /* Verify fix for b/141603906 */\n        final InetSocketAddress src \u003d new InetSocketAddress(0);\n        final InetSocketAddress dst \u003d new InetSocketAddress(0);\n        for (int i \u003d 1; i \u003c\u003d 100000; i++) {\n            mCm.getConnectionOwnerUid(IPPROTO_TCP, src, dst);\n        }\n        // No crashes? Good.\n    }",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 9
+      },
+      "revId": "54b72d013fdb59e118a7322d013a4f12efba7f69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

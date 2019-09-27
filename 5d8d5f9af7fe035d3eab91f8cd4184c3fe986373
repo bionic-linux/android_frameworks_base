@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9c50102_11d32eec",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-09-27T09:46:08Z",
+      "side": 0,
+      "message": "I\u0027d rather leave this code here as @Ignore so we can at least see failures when we run the test manually. Could you leave this here as is? Or maybe break out the flaky bits to another test that has @Ignore?",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 90
+      },
+      "revId": "5d8d5f9af7fe035d3eab91f8cd4184c3fe986373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
