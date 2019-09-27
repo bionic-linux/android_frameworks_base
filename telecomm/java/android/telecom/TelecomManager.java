@@ -2035,6 +2035,30 @@ public class TelecomManager {
     }
 
     /**
+     * Sets a PhoneAccount package name filter in Telecom, which will restrict the PhoneAccounts
+     * that can be used to place outgoing calls to the package name specified. Pass in {@code null}
+     * to remove any previous restriction.
+     * <p>
+     * Placing an emergency call (that is not in the test emergency call list) will override this
+     * restriction for safety reasons.
+     * <p>
+     * This method is to be used for TESTING ONLY and may only be executed by the SHELL UID.
+     * @hide
+     */
+    @TestApi
+    public void setTestEmergencyPhoneAccountPackageNameFilter(@Nullable String packageName) {
+        try {
+            if (isServiceConnected()) {
+                getTelecomService().setTestEmergencyPhoneAccountPackageNameFilter(packageName);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException restrictOutgoingPhoneAccountToPackage: " + e);
+            e.rethrowAsRuntimeException();
+        }
+    }
+
+
+    /**
      * Determines if there is an ongoing emergency call.  This can be either an outgoing emergency
      * call, as identified by the dialed number, or because a call was identified by the network
      * as an emergency call.
@@ -2059,12 +2083,13 @@ public class TelecomManager {
     /**
      * Handles {@link Intent#ACTION_CALL} intents trampolined from UserCallActivity.
      * @param intent The {@link Intent#ACTION_CALL} intent to handle.
+     * @param callingPackageProxy The original package that called this before it was trampolined.
      * @hide
      */
-    public void handleCallIntent(Intent intent) {
+    public void handleCallIntent(Intent intent, String callingPackageProxy) {
         try {
             if (isServiceConnected()) {
-                getTelecomService().handleCallIntent(intent);
+                getTelecomService().handleCallIntent(intent, callingPackageProxy);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "RemoteException handleCallIntent: " + e);

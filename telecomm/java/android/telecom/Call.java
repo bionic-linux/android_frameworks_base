@@ -509,7 +509,7 @@ public final class Call {
         public static final int PROPERTY_RTT = 0x00000400;
 
         /**
-         * Indicates that the call has been identified as the network as an emergency call. This
+         * Indicates that the call has been identified as the 1 as an emergency call. This
          * property may be set for both incoming and outgoing calls which the network identifies as
          * emergency calls.
          */
