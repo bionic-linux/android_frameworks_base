@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e246bc_bd200847",
+        "filename": "cmds/telecom/src/com/android/commands/telecom/Telecom.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-09-30T23:17:27Z",
+      "side": 1,
+      "message": "is there a way to find out whether the options contain \u0027-e\u0027? this makes the behavior order-dependent if we ever add other options and that\u0027s bad",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 93
+      },
+      "revId": "be559385296415c120f0c4095e8ea501c9fa60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17313895_122fbded",
+        "filename": "telephony/java/android/telephony/emergency/EmergencyNumber.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-09-30T23:17:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be @TestApi if you\u0027re using it from CTS?",
+      "range": {
+        "startLine": 188,
+        "startChar": 5,
+        "endLine": 188,
+        "endChar": 14
+      },
+      "revId": "be559385296415c120f0c4095e8ea501c9fa60ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
