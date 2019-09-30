@@ -18,8 +18,12 @@
 aidl_interface {
     name: "tethering-aidl-interfaces",
     local_include_dir: "src",
+    include_dirs: ["frameworks/base/core/java"], // For framework parcelables.
     srcs: [
+        "src/android/net/ITetherInternalCallback.aidl",
         "src/android/net/ITetheringConnector.aidl",
+        "src/android/net/TetheringConfigurationParcel.aidl",
+        "src/android/net/TetherStatesParcel.aidl",
     ],
     backend: {
         ndk: {

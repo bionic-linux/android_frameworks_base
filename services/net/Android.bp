@@ -1,7 +1,6 @@
 java_library_static {
     name: "services.net",
     srcs: [
-        ":tethering-servicesnet-srcs",
         "java/**/*.java",
     ],
     static_libs: [

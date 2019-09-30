@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity.tethering;
+package com.android.server.connectivity;
 
 import android.annotation.Nullable;
 import android.net.LinkProperties;
