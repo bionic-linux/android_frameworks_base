@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bf1623b_123e4f4f",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-09-30T15:14:30Z",
+      "side": 1,
+      "message": "Care to add a comment here explaining why we do this? Something like:\n\n    // This doesn\u0027t always return INVALID_UID because on some devices other UIDs (e.g.,\n    // the radio) might have transparent sockets open. b/141459241\n\nOr maybe do something more explicit:\n\n    void assertUidIn(int uid, int... uids) {\n        for (int i \u003d 0; i \u003c uids.length; i++) {\n            if (uid \u003d\u003d uids[i]) return;\n        }\n        fail(\"UID \" + uid + \" not in \" + arrays.toString(uids));\n    }\n\nand then do:\n\n    assertUidIn(uid, Process.myUid, PHONE_UID);",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "59940afb16782d2cad2a7a1adbe653c2f5eb9812",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
