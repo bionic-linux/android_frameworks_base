@@ -2,7 +2,6 @@ java_library_static {
     name: "services.net",
     srcs: [
         ":net-module-utils-srcs",
-        ":tethering-servicesnet-srcs",
         "java/**/*.java",
     ],
     static_libs: [
