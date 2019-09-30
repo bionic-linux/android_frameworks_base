@@ -47,6 +47,7 @@ import android.os.Parcel;
 import android.os.PersistableBundle;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
@@ -93,7 +94,6 @@ public class EntitlementManager {
     private final ArraySet<Integer> mCurrentTethers;
     private final Context mContext;
     private final int mPermissionChangeMessageCode;
-    private final MockableSystemProperties mSystemProperties;
     private final SharedLog mLog;
     private final SparseIntArray mEntitlementCacheValue;
     private final EntitlementHandler mHandler;
@@ -109,12 +109,12 @@ public class EntitlementManager {
     private TetheringConfigurationFetcher mFetcher;
 
     public EntitlementManager(Context ctx, StateMachine tetherMasterSM, SharedLog log,
-            int permissionChangeMessageCode, MockableSystemProperties systemProperties) {
+            int permissionChangeMessageCode) {
+
         mContext = ctx;
         mLog = log.forSubComponent(TAG);
         mCurrentTethers = new ArraySet<Integer>();
         mCellularPermitted = new SparseIntArray();
-        mSystemProperties = systemProperties;
         mEntitlementCacheValue = new SparseIntArray();
         mTetherMasterSM = tetherMasterSM;
         mPermissionChangeMessageCode = permissionChangeMessageCode;
@@ -286,7 +286,7 @@ public class EntitlementManager {
      */
     @VisibleForTesting
     protected boolean isTetherProvisioningRequired(final TetheringConfiguration config) {
-        if (mSystemProperties.getBoolean(DISABLE_PROVISIONING_SYSPROP_KEY, false)
+        if (SystemProperties.getBoolean(DISABLE_PROVISIONING_SYSPROP_KEY, false)
                 || config.provisioningApp.length == 0) {
             return false;
         }
