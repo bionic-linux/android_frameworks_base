@@ -81,6 +81,14 @@ public final class CompatChange {
         return mName;
     }
 
+    int getEnableAfterTargetSdk() {
+        return mEnableAfterTargetSdk;
+    }
+
+    boolean getDisabled() {
+        return mDisabled;
+    }
+
     /**
      * Force the enabled state of this change for a given package name. The change will only take
      * effect after that packages process is killed and restarted.
