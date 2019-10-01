@@ -49,6 +49,20 @@ public final class CompatibilityChangeConfig implements Parcelable {
         return mChangeConfig.forceDisabledSet();
     }
 
+    /**
+     * Returns if a change is enabled or disabled in this config, or a default value if it
+     * doesn't exist.
+     */
+
+    public boolean isChangeEnabledOrDefault(long changeId, boolean defaultValue) {
+        if (mChangeConfig.isForceEnabled(changeId)) {
+            return true;
+        } else if (mChangeConfig.isForceDisabled(changeId)) {
+            return false;
+        }
+        return defaultValue;
+    }
+
     private CompatibilityChangeConfig(Parcel in) {
         long[] enabledArray = in.createLongArray();
         long[] disabledArray = in.createLongArray();
