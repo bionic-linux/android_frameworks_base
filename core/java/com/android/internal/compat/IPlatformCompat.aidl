@@ -20,6 +20,7 @@ import android.content.pm.ApplicationInfo;
 import java.util.Map;
 
 parcelable ParcelableCompatibilityChangeConfig;
+parcelable CompatChangeInfo;
 
 /**
  * Platform private API for talking with the PlatformCompat service.
@@ -115,4 +116,18 @@ interface IPlatformCompat
      *
      */
     void clearOverrides(in String packageName);
+
+    /**
+     * Get configs for an application.
+     *
+     * @param appInfo The application whose config will be returned.
+     */
+    Map getAppConfig(in ApplicationInfo appInfo);
+
+    /**
+     * List all compatibility changes.
+     *
+     * @return An array of {@link CompatChangeInfo}.
+     */
+    CompatChangeInfo[] listAllChanges();
 }

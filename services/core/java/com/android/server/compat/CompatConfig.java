@@ -25,6 +25,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.compat.CompatChangeInfo;
 import com.android.internal.compat.ParcelableCompatibilityChangeConfig;
 import com.android.server.compat.config.Change;
 import com.android.server.compat.config.XmlParser;
@@ -261,6 +262,25 @@ public final class CompatConfig {
             }
         }
         return state;
+    }
+
+    /**
+     * Dump all the compatibility change information.
+     *
+     * @return An array of {@link CompatChangeInfo} with the current changes.
+     */
+    public CompatChangeInfo[] dumpChanges() {
+        synchronized (mChanges) {
+            CompatChangeInfo[] changeInfos = new CompatChangeInfo[mChanges.size()];
+            for (int i = 0; i < mChanges.size(); ++i) {
+                CompatChange change = mChanges.valueAt(i);
+                changeInfos[i] = new CompatChangeInfo(change.getId(),
+                                                      change.getName(),
+                                                      change.getEnableAfterTargetSdk(),
+                                                      !change.getDisabled());
+            }
+            return changeInfos;
+        }
     }
 
     CompatConfig initConfigFromLib(File libraryDir) {
