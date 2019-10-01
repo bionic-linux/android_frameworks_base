@@ -26,6 +26,7 @@ import android.util.Slog;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.compat.CompatibilityChangeConfig;
+import com.android.internal.compat.CompatibilityChangeInfo;
 import com.android.server.compat.config.Change;
 import com.android.server.compat.config.XmlParser;
 
@@ -37,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 /**
@@ -240,6 +243,43 @@ public final class CompatConfig {
                 CompatChange c = mChanges.valueAt(i);
                 pw.println(c.toString());
             }
+        }
+    }
+
+    /**
+     * Dumps the config for a given app.
+     *
+     * @param applicationInfo the {@link ApplicationInfo} for which the info should be dumped.
+     * @return A {@link Map} which contains the compat config info for the given app.
+     */
+
+    public Map<Long, Boolean> dumpAppConfig(ApplicationInfo applicationInfo) {
+        Map<Long, Boolean> state = new HashMap<>();
+        synchronized (mChanges) {
+            for (int i = 0; i < mChanges.size(); ++i) {
+                CompatChange c = mChanges.valueAt(i);
+                state.put(c.getId(), c.isEnabled(applicationInfo));
+            }
+        }
+        return state;
+    }
+
+    /**
+     * Dumps all the compatibility change information.
+     *
+     * @return An array of {@link CompatibilityChangeInfo} with the current changes.
+     */
+    public CompatibilityChangeInfo[] dumpChanges() {
+        synchronized (mChanges) {
+            CompatibilityChangeInfo[] changeInfos = new CompatibilityChangeInfo[mChanges.size()];
+            for (int i = 0; i < mChanges.size(); ++i) {
+                CompatChange change = mChanges.valueAt(i);
+                changeInfos[i] = new CompatibilityChangeInfo(change.getId(),
+                                                      change.getName(),
+                                                      change.getEnableAfterTargetSdk(),
+                                                      change.getDisabled());
+            }
+            return changeInfos;
         }
     }
 
