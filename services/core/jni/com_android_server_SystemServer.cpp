@@ -33,6 +33,12 @@
 
 namespace android {
 
+#ifdef PRODUCT_SHIPPING_API_LEVEL
+constexpr size_t kProductShippingApiLevel = PRODUCT_SHIPPING_API_LEVEL;
+#else
+constexpr size_t kProductShippingApiLevel = 1;
+#endif
+
 static void android_server_SystemServer_startSensorService(JNIEnv* /* env */, jobject /* clazz */) {
     char propBuf[PROPERTY_VALUE_MAX];
     property_get("system_init.startsensorservice", propBuf, "1");
@@ -61,9 +67,11 @@ static void android_server_SystemServer_startHidlServices(JNIEnv* env, jobject /
     err = sensorService->registerAsService();
     ALOGE_IF(err != OK, "Cannot register %s: %d", ISensorManager::descriptor, err);
 
-    sp<ISchedulingPolicyService> schedulingService = new SchedulingPolicyService();
-    err = schedulingService->registerAsService();
-    ALOGE_IF(err != OK, "Cannot register %s: %d", ISchedulingPolicyService::descriptor, err);
+    if (kProductShippingApiLevel <= 29) {
+        sp<ISchedulingPolicyService> schedulingService = new SchedulingPolicyService();
+        err = schedulingService->registerAsService();
+        ALOGE_IF(err != OK, "Cannot register %s: %d", ISchedulingPolicyService::descriptor, err);
+    }
 }
 
 static void android_server_SystemServer_initZygoteChildHeapProfiling(JNIEnv* /* env */,

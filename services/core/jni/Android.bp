@@ -152,7 +152,10 @@ cc_defaults {
                 "libchrome",
                 "libmojo",
             ],
-        }
+        },
+        product_shipping_api_level: {
+            cflags: ["-DPRODUCT_SHIPPING_API_LEVEL=%s"],
+        },
     }
 }
 
