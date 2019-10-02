@@ -78,8 +78,11 @@ public final class LinkProperties implements Parcelable {
     private Hashtable<String, LinkProperties> mStackedLinks = new Hashtable<>();
 
     /**
+     * @param <T> The type of data to compare.
+     *
      * @hide
      */
+    @SystemApi
     public static class CompareResult<T> {
         public final List<T> removed = new ArrayList<>();
         public final List<T> added = new ArrayList<>();
@@ -243,7 +246,7 @@ public final class LinkProperties implements Parcelable {
      * @return An unmodifiable {@link List} of {@link InetAddress} for this link.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public @NonNull List<InetAddress> getAddresses() {
         final List<InetAddress> addresses = new ArrayList<>();
         for (LinkAddress linkAddress : mLinkAddresses) {
@@ -538,6 +541,7 @@ public final class LinkProperties implements Parcelable {
      * @return true if the PCSCF server was added, false otherwise.
      * @hide
      */
+    @SystemApi
     public boolean addPcscfServer(@NonNull InetAddress pcscfServer) {
         if (pcscfServer != null && !mPcscfs.contains(pcscfServer)) {
             mPcscfs.add(pcscfServer);
@@ -1022,7 +1026,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if there is an IPv4 default route, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean hasIpv4DefaultRoute() {
         for (RouteInfo r : mRoutes) {
             if (r.isIPv4Default()) {
@@ -1079,7 +1083,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if there is an IPv4 DNS server, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean hasIpv4DnsServer() {
         for (InetAddress ia : mDnses) {
             if (ia instanceof Inet4Address) {
@@ -1107,7 +1111,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if there is an IPv6 DNS server, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean hasIpv6DnsServer() {
         for (InetAddress ia : mDnses) {
             if (ia instanceof Inet6Address) {
@@ -1261,7 +1265,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if both are identical, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean isIdenticalInterfaceName(@NonNull LinkProperties target) {
         return TextUtils.equals(getInterfaceName(), target.getInterfaceName());
     }
@@ -1273,7 +1277,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if both are identical, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean isIdenticalAddresses(@NonNull LinkProperties target) {
         Collection<InetAddress> targetAddresses = target.getAddresses();
         Collection<InetAddress> sourceAddresses = getAddresses();
@@ -1288,7 +1292,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if both are identical, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean isIdenticalDnses(@NonNull LinkProperties target) {
         Collection<InetAddress> targetDnses = target.getDnsServers();
         String targetDomains = target.getDomains();
@@ -1349,7 +1353,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if both are identical, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean isIdenticalRoutes(@NonNull LinkProperties target) {
         Collection<RouteInfo> targetRoutes = target.getRoutes();
         return (mRoutes.size() == targetRoutes.size()) ?
@@ -1363,7 +1367,7 @@ public final class LinkProperties implements Parcelable {
      * @return {@code true} if both are identical, {@code false} otherwise.
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
+    @SystemApi
     public boolean isIdenticalHttpProxy(@NonNull LinkProperties target) {
         return getHttpProxy() == null ? target.getHttpProxy() == null :
                 getHttpProxy().equals(target.getHttpProxy());
@@ -1472,6 +1476,7 @@ public final class LinkProperties implements Parcelable {
      * @return the differences between the addresses.
      * @hide
      */
+    @SystemApi
     public @NonNull CompareResult<LinkAddress> compareAddresses(@Nullable LinkProperties target) {
         /*
          * Duplicate the LinkAddresses into removed, we will be removing

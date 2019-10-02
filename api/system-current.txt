@@ -4078,13 +4078,24 @@ package android.net {
     ctor public LinkProperties(@Nullable android.net.LinkProperties);
     method public boolean addDnsServer(@NonNull java.net.InetAddress);
     method public boolean addLinkAddress(@NonNull android.net.LinkAddress);
+    method public boolean addPcscfServer(@NonNull java.net.InetAddress);
+    method @NonNull public android.net.LinkProperties.CompareResult<android.net.LinkAddress> compareAddresses(@Nullable android.net.LinkProperties);
+    method @NonNull public java.util.List<java.net.InetAddress> getAddresses();
     method @Nullable public android.net.IpPrefix getNat64Prefix();
     method @NonNull public java.util.List<java.net.InetAddress> getPcscfServers();
     method @Nullable public String getTcpBufferSizes();
     method @NonNull public java.util.List<java.net.InetAddress> getValidatedPrivateDnsServers();
     method public boolean hasGlobalIpv6Address();
     method public boolean hasIpv4Address();
+    method public boolean hasIpv4DefaultRoute();
+    method public boolean hasIpv4DnsServer();
     method public boolean hasIpv6DefaultRoute();
+    method public boolean hasIpv6DnsServer();
+    method public boolean isIdenticalAddresses(@NonNull android.net.LinkProperties);
+    method public boolean isIdenticalDnses(@NonNull android.net.LinkProperties);
+    method public boolean isIdenticalHttpProxy(@NonNull android.net.LinkProperties);
+    method public boolean isIdenticalInterfaceName(@NonNull android.net.LinkProperties);
+    method public boolean isIdenticalRoutes(@NonNull android.net.LinkProperties);
     method public boolean isIpv4Provisioned();
     method public boolean isIpv6Provisioned();
     method public boolean isProvisioned();
@@ -4098,6 +4109,13 @@ package android.net {
     method public void setTcpBufferSizes(@Nullable String);
     method public void setUsePrivateDns(boolean);
     method public void setValidatedPrivateDnsServers(@NonNull java.util.Collection<java.net.InetAddress>);
+  }
+
+  public static class LinkProperties.CompareResult<T> {
+    ctor public LinkProperties.CompareResult();
+    ctor public LinkProperties.CompareResult(java.util.Collection<T>, java.util.Collection<T>);
+    field public final java.util.List<T> added;
+    field public final java.util.List<T> removed;
   }
 
   public class Network implements android.os.Parcelable {
