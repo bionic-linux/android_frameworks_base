@@ -130,4 +130,8 @@ interface IPlatformCompat
      * @return An array of {@link CompatChangeInfo}.
      */
     CompatChangeInfo[] listAllChanges();
+
+    String dummy1();
+    String dummy2();
+    String dummy3();
 }

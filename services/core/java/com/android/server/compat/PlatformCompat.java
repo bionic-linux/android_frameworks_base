@@ -19,6 +19,8 @@ package com.android.server.compat;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.dummy.Gating;
+import android.os.Binder;
 import android.util.Slog;
 import android.util.StatsLog;
 
@@ -122,5 +124,41 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     private void reportChange(long changeId, ApplicationInfo appInfo, int state) {
         int uid = appInfo.uid;
         mChangeReporter.reportChange(uid, changeId, state);
+    }
+
+    @Override
+    public String dummy1() {
+        int uid = Binder.getCallingUid();
+        String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
+        if (packages.length != 1) {
+            return "dummy1 can't find package name for uid";
+        }
+        if (isChangeEnabledByPackageName(Gating.CHANGE_NORMAL, packages[0]))
+            return "dummy1 enabled";
+        return "dummy1 disabled";
+    }
+
+    @Override
+    public String dummy2() {
+        int uid = Binder.getCallingUid();
+        String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
+        if (packages.length != 1) {
+            return "dummy2 can't find package name for uid";
+        }
+        if (isChangeEnabledByPackageName(Gating.CHANGE_DISABLED, packages[0]))
+            return "dummy2 enabled";
+        return "dummy2 disabled";
+    }
+
+    @Override
+    public String dummy3() {
+        int uid = Binder.getCallingUid();
+        String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
+        if (packages.length != 1) {
+            return "dummy3 can't find package name for uid";
+        }
+        if (isChangeEnabledByPackageName(Gating.CHANGE_AFTER_SDK, packages[0]))
+            return "dummy3 enabled";
+        return "dummy3 disabled";
     }
 }
