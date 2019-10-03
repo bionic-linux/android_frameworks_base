@@ -52,6 +52,24 @@ public class BootImageProfileTest implements IDeviceTest {
         assertTrue("profile system server not enabled", res != null && res.equals("true"));
     }
 
+    private void forceSetPhenotypeProperty(String flag, String value) throws Exception {
+        String res;
+        String cmd;
+        // For AOSP devices
+        cmd = "setprop persist.device_config.runtime_native_boot." + flag + " " + value;
+        res = mTestDevice.executeShellCommand(cmd);
+        assertTrue("Command " + cmd + " resulted in " + res, "".equals(res));
+        // For GMS devices
+        cmd = "am broadcast -a 'com.google.android.gms.phenotype.FLAG_OVERRIDE'";
+        cmd += " --es package \"com.google.android.gms.phenotype\"";
+        cmd += " --es user \"*\"";
+        cmd += " --esa flags \"" + flag + "\"";
+        cmd += " --esa values \"" + value + "\"  --esa types \"boolean\"";
+        cmd += " com.google.android.gms";
+        res = mTestDevice.executeShellCommand(cmd).trim();
+        // Ignore res since this will fail on AOSP devices.
+    }
+
     private void forceSaveProfile(String pkg) throws Exception {
         String pid = mTestDevice.executeShellCommand("pidof " + pkg).trim();
         assertTrue("Invalid pid " + pid, pid.length() > 0);
@@ -61,6 +79,7 @@ public class BootImageProfileTest implements IDeviceTest {
 
     @Test
     public void testSystemServerProfile() throws Exception {
+        forceSetPhenotypeProperty("profilebootclasspath", "true");
         // Trunacte the profile before force it to be saved to prevent previous profiles
         // causing the test to pass.
         String res;
