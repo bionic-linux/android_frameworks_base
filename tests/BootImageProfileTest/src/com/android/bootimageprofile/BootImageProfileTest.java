@@ -41,15 +41,23 @@ public class BootImageProfileTest implements IDeviceTest {
         return mTestDevice;
     }
 
-    /**
-     * Test that the boot image profile properties are set.
-     */
-    @Test
-    public void testProperties() throws Exception {
-        String res = mTestDevice.getProperty("dalvik.vm.profilebootclasspath");
-        assertTrue("profile boot class path not enabled", res != null && res.equals("true"));
-        res = mTestDevice.getProperty("dalvik.vm.profilesystemserver");
-        assertTrue("profile system server not enabled", res != null && res.equals("true"));
+    private void forceSetPhenotypeProperty(String namespace, String flag, String value)
+            throws Exception {
+        int i = 0;
+        final int maxIterations = 10;
+        while (true) {
+            String res;
+            String cmd = "device_config put " + namespace + " " + flag + " " + value;
+            res = mTestDevice.executeShellCommand(cmd);
+            String prop = "persist.device_config." + namespace + "." + flag;
+            String readValue = mTestDevice.getProperty(prop);
+            if (value.equals(readValue)) {
+                break;
+            }
+            assertTrue("Timeout setting property " + prop + " to " + value, i < maxIterations);
+            Thread.sleep(1000);
+            ++i;
+        }
     }
 
     private void forceSaveProfile(String pkg) throws Exception {
@@ -61,6 +69,8 @@ public class BootImageProfileTest implements IDeviceTest {
 
     @Test
     public void testSystemServerProfile() throws Exception {
+        forceSetPhenotypeProperty("runtime_native_boot", "profilebootclasspath", "true");
+        forceSetPhenotypeProperty("runtime_native_boot", "profilesystemserver", "true");
         // Trunacte the profile before force it to be saved to prevent previous profiles
         // causing the test to pass.
         String res;
