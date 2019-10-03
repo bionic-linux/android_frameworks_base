@@ -261,6 +261,30 @@
       "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e11d40_c86c4596",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-03T02:50:34Z",
+      "side": 1,
+      "message": "I\u0027m being super late to the party but let me observe a number of things.\n\n• Feature flags have an extreme tendency to creep and very easily become unmanageable. I think should be an general effort to avoid feature flags generally whenever sane. You don\u0027t want to live in a world where you have 20 concurrent feature flags to handle ; we already are trying to bite a lot more with the m*n problem caused by module version m running on platform version n, and a feature flag is an exponential increase in combination number with every flag we add. Down the trigger-happy path for feature flags lies madness.\n• In this case I think Luke makes two cogent points. One, this only ever releases to R. Two, there is no possible comparative metrics because we don\u0027t have old metrics.\n\nTherefore I think there are only two sane paths forward. Either we decide that we NEED metrics to release this, and then we shelve this work in favor of building old metrics first. Or we don\u0027t add a feature flag for this. I lean toward the latter.\n\n...and by the way if we don\u0027t add a feature flag for this, I see little point in having a getEnableLegacyDnsProxyServer() method, unless it eases development.",
+      "parentUuid": "11d4edf3_07312aa5",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 340,
+        "endChar": 19
+      },
+      "revId": "6e1b6d28f8788db8e46ab81afd0903f5ff741992",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
