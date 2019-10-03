@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
@@ -586,7 +587,7 @@ public class ViewConfiguration {
      * @return the time between successive key repeats in milliseconds.
      */
     public static int getKeyRepeatDelay() {
-        return KEY_REPEAT_DELAY;
+        return SystemProperties.getInt("ro.config.key_repeat_delay", KEY_REPEAT_DELAY);
     }
 
     /**
