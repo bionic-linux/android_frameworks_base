@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34a803d_65f97af9",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-08T17:52:01Z",
+      "side": 1,
+      "message": "Is this a new method? You ~never want go/@UnsupportedAppUsage annotation on new members.",
+      "range": {
+        "startLine": 753,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 24
+      },
+      "revId": "0f7b7da1475b52ccfec845e23274b7e50a731f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
