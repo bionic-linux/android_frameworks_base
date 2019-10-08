@@ -145,6 +145,7 @@ import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -368,6 +369,16 @@ public class AudioService extends IAudioService.Stub
         AudioSystem.STREAM_MUSIC,           // STREAM_TTS
         AudioSystem.STREAM_MUSIC            // STREAM_ACCESSIBILITY
     };
+
+    private static final Integer[] STREAM_VOLUME_BROADCAST = new Integer[] {
+        AudioSystem.STREAM_VOICE_CALL,
+        AudioSystem.STREAM_SYSTEM,
+        AudioSystem.STREAM_MUSIC,
+        AudioSystem.STREAM_NOTIFICATION,
+        AudioSystem.STREAM_BLUETOOTH_SCO,
+        AudioSystem.STREAM_TTS
+    };
+
     protected static int[] mStreamVolumeAlias;
 
     /**
@@ -1033,6 +1044,11 @@ public class AudioService extends IAudioService.Stub
                 }
             }
         }
+    }
+
+    private boolean isTv() {
+        return (mContext.getResources().getConfiguration().uiMode & Configuration.UI_MODE_TYPE_MASK)
+                == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
     private void createAudioSystemThread() {
@@ -4608,12 +4624,23 @@ public class AudioService extends IAudioService.Stub
                     EventLogTags.writeVolumeChanged(mStreamType, oldIndex, index, mIndexMax / 10,
                             caller);
                 }
-                // fire changed intents for all streams
-                mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
-                mVolumeChanged.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, oldIndex);
-                mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE_ALIAS,
-                        mStreamVolumeAlias[mStreamType]);
-                sendBroadcastToAll(mVolumeChanged);
+                if (isTv()) {
+                    if(Arrays.asList(STREAM_VOLUME_BROADCAST).contains(mStreamType)) {
+                        mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
+                        mVolumeChanged.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE,
+                              oldIndex);
+                        mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE_ALIAS,
+                              mStreamVolumeAlias[mStreamType]);
+                        sendBroadcastToAll(mVolumeChanged);
+                    }
+                } else {
+                    // fire changed intents for all streams
+                    mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
+                    mVolumeChanged.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, oldIndex);
+                    mVolumeChanged.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE_ALIAS,
+                          mStreamVolumeAlias[mStreamType]);
+                    sendBroadcastToAll(mVolumeChanged);
+                }
             }
             return changed;
         }
