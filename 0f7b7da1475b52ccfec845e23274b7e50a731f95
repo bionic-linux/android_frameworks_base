@@ -46,6 +46,30 @@
       "revId": "0f7b7da1475b52ccfec845e23274b7e50a731f95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17474445_eea8cf70",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-08T17:58:14Z",
+      "side": 1,
+      "message": "If this is not meant to be accessed by apps (i.e. just internal implementation detail), just remove this annotation.",
+      "parentUuid": "556c6c57_65b6ed03",
+      "range": {
+        "startLine": 753,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 24
+      },
+      "revId": "0f7b7da1475b52ccfec845e23274b7e50a731f95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
