@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "da00a33a_65e574c8",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T06:57:59Z",
+      "side": 1,
+      "message": "Let\u0027s use the new NETWORK_FACTORY permission that Paul is building in aosp/1099096",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9caa961d_826a98ca",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T06:57:59Z",
+      "side": 1,
+      "message": "protected if possible",
+      "range": {
+        "startLine": 444,
+        "startChar": 4,
+        "endLine": 444,
+        "endChar": 10
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7740f9ef_81bfb8e8",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -87,6 +133,53 @@
         "startChar": 16,
         "endLine": 449,
         "endChar": 35
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bcec1b_ba530f30",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T06:57:59Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "47a8be6f_c7d10990",
+      "range": {
+        "startLine": 449,
+        "startChar": 16,
+        "endLine": 449,
+        "endChar": 35
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8b5d12_cbb445d3",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-10-09T06:57:59Z",
+      "side": 1,
+      "message": "protected if possible",
+      "range": {
+        "startLine": 460,
+        "startChar": 4,
+        "endLine": 460,
+        "endChar": 10
       },
       "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
