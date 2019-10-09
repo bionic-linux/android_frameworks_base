@@ -58,7 +58,7 @@ public class ProvisioningConfiguration {
     //     t=0, t=2, t=6, t=14, t=30
     //
     // allowing for 10% jitter.
-    private static final int DEFAULT_TIMEOUT_MS = 36 * 1000;
+    private static final int DEFAULT_TIMEOUT_MS = 15 * 60 * 1000;
 
     /**
      * Builder to create a {@link ProvisioningConfiguration}.
