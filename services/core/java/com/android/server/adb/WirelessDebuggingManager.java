@@ -36,7 +36,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Provides communication to the Android Debug Daemon to allow, deny, query,
@@ -48,10 +50,10 @@ public class WirelessDebuggingManager {
     //private static final boolean DEBUG = false;
     private static final boolean DEBUG = true;
 
-    private static final String ADBD_SOCKET = "adbd";
+    private static final String ADBDWIFI_SOCKET = "adbdwifi";
     private static final int BUFFER_SIZE = 4096;
     private static final String WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY =
-            "persist.sys.wirless.debug";
+            "persist.sys.wireless.debug";
     private final Context mContext;
     private final Handler mHandler;
     private WirelessDebuggingThread mThread;
@@ -103,7 +105,7 @@ public class WirelessDebuggingManager {
 
         private void openSocketLocked() throws IOException {
             try {
-                LocalSocketAddress address = new LocalSocketAddress(ADBD_SOCKET,
+                LocalSocketAddress address = new LocalSocketAddress(ADBDWIFI_SOCKET,
                         LocalSocketAddress.Namespace.RESERVED);
                 mInputStream = null;
 
@@ -115,23 +117,18 @@ public class WirelessDebuggingManager {
                 mOutputStream = mSocket.getOutputStream();
                 mInputStream = mSocket.getInputStream();
 
-                if (DEBUG) Slog.d(TAG, "adb sending WI");
-                String head = "WI";
-                mOutputStream.write(head.getBytes());
-                mOutputStream.flush();
-
                 if (DEBUG) Slog.d(TAG, "adb sending QUERY PAIRED");
-                String qpaired = "QPAIRED";
+                String qpaired = "QD";
                 mOutputStream.write(qpaired.getBytes());
                 mOutputStream.flush();
 
                 if (DEBUG) Slog.d(TAG, "adb sending QUERY PAIRING");
-                String qpairing = "QPAIRING";
+                String qpairing = "QP";
                 mOutputStream.write(qpairing.getBytes());
                 mOutputStream.flush();
 
                 if (DEBUG) Slog.d(TAG, "adb sending QUERY Name");
-                String qname = "QNAME";
+                String qname = "QN";
                 mOutputStream.write(qname.getBytes());
                 mOutputStream.flush();
 
@@ -143,14 +140,30 @@ public class WirelessDebuggingManager {
 
         private void handleAdbdMsg(int count, byte[]  buffer, int op) {
             // Msg is in the following format:
-            //  [2 bytes][<content>]
             //  1) Opcode (2 bytes)
-            //  3) <content>
-            String content = new String(Arrays.copyOfRange(buffer, 2, count));
+            //  2) <content>
+            String content = new String(Arrays.copyOfRange(buffer, 0, count));
             Message msg = mHandler.obtainMessage(op);
             msg.obj = content;
             mHandler.sendMessage(msg);
         }
+
+        private class AdbdWifiMsg {
+            public final String code;
+            public final int msgInt;
+            public AdbdWifiMsg(String c, int m) {
+                code = c;
+                msgInt = m;
+            }
+        }
+        private final List<AdbdWifiMsg> mAdbdWifiMsgs = Collections.unmodifiableList(
+                Arrays.asList(
+                    new AdbdWifiMsg("PD", WirelessDebuggingHandler.MSG_RESPONSE_PAIRED_DEVICES),
+                    new AdbdWifiMsg("PI", WirelessDebuggingHandler.MSG_RESPONSE_PAIRING_DEVICES),
+                    new AdbdWifiMsg("CD", WirelessDebuggingHandler.MSG_RESPONSE_PAIRING_CODE),
+                    new AdbdWifiMsg("OK", WirelessDebuggingHandler.MSG_RESULT_OK),
+                    new AdbdWifiMsg("FA", WirelessDebuggingHandler.MSG_RESULT_FAILED),
+                    new AdbdWifiMsg("CA", WirelessDebuggingHandler.MSG_RESULT_CANCELLED)));
 
         private void listenToSocket() throws IOException {
             try {
@@ -164,35 +177,16 @@ public class WirelessDebuggingManager {
                         Slog.i(TAG, "listenToSocket received " + count + " :"
                                 + new String(Arrays.copyOfRange(buffer, 0, count)));
                     }
-                    if (buffer[0] == 'P' && buffer[1] == 'D') {
-                        /* Paired devices update */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_PAIRED_UPDATE);
-                    } else if (buffer[0] == 'P' && buffer[1] == 'I') {
-                        /* Pairing devices update */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_PAIRING_UPDATE);
-                    } else if (buffer[0] == 'C' && buffer[1] == 'D') {
-                        /* Pairing code update */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_PAIR_CODE);
-                    } else if (buffer[0] == 'D' && buffer[1] == 'N') {
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_NAME);
-                    } else if (buffer[0] == 'O' && buffer[1] == 'K') {
-                        /* Pair or unpair success */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_RESULT_OK);
-                    } else if (buffer[0] == 'F' && buffer[1] == 'A') {
-                        /* Pair or unpair fail */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler.MSG_ADB_WIRELESS_RESULT_FAIL);
-                    } else if (buffer[0] == 'C' && buffer[1] == 'A') {
-                        /* Pair or unpair cancelled */
-                        handleAdbdMsg(count, buffer,
-                                WirelessDebuggingHandler
-                                .MSG_ADB_WIRELESS_RESULT_CANCELLED);
-                    } else {
+                    boolean handled = false;
+                    for (AdbdWifiMsg adbdWifiMsg : mAdbdWifiMsgs) {
+                        if (adbdWifiMsg.code.charAt(0) == buffer[0] &&
+                            adbdWifiMsg.code.charAt(1) == buffer[1]) {
+                            handleAdbdMsg(count, buffer, adbdWifiMsg.msgInt);
+                            handled = true;
+                            break;
+                        }
+                    }
+                    if (!handled) {
                         Slog.e(TAG, "Unexpected operator: " + buffer[0]
                                 + buffer[1]);
                         break;
@@ -249,24 +243,38 @@ public class WirelessDebuggingManager {
     }
 
     class WirelessDebuggingHandler extends Handler {
-        private static final int MSG_ADB_WIRELESS_ENABLE = 1;
-        private static final int MSG_ADB_WIRELESS_DISABLE = 2;
-        private static final int MSG_ADB_WIRELESS_UI_PAIRED_QUERY = 3;
-        private static final int MSG_ADB_WIRELESS_UI_PAIRING_QUERY = 4;
-        private static final int MSG_ADB_WIRELESS_PAIRED_UPDATE = 5;
-        private static final int MSG_ADB_WIRELESS_PAIRING_UPDATE = 6;
-        private static final int MSG_ADB_WIRELESS_PAIR = 7;
-        private static final int MSG_ADB_WIRELESS_UNPAIR = 8;
-        private static final int MSG_ADB_WIRELESS_CANCEL_PAIRING = 9;
-        private static final int MSG_ADB_WIRELESS_RESULT_OK = 10;
-        private static final int MSG_ADB_WIRELESS_RESULT_FAIL = 11;
-        private static final int MSG_ADB_WIRELESS_RESULT_CANCELLED = 12;
-        private static final int MSG_ADB_WIRELESS_PAIR_CODE = 13;
-        private static final int MSG_ADB_WIRELESS_NAME = 14;
-        private static final int MSG_ADB_WIRELESS_UI_SET_NAME = 15;
-        private static final int MSG_ADB_WIRELESS_UI_DISCOVER_ENABLE = 16;
-        private static final int MSG_ADB_WIRELESS_UI_DISCOVER_DISABLE = 17;
-
+        // Ask adbd to enable adbdwifi
+        private static final int MSG_ADBDWIFI_ENABLE = 1;
+        // Ask adbd to disable adbdwifi
+        private static final int MSG_ADBDWIFI_DISABLE = 2;
+        // Ask adbd for the list of paired devices
+        private static final int MSG_QUERY_PAIRED_DEVICES = 3;
+        // Ask adbd for the list of pairing devices
+        private static final int MSG_QUERY_PAIRING_DEVICES = 4;
+        // Adbd response for the list of paired devices
+        private static final int MSG_RESPONSE_PAIRED_DEVICES = 5;
+        // Adbd response for the list of pairing devices
+        private static final int MSG_RESPONSE_PAIRING_DEVICES = 6;
+        // Request adbd to pair a device
+        private static final int MSG_REQ_PAIR = 7;
+        // Request adbd to unpair a device
+        private static final int MSG_REQ_UNPAIR = 8;
+        // Request adbd to cancel an in-progress device pairing
+        private static final int MSG_REQ_CANCEL_PAIRING = 9;
+        // Status code from adbd response (ok)
+        private static final int MSG_RESULT_OK = 10;
+        // Status code from adbd response (failed)
+        private static final int MSG_RESULT_FAILED = 11;
+        // Status code from adbd response (cancelled)
+        private static final int MSG_RESULT_CANCELLED = 12;
+        // adbd response with the user entered pairing code
+        private static final int MSG_RESPONSE_PAIRING_CODE = 13;
+        // Ask WirelessDebuggingManager to change the device name
+        private static final int MSG_QUERY_SET_DEVICE_NAME = 14;
+        // Ask adbd to enable discoverability mode
+        private static final int MSG_QUERY_DISCOVER_ENABLE = 15;
+        // Ask adbd to disable discoverability mode
+        private static final int MSG_QUERY_DISCOVER_DISABLE = 16;
 
         WirelessDebuggingHandler(Looper looper) {
             super(looper);
@@ -275,7 +283,7 @@ public class WirelessDebuggingManager {
         public void handleMessage(Message msg) {
             if (DEBUG) Slog.i(TAG, "adb wireless handle msg " + msg.what);
             switch (msg.what) {
-                case MSG_ADB_WIRELESS_ENABLE:
+                case MSG_ADBDWIFI_ENABLE:
                     if (mAdbWirelessEnabled) {
                         break;
                     }
@@ -289,7 +297,7 @@ public class WirelessDebuggingManager {
                     mThread.start();
 
                     break;
-                case MSG_ADB_WIRELESS_DISABLE:
+                case MSG_ADBDWIFI_DISABLE:
                     if (!mAdbWirelessEnabled) {
                         break;
                     }
@@ -304,88 +312,70 @@ public class WirelessDebuggingManager {
                     }
                     mPairedDevices.clear();
                     mPairingDevices.clear();
-
                     break;
-                case MSG_ADB_WIRELESS_UI_PAIRED_QUERY:
+                case MSG_QUERY_PAIRED_DEVICES:
                     updateUIDevices(true);
-
                     break;
-                case MSG_ADB_WIRELESS_UI_PAIRING_QUERY:
+                case MSG_QUERY_PAIRING_DEVICES:
                     updateUIDevices(false);
-
                     break;
-                case MSG_ADB_WIRELESS_PAIRED_UPDATE:
+                case MSG_RESPONSE_PAIRED_DEVICES:
                     parseDevices((String) msg.obj, true);
                     updateUIDevices(true);
-
                     break;
-                case MSG_ADB_WIRELESS_PAIRING_UPDATE:
+                case MSG_RESPONSE_PAIRING_DEVICES:
                     parseDevices((String) msg.obj, false);
                     updateUIDevices(false);
-
                     break;
-                case MSG_ADB_WIRELESS_PAIR:
+                case MSG_REQ_PAIR:
                     if (mThread != null) {
-                        String cmdStr = "PAIR" + msg.arg1 + "\n" + msg.arg2 + "\n" + msg.obj;
+                        String cmdStr = "PA" + msg.arg1 + "\n" + msg.arg2 + "\n" + msg.obj;
                         mThread.sendMessage(cmdStr);
                     }
-
                     break;
-                case MSG_ADB_WIRELESS_UNPAIR:
+                case MSG_REQ_UNPAIR:
                     if (mThread != null) {
-                        String cmdStr = "UNPAIR" + msg.arg1;
+                        String cmdStr = "UP" + msg.arg1;
                         mThread.sendMessage(cmdStr);
                     }
-
                     break;
-                case MSG_ADB_WIRELESS_CANCEL_PAIRING:
+                case MSG_REQ_CANCEL_PAIRING:
                     if (mThread != null) {
-                        String cmdStr = "CANCEL_PAIRING" + msg.arg1 + "\n" + msg.arg2;
+                        String cmdStr = "CP" + msg.arg1 + "\n" + msg.arg2;
                         mThread.sendMessage(cmdStr);
                     }
-
                     break;
-                case MSG_ADB_WIRELESS_RESULT_OK:
+                case MSG_RESULT_OK:
                     updateUIResult((String) msg.obj, AdbManager.WIRELESS_STATUS_SUCCESS);
-
                     break;
-                case MSG_ADB_WIRELESS_RESULT_FAIL:
+                case MSG_RESULT_FAILED:
                     updateUIResult((String) msg.obj, AdbManager.WIRELESS_STATUS_FAIL);
-
                     break;
-                case MSG_ADB_WIRELESS_RESULT_CANCELLED:
+                case MSG_RESULT_CANCELLED:
                     updateUIResult((String) msg.obj, AdbManager.WIRELESS_STATUS_CANCELLED);
-
                     break;
-                case MSG_ADB_WIRELESS_PAIR_CODE:
+                case MSG_RESPONSE_PAIRING_CODE:
                     updateUIPairCode((String) msg.obj);
-
                     break;
-                case MSG_ADB_WIRELESS_NAME:
-                    mDeviceName = (String) msg.obj;
-
-                    break;
-                case MSG_ADB_WIRELESS_UI_SET_NAME:
+                case MSG_QUERY_SET_DEVICE_NAME:
                     mDeviceName = (String) msg.obj;
                     if (mThread != null) {
-                        String cmdStr = "SNAME" + msg.obj;
+                        String cmdStr = "SN" + msg.obj;
                         mThread.sendMessage(cmdStr);
                     }
-
                     break;
-                case MSG_ADB_WIRELESS_UI_DISCOVER_ENABLE:
+                case MSG_QUERY_DISCOVER_ENABLE:
                     if (mThread != null) {
-                        String cmdStr = "ENDISCOVER" + msg.arg1;
+                        String cmdStr = "ED" + msg.arg1;
                         mThread.sendMessage(cmdStr);
                     }
-
                     break;
-                case MSG_ADB_WIRELESS_UI_DISCOVER_DISABLE:
+                case MSG_QUERY_DISCOVER_DISABLE:
                     if (mThread != null) {
-                        String cmdStr = "DISDISCOVER" + msg.arg1;
+                        String cmdStr = "DD" + msg.arg1;
                         mThread.sendMessage(cmdStr);
                     }
-
+                    break;
             }
         }
 
@@ -433,11 +423,11 @@ public class WirelessDebuggingManager {
             Intent intent;
             String[] token = content.split("\n");
 
-            if ("PAIR".equals(token[0])) {
+            if ("PA".equals(token[0])) {
                 intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRING_RESULT_ACTION);
-            } else if ("UNPAIR".equals(token[0])) {
+            } else if ("UP".equals(token[0])) {
                 intent = new Intent(AdbManager.WIRELESS_DEBUG_UNPAIRING_RESULT_ACTION);
-            } else if ("ENDISC".equals(token[0])) {
+            } else if ("ED".equals(token[0])) {
                 intent = new Intent(AdbManager.WIRELESS_DEBUG_ENABLE_DISCOVER_ACTION);
                 intent.putExtra(AdbManager.WIRELESS_STATUS_EXTRA, resultCode);
                 mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
@@ -505,9 +495,9 @@ public class WirelessDebuggingManager {
      */
     public void enableAdbWireless(boolean enable) {
         if (enable) {
-            mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADB_WIRELESS_ENABLE);
+            mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_ENABLE);
         } else {
-            mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADB_WIRELESS_DISABLE);
+            mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADBDWIFI_DISABLE);
         }
     }
 
@@ -515,21 +505,21 @@ public class WirelessDebuggingManager {
      * UI queries the paired devices.
      */
     public void queryPairedDevices() {
-        mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADB_WIRELESS_UI_PAIRED_QUERY);
+        mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_QUERY_PAIRED_DEVICES);
     }
 
     /**
      * UI queries the pairing devices.
      */
     public void queryPairingDevices() {
-        mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_ADB_WIRELESS_UI_PAIRING_QUERY);
+        mHandler.sendEmptyMessage(WirelessDebuggingHandler.MSG_QUERY_PAIRING_DEVICES);
     }
 
     /**
      * Pair with device
      */
     public void pairDevice(int pairMode, int deviceId, String code) {
-        Message message = Message.obtain(mHandler, WirelessDebuggingHandler.MSG_ADB_WIRELESS_PAIR,
+        Message message = Message.obtain(mHandler, WirelessDebuggingHandler.MSG_REQ_PAIR,
                                          pairMode, deviceId, code == null ? "" : code);
         mHandler.sendMessage(message);
     }
@@ -539,7 +529,7 @@ public class WirelessDebuggingManager {
      */
     public void unPairDevice(int deviceId) {
         Message message = Message.obtain(mHandler,
-                                         WirelessDebuggingHandler.MSG_ADB_WIRELESS_UNPAIR,
+                                         WirelessDebuggingHandler.MSG_REQ_UNPAIR,
                                          deviceId, 0);
         mHandler.sendMessage(message);
     }
@@ -549,7 +539,7 @@ public class WirelessDebuggingManager {
      */
     public void cancelPairing(int pairMode, int deviceId) {
         Message message = Message.obtain(mHandler,
-                                         WirelessDebuggingHandler.MSG_ADB_WIRELESS_CANCEL_PAIRING,
+                                         WirelessDebuggingHandler.MSG_REQ_CANCEL_PAIRING,
                                          pairMode, deviceId);
         mHandler.sendMessage(message);
     }
@@ -573,7 +563,7 @@ public class WirelessDebuggingManager {
      */
     public void setName(String name) {
         Message message = Message.obtain(mHandler,
-                                         WirelessDebuggingHandler.MSG_ADB_WIRELESS_UI_SET_NAME,
+                                         WirelessDebuggingHandler.MSG_QUERY_SET_DEVICE_NAME,
                                          0, 0, name);
         mHandler.sendMessage(message);
     }
@@ -585,13 +575,13 @@ public class WirelessDebuggingManager {
         if (enable) {
             Message message = Message.obtain(mHandler,
                                              WirelessDebuggingHandler
-                                             .MSG_ADB_WIRELESS_UI_DISCOVER_ENABLE,
+                                             .MSG_QUERY_DISCOVER_ENABLE,
                                              pairMode, 0);
             mHandler.sendMessage(message);
         } else {
             Message message = Message.obtain(mHandler,
                                              WirelessDebuggingHandler
-                                             .MSG_ADB_WIRELESS_UI_DISCOVER_DISABLE,
+                                             .MSG_QUERY_DISCOVER_DISABLE,
                                              pairMode, 0);
             mHandler.sendMessage(message);
         }
