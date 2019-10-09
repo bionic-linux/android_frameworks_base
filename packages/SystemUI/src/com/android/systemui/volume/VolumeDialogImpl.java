@@ -84,6 +84,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.SystemProperties;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
@@ -1133,7 +1134,8 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
         final int newProgress = vlevel * 100;
         if (progress != newProgress) {
-            if (mShowing && rowVisible) {
+            if (mShowing && rowVisible
+                    && SystemProperties.getBoolean("ro.config.volume_row_slider_anim", true)) {
                 // animate!
                 if (row.anim != null && row.anim.isRunning()
                         && row.animTargetProgress == newProgress) {
