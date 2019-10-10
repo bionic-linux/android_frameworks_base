@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e1bd4c_96c82dc7",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-10-10T21:16:16Z",
+      "side": 1,
+      "message": "so that file is not part of that static lib? I still don\u0027t properly understand what was part of that old target that you replaced with \"art.module.api.annotations\". I could look it up, but figured it should be clear from the CL :)",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 64
+      },
+      "revId": "c130801a676adcd9f328945f89b282a1a59fd83e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
