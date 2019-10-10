@@ -22,6 +22,30 @@
       "revId": "c130801a676adcd9f328945f89b282a1a59fd83e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f00d93a1_81b306cd",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-10-10T21:19:57Z",
+      "side": 1,
+      "message": "Ah, it\u0027s clearer from the companion CL. So apparently there is\n\ndalvik/src/main/java/dalvik/annotation/compat/UnsupportedAppUsage.java\n\nbut I take it that we also still carry android.annotation.UnsupportedAppUsage rather than replacing all occurrences with the dalvik.annotation one? Huh. Weird.",
+      "parentUuid": "03e1bd4c_96c82dc7",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 64
+      },
+      "revId": "c130801a676adcd9f328945f89b282a1a59fd83e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
