@@ -19,11 +19,13 @@ package com.android.server.compat;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.ServiceManager;
 import android.util.Slog;
 import android.util.StatsLog;
 
 import com.android.internal.compat.ChangeReporter;
 import com.android.internal.compat.IPlatformCompat;
+import com.android.internal.compat.IPlatformCompatNative;
 import com.android.internal.util.DumpUtils;
 
 import java.io.FileDescriptor;
@@ -43,6 +45,8 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         mContext = context;
         mChangeReporter = new ChangeReporter(
                 StatsLog.APP_COMPATIBILITY_CHANGE_REPORTED__SOURCE__SYSTEM_SERVER);
+        ServiceManager.addService(Context.PLATFORM_COMPAT_SERVICE + "_NATIVE",
+                new PlatformCompatNative());
     }
 
     @Override
@@ -125,5 +129,27 @@ public class PlatformCompat extends IPlatformCompat.Stub {
 
     private void reportChange(long changeId, int uid, int state) {
         mChangeReporter.reportChange(uid, changeId, state);
+    }
+
+    private class PlatformCompatNative extends IPlatformCompatNative.Stub {
+        @Override
+        public void reportChangeByPackageName(long changeId, String packageName) {
+            PlatformCompat.this.reportChangeByPackageName(changeId, packageName);
+        }
+
+        @Override
+        public void reportChangeByUid(long changeId, int uid) {
+            PlatformCompat.this.reportChangeByUid(changeId, uid);
+        }
+
+        @Override
+        public boolean isChangeEnabledByPackageName(long changeId, String packageName) {
+            return PlatformCompat.this.isChangeEnabledByPackageName(changeId, packageName);
+        }
+
+        @Override
+        public boolean isChangeEnabledByUid(long changeId, int uid) {
+            return PlatformCompat.this.isChangeEnabledByUid(changeId, uid);
+        }
     }
 }
