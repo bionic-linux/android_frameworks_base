@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996e4bcb_b5fb1b23",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-10T23:26:27Z",
+      "side": 1,
+      "message": "nit: explain when or remove (since it is in the function declaration already)",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 30
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e127ffa3_2333cb8b",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-10T23:26:27Z",
+      "side": 1,
+      "message": "nit: explain when null binder may be returned (permissions only?)",
+      "range": {
+        "startLine": 1073,
+        "startChar": 31,
+        "endLine": 1073,
+        "endChar": 40
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510f7076_b07fc799",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-10T23:26:27Z",
+      "side": 1,
+      "message": "this is getting converted utf-16 in Java -\u003e ScopedUtfChars (utf-8) -\u003e String16 below. There is another class we should use instead, but I don\u0027t know it off the top of my head (funny enough, there is another extra layer of conversions underneath waitForService that I still need to fix...)",
+      "range": {
+        "startLine": 999,
+        "startChar": 8,
+        "endLine": 999,
+        "endChar": 22
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa29946_a857d1c3",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-10T23:26:27Z",
+      "side": 1,
+      "message": "this is use after free as well, right?",
+      "range": {
+        "startLine": 1008,
+        "startChar": 54,
+        "endLine": 1008,
+        "endChar": 65
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
