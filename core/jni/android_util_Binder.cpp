@@ -989,6 +989,32 @@ static void android_os_Binder_blockUntilThreadAvailable(JNIEnv* env, jobject cla
     return IPCThreadState::self()->blockUntilThreadAvailable();
 }
 
+static jobject android_os_Binder_waitForService(
+        JNIEnv *env,
+        jclass /* clazzObj */,
+        jstring serviceNameObj) {
+
+    const char* serviceName;
+    {
+        ScopedUtfChars str(env, serviceNameObj);
+        if (str.c_str() == nullptr) {
+            signalExceptionForError(env, nullptr, BAD_VALUE, true /*canThrowRemoteException*/);
+            return nullptr;
+        }
+        serviceName = str.c_str();
+    }
+
+    auto sm = android::defaultServiceManager();
+    sp<IBinder> service = sm->waitForService(String16(serviceName));
+
+    if (service == nullptr) {
+        signalExceptionForError(env, nullptr, NAME_NOT_FOUND, true /*canThrowRemoteException*/);
+        return nullptr;
+    }
+
+    return javaObjectForIBinder(env, service);
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gBinderMethods[] = {
@@ -1016,7 +1042,8 @@ static const JNINativeMethod gBinderMethods[] = {
     { "flushPendingCommands", "()V", (void*)android_os_Binder_flushPendingCommands },
     { "getNativeBBinderHolder", "()J", (void*)android_os_Binder_getNativeBBinderHolder },
     { "getNativeFinalizer", "()J", (void*)android_os_Binder_getNativeFinalizer },
-    { "blockUntilThreadAvailable", "()V", (void*)android_os_Binder_blockUntilThreadAvailable }
+    { "blockUntilThreadAvailable", "()V", (void*)android_os_Binder_blockUntilThreadAvailable },
+    { "waitForService", "(Ljava/lang/String;)Landroid/os/IBinder;", (void*)android_os_Binder_waitForService }
 };
 
 const char* const kBinderPathName = "android/os/Binder";
