@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52681032_7f5b9a66",
+        "filename": "tests/BootImageProfileTest/AndroidTest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-10-11T21:55:36Z",
+      "side": 0,
+      "message": "Should I keep using these with the other options? They are more flaky than normal properties and won\u0027t get set unless the device is fully booted.",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "b389ffe2d9b3ddf90093632cbbe4fc36aa384cd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
