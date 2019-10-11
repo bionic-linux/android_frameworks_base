@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a238f7dc_e8dcebf1",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1525136
+      },
+      "writtenOn": "2019-10-11T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996e4bcb_b5fb1b23",
+      "range": {
+        "startLine": 1070,
+        "startChar": 0,
+        "endLine": 1070,
+        "endChar": 30
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e127ffa3_2333cb8b",
         "filename": "core/java/android/os/Binder.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b38469_ebefc998",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1525136
+      },
+      "writtenOn": "2019-10-11T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e127ffa3_2333cb8b",
+      "range": {
+        "startLine": 1073,
+        "startChar": 31,
+        "endLine": 1073,
+        "endChar": 40
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "25f05210_04767cfa",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1525136
+      },
+      "writtenOn": "2019-10-11T02:16:18Z",
+      "side": 1,
+      "message": "Found some precedents in the code and emulated them.",
+      "parentUuid": "510f7076_b07fc799",
+      "range": {
+        "startLine": 999,
+        "startChar": 8,
+        "endLine": 999,
+        "endChar": 22
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa29946_a857d1c3",
         "filename": "core/jni/android_util_Binder.cpp",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2019-10-10T23:26:27Z",
       "side": 1,
       "message": "this is use after free as well, right?",
+      "range": {
+        "startLine": 1008,
+        "startChar": 54,
+        "endLine": 1008,
+        "endChar": 65
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659a9314_c5b5ec31",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1525136
+      },
+      "writtenOn": "2019-10-11T02:16:18Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "parentUuid": "6fa29946_a857d1c3",
       "range": {
         "startLine": 1008,
         "startChar": 54,
