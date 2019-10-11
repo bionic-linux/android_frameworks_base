@@ -83,8 +83,8 @@ font_src_files :=
 
 ################################
 # Copies the font configuration file into system/etc for the product as fonts.xml.
-# In the case where $(ADDITIONAL_FONTS_FILE) is defined, the content of $(ADDITIONAL_FONTS_FILE)
-# is added to the $(AOSP_FONTS_FILE).
+# ADDITIONAL_FONTS_FILE is no longer used to define additional files. Additional fonts
+# should be installed to /product/fonts and will automatically be picked up by the system.
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := fonts.xml
