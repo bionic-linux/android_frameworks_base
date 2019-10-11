@@ -19,6 +19,7 @@ package android.os;
 import static android.app.ActivityManager.PROCESS_STATE_BOUND_TOP;
 import static android.app.ActivityManager.PROCESS_STATE_FOREGROUND_SERVICE_LOCATION;
 
+import android.annotation.IntDef;
 import android.annotation.UnsupportedAppUsage;
 import android.app.ActivityManager;
 import android.app.job.JobParameters;
@@ -48,6 +49,8 @@ import com.android.internal.os.BatteryStatsHelper;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +78,7 @@ public abstract class BatteryStats implements Parcelable {
     protected static final boolean SCREEN_OFF_RPM_STATS_ENABLED = false;
 
     /** @hide */
-    public static final String SERVICE_NAME = "batterystats";
+    public static final String SERVICE_NAME = Context.BATTERY_STATS_SERVICE;
 
     /**
      * A constant indicating a partial wake lock timer.
@@ -221,6 +224,15 @@ public abstract class BatteryStats implements Parcelable {
      */
     @Deprecated
     public static final int STATS_SINCE_UNPLUGGED = 2;
+
+    /** @hide */
+    @IntDef(flag = true, prefix = { "STATS_" }, value = {
+            STATS_SINCE_CHARGED,
+            STATS_CURRENT,
+            STATS_SINCE_UNPLUGGED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface StatName {}
 
     // NOTE: Update this list if you add/change any stats above.
     // These characters are supposed to represent "total", "last", "current",
@@ -2473,6 +2485,25 @@ public abstract class BatteryStats implements Parcelable {
 
     public static final int NUM_WIFI_SUPPL_STATES = WIFI_SUPPL_STATE_UNINITIALIZED+1;
 
+    /** @hide */
+    @IntDef(flag = true, prefix = { "WIFI_SUPPL_STATE_" }, value = {
+            WIFI_SUPPL_STATE_INVALID,
+            WIFI_SUPPL_STATE_DISCONNECTED,
+            WIFI_SUPPL_STATE_INTERFACE_DISABLED,
+            WIFI_SUPPL_STATE_INACTIVE,
+            WIFI_SUPPL_STATE_SCANNING,
+            WIFI_SUPPL_STATE_AUTHENTICATING,
+            WIFI_SUPPL_STATE_ASSOCIATING,
+            WIFI_SUPPL_STATE_ASSOCIATED,
+            WIFI_SUPPL_STATE_FOUR_WAY_HANDSHAKE,
+            WIFI_SUPPL_STATE_GROUP_HANDSHAKE,
+            WIFI_SUPPL_STATE_COMPLETED,
+            WIFI_SUPPL_STATE_DORMANT,
+            WIFI_SUPPL_STATE_UNINITIALIZED,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface WifiSupplState {}
+
     static final String[] WIFI_SUPPL_STATE_NAMES = {
         "invalid", "disconn", "disabled", "inactive", "scanning",
         "authenticating", "associating", "associated", "4-way-handshake",
@@ -2624,34 +2655,48 @@ public abstract class BatteryStats implements Parcelable {
     public static final int WIFI_STATE_ON_CONNECTED_STA_P2P = 6;
     public static final int WIFI_STATE_SOFT_AP = 7;
 
+    public static final int NUM_WIFI_STATES = WIFI_STATE_SOFT_AP + 1;
+
+    /** @hide */
+    @IntDef(flag = true, prefix = { "WIFI_STATE_" }, value = {
+            WIFI_STATE_OFF,
+            WIFI_STATE_OFF_SCANNING,
+            WIFI_STATE_ON_NO_NETWORKS,
+            WIFI_STATE_ON_DISCONNECTED,
+            WIFI_STATE_ON_CONNECTED_STA,
+            WIFI_STATE_ON_CONNECTED_P2P,
+            WIFI_STATE_ON_CONNECTED_STA_P2P,
+            WIFI_STATE_SOFT_AP
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface WifiState {}
+
     static final String[] WIFI_STATE_NAMES = {
         "off", "scanning", "no_net", "disconn",
         "sta", "p2p", "sta_p2p", "soft_ap"
     };
-
-    public static final int NUM_WIFI_STATES = WIFI_STATE_SOFT_AP+1;
 
     /**
      * Returns the time in microseconds that WiFi has been running in the given state.
      *
      * {@hide}
      */
-    public abstract long getWifiStateTime(int wifiState,
-            long elapsedRealtimeUs, int which);
+    public abstract long getWifiStateTime(@WifiState int wifiState,
+            long elapsedRealtimeUs, @StatName int which);
 
     /**
      * Returns the number of times that WiFi has entered the given state.
      *
      * {@hide}
      */
-    public abstract int getWifiStateCount(int wifiState, int which);
+    public abstract int getWifiStateCount(@WifiState int wifiState, @StatName int which);
 
     /**
      * Returns the {@link Timer} object that tracks the given WiFi state.
      *
      * {@hide}
      */
-    public abstract Timer getWifiStateTimer(int wifiState);
+    public abstract Timer getWifiStateTimer(@WifiState int wifiState);
 
     /**
      * Returns the time in microseconds that the wifi supplicant has been
@@ -2659,7 +2704,8 @@ public abstract class BatteryStats implements Parcelable {
      *
      * {@hide}
      */
-    public abstract long getWifiSupplStateTime(int state, long elapsedRealtimeUs, int which);
+    public abstract long getWifiSupplStateTime(@WifiSupplState int state, long elapsedRealtimeUs,
+            @StatName int which);
 
     /**
      * Returns the number of times that the wifi supplicant has transitioned
@@ -2667,14 +2713,14 @@ public abstract class BatteryStats implements Parcelable {
      *
      * {@hide}
      */
-    public abstract int getWifiSupplStateCount(int state, int which);
+    public abstract int getWifiSupplStateCount(@WifiSupplState int state, @StatName int which);
 
     /**
      * Returns the {@link Timer} object that tracks the given wifi supplicant state.
      *
      * {@hide}
      */
-    public abstract Timer getWifiSupplStateTimer(int state);
+    public abstract Timer getWifiSupplStateTimer(@WifiSupplState int state);
 
     public static final int NUM_WIFI_SIGNAL_STRENGTH_BINS = 5;
 
