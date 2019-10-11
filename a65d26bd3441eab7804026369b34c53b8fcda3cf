@@ -187,6 +187,30 @@
       "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d89dc78_fef63b87",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-11T21:02:22Z",
+      "side": 1,
+      "message": "ReleaseStringUTFChars in the destructor of ScopedUtfChars deletes the char* serviceName. Fixed in latest patchset though. Thanks!",
+      "parentUuid": "659a9314_c5b5ec31",
+      "range": {
+        "startLine": 1008,
+        "startChar": 54,
+        "endLine": 1008,
+        "endChar": 65
+      },
+      "revId": "a65d26bd3441eab7804026369b34c53b8fcda3cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

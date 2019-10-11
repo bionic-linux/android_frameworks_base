@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4adac5d_40cca06a",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-11T21:02:22Z",
+      "side": 1,
+      "message": "nullptr always",
+      "range": {
+        "startLine": 997,
+        "startChar": 70,
+        "endLine": 997,
+        "endChar": 74
+      },
+      "revId": "4bd77ad487faceb24d03769054617ba7677297ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dd8274f_6b7a0e11",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-11T21:02:22Z",
+      "side": 1,
+      "message": "I guess there is no ScopedUtf16Chars.. a lot of places seem to do this.",
+      "range": {
+        "startLine": 997,
+        "startChar": 36,
+        "endLine": 997,
+        "endChar": 53
+      },
+      "revId": "4bd77ad487faceb24d03769054617ba7677297ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
