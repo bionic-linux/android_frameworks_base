@@ -85,7 +85,7 @@ import java.util.Set;
  */
 public class AdbDebuggingManager {
     private static final String TAG = "AdbDebuggingManager";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String ADBD_SOCKET = "adbd";
     private static final String ADB_DIRECTORY = "misc/adb";
@@ -166,7 +166,7 @@ public class AdbDebuggingManager {
                         LocalSocketAddress.Namespace.RESERVED);
                 mInputStream = null;
 
-                if (DEBUG) Slog.d(TAG, "Creating socket");
+                if (DEBUG) Slog.w(TAG, "Creating socket");
                 mSocket = new LocalSocket(LocalSocket.SOCKET_SEQPACKET);
                 mSocket.connect(address);
 
