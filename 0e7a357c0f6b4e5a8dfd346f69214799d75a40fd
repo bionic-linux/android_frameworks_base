@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29dbd632_fc7c8211",
+        "filename": "native/android/aidl/com/android/internal/compat/IPlatformCompatNative.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-15T09:56:44Z",
+      "side": 1,
+      "message": "Should link to IPlatformCompat#isChangeEnabled(long, ApplicationInfo) or should be reworded such that it doesn\u0027t mention it.",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "0e7a357c0f6b4e5a8dfd346f69214799d75a40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfad09c_25febff4",
+        "filename": "native/android/aidl/com/android/internal/compat/IPlatformCompatNative.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-15T09:56:44Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "0e7a357c0f6b4e5a8dfd346f69214799d75a40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
