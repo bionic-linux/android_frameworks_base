@@ -33,10 +33,19 @@ import android.text.TextUtils;
 import android.util.Slog;
 
 import com.android.server.FgThread;
+import com.android.server.adb.AdbKeyStoreProto.Key;
+import com.android.server.adb.AdbKeyStoreProto.KeyStore;
+import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,21 +62,65 @@ public class WirelessDebuggingManager {
     private static final boolean DEBUG = true;
 
     private static final String ADBDWIFI_SOCKET = "adbdwifi";
+    private static final String ADBDWIFI_KEYS = "/data/misc/adb/adb_wifi_keys";
     private static final int BUFFER_SIZE = 4096;
     private static final String WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY =
             "persist.sys.wireless.debug";
     private final Context mContext;
     private final Handler mHandler;
     private WirelessDebuggingThread mThread;
+    private PairingThread mPairingThread = null;
     private boolean mAdbWirelessEnabled = false;
     private int mState;
     private String mDeviceName;
     HashMap<String, PairDevice> mPairedDevices = new HashMap<String, PairDevice>();
     HashMap<String, PairDevice> mPairingDevices = new HashMap<String, PairDevice>();
+    private static final int PAIRING_CODE_LENGTH = 6;
+    private byte[] mOurKey;
+    private byte[] mTheirKey;
+
+    private static native boolean native_keystore_init();
 
     public WirelessDebuggingManager(Context context) {
         mHandler = new WirelessDebuggingHandler(FgThread.get().getLooper());
         mContext = context;
+    }
+
+    class PairingThread extends Thread {
+        private String mGuid;
+        private String mName;
+        private String mPairingCode;
+
+        private native boolean native_pairing_start(String password);
+        private native void native_pairing_cancel();
+
+        PairingThread(String pairingCode) {
+            super(TAG);
+            mPairingCode = pairingCode;
+        }
+
+        @Override
+        public void run() {
+            boolean paired = native_pairing_start(mPairingCode);
+            if (DEBUG) {
+                if (mGuid != null && mName != null) {
+                    Slog.i(TAG, "Pairing succeeded guid=" + mGuid + " name=" + mName);
+                } else {
+                    Slog.i(TAG, "Pairing failed");
+                }
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString("guid", paired ? mGuid : null);
+            bundle.putString("name", paired ? mName : null);
+            Message message = Message.obtain(mHandler,
+                                             WirelessDebuggingHandler.MSG_RESPONSE_PAIRING_RESULT,
+                                             bundle);
+            mHandler.sendMessage(message);
+        }
+
+        public void cancelPairing() {
+            native_pairing_cancel();
+        }
     }
 
     class WirelessDebuggingThread extends Thread {
@@ -118,6 +171,8 @@ public class WirelessDebuggingManager {
                 mOutputStream = mSocket.getOutputStream();
                 mInputStream = mSocket.getInputStream();
             } catch (IOException ioe) {
+                Slog.w(TAG, "Failed to connect to " + ADBDWIFI_SOCKET + " socket.");
+                Slog.w(TAG, "Error (" + ioe + ")");
                 closeSocketLocked();
                 throw ioe;
             }
@@ -145,7 +200,6 @@ public class WirelessDebuggingManager {
                 Arrays.asList(
                     new AdbdWifiMsg("PD", WirelessDebuggingHandler.MSG_RESPONSE_PAIRED_DEVICES),
                     new AdbdWifiMsg("PI", WirelessDebuggingHandler.MSG_RESPONSE_PAIRING_DEVICES),
-                    new AdbdWifiMsg("CD", WirelessDebuggingHandler.MSG_RESPONSE_PAIRING_CODE),
                     new AdbdWifiMsg("OK", WirelessDebuggingHandler.MSG_RESULT_OK),
                     new AdbdWifiMsg("FA", WirelessDebuggingHandler.MSG_RESULT_FAILED),
                     new AdbdWifiMsg("CA", WirelessDebuggingHandler.MSG_RESULT_CANCELLED)));
@@ -156,7 +210,8 @@ public class WirelessDebuggingManager {
                 while (true) {
                     int count = mInputStream.read(buffer);
                     if (count < 2) {
-                        continue;
+                        Slog.w(TAG, "Read failed with count " + count);
+                        break;
                     }
                     if (DEBUG) {
                         Slog.i(TAG, "listenToSocket received " + count + " :"
@@ -236,7 +291,7 @@ public class WirelessDebuggingManager {
         private static final int MSG_QUERY_PAIRED_DEVICES = 3;
         // Ask adbd for the list of pairing devices
         private static final int MSG_QUERY_PAIRING_DEVICES = 4;
-        // Adbd response for the list of paired devices
+        // TODO: Remove? // Adbd response for the list of paired devices
         private static final int MSG_RESPONSE_PAIRED_DEVICES = 5;
         // Adbd response for the list of pairing devices
         private static final int MSG_RESPONSE_PAIRING_DEVICES = 6;
@@ -252,13 +307,13 @@ public class WirelessDebuggingManager {
         private static final int MSG_RESULT_FAILED = 11;
         // Status code from adbd response (cancelled)
         private static final int MSG_RESULT_CANCELLED = 12;
-        // adbd response with the user entered pairing code
-        private static final int MSG_RESPONSE_PAIRING_CODE = 13;
+        // Response from the pairing
+        private static final int MSG_RESPONSE_PAIRING_RESULT = 13;
         // Ask WirelessDebuggingManager to change the device name
         private static final int MSG_QUERY_SET_DEVICE_NAME = 14;
-        // Ask adbd to enable discoverability mode
+        // Enable discoverability mode
         private static final int MSG_QUERY_DISCOVER_ENABLE = 15;
-        // Ask adbd to disable discoverability mode
+        // Disable discoverability mode
         private static final int MSG_QUERY_DISCOVER_DISABLE = 16;
 
         WirelessDebuggingHandler(Looper looper) {
@@ -274,6 +329,13 @@ public class WirelessDebuggingManager {
                     }
 
                     mAdbWirelessEnabled = true;
+                    if (!native_keystore_init()) {
+                        Slog.e(TAG, "Unable to initialize adbwifi keystore");
+                        // TODO: Should we re-disable the UI?
+                    }
+                    // Send the paired devices list to the UI
+                    refreshPairedDevicesList(mPairedDevices);
+                    sendPairedDevicesToUI(mPairedDevices);
                     SystemProperties.set(WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY,
                             Boolean.toString(mAdbWirelessEnabled));
 
@@ -299,18 +361,18 @@ public class WirelessDebuggingManager {
                     mPairingDevices.clear();
                     break;
                 case MSG_QUERY_PAIRED_DEVICES:
-                    updateUIDevices(true);
+                    sendPairedDevicesToUI(mPairedDevices);
                     break;
                 case MSG_QUERY_PAIRING_DEVICES:
-                    updateUIDevices(false);
+                    sendPairingDevicesToUI(mPairingDevices);
                     break;
                 case MSG_RESPONSE_PAIRED_DEVICES:
                     parseDevices(new String((byte[]) msg.obj), true);
-                    updateUIDevices(true);
+                    sendPairedDevicesToUI(mPairedDevices);
                     break;
                 case MSG_RESPONSE_PAIRING_DEVICES:
                     parseDevices(new String((byte[]) msg.obj), false);
-                    updateUIDevices(false);
+                    sendPairingDevicesToUI(mPairingDevices);
                     break;
                 case MSG_REQ_PAIR: {
                     Bundle bundle = (Bundle) msg.obj;
@@ -333,16 +395,6 @@ public class WirelessDebuggingManager {
                     }
                     break;
                 }
-                case MSG_REQ_CANCEL_PAIRING:
-                    if (mThread != null) {
-                        // Notify adbd that pairing has been aborted by the UI.
-                        Bundle bundle = (Bundle) msg.obj;
-                        String cmdStr = "CP"
-                                      + bundle.getInt("pairMode") + "\n"
-                                      + bundle.getString("guid");
-                        mThread.sendMessage(cmdStr.getBytes());
-                    }
-                    break;
                 case MSG_RESULT_OK:
                     updateUIResult(new String((byte[]) msg.obj), AdbManager.WIRELESS_STATUS_SUCCESS);
                     break;
@@ -352,9 +404,16 @@ public class WirelessDebuggingManager {
                 case MSG_RESULT_CANCELLED:
                     updateUIResult(new String((byte[]) msg.obj), AdbManager.WIRELESS_STATUS_CANCELLED);
                     break;
-                case MSG_RESPONSE_PAIRING_CODE:
-                    updateUIPairCode(new String((byte[]) msg.obj));
+                case MSG_RESPONSE_PAIRING_RESULT: {
+                    Bundle bundle = (Bundle) msg.obj;
+                    String guid = bundle.getString("guid");
+                    String name = bundle.getString("name");
+                    onPairingResult(guid, name);
+                    // Send the updated paired devices list to the UI.
+                    refreshPairedDevicesList(mPairedDevices);
+                    sendPairedDevicesToUI(mPairedDevices);
                     break;
+                }
                 case MSG_QUERY_SET_DEVICE_NAME:
                     mDeviceName = new String((byte[]) msg.obj);
                     if (mThread != null) {
@@ -362,18 +421,54 @@ public class WirelessDebuggingManager {
                         mThread.sendMessage(cmdStr.getBytes());
                     }
                     break;
-                case MSG_QUERY_DISCOVER_ENABLE:
-                    if (mThread != null) {
-                        String cmdStr = "ED" + msg.arg1;
-                        mThread.sendMessage(cmdStr.getBytes());
-                    }
+                case MSG_QUERY_DISCOVER_ENABLE: {
+                    String pairingCode = createPairingCode(PAIRING_CODE_LENGTH);
+                    updateUIPairCode(pairingCode);
+                    mPairingThread = new PairingThread(pairingCode);
+                    mPairingThread.start();
                     break;
+                }
+                case MSG_REQ_CANCEL_PAIRING:
                 case MSG_QUERY_DISCOVER_DISABLE:
-                    if (mThread != null) {
-                        String cmdStr = "DD" + msg.arg1;
-                        mThread.sendMessage(cmdStr.getBytes());
+                    if (mPairingThread != null) {
+                        mPairingThread.cancelPairing();
+                        try {
+                            mPairingThread.join();
+                        } catch (InterruptedException e) {
+                            Slog.w(TAG, "Error while waiting for pairing thread to quit.");
+                            e.printStackTrace();
+                        }
                     }
                     break;
+            }
+        }
+
+        private static final String ALPHA_NUMERICS = "0123456789";
+        // Generates a random string of size |size|.
+        private String createPairingCode(int size) {
+            String res = "";
+            SecureRandom rand = new SecureRandom();
+            byte[] data = new byte[size];
+            rand.nextBytes(data);
+            for (byte a : data) {
+                int idx = Byte.toUnsignedInt(a) % ALPHA_NUMERICS.length();
+                res += ALPHA_NUMERICS.charAt(idx);
+            }
+
+            return res;
+        }
+
+        private void onPairingResult(String guid, String name) {
+            if (guid == null || name == null) {
+                Intent intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRING_RESULT_ACTION);
+                intent.putExtra(AdbManager.WIRELESS_STATUS_EXTRA, AdbManager.WIRELESS_STATUS_FAIL);
+                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
+            } else {
+                Intent intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRING_RESULT_ACTION);
+                intent.putExtra(AdbManager.WIRELESS_STATUS_EXTRA, AdbManager.WIRELESS_STATUS_SUCCESS);
+                PairDevice device = new PairDevice(guid, name, false);
+                intent.putExtra(AdbManager.WIRELESS_PAIR_DEVICE_EXTRA, device);
+                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
             }
         }
 
@@ -400,16 +495,19 @@ public class WirelessDebuggingManager {
             }
         }
 
-        private void updateUIDevices(boolean isPaired) {
-            if (isPaired) {
-                Intent intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRED_DEVICES_ACTION);
-                intent.putExtra(AdbManager.WIRELESS_DEVICES_EXTRA, mPairedDevices);
-                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
-            } else {
-                Intent intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRING_DEVICES_ACTION);
-                intent.putExtra(AdbManager.WIRELESS_DEVICES_EXTRA, mPairingDevices);
-                mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
-            }
+        private void sendPairedDevicesToUI(HashMap<String, PairDevice> devices) {
+            sendDevicesToUI(devices, true);
+        }
+
+        private void sendPairingDevicesToUI(HashMap<String, PairDevice> devices) {
+            sendDevicesToUI(devices, false);
+        }
+
+        private void sendDevicesToUI(HashMap<String, PairDevice> devices, boolean isPairedDevices) {
+            Intent intent = new Intent(isPairedDevices ? AdbManager.WIRELESS_DEBUG_PAIRED_DEVICES_ACTION
+                                                       : AdbManager.WIRELESS_DEBUG_PAIRING_DEVICES_ACTION);
+            intent.putExtra(AdbManager.WIRELESS_DEVICES_EXTRA, devices);
+            mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
         }
 
         private void updateUIResult(String content, int resultCode) {
@@ -456,6 +554,32 @@ public class WirelessDebuggingManager {
                     AdbManager.WIRELESS_STATUS_PAIRING_CODE);
             mContext.sendBroadcastAsUser(intent, UserHandle.ALL);
         }
+
+        private void refreshPairedDevicesList(HashMap<String, PairDevice> pairedDevices) {
+            pairedDevices.clear();
+
+            try {
+                // Read the keystore data from file.
+                byte[] data = Files.readAllBytes(Paths.get(ADBDWIFI_KEYS));
+                if (data == null || data.length == 0) {
+                    Slog.i(TAG, ADBDWIFI_KEYS + " doesn't exist or is empty");
+                    return;
+                }
+
+                // Parse the keystore proto data and put it in pairedDevices
+                KeyStore keyStore = KeyStore.parseFrom(data);
+                List<Key> keys = keyStore.getKeysList();
+                keys.forEach(key -> {
+                    pairedDevices.put(key.getGuid(),
+                                      new PairDevice(key.getName(), key.getGuid(), false));
+                });
+            } catch (InvalidProtocolBufferException e) {
+                e.printStackTrace();
+                Slog.i(TAG, "Failed to parse " + ADBDWIFI_KEYS);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -464,8 +588,7 @@ public class WirelessDebuggingManager {
     public void bootCompleted() {
         boolean enable = SystemProperties.getBoolean(
                 WIRELESS_DEBUG_PERSISTENT_CONFIG_PROPERTY, false);
-        enableAdbWireless(true);
-        //enableAdbWireless(enable);
+        enableAdbWireless(enable);
         if (DEBUG) Slog.i(TAG, "enable adb wireless on boot completion");
     }
 
