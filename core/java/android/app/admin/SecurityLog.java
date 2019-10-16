@@ -680,7 +680,8 @@ public class SecurityLog {
 
     /**
      * Write a log entry to the underlying storage, with several payloads.
-     * Supported types of payload are: integer, long, float, string plus array of supported types.
+     * Supported types of payload are: {@code Integer}, {@code Long}, {@code Float},
+     * {@code String}, or an array of supported types.
      * @hide
      */
     public static native int writeEvent(int tag, Object... payloads);
