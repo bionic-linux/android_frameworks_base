@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7c29ac8_e44cdc5f",
+        "filename": "native/android/aidl/com/android/internal/compat/IPlatformCompatNative.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-16T17:09:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29dbd632_fc7c8211",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "0e7a357c0f6b4e5a8dfd346f69214799d75a40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bfad09c_25febff4",
         "filename": "native/android/aidl/com/android/internal/compat/IPlatformCompatNative.aidl",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0e7a357c0f6b4e5a8dfd346f69214799d75a40fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c89c5a_789d7d4d",
+        "filename": "native/android/aidl/com/android/internal/compat/IPlatformCompatNative.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-16T17:09:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bfad09c_25febff4",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "0e7a357c0f6b4e5a8dfd346f69214799d75a40fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
