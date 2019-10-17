@@ -46,11 +46,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -73,7 +73,7 @@ import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ITetherInternalCallback;
-import android.net.InterfaceConfiguration;
+import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -183,6 +183,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     private BroadcastReceiver mBroadcastReceiver;
     private TetheringService mTethering;
     private PhoneStateListener mPhoneStateListener;
+    private InterfaceConfigurationParcel mInterfaceConfiguration;
 
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
@@ -236,11 +237,6 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
                     TEST_USB_IFNAME, TEST_WLAN_IFNAME, TEST_MOBILE_IFNAME, TEST_P2P_IFNAME};
             return new InterfaceParams(ifName, ArrayUtils.indexOf(ifaces, ifName) + IFINDEX_OFFSET,
                     MacAddress.ALL_ZEROS_ADDRESS);
-        }
-
-        @Override
-        public INetd getNetdService() {
-            return mNetd;
         }
 
         @Override
@@ -413,11 +409,13 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
                 .thenReturn(new int[0]);
         when(mResources.getBoolean(com.android.internal.R.bool.config_tether_upstream_automatic))
                 .thenReturn(false);
-        when(mNMService.listInterfaces())
+        when(mNetd.interfaceGetList())
                 .thenReturn(new String[] {
                         TEST_MOBILE_IFNAME, TEST_WLAN_IFNAME, TEST_USB_IFNAME, TEST_P2P_IFNAME});
-        when(mNMService.getInterfaceConfig(anyString()))
-                .thenReturn(new InterfaceConfiguration());
+        mInterfaceConfiguration = new InterfaceConfigurationParcel();
+        mInterfaceConfiguration.flags = new String[0];
+        when(mNetd.interfaceGetCfg(anyString()))
+                .thenReturn(mInterfaceConfiguration);
         when(mRouterAdvertisementDaemon.start())
                 .thenReturn(true);
 
@@ -507,10 +505,12 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     }
 
     private void verifyInterfaceServingModeStarted(String ifname) throws Exception {
-        verify(mNMService, times(1)).getInterfaceConfig(ifname);
-        verify(mNMService, times(1))
-                .setInterfaceConfig(eq(ifname), any(InterfaceConfiguration.class));
-        verify(mNMService, times(1)).tetherInterface(ifname);
+        verify(mNetd, times(2)).interfaceGetCfg(ifname);
+        verify(mNetd, times(1)).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, times(1)).tetherInterfaceAdd(ifname);
+        verify(mNetd, times(1)).networkAddInterface(INetd.LOCAL_NET_ID, ifname);
+        verify(mNetd, times(2)).networkAddRoute(eq(INetd.LOCAL_NET_ID), eq(ifname),
+                anyString(), anyString());
     }
 
     private void verifyTetheringBroadcast(String ifname, String whichExtra) {
@@ -542,7 +542,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
             verify(mWifiManager).updateInterfaceIpState(
                     TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         }
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
         verifyNoMoreInteractions(mWifiManager);
     }
 
@@ -565,14 +565,14 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         prepareUsbTethering(upstreamState);
 
         // This should produce no activity of any kind.
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
 
         // Pretend we then receive USB configured broadcast.
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
         // Now we should see the start of tethering mechanics (in this case:
         // tetherMatchingInterfaces() which starts by fetching all interfaces).
-        verify(mNMService, times(1)).listInterfaces();
+        verify(mNetd, times(1)).interfaceGetList();
 
         // UpstreamNetworkMonitor should receive selected upstream
         verify(mUpstreamNetworkMonitor, times(1)).selectPreferredUpstreamType(any());
@@ -602,9 +602,9 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
 
         verifyInterfaceServingModeStarted(TEST_WLAN_IFNAME);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
-        verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
-        verifyNoMoreInteractions(mNMService);
+        verify(mNetd, times(1)).ipfwdEnableForwarding("tethering");
+        verify(mNetd, times(1)).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
+        verifyNoMoreInteractions(mNetd);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verify(mWifiManager).updateInterfaceIpState(
@@ -622,16 +622,18 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mTethering.interfaceRemoved(TEST_WLAN_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, times(1)).untetherInterface(TEST_WLAN_IFNAME);
-        // {g,s}etInterfaceConfig() called twice for enabling and disabling IPv4.
-        verify(mNMService, times(2)).getInterfaceConfig(TEST_WLAN_IFNAME);
-        verify(mNMService, times(2))
-                .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, times(1)).stopTethering();
-        verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mNetd, times(1)).tetherApplyDnsInterfaces();
+        verify(mNetd, times(1)).tetherInterfaceRemove(TEST_WLAN_IFNAME);
+        verify(mNetd, times(1)).networkRemoveInterface(INetd.LOCAL_NET_ID, TEST_WLAN_IFNAME);
+        // interfaceGetCfg() called twice for enabling and once for disabling IPv4.
+        verify(mNetd, times(3)).interfaceGetCfg(TEST_WLAN_IFNAME);
+        // interfaceSetCfg() called once for enabling and twice disabling IPv4.
+        verify(mNetd, times(3)).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, times(1)).tetherStop();
+        verify(mNetd, times(1)).ipfwdDisableForwarding("tethering");
         verify(mWifiManager, times(3)).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
         verifyNoMoreInteractions(mWifiManager);
         // Asking for the last error after the per-interface state machine
         // has been reaped yields an unknown interface error.
@@ -669,8 +671,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         NetworkState upstreamState = buildMobileIPv4UpstreamState();
         runUsbTethering(upstreamState);
 
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, never()).buildNewRa(any(), notNull());
@@ -693,8 +695,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         NetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
 
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
@@ -706,8 +708,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         NetworkState upstreamState = buildMobileDualStackUpstreamState();
         runUsbTethering(upstreamState);
 
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mRouterAdvertisementDaemon, times(1)).start();
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
 
@@ -721,12 +723,11 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         NetworkState upstreamState = buildMobile464xlatUpstreamState();
         runUsbTethering(upstreamState);
 
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME,
-                TEST_XLAT_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         sendIPv6TetherUpdates(upstreamState);
         verify(mRouterAdvertisementDaemon, times(1)).buildNewRa(any(), notNull());
@@ -739,9 +740,9 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         NetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
 
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
 
         // Then 464xlat comes up
         upstreamState = buildMobile464xlatUpstreamState();
@@ -757,12 +758,11 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mLooper.dispatchAll();
 
         // Forwarding is added for 464xlat
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME,
-                TEST_XLAT_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
         // Forwarding was not re-added for v6 (still times(1))
-        verify(mNMService, times(1)).enableNat(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
-        verify(mNMService, times(1)).startInterfaceForwarding(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
+        verify(mNetd, times(1)).ipfwdAddInterfaceForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
         // DHCP not restarted on downstream (still times(1))
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).start(any());
     }
@@ -818,7 +818,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
         verifyNoMoreInteractions(mWifiManager);
     }
 
@@ -832,7 +832,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).startSoftAp(null);
         verifyNoMoreInteractions(mWifiManager);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
 
         // Emulate externally-visible WifiManager effects, causing the
         // per-interface state machine to start up, and telling us that
@@ -843,9 +843,11 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
 
         verifyInterfaceServingModeStarted(TEST_WLAN_IFNAME);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
-        verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
-        verifyNoMoreInteractions(mNMService);
+        verify(mNetd, times(1)).ipfwdEnableForwarding("tethering");
+        verify(mNetd, times(1)).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
+        verify(mNetd, times(2)).networkAddRoute(eq(INetd.LOCAL_NET_ID), eq(TEST_WLAN_IFNAME),
+                anyString(), anyString());
+        verifyNoMoreInteractions(mNetd);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verify(mWifiManager).updateInterfaceIpState(
@@ -863,8 +865,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         /////
         // We do not currently emulate any upstream being found.
         //
-        // This is why there are no calls to verify mNMService.enableNat() or
-        // mNMService.startInterfaceForwarding().
+        // This is why there are no calls to verify mNetd.tetherAddForward() or
+        // mNetd.ipfwdAddInterfaceForward().
         /////
 
         // Emulate pressing the WiFi tethering button.
@@ -872,7 +874,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).stopSoftAp();
         verifyNoMoreInteractions(mWifiManager);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
 
         // Emulate externally-visible WifiManager effects, when tethering mode
         // is being torn down.
@@ -880,16 +882,18 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mTethering.interfaceRemoved(TEST_WLAN_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, times(1)).untetherInterface(TEST_WLAN_IFNAME);
-        // {g,s}etInterfaceConfig() called twice for enabling and disabling IPv4.
-        verify(mNMService, atLeastOnce()).getInterfaceConfig(TEST_WLAN_IFNAME);
-        verify(mNMService, atLeastOnce())
-                .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, times(1)).stopTethering();
-        verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mNetd, times(1)).tetherApplyDnsInterfaces();
+        verify(mNetd, times(1)).tetherInterfaceRemove(TEST_WLAN_IFNAME);
+        verify(mNetd, times(1)).networkRemoveInterface(INetd.LOCAL_NET_ID, TEST_WLAN_IFNAME);
+        // interfaceGetCfg() called twice for enabling and once for disabling IPv4.
+        verify(mNetd, times(3)).interfaceGetCfg(TEST_WLAN_IFNAME);
+        // interfaceSetCfg() called once for enabling and twice for disabling IPv4.
+        verify(mNetd, times(3)).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, times(1)).tetherStop();
+        verify(mNetd, times(1)).ipfwdDisableForwarding("tethering");
         verify(mWifiManager, times(3)).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
         verifyNoMoreInteractions(mWifiManager);
         // Asking for the last error after the per-interface state machine
         // has been reaped yields an unknown interface error.
@@ -900,14 +904,14 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     @Test
     public void failureEnablingIpForwarding() throws Exception {
         when(mWifiManager.startSoftAp(any(WifiConfiguration.class))).thenReturn(true);
-        doThrow(new RemoteException()).when(mNMService).setIpForwardingEnabled(true);
+        doThrow(new RemoteException()).when(mNetd).ipfwdEnableForwarding("tethering");
 
         // Emulate pressing the WiFi tethering button.
         mTethering.startTethering(TETHERING_WIFI, null, false);
         mLooper.dispatchAll();
         verify(mWifiManager, times(1)).startSoftAp(null);
         verifyNoMoreInteractions(mWifiManager);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
 
         // Emulate externally-visible WifiManager effects, causing the
         // per-interface state machine to start up, and telling us that
@@ -916,15 +920,16 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         sendWifiApStateChanged(WIFI_AP_STATE_ENABLED, TEST_WLAN_IFNAME, IFACE_IP_MODE_TETHERED);
         mLooper.dispatchAll();
 
-        // We verify get/set called thrice here: twice for setup (on NMService) and once during
-        // teardown (on Netd) because all events happen over the course of the single
+        // We verify get/set called three times here: twice for setup and once during
+        // teardown because all events happen over the course of the single
         // dispatchAll() above. Note that once the IpServer IPv4 address config
         // code is refactored the two calls during shutdown will revert to one.
-        verify(mNMService, times(2)).getInterfaceConfig(TEST_WLAN_IFNAME);
-        verify(mNMService, times(2))
-                .setInterfaceConfig(eq(TEST_WLAN_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNetd, times(1)).interfaceSetCfg(argThat(p -> TEST_WLAN_IFNAME.equals(p.ifName)));
-        verify(mNMService, times(1)).tetherInterface(TEST_WLAN_IFNAME);
+        verify(mNetd, times(3)).interfaceGetCfg(TEST_WLAN_IFNAME);
+        verify(mNetd, times(3)).interfaceSetCfg(argThat(p -> TEST_WLAN_IFNAME.equals(p.ifName)));
+        verify(mNetd, times(1)).tetherInterfaceAdd(TEST_WLAN_IFNAME);
+        verify(mNetd, times(1)).networkAddInterface(INetd.LOCAL_NET_ID, TEST_WLAN_IFNAME);
+        verify(mNetd, times(2)).networkAddRoute(eq(INetd.LOCAL_NET_ID), eq(TEST_WLAN_IFNAME),
+                anyString(), anyString());
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verify(mWifiManager).updateInterfaceIpState(
@@ -934,18 +939,20 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         assertEquals(3, mTetheringDependencies.mIsTetheringSupportedCalls);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         // This is called, but will throw.
-        verify(mNMService, times(1)).setIpForwardingEnabled(true);
+        verify(mNetd, times(1)).ipfwdEnableForwarding("tethering");
         // This never gets called because of the exception thrown above.
-        verify(mNMService, times(0)).startTethering(any(String[].class));
+        verify(mNetd, times(0)).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
         // When the master state machine transitions to an error state it tells
         // downstream interfaces, which causes us to tell Wi-Fi about the error
         // so it can take down AP mode.
-        verify(mNMService, times(1)).untetherInterface(TEST_WLAN_IFNAME);
+        verify(mNetd, times(1)).tetherApplyDnsInterfaces();
+        verify(mNetd, times(1)).tetherInterfaceRemove(TEST_WLAN_IFNAME);
+        verify(mNetd, times(1)).networkRemoveInterface(INetd.LOCAL_NET_ID, TEST_WLAN_IFNAME);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_CONFIGURATION_ERROR);
 
         verifyNoMoreInteractions(mWifiManager);
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
     }
 
     private void userRestrictionsListenerBehaviour(
@@ -1170,9 +1177,9 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
 
         verifyInterfaceServingModeStarted(TEST_P2P_IFNAME);
         verifyTetheringBroadcast(TEST_P2P_IFNAME, EXTRA_AVAILABLE_TETHER);
-        verify(mNMService, times(1)).setIpForwardingEnabled(true);
-        verify(mNMService, times(1)).startTethering(any(String[].class));
-        verifyNoMoreInteractions(mNMService);
+        verify(mNetd, times(1)).ipfwdEnableForwarding("tethering");
+        verify(mNetd, times(1)).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
+        verifyNoMoreInteractions(mNetd);
         verifyTetheringBroadcast(TEST_P2P_IFNAME, EXTRA_ACTIVE_LOCAL_ONLY);
         verify(mUpstreamNetworkMonitor, times(1)).startObserveAllNetworks();
         // This will be called twice, one is on entering IpServer.STATE_AVAILABLE,
@@ -1187,16 +1194,18 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mTethering.interfaceRemoved(TEST_P2P_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, times(1)).untetherInterface(TEST_P2P_IFNAME);
-        // {g,s}etInterfaceConfig() called twice for enabling and disabling IPv4.
-        verify(mNMService, times(2)).getInterfaceConfig(TEST_P2P_IFNAME);
-        verify(mNMService, times(2))
-                .setInterfaceConfig(eq(TEST_P2P_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, times(1)).stopTethering();
-        verify(mNMService, times(1)).setIpForwardingEnabled(false);
+        verify(mNetd, times(1)).tetherApplyDnsInterfaces();
+        verify(mNetd, times(1)).tetherInterfaceRemove(TEST_P2P_IFNAME);
+        verify(mNetd, times(1)).networkRemoveInterface(INetd.LOCAL_NET_ID, TEST_P2P_IFNAME);
+        // interfaceGetCfg() called twice for enabling and once for disabling IPv4.
+        verify(mNetd, times(3)).interfaceGetCfg(TEST_P2P_IFNAME);
+        // interfaceSetCfg() called once for enabling and twice for disabling IPv4.
+        verify(mNetd, times(3)).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, times(1)).tetherStop();
+        verify(mNetd, times(1)).ipfwdDisableForwarding("tethering");
         verify(mUpstreamNetworkMonitor, never()).getCurrentPreferredUpstream();
         verify(mUpstreamNetworkMonitor, never()).selectPreferredUpstreamType(any());
-        verifyNoMoreInteractions(mNMService);
+        verifyNoMoreInteractions(mNetd);
         // Asking for the last error after the per-interface state machine
         // has been reaped yields an unknown interface error.
         assertEquals(TETHER_ERROR_UNKNOWN_IFACE, mTethering.getLastTetherError(TEST_P2P_IFNAME));
@@ -1210,12 +1219,12 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         sendWifiP2pConnectionChanged(true, false, TEST_P2P_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, never()).getInterfaceConfig(TEST_P2P_IFNAME);
-        verify(mNMService, never())
-                .setInterfaceConfig(eq(TEST_P2P_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, never()).tetherInterface(TEST_P2P_IFNAME);
-        verify(mNMService, never()).setIpForwardingEnabled(true);
-        verify(mNMService, never()).startTethering(any(String[].class));
+        verify(mNetd, never()).interfaceGetCfg(TEST_P2P_IFNAME);
+        verify(mNetd, never()).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, never()).tetherInterfaceAdd(TEST_P2P_IFNAME);
+        verify(mNetd, never()).networkAddInterface(INetd.LOCAL_NET_ID, TEST_P2P_IFNAME);
+        verify(mNetd, never()).ipfwdEnableForwarding("tethering");
+        verify(mNetd, never()).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
 
         // Emulate externally-visible WifiP2pManager effects, when wifi p2p group
         // is being removed.
@@ -1223,13 +1232,14 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         mTethering.interfaceRemoved(TEST_P2P_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, never()).untetherInterface(TEST_P2P_IFNAME);
-        verify(mNMService, never()).getInterfaceConfig(TEST_P2P_IFNAME);
-        verify(mNMService, never())
-                .setInterfaceConfig(eq(TEST_P2P_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, never()).stopTethering();
-        verify(mNMService, never()).setIpForwardingEnabled(false);
-        verifyNoMoreInteractions(mNMService);
+        verify(mNetd, never()).tetherApplyDnsInterfaces();
+        verify(mNetd, never()).tetherInterfaceRemove(TEST_P2P_IFNAME);
+        verify(mNetd, never()).networkRemoveInterface(INetd.LOCAL_NET_ID, TEST_P2P_IFNAME);
+        verify(mNetd, never()).interfaceGetCfg(TEST_P2P_IFNAME);
+        verify(mNetd, never()).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, never()).tetherStop();
+        verify(mNetd, never()).ipfwdDisableForwarding("tethering");
+        verifyNoMoreInteractions(mNetd);
         // Asking for the last error after the per-interface state machine
         // has been reaped yields an unknown interface error.
         assertEquals(TETHER_ERROR_UNKNOWN_IFACE, mTethering.getLastTetherError(TEST_P2P_IFNAME));
@@ -1259,12 +1269,12 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         sendWifiP2pConnectionChanged(true, true, TEST_P2P_IFNAME);
         mLooper.dispatchAll();
 
-        verify(mNMService, never()).getInterfaceConfig(TEST_P2P_IFNAME);
-        verify(mNMService, never())
-                .setInterfaceConfig(eq(TEST_P2P_IFNAME), any(InterfaceConfiguration.class));
-        verify(mNMService, never()).tetherInterface(TEST_P2P_IFNAME);
-        verify(mNMService, never()).setIpForwardingEnabled(true);
-        verify(mNMService, never()).startTethering(any(String[].class));
+        verify(mNetd, never()).interfaceGetCfg(TEST_P2P_IFNAME);
+        verify(mNetd, never()).interfaceSetCfg(any(InterfaceConfigurationParcel.class));
+        verify(mNetd, never()).tetherInterfaceAdd(TEST_P2P_IFNAME);
+        verify(mNetd, never()).networkAddInterface(INetd.LOCAL_NET_ID, TEST_P2P_IFNAME);
+        verify(mNetd, never()).ipfwdEnableForwarding("tethering");
+        verify(mNetd, never()).tetherStartWithConfiguration(anyBoolean(), any(String[].class));
         assertEquals(TETHER_ERROR_UNKNOWN_IFACE, mTethering.getLastTetherError(TEST_P2P_IFNAME));
     }
     @Test
