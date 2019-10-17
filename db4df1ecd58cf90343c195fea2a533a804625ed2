@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0a73b5_13a0800b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-10-17T09:42:58Z",
+      "side": 1,
+      "message": "Nullable apparently: http://cs/android/frameworks/base/core/jni/eventlog_helper.h?l\u003d115\u0026rcl\u003d2a2e25c47163ed4a805ca7f05c7490059295b3e8",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79bf9c80_0d982853",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-10-17T09:42:58Z",
+      "side": 1,
+      "message": "I think the method accepts parameters of (integer|long|float|string)*",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ef65457_65ee8dfd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-10-17T09:42:58Z",
+      "side": 1,
+      "message": "No.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5aadd1_0255ccf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2019-10-17T09:42:58Z",
+      "side": 1,
+      "message": "The above code shows we limit the number of logged elements to 255. The return values comes from __write_to_log_daemon(), I don\u0027t fully understand what it means though",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 55
+      },
+      "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
