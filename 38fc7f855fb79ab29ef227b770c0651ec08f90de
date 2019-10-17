@@ -16,6 +16,24 @@
       "revId": "38fc7f855fb79ab29ef227b770c0651ec08f90de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465201e6_476176a4",
+        "filename": "services/core/java/com/android/server/am/ActiveServices.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2924,
+      "author": {
+        "id": 1463796
+      },
+      "writtenOn": "2019-10-17T10:40:19Z",
+      "side": 1,
+      "message": "ya correct , somehow i thought that null check is already there for processrecord but its outside loop. I will update the patch as per your suggestion.",
+      "parentUuid": "090539b5_34c7e72b",
+      "revId": "38fc7f855fb79ab29ef227b770c0651ec08f90de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
