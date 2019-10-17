@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "b672fb4a_cd4962f4",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-17T16:12:47Z",
+      "side": 1,
+      "message": "Please explain the return value (map what to what, meaning)",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 7
+      },
+      "revId": "8df34600bbb5ab375f0c0325a0d9c5c320e3579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ab50011_f3811e30",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 3
