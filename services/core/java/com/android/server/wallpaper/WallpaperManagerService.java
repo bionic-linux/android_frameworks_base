@@ -58,6 +58,11 @@ import android.graphics.BitmapRegionDecoder;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
+import android.opengl.EGL14;
+import android.opengl.EGLConfig;
+import android.opengl.EGLContext;
+import android.opengl.EGLDisplay;
+import android.opengl.GLES20;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Debug;
@@ -830,6 +835,10 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
     private final SparseBooleanArray mUserRestorecon = new SparseBooleanArray();
     private int mCurrentUserId = UserHandle.USER_NULL;
     private boolean mInAmbientMode;
+    private EGLConfig mEglConfig;
+    private EGLContext mEglContext;
+    private EGLDisplay mEglDisplay;
+    private int mMaxTextureSize = 0;
 
     static class WallpaperData {
 
@@ -1580,6 +1589,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         mColorsChangedListeners = new SparseArray<>();
 
         LocalServices.addService(WallpaperManagerInternal.class, new LocalService());
+        initEglContext();
     }
 
     private final class LocalService extends WallpaperManagerInternal {
@@ -2975,9 +2985,86 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         return wallpaper;
     }
 
+    private boolean initEglContext() {
+        int renderableType = EGL14.EGL_OPENGL_ES2_BIT;
+        int eglClientVersion = 2;
+
+        if (mEglDisplay == null) {
+            mEglDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
+            if (mEglDisplay == EGL14.EGL_NO_DISPLAY) {
+                Slog.e(TAG, "eglGetDisplay failed");
+                return false;
+            }
+
+            int[] versions = new int[2];
+            if (!EGL14.eglInitialize(mEglDisplay, versions, 0, versions, 1)) {
+                mEglDisplay = null;
+                Slog.e(TAG,"eglInitialize failed");
+                return false;
+            }
+        }
+
+        if (mEglConfig == null) {
+            int[] eglConfigAttribList = new int[] {
+                    EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,
+                    EGL14.EGL_RED_SIZE, 8,
+                    EGL14.EGL_GREEN_SIZE, 8,
+                    EGL14.EGL_BLUE_SIZE, 8,
+                    EGL14.EGL_ALPHA_SIZE, 8,
+                    EGL14.EGL_NONE
+            };
+
+            EGLConfig[] eglConfigs = new EGLConfig[1];
+            int[] numEglConfigs = new int[1];
+            int attribListOffset = 0;
+            int configsOffset = 0;
+            int numConfigOffset = 0;
+
+            if (!EGL14.eglChooseConfig(mEglDisplay, eglConfigAttribList,
+                attribListOffset, eglConfigs, configsOffset, eglConfigs.length,
+                numEglConfigs, numConfigOffset)) {
+                Slog.e(TAG, "eglChooseConfig failed");
+                return false;
+            }
+            if (numEglConfigs[0] <= 0) {
+                Slog.e(TAG, "no valid config found");
+                return false;
+            }
+
+            mEglConfig = eglConfigs[0];
+        }
+
+        if (mEglContext == null) {
+            int[] eglContextAttribList = new int[] {
+                    EGL14.EGL_CONTEXT_CLIENT_VERSION, eglClientVersion,
+                    EGL14.EGL_NONE
+            };
+
+            mEglContext = EGL14.eglCreateContext(mEglDisplay, mEglConfig,
+                    EGL14.EGL_NO_CONTEXT, eglContextAttribList, 0);
+            if (mEglContext == null) {
+                Slog.e(TAG, "glCreateContext failed");
+                return false;
+            }
+        }
+
+        if (!EGL14.eglMakeCurrent(mEglDisplay, EGL14.EGL_NO_SURFACE,
+            EGL14.EGL_NO_SURFACE, mEglContext)) {
+            Slog.e(TAG, "eglMakeCurrent failed");
+            return false;
+        }
+
+        int[] maxTextureSize = new int[1];
+        GLES20.glGetIntegerv(GLES20.GL_MAX_TEXTURE_SIZE, maxTextureSize, 0);
+        mMaxTextureSize = maxTextureSize[0];
+
+        return true;
+    }
+
     private void loadSettingsLocked(int userId, boolean keepDimensionHints) {
         JournaledFile journal = makeJournaledFile(userId);
         FileInputStream stream = null;
+        boolean needGenerateCrop = false;
         File file = journal.chooseForRead();
 
         WallpaperData wallpaper = mWallpaperMap.get(userId);
@@ -2990,13 +3077,31 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
             mWallpaperMap.put(userId, wallpaper);
             if (!wallpaper.cropExists()) {
                 if (wallpaper.sourceExists()) {
-                    generateCrop(wallpaper);
+                    needGenerateCrop = true;
                 } else {
                     Slog.i(TAG, "No static wallpaper imagery; defaults will be shown");
                 }
+            } else if (wallpaper.sourceExists()) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(wallpaper.cropFile.getAbsolutePath(), options);
+                if (mMaxTextureSize > 0 &&
+                    (options.outWidth > mMaxTextureSize ||
+                     options.outHeight > mMaxTextureSize)) {
+                    needGenerateCrop = true;
+                    if (DEBUG) {
+                        Slog.i(TAG, "width:" + options.outWidth +
+                               " height:" + options.outHeight +
+                               " exceeds maxTextureSize:" + mMaxTextureSize);
+                    }
+                }
+            }
+            if (needGenerateCrop == true) {
+                generateCrop(wallpaper);
             }
             initializeFallbackWallpaper();
         }
+
         boolean success = false;
         final DisplayData wpdData = getDisplayDataOrCreate(DEFAULT_DISPLAY);
         try {
