@@ -510,8 +510,15 @@ public class RingtoneManager {
      */
     public int getRingtonePosition(Uri ringtoneUri) {
         if (ringtoneUri == null) return -1;
-        final long ringtoneId = ContentUris.parseId(ringtoneUri);
-        
+        final long ringtoneId;
+        try {
+            ringtoneId = ContentUris.parseId(ringtoneUri);
+        } catch (NumberFormatException ex) {
+            /* The Uri did not end with an Id */
+            Log.d(TAG, "Failed to find position for ringtone " + ringtoneUri + ": " + ex);
+            return -1;
+        }
+
         final Cursor cursor = getCursor();
         cursor.moveToPosition(-1);
         while (cursor.moveToNext()) {
