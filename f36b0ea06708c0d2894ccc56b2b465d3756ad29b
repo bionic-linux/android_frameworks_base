@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d997ad7_b2c94572",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-21T12:34:47Z",
+      "side": 1,
+      "message": "Isn\u0027t that CompatibilityChangeConfig again with a different representation?",
+      "range": {
+        "startLine": 155,
+        "startChar": 17,
+        "endLine": 156,
+        "endChar": 67
+      },
+      "revId": "f36b0ea06708c0d2894ccc56b2b465d3756ad29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7986e33f_4d0f1bae",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-21T12:34:47Z",
+      "side": 1,
+      "message": "known to the service?",
+      "range": {
+        "startLine": 163,
+        "startChar": 51,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "f36b0ea06708c0d2894ccc56b2b465d3756ad29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
