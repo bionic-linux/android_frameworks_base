@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46642628_c5a56467",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-21T13:43:14Z",
+      "side": 1,
+      "message": "Yeah, I guess so. Switching to that instead.",
+      "parentUuid": "3d997ad7_b2c94572",
+      "range": {
+        "startLine": 155,
+        "startChar": 17,
+        "endLine": 156,
+        "endChar": 67
+      },
+      "revId": "f36b0ea06708c0d2894ccc56b2b465d3756ad29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7986e33f_4d0f1bae",
         "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f36b0ea06708c0d2894ccc56b2b465d3756ad29b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f6e208_6374e00f",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-21T13:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7986e33f_4d0f1bae",
+      "range": {
+        "startLine": 163,
+        "startChar": 51,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "f36b0ea06708c0d2894ccc56b2b465d3756ad29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
