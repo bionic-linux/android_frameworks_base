@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e08e354c_5b4aab04",
+        "filename": "core/java/com/android/internal/compat/CompatibilityChangeConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-10-21T17:06:04Z",
+      "side": 1,
+      "message": "why would a default be ever needed? Shouldn\u0027t this be an error if a change is not found?",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 43
+      },
+      "revId": "18c05fb665835c06cb88d9adfa522e2391ff97e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
