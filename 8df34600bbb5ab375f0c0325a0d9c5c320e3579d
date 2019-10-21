@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b0b065e_3703ccbf",
+        "filename": "core/java/com/android/internal/compat/CompatibilityChangeInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-21T12:18:36Z",
+      "side": 1,
+      "message": "com.android.server.compat.config.Change is generated from a .xsd; I would\u0027ve _loved_ for this to be generated directly as Parcelable, but that isn\u0027t possible (right now).\n\nSince your comment, I have made com.android.internal.compat.CompatibilityChangeInfo parcelable, and com.android.server.compat.CompatChange extends CompatibilityChangeInfo.\n\nCompatChange cannot be made directly Parcelable; even if it could - it cannot be used directly in IPlatformCompat.aidl (which is why I needed a Parcelable in the first place).\n\nWe still end up with three classes, tho, which is not ideal; we could consider moving the .xsd that generates com.android.server.compat.config.Change to frameworks/base/core instead, and have CompatibilityChangeInfo extend it as a Parcelable and contain the logic for CompatChange.\nI\u0027d prefer to keep that change out of this CL, but LMK if you\u0027d prefer I do it here (or if there\u0027s an alternative you\u0027d prefer).",
+      "parentUuid": "9eae5373_127f4cd3",
+      "range": {
+        "startLine": 23,
+        "startChar": 48,
+        "endLine": 23,
+        "endChar": 86
+      },
+      "revId": "8df34600bbb5ab375f0c0325a0d9c5c320e3579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b672fb4a_cd4962f4",
         "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71c58ff9_5fe079fa",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-21T12:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b672fb4a_cd4962f4",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 7
+      },
+      "revId": "8df34600bbb5ab375f0c0325a0d9c5c320e3579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ab50011_f3811e30",
         "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "8df34600bbb5ab375f0c0325a0d9c5c320e3579d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001f2917_ed3f31c9",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2019-10-21T12:18:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ab50011_f3811e30",
+      "range": {
+        "startLine": 256,
+        "startChar": 30,
+        "endLine": 256,
+        "endChar": 43
+      },
+      "revId": "8df34600bbb5ab375f0c0325a0d9c5c320e3579d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
