@@ -1503,6 +1503,51 @@ public class PduParser {
                     tempPos = pduDataStream.available();
                     lastLen = length - (startPos - tempPos);
                     break;
+
+                    /* From wap-230-wsp-20010705-a.pdf
+                     * filename, comment, domain, path = Text-String
+                     */
+                case PduPart.P_DEP_FILENAME:
+                case PduPart.P_FILENAME:
+                    byte[] fileName = parseWapString(pduDataStream, TYPE_TEXT_STRING);
+                    if ((null != fileName) && (null != map)) {
+                        map.put(PduPart.P_FILENAME, fileName);
+                    }
+
+                    tempPos = pduDataStream.available();
+                    lastLen = length - (startPos - tempPos);
+                    break;
+                case PduPart.P_PATH:
+                case PduPart.P_DEP_PATH:
+                    byte[] path = parseWapString(pduDataStream, TYPE_TEXT_STRING);
+                    if ((null != path) && (null != map)) {
+                        map.put(PduPart.P_PATH, path);
+                    }
+
+                    tempPos = pduDataStream.available();
+                    lastLen = length - (startPos - tempPos);
+                    break;
+                case PduPart.P_DEP_COMMENT:
+                case PduPart.P_COMMENT:
+                    byte[] comment = parseWapString(pduDataStream, TYPE_TEXT_STRING);
+                    if ((null != comment) && (null != map)) {
+                        map.put(PduPart.P_COMMENT, comment);
+                    }
+
+                    tempPos = pduDataStream.available();
+                    lastLen = length - (startPos - tempPos);
+                    break;
+                case PduPart.P_DEP_DOMAIN:
+                case PduPart.P_DOMAIN:
+                    byte[] domain = parseWapString(pduDataStream, TYPE_TEXT_STRING);
+                    if ((null != domain) && (null != map)) {
+                        map.put(PduPart.P_DOMAIN, domain);
+                    }
+
+                    tempPos = pduDataStream.available();
+                    lastLen = length - (startPos - tempPos);
+                    break;
+
                 default:
                     if (LOCAL_LOGV) {
                         Log.v(LOG_TAG, "Not supported Content-Type parameter");
