@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f257a0a_b683679e",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-22T16:37:57Z",
+      "side": 1,
+      "message": "use libandroid_defaults",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 10
+      },
+      "revId": "6209a49ef9cce91ac2c8d7fc210990187f1cced6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87be6ce5_2a968d58",
+        "filename": "native/android/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-10-22T16:37:57Z",
+      "side": 1,
+      "message": "inconsistent indentation",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "6209a49ef9cce91ac2c8d7fc210990187f1cced6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
