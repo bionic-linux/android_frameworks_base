@@ -1048,10 +1048,9 @@ public final class BluetoothDevice implements Parcelable {
      * Get the Bluetooth alias of the remote device.
      * <p>Alias is the locally modified name of a remote device.
      *
-     * @return the Bluetooth alias, or null if no alias or there was a problem
-     * @hide
+     * @return the Bluetooth alias, the friendly device name if no alias, or
+     * null if there was a problem
      */
-    @UnsupportedAppUsage(publicAlternatives = "Use {@link #getName()} instead.")
     public String getAlias() {
         final IBluetooth service = sService;
         if (service == null) {
@@ -1059,7 +1058,11 @@ public final class BluetoothDevice implements Parcelable {
             return null;
         }
         try {
-            return service.getRemoteAlias(this);
+            String alias = service.getRemoteAlias(this);
+            if (alias == null) {
+                return getName();
+            }
+            return alias;
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
@@ -1076,7 +1079,7 @@ public final class BluetoothDevice implements Parcelable {
      * @return true on success, false on error
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi
     public boolean setAlias(String alias) {
         final IBluetooth service = sService;
         if (service == null) {
@@ -1089,24 +1092,6 @@ public final class BluetoothDevice implements Parcelable {
             Log.e(TAG, "", e);
         }
         return false;
-    }
-
-    /**
-     * Get the Bluetooth alias of the remote device.
-     * If Alias is null, get the Bluetooth name instead.
-     *
-     * @return the Bluetooth alias, or null if no alias or there was a problem
-     * @hide
-     * @see #getAlias()
-     * @see #getName()
-     */
-    @UnsupportedAppUsage(publicAlternatives = "Use {@link #getName()} instead.")
-    public String getAliasName() {
-        String name = getAlias();
-        if (name == null) {
-            name = getName();
-        }
-        return name;
     }
 
     /**
