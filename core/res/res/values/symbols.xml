@@ -3839,6 +3839,8 @@
   <java-symbol type="integer" name="config_notificationWarnRemoteViewSizeBytes" />
   <java-symbol type="integer" name="config_notificationStripRemoteViewSizeBytes" />
 
+  <java-symbol type="bool" name="config_sim_phonebook_in_modem" />
+
   <java-symbol type="string" name="config_factoryResetPackage" />
   <java-symbol type="array" name="config_highRefreshRateBlacklist" />
 
