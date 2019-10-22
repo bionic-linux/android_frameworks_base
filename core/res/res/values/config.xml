@@ -4414,4 +4414,7 @@
 
     <!-- Whether to select voice/data/sms preference without user confirmation -->
     <bool name="config_voice_data_sms_auto_fallback">false</bool>
+
+    <!-- Whether modem to return the entire parsed SIM phonebook.-->
+    <bool name="config_sim_phonebook_in_modem">false</bool>
 </resources>
