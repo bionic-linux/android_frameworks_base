@@ -14353,13 +14353,23 @@ public class TelephonyManager {
      * @hide
      */
     @SystemApi
-    public static final String CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE =
+    public static final String CAPABILITY__LINK_BANDWIDTH_VISIBLE =
             "CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE";
+
+    /**
+     * Indicates whether modem supports for returning an entire parsed SIM phonebook.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_SIM_PHONEBOOK_IN_MODEM =
+            "CAPABILITY_SIM_PHONEBOOK_IN_MODEM";
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
+            CAPABILITY_SIM_PHONEBOOK_IN_MODEM,
     })
     public @interface RadioInterfaceCapability {}
 
