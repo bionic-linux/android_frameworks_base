@@ -14408,11 +14408,22 @@ public class TelephonyManager {
     public static final String CAPABILITY_ALLOWED_NETWORK_TYPES_USED =
             "CAPABILITY_ALLOWED_NETWORK_TYPES_USED";
 
+    /*
+     * Indicates whether modem supports for returning an entire parsed SIM phonebook.
+     * This is for the purpose of  internal usage.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_SIM_PHONEBOOK_IN_MODEM =
+            "CAPABILITY_SIM_PHONEBOOK_IN_MODEM";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
+            CAPABILITY_SIM_PHONEBOOK_IN_MODEM,
     })
     public @interface RadioInterfaceCapability {}
 
