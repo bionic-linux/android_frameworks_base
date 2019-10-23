@@ -91,6 +91,29 @@
       "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "080df6eb_dba49be3",
+        "filename": "core/java/android/app/admin/SecurityLog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2019-10-23T21:41:30Z",
+      "side": 1,
+      "message": "It turns out the supported types are int, long, etc. rather than Integer, Long. (Specifically, they are not nullable). So the existing documentation is correct, except that \"integer\" should be \"int\". \n\nI\u0027ll abandon this CL for now.",
+      "range": {
+        "startLine": 683,
+        "startChar": 36,
+        "endLine": 684,
+        "endChar": 38
+      },
+      "revId": "db4df1ecd58cf90343c195fea2a533a804625ed2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
