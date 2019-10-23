@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eba091a_33ff4a8b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-10-23T23:24:15Z",
+      "side": 1,
+      "message": "Dual-antenna receiver capability? Didn\u0027t see the range is defined between -200 and 300. How is it decided?",
+      "range": {
+        "startLine": 2393,
+        "startChar": 25,
+        "endLine": 2393,
+        "endChar": 52
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7c1e43_ecda74e7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-10-23T23:24:15Z",
+      "side": 1,
+      "message": "could you document how these numbers are decided?",
+      "range": {
+        "startLine": 3090,
+        "startChar": 0,
+        "endLine": 3093,
+        "endChar": 56
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7ddccf_50518568",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3100,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-10-23T23:24:15Z",
+      "side": 1,
+      "message": "Same above.",
+      "range": {
+        "startLine": 3097,
+        "startChar": 0,
+        "endLine": 3100,
+        "endChar": 56
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb7e697_48aa326c",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-10-23T23:24:15Z",
+      "side": 1,
+      "message": "Can you please explain why is this -1, not SIGNAL_STRENGTH_NONE_OR_UNKNOWN?",
+      "range": {
+        "startLine": 210,
+        "startChar": 28,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80975009_5ee7f557",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-10-23T23:24:15Z",
+      "side": 1,
+      "message": "May I know why the smaller one is preferred?",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
