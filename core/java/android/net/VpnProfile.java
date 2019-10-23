@@ -24,6 +24,9 @@ import android.text.TextUtils;
 
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Parcel-like entity class for VPN profiles. To keep things simple, all
@@ -44,7 +47,10 @@ public class VpnProfile implements Cloneable, Parcelable {
     public static final int TYPE_IPSEC_XAUTH_PSK = 3;
     public static final int TYPE_IPSEC_XAUTH_RSA = 4;
     public static final int TYPE_IPSEC_HYBRID_RSA = 5;
-    public static final int TYPE_MAX = 5;
+    public static final int TYPE_IKEV2_IPSEC_USER_PASS = 6;
+    public static final int TYPE_IKEV2_IPSEC_PSK = 7;
+    public static final int TYPE_IKEV2_IPSEC_RSA = 8;
+    public static final int TYPE_MAX = 8;
 
     // Match these constants with R.array.vpn_proxy_settings.
     public static final int PROXY_NONE = 0;
@@ -52,27 +58,53 @@ public class VpnProfile implements Cloneable, Parcelable {
 
     // Entity fields.
     @UnsupportedAppUsage
-    public final String key;           // -1
+    public final String key;              // -1
     @UnsupportedAppUsage
-    public String name = "";           // 0
+    public String name = "";              // 0
     @UnsupportedAppUsage
-    public int type = TYPE_PPTP;       // 1
+    public int type = TYPE_PPTP;          // 1
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public String server = "";         // 2
+    public String server = "";                                 // 2
     @UnsupportedAppUsage
-    public String username = "";       // 3
-    public String password = "";       // 4
-    public String dnsServers = "";     // 5
-    public String searchDomains = "";  // 6
-    public String routes = "";         // 7
-    public boolean mppe = true;        // 8
-    public String l2tpSecret = "";     // 9
-    public String ipsecIdentifier = "";// 10
-    public String ipsecSecret = "";    // 11
-    public String ipsecUserCert = "";  // 12
-    public String ipsecCaCert = "";    // 13
-    public String ipsecServerCert = "";// 14
-    public ProxyInfo proxy = null;     // 15~18
+    public String username = "";          // 3
+    public String password = "";                               // 4
+    public String dnsServers = "";                             // 5
+    public String searchDomains = "";                          // 6
+    public String routes = "";                                 // 7
+    public boolean mppe = true;                                // 8
+    public String l2tpSecret = "";                             // 9
+    public String ipsecIdentifier = "";                        // 10
+
+    /**
+     * The RSA private key used for digital signature authentication
+     *
+     * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link java.security.PrivateKey}
+     */
+    public String ipsecSecret = "";                            // 11
+
+    /**
+     * The RSA certificate to be used for digital signature authentication
+     *
+     * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link
+     * java.security.X509Certificate}
+     */
+    public String ipsecUserCert = "";                          // 12
+
+    /**
+     * The RSA certificate that should be used to verify the server's end/target certificate
+     *
+     * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link
+     * java.security.X509Certificate}
+     */
+    public String ipsecCaCert = "";                            // 13
+
+    public String ipsecServerCert = "";                        // 14
+    public ProxyInfo proxy = null;                             // 15~18
+    public List<String> allowedAlgorithms = new ArrayList<>(); // 19
+    public boolean isBypassable = false;                       // 20
+    public boolean isMetered = false;                          // 21
+    public int maxMtu = 1400;                                  // 22
+    public boolean authParamsInline = false;                   // 23
 
     // Helper fields.
     @UnsupportedAppUsage
@@ -102,6 +134,13 @@ public class VpnProfile implements Cloneable, Parcelable {
         ipsecServerCert = in.readString();
         saveLogin = in.readInt() != 0;
         proxy = in.readParcelable(null);
+
+        allowedAlgorithms = new ArrayList<>();
+        in.readList(allowedAlgorithms, null);
+        isBypassable = in.readBoolean();
+        isMetered = in.readBoolean();
+        maxMtu = in.readInt();
+        authParamsInline = in.readBoolean();
     }
 
     @Override
@@ -124,6 +163,11 @@ public class VpnProfile implements Cloneable, Parcelable {
         out.writeString(ipsecServerCert);
         out.writeInt(saveLogin ? 1 : 0);
         out.writeParcelable(proxy, flags);
+        out.writeList(allowedAlgorithms);
+        out.writeBoolean(isBypassable);
+        out.writeBoolean(isMetered);
+        out.writeInt(maxMtu);
+        out.writeBoolean(authParamsInline);
     }
 
     @UnsupportedAppUsage
@@ -134,8 +178,8 @@ public class VpnProfile implements Cloneable, Parcelable {
             }
 
             String[] values = new String(value, StandardCharsets.UTF_8).split("\0", -1);
-            // There can be 14 - 19 Bytes in values.length.
-            if (values.length < 14 || values.length > 19) {
+            // There can be 14 - 24 items in the encoded VpnProfile.
+            if (values.length < 14 || values.length > 24) {
                 return null;
             }
 
@@ -170,6 +214,15 @@ public class VpnProfile implements Cloneable, Parcelable {
                     profile.proxy = new ProxyInfo(pacFileUrl);
                 }
             } // else profle.proxy = null
+
+            if (values.length > 19) {
+                profile.allowedAlgorithms = Arrays.asList(values[19].split(","));
+            }
+            if (values.length > 20) profile.isBypassable = Boolean.parseBoolean(values[20]);
+            if (values.length > 21) profile.isMetered = Boolean.parseBoolean(values[21]);
+            if (values.length > 22) profile.maxMtu = Integer.parseInt(values[22]);
+            if (values.length > 23) profile.authParamsInline = Boolean.parseBoolean(values[23]);
+
             profile.saveLogin = !profile.username.isEmpty() || !profile.password.isEmpty();
             return profile;
         } catch (Exception e) {
@@ -200,7 +253,16 @@ public class VpnProfile implements Cloneable, Parcelable {
             builder.append('\0').append(proxy.getExclusionListAsString() != null ?
                     proxy.getExclusionListAsString() : "");
             builder.append('\0').append(proxy.getPacFileUrl().toString());
+        } else {
+            builder.append("\0\0\0\0");
         }
+
+        builder.append('\0').append(String.join(",", allowedAlgorithms));
+        builder.append('\0').append(isBypassable);
+        builder.append('\0').append(isMetered);
+        builder.append('\0').append(Integer.toString(maxMtu));
+        builder.append('\0').append(authParamsInline);
+
         return builder.toString().getBytes(StandardCharsets.UTF_8);
     }
 
