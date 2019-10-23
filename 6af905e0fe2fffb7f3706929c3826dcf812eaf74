@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0086ce_04f99a7d",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthNr.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2019-10-23T15:55:27Z",
+      "side": 0,
+      "message": "these too?",
+      "revId": "6af905e0fe2fffb7f3706929c3826dcf812eaf74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
