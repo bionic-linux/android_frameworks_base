@@ -52,7 +52,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
@@ -166,6 +165,8 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     @Mock private RouterAdvertisementDaemon mRouterAdvertisementDaemon;
     @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
+    @Mock private UserManager mUserManager;
+    @Mock private TetheringService mMockTetheringService;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -215,6 +216,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
             if (Context.WIFI_SERVICE.equals(name)) return mWifiManager;
             if (Context.USB_SERVICE.equals(name)) return mUsbManager;
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
+            if (Context.USER_SERVICE.equals(name)) return mUserManager;
             return super.getSystemService(name);
         }
     }
@@ -333,6 +335,11 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         @Override
         public Looper getTetheringLooper() {
             return mLooper.getLooper();
+        }
+
+        @Override
+        public TetheringService getTetheringService() {
+            return mMockTetheringService;
         }
     }
 
@@ -955,26 +962,29 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         verifyNoMoreInteractions(mNetd);
     }
 
-    private void userRestrictionsListenerBehaviour(
+    private void sendUserRestrictionChangeBroadcast() {
+        final Intent intent = new Intent(UserManager.ACTION_USER_RESTRICTIONS_CHANGED);
+        final int userId = 0;
+        mServiceContext.sendBroadcastAsUser(intent, UserHandle.of(userId));
+    }
+
+    private void runUserRestrictionsChange(
             boolean currentDisallow, boolean nextDisallow, String[] activeTetheringIfacesList,
             int expectedInteractionsWithShowNotification) throws  Exception {
-        final int userId = 0;
-        final Bundle currRestrictions = new Bundle();
+        mTethering.mDisallowTethering = currentDisallow;
         final Bundle newRestrictions = new Bundle();
-        TetheringService tethering = mock(TetheringService.class);
-        TetheringService.TetheringUserRestrictionListener turl =
-                new TetheringService.TetheringUserRestrictionListener(tethering);
 
-        currRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, currentDisallow);
         newRestrictions.putBoolean(UserManager.DISALLOW_CONFIG_TETHERING, nextDisallow);
-        when(tethering.getTetheredIfaces()).thenReturn(activeTetheringIfacesList);
+        when(mMockTetheringService.getTetheredIfaces()).thenReturn(activeTetheringIfacesList);
+        when(mUserManager.getUserRestrictions()).thenReturn(newRestrictions);
 
-        turl.onUserRestrictionsChanged(userId, newRestrictions, currRestrictions);
+        sendUserRestrictionChangeBroadcast();
 
-        verify(tethering, times(expectedInteractionsWithShowNotification))
+        verify(mMockTetheringService, times(expectedInteractionsWithShowNotification))
                 .showTetheredNotification(anyInt(), eq(false));
 
-        verify(tethering, times(expectedInteractionsWithShowNotification)).untetherAll();
+        verify(mMockTetheringService, times(expectedInteractionsWithShowNotification))
+                .untetherAll();
     }
 
     @Test
@@ -984,7 +994,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         final boolean nextDisallow = true;
         final int expectedInteractionsWithShowNotification = 0;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, emptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, emptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
 
@@ -995,7 +1005,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         final boolean nextDisallow = true;
         final int expectedInteractionsWithShowNotification = 1;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
 
@@ -1006,7 +1016,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         final boolean nextDisallow = false;
         final int expectedInteractionsWithShowNotification = 0;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
 
@@ -1017,7 +1027,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         final boolean nextDisallow = false;
         final int expectedInteractionsWithShowNotification = 0;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
 
@@ -1028,13 +1038,13 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
         boolean currDisallow = true;
         boolean nextDisallow = true;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
 
         currDisallow = false;
         nextDisallow = false;
 
-        userRestrictionsListenerBehaviour(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
+        runUserRestrictionsChange(currDisallow, nextDisallow, nonEmptyActiveIfacesList,
                 expectedInteractionsWithShowNotification);
     }
 
