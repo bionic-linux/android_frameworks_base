@@ -32,6 +32,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.storage.StorageManager;
@@ -73,17 +74,21 @@ public class UninstallAlertDialogFragment extends DialogFragment implements
 
         int numVolumes = volumes.size();
         for (int i = 0; i < numVolumes; i++) {
-            StorageStats stats;
+            StorageStats stats = null;
             try {
-                stats = storageStatsManager.queryStatsForPackage(convert(volumes.get(i).getUuid()),
-                        pkg, user);
+                if (Environment.MEDIA_MOUNTED.equals(volumes.get(i).getState()) {
+                    stats = storageStatsManager.queryStatsForPackage(convert(volumes.get(i).getUuid()),
+                            pkg, user);
+                }
             } catch (PackageManager.NameNotFoundException | IOException e) {
                 Log.e(LOG_TAG, "Cannot determine amount of app data for " + pkg + " on "
                         + volumes.get(i) + " (user " + user + ")", e);
                 continue;
             }
 
-            appDataSize += stats.getDataBytes();
+            if (stats != null) {
+                appDataSize += stats.getDataBytes();
+            }
         }
 
         return appDataSize;
