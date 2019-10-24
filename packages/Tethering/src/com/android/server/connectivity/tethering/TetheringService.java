@@ -100,8 +100,6 @@ import android.os.ResultReceiver;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.os.UserManagerInternal;
-import android.os.UserManagerInternal.UserRestrictionsListener;
 import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -122,7 +120,6 @@ import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
-import com.android.server.LocalServices;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -209,6 +206,9 @@ public class TetheringService extends Service {
     private boolean mWifiTetherRequested;
     private Network mTetherUpstream;
     private TetherStatesParcel mTetherStatesParcel;
+    private UserManager mUserManager;
+
+    boolean mDisallowTethering = false;
 
     @Override
     public void onCreate() {
@@ -219,6 +219,7 @@ public class TetheringService extends Service {
         mPolicyManager = mDeps.getINetworkPolicyManager();
         mNetd = mDeps.getINetd(mContext);
         mLooper = mDeps.getTetheringLooper();
+        mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
 
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper, mDeps);
         mTetherMasterSM.start();
@@ -357,6 +358,7 @@ public class TetheringService extends Service {
         filter.addAction(WifiManager.WIFI_AP_STATE_CHANGED_ACTION);
         filter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         filter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+        filter.addAction(UserManager.ACTION_USER_RESTRICTIONS_CHANGED);
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
 
         filter = new IntentFilter();
@@ -364,12 +366,6 @@ public class TetheringService extends Service {
         filter.addAction(Intent.ACTION_MEDIA_UNSHARED);
         filter.addDataScheme("file");
         mContext.registerReceiver(mStateReceiver, filter, null, handler);
-
-        final UserManagerInternal umi = LocalServices.getService(UserManagerInternal.class);
-        // This check is useful only for some unit tests; example: ConnectivityServiceTest.
-        if (umi != null) {
-            umi.addUserRestrictionsListener(new TetheringUserRestrictionListener(this));
-        }
 
         mNetdCallback = new NetdCallback();
         try {
@@ -825,6 +821,9 @@ public class TetheringService extends Service {
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 mLog.log("OBSERVED configuration changed");
                 updateConfiguration();
+            } else if (action.equals(UserManager.ACTION_USER_RESTRICTIONS_CHANGED)) {
+                mLog.log("OBSERVED user restrictions changed");
+                handleUserRestrictionAction();
             }
         }
 
@@ -931,36 +930,24 @@ public class TetheringService extends Service {
                 }
             }
         }
-    }
 
-    @VisibleForTesting
-    protected static class TetheringUserRestrictionListener implements UserRestrictionsListener {
-        private final TetheringService mWrapper;
-
-        public TetheringUserRestrictionListener(TetheringService wrapper) {
-            mWrapper = wrapper;
-        }
-
-        public void onUserRestrictionsChanged(int userId,
-                                              Bundle newRestrictions,
-                                              Bundle prevRestrictions) {
+        private void handleUserRestrictionAction() {
+            Bundle restrictions = mUserManager.getUserRestrictions();
             final boolean newlyDisallowed =
-                    newRestrictions.getBoolean(UserManager.DISALLOW_CONFIG_TETHERING);
-            final boolean previouslyDisallowed =
-                    prevRestrictions.getBoolean(UserManager.DISALLOW_CONFIG_TETHERING);
-            final boolean tetheringDisallowedChanged = (newlyDisallowed != previouslyDisallowed);
+                    restrictions.getBoolean(UserManager.DISALLOW_CONFIG_TETHERING);
 
-            if (!tetheringDisallowedChanged) {
-                return;
-            }
+            if (newlyDisallowed == mDisallowTethering) return;
 
-            mWrapper.clearTetheredNotification();
-            final boolean isTetheringActiveOnDevice = (mWrapper.getTetheredIfaces().length != 0);
+            final TetheringService wrapper = mDeps.getTetheringService();
+            mDisallowTethering = newlyDisallowed;
+            wrapper.clearTetheredNotification();
+            final boolean isTetheringActiveOnDevice =
+                    (wrapper.getTetheredIfaces().length != 0);
 
-            if (newlyDisallowed && isTetheringActiveOnDevice) {
-                mWrapper.showTetheredNotification(
+            if (mDisallowTethering && isTetheringActiveOnDevice) {
+                wrapper.showTetheredNotification(
                         com.android.internal.R.drawable.stat_sys_tether_general, false);
-                mWrapper.untetherAll();
+                wrapper.untetherAll();
             }
         }
     }
@@ -2116,6 +2103,11 @@ public class TetheringService extends Service {
                     boolean tetherSupported = Settings.Global.getInt(mContext.getContentResolver(),
                             Settings.Global.TETHER_SUPPORTED, defaultVal) != 0;
                     return tetherSupported;
+                }
+
+                @Override
+                public TetheringService getTetheringService() {
+                    return TetheringService.this;
                 }
 
             };

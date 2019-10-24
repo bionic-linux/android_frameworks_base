@@ -141,4 +141,11 @@ public class TetheringDependencies {
     public Looper getTetheringLooper() {
         return null;
     }
+
+    /**
+     * Get a reference to TetheringService to be used for testing.
+     */
+    public TetheringService getTetheringService() {
+        return null;
+    }
 }
