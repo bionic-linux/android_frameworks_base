@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.net;
+package android.net;
 
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;

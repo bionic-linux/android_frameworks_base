@@ -38,7 +38,7 @@ import android.os.ResultReceiver;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
-import com.android.internal.net.VpnProfile;
+import android.net.VpnProfile;
 
 /**
  * Interface that answers queries about, and allows changing, the
