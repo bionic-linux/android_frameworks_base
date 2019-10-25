@@ -35,8 +35,6 @@ import java.util.List;
  * storage can be implemented easily. Two rules are set for this class.
  * First, all fields must be kept non-null. Second, always make a copy
  * using clone() before modifying.
- *
- * @hide
  */
 public class VpnProfile implements Cloneable, Parcelable {
     private static final String TAG = "VpnProfile";
@@ -54,65 +52,157 @@ public class VpnProfile implements Cloneable, Parcelable {
     public static final int TYPE_MAX = 8;
 
     // Match these constants with R.array.vpn_proxy_settings.
+    /** @hide */
     public static final int PROXY_NONE = 0;
+    /** @hide */
     public static final int PROXY_MANUAL = 1;
 
     // Entity fields.
-    @UnsupportedAppUsage public final String key; // -1
-    @UnsupportedAppUsage public String name = ""; // 0
-    @UnsupportedAppUsage public int type = TYPE_PPTP; // 1
-
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public String server = ""; // 2
-
-    @UnsupportedAppUsage public String username = ""; // 3
-    public String password = ""; // 4
-    public String dnsServers = ""; // 5
-    public String searchDomains = ""; // 6
-    public String routes = ""; // 7
-    public boolean mppe = true; // 8
-    public String l2tpSecret = ""; // 9
-    public String ipsecIdentifier = ""; // 10
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.Q,
+            publicAlternatives = "Use {@link #getKey()} instead")
+    public final String key;                                   // -1
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.Q,
+            publicAlternatives = "Use {@link #getName()} and {@link #setName()} instead")
+    public String name = "";                                   // 0
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.Q,
+            publicAlternatives = "Use {@link #getType()} and {@link #setType()} instead")
+    public int type = TYPE_PPTP;                               // 1
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.P,
+            trackingBug = 115609023,
+            publicAlternatives = "Use {@link #getServer()} and {@link #setServer()} instead")
+    public String server = "";                                 // 2
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.Q,
+            publicAlternatives = "Use {@link #getUsername()} and {@link #setUsername()} instead")
+    public String username = "";                               // 3
+    /** @hide */
+    public String password = "";                               // 4
+    /** @hide */
+    public String dnsServers = "";                             // 5
+    /** @hide */
+    public String searchDomains = "";                          // 6
+    /** @hide */
+    public String routes = "";                                 // 7
+    /** @hide */
+    public boolean mppe = true;                                // 8
+    /** @hide */
+    public String l2tpSecret = "";                             // 9
+    /** @hide */
+    public String ipsecIdentifier = "";                        // 10
 
     /**
      * The RSA private key used for digital signature authentication
      *
      * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link java.security.PrivateKey}
+     *
+     * @hide
      */
-    public String ipsecSecret = ""; // 11
+    public String ipsecSecret = "";                            // 11
 
     /**
      * The RSA certificate to be used for digital signature authentication
      *
      * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link
      * java.security.X509Certificate}
+     *
+     * @hide
      */
-    public String ipsecUserCert = ""; // 12
+    public String ipsecUserCert = "";                          // 12
 
     /**
      * The RSA certificate that should be used to verify the server's end/target certificate
      *
      * <p>For IKEv2 VPN types, this String will be a base64-encoded {@link
      * java.security.X509Certificate}
+     *
+     * @hide
      */
-    public String ipsecCaCert = ""; // 13
-
-    public String ipsecServerCert = ""; // 14
-    public ProxyInfo proxy = null; // 15~18
+    public String ipsecCaCert = "";                            // 13
+    /** @hide */
+    public String ipsecServerCert = "";                        // 14
+    /** @hide */
+    public ProxyInfo proxy = null;                             // 15~18
+    /** @hide */
     public List<String> allowedAlgorithms = new ArrayList<>(); // 19
-    public boolean isBypassable = false; // 20
-    public boolean isMetered = false; // 21
-    public int maxMtu = 1400; // 22
-    public boolean authParamsInline = false; // 23
+    /** @hide */
+    public boolean isBypassable = false;                       // 20
+    /** @hide */
+    public boolean isMetered = false;                          // 21
+    /** @hide */
+    public int maxMtu = 1400;                                  // 22
+    /** @hide */
+    public boolean authParamsInline = false;                   // 23
 
     // Helper fields.
-    @UnsupportedAppUsage
+    /** @hide */
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.Q,
+            publicAlternatives = "Use {@link #isLoginSaved()} and {@link #setSaveLogin()} instead")
     public boolean saveLogin = false;
 
+    /** @hide */
     public VpnProfile(String key) {
         this.key = key;
     }
 
+    @NonNull
+    public String getKey() {
+        return key;
+    }
+
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setServer(@NonNull String server) {
+        this.server = server;
+    }
+
+    @NonNull
+    public String getServer() {
+        return server;
+    }
+
+    public void setUsername(@NonNull String username) {
+        this.username = username;
+    }
+
+    @NonNull
+    public String getUsername() {
+        return username;
+    }
+
+    public void setSaveLogin(boolean saveLogin) {
+        this.saveLogin = saveLogin;
+    }
+
+    public boolean isLoginSaved() {
+        return saveLogin;
+    }
+
+    /** @hide */
     @UnsupportedAppUsage
     public VpnProfile(Parcel in) {
         key = in.readString();
@@ -142,6 +232,7 @@ public class VpnProfile implements Cloneable, Parcelable {
         authParamsInline = in.readBoolean();
     }
 
+    /** @hide */
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(key);
@@ -169,6 +260,13 @@ public class VpnProfile implements Cloneable, Parcelable {
         out.writeBoolean(authParamsInline);
     }
 
+    /**
+     * Decodes a VpnProfile instance from the encoded byte array
+     *
+     * <p>See {@link #encode()}
+     *
+     * @hide
+     */
     @UnsupportedAppUsage
     public static VpnProfile decode(String key, byte[] value) {
         try {
@@ -230,6 +328,13 @@ public class VpnProfile implements Cloneable, Parcelable {
         return null;
     }
 
+    /**
+     * Encodes a VpnProfile instance to a byte array for storage.
+     *
+     * <p>See {@link #decode(String, byte[])}
+     *
+     * @hide
+     */
     public byte[] encode() {
         StringBuilder builder = new StringBuilder(name);
         builder.append('\0').append(type);
@@ -269,6 +374,8 @@ public class VpnProfile implements Cloneable, Parcelable {
      * Tests if profile is valid for lockdown, which requires IPv4 address for
      * both server and DNS. Server hostnames would require using DNS before
      * connection.
+     *
+     * @hide
      */
     public boolean isValidLockdownProfile() {
         return isTypeValidForLockdown()
@@ -277,13 +384,21 @@ public class VpnProfile implements Cloneable, Parcelable {
                 && areDnsAddressesNumeric();
     }
 
-    /** Returns {@code true} if the VPN type is valid for lockdown. */
+    /**
+     * Returns {@code true} if the VPN type is valid for lockdown.
+     *
+     * @hide
+     */
     public boolean isTypeValidForLockdown() {
         // b/7064069: lockdown firewall blocks ports used for PPTP
         return type != TYPE_PPTP;
     }
 
-    /** Returns {@code true} if the server address is numeric, e.g. 8.8.8.8 */
+    /**
+     * Returns {@code true} if the server address is numeric, e.g. 8.8.8.8
+     *
+     * @hide
+     */
     public boolean isServerAddressNumeric() {
         try {
             InetAddress.parseNumericAddress(server);
@@ -293,7 +408,11 @@ public class VpnProfile implements Cloneable, Parcelable {
         return true;
     }
 
-    /** Returns {@code true} if one or more DNS servers are specified. */
+    /**
+     * Returns {@code true} if one or more DNS servers are specified.
+     *
+     * @hide
+     */
     public boolean hasDns() {
         return !TextUtils.isEmpty(dnsServers);
     }
@@ -301,6 +420,8 @@ public class VpnProfile implements Cloneable, Parcelable {
     /**
      * Returns {@code true} if all DNS servers have numeric addresses,
      * e.g. 8.8.8.8
+     *
+     * @hide
      */
     public boolean areDnsAddressesNumeric() {
         try {
@@ -313,6 +434,7 @@ public class VpnProfile implements Cloneable, Parcelable {
         return true;
     }
 
+    /** @hide */
     public static final Creator<VpnProfile> CREATOR = new Creator<VpnProfile>() {
         @Override
         public VpnProfile createFromParcel(Parcel in) {
