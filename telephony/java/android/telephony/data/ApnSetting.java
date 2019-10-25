@@ -108,6 +108,7 @@ public class ApnSetting implements Parcelable {
     public static final int TYPE_EMERGENCY = ApnTypes.EMERGENCY;
     /** APN type for MCX (Mission Critical Service) where X can be PTT/Video/Data */
     public static final int TYPE_MCX = ApnTypes.MCX;
+    public static final int TYPE_ALL_INCLUDING_NON_WILD_CARDABLE = TYPE_ALL | TYPE_EMERGENCY | TYPE_IA | TYPE_MCX;
 
     /** @hide */
     @IntDef(flag = true, prefix = { "TYPE_" }, value = {
@@ -1954,7 +1955,7 @@ public class ApnSetting implements Parcelable {
          * {@link ApnSetting} built from this builder otherwise.
          */
         public ApnSetting build() {
-            if ((mApnTypeBitmask & TYPE_ALL) == 0 || TextUtils.isEmpty(mApnName)
+            if ((mApnTypeBitmask & TYPE_ALL_INCLUDING_NON_WILD_CARDABLE) == 0 || TextUtils.isEmpty(mApnName)
                 || TextUtils.isEmpty(mEntryName)) {
                 return null;
             }
