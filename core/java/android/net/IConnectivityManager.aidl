@@ -29,6 +29,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.ISocketKeepaliveCallback;
 import android.net.ProxyInfo;
+import android.net.VpnProfile;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -38,7 +39,6 @@ import android.os.ResultReceiver;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
-import com.android.internal.net.VpnProfile;
 
 /**
  * Interface that answers queries about, and allows changing, the
