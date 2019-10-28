@@ -102,8 +102,8 @@ inline bool operator==(const UsageLocation& lhs, const UsageLocation& rhs) {
   return lhs.name == rhs.name;
 }
 
-inline int operator<(const UsageLocation& lhs, const UsageLocation& rhs) {
-  return lhs.name.compare(rhs.name);
+inline bool operator<(const UsageLocation& lhs, const UsageLocation& rhs) {
+  return lhs.name < rhs.name;
 }
 
 //

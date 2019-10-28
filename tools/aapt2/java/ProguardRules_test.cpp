@@ -364,4 +364,33 @@ TEST(ProguardRulesTest, TransitionRulesAreEmitted) {
     "-keep class com.foo.Bar { <init>(android.content.Context, android.util.AttributeSet); }"));
 }
 
+TEST(ProguardRulesTest, LayoutCycles) {
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
+  std::unique_ptr<xml::XmlResource> alfa = test::BuildXmlDom(R"(
+      <com.foo.CustomView xmlns:android="http://schemas.android.com/apk/res/android" />)");
+  alfa->file.name = test::ParseNameOrDie("layout/alfa");
+
+  std::unique_ptr<xml::XmlResource> hotel = test::BuildXmlDom(R"(
+      <com.foo.CustomView2 xmlns:android="http://schemas.android.com/apk/res/android" />)");
+  hotel->file.name = test::ParseNameOrDie("layout/hotel");
+
+  std::unique_ptr<xml::XmlResource> mu = test::BuildXmlDom(R"(
+      <com.foo.CustomView2 xmlns:android="http://schemas.android.com/apk/res/android" />)");
+  mu->file.name = test::ParseNameOrDie("layout/mu");
+
+  std::unique_ptr<xml::XmlResource> zulu = test::BuildXmlDom(R"(
+      <com.foo.CustomView2 xmlns:android="http://schemas.android.com/apk/res/android" />)");
+  zulu->file.name = test::ParseNameOrDie("layout/zulu");
+
+  proguard::KeepSet set;
+  set.AddReference({test::ParseNameOrDie("layout/hotel"), {}}, alfa->file.name);
+  set.AddReference({test::ParseNameOrDie("layout/alfa"), {}}, hotel->file.name);
+  set.AddReference({test::ParseNameOrDie("layout/hotel"), {}}, mu->file.name);
+  set.AddReference({test::ParseNameOrDie("layout/mu"), {}}, zulu->file.name);
+  ASSERT_TRUE(proguard::CollectProguardRules(context.get(), zulu.get(), &set));
+
+  std::string actual = GetKeepSetString(set, /** minimal_rules */ false);
+  EXPECT_THAT(actual, HasSubstr(""));
+}
+
 }  // namespace aapt
