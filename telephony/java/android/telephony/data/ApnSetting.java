@@ -1228,6 +1228,12 @@ public class ApnSetting implements Parcelable {
         return first == null || second == null || first.equals(second);
     }
 
+    // Equal or one is null.
+    private boolean xorEquals(String first, String second) {
+        return first == null || second == null
+                   || first.equals(UNSPECIFIED_STRING) || second.equals(UNSPECIFIED_STRING);
+    }
+
     // Equal or one is not specified.
     private boolean xorEqualsInt(int first, int second) {
         return first == UNSPECIFIED_INT || second == UNSPECIFIED_INT
