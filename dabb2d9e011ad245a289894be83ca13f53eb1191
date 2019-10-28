@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc18bd69_547f4148",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-10-28T20:57:16Z",
+      "side": 1,
+      "message": "Incorrect logic. It should be\n\nTextUtils.isEmpty(first) || TextUtils.isEmpty(second) || first.equals(second)\n\nAlso if you want to use the name xorEquals, maybe should rename xorEqualsInt to xorEquals for consistency.",
+      "range": {
+        "startLine": 1233,
+        "startChar": 0,
+        "endLine": 1234,
+        "endChar": 92
+      },
+      "revId": "dabb2d9e011ad245a289894be83ca13f53eb1191",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
