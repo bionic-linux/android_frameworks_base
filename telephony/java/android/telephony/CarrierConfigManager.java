@@ -3138,6 +3138,9 @@ public class CarrierConfigManager {
     public static final String KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY =
             "disconnect_cause_play_busytone_int_array";
 
+    public static final String KEY_CARRIER_SUPPORT_MULTI_VIDEO_CALL =
+            "support_multi_video_call";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3560,6 +3563,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_CARRIER_CERTIFICATE_STRING_ARRAY, null);
         sDefaults.putIntArray(KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY,
                 new int[] {4 /* BUSY */});
+        sDefaultsEx.putBoolean(KEY_CARRIER_SUPPORT_MULTI_VIDEO_CALL, true);
     }
 
     /**
