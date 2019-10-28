@@ -1215,7 +1215,7 @@ public class ApnSetting implements Parcelable {
             && Objects.equals(this.mMvnoType, other.mMvnoType)
             && Objects.equals(this.mMvnoMatchData, other.mMvnoMatchData)
             && xorEquals(this.mMmsc, other.mMmsc)
-            && xorEquals(this.mMmsProxyAddress, other.mMmsProxyAddress)
+            && xorEqualsString(this.mMmsProxyAddress, other.mMmsProxyAddress)
             && xorEqualsInt(this.mMmsProxyPort, other.mMmsProxyPort))
             && Objects.equals(this.mNetworkTypeBitmask, other.mNetworkTypeBitmask)
             && Objects.equals(mApnSetId, other.mApnSetId)
@@ -1226,6 +1226,12 @@ public class ApnSetting implements Parcelable {
     // Equal or one is null.
     private boolean xorEquals(Object first, Object second) {
         return first == null || second == null || first.equals(second);
+    }
+
+    // Equal or one is null.
+    private boolean xorEqualsString(String first, String second) {
+        return first == null || second == null || first.equals(second)
+            || TextUtils.isEmpty(first) || TextUtils.isEmpty(second);
     }
 
     // Equal or one is not specified.
