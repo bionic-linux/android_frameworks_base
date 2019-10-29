@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a760bcc7_36b2283a",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-10-29T03:49:06Z",
+      "side": 1,
+      "message": "This already checked first\u003d\u003dnull",
+      "range": {
+        "startLine": 1234,
+        "startChar": 15,
+        "endLine": 1234,
+        "endChar": 39
+      },
+      "revId": "c7b173d3f0a42bf5edcfe566ddc029e8dce12e6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
