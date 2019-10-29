@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2ea5fdc_fa4f2083",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-10-29T19:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d013321_0d145334",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "9369698e2d70c0b0747c42d821b97b88f6812ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6dad2ca_39aa8877",
         "filename": "core/java/android/net/VpnProfile.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-10-29T00:48:50Z",
       "side": 1,
       "message": "Unrelated, but this should probably do additional validation to check that \u0027dnsServers\u0027 is actually a list of addresses.",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 46
+      },
+      "revId": "9369698e2d70c0b0747c42d821b97b88f6812ac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aed40b7_b2393c33",
+        "filename": "core/java/android/net/VpnProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-10-29T19:37:08Z",
+      "side": 1,
+      "message": "I believe that is mostly covered by areDnsAddressesNumeric(). It seems like it\u0027s primarily used to choose which error codes are being shown to the user.",
+      "parentUuid": "e6dad2ca_39aa8877",
       "range": {
         "startLine": 239,
         "startChar": 0,
