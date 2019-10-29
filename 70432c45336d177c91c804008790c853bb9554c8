@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c4b337_36750570",
+        "filename": "services/core/jni/com_android_server_VibratorService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2019-10-29T04:34:18Z",
+      "side": 1,
+      "message": "do we still need this?",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 91
+      },
+      "revId": "70432c45336d177c91c804008790c853bb9554c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
