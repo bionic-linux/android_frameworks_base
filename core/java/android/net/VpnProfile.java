@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static com.android.internal.util.Preconditions.checkStringNotEmpty;
+
 import android.annotation.NonNull;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
@@ -453,5 +455,40 @@ public class VpnProfile implements Cloneable, Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
+
+    /**
+     * Validates that the current profile is a valid for an IKEv2/IPsec VPN
+     *
+     * Package-visible (used in VpnManager)
+     */
+    void validateIkev2Ipsec(){
+        // Only ProxyInfo is allowed to be null
+        if (key == null || name == null || server == null || username == null ||
+                password == null || dnsServers == null || searchDomains == null || routes == null ||
+                l2tpSecret == null || ipsecIdentifier == null || ipsecSecret == null || ipsecUserCert == null ||
+                ipsecCaCert == null || ipsecServerCert == null || allowedAlgorithms == null) {
+            throw new IllegalArgumentException("A required parameter was null");
+        }
+
+        switch(type) {
+            case TYPE_IKEV2_IPSEC_USER_PASS:
+                checkStringNotEmpty(username, MISSING_PARAM_MSG_TMPL, "username");
+                checkStringNotEmpty(password, MISSING_PARAM_MSG_TMPL, "password");
+                checkStringNotEmpty(ipsecCaCert, MISSING_PARAM_MSG_TMPL, "ipsecCaCert");
+                break;
+            case TYPE_IKEV2_IPSEC_PSK:
+                checkStringNotEmpty(ipsecSecret, MISSING_PARAM_MSG_TMPL, "ipsecSecret");
+                break;
+            case TYPE_IKEV2_IPSEC_RSA:
+                checkStringNotEmpty(ipsecUserCert, MISSING_PARAM_MSG_TMPL, "ipsecUserCert");
+                checkStringNotEmpty(ipsecSecret, MISSING_PARAM_MSG_TMPL, "ipsecSecret");
+                checkStringNotEmpty(ipsecCaCert, MISSING_PARAM_MSG_TMPL, "ipsecCaCert");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid IKEv2/IPsec profile type: " + type);
+        }
     }
 }
