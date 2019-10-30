@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "436089ad_ad62e32c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-30T19:31:35Z",
+      "side": 1,
+      "message": "Let\u0027s not use this codename in public.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "c1fdb03c949884e585ccae41aef4bd6542b0201c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831741c8_8522e255",
+        "filename": "api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8817,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-30T19:31:35Z",
+      "side": 1,
+      "message": "It looks like this is all being exposed as @SystemApi... we need public (carrier privileged) API, so these methods should be showing up in current.txt (not system-current.txt).",
+      "range": {
+        "startLine": 8817,
+        "startChar": 12,
+        "endLine": 8817,
+        "endChar": 30
+      },
+      "revId": "c1fdb03c949884e585ccae41aef4bd6542b0201c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142207b6_705057e8",
+        "filename": "telephony/java/android/telephony/ims/ImsMmTelManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-30T19:31:35Z",
+      "side": 1,
+      "message": "Please expand this docstring comment. \"ready\" doesn\u0027t have semantic meaning to callers, so we need to be very clear about what will cause this API to be true.",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 35
+      },
+      "revId": "c1fdb03c949884e585ccae41aef4bd6542b0201c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3f32b0_9d4c1a5d",
+        "filename": "telephony/java/android/telephony/ims/ImsMmTelManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-30T19:31:35Z",
+      "side": 1,
+      "message": "It\u0027s fine to check READ_PRIVILEGED, but this needs docstrings saying that it can also be accessed with CarrierPrivilege.\n\nYou can use language like this:\nhttps://android.googlesource.com/platform/frameworks/base/+/master/telephony/java/android/telephony/TelephonyManager.java#2688",
+      "range": {
+        "startLine": 962,
+        "startChar": 44,
+        "endLine": 962,
+        "endChar": 71
+      },
+      "revId": "c1fdb03c949884e585ccae41aef4bd6542b0201c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef90fcc_6d709be6",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-10-30T19:31:35Z",
+      "side": 1,
+      "message": "I thought we cancelled the request for ProvisioningManager...?",
+      "range": {
+        "startLine": 413,
+        "startChar": 26,
+        "endLine": 413,
+        "endChar": 48
+      },
+      "revId": "c1fdb03c949884e585ccae41aef4bd6542b0201c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
