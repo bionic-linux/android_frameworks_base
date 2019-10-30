@@ -3169,6 +3169,11 @@ public class CarrierConfigManager {
      */
     public static final String KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY =
             "disconnect_cause_play_busytone_int_array";
+    /**
+     * Determines whether the carrier wants to hang up incoming call and prevent add call
+     */
+    public static final String KEY_PREVENT_ADD_CALL_FOR_VILTE =
+            "carrier_prevent_add_call_for_vilte";
 
     /**
      * Flag specifying whether to prevent sending CLIR activation("*31#") and deactivation("#31#")
@@ -3604,6 +3609,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_CARRIER_CERTIFICATE_STRING_ARRAY, null);
         sDefaults.putIntArray(KEY_DISCONNECT_CAUSE_PLAY_BUSYTONE_INT_ARRAY,
                 new int[] {4 /* BUSY */});
+        sDefaultsEx.putBoolean(KEY_PREVENT_ADD_CALL_FOR_VILTE, false);
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
     }
 
