@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52f117e4_808eaa73",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-10-30T00:37:25Z",
+      "side": 1,
+      "message": "I believe these APIs declare that they may throw an ImsException, although i do not see it being caught here. You will need to also catch ImsExceptions in the case that the ImsService is not currently available for the subscription specified.\n\n(same with below.)",
+      "range": {
+        "startLine": 532,
+        "startChar": 29,
+        "endLine": 532,
+        "endChar": 60
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c54097c_30d43c62",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-10-30T00:37:25Z",
+      "side": 1,
+      "message": "If IMS is not registered, onCapabilitiesStatusChanged will be called with no VT/WFC capability, so this may be redundant for mWifiCallingAvailable unless there is other state that you wish to update in updateTelephony.",
+      "range": {
+        "startLine": 640,
+        "startChar": 18,
+        "endLine": 640,
+        "endChar": 46
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3070eb7_33abd96a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-10-30T00:37:25Z",
+      "side": 1,
+      "message": "These MmTelCapabilities will tell the listener whether VT/WiFi calling are available, so it may be more efficient to simply use this callback to set mWifiCallingAvailable rather than querying into Telephony again using ImsMmTelManager#isAvailable.",
+      "range": {
+        "startLine": 673,
+        "startChar": 66,
+        "endLine": 673,
+        "endChar": 78
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e789c3_682a5e12",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-10-30T00:37:25Z",
+      "side": 1,
+      "message": "This a hidden API, please use SubscriptionManager#getSubscriptionIds instead.",
+      "range": {
+        "startLine": 922,
+        "startChar": 51,
+        "endLine": 922,
+        "endChar": 59
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
