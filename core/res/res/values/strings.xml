@@ -5414,4 +5414,7 @@
     <!-- ChooserActivity - Alphabetically sorted apps list label. [CHAR LIMIT=NONE] -->
     <string name="chooser_all_apps_button_label">Apps list</string>
 
+    <!-- Whether to show detailed call forwarding type -->
+    <bool name="config_add_mmi_cf_title_type">false</bool>
+
 </resources>
