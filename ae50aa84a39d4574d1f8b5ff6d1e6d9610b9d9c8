@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f0dd82c_fe6bc4f7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2393,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-30T14:18:29Z",
+      "side": 1,
+      "message": "Sorry, the 3GPP spec does not mention about the range. We decided the RSSNR range according to values described in LteSignalStrength of /hardware/interfaces/radio/1.0/types.hal.\nhttps://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/radio/1.0/types.hal#1285\n---\n// Range: -200 to +300 (-200 \u003d -20.0 dB, +300 \u003d 30dB).\n---\nI\u0027ve revised the comment.",
+      "parentUuid": "6eba091a_33ff4a8b",
+      "range": {
+        "startLine": 2393,
+        "startChar": 25,
+        "endLine": 2393,
+        "endChar": 52
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7c1e43_ecda74e7",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-10-23T23:24:15Z",
       "side": 1,
       "message": "could you document how these numbers are decided?",
+      "range": {
+        "startLine": 3090,
+        "startChar": 0,
+        "endLine": 3093,
+        "endChar": 56
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8354e543_657da0e8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-30T14:18:29Z",
+      "side": 1,
+      "message": "This values come from a carrier requirement which is trigger of this contribution. I\u0027ll put the detail information in b/133400544.",
+      "parentUuid": "eb7c1e43_ecda74e7",
       "range": {
         "startLine": 3090,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f6acc8f9_74b1fb82",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3100,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-30T14:18:29Z",
+      "side": 1,
+      "message": "Same above, I\u0027ll put the detail information in b/133400544.",
+      "parentUuid": "7f7ddccf_50518568",
+      "range": {
+        "startLine": 3097,
+        "startChar": 0,
+        "endLine": 3100,
+        "endChar": 56
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0eb7e697_48aa326c",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8c4c5adf_48d76a33",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-30T14:18:29Z",
+      "side": 1,
+      "message": "This \"-1\" indicates an invalid value and it is not used to decide the signal level. It\u0027s different from SIGNAL_STRENGTH_NONE_OR_UNKNOWN(\"0\" and valid value).\nThis value and logic are same as \"snrIconLevel\"(just below).",
+      "parentUuid": "0eb7e697_48aa326c",
+      "range": {
+        "startLine": 210,
+        "startChar": 28,
+        "endLine": 210,
+        "endChar": 30
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80975009_5ee7f557",
         "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2019-10-23T23:24:15Z",
       "side": 1,
       "message": "May I know why the smaller one is preferred?",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "ae50aa84a39d4574d1f8b5ff6d1e6d9610b9d9c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b7fce7_826d3d34",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-10-30T14:18:29Z",
+      "side": 1,
+      "message": "This also comes from carrier requirement which is trigger of this contribution. I\u0027ll put the detail information in b/133400544.",
+      "parentUuid": "80975009_5ee7f557",
       "range": {
         "startLine": 271,
         "startChar": 0,
