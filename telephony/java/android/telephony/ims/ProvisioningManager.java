@@ -405,7 +405,12 @@ public class ProvisioningManager {
                 + "supported");
     }
 
-    private static boolean isImsAvailableOnDevice() {
+    /**
+     * @return true if IMS is ready
+     *
+     */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public static boolean isImsAvailableOnDevice() {
         IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             // For some reason package manger is not available.. This will fail internally anyways,

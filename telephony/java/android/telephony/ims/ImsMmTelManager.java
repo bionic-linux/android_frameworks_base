@@ -940,7 +940,7 @@ public class ImsMmTelManager {
      * @see android.telephony.CarrierConfigManager#KEY_CARRIER_VOLTE_TTY_SUPPORTED_BOOL
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    boolean isTtyOverVolteEnabled() {
+    public boolean isTtyOverVolteEnabled() {
         try {
             return getITelephony().isTtyOverVolteEnabled(mSubId);
         } catch (ServiceSpecificException e) {
@@ -955,7 +955,12 @@ public class ImsMmTelManager {
         }
     }
 
-    private static boolean isImsAvailableOnDevice() {
+    /**
+     * @return true if IMS is ready
+     *
+     */
+    @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public static boolean isImsAvailableOnDevice() {
         IPackageManager pm = IPackageManager.Stub.asInterface(ServiceManager.getService("package"));
         if (pm == null) {
             // For some reason package manger is not available.. This will fail internally anyways,
