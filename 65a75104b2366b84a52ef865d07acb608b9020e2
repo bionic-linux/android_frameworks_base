@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "179fe89a_95f7a77d",
+        "filename": "services/core/jni/com_android_server_VibratorService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-31T17:11:10Z",
+      "side": 1,
+      "message": "I was going to change the direction of the shim though, which will save some (and allow us to delete 1.4). For instance, we shouldn\u0027t need the callback shim whatsoever, since it is new in 1.4.",
+      "parentUuid": "7c81d5de_1991d0f0",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 77
+      },
+      "revId": "65a75104b2366b84a52ef865d07acb608b9020e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8b57e2_8007e8d2",
         "filename": "services/core/jni/com_android_server_VibratorService.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "65a75104b2366b84a52ef865d07acb608b9020e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27b424d_4238cc86",
+        "filename": "services/core/jni/com_android_server_VibratorService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-31T17:11:10Z",
+      "side": 1,
+      "message": "Done. Can you push forward http://aosp/889999 or a similar solution?",
+      "parentUuid": "8a8b57e2_8007e8d2",
+      "revId": "65a75104b2366b84a52ef865d07acb608b9020e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "65a75104b2366b84a52ef865d07acb608b9020e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf421a5e_310078b3",
+        "filename": "services/core/jni/com_android_server_VibratorService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-10-31T17:11:10Z",
+      "side": 1,
+      "message": "Done and agreed.",
+      "parentUuid": "be5483df_6f8369aa",
+      "range": {
+        "startLine": 201,
+        "startChar": 78,
+        "endLine": 201,
+        "endChar": 128
+      },
+      "revId": "65a75104b2366b84a52ef865d07acb608b9020e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
