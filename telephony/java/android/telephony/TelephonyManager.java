@@ -38,6 +38,7 @@ import android.annotation.UnsupportedAppUsage;
 import android.annotation.WorkerThread;
 import android.app.ActivityThread;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -92,6 +93,7 @@ import com.android.internal.telephony.IUpdateAvailableNetworksCallback;
 import com.android.internal.telephony.OperatorInfo;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.RILConstants;
+import com.android.internal.telephony.SmsApplication;
 import com.android.internal.telephony.TelephonyProperties;
 
 import dalvik.system.VMRuntime;
@@ -443,6 +445,25 @@ public class TelephonyManager {
         } else {
             return getPhoneCount();
         }
+    }
+
+    /**
+     * Gets the maximum number of SIMs that can be active, based on the device's multisim
+     * configuration.
+     * @return 1 for single-SIM, DSDS, and TSTS devices. 2 for DSDA devices.
+     * @hide
+     */
+    @SystemApi
+    public int getMaxNumberOfSimultaneouslyActiveSims() {
+        switch (getMultiSimConfiguration()) {
+            case UNKNOWN:
+            case DSDS:
+            case TSTS:
+                return 1;
+            case DSDA:
+                return 2;
+        }
+        return 1;
     }
 
     /** {@hide} */
@@ -5020,6 +5041,24 @@ public class TelephonyManager {
     public @interface CallState{}
 
     /**
+     * Updates the call state, possibly causing an update to be sent out to listeners via
+     * {@link PhoneStateListener}. Intended for use only by the system's Telecom service.
+     *
+     * @param state The current state
+     * @param phoneNumber The phone number of the call responsible for the state change.
+     * @hide
+     */
+    @SystemApi
+    public void updateCallState(@CallState int state, @Nullable String phoneNumber) {
+        ITelephonyRegistry registry = getTelephonyRegistry();
+        try {
+            registry.notifyCallState(state, phoneNumber);
+        } catch (RemoteException e) {
+            Log.w(TAG, "RemoteException when notifying TelephonyRegistry of call state change.");
+        }
+    }
+
+    /**
      * Returns the state of all calls on the device.
      * <p>
      * This method considers not only calls in the Telephony stack, but also calls via other
@@ -9323,6 +9362,21 @@ public class TelephonyManager {
     }
 
     /**
+     * Gets the default Respond Via Message application
+     * @param context context from the calling app
+     * @param updateIfNeeded update the default app if there is no valid default app configured.
+     * @return component name of the app and class to direct Respond Via Message intent to, or
+     * {@code null} if the functionality is not supported.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public static @Nullable ComponentName getDefaultRespondViaMessageApplication(
+            @NonNull Context context, boolean updateIfNeeded) {
+        return SmsApplication.getDefaultRespondViaMessageApplication(context, updateIfNeeded);
+    }
+
+    /**
      * Set the alphabetic name of current registered operator.
      * @param name the alphabetic name of current registered operator.
      * @hide
@@ -9423,8 +9477,9 @@ public class TelephonyManager {
      * Returns the subscription ID for the given phone account.
      * @hide
      */
-    @UnsupportedAppUsage
-    public int getSubIdForPhoneAccount(PhoneAccount phoneAccount) {
+    @SystemApi
+    @TestApi
+    public int getSubscriptionIdForPhoneAccount(@Nullable PhoneAccount phoneAccount) {
         int retval = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
         try {
             ITelephony service = getITelephony();
@@ -9438,6 +9493,14 @@ public class TelephonyManager {
     }
 
     /**
+     * Same as {@link #getSubscriptionIdForPhoneAccount(PhoneAccount)}, for backwards compatibility
+     * @hide
+     */
+    public int getSubIdForPhoneAccount(@Nullable PhoneAccount phoneAccount) {
+        return getSubscriptionIdForPhoneAccount(phoneAccount);
+    }
+
+    /**
      * Determines the {@link PhoneAccountHandle} associated with a subscription Id.
      *
      * @param subscriptionId The subscription Id to check.
@@ -9445,6 +9508,7 @@ public class TelephonyManager {
      * there is no associated {@link PhoneAccountHandle}.
      * @hide
      */
+    @TestApi
     public @Nullable PhoneAccountHandle getPhoneAccountHandleForSubscriptionId(int subscriptionId) {
         PhoneAccountHandle returnValue = null;
         try {
@@ -9463,7 +9527,8 @@ public class TelephonyManager {
         try {
             ITelecomService service = getTelecomService();
             if (service != null) {
-                retval = getSubIdForPhoneAccount(service.getPhoneAccount(phoneAccountHandle));
+                retval = getSubscriptionIdForPhoneAccount(
+                        service.getPhoneAccount(phoneAccountHandle));
             }
         } catch (RemoteException e) {
         }
