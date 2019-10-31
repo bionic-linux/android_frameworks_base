@@ -18,25 +18,32 @@ package com.android.server.wm;
 
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_STANDARD;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.view.DisplayAdjustments.DEFAULT_DISPLAY_ADJUSTMENTS;
 import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.mock;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.spy;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+
 import android.content.ClipData;
 import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManagerGlobal;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.os.UserManagerInternal;
 import android.platform.test.annotations.Presubmit;
+import android.view.Display;
 import android.view.InputChannel;
 import android.view.SurfaceControl;
 import android.view.SurfaceSession;
+import android.view.SurfaceControl.Transaction;
 import android.view.View;
 
 import androidx.test.filters.FlakyTest;
@@ -50,8 +57,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
 
 /**
  * Tests for the {@link DragDropController} class.
@@ -66,6 +77,7 @@ public class DragDropControllerTests extends WindowTestsBase {
     private TestDragDropController mTarget;
     private WindowState mWindow;
     private IBinder mToken;
+    private TestableDisplayContent mTestableDisplayContent;
 
     static class TestDragDropController extends DragDropController {
         private Runnable mCloseCallback;
@@ -86,6 +98,80 @@ public class DragDropControllerTests extends WindowTestsBase {
                 mCloseCallback.run();
                 mCloseCallback = null;
             }
+        }
+    }
+
+    /**
+     * Creates a TestableSurfaceControlBuilder which can be used as a SurfaceControl.Builder Mock.
+     */
+    private class TestableSurfaceControlBuilder extends MockSurfaceControlBuilder {
+        private SurfaceControl mParent;
+
+        @Override
+        public SurfaceControl.Builder setParent(SurfaceControl sc) {
+            super.setParent(sc);
+            mParent = sc;
+            return this;
+        }
+
+        @Override
+        public SurfaceControl build() {
+            final SurfaceControl surfaceControl = mock(SurfaceControl.class);
+            if (mTestableDisplayContent != null) {
+                mTestableDisplayContent.addParentFor(surfaceControl, mParent);
+            }
+            return surfaceControl;
+        }
+    }
+
+    /**
+     * Creates a TestableStubTransaction which can be used as a Transaction Mock.
+     */
+    private class TestableStubTransaction extends StubTransaction {
+
+        @Override
+        public SurfaceControl.Transaction reparent(SurfaceControl sc, SurfaceControl newParent) {
+            if (mTestableDisplayContent != null) {
+                mTestableDisplayContent.addParentFor(sc, newParent);
+            }
+            return super.reparent(sc, newParent);
+        }
+    }
+
+    /**
+     * Creates a TestableDisplayContent which can be used as a DisplayContent Mock.
+     */
+    private class TestableDisplayContent extends DisplayContent {
+
+        private final HashMap<SurfaceControl, SurfaceControl> mParentFor = new HashMap<>();
+
+        TestableDisplayContent(Display display, WindowManagerService service,
+                               ActivityDisplay activityDisplay) {
+            super(display, service, activityDisplay);
+        }
+
+        @Override
+        SurfaceControl.Builder makeOverlay() {
+            final SurfaceControl overlay = getPrivateFieldInDisplayContent("mOverlayLayer");
+            final TestableSurfaceControlBuilder builder = new TestableSurfaceControlBuilder();
+            builder.setParent(overlay);
+            return builder;
+        }
+
+        @Override
+        void reparentToOverlay(Transaction transaction, SurfaceControl surface) {
+            final SurfaceControl overlay = getPrivateFieldInDisplayContent("mOverlayLayer");
+            final TestableStubTransaction testTransaction = new TestableStubTransaction();
+            testTransaction.reparent(surface, overlay);
+        }
+
+        public void addParentFor(SurfaceControl child, SurfaceControl parent) {
+            mParentFor.remove(child);
+            mParentFor.put(child, parent);
+        }
+
+        public SurfaceControl getParentFor(SurfaceControl child) {
+            return mParentFor.get(child);
         }
     }
 
@@ -168,6 +254,34 @@ public class DragDropControllerTests extends WindowTestsBase {
         dragFlow(0, null, 10, 10);
     }
 
+    @Test
+    public void testPerformDrag_OverlayLayerTopOfDragStateInputSurface() {
+        mTestableDisplayContent = createTestableDisplayContent();
+        mTestableDisplayContent = spy(mTestableDisplayContent);
+        final RootWindowContainer root = mock(RootWindowContainer.class);
+        final RootWindowContainer saveRoot = mWm.mRoot;
+        mWm.mRoot = root;
+        doReturn(mTestableDisplayContent).when(mWm.mRoot).getDisplayContent(anyInt());
+        dragFlow(0, ClipData.newPlainText("OverlayLayer", "Test"), 0, 0);
+        mWm.mRoot = saveRoot;
+
+        final DragState dragState = getPrivateFieldInDragDropController("mDragState");
+        assertNotNull(dragState);
+        SurfaceControl inputSurface = dragState.mInputSurface;
+        final SurfaceControl overlay = getPrivateFieldInDisplayContent("mOverlayLayer");
+
+        // Check makeOverlay method is called and inputSurface has the mOverlayLayer parent.
+        // If not, verify reparentToOverlay method is called.
+        if (mTestableDisplayContent.getParentFor(inputSurface) != overlay) {
+            dragState.mDisplayContent = mTestableDisplayContent;
+            dragState.mInputSurface = mock(SurfaceControl.class);
+            invokePrivateMethodInDragState(dragState, "showInputSurface");
+            inputSurface = dragState.mInputSurface;
+        }
+        assertEquals("DragState.mInputSurface does not have the parent mOverlayLayer.",
+                overlay, mTestableDisplayContent.getParentFor(inputSurface));
+    }
+
     private void dragFlow(int flag, ClipData data, float dropX, float dropY) {
         final SurfaceSession appSession = new SurfaceSession();
         try {
@@ -186,6 +300,59 @@ public class DragDropControllerTests extends WindowTestsBase {
             mToken = mWindow.mClient.asBinder();
         } finally {
             appSession.kill();
+        }
+    }
+
+    private TestableDisplayContent createTestableDisplayContent() {
+        final int displayId = getValueAndPostIncrementPrivateFieldInWindowTestsBase("sNextDisplayId");
+        final Display display = new Display(DisplayManagerGlobal.getInstance(), displayId,
+                mDisplayInfo, DEFAULT_DISPLAY_ADJUSTMENTS);
+
+        synchronized (mWm.mGlobalLock) {
+            TestableDisplayContent testableDisplayContent = new TestableDisplayContent(display, mWm, mock(ActivityDisplay.class));
+            return testableDisplayContent;
+        }
+    }
+
+    private SurfaceControl getPrivateFieldInDisplayContent(String fieldName) {
+        try {
+            Field fd = DisplayContent.class.getDeclaredField(fieldName);
+            fd.setAccessible(true);
+            return (SurfaceControl)fd.get(mTestableDisplayContent);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private int getValueAndPostIncrementPrivateFieldInWindowTestsBase(String fieldName) {
+        try {
+            Field fd = WindowTestsBase.class.getDeclaredField(fieldName);
+            fd.setAccessible(true);
+            int value = (int)fd.get(this);
+            fd.set(this, value + 1);
+            return value;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private DragState getPrivateFieldInDragDropController(String fieldName) {
+        try {
+            Field fd = DragDropController.class.getDeclaredField(fieldName);
+            fd.setAccessible(true);
+            DragDropController dragDropController = (DragDropController)mTarget;
+            return (DragState)fd.get(dragDropController);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void invokePrivateMethodInDragState(DragState dragState, String methodName) {
+        try {
+            Method method = DragState.class.getDeclaredMethod(methodName);
+            method.setAccessible(true);
+            method.invoke(dragState);
+        } catch (Exception e) {
         }
     }
 }
