@@ -63,8 +63,8 @@ class DragInputEventReceiver extends InputEventReceiver {
                 return;
             }
             final MotionEvent motionEvent = (MotionEvent) event;
-            final float newX = motionEvent.getRawX();
-            final float newY = motionEvent.getRawY();
+            final float newX = motionEvent.getX();
+            final float newY = motionEvent.getY();
             final boolean isStylusButtonDown =
                     (motionEvent.getButtonState() & BUTTON_STYLUS_PRIMARY) != 0;
 

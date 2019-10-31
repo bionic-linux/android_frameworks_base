@@ -175,6 +175,7 @@ class DragState {
         mTransaction.setWindowCrop(mInputSurface, mTmpClipRect);
         mTransaction.transferTouchFocus(mTransferTouchFromToken, h.token);
         mTransferTouchFromToken = null;
+        mDisplayContent.reparentToOverlay(mTransaction, mInputSurface);
 
         // syncInputWindows here to ensure the input channel isn't removed before the transfer.
         mTransaction.syncInputWindows();
