@@ -155,8 +155,8 @@ class DragState {
 
     private void showInputSurface() {
         if (mInputSurface == null) {
-            mInputSurface = mService.makeSurfaceBuilder(
-                    mService.mRoot.getDisplayContent(mDisplayContent.getDisplayId()).getSession())
+            mInputSurface = mService.mRoot.getDisplayContent(mDisplayContent.getDisplayId())
+                    .makeOverlay()
                     .setContainerLayer()
                     .setName("Drag and Drop Input Consumer").build();
         }

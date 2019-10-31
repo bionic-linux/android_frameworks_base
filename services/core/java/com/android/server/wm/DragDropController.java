@@ -268,8 +268,8 @@ class DragDropController {
      * Handles motion events.
      * @param keepHandling Whether if the drag operation is continuing or this is the last motion
      *          event.
-     * @param newX X coordinate value in dp in the screen coordinate
-     * @param newY Y coordinate value in dp in the screen coordinate
+     * @param newX X coordinate value is relative to the dragdrop input layer
+     * @param newY Y coordinate value is relative to the dragdrop input layer
      */
     void handleMotionEvent(boolean keepHandling, float newX, float newY) {
         synchronized (mService.mGlobalLock) {
