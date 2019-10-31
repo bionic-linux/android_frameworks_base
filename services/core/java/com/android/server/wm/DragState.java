@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2019 Sony Mobile Communications Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are licensed under the License.
  */
 
 package com.android.server.wm;
@@ -175,6 +179,7 @@ class DragState {
         mTransaction.setWindowCrop(mInputSurface, mTmpClipRect);
         mTransaction.transferTouchFocus(mTransferTouchFromToken, h.token);
         mTransferTouchFromToken = null;
+        mDisplayContent.reparentToOverlay(mTransaction, mInputSurface);
 
         // syncInputWindows here to ensure the input channel isn't removed before the transfer.
         mTransaction.syncInputWindows();
