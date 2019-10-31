@@ -22,6 +22,30 @@
       "revId": "999e39bcbdb52a314eff99e13b0a61ac907dbe07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ab75ea_07142c16",
+        "filename": "api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 29205,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-10-31T03:04:30Z",
+      "side": 1,
+      "message": "Removed; thanks for catching. I\u0027m somewhat torn between exposing the non-IPsec types; they\u0027re not really relevant, but the context is somewhat important.",
+      "parentUuid": "573ee07a_42d9f552",
+      "range": {
+        "startLine": 29205,
+        "startChar": 0,
+        "endLine": 29205,
+        "endChar": 54
+      },
+      "revId": "999e39bcbdb52a314eff99e13b0a61ac907dbe07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
