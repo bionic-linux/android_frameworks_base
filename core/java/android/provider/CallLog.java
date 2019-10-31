@@ -42,7 +42,7 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import android.telephony.CallerInfo;
+import android.telecom.CallerInfo;
 import com.android.internal.telephony.PhoneConstants;
 
 import java.util.List;
