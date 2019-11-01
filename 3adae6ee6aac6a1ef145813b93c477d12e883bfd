@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "455af840_114f209e",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "Generally, good Javadoc is written with a one-line description first, then a blank line, then the detailed explanation. This is because a one-line description eases readers in. Example :\n\n/**\n * Object representing the quality of a network as perceived by the user.\n *\n * A NetworkScore object represents the characteristics...\n...\n * @hide\n */\n\n(also remove blank line in l.25)",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc56858d_0672d143",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 1
@@ -48,6 +71,99 @@
     },
     {
       "key": {
+        "uuid": "48cab7d2_6b11057f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "dc56858d_0672d143",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e41398_2b6efb43",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "Let\u0027s put this somewhere else. ConnectivityConstants come to mind. I would like to reduce the visibility of this, considering we will remove it ASAP.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20811a11_14a0423f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d59dc8_d0feafae",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "Leftover comment",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1fe1073_be5a5cfa",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 1
@@ -64,6 +180,99 @@
         "startChar": 41,
         "endLine": 43,
         "endChar": 47
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57d7063_57125418",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "Makes sense, maybe we want to only accept Parcelable here.",
+      "parentUuid": "c1fe1073_be5a5cfa",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d59d22_cff48a81",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2647,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "Either final or inline please",
+      "range": {
+        "startLine": 2647,
+        "startChar": 20,
+        "endLine": 2647,
+        "endChar": 32
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d4bcdf_f396fb40",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5599,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 5599,
+        "startChar": 8,
+        "endLine": 5599,
+        "endChar": 20
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d567c34e_079885f6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 233,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 11
       },
       "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -128,6 +337,30 @@
       "writtenOn": "2019-11-01T09:16:48Z",
       "side": 1,
       "message": "if we need to do it everytime, maybe put this into constructor of NetworkScore?",
+      "range": {
+        "startLine": 359,
+        "startChar": 8,
+        "endLine": 359,
+        "endChar": 55
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc1b179_8824f3d5",
+        "filename": "tests/net/java/com/android/server/connectivity/LingerMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T10:51:48Z",
+      "side": 1,
+      "message": "I don\u0027t think so because we want to get rid of this and we do not want to increase the visibility of this.\n\nWe can have a helper function somewhere, but not in NetworkScore. It could be in some internal utils class for example. But hopefully this will be short-lived enough that it won\u0027t matter if we leave as is.",
+      "parentUuid": "663ad1a3_f8dd0118",
       "range": {
         "startLine": 359,
         "startChar": 8,
