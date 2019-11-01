@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc56858d_0672d143",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:03:06Z",
+      "side": 1,
+      "message": "given that we\u0027ll need to pass it across process boundary.\nshould we extends the parcelable?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fe1073_be5a5cfa",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:03:06Z",
+      "side": 1,
+      "message": "could we accept arbitrary object?\nwhat will happen if we put non-parcelable object into the bundle?",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
