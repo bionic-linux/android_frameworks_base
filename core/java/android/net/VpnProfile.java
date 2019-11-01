@@ -16,17 +16,30 @@
 
 package android.net;
 
+import static com.android.internal.util.Preconditions.checkStringNotEmpty;
+
 import android.annotation.NonNull;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.security.Credentials;
 import android.text.TextUtils;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -157,6 +170,37 @@ public class VpnProfile implements Cloneable, Parcelable {
             maxTargetSdk = Build.VERSION_CODES.Q,
             publicAlternatives = "Use {@link #isLoginSaved()} and {@link #setSaveLogin()} instead")
     public boolean saveLogin = false;
+
+    /**
+     * Copy constructor
+     *
+     * @hide
+     */
+    public VpnProfile(VpnProfile toCopy) {
+        key = toCopy.key;
+        name = toCopy.name;
+        type = toCopy.type;
+        server = toCopy.server;
+        username = toCopy.username;
+        password = toCopy.password;
+        dnsServers = toCopy.dnsServers;
+        searchDomains = toCopy.searchDomains;
+        routes = toCopy.routes;
+        mppe = toCopy.mppe;
+        l2tpSecret = toCopy.l2tpSecret;
+        ipsecIdentifier = toCopy.ipsecIdentifier;
+        ipsecSecret = toCopy.ipsecSecret;
+        ipsecUserCert = toCopy.ipsecUserCert;
+        ipsecCaCert = toCopy.ipsecCaCert;
+        ipsecServerCert = toCopy.ipsecServerCert;
+        proxy = toCopy.proxy;
+        allowedAlgorithms = toCopy.allowedAlgorithms;
+        isBypassable = toCopy.isBypassable;
+        isMetered = toCopy.isMetered;
+        maxMtu = toCopy.maxMtu;
+        authParamsInline = toCopy.authParamsInline;
+        saveLogin = toCopy.saveLogin;
+    }
 
     /** @hide */
     public VpnProfile(String key) {
@@ -488,5 +532,81 @@ public class VpnProfile implements Cloneable, Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
+
+    /**
+     * Decodes the provided Certificate
+     *
+     * @hide
+     */
+    public X509Certificate getCertificate(String certStr) throws CertificateException {
+        try {
+            List<X509Certificate> certs =
+                    Credentials.convertFromPem(certStr.getBytes(StandardCharsets.US_ASCII));
+            return certs.isEmpty() ? null : certs.iterator().next();
+        } catch (IOException e) {
+            throw new CertificateException(e);
+        }
+    }
+
+    /**
+     * Decodes the provided PKCS8 compliant Private Key
+     *
+     * @hide
+     */
+    public PrivateKey getPrivateKey(String privKeyStr)
+            throws InvalidKeySpecException, NoSuchAlgorithmException {
+        PKCS8EncodedKeySpec privateKeySpec =
+                new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privKeyStr));
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return keyFactory.generatePrivate(privateKeySpec);
+    }
+
+    /**
+     * Validates that the current profile is a valid for an IKEv2/IPsec VPN
+     *
+     * <p>Package-visible (used in VpnManager)
+     */
+    void validateIkev2Ipsec() throws GeneralSecurityException {
+        // Only ProxyInfo is allowed to be null
+        if (key == null || name == null || server == null || username == null || password == null
+                || dnsServers == null || searchDomains == null || routes == null
+                || l2tpSecret == null || ipsecIdentifier == null || ipsecSecret == null
+                || ipsecUserCert == null || ipsecCaCert == null || ipsecServerCert == null
+                || allowedAlgorithms == null) {
+            throw new IllegalArgumentException("Invalid config; null values not supported");
+        }
+
+        if (server.isEmpty() || ipsecIdentifier.isEmpty()) {
+            throw new IllegalArgumentException("Server or identity not provided");
+        }
+
+        switch (type) {
+            case TYPE_IKEV2_IPSEC_USER_PASS:
+                checkStringNotEmpty(username, MISSING_PARAM_MSG_TMPL, "username");
+                checkStringNotEmpty(password, MISSING_PARAM_MSG_TMPL, "password");
+                checkStringNotEmpty(ipsecCaCert, MISSING_PARAM_MSG_TMPL, "ipsecCaCert");
+
+                // Make sure certificates are valid
+                getCertificate(ipsecCaCert);
+                break;
+            case TYPE_IKEV2_IPSEC_PSK:
+                checkStringNotEmpty(ipsecSecret, MISSING_PARAM_MSG_TMPL, "ipsecSecret");
+                break;
+            case TYPE_IKEV2_IPSEC_RSA:
+                checkStringNotEmpty(ipsecUserCert, MISSING_PARAM_MSG_TMPL, "ipsecUserCert");
+                checkStringNotEmpty(ipsecSecret, MISSING_PARAM_MSG_TMPL, "ipsecSecret");
+                checkStringNotEmpty(ipsecCaCert, MISSING_PARAM_MSG_TMPL, "ipsecCaCert");
+
+                // Make sure certificates  and private keys are valid
+                getCertificate(ipsecUserCert);
+                getCertificate(ipsecCaCert);
+                getPrivateKey(ipsecSecret);
+                break;
+            default:
+                throw new IllegalArgumentException("No auth method set");
+        }
     }
 }
