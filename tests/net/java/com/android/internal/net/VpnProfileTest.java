@@ -117,6 +117,14 @@ public class VpnProfileTest {
     }
 
     @Test
+    public void testCopyConstructor() {
+        VpnProfile profile = getSampleIkev2Profile();
+        VpnProfile copy = new VpnProfile(profile);
+        assertEquals(profile, copy);
+        assertEquals(profile.saveLogin, copy.saveLogin);
+    }
+
+    @Test
     public void testEncodeDecode() {
         final VpnProfile profile = getSampleIkev2Profile();
         final VpnProfile decoded = VpnProfile.decode(DUMMY_PROFILE_KEY, profile.encode());
