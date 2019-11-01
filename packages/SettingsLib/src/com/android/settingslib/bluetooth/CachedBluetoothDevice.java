@@ -630,6 +630,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         refresh();
 
         if (bondState == BluetoothDevice.BOND_BONDED && mDevice.isBondingInitiatedLocally()) {
+            mDevice.setBondingInitiatedLocally(false);
             connect();
         }
     }
