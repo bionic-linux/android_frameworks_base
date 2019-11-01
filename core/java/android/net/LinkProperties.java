@@ -71,7 +71,8 @@ public final class LinkProperties implements Parcelable {
     private boolean mWakeOnLanSupported;
 
     private static final int MIN_MTU    = 68;
-    private static final int MIN_MTU_V6 = 1280;
+    /* package-visibility */
+    static final int MIN_MTU_V6 = 1280;
     private static final int MAX_MTU    = 10000;
 
     // Stores the properties of links that are "stacked" above this link.
