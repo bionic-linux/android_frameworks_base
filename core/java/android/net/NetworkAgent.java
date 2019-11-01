@@ -418,7 +418,16 @@ public abstract class NetworkAgent extends Handler {
         if (score < 0) {
             throw new IllegalArgumentException("Score must be >= 0");
         }
-        queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED,  score, 0);
+        final NetworkScore ns = new NetworkScore();
+        ns.putExtension(NetworkScore.LEGACY_SCORE, score);
+        updateScore(ns);
+    }
+
+    /**
+     * Called by the bearer code when it has a new NetworkScore for this network.
+     */
+    public void updateScore(NetworkScore ns) {
+        queueOrSendMessage(EVENT_NETWORK_SCORE_CHANGED, new NetworkScore(ns));
     }
 
     /**
