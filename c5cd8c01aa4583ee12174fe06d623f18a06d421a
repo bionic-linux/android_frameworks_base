@@ -22,6 +22,30 @@
       "revId": "c5cd8c01aa4583ee12174fe06d623f18a06d421a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d09fe6_abfa3166",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9482,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-11-01T21:47:22Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "92ee6d1c_ef45f526",
+      "range": {
+        "startLine": 9482,
+        "startChar": 4,
+        "endLine": 9482,
+        "endChar": 86
+      },
+      "revId": "c5cd8c01aa4583ee12174fe06d623f18a06d421a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
