@@ -812,6 +812,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             }
             if (isBluetoothPersistedStateOnBluetooth() || !isBleAppPresent()) {
                 // This triggers transition to STATE_ON
+                mBluetooth.updateQuietModeStatus(mQuietEnable);
                 mBluetooth.onLeServiceUp();
                 persistBluetoothSetting(BLUETOOTH_ON_BLUETOOTH);
             }
@@ -1601,6 +1602,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     mHandler.removeMessages(MESSAGE_RESTART_BLUETOOTH_SERVICE);
                     mEnable = true;
 
+                    mQuietEnable = (msg.arg1 == 1);
                     // Use service interface to get the exact state
                     try {
                         mBluetoothLock.readLock().lock();
@@ -1608,6 +1610,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             int state = mBluetooth.getState();
                             if (state == BluetoothAdapter.STATE_BLE_ON) {
                                 Slog.w(TAG, "BT Enable in BLE_ON State, going to ON");
+                                mBluetooth.updateQuietModeStatus(mQuietEnable);
                                 mBluetooth.onLeServiceUp();
                                 persistBluetoothSetting(BLUETOOTH_ON_BLUETOOTH);
                                 break;
@@ -1619,7 +1622,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                         mBluetoothLock.readLock().unlock();
                     }
 
-                    mQuietEnable = (msg.arg1 == 1);
                     if (mBluetooth == null) {
                         handleEnable(mQuietEnable);
                     } else {
