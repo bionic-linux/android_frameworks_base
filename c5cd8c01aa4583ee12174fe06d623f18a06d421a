@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ee6d1c_ef45f526",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9482,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-01T20:34:15Z",
+      "side": 1,
+      "message": "Shuo is currently adding one for getSubidForPhoneAccountHandle which you can probably leverage.  I don\u0027t know if we want to pass in the entire phone account just to get its subid.",
+      "range": {
+        "startLine": 9482,
+        "startChar": 4,
+        "endLine": 9482,
+        "endChar": 86
+      },
+      "revId": "c5cd8c01aa4583ee12174fe06d623f18a06d421a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
