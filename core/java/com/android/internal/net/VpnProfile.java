@@ -16,6 +16,7 @@
 
 package com.android.internal.net;
 
+
 import android.annotation.NonNull;
 import android.annotation.UnsupportedAppUsage;
 import android.net.ProxyInfo;
@@ -122,6 +123,34 @@ public final class VpnProfile implements Cloneable, Parcelable {
     @UnsupportedAppUsage
     public boolean saveLogin = false;
 
+    /** Copy constructor */
+    public VpnProfile(VpnProfile toCopy) {
+        key = toCopy.key;
+        name = toCopy.name;
+        type = toCopy.type;
+        server = toCopy.server;
+        username = toCopy.username;
+        password = toCopy.password;
+        dnsServers = toCopy.dnsServers;
+        searchDomains = toCopy.searchDomains;
+        routes = toCopy.routes;
+        mppe = toCopy.mppe;
+        l2tpSecret = toCopy.l2tpSecret;
+        ipsecIdentifier = toCopy.ipsecIdentifier;
+        ipsecSecret = toCopy.ipsecSecret;
+        ipsecUserCert = toCopy.ipsecUserCert;
+        ipsecCaCert = toCopy.ipsecCaCert;
+        ipsecServerCert = toCopy.ipsecServerCert;
+        proxy = toCopy.proxy;
+        allowedAlgorithms = toCopy.allowedAlgorithms;
+        isBypassable = toCopy.isBypassable;
+        isMetered = toCopy.isMetered;
+        maxMtu = toCopy.maxMtu;
+        authParamsInline = toCopy.authParamsInline;
+        saveLogin = toCopy.saveLogin;
+    }
+
+    /** @hide */
     public VpnProfile(String key) {
         this.key = key;
     }
