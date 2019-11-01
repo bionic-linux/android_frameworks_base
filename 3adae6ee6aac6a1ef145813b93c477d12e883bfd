@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "30634444_e7bf43e2",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:16:48Z",
+      "side": 1,
+      "message": "maybe add Nullable or NonNull?",
+      "range": {
+        "startLine": 429,
+        "startChar": 28,
+        "endLine": 429,
+        "endChar": 40
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc56858d_0672d143",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 1
@@ -41,6 +64,75 @@
         "startChar": 41,
         "endLine": 43,
         "endChar": 47
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144d406f_b3fd92b5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:16:48Z",
+      "side": 1,
+      "message": "maybe add Nullable or NonNull?",
+      "range": {
+        "startLine": 517,
+        "startChar": 32,
+        "endLine": 517,
+        "endChar": 44
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13ee483_bf775f2e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:16:48Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 521,
+        "startChar": 11,
+        "endLine": 521,
+        "endChar": 23
+      },
+      "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663ad1a3_f8dd0118",
+        "filename": "tests/net/java/com/android/server/connectivity/LingerMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-01T09:16:48Z",
+      "side": 1,
+      "message": "if we need to do it everytime, maybe put this into constructor of NetworkScore?",
+      "range": {
+        "startLine": 359,
+        "startChar": 8,
+        "endLine": 359,
+        "endChar": 55
       },
       "revId": "3adae6ee6aac6a1ef145813b93c477d12e883bfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
