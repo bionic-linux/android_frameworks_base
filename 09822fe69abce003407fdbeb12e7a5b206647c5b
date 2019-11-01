@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762cea09_ef7a6d23",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "API Council guide 5.19 : prefer List over array in return and parameter types when possible\n\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#prefer-list-over-array\n\n\n\nIn this case though, I think what you really want is to take one of the numbers below and only return one list.\n\n@NonNull public List\u003cDnsRecord\u003e getRecords(@DnsSection section);\n\nThen, annotate your sections below with @IntDef DnsSection",
+      "range": {
+        "startLine": 1358,
+        "startChar": 74,
+        "endLine": 1358,
+        "endChar": 76
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43677fc7_fd9247e0",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "Section 5.19 applies here too. You may want to consider either having setRecordCount(@DnsSection section, int count) or passing a list. In all cases do check that the input is valid (with the individual counts, validate in build() that everything that is needed has been set ; with the list, validate the size of the list and its contents)",
+      "range": {
+        "startLine": 1378,
+        "startChar": 0,
+        "endLine": 1378,
+        "endChar": 96
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dfcebc_d9cbb19c",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "This sets multiple record counts, so it should be called setRecordCounts",
+      "range": {
+        "startLine": 1378,
+        "startChar": 67,
+        "endLine": 1378,
+        "endChar": 81
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96715de7_4df98ebc",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "Are there spec-mandated constraints on what values this can take ? If yes you should have an @IntDef and a list. The same applies to setNsType.",
+      "range": {
+        "startLine": 1393,
+        "startChar": 78,
+        "endLine": 1393,
+        "endChar": 81
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57de651a_a1482405",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "I think you can actually make this private. The compiler will generate a synthetic accessor that other classes have no (legal) way to call.",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04169bde_6277b809",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "Can you please call out in comment here that this returns the internal member, and that the behavior is undefined if the callers mutate the contents of the returned value in any way ?",
+      "range": {
+        "startLine": 348,
+        "startChar": 11,
+        "endLine": 348,
+        "endChar": 20
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f9dc19_5dd0397f",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-01T06:48:19Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 356,
+        "startChar": 15,
+        "endLine": 356,
+        "endChar": 24
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
