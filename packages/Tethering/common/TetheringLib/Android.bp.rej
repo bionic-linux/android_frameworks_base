@@ -1,0 +1,52 @@
+--- packages/Tethering/common/TetheringLib/Android.bp
++++ packages/Tethering/common/TetheringLib/Android.bp
+@@ -36,8 +35,48 @@ aidl_interface {
+ 
+ java_library {
+     name: "tethering-client",
+-    platform_apis: true,
++    sdk_version: "system_current",
++    srcs: [
++        "src/android/net/TetheringManager.java",
++    ],
+     static_libs: [
+         "tethering-aidl-interfaces-java",
+     ],
++    installable: true,
++
++    libs: [
++        "android_system_stubs_current",
++    ],
++}
++
++java_library {
++    name: "tethering_client_stubs",
++    sdk_version: "system_current",
++    srcs: [
++        ":tethering-client-stubs",
++    ],
++}
++
++droidstubs {
++    name: "tethering-client-stubs",
++    srcs: [
++        ":tethering-client-srcs",
++    ],
++    sdk_version: "system_current",
++    aidl: {
++        // For framework parcelables.
++        include_dirs: ["frameworks/base/core/java"],
++    },
++}
++
++filegroup {
++    name: "tethering-client-srcs",
++    srcs: [
++        "src/android/net/TetheringManager.java",
++        "src/android/net/ITetherInternalCallback.aidl",
++        "src/android/net/ITetheringConnector.aidl",
++        "src/android/net/TetheringConfigurationParcel.aidl",
++        "src/android/net/TetherStatesParcel.aidl",
++    ],
++    path: "src"
+ }
