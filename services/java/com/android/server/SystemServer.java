@@ -40,7 +40,6 @@ import android.database.sqlite.SQLiteGlobal;
 import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityModuleConnector;
 import android.net.NetworkStackClient;
-import android.net.TetheringManager;
 import android.os.BaseBundle;
 import android.os.Binder;
 import android.os.Build;
@@ -2183,15 +2182,6 @@ public final class SystemServer {
                 NetworkStackClient.getInstance().start();
             } catch (Throwable e) {
                 reportWtf("starting Network Stack", e);
-            }
-            traceEnd();
-
-            traceBeginAndSlog("StartTethering");
-            try {
-                // Tethering must start after ConnectivityService and NetworkStack.
-                TetheringManager.getInstance().start();
-            } catch (Throwable e) {
-                reportWtf("starting Tethering", e);
             }
             traceEnd();
 

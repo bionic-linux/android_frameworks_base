@@ -21,6 +21,7 @@ import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.util.SharedLog;
+import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
@@ -53,6 +54,8 @@ public class TetheringManager {
             new RemoteCallbackList<>();
     @GuardedBy("mLog")
     private final SharedLog mLog = new SharedLog(TAG);
+
+    public static final String EXTRA_NETWORKSTACK = "android.net.extra.NETWORKSTACK";
 
     private TetheringManager() { }
 
@@ -149,10 +152,12 @@ public class TetheringManager {
      *
      * {@hide}
      */
-    public void start() {
+    public void start(IBinder service) {
+        final Bundle bundle = new Bundle();
+        bundle.putBinder(EXTRA_NETWORKSTACK, service);
         // Using MAINLINE_NETWORK_STACK permission after cutting off the dpendency of system server.
         ConnectivityModuleConnector.getInstance().startModuleService(
-                ITetheringConnector.class.getName(), NETWORK_STACK,
+                ITetheringConnector.class.getName(), NETWORK_STACK, bundle,
                 new TetheringConnection());
         log("Tethering service start requested");
     }

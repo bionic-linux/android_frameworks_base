@@ -81,6 +81,7 @@ import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
@@ -168,6 +169,7 @@ public class TetheringTest {
     @Mock private IDhcpServer mDhcpServer;
     @Mock private INetd mNetd;
     @Mock private UserManager mUserManager;
+    @Mock private NetworkRequest mNetworkRequest;
 
     private final MockIpServerDependencies mIpServerDependencies =
             spy(new MockIpServerDependencies());
@@ -305,6 +307,11 @@ public class TetheringTest {
         @Override
         public IpServer.Dependencies getIpServerDependencies() {
             return mIpServerDependencies;
+        }
+
+        @Override
+        public NetworkRequest getDefaultNetworkRequest() {
+            return mNetworkRequest;
         }
 
         @Override
