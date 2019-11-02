@@ -65,6 +65,7 @@ import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
+import android.net.INetworkStackConnector;
 import android.net.INetworkStatsService;
 import android.net.ITetherInternalCallback;
 import android.net.ITetheringConnector;
@@ -78,6 +79,8 @@ import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.TetherStatesParcel;
 import android.net.TetheringConfigurationParcel;
+import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.ip.IpServer;
 import android.net.util.BaseNetdUnsolicitedEventListener;
 import android.net.util.InterfaceSet;
@@ -195,6 +198,7 @@ public class TetheringService extends Service {
     private PhoneStateListener mPhoneStateListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     private ITetherInternalCallback mTetherInternalCallback = null;
+    private INetworkStackConnector mNetworkStackConnector;
 
     private volatile TetheringConfiguration mConfig;
     private InterfaceSet mCurrentUpstreamIfaceSet;
@@ -288,9 +292,9 @@ public class TetheringService extends Service {
      * <p>On platforms where the tethering runs in the system server process, this method may be
      * called directly instead of obtaining the connector by binding to the service.
      */
-    private synchronized IBinder makeConnector(Context context) {
+    private synchronized IBinder makeConnector() {
         if (mConnector == null) {
-            mConnector = new TetheringConnector(context, this);
+            mConnector = new TetheringConnector(this);
         }
         return mConnector;
     }
@@ -298,15 +302,20 @@ public class TetheringService extends Service {
     @NonNull
     @Override
     public IBinder onBind(Intent intent) {
-        return makeConnector(this);
+        mLog.i("TetheringService onBind");
+        final Bundle bundle = intent.getExtras();
+        // android.net.extra.NETWORKSTACK is defined in TetheringManager.EXTRA_NETWORKSTACK,
+        // will use it when TetheringManager move to framwork. See aosp/1156906.
+        final IBinder networkStack = bundle.getBinder("android.net.extra.NETWORKSTACK");
+        mNetworkStackConnector = INetworkStackConnector.Stub.asInterface(networkStack);
+
+        return makeConnector();
     }
 
     private static class TetheringConnector extends ITetheringConnector.Stub {
-        private final Context mContext;
         private final TetheringService mService;
 
-        TetheringConnector(Context context, TetheringService tether) {
-            mContext = context;
+        TetheringConnector(TetheringService tether) {
             mService = tether;
         }
 
@@ -2110,6 +2119,20 @@ public class TetheringService extends Service {
                     return TetheringService.this;
                 }
 
+                @Override
+                public IpServer.Dependencies getIpServerDependencies() {
+                    return new IpServer.Dependencies() {
+                        @Override
+                        public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+                                DhcpServerCallbacks cb) {
+                            try {
+                                mNetworkStackConnector.makeDhcpServer(ifName, params, cb);
+                            } catch (RemoteException e) {
+                                e.rethrowFromSystemServer();
+                            }
+                        }
+                    };
+                }
             };
         }
 
