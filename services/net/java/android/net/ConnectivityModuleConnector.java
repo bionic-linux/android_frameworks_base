@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.util.SharedLog;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.Process;
@@ -214,6 +215,19 @@ public class ConnectivityModuleConnector {
             @NonNull String serviceIntentBaseAction,
             @NonNull String servicePermissionName,
             @NonNull ModuleServiceCallback callback) {
+        startModuleService(serviceIntentBaseAction, servicePermissionName, null, callback);
+    }
+
+    /**
+     * Start a module running in the network stack or system_server process. Should be called only
+     * once for each module per device startup.
+     */
+    public void startModuleService(
+            @NonNull String serviceIntentBaseAction,
+            @NonNull String servicePermissionName,
+            @Nullable Bundle extras,
+            @NonNull ModuleServiceCallback callback) {
+
         log("Starting networking module " + serviceIntentBaseAction);
 
         final PackageManager pm = mContext.getPackageManager();
@@ -238,6 +252,9 @@ public class ConnectivityModuleConnector {
 
         final String packageName = intent.getComponent().getPackageName();
 
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
         // Start the network stack. The service will be added to the service manager by the
         // corresponding client in ModuleServiceCallback.onModuleServiceConnected().
         if (!mContext.bindServiceAsUser(
