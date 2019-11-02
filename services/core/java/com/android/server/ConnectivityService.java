@@ -107,7 +107,6 @@ import android.net.PrivateDnsConfigParcel;
 import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
-import android.net.TetheringManager;
 import android.net.UidRange;
 import android.net.Uri;
 import android.net.VpnService;
@@ -275,8 +274,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private final int mReleasePendingIntentDelayMs;
 
     private MockableSystemProperties mSystemProperties;
-
-    private TetheringManager mTetheringManager;
 
     @VisibleForTesting
     protected final PermissionMonitor mPermissionMonitor;
@@ -865,13 +862,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         /**
-         * Get a reference to the TetheringManager.
-         */
-        public TetheringManager getTetheringManager() {
-            return TetheringManager.getInstance();
-        }
-
-        /**
          * @see ProxyTracker
          */
         public ProxyTracker makeProxyTracker(@NonNull Context context,
@@ -1065,8 +1055,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         com.android.internal.R.array.config_wakeonlan_supported_interfaces));
 
         mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
-
-        mTetheringManager = mDeps.getTetheringManager();
 
         mPermissionMonitor = new PermissionMonitor(mContext, mNetd);
 
@@ -1885,9 +1873,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // TODO: relocate this specific callback in Tethering.
             if (restrictBackground) {
                 log("onRestrictBackgroundChanged(true): disabling tethering");
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_USB);
-                mTetheringManager.stopTethering(ConnectivityManager.TETHERING_BLUETOOTH);
             }
         }
     };
@@ -2492,12 +2477,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println("NetworkStackClient logs:");
         pw.increaseIndent();
         NetworkStackClient.getInstance().dump(pw);
-        pw.decreaseIndent();
-
-        pw.println();
-        pw.println("TetheringManager logs:");
-        pw.increaseIndent();
-        TetheringManager.getInstance().dump(pw);
         pw.decreaseIndent();
 
         pw.println();
@@ -3964,11 +3943,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public int tether(String iface, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        if (isTetheringSupported()) {
-            return mTetheringManager.tether(iface);
-        } else {
-            return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
-        }
+        return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
     }
 
     // javadoc from interface
@@ -3976,11 +3951,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public int untether(String iface, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
 
-        if (isTetheringSupported()) {
-            return mTetheringManager.untether(iface);
-        } else {
-            return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
-        }
+        return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
     }
 
     // javadoc from interface
@@ -3988,52 +3959,32 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public int getLastTetherError(String iface) {
         enforceTetherAccessPermission();
 
-        if (isTetheringSupported()) {
-            return mTetheringManager.getLastTetherError(iface);
-        } else {
-            return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
-        }
+        return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
     }
 
     // TODO - proper iface API for selection by property, inspection, etc
     @Override
     public String[] getTetherableUsbRegexs() {
         enforceTetherAccessPermission();
-        if (isTetheringSupported()) {
-            return mTetheringManager.getTetherableUsbRegexs();
-        } else {
-            return new String[0];
-        }
+        return new String[0];
     }
 
     @Override
     public String[] getTetherableWifiRegexs() {
         enforceTetherAccessPermission();
-        if (isTetheringSupported()) {
-            return mTetheringManager.getTetherableWifiRegexs();
-        } else {
-            return new String[0];
-        }
+        return new String[0];
     }
 
     @Override
     public String[] getTetherableBluetoothRegexs() {
         enforceTetherAccessPermission();
-        if (isTetheringSupported()) {
-            return mTetheringManager.getTetherableBluetoothRegexs();
-        } else {
-            return new String[0];
-        }
+        return new String[0];
     }
 
     @Override
     public int setUsbTethering(boolean enable, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        if (isTetheringSupported()) {
-            return mTetheringManager.setUsbTethering(enable);
-        } else {
             return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
-        }
     }
 
     // TODO - move iface listing, queries, etc to new module
@@ -4041,72 +3992,43 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public String[] getTetherableIfaces() {
         enforceTetherAccessPermission();
-        return mTetheringManager.getTetherableIfaces();
+        return new String[0];
     }
 
     @Override
     public String[] getTetheredIfaces() {
         enforceTetherAccessPermission();
-        return mTetheringManager.getTetheredIfaces();
+        return new String[0];
     }
 
     @Override
     public String[] getTetheringErroredIfaces() {
         enforceTetherAccessPermission();
-        return mTetheringManager.getTetheringErroredIfaces();
+        return new String[0];
     }
 
     @Override
     public String[] getTetheredDhcpRanges() {
         enforceConnectivityInternalPermission();
-        return mTetheringManager.getTetheredDhcpRanges();
+        return new String[0];
     }
 
     @Override
     public boolean isTetheringSupported(String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        return isTetheringSupported();
-    }
-
-    // if ro.tether.denied = true we default to no tethering
-    // gservices could set the secure setting to 1 though to enable it on a build where it
-    // had previously been turned off.
-    private boolean isTetheringSupported() {
-        // Elevate to system UID to avoid caller requiring MANAGE_USERS permission.
-        int defaultVal = encodeBool(!mSystemProperties.get("ro.tether.denied").equals("true"));
-        boolean tetherSupported = toBool(Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.TETHER_SUPPORTED, defaultVal));
-        boolean tetherEnabledInSettings = tetherSupported
-                && !mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_TETHERING);
-
-        // Elevate to system UID to avoid caller requiring MANAGE_USERS permission.
-        boolean adminUser = false;
-        final long token = Binder.clearCallingIdentity();
-        try {
-            adminUser = mUserManager.isAdminUser();
-        } finally {
-            Binder.restoreCallingIdentity(token);
-        }
-
-        return tetherEnabledInSettings && adminUser
-                && mTetheringManager.hasTetherableConfiguration();
+        return true;
     }
 
     @Override
     public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi,
             String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        if (!isTetheringSupported()) {
-            receiver.send(ConnectivityManager.TETHER_ERROR_UNSUPPORTED, null);
-            return;
-        }
-        mTetheringManager.startTethering(type, receiver, showProvisioningUi);
+        receiver.send(ConnectivityManager.TETHER_ERROR_UNSUPPORTED, null);
     }
 
     @Override
     public void stopTethering(int type, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        mTetheringManager.stopTethering(type);
     }
 
     /**
@@ -4120,8 +4042,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void getLatestTetheringEntitlementResult(int type, ResultReceiver receiver,
             boolean showEntitlementUi, String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        mTetheringManager.getLatestTetheringEntitlementResult(
-                type, receiver, showEntitlementUi);
     }
 
     /** Register tethering event callback. */
@@ -4129,7 +4049,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void registerTetheringEventCallback(ITetheringEventCallback callback,
             String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        mTetheringManager.registerTetheringEventCallback(callback);
     }
 
     /** Unregister tethering event callback. */
@@ -4137,7 +4056,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void unregisterTetheringEventCallback(ITetheringEventCallback callback,
             String callerPkg) {
         ConnectivityManager.enforceTetherChangePermission(mContext, callerPkg);
-        mTetheringManager.unregisterTetheringEventCallback(callback);
     }
 
     // Called when we lose the default network and have no replacement yet.
