@@ -20,7 +20,6 @@ import android.net.Network;
 
 /**
  * Callback class for receiving tethering changed events
- * @hide
  */
 oneway interface ITetheringEventCallback
 {

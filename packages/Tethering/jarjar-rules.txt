@@ -1,0 +1,6 @@
+rule com.android.internal.util.** android.net.tethering.util.@1
+
+rule android.net.ITetheringConnector* android.net.tethering.ITetheringConnector@1
+rule android.net.ITetherInternalCallback* android.net.tethering.ITetherInternalCallback@1
+rule android.net.Tether* android.net.tethering.Tether@1
+rule android.net.LocalLog* android.net.networkstack.LocalLog@1

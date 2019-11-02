@@ -29,6 +29,7 @@ java_defaults {
         "android.hardware.tetheroffload.control-V1.0-java",
         "tethering-client",
     ],
+    jarjar_rules: "jarjar-rules.txt",
     manifest: "AndroidManifestBase.xml",
 }
 
