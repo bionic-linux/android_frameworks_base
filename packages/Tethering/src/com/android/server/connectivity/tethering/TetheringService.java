@@ -20,13 +20,19 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.INetworkStackConnector;
 import android.net.ITetherInternalCallback;
 import android.net.ITetheringConnector;
 import android.net.NetworkRequest;
+import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParamsParcel;
+import android.net.ip.IpServer;
 import android.net.util.SharedLog;
+import android.os.Bundle;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.SystemProperties;
 import android.provider.Settings;
@@ -52,6 +58,7 @@ public class TetheringService extends Service {
     private Context mContext;
     private TetheringDependencies mDeps;
     private Tethering mTethering;
+    private INetworkStackConnector mNetworkStackConnector;
 
     @Override
     public void onCreate() {
@@ -84,6 +91,12 @@ public class TetheringService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         mLog.mark("onBind");
+        final Bundle bundle = intent.getExtras();
+        // android.net.extra.NETWORKSTACK is defined in TetheringManager.EXTRA_NETWORKSTACK,
+        // will use it when TetheringManager move to framwork. See aosp/1156906.
+        final IBinder networkStack = bundle.getBinder("android.net.extra.NETWORKSTACK");
+        mNetworkStackConnector = INetworkStackConnector.Stub.asInterface(networkStack);
+
         return makeConnector();
     }
 
@@ -170,6 +183,21 @@ public class TetheringService extends Service {
                 @Override
                 public Context getContext() {
                     return TetheringService.this;
+                }
+
+                @Override
+                public IpServer.Dependencies getIpServerDependencies() {
+                    return new IpServer.Dependencies() {
+                        @Override
+                        public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+                                DhcpServerCallbacks cb) {
+                            try {
+                                mNetworkStackConnector.makeDhcpServer(ifName, params, cb);
+                            } catch (RemoteException e) {
+                                e.rethrowFromSystemServer();
+                            }
+                        }
+                    };
                 }
             };
         }
