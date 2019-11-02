@@ -15,7 +15,7 @@
  */
 package android.net;
 
-import android.net.ITetherInternalCallback;
+import android.net.ITetheringEventCallback;
 import android.os.ResultReceiver;
 
 /** @hide */
@@ -33,5 +33,5 @@ oneway interface ITetheringConnector {
     void getLatestTetheringEntitlementResult(int type, in ResultReceiver receiver,
             boolean showEntitlementUi);
 
-    void registerTetherInternalCallback(ITetherInternalCallback callback);
+    void registerTetheringEventCallback(ITetheringEventCallback callback);
 }

@@ -268,6 +268,7 @@ filegroup {
     srcs: [
         ":framework-non-updatable-sources",
         ":updatable-media-srcs",
+        ":tethering-client-srcs",
     ],
 }
 
@@ -293,6 +294,7 @@ java_defaults {
             "telecomm/java",
             "telephony/java",
             "wifi/java",
+            "packages/Tethering/common/TetheringLib/src/",
         ],
     },
 }
@@ -359,6 +361,7 @@ java_defaults {
     libs: [
         "ext",
         "updatable_media_stubs",
+        "tethering_client_stubs",
     ],
 
     jarjar_rules: ":framework-jarjar-rules",
@@ -579,6 +582,10 @@ filegroup {
     name: "framework-tethering-shared-srcs",
     srcs: [
         "core/java/android/util/LocalLog.java",
+        "core/java/com/android/internal/util/IState.java",
+        "core/java/com/android/internal/util/MessageUtils.java",
+        "core/java/com/android/internal/util/State.java",
+        "core/java/com/android/internal/util/StateMachine.java",
     ],
 }
 // Build ext.jar
@@ -1007,6 +1014,7 @@ stubs_defaults {
         ":updatable-media-srcs",
         "test-mock/src/**/*.java",
         "test-runner/src/**/*.java",
+        ":tethering-client-srcs",
     ],
     libs: framework_docs_only_libs,
     local_sourcepaths: frameworks_base_subdirs,
@@ -1069,6 +1077,7 @@ stubs_defaults {
         ":core-current-stubs-source",
         ":core_public_api_files",
         ":updatable-media-srcs",
+        ":tethering-client-srcs",
     ],
     libs: ["framework-internal-utils"],
     local_sourcepaths: frameworks_base_subdirs,

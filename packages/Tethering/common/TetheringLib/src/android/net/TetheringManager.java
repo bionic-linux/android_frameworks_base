@@ -15,23 +15,18 @@
  */
 package android.net;
 
-import static android.Manifest.permission.NETWORK_STACK;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
-import android.net.util.SharedLog;
-import android.os.Bundle;
+import android.net.ConnectivityManager.OnTetheringEventCallback;
+import android.os.Binder;
 import android.os.IBinder;
-import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
-import android.util.Slog;
-
-import com.android.internal.annotations.GuardedBy;
+import android.util.ArrayMap;
 
 import java.io.PrintWriter;
 import java.util.StringJoiner;
+import java.util.concurrent.Executor;
 
 /**
  * Service used to communicate with the tethering, which is running in a separate module.
@@ -42,60 +37,29 @@ public class TetheringManager {
 
     private static TetheringManager sInstance;
 
-    @Nullable
     private ITetheringConnector mConnector;
-    private ITetherInternalCallback mCallback;
+    private ITetheringEventCallback mCallback;
     private Network mTetherUpstream;
     private TetheringConfigurationParcel mTetheringConfiguration;
     private TetherStatesParcel mTetherStatesParcel;
 
-    private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
-            new RemoteCallbackList<>();
-    @GuardedBy("mLog")
-    private final SharedLog mLog = new SharedLog(TAG);
+    private final ArrayMap<OnTetheringEventCallback, ITetheringEventCallback>
+            mTetheringEventCallbacks = new ArrayMap<>();
 
-    private TetheringManager() { }
 
-    /**
-     * Get the TetheringManager singleton instance.
-     */
-    public static synchronized TetheringManager getInstance() {
-        if (sInstance == null) {
-            sInstance = new TetheringManager();
-        }
-        return sInstance;
-    }
-
-    private class TetheringConnection implements
-            ConnectivityModuleConnector.ModuleServiceCallback {
-        @Override
-        public void onModuleServiceConnected(@NonNull IBinder service) {
-            logi("Tethering service connected");
-            registerTetheringService(service);
-        }
-    }
-
-    private void registerTetheringService(@NonNull IBinder service) {
-        final ITetheringConnector connector = ITetheringConnector.Stub.asInterface(service);
-
-        log("Tethering service registered");
-
-        // Currently TetheringManager instance is only used by ConnectivityService and mConnector
-        // only expect to assgin once when system server start and bind tethering service.
-        // TODO: Change mConnector to final before TetheringManager put into boot classpath.
+    private TetheringManager(ITetheringConnector connector) {
         mConnector = connector;
-        mCallback = new TetherInternalCallback();
+        mCallback = new TetheringEventCallback();
         try {
-            mConnector.registerTetherInternalCallback(mCallback);
+            mConnector.registerTetheringEventCallback(mCallback);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
     }
 
-    private class TetherInternalCallback extends ITetherInternalCallback.Stub {
+    private class TetheringEventCallback extends ITetheringEventCallback.Stub {
         @Override
         public void onUpstreamChanged(Network network) {
-            mTetherUpstream = network;
             reportUpstreamChanged(network);
         }
 
@@ -111,36 +75,16 @@ public class TetheringManager {
     }
 
     private void reportUpstreamChanged(Network network) {
-        final int length = mTetheringEventCallbacks.beginBroadcast();
-        try {
-            for (int i = 0; i < length; i++) {
+        synchronized (mTetheringEventCallbacks) {
+            mTetherUpstream = network;
+            for (int i = 0; i < mTetheringEventCallbacks.size(); i++) {
                 try {
-                    mTetheringEventCallbacks.getBroadcastItem(i).onUpstreamChanged(network);
+                    mTetheringEventCallbacks.valueAt(i).onUpstreamChanged(mTetherUpstream);
                 } catch (RemoteException e) {
                     // Not really very much to do here.
                 }
             }
-        } finally {
-            mTetheringEventCallbacks.finishBroadcast();
         }
-    }
-
-    /**
-     * Start the tethering service. Should be called only once on device startup.
-     *
-     * <p>This method will start the tethering service either in the network stack process,
-     * or inside the system server on devices that do not support the tethering module.
-     *
-     * {@hide}
-     */
-    public void start(IBinder service) {
-        final Bundle bundle = new Bundle();
-        bundle.putBinder("extra_networkstack", service);
-        // Using MAINLINE_NETWORK_STACK permission after cutting off the dpendency of system server.
-        ConnectivityModuleConnector.getInstance().startModuleService(
-                ITetheringConnector.class.getName(), NETWORK_STACK, bundle,
-                new TetheringConnection());
-        log("Tethering service start requested");
     }
 
     /**
@@ -163,7 +107,7 @@ public class TetheringManager {
         try {
             mConnector.tether(iface);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
         return TETHER_ERROR_NO_ERROR;
     }
@@ -177,7 +121,7 @@ public class TetheringManager {
         try {
             mConnector.untether(iface);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
         return TETHER_ERROR_NO_ERROR;
     }
@@ -194,7 +138,7 @@ public class TetheringManager {
         try {
             mConnector.setUsbTethering(enable);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
         return TETHER_ERROR_NO_ERROR;
     }
@@ -209,7 +153,7 @@ public class TetheringManager {
         try {
             mConnector.startTethering(type, receiver, showProvisioningUi);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
     }
 
@@ -223,7 +167,7 @@ public class TetheringManager {
         try {
             mConnector.stopTethering(type);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
     }
 
@@ -239,7 +183,7 @@ public class TetheringManager {
         try {
             mConnector.getLatestTetheringEntitlementResult(type, receiver, showEntitlementUi);
         } catch (RemoteException e) {
-            e.rethrowFromSystemServer();
+            throw new RuntimeException(e);
         }
     }
 
@@ -248,8 +192,29 @@ public class TetheringManager {
      *
      * {@hide}
      */
-    public void registerTetheringEventCallback(ITetheringEventCallback callback) {
-        mTetheringEventCallbacks.register(callback);
+    public void registerTetheringEventCallback(Executor executor,
+            OnTetheringEventCallback callback) {
+        synchronized (mTetheringEventCallbacks) {
+            if (!mTetheringEventCallbacks.containsKey(callback)) {
+                throw new IllegalArgumentException("callback was already registered.");
+            }
+            ITetheringEventCallback relayedCallback = new ITetheringEventCallback.Stub() {
+                @Override
+                public void onUpstreamChanged(Network network) throws RemoteException {
+                    executor.execute(() -> {
+                        callback.onUpstreamChanged(network);
+                    });
+                }
+
+                @Override
+                public void onConfigurationChanged(TetheringConfigurationParcel config) { }
+
+                @Override
+                public void onTetherStatesChanged(TetherStatesParcel states) { }
+            };
+            callback.onUpstreamChanged(mTetherUpstream);
+            mTetheringEventCallbacks.put(callback, relayedCallback);
+        }
     }
 
     /**
@@ -257,8 +222,13 @@ public class TetheringManager {
      *
      * {@hide}
      */
-    public void unregisterTetheringEventCallback(ITetheringEventCallback callback) {
-        mTetheringEventCallbacks.unregister(callback);
+    public void unregisterTetheringEventCallback(OnTetheringEventCallback callback) {
+        synchronized (mTetheringEventCallbacks) {
+            ITetheringEventCallback relayedCallback = mTetheringEventCallbacks.remove(callback);
+            if (relayedCallback == null) {
+                throw new IllegalArgumentException("callback was not registered.");
+            }
+        }
     }
 
     /**
@@ -372,94 +342,5 @@ public class TetheringManager {
                 || mTetheringConfiguration.chooseUpstreamAutomatically;
 
         return hasDownstreamConfiguration && hasUpstreamConfiguration;
-    }
-
-    /**
-     * Log a message in the local log.
-     */
-    private void log(@NonNull String message) {
-        synchronized (mLog) {
-            mLog.log(message);
-        }
-    }
-
-    /**
-     * Log a condition that should never happen.
-     */
-    private void logWtf(@NonNull String message, @Nullable Throwable e) {
-        Slog.wtf(TAG, message);
-        synchronized (mLog) {
-            mLog.e(message, e);
-        }
-    }
-
-    /**
-     * Log a ERROR level message in the local and system logs.
-     */
-    private void loge(@NonNull String message, @Nullable Throwable e) {
-        synchronized (mLog) {
-            mLog.e(message, e);
-        }
-    }
-
-    /**
-     * Log a INFO level message in the local and system logs.
-     */
-    private void logi(@NonNull String message) {
-        synchronized (mLog) {
-            mLog.i(message);
-        }
-    }
-
-    /**
-     * Dump TetheringManager logs to the specified {@link PrintWriter}.
-     */
-    public void dump(PrintWriter pw) {
-        // dump is thread-safe on SharedLog
-        mLog.dump(null, pw, null);
-
-        pw.print("subId: ");
-        pw.println(mTetheringConfiguration.subId);
-
-        dumpStringArray(pw, "tetherableUsbRegexs",
-                mTetheringConfiguration.tetherableUsbRegexs);
-        dumpStringArray(pw, "tetherableWifiRegexs",
-                mTetheringConfiguration.tetherableWifiRegexs);
-        dumpStringArray(pw, "tetherableBluetoothRegexs",
-                mTetheringConfiguration.tetherableBluetoothRegexs);
-
-        pw.print("isDunRequired: ");
-        pw.println(mTetheringConfiguration.isDunRequired);
-
-        pw.print("chooseUpstreamAutomatically: ");
-        pw.println(mTetheringConfiguration.chooseUpstreamAutomatically);
-
-        dumpStringArray(pw, "legacyDhcpRanges", mTetheringConfiguration.legacyDhcpRanges);
-        dumpStringArray(pw, "defaultIPv4DNS", mTetheringConfiguration.defaultIPv4DNS);
-
-        dumpStringArray(pw, "provisioningApp", mTetheringConfiguration.provisioningApp);
-        pw.print("provisioningAppNoUi: ");
-        pw.println(mTetheringConfiguration.provisioningAppNoUi);
-
-        pw.print("enableLegacyDhcpServer: ");
-        pw.println(mTetheringConfiguration.enableLegacyDhcpServer);
-
-        pw.println();
-    }
-
-    private static void dumpStringArray(PrintWriter pw, String label, String[] values) {
-        pw.print(label);
-        pw.print(": ");
-
-        if (values != null) {
-            final StringJoiner sj = new StringJoiner(", ", "[", "]");
-            for (String value : values) sj.add(value);
-
-            pw.print(sj.toString());
-        } else {
-            pw.print("null");
-        }
-
-        pw.println();
     }
 }

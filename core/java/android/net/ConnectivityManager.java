@@ -56,7 +56,6 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseIntArray;
 
-import com.android.internal.annotations.GuardedBy;
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.util.Preconditions;
@@ -2619,10 +2618,6 @@ public class ConnectivityManager {
         public void onUpstreamChanged(@Nullable Network network) {}
     }
 
-    @GuardedBy("mTetheringEventCallbacks")
-    private final ArrayMap<OnTetheringEventCallback, ITetheringEventCallback>
-            mTetheringEventCallbacks = new ArrayMap<>();
-
     /**
      * Start listening to tethering change events. Any new added callback will receive the last
      * tethering status right away. If callback is registered when tethering has no upstream or
@@ -2640,7 +2635,8 @@ public class ConnectivityManager {
             @NonNull final OnTetheringEventCallback callback) {
         Preconditions.checkNotNull(callback, "OnTetheringEventCallback cannot be null.");
 
-        synchronized (mTetheringEventCallbacks) {
+        // TODO: Fix this before merged.
+        /*synchronized (mTetheringEventCallbacks) {
             Preconditions.checkArgument(!mTetheringEventCallbacks.containsKey(callback),
                     "callback was already registered.");
             ITetheringEventCallback remoteCallback = new ITetheringEventCallback.Stub() {
@@ -2660,7 +2656,7 @@ public class ConnectivityManager {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
-        }
+        }*/
     }
 
     /**
@@ -2674,7 +2670,8 @@ public class ConnectivityManager {
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void unregisterTetheringEventCallback(
             @NonNull final OnTetheringEventCallback callback) {
-        synchronized (mTetheringEventCallbacks) {
+        // TODO: Fix this before merged.
+        /*synchronized (mTetheringEventCallbacks) {
             ITetheringEventCallback remoteCallback = mTetheringEventCallbacks.remove(callback);
             Preconditions.checkNotNull(remoteCallback, "callback was not registered.");
             try {
@@ -2684,7 +2681,7 @@ public class ConnectivityManager {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
-        }
+        }*/
     }
 
 

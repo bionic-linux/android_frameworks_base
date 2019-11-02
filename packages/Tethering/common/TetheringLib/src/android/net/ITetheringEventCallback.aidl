@@ -21,10 +21,10 @@ import android.net.TetheringConfigurationParcel;
 import android.net.TetherStatesParcel;
 
 /**
- * Callback class for receiving tethering changed events
+ * Callback class for receiving tethering changed events.
  * @hide
  */
-oneway interface ITetherInternalCallback
+oneway interface ITetheringEventCallback
 {
     void onUpstreamChanged(in Network network);
     void onConfigurationChanged(in TetheringConfigurationParcel config);

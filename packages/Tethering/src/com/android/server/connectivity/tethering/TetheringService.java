@@ -67,8 +67,8 @@ import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStackConnector;
 import android.net.INetworkStatsService;
-import android.net.ITetherInternalCallback;
 import android.net.ITetheringConnector;
+import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -79,8 +79,8 @@ import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.TetherStatesParcel;
 import android.net.TetheringConfigurationParcel;
-import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.ip.IpServer;
 import android.net.util.BaseNetdUnsolicitedEventListener;
 import android.net.util.InterfaceSet;
@@ -197,7 +197,7 @@ public class TetheringService extends Service {
     private Handler mHandler;
     private PhoneStateListener mPhoneStateListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
-    private ITetherInternalCallback mTetherInternalCallback = null;
+    private ITetheringEventCallback mTetheringEventCallback = null;
     private INetworkStackConnector mNetworkStackConnector;
 
     private volatile TetheringConfiguration mConfig;
@@ -353,8 +353,8 @@ public class TetheringService extends Service {
         }
 
         @Override
-        public void registerTetherInternalCallback(ITetherInternalCallback callback) {
-            mService.registerTetherInternalCallback(callback);
+        public void registerTetheringEventCallback(ITetheringEventCallback callback) {
+            mService.registerTetheringEventCallback(callback);
         }
     }
 
@@ -1843,9 +1843,9 @@ public class TetheringService extends Service {
     }
 
     /** Register tethering event callback */
-    void registerTetherInternalCallback(ITetherInternalCallback callback) {
+    void registerTetheringEventCallback(ITetheringEventCallback callback) {
         mHandler.post(() -> {
-            mTetherInternalCallback = callback;
+            mTetheringEventCallback = callback;
             reportUpstreamChanged(mTetherUpstream);
             reportConfigurationChanged(mConfig.toStableParcelable());
             reportTetherStateChanged(mTetherStatesParcel);
@@ -1853,30 +1853,30 @@ public class TetheringService extends Service {
     }
 
     private void reportUpstreamChanged(Network network) {
-        if (mTetherInternalCallback == null) return;
+        if (mTetheringEventCallback == null) return;
 
         try {
-            mTetherInternalCallback.onUpstreamChanged(network);
+            mTetheringEventCallback.onUpstreamChanged(network);
         } catch (RemoteException e) {
             // Not really very much to do here.
         }
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {
-        if (mTetherInternalCallback == null) return;
+        if (mTetheringEventCallback == null) return;
 
         try {
-            mTetherInternalCallback.onConfigurationChanged(config);
+            mTetheringEventCallback.onConfigurationChanged(config);
         } catch (RemoteException e) {
             // Not really very much to do here.
         }
     }
 
     private void reportTetherStateChanged(TetherStatesParcel states) {
-        if (mTetherInternalCallback == null) return;
+        if (mTetheringEventCallback == null) return;
 
         try {
-            mTetherInternalCallback.onTetherStatesChanged(states);
+            mTetheringEventCallback.onTetherStatesChanged(states);
         } catch (RemoteException e) {
             // Not really very much to do here.
         }
