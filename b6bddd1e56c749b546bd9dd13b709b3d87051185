@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d302c2f0_3fcaf11a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-04T09:55:50Z",
+      "side": 1,
+      "message": "nit: maybe just NS01?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bec1bbc_505202f3",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 3
@@ -18,6 +41,29 @@
         "startChar": 12,
         "endLine": 268,
         "endChar": 20
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00488376_b2971fb3",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-04T09:55:50Z",
+      "side": 1,
+      "message": "maybe choose another score that won\u0027t be used by framework?",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 33
       },
       "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
