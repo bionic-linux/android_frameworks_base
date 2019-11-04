@@ -11418,4 +11418,32 @@ public class TelephonyManager {
         }
         return false;
     }
+
+
+
+    /**
+     * Check whether ICC fdn (fixed dialing number) is enabled.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE READ_PRIVILEGED_PHONE_STATE}
+     *
+     * @param subId the id of the subscription.
+     * @return true for ICC fdn enabled.
+     *         false for ICC fdn disabled.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    public boolean getIccFdnEnabled(int subId) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getIccFdnEnabledForSubscriber(subId);
+            }
+        } catch (RemoteException ex) {
+            if (!isSystemProcess()) {
+                ex.rethrowAsRuntimeException();
+            }
+        }
+        return false;
+    }
 }
