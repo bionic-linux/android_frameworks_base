@@ -211,6 +211,30 @@
       "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefcd538_b7e1ee64",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-04T10:43:15Z",
+      "side": 1,
+      "message": "It\u0027s weird that I can pass all tests of LingerMonitorTest...\nAnyway, to be more safer, let\u0027s get back to the previous version.",
+      "parentUuid": "1815e6eb_5bd02ed8",
+      "range": {
+        "startLine": 262,
+        "startChar": 28,
+        "endLine": 265,
+        "endChar": 93
+      },
+      "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

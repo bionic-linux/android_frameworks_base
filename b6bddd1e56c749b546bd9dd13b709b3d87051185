@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fa4e2a8_373f8851",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-04T10:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d302c2f0_3fcaf11a",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bec1bbc_505202f3",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61449468_be8d9e95",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-04T10:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bec1bbc_505202f3",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b8d32e1_7b9d0ee3",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-04T10:43:15Z",
+      "side": 1,
+      "message": "I think the result won\u0027t be different if we choose the score which is used by framework.\nAnyway, I will change the score to 80.",
+      "parentUuid": "00488376_b2971fb3",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3977ea4c_cfdf89d0",
         "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38493ca8_1211daa0",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-04T10:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3977ea4c_cfdf89d0",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
