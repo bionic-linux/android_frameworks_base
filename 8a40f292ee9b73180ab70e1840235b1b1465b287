@@ -68,6 +68,29 @@
       "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327f0cbf_12946062",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-04T02:36:15Z",
+      "side": 1,
+      "message": "nit: maybe also annotate others, but no strong opinion.",
+      "range": {
+        "startLine": 262,
+        "startChar": 28,
+        "endLine": 265,
+        "endChar": 93
+      },
+      "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
