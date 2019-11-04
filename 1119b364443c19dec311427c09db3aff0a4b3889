@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30177dec_22273754",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-04T14:07:57Z",
+      "side": 1,
+      "message": "Nit: As a first patch of NetworkScore, is that possible to provide more content? I think it will also be helpful for other developerss and OEMs to understand the purpose.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592ea0ba_8fc75923",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-04T14:07:57Z",
+      "side": 1,
+      "message": "Is this called by bearer code? From current flow, it looks like that it will call from sendNetworkScore(int)?",
+      "range": {
+        "startLine": 428,
+        "startChar": 7,
+        "endLine": 428,
+        "endChar": 32
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
