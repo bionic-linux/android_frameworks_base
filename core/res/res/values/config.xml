@@ -4298,4 +4298,7 @@
     <!-- The list of packages to automatically opt out of refresh rates higher than 60hz because
          of known compatibility issues. -->
     <string-array name="config_highRefreshRateBlacklist"></string-array>
+
+    <!-- Whether or not to set default data sub for some operator required -->
+    <bool name="config_operator_default_choose_data_sub">false</bool>
 </resources>
