@@ -11418,4 +11418,23 @@ public class TelephonyManager {
         }
         return false;
     }
+
+    /**
+     *
+     * @return true if IccFdn enabled
+     *
+     */
+    public boolean getIccFdnEnabled() {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getIccFdnEnabledForSubscriber(getSubId());
+            }
+        } catch (RemoteException ex) {
+            if (!isSystemProcess()) {
+                ex.rethrowAsRuntimeException();
+            }
+        }
+        return false;
+    }
 }

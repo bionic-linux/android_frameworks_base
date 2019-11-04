@@ -2047,4 +2047,9 @@ interface ITelephony {
      * Command line command to enable or disable handling of CEP data for test purposes.
      */
     oneway void setCepEnabled(boolean isCepEnabled);
+
+    /*
+     * Check whether IccFdn is enabled
+     */
+    boolean getIccFdnEnabledForSubscriber(int subId);
 }
