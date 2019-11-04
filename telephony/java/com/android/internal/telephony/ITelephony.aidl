@@ -2047,4 +2047,13 @@ interface ITelephony {
      * Command line command to enable or disable handling of CEP data for test purposes.
      */
     oneway void setCepEnabled(boolean isCepEnabled);
+
+    /*
+     * Check whether ICC fdn (fixed dialing number) is enabled.
+     *
+     * @param subId the id of the subscription.
+     * @return true for ICC fdn enabled.
+     *         false for ICC fdn disabled.
+     */
+    boolean isIccFdnEnabledForSubscriber(int subId);
 }
