@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bec1bbc_505202f3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-04T09:44:13Z",
+      "side": 1,
+      "message": "This is redundant. int can not be null.",
+      "range": {
+        "startLine": 268,
+        "startChar": 12,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3977ea4c_cfdf89d0",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-04T09:44:13Z",
+      "side": 1,
+      "message": "Could you also test putExtension(String key, Parcelable value) \u0026 \u003cT extends Parcelable\u003e T getExtension(String key)?",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "b6bddd1e56c749b546bd9dd13b709b3d87051185",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
