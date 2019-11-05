@@ -166,6 +166,52 @@
     },
     {
       "key": {
+        "uuid": "a1deb726_b62323d3",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-05T05:54:46Z",
+      "side": 1,
+      "message": "maybe @NonNull this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33528c20_4010c338",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-05T05:54:46Z",
+      "side": 1,
+      "message": "maybe add annotations for them? also for other APIs that uses String, NetworkScore or Parcelable.",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 57
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ca1f7e6_0c5d8bda",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 4
@@ -228,6 +274,29 @@
         "startChar": 15,
         "endLine": 109,
         "endChar": 84
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45541c6c_2b328fe3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6736,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-05T05:54:46Z",
+      "side": 1,
+      "message": "maybe add NonNull or Nullable annotations?",
+      "range": {
+        "startLine": 6736,
+        "startChar": 36,
+        "endLine": 6736,
+        "endChar": 73
       },
       "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
