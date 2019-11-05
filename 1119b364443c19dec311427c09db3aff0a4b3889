@@ -189,6 +189,29 @@
     },
     {
       "key": {
+        "uuid": "e6feb47d_3e19983a",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-05T06:05:31Z",
+      "side": 1,
+      "message": "I think this should add @NonNull to avoid NPE.",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33528c20_4010c338",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 4
