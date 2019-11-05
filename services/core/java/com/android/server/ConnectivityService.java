@@ -2204,8 +2204,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_CONFIGURE_ALWAYS_ON_NETWORKS));
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
-
-        mPermissionMonitor.startMonitoring();
     }
 
     /**
@@ -3954,6 +3952,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_SYSTEM_READY: {
+                    // Let PermissionMonitor#startMonitoring() running before
+                    // MultipathPolicyTracker.start() due to mApps in PermissionMonitor needs to be
+                    // populated first to ensure that listening network request which send by
+                    // MultipathPolicyTracker won't be added NET_CAPABILITY_FOREGROUND capability.
+                    mPermissionMonitor.startMonitoring();
                     mMultipathPolicyTracker.start();
                     break;
                 }

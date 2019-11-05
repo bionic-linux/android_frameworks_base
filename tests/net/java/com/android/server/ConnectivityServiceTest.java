@@ -16,6 +16,9 @@
 
 package com.android.server;
 
+import static android.Manifest.permission.CHANGE_NETWORK_STATE;
+import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
+import static android.Manifest.permission.NETWORK_STACK;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
@@ -1179,7 +1182,8 @@ public class ConnectivityServiceTest {
                 Arrays.asList(new PackageInfo[] {
                         buildPackageInfo(/* SYSTEM */ false, APP1_UID),
                         buildPackageInfo(/* SYSTEM */ false, APP2_UID),
-                        buildPackageInfo(/* SYSTEM */ false, VPN_UID)
+                        buildPackageInfo(/* SYSTEM */ false, VPN_UID),
+                        buildPackageInfo(/* SYSTEM */ true, Binder.getCallingUid())
                 }));
     }
 
@@ -6075,7 +6079,12 @@ public class ConnectivityServiceTest {
 
     private static PackageInfo buildPackageInfo(boolean hasSystemPermission, int uid) {
         final PackageInfo packageInfo = new PackageInfo();
-        packageInfo.requestedPermissions = new String[0];
+        if (hasSystemPermission) {
+            packageInfo.requestedPermissions = new String[] {
+                    CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_USE_RESTRICTED_NETWORKS };
+        } else {
+            packageInfo.requestedPermissions = new String[0];
+        }
         packageInfo.applicationInfo = new ApplicationInfo();
         packageInfo.applicationInfo.privateFlags = 0;
         packageInfo.applicationInfo.uid = UserHandle.getUid(UserHandle.USER_SYSTEM,
