@@ -273,20 +273,22 @@ public class PermissionMonitor {
 
     public boolean hasUseBackgroundNetworksPermission(int uid) {
         final String[] names = mPackageManager.getPackagesForUid(uid);
-        if (null == names || names.length == 0) return false;
-        try {
-            // Only using the first package name. There may be multiple names if multiple
-            // apps share the same UID, but in that case they also share permissions so
-            // querying with any of the names will return the same results.
+        if (names != null && names.length > 0) {
             int userId = UserHandle.getUserId(uid);
-            final PackageInfo app = mPackageManager.getPackageInfoAsUser(
-                    names[0], GET_PERMISSIONS, userId);
-            return hasUseBackgroundNetworksPermission(app);
-        } catch (NameNotFoundException e) {
-            // App not found.
-            loge("NameNotFoundException " + names[0], e);
-            return false;
+            for (String name : names) {
+                try {
+                    final PackageInfo app = mPackageManager.getPackageInfoAsUser(
+                            name, GET_PERMISSIONS, userId);
+                    if (hasUseBackgroundNetworksPermission(app)) {
+                        return true;
+                    }
+                } catch (NameNotFoundException e) {
+                    // App not found.
+                    loge("NameNotFoundException " + name, e);
+                }
+            }
         }
+        return false;
     }
 
     private int[] toIntArray(Collection<Integer> list) {

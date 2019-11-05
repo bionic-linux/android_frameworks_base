@@ -102,7 +102,6 @@ public class PermissionMonitorTest {
     private static final String MOCK_PACKAGE2 = "appName2";
     private static final String SYSTEM_PACKAGE1 = "sysName1";
     private static final String SYSTEM_PACKAGE2 = "sysName2";
-    private static final String VPN_PACKAGE = "vpnApp";
     private static final String PARTITION_SYSTEM = "system";
     private static final String PARTITION_OEM = "oem";
     private static final String PARTITION_PRODUCT = "product";
@@ -145,15 +144,23 @@ public class PermissionMonitorTest {
         mObserver = observerCaptor.getValue();
     }
 
-    private boolean hasBgPermission(String partition, int targetSdkVersion, int uid,
-            String... permission) throws Exception {
-        final PackageInfo packageInfo = packageInfoWithPermissions(permission, partition);
-        packageInfo.applicationInfo.targetSdkVersion = targetSdkVersion;
-        packageInfo.applicationInfo.uid = uid;
-        when(mPackageManager.getPackageInfoAsUser(
-                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS), anyInt())).thenReturn(packageInfo);
-        when(mPackageManager.getPackagesForUid(anyInt())).thenReturn(new String[] {MOCK_PACKAGE1});
+    private boolean hasBgPermission(int targetSdkVersion, int uid, PackageInfo... packageInfo)
+            throws Exception {
+        final String[] names = new String[packageInfo.length];
+
+        for (int i = 0; i < packageInfo.length; i++) {
+            packageInfo[i].applicationInfo.targetSdkVersion = targetSdkVersion;
+            packageInfo[i].applicationInfo.uid = uid;
+            names[i] = "testName" + i;
+            when(mPackageManager.getPackageInfoAsUser(
+                    eq(names[i]), eq(GET_PERMISSIONS), anyInt())).thenReturn(packageInfo[i]);
+        }
+        when(mPackageManager.getPackagesForUid(eq(uid))).thenReturn(names);
         return mPermissionMonitor.hasUseBackgroundNetworksPermission(uid);
+    }
+
+    private static PackageInfo packageInfoWithPermissions(String... permissions) {
+        return packageInfoWithPermissions(permissions, PARTITION_SYSTEM);
     }
 
     private static PackageInfo packageInfoWithPermissions(String[] permissions, String partition) {
@@ -161,12 +168,6 @@ public class PermissionMonitorTest {
         for (int i = 0; i < permissions.length; i++) {
             requestedPermissionsFlags[i] = REQUESTED_PERMISSION_GRANTED;
         }
-        return packageInfoWithPermissions(permissions, partition,
-                requestedPermissionsFlags);
-    }
-
-    private static PackageInfo packageInfoWithPermissions(String[] permissions, String partition,
-            int[] requestedPermissionsFlags) {
         final PackageInfo packageInfo = new PackageInfo();
         packageInfo.requestedPermissions = permissions;
         packageInfo.applicationInfo = new ApplicationInfo();
@@ -190,10 +191,8 @@ public class PermissionMonitorTest {
     private static PackageInfo buildPackageInfo(boolean hasSystemPermission, int uid, int userId) {
         final PackageInfo pkgInfo;
         if (hasSystemPermission) {
-            final String[] systemPermissions = new String[]{
-                    CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_USE_RESTRICTED_NETWORKS
-            };
-            pkgInfo = packageInfoWithPermissions(systemPermissions, PARTITION_SYSTEM);
+            pkgInfo = packageInfoWithPermissions(
+                    CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
         } else {
             pkgInfo = packageInfoWithPermissions(new String[] {}, "");
         }
@@ -203,23 +202,20 @@ public class PermissionMonitorTest {
 
     @Test
     public void testHasPermission() {
-        PackageInfo app = packageInfoWithPermissions(new String[] {}, PARTITION_SYSTEM);
+        PackageInfo app = packageInfoWithPermissions();
         assertFalse(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertFalse(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_INTERNAL));
 
-        app = packageInfoWithPermissions(new String[] {
-            CHANGE_NETWORK_STATE, NETWORK_STACK
-        }, PARTITION_SYSTEM);
+        app = packageInfoWithPermissions(CHANGE_NETWORK_STATE, NETWORK_STACK);
         assertTrue(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertTrue(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
         assertFalse(mPermissionMonitor.hasPermission(app, CONNECTIVITY_INTERNAL));
 
-        app = packageInfoWithPermissions(new String[] {
-            CONNECTIVITY_USE_RESTRICTED_NETWORKS, CONNECTIVITY_INTERNAL
-        }, PARTITION_SYSTEM);
+        app = packageInfoWithPermissions(
+                CONNECTIVITY_USE_RESTRICTED_NETWORKS, CONNECTIVITY_INTERNAL);
         assertFalse(mPermissionMonitor.hasPermission(app, CHANGE_NETWORK_STATE));
         assertFalse(mPermissionMonitor.hasPermission(app, NETWORK_STACK));
         assertTrue(mPermissionMonitor.hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS));
@@ -228,7 +224,7 @@ public class PermissionMonitorTest {
 
     @Test
     public void testIsVendorApp() {
-        PackageInfo app = packageInfoWithPermissions(new String[] {}, PARTITION_SYSTEM);
+        PackageInfo app = packageInfoWithPermissions();
         assertFalse(mPermissionMonitor.isVendorApp(app.applicationInfo));
         app = packageInfoWithPermissions(new String[] {}, PARTITION_OEM);
         assertTrue(mPermissionMonitor.isVendorApp(app.applicationInfo));
@@ -240,45 +236,80 @@ public class PermissionMonitorTest {
 
     @Test
     public void testHasUseBackgroundNetworksPermission() throws Exception {
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, NETWORK_STACK));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1,
-                CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
+        //Single package for MOCK_UID1
+        assertFalse(hasBgPermission(VERSION_P, MOCK_UID1, packageInfoWithPermissions()));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(CHANGE_NETWORK_STATE)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(NETWORK_STACK)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(CONNECTIVITY_INTERNAL)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(CONNECTIVITY_USE_RESTRICTED_NETWORKS)));
+        assertFalse(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
 
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1));
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, MOCK_UID1, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID1, packageInfoWithPermissions()));
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID1,
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
+
+        // Two packages for MOCK_UID2
+        assertFalse(hasBgPermission(VERSION_P, MOCK_UID2, packageInfoWithPermissions(),
+                packageInfoWithPermissions()));
+        assertFalse(hasBgPermission(VERSION_P, MOCK_UID2, packageInfoWithPermissions(),
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID2, packageInfoWithPermissions(),
+                packageInfoWithPermissions(CHANGE_NETWORK_STATE)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID2,
+                packageInfoWithPermissions(CHANGE_WIFI_STATE),
+                packageInfoWithPermissions(CONNECTIVITY_USE_RESTRICTED_NETWORKS)));
+
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID2, packageInfoWithPermissions(),
+                packageInfoWithPermissions()));
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID2,
+                packageInfoWithPermissions(),
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
     }
 
     @Test
     public void testHasUseBackgroundNetworksPermissionSystemUid() throws Exception {
         doReturn(VERSION_P).when(mPermissionMonitor).getDeviceFirstSdkInt();
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID, CHANGE_WIFI_STATE));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_P, SYSTEM_UID,
-                CONNECTIVITY_USE_RESTRICTED_NETWORKS));
+        assertTrue(hasBgPermission(VERSION_P, SYSTEM_UID, packageInfoWithPermissions()));
+        assertTrue(hasBgPermission(VERSION_P, SYSTEM_UID,
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
+        assertTrue(hasBgPermission(VERSION_P, SYSTEM_UID,
+                packageInfoWithPermissions(CONNECTIVITY_USE_RESTRICTED_NETWORKS)));
 
         doReturn(VERSION_Q).when(mPermissionMonitor).getDeviceFirstSdkInt();
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID));
-        assertFalse(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID, CHANGE_WIFI_STATE));
-        assertTrue(hasBgPermission(PARTITION_SYSTEM, VERSION_Q, SYSTEM_UID,
-                CONNECTIVITY_USE_RESTRICTED_NETWORKS));
+        assertFalse(hasBgPermission(VERSION_Q, SYSTEM_UID, packageInfoWithPermissions()));
+        assertFalse(hasBgPermission(VERSION_Q, SYSTEM_UID,
+                packageInfoWithPermissions(CHANGE_WIFI_STATE)));
+        assertTrue(hasBgPermission(VERSION_Q, SYSTEM_UID,
+                packageInfoWithPermissions(CONNECTIVITY_USE_RESTRICTED_NETWORKS)));
     }
 
     @Test
     public void testHasUseBackgroundNetworksPermissionVendorApp() throws Exception {
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_NETWORK_STATE));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, NETWORK_STACK));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CONNECTIVITY_INTERNAL));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1,
-                CONNECTIVITY_USE_RESTRICTED_NETWORKS));
-        assertTrue(hasBgPermission(PARTITION_VENDOR, VERSION_P, MOCK_UID1, CHANGE_WIFI_STATE));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] {}, PARTITION_VENDOR)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { CHANGE_NETWORK_STATE },
+                        PARTITION_VENDOR)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { NETWORK_STACK }, PARTITION_VENDOR)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { CONNECTIVITY_INTERNAL },
+                        PARTITION_VENDOR)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { CONNECTIVITY_USE_RESTRICTED_NETWORKS },
+                        PARTITION_VENDOR)));
+        assertTrue(hasBgPermission(VERSION_P, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { CHANGE_WIFI_STATE }, PARTITION_VENDOR)));
 
-        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1));
-        assertFalse(hasBgPermission(PARTITION_VENDOR, VERSION_Q, MOCK_UID1, CHANGE_WIFI_STATE));
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID1,
+                packageInfoWithPermissions(new String[] {}, PARTITION_VENDOR)));
+        assertFalse(hasBgPermission(VERSION_Q, MOCK_UID1,
+                packageInfoWithPermissions(new String[] { CHANGE_WIFI_STATE }, PARTITION_VENDOR)));
     }
 
     private class NetdMonitor {
@@ -599,7 +630,7 @@ public class PermissionMonitorTest {
 
         // Install another package with the same uid and no permissions should not cause the UID to
         // lose permissions.
-        PackageInfo packageInfo2 = packageInfoWithPermissions(new String[]{}, PARTITION_SYSTEM);
+        PackageInfo packageInfo2 = packageInfoWithPermissions();
         when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE2), anyInt())).thenReturn(packageInfo2);
         when(mPackageManager.getPackagesForUid(MOCK_UID1))
               .thenReturn(new String[]{MOCK_PACKAGE1, MOCK_PACKAGE2});
@@ -660,8 +691,7 @@ public class PermissionMonitorTest {
                 | INetd.PERMISSION_UPDATE_DEVICE_STATS, new int[]{MOCK_UID1});
 
         // Mock another package with the same uid but different permissions.
-        PackageInfo packageInfo2 = packageInfoWithPermissions(new String[] {INTERNET},
-                PARTITION_SYSTEM);
+        PackageInfo packageInfo2 = packageInfoWithPermissions(INTERNET);
         when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE2), anyInt())).thenReturn(packageInfo2);
         when(mPackageManager.getPackagesForUid(MOCK_UID1)).thenReturn(new String[]{
                 MOCK_PACKAGE2});
