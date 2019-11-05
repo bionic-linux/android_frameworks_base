@@ -240,11 +240,13 @@ public class PermissionMonitor {
         return false;
     }
 
-    private boolean hasNetworkPermission(PackageInfo app) {
+    @VisibleForTesting
+    boolean hasNetworkPermission(PackageInfo app) {
         return hasPermission(app, CHANGE_NETWORK_STATE);
     }
 
-    private boolean hasRestrictedNetworkPermission(PackageInfo app) {
+    @VisibleForTesting
+    boolean hasRestrictedNetworkPermission(PackageInfo app) {
         // TODO : remove this check in the future(b/31479477). All apps should just
         // request the appropriate permission for their use case since android Q.
         if (app.applicationInfo != null) {
@@ -260,33 +262,14 @@ public class PermissionMonitor {
             }
         }
         return hasPermission(app, CONNECTIVITY_INTERNAL)
+                || hasPermission(app, NETWORK_STACK)
                 || hasPermission(app, CONNECTIVITY_USE_RESTRICTED_NETWORKS);
     }
 
-    private boolean hasUseBackgroundNetworksPermission(PackageInfo app) {
-        // This function defines what it means to hold the permission to use
-        // background networks.
-        return hasPermission(app, CHANGE_NETWORK_STATE)
-                || hasPermission(app, NETWORK_STACK)
-                || hasRestrictedNetworkPermission(app);
-    }
-
     public boolean hasUseBackgroundNetworksPermission(int uid) {
-        final String[] names = mPackageManager.getPackagesForUid(uid);
-        if (null == names || names.length == 0) return false;
-        try {
-            // Only using the first package name. There may be multiple names if multiple
-            // apps share the same UID, but in that case they also share permissions so
-            // querying with any of the names will return the same results.
-            int userId = UserHandle.getUserId(uid);
-            final PackageInfo app = mPackageManager.getPackageInfoAsUser(
-                    names[0], GET_PERMISSIONS, userId);
-            return hasUseBackgroundNetworksPermission(app);
-        } catch (NameNotFoundException e) {
-            // App not found.
-            loge("NameNotFoundException " + names[0], e);
-            return false;
-        }
+        // mApps already checked both network and using restricted network permissions. If uid is in
+        // the mApps list that means uid has one of permission at least.
+        return mApps.containsKey(uid);
     }
 
     private int[] toIntArray(Collection<Integer> list) {
