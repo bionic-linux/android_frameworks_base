@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d96ceaf_b75019a4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 0,
+      "message": "I don\u0027t think it\u0027s reasonable to remove all these finals ; this is likely to cause a lot of very hard to notice and diagnose issues by loss of the visibility guarantees of 17.5. Final is not like @NonNull : it comes with essential runtime guarantees that the code is likely to rely on. Removing them voids these guarantees.\n\nA common way to solve this is to have the service create in onCreate() an object that contains everything and has all the fields final. This lets you keep all the guarantees and lets you handle the lifecycle in a different, very small class. The one non-final object has very limited reach and the damage it can cause is easy to circumscribe.",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "ea91961c2e0ff0d01d3dfa8124dc4dc0b7497fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

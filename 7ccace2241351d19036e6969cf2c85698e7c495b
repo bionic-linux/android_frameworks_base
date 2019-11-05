@@ -1,0 +1,504 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e5cdb8_4816d2b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Will this change when ConnectivityService is out of the loop ? If not we should have a different design based on callbacks.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7286c8f0_45af3972",
+        "filename": "packages/Tethering/AndroidManifest_InProcess.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "The network stack is using MAINLINE_NETWORK_STACK here too, shouldn\u0027t this be doing that too ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 56,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990bdd2b_e65a3120",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "If all errored interfaces must be in the available list, maybe we want to instead have only an array of ints listing SUCCESS for interfaces without an error, and remove the erroredIfaceList.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d73624c_ac5e14d6",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringConfigurationParcel.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t look homogeneous to me.\n\nSome of the fields are specific to a given subId : subId, isDunRequired, provisioningApp, provisioningAppNoUi. For those you\u0027d need one TetheringConfigurationParcel for any given subscription.\nOthers are global to a device : tetherable*Regexs, chooseUpstreamAutomatically, etc.\n\n\nI get that this is similar to the current status of the configuration in tethering, but I don\u0027t think it\u0027s great to keep merging together these two use cases now that these settings need to move across processes.\n\nCould we have something better separated so that only the necessary attributes are updated when the default subscription change ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92709cc_93ae6a49",
+        "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "I might be losing my C++ now, but my recollection is that this cast shouldn\u0027t be necessary as any pointer is a void*. Please ignore if I\u0027m getting this wrong",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "253d2fa2_ab58ee2f",
+        "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "extra blank line",
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ad6cf6_3574cd7e",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Are you moving this from somewhere else ? If not you want to say 2019 here.\n\nIt looks like you might be copying frameworks/base/services/net/java/android/net/util/VersionedBroadcastListener.java. Could you instead have it compiled in both places ? We\u0027d like to avoid duplication.",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3f5fd2_e4036003",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "This scheme looks a little complex ; you could have an AtomicReference\u003cBroadcastReceiver\u003e and the receiver would check that mReceiver.get() \u003d\u003d this for better security.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514a7f5d_bb1fb3d7",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Keep this on the same line",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d4121a_4fb2113c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Is this temporary ? I think you can\u0027t get an instance of something that\u0027s not @SystemApi and AIDLs can\u0027t be made @SystemApi (by rule of the API council)",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c491038_2eaa4893",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Is there something missing here ?",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 19
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff92fcc_1c76e2b1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Event Listener",
+      "range": {
+        "startLine": 381,
+        "startChar": 56,
+        "endLine": 381,
+        "endChar": 61
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba57a1bc_37d74aee",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "register",
+      "range": {
+        "startLine": 381,
+        "startChar": 30,
+        "endLine": 381,
+        "endChar": 38
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c642347_c9b790f5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Putting these in the stable AIDL enshrines this API forever, while we have already comments saying we know it\u0027s not a great API. Can we improve ?",
+      "range": {
+        "startLine": 1139,
+        "startChar": 7,
+        "endLine": 1139,
+        "endChar": 65
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d4e5f4_b1875716",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t understand this todo, can you clarify ?",
+      "range": {
+        "startLine": 1890,
+        "startChar": 4,
+        "endLine": 1890,
+        "endChar": 26
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24595799_20a2a3e0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Can we consider sending a callback here instead of overwriting the previous error ? I\u0027m pretty nervous about having to support forever a style where by design there is no way to guarantee seeing all the events.",
+      "range": {
+        "startLine": 1989,
+        "startChar": 28,
+        "endLine": 1989,
+        "endChar": 37
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb26a59_5b582607",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Hopefully this is impossible, and if it\u0027s not I hope it should crash, so I think this test should be remove",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 38
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21a63ae_9d4f3f26",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Won\u0027t this fit on one line ?",
+      "range": {
+        "startLine": 650,
+        "startChar": 28,
+        "endLine": 650,
+        "endChar": 29
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addb73c9_59a19941",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Configs if this is meant to hold several",
+      "range": {
+        "startLine": 1036,
+        "startChar": 72,
+        "endLine": 1036,
+        "endChar": 78
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0625be90_9be0a3f0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Can mTetheringManager keep the responsibility of managing the list of downstream types ? I fear we\u0027ll forget to update this place when we add a new downstream.",
+      "range": {
+        "startLine": 1889,
+        "startChar": 16,
+        "endLine": 1889,
+        "endChar": 33
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3876ea_69a2cd2a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4075,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Is this copy intentional ? I think this comment still only applies to l.4083~4089",
+      "range": {
+        "startLine": 4075,
+        "startChar": 12,
+        "endLine": 4075,
+        "endChar": 83
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfab07d_78f34e71",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T15:02:12Z",
+      "side": 1,
+      "message": "Is it reasonable to have the network stack start this instead of the system server directly ?",
+      "range": {
+        "startLine": 2187,
+        "startChar": 16,
+        "endLine": 2187,
+        "endChar": 55
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
