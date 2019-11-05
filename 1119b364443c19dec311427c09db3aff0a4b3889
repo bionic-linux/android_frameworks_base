@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0e6e497b_ab80d45b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T06:08:46Z",
+      "side": 1,
+      "message": "Yes, it works for me. I think this provide the basic content of the work to describe what NetworkScore is and what does it target to serve.",
+      "parentUuid": "c4fdd984_9394ccfd",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "592ea0ba_8fc75923",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "sendNetworkScore(int) is the migration path. Hopefully it gets removed when the work is complete.",
       "parentUuid": "592ea0ba_8fc75923",
+      "range": {
+        "startLine": 428,
+        "startChar": 7,
+        "endLine": 428,
+        "endChar": 32
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88e9ae1e_2c40d874",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T06:08:46Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "abb4c9b9_be6e9a69",
       "range": {
         "startLine": 428,
         "startChar": 7,
