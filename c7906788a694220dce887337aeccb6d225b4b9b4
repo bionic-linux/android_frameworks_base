@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6364137_c33478f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T12:17:37Z",
+      "side": 1,
+      "message": "share the same?",
+      "range": {
+        "startLine": 12,
+        "startChar": 44,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4f2b78_c670a31a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T12:17:37Z",
+      "side": 1,
+      "message": "\"the right\" is ok? or it implies something still not right?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbe336e_4494d576",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T12:17:37Z",
+      "side": 1,
+      "message": "Nit: Will it be better to name with SystemPartition like packageInfoWithPermissionsInSys() since this function is limited with PARTITION_SYSTEM, not a general one.\n\nAlso, do you want to just use addPackage() in l.603? Actually, the naming is easier to understand for me in your case.",
+      "range": {
+        "startLine": 162,
+        "startChar": 31,
+        "endLine": 162,
+        "endChar": 57
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd30afa3_da0dd511",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T12:17:37Z",
+      "side": 1,
+      "message": "Nit: space",
+      "range": {
+        "startLine": 239,
+        "startChar": 9,
+        "endLine": 239,
+        "endChar": 10
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d78eb63_b29fa8cf",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-11-05T12:17:37Z",
+      "side": 1,
+      "message": "Nit: I think you do not need to do this every time. You do not need to re-generate that every time, right?\n\nsomething like:\n\nPackageInfo package1 \u003d packageInfoWithPermissions();\nPackageInfo package2 \u003d packageInfoWithPermissions();\n\nassertFalse(hasBgPermission(VERSION_P, MOCK_UID2, package1,package2));\nassertFalse(hasBgPermission(VERSION_P, MOCK_UID2, package1,\n       packageInfoWithPermissions(CHANGE_WIFI_STATE)));\nassertTrue(hasBgPermission(VERSION_P, MOCK_UID2, package1,\n                packageInfoWithPermissions(CHANGE_NETWORK_STATE)));\n         :",
+      "range": {
+        "startLine": 257,
+        "startChar": 58,
+        "endLine": 257,
+        "endChar": 86
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
