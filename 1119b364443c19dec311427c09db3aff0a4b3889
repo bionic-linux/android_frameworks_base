@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4fdd984_9394ccfd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "Suggested wording :\n\nCreate the object that will serve to represent network quality for more comprehensive ranking.\n\nChiachang, do you think this is satisfactory or would you want more detail ?",
+      "parentUuid": "30177dec_22273754",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "592ea0ba_8fc75923",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "abb4c9b9_be6e9a69",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "sendNetworkScore(int) is the migration path. Hopefully it gets removed when the work is complete.",
+      "parentUuid": "592ea0ba_8fc75923",
+      "range": {
+        "startLine": 428,
+        "startChar": 7,
+        "endLine": 428,
+        "endChar": 32
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05c7504b_47b5b296",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 4
@@ -64,6 +112,145 @@
         "startChar": 4,
         "endLine": 430,
         "endChar": 10
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad871c4_0ac0e299",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "Yes it does, agent implementations will call this. It\u0027s just the new sendNetworkScore.",
+      "parentUuid": "05c7504b_47b5b296",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 10
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "135bedf2_712cee17",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "Apologies, I should have thought of this earlier : all parcelable child classes must be final by rule 8.8 : https://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#8-parcelable-implementations-should-be-final",
+      "range": {
+        "startLine": 31,
+        "startChar": 37,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca1f7e6_0c5d8bda",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "When you override equals() please always also override hashCode.\n\nYou can find many resources on the net to explain why (the main reason is to give it expected behavior when used in hash maps and the like). Our own API guidelines also mention it : https://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#equals-and-hashcode",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64866911_ab07fc55",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "You don\u0027t need to say this because \"null instanceof NetworkScore\" is always false.",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 26
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f48ef20_47ec8443",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "To avoid having to touch this again an again how about just saying mExtensions.equals(other.mExtensions)",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 84
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500f2642_04b7d535",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "Now that you have NetworkScore#equals you should probably add a test for it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 5
       },
       "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",

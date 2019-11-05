@@ -235,6 +235,30 @@
       "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabaef14_497fe552",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-05T03:29:10Z",
+      "side": 1,
+      "message": "Annotations will never make a test fail (they do not cause runtime checks). They may have caused warnings that you missed.\n\nBut I agree with the final decision to just keep the original version and only annotating the new ones, or the ones you know for sure.",
+      "parentUuid": "aefcd538_b7e1ee64",
+      "range": {
+        "startLine": 262,
+        "startChar": 28,
+        "endLine": 265,
+        "endChar": 93
+      },
+      "revId": "8a40f292ee9b73180ab70e1840235b1b1465b287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
