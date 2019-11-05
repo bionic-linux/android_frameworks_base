@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "c52c2c0a_a67e45e8",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-05T16:02:06Z",
+      "side": 1,
+      "message": "This looks like it will send lots of IPCs to the package manager and could get expensive. If all we\u0027re trying to determine here is \"does this uid have CHANGE_NETWORK_STATE, NETWORK_STACK, or CONNECTIVITY_USE_RESTRICTED_NETWORKS\", then can we just use mContext.checkPermission() to check whether the caller has those permissions?\n\nOr, if we can\u0027t use that: isn\u0027t this information already available in mApps? The documentation for mApps says that it maps every UID to either true (CONNECTIVITY_USE_RESTRICTED_NETWORKS) or false (CHANGE_NETWORK_STATE). So perhaps we could use it. But we would need to check if mApps is guaranteed to be populated at the time that MultipathPolicyTracker starts running.",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 39
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afbe336e_4494d576",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 1
