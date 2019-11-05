@@ -45,6 +45,29 @@
       "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c7504b_47b5b296",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-05T03:25:33Z",
+      "side": 1,
+      "message": "Question: I don\u0027t see you use this API outside of this class, does this API need to be public ??",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 10
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
