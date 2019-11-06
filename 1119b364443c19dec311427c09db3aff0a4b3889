@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "074204c7_3af3c897",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "Sure, your suggested description LGTM.",
+      "parentUuid": "8c2bc7d8_38d656dc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "1119b364443c19dec311427c09db3aff0a4b3889",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "592ea0ba_8fc75923",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 4

@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15ad9c66_79c9fdfa",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "Unfortunately this does not conform to the invariant between equals() and hashCode(). The contract is : if two objects are equals() then they MUST have the same hashCode().",
+      "range": {
+        "startLine": 117,
+        "startChar": 15,
+        "endLine": 117,
+        "endChar": 27
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08cbb770_2dbd0042",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "I\u0027m surprised there isn\u0027t already some code doing this in the platform ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6d3ccb_d2ed2ebe",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "Suggest the more efficient\n\n if (bundle1 \u003d\u003d bundle2) return true;\n if (null \u003d\u003d bundle1 || null \u003d\u003d bundle2) return false;",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6189a00_9915e763",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "Can bundle keys be null ?\n• If not, you don\u0027t need to test for this\n• If yes, you need to test for equality of values",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27a517f_478692d6",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-06T07:16:42Z",
+      "side": 1,
+      "message": "assertNotEquals(ns1, ns2) is the same thing as assertFalse(ns1.equals(ns2)) (unless ns1 is null, which can\u0027t be true here)",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
