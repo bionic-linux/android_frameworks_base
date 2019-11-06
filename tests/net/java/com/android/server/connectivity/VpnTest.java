@@ -63,6 +63,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
 import android.net.UidRange;
+import android.net.VpnManager;
 import android.net.VpnService;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -471,12 +472,12 @@ public class VpnTest {
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(entireUser));
 
         // When a new VPN package is set the rules should change to cover that package.
-        vpn.prepare(null, PKGS[0], false /* isPlatformVpn */);
+        vpn.prepare(null, PKGS[0], VpnManager.TYPE_VPN_SERVICE);
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(entireUser));
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(exceptPkg0));
 
         // When that VPN package is unset, everything should be undone again in reverse.
-        vpn.prepare(null, VpnConfig.LEGACY_VPN, false /* isPlatformVpn */);
+        vpn.prepare(null, VpnConfig.LEGACY_VPN, VpnManager.TYPE_VPN_SERVICE);
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(false), aryEq(exceptPkg0));
         order.verify(mNetService).setAllowOnlyVpnForUids(eq(true), aryEq(entireUser));
     }
@@ -801,6 +802,61 @@ public class VpnTest {
                         eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
                         eq(Process.myUid()),
                         eq(TEST_VPN_PKG));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationVpnService() throws Exception {
+        final Vpn vpn = createVpnAndSetupUidChecks();
+
+        assertTrue(
+                vpn.setPackageAuthorization(
+                        TEST_VPN_PKG, true /* authorized */, VpnManager.TYPE_VPN_SERVICE));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_ALLOWED));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationPlatformVpn() throws Exception {
+        final Vpn vpn = createVpnAndSetupUidChecks();
+
+        assertTrue(vpn.setPackageAuthorization(
+                TEST_VPN_PKG, true /* authorized */, VpnManager.TYPE_PLATFORM_VPN));
+        verify(mAppOps)
+                .setMode(
+                        eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
+                        eq(Process.myUid()),
+                        eq(TEST_VPN_PKG),
+                        eq(AppOpsManager.MODE_ALLOWED));
+    }
+
+    @Test
+    public void testSetPackageAuthorizationRevokeAuthorization() throws Exception {
+        final Vpn vpn = createVpnAndSetupUidChecks();
+
+        // Verify that for any given type, both appops are cleared.
+        final int[] allTypes = new int[] {
+                VpnManager.TYPE_VPN_NONE, VpnManager.TYPE_VPN_SERVICE,
+                VpnManager.TYPE_PLATFORM_VPN};
+        for (int i = 0; i < allTypes.length; i++) {
+            assertTrue(
+                    vpn.setPackageAuthorization(TEST_VPN_PKG, false /* authorized */, allTypes[i]));
+            verify(mAppOps, times(i + 1))
+                    .setMode(
+                            eq(AppOpsManager.OP_ACTIVATE_VPN),
+                            eq(Process.myUid()),
+                            eq(TEST_VPN_PKG),
+                            eq(AppOpsManager.MODE_IGNORED));
+            verify(mAppOps, times(i + 1))
+                    .setMode(
+                            eq(AppOpsManager.OP_ACTIVATE_PLATFORM_VPN),
+                            eq(Process.myUid()),
+                            eq(TEST_VPN_PKG),
+                            eq(AppOpsManager.MODE_IGNORED));
+        }
     }
 
     /**
