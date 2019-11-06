@@ -862,9 +862,9 @@ public final class DropBoxManagerService extends SystemService {
                 throw new IOException("Can't restat: " + mDropBoxDir);
             }
             int available = mStatFs.getAvailableBlocks();
-            int nonreserved = available - mStatFs.getBlockCount() * reservePercent / 100;
+            int nonreserved = available - (int)((long)mStatFs.getBlockCount() * reservePercent / 100);
             int maximum = quotaKb * 1024 / mBlockSize;
-            mCachedQuotaBlocks = Math.min(maximum, Math.max(0, nonreserved * quotaPercent / 100));
+            mCachedQuotaBlocks = Math.min(maximum, Math.max(0, (int)((long)nonreserved * quotaPercent / 100)));
             mCachedQuotaUptimeMillis = uptimeMillis;
         }
 
