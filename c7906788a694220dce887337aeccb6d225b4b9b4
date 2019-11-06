@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "09a5f45c_e597114d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-06T06:00:46Z",
+      "side": 1,
+      "message": "since?",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6364137_c33478f5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -41,6 +64,52 @@
         "startChar": 0,
         "endLine": 13,
         "endChar": 12
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f85a65_8f68bd0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-06T06:00:46Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912bdd9c_bd0085f3",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-06T06:00:46Z",
+      "side": 1,
+      "message": "I would prefer old logic that reduce nested logic.\nSee go/tott/553",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 48
       },
       "revId": "c7906788a694220dce887337aeccb6d225b4b9b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
