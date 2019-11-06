@@ -25,6 +25,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.admin.DevicePolicyManager;
@@ -179,15 +180,17 @@ public class VpnService extends Service {
     }
 
     /**
-     * Prepare to establish a VPN connection. This method returns {@code null}
-     * if the VPN application is already prepared or if the user has previously
-     * consented to the VPN application. Otherwise, it returns an
-     * {@link Intent} to a system activity. The application should launch the
-     * activity using {@link Activity#startActivityForResult} to get itself
-     * prepared. The activity may pop up a dialog to require user action, and
-     * the result will come back via its {@link Activity#onActivityResult}.
-     * If the result is {@link Activity#RESULT_OK}, the application becomes
-     * prepared and is granted to use other methods in this class.
+     * Prepare to establish a VPN connection. This method returns {@code null} if the VPN
+     * application is already prepared or if the user has previously consented to the VPN
+     * application. Otherwise, it returns an {@link Intent} to a system activity. If the application
+     * wants to have VPN over all kinds of networks, the application should launch the activity
+     * using {@link Activity#startActivityForResult} to get itself prepared. The activity may pop up
+     * a dialog to require user action, and the result will come back via its
+     * {@link Activity#onActivityResult}. If the result is {@link Activity#RESULT_OK}, the
+     * application becomes prepared and is granted to use other methods in this class. For the VPN
+     * started by the application of the carrier which is the default data provider and only handles
+     * the traffic of that carrier network, user's consent is not required. But {@link Intent} will
+     * be returned in case the application want to extend this VPN to all networks.
      *
      * <p>Only one application can be granted at the same time. The right
      * is revoked when another application is granted. The application
@@ -196,7 +199,7 @@ public class VpnService extends Service {
      * class will fail.
      *
      * <p>The user may disable the VPN at any time while it is activated, in
-     * which case this method will return an intent the next time it is
+     * which case this method may return an intent the next time it is
      * executed to obtain the user's consent again.
      *
      * @see #onRevoke
@@ -204,12 +207,27 @@ public class VpnService extends Service {
     public static Intent prepare(Context context) {
         try {
             if (getService().prepareVpn(context.getPackageName(), null, context.getUserId())) {
+                // Returns intent to the application with carrier privilege, in case, it wants to
+                // extend the VPN to all kinds of networks.
+                if (!isVpnUserPreConsented(context.getPackageName(), context)) {
+                    getService().prepareVpn(null, context.getPackageName(), context.getUserId());
+                    return VpnConfig.getIntentForConfirmation();
+                }
                 return null;
             }
         } catch (RemoteException e) {
             // ignore
         }
         return VpnConfig.getIntentForConfirmation();
+    }
+
+    private static boolean isVpnUserPreConsented(String packageName, Context context) {
+        AppOpsManager appOps =
+                (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+
+        // Verify that the caller matches the given package and has permission to activate VPNs.
+        return appOps.noteOpNoThrow(AppOpsManager.OP_ACTIVATE_VPN, Binder.getCallingUid(),
+            packageName) == AppOpsManager.MODE_ALLOWED;
     }
 
     /**
