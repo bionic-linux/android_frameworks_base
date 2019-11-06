@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "083de066_874ffaea",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-06T12:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ad9c66_79c9fdfa",
+      "range": {
+        "startLine": 117,
+        "startChar": 15,
+        "endLine": 117,
+        "endChar": 27
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08cbb770_2dbd0042",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-06T07:16:42Z",
       "side": 1,
       "message": "I\u0027m surprised there isn\u0027t already some code doing this in the platform ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb63e95_04ede166",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-06T12:25:05Z",
+      "side": 1,
+      "message": "There are some similar codes below:\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/telecomm/java/android/telecom/PhoneAccount.java;l\u003d1078\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/telecomm/java/android/telecom/Call.java;l\u003d2501\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:packages/services/Telephony/src/com/android/services/telephony/TelephonyConnection.java;l\u003d1640\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/opt/telephony/src/java/com/android/internal/telephony/imsphone/ImsPhoneConnection.java;l\u003d1184",
+      "parentUuid": "08cbb770_2dbd0042",
       "range": {
         "startLine": 120,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "371411da_7e9ccb56",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-06T12:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d6d3ccb_d2ed2ebe",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6189a00_9915e763",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2019-11-06T07:16:42Z",
       "side": 1,
       "message": "Can bundle keys be null ?\n• If not, you don\u0027t need to test for this\n• If yes, you need to test for equality of values",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 30
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36aadc0e_062ea7c4",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-06T12:25:05Z",
+      "side": 1,
+      "message": "Yes, I think it can be null.\nI\u0027ll add a test to test when the key of bundle is null.\n/**\n * Inserts a Bundle value into the mapping of this Bundle, replacing\n * any existing value for the given key.  Either key or value may be null.\n *\n * @param key a String, or null\n * @param value a Bundle object, or null\n */\npublic void putBundle(@Nullable String key, @Nullable Bundle value);",
+      "parentUuid": "c6189a00_9915e763",
       "range": {
         "startLine": 130,
         "startChar": 12,
@@ -114,6 +210,30 @@
       "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17dd3eb2_37f71cf7",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-06T12:25:05Z",
+      "side": 1,
+      "message": "I\u0027ll remove them.",
+      "parentUuid": "b27a517f_478692d6",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "f153a50ab276603d4773fba2883b04fe1cd52264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
