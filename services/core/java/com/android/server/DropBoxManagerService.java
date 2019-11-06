@@ -1036,13 +1036,22 @@ public final class DropBoxManagerService extends SystemService {
             } catch (IllegalArgumentException e) {  // restat throws this on error
                 throw new IOException("Can't restat: " + mDropBoxDir);
             }
+<<<<<<< HEAD   (d5ef2d Merge "API Lint: remove obsolete python linter")
             long available = mStatFs.getAvailableBlocksLong();
             long nonreserved = available - mStatFs.getBlockCountLong() * reservePercent / 100;
             long maxAvailableLong = nonreserved * quotaPercent / 100;
             int maxAvailable = Math.toIntExact(Math.max(0,
                     Math.min(maxAvailableLong, Integer.MAX_VALUE)));
+=======
+            int available = mStatFs.getAvailableBlocks();
+            int nonreserved = available - (int)((long)mStatFs.getBlockCount() * reservePercent / 100);
+>>>>>>> CHANGE (241ffd fix integer overflow in DropboxManagerService)
             int maximum = quotaKb * 1024 / mBlockSize;
+<<<<<<< HEAD   (d5ef2d Merge "API Lint: remove obsolete python linter")
             mCachedQuotaBlocks = Math.min(maximum, maxAvailable);
+=======
+            mCachedQuotaBlocks = Math.min(maximum, Math.max(0, (int)((long)nonreserved * quotaPercent / 100)));
+>>>>>>> CHANGE (241ffd fix integer overflow in DropboxManagerService)
             mCachedQuotaUptimeMillis = uptimeMillis;
         }
 
