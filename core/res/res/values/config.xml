@@ -4178,4 +4178,7 @@
 
     <!-- Sharesheet: define a max number of targets per application for new shortcuts-based direct share introduced in Q -->
     <integer name="config_maxShortcutTargetsPerApp">3</integer>
+
+    <!-- For Data Clear Code -->
+    <string name="config_dataconnection_data_clear_code" translatable="false"></string>
 </resources>
