@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5835c7a7_64840364",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "762cea09_ef7a6d23",
+      "range": {
+        "startLine": 1358,
+        "startChar": 74,
+        "endLine": 1358,
+        "endChar": 76
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43677fc7_fd9247e0",
         "filename": "api/test-current.txt",
         "patchSetId": 4
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "d627a03f_bb4eafa8",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78dfcebc_d9cbb19c",
+      "range": {
+        "startLine": 1378,
+        "startChar": 67,
+        "endLine": 1378,
+        "endChar": 81
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "179a76b7_c0c20ab5",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "I see, change to setRecordCount(@DnsSection section, int count) \nISTM that we don\u0027t need much validation here because the default value still can produce a valid DnsHeader.",
+      "parentUuid": "43677fc7_fd9247e0",
+      "range": {
+        "startLine": 1378,
+        "startChar": 0,
+        "endLine": 1378,
+        "endChar": 96
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96715de7_4df98ebc",
         "filename": "api/test-current.txt",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27e70b2_b7c64518",
+        "filename": "api/test-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "I see, add some common type for now.",
+      "parentUuid": "96715de7_4df98ebc",
+      "range": {
+        "startLine": 1393,
+        "startChar": 78,
+        "endLine": 1393,
+        "endChar": 81
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ace09617_5f8468ac",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57de651a_a1482405",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04169bde_6277b809",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0f98bf5b_5abe5e28",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "hmm, add some comments. Caller has no way to mutate the content of DnsHeader.\nBut yeah, they could break the DnsRecord list.",
+      "parentUuid": "04169bde_6277b809",
+      "range": {
+        "startLine": 348,
+        "startChar": 11,
+        "endLine": 348,
+        "endChar": 20
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65f9dc19_5dd0397f",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0f0c16_78bddc31",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-11-06T06:48:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65f9dc19_5dd0397f",
+      "range": {
+        "startLine": 356,
+        "startChar": 15,
+        "endLine": 356,
+        "endChar": 24
+      },
+      "revId": "09822fe69abce003407fdbeb12e7a5b206647c5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
