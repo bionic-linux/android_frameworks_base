@@ -62,6 +62,7 @@ import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.RouteInfo;
 import android.net.UidRange;
+import android.net.VpnManager;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
@@ -509,8 +510,11 @@ public class Vpn {
         }
 
         if (packageName != null) {
-            // Pre-authorize new always-on VPN package.
-            if (!setPackageAuthorization(packageName, true)) {
+            // TODO: Give the minimum permission possible; if there is a Platform VPN profile, only
+            // grant ACTIVATE_PLATFORM_VPN.
+            // Pre-authorize new always-on VPN package. Grant the full ACTIVATE_VPN appop, allowing
+            // both VpnService and Platform VPNs.
+            if (!setPackageAuthorization(packageName, true, VpnManager.TYPE_VPN_SERVICE)) {
                 return false;
             }
             mAlwaysOn = true;
@@ -685,8 +689,7 @@ public class Vpn {
      *     Preparing a platform VPN profile requires only the lesser ACTIVATE_PLATFORM_VPN appop.
      * @return true if the operation succeeded.
      */
-    public synchronized boolean prepare(
-            String oldPackage, String newPackage, boolean isPlatformVpn) {
+    public synchronized boolean prepare(String oldPackage, String newPackage, int vpnType) {
         if (oldPackage != null) {
             // Stop an existing always-on VPN from being dethroned by other apps.
             if (mAlwaysOn && !isCurrentPreparedPackage(oldPackage)) {
@@ -698,13 +701,13 @@ public class Vpn {
                 // The package doesn't match. We return false (to obtain user consent) unless the
                 // user has already consented to that VPN package.
                 if (!oldPackage.equals(VpnConfig.LEGACY_VPN)
-                        && isVpnPreConsented(mContext, oldPackage, isPlatformVpn)) {
+                        && isVpnPreConsented(mContext, oldPackage, vpnType)) {
                     prepareInternal(oldPackage);
                     return true;
                 }
                 return false;
             } else if (!oldPackage.equals(VpnConfig.LEGACY_VPN)
-                    && !isVpnPreConsented(mContext, oldPackage, isPlatformVpn)) {
+                    && !isVpnPreConsented(mContext, oldPackage, vpnType)) {
                 // Currently prepared VPN is revoked, so unprepare it and return false.
                 prepareInternal(VpnConfig.LEGACY_VPN);
                 return false;
@@ -787,25 +790,47 @@ public class Vpn {
         }
     }
 
-    /**
-     * Set whether a package has the ability to launch VPNs without user intervention.
-     */
-    public boolean setPackageAuthorization(String packageName, boolean authorized) {
+    /** Set whether a package has the ability to launch VPNs without user intervention. */
+    public boolean setPackageAuthorization(
+            String packageName, boolean authorized, @VpnManager.VpnType int authorizationType) {
         // Check if the caller is authorized.
         enforceControlPermissionOrInternalCaller();
 
-        int uid = getAppUid(packageName, mUserHandle);
+        final int uid = getAppUid(packageName, mUserHandle);
         if (uid == -1 || VpnConfig.LEGACY_VPN.equals(packageName)) {
             // Authorization for nonexistent packages (or fake ones) can't be updated.
             return false;
         }
 
-        long token = Binder.clearCallingIdentity();
+        final long token = Binder.clearCallingIdentity();
         try {
-            AppOpsManager appOps =
+            final int[] toChange;
+
+            // Clear all AppOps if the app is being unauthorized.
+            if (!authorized || authorizationType == VpnManager.TYPE_NONE) {
+                toChange =
+                        new int[] {
+                    AppOpsManager.OP_ACTIVATE_VPN, AppOpsManager.OP_ACTIVATE_PLATFORM_VPN
+                };
+            } else if (authorizationType == VpnManager.TYPE_PLATFORM_VPN) {
+                toChange = new int[] {AppOpsManager.OP_ACTIVATE_PLATFORM_VPN};
+            } else if (authorizationType == VpnManager.TYPE_VPN_SERVICE) {
+                toChange = new int[] {AppOpsManager.OP_ACTIVATE_VPN};
+            } else {
+                // If unrecognized, log and do not grant any permissions.
+                Log.e(TAG, "Unrecognized VPN type while granting authorization");
+                toChange = new int[] {};
+            }
+
+            final AppOpsManager appOpMgr =
                     (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
-            appOps.setMode(AppOpsManager.OP_ACTIVATE_VPN, uid, packageName,
-                    authorized ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED);
+            for (final int appOp : toChange) {
+                appOpMgr.setMode(
+                        appOp,
+                        uid,
+                        packageName,
+                        authorized ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_IGNORED);
+            }
             return true;
         } catch (Exception e) {
             Log.wtf(TAG, "Failed to set app ops for package " + packageName + ", uid " + uid, e);
@@ -815,10 +840,15 @@ public class Vpn {
         return false;
     }
 
-    private boolean isVpnPreConsented(Context context, String packageName, boolean isPlatformVpn) {
-        return isPlatformVpn
-                ? isVpnProfilePreConsented(context, packageName)
-                : isVpnServicePreConsented(context, packageName);
+    private boolean isVpnPreConsented(Context context, String packageName, int vpnType) {
+        switch (vpnType) {
+            case VpnManager.TYPE_VPN_SERVICE:
+                return isVpnServicePreConsented(context, packageName);
+            case VpnManager.TYPE_PLATFORM_VPN:
+                return isVpnProfilePreConsented(context, packageName);
+            default:
+                return false;
+        }
     }
 
     private boolean doesPackageHaveAppop(Context context, String packageName, int appop) {
@@ -2349,7 +2379,7 @@ public class Vpn {
         checkNotNull(keyStore, "KeyStore missing");
 
         // Prepare VPN for startup
-        if (!prepare(packageName, null /* newPackage */, true /* isPlatformVpn */)) {
+        if (!prepare(packageName, null /* newPackage */, VpnManager.TYPE_PLATFORM_VPN)) {
             throw new SecurityException("User consent not granted for package " + packageName);
         }
 
