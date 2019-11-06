@@ -95,11 +95,12 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.LockPatternUtils;
-import com.android.server.FgThread;
 import com.android.server.LocalServices;
+import com.android.server.ServiceThread;
 import com.android.server.SystemServiceManager;
 import com.android.server.am.UserState.KeyEvictedCallback;
 import com.android.server.pm.UserManagerService;
+import com.android.server.Watchdog;
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.WindowManagerService;
 
@@ -168,6 +169,7 @@ class UserController implements Handler.Callback {
     private final Injector mInjector;
     private final Handler mHandler;
     private final Handler mUiHandler;
+    private final Handler mIoHandler;
 
     // Holds the current foreground user's id. Use mLock when updating
     @GuardedBy("mLock")
@@ -265,6 +267,7 @@ class UserController implements Handler.Callback {
         mInjector = injector;
         mHandler = mInjector.getHandler(this);
         mUiHandler = mInjector.getUiHandler(this);
+        mIoHandler = mInjector.getIoHandler();
         // User 0 is the first and only user that runs at boot.
         final UserState uss = new UserState(UserHandle.SYSTEM);
         uss.mUnlockProgress.addListener(new UserProgressListener());
@@ -421,7 +424,7 @@ class UserController implements Handler.Callback {
                     mInjector.getContext().getString(R.string.android_start_title));
 
         // Call onBeforeUnlockUser on a worker thread that allows disk I/O
-        FgThread.getHandler().post(() -> {
+        mIoHandler.post(() -> {
             if (!StorageManager.isUserKeyUnlocked(userId)) {
                 Slog.w(TAG, "User key got locked unexpectedly, leaving user locked.");
                 return;
@@ -572,11 +575,11 @@ class UserController implements Handler.Callback {
         bootIntent.addFlags(Intent.FLAG_RECEIVER_NO_ABORT
                 | Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND
                 | Intent.FLAG_RECEIVER_OFFLOAD);
-        // Widget broadcasts are outbound via FgThread, so to guarantee sequencing
+        // Widget broadcasts are outbound via io thread, so to guarantee sequencing
         // we also send the boot_completed broadcast from that thread.
         final int callingUid = Binder.getCallingUid();
         final int callingPid = Binder.getCallingPid();
-        FgThread.getHandler().post(() -> {
+        mIoHandler.post(() -> {
             mInjector.broadcastIntent(bootIntent, null,
                     new IIntentReceiver.Stub() {
                         @Override
@@ -816,10 +819,10 @@ class UserController implements Handler.Callback {
                 return;
             }
             final int userIdToLockF = userIdToLock;
-            // Evict the user's credential encryption key. Performed on FgThread to make it
+            // Evict the user's credential encryption key. Performed on io thread to make it
             // serialized with call to UserManagerService.onBeforeUnlockUser in finishUserUnlocking
             // to prevent data corruption.
-            FgThread.getHandler().post(() -> {
+            mIoHandler.post(() -> {
                 synchronized (mLock) {
                     if (mStartedUsers.get(userIdToLockF) != null) {
                         Slog.w(TAG, "User was restarted, skipping key eviction");
@@ -940,11 +943,11 @@ class UserController implements Handler.Callback {
     }
 
     void scheduleStartProfiles() {
-        // Parent user transition to RUNNING_UNLOCKING happens on FgThread, so it is busy, there is
+        // Parent user transition to RUNNING_UNLOCKING happens on io thread, so it is busy, there is
         // a chance the profile will reach RUNNING_LOCKED while parent is still locked, so no
-        // attempt will be made to unlock the profile. If we go via FgThread, this will be executed
+        // attempt will be made to unlock the profile. If we go via io thread, this will be executed
         // after the parent had chance to unlock fully.
-        FgThread.getHandler().post(() -> {
+        mIoHandler.post(() -> {
             if (!mHandler.hasMessages(START_PROFILES_MSG)) {
                 mHandler.sendMessageDelayed(mHandler.obtainMessage(START_PROFILES_MSG),
                         DateUtils.SECOND_IN_MILLIS);
@@ -2139,7 +2142,7 @@ class UserController implements Handler.Callback {
                 final int userId = msg.arg1;
                 mInjector.getSystemServiceManager().unlockUser(userId);
                 // Loads recents on a worker thread that allows disk I/O
-                FgThread.getHandler().post(() -> {
+                mIoHandler.post(() -> {
                     mInjector.loadUserRecents(userId);
                 });
                 finishUserUnlocked((UserState) msg.obj);
@@ -2203,6 +2206,8 @@ class UserController implements Handler.Callback {
         private final ActivityManagerService mService;
         private UserManagerService mUserManager;
         private UserManagerInternal mUserManagerInternal;
+        private Handler mIoHandler = null;
+        private static final int WATCHDOG_TIMEOUT = 10 * 60 * 1000; // ten minutes
 
         Injector(ActivityManagerService service) {
             mService = service;
@@ -2210,6 +2215,17 @@ class UserController implements Handler.Callback {
 
         protected Handler getHandler(Handler.Callback callback) {
             return new Handler(mService.mHandlerThread.getLooper(), callback);
+        }
+
+        protected Handler getIoHandler() {
+            if (mIoHandler == null) {
+                ServiceThread workerThread = new ServiceThread("UserController",
+                        android.os.Process.THREAD_PRIORITY_DEFAULT, true);
+                workerThread.start();
+                mIoHandler = workerThread.getThreadHandler();
+                Watchdog.getInstance().addThread(mIoHandler, WATCHDOG_TIMEOUT);
+            }
+            return mIoHandler;
         }
 
         protected Handler getUiHandler(Handler.Callback callback) {
@@ -2323,7 +2339,7 @@ class UserController implements Handler.Callback {
             if (awm != null) {
                 // Out of band, because this is called during a sequence with
                 // sensitive cross-service lock management
-                FgThread.getHandler().post(() -> {
+                mIoHandler.post(() -> {
                     awm.unlockUser(userId);
                 });
             }
