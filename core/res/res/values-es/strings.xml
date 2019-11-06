@@ -2087,4 +2087,8 @@
     </plurals>
     <!-- no translation found for chooser_no_direct_share_targets (997970693708458895) -->
     <skip />
+
+    <!-- For Data Clear Code -->
+    <string name="failcause_user_authentication">FALLA DE AUTENTICACION -29-</string>
+    <string name="failcause_service_option_not_subscribed">SIN SUBSCRIPCION AL SERVICIO -33-</string>
 </resources>

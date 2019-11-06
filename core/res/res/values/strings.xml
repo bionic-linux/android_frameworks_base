@@ -5392,4 +5392,8 @@
     <!-- ChooserActivity - Alphabetically sorted apps list label. [CHAR LIMIT=NONE] -->
     <string name="chooser_all_apps_button_label">Apps list</string>
 
+    <!-- For Data Clear Code -->
+    <string name="failcause_user_authentication">AUTHENTICATION FAILURE -29-</string>
+    <string name="failcause_service_option_not_subscribed">NO SUBSCRIPTION TO SERVICE -33-</string>
+
 </resources>
