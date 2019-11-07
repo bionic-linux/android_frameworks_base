@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dde810df_5258200e",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Well, you remind me that maybe we should have a NetworkScore#removeExtension(@Nullable String key) for owner to remove the specific entry.\nBack to your comment, I think you\u0027re right because Bundle#putParcelable(@Nullable String key, @Nullable Parcelable value), we should be aligned with it.",
+      "parentUuid": "a23e6a4f_23d3389b",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15f276b2_9eb86082",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0df68fc_0aaca4b4",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "For int case, maybe the owner just update the value to 0. Or using the NetworkScore#removeExtension(@Nullable String key) to remove that entry.\n\nIt reminds me that maybe we should rename this method to putIntExtension().",
+      "parentUuid": "15f276b2_9eb86082",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5833ac03_c04b0d77",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Yes, just discussed with Jean yesterday that the key is nullable.\nWill change the annotation. Thanks.",
+      "parentUuid": "8ef0a773_4bf5dce3",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ee9b63_ea78fbf1",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Yes, let\u0027s pick up a prime number: 29.",
+      "parentUuid": "2dfdef58_ca10d29b",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33039cf1_dc639e9d",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd63643_e5d4ebc8",
+      "range": {
+        "startLine": 120,
+        "startChar": 62,
+        "endLine": 120,
+        "endChar": 66
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3430d43_ea510b04",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c763c8ff_df2b7bc9",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Thanks for sharing this.",
+      "parentUuid": "c3430d43_ea510b04",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "73cd3296_fa50b300",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fc58f08_e9faaa01",
+      "range": {
+        "startLine": 126,
+        "startChar": 33,
+        "endLine": 126,
+        "endChar": 42
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1707b8b5_276e9f45",
         "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d973cd02_5dcd39ff",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T08:43:45Z",
+      "side": 1,
+      "message": "Sure!\nThanks.",
+      "parentUuid": "1707b8b5_276e9f45",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 88
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
