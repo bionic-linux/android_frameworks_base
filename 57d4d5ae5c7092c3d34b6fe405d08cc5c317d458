@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "01c708ef_739fcfc5",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T09:53:10Z",
+      "side": 1,
+      "message": "I added @Nullable here because Bundle#putInt() allows null to be the key, so we should be aligned with it.\nFor the meaning, I think you can just see null as the key.(But maybe most of people won\u0027t use null as the key.)",
+      "parentUuid": "1ad5b183_8f041910",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
