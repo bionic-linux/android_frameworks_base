@@ -145,6 +145,7 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
@@ -6329,10 +6330,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (VDBG || DDBG) log("rematching " + newNetwork.name());
 
+        final ArrayMap<NetworkRequestInfo, NetworkAgentInfo> reassignedRequests = new ArrayMap<>();
+
         // Find and migrate to this Network any NetworkRequests for
         // which this network is now the best.
-        ArrayList<NetworkAgentInfo> affectedNetworks = new ArrayList<>();
-        ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<>();
+        final ArrayList<NetworkAgentInfo> removedRequests = new ArrayList<>();
+        final ArrayList<NetworkRequestInfo> addedRequests = new ArrayList<>();
         NetworkCapabilities nc = newNetwork.networkCapabilities;
         if (VDBG) log(" network has: " + nc);
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
@@ -6345,6 +6348,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkAgentInfo currentNetwork = getNetworkForRequest(nri);
             final boolean satisfies = newNetwork.satisfies(nri.request);
             if (newNetwork == currentNetwork && satisfies) {
+                reassignedRequests.put(nri, newNetwork);
                 if (VDBG) {
                     log("Network " + newNetwork.name() + " was already satisfying" +
                             " request " + nri.request.requestId + ". No change.");
@@ -6364,6 +6368,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             ", newScore = " + score);
                 }
                 if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
+                    reassignedRequests.put(nri, newNetwork);
                     if (VDBG) log("rematch for " + newNetwork.name());
                     if (currentNetwork != null) {
                         if (VDBG || DDBG){
@@ -6371,7 +6376,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         }
                         currentNetwork.removeRequest(nri.request.requestId);
                         currentNetwork.lingerRequest(nri.request, now, mLingerDelayMs);
-                        affectedNetworks.add(currentNetwork);
+                        removedRequests.add(currentNetwork);
                     } else {
                         if (VDBG || DDBG) log("   accepting network in place of null");
                     }
@@ -6397,6 +6402,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                 }
             } else if (newNetwork.isSatisfyingRequest(nri.request.requestId)) {
+                reassignedRequests.put(nri, null);
                 // If "newNetwork" is listed as satisfying "nri" but no longer satisfies "nri",
                 // mark it as no longer satisfying "nri".  Because networks are processed by
                 // rematchAllNetworksAndRequests() in descending score order, "currentNetwork" will
@@ -6467,7 +6473,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         // Linger any networks that are no longer needed. This should be done after sending the
         // available callback for newNetwork.
-        for (NetworkAgentInfo nai : affectedNetworks) {
+        for (NetworkAgentInfo nai : removedRequests) {
             updateLingerState(nai, now);
         }
         // Possibly unlinger newNetwork. Unlingering a network does not send any callbacks so it
