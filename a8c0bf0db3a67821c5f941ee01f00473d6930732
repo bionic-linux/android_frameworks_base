@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c24829b1_9346d5b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-07T13:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39a4ca4_7a8af3ff",
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408707f0_11f13997",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aa9de586_30102029",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5516,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-07T13:17:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "408707f0_11f13997",
+      "range": {
+        "startLine": 5516,
+        "startChar": 11,
+        "endLine": 5516,
+        "endChar": 18
+      },
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74887de4_66d59a2c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fa6d1b_c23845ad",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5518,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-07T13:17:21Z",
+      "side": 1,
+      "message": "Of course not. It\u0027s full of public mutable state. However, this patch does not change the accesses inside the object AFAICT (and if you find it does, I have a problem that I need to fix).",
+      "parentUuid": "74887de4_66d59a2c",
+      "range": {
+        "startLine": 5518,
+        "startChar": 38,
+        "endLine": 5518,
+        "endChar": 56
+      },
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
