@@ -22,6 +22,30 @@
       "revId": "c2bac518825ddaf2ef65e874bbfdd4d7cc07faab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1786b3_7b679290",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-07T09:24:48Z",
+      "side": 1,
+      "message": "ok, let\u0027s remove this in following patch.\nThanks.",
+      "parentUuid": "7557db82_7afc7801",
+      "range": {
+        "startLine": 139,
+        "startChar": 1,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "c2bac518825ddaf2ef65e874bbfdd4d7cc07faab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
