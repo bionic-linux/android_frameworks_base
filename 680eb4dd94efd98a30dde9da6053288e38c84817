@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b316892c_37662a07",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-07T19:22:22Z",
+      "side": 1,
+      "message": "This will be public by aosp/1156845. Please coordinate.",
+      "range": {
+        "startLine": 331,
+        "startChar": 3,
+        "endLine": 331,
+        "endChar": 14
+      },
+      "revId": "680eb4dd94efd98a30dde9da6053288e38c84817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
