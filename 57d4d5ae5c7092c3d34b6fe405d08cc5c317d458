@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a23e6a4f_23d3389b",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T03:01:11Z",
+      "side": 1,
+      "message": "I think this could be Nullable in order to clear the value of it?",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f276b2_9eb86082",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T03:01:11Z",
+      "side": 1,
+      "message": "Once this value is set,\ndo we have way to unset it?",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
@@ -41,6 +87,29 @@
         "startChar": 62,
         "endLine": 120,
         "endChar": 66
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3430d43_ea510b04",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T03:01:11Z",
+      "side": 1,
+      "message": "nit: do we want to multiply by 31 to improve uniqueness\nSee https://www.baeldung.com/java-hashcode",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 38
       },
       "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
