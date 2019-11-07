@@ -6347,8 +6347,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkAgentInfo currentNetwork = getNetworkForRequest(nri.request.requestId);
             // check if it satisfies the NetworkCapabilities
             if (VDBG) log("  checking if request is satisfied: " + nri.request);
-            final boolean satisfies = newNetwork.satisfies(nri.request);
-            if (!satisfies) continue;
+            if (!newNetwork.satisfies(nri.request)) continue;
 
             if (newNetwork == currentNetwork) {
                 if (VDBG) {
