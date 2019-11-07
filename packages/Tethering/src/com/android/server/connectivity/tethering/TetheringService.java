@@ -67,8 +67,8 @@ import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStackConnector;
 import android.net.INetworkStatsService;
-import android.net.ITetherInternalCallback;
 import android.net.ITetheringConnector;
+import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -79,8 +79,8 @@ import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.TetherStatesParcel;
 import android.net.TetheringConfigurationParcel;
-import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.DhcpServerCallbacks;
+import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.ip.IpServer;
 import android.net.util.BaseNetdUnsolicitedEventListener;
 import android.net.util.InterfaceSet;
@@ -98,6 +98,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.SystemProperties;
@@ -177,6 +178,8 @@ public class TetheringService extends Service {
     private final Object mPublicSync = new Object();
     private final ArrayMap<String, TetherState> mTetherStates = new ArrayMap<>();
     private final HashSet<IpServer> mForwardedDownstreams = new HashSet<>();
+    private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
+            new RemoteCallbackList<>();
 
     private TetheringConnector mConnector;
     private Context mContext;
@@ -197,7 +200,7 @@ public class TetheringService extends Service {
     private Handler mHandler;
     private PhoneStateListener mPhoneStateListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
-    private ITetherInternalCallback mTetherInternalCallback = null;
+    private ITetheringEventCallback mTetheringEventCallback = null;
     private INetworkStackConnector mNetworkStackConnector;
 
     private volatile TetheringConfiguration mConfig;
@@ -322,39 +325,45 @@ public class TetheringService extends Service {
         }
 
         @Override
-        public void tether(String iface) {
+        public void tether(String iface, String callerPkg) {
             mService.tether(iface);
         }
 
         @Override
-        public void untether(String iface) {
+        public void untether(String iface, String callerPkg) {
             mService.untether(iface);
         }
 
         @Override
-        public void setUsbTethering(boolean enable) {
+        public void setUsbTethering(boolean enable, String callerPkg) {
             mService.setUsbTethering(enable);
         }
 
         @Override
-        public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi) {
+        public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi,
+                String callerPkg) {
             mService.startTethering(type, receiver, showProvisioningUi);
         }
 
         @Override
-        public void stopTethering(int type) {
+        public void stopTethering(int type, String callerPkg) {
             mService.stopTethering(type);
         }
 
         @Override
         public void getLatestTetheringEntitlementResult(int type, ResultReceiver receiver,
-                boolean showEntitlementUi) {
+                boolean showEntitlementUi, String callerPkg) {
             mService.getLatestTetheringEntitlementResult(type, receiver, showEntitlementUi);
         }
 
         @Override
-        public void registerTetherInternalCallback(ITetherInternalCallback callback) {
-            mService.registerTetherInternalCallback(callback);
+        public void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg) {
+            mService.registerTetheringEventCallback(callback);
+        }
+
+        @Override
+        public void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg) {
+            mService.unregisterTetheringEventCallback(callback);
         }
     }
 
@@ -960,6 +969,7 @@ public class TetheringService extends Service {
                         com.android.internal.R.drawable.stat_sys_tether_general, false);
                 wrapper.untetherAll();
             }
+            reportTetheringRestricted(mDisallowTethering);
         }
     }
 
@@ -1843,45 +1853,86 @@ public class TetheringService extends Service {
     }
 
     /** Register tethering event callback */
-    void registerTetherInternalCallback(ITetherInternalCallback callback) {
+    void registerTetheringEventCallback(ITetheringEventCallback callback) {
         mHandler.post(() -> {
-            mTetherInternalCallback = callback;
-            reportUpstreamChanged(mTetherUpstream);
-            reportConfigurationChanged(mConfig.toStableParcelable());
-            reportTetherStateChanged(mTetherStatesParcel);
+            mTetheringEventCallbacks.register(callback);
+            try {
+                callback.onCallbackCreated(mTetherUpstream, mConfig.toStableParcelable(),
+                        mTetherStatesParcel, mDisallowTethering);
+            } catch (RemoteException e) {
+                // Not really very much to do here.
+            }
+
+        });
+    }
+
+    /** Unregister tethering event callback */
+    void unregisterTetheringEventCallback(ITetheringEventCallback callback) {
+        mHandler.post(() -> {
+            mTetheringEventCallbacks.unregister(callback);
         });
     }
 
     private void reportUpstreamChanged(Network network) {
-        if (mTetherInternalCallback == null) return;
-
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onUpstreamChanged(network);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onUpstreamChanged(network);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {
-        if (mTetherInternalCallback == null) return;
-
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onConfigurationChanged(config);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onConfigurationChanged(config);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
     private void reportTetherStateChanged(TetherStatesParcel states) {
-        if (mTetherInternalCallback == null) return;
-
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onTetherStatesChanged(states);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetherStatesChanged(states);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
+    private void reportTetheringRestricted(boolean isRestricted) {
+        final int length = mTetheringEventCallbacks.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetheringRestricted(
+                            isRestricted);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
+        }
+    }
 
     // TODO: dump function
     @Override
@@ -1990,6 +2041,8 @@ public class TetheringService extends Service {
 
         mLog.log(String.format("OBSERVED iface=%s state=%s error=%s", iface, state, error));
 
+        // TODO: refactor to let policy service know tethering state by alternative way.
+        /*
         try {
             // Notify that we're tethering (or not) this interface.
             // This is how data saver for instance knows if the user explicitly
@@ -1997,7 +2050,7 @@ public class TetheringService extends Service {
             mPolicyManager.onTetheringChanged(iface, state == IpServer.STATE_TETHERED);
         } catch (RemoteException e) {
             // Not really very much we can do here.
-        }
+        }*/
 
         // If TetherMasterSM is in ErrorState, TetherMasterSM stays there.
         // Thus we give a chance for TetherMasterSM to recover to InitialState

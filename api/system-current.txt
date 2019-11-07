@@ -4217,6 +4217,28 @@ package android.net {
     method @NonNull public android.net.StaticIpConfiguration.Builder setIpAddress(@Nullable android.net.LinkAddress);
   }
 
+  public class TetheringManager {
+    ctor public TetheringManager(android.content.Context, android.os.IBinder) throws android.os.RemoteException;
+    method public int getLastTetherError(String);
+    method public void getLatestTetheringEntitlementResult(int, android.os.ResultReceiver, boolean, String) throws android.os.RemoteException;
+    method public String[] getTetherableBluetoothRegexs();
+    method public String[] getTetherableIfaces();
+    method public String[] getTetherableUsbRegexs();
+    method public String[] getTetherableWifiRegexs();
+    method public String[] getTetheredDhcpRanges();
+    method public String[] getTetheredIfaces();
+    method public String[] getTetheringErroredIfaces();
+    method public boolean hasTetherableConfiguration();
+    method public boolean isTetheringSupported();
+    method public void registerTetheringEventCallback(java.util.concurrent.Executor, android.net.ConnectivityManager.OnTetheringEventCallback, String) throws android.os.RemoteException;
+    method public int setUsbTethering(boolean, String) throws android.os.RemoteException;
+    method public void startTethering(int, android.os.ResultReceiver, boolean, String) throws android.os.RemoteException;
+    method public void stopTethering(int, String) throws android.os.RemoteException;
+    method public int tether(String, String) throws android.os.RemoteException;
+    method public void unregisterTetheringEventCallback(android.net.ConnectivityManager.OnTetheringEventCallback, String) throws android.os.RemoteException;
+    method public int untether(String, String) throws android.os.RemoteException;
+  }
+
   public class TrafficStats {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
