@@ -24,11 +24,12 @@ java_defaults {
     ],
     static_libs: [
         "androidx.annotation_annotation",
-        "netd_aidl_interface-java",
+        "netd_aidl_interface-unstable-java",
         "networkstack-aidl-interfaces-java",
         "android.hardware.tetheroffload.control-V1.0-java",
         "tethering-client",
     ],
+    jarjar_rules: "jarjar-rules.txt",
     manifest: "AndroidManifestBase.xml",
 }
 
