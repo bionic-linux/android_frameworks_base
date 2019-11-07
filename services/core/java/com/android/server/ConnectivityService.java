@@ -6345,8 +6345,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (nri.request.isListen()) continue;
 
             final NetworkAgentInfo currentNetwork = getNetworkForRequest(nri.request.requestId);
+            // check if it satisfies the NetworkCapabilities
+            if (VDBG) log("  checking if request is satisfied: " + nri.request);
             final boolean satisfies = newNetwork.satisfies(nri.request);
-            if (newNetwork == currentNetwork && satisfies) {
+            if (!satisfies) continue;
+
+            if (newNetwork == currentNetwork) {
                 if (VDBG) {
                     log("Network " + newNetwork.name() + " was already satisfying" +
                             " request " + nri.request.requestId + ". No change.");
@@ -6355,47 +6359,43 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 continue;
             }
 
-            // check if it satisfies the NetworkCapabilities
-            if (VDBG) log("  checking if request is satisfied: " + nri.request);
-            if (satisfies) {
-                // next check if it's better than any current network we're using for
-                // this request
-                if (VDBG || DDBG) {
-                    log("currentScore = " +
-                            (currentNetwork != null ? currentNetwork.getCurrentScore() : 0) +
-                            ", newScore = " + score);
+            // next check if it's better than any current network we're using for
+            // this request
+            if (VDBG || DDBG) {
+                log("currentScore = "
+                        + (currentNetwork != null ? currentNetwork.getCurrentScore() : 0)
+                        + ", newScore = " + score);
+            }
+            if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
+                if (VDBG) log("rematch for " + newNetwork.name());
+                if (currentNetwork != null) {
+                    if (VDBG || DDBG) {
+                        log("   accepting network in place of " + currentNetwork.name());
+                    }
+                    currentNetwork.removeRequest(nri.request.requestId);
+                    currentNetwork.lingerRequest(nri.request, now, mLingerDelayMs);
+                    affectedNetworks.add(currentNetwork);
+                } else {
+                    if (VDBG || DDBG) log("   accepting network in place of null");
                 }
-                if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
-                    if (VDBG) log("rematch for " + newNetwork.name());
+                newNetwork.unlingerRequest(nri.request);
+                setNetworkForRequest(nri.request.requestId, newNetwork);
+                if (!newNetwork.addRequest(nri.request)) {
+                    Slog.wtf(TAG, "BUG: " + newNetwork.name() + " already has " + nri.request);
+                }
+                addedRequests.add(nri);
+                keep = true;
+                // Tell NetworkFactories about the new score, so they can stop
+                // trying to connect if they know they cannot match it.
+                // TODO - this could get expensive if we have a lot of requests for this
+                // network.  Think about if there is a way to reduce this.  Push
+                // netid->request mapping to each factory?
+                sendUpdatedScoreToFactories(nri.request, newNetwork);
+                if (isDefaultRequest(nri)) {
+                    isNewDefault = true;
+                    oldDefaultNetwork = currentNetwork;
                     if (currentNetwork != null) {
-                        if (VDBG || DDBG){
-                            log("   accepting network in place of " + currentNetwork.name());
-                        }
-                        currentNetwork.removeRequest(nri.request.requestId);
-                        currentNetwork.lingerRequest(nri.request, now, mLingerDelayMs);
-                        affectedNetworks.add(currentNetwork);
-                    } else {
-                        if (VDBG || DDBG) log("   accepting network in place of null");
-                    }
-                    newNetwork.unlingerRequest(nri.request);
-                    setNetworkForRequest(nri.request.requestId, newNetwork);
-                    if (!newNetwork.addRequest(nri.request)) {
-                        Slog.wtf(TAG, "BUG: " + newNetwork.name() + " already has " + nri.request);
-                    }
-                    addedRequests.add(nri);
-                    keep = true;
-                    // Tell NetworkFactories about the new score, so they can stop
-                    // trying to connect if they know they cannot match it.
-                    // TODO - this could get expensive if we have a lot of requests for this
-                    // network.  Think about if there is a way to reduce this.  Push
-                    // netid->request mapping to each factory?
-                    sendUpdatedScoreToFactories(nri.request, newNetwork);
-                    if (isDefaultRequest(nri)) {
-                        isNewDefault = true;
-                        oldDefaultNetwork = currentNetwork;
-                        if (currentNetwork != null) {
-                            mLingerMonitor.noteLingerDefaultNetwork(currentNetwork, newNetwork);
-                        }
+                        mLingerMonitor.noteLingerDefaultNetwork(currentNetwork, newNetwork);
                     }
                 }
             } else if (newNetwork.isSatisfyingRequest(nri.request.requestId)) {
