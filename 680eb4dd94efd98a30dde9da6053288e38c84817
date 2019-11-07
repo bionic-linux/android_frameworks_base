@@ -46,6 +46,30 @@
       "revId": "680eb4dd94efd98a30dde9da6053288e38c84817",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b581aba_782d3626",
+        "filename": "telephony/java/android/telephony/NetworkRegistrationInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-11-07T21:34:13Z",
+      "side": 1,
+      "message": "The entire NetworkRegistrationInfo becomes public.",
+      "parentUuid": "7b4281e0_9d44c2d2",
+      "range": {
+        "startLine": 331,
+        "startChar": 3,
+        "endLine": 331,
+        "endChar": 14
+      },
+      "revId": "680eb4dd94efd98a30dde9da6053288e38c84817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
