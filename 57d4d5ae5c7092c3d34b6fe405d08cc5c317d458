@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "4d54e5c8_c86c01be",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-07T13:21:40Z",
+      "side": 1,
+      "message": "I also don\u0027t feel very strongly. However I am inclined to allow null simply because Bundle allows null. I think it would also be reasonable to decide we don\u0027t want to allow null here, but I don\u0027t see a strong reason to depart from the usual Bundle semantics.\n\nOne thing that argues for nullable is, OEMs may want to create a Bundle somewhere and set it in bulk inside the NetworkScore object. It is likely the WiFi mainline module will just let OEMs supply a Bundle to mix inside the NetworkScore supplied by WiF, for example. This means it\u0027s easier to understand if we have the same semantics, rather than forcing them to know that just this Bundle here does not like null keys.",
+      "parentUuid": "6cb9f8a9_ab7085d9",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
