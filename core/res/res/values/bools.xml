@@ -30,4 +30,6 @@
          <p>The main purpose is for OEMs to customize the rendering of the
          lockscreen, setting this to true should come with customized drawables. -->
     <bool name="use_lock_pattern_drawable">false</bool>
+    <!-- not show ussd complete Dialog; Telcel:true -->
+    <bool name="config_ussd_balance_custom">false</bool>
 </resources>
