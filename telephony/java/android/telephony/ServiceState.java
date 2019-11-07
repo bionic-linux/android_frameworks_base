@@ -751,6 +751,7 @@ public class ServiceState implements Parcelable {
 
     /**
      * Get current registered voice network operator name in short alphanumeric format.
+     *
      * @return short name of operator, null if unregistered or unknown
      * @hide
      */
@@ -764,7 +765,8 @@ public class ServiceState implements Parcelable {
      * @return short name of operator, null if unregistered or unknown
      * @hide
      */
-    @UnsupportedAppUsage
+    @Nullable
+    @SystemApi
     public String getDataOperatorAlphaShort() {
         return mDataOperatorAlphaShort;
     }
@@ -1968,8 +1970,11 @@ public class ServiceState implements Parcelable {
     /**
      * The current registered raw data network operator name in long alphanumeric format.
      *
+     * @return long raw name of operator, null if unregistered or unknown
      * @hide
      */
+    @Nullable
+    @SystemApi
     public String getOperatorAlphaLongRaw() {
         return mOperatorAlphaLongRaw;
     }
@@ -1984,8 +1989,11 @@ public class ServiceState implements Parcelable {
     /**
      * The current registered raw data network operator name in short alphanumeric format.
      *
+     * @return short raw name of operator, null if unregistered or unknown
      * @hide
      */
+    @Nullable
+    @SystemApi
     public String getOperatorAlphaShortRaw() {
         return mOperatorAlphaShortRaw;
     }
