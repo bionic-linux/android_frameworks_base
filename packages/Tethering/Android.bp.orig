@@ -26,8 +26,8 @@ java_defaults {
         "androidx.annotation_annotation",
         "netd_aidl_interface-unstable-java",
         "networkstack-aidl-interfaces-unstable-java",
-        "tethering-aidl-interfaces-java",
         "android.hardware.tetheroffload.control-V1.0-java",
+        "tethering-client",
     ],
     jarjar_rules: "jarjar-rules.txt",
     manifest: "AndroidManifestBase.xml",
@@ -39,26 +39,20 @@ android_library {
     defaults: ["TetheringAndroidLibraryDefaults"],
 }
 
-// Due to b/143733063, APK can't access a jni lib that is in APEX (but not in the APK).
-cc_library {
+cc_library_shared {
     name: "libtetheroffloadjni",
     srcs: [
         "jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
     ],
     shared_libs: [
-        "libcgrouprc",
-        "libnativehelper_compat_libc++",
-        "libvndksupport",
+        "libnativehelper",
+        "libcutils",
+        "android.hardware.tetheroffload.config@1.0",
     ],
     static_libs: [
-        "android.hardware.tetheroffload.config@1.0",
         "liblog",
         "libbase",
-        "libbinderthreadstate",
-        "libcutils",
         "libhidlbase",
-        "libjsoncpp",
-        "libprocessgroup",
         "libutils",
     ],
 
@@ -68,8 +62,6 @@ cc_library {
         "-Wno-unused-parameter",
         "-Wthread-safety",
     ],
-
-    ldflags: ["-Wl,--exclude-libs=ALL,-error-limit=0"],
 }
 
 // Common defaults for compiling the actual APK.
@@ -78,7 +70,6 @@ java_defaults {
     platform_apis: true,
     privileged: true,
     jni_libs: [
-        "libnativehelper_compat_libc++",
         "libtetheroffloadjni",
     ],
     resource_dirs: [

@@ -218,8 +218,5 @@ interface IConnectivityManager
     void getLatestTetheringEntitlementResult(int type, in ResultReceiver receiver,
             boolean showEntitlementUi, String callerPkg);
 
-    void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
-    void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
-
     IBinder startOrGetTestNetworkService();
 }
