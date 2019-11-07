@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d39a4ca4_7a8af3ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T12:20:41Z",
+      "side": 1,
+      "message": "IIUC you are putting thread check in the functions which access\ngetNetworkForRequest, but I cannot figure out why.\nMaybe briefly explain it?",
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408707f0_11f13997",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5516,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T12:20:41Z",
+      "side": 1,
+      "message": "NetworkAgentInfo?",
+      "range": {
+        "startLine": 5516,
+        "startChar": 11,
+        "endLine": 5516,
+        "endChar": 18
+      },
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74887de4_66d59a2c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5518,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T12:20:41Z",
+      "side": 1,
+      "message": "stupid question: is NetworkAgentInfo object thread-safe?\ne.g. Is it ok to get Capabilities from binder thread, while handler thread is replacing with new Cap?",
+      "range": {
+        "startLine": 5518,
+        "startChar": 38,
+        "endLine": 5518,
+        "endChar": 56
+      },
+      "revId": "a8c0bf0db3a67821c5f941ee01f00473d6930732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
