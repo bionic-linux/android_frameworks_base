@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "655028d9_3be85d72",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3166,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "nit: final?",
+      "range": {
+        "startLine": 3166,
+        "startChar": 12,
+        "endLine": 3166,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635448e5_5c9c620e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3402,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 3402,
+        "startChar": 12,
+        "endLine": 3402,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905e09f2_30df9598",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5105,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "IIUC this is only valid for not LISTEN requests.\nIf so, do we want to say that in comment?",
+      "range": {
+        "startLine": 5105,
+        "startChar": 25,
+        "endLine": 5105,
+        "endChar": 35
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf0a3fc_df462d0c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5533,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "@Nullable?",
+      "range": {
+        "startLine": 5533,
+        "startChar": 12,
+        "endLine": 5533,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786eb758_7a209c62",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "IIUC this line equivalent to all thread checks in NS A01?\nAre they still needed given that you have check in this line?",
+      "range": {
+        "startLine": 5534,
+        "startChar": 8,
+        "endLine": 5534,
+        "endChar": 48
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa200285_85676116",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T14:18:03Z",
+      "side": 1,
+      "message": "[Not for this CL]\nIIUC whenever we add request to nai, we will need to add nai to nri (except listen requests)\nnai.addRequest -\u003e setNetworkForRequest(nri, nai)\nnai.removeReuqest -\u003e setNetworkForRequest(nri, null)\nIf so, do we want to put them into the same function?",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6399,
+        "endChar": 21
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
