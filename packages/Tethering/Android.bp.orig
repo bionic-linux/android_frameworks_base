@@ -26,8 +26,8 @@ java_defaults {
         "androidx.annotation_annotation",
         "netd_aidl_interface-unstable-java",
         "networkstack-aidl-interfaces-unstable-java",
-        "tethering-aidl-interfaces-java",
         "android.hardware.tetheroffload.control-V1.0-java",
+        "tethering-client",
     ],
     jarjar_rules: "jarjar-rules.txt",
     manifest: "AndroidManifestBase.xml",
@@ -70,7 +70,6 @@ java_defaults {
     platform_apis: true,
     privileged: true,
     jni_libs: [
-        "libnativehelper_compat_libc++",
         "libtetheroffloadjni",
     ],
     resource_dirs: [

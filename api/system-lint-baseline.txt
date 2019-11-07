@@ -17,6 +17,10 @@ KotlinKeyword: android.app.Notification#when:
     
 
 
+ManagerConstructor: android.net.TetheringManager#TetheringManager(android.content.Context, android.os.IBinder):
+    Managers must always be obtained from Context; no direct constructors
+
+
 MissingNullability: android.media.soundtrigger.SoundTriggerDetectionService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent(String, String, android.os.Bundle) parameter #0:
@@ -25,6 +29,56 @@ MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent
     
 MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent(String, String, android.os.Bundle) parameter #2:
     
+MissingNullability: android.net.TetheringManager#TetheringManager(android.content.Context, android.os.IBinder) parameter #0:
+    Missing nullability on parameter `context` in method `TetheringManager`
+MissingNullability: android.net.TetheringManager#TetheringManager(android.content.Context, android.os.IBinder) parameter #1:
+    Missing nullability on parameter `service` in method `TetheringManager`
+MissingNullability: android.net.TetheringManager#getLastTetherError(String) parameter #0:
+    Missing nullability on parameter `iface` in method `getLastTetherError`
+MissingNullability: android.net.TetheringManager#getLatestTetheringEntitlementResult(int, android.os.ResultReceiver, boolean, String) parameter #1:
+    Missing nullability on parameter `receiver` in method `getLatestTetheringEntitlementResult`
+MissingNullability: android.net.TetheringManager#getLatestTetheringEntitlementResult(int, android.os.ResultReceiver, boolean, String) parameter #3:
+    Missing nullability on parameter `callerPkg` in method `getLatestTetheringEntitlementResult`
+MissingNullability: android.net.TetheringManager#getTetherableBluetoothRegexs():
+    Missing nullability on method `getTetherableBluetoothRegexs` return
+MissingNullability: android.net.TetheringManager#getTetherableIfaces():
+    Missing nullability on method `getTetherableIfaces` return
+MissingNullability: android.net.TetheringManager#getTetherableUsbRegexs():
+    Missing nullability on method `getTetherableUsbRegexs` return
+MissingNullability: android.net.TetheringManager#getTetherableWifiRegexs():
+    Missing nullability on method `getTetherableWifiRegexs` return
+MissingNullability: android.net.TetheringManager#getTetheredDhcpRanges():
+    Missing nullability on method `getTetheredDhcpRanges` return
+MissingNullability: android.net.TetheringManager#getTetheredIfaces():
+    Missing nullability on method `getTetheredIfaces` return
+MissingNullability: android.net.TetheringManager#getTetheringErroredIfaces():
+    Missing nullability on method `getTetheringErroredIfaces` return
+MissingNullability: android.net.TetheringManager#registerTetheringEventCallback(java.util.concurrent.Executor, android.net.ConnectivityManager.OnTetheringEventCallback, String) parameter #0:
+    Missing nullability on parameter `executor` in method `registerTetheringEventCallback`
+MissingNullability: android.net.TetheringManager#registerTetheringEventCallback(java.util.concurrent.Executor, android.net.ConnectivityManager.OnTetheringEventCallback, String) parameter #1:
+    Missing nullability on parameter `callback` in method `registerTetheringEventCallback`
+MissingNullability: android.net.TetheringManager#registerTetheringEventCallback(java.util.concurrent.Executor, android.net.ConnectivityManager.OnTetheringEventCallback, String) parameter #2:
+    Missing nullability on parameter `callerPkg` in method `registerTetheringEventCallback`
+MissingNullability: android.net.TetheringManager#setUsbTethering(boolean, String) parameter #1:
+    Missing nullability on parameter `callerPkg` in method `setUsbTethering`
+MissingNullability: android.net.TetheringManager#startTethering(int, android.os.ResultReceiver, boolean, String) parameter #1:
+    Missing nullability on parameter `receiver` in method `startTethering`
+MissingNullability: android.net.TetheringManager#startTethering(int, android.os.ResultReceiver, boolean, String) parameter #3:
+    Missing nullability on parameter `callerPkg` in method `startTethering`
+MissingNullability: android.net.TetheringManager#stopTethering(int, String) parameter #1:
+    Missing nullability on parameter `callerPkg` in method `stopTethering`
+MissingNullability: android.net.TetheringManager#tether(String, String) parameter #0:
+    Missing nullability on parameter `iface` in method `tether`
+MissingNullability: android.net.TetheringManager#tether(String, String) parameter #1:
+    Missing nullability on parameter `callerPkg` in method `tether`
+MissingNullability: android.net.TetheringManager#unregisterTetheringEventCallback(android.net.ConnectivityManager.OnTetheringEventCallback, String) parameter #0:
+    Missing nullability on parameter `callback` in method `unregisterTetheringEventCallback`
+MissingNullability: android.net.TetheringManager#unregisterTetheringEventCallback(android.net.ConnectivityManager.OnTetheringEventCallback, String) parameter #1:
+    Missing nullability on parameter `callerPkg` in method `unregisterTetheringEventCallback`
+MissingNullability: android.net.TetheringManager#untether(String, String) parameter #0:
+    Missing nullability on parameter `iface` in method `untether`
+MissingNullability: android.net.TetheringManager#untether(String, String) parameter #1:
+    Missing nullability on parameter `callerPkg` in method `untether`
 MissingNullability: android.net.wifi.rtt.RangingRequest.Builder#addResponder(android.net.wifi.rtt.ResponderConfig):
     
 MissingNullability: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context) parameter #0:
@@ -52,13 +106,13 @@ MissingNullability: android.service.notification.NotificationAssistantService#at
 MissingNullability: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallFurther(boolean):
     
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent):
-    Missing nullability on method `onBind` return
+    
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent) parameter #0:
-    Missing nullability on parameter `intent` in method `onBind`
+    
 MissingNullability: android.telephony.CellBroadcastService#onCdmaCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onCdmaCellBroadcastSms`
+    
 MissingNullability: android.telephony.CellBroadcastService#onGsmCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onGsmCellBroadcastSms`
+    
 MissingNullability: android.telephony.NetworkService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.telephony.SmsCbCmasInfo#toString():
@@ -145,6 +199,26 @@ ProtectedMember: android.service.notification.NotificationAssistantService#attac
     
 
 
+RethrowRemoteException: android.net.TetheringManager#TetheringManager(android.content.Context, android.os.IBinder):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#getLatestTetheringEntitlementResult(int, android.os.ResultReceiver, boolean, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#registerTetheringEventCallback(java.util.concurrent.Executor, android.net.ConnectivityManager.OnTetheringEventCallback, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#setUsbTethering(boolean, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#startTethering(int, android.os.ResultReceiver, boolean, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#stopTethering(int, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#tether(String, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#unregisterTetheringEventCallback(android.net.ConnectivityManager.OnTetheringEventCallback, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+RethrowRemoteException: android.net.TetheringManager#untether(String, String):
+    Methods calling system APIs should rethrow `RemoteException` as `RuntimeException` (but do not list it in the throws clause)
+
+
 SamShouldBeLast: android.accounts.AccountManager#addAccount(String, String, String[], android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
     
 SamShouldBeLast: android.accounts.AccountManager#addOnAccountsUpdatedListener(android.accounts.OnAccountsUpdateListener, android.os.Handler, boolean):
@@ -191,6 +265,8 @@ SamShouldBeLast: android.app.AlarmManager#setWindow(int, long, long, String, and
     
 SamShouldBeLast: android.app.WallpaperInfo#dump(android.util.Printer, String):
     
+SamShouldBeLast: android.app.WallpaperManager#addOnColorsChangedListener(android.app.WallpaperManager.OnColorsChangedListener, android.os.Handler):
+    SAM-compatible parameters (such as parameter 1, "listener", in android.app.WallpaperManager.addOnColorsChangedListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 SamShouldBeLast: android.app.admin.DevicePolicyManager#installSystemUpdate(android.content.ComponentName, android.net.Uri, java.util.concurrent.Executor, android.app.admin.DevicePolicyManager.InstallSystemUpdateCallback):
     
 SamShouldBeLast: android.content.Context#bindIsolatedService(android.content.Intent, int, String, java.util.concurrent.Executor, android.content.ServiceConnection):
@@ -309,6 +385,8 @@ SamShouldBeLast: android.telephony.TelephonyManager#setPreferredOpportunisticDat
     
 SamShouldBeLast: android.telephony.TelephonyManager#updateAvailableNetworks(java.util.List<android.telephony.AvailableNetworkInfo>, java.util.concurrent.Executor, java.util.function.Consumer<java.lang.Integer>):
     
+SamShouldBeLast: android.telephony.ims.ImsMmTelManager#getFeatureState(java.util.function.Consumer<java.lang.Integer>, java.util.concurrent.Executor):
+    SAM-compatible parameters (such as parameter 1, "callback", in android.telephony.ims.ImsMmTelManager.getFeatureState) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 SamShouldBeLast: android.view.View#postDelayed(Runnable, long):
     
 SamShouldBeLast: android.view.View#postOnAnimationDelayed(Runnable, long):
@@ -332,7 +410,7 @@ ServiceName: android.Manifest.permission#BIND_ATTENTION_SERVICE:
 ServiceName: android.Manifest.permission#BIND_AUGMENTED_AUTOFILL_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CELL_BROADCAST_SERVICE:
-    Inconsistent service value; expected `BIND_CELL_BROADCAST`, was `android.permission.BIND_CELL_BROADCAST_SERVICE`
+    
 ServiceName: android.Manifest.permission#BIND_CONTENT_CAPTURE_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CONTENT_SUGGESTIONS_SERVICE:

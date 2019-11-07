@@ -71,7 +71,7 @@ import android.hardware.usb.UsbManager;
 import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
-import android.net.ITetherInternalCallback;
+import android.net.ITetheringEventCallback;
 import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -1048,7 +1048,7 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
                 expectedInteractionsWithShowNotification);
     }
 
-    private class TestTetherInternalCallback extends ITetherInternalCallback.Stub {
+    private class TestTetheringEventCallback extends ITetheringEventCallback.Stub {
         private final ArrayList<Network> mActualUpstreams = new ArrayList<>();
         private final ArrayList<TetheringConfigurationParcel> mTetheringConfig =
                 new ArrayList<>();
@@ -1127,11 +1127,11 @@ public class TetheringServiceTest extends ServiceTestCase<TetheringService> {
     }
 
     @Test
-    public void testRegisterTetherInternalCallback() throws Exception {
-        TestTetherInternalCallback callback = new TestTetherInternalCallback();
+    public void testRegisterTetheringEventCallback() throws Exception {
+        TestTetheringEventCallback callback = new TestTetheringEventCallback();
 
         // 1. Register one callback before running any tethering.
-        mTethering.registerTetherInternalCallback(callback);
+        mTethering.registerTetheringEventCallback(callback);
         mLooper.dispatchAll();
         callback.expectUpstreamChanged(new Network[] {null});
         callback.expectConfigurationChanged(
