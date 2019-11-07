@@ -170,7 +170,7 @@ public class Vpn {
     private boolean mIsPackageTargetingAtLeastQ;
     private String mInterface;
     private Connection mConnection;
-    private LegacyVpnRunner mLegacyVpnRunner;
+    private VpnRunner mVpnRunner;
     private PendingIntent mStatusIntent;
     private volatile boolean mEnableTeardown = true;
     private final INetworkManagementService mNetd;
@@ -751,7 +751,7 @@ public class Vpn {
                 mNetworkCapabilities.setUids(null);
             }
 
-            // Revoke the connection or stop LegacyVpnRunner.
+            // Revoke the connection or stop the VpnRunner.
             if (mConnection != null) {
                 try {
                     mConnection.mService.transact(IBinder.LAST_CALL_TRANSACTION,
@@ -761,9 +761,9 @@ public class Vpn {
                 }
                 mContext.unbindService(mConnection);
                 mConnection = null;
-            } else if (mLegacyVpnRunner != null) {
-                mLegacyVpnRunner.exit();
-                mLegacyVpnRunner = null;
+            } else if (mVpnRunner != null) {
+                mVpnRunner.exit();
+                mVpnRunner = null;
             }
 
             try {
@@ -1482,8 +1482,8 @@ public class Vpn {
         @Override
         public void interfaceStatusChanged(String interfaze, boolean up) {
             synchronized (Vpn.this) {
-                if (!up && mLegacyVpnRunner != null) {
-                    mLegacyVpnRunner.check(interfaze);
+                if (!up && mVpnRunner != null && mVpnRunner instanceof LegacyVpnRunner) {
+                    ((LegacyVpnRunner) mVpnRunner).checkUnderlyingIfaceAlive(interfaze);
                 }
             }
         }
@@ -1500,9 +1500,9 @@ public class Vpn {
                         mContext.unbindService(mConnection);
                         mConnection = null;
                         agentDisconnect();
-                    } else if (mLegacyVpnRunner != null) {
-                        mLegacyVpnRunner.exit();
-                        mLegacyVpnRunner = null;
+                    } else if (mVpnRunner != null) {
+                        mVpnRunner.exit();
+                        mVpnRunner = null;
                     }
                 }
             }
@@ -1881,26 +1881,32 @@ public class Vpn {
 
     private synchronized void startLegacyVpn(VpnConfig config, String[] racoon, String[] mtpd,
             VpnProfile profile) {
-        stopLegacyVpnPrivileged();
+        stopVpnRunnerPrivileged();
 
         // Prepare for the new request.
         prepareInternal(VpnConfig.LEGACY_VPN);
         updateState(DetailedState.CONNECTING, "startLegacyVpn");
 
         // Start a new LegacyVpnRunner and we are done!
-        mLegacyVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
-        mLegacyVpnRunner.start();
+        mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
+        mVpnRunner.start();
     }
 
     /** Stop legacy VPN. Permissions must be checked by callers. */
-    public synchronized void stopLegacyVpnPrivileged() {
-        if (mLegacyVpnRunner != null) {
-            mLegacyVpnRunner.exit();
-            mLegacyVpnRunner = null;
+    public synchronized void stopVpnRunnerPrivileged() {
+        if (mVpnRunner != null && mPackage.equals(VpnConfig.LEGACY_VPN)) {
+            boolean isLegacyVpn = mVpnRunner instanceof LegacyVpnRunner;
 
-            synchronized (LegacyVpnRunner.TAG) {
-                // wait for old thread to completely finish before spinning up
-                // new instance, otherwise state updates can be out of order.
+            mVpnRunner.exit();
+            mVpnRunner = null;
+
+            // LegacyVpn uses daemons that must be shut down before new ones are brought up.
+            // The same limitation does not apply to Platform VPNs.
+            if (isLegacyVpn) {
+                synchronized (LegacyVpnRunner.TAG) {
+                    // wait for old thread to completely finish before spinning up
+                    // new instance, otherwise state updates can be out of order.
+                }
             }
         }
     }
@@ -1919,7 +1925,7 @@ public class Vpn {
      * Callers are responsible for checking permissions if needed.
      */
     private synchronized LegacyVpnInfo getLegacyVpnInfoPrivileged() {
-        if (mLegacyVpnRunner == null) return null;
+        if (mVpnRunner == null) return null;
 
         final LegacyVpnInfo info = new LegacyVpnInfo();
         info.key = mConfig.user;
@@ -1931,11 +1937,22 @@ public class Vpn {
     }
 
     public VpnConfig getLegacyVpnConfig() {
-        if (mLegacyVpnRunner != null) {
+        if (mVpnRunner != null) {
             return mConfig;
         } else {
             return null;
         }
+    }
+
+    private abstract class VpnRunner extends Thread {
+
+        protected VpnRunner(String name) {
+            super(name);
+        }
+
+        public abstract void run();
+
+        protected abstract void exit();
     }
 
     /**
@@ -1945,7 +1962,7 @@ public class Vpn {
      * requests will pile up. This could be done in a Handler as a state
      * machine, but it is much easier to read in the current form.
      */
-    private class LegacyVpnRunner extends Thread {
+    private class LegacyVpnRunner extends VpnRunner {
         private static final String TAG = "LegacyVpnRunner";
 
         private final String[] mDaemons;
@@ -2015,13 +2032,21 @@ public class Vpn {
             mContext.registerReceiver(mBroadcastReceiver, filter);
         }
 
-        public void check(String interfaze) {
+        /**
+         * Checks if the parameter matches the underlying interface
+         *
+         * <p>If the underlying interface is torn down, the LegacyVpnRunner also should be. It has
+         * no ability to migrate between interfaces (or Networks).
+         */
+        public void checkUnderlyingIfaceAlive(String interfaze) {
             if (interfaze.equals(mOuterInterface)) {
                 Log.i(TAG, "Legacy VPN is going down with " + interfaze);
                 exit();
             }
         }
 
+        /** Tears down this LegacyVpn connection */
+        @Override
         public void exit() {
             // We assume that everything is reset after stopping the daemons.
             interrupt();
