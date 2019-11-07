@@ -18,7 +18,7 @@ package android.net;
 
 /**
  * Status details for tethering downstream interfaces.
- * {@hide}
+ * @hide
  */
 parcelable TetherStatesParcel {
     String[] availableList;

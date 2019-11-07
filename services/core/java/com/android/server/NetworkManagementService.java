@@ -32,6 +32,7 @@ import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_DOZABLE;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_POWERSAVE;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_STANDBY;
 import static android.net.NetworkPolicyManager.FIREWALL_RULE_DEFAULT;
+import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.STATS_PER_UID;
 import static android.net.NetworkStats.TAG_NONE;
@@ -454,7 +455,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public void registerTetheringStatsProvider(ITetheringStatsProvider provider, String name) {
-        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
+        mContext.enforceCallingOrSelfPermission(PERMISSION_MAINLINE_NETWORK_STACK, TAG);
         Preconditions.checkNotNull(provider);
         synchronized(mTetheringStatsProviders) {
             mTetheringStatsProviders.put(provider, name);
@@ -463,7 +464,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public void unregisterTetheringStatsProvider(ITetheringStatsProvider provider) {
-        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
+        mContext.enforceCallingOrSelfPermission(PERMISSION_MAINLINE_NETWORK_STACK, TAG);
         synchronized(mTetheringStatsProviders) {
             mTetheringStatsProviders.remove(provider);
         }
@@ -471,7 +472,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
 
     @Override
     public void tetherLimitReached(ITetheringStatsProvider provider) {
-        mContext.enforceCallingOrSelfPermission(NETWORK_STACK, TAG);
+        mContext.enforceCallingOrSelfPermission(PERMISSION_MAINLINE_NETWORK_STACK, TAG);
         synchronized(mTetheringStatsProviders) {
             if (!mTetheringStatsProviders.containsKey(provider)) {
                 return;
