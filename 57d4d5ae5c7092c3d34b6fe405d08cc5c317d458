@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "30a2f265_e591bae3",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-07T09:07:00Z",
+      "side": 1,
+      "message": "I think removeExtension is better because that\u0027s what Bundle does.\n\nBy the way there is a fundamental difference in Bundle between a key being absent and present with the default value, so I don\u0027t think setting to 0 works.",
+      "parentUuid": "a0df68fc_0aaca4b4",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 60
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef0a773_4bf5dce3",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
