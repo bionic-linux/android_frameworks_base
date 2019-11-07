@@ -138,7 +138,7 @@ public class LockdownVpnTracker {
 
         if (egressDisconnected || egressChanged) {
             mAcceptedEgressIface = null;
-            mVpn.stopLegacyVpnPrivileged();
+            mVpn.stopPlatformVpnPrivileged();
         }
         if (egressDisconnected) {
             hideNotification();
@@ -218,7 +218,7 @@ public class LockdownVpnTracker {
         mAcceptedEgressIface = null;
         mErrorCount = 0;
 
-        mVpn.stopLegacyVpnPrivileged();
+        mVpn.stopPlatformVpnPrivileged();
         mVpn.setLockdown(false);
         hideNotification();
 
