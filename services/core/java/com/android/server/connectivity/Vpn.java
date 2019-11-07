@@ -2377,10 +2377,19 @@ public class Vpn {
             enforceControlPermissionOrInternalCaller();
         }
 
-        // TODO: Clear binder UID
-        // TODO: Retrieve VPN profile
-        // TODO: Call prepareInternal()
-        // TODO: Start PlatformVpnRunner
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    String key = getProfileNameForPackage(packageName);
+                    byte[] value = keyStore.get(key, true);
+                    if (value == null) {
+                        throw new IllegalArgumentException("Default profile for package not found");
+                    }
+
+                    VpnProfile profile = VpnProfile.decode(key, value);
+                    prepareInternal(packageName);
+
+                    startPlatformVpnPrivileged(profile);
+                });
     }
 
     /**
@@ -2403,5 +2412,5 @@ public class Vpn {
                 });
     }
 
-    private void startPlatformVpnPrivileged(VpnProfile profile) {}
+    private synchronized void startPlatformVpnPrivileged(VpnProfile profile) {}
 }
