@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb46777_287cd7ac",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2019-11-07T12:56:18Z",
+      "side": 1,
+      "message": "Ignorable nit: it\u0027s always assigned so omit?",
+      "range": {
+        "startLine": 1705,
+        "startChar": 67,
+        "endLine": 1705,
+        "endChar": 74
+      },
+      "revId": "025ed19a4b6804e6b417dbf3206820b2db2ea16b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f1f625f_313183b2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2019-11-07T12:56:18Z",
+      "side": 1,
+      "message": "What is the intended behavior if an app removes the listener from within the onFrameRendered callback? I was wondering if this code should be moved inside the for loop. Feel free to ack if it doesn\u0027t seem important to handle this case.",
+      "range": {
+        "startLine": 1705,
+        "startChar": 20,
+        "endLine": 1709,
+        "endChar": 58
+      },
+      "revId": "025ed19a4b6804e6b417dbf3206820b2db2ea16b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
