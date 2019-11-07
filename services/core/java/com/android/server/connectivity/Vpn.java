@@ -2429,6 +2429,4 @@ public class Vpn {
                     prepare(null, VpnConfig.LEGACY_VPN);
                 });
     }
-
-    private void startPlatformVpnPrivileged(VpnProfile profile) {}
 }
