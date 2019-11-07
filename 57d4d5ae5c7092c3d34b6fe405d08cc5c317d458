@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1ad5b183_8f041910",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T09:43:47Z",
+      "side": 1,
+      "message": "question: \nIf so, what is the meaning if someone pass null key to us?",
+      "parentUuid": "5833ac03_c04b0d77",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
