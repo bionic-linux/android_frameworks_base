@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "0029cd93_b53bf082",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-07T10:01:29Z",
+      "side": 1,
+      "message": "nit: Given that we don\u0027t find a real meaning of it,\nI think it should not be a legal use if key is null,\nno matter what is the implementation detail we are using.\nThus, I\u0027ll suggest using @NonNull.\n\nHowever, I don\u0027t have strong objection if you already discuss with jean.",
+      "parentUuid": "01c708ef_739fcfc5",
+      "range": {
+        "startLine": 73,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 39
+      },
+      "revId": "57d4d5ae5c7092c3d34b6fe405d08cc5c317d458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dfdef58_ca10d29b",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 6
