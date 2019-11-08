@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ce8161_5b17d9de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5558,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-08T01:51:18Z",
+      "side": 1,
+      "message": "mHandler is used to deal with the internal event of ConnectivityService.\nmTrackerHandler is used to deal with the outside event of ConnectivityService.\nNot sure why the original owner chose the mHandler but not the mTrackerHandler or mHandlerThread.\nActually, all of them are the same thread.\nI think maybe it\u0027s better and neutral to use mHandlerThread instead.\nJean, Junyu, what do you think?",
+      "range": {
+        "startLine": 5558,
+        "startChar": 12,
+        "endLine": 5558,
+        "endChar": 20
+      },
+      "revId": "f490dbd1f20b571a4bca2d39ce54f976be08696f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
