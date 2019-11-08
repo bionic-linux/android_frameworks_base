@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "328054f3_6d3cda95",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5535,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-08T02:48:36Z",
+      "side": 1,
+      "message": "I saw you removing this line in [NS A03], so maybe it\u0027s fine for this patch.",
+      "parentUuid": "c054310b_4cd958f7",
+      "range": {
+        "startLine": 5535,
+        "startChar": 8,
+        "endLine": 5535,
+        "endChar": 45
+      },
+      "revId": "a3f98d6ba0d485fff5134e1ae5c58277d9978e41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c18d3b03_52353604",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
