@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d4a5f4_97b04e9c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-08T05:55:56Z",
+      "side": 1,
+      "message": "You can use getCellSignalStrengths(CellSignalStrengthCdma.class) instead.",
+      "revId": "27ef64e2ff250480bccbfb166ab21d944bc63ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
