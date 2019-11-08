@@ -16,6 +16,24 @@
       "revId": "27ef64e2ff250480bccbfb166ab21d944bc63ecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e2442f_381b2d28",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-11-08T06:00:38Z",
+      "side": 1,
+      "message": "ohh yes, will change",
+      "parentUuid": "b4d4a5f4_97b04e9c",
+      "revId": "27ef64e2ff250480bccbfb166ab21d944bc63ecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
