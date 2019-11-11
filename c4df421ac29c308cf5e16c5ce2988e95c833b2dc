@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cd91f2d_9915ef86",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2527,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-11-11T21:27:31Z",
+      "side": 1,
+      "message": "AFAIK this reference doesn\u0027t actually define RSSNR. It only defines how to calculate SNR in the general sense (which is only a small part of RSSNR). Suggest to remove to avoid confusion.",
+      "range": {
+        "startLine": 2527,
+        "startChar": 18,
+        "endLine": 2527,
+        "endChar": 38
+      },
+      "revId": "c4df421ac29c308cf5e16c5ce2988e95c833b2dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
