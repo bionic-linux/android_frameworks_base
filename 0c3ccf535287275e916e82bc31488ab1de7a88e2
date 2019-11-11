@@ -22,6 +22,30 @@
       "revId": "0c3ccf535287275e916e82bc31488ab1de7a88e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9abd41_294b5add",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015378
+      },
+      "writtenOn": "2019-11-11T17:59:52Z",
+      "side": 1,
+      "message": "The test restarts the shell to make sure the properties are active in system server, I assume this is why the package manager is not necessarily started.",
+      "parentUuid": "b950d837_56deb08a",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "0c3ccf535287275e916e82bc31488ab1de7a88e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
