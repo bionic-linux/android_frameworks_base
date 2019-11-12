@@ -46,6 +46,53 @@
       "revId": "0c3ccf535287275e916e82bc31488ab1de7a88e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98565c1_da7f430d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-11-12T10:09:28Z",
+      "side": 1,
+      "message": "I see - Can you add that as a comment in the code?",
+      "parentUuid": "fd9abd41_294b5add",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "0c3ccf535287275e916e82bc31488ab1de7a88e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3706fa6_22ed7556",
+        "filename": "tests/BootImageProfileTest/src/com/android/bootimageprofile/BootImageProfileTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2019-11-12T10:09:28Z",
+      "side": 1,
+      "message": "Adding that comment about adb shell stop/start could make sense here?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 71
+      },
+      "revId": "0c3ccf535287275e916e82bc31488ab1de7a88e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
