@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5985d348_cde40663",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-12T04:25:01Z",
+      "side": 1,
+      "message": "nit: IIUC this only contains the networks which we had removed request belongs to it.\nIf so, the naming here is confusing, maybe \"maybeLingerNetwork\" or similar things will be more accurate?",
+      "range": {
+        "startLine": 6342,
+        "startChar": 42,
+        "endLine": 6342,
+        "endChar": 58
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dd5e8e_cc859eca",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6356,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-12T04:25:01Z",
+      "side": 1,
+      "message": "IIUC the nri here is not reassigned, why do we need this line here?",
+      "range": {
+        "startLine": 6356,
+        "startChar": 16,
+        "endLine": 6356,
+        "endChar": 34
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
