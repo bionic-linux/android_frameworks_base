@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1968337b_083922dc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3420,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-12T02:53:28Z",
+      "side": 1,
+      "message": "IIUC you also want to remove the use of setNetworkForRequest, but I don\u0027t know why.\nDo you explain that somewhere?",
+      "revId": "261a019c9d8afa4ea722b36bed85b74195263af1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
