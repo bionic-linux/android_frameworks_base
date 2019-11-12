@@ -478,7 +478,24 @@ public final class ShutdownThread extends Thread {
         }
         shutdownTimingLog.traceEnd(); // SendShutdownBroadcast
         metricEnded(METRIC_SEND_BROADCAST);
-
+        //ShutDown Radio in a new thread
+        Thread t = new Thread() {
+            public void run() {
+                boolean radioOff;
+                final ITelephony phone =
+                       ITelephony.Stub.asInterface(ServiceManager.checkService("phone"));
+                try {
+                    radioOff = phone == null || !phone.needMobileRadioShutdown();
+                    if (!radioOff) {
+                        Log.w(TAG, "Turning off cellular radios...");
+                        phone.shutdownMobileRadios();
+                    }
+                } catch (RemoteException ex) {
+                    Log.e(TAG, "RemoteException during radio shutdown", ex);
+                }
+            }
+        };
+        t.start();
         Log.i(TAG, "Shutting down activity manager...");
         shutdownTimingLog.traceBegin("ShutdownActivityManager");
         metricStarted(METRIC_AM);
@@ -590,9 +607,7 @@ public final class ShutdownThread extends Thread {
                 try {
                     radioOff = phone == null || !phone.needMobileRadioShutdown();
                     if (!radioOff) {
-                        Log.w(TAG, "Turning off cellular radios...");
                         metricStarted(METRIC_RADIO);
-                        phone.shutdownMobileRadios();
                     }
                 } catch (RemoteException ex) {
                     Log.e(TAG, "RemoteException during radio shutdown", ex);
