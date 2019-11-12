@@ -34,6 +34,24 @@
       "revId": "261a019c9d8afa4ea722b36bed85b74195263af1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26e0bde_14b9aeb6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3420,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-12T04:30:23Z",
+      "side": 1,
+      "message": "If so then the function call of setNetworkForRequest() should be preserved, not inlining its content.",
+      "parentUuid": "ef1db962_23925fe9",
+      "revId": "261a019c9d8afa4ea722b36bed85b74195263af1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
