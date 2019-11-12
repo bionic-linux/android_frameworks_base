@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1bbe65_e026c1b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-12T09:26:58Z",
+      "side": 1,
+      "message": "Thanks for the notice.\nBut maybe this is more suitable in the gerrit comment instead of commit message?",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "ad50918d3709eb1da34949c0cec4572de8d13a2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
