@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a360363_a5c0a1f2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11434,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-11-12T03:12:44Z",
+      "side": 1,
+      "message": "if it\u0027s a system API, you need:\n@SystemAPI\nAnd READ_PHONE_STATE and carrier privilege don\u0027t make much sense: they are to check against 3rd party apps.\nUse READ_PRIVILEGED_PHONE_STATE",
+      "range": {
+        "startLine": 11434,
+        "startChar": 5,
+        "endLine": 11434,
+        "endChar": 23
+      },
+      "revId": "ff62438b0ed6395068310031d9e14d217183b374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
