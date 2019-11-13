@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95deebe7_c8364a28",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-13T09:08:16Z",
+      "side": 1,
+      "message": "IIUC this is why TH fail at testFullyRoutedVpnResultsInInterfaceFilteringRules, when CallingUid matches one of the test UID",
+      "range": {
+        "startLine": 1186,
+        "startChar": 24,
+        "endLine": 1188,
+        "endChar": 83
+      },
+      "revId": "875354861221edaec1f9295df884bb03cbc35399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
