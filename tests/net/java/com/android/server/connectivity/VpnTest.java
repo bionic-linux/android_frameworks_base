@@ -147,6 +147,7 @@ public class VpnTest {
     @Mock private AppOpsManager mAppOps;
     @Mock private NotificationManager mNotificationManager;
     @Mock private Vpn.SystemServices mSystemServices;
+    @Mock private Vpn.Ikev2SessionCreator mIkev2SessionCreator;
     @Mock private ConnectivityManager mConnectivityManager;
     @Mock private KeyStore mKeyStore;
     private final VpnProfile mVpnProfile = new VpnProfile("key");
@@ -733,6 +734,10 @@ public class VpnTest {
 
     @Test
     public void testStartVpnProfile() throws Exception {
+        startVpnAndVerify();
+    }
+
+    private void startVpnAndVerify() throws Exception {
         final Vpn vpn = createVpnAndSetupUidChecks();
 
         when(mAppOps.noteOpNoThrow(
@@ -875,7 +880,8 @@ public class VpnTest {
      * Mock some methods of vpn object.
      */
     private Vpn createVpn(@UserIdInt int userId) {
-        return new Vpn(Looper.myLooper(), mContext, mNetService, userId, mSystemServices);
+        return new Vpn(Looper.myLooper(), mContext, mNetService,
+                userId, mSystemServices, mIkev2SessionCreator);
     }
 
     private static void assertBlocked(Vpn vpn, int... uids) {
