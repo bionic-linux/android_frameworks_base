@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1016b9d_8b49fdb5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3956,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T03:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2d0906_db278699",
+      "range": {
+        "startLine": 3956,
+        "startChar": 55,
+        "endLine": 3956,
+        "endChar": 60
+      },
+      "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27f96022_bd1c1c3d",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a2a9fc_d4fe7cfd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T03:08:17Z",
+      "side": 1,
+      "message": "This is used for some tests which need to verify the state when network went to background like testNetworkGoesIntoBackgroundAfterLinger, testBackgroundNetworks...\nWithout this, those test will always get lost callback when network went to background.\nJust add comments to explain the behavior here.",
+      "parentUuid": "27f96022_bd1c1c3d",
+      "range": {
+        "startLine": 1186,
+        "startChar": 22,
+        "endLine": 1186,
+        "endChar": 83
+      },
+      "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8d5adbe_9c5fb247",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T03:08:17Z",
+      "side": 1,
+      "message": "Rename to hasRestrictedNetPerm",
+      "parentUuid": "2b914be9_a23dc2d1",
+      "range": {
+        "startLine": 148,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 25
+      },
+      "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82d9ce84_57aace5a",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "31588e58_4c32e98e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T03:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d9ce84_57aace5a",
+      "range": {
+        "startLine": 302,
+        "startChar": 17,
+        "endLine": 302,
+        "endChar": 22
+      },
+      "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b940ad3c_0fa5331c",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7f626b_0c5977dd",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T03:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b940ad3c_0fa5331c",
+      "range": {
+        "startLine": 303,
+        "startChar": 22,
+        "endLine": 303,
+        "endChar": 32
+      },
+      "revId": "1dbbb5909d4ff366b8217c13e6915acc5248d7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
