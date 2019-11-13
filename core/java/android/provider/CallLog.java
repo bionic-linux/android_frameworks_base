@@ -602,6 +602,11 @@ public class CallLog {
         public static final String BLOCK_REASON = "block_reason";
 
         /**
+         * The encoded missed information.
+         */
+        public static final String MISSED_INFORMATION = "missed_information";
+
+        /**
          * Adds a call to the call log.
          *
          * @param ci the CallerInfo object to get the target contact from.  Can be null
@@ -625,12 +630,13 @@ public class CallLog {
         public static Uri addCall(CallerInfo ci, Context context, String number,
                 int presentation, int callType, int features,
                 PhoneAccountHandle accountHandle,
-                long start, int duration, Long dataUsage) {
+                long start, int duration, Long dataUsage, int missedInformation) {
             return addCall(ci, context, number, "" /* postDialDigits */, "" /* viaNumber */,
                 presentation, callType, features, accountHandle, start, duration,
                 dataUsage, false /* addForAllUsers */, null /* userToBeInsertedTo */,
                 false /* isRead */, Calls.BLOCK_REASON_NOT_BLOCKED /* callBlockReason */,
-                null /* callScreeningAppName */, null /* callScreeningComponentName */);
+                null /* callScreeningAppName */, null /* callScreeningComponentName */,
+                    missedInformation);
         }
 
 
@@ -665,12 +671,13 @@ public class CallLog {
         public static Uri addCall(CallerInfo ci, Context context, String number,
                 String postDialDigits, String viaNumber, int presentation, int callType,
                 int features, PhoneAccountHandle accountHandle, long start, int duration,
-                Long dataUsage, boolean addForAllUsers, UserHandle userToBeInsertedTo) {
+                Long dataUsage, boolean addForAllUsers, UserHandle userToBeInsertedTo,
+                int missedInformation) {
             return addCall(ci, context, number, postDialDigits, viaNumber, presentation, callType,
                 features, accountHandle, start, duration, dataUsage, addForAllUsers,
                 userToBeInsertedTo, false /* isRead */ , Calls.BLOCK_REASON_NOT_BLOCKED
                 /* callBlockReason */, null /* callScreeningAppName */,
-                null /* callScreeningComponentName */);
+                null /* callScreeningComponentName */, missedInformation);
         }
 
         /**
@@ -716,7 +723,7 @@ public class CallLog {
                 int features, PhoneAccountHandle accountHandle, long start, int duration,
                 Long dataUsage, boolean addForAllUsers, UserHandle userToBeInsertedTo,
                 boolean isRead, int callBlockReason, CharSequence callScreeningAppName,
-                String callScreeningComponentName) {
+                String callScreeningComponentName, int missedInformation) {
             if (VERBOSE_LOG) {
                 Log.v(LOG_TAG, String.format("Add call: number=%s, user=%s, for all=%s",
                         number, userToBeInsertedTo, addForAllUsers));
@@ -769,6 +776,7 @@ public class CallLog {
             values.put(BLOCK_REASON, callBlockReason);
             values.put(CALL_SCREENING_APP_NAME, charSequenceToString(callScreeningAppName));
             values.put(CALL_SCREENING_COMPONENT_NAME, callScreeningComponentName);
+            values.put(MISSED_INFORMATION, Integer.valueOf(missedInformation));
 
             if ((ci != null) && (ci.getContactId() > 0)) {
                 // Update usage information for the number associated with the contact ID.
