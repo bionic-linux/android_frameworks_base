@@ -22,6 +22,30 @@
       "revId": "875354861221edaec1f9295df884bb03cbc35399",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8441def_f604deb5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-13T10:37:01Z",
+      "side": 1,
+      "message": "I change the design on new patchset to avoid making FrameworksNetTests flaky.",
+      "parentUuid": "95deebe7_c8364a28",
+      "range": {
+        "startLine": 1186,
+        "startChar": 24,
+        "endLine": 1188,
+        "endChar": 83
+      },
+      "revId": "875354861221edaec1f9295df884bb03cbc35399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
