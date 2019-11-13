@@ -22,6 +22,30 @@
       "revId": "ff62438b0ed6395068310031d9e14d217183b374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf44d2f_a326fcf9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11434,
+      "author": {
+        "id": 1546707
+      },
+      "writtenOn": "2019-11-13T09:51:07Z",
+      "side": 1,
+      "message": "Dear Malcolm:\nWhen I use READ_PRIVILEGED_PHONE_STATE, Contact app can not use this api, it throws java.lang.RuntimeException, I have added \u003cuses-permission android:name\u003d\"android.permission.READ_PRIVILEGED_PHONE_STATE\"/\u003e for Contact app. And I try to apply for READ_PRIVILEGED_PHONE_STATE permission dynamically, but still can\u0027t get READ_PRIVILEGED_PHONE_STATE  permission. How can Contacts or dialer app apply for this permission？Thanks for your help.",
+      "parentUuid": "4a360363_a5c0a1f2",
+      "range": {
+        "startLine": 11434,
+        "startChar": 5,
+        "endLine": 11434,
+        "endChar": 23
+      },
+      "revId": "ff62438b0ed6395068310031d9e14d217183b374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
