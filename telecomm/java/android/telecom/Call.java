@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 
 import com.android.internal.telecom.IVideoProvider;
@@ -552,6 +551,63 @@ public final class Call {
         //******************************************************************************************
         // Next PROPERTY value: 0x00002000
         //******************************************************************************************
+
+        public static final int NOT_MISSED = 0;
+
+        /**
+         * Indicates that the call is auto missed by telecom due to an placed outgoing emergency
+         * call.
+         */
+        public static final int AUTO_MISSED_EMERGENCY_CALL_PLACING = 1;
+
+        /**
+         * Indicates that the call is auto missed by telecom due to maximum supported ringing call
+         * is reached.
+         */
+        public static final int AUTO_MISSED_MAXIMUM_RINGING = 2;
+
+        /**
+         * Indicates that the call is auto missed by telecom due to maximum supported dailing call
+         * is reached
+         */
+        public static final int AUTO_MISSED_MAXIMUM_DIALING = 3;
+
+        /**
+         * Indicates that the call missed for reasons belongs to user missed category.
+         */
+        public static final int USER_MISSED = 0x10000000;
+
+        /**
+         * Indicates that the call rings less than {@code SHORT_RING_THRESHOLD} millisecond.
+         */
+        public static final int USER_MISSED_SHORT_RING = 0x00000001;
+        public static final long SHORT_RING_THRESHOLD = 5000L;
+
+        /**
+         * Indicates that the call is silenced because the phone is in Do not disturb mode.
+         */
+        public static final int USER_MISSED_DND_MODE = 0x00000002;
+
+        /**
+         * Indicates that the call rings when volume is equal or below {@code LOW_RING_VOLUME}.
+         */
+        public static final int USER_MISSED_LOW_RING_VOLUME = 0x00000004;
+        public static final int LOW_RING_VOLUME = 0;
+
+        /**
+         * Indicates that the call rings when vibrate is disabled.
+         */
+        public static final int USER_MISSED_NO_VIBRATE = 0x00000008;
+
+        /**
+         * Indicates that call screening service silenced the call.
+         */
+        public static final int USER_MISSED_CALL_SCREENING_SERVICE_SILENCE = 0x00000010;
+
+        /**
+         * Indicates that the call filters timed out.
+         */
+        public static final int USER_MISSED_CALL_FILTERS_TIMEOUT = 0x00000020;
 
         private final String mTelecomCallId;
         private final Uri mHandle;
