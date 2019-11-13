@@ -70,6 +70,30 @@
       "revId": "f490dbd1f20b571a4bca2d39ce54f976be08696f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27eebeb2_3de3f3a2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5558,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-13T04:09:30Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a difference and I don\u0027t understand why it\u0027s better to use mHandlerThread (nor do I think it\u0027s better to use mHandler). I do think however that this is unrelated to this change, so I\u0027ll go ahead without changing this.",
+      "parentUuid": "71428be2_9c928c96",
+      "range": {
+        "startLine": 5558,
+        "startChar": 12,
+        "endLine": 5558,
+        "endChar": 20
+      },
+      "revId": "f490dbd1f20b571a4bca2d39ce54f976be08696f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
