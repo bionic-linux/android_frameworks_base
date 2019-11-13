@@ -94,6 +94,30 @@
       "revId": "f490dbd1f20b571a4bca2d39ce54f976be08696f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b079886_e6197b5e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5558,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-13T04:30:32Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not related to this change please go ahead, I just don\u0027t know why the original owner chose mHandler but not others.\nAnd I also agree there is no difference between mHandler, mTrackerHandler and mHandlerThread.\nThe reason that I think mHandlerThread should be better is because mHandlerThread is the original thread, mHandler and mTrackerHandler are created by the looper of mHandlerThread.\nFrom the reviewer\u0027s point of view, maybe choosing mHandlerThread can reduce the debate?\n\nCode:\npublic HandlerThread makeHandlerThread() {\n    return new HandlerThread(\"ConnectivityServiceThread\");\n}\n// CS constructor.\nmHandlerThread \u003d mDeps.makeHandlerThread();\nmHandlerThread.start();\nmHandler \u003d new InternalHandler(mHandlerThread.getLooper());\nmTrackerHandler \u003d new NetworkStateTrackerHandler(mHandlerThread.getLooper());",
+      "parentUuid": "27eebeb2_3de3f3a2",
+      "range": {
+        "startLine": 5558,
+        "startChar": 12,
+        "endLine": 5558,
+        "endChar": 20
+      },
+      "revId": "f490dbd1f20b571a4bca2d39ce54f976be08696f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
