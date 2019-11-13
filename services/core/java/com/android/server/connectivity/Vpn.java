@@ -48,8 +48,13 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.net.ConnectivityManager;
 import android.net.INetworkManagementEventObserver;
+import android.net.Ikev2VpnProfile;
+import android.net.InetAddresses;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
+import android.net.IpSecManager.IpSecTunnelInterface;
+import android.net.IpSecManager.UdpEncapsulationSocket;
+import android.net.IpSecTransform;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.LocalSocket;
@@ -61,10 +66,33 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
+import android.net.NetworkRequest;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.eap.EapSessionConfig;
+import android.net.ipsec.ike.ChildSaProposal;
+import android.net.ipsec.ike.ChildSessionCallback;
+import android.net.ipsec.ike.ChildSessionConfiguration;
+import android.net.ipsec.ike.ChildSessionParams;
+import android.net.ipsec.ike.IkeFqdnIdentification;
+import android.net.ipsec.ike.IkeIdentification;
+import android.net.ipsec.ike.IkeIpv4AddrIdentification;
+import android.net.ipsec.ike.IkeIpv6AddrIdentification;
+import android.net.ipsec.ike.IkeKeyIdIdentification;
+import android.net.ipsec.ike.IkeRfc822AddrIdentification;
+import android.net.ipsec.ike.IkeSaProposal;
+import android.net.ipsec.ike.IkeSession;
+import android.net.ipsec.ike.IkeSessionCallback;
+import android.net.ipsec.ike.IkeSessionConfiguration;
+import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.IkeTrafficSelector;
+import android.net.ipsec.ike.SaProposal;
+import android.net.ipsec.ike.TunnelModeChildSessionParams;
+import android.net.ipsec.ike.exceptions.IkeException;
+import android.net.ipsec.ike.exceptions.IkeProtocolException;
+import android.net.util.IpRange;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -83,6 +111,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
@@ -97,6 +126,7 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.HexDump;
 import com.android.server.ConnectivityService;
 import com.android.server.DeviceIdleController;
 import com.android.server.LocalServices;
@@ -112,16 +142,21 @@ import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -166,12 +201,12 @@ public class Vpn {
 
     private final Context mContext;
     private final NetworkInfo mNetworkInfo;
-    private String mPackage;
+    @VisibleForTesting protected String mPackage;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
     private String mInterface;
     private Connection mConnection;
-    private VpnRunner mVpnRunner;
+    @VisibleForTesting protected VpnRunner mVpnRunner;
     private PendingIntent mStatusIntent;
     private volatile boolean mEnableTeardown = true;
     private final INetworkManagementService mNetd;
@@ -183,6 +218,7 @@ public class Vpn {
     @VisibleForTesting
     protected final NetworkCapabilities mNetworkCapabilities;
     private final SystemServices mSystemServices;
+    private final Ikev2SessionCreator mIkev2SessionCreator;
 
     /**
      * Whether to keep the connection active after rebooting, or upgrading or reinstalling. This
@@ -225,17 +261,24 @@ public class Vpn {
 
     public Vpn(Looper looper, Context context, INetworkManagementService netService,
             @UserIdInt int userHandle) {
-        this(looper, context, netService, userHandle, new SystemServices(context));
+        this(looper, context, netService, userHandle,
+                new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
-    protected Vpn(Looper looper, Context context, INetworkManagementService netService,
-            int userHandle, SystemServices systemServices) {
+    protected Vpn(
+            Looper looper,
+            Context context,
+            INetworkManagementService netService,
+            int userHandle,
+            SystemServices systemServices,
+            Ikev2SessionCreator ikev2SessionCreator) {
         mContext = context;
         mNetd = netService;
         mUserHandle = userHandle;
         mLooper = looper;
         mSystemServices = systemServices;
+        mIkev2SessionCreator = ikev2SessionCreator;
 
         mPackage = VpnConfig.LEGACY_VPN;
         mOwnerUID = getAppUid(mPackage, mUserHandle);
@@ -958,7 +1001,11 @@ public class Vpn {
         }
         lp.setDomains(buffer.toString().trim());
 
-        // TODO: Stop setting the MTU in jniCreate and set it here.
+        if (mConfig.mtu > 0) {
+            lp.setMtu(mConfig.mtu);
+        }
+
+        // TODO: Stop setting the MTU in jniCreate
 
         return lp;
     }
@@ -1971,30 +2018,550 @@ public class Vpn {
         protected abstract void exit();
     }
 
+    /**
+     * Internal class managing IKEv2/IPsec VPN connectivity
+     *
+     * <p>The IKEv2 VPN will listen to, and run based on the lifecycle of Android's default Network.
+     * As a new default is selected, old IKE sessions will be torn down, and a new one will be
+     * started.
+     */
     private class IkeV2VpnRunner extends VpnRunner {
-        private static final String TAG = "IkeV2VpnRunner";
+        @NonNull private static final String TAG = "IkeV2VpnRunner";
 
-        private final IpSecManager mIpSecManager;
-        private final VpnProfile mProfile;
+        @NonNull private final IpSecManager mIpSecManager;
+        @NonNull private final Ikev2VpnProfile mProfile;
 
-        IkeV2VpnRunner(VpnProfile profile) {
+        @NonNull
+        private final ConnectivityManager.NetworkCallback mNetworkCallback = buildNetworkCallback();
+
+        @Nullable private UdpEncapsulationSocket mEncapSocket;
+        @Nullable private IpSecTunnelInterface mTunnelIface;
+        @Nullable private IkeSession mSession;
+        @Nullable private Network mActiveNetwork;
+
+        IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) throws UnknownHostException {
             super(TAG);
             mProfile = profile;
+            mIpSecManager = (IpSecManager) mContext.getSystemService(Context.IPSEC_SERVICE);
+        }
 
-            // TODO: move this to startVpnRunnerPrivileged()
-            mConfig = new VpnConfig();
-            mIpSecManager = mContext.getSystemService(IpSecManager.class);
+        private IkeSessionParams buildIkeSessionParams(@NonNull UdpEncapsulationSocket socket)
+                throws UnknownHostException {
+            // TODO: Give IKE the string hostname/IP literal, and let it do DNS resolution.
+            final InetAddress serverAddr = InetAddress.getByName(mProfile.getServerAddr());
+            final IkeIdentification localId = parseIkeIdentification(mProfile.getUserIdentity());
+            final IkeIdentification remoteId = parseIkeIdentification(mProfile.getServerAddr());
+
+            final IkeSessionParams.Builder ikeOptionsBuilder =
+                    new IkeSessionParams.Builder()
+                            .setServerAddress(serverAddr)
+                            .setUdpEncapsulationSocket(socket)
+                            .setLocalIdentification(localId)
+                            .setRemoteIdentification(remoteId);
+            setIkeAuth(ikeOptionsBuilder);
+
+            for (final IkeSaProposal ikeProposal : getIkeSaProposals()) {
+                ikeOptionsBuilder.addSaProposal(ikeProposal);
+            }
+
+            return ikeOptionsBuilder.build();
+        }
+
+        private ChildSessionParams buildChildSessionParams() {
+            final TunnelModeChildSessionParams.Builder childOptionsBuilder =
+                    new TunnelModeChildSessionParams.Builder();
+
+            for (final ChildSaProposal childProposal : getChildSaProposals()) {
+                childOptionsBuilder.addSaProposal(childProposal);
+            }
+
+            childOptionsBuilder.addInternalAddressRequest(OsConstants.AF_INET);
+            childOptionsBuilder.addInternalAddressRequest(OsConstants.AF_INET6);
+            childOptionsBuilder.addInternalDnsServerRequest(OsConstants.AF_INET);
+            childOptionsBuilder.addInternalDnsServerRequest(OsConstants.AF_INET6);
+
+            return childOptionsBuilder.build();
+        }
+
+        private void setIkeAuth(@NonNull IkeSessionParams.Builder builder) {
+            switch (mProfile.getType()) {
+                case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
+                    final EapSessionConfig eapConfig =
+                            new EapSessionConfig.Builder()
+                                    .setEapMsChapV2Config(
+                                            mProfile.getUsername(), mProfile.getPassword())
+                                    .build();
+                    builder.setAuthEap(mProfile.getServerRootCaCert(), eapConfig);
+                    break;
+                case VpnProfile.TYPE_IKEV2_IPSEC_PSK:
+                    builder.setAuthPsk(mProfile.getPresharedKey());
+                    break;
+                case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
+                    builder.setAuthDigitalSignature(
+                            mProfile.getServerRootCaCert(),
+                            mProfile.getUserCert(),
+                            mProfile.getRsaPrivateKey());
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown auth method set");
+            }
+        }
+
+        private List<IkeSaProposal> getIkeSaProposals() {
+            // TODO: filter this based on allowedAlgorithms
+            final List<IkeSaProposal> proposals = new ArrayList<>();
+
+            // Encryption Algorithms: Currently only AES_CBC is supported.
+            final IkeSaProposal.Builder normalModeBuilder = new IkeSaProposal.Builder();
+
+            // Currently only AES_CBC is supported.
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_128);
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_192);
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_256);
+
+            // Authentication/Integrity Algorithms
+            normalModeBuilder.addIntegrityAlgorithm(SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA1_96);
+            normalModeBuilder.addIntegrityAlgorithm(SaProposal.INTEGRITY_ALGORITHM_AES_XCBC_96);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_256_128);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_384_192);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_512_256);
+
+            // Add AEAD options
+            final IkeSaProposal.Builder aeadBuilder = new IkeSaProposal.Builder();
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_256);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_256);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_256);
+
+            // Add dh, prf for both builders
+            for (final IkeSaProposal.Builder builder :
+                    Arrays.asList(normalModeBuilder, aeadBuilder)) {
+                for (final int dh : Arrays.asList(
+                        SaProposal.DH_GROUP_2048_BIT_MODP,
+                        SaProposal.DH_GROUP_1024_BIT_MODP)) {
+                    builder.addDhGroup(dh);
+                }
+                for (final int prf : Arrays.asList(
+                        SaProposal.PSEUDORANDOM_FUNCTION_AES128_XCBC,
+                        SaProposal.PSEUDORANDOM_FUNCTION_HMAC_SHA1)) {
+                    builder.addPseudorandomFunction(prf);
+                }
+            }
+
+            proposals.add(normalModeBuilder.build());
+            proposals.add(aeadBuilder.build());
+            return proposals;
+        }
+
+        private List<ChildSaProposal> getChildSaProposals() {
+            // TODO: filter this based on allowedAlgorithms
+            final List<ChildSaProposal> proposals = new ArrayList<>();
+
+            // Add non-AEAD options
+            final ChildSaProposal.Builder normalModeBuilder = new ChildSaProposal.Builder();
+
+            // Encryption Algorithms: Currently only AES_CBC is supported.
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_128);
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_192);
+            normalModeBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_CBC, SaProposal.KEY_LEN_AES_256);
+
+            // Authentication/Integrity Algorithms
+            normalModeBuilder.addIntegrityAlgorithm(SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA1_96);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_256_128);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_384_192);
+            normalModeBuilder.addIntegrityAlgorithm(
+                    SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_512_256);
+
+            // Add AEAD options
+            final ChildSaProposal.Builder aeadBuilder = new ChildSaProposal.Builder();
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_8, SaProposal.KEY_LEN_AES_256);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12, SaProposal.KEY_LEN_AES_256);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_128);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_192);
+            aeadBuilder.addEncryptionAlgorithm(
+                    SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_16, SaProposal.KEY_LEN_AES_256);
+
+            proposals.add(normalModeBuilder.build());
+            proposals.add(aeadBuilder.build());
+            return proposals;
+        }
+
+        /** Identity parsing logic using similar logic to open source implementations of IKEv2 */
+        private IkeIdentification parseIkeIdentification(@NonNull String identityStr) {
+            // TODO: Add format to public API javadocs.
+            if (identityStr.contains("@")) {
+                if (identityStr.startsWith("@#")) {
+                    // KEY_ID
+                    final String hexStr = identityStr.substring(2);
+                    return new IkeKeyIdIdentification(HexDump.hexStringToByteArray(hexStr));
+                } else if (identityStr.startsWith("@") && !identityStr.startsWith("@@")) {
+                    // FQDN
+                    return new IkeFqdnIdentification(identityStr.substring(1));
+                } else if (identityStr.startsWith("@@")) {
+                    // RFC822 (USER_FQDN)
+                    return new IkeRfc822AddrIdentification(identityStr.substring(2));
+                } else {
+                    // RFC822 (USER_FQDN)
+                    return new IkeRfc822AddrIdentification(identityStr);
+                }
+            } else {
+                if (InetAddresses.isNumericAddress(mProfile.getServerAddr())) {
+                    final InetAddress addr =
+                            InetAddresses.parseNumericAddress(mProfile.getServerAddr());
+                    if (addr instanceof Inet4Address) {
+                        // IPv4
+                        return new IkeIpv4AddrIdentification((Inet4Address) addr);
+                    } else if (addr instanceof Inet6Address) {
+                        // IPv6
+                        return new IkeIpv6AddrIdentification((Inet6Address) addr);
+                    } else {
+                        throw new IllegalArgumentException("IP version not supported");
+                    }
+                } else {
+                    if (identityStr.contains(":")) {
+                        // KEY_ID
+                        return new IkeKeyIdIdentification(identityStr.getBytes());
+                    } else {
+                        // FQDN
+                        return new IkeFqdnIdentification(identityStr);
+                    }
+                }
+            }
+        }
+
+        private Collection<RouteInfo> getRoutesFromTrafficSelectors(
+                List<IkeTrafficSelector> trafficSelectors) {
+            final HashSet<IpPrefix> prefixes = new HashSet<>();
+            final HashSet<RouteInfo> routes = new HashSet<>();
+
+            for (final IkeTrafficSelector selector : trafficSelectors) {
+                for (final IpPrefix prefix :
+                        new IpRange(selector.startingAddress, selector.endingAddress)
+                                .asIpPrefixes()) {
+                    routes.add(new RouteInfo(prefix, null));
+                }
+            }
+
+            return routes;
+        }
+
+        private boolean isCurrentActiveNetwork(@Nullable Network network) {
+            return Objects.equals(mActiveNetwork, network);
+        }
+
+        private IkeSessionCallback buildIkeSessionCallback(@NonNull Network network) {
+            return new IkeSessionCallback() {
+                @Override
+                public void onOpened(@NonNull IkeSessionConfiguration ikeSessionConfig) {
+                    Log.d(TAG, "IkeOpened for network " + network);
+                }
+
+                @Override
+                public void onClosed() {
+                    Log.d(TAG, "IkeClosed for network " + network);
+                    handleSessionLost(network); // Server requested we close. Retry?
+                }
+
+                @Override
+                public void onClosedExceptionally(@NonNull IkeException exception) {
+                    Log.d(TAG, "IkeClosedExceptionally for network " + network, exception);
+                    handleSessionLost(network);
+                }
+
+                @Override
+                public void onError(@NonNull IkeProtocolException exception) {
+                    Log.d(TAG, "IkeError for network " + network, exception);
+                    // Non-fatal, log and continue.
+                }
+            };
+        }
+
+        private ChildSessionCallback buildChildSessionCallback(@NonNull Network network) {
+            return new ChildSessionCallback() {
+                @Override
+                public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
+                    synchronized (Vpn.this) {
+                        if (!isCurrentActiveNetwork(network)) {
+                            Log.d(TAG, "onOpened called for obsolete network " + network);
+                            return;
+                        }
+
+                        Log.d(TAG, "ChildOpened for network " + network);
+                        try {
+                            mInterface = mTunnelIface.getInterfaceName();
+                            mConfig.mtu = mProfile.getMaxMtu();
+
+                            mConfig.addresses.clear();
+                            for (final LinkAddress address : childConfig.getInternalAddresses()) {
+                                mTunnelIface.addAddress(
+                                        address.getAddress(), address.getPrefixLength());
+                                mConfig.addresses.add(address);
+                            }
+
+                            mConfig.routes.clear();
+                            mConfig.routes.addAll(getRoutesFromTrafficSelectors(
+                                    childConfig.getOutboundTrafficSelectors()));
+
+                            // TODO: Add DNS servers from negotiation
+
+                            if (mNetworkAgent != null) {
+                                // Update to use the new interface and configuration
+                                mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                            } else {
+                                if (isSettingsVpn()) prepareStatusIntent();
+                                agentConnect();
+                            }
+                        } catch (Exception e) {
+                            Log.d(TAG, "Error in ChildOpened for network " + network, e);
+                            handleSessionLost(network);
+                        }
+                    }
+                }
+
+                @Override
+                public void onClosed() {
+                    Log.d(TAG, "ChildClosed for network " + network);
+                    handleSessionLost(network);
+                }
+
+                @Override
+                public void onClosedExceptionally(@NonNull IkeException exception) {
+                    Log.d(TAG, "ChildClosedExceptionally for network " + network, exception);
+                    handleSessionLost(network);
+                }
+
+                @Override
+                public void onIpSecTransformCreated(
+                        @NonNull IpSecTransform transform, int direction) {
+                    synchronized (Vpn.this) {
+                        if (!isCurrentActiveNetwork(network)) {
+                            Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
+                            return;
+                        }
+
+                        Log.d(TAG, "ChildTransformCreated; Direction: " + direction + "; network "
+                                + network);
+                        try {
+                            // Transforms do not need to be persisted; the IkeSession will keep
+                            // them alive for us
+                            mIpSecManager.applyTunnelModeTransform(
+                                    mTunnelIface, direction, transform);
+                        } catch (IOException e) {
+                            Log.d(TAG, "Transform application failed for network " + network, e);
+                            handleSessionLost(network);
+                        }
+                    }
+                }
+
+                @Override
+                public void onIpSecTransformDeleted(
+                        @NonNull IpSecTransform transform, int direction) {
+                    // Nothing to be done; we don't hold any references, so this will be cleaned up
+                    // by IKE automatically.
+                    Log.d(TAG, "ChildTransformDeleted; Direction: " + direction + "; for network "
+                            + network);
+                }
+            };
+        }
+
+        private ConnectivityManager.NetworkCallback buildNetworkCallback() {
+            return new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onAvailable(@NonNull Network network) {
+                    synchronized (Vpn.this) {
+                        try {
+                            Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
+
+                            // Without MOBIKE, we have no way to seamlessly migrate. Close on old
+                            // (non-default) network, and start the new one.
+                            resetIkeStateLocked();
+                            mActiveNetwork = network;
+
+                            mEncapSocket = mIpSecManager.openUdpEncapsulationSocket();
+
+                            final IkeSessionParams ikeSessionParams =
+                                    buildIkeSessionParams(mEncapSocket);
+                            final ChildSessionParams childSessionParams = buildChildSessionParams();
+
+                            // TODO: Remove the need for adding two null addresses with
+                            // IPsec tunnels.
+                            mTunnelIface =
+                                    mIpSecManager.createIpSecTunnelInterface(
+                                            ikeSessionParams.getServerAddress() /* unused */,
+                                            ikeSessionParams.getServerAddress() /* unused */,
+                                            network);
+                            mNetd.setInterfaceUp(mTunnelIface.getInterfaceName());
+
+                            // Socket must be bound to prevent network switches from causing
+                            // the IKE teardown to fail/timeout.
+                            network.bindSocket(mEncapSocket.getFileDescriptor());
+
+                            mSession =
+                                    mIkev2SessionCreator.createIkeSession(
+                                            mContext,
+                                            ikeSessionParams,
+                                            childSessionParams,
+                                            Executors.newSingleThreadExecutor(),
+                                            buildIkeSessionCallback(network),
+                                            buildChildSessionCallback(network));
+                            Log.d(TAG, "Ike Session started for network " + network);
+                        } catch (Exception e) {
+                            Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
+                            handleFatal(network);
+                        }
+                    }
+                }
+
+                @Override
+                public void onLost(@NonNull Network network) {
+                    Log.d(TAG, "Tearing down; lost network: " + network);
+                    handleSessionLost(network);
+                }
+            };
         }
 
         @Override
         public void run() {
-            // TODO: Build IKE config, start IKE session
+            NetworkRequest networkReq =
+                    new NetworkRequest.Builder()
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+                            .build();
+
+            final ConnectivityManager cm = ConnectivityManager.from(mContext);
+            cm.requestNetwork(networkReq, mNetworkCallback);
+        }
+
+        private void handleFatal(@NonNull Network network) {
+            // If we receive a lost notification for the non-default, the old state was already
+            // removed.
+            synchronized (Vpn.this) {
+                if (!isCurrentActiveNetwork(network)) {
+                    Log.d(
+                            TAG,
+                            "NetworkCallback#handleFatal() called for obsolete network " + network);
+                    return;
+                }
+
+                exitLocked();
+            }
+        }
+
+        private void handleSessionLost(@NonNull Network network) {
+            // If we receive a lost notification for the non-default, the old state was already
+            // removed.
+            synchronized (Vpn.this) {
+                if (!isCurrentActiveNetwork(network)) {
+                    Log.d(
+                            TAG,
+                            "NetworkCallback#handleSessionLost() called for obsolete network "
+                                    + network);
+                    return;
+                }
+
+                mActiveNetwork = null;
+
+                // Close all obsolete state, but keep VPN alive incase a usable network comes up.
+                // (Mirrors VpnService behavior)
+                Log.d(TAG, "Resetting state for network: " + network);
+
+                // Since this method handles non-fatal errors only, set mInterface to null to
+                // prevent the NetworkManagementEventObserver from killing this VPN based on the
+                // interface going down (which we expect).
+                mInterface = null;
+
+                // Set routable set as unroutable to prevent traffic leaking while the interface
+                // is down.
+                if (mConfig != null && mConfig.routes != null) {
+                    final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
+
+                    mConfig.routes.clear();
+                    for (final RouteInfo route : oldRoutes) {
+                        mConfig.routes.add(new RouteInfo(route.getDestination(), RTN_UNREACHABLE));
+                    }
+                    if (mNetworkAgent != null) {
+                        mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                    }
+                }
+
+                resetIkeStateLocked();
+            }
+        }
+
+        private void resetIkeStateLocked() {
+            if (mTunnelIface != null) {
+                mTunnelIface.close();
+                mTunnelIface = null;
+            }
+            if (mSession != null) {
+                mSession.kill(); // Kill here to make sure all resources are released immediately
+                mSession = null;
+            }
+            if (mEncapSocket != null) {
+                try {
+                    mEncapSocket.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to close encap socket", e);
+                }
+                mEncapSocket = null;
+            }
+        }
+
+        private void exitLocked() {
+            final ConnectivityManager cm = ConnectivityManager.from(mContext);
+            cm.unregisterNetworkCallback(mNetworkCallback);
+
+            agentDisconnect();
+            resetIkeStateLocked();
+
+            mActiveNetwork = null;
+
+            updateState(DetailedState.DISCONNECTED, "Platform VPN exit");
         }
 
         @Override
         public void exit() {
-            // TODO: Teardown IKE session & any resources.
-            agentDisconnect();
+            synchronized (Vpn.this) {
+                exitLocked();
+            }
         }
     }
 
@@ -2247,7 +2814,7 @@ public class Vpn {
                 // Now we are connected. Read and parse the new state.
                 String[] parameters = FileUtils.readTextFile(state, 0, null).split("\n", -1);
                 if (parameters.length != 7) {
-                    throw new IllegalStateException("Cannot parse the state");
+                    throw new IllegalStateException("Cannot pexitarse the state");
                 }
 
                 // Set the interface and the addresses in the config.
@@ -2448,12 +3015,42 @@ public class Vpn {
                         throw new IllegalArgumentException("No profile found for " + packageName);
                     }
 
-                    startVpnProfilePrivileged(profile);
+                    startVpnProfilePrivileged(profile, packageName);
                 });
     }
 
-    private void startVpnProfilePrivileged(@NonNull VpnProfile profile) {
-        // TODO: Start PlatformVpnRunner
+    private void startVpnProfilePrivileged(@NonNull VpnProfile profile, String packageName) {
+        // Call prepareInternal to ensure all previous VpnRunners have exited. If this is already
+        // the prepared package, and there is no previous VpnRunner, this is a no-op.
+        prepareInternal(packageName);
+        updateState(DetailedState.CONNECTING, "startPlatformVpn");
+
+        try {
+            // Build basic config
+            mConfig = new VpnConfig();
+            mConfig.user = packageName;
+            mConfig.startTime = SystemClock.elapsedRealtime();
+            mConfig.proxyInfo = profile.proxy;
+
+            switch (profile.type) {
+                case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
+                case VpnProfile.TYPE_IKEV2_IPSEC_PSK:
+                case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
+                    mVpnRunner = new IkeV2VpnRunner(Ikev2VpnProfile.fromVpnProfile(profile));
+                    mVpnRunner.start();
+                    break;
+                default:
+                    updateState(DetailedState.FAILED, "Invalid platform VPN type");
+                    Log.d(TAG, "Unknown VPN profile type: " + profile.type);
+                    break;
+            }
+        } catch (IOException | GeneralSecurityException e) {
+            // Reset mConfig
+            mConfig = null;
+
+            updateState(DetailedState.DISCONNECTED, "VPN startup failed");
+            throw new IllegalArgumentException("VPN startup failed", e);
+        }
     }
 
     /**
@@ -2472,5 +3069,30 @@ public class Vpn {
         }
 
         prepareInternal(VpnConfig.LEGACY_VPN);
+    }
+
+    /**
+     * Proxy to allow testing
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    public static class Ikev2SessionCreator {
+        /** Creates a IKE session */
+        public IkeSession createIkeSession(
+                @NonNull Context context,
+                @NonNull IkeSessionParams ikeSessionParams,
+                @NonNull ChildSessionParams firstChildSessionParams,
+                @NonNull Executor userCbExecutor,
+                @NonNull IkeSessionCallback ikeSessionCallback,
+                @NonNull ChildSessionCallback firstChildSessionCallback) {
+            return new IkeSession(
+                    context,
+                    ikeSessionParams,
+                    firstChildSessionParams,
+                    userCbExecutor,
+                    ikeSessionCallback,
+                    firstChildSessionCallback);
+        }
     }
 }
