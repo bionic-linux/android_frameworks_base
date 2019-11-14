@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0db50501_81d3f864",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-14T08:30:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a backdoor to use restricted network. At least ConnectivityService would block apps by checking whether CONNECTIVITY_USE_RESTRICTED_NETWORKS or CONNECTIVITY_INTERNAL has been truly granted.\nPermssionMonitor just pass wrong permssion to netd but apps still can\u0027t use restricted network if they don\u0027t get the network.\nHowever, hasPermission() should be incorrect that only check requested permissions instead of granted permissions.\n\nJean, what do you think?",
+      "parentUuid": "a148fe33_efdb3647",
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0512ae33_590445c1",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28d1fae_9b31007a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-14T08:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0512ae33_590445c1",
+      "range": {
+        "startLine": 272,
+        "startChar": 15,
+        "endLine": 272,
+        "endChar": 20
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
