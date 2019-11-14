@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a981a71_23757d98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-14T09:12:07Z",
+      "side": 1,
+      "message": "nit: maybe remove this",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "62a098e04688d86376dafaa5cbe8880bc9f77d43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
