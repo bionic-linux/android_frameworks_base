@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ca5470_be766722",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-14T08:07:47Z",
+      "side": 1,
+      "message": "SparseInputStream. Or, SparseImageInputStream.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "6ef49257835fe02c8d0cfda6ffdf15529223c00f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ffacc4_3932bb2a",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/SparseInputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-14T08:07:47Z",
+      "side": 1,
+      "message": "I suppose we don\u0027t need this.",
+      "range": {
+        "startLine": 204,
+        "startChar": 23,
+        "endLine": 204,
+        "endChar": 27
+      },
+      "revId": "6ef49257835fe02c8d0cfda6ffdf15529223c00f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
