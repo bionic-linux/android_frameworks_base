@@ -46,6 +46,30 @@
       "revId": "ff62438b0ed6395068310031d9e14d217183b374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c8f513_be106641",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11434,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2019-11-14T23:25:39Z",
+      "side": 1,
+      "message": "Are contact app and dialer app system apps?\n\"The READ_PRIVILEGED_PHONE_STATE permission is only granted to apps signed with the platform key and privileged system apps.\"\nMore details at:\nhttps://source.android.com/devices/tech/config/device-identifiers\nhttps://source.android.com/devices/tech/config/perms-whitelist",
+      "parentUuid": "0bf44d2f_a326fcf9",
+      "range": {
+        "startLine": 11434,
+        "startChar": 5,
+        "endLine": 11434,
+        "endChar": 23
+      },
+      "revId": "ff62438b0ed6395068310031d9e14d217183b374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
