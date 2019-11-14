@@ -93,6 +93,30 @@
       "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55ec3fe_e1f6ac9e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6356,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-14T09:07:19Z",
+      "side": 1,
+      "message": "If so, maybe a TODO is needed for this CL?",
+      "parentUuid": "3f34b7a6_25f3f6a2",
+      "range": {
+        "startLine": 6356,
+        "startChar": 16,
+        "endLine": 6356,
+        "endChar": 34
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
