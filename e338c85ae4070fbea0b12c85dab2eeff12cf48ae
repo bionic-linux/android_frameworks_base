@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d87cdfc6_277e894f",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-14T08:17:16Z",
+      "side": 1,
+      "message": "API guideline 5.25.6 : the built object must have getters corresponding to all setters in the builder.",
+      "range": {
+        "startLine": 4274,
+        "startChar": 21,
+        "endLine": 4274,
+        "endChar": 36
+      },
+      "revId": "e338c85ae4070fbea0b12c85dab2eeff12cf48ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
