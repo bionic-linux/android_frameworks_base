@@ -69,6 +69,30 @@
       "revId": "6ef49257835fe02c8d0cfda6ffdf15529223c00f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1611a5dc_9a0822de",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/SparseInputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-14T09:11:05Z",
+      "side": 1,
+      "message": "Let\u0027s not add tests into the class, shall we?",
+      "parentUuid": "13ecd82c_f5abc23a",
+      "range": {
+        "startLine": 204,
+        "startChar": 23,
+        "endLine": 204,
+        "endChar": 27
+      },
+      "revId": "6ef49257835fe02c8d0cfda6ffdf15529223c00f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
