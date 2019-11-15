@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a154ce1_1ef766c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3959,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-15T08:09:08Z",
+      "side": 1,
+      "message": "is sent by?",
+      "range": {
+        "startLine": 3959,
+        "startChar": 86,
+        "endLine": 3959,
+        "endChar": 93
+      },
+      "revId": "968dc8a8f2970cec8e4da70a59c695fd9c60aad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e16709c_0cf81b12",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-15T08:09:08Z",
+      "side": 1,
+      "message": "I think you only need to keep \"whether\" or \"if\" beause they are the same usage?\nHow about: whether the given uid?",
+      "range": {
+        "startLine": 269,
+        "startChar": 16,
+        "endLine": 269,
+        "endChar": 36
+      },
+      "revId": "968dc8a8f2970cec8e4da70a59c695fd9c60aad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480c6ee4_c6608e3c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-15T08:09:08Z",
+      "side": 1,
+      "message": "used",
+      "range": {
+        "startLine": 271,
+        "startChar": 50,
+        "endLine": 271,
+        "endChar": 55
+      },
+      "revId": "968dc8a8f2970cec8e4da70a59c695fd9c60aad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4e89b5_e1c464df",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-15T08:09:08Z",
+      "side": 1,
+      "message": "If you treat mApps as a variable, how about \"mApps has already checked\"?",
+      "range": {
+        "startLine": 271,
+        "startChar": 11,
+        "endLine": 271,
+        "endChar": 32
+      },
+      "revId": "968dc8a8f2970cec8e4da70a59c695fd9c60aad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0566f6cd_cc109588",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-15T08:09:08Z",
+      "side": 1,
+      "message": "permissions",
+      "range": {
+        "startLine": 272,
+        "startChar": 52,
+        "endLine": 272,
+        "endChar": 62
+      },
+      "revId": "968dc8a8f2970cec8e4da70a59c695fd9c60aad6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
