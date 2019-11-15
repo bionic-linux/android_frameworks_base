@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6272c2b0_13cf28b2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3961,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-15T13:37:47Z",
+      "side": 1,
+      "message": "Why move this code? It looks like we\u0027re trying to ensure that mPermissionMonitor starts before mMultipathPolicyTracker starts. But... doesn\u0027t the current code already do that? systemReady() is guaranteed to run before EVENT_SYSTEM_READY is processed, because systemReady() *is* the code that sends EVENT_SYSTEM_READY.\n\nAm I missing something?",
+      "range": {
+        "startLine": 3957,
+        "startChar": 0,
+        "endLine": 3961,
+        "endChar": 57
+      },
+      "revId": "330780128930363dfb0d51b7eced7651a17d6579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e676e8_dad1f9c2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6093,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-15T13:37:47Z",
+      "side": 1,
+      "message": "Remove NETWORK_STACK, since apps don\u0027t have it.",
+      "range": {
+        "startLine": 6093,
+        "startChar": 20,
+        "endLine": 6093,
+        "endChar": 57
+      },
+      "revId": "330780128930363dfb0d51b7eced7651a17d6579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d220f148_0f940e9b",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-15T13:37:47Z",
+      "side": 1,
+      "message": "I think this should be:\n\n    if (app.requestedPermissions \u003d\u003d null || app.requestedPermissionsFlags \u003d\u003d null) {\n        return false;\n    }\n\n    int len \u003d Math.min(requestedPermissions.length, app.requestedPermissionsFlags.length);\n    for (int i \u003d 0; i \u003c len; i++) {\n        if ((requestedPermissionsFlags[i] \u0026 REQUESTED_PERMISSION_GRANTED) !\u003d 0)\n                \u0026\u0026 requestedPermissions.equals(permission)) {\n            return true;\n        }\n    }\n\n    return false;",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148fe33_efdb3647",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -31,6 +54,24 @@
       "side": 1,
       "message": "I don\u0027t think this is a backdoor to use restricted network. At least ConnectivityService would block apps by checking whether CONNECTIVITY_USE_RESTRICTED_NETWORKS or CONNECTIVITY_INTERNAL has been truly granted.\nPermssionMonitor just pass wrong permssion to netd but apps still can\u0027t use restricted network if they don\u0027t get the network.\nHowever, hasPermission() should be incorrect that only check requested permissions instead of granted permissions.\n\nJean, what do you think?",
       "parentUuid": "a148fe33_efdb3647",
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa32130_dc90c154",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-15T13:37:47Z",
+      "side": 1,
+      "message": "Ouch. If this only checks whether the permission is requested and not whether the permission was granted, then that\u0027s a security problem and we should fix it.",
+      "parentUuid": "0db50501_81d3f864",
       "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true

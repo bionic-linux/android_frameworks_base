@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28003638_cd6e7d5d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2209,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-15T13:37:47Z",
+      "side": 0,
+      "message": "Not for this CL since it has been this way for years, but... is it guaranteed that this will happen before any NetworkAgents are registered? Otherwise, if a network such as IMS connects immediately after boot, before this code runs, then apps won\u0027t be able to use it immediately because netd doesn\u0027t know about any permissions yet.",
+      "range": {
+        "startLine": 2209,
+        "startChar": 8,
+        "endLine": 2209,
+        "endChar": 45
+      },
+      "revId": "1a2b94064622d5c4333a065781b781868afa2d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
