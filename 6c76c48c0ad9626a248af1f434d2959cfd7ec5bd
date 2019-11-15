@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f8b8d0_ab830a7d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/SparseInputStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-15T02:13:44Z",
+      "side": 1,
+      "message": "read(buf, done, n-done)",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "6c76c48c0ad9626a248af1f434d2959cfd7ec5bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d2b234_9c3f630c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/SparseInputStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-15T02:13:44Z",
+      "side": 1,
+      "message": "nit: newline\n\n(run lint?)",
+      "revId": "6c76c48c0ad9626a248af1f434d2959cfd7ec5bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f4a972_101b5107",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/SparseInputStream.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-11-15T02:13:44Z",
+      "side": 1,
+      "message": "nit: unsparse",
+      "range": {
+        "startLine": 191,
+        "startChar": 15,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "6c76c48c0ad9626a248af1f434d2959cfd7ec5bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
