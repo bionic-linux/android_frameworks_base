@@ -22,6 +22,30 @@
       "revId": "e730663471a75661c3169c3559176d699dad76ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0282843_c0b4b964",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6401,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-15T07:16:34Z",
+      "side": 1,
+      "message": "+1\nalso for all newNetworks below.",
+      "parentUuid": "37fd13bd_c8c5ee29",
+      "range": {
+        "startLine": 6401,
+        "startChar": 16,
+        "endLine": 6401,
+        "endChar": 26
+      },
+      "revId": "e730663471a75661c3169c3559176d699dad76ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
