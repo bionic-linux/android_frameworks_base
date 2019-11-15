@@ -1295,8 +1295,11 @@ public class UserManager {
                 mContext.getContentResolver(),
                 Settings.Global.ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED, 0) != 0;
         boolean isSystemUserUnlocked = isUserUnlocked(UserHandle.SYSTEM);
-        boolean inCall = TelephonyManager.getDefault().getCallState()
-                != TelephonyManager.CALL_STATE_IDLE;
+        boolean inCall = false;
+        TelephonyManager telephonyManager = mContext.getSystemService(TelephonyManager.class);
+        if (telephonyManager != null) {
+            inCall = telephonyManager.getCallState() != TelephonyManager.CALL_STATE_IDLE;
+        }
         boolean isUserSwitchDisallowed = hasUserRestriction(DISALLOW_USER_SWITCH);
         return (allowUserSwitchingWhenSystemUserLocked || isSystemUserUnlocked) && !inCall
                 && !isUserSwitchDisallowed;
@@ -1322,8 +1325,7 @@ public class UserManager {
                 mContext.getContentResolver(),
                 Settings.Global.ALLOW_USER_SWITCHING_WHEN_SYSTEM_USER_LOCKED, 0) != 0;
         final boolean systemUserUnlocked = isUserUnlocked(UserHandle.SYSTEM);
-        final TelephonyManager tm =
-                (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        final TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
 
         int flags = SWITCHABILITY_STATUS_OK;
         if (tm.getCallState() != TelephonyManager.CALL_STATE_IDLE) {
