@@ -31,7 +31,11 @@ import java.util.Observable;
  * ContentValues contains all columns other than the one that is designated the key.
  * <p>
  * The cursor data is accessed by row key and column name via getValue().
+ *
+ * @deprecated This class relies on {@link android.database.Cursor#requery}, which is deprecated.
+ *   Instead, convert the cursor to a map yourself or use {@link androidx.room}.
  */
+@Deprecated
 public class ContentQueryMap extends Observable {
     private volatile Cursor mCursor;
     private String[] mColumnNames;
