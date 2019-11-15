@@ -56,10 +56,10 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 
-import libcore.io.IoUtils;
-
 import com.google.android.collect.Lists;
 import com.google.android.collect.Maps;
+
+import libcore.io.IoUtils;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -387,7 +387,7 @@ public class NetworkStatsCollection implements FileRotator.Reader {
                 entry.operations = historyEntry.operations;
 
                 if (!entry.isEmpty()) {
-                    stats.combineValues(entry);
+                    stats.addValues(entry);
                 }
             }
         }

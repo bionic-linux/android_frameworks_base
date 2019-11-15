@@ -229,7 +229,7 @@ public class NetworkStatsFactory {
                     entry.txPackets += reader.nextLong();
                 }
 
-                stats.addValues(entry);
+                stats.addEntry(entry);
                 reader.finishLine();
             }
         } catch (NullPointerException|NumberFormatException e) {
@@ -279,7 +279,7 @@ public class NetworkStatsFactory {
                 entry.txBytes = reader.nextLong();
                 entry.txPackets = reader.nextLong();
 
-                stats.addValues(entry);
+                stats.addEntry(entry);
                 reader.finishLine();
             }
         } catch (NullPointerException|NumberFormatException e) {
@@ -343,7 +343,7 @@ public class NetworkStatsFactory {
 
                     // BPF stats are incremental; fold into mPersistSnapshot.
                     mPersistSnapshot.setElapsedRealtime(stats.getElapsedRealtime());
-                    mPersistSnapshot.combineAllValues(stats);
+                    mPersistSnapshot.addAllValues(stats);
                 } else {
                     if (nativeReadNetworkStatsDetail(stats, mStatsXtUid.getAbsolutePath(), UID_ALL,
                             INTERFACES_ALL, TAG_ALL, mUseBpfStats) != 0) {
@@ -391,7 +391,7 @@ public class NetworkStatsFactory {
         delta.filterDebugEntries();
 
         // Update mTunAnd464xlatAdjustedStats with migrated delta.
-        mTunAnd464xlatAdjustedStats.combineAllValues(delta);
+        mTunAnd464xlatAdjustedStats.addAllValues(delta);
         mTunAnd464xlatAdjustedStats.setElapsedRealtime(uidDetailStats.getElapsedRealtime());
 
         return mTunAnd464xlatAdjustedStats.clone();
@@ -439,7 +439,7 @@ public class NetworkStatsFactory {
                 if ((limitIfaces == null || ArrayUtils.contains(limitIfaces, entry.iface))
                         && (limitUid == UID_ALL || limitUid == entry.uid)
                         && (limitTag == TAG_ALL || limitTag == entry.tag)) {
-                    stats.addValues(entry);
+                    stats.addEntry(entry);
                 }
 
                 reader.finishLine();

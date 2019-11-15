@@ -1539,7 +1539,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
                     entry.rxPackets = tetherStats.rxPackets;
                     entry.txBytes   = tetherStats.txBytes;
                     entry.txPackets = tetherStats.txPackets;
-                    stats.combineValues(entry);
+                    stats.addValues(entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     throw new IllegalStateException("invalid tethering stats " + e);
                 }
@@ -1562,7 +1562,7 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         synchronized (mTetheringStatsProviders) {
             for (ITetheringStatsProvider provider: mTetheringStatsProviders.keySet()) {
                 try {
-                    stats.combineAllValues(provider.getTetherStats(how));
+                    stats.addAllValues(provider.getTetherStats(how));
                 } catch (RemoteException e) {
                     Log.e(TAG, "Problem reading tethering stats from " +
                             mTetheringStatsProviders.get(provider) + ": " + e);

@@ -27,6 +27,7 @@ import static android.net.ConnectivityManager.isNetworkTypeMobile;
 import static android.net.NetworkStack.checkNetworkStackPermission;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
 import static android.net.NetworkStats.IFACE_ALL;
+import static android.net.NetworkStats.IFACE_VT;
 import static android.net.NetworkStats.INTERFACES_ALL;
 import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.ROAMING_ALL;
@@ -211,6 +212,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     /**
      * Virtual network interface for video telephony. This is for VT data usage counting purpose.
      */
+    // TODO: Remove this after no one is using it.
     public static final String VT_INTERFACE = "vt_data0";
 
     /**
@@ -621,7 +623,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     if (includeTags) {
                         final NetworkStats tagStats = getUidTagComplete()
                                 .getSummary(template, start, end, mAccessLevel, mCallingUid);
-                        stats.combineAllValues(tagStats);
+                        stats.addAllValues(tagStats);
                     }
                     return stats;
                 } catch (NullPointerException e) {
@@ -711,7 +713,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStatsHistory.Entry entry = history.getValues(start, end, now, null);
 
         final NetworkStats stats = new NetworkStats(end - start, 1);
-        stats.addValues(new NetworkStats.Entry(IFACE_ALL, UID_ALL, SET_ALL, TAG_NONE,
+        stats.addEntry(new NetworkStats.Entry(IFACE_ALL, UID_ALL, SET_ALL, TAG_NONE,
                 METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, entry.rxBytes, entry.rxPackets,
                 entry.txBytes, entry.txPackets, entry.operations));
         return stats;
@@ -774,7 +776,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         for (int i = 0; i < networkLayer.size(); i++) {
             entry = networkLayer.getValues(i, entry);
             entry.iface = IFACE_ALL;
-            dataLayer.combineValues(entry);
+            dataLayer.addValues(entry);
         }
 
         return dataLayer;
@@ -813,9 +815,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         synchronized (mStatsLock) {
             final int set = mActiveUidCounterSet.get(uid, SET_DEFAULT);
-            mUidOperations.combineValues(
+            mUidOperations.addValues(
                     mActiveIface, uid, set, tag, 0L, 0L, 0L, 0L, operationCount);
-            mUidOperations.combineValues(
+            mUidOperations.addValues(
                     mActiveIface, uid, set, TAG_NONE, 0L, 0L, 0L, 0L, operationCount);
         }
     }
@@ -1175,8 +1177,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                                 ident.getSubType(), ident.getSubscriberId(), ident.getNetworkId(),
                                 ident.getRoaming(), true /* metered */,
                                 true /* onDefaultNetwork */);
-                        findOrCreateNetworkIdentitySet(mActiveIfaces, VT_INTERFACE).add(vtIdent);
-                        findOrCreateNetworkIdentitySet(mActiveUidIfaces, VT_INTERFACE).add(vtIdent);
+                        findOrCreateNetworkIdentitySet(mActiveIfaces, IFACE_VT).add(vtIdent);
+                        findOrCreateNetworkIdentitySet(mActiveUidIfaces, IFACE_VT).add(vtIdent);
                     }
 
                     if (isMobile) {
@@ -1243,8 +1245,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotTether");
         final NetworkStats tetherSnapshot = getNetworkStatsTethering(STATS_PER_IFACE);
         Trace.traceEnd(TRACE_TAG_NETWORK);
-        xtSnapshot.combineAllValues(tetherSnapshot);
-        devSnapshot.combineAllValues(tetherSnapshot);
+        xtSnapshot.addAllValues(tetherSnapshot);
+        devSnapshot.addAllValues(tetherSnapshot);
 
         // For xt/dev, we pass a null VPN array because usage is aggregated by UID, so VPN traffic
         // can't be reattributed to responsible apps.
@@ -1670,7 +1672,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         tetherSnapshot.filter(UID_ALL, ifaces, TAG_ALL);
         mStatsFactory.apply464xlatAdjustments(uidSnapshot, tetherSnapshot,
                 mUseBpfTrafficStats);
-        uidSnapshot.combineAllValues(tetherSnapshot);
+        uidSnapshot.addAllValues(tetherSnapshot);
 
         final TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(
                 Context.TELEPHONY_SERVICE);
@@ -1681,10 +1683,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             vtStats.filter(UID_ALL, ifaces, TAG_ALL);
             mStatsFactory.apply464xlatAdjustments(uidSnapshot, vtStats,
                     mUseBpfTrafficStats);
-            uidSnapshot.combineAllValues(vtStats);
+            uidSnapshot.addAllValues(vtStats);
         }
 
-        uidSnapshot.combineAllValues(mUidOperations);
+        uidSnapshot.addAllValues(mUidOperations);
 
         return uidSnapshot;
     }
@@ -1701,7 +1703,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // Merge video calling data usage into XT
         final NetworkStats vtSnapshot = telephonyManager.getVtDataUsage(STATS_PER_IFACE);
         if (vtSnapshot != null) {
-            xtSnapshot.combineAllValues(vtSnapshot);
+            xtSnapshot.addAllValues(vtSnapshot);
         }
 
         return xtSnapshot;

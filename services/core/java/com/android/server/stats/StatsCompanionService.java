@@ -821,7 +821,7 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
             entry.txBytes = recycle.txBytes;
             entry.txPackets = recycle.txPackets;
             // Operations purposefully omitted since we don't use them for statsd.
-            ret.combineValues(entry);
+            ret.addValues(entry);
         }
         return ret;
     }
