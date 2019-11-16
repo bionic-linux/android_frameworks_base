@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ded149_7a7d2446",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1121193
+      },
+      "writtenOn": "2019-11-16T01:23:02Z",
+      "side": 1,
+      "message": "no need for null point check? the registration happens early in SystemServiceRegistry",
+      "range": {
+        "startLine": 736,
+        "startChar": 8,
+        "endLine": 736,
+        "endChar": 39
+      },
+      "revId": "3976ff30304a6100bf716f959dbf0637bb9916ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
