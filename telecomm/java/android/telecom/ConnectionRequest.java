@@ -16,6 +16,9 @@
 
 package android.telecom;
 
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -32,6 +35,7 @@ public final class ConnectionRequest implements Parcelable {
      * Builder class for {@link ConnectionRequest}
      * @hide
      */
+    @TestApi // For convenience in CTS tests
     public static final class Builder {
         private PhoneAccountHandle mAccountHandle;
         private Uri mAddress;
@@ -261,7 +265,9 @@ public final class ConnectionRequest implements Parcelable {
      * @return The Telecom ID.
      * @hide
      */
-    public String getTelecomCallId() {
+    @SystemApi
+    @TestApi
+    public @Nullable String getTelecomCallId() {
         return mTelecomCallId;
     }
 

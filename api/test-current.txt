@@ -2782,6 +2782,10 @@ package android.telecom {
     field public static final int PROPERTY_REMOTELY_HOSTED = 2048; // 0x800
   }
 
+  public final class ConnectionRequest implements android.os.Parcelable {
+    method @Nullable public String getTelecomCallId();
+  }
+
   public static class PhoneAccount.Builder {
     method @NonNull public android.telecom.PhoneAccount.Builder setGroupId(@NonNull String);
   }
@@ -2795,6 +2799,7 @@ package android.telecom {
   }
 
   public class TelecomManager {
+    method @NonNull @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public java.util.List<android.telecom.PhoneAccountHandle> getCallCapablePhoneAccounts(boolean);
     method @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public int getCurrentTtyMode();
     method @Nullable @RequiresPermission("android.permission.READ_PRIVILEGED_PHONE_STATE") public String getDefaultDialerPackage(int);
     method @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public boolean isInEmergencyCall();
