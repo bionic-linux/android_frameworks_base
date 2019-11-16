@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa109e9c_cfacbc92",
+        "filename": "api/test-current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T03:48:40Z",
+      "side": 1,
+      "message": "Maybe we want to unify the setter and the getters ? Either setDName/dName getRR/setRR, or setDomainName/domainName and setResourceData/resourceData ?\n\nI would suggest using the names in the RFC and documenting in javadoc what they stand for.",
+      "range": {
+        "startLine": 1406,
+        "startChar": 67,
+        "endLine": 1406,
+        "endChar": 80
+      },
+      "revId": "48560e868b922876a32fb4bb7e95a1058782000e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586b168f_681d7588",
+        "filename": "api/test-current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T03:48:40Z",
+      "side": 1,
+      "message": "Rule 8.71 : please hide all @IntDefs (but keep the annotation and the places where it\u0027s used). It\u0027s a bit sad, but the rationale is clear :\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines.md?cl\u003dhead#no-public-typedefs\n\nNote that it\u0027s fine because in practice we have separate tooling to expose them.\n\nAlso, the API linter should have told you that ; maybe it\u0027s not running on test-current ?",
+      "range": {
+        "startLine": 1413,
+        "startChar": 3,
+        "endLine": 1413,
+        "endChar": 9
+      },
+      "revId": "48560e868b922876a32fb4bb7e95a1058782000e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fdf623_7809a4ec",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T03:48:40Z",
+      "side": 1,
+      "message": "You may want to also validate |sec|. Since it\u0027s only @SystemApi maybe it doesn\u0027t matter too much though.",
+      "revId": "48560e868b922876a32fb4bb7e95a1058782000e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63c18a2_da110874",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-16T03:48:40Z",
+      "side": 1,
+      "message": "While you\u0027re here can you annotate this with @Nullable too ? And possibly add a comment to explain what null means for this member",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 15
+      },
+      "revId": "48560e868b922876a32fb4bb7e95a1058782000e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
