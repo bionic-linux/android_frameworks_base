@@ -173,10 +173,13 @@ public final class BluetoothDevice implements Parcelable {
      * changed.
      * <p>Always contains the extra field {@link #EXTRA_DEVICE}.
      * <p>Requires {@link android.Manifest.permission#BLUETOOTH} to receive.
+     *
+     * @hide
      */
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @UnsupportedAppUsage
     public static final String ACTION_ALIAS_CHANGED =
-            "android.bluetooth.action.ALIAS_CHANGED";
+            "android.bluetooth.device.action.ALIAS_CHANGED";
 
     /**
      * Broadcast Action: Indicates a change in the bond state of a remote
@@ -1045,11 +1048,10 @@ public final class BluetoothDevice implements Parcelable {
      * Get the Bluetooth alias of the remote device.
      * <p>Alias is the locally modified name of a remote device.
      *
-     * @return the Bluetooth alias, the friendly device name if no alias, or
-     * null if there was a problem
+     * @return the Bluetooth alias, or null if no alias or there was a problem
+     * @hide
      */
-    @Nullable
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @UnsupportedAppUsage(publicAlternatives = "Use {@link #getName()} instead.")
     public String getAlias() {
         final IBluetooth service = sService;
         if (service == null) {
@@ -1057,11 +1059,7 @@ public final class BluetoothDevice implements Parcelable {
             return null;
         }
         try {
-            String alias = service.getRemoteAlias(this);
-            if (alias == null) {
-                return getName();
-            }
-            return alias;
+            return service.getRemoteAlias(this);
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
         }
@@ -1078,9 +1076,8 @@ public final class BluetoothDevice implements Parcelable {
      * @return true on success, false on error
      * @hide
      */
-    @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public boolean setAlias(@NonNull String alias) {
+    @UnsupportedAppUsage
+    public boolean setAlias(String alias) {
         final IBluetooth service = sService;
         if (service == null) {
             Log.e(TAG, "BT not enabled. Cannot set Remote Device name");
@@ -1092,6 +1089,24 @@ public final class BluetoothDevice implements Parcelable {
             Log.e(TAG, "", e);
         }
         return false;
+    }
+
+    /**
+     * Get the Bluetooth alias of the remote device.
+     * If Alias is null, get the Bluetooth name instead.
+     *
+     * @return the Bluetooth alias, or null if no alias or there was a problem
+     * @hide
+     * @see #getAlias()
+     * @see #getName()
+     */
+    @UnsupportedAppUsage(publicAlternatives = "Use {@link #getName()} instead.")
+    public String getAliasName() {
+        String name = getAlias();
+        if (name == null) {
+            name = getName();
+        }
+        return name;
     }
 
     /**
