@@ -1875,7 +1875,9 @@ public final class Debug
     /** @hide */
     public static final int MEMINFO_KERNEL_STACK = 14;
     /** @hide */
-    public static final int MEMINFO_COUNT = 15;
+    public static final int MEMINFO_KRECLAIMABLE = 15;
+    /** @hide */
+    public static final int MEMINFO_COUNT = 16;
 
     /**
      * Retrieves /proc/meminfo.  outSizes is filled with fields
