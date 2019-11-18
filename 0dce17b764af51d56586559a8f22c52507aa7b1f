@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a573ecf4_93cf108a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-18T12:33:17Z",
+      "side": 1,
+      "message": "nit: Although this is used widely, it is not very friend to me that the function returns a CV, instead of actually blocking on something, like waitForIdle().\nDo we want to name it in better way?",
+      "range": {
+        "startLine": 1253,
+        "startChar": 30,
+        "endLine": 1253,
+        "endChar": 59
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbceef8_198764d2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-18T12:33:17Z",
+      "side": 1,
+      "message": "1. maybe waitForConnectivityBroadcastsThat to indicate there is a predicate input?\n\n2. IIUC we are not testing ACTION \u0026 ACTION_SUPL at the same time.\nis it better if we simplify it to something like waitForConnectivityBroadcasts(count, action)?",
+      "range": {
+        "startLine": 1257,
+        "startChar": 30,
+        "endLine": 1257,
+        "endChar": 59
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
