@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0fffbc_caf8c1c4",
+        "filename": "core/java/android/app/ActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2740,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-11-18T16:40:14Z",
+      "side": 1,
+      "message": "- There can be multiple ActivityManager instances, so apps can still have multiple calls to it simultaneously via different AM instances if you use \"this\" here.\n\nLet\u0027s create a static, dedicated lock and use it here:\n\n    private static final sProcessesInErrorStateLock \u003d new Object();\n\n(I want to have a dedicated lock for this, to avoid potential deadlocks when someone accidentally using the same lock for something else )\n\n\n- Also, if apps are calling it from multiple threads, this change could break them, because calls to this API would all be serialized so they\u0027ll look slower to the calling app.\n\nDo you know what apps are spamming this API? Is it okay to possibly breaking them?\n\nAnother way to mitigate it so cache the result in the client side, for example for 1 second. The cache has to be static, and you\u0027ll need to return a copy for every call, rather than returning the exact same object, because the result is mutable. You can easily create a copy by writing it to a Parcel and reading it.",
+      "revId": "ba89cb2ae45e954b34ee2872fa49ae606f0ce068",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
