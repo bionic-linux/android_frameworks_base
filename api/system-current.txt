@@ -4059,6 +4059,13 @@ package android.metrics {
 
 package android.net {
 
+  public abstract class AbstractNetworkStatsProvider {
+    ctor public AbstractNetworkStatsProvider();
+    method public abstract void requestStatsUpdate(int);
+    method public abstract void setAlert(long);
+    method public abstract void setLimit(@NonNull String, long);
+  }
+
   public class CaptivePortal implements android.os.Parcelable {
     method public void logEvent(int, @NonNull String);
     method public void useNetwork();
@@ -4273,6 +4280,13 @@ package android.net {
 
   public static class NetworkStats.Entry {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
+  }
+
+  public class NetworkStatsProviderCallback {
+    method public void onAlertReached();
+    method public void onLimitReached();
+    method public void onStatsUpdated(int, @NonNull android.net.NetworkStats, @NonNull android.net.NetworkStats);
+    method public void unregister();
   }
 
   public final class RouteInfo implements android.os.Parcelable {
