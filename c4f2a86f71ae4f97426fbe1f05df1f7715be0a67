@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae0c23b2_fc7ee331",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-18T10:10:53Z",
+      "side": 1,
+      "message": "Can\u0027t we use PackageManager#checkPermission(String permissionName, String packageName) ?",
+      "parentUuid": "d220f148_0f940e9b",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148fe33_efdb3647",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
