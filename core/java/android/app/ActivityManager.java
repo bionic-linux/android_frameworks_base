@@ -2737,10 +2737,12 @@ public class ActivityManager {
      * specified.
      */
     public List<ProcessErrorStateInfo> getProcessesInErrorState() {
-        try {
-            return getService().getProcessesInErrorState();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+        synchronized (this) {
+            try {
+                return getService().getProcessesInErrorState();
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
     }
 
