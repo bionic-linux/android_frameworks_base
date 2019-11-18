@@ -4274,6 +4274,20 @@ package android.net {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
   }
 
+  public abstract class NetworkStatsProviderBase {
+    ctor public NetworkStatsProviderBase();
+    method public abstract void requestStatsUpdate(int);
+    method public abstract void setAlert(long);
+    method public abstract void setLimit(@NonNull String, long);
+  }
+
+  public class NetworkStatsProviderCallback {
+    method public void onAlertReached();
+    method public void onLimitReached();
+    method public void onStatsUpdated(int, @NonNull android.net.NetworkStats, @NonNull android.net.NetworkStats);
+    method public void unregister();
+  }
+
   public final class RouteInfo implements android.os.Parcelable {
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int);
     method public int getType();
