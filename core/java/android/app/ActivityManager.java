@@ -141,6 +141,7 @@ public class ActivityManager {
     private static final int LAST_START_SUCCESS_CODE = 99;
     private static final int FIRST_START_NON_FATAL_ERROR_CODE = 100;
     private static final int LAST_START_NON_FATAL_ERROR_CODE = 199;
+    private static final Object sProcessesInErrorStateLock = new Object();
 
     /**
      * Disable hidden API checks for the newly started instrumentation.
@@ -2737,10 +2738,12 @@ public class ActivityManager {
      * specified.
      */
     public List<ProcessErrorStateInfo> getProcessesInErrorState() {
-        try {
-            return getService().getProcessesInErrorState();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
+        synchronized (sProcessesInErrorStateLock) {
+            try {
+                return getService().getProcessesInErrorState();
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
         }
     }
 
