@@ -4778,6 +4778,14 @@ package android.net.metrics {
 
 package android.net.netstats.provider {
 
+  public abstract class AbstractNetworkStatsProvider {
+    ctor public AbstractNetworkStatsProvider();
+    method public abstract void requestStatsUpdate(int);
+    method public abstract void setAlert(long);
+    method public abstract void setLimit(@NonNull String, long);
+    field public static final int QUOTA_UNLIMITED = -1; // 0xffffffff
+  }
+
   public class NetworkStatsParcelableWrapper {
     ctor public NetworkStatsParcelableWrapper(int);
     method public void combineAllValues(@NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper);
@@ -4799,6 +4807,13 @@ package android.net.netstats.provider {
     field public static final int TAG_NONE = 0; // 0x0
     field public static final int UID_ALL = -1; // 0xffffffff
     field public static final int UID_TETHERING = -5; // 0xfffffffb
+  }
+
+  public class NetworkStatsProviderCallback {
+    method public void onAlertReached();
+    method public void onLimitReached();
+    method public void onStatsUpdated(int, @NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper, @NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper);
+    method public void unregister();
   }
 
 }
