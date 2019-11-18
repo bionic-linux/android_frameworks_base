@@ -16,6 +16,24 @@
       "revId": "773c4f78d80dae19faf94f4455a6902e2578fcd4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f409a9_5b63b6cc",
+        "filename": "core/jni/core_jni_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2019-11-18T23:12:56Z",
+      "side": 1,
+      "message": "This is exactly the way it is in internal master and I don\u0027t want to change it here.",
+      "parentUuid": "4a193587_b44a4909",
+      "revId": "773c4f78d80dae19faf94f4455a6902e2578fcd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
