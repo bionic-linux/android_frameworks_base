@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cceb1489_5c206abf",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T11:35:10Z",
+      "side": 1,
+      "message": "Yes, we can use PackageManager#checkPermission(). But hasPermission will be called when package added/removed that means it will send lots of IPCs to the package manager and could get expensive. I\u0027d like to adopt Lorenz\u0027s solution.\nAs we discussed in meeting, use another commit aosp/1168609 to fix this probelm.",
+      "parentUuid": "ae0c23b2_fc7ee331",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148fe33_efdb3647",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -99,6 +123,24 @@
       "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e54989a_528fd079",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-18T11:35:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fa32130_dc90c154",
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
