@@ -125,6 +125,11 @@ public class AppFuseBridge implements Runnable {
         }
     }
 
+    // Used by com_android_server_storage_AppFuse.cpp.
+    synchronized private void onGetlock() {
+        return;
+    }
+
     public static abstract class MountScope implements AutoCloseable {
         public final int uid;
         public final int mountId;

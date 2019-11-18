@@ -32,6 +32,7 @@ constexpr const char* CLASS_NAME = "com/android/server/storage/AppFuseBridge";
 static jclass gAppFuseClass;
 static jmethodID gAppFuseOnMount;
 static jmethodID gAppFuseOnClosed;
+static jmethodID gAppFuseOnGetlock;
 
 class Callback : public fuse::FuseBridgeLoopCallback {
     JNIEnv* mEnv;
@@ -49,6 +50,14 @@ public:
 
     void OnClosed(int mount_id) override {
         mEnv->CallVoidMethod(mSelf, gAppFuseOnClosed, mount_id);
+        if (mEnv->ExceptionCheck()) {
+            LOGE_EX(mEnv, nullptr);
+            mEnv->ExceptionClear();
+        }
+    }
+
+    void OnGetlock() override {
+        mEnv->CallVoidMethod(mSelf, gAppFuseOnGetlock);
         if (mEnv->ExceptionCheck()) {
             LOGE_EX(mEnv, nullptr);
             mEnv->ExceptionClear();
@@ -154,6 +163,7 @@ void register_android_server_storage_AppFuse(JNIEnv* env) {
     gAppFuseClass = MakeGlobalRefOrDie(env, FindClassOrDie(env, CLASS_NAME));
     gAppFuseOnMount = GetMethodIDOrDie(env, gAppFuseClass, "onMount", "(I)V");
     gAppFuseOnClosed = GetMethodIDOrDie(env, gAppFuseClass, "onClosed", "(I)V");
+    gAppFuseOnGetlock = GetMethodIDOrDie(env, gAppFuseClass, "onGetlock", "()V");
     RegisterMethodsOrDie(env, CLASS_NAME, methods, NELEM(methods));
 }
 }  // namespace android
