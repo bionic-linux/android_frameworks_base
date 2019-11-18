@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49477b84_5601fc55",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4303,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-18T17:53:32Z",
+      "side": 1,
+      "message": "The AOSP behavior currently means this should be true; all devices shouldn\u0027t need to overlay a true value because of this change.\n\nAlso recommend the comment:\nWhen true, enables local playback of DTMF tones.  When false, no local DTMF tone playback occurs and it is assumed that the modem will play the DTMF tones.",
+      "range": {
+        "startLine": 4303,
+        "startChar": 44,
+        "endLine": 4303,
+        "endChar": 49
+      },
+      "revId": "b474c4b0f51296a27a22975f3c6cb729a5b50fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
