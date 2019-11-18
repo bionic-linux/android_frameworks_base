@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ac764098_fed9469f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-18T14:42:13Z",
+      "side": 1,
+      "message": "Given that that commit is only 13 lines and touches code very close to this one can we merge them together? That way OEMs only have to backport one change to get the fixes.",
+      "parentUuid": "cceb1489_5c206abf",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148fe33_efdb3647",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
