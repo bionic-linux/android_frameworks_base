@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a193587_b44a4909",
+        "filename": "core/jni/core_jni_helpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-11-18T23:10:39Z",
+      "side": 1,
+      "message": "Line length?",
+      "revId": "773c4f78d80dae19faf94f4455a6902e2578fcd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
