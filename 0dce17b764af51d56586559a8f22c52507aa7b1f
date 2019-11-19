@@ -93,6 +93,122 @@
       "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9376343_67b5ddd0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T11:10:39Z",
+      "side": 1,
+      "message": "TBH I don\u0027t",
+      "parentUuid": "51886e60_99cb2ba6",
+      "range": {
+        "startLine": 1257,
+        "startChar": 30,
+        "endLine": 1257,
+        "endChar": 59
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "565c4a36_b7e8f1f8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T11:10:39Z",
+      "side": 1,
+      "message": "nit: maybe put them into separate section to improve readability, I don\u0027t have strong opinion.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 8,
+        "endLine": 1308,
+        "endChar": 83
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47973b6_a3fea914",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T11:10:39Z",
+      "side": 1,
+      "message": "1.quesion: are we expecting CONNECTIVITY_ACTION with TYPE_MOBILE, and CONNECTIVITY_ACTION_SUPL with TYPE_MOBILE_SUPL?\n\n2. nit: IIUC we did not verify this. We just verify there are total 2 of them.\nIf 1 is true, we might use below form to verify them:\n   waitForConnectivityBroadcasts(count, type, expectConnected)\n\nThis also gives another reason of comments at l.1257.\nBut given that it is legacy code, which we might not really care. I still don\u0027t feel strongly.",
+      "range": {
+        "startLine": 1341,
+        "startChar": 74,
+        "endLine": 1342,
+        "endChar": 21
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e463915e_1909657d",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T11:10:39Z",
+      "side": 1,
+      "message": "question: why do we need to reset every time?",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c25fab_fdea0ee1",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T11:10:39Z",
+      "side": 1,
+      "message": "question: why do we expect 2 supl broadcast here?",
+      "range": {
+        "startLine": 89,
+        "startChar": 81,
+        "endLine": 89,
+        "endChar": 97
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
