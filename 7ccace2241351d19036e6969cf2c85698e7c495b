@@ -671,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "a50777a0_fe867575",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T11:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12d4e5f4_b1875716",
+      "range": {
+        "startLine": 1890,
+        "startChar": 4,
+        "endLine": 1890,
+        "endChar": 26
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24595799_20a2a3e0",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 10
@@ -691,6 +715,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688dce91_5af5f5cc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T11:42:08Z",
+      "side": 1,
+      "message": "Ack, we already have bug to deprecate last error code. I want to figure out the usage of this error code from client side(e.g system UI/Settings). If I fail to refactor this, I would add this error code to callback.",
+      "parentUuid": "24595799_20a2a3e0",
+      "range": {
+        "startLine": 1989,
+        "startChar": 28,
+        "endLine": 1989,
+        "endChar": 37
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -764,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "8b1d226b_f36b7249",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T11:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21a63ae_9d4f3f26",
+      "range": {
+        "startLine": 650,
+        "startChar": 28,
+        "endLine": 650,
+        "endChar": 29
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "addb73c9_59a19941",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 10
@@ -784,6 +856,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3627affa_37e44e77",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T11:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "addb73c9_59a19941",
+      "range": {
+        "startLine": 1036,
+        "startChar": 72,
+        "endLine": 1036,
+        "endChar": 78
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
