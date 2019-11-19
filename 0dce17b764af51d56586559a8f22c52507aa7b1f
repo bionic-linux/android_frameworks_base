@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1889110_36f01e32",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T07:25:44Z",
+      "side": 1,
+      "message": "Makes complete sense, but done in a follow-up as the rename is pervasive and unrelated to this change.",
+      "parentUuid": "a573ecf4_93cf108a",
+      "range": {
+        "startLine": 1253,
+        "startChar": 30,
+        "endLine": 1253,
+        "endChar": 59
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccbceef8_198764d2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51886e60_99cb2ba6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T07:25:44Z",
+      "side": 1,
+      "message": "Implemented 1. in the same follow-up change as the above.\n\n2. I considered that and thought the caller typically didn\u0027t care. I don\u0027t feel strongly, so if you do I\u0027ll change it.",
+      "parentUuid": "ccbceef8_198764d2",
+      "range": {
+        "startLine": 1257,
+        "startChar": 30,
+        "endLine": 1257,
+        "endChar": 59
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
