@@ -29,6 +29,7 @@ import java.util.Arrays;
  */
 public class VpnInfo implements Parcelable {
     public int ownerUid;
+    public int carrierId;
     public String vpnIface;
     public String[] underlyingIfaces;
 
@@ -36,6 +37,7 @@ public class VpnInfo implements Parcelable {
     public String toString() {
         return "VpnInfo{"
                 + "ownerUid=" + ownerUid
+                + ", carrierId='" + carrierId + '\''
                 + ", vpnIface='" + vpnIface + '\''
                 + ", underlyingIfaces='" + Arrays.toString(underlyingIfaces) + '\''
                 + '}';
@@ -49,6 +51,7 @@ public class VpnInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(ownerUid);
+        dest.writeInt(carrierId);
         dest.writeString(vpnIface);
         dest.writeStringArray(underlyingIfaces);
     }
@@ -58,6 +61,7 @@ public class VpnInfo implements Parcelable {
         public VpnInfo createFromParcel(Parcel source) {
             VpnInfo info = new VpnInfo();
             info.ownerUid = source.readInt();
+            info.carrierId = source.readInt();
             info.vpnIface = source.readString();
             info.underlyingIfaces = source.readStringArray();
             return info;

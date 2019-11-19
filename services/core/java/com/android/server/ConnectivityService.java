@@ -39,6 +39,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
@@ -5837,7 +5838,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final Set<UidRange> ranges = nai.networkCapabilities.getUids();
-        final int vpnAppUid = nai.networkCapabilities.getEstablishingVpnAppUid();
+        final int vpnAppUid = nai.networkCapabilities.getOwnerId();
         // TODO: this create a window of opportunity for apps to receive traffic between the time
         // when the old rules are removed and the time when new rules are added. To fix this,
         // make eBPF support two whitelisted interfaces so here new rules can be added before the
@@ -6019,7 +6020,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nc == null || lp == null) return false;
         return nai.isVPN()
                 && !nai.networkMisc.allowBypass
-                && nc.getEstablishingVpnAppUid() != Process.SYSTEM_UID
+                && nc.getOwnerId() != Process.SYSTEM_UID
                 && lp.getInterfaceName() != null
                 && (lp.hasIPv4DefaultRoute() || lp.hasIPv6DefaultRoute());
     }
@@ -6068,11 +6069,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // to be removed will never overlap with the new range to be added.
             if (wasFiltering && !prevRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesRemoved(iface, prevRanges,
-                        prevNc.getEstablishingVpnAppUid());
+                        prevNc.getOwnerId());
             }
             if (shouldFilter && !newRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesAdded(iface, newRanges,
-                        newNc.getEstablishingVpnAppUid());
+                        newNc.getOwnerId());
             }
         } catch (Exception e) {
             // Never crash!
@@ -6501,6 +6502,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Have a new default network, release the transition wakelock in
             scheduleReleaseNetworkTransitionWakelock();
         }
+    }
+
+    @VisibleForTesting
+    boolean isVpnNetwork(NetworkAgentInfo vpnNai, NetworkCapabilities newNc) {
+        if (vpnNai == null || newNc == null) {
+            return false;
+        }
+        int ownerId = vpnNai.networkCapabilities.getOwnerId();
+        if (newNc.hasTransport(TRANSPORT_CELLULAR)
+                && vpnNai.networkMisc != null && vpnNai.networkMisc.isCarrierVpn) {
+            ownerId = vpnNai.networkMisc.carrierId;
+        }
+        return ownerId == newNc.getOwnerId();
     }
 
     /**

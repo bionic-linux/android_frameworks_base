@@ -154,6 +154,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkInfo;
+import android.net.NetworkMisc;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
@@ -211,6 +212,7 @@ import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
+import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
@@ -6218,12 +6220,48 @@ public class ConnectivityServiceTest {
         assertEquals(wifiLp, mService.getActiveLinkProperties());
     }
 
+    @Test
+    public void testIsVpnNetwork() {
+        int carrierId = 1234;
+        int ownerUid = Binder.getCallingUid();
+        NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setOwnerIdUnprotected(true);
+        nc.addTransportType(TRANSPORT_CELLULAR);
+        nc.setOwnerId(carrierId);
 
-    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int establishingUid,
+        NetworkMisc vpnMisc = new NetworkMisc();
+        vpnMisc.isCarrierVpn = true;
+        vpnMisc.carrierId = carrierId;
+        NetworkCapabilities vpnNc = new NetworkCapabilities();
+        vpnNc.setOwnerId(ownerUid);
+        NetworkAgentInfo vpnNai = new NetworkAgentInfo(null, null, null, null, null,
+                vpnNc, null, null, null, vpnMisc, null, null, null, null,
+                NetworkFactory.SerialNumber.NONE);
+
+        assertTrue(mService.isVpnNetwork(vpnNai, nc));
+
+        nc.setOwnerId(ownerUid);
+        assertFalse(mService.isVpnNetwork(vpnNai, nc));
+
+        nc.removeTransportType(TRANSPORT_CELLULAR);
+        assertTrue(mService.isVpnNetwork(vpnNai, nc));
+
+        nc.setOwnerId(carrierId);
+        assertFalse(mService.isVpnNetwork(vpnNai, nc));
+
+        assertFalse(mService.isVpnNetwork(null /* vpnNai */, nc));
+
+        assertFalse(mService.isVpnNetwork(
+                vpnNai, null /* networkCapabilities */));
+    }
+
+
+    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int ownerId,
             Set<UidRange> vpnRange) throws Exception {
         final TestNetworkAgentWrapper
                 vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp);
-        vpnNetworkAgent.getNetworkCapabilities().setEstablishingVpnAppUid(establishingUid);
+        vpnNetworkAgent.getNetworkCapabilities().setOwnerId(ownerId);
+        vpnNetworkAgent.getNetworkCapabilities().setOwnerIdUnprotected(true);
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
         mMockVpn.connect();
         mMockVpn.setUids(vpnRange);

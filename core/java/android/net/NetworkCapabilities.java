@@ -23,9 +23,12 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
+import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
 
@@ -54,11 +57,12 @@ import java.util.StringJoiner;
  * connections are metered and all Wi-Fi based connections are not.
  */
 public final class NetworkCapabilities implements Parcelable {
-    private static final String TAG = "NetworkCapabilities";
-    private static final int INVALID_UID = -1;
+    private static final int INVALID_OWNER_ID = TelephonyManager.UNKNOWN_CARRIER_ID;
 
     // Set to true when private DNS is broken.
     private boolean mPrivateDnsBroken;
+    // Set to true when the owner ID can be got by any apps.
+    private boolean mOwnerIdUnprotected;
 
     /**
      * @hide
@@ -87,9 +91,10 @@ public final class NetworkCapabilities implements Parcelable {
         mTransportInfo = null;
         mSignalStrength = SIGNAL_STRENGTH_UNSPECIFIED;
         mUids = null;
-        mEstablishingVpnAppUid = INVALID_UID;
+        mOwnerId = INVALID_OWNER_ID;
         mSSID = null;
         mPrivateDnsBroken = false;
+        mOwnerIdUnprotected = false;
     }
 
     /**
@@ -105,10 +110,11 @@ public final class NetworkCapabilities implements Parcelable {
         mTransportInfo = nc.mTransportInfo;
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
-        mEstablishingVpnAppUid = nc.mEstablishingVpnAppUid;
+        mOwnerId = nc.mOwnerId;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
         mSSID = nc.mSSID;
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
+        mOwnerIdUnprotected = nc.mOwnerIdUnprotected;
     }
 
     /**
@@ -809,31 +815,46 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
-     * UID of the app that manages this network, or INVALID_UID if none/unknown.
+     * ID of the network owner, or {@link INVALID_OWNER_ID} if none / unknown.
      *
-     * This field keeps track of the UID of the app that created this network and is in charge
-     * of managing it. In the practice, it is used to store the UID of VPN apps so it is named
-     * accordingly, but it may be renamed if other mechanisms are offered for third party apps
-     * to create networks.
+     * This field keeps track of the ID of the owner which created this network and is in charge of
+     * managing it. In the practice, if this network is VPN or Wi-Fi network, it is used to store
+     * the UID of the apps which created / provided this network and if this network is cellular
+     * network, it is used to store the ID of the carrier which provides this network.
      *
-     * Because this field is only used in the services side (and to avoid apps being able to
-     * set this to whatever they want), this field is not parcelled and will not be conserved
-     * across the IPC boundary.
+     * This field is only able to be got internally or from the app which owns this network. To
+     * avoid apps being able to set this to whatever they want, this field is not be able to
+     * parcelled from user apps.
      * @hide
      */
-    private int mEstablishingVpnAppUid = INVALID_UID;
+    private int mOwnerId = INVALID_OWNER_ID;
 
     /**
-     * Set the UID of the managing app.
+     * Set the ID of the network owner.
      * @hide
      */
-    public void setEstablishingVpnAppUid(final int uid) {
-        mEstablishingVpnAppUid = uid;
+    public void setOwnerId(final int uid) {
+        mOwnerId = uid;
     }
 
-    /** @hide */
-    public int getEstablishingVpnAppUid() {
-        return mEstablishingVpnAppUid;
+    public int getOwnerId() {
+        return hasPermissionToSeeOwnerId() ? mOwnerId : INVALID_OWNER_ID;
+    }
+
+    /**
+     * Set whether the owner ID can be got by any apps.
+     * @hide
+     */
+    public void setOwnerIdUnprotected(final boolean ownerIdUnprotected) {
+        mOwnerIdUnprotected = ownerIdUnprotected;
+    }
+
+    /**
+     * Returns whether the owner ID can be got by any apps.
+     * @hide
+     */
+    public boolean isOwnerIdUnprotected() {
+        return mOwnerIdUnprotected;
     }
 
     /**
@@ -1229,7 +1250,7 @@ public final class NetworkCapabilities implements Parcelable {
     public boolean satisfiedByUids(@NonNull NetworkCapabilities nc) {
         if (null == nc.mUids || null == mUids) return true; // The network satisfies everything.
         for (UidRange requiredRange : mUids) {
-            if (requiredRange.contains(nc.mEstablishingVpnAppUid)) return true;
+            if (requiredRange.contains(nc.mOwnerId)) return true;
             if (!nc.appliesToUidRange(requiredRange)) {
                 return false;
             }
@@ -1491,6 +1512,8 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeArraySet(mUids);
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
+        dest.writeInt(getOwnerId());
+        dest.writeBoolean(mOwnerIdUnprotected);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1511,6 +1534,14 @@ public final class NetworkCapabilities implements Parcelable {
                         null /* ClassLoader, null for default */);
                 netCap.mSSID = in.readString();
                 netCap.mPrivateDnsBroken = in.readBoolean();
+                int ownerId = in.readInt();
+                netCap.mOwnerId =
+                        Process.isApplicationUid(Binder.getCallingUid())
+                                ? INVALID_OWNER_ID : ownerId;
+                boolean ownerIdUnprotected = in.readBoolean();
+                netCap.mOwnerIdUnprotected =
+                        Process.isApplicationUid(Binder.getCallingUid())
+                                ? false : ownerIdUnprotected;
                 return netCap;
             }
             @Override
@@ -1560,8 +1591,8 @@ public final class NetworkCapabilities implements Parcelable {
                 sb.append(" Uids: <").append(mUids).append(">");
             }
         }
-        if (mEstablishingVpnAppUid != INVALID_UID) {
-            sb.append(" EstablishingAppUid: ").append(mEstablishingVpnAppUid);
+        if (mOwnerId != INVALID_OWNER_ID) {
+            sb.append(" EstablishingAppUid: ").append(mOwnerId);
         }
 
         if (null != mSSID) {
@@ -1746,5 +1777,12 @@ public final class NetworkCapabilities implements Parcelable {
 
     private boolean equalsPrivateDnsBroken(NetworkCapabilities nc) {
         return mPrivateDnsBroken == nc.mPrivateDnsBroken;
+    }
+
+    private boolean hasPermissionToSeeOwnerId() {
+        int callerId = Binder.getCallingUid();
+        return mOwnerIdUnprotected
+                || !Process.isApplicationUid(callerId)
+                || mOwnerId == callerId;
     }
 }

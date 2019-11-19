@@ -967,8 +967,16 @@ public class Vpn {
 
         NetworkMisc networkMisc = new NetworkMisc();
         networkMisc.allowBypass = mConfig.allowBypass && !mLockdown;
+        networkMisc.isCarrierVpn = !isVpnUserPreConsented(mPackage);
+        if (networkMisc.isCarrierVpn) {
+            int subId = SubscriptionManager.getDefaultDataSubscriptionId();
+            // Set carrier ID only for VPN started by carrier app without user consent.
+            TelephonyManager tm =
+                    TelephonyManager.from(mContext).createForSubscriptionId(subId);
+            networkMisc.carrierId = tm.getCarrierIdFromSimMccMnc();
+        }
 
-        mNetworkCapabilities.setEstablishingVpnAppUid(Binder.getCallingUid());
+        mNetworkCapabilities.setOwnerId(Binder.getCallingUid());
         mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserHandle,
                 mConfig.allowedApplications, mConfig.disallowedApplications));
         long token = Binder.clearCallingIdentity();

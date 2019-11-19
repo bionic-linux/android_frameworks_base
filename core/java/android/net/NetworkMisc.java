@@ -36,6 +36,18 @@ public class NetworkMisc implements Parcelable {
     public boolean allowBypass;
 
     /**
+     * If the {@link Network} is a VPN, whether the VPN is started by carrier apps without user
+     * consent. This is set by a {@link VpnService} and used by {@link ConnectivityManager} when
+     * creating a VPN.
+     */
+    public boolean isCarrierVpn;
+
+    /**
+     * If the {@link Network} is a carrier VPN, the ID of the carrier which owns this VPN.
+     */
+    public int carrierId;
+
+    /**
      * Set if the network was manually/explicitly connected to by the user either from settings
      * or a 3rd party app.  For example, turning on cell data is not explicit but tapping on a wifi
      * ap in the wifi settings to trigger a connection is explicit.  A 3rd party app asking to
@@ -89,6 +101,8 @@ public class NetworkMisc implements Parcelable {
     public NetworkMisc(NetworkMisc nm) {
         if (nm != null) {
             allowBypass = nm.allowBypass;
+            isCarrierVpn = nm.isCarrierVpn;
+            carrierId = nm.carrierId;
             explicitlySelected = nm.explicitlySelected;
             acceptUnvalidated = nm.acceptUnvalidated;
             subscriberId = nm.subscriberId;
@@ -105,6 +119,8 @@ public class NetworkMisc implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(allowBypass ? 1 : 0);
+        out.writeInt(isCarrierVpn ? 1 : 0);
+        out.writeInt(carrierId);
         out.writeInt(explicitlySelected ? 1 : 0);
         out.writeInt(acceptUnvalidated ? 1 : 0);
         out.writeString(subscriberId);
@@ -117,6 +133,8 @@ public class NetworkMisc implements Parcelable {
         public NetworkMisc createFromParcel(Parcel in) {
             NetworkMisc networkMisc = new NetworkMisc();
             networkMisc.allowBypass = in.readInt() != 0;
+            networkMisc.isCarrierVpn = in.readInt() != 0;
+            networkMisc.carrierId = in.readInt();
             networkMisc.explicitlySelected = in.readInt() != 0;
             networkMisc.acceptUnvalidated = in.readInt() != 0;
             networkMisc.subscriberId = in.readString();
