@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "3bbcb62b_f0457779",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T09:29:06Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "95ee0c9e_55dd32ce",
+      "range": {
+        "startLine": 5534,
+        "startChar": 8,
+        "endLine": 5534,
+        "endChar": 48
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa200285_85676116",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "I think so, but I think doing this now might be in the way of the refactoring. Maybe we want to do this later.",
       "parentUuid": "aa200285_85676116",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6399,
+        "endChar": 21
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03fa4503_9731a64b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-19T09:29:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4ff0df2_7f8ef5c7",
       "range": {
         "startLine": 6396,
         "startChar": 20,
