@@ -22,6 +22,30 @@
       "revId": "ad50918d3709eb1da34949c0cec4572de8d13a2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5090d2fc_dc77bd41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:36Z",
+      "side": 1,
+      "message": "Makes sense. Fixed.",
+      "parentUuid": "eb1bbe65_e026c1b2",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "ad50918d3709eb1da34949c0cec4572de8d13a2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
