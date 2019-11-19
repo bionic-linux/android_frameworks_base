@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "4ad941a9_2746a1e4",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T12:09:36Z",
+      "side": 1,
+      "message": "Because mocks will always compare to the last time it was reset. So if I don\u0027t reset here and the next broadcast is not sent, l.80 will still succeed instead of failing.",
+      "parentUuid": "e463915e_1909657d",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53c25fab_fdea0ee1",
         "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
         "patchSetId": 2
@@ -257,6 +281,30 @@
       "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6358309_c0542faa",
+        "filename": "tests/net/java/com/android/server/LegacyTypeTrackerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T12:09:36Z",
+      "side": 1,
+      "message": "This is a mistake on my part, we should see one of each type. The reason the test passes is the answer to your question in l.78 : sure, there was a call with MOBILE_SUPL, so checking for that twice passes twice.\n\nFixed, thanks for noticing.",
+      "parentUuid": "53c25fab_fdea0ee1",
+      "range": {
+        "startLine": 89,
+        "startChar": 81,
+        "endLine": 89,
+        "endChar": 97
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
