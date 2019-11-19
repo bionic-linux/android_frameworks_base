@@ -22,6 +22,30 @@
       "revId": "4504cc4636ad40a481dbc1907361a9ef3267eed3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a6185c_4a62e810",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3961,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-19T03:24:19Z",
+      "side": 1,
+      "message": "Make sense. Move this to the beginning of the systemReady.",
+      "parentUuid": "ad20fdc0_daad074f",
+      "range": {
+        "startLine": 3957,
+        "startChar": 0,
+        "endLine": 3961,
+        "endChar": 57
+      },
+      "revId": "4504cc4636ad40a481dbc1907361a9ef3267eed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

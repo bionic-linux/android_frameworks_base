@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "956b9b07_9e56132d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-19T03:24:19Z",
+      "side": 1,
+      "message": "My original thought is to seperate this fix that will be easier to sync to old android version. But I found it\u0027s too complicated to modify PermissionMonitorTest simultaneously for both commits. So I have merged them together.",
+      "parentUuid": "ac764098_fed9469f",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 13
+      },
+      "revId": "c4f2a86f71ae4f97426fbe1f05df1f7715be0a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a148fe33_efdb3647",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
