@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "25d1d86e_7ecdc0f6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3420,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T12:20:03Z",
+      "side": 1,
+      "message": "I think you\u0027re right. It\u0027s the right time to remove them.\nInlined all calls to get, and removed set as it had no more callers.",
+      "parentUuid": "7c4876ee_d370b427",
+      "revId": "261a019c9d8afa4ea722b36bed85b74195263af1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4623dfb7_f08a8a2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
