@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3a30a5c_4ec86e8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Ack, current they still don\u0027t have return value even ConnectivityService is out of loop. Agree to have better design, let me fix this separately. b/144336878",
+      "parentUuid": "27e5cdb8_4816d2b8",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7286c8f0_45af3972",
         "filename": "packages/Tethering/AndroidManifest_InProcess.xml",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58345396_1c33f009",
+        "filename": "packages/Tethering/AndroidManifest_InProcess.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "This is temporary change, since tethering is still in system server instead of network stack which means it don\u0027t use the same key as network stack. So tethering is not able to use MAINLINE_NETWORK_STACK. It is changed at https://android-review.googlesource.com/c/platform/frameworks/base/+/1156906/8/services/net/java/android/net/TetheringClient.java#91",
+      "parentUuid": "7286c8f0_45af3972",
+      "range": {
+        "startLine": 27,
+        "startChar": 56,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f75ac1e_c07eb518",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "We can\u0027t change availableList to usccessfulList which exclude error interface. Because the error may be temporary, user should able to try to use these error interfaces for tethering again.\nSUCCESS list looks strange to me. No error(SUCCESS) seems need to cover the interface in availableList and tetheredList/localOnlyList. These two variables is highly tight with API #getTetheringErroredIfaces/#getLastTetherError. I think we should consider to refine these two APIs instead.",
+      "parentUuid": "990bdd2b_e65a3120",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d73624c_ac5e14d6",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringConfigurationParcel.aidl",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a5341638_a279540a",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringConfigurationParcel.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Ack, will separate them in follow up Cl. b/144336709",
+      "parentUuid": "6d73624c_ac5e14d6",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a92709cc_93ae6a49",
         "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2019-11-05T15:02:12Z",
       "side": 1,
       "message": "I might be losing my C++ now, but my recollection is that this cast shouldn\u0027t be necessary as any pointer is a void*. Please ignore if I\u0027m getting this wrong",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb010492_8892433e",
+        "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "We need to let compile know we would change the pointer type. If we remove reinterpret_cat\u003cvoid**\u003e, compile would says:\ncannot initialize a parameter of type \u0027void **\u0027 with an rvalue of type \u0027JNIEnv **\u0027 (aka \u0027_JNIEnv **\u0027)\nOr you are saying we just need to change it to (void**)(\u0026env) ?? I think this is work too.",
+      "parentUuid": "a92709cc_93ae6a49",
       "range": {
         "startLine": 150,
         "startChar": 19,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "a0490fa7_7025fc45",
+        "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253d2fa2_ab58ee2f",
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ad6cf6_3574cd7e",
         "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
         "patchSetId": 10
@@ -154,6 +292,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420aa949_291b4ccf",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Yes, I miss to remove original one. Now it done as removed instead of copied.",
+      "parentUuid": "e5ad6cf6_3574cd7e",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "08a5e920_942936c7",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Ack, this is just a moved file. Will refine this separately.",
+      "parentUuid": "bf3f5fd2_e4036003",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "514a7f5d_bb1fb3d7",
         "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
         "patchSetId": 10
@@ -200,6 +386,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72577e17_7d576c6c",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "514a7f5d_bb1fb3d7",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 16
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "9a7ae484_ee89e3dc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Yes, this is temporary as my comment at l.105.",
+      "parentUuid": "b3d4121a_4fb2113c",
+      "range": {
+        "startLine": 108,
+        "startChar": 11,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c491038_2eaa4893",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
         "patchSetId": 10
@@ -246,6 +480,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4087b2f_cd053333",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringDependencies.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "No, this API used in TetheringSrvice and TetheringServiceTest. Both of them should override this API as below:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1131002/14/packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java#2107",
+      "parentUuid": "0c491038_2eaa4893",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 19
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +553,54 @@
     },
     {
       "key": {
+        "uuid": "1fdf47cd_ad4da178",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dff92fcc_1c76e2b1",
+      "range": {
+        "startLine": 381,
+        "startChar": 56,
+        "endLine": 381,
+        "endChar": 61
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f2b5e23_4dd638aa",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba57a1bc_37d74aee",
+      "range": {
+        "startLine": 381,
+        "startChar": 30,
+        "endLine": 381,
+        "endChar": 38
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c642347_c9b790f5",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 10
@@ -315,6 +621,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e606f0b7_dcbaba40",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "I don\u0027t put this API in to stable AIDL. These API already change to callback. These API is just used for testing now. Note: we don\u0027t remove the API in ConnectivityManager because it already be public.",
+      "parentUuid": "5c642347_c9b790f5",
+      "range": {
+        "startLine": 1139,
+        "startChar": 7,
+        "endLine": 1139,
+        "endChar": 65
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "8c963f38_201701af",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb26a59_5b582607",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 38
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d21a63ae_9d4f3f26",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 10
@@ -456,6 +810,30 @@
     },
     {
       "key": {
+        "uuid": "f993cff1_41a44a26",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Original I want to move these code into Tethering if tethering can know restrict background change by itself, so I don\u0027t expose untetherAll() API. But it seems networkpolicymanager would not public as systemApi in R, this should be fixed by b/142374233 which is tracking for how to let tethering know restrictBackgound and let networkpolicy know tethering status.",
+      "parentUuid": "0625be90_9be0a3f0",
+      "range": {
+        "startLine": 1889,
+        "startChar": 16,
+        "endLine": 1889,
+        "endChar": 33
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3876ea_69a2cd2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -479,6 +857,30 @@
     },
     {
       "key": {
+        "uuid": "917aa775_ed152f82",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4075,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Ohh, thanks for catch this. This should be removed. BTW I think clear calling identity in l.4083 is wrong. isAdminUser() would always return true after clearing calling identity. Because there are no mutliple systemServer process for multiple user. ConnectivityService always own by AdminUser.",
+      "parentUuid": "1d3876ea_69a2cd2a",
+      "range": {
+        "startLine": 4075,
+        "startChar": 12,
+        "endLine": 4075,
+        "endChar": 83
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfab07d_78f34e71",
         "filename": "services/java/com/android/server/SystemServer.java",
         "patchSetId": 10
@@ -499,6 +901,30 @@
       "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1644e9e_af2b3370",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 1,
+      "message": "Yes, this is done by follow up changes. You can reference https://android-review.googlesource.com/c/platform/frameworks/base/+/1157049/7/services/net/java/android/net/NetworkStackClient.java",
+      "parentUuid": "cbfab07d_78f34e71",
+      "range": {
+        "startLine": 2187,
+        "startChar": 16,
+        "endLine": 2187,
+        "endChar": 55
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

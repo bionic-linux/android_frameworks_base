@@ -22,6 +22,30 @@
       "revId": "ea91961c2e0ff0d01d3dfa8124dc4dc0b7497fbd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37ae728_31e5abe2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-19T10:22:41Z",
+      "side": 0,
+      "message": "Ack, make sense but allow me to fix this in separate CL. To save the time, I want to base on the last CL to change this, otherwise I will need to fix conflict for all of the follow up CLs.\nTracking at b/144742179",
+      "parentUuid": "9d96ceaf_b75019a4",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "ea91961c2e0ff0d01d3dfa8124dc4dc0b7497fbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
