@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9305194_5d64d329",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3166,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655028d9_3be85d72",
+      "range": {
+        "startLine": 3166,
+        "startChar": 12,
+        "endLine": 3166,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635448e5_5c9c620e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e136d7_520a8bd5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3402,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635448e5_5c9c620e",
+      "range": {
+        "startLine": 3402,
+        "startChar": 12,
+        "endLine": 3402,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6cedd4cb_d971030f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "Makes sense yes. Thanks.",
+      "parentUuid": "905e09f2_30df9598",
+      "range": {
+        "startLine": 5105,
+        "startChar": 25,
+        "endLine": 5105,
+        "endChar": 35
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf0a3fc_df462d0c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69be8f22_46cd81b3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5533,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf0a3fc_df462d0c",
+      "range": {
+        "startLine": 5533,
+        "startChar": 12,
+        "endLine": 5533,
+        "endChar": 28
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "95ee0c9e_55dd32ce",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "It\u0027s to help reading and reviewing, as well as a wedge against future mistakes. It\u0027s very difficult, when you read the code, to know from this function on what thread it is called. You can do analysis but as this is called from all over the place it takes a lot of time and sometimes it\u0027s very complex.\n\nBefore this patch, the call was synchronized and no thread guarantees were necessary. In this patch, I change the implementation to return a field that must only be accessed on the CS thread. I think this is the only tractable and self-documenting way to actually give confidence to readers (and indeed, to me as an implementor) that this will never be called on the wrong thread, breaking invariants.\n\nDoes that make sense ?",
+      "parentUuid": "786eb758_7a209c62",
+      "range": {
+        "startLine": 5534,
+        "startChar": 8,
+        "endLine": 5534,
+        "endChar": 48
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa200285_85676116",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ff0df2_7f8ef5c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T08:02:07Z",
+      "side": 1,
+      "message": "I think so, but I think doing this now might be in the way of the refactoring. Maybe we want to do this later.",
+      "parentUuid": "aa200285_85676116",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6399,
+        "endChar": 21
+      },
+      "revId": "9c7a6561af27384ff0ac719ba4a1d33f438c06c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
