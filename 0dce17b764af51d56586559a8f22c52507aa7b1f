@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d512a02f_89ac04fb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T11:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565c4a36_b7e8f1f8",
+      "range": {
+        "startLine": 1304,
+        "startChar": 8,
+        "endLine": 1308,
+        "endChar": 83
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a47973b6_a3fea914",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -163,6 +187,30 @@
       "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf27cb9_21a4ef4e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-19T11:59:40Z",
+      "side": 1,
+      "message": "1. Yes actually there is ad-hoc code in LegacyTypeTracker replacing the action if the type is SUPL. It\u0027s pretty hacky. https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/ConnectivityService.java;l\u003d2158?q\u003dconnectivityservice.java\n\n2. Then let\u0027s keep the current signature. We\u0027ll do this if we start having more use of this specific form. For now the generic form is probably enough.\nI do agree with your comment that we should check for both to be sent though. I don\u0027t want the order to be contractual, so I implemented a small hack to check that there was one for each type. See what you think.",
+      "parentUuid": "a47973b6_a3fea914",
+      "range": {
+        "startLine": 1341,
+        "startChar": 74,
+        "endLine": 1342,
+        "endChar": 21
+      },
+      "revId": "0dce17b764af51d56586559a8f22c52507aa7b1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
