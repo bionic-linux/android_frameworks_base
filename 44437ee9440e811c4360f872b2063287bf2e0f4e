@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e6ca5227_af662315",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T11:42:55Z",
+      "side": 1,
+      "message": "No, this is absolutely required. This sets up the state in NetworkAgentInfo that updateLingerState will read from.\n\nIt\u0027s a bit confusing but here is how this happens :\n\npreviousSatisfier.lingerRequest() (NetworkAgentInfo#lingerRequest) will add an entry in previousSatisfier.mLingerTimers(:SortedSet) and .mLingerTimerForRequest(:SparseArray) with the id of this request.\n\nIn l.6493, updateLingerState will read mLingerTimers.last() and reschedule the message for that time.",
+      "parentUuid": "eebb5ce1_ed410062",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6396,
+        "endChar": 86
+      },
+      "revId": "44437ee9440e811c4360f872b2063287bf2e0f4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df960e6c_bc216546",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
@@ -68,6 +92,30 @@
       "revId": "44437ee9440e811c4360f872b2063287bf2e0f4e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24c2eaa_db46cc4b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6401,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T11:42:55Z",
+      "side": 1,
+      "message": "Same thing.",
+      "parentUuid": "df960e6c_bc216546",
+      "range": {
+        "startLine": 6401,
+        "startChar": 16,
+        "endLine": 6401,
+        "endChar": 58
+      },
+      "revId": "44437ee9440e811c4360f872b2063287bf2e0f4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
