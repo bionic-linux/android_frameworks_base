@@ -3842,4 +3842,8 @@
   <java-symbol type="layout" name="platlogo_layout" />
 
   <java-symbol type="bool" name="config_automotiveHideNavBarForKeyboard" />
+
+  <!-- For Wigig (60GHz) feature -->
+  <java-symbol type="string" name="config_wigigInterfaceName" />
+  <java-symbol type="array" name="config_tetherFstRegexs" />
 </resources>

@@ -94,6 +94,8 @@ public class IpServer extends StateMachine {
     private static final int WIFI_HOST_IFACE_PREFIX_LENGTH = 24;
     private static final String WIFI_P2P_IFACE_ADDR = "192.168.49.1";
     private static final int WIFI_P2P_IFACE_PREFIX_LENGTH = 24;
+    private static final String WIGIG_HOST_IFACE_ADDR = "192.168.50.1";
+    private static final int WIGIG_HOST_IFACE_PREFIX_LENGTH = 24;
 
     // TODO: have PanService use some visible version of this constant
     private static final String BLUETOOTH_IFACE_ADDR = "192.168.44.1";
@@ -429,6 +431,9 @@ public class IpServer extends StateMachine {
             } else if (mInterfaceType == TetheringManager.TETHERING_WIFI_P2P) {
                 srvAddr = (Inet4Address) parseNumericAddress(WIFI_P2P_IFACE_ADDR);
                 prefixLen = WIFI_P2P_IFACE_PREFIX_LENGTH;
+            } else if (mInterfaceType == TetheringManager.TETHERING_WIGIG) {
+                srvAddr = (Inet4Address) parseNumericAddress(WIGIG_HOST_IFACE_ADDR);
+                prefixLen = WIGIG_HOST_IFACE_PREFIX_LENGTH;
             } else {
                 // BT configures the interface elsewhere: only start DHCP.
                 // TODO: make all tethering types behave the same way, and delete the bluetooth
