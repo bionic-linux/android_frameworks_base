@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0b3d6e_912aaaf9",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2019-11-20T11:27:00Z",
+      "side": 1,
+      "message": "Do we need this annotation ? It would put this method into greylist, and would allow apps to access it.\n\nThis is not a security issue, since apps are already able to initate bonding, but it\u0027s for settings only, so should n\u0027t need this annotation at all.",
+      "range": {
+        "startLine": 1251,
+        "startChar": 3,
+        "endLine": 1251,
+        "endChar": 24
+      },
+      "revId": "47e85d21e3e195810022ab0e699ed8d26857ec9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
