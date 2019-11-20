@@ -213,6 +213,30 @@
       "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e9356d2_e2519b9a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-20T11:45:25Z",
+      "side": 1,
+      "message": "Yes sorry. Removed in the last patchset.",
+      "parentUuid": "ad33b7ea_73586ca4",
+      "range": {
+        "startLine": 6356,
+        "startChar": 16,
+        "endLine": 6356,
+        "endChar": 34
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
