@@ -22,6 +22,30 @@
       "revId": "b474c4b0f51296a27a22975f3c6cb729a5b50fc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66963b8_f64c804f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4303,
+      "author": {
+        "id": 1595236
+      },
+      "writtenOn": "2019-11-20T03:39:09Z",
+      "side": 1,
+      "message": "Hi Tyler,\nYes, as you said, in some cases, the user may hear the DTMF sounded twice by the modem and local.\nTherefore, we configure the default value to false, and configure it to true in the device directory where the modem does not play DTMF. When the value is set to true, enables local  DTMF tones in Telecom side.While,when it is false, it plays DTMF tone on the modem side.\n\nXinwei",
+      "parentUuid": "49477b84_5601fc55",
+      "range": {
+        "startLine": 4303,
+        "startChar": 44,
+        "endLine": 4303,
+        "endChar": 49
+      },
+      "revId": "b474c4b0f51296a27a22975f3c6cb729a5b50fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
