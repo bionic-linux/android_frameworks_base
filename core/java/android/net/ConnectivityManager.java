@@ -474,6 +474,13 @@ public class ConnectivityManager {
     public static final int TETHERING_WIFI_P2P = TetheringManager.TETHERING_WIFI_P2P;
 
     /**
+     * WIGIG tethering type. Use a separate type to prevent
+     * conflicts with TETHERING_WIFI
+     * @hide
+     */
+    public static final int TETHERING_WIGIG = 4;
+
+    /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
      * @hide

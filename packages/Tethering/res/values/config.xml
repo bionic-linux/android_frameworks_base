@@ -166,4 +166,12 @@
          state. -->
     <!-- Config for showing upstream roaming notification. -->
     <bool name="config_upstream_roaming_notification">false</bool>
+
+    <!-- Wigig (60GHz) network interface name -->
+    <string name="config_wigig_interface_name"></string>
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+     FST interfaces.  If the device doesn't want to support tethering over FST this
+     should be empty.  An example would be "bond\\d" -->
+    <string-array translatable="false" name="config_tether_fst_regexs">
+    </string-array>
 </resources>
