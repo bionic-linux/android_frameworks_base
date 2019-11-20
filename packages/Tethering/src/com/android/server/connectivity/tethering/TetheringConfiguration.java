@@ -26,6 +26,7 @@ import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
 import static com.android.internal.R.array.config_tether_bluetooth_regexs;
 import static com.android.internal.R.array.config_tether_dhcp_range;
+import static com.android.internal.R.array.config_tetherFstRegexs;
 import static com.android.internal.R.array.config_tether_upstream_types;
 import static com.android.internal.R.array.config_tether_usb_regexs;
 import static com.android.internal.R.array.config_tether_wifi_p2p_regexs;
@@ -39,6 +40,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.util.SharedLog;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -111,7 +113,11 @@ public class TetheringConfiguration {
         // TODO: Evaluate deleting this altogether now that Wi-Fi always passes
         // us an interface name. Careful consideration needs to be given to
         // implications for Settings and for provisioning checks.
-        tetherableWifiRegexs = getResourceStringArray(res, config_tether_wifi_regexs);
+        if (SystemProperties.getInt("persist.vendor.fst.softap.en", 0) == 1) {
+            tetherableWifiRegexs = getResourceStringArray(res, config_tetherFstRegexs);
+        } else {
+            tetherableWifiRegexs = getResourceStringArray(res, config_tether_wifi_regexs);
+        }
         tetherableWifiP2pRegexs = getResourceStringArray(res, config_tether_wifi_p2p_regexs);
         tetherableBluetoothRegexs = getResourceStringArray(res, config_tether_bluetooth_regexs);
 
@@ -140,7 +146,14 @@ public class TetheringConfiguration {
 
     /** Check whether input interface belong to wifi.*/
     public boolean isWifi(String iface) {
-        return matchesDownstreamRegexs(iface, tetherableWifiRegexs);
+        return matchesDownstreamRegexs(iface, tetherableWifiRegexs) &&
+                !iface.equals(com.android.internal.R.string.config_wigigInterfaceName);
+    }
+
+    /** Check whether input interface belong to wigig.*/
+    public boolean isWigig(String iface) {
+        return matchesDownstreamRegexs(iface, tetherableWifiRegexs) &&
+                iface.equals(com.android.internal.R.string.config_wigigInterfaceName);
     }
 
     /** Check whether this interface is Wifi P2P interface. */

@@ -4307,4 +4307,12 @@
     <!-- The list of packages to automatically opt out of refresh rates higher than 60hz because
          of known compatibility issues. -->
     <string-array name="config_highRefreshRateBlacklist"></string-array>
+
+    <!-- Wigig (60GHz) network interface name -->
+    <string name="config_wigigInterfaceName"></string>
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+     FST interfaces.  If the device doesn't want to support tethering over FST this
+     should be empty.  An example would be "bond.*" -->
+    <string-array translatable="false" name="config_tetherFstRegexs">
+    </string-array>
 </resources>
