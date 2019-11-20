@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "88ac9b78_d82b7593",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6342,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-20T02:56:39Z",
+      "side": 1,
+      "message": "IIUC this is a list of networks that we removed request from it, but not requests.\nBut yes in this context this might be clearest.",
+      "parentUuid": "a6f3e67c_2518485e",
+      "range": {
+        "startLine": 6342,
+        "startChar": 42,
+        "endLine": 6342,
+        "endChar": 58
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0dd5e8e_cc859eca",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -165,6 +189,30 @@
       "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad33b7ea_73586ca4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6356,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-20T02:56:39Z",
+      "side": 1,
+      "message": "Thanks.\nnit: Are you already planning to remove this line in somewhere?\nIf not we might need some comments for this line, given that it might confuse others.",
+      "parentUuid": "049149cb_7772c854",
+      "range": {
+        "startLine": 6356,
+        "startChar": 16,
+        "endLine": 6356,
+        "endChar": 34
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
