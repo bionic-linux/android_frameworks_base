@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b6c6748_551384de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6417,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-20T03:12:14Z",
+      "side": 1,
+      "message": "getNetworkForRequest() has removed in [NS A03], so here may be changed to:\nfinal NetworkAgentInfo previousSatisfier \u003d nri.mSatisfier;",
+      "range": {
+        "startLine": 6417,
+        "startChar": 55,
+        "endLine": 6417,
+        "endChar": 80
+      },
+      "revId": "63eed0948eb81e28344ac89858a8fd8c2d7355a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
