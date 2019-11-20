@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f9df2f8_bd79ed76",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-11-20T12:00:08Z",
+      "side": 1,
+      "message": "I think they are doing different things.\nFrom my point of view, NetworkAgentInfo#lingerRequest() is doing something like silent lingering.\nAfter the new network told the world that it is available, updateLingerState() will update linger timer of the old network and re-schedule the EVENT_NETWORK_LINGER_COMPLETE then double check if the old network is really unneeded.\nIf there is someone(network request) needs the old network, then cancel the linger.\nIf there is no one cares about the old network, then fire the losing callback and wait for the linger timer expired.",
+      "parentUuid": "eebb5ce1_ed410062",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6396,
+        "endChar": 86
+      },
+      "revId": "44437ee9440e811c4360f872b2063287bf2e0f4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df960e6c_bc216546",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
