@@ -114,6 +114,8 @@ public class IpServer extends StateMachine {
     private static final int WIFI_P2P_IFACE_PREFIX_LENGTH = 24;
     private static final String ETHERNET_IFACE_ADDR = "192.168.50.1";
     private static final int ETHERNET_IFACE_PREFIX_LENGTH = 24;
+    private static final String WIGIG_HOST_IFACE_ADDR = "192.168.51.1";
+    private static final int WIGIG_HOST_IFACE_PREFIX_LENGTH = 24;
 
     // TODO: have PanService use some visible version of this constant
     private static final String BLUETOOTH_IFACE_ADDR = "192.168.44.1";
@@ -602,7 +604,8 @@ public class IpServer extends StateMachine {
                 srvAddr = (Inet4Address) parseNumericAddress(USB_NEAR_IFACE_ADDR);
                 prefixLen = USB_PREFIX_LENGTH;
             } else if (mInterfaceType == TetheringManager.TETHERING_WIFI) {
-                srvAddr = (Inet4Address) parseNumericAddress(getRandomWifiIPv4Address());
+                srvAddr = (Inet4Address) parseNumericAddress(getRandomWifiIPv4Address(
+                    WIFI_HOST_IFACE_ADDR));
                 prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
             } else if (mInterfaceType == TetheringManager.TETHERING_WIFI_P2P) {
                 srvAddr = (Inet4Address) parseNumericAddress(WIFI_P2P_IFACE_ADDR);
@@ -611,6 +614,10 @@ public class IpServer extends StateMachine {
                 // TODO: randomize address for tethering too, similarly to wifi
                 srvAddr = (Inet4Address) parseNumericAddress(ETHERNET_IFACE_ADDR);
                 prefixLen = ETHERNET_IFACE_PREFIX_LENGTH;
+            } else if (mInterfaceType == TetheringManager.TETHERING_WIGIG) {
+                srvAddr = (Inet4Address) parseNumericAddress(getRandomWifiIPv4Address(
+                    WIGIG_HOST_IFACE_ADDR));
+                prefixLen = WIGIG_HOST_IFACE_PREFIX_LENGTH;
             } else {
                 // BT configures the interface elsewhere: only start DHCP.
                 // TODO: make all tethering types behave the same way, and delete the bluetooth
@@ -628,7 +635,8 @@ public class IpServer extends StateMachine {
 
         final Boolean setIfaceUp;
         if (mInterfaceType == TetheringManager.TETHERING_WIFI
-                || mInterfaceType == TetheringManager.TETHERING_WIFI_P2P) {
+                || mInterfaceType == TetheringManager.TETHERING_WIFI_P2P
+                || mInterfaceType == TetheringManager.TETHERING_WIGIG) {
             // The WiFi stack has ownership of the interface up/down state.
             // It is unclear whether the Bluetooth or USB stacks will manage their own
             // state.
@@ -657,13 +665,13 @@ public class IpServer extends StateMachine {
         return configureDhcp(enabled, mIpv4Address, mStaticIpv4ClientAddr);
     }
 
-    private String getRandomWifiIPv4Address() {
+    private String getRandomWifiIPv4Address(String baseAddress) {
         try {
-            byte[] bytes = parseNumericAddress(WIFI_HOST_IFACE_ADDR).getAddress();
+            byte[] bytes = parseNumericAddress(baseAddress).getAddress();
             bytes[3] = getRandomSanitizedByte(DOUG_ADAMS, asByte(0), asByte(1), FF);
             return InetAddress.getByAddress(bytes).getHostAddress();
         } catch (Exception e) {
-            return WIFI_HOST_IFACE_ADDR;
+            return baseAddress;
         }
     }
 
