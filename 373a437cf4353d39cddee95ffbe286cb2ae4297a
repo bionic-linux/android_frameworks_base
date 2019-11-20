@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9711fe7f_6a9a1700",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-11-20T10:55:45Z",
+      "side": 1,
+      "message": "can be final",
+      "revId": "373a437cf4353d39cddee95ffbe286cb2ae4297a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac8e9d0_5336fca1",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTestable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2019-11-20T10:55:45Z",
+      "side": 1,
+      "message": "what are these for ? who\u0027s using them ?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "373a437cf4353d39cddee95ffbe286cb2ae4297a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
