@@ -31,6 +31,7 @@ import static android.net.ConnectivityManager.TETHERING_INVALID;
 import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHERING_WIFI_P2P;
+import static android.net.ConnectivityManager.TETHERING_WIGIG;
 import static android.net.ConnectivityManager.TETHER_ERROR_MASTER_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL;
@@ -360,7 +361,8 @@ public class Tethering {
             if (up) {
                 maybeTrackNewInterfaceLocked(iface);
             } else {
-                if (ifaceNameToType(iface) == TETHERING_BLUETOOTH) {
+                if (ifaceNameToType(iface) == TETHERING_BLUETOOTH ||
+                    ifaceNameToType(iface) == TETHERING_WIGIG) {
                     stopTrackingInterfaceLocked(iface);
                 } else {
                     // Ignore usb0 down after enabling RNDIS.
@@ -384,6 +386,8 @@ public class Tethering {
             return TETHERING_WIFI;
         } else if (cfg.isWifiP2p(iface)) {
             return TETHERING_WIFI_P2P;
+        } else if (cfg.isWigig(iface)) {
+            return TETHERING_WIGIG;
         } else if (cfg.isUsb(iface)) {
             return TETHERING_USB;
         } else if (cfg.isBluetooth(iface)) {
