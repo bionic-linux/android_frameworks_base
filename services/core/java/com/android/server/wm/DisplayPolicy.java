@@ -1338,13 +1338,15 @@ public class DisplayPolicy {
     }
 
     private static int getImpliedSysUiFlagsForLayout(LayoutParams attrs) {
-        int impliedFlags = 0;
-        final boolean forceWindowDrawsBarBackgrounds =
-                (attrs.privateFlags & PRIVATE_FLAG_FORCE_DRAW_BAR_BACKGROUNDS) != 0
-                && attrs.height == MATCH_PARENT && attrs.width == MATCH_PARENT;
+       int impliedFlags = 0;
+        if ((attrs.flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0) {
+            impliedFlags |= View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+        }
+        final boolean forceWindowDrawsStatusBarBackground =
+                (attrs.privateFlags & PRIVATE_FLAG_FORCE_DRAW_BAR_BACKGROUNDS/*PRIVATE_FLAG_FORCE_DRAW_STATUS_BAR_BACKGROUND*/) != 0;
         if ((attrs.flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0
-                || forceWindowDrawsBarBackgrounds) {
-            impliedFlags |= SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
+                || forceWindowDrawsStatusBarBackground
+                        && attrs.height == MATCH_PARENT && attrs.width == MATCH_PARENT) {
             impliedFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
         }
         return impliedFlags;
