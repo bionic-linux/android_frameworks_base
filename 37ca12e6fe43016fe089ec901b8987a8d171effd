@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff8cca65_ad15722c",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-11-21T19:44:16Z",
+      "side": 1,
+      "message": "CallLog table is actually part of the ContactsProvider (CallLogProvider.java). You will have to add missed information as part of the calls projection map and create the new column in ContactsDatabaseHelper.",
+      "range": {
+        "startLine": 781,
+        "startChar": 23,
+        "endLine": 781,
+        "endChar": 41
+      },
+      "revId": "37ca12e6fe43016fe089ec901b8987a8d171effd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
