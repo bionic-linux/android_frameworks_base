@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db41ed32_533c1440",
+        "filename": "core/java/android/os/ResultReceiver.aidl",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "I think ideally we\u0027d like to remove usage of this (we had problems with subclassing it). Maybe file a bug. (I\u0027m happy publishing R with this if we don\u0027t have time)",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ff4b31_98a33cc0",
+        "filename": "packages/Tethering/AndroidManifest_InProcess.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "This TODO is done right ? The manifest for the module is already done in this patch.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ef9286_baaf2c2d",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetherInternalCallback.aidl",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Optional : maybe \"onConnected\" or something. I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ccc5f3_ed0e814d",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Maybe add a TODO here with a ref to the bug to correct that interface",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af44687b_ef5aa753",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "How was this loaded before ?",
+      "range": {
+        "startLine": 111,
+        "startChar": 28,
+        "endLine": 111,
+        "endChar": 44
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15aaa955_0d14cd74",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Removing all these finals is extremely dangerous. I don\u0027t think you know what threading guarantees of final this code used to rely on.\n\nA fairly common pattern is to have the service hold a single non-final member that will be initialized in onCreate, and have that member hold all the final attributes.",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 12
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e207470a_2cc66c6d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 660,
+        "startChar": 8,
+        "endLine": 660,
+        "endChar": 26
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4382522f_574b85e9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "While this is very nice the guidance from the framework team is to avoid streams in framework code (which, in a way, this is)",
+      "range": {
+        "startLine": 690,
+        "startChar": 58,
+        "endLine": 690,
+        "endChar": 64
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba88bad_ea5e3c65",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Do you have any threading guarantees here ? If so spell them out in a comment. If not you have a bug :) Likewise below.",
+      "range": {
+        "startLine": 1863,
+        "startChar": 12,
+        "endLine": 1863,
+        "endChar": 43
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f30064_27f53031",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Instead of this we should probably make getTetheringDependencies @VisibleForTesting and override it in the test.",
+      "range": {
+        "startLine": 2092,
+        "startChar": 3,
+        "endLine": 2095,
+        "endChar": 5
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bcf6b2_ebb66823",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Maybe IllegalStateException ? No strong feelings.",
+      "range": {
+        "startLine": 309,
+        "startChar": 22,
+        "endLine": 309,
+        "endChar": 42
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

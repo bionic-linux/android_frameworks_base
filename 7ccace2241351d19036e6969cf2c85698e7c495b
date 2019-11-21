@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "da35f971_56899aef",
+        "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "Sorry that wasn\u0027t what I meant, I thought we could remove it without a compile error.\n\nHoewever I think this should be a static_cast rather than a reinterpret_cast",
+      "parentUuid": "fb010492_8892433e",
+      "range": {
+        "startLine": 150,
+        "startChar": 19,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253d2fa2_ab58ee2f",
         "filename": "packages/Tethering/jni/com_android_server_connectivity_tethering_OffloadHardwareInterface.cpp",
         "patchSetId": 10
@@ -354,6 +378,30 @@
       "side": 1,
       "message": "Ack, this is just a moved file. Will refine this separately.",
       "parentUuid": "bf3f5fd2_e4036003",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ce66469_6deb5f3f",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-21T10:24:14Z",
+      "side": 1,
+      "message": "As it\u0027s just a moved file don\u0027t bother",
+      "parentUuid": "08a5e920_942936c7",
       "range": {
         "startLine": 47,
         "startChar": 4,
