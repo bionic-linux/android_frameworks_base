@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "00cb73ee_676fc2bc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-11-21T03:38:44Z",
+      "side": 1,
+      "message": "Ack, thanks for explanations.",
+      "parentUuid": "7f9df2f8_bd79ed76",
+      "range": {
+        "startLine": 6396,
+        "startChar": 20,
+        "endLine": 6396,
+        "endChar": 86
+      },
+      "revId": "44437ee9440e811c4360f872b2063287bf2e0f4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df960e6c_bc216546",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 8
