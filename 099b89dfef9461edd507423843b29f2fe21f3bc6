@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cd2efc_02f8f5d7",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4082,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-21T14:44:48Z",
+      "side": 1,
+      "message": "Is it worth making this @SystemApi? The CompareResult class is trivial. Could we put it in frameworks/libs/net as a static library instead.",
+      "range": {
+        "startLine": 4082,
+        "startChar": 27,
+        "endLine": 4082,
+        "endChar": 67
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051599dd_07dd9936",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4098,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-21T14:44:48Z",
+      "side": 1,
+      "message": "Should these be static methods in frameworks/libs/net instead?",
+      "range": {
+        "startLine": 4094,
+        "startChar": 0,
+        "endLine": 4098,
+        "endChar": 81
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af1b161_b6383cf7",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-21T14:44:48Z",
+      "side": 1,
+      "message": "Is it worth making this @SystemApi? The CompareResult class is pretty simple, and also it has nothing to do with LinkProperties at all. Could we put it in frameworks/libs/net as a static library instead?",
+      "range": {
+        "startLine": 4113,
+        "startChar": 0,
+        "endLine": 4119,
+        "endChar": 3
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
