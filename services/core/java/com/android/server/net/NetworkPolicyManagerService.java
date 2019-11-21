@@ -128,6 +128,7 @@ import android.app.IUidObserver;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.usage.NetworkStatsManager;
 import android.app.usage.UsageStatsManagerInternal;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -390,6 +391,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int MSG_SUBSCRIPTION_OVERRIDE = 16;
     private static final int MSG_METERED_RESTRICTED_PACKAGES_CHANGED = 17;
     private static final int MSG_SET_NETWORK_TEMPLATE_ENABLED = 18;
+    private static final int MSG_STATS_PROVIDER_LIMIT_REACHED = 19;
 
     private static final int UID_MSG_STATE_CHANGED = 100;
     private static final int UID_MSG_GONE = 101;
@@ -4502,6 +4504,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     mListeners.finishBroadcast();
                     return true;
                 }
+                case MSG_STATS_PROVIDER_LIMIT_REACHED: {
+                    mNetworkStats.forceUpdate();
+                    synchronized (mNetworkPoliciesSecondLock) {
+                        updateNetworkEnabledNL();
+                        updateNotificationsNL();
+                    }
+                    return true;
+                }
                 case MSG_LIMIT_REACHED: {
                     final String iface = (String) msg.obj;
 
@@ -4557,14 +4567,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     return true;
                 }
                 case MSG_UPDATE_INTERFACE_QUOTA: {
-                    removeInterfaceQuota((String) msg.obj);
+                    final String iface = (String) msg.obj;
                     // int params need to be stitched back into a long
-                    setInterfaceQuota((String) msg.obj,
-                            ((long) msg.arg1 << 32) | (msg.arg2 & 0xFFFFFFFFL));
+                    final long quota = ((long) msg.arg1 << 32) | (msg.arg2 & 0xFFFFFFFFL);
+                    removeInterfaceQuota(iface);
+                    setInterfaceQuota(iface, quota);
+                    mNetworkStats.setStatsProviderLimit(iface, quota);
                     return true;
                 }
                 case MSG_REMOVE_INTERFACE_QUOTA: {
-                    removeInterfaceQuota((String) msg.obj);
+                    final String iface = (String) msg.obj;
+                    removeInterfaceQuota(iface);
+                    mNetworkStats
+                            .setStatsProviderLimit(iface, NetworkStatsManager.QUOTA_UNLIMITED);
                     return true;
                 }
                 case MSG_RESET_FIREWALL_RULES_BY_UID: {
@@ -5203,6 +5218,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         public void setMeteredRestrictedPackagesAsync(Set<String> packageNames, int userId) {
             mHandler.obtainMessage(MSG_METERED_RESTRICTED_PACKAGES_CHANGED,
                     userId, 0, packageNames).sendToTarget();
+        }
+
+        @Override
+        public void onStatsProviderLimitReached(@NonNull String tag) {
+            Log.v(TAG, "onStatsProviderLimitReached: " + tag);
+            mHandler.obtainMessage(MSG_STATS_PROVIDER_LIMIT_REACHED).sendToTarget();
         }
     }
 

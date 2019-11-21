@@ -17,6 +17,8 @@
 package android.net;
 
 import android.net.DataUsageRequest;
+import android.net.INetworkStatsProvider;
+import android.net.INetworkStatsProviderCallback;
 import android.net.INetworkStatsSession;
 import android.net.Network;
 import android.net.NetworkState;
@@ -89,4 +91,7 @@ interface INetworkStatsService {
     /** Get the total network stats information since boot */
     long getTotalStats(int type);
 
+    /** Registers a network stats provider */
+    INetworkStatsProviderCallback registerNetworkStatsProvider(String tag,
+            in INetworkStatsProvider provider);
 }

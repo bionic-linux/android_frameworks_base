@@ -1204,6 +1204,11 @@ package android.app.usage {
     field public static final String SERVICE_INTERFACE = "android.app.usage.CacheQuotaService";
   }
 
+  public class NetworkStatsManager {
+    method @NonNull @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public android.net.NetworkStatsProviderCallback registerNetworkStatsProvider(@NonNull String, @NonNull android.net.AbstractNetworkStatsProvider);
+    field public static final int QUOTA_UNLIMITED = -1; // 0xffffffff
+  }
+
   public static final class UsageEvents.Event {
     method public int getInstanceId();
     method @Nullable public String getNotificationChannelId();
