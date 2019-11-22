@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "655a2d8a_01e6d027",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5011,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-22T05:26:24Z",
+      "side": 1,
+      "message": "You can have this has the first line in the function, and rest of the function can be a part of this if block. Same for the other one that was fixed earlier today.\n\nBtw can you check with Tyler if this one should be marked deprecated?",
+      "range": {
+        "startLine": 5011,
+        "startChar": 8,
+        "endLine": 5011,
+        "endChar": 31
+      },
+      "revId": "a4958457aff7be882fc03c8d59990727916d5329",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
