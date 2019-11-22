@@ -101,6 +101,8 @@ public final class SEService {
 
     private static final String TAG = "OMAPI.SEService";
 
+    private static final String UICC_TERMINAL = "SIM";
+
     private final Object mLock = new Object();
 
     /** The client context (e.g. activity). */
@@ -197,32 +199,33 @@ public final class SEService {
      * is of length 0.
      */
     public @NonNull Reader[] getReaders() {
-        if (mSecureElementService == null) {
-            throw new IllegalStateException("service not connected to system");
-        }
-        String[] readerNames;
-        try {
-            readerNames = mSecureElementService.getReaders();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        loadReaders();
 
-        Reader[] readers = new Reader[readerNames.length];
-        int i = 0;
-        for (String readerName : readerNames) {
-            if (mReaders.get(readerName) == null) {
-                try {
-                    mReaders.put(readerName, new Reader(this, readerName,
-                            getReader(readerName)));
-                    readers[i++] = mReaders.get(readerName);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error adding Reader: " + readerName, e);
-                }
-            } else {
-                readers[i++] = mReaders.get(readerName);
-            }
-        }
-        return readers;
+        return mReaders.values().toArray(new Reader[0]);
+    }
+
+    /**
+      * Obtain a UICC Reader instance with specific slot number from the SecureElementService
+      *
+      * @param uiccSlotNumber The index of the uicc slot. The index starts from 1.
+      * @throws IllegalArgumentException if the reader object corresponding to the uiccSlotNumber
+      *         is not exist.
+      * @return A Reader object for this uicc slot.
+      */
+     public @NonNull Reader getUiccReader(int uiccSlotNumber) {
+         if (uiccSlotNumber < 1) {
+             throw new IllegalArgumentException("uiccSlotNumber should be larger than 0");
+         }
+         loadReaders();
+
+         String readerName = UICC_TERMINAL + uiccSlotNumber;
+         Reader reader = mReaders.get(readerName);
+
+         if (reader == null) {
+            throw new IllegalArgumentException("Reader:" + readerName + " doesn't exist");
+         }
+
+         return reader;
     }
 
     /**
@@ -294,6 +297,32 @@ public final class SEService {
         } catch (RemoteException e) {
             Log.e(TAG, "Package manager query failed, assuming OMAPI readers supported", e);
             return true;
+        }
+    }
+
+    /**
+     * Load available Secure Element Readers
+     */
+    private void loadReaders() {
+        if (mSecureElementService == null) {
+            throw new IllegalStateException("service not connected to system");
+        }
+        String[] readerNames;
+        try {
+            readerNames = mSecureElementService.getReaders();
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
+        }
+
+        for (String readerName : readerNames) {
+            if (mReaders.get(readerName) == null) {
+                try {
+                    mReaders.put(readerName, new Reader(this, readerName,
+                            getReader(readerName)));
+                } catch (Exception e) {
+                    Log.e(TAG, "Error adding Reader: " + readerName, e);
+                }
+            }
         }
     }
 }
