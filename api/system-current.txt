@@ -6739,6 +6739,14 @@ package android.provider {
 
 }
 
+package android.se.omapi {
+
+  public final class SEService {
+    method @Nullable public android.se.omapi.Reader getUiccReader(int);
+  }
+
+}
+
 package android.security.keystore {
 
   public abstract class AttestationUtils {
