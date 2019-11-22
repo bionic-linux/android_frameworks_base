@@ -24,6 +24,7 @@ package android.se.omapi;
 
 import android.app.ActivityThread;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -197,32 +198,29 @@ public final class SEService {
      * is of length 0.
      */
     public @NonNull Reader[] getReaders() {
-        if (mSecureElementService == null) {
-            throw new IllegalStateException("service not connected to system");
-        }
-        String[] readerNames;
         try {
-            readerNames = mSecureElementService.getReaders();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+            loadReaders();
+        } catch (Exception e) { }
 
-        Reader[] readers = new Reader[readerNames.length];
-        int i = 0;
-        for (String readerName : readerNames) {
-            if (mReaders.get(readerName) == null) {
-                try {
-                    mReaders.put(readerName, new Reader(this, readerName,
-                            getReader(readerName)));
-                    readers[i++] = mReaders.get(readerName);
-                } catch (Exception e) {
-                    Log.e(TAG, "Error adding Reader: " + readerName, e);
-                }
-            } else {
-                readers[i++] = mReaders.get(readerName);
-            }
-        }
-        return readers;
+        return mReaders.values().toArray(new Reader[0]);
+    }
+
+    /**
+      * Obtain a UICC Reader instance with specific slot number from the SecureElementService
+      *
+      * @param uiccSlotNumber The index of the uicc slot. The index starts from 1.
+      * @return A Reader object for this uicc slot, or null if it couldn't be found.
+      */
+     public @Nullable Reader getUiccReader(int uiccSlotNumber) {
+         if (uiccSlotNumber < 1) {
+             return null;
+         }
+         try {
+             loadReaders();
+         } catch (Exception e) { }
+
+         String readerName = "SIM" + uiccSlotNumber;
+         return mReaders.get(readerName);
     }
 
     /**
@@ -294,6 +292,32 @@ public final class SEService {
         } catch (RemoteException e) {
             Log.e(TAG, "Package manager query failed, assuming OMAPI readers supported", e);
             return true;
+        }
+    }
+
+    /**
+     * Load available Secure Element Readers
+     */
+    private void loadReaders() {
+        if (mSecureElementService == null) {
+            throw new IllegalStateException("service not connected to system");
+        }
+        String[] readerNames;
+        try {
+            readerNames = mSecureElementService.getReaders();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (String readerName : readerNames) {
+            if (mReaders.get(readerName) == null) {
+                try {
+                    mReaders.put(readerName, new Reader(this, readerName,
+                            getReader(readerName)));
+                } catch (Exception e) {
+                    Log.e(TAG, "Error adding Reader: " + readerName, e);
+                }
+            }
         }
     }
 }
