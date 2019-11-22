@@ -22,6 +22,30 @@
       "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2cf799_9421d61e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5008,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-22T18:07:01Z",
+      "side": 1,
+      "message": "We should @deprecate this and note to use the Telecom one; we can\u0027t just remove it until its deprecated.",
+      "parentUuid": "afd5e55f_765756d0",
+      "range": {
+        "startLine": 5008,
+        "startChar": 26,
+        "endLine": 5008,
+        "endChar": 38
+      },
+      "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
