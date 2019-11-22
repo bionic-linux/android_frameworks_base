@@ -270,4 +270,19 @@ public final class SEService {
             throw new IllegalStateException(e.getMessage());
         }
     }
+
+    /**
+     * Obtain a UICC Reader instance with specific slot numner from the SecureElementService
+     * Index starts from 1.
+     * @hide
+     */
+    @SystemApi
+    public @Nullable Reader getUiccReader(int num) {
+        if (num < 1) {
+            return null;
+        }
+        getReaders();
+        String readerName = "SIM" + num;
+        return mReaders.get(readerName);
+    }
 }
