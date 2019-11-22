@@ -118,6 +118,30 @@
       "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d33acff6_37eb4415",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5008,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2019-11-22T22:52:48Z",
+      "side": 1,
+      "message": "Tyler didn\u0027t want to expose it as public so for now going with this change",
+      "parentUuid": "bab66c7e_1d92de04",
+      "range": {
+        "startLine": 5008,
+        "startChar": 26,
+        "endLine": 5008,
+        "endChar": 38
+      },
+      "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
