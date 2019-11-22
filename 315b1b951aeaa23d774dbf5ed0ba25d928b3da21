@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e97b28_c1330ac7",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T06:30:49Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 11
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d41e1e2_8658aa61",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T06:30:49Z",
+      "side": 1,
+      "message": "Hopefully you can\u0027t have the same permission twice in the array, so I think you can say :\n\n  if (app.requestedPermissions[i].equals(permission)) {\n    return app.requestedPermissionsFlags[i] \u0026 REQUESTED_PERMISSION_GRANTED !\u003d 0;\n  }\n\nMaybe even more readable :\n\n  final int index \u003d ArrayUtils.indexOf(requestedPermissions, permission);\n  if (index \u003c 0) return false;\n  return app.requestedPermissionsFlags[index] \u0026 REQUESTED_PERMISSION_GRANTED !\u003d 0;",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 62
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71dafae5_dbc76be5",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T06:30:49Z",
+      "side": 1,
+      "message": "Can you add a little bit of context on what permissions this refers to ? e.g. :\n\n  // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK or USE_RESTRICTED_NETWORKS permission\n  // has the permission to use background networks. mApps contains the result of checks for\n  // both hasNetworkPermission and hasRestrictedNetworkPermission. If uid is...",
+      "range": {
+        "startLine": 275,
+        "startChar": 48,
+        "endLine": 275,
+        "endChar": 67
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb03fd3_f699c3f2",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T06:30:49Z",
+      "side": 1,
+      "message": "This is named like a getter but it mutates its argument, which is very unexpected. I prefer the old signatures with arguments for the partition and the list of permissions.",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2049084_c454749c",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T06:30:49Z",
+      "side": 1,
+      "message": "permissionFlags ? Maybe with a comment saying this represents the flags in PackageInfo.",
+      "range": {
+        "startLine": 165,
+        "startChar": 62,
+        "endLine": 165,
+        "endChar": 66
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
