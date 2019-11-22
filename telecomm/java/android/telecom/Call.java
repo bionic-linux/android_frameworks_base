@@ -1491,7 +1491,14 @@ public final class Call {
     public void hold() {
         mInCallAdapter.holdCall(mTelecomCallId);
     }
-
+    
+    /**
+     * Instructs this {@code Call} to go on silience.
+     */
+    public void silience() {
+        mInCallAdapter.silience(mTelecomCallId);
+    }
+    
     /**
      * Instructs this {@link #STATE_HOLDING} call to release from hold.
      */
