@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af0dbb15_e232d51a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-22T14:15:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9e97b28_c1330ac7",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 11
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d41e1e2_8658aa61",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c768d3_3d7b10c2",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-22T14:15:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d41e1e2_8658aa61",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 62
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d27e3d1f_cfb1c1fa",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-22T14:15:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71dafae5_dbc76be5",
+      "range": {
+        "startLine": 275,
+        "startChar": 48,
+        "endLine": 275,
+        "endChar": 67
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb03fd3_f699c3f2",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "01494263_9e5d6c1d",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-22T14:15:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcb03fd3_f699c3f2",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2049084_c454749c",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8777cae3_6ad1fa24",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2019-11-22T14:15:31Z",
+      "side": 1,
+      "message": "Rename to permissionsFlags.",
+      "parentUuid": "d2049084_c454749c",
+      "range": {
+        "startLine": 165,
+        "startChar": 62,
+        "endLine": 165,
+        "endChar": 66
+      },
+      "revId": "315b1b951aeaa23d774dbf5ed0ba25d928b3da21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
