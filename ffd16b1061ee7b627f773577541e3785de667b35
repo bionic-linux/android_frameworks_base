@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "ea19c151_b6648f20",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 18
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Bad copy-paste ?",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1308f6fb_77872ebe",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Actually I think PlatformNetworkPermissionConfig could be merged into InProcessNetworkStack (and NetworkPermissionConfig into NetworkStack).\nMaybe this TODO is not necessary ?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 49
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ff4b31_98a33cc0",
         "filename": "packages/Tethering/AndroidManifest_InProcess.xml",
         "patchSetId": 18
@@ -48,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "b91a678b_9d627c33",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Can this one be building against system_current ? I don\u0027t see any source that should cause problems for this lib",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea38b4f6_1c7d3c7d",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetherInternalCallback.aidl",
         "patchSetId": 18
@@ -59,6 +128,30 @@
       "writtenOn": "2019-11-22T05:52:33Z",
       "side": 1,
       "message": "Will we have a wrapper for this callback ? Stable parcelables are pretty bad to use directly because they can\u0027t have methods or final fields and are therefore unpractical and fiddly ; mostly they should be converted back to a TetheringConfiguration object before any use.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e0b881_e73d7eb7",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetherInternalCallback.aidl",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "+1, added a comment below but a wrapper is necessary since it will be used in TetheringManager for the exported API",
+      "parentUuid": "ea38b4f6_1c7d3c7d",
       "range": {
         "startLine": 30,
         "startChar": 35,
@@ -117,6 +210,52 @@
     },
     {
       "key": {
+        "uuid": "bd173ecd_11d2dcc4",
+        "filename": "packages/Tethering/src/android/net/util/VersionedBroadcastListener.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Nit: start listing to intent broadcast ? (also for stop)",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bcb19e_9092985a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Rather than when it is called, can you document what it does ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 54
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af44687b_ef5aa753",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java",
         "patchSetId": 18
@@ -140,6 +279,144 @@
     },
     {
       "key": {
+        "uuid": "43e7b65e_413892c2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Is this covered in a test ?",
+      "range": {
+        "startLine": 392,
+        "startChar": 40,
+        "endLine": 392,
+        "endChar": 58
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7621356b_c8ca27bc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Is this class going to be in the APEX together with TetheringManager, and defined as system API ?\ntoStableParcelable can\u0027t be a SystemApi since it returns a parcelable that can\u0027t be a systemapi.\n\nWould it be possible to move this method to a static (@hide) function only inside the APEX JAR ?",
+      "range": {
+        "startLine": 392,
+        "startChar": 4,
+        "endLine": 392,
+        "endChar": 62
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5fc600_0eea85af",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Should we do a defensive copy when passing arrays ? Changing the contents of the array could change the contents of TetheringConfigurationParcel unexpectedly.",
+      "range": {
+        "startLine": 395,
+        "startChar": 37,
+        "endLine": 395,
+        "endChar": 56
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d25645_d968010a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Ideally I think everything in the tethering module should be under one module-specific package (so com.android.tethering.something). This reduces the chances of conflicts with OEM code.\nMaybe this does not need to be changed now, but consider when would be the easiest time to do this change.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb85893b_9ee68e56",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Nit: used to start tethering",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 46
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73004a65_e1f7d1d7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Just binding does not start tethering right ? Considering the next sentence, maybe just \"Android service used to manage tethering\" is enough ?",
+      "range": {
+        "startLine": 137,
+        "startChar": 47,
+        "endLine": 137,
+        "endChar": 74
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15aaa955_0d14cd74",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 18
@@ -156,6 +433,122 @@
         "startChar": 11,
         "endLine": 184,
         "endChar": 12
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e024b82_31aa5577",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Or alternatively, make TetheringService a small and simple service that calls new Tethering().\nWith all the connector logic, it may be good to separate the two to avoid having the connector-related logic and the tethering logic in the same file.\nNetworkStack has NetworkStackService and DhcpServer separate for example.",
+      "parentUuid": "15aaa955_0d14cd74",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 12
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea8dd7b_7dc53fce",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "This is not correct; the corresponding comment in NetworkStackService is also very stale.",
+      "range": {
+        "startLine": 290,
+        "startChar": 7,
+        "endLine": 291,
+        "endChar": 84
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055b7a9f_cdd72e65",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Would\nenforceNetworkStackCallingPermission()\nmake sense here ? I\u0027m not sure the MAINLINE_NETWORK_STACK permission check to obtain the service is sufficient; having a UID check on each method may allow us to avoid other unexpected clients.",
+      "range": {
+        "startLine": 317,
+        "startChar": 12,
+        "endLine": 317,
+        "endChar": 35
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b26a6e_28342490",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest \"requestLatestEntitlementResult\" since it\u0027s async, and already inside a tethering class.",
+      "range": {
+        "startLine": 341,
+        "startChar": 20,
+        "endLine": 341,
+        "endChar": 55
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86f923c_94ed8ca6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "That\u0027s likely to get out of date quickly too. Maybe just NetlinkHandler.cpp ? Or the name of the function ?",
+      "range": {
+        "startLine": 427,
+        "startChar": 14,
+        "endLine": 427,
+        "endChar": 38
       },
       "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -394,6 +787,29 @@
     },
     {
       "key": {
+        "uuid": "23a2e929_46e212e4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Why not add a method in TetheringManager for that ?\nThis may make it easier to update if other tethering downstreams are added.",
+      "range": {
+        "startLine": 1889,
+        "startChar": 16,
+        "endLine": 1891,
+        "endChar": 89
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de842e9a_6bffb66a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -457,6 +873,23 @@
         "endLine": 2189,
         "endChar": 32
       },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a42c4df_df9940b4",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "Since this is going to be moved to an APEX, can it be in a different folder before the move ? Ideally in packages/Tethering since it\u0027s going to be part of the module. You can still include it where necessary with a filegroup in the meantime.",
       "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -601,6 +1034,29 @@
     },
     {
       "key": {
+        "uuid": "3d49bdf7_c52198d1",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "This needs to be TetheringConfiguration to be defined as an API.\nTetheringConfiguration is going to be moved to the APEX with TetheringManager right ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 43,
+        "endLine": 106,
+        "endChar": 71
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3c45809_3da65399",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 18
@@ -684,6 +1140,29 @@
       "range": {
         "startLine": 203,
         "startChar": 69,
+        "endLine": 203,
+        "endChar": 76
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed528ac1_13744ab4",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "This is a little hard to understand, how about \"If the API is used and an entitlement check is needed, downstream USB tethering will be enabled but will not have any upstream\" ?\nIf this API should not be used, can it be marked as @Deprecated ?\nWhy is it added in the first place; is it to support the existing API in ConnectivityManager only ? Can you explain in the javadoc ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
         "endLine": 203,
         "endChar": 76
       },
@@ -778,6 +1257,29 @@
         "startChar": 71,
         "endLine": 252,
         "endChar": 85
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf122d6_0a84f046",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-22T08:42:23Z",
+      "side": 1,
+      "message": "This needs to be a wrapper, since the AIDL can\u0027t be used for API",
+      "range": {
+        "startLine": 266,
+        "startChar": 56,
+        "endLine": 266,
+        "endChar": 79
       },
       "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
