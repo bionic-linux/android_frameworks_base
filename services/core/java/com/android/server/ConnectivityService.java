@@ -5958,11 +5958,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        final NetworkCapabilities prevNc;
-        synchronized (nai) {
-            prevNc = nai.networkCapabilities;
-            nai.setNetworkCapabilities(newNc);
-        }
+        final NetworkCapabilities prevNc = nai.setNetworkCapabilities(newNc);
 
         updateUids(nai, prevNc, newNc);
 
@@ -5971,7 +5967,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // the change we're processing can't affect any requests, it can only affect the listens
             // on this network. We might have been called by rematchNetworkAndRequests when a
             // network changed foreground state.
-            processListenRequests(nai, true);
+            processListenRequests(nai);
         } else {
             // If the requestable capabilities have changed or the score changed, we can't have been
             // called by rematchNetworkAndRequests, so it's safe to start a rematch.
@@ -6279,14 +6275,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateAllVpnsCapabilities();
     }
 
-    private void processListenRequests(@NonNull NetworkAgentInfo nai, boolean capabilitiesChanged) {
+    private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
         // For consistency with previous behaviour, send onLost callbacks before onAvailable.
         processNewlyLostListenRequests(nai);
-
-        if (capabilitiesChanged) {
-            notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED);
-        }
-
+        notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_CAP_CHANGED);
         processNewlySatisfiedListenRequests(nai);
     }
 
@@ -6484,6 +6476,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // before LegacyTypeTracker sends legacy broadcasts
         for (NetworkRequestInfo nri : addedRequests) notifyNetworkAvailable(newNetwork, nri);
 
+        // Finally, process listen requests and update capabilities if the background state has
+        // changed for this network. For consistency with previous behavior, send onLost callbacks
+        // before onAvailable.
+        processNewlyLostListenRequests(newNetwork);
+
         // Maybe the network changed background states. Update its capabilities.
         final boolean backgroundChanged = wasBackgroundNetwork != newNetwork.isBackgroundNetwork();
         if (backgroundChanged) {
@@ -6500,13 +6497,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
 
-            synchronized (newNetwork) {
-                newNetwork.setNetworkCapabilities(newNc);
-            }
+            newNetwork.setNetworkCapabilities(newNc);
+            notifyNetworkCallbacks(newNetwork, ConnectivityManager.CALLBACK_CAP_CHANGED);
         }
 
-        // Finally, process listen requests.
-        processListenRequests(newNetwork, backgroundChanged);
+        processNewlySatisfiedListenRequests(newNetwork);
     }
 
     /**
@@ -6693,9 +6688,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             // NetworkCapabilities need to be set before sending the private DNS config to
             // NetworkMonitor, otherwise NetworkMonitor cannot determine if validation is required.
-            synchronized (networkAgent) {
-                networkAgent.setNetworkCapabilities(networkAgent.networkCapabilities);
-            }
+            networkAgent.setNetworkCapabilities(networkAgent.networkCapabilities);
+
             handlePerNetworkPrivateDnsConfig(networkAgent, mDnsManager.getPrivateDnsConfig());
             updateLinkProperties(networkAgent, new LinkProperties(networkAgent.linkProperties),
                     null);
