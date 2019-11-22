@@ -87,4 +87,5 @@ oneway interface IInCallAdapter {
 
     void handoverTo(String callId, in PhoneAccountHandle destAcct, int videoState,
             in Bundle extras);
+    void silience(String callId);
 }

@@ -1493,6 +1493,13 @@ public final class Call {
     }
 
     /**
+     * Instructs this {@code Call} to go on silience.
+     */
+    public void silience() {
+        mInCallAdapter.silience(mTelecomCallId);
+    }
+
+    /**
      * Instructs this {@link #STATE_HOLDING} call to release from hold.
      */
     public void unhold() {

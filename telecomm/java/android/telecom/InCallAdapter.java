@@ -113,6 +113,18 @@ public final class InCallAdapter {
     }
 
     /**
+     * Instructs Telecom to put the specified call on silience.
+     *
+     * @param callId The identifier of the call to put on hold.
+     */
+    public void silience(String callId) {
+        try {
+            mAdapter.silience(callId);
+        } catch (RemoteException e) {
+        }
+    }
+
+    /**
      * Instructs Telecom to release the specified call from hold.
      *
      * @param callId The identifier of the call to release from hold.
