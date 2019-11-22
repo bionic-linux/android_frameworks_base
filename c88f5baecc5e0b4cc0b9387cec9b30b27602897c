@@ -94,6 +94,30 @@
       "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab66c7e_1d92de04",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5008,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-11-22T22:43:02Z",
+      "side": 1,
+      "message": "That should be a public API then, but that is independent of this CL. This lgtm.",
+      "parentUuid": "c9bca45e_e76b97b5",
+      "range": {
+        "startLine": 5008,
+        "startChar": 26,
+        "endLine": 5008,
+        "endChar": 38
+      },
+      "revId": "c88f5baecc5e0b4cc0b9387cec9b30b27602897c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
