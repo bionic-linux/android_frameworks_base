@@ -978,6 +978,30 @@
     },
     {
       "key": {
+        "uuid": "d7becd41_60ad2a49",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand well this justification. I don\u0027t have an objection to CS being the one initiating this when restrictBackground changes (you\u0027re not changing this in this patch). I\u0027m saying this should say mTetheringManager.untetherAll() because ConnectivityService should no have to know the list of downstreams.",
+      "parentUuid": "f993cff1_41a44a26",
+      "range": {
+        "startLine": 1889,
+        "startChar": 16,
+        "endLine": 1889,
+        "endChar": 33
+      },
+      "revId": "7ccace2241351d19036e6969cf2c85698e7c495b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3876ea_69a2cd2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10

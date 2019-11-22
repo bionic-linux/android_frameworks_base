@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "ea38b4f6_1c7d3c7d",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetherInternalCallback.aidl",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Will we have a wrapper for this callback ? Stable parcelables are pretty bad to use directly because they can\u0027t have methods or final fields and are therefore unpractical and fiddly ; mostly they should be converted back to a TetheringConfiguration object before any use.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1ef9286_baaf2c2d",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetherInternalCallback.aidl",
         "patchSetId": 18
@@ -225,6 +248,536 @@
         "startChar": 3,
         "endLine": 2095,
         "endChar": 5
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47605239_88f9453c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Now that I\u0027m reviewing TetheringServiceTest, I see you\u0027ve done this because ServiceTestCase will call TetheringService.class.newInstance() 😞\n\nHowever, this kind of setting a mutable member from outside is really really dangerous. Some possible solution ideas :\n• Move away from the deprecated ServiceTestCase to ServiceTestRule\n• Make the test case an instance of ServiceTestCase\u003cInstrumentedTetheringService\u003e, and define InstrumentedTetheringService to override getTetheringDependencies\n• On line 184 I\u0027m asking you to move all these members in a subobject so that they can be final. Maybe this lets us do this more easily\n\n(I haven\u0027t looked at which of these are really feasible)",
+      "parentUuid": "d7f30064_27f53031",
+      "range": {
+        "startLine": 2092,
+        "startChar": 3,
+        "endLine": 2095,
+        "endChar": 5
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed412bd_0e209094",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "ServiceTestCase is deprecated ; if you can\u0027t use ServiceTestRule, can you briefly document the reason, so that future implementors will know when it\u0027s possible to migrate ?",
+      "range": {
+        "startLine": 142,
+        "startChar": 42,
+        "endLine": 142,
+        "endChar": 57
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fcc2b6_812df0db",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Suggest having a short comment on top of this (and expectUpstreamChanged) to describe that this will remove the recorded callbacks, so it should be called once for each callback. Maybe also describe that onCallbackCreated counts as the first call to onConfigurationChanged with @see onCallbackCreated\n\n(I like this design, but it\u0027s different from what Mockito does so I think a comment would help)",
+      "range": {
+        "startLine": 1055,
+        "startChar": 20,
+        "endLine": 1055,
+        "endChar": 46
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00110430_539a63d8",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Nit : @NonNull on these",
+      "range": {
+        "startLine": 1106,
+        "startChar": 51,
+        "endLine": 1106,
+        "endChar": 79
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60ce7dc_cdaef9b6",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Maybe for another patch : can we have a helper method somewhere for tetherConfigParcelEquals(), and here just assertTrue(tetherConfigParcelEquals(actual, expected)) ?\nAlternatively you can also unparcel the parcelables to TetheringConfiguration and call .equals() on this if you think this gives us the guarantees we need.",
+      "range": {
+        "startLine": 1108,
+        "startChar": 12,
+        "endLine": 1108,
+        "endChar": 24
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2d8ba0_094b96b5",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Just say expectUpstreamChanged(null) here.\n\nThis looks like you\u0027re expecting a call to onUpstreamChanged with an array containing a single null element, which is not at all how onUpstreamChanged works of course – it only takes one network, and should be called with null when the upstream disappears. That\u0027s kind of the reason expectUpstreamChanged is written to take a (Network...)  :)",
+      "range": {
+        "startLine": 1162,
+        "startChar": 39,
+        "endLine": 1162,
+        "endChar": 59
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de842e9a_6bffb66a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Maybe keep this in the same place as before ?",
+      "range": {
+        "startLine": 2501,
+        "startChar": 8,
+        "endLine": 2501,
+        "endChar": 24
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2054945c_2b6c0141",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 4104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Wait this is running on a random binder thread in the system server right ? IIUC this method can block for up to a minute. Are we comfortable with the possibility of blocking a random binder thread for a minute ?",
+      "range": {
+        "startLine": 4104,
+        "startChar": 0,
+        "endLine": 4104,
+        "endChar": 77
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44375bf_7de8264c",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Add a small comment saying this must start after ConnectivityService (does it need to start after NetworkStack too ? If so, say it too)",
+      "range": {
+        "startLine": 2189,
+        "startChar": 16,
+        "endLine": 2189,
+        "endChar": 32
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5aa76b6_ea4b484d",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "This is running in apps right ? If it\u0027s only running in the system server we should make it final and initialize it here, but if it\u0027s running in apps please keep the current code.",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6bfe177_d5723cd4",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Can this be an instance of TetheringConfiguration instead ? Storing this free-for-all completely mutable object makes me super nervous.",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9dac6f_cfb514a5",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Similar question, though there is no TetherStates object, it\u0027s not clear we want to make one, and all of this is arrays so it\u0027s 100% mutable all the way anyway :( So not as important",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b84178_c2f5a101",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "assign",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189d1898_950f7ccc",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "I\u0027d say STOPSHIP :)",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965838ab_6ab0cd6b",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "It would be nice to have some security around the requirement to call this. Today this code can just read, say, mTetherStatesParcel without calling awaitCallbackCreation, and get the wrong answer.\n\nSomething like CompletableFuture comes to mind – it gives you a way to make clients query for immediate completion, wait indefinitely, wait until a timeout, and guarantees the included object can\u0027t be used before it\u0027s initialized. It\u0027s not clear exactly how you\u0027d use it here however, since you have to update the values and CompletableFuture doesn\u0027t support that.\n\nMaybe we can think of this a little bit more, possibly as a cleanup.",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 88
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c45809_3da65399",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Is there any reason not to call this in the constructor for this class ? After all, whoever calls getInstance() will need to call start() immediately after and know nobody else calls this, so the simplest way to accomplish this is to put this in the constructor as this is already a static on-demand instance.",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 21
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a073da24_6205ba36",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Can\u0027t we just make it void then ? ConnectivityService can return TETHER_ERROR_NO_ERROR after calling this.",
+      "range": {
+        "startLine": 167,
+        "startChar": 15,
+        "endLine": 167,
+        "endChar": 57
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15004ea2_cde3b6b5",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "But this is inherently racy. I don\u0027t think we should recommend this in comments. (no code changes needed though, since this is not something your patch is changing)",
+      "range": {
+        "startLine": 167,
+        "startChar": 59,
+        "endLine": 167,
+        "endChar": 71
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235c37fb_8fd3ec41",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "launched ? Or do you mean something else ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 69,
+        "endLine": 203,
+        "endChar": 76
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443fb5ec_2d559c46",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 218,
+        "startChar": 23,
+        "endLine": 218,
+        "endChar": 28
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a9d7d7_90c36c33",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "fails",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 11
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cb4c05_cdfc4e5c",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "stopped ? I don\u0027t think it\u0027s very clear what the difference is between close and stop.",
+      "range": {
+        "startLine": 218,
+        "startChar": 32,
+        "endLine": 218,
+        "endChar": 38
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636b525f_fc4b90b5",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-22T05:52:33Z",
+      "side": 1,
+      "message": "Do you want to have a TODO to migrate away from ResultReceiver to a more strongly-typed callback ? Maybe even add this into ITetheringEventCallback ?",
+      "range": {
+        "startLine": 252,
+        "startChar": 71,
+        "endLine": 252,
+        "endChar": 85
       },
       "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
