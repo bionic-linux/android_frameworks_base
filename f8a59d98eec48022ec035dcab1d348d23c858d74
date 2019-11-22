@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b078aa5_3668b8a3",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-22T22:22:15Z",
+      "side": 1,
+      "message": "I think we should make this doc a little more clear.\nWhere the {@link CallLog.Calls#TYPE} is {@link CallLog.Calls#MISSED_TYPE}, indicates the reason why a call is missed.\n\u003cp\u003eTyper: INTEGER\u003c/P\u003e\n\n\nAlso, for consistency with the BLOCK_REASON API above, should name this MISSED_REASON.  The reasons should also be defined here as constants.",
+      "range": {
+        "startLine": 604,
+        "startChar": 8,
+        "endLine": 607,
+        "endChar": 77
+      },
+      "revId": "f8a59d98eec48022ec035dcab1d348d23c858d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
