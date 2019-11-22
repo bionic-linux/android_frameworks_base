@@ -68,9 +68,9 @@ public final class BitUtils {
         int[] result = new int[size];
         int index = 0;
         int bitPos = 0;
-        while (val > 0) {
+        while (val != 0) {
             if ((val & 1) == 1) result[index++] = bitPos;
-            val = val >> 1;
+            val = val >>> 1;
             bitPos++;
         }
         return result;
