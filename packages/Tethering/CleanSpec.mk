@@ -45,7 +45,10 @@
 #$(call add-clean-step, rm -rf $(PRODUCT_OUT)/data/*)
 
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/priv-app/Tethering)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/APPS/InProcessTethering*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/APPS/InProcessTethering*)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/priv-app/InProcessTethering)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system_other/system/priv-app/InProcessTethering)
 
 # ******************************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST ABOVE THIS BANNER

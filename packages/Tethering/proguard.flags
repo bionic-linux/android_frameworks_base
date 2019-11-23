@@ -1,1 +1,9 @@
-#TBD
+-keepclassmembers class com.android.server.connectivity.tethering.TetheringService.TetherMasterSM {
+    static final int CMD_*;
+    static final int EVENT_*;
+}
+
+-keepclassmembers class android.net.ip.IpServer {
+    static final int STATE__*;
+    static final int CMD_*;
+}

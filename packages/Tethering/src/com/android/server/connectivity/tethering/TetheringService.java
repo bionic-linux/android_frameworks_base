@@ -16,6 +16,7 @@
 
 package com.android.server.connectivity.tethering;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.hardware.usb.UsbManager.USB_CONFIGURED;
 import static android.hardware.usb.UsbManager.USB_CONNECTED;
 import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
@@ -37,6 +38,8 @@ import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_SERVICE_UNAVAIL;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNAVAIL_IFACE;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
+import static android.net.TetheringManager.EXTRA_NETWORKSTACK;
+import static android.net.TetheringManager.TETHER_ERROR_NO_PRIVILEGED_PERMISSION;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_STATE;
@@ -67,8 +70,9 @@ import android.net.INetd;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStackConnector;
 import android.net.INetworkStatsService;
-import android.net.ITetherInternalCallback;
+import android.net.IResultListener;
 import android.net.ITetheringConnector;
+import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
@@ -98,6 +102,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.SystemProperties;
@@ -117,7 +122,6 @@ import androidx.annotation.Nullable;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
-import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
@@ -177,6 +181,8 @@ public class TetheringService extends Service {
     private final Object mPublicSync = new Object();
     private final ArrayMap<String, TetherState> mTetherStates = new ArrayMap<>();
     private final HashSet<IpServer> mForwardedDownstreams = new HashSet<>();
+    private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
+            new RemoteCallbackList<>();
 
     private TetheringConnector mConnector;
     private Context mContext;
@@ -197,7 +203,7 @@ public class TetheringService extends Service {
     private Handler mHandler;
     private PhoneStateListener mPhoneStateListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
-    private ITetherInternalCallback mTetherInternalCallback = null;
+    private ITetheringEventCallback mTetheringEventCallback = null;
     private INetworkStackConnector mNetworkStackConnector;
 
     private volatile TetheringConfiguration mConfig;
@@ -294,7 +300,7 @@ public class TetheringService extends Service {
      */
     private synchronized IBinder makeConnector() {
         if (mConnector == null) {
-            mConnector = new TetheringConnector(this);
+            mConnector = new TetheringConnector(this, mHandler);
         }
         return mConnector;
     }
@@ -304,9 +310,7 @@ public class TetheringService extends Service {
     public IBinder onBind(Intent intent) {
         mLog.i("TetheringService onBind");
         final Bundle bundle = intent.getExtras();
-        // android.net.extra.NETWORKSTACK is defined in TetheringManager.EXTRA_NETWORKSTACK,
-        // will use it when TetheringManager move to framwork. See aosp/1156906.
-        final IBinder networkStack = bundle.getBinder("android.net.extra.NETWORKSTACK");
+        final IBinder networkStack = bundle.getBinder(EXTRA_NETWORKSTACK);
         mNetworkStackConnector = INetworkStackConnector.Stub.asInterface(networkStack);
 
         return makeConnector();
@@ -314,46 +318,138 @@ public class TetheringService extends Service {
 
     private static class TetheringConnector extends ITetheringConnector.Stub {
         private final TetheringService mService;
+        private Handler mTetherHandler;
 
-        TetheringConnector(TetheringService tether) {
+        TetheringConnector(TetheringService tether, Handler handler) {
             mService = tether;
+            mTetherHandler = handler;
         }
 
         @Override
-        public void tether(String iface) {
-            mService.tether(iface);
+        public void tether(String iface, String callerPkg, IResultListener listener) {
+            if (mService.hasTetherChangePermission()) {
+                mTetherHandler.post(() -> {
+                    try {
+                        listener.onResult(mService.tether(iface));
+                    } catch (RemoteException e) { }
+                });
+                return;
+            }
+            try {
+                listener.onResult(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
         }
 
         @Override
-        public void untether(String iface) {
-            mService.untether(iface);
+        public void untether(String iface, String callerPkg, IResultListener listener) {
+            if (mService.hasTetherChangePermission()) {
+                mTetherHandler.post(() -> {
+                    try {
+                        listener.onResult(mService.untether(iface));
+                    } catch (RemoteException e) { }
+                });
+                return;
+            }
+            try {
+                listener.onResult(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
         }
 
         @Override
-        public void setUsbTethering(boolean enable) {
-            mService.setUsbTethering(enable);
+        public void setUsbTethering(boolean enable, String callerPkg, IResultListener listener) {
+            if (mService.hasTetherChangePermission()) {
+                mTetherHandler.post(() -> {
+                    try {
+                        listener.onResult(mService.setUsbTethering(enable));
+                    } catch (RemoteException e) { }
+                });
+                return;
+            }
+            try {
+                listener.onResult(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
         }
 
         @Override
-        public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi) {
-            mService.startTethering(type, receiver, showProvisioningUi);
+        public void startTethering(int type, ResultReceiver receiver, boolean showProvisioningUi,
+                String callerPkg) {
+            if (mService.hasTetherChangePermission()) {
+                mTetherHandler.post(() -> mService.startTethering(type, receiver,
+                          showProvisioningUi));
+                return;
+            }
+            receiver.send(TETHER_ERROR_NO_PRIVILEGED_PERMISSION, null);
         }
 
         @Override
-        public void stopTethering(int type) {
-            mService.stopTethering(type);
+        public void stopTethering(int type, String callerPkg, IResultListener listener) {
+            try {
+                if (mService.hasTetherChangePermission()) {
+                    listener.onResult(TETHER_ERROR_NO_ERROR);
+                    mTetherHandler.post(() -> mService.stopTethering(type));
+                    return;
+                }
+                listener.onResult(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
         }
 
         @Override
         public void getLatestTetheringEntitlementResult(int type, ResultReceiver receiver,
-                boolean showEntitlementUi) {
-            mService.getLatestTetheringEntitlementResult(type, receiver, showEntitlementUi);
+                boolean showEntitlementUi, String callerPkg) {
+            if (mService.hasTetherChangePermission()) {
+                mTetherHandler.post(() -> mService.getLatestTetheringEntitlementResult(
+                        type, receiver, showEntitlementUi));
+                return;
+            }
+            receiver.send(TETHER_ERROR_NO_PRIVILEGED_PERMISSION, null);
         }
 
         @Override
-        public void registerTetherInternalCallback(ITetherInternalCallback callback) {
-            mService.registerTetherInternalCallback(callback);
+        public void registerTetheringEventCallback(ITetheringEventCallback callback,
+                String callerPkg) {
+            try {
+                if (mService.hasTetherChangePermission()) {
+                    mTetherHandler.post(() -> mService.registerTetheringEventCallback(callback));
+                    return;
+                }
+                callback.onCallbackFailed(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
         }
+
+        @Override
+        public void unregisterTetheringEventCallback(ITetheringEventCallback callback,
+                String callerPkg) {
+            try {
+                if (mService.hasTetherChangePermission()) {
+                    mTetherHandler.post(() -> mService.unregisterTetheringEventCallback(callback));
+                    return;
+                }
+                callback.onCallbackFailed(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
+        }
+
+        @Override
+        public void stopTetheringAll(String callerPkg, IResultListener listener) {
+            try {
+                if (mService.hasTetherChangePermission()) {
+                    listener.onResult(TETHER_ERROR_NO_ERROR);
+                    mTetherHandler.post(() -> mService.untetherAll());
+                    return;
+                }
+                listener.onResult(TETHER_ERROR_NO_PRIVILEGED_PERMISSION);
+            } catch (RemoteException e) { }
+        }
+
+        @Override
+        protected void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter writer,
+                    @Nullable String[] args) {
+            mService.dump(fd, writer, args);
+        }
+    }
+
+    private boolean hasTetherChangePermission() {
+        return checkCallingOrSelfPermission(
+                android.Manifest.permission.TETHER_PRIVILEGED) == PERMISSION_GRANTED;
     }
 
     private void startStateMachineUpdaters(Handler handler) {
@@ -958,6 +1054,7 @@ public class TetheringService extends Service {
                         com.android.internal.R.drawable.stat_sys_tether_general, false);
                 wrapper.untetherAll();
             }
+            reportTetheringRestricted(mDisallowTethering);
         }
     }
 
@@ -1841,45 +1938,83 @@ public class TetheringService extends Service {
     }
 
     /** Register tethering event callback */
-    void registerTetherInternalCallback(ITetherInternalCallback callback) {
+    void registerTetheringEventCallback(ITetheringEventCallback callback) {
         mHandler.post(() -> {
-            mTetherInternalCallback = callback;
+            mTetheringEventCallbacks.register(callback);
             try {
-                mTetherInternalCallback.onCallbackCreated(mTetherUpstream,
-                        mConfig.toStableParcelable(), mTetherStatesParcel);
+                callback.onCallbackCreated(mTetherUpstream, mConfig.toStableParcelable(),
+                        mTetherStatesParcel, mDisallowTethering);
             } catch (RemoteException e) {
                 // Not really very much to do here.
             }
         });
     }
 
-    private void reportUpstreamChanged(Network network) {
-        if (mTetherInternalCallback == null) return;
+    /** Unregister tethering event callback */
+    void unregisterTetheringEventCallback(ITetheringEventCallback callback) {
+        mHandler.post(() -> {
+            mTetheringEventCallbacks.unregister(callback);
+        });
+    }
 
+    private void reportUpstreamChanged(Network network) {
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onUpstreamChanged(network);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onUpstreamChanged(network);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
     private void reportConfigurationChanged(TetheringConfigurationParcel config) {
-        if (mTetherInternalCallback == null) return;
-
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onConfigurationChanged(config);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onConfigurationChanged(config);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
     private void reportTetherStateChanged(TetherStatesParcel states) {
-        if (mTetherInternalCallback == null) return;
-
+        final int length = mTetheringEventCallbacks.beginBroadcast();
         try {
-            mTetherInternalCallback.onTetherStatesChanged(states);
-        } catch (RemoteException e) {
-            // Not really very much to do here.
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetherStatesChanged(states);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
+        }
+    }
+
+    private void reportTetheringRestricted(boolean isRestricted) {
+        final int length = mTetheringEventCallbacks.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetheringRestricted(
+                            isRestricted);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
         }
     }
 
@@ -1888,7 +2023,11 @@ public class TetheringService extends Service {
                 @Nullable String[] args) {
         @SuppressWarnings("resource")
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
-        if (!DumpUtils.checkDumpPermission(mContext, TAG, pw)) return;
+        if (checkCallingOrSelfPermission(android.Manifest.permission.DUMP)
+                != PERMISSION_GRANTED) {
+            pw.println("Permission Denial: can't dump.");
+            return;
+        }
 
         pw.println("Tethering:");
         pw.increaseIndent();

@@ -268,6 +268,7 @@ filegroup {
     srcs: [
         ":framework-non-updatable-sources",
         ":updatable-media-srcs",
+        ":tethering-client-srcs",
     ],
 }
 
@@ -293,6 +294,7 @@ java_defaults {
             "telecomm/java",
             "telephony/java",
             "wifi/java",
+            "packages/Tethering/common/TetheringLib/src/",
         ],
     },
 }
@@ -359,6 +361,7 @@ java_defaults {
     libs: [
         "ext",
         "updatable_media_stubs",
+        "tethering_client_stubs",
     ],
 
     jarjar_rules: ":framework-jarjar-rules",
@@ -583,6 +586,21 @@ filegroup {
     name: "framework-tethering-shared-srcs",
     srcs: [
         "core/java/android/util/LocalLog.java",
+        "core/java/com/android/internal/util/BitUtils.java",
+        "core/java/com/android/internal/util/IndentingPrintWriter.java",
+        "core/java/com/android/internal/util/IState.java",
+        "core/java/com/android/internal/util/MessageUtils.java",
+        "core/java/com/android/internal/util/Preconditions.java",
+        "core/java/com/android/internal/util/State.java",
+        "core/java/com/android/internal/util/StateMachine.java",
+    ],
+}
+
+filegroup {
+    name: "framework-tethering-annotations",
+    srcs: [
+        "core/java/android/annotation/NonNull.java",
+        "core/java/android/annotation/SystemApi.java",
     ],
 }
 // Build ext.jar
@@ -803,6 +821,7 @@ subdirs = [
     "tools/*",
     "native/android",
     "native/graphics/jni",
+    "packages/Tethering/common/TetheringLib/",
 ]
 
 optional_subdirs = [
@@ -974,6 +993,7 @@ stubs_defaults {
         ":updatable-media-srcs",
         "test-mock/src/**/*.java",
         "test-runner/src/**/*.java",
+        ":tethering-client-srcs",
     ],
     libs: framework_docs_only_libs,
     create_doc_stubs: true,
@@ -1034,6 +1054,7 @@ stubs_defaults {
         ":core-current-stubs-source",
         ":core_public_api_files",
         ":updatable-media-srcs",
+        ":tethering-client-srcs",
     ],
     libs: ["framework-internal-utils"],
     installable: false,

@@ -15,23 +15,29 @@
  */
 package android.net;
 
-import android.net.ITetherInternalCallback;
+import android.net.IResultListener;
+import android.net.ITetheringEventCallback;
 import android.os.ResultReceiver;
 
 /** @hide */
 oneway interface ITetheringConnector {
-    void tether(String iface);
+    void tether(String iface, String callerPkg, IResultListener receiver);
 
-    void untether(String iface);
+    void untether(String iface, String callerPkg, IResultListener receiver);
 
-    void setUsbTethering(boolean enable);
+    void setUsbTethering(boolean enable, String callerPkg, IResultListener receiver);
 
-    void startTethering(int type, in ResultReceiver receiver, boolean showProvisioningUi);
+    void startTethering(int type, in ResultReceiver receiver, boolean showProvisioningUi,
+            String callerPkg);
 
-    void stopTethering(int type);
+    void stopTethering(int type, String callerPkg, IResultListener receiver);
 
     void getLatestTetheringEntitlementResult(int type, in ResultReceiver receiver,
-            boolean showEntitlementUi);
+            boolean showEntitlementUi, String callerPkg);
 
-    void registerTetherInternalCallback(ITetherInternalCallback callback);
+    void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
+
+    void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
+
+    void stopTetheringAll(String callerPkg, IResultListener receiver);
 }

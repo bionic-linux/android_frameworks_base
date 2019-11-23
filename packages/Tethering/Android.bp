@@ -27,8 +27,11 @@ java_defaults {
         "netd_aidl_interface-unstable-java",
         "networkstack-aidl-interfaces-unstable-java",
         "android.hardware.tetheroffload.control-V1.0-java",
+    ],
+    libs: [
         "tethering-client",
     ],
+
     manifest: "AndroidManifestBase.xml",
 }
 
@@ -87,6 +90,10 @@ java_defaults {
     resource_dirs: [
         "res",
     ],
+    libs: [
+        "tethering-client",
+    ],
+    jarjar_rules: "jarjar-rules.txt",
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
@@ -99,9 +106,9 @@ android_app {
     static_libs: ["TetheringApiCurrentLib"],
     certificate: "platform",
     manifest: "AndroidManifest_InProcess.xml",
-    // InProcessNetworkStack is a replacement for Tethering
+    // InProcessTethering is a replacement for Tethering
     overrides: ["Tethering"],
-    // TODO: use PlatformNetworkPermissionConfig.
+    required: ["NetworkPermissionConfig"],
 }
 
 // Updatable tethering packaged as an application

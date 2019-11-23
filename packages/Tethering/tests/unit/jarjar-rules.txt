@@ -1,0 +1,11 @@
+# Don't jar-jar the entire package because this test use some
+# internal classes (like ArrayUtils in com.android.internal.util)
+rule com.android.internal.util.BitUtils* android.net.tethering.util.BitUtils@1
+rule com.android.internal.util.IndentingPrintWriter.java* android.net.tethering.util.IndentingPrintWriter.java@1
+rule com.android.internal.util.IState.java* android.net.tethering.util.IState.java@1
+rule com.android.internal.util.MessageUtils* android.net.tethering.util.MessageUtils@1
+rule com.android.internal.util.Preconditions* android.net.tethering.util.Preconditions@1
+rule com.android.internal.util.State* android.net.tethering.util.State@1
+rule com.android.internal.util.StateMachine* android.net.tethering.util.StateMachine@1
+
+rule android.net.LocalLog* android.net.tethering.LocalLog@1
