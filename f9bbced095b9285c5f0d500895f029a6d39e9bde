@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e02702b0_19ad2b14",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-24T02:11:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \u003e\u003d instead of \u003e ? Otherwise if app.requestedPermissions.length \u003d\u003d 4, index \u003d\u003d 3, and app.requesterPermissionsFlags.length \u003d\u003d 3, the code will crash.",
+      "range": {
+        "startLine": 237,
+        "startChar": 31,
+        "endLine": 237,
+        "endChar": 32
+      },
+      "revId": "f9bbced095b9285c5f0d500895f029a6d39e9bde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
