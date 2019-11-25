@@ -35,9 +35,6 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.SystemClock;
-import android.telephony.Annotation.RilRadioTechnology;
-import android.telephony.ServiceState;
-import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 import android.view.Surface;
 
@@ -565,6 +562,13 @@ public abstract class Connection extends Conferenceable {
      */
     public static final String EXTRA_IS_RTT_AUDIO_PRESENT =
             "android.telecom.extra.IS_RTT_AUDIO_PRESENT";
+
+    /**
+     * IMS audio codec type defined in {@link ImsStreamMediaProfile}. App could use it to
+     * determine call quality icon.
+     */
+    public static final String EXTRA_AUDIO_CODEC_TYPE =
+            "android.telecom.extra.EXTRA_AUDIO_CODEC_TYPE";
 
     /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
