@@ -6458,6 +6458,7 @@ package android.provider {
     field public static final String APN_SET_ID = "apn_set_id";
     field public static final int CARRIER_EDITED = 4; // 0x4
     field public static final String EDITED_STATUS = "edited";
+    field public static final String IPV6_MTU = "ipv6_mtu";
     field public static final String MAX_CONNECTIONS = "max_conns";
     field public static final String MODEM_PERSIST = "modem_cognitive";
     field public static final String MTU = "mtu";
@@ -8868,6 +8869,7 @@ package android.telephony.data {
     method @NonNull public String getApn();
     method public int getAuthType();
     method public int getBearerBitmask();
+    method public int getIpv6Mtu();
     method public int getMtu();
     method @Nullable public String getPassword();
     method public int getProfileId();
@@ -8893,6 +8895,7 @@ package android.telephony.data {
     method @NonNull public android.telephony.data.DataProfile.Builder setApn(@NonNull String);
     method @NonNull public android.telephony.data.DataProfile.Builder setAuthType(int);
     method @NonNull public android.telephony.data.DataProfile.Builder setBearerBitmask(int);
+    method @NonNull public android.telephony.data.DataProfile.Builder setIpv6Mtu(int);
     method @NonNull public android.telephony.data.DataProfile.Builder setMtu(int);
     method @NonNull public android.telephony.data.DataProfile.Builder setPassword(@NonNull String);
     method @NonNull public android.telephony.data.DataProfile.Builder setPersistent(boolean);
