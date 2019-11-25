@@ -102,6 +102,8 @@ public final class DataProfile implements Parcelable {
 
     private final boolean mPreferred;
 
+    private final int mIpv6Mtu;
+
     /** @hide */
     private DataProfile(int profileId, String apn, @ProtocolType int protocolType, int authType,
                         String userName, String password, int type, int maxConnectionsTime,
@@ -109,7 +111,7 @@ public final class DataProfile implements Parcelable {
                         @ApnType int supportedApnTypesBitmask,
                         @ProtocolType int roamingProtocolType,
                         @NetworkTypeBitMask int bearerBitmask, int mtu, boolean persistent,
-                        boolean preferred) {
+                        boolean preferred, int ipv6Mtu) {
         this.mProfileId = profileId;
         this.mApn = apn;
         this.mProtocolType = protocolType;
@@ -131,6 +133,7 @@ public final class DataProfile implements Parcelable {
         this.mMtu = mtu;
         this.mPersistent = persistent;
         this.mPreferred = preferred;
+        this.mIpv6Mtu = ipv6Mtu;
     }
 
     private DataProfile(Parcel source) {
@@ -151,6 +154,7 @@ public final class DataProfile implements Parcelable {
         mMtu = source.readInt();
         mPersistent = source.readBoolean();
         mPreferred = source.readBoolean();
+        mIpv6Mtu = source.readInt();
     }
 
     /**
@@ -241,6 +245,11 @@ public final class DataProfile implements Parcelable {
     public int getMtu() { return mMtu; }
 
     /**
+     * @return The maximum transmission unit (IPV6 MTU) size in bytes.
+     */
+    public int getIpv6Mtu() { return mIpv6Mtu; }
+
+    /**
      * @return {@code true} if modem must persist this data profile.
      */
     public boolean isPersistent() { return mPersistent; }
@@ -266,7 +275,7 @@ public final class DataProfile implements Parcelable {
                 + mMaxConnectionsTime + "/" + mMaxConnections + "/"
                 + mWaitTime + "/" + mEnabled + "/" + mSupportedApnTypesBitmask + "/"
                 + mRoamingProtocolType + "/" + mBearerBitmask + "/" + mMtu + "/" + mPersistent + "/"
-                + mPreferred;
+                + mPreferred + "/" + mIpv6Mtu;
     }
 
     @Override
@@ -288,6 +297,7 @@ public final class DataProfile implements Parcelable {
         dest.writeInt(mMtu);
         dest.writeBoolean(mPersistent);
         dest.writeBoolean(mPreferred);
+        dest.writeInt(mIpv6Mtu);
     }
 
     public static final @android.annotation.NonNull Parcelable.Creator<DataProfile> CREATOR =

@@ -65,6 +65,7 @@ public class ApnSetting implements Parcelable {
     private static final String V5_FORMAT_REGEX = "^\\[ApnSettingV5\\]\\s*";
     private static final String V6_FORMAT_REGEX = "^\\[ApnSettingV6\\]\\s*";
     private static final String V7_FORMAT_REGEX = "^\\[ApnSettingV7\\]\\s*";
+    private static final String V8_FORMAT_REGEX = "^\\[ApnSettingV8\\]\\s*";
 
     /**
      * Default value for mtu if it's not set. Moved from PhoneConstants.
@@ -275,6 +276,7 @@ public class ApnSetting implements Parcelable {
     private final int mCarrierId;
 
     private final int mSkip464Xlat;
+    private final int mIpv6Mtu;
 
     /**
      * Returns the MTU size of the mobile interface to which the APN connected.
@@ -284,6 +286,16 @@ public class ApnSetting implements Parcelable {
      */
     public int getMtu() {
         return mMtu;
+    }
+
+    /**
+     * Returns the IPV6 MTU size of the mobile interface to which the APN connected.
+     *
+     * @return the IPV6 MTU size of the APN
+     * @hide
+     */
+    public int getIpv6Mtu() {
+        return mIpv6Mtu;
     }
 
     /**
@@ -653,6 +665,7 @@ public class ApnSetting implements Parcelable {
         this.mApnSetId = builder.mApnSetId;
         this.mCarrierId = builder.mCarrierId;
         this.mSkip464Xlat = builder.mSkip464Xlat;
+        this.mIpv6Mtu = builder.mIpv6Mtu;
     }
 
     /**
@@ -664,7 +677,7 @@ public class ApnSetting implements Parcelable {
             int authType, int mApnTypeBitmask, int protocol, int roamingProtocol,
             boolean carrierEnabled, int networkTypeBitmask, int profileId,
             boolean modemCognitive, int maxConns, int waitTime, int maxConnsTime, int mtu,
-            int mvnoType, String mvnoMatchData, int apnSetId, int carrierId, int skip464xlat) {
+            int mvnoType, String mvnoMatchData, int apnSetId, int carrierId, int skip464xlat, int ipv6Mtu) {
         return new Builder()
             .setId(id)
             .setOperatorNumeric(operatorNumeric)
@@ -694,6 +707,7 @@ public class ApnSetting implements Parcelable {
             .setApnSetId(apnSetId)
             .setCarrierId(carrierId)
             .setSkip464Xlat(skip464xlat)
+            .setMtu(ipv6Mtu)
             .buildWithoutCheck();
     }
 
@@ -706,13 +720,13 @@ public class ApnSetting implements Parcelable {
             int authType, int mApnTypeBitmask, int protocol, int roamingProtocol,
             boolean carrierEnabled, int networkTypeBitmask, int profileId, boolean modemCognitive,
             int maxConns, int waitTime, int maxConnsTime, int mtu, int mvnoType,
-            String mvnoMatchData) {
+            String mvnoMatchData, int ipv6Mtu) {
         return makeApnSetting(id, operatorNumeric, entryName, apnName, proxyAddress, proxyPort,
             mmsc, mmsProxyAddress, mmsProxyPort, user, password, authType, mApnTypeBitmask,
             protocol, roamingProtocol, carrierEnabled, networkTypeBitmask, profileId,
             modemCognitive, maxConns, waitTime, maxConnsTime, mtu, mvnoType, mvnoMatchData,
             Carriers.NO_APN_SET_ID, TelephonyManager.UNKNOWN_CARRIER_ID,
-            Carriers.SKIP_464XLAT_DEFAULT);
+            Carriers.SKIP_464XLAT_DEFAULT, ipv6Mtu);
     }
 
     /**
@@ -770,9 +784,11 @@ public class ApnSetting implements Parcelable {
                     Telephony.Carriers.MVNO_TYPE))),
             cursor.getString(cursor.getColumnIndexOrThrow(
                 Telephony.Carriers.MVNO_MATCH_DATA)),
+            cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.IPV6_MTU)),
             cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.APN_SET_ID)),
             cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.CARRIER_ID)),
-            cursor.getInt(cursor.getColumnIndexOrThrow(Carriers.SKIP_464XLAT)));
+            cursor.getInt(cursor.getColumnIndexOrThrow(Carriers.SKIP_464XLAT)),
+            cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Carriers.IPV6_MTU)));
     }
 
     /**
@@ -785,7 +801,7 @@ public class ApnSetting implements Parcelable {
             apn.mProtocol, apn.mRoamingProtocol, apn.mCarrierEnabled, apn.mNetworkTypeBitmask,
             apn.mProfileId, apn.mPersistent, apn.mMaxConns, apn.mWaitTime,
             apn.mMaxConnsTime, apn.mMtu, apn.mMvnoType, apn.mMvnoMatchData, apn.mApnSetId,
-            apn.mCarrierId, apn.mSkip464Xlat);
+            apn.mCarrierId, apn.mSkip464Xlat, apn.mIpv6Mtu);
     }
 
     /**
@@ -841,6 +857,14 @@ public class ApnSetting implements Parcelable {
      *   <profileId>, <modemCognitive>, <maxConns>, <waitTime>, <maxConnsTime>, <mtu>,
      *   <mvnoType>, <mvnoMatchData>, <networkTypeBitmask>, <apnSetId>, <carrierId>, <skip464xlat>
      *
+     * v8 format:
+     *   [ApnSettingV8] <carrier>, <apn>, <proxy>, <port>, <user>, <password>, <server>,
+     *   <mmsc>, <mmsproxy>, <mmsport>, <mcc>, <mnc>, <authtype>,
+     *   <type>[| <type>...], <protocol>, <roaming_protocol>, <carrierEnabled>, <bearerBitmask>,
+     *   <profileId>, <modemCognitive>, <maxConns>, <waitTime>, <maxConnsTime>, <mtu>,
+     *   <mvnoType>, <mvnoMatchData>, <networkTypeBitmask>, <apnSetId>, <carrierId>, <skip464xlat>,
+     *   <ipv6Mtu>
+     *   
      * Note that the strings generated by {@link #toString()} do not contain the username
      * and password and thus cannot be read by this method.
      *
@@ -853,7 +877,10 @@ public class ApnSetting implements Parcelable {
 
         int version;
         // matches() operates on the whole string, so append .* to the regex.
-        if (data.matches(V7_FORMAT_REGEX + ".*")) {
+        if (data.matches(V8_FORMAT_REGEX + ".*")) {
+            version = 8;
+            data = data.replaceFirst(V8_FORMAT_REGEX, "");
+        } else if (data.matches(V7_FORMAT_REGEX + ".*")) {
             version = 7;
             data = data.replaceFirst(V7_FORMAT_REGEX, "");
         } else if (data.matches(V6_FORMAT_REGEX + ".*")) {
@@ -898,6 +925,7 @@ public class ApnSetting implements Parcelable {
         int waitTime = 0;
         int maxConnsTime = 0;
         int mtu = UNSET_MTU;
+        int ipv6_mtu = UNSET_MTU;
         String mvnoType = "";
         String mvnoMatchData = "";
         int apnSetId = Carriers.NO_APN_SET_ID;
@@ -955,6 +983,12 @@ public class ApnSetting implements Parcelable {
                 } catch (NumberFormatException e) {
                 }
             }
+            if (a.length > 30) {
+                try {
+                    ipv6_mtu = Integer.parseInt(a[30]);
+                } catch (NumberFormatException e) {
+                }
+            }
         }
 
         // If both bearerBitmask and networkTypeBitmask were specified, bearerBitmask would be
@@ -970,7 +1004,7 @@ public class ApnSetting implements Parcelable {
             getProtocolIntFromString(protocol), getProtocolIntFromString(roamingProtocol),
             carrierEnabled, networkTypeBitmask, profileId, modemCognitive, maxConns, waitTime,
             maxConnsTime, mtu, getMvnoTypeIntFromString(mvnoType), mvnoMatchData, apnSetId,
-            carrierId, skip464xlat);
+            carrierId, skip464xlat, ipv6Mtu);
     }
 
     /**
@@ -1035,6 +1069,7 @@ public class ApnSetting implements Parcelable {
         sb.append(", ").append(mApnSetId);
         sb.append(", ").append(mCarrierId);
         sb.append(", ").append(mSkip464Xlat);
+        sb.append(", ").append(mIpv6Mtu);
         return sb.toString();
     }
 
@@ -1129,7 +1164,8 @@ public class ApnSetting implements Parcelable {
             && Objects.equals(mNetworkTypeBitmask, other.mNetworkTypeBitmask)
             && Objects.equals(mApnSetId, other.mApnSetId)
             && Objects.equals(mCarrierId, other.mCarrierId)
-            && Objects.equals(mSkip464Xlat, other.mSkip464Xlat);
+            && Objects.equals(mSkip464Xlat, other.mSkip464Xlat)
+            && Objects.equals(mIpv6Mtu, other.mIpv6Mtu);
     }
 
     /**
@@ -1176,7 +1212,8 @@ public class ApnSetting implements Parcelable {
             && Objects.equals(mMvnoMatchData, other.mMvnoMatchData)
             && Objects.equals(mApnSetId, other.mApnSetId)
             && Objects.equals(mCarrierId, other.mCarrierId)
-            && Objects.equals(mSkip464Xlat, other.mSkip464Xlat);
+            && Objects.equals(mSkip464Xlat, other.mSkip464Xlat)
+            && Objects.equals(mIpv6Mtu, other.mIpv6Mtu);
     }
 
     /**
@@ -1566,6 +1603,7 @@ public class ApnSetting implements Parcelable {
         private int mApnSetId;
         private int mCarrierId = TelephonyManager.UNKNOWN_CARRIER_ID;
         private int mSkip464Xlat = Carriers.SKIP_464XLAT_DEFAULT;
+        private int mIpv6Mtu;
 
         /**
          * Default constructor for Builder.
@@ -1590,6 +1628,17 @@ public class ApnSetting implements Parcelable {
          */
         public Builder setMtu(int mtu) {
             this.mMtu = mtu;
+            return this;
+        }
+
+        /**
+         * Set the IPV6 MTU size of the mobile interface to which the APN connected.
+         *
+         * @param mtu the IPV6 MTU size to set for the APN
+         * @hide
+         */
+        public Builder setIpv6Mtu(int ipv6Mtu) {
+            this.mIpv6Mtu = ipv6Mtu;
             return this;
         }
 
