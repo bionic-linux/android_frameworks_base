@@ -31,6 +31,7 @@ import android.content.IntentSender;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewParent;
 
@@ -165,7 +166,9 @@ public class StatusBarRemoteInputCallback implements Callback, Callbacks,
     @Override
     public void onMakeExpandedVisibleForRemoteInput(ExpandableNotificationRow row,
             View clickedView) {
-        if (mKeyguardMonitor.isShowing()) {
+        // UNISOC: Fix for bug 1197441
+        int doze = Settings.Secure.getInt(mContext.getContentResolver(), Settings.Secure.DOZE_ENABLED, -1);
+        if (mKeyguardMonitor.isShowing() || doze == 1) {
             onLockedRemoteInput(row, clickedView);
         } else {
             if (row.isChildInGroup() && !row.areChildrenExpanded()) {
