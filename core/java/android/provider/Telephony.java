@@ -267,6 +267,12 @@ public final class Telephony {
         public static final String MTU = "mtu";
 
         /**
+         * The IPV6_MTU size of the mobile interface to which the APN connected
+         * @hide
+         */
+        public static final String IPV6_MTU = "ipv6_mtu";
+
+        /**
          * Error code associated with sending or receiving this message
          * <P>Type: INTEGER</P>
          */
@@ -3801,6 +3807,15 @@ public final class Telephony {
          */
         @SystemApi
         public static final String MTU = "mtu";
+
+        /**
+         * The IPV6_MTU (maximum transmit unit) size of the mobile interface to which the APN is
+         * connected, in bytes.
+         * <p>Type: INTEGER </p>
+         * @hide
+         */
+        @SystemApi
+        public static final String IPV6_MTU = "ipv6_mtu";
 
         /**
          * APN edit status. APN could be added/edited/deleted by a user or carrier.
