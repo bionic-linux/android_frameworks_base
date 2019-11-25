@@ -3343,10 +3343,10 @@ public class AccountManagerService
 
                 @Override
                 protected String toDebugString(long now) {
-                    String requiredFeaturesStr = TextUtils.join(",", requiredFeatures);
                     return super.toDebugString(now) + ", startAddAccountSession" + ", accountType "
                             + accountType + ", requiredFeatures "
-                            + (requiredFeatures != null ? requiredFeaturesStr : null);
+                            + (requiredFeatures != null ?
+                            TextUtils.join(",", requiredFeatures) : null);
                 }
             }.bind();
         } finally {

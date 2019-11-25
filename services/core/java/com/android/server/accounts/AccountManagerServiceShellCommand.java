@@ -16,7 +16,9 @@
 
 package com.android.server.accounts;
 
+import com.android.internal.os.RoSystemProperties;
 import android.annotation.NonNull;
+import android.app.ActivityManager;
 import android.os.ShellCommand;
 import android.os.UserHandle;
 
@@ -82,6 +84,10 @@ final class AccountManagerServiceShellCommand extends ShellCommand {
                 getErrPrintWriter().println("Unknown option: " + option);
                 return null;
             }
+        }
+        //if System user is headless,return current user.
+        if (RoSystemProperties.MULTIUSER_HEADLESS_SYSTEM_USER) {
+            return ActivityManager.getCurrentUser();
         }
         return UserHandle.USER_SYSTEM;
     }
