@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb5a63e_7f5ce818",
+        "filename": "api/lint-baseline.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-25T18:42:06Z",
+      "side": 1,
+      "message": "What was the lint error?  You shouldn\u0027t need to ignore these.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 63
+      },
+      "revId": "a3b6ca14dc6564778f4b3e4ce47c5cd50865a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c46fd5a_992b2874",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-11-25T18:42:06Z",
+      "side": 1,
+      "message": "ImsStreamMediaProfile is @SystemApi and so are the constants, so this should be a System API as well.\n\nAlso recommend naming it EXTRA_AUDIO_QUALITY for consistency with the ImsStreamMediaProfile naming scheme.",
+      "range": {
+        "startLine": 566,
+        "startChar": 5,
+        "endLine": 571,
+        "endChar": 59
+      },
+      "revId": "a3b6ca14dc6564778f4b3e4ce47c5cd50865a168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
