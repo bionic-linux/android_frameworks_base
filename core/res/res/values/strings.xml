@@ -5414,4 +5414,9 @@
     <!-- ChooserActivity - Alphabetically sorted apps list label. [CHAR LIMIT=NONE] -->
     <string name="chooser_all_apps_button_label">Apps list</string>
 
+    <string name="cfmmiuncondition">Always forward</string>
+    <string name="cfmmibusy">Call forward when busy</string>
+    <string name="cfmminoreply">Call forward when unanswered</string>
+    <string name="cfmminoreach">Call forward when unreachable</string>
+
 </resources>
