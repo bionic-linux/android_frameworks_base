@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c3181c_8de89841",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:05:50Z",
+      "side": 1,
+      "message": "Suggest adding some details on the timing : is there an expectation of responsivity ? If so how does the framework wait and how does it behave if the update is late ? If not, what are the edges of the reporting system ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "68dc253eceed8c2da66a4991d8abeaa46066b24a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57830877_6748bfa4",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T08:05:50Z",
+      "side": 1,
+      "message": "Can you be a bit more specific ? block all packets ? ingress, egress ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 67,
+        "endLine": 42,
+        "endChar": 79
+      },
+      "revId": "68dc253eceed8c2da66a4991d8abeaa46066b24a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
