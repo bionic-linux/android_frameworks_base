@@ -22,6 +22,30 @@
       "revId": "f8a59d98eec48022ec035dcab1d348d23c858d74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea607ed_05a8609e",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2019-11-26T00:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b078aa5_3668b8a3",
+      "range": {
+        "startLine": 604,
+        "startChar": 8,
+        "endLine": 607,
+        "endChar": 77
+      },
+      "revId": "f8a59d98eec48022ec035dcab1d348d23c858d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
