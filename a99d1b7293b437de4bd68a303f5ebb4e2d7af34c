@@ -22,6 +22,69 @@
       "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc9a5e6_96c720f2",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:35Z",
+      "side": 1,
+      "message": "There are changes to this file and making these changes at the same time as the move makes them really difficult to review. Is it possible to apply the changes either in a preliminary or in a followup change, so that we can see the diff ?",
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24bd039_957787fb",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:35Z",
+      "side": 1,
+      "message": "Pulled back from Tether07 review :\n\nmTetheringConfiguration has to be an instance of TetheringConfiguration, or some other way of not storing a bag of mutable members. b/145116632 tracks this. It can be done in a followup change, but I want this to stop ship.\n\nSimilar question applies to mTetherStates, but I\u0027m willing to let mTetherStates go because it only contains arrays which are always mutable anyway.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f0c458_ee50451a",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:35Z",
+      "side": 1,
+      "message": "This lets other clients claim they also \"need\" direct access. Instead we should say PanService uses this for legacy reasons and will migrate away as soon as possible.",
+      "range": {
+        "startLine": 210,
+        "startChar": 13,
+        "endLine": 210,
+        "endChar": 17
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
