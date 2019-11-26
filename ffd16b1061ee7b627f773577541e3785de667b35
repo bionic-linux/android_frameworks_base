@@ -896,6 +896,30 @@
     },
     {
       "key": {
+        "uuid": "6854fa3e_a1b3d3c0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Fine for now but I call stopship on this.",
+      "parentUuid": "8dee4a2a_950ebfe4",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 12
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ea8dd7b_7dc53fce",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 18
@@ -1507,6 +1531,30 @@
     },
     {
       "key": {
+        "uuid": "3f3d27e8_dc680d7c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Huh. I expected saying (null) here would pass an array containing null, not a null array. The more you know.\n\nThanks for the explanation.",
+      "parentUuid": "0b717550_4f15459b",
+      "range": {
+        "startLine": 1162,
+        "startChar": 39,
+        "endLine": 1162,
+        "endChar": 59
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a2e929_46e212e4",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -1759,6 +1807,30 @@
     },
     {
       "key": {
+        "uuid": "a9a1d845_6d0943be",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Ack. Tether13 moves TetheringManager to app space, so this is fine.",
+      "parentUuid": "8462331b_6058b3e7",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6bfe177_d5723cd4",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 18
@@ -1806,6 +1878,30 @@
     },
     {
       "key": {
+        "uuid": "88aeb1b7_75dce5ac",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Okay. Calling stopship on this.",
+      "parentUuid": "c9091c1d_9d44d195",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb9dac6f_cfb514a5",
         "filename": "services/net/java/android/net/TetheringManager.java",
         "patchSetId": 18
@@ -1841,6 +1937,30 @@
       "side": 1,
       "message": "Ack, Tether13 has all final design. Maybe we can defer this question to Tether13 review.",
       "parentUuid": "eb9dac6f_cfb514a5",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcf3f3aa_d146dd09",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Sure. Let me add a comment to Tether13 so we don\u0027t forget.",
+      "parentUuid": "4d524286_58e190dc",
       "range": {
         "startLine": 50,
         "startChar": 12,
@@ -1982,6 +2102,30 @@
       "side": 1,
       "message": "I already refactor this at Tether13. There is a new WaitingUtil and I also use  that WaitingUtil in TetheringManager constructor that it guarantee callback is connected at constructor. Since TetheringManager manager is running at application\u0027s process, I think this blocking is acceptable. Lets review this at Tether13.",
       "parentUuid": "965838ab_6ab0cd6b",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 88
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ad4dbbb_d3a63719",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Fair enough. Thanks.",
+      "parentUuid": "74404ddc_2af66ca1",
       "range": {
         "startLine": 96,
         "startChar": 22,
@@ -2175,6 +2319,54 @@
         "startChar": 15,
         "endLine": 167,
         "endChar": 57
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e77776f_31a81c98",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97fbe400_5b09db0a",
+      "range": {
+        "startLine": 167,
+        "startChar": 15,
+        "endLine": 167,
+        "endChar": 57
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1626b29a_7bef3365",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8eba7bec_62a4f77f",
+      "range": {
+        "startLine": 167,
+        "startChar": 59,
+        "endLine": 167,
+        "endChar": 71
       },
       "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -2546,6 +2738,30 @@
       "side": 1,
       "message": "If you don\u0027t have strong feeling, I\u0027ll just keep it because it will be moved at Tether13",
       "parentUuid": "93bcf6b2_ebb66823",
+      "range": {
+        "startLine": 309,
+        "startChar": 22,
+        "endLine": 309,
+        "endChar": 42
+      },
+      "revId": "ffd16b1061ee7b627f773577541e3785de667b35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74f41f1e_47c3390e",
+        "filename": "services/net/java/android/net/TetheringManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T11:50:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "612bc1ab_c4e1afd2",
       "range": {
         "startLine": 309,
         "startChar": 22,
