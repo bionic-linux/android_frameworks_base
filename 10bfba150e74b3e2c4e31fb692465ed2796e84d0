@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02932680_e25268d3",
+        "filename": "packages/SystemUI/res/layout-land/global_actions_grid_item.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1387507
+      },
+      "writtenOn": "2019-11-26T19:26:32Z",
+      "side": 1,
+      "message": "Unfortunately, wrap_content will cause some problems here. Grid items need to be a fixed height so that the columns in the grid version of the GlobalActionsDialog are all the same height.",
+      "revId": "10bfba150e74b3e2c4e31fb692465ed2796e84d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21f82e4_c2b9e0ab",
+        "filename": "packages/SystemUI/res/layout/global_actions_grid_item.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1387507
+      },
+      "writtenOn": "2019-11-26T19:26:32Z",
+      "side": 1,
+      "message": "See other comment about wrap_content.",
+      "revId": "10bfba150e74b3e2c4e31fb692465ed2796e84d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8f64fc_f7bf473a",
+        "filename": "packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1387507
+      },
+      "writtenOn": "2019-11-26T19:26:32Z",
+      "side": 1,
+      "message": "We\u0027ll need to redesign the toggle actions not to use the status text, since the new grid items only support a single line of text due to their reduced size.",
+      "revId": "10bfba150e74b3e2c4e31fb692465ed2796e84d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
