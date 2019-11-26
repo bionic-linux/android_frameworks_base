@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "1d8c0208_9db92178",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "I expect the API council will tell you to abide by this warning. I\u0027m personally happy to change this in a followup but I don\u0027t know if everyone in the council is going to like that.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edeb1efc_e6a63f84",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "go/synchronized-this-considered-harmful\n\nThis is especially important as this is public API running in app space.",
+      "range": {
+        "startLine": 2342,
+        "startChar": 22,
+        "endLine": 2342,
+        "endChar": 26
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03b944a_add2e061",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2350,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "I think this is too short.\n\nThis should only ever happen early after boot of the device. Very soon after boot, this code will never be called any more because this function will return in l.2344 or not enter this while() clause.\n\nVery early after boot when this can run, the device is very busy and multiple apps can be hammering this at the same time.\n\nTherefore I think that making this short has the potential to make the problem worse by loading the device even more than it already is, while making this long has very little adverse impact. I suggest something like 1 second.",
+      "range": {
+        "startLine": 2350,
+        "startChar": 33,
+        "endLine": 2350,
+        "endChar": 36
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1949cd98_2017a022",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "Suggest UnsupportedOperationException",
+      "range": {
+        "startLine": 2353,
+        "startChar": 34,
+        "endLine": 2353,
+        "endChar": 50
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2f4b98_07e5dc8d",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/IResultListener.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "Suggest IIntResultListener or something",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f14de88_a651a07a",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
         "patchSetId": 10
@@ -18,6 +133,29 @@
         "startChar": 9,
         "endLine": 29,
         "endChar": 26
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f211cca2_e8dcf845",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure what it means for a callback to fail, can you clarify the method name ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 25
       },
       "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -81,6 +219,29 @@
         "startChar": 13,
         "endLine": 210,
         "endChar": 17
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e363ccc_ba1523ef",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-26T12:29:23Z",
+      "side": 1,
+      "message": "This doesn\u0027t reset anything really. I think it should be called something like stopAllTethering or something. It would also clarify the code in ConnectivityManager#factoryReset.",
+      "range": {
+        "startLine": 562,
+        "startChar": 16,
+        "endLine": 562,
+        "endChar": 28
       },
       "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
