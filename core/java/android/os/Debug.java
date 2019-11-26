@@ -2499,4 +2499,25 @@ public final class Debug
      * @hide
      */
     public static native long getZramFreeKb();
+
+    /**
+     * Return memory size in kilobytes allocated for ION heaps.
+     *
+     * @hide
+     */
+    public static native long getIonHeapsSizeKb();
+
+    /**
+     * Return memory size in kilobytes allocated for ION pools.
+     *
+     * @hide
+     */
+    public static native long getIonPoolsSizeKb();
+
+    /**
+     * Return ION memory mapped by processes in kB.
+     *
+     * @hide
+     */
+    public static native long getIonMappedSizeKb();
 }
