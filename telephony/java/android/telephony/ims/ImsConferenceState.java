@@ -25,7 +25,6 @@ import android.os.Parcelable;
 import android.telecom.Call;
 import android.telecom.Connection;
 import android.telephony.Rlog;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,6 +40,8 @@ import java.util.Set;
 @TestApi
 public final class ImsConferenceState implements Parcelable {
     private static final String TAG = "ImsConferenceState";
+    // id (String) : connection id
+    public static final String ID = "id";
     /**
      * conference-info : user
      */
