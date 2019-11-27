@@ -237,7 +237,11 @@ public class RoleManagerService extends SystemService implements RoleUserState.C
             getOrCreateController(userId).grantDefaultRoles(FgThread.getExecutor(),
                     successful -> {
                         if (successful) {
-                            userState.setPackagesHash(packagesHash);
+                            try {
+                                userState.setPackagesHash(packagesHash);
+                            } catch (IllegalStateException e) {
+                                Slog.e(LOG_TAG, "RoleUserState has been destroyed", e);
+                            }
                             result.complete(null);
                         } else {
                             result.completeExceptionally(new RuntimeException());
