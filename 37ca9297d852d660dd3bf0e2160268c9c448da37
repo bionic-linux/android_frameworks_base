@@ -22,6 +22,30 @@
       "revId": "37ca9297d852d660dd3bf0e2160268c9c448da37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e261d768_ed7a1471",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 0,
+      "message": "No, TetheringManager would running in application\u0027s process. This would be moved to TetheringClient instead. See Tether13",
+      "parentUuid": "ea429bff_f09afbef",
+      "range": {
+        "startLine": 2406,
+        "startChar": 12,
+        "endLine": 2406,
+        "endChar": 42
+      },
+      "revId": "37ca9297d852d660dd3bf0e2160268c9c448da37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "619563d1_fd3d7fc1",
+        "filename": "core/java/android/os/ResultReceiver.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a889458c_78aaec1f",
+      "range": {
+        "startLine": 11,
+        "startChar": 70,
+        "endLine": 11,
+        "endChar": 71
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baaf67b8_206d8aab",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
         "patchSetId": 20
@@ -36,6 +60,30 @@
       "writtenOn": "2019-11-27T06:12:36Z",
       "side": 1,
       "message": "Nit: explain how in the comment, as not everybody has access to that bug",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1238e09_6bd6b020",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack, so far I don\u0027t decide how to improve this yet. So just add the tracking bug....",
+      "parentUuid": "baaf67b8_206d8aab",
       "range": {
         "startLine": 29,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bd46b838_20ff3866",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringConfigurationParcel.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "878a71d9_a291ca87",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eddda3e_0fb47742",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28da4302_304f40d3",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "No, TetheringManager can\u0027t use androidx because it would be moved into framework(bootclass path) that it don\u0027 have androidx.",
+      "parentUuid": "8eddda3e_0fb47742",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a7d7b945_1d815ae6",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Same reason as above.",
+      "parentUuid": "9802e1b3_372c98a0",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d1393a4_e50973cc",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -128,6 +248,30 @@
       "writtenOn": "2019-11-27T06:12:36Z",
       "side": 1,
       "message": "I\u0027m not sure how you could do that considering that it\u0027s only obtained once the service is bound. Or maybe it could be a promise or some other holder ?",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 47
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "183d5165_0e7e230b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Yes, it would be hold by ConnectivityManager(Maybe also be created by Context.getSystemServer(xxx)). So mConnector can be initialized in Constructor. See Tether13.",
+      "parentUuid": "0d1393a4_e50973cc",
       "range": {
         "startLine": 85,
         "startChar": 21,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5c0bfb72_18ba734b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Should already be changed at Tether13.",
+      "parentUuid": "6f0bf55b_a65d2e48",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6c0a4e_e551cbab",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -183,6 +351,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e4698a_a7ab042e",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a6c0a4e_e551cbab",
+      "range": {
+        "startLine": 171,
+        "startChar": 7,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e05da20d_bdf13185",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6565fafc_c4fe84cc",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 23
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b8b05e9_16d434e9",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -229,6 +445,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aabe3c3_12f6ada7",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b8b05e9_16d434e9",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 18
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "63f45454_7483c46c",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af1e68fb_a8445a52",
+      "range": {
+        "startLine": 254,
+        "startChar": 34,
+        "endLine": 254,
+        "endChar": 48
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f61c60a_f972c7b5",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -275,6 +539,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7642ab88_12257c90",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Should already done at Tether13.",
+      "parentUuid": "1f61c60a_f972c7b5",
+      "range": {
+        "startLine": 265,
+        "startChar": 40,
+        "endLine": 265,
+        "endChar": 41
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "3748e553_5f817985",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "This API is also used by Settings to show error in Settings UI. But we should consider to have better API surface. This is already in my TODO list.",
+      "parentUuid": "0a40ad5a_c2ef42d1",
+      "range": {
+        "startLine": 283,
+        "startChar": 46,
+        "endLine": 283,
+        "endChar": 70
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bfe5721_d54001ac",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -321,6 +633,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6e87c6_8aad754e",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack, sounds good. Add to cleanup list, thank you.",
+      "parentUuid": "2bfe5721_d54001ac",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 55
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4b8ad817_6d572b6e",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "74acdc5a_46433f7c",
+      "range": {
+        "startLine": 395,
+        "startChar": 39,
+        "endLine": 395,
+        "endChar": 55
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb6812a6_b974f64b",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 20
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "b954684e_96d5ae3a",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "This is removed at Tether13.",
+      "parentUuid": "bb6812a6_b974f64b",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 486,
+        "endChar": 67
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fc5c944_4ac8f4d5",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 20
@@ -390,6 +774,30 @@
       "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634d7085_76343baf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2452,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-11-27T13:06:40Z",
+      "side": 1,
+      "message": "Oops, I also don\u0027t know why I invert it. I don\u0027t aware this.... But it already be removed at Tether13",
+      "parentUuid": "4fc5c944_4ac8f4d5",
+      "range": {
+        "startLine": 2444,
+        "startChar": 8,
+        "endLine": 2452,
+        "endChar": 0
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
