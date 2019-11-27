@@ -195,6 +195,8 @@ public class RcsFeature extends ImsFeature {
      * framework that the capability is available for usage.
      * @hide
      */
+    @SystemApi
+    @TestApi
     public static class RcsImsCapabilities extends Capabilities {
         /** @hide*/
         @Retention(RetentionPolicy.SOURCE)

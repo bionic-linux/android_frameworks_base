@@ -20,6 +20,8 @@ import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
@@ -42,6 +44,8 @@ import java.util.function.Consumer;
  * Use {@link ImsManager#getImsRcsManager(int)} to create an instance of this manager.
  * @hide
  */
+@SystemApi
+@TestApi
 public class ImsRcsManager implements RegistrationManager {
     private static final String TAG = "ImsRcsManager";
 
@@ -51,7 +55,11 @@ public class ImsRcsManager implements RegistrationManager {
      * @see #isAvailable(int)
      * @see #registerRcsAvailabilityCallback(Executor, AvailabilityCallback)
      * @see #unregisterRcsAvailabilityCallback(AvailabilityCallback)
+     *
+     * @hide
      */
+    @SystemApi
+    @TestApi
     public static class AvailabilityCallback {
 
         private static class CapabilityBinder extends IImsCapabilityCallback.Stub {
@@ -101,7 +109,7 @@ public class ImsRcsManager implements RegistrationManager {
          *
          * @param capabilities The new availability of the capabilities.
          */
-        public void onAvailabilityChanged(RcsFeature.RcsImsCapabilities capabilities) {
+        public void onAvailabilityChanged(@NonNull RcsFeature.RcsImsCapabilities capabilities) {
         }
 
         /**@hide*/
@@ -215,7 +223,7 @@ public class ImsRcsManager implements RegistrationManager {
      * becomes inactive. See {@link ImsException#getCode()} for more information on the error codes.
      */
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    public void registerRcsAvailabilityCallback(@CallbackExecutor Executor executor,
+    public void registerRcsAvailabilityCallback(@NonNull @CallbackExecutor Executor executor,
             @NonNull AvailabilityCallback c) throws ImsException {
         if (c == null) {
             throw new IllegalArgumentException("Must include a non-null AvailabilityCallback.");
@@ -233,7 +241,7 @@ public class ImsRcsManager implements RegistrationManager {
 
         c.setExecutor(executor);
         try {
-            imsRcsController.registerRcsAvailabilityCallback(c.getBinder());
+            imsRcsController.registerRcsAvailabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#registerRcsAvailabilityCallback", e);
             throw new ImsException("Remote IMS Service is not available",
@@ -268,7 +276,7 @@ public class ImsRcsManager implements RegistrationManager {
         }
 
         try {
-            imsRcsController.unregisterRcsAvailabilityCallback(c.getBinder());
+            imsRcsController.unregisterRcsAvailabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#unregisterRcsAvailabilityCallback", e);
             throw new ImsException("Remote IMS Service is not available",

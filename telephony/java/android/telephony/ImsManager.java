@@ -16,21 +16,22 @@
 
 package android.telephony.ims;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.telephony.SubscriptionManager;
 
 /**
  * Provides access to information about Telephony IMS services on the device.
- *
- * @hide
  */
 @SystemService(Context.TELEPHONY_IMS_SERVICE)
 public class ImsManager {
 
     private Context mContext;
 
-    public ImsManager(Context context) {
+    /** @hide */
+    public ImsManager(@NonNull Context context) {
         mContext = context;
     }
 
@@ -40,7 +41,11 @@ public class ImsManager {
      * @param subscriptionId The ID of the subscription that this ImsRcsManager will use.
      * @throws IllegalArgumentException if the subscription is invalid.
      * @return a ImsRcsManager instance with the specific subscription ID.
+     *
+     * @hide
      */
+    @SystemApi
+    @NonNull
     public ImsRcsManager getImsRcsManager(int subscriptionId) {
         if (!SubscriptionManager.isValidSubscriptionId(subscriptionId)) {
             throw new IllegalArgumentException("Invalid subscription ID: " + subscriptionId);
@@ -55,7 +60,11 @@ public class ImsManager {
      * @param subscriptionId The ID of the subscription that this ImsMmTelManager will use.
      * @throws IllegalArgumentException if the subscription is invalid.
      * @return a ImsMmTelManager instance with the specific subscription ID.
+     *
+     * @hide
      */
+    @SystemApi
+    @NonNull
     public ImsMmTelManager getImsMmTelManager(int subscriptionId) {
         if (!SubscriptionManager.isValidSubscriptionId(subscriptionId)) {
             throw new IllegalArgumentException("Invalid subscription ID: " + subscriptionId);

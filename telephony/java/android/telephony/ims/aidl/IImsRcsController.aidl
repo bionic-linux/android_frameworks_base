@@ -26,8 +26,8 @@ import android.telephony.ims.aidl.IRcsUceControllerCallback;
  * {@hide}
  */
 interface IImsRcsController {
-    void registerRcsAvailabilityCallback(IImsCapabilityCallback c);
-    void unregisterRcsAvailabilityCallback(IImsCapabilityCallback c);
+    void registerRcsAvailabilityCallback(int subId, IImsCapabilityCallback c);
+    void unregisterRcsAvailabilityCallback(int subId, IImsCapabilityCallback c);
     boolean isCapable(int subId, int capability);
     boolean isAvailable(int subId, int capability);
 
