@@ -75,6 +75,42 @@ public final class TelephonyUtils {
     }
 
     /**
+     * Convenience method for running the provided action enclosed in
+     * {@link Binder#clearCallingIdentity}/{@link Binder#restoreCallingIdentity}
+     *
+     * Any exception thrown by the given action will need to be handled by caller.
+     *
+     */
+    public static void runWithCleanCallingIdentity(
+            @NonNull Runnable action) {
+        long callingIdentity = Binder.clearCallingIdentity();
+        try {
+            action.run();
+        } finally {
+            Binder.restoreCallingIdentity(callingIdentity);
+        }
+    }
+
+
+    /**
+     * Convenience method for running the provided action enclosed in
+     * {@link Binder#clearCallingIdentity}/{@link Binder#restoreCallingIdentity} and return
+     * the result.
+     *
+     * Any exception thrown by the given action will need to be handled by caller.
+     *
+     */
+    public static <T> T runWithCleanCallingIdentity(
+            @NonNull Supplier<T> action) {
+        long callingIdentity = Binder.clearCallingIdentity();
+        try {
+            return action.get();
+        } finally {
+            Binder.restoreCallingIdentity(callingIdentity);
+        }
+    }
+
+    /**
      * Filter values in bundle to only basic types.
      */
     public static Bundle filterValues(Bundle bundle) {
