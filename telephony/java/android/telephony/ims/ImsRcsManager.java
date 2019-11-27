@@ -233,7 +233,7 @@ public class ImsRcsManager implements RegistrationManager {
 
         c.setExecutor(executor);
         try {
-            imsRcsController.registerRcsAvailabilityCallback(c.getBinder());
+            imsRcsController.registerRcsAvailabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#registerRcsAvailabilityCallback", e);
             throw new ImsException("Remote IMS Service is not available",
@@ -268,7 +268,7 @@ public class ImsRcsManager implements RegistrationManager {
         }
 
         try {
-            imsRcsController.unregisterRcsAvailabilityCallback(c.getBinder());
+            imsRcsController.unregisterRcsAvailabilityCallback(mSubId, c.getBinder());
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling IImsRcsController#unregisterRcsAvailabilityCallback", e);
             throw new ImsException("Remote IMS Service is not available",
