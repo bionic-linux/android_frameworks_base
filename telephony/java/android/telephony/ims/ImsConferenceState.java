@@ -37,6 +37,8 @@ import java.util.Set;
  */
 @SystemApi
 public final class ImsConferenceState implements Parcelable {
+    // id (String) : connection id
+    public static final String ID = "id";
     /**
      * conference-info : user
      */
