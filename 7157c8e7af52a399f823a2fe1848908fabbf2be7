@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec7a397_f6bfc41d",
+        "filename": "tests/net/java/com/android/internal/util/BitUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-11-27T04:10:39Z",
+      "side": 1,
+      "message": "Nit: this (and the one below) could have been on fewer lines. Don\u0027t bother respinning just for this.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 51
+      },
+      "revId": "7157c8e7af52a399f823a2fe1848908fabbf2be7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
