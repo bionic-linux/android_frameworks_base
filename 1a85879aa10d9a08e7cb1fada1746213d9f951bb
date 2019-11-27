@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2af3f13c_b47e40c1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-11-27T04:45:17Z",
+      "side": 1,
+      "message": "I added the catch ImsExceptions.",
+      "parentUuid": "52f117e4_808eaa73",
+      "range": {
+        "startLine": 532,
+        "startChar": 29,
+        "endLine": 532,
+        "endChar": 60
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c54097c_30d43c62",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2019-10-30T00:37:25Z",
       "side": 1,
       "message": "If IMS is not registered, onCapabilitiesStatusChanged will be called with no VT/WFC capability, so this may be redundant for mWifiCallingAvailable unless there is other state that you wish to update in updateTelephony.",
+      "range": {
+        "startLine": 640,
+        "startChar": 18,
+        "endLine": 640,
+        "endChar": 46
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b08a59e_7b39770a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-11-27T04:45:17Z",
+      "side": 1,
+      "message": "You are right. I removed it.",
+      "parentUuid": "2c54097c_30d43c62",
       "range": {
         "startLine": 640,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7aaf039_941740ef",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-11-27T04:45:17Z",
+      "side": 1,
+      "message": "We can not use capabilities here.\n\nMmTelCapabilities just tells Voice, Video, UT and MMS. We can not judge if we can use WFC from it. On the other hand, we can judge it by ImsMmTelManager#isAvailable.",
+      "parentUuid": "f3070eb7_33abd96a",
+      "range": {
+        "startLine": 673,
+        "startChar": 66,
+        "endLine": 673,
+        "endChar": 78
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23e789c3_682a5e12",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2019-10-30T00:37:25Z",
       "side": 1,
       "message": "This a hidden API, please use SubscriptionManager#getSubscriptionIds instead.",
+      "range": {
+        "startLine": 922,
+        "startChar": 51,
+        "endLine": 922,
+        "endChar": 59
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8820cdb4_3bbe0884",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-11-27T04:45:17Z",
+      "side": 1,
+      "message": "Thank you. I update it.",
+      "parentUuid": "23e789c3_682a5e12",
       "range": {
         "startLine": 922,
         "startChar": 51,
