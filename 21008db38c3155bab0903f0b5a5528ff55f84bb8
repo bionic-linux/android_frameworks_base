@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a889458c_78aaec1f",
+        "filename": "core/java/android/os/ResultReceiver.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: extra spaces",
+      "range": {
+        "startLine": 11,
+        "startChar": 70,
+        "endLine": 11,
+        "endChar": 71
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaf67b8_206d8aab",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetherStatesParcel.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: explain how in the comment, as not everybody has access to that bug",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878a71d9_a291ca87",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringConfigurationParcel.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: for tethering",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eddda3e_0fb47742",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "androidx annotations should be used here, to avoid depending on internal framework annotations in classes to be in a module.\nCan be cleaned up in a later commit.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9802e1b3_372c98a0",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1393a4_e50973cc",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure how you could do that considering that it\u0027s only obtained once the service is bound. Or maybe it could be a promise or some other holder ?",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 47
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f0bf55b_a65d2e48",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "rethrowFromSystemServer doc says \"Rethrow this exception when we know it came from the system server\". This is not the case here, since the exception did not come from the system server.\nI\u0027d suggest handling this differently, maybe in a separate CL (please at least file a bug in that case)",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6c0a4e_e551cbab",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Why not do it now ? If we don\u0027t want new clients of this API, I think marking it @Deprecated makes sense.",
+      "range": {
+        "startLine": 171,
+        "startChar": 7,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6565fafc_c4fe84cc",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: is this one deprecated too ?",
+      "range": {
+        "startLine": 190,
+        "startChar": 15,
+        "endLine": 190,
+        "endChar": 23
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8b05e9_16d434e9",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: the method should also have a @Deprecated annotation (not just in the javadoc)",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 18
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1e68fb_a8445a52",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: ResultReceiver",
+      "range": {
+        "startLine": 254,
+        "startChar": 34,
+        "endLine": 254,
+        "endChar": 48
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f61c60a_f972c7b5",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Nit: can you detail what happens after registering; should the caller expect immediate callbacks for onUpstreamChanged for example, or will it get no notification until the next upstream change ? (In which case would it make sense to trigger a callback immediately, otherwise callers need to use the synchronous API to get the current upstream and there will be races ?)",
+      "range": {
+        "startLine": 265,
+        "startChar": 40,
+        "endLine": 265,
+        "endChar": 41
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a40ad5a_c2ef42d1",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "If tether (and untether ?) are deprecated, should this method be deprecated too ? Is it necessary for clients that use the recommended asynchronous API ?",
+      "range": {
+        "startLine": 283,
+        "startChar": 46,
+        "endLine": 283,
+        "endChar": 70
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfe5721_d54001ac",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "As a module API, I\u0027m wondering if something like:\ngetTetherableInterfaceRegexps(TetheringType.USB)\nwould be better, considering the possible addition of other downstream types.\nEven if you agree, this does not need to be done now.\n\nTetheringType could be a bit mask, so you can do:\ngetTetherableInterfaceRegexps(TetheringType.USB | TetheringType.BLUETOOTH)\n\nOr the method could be varargs, so you can do:\ngetTetherableInterfaceRegexps(TetheringType.USB, TetheringType.BLUETOOTH)",
+      "range": {
+        "startLine": 310,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 55
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74acdc5a_46433f7c",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "This does not match new DhcpServer behavior right ? Can you document what is actually returned here ? I think these ranges only apply to dnsmasq.\nIs this method still needed ? If yes, can it be deprecated ?",
+      "range": {
+        "startLine": 395,
+        "startChar": 39,
+        "endLine": 395,
+        "endChar": 55
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6812a6_b974f64b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "This could be simplified with a toString method in TetheringConfiguration",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 486,
+        "endChar": 67
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc5c944_4ac8f4d5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2452,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 1,
+      "message": "Why invert the order ? Not really important though",
+      "range": {
+        "startLine": 2444,
+        "startChar": 8,
+        "endLine": 2452,
+        "endChar": 0
+      },
+      "revId": "21008db38c3155bab0903f0b5a5528ff55f84bb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

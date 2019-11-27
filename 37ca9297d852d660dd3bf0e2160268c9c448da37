@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea429bff_f09afbef",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-11-27T06:12:36Z",
+      "side": 0,
+      "message": "I guess this will be deprecated soon anyway, but could this have been kept with TetheringManager.getInstance().dump(pw) ?",
+      "range": {
+        "startLine": 2406,
+        "startChar": 12,
+        "endLine": 2406,
+        "endChar": 42
+      },
+      "revId": "37ca9297d852d660dd3bf0e2160268c9c448da37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
