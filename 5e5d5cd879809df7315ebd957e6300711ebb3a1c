@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54053c0d_877b5bf0",
+        "filename": "services/core/java/com/android/server/wm/DragState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1091002
+      },
+      "writtenOn": "2019-11-28T14:18:40Z",
+      "side": 1,
+      "message": "nit: Can we use DisplayContent#makeOverlay?",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "5e5d5cd879809df7315ebd957e6300711ebb3a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
