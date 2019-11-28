@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095f1ca3_04180b13",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2019-11-28T12:18:04Z",
+      "side": 1,
+      "message": "not sure this will work - I think this is a resource ID you may need to call getString or something similar. I see this was in the original patch as well I missed it in the code review...",
+      "revId": "c4f12fa5a9de2289003ef0b8a61c17ed799e3d6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
