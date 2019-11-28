@@ -837,49 +837,48 @@ public final class BearerData {
         return rawData;
     }
 
-    /*
-     * TODO(cleanup): CdmaSmsAddress encoding should make use of
-     * CdmaSmsAddress.parse provided that DTMF encoding is unified,
-     * and the difference in 4-bit vs. 8-bit is resolved.
-     */
-
-    private static void encodeCdmaSmsAddress(CdmaSmsAddress addr) throws CodingException {
-        if (addr.digitMode == CdmaSmsAddress.DIGIT_MODE_8BIT_CHAR) {
+    private static void encodeCallbackNumber(BearerData bData, BitwiseOutputStream outStream)
+            throws BitwiseOutputStream.AccessException, CodingException {
+        int paramBits = 9; // SUBPARAM_LEN(8) + DIGIT_MODE(1)
+        int dataBits = 0;
+        CdmaSmsAddress addr = bData.callbackNumber;
+        addr.origBytes = encodeDtmfSmsAddress(addr.address);
+        if (addr.origBytes == null) {
+            Rlog.w(LOG_TAG, "CallbackNumber cannot be converted to DTMF. try over ASCII");
             try {
                 addr.origBytes = addr.address.getBytes("US-ASCII");
             } catch (java.io.UnsupportedEncodingException ex) {
-                throw new CodingException("invalid SMS address, cannot convert to ASCII");
+                throw new CodingException("invalid CallbackNumber, cannot convert to ASCII");
             }
-        } else {
-            addr.origBytes = encodeDtmfSmsAddress(addr.address);
-        }
-    }
-
-    private static void encodeCallbackNumber(BearerData bData, BitwiseOutputStream outStream)
-        throws BitwiseOutputStream.AccessException, CodingException
-    {
-        CdmaSmsAddress addr = bData.callbackNumber;
-        encodeCdmaSmsAddress(addr);
-        int paramBits = 9;
-        int dataBits = 0;
-        if (addr.digitMode == CdmaSmsAddress.DIGIT_MODE_8BIT_CHAR) {
-            paramBits += 7;
+            if (addr.origBytes[0] == '+') {
+                addr.ton = CdmaSmsAddress.TON_INTERNATIONAL_OR_IP;
+            } else {
+                addr.ton = CdmaSmsAddress.TON_UNKNOWN;
+            }
+            addr.digitMode = CdmaSmsAddress.DIGIT_MODE_8BIT_CHAR;
+            addr.numberPlan = CdmaSmsAddress.NUMBERING_PLAN_ISDN_TELEPHONY;
+            addr.numberOfDigits = addr.origBytes.length;
+            paramBits += 7; // NUMBER_TYPE(3) + NUMBER_PLAN(4)
             dataBits = addr.numberOfDigits * 8;
+
         } else {
+            addr.digitMode = CdmaSmsAddress.DIGIT_MODE_4BIT_DTMF;
+            addr.numberOfDigits = addr.address.length();
             dataBits = addr.numberOfDigits * 4;
         }
+
         paramBits += dataBits;
         int paramBytes = (paramBits / 8) + ((paramBits % 8) > 0 ? 1 : 0);
         int paddingBits = (paramBytes * 8) - paramBits;
-        outStream.write(8, paramBytes);
-        outStream.write(1, addr.digitMode);
+        outStream.write(8, paramBytes); // SUBPARAM_LEN(8)
+        outStream.write(1, addr.digitMode); // DIGIT_MODE(1)
         if (addr.digitMode == CdmaSmsAddress.DIGIT_MODE_8BIT_CHAR) {
-            outStream.write(3, addr.ton);
-            outStream.write(4, addr.numberPlan);
+            outStream.write(3, addr.ton); // NUMBER_TYPE(3)
+            outStream.write(4, addr.numberPlan); // NUMBER_PLAN(4)
         }
-        outStream.write(8, addr.numberOfDigits);
-        outStream.writeByteArray(dataBits, addr.origBytes);
-        if (paddingBits > 0) outStream.write(paddingBits, 0);
+        outStream.write(8, addr.numberOfDigits); // NUM_FIELDS(8)
+        outStream.writeByteArray(dataBits, addr.origBytes); // CHARi
+        if (paddingBits > 0) outStream.write(paddingBits, 0); // RESERVED
     }
 
     private static void encodeMsgStatus(BearerData bData, BitwiseOutputStream outStream)
@@ -1484,6 +1483,10 @@ public final class BearerData {
                 /* As specified in 3GPP2 C.S0015-B, v2, 4.5.15 -- actually
                  * just 7-bit ASCII encoding, with the MSB being zero. */
                 addr.address = new String(addr.origBytes, 0, addr.origBytes.length, "US-ASCII");
+                if (addr.ton == CdmaSmsAddress.TON_INTERNATIONAL_OR_IP
+                        && addr.address.charAt(0) != '+') {
+                    addr.address = "+" + addr.address;
+                }
             } catch (java.io.UnsupportedEncodingException ex) {
                 throw new CodingException("invalid SMS address ASCII code");
             }
