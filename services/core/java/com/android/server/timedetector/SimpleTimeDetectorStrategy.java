@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.util.Slog;
 import android.util.TimestampedValue;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.telephony.TelephonyIntents;
 
 import java.io.PrintWriter;
@@ -126,6 +127,7 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
         return true;
     }
 
+    @GuardedBy("this")
     private void setSystemClockIfRequired(
             @Origin int origin, TimestampedValue<Long> time, Object cause) {
         // Historically, Android has sent a TelephonyIntents.ACTION_NETWORK_SET_TIME broadcast only
@@ -141,14 +143,16 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
 
             if (!mCallback.isAutoTimeDetectionEnabled()) {
                 Slog.d(TAG, "setSystemClockIfRequired: Auto time detection is not enabled."
-                        + " time=" + time
+                        + " origin=" + origin
+                        + ", time=" + time
                         + ", cause=" + cause);
                 return;
             }
         } else {
             if (mCallback.isAutoTimeDetectionEnabled()) {
                 Slog.d(TAG, "setSystemClockIfRequired: Auto time detection is enabled."
-                        + " time=" + time
+                        + " origin=" + origin
+                        + ", time=" + time
                         + ", cause=" + cause);
                 return;
             }
@@ -219,11 +223,13 @@ public final class SimpleTimeDetectorStrategy implements TimeDetectorStrategy {
 
     @Override
     public void dump(@NonNull PrintWriter pw, @Nullable String[] args) {
+        pw.println("TimeDetectorStrategy:");
         pw.println("mLastPhoneSuggestion=" + mLastPhoneSuggestion);
         pw.println("mLastAutoSystemClockTimeSet=" + mLastAutoSystemClockTimeSet);
         pw.println("mLastAutoSystemClockTime=" + mLastAutoSystemClockTime);
         pw.println("mLastAutoSystemClockTimeSendNetworkBroadcast="
                 + mLastAutoSystemClockTimeSendNetworkBroadcast);
+        pw.flush();
     }
 
     private void adjustAndSetDeviceSystemClock(

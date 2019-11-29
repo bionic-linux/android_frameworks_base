@@ -637,9 +637,9 @@ public class SimpleTimeZoneDetectorStrategyTest {
 
     private static PhoneTimeSuggestion createPhoneTimeSuggestion(int phoneId,
             TimestampedValue<Long> utcTime) {
-        PhoneTimeSuggestion timeSuggestion = new PhoneTimeSuggestion(phoneId);
-        timeSuggestion.setUtcTime(utcTime);
-        return timeSuggestion;
+        return new PhoneTimeSuggestion.Builder(phoneId)
+                .setUtcTime(utcTime)
+                .build();
     }
 
     private ManualTimeSuggestion createManualTimeSuggestion(long timeMillis) {
