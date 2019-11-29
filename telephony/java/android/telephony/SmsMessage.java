@@ -64,6 +64,24 @@ public class SmsMessage {
      */
     public static final int ENCODING_KSC5601 = 4;
 
+    /**
+     * Supported priority modes for CDMA SMS messages
+     * (See 3GPP2 C.S0015-B, v2.0, table 4.5.9-1)
+     */
+    public static final int PRIORITY_NORMAL        = 0x0;
+    public static final int PRIORITY_INTERACTIVE   = 0x1;
+    public static final int PRIORITY_URGENT        = 0x2;
+    public static final int PRIORITY_EMERGENCY     = 0x3;
+
+    /**
+     * Supported privacy modes for CDMA SMS messages
+     * (See 3GPP2 C.S0015-B, v2.0, table 4.5.10-1)
+     */
+    public static final int PRIVACY_NOT_RESTRICTED = 0x0;
+    public static final int PRIVACY_RESTRICTED     = 0x1;
+    public static final int PRIVACY_CONFIDENTIAL   = 0x2;
+    public static final int PRIVACY_SECRET         = 0x3;
+
     /** The maximum number of payload bytes per message */
     public static final int MAX_USER_DATA_BYTES = 140;
 
@@ -871,6 +889,59 @@ public class SmsMessage {
      */
     public boolean isReplyPathPresent() {
         return mWrappedSmsMessage.isReplyPathPresent();
+    }
+
+
+    /**
+     * Returns Call-Back Number for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.15 Call-Back Number)
+     *
+     * @return the call-back number. null if not specified.
+     */
+    @Nullable
+    public String getCallbackNumber() {
+        return mWrappedSmsMessage.getCallbackNumber();
+    }
+
+    /**
+     * Returns Priority for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.9 Priority Indicator)
+     *
+     * @return one of these priority levels if specified:
+     *         <code>PRIORITY_NORMAL</code>
+     *         <code>PRIORITY_INTERACTIVE</code>
+     *         <code>PRIORITY_URGENT</code>
+     *         <code>PRIORITY_EMERGENCY</code>
+     *         Otherwise -1.
+     */
+    public int getPriority() {
+        return mWrappedSmsMessage.getPriority();
+    }
+
+    /**
+     * Returns Privacy for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.10 Privacy Indicator)
+     *
+     * @return one of these privacy levels if specified:
+     *         <code>PRIVACY_NOT_RESTRICTED</code>
+     *         <code>PRIVACY_RESTRICTED</code>
+     *         <code>PRIVACY_CONFIDENTIAL</code>
+     *         <code>PRIVACY_SECRET</code>
+     *         Otherwise -1.
+     */
+    public int getPrivacy() {
+        return mWrappedSmsMessage.getPrivacy();
+    }
+
+    /**
+     * Returns Language for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.14 Language Indicator)
+     *
+     * @return the language of messages as a two-character ISO 639 string. null if not specified.
+     */
+    @Nullable
+    public String getLanguage() {
+        return mWrappedSmsMessage.getLanguage();
     }
 
     /**
