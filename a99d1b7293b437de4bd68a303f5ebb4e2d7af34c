@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "d94a79bf_79f2ecf7",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "If tethering is not supported, should we instead call onCallbackFail with an appropriate error code ? It doesn\u0027t seem very useful to let apps create callbacks if tethering is not supported at all.",
+      "range": {
+        "startLine": 30,
+        "startChar": 50,
+        "endLine": 30,
+        "endChar": 61
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f211cca2_e8dcf845",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
         "patchSetId": 10
@@ -242,6 +265,167 @@
         "startChar": 16,
         "endLine": 562,
         "endChar": 28
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d588062c_41a31539",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "I don\u0027t think this is going to work ; if the package still works, maybe you don\u0027t need this ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f7f124_d39caef1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 321,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 23
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470dd1f0_976808c7",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "Just to be sure : this continues to work when Tethering is still in the system server right ?",
+      "range": {
+        "startLine": 458,
+        "startChar": 48,
+        "endLine": 458,
+        "endChar": 81
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da9d842_e8b76b71",
+        "filename": "services/net/java/android/net/ModuleClientBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "If this base is only for connectivity, it should be named ConnectivityModuleClientBase. If you intend other modules to be able to use it, then you should update the comment.",
+      "range": {
+        "startLine": 29,
+        "startChar": 40,
+        "endLine": 29,
+        "endChar": 52
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd50770_a3e1c869",
+        "filename": "services/net/java/android/net/ModuleClientBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "Likewise, this is probably far too short. Considering this is only happening on boot, when everything is slow and heavy, polling every 20ms probably makes things worse instead of better. You may want to use 500 or 1000, or maybe 980 just so that you have time to get a 10th try in.",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3394808c_ad3de51b",
+        "filename": "services/net/java/android/net/ModuleClientBase.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "Put the sleep after the check for timeout so that the process doesn\u0027t sleep for nothing on the last try",
+      "range": {
+        "startLine": 111,
+        "startChar": 23,
+        "endLine": 111,
+        "endChar": 28
+      },
+      "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f710441_c8f48faf",
+        "filename": "services/net/java/android/net/NetworkStackClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-11-29T12:16:06Z",
+      "side": 1,
+      "message": "Update ?",
+      "range": {
+        "startLine": 253,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 30
       },
       "revId": "a99d1b7293b437de4bd68a303f5ebb4e2d7af34c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
