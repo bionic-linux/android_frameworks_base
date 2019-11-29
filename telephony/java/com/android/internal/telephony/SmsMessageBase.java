@@ -101,6 +101,18 @@ public abstract class SmsMessageBase {
      */
     protected int mIndexOnIcc = -1;
 
+    /** The Call-Back Number of the message */
+    protected String mCallbackNumber;
+
+    /** The Priority level of the message */
+    protected int mPriority = -1;
+
+    /** The Privacy level of the message */
+    protected int mPrivacy = -1;
+
+    /** The Language used for the message text */
+    protected String mLanguage;
+
     /** TP-Message-Reference - Message Reference of sent message. @hide */
     @UnsupportedAppUsage
     public int mMessageRef;
@@ -265,6 +277,38 @@ public abstract class SmsMessageBase {
      * Discard Message" notification and should not be stored.
      */
     public abstract boolean isMwiDontStore();
+
+    /**
+     * Returns Call-Back Number for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.15 Call-Back Number)
+     */
+    public String getCallbackNumber() {
+        return mCallbackNumber;
+    }
+
+    /**
+     * Returns Priority for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.9 Priority Indicator)
+     */
+    public int getPriority() {
+        return mPriority;
+    }
+
+    /**
+     * Returns Privacy for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.10 Privacy Indicator)
+     */
+    public int getPrivacy() {
+        return mPrivacy;
+    }
+
+    /**
+     * Returns Language for CDMA SMS messages.
+     * (See 3GPP2 C.S0015-B, v2.0, 4.5.14 Language Indicator)
+     */
+    public String getLanguage() {
+        return mLanguage;
+    }
 
     /**
      * returns the user data section minus the user data header if one was

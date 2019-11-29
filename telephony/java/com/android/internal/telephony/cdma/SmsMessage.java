@@ -101,15 +101,6 @@ public class SmsMessage extends SmsMessageBase {
     private static final int RETURN_NO_ACK  = 0;
     private static final int RETURN_ACK     = 1;
 
-    /**
-     * Supported priority modes for CDMA SMS messages
-     * (See 3GPP2 C.S0015-B, v2.0, table 4.5.9-1)
-     */
-    private static final int PRIORITY_NORMAL        = 0x0;
-    private static final int PRIORITY_INTERACTIVE   = 0x1;
-    private static final int PRIORITY_URGENT        = 0x2;
-    private static final int PRIORITY_EMERGENCY     = 0x3;
-
     @UnsupportedAppUsage
     private SmsEnvelope mEnvelope;
     @UnsupportedAppUsage
@@ -825,6 +816,27 @@ public class SmsMessage extends SmsMessageBase {
 
         if (VDBG) Rlog.d(LOG_TAG, "SMS SC timestamp: " + mScTimeMillis);
 
+        if (mBearerData.callbackNumber != null) {
+            mCallbackNumber = mBearerData.callbackNumber.address;
+        }
+
+        if (mBearerData.priorityIndicatorSet) {
+            if (mBearerData.priority >= BearerData.PRIORITY_NORMAL
+                    && mBearerData.priority <= BearerData.PRIORITY_EMERGENCY) {
+                mPriority = mBearerData.priority;
+            }
+        }
+
+        if (mBearerData.privacyIndicatorSet) {
+            if (mBearerData.privacy >= BearerData.PRIVACY_NOT_RESTRICTED
+                    && mBearerData.privacy <= BearerData.PRIVACY_SECRET) {
+                mPrivacy = mBearerData.privacy;
+            }
+        }
+
+        if (mBearerData.languageIndicatorSet) {
+            mLanguage = mBearerData.getLanguage();
+        }
         // Message Type (See 3GPP2 C.S0015-B, v2, 4.5.1)
         if (mBearerData.messageType == BearerData.MESSAGE_TYPE_DELIVERY_ACK) {
             // The BearerData MsgStatus subparameter should only be
@@ -998,7 +1010,7 @@ public class SmsMessage extends SmsMessageBase {
         bearerData.userAckReq = false;
         bearerData.readAckReq = false;
         bearerData.reportReq = false;
-        if (priority >= PRIORITY_NORMAL && priority <= PRIORITY_EMERGENCY) {
+        if (priority >= BearerData.PRIORITY_NORMAL && priority <= BearerData.PRIORITY_EMERGENCY) {
             bearerData.priorityIndicatorSet = true;
             bearerData.priority = priority;
         }
