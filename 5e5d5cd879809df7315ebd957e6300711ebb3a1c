@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "725d79bc_e6355704",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2019-12-02T17:29:23Z",
+      "side": 1,
+      "message": "can you run atest DragDropControllerTests and add it to the commit msg as well?\n\nTest: atest DragDropControllerTests",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "5e5d5cd879809df7315ebd957e6300711ebb3a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ec3cb3_de6f03be",
+        "filename": "services/core/java/com/android/server/wm/DragInputEventReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2019-12-02T17:29:23Z",
+      "side": 1,
+      "message": "Please fix the comments in DragDropController#handleMotionEvent to remove references to screen coordinate",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 94
+      },
+      "revId": "5e5d5cd879809df7315ebd957e6300711ebb3a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54053c0d_877b5bf0",
         "filename": "services/core/java/com/android/server/wm/DragState.java",
         "patchSetId": 2
@@ -13,6 +59,30 @@
       "writtenOn": "2019-11-28T14:18:40Z",
       "side": 1,
       "message": "nit: Can we use DisplayContent#makeOverlay?",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "5e5d5cd879809df7315ebd957e6300711ebb3a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1a39bf_8216833b",
+        "filename": "services/core/java/com/android/server/wm/DragState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2019-12-02T17:29:23Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "54053c0d_877b5bf0",
       "range": {
         "startLine": 158,
         "startChar": 28,
