@@ -242,6 +242,12 @@ interface ITelecomService {
     void addNewUnknownCall(in PhoneAccountHandle phoneAccount, in Bundle extras);
 
     /**
+     * @see TelecomServiceImpl#startConference
+     */
+    void startConference(in List<Uri> participants, int videoState,
+            String callingPackage);
+
+    /**
      * @see TelecomServiceImpl#placeCall
      */
     void placeCall(in Uri handle, in Bundle extras, String callingPackage);

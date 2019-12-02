@@ -724,14 +724,6 @@ public abstract class Conference extends Conferenceable {
     }
 
     private void setState(int newState) {
-        if (newState != Connection.STATE_ACTIVE &&
-                newState != Connection.STATE_HOLDING &&
-                newState != Connection.STATE_DISCONNECTED) {
-            Log.w(this, "Unsupported state transition for Conference call.",
-                    Connection.stateToString(newState));
-            return;
-        }
-
         if (mState != newState) {
             int oldState = mState;
             mState = newState;

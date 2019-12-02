@@ -1852,6 +1852,25 @@ public class TelecomManager {
         }
     }
 
+
+    /*
+     * Place a new conference call with the provided participants using the system telecom service
+     * This method doesn't support placing of emergency calls
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.CALL_PHONE)
+    public void startConference(List<Uri> participants, int videoState) {
+        ITelecomService service = getTelecomService();
+        if (service != null) {
+            try {
+                service.startConference(participants, videoState,
+                        mContext.getOpPackageName());
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error calling ITelecomService#placeCall", e);
+            }
+        }
+    }
+
     /**
      * Enables and disables specified phone account.
      *
