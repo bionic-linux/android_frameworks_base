@@ -117,6 +117,11 @@ public class NetworkRequest implements Parcelable {
     public final Type type;
 
     /**
+     * descriptor of URSP rules
+     */
+    public final TrafficDescriptor trafficDescriptor;
+
+    /**
      * @hide
      */
     public NetworkRequest(NetworkCapabilities nc, int legacyType, int rId, Type type) {
@@ -127,6 +132,22 @@ public class NetworkRequest implements Parcelable {
         networkCapabilities = nc;
         this.legacyType = legacyType;
         this.type = type;
+        trafficDescriptor = new TrafficDescriptor();
+    }
+
+    /**
+     * @hide
+     */
+    public NetworkRequest(NetworkCapabilities nc, int legacyType, int rId, Type type,
+            TrafficDescriptor td) {
+        if (nc == null) {
+            throw new NullPointerException();
+        }
+        requestId = rId;
+        networkCapabilities = nc;
+        this.legacyType = legacyType;
+        this.type = type;
+        this.trafficDescriptor = td;
     }
 
     /**
@@ -137,6 +158,7 @@ public class NetworkRequest implements Parcelable {
         requestId = that.requestId;
         this.legacyType = that.legacyType;
         this.type = that.type;
+        this.trafficDescriptor = new TrafficDescriptor(that.trafficDescriptor);
     }
 
     /**
@@ -145,6 +167,7 @@ public class NetworkRequest implements Parcelable {
      */
     public static class Builder {
         private final NetworkCapabilities mNetworkCapabilities;
+        private final TrafficDescriptor mTrafficDescriptor;
 
         /**
          * Default constructor for Builder.
@@ -155,6 +178,7 @@ public class NetworkRequest implements Parcelable {
             // it for apps that do not have the NETWORK_SETTINGS permission.
             mNetworkCapabilities = new NetworkCapabilities();
             mNetworkCapabilities.setSingleUid(Process.myUid());
+            mTrafficDescriptor = new TrafficDescriptor();
         }
 
         /**
@@ -166,9 +190,11 @@ public class NetworkRequest implements Parcelable {
             // which case NOT_RESTRICTED should be returned to mNetworkCapabilities, which
             // maybeMarkCapabilitiesRestricted() doesn't add back.
             final NetworkCapabilities nc = new NetworkCapabilities(mNetworkCapabilities);
+            mTrafficDescriptor.updateCapability(nc);
+            final TrafficDescriptor td = new TrafficDescriptor(mTrafficDescriptor);
             nc.maybeMarkCapabilitiesRestricted();
             return new NetworkRequest(nc, ConnectivityManager.TYPE_NONE,
-                    ConnectivityManager.REQUEST_ID_UNSET, Type.NONE);
+                    ConnectivityManager.REQUEST_ID_UNSET, Type.NONE, td);
         }
 
         /**
@@ -356,6 +382,49 @@ public class NetworkRequest implements Parcelable {
             mNetworkCapabilities.setSignalStrength(signalStrength);
             return this;
         }
+
+        /**
+         * @hide
+         */
+        public Builder setOSId(String osId) {
+            mTrafficDescriptor.setOSId(osId);
+            return this;
+        }
+        /**
+         * @hide
+         */
+        public Builder setAppId(String appId) {
+            mTrafficDescriptor.setAppId(appId);
+            return this;
+        }
+        /**
+         * @hide
+         */
+        public Builder setNonIPDescriptor(String nonIPDescriptor) {
+            mTrafficDescriptor.setNonIPDescriptor(nonIPDescriptor);
+            return this;
+        }
+        /**
+         * @hide
+         */
+        public Builder setIpDescriptor(IPDescriptor ipDescriptor) {
+            mTrafficDescriptor.setIpDescriptor(ipDescriptor);
+            return this;
+        }
+        /**
+         * @hide
+         */
+        public Builder setDomainDescriptor(String domainDescriptor) {
+            mTrafficDescriptor.setDomainDescriptor(domainDescriptor);
+            return this;
+        }
+        /**
+         * @hide
+         */
+        public Builder addDnn(String dnn) {
+            mTrafficDescriptor.addDnn(dnn);
+            return this;
+        }
     }
 
     // implement the Parcelable interface
@@ -367,6 +436,7 @@ public class NetworkRequest implements Parcelable {
         dest.writeInt(legacyType);
         dest.writeInt(requestId);
         dest.writeString(type.name());
+        trafficDescriptor.writeToParcel(dest, flags);
     }
     public static final @android.annotation.NonNull Creator<NetworkRequest> CREATOR =
         new Creator<NetworkRequest>() {
@@ -375,7 +445,8 @@ public class NetworkRequest implements Parcelable {
                 int legacyType = in.readInt();
                 int requestId = in.readInt();
                 Type type = Type.valueOf(in.readString());  // IllegalArgumentException if invalid.
-                NetworkRequest result = new NetworkRequest(nc, legacyType, requestId, type);
+                TrafficDescriptor td = TrafficDescriptor.CREATOR.createFromParcel(in);
+                NetworkRequest result = new NetworkRequest(nc, legacyType, requestId, type, td);
                 return result;
             }
             public NetworkRequest[] newArray(int size) {
@@ -472,7 +543,7 @@ public class NetworkRequest implements Parcelable {
     public String toString() {
         return "NetworkRequest [ " + type + " id=" + requestId +
                 (legacyType != ConnectivityManager.TYPE_NONE ? ", legacyType=" + legacyType : "") +
-                ", " + networkCapabilities.toString() + " ]";
+                ", " + networkCapabilities.toString() + ", " + trafficDescriptor.toString() + " ]";
     }
 
     private int typeToProtoEnum(Type t) {
