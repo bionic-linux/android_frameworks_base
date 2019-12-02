@@ -72,6 +72,7 @@ public abstract class Conference extends Conferenceable {
         public void onConnectionEvent(Conference c, String event, Bundle extras) {}
         public void onCallerDisplayNameChanged(
                 Conference c, String callerDisplayName, int presentation) {}
+        public void onRingbackRequested(Conference c, boolean ringback) {}
     }
 
     private final Set<Listener> mListeners = new CopyOnWriteArraySet<>();
@@ -100,6 +101,9 @@ public abstract class Conference extends Conferenceable {
     private int mAddressPresentation;
     private String mCallerDisplayName;
     private int mCallerDisplayNamePresentation;
+    private List<Uri> mParticipants;
+    private boolean mIsAdhocConferenceCall;
+    private boolean mRingbackRequested = false;
 
     private final Connection.Listener mConnectionDeathListener = new Connection.Listener() {
         @Override
@@ -109,6 +113,11 @@ public abstract class Conference extends Conferenceable {
             }
         }
     };
+
+    /**
+     * Create a new Conference.
+     */
+    public Conference() {}
 
     /**
      * Constructs a new Conference with a mandatory {@link PhoneAccountHandle}
@@ -173,6 +182,14 @@ public abstract class Conference extends Conferenceable {
     }
 
     /**
+     * Returns whether this conference is requesting that the system play a ringback tone
+     * on its behalf.
+     */
+    public final boolean isRingbackRequested() {
+        return mRingbackRequested;
+    }
+
+    /**
      * Returns the capabilities of the conference. See {@code CAPABILITY_*} constants in class
      * {@link Connection} for valid values.
      *
@@ -233,6 +250,13 @@ public abstract class Conference extends Conferenceable {
      * be disconnected.
      */
     public void onDisconnect() {}
+
+    /**
+     * returns conference host connection
+     */
+    public @Nullable Connection getConferenceHost() {
+        return null;
+    }
 
     /**
      * Notifies the {@link Conference} when the specified {@link Connection} should be separated
@@ -310,24 +334,38 @@ public abstract class Conference extends Conferenceable {
      */
     public void onConnectionAdded(Connection connection) {}
 
+    public void onAnswer(int videoState) {}
+
+    public void onAnswer() {
+         onAnswer(VideoProfile.STATE_AUDIO_ONLY);
+    }
+
     /**
      * Sets state to be on hold.
      */
-    public final void setOnHold() {
+    public void setOnHold() {
         setState(Connection.STATE_HOLDING);
     }
 
     /**
      * Sets state to be dialing.
      */
-    public final void setDialing() {
+    public void setDialing() {
         setState(Connection.STATE_DIALING);
     }
 
     /**
      * Sets state to be active.
      */
-    public final void setActive() {
+    public void setRinging() {
+        setState(Connection.STATE_RINGING);
+    }
+
+    /**
+     * Sets state to be active.
+     */
+    public void setActive() {
+        setRingbackRequested(false);
         setState(Connection.STATE_ACTIVE);
     }
 
@@ -436,6 +474,21 @@ public abstract class Conference extends Conferenceable {
             }
         }
         fireOnConferenceableConnectionsChanged();
+    }
+
+    /**
+     * Requests that the framework play a ringback tone. This is to be invoked by implementations
+     * that do not play a ringback tone themselves in the conference's audio stream.
+     *
+     * @param ringback Whether the ringback tone is to be played.
+     */
+    public final void setRingbackRequested(boolean ringback) {
+        if (mRingbackRequested != ringback) {
+            mRingbackRequested = ringback;
+            for (Listener l : mListeners) {
+                l.onRingbackRequested(this, ringback);
+            }
+        }
     }
 
     /**
@@ -643,14 +696,6 @@ public abstract class Conference extends Conferenceable {
     }
 
     private void setState(int newState) {
-        if (newState != Connection.STATE_ACTIVE &&
-                newState != Connection.STATE_HOLDING &&
-                newState != Connection.STATE_DISCONNECTED) {
-            Log.w(this, "Unsupported state transition for Conference call.",
-                    Connection.stateToString(newState));
-            return;
-        }
-
         if (mState != newState) {
             int oldState = mState;
             mState = newState;
@@ -658,6 +703,50 @@ public abstract class Conference extends Conferenceable {
                 l.onStateChanged(this, oldState, newState);
             }
         }
+    }
+
+    private static class FailureSignalingConference extends Conference {
+        private boolean mImmutable = false;
+        public FailureSignalingConference(DisconnectCause disconnectCause) {
+            setDisconnected(disconnectCause);
+            mImmutable = true;
+        }
+        public void checkImmutable() {
+            if (mImmutable) {
+                throw new UnsupportedOperationException("Conference is immutable");
+            }
+        }
+    }
+
+    /**
+     * Return a {@code Conference} which represents a failed conference attempt. The returned
+     * {@code Conference} will have a {@link android.telecom.DisconnectCause} and as specified,
+     * and a {@link #getState()} of {@link #STATE_DISCONNECTED}.
+     * <p>
+     * The returned {@code Conference} can be assumed to {@link #destroy()} itself when appropriate,
+     * so users of this method need not maintain a reference to its return value to destroy it.
+     *
+     * @param disconnectCause The disconnect cause, ({@see android.telecomm.DisconnectCause}).
+     * @return A {@code Conference} which indicates failure.
+     */
+    public @NonNull static Conference createFailedConference(
+            @NonNull DisconnectCause disconnectCause) {
+        return new FailureSignalingConference(disconnectCause);
+    }
+
+    /**
+     * Return a {@code Conference} which represents a canceled conference attempt. The returned
+     * {@code Conference} will have state {@link #STATE_DISCONNECTED}, and cannot be moved out of
+     * that state. This conference should not be used for anything, and no other
+     * {@code Conference}s should be attempted.
+     * <p>
+     * so users of this method need not maintain a reference to its return value to destroy it.
+     *
+     * @return A {@code Conference} which indicates that the underlying conference should
+     * be canceled.
+     */
+    public @NonNull static Conference createCanceledConference() {
+        return new FailureSignalingConference(new DisconnectCause(DisconnectCause.CANCELED));
     }
 
     private final void clearConferenceableList() {
@@ -670,11 +759,14 @@ public abstract class Conference extends Conferenceable {
     @Override
     public String toString() {
         return String.format(Locale.US,
-                "[State: %s,Capabilites: %s, VideoState: %s, VideoProvider: %s, ThisObject %s]",
+                "[State: %s,Capabilites: %s, VideoState: %s, VideoProvider: %s, isAdhocConf: %s, "
+                + "isRingbackRequested: %s, ThisObject %s]",
                 Connection.stateToString(mState),
                 Call.Details.capabilitiesToString(mConnectionCapabilities),
                 getVideoState(),
                 getVideoProvider(),
+                isAdhocConferenceCall() ? "Y" : "N",
+                isRingbackRequested() ? "Y" : "N",
                 super.toString());
     }
 
@@ -943,6 +1035,34 @@ public abstract class Conference extends Conferenceable {
     public final Uri getAddress() {
         return mAddress;
     }
+
+    /**
+     * @return The address's to which this Connection is currently communicating.
+     */
+    public @Nullable final List<Uri> getParticipants() {
+        return mParticipants;
+    }
+
+    /**
+     * @return true if connection is adhocConference call else false.
+     */
+    public final boolean isAdhocConferenceCall() {
+        return mIsAdhocConferenceCall;
+    }
+
+    /**
+     * Sets the value of the {@link #getParticipantAddress()} property.
+     *
+     * @param address The new address's.
+     */
+    public final void setParticipants(@Nullable List<Uri> address) {
+        mParticipants = address;
+    }
+
+    public void setIsAdhocConferenceCall(boolean isAdhocConferenceCall) {
+        mIsAdhocConferenceCall = isAdhocConferenceCall;
+    }
+
 
     /**
      * Returns the address presentation associated with the conference.
