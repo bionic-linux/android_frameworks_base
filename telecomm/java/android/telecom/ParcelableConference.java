@@ -47,6 +47,34 @@ public final class ParcelableConference implements Parcelable {
     private final int mAddressPresentation;
     private final String mCallerDisplayName;
     private final int mCallerDisplayNamePresentation;
+    private DisconnectCause mDisconnectCause;
+    private boolean mIsAdhocConference;
+
+    public ParcelableConference(
+            PhoneAccountHandle phoneAccount,
+            int state,
+            int connectionCapabilities,
+            int connectionProperties,
+            List<String> connectionIds,
+            IVideoProvider videoProvider,
+            int videoState,
+            long connectTimeMillis,
+            long connectElapsedTimeMillis,
+            StatusHints statusHints,
+            Bundle extras,
+            Uri address,
+            int addressPresentation,
+            String callerDisplayName,
+            int callerDisplayNamePresentation,
+            DisconnectCause disconnectCause,
+            boolean isAdhocConference) {
+        this(phoneAccount, state, connectionCapabilities, connectionProperties, connectionIds,
+                videoProvider, videoState, connectTimeMillis, connectElapsedTimeMillis,
+                statusHints, extras, address, addressPresentation, callerDisplayName,
+                callerDisplayNamePresentation);
+        mDisconnectCause = disconnectCause;
+        mIsAdhocConference = isAdhocConference;
+    }
 
     public ParcelableConference(
             PhoneAccountHandle phoneAccount,
@@ -79,6 +107,8 @@ public final class ParcelableConference implements Parcelable {
         mAddressPresentation = addressPresentation;
         mCallerDisplayName = callerDisplayName;
         mCallerDisplayNamePresentation = callerDisplayNamePresentation;
+        mDisconnectCause = null;
+        mIsAdhocConference = false;
     }
 
     @Override
@@ -100,6 +130,10 @@ public final class ParcelableConference implements Parcelable {
                 .append(mVideoState)
                 .append(", VideoProvider: ")
                 .append(mVideoProvider)
+                .append(", isAdhocConference: ")
+                .append(mIsAdhocConference)
+                .append(", disconnectCause: ")
+                .append(mDisconnectCause)
                 .toString();
     }
 
@@ -151,6 +185,14 @@ public final class ParcelableConference implements Parcelable {
         return mAddress;
     }
 
+    public final DisconnectCause getDisconnectCause() {
+        return mDisconnectCause;
+    }
+
+    public boolean isAdhocConference() {
+        return mIsAdhocConference;
+    }
+
     public int getHandlePresentation() {
         return mAddressPresentation;
     }
@@ -177,11 +219,14 @@ public final class ParcelableConference implements Parcelable {
             int addressPresentation = source.readInt();
             String callerDisplayName = source.readString();
             int callerDisplayNamePresentation = source.readInt();
+            DisconnectCause disconnectCause = source.readParcelable(classLoader);
+            boolean isAdhocConference = source.readInt() == 1;
 
             return new ParcelableConference(phoneAccount, state, capabilities, properties,
                     connectionIds, videoCallProvider, videoState, connectTimeMillis,
                     connectElapsedTimeMillis, statusHints, extras, address, addressPresentation,
-                    callerDisplayName, callerDisplayNamePresentation);
+                    callerDisplayName, callerDisplayNamePresentation, disconnectCause,
+                    isAdhocConference);
         }
 
         @Override
@@ -215,5 +260,7 @@ public final class ParcelableConference implements Parcelable {
         destination.writeInt(mAddressPresentation);
         destination.writeString(mCallerDisplayName);
         destination.writeInt(mCallerDisplayNamePresentation);
+        destination.writeParcelable(mDisconnectCause, 0);
+        destination.writeInt(mIsAdhocConference ? 1 : 0);
     }
 }
