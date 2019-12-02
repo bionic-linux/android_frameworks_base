@@ -3858,6 +3858,14 @@ public abstract class Context {
     public static final String NETWORK_STACK_SERVICE = "network_stack";
 
     /**
+     * Use with {@link android.os.ServiceManager.getService()} to retrieve a
+     * {@link ITetheringConnector} IBinder for communicating with the tethering service
+     * @hide
+     * @see TetheringClient
+     */
+    public static final String TETHERING_SERVICE = "tethering";
+
+    /**
      * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.net.IpSecManager} for encrypting Sockets or Networks with
      * IPSec.
