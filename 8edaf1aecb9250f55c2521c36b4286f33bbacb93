@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6bd086_acb6a513",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2019-12-02T20:42:11Z",
+      "side": 1,
+      "message": "also need:\n\n  Merged-in: If0fd48343e89cbb77ccd25826656194195d5b0cd",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "8edaf1aecb9250f55c2521c36b4286f33bbacb93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
