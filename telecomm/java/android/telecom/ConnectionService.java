@@ -716,21 +716,37 @@ public abstract class ConnectionService extends Service {
                                             null /*lock*/) {
                                 @Override
                                 public void loggedRun() {
-                                    createConnection(
-                                            connectionManagerPhoneAccount,
-                                            id,
-                                            request,
-                                            isIncoming,
-                                            isUnknown);
+                                    if (request.isAdhocConferenceCall()) {
+                                        createConferenceConnection(connectionManagerPhoneAccount,
+                                                id,
+                                                request,
+                                                isIncoming,
+                                                isUnknown);
+                                    } else {
+                                        createConnection(
+                                                connectionManagerPhoneAccount,
+                                                id,
+                                                request,
+                                                isIncoming,
+                                                isUnknown);
+                                    }
                                 }
                             }.prepare());
                         } else {
-                            createConnection(
-                                    connectionManagerPhoneAccount,
-                                    id,
-                                    request,
-                                    isIncoming,
-                                    isUnknown);
+                            if (request.isAdhocConferenceCall()) {
+                                createConferenceConnection(connectionManagerPhoneAccount,
+                                        id,
+                                        request,
+                                        isIncoming,
+                                        isUnknown);
+                            } else {
+                                createConnection(
+                                        connectionManagerPhoneAccount,
+                                        id,
+                                        request,
+                                        isIncoming,
+                                        isUnknown);
+                            }
                         }
                     } finally {
                         args.recycle();
@@ -1530,6 +1546,77 @@ public abstract class ConnectionService extends Service {
         return super.onUnbind(intent);
     }
 
+
+    /**
+     * This can be used by telecom to either create a new outgoing conference call or attach
+     * to an existing incoming conference call. In either case, telecom will cycle through a
+     * set of services and call createConnection util a connection service cancels the process
+     * or completes it successfully.
+     */
+    private void createConferenceConnection(
+            final PhoneAccountHandle callManagerAccount,
+            final String callId,
+            final ConnectionRequest request,
+            boolean isIncoming,
+            boolean isUnknown) {
+
+        Connection connection = null;
+        connection = isUnknown ? onCreateUnknownConferenceConnection(callManagerAccount, request)
+                    : isIncoming ? onCreateIncomingConferenceConnection(callManagerAccount, request)
+                    : onCreateOutgoingConferenceConnection(callManagerAccount, request);
+
+        Log.d(this, "createConferenceConnection, connection: %s", connection);
+        if (connection == null) {
+            Log.i(this, "createConferenceConnection, implementation returned null connection.");
+            connection = Connection.createFailedConnection(
+                    new DisconnectCause(DisconnectCause.ERROR, "IMPL_RETURNED_NULL_CONNECTION"));
+        }
+        connection.setTelecomCallId(callId);
+        if (connection.getState() != Connection.STATE_DISCONNECTED) {
+            addConnection(request.getAccountHandle(), callId, connection);
+        }
+
+//TODO revisit
+        //Uri address = connection.getAddress();
+        //String number = address == null ? "null" : address.getSchemeSpecificPart();
+        Log.v(this, "createConferenceConnection, number: %s, state: %s, capabilities: %s, properties: %s",
+                //Connection.toLogSafePhoneNumber(number),
+                Connection.stateToString(connection.getState()),
+                Connection.capabilitiesToString(connection.getConnectionCapabilities()),
+                Connection.propertiesToString(connection.getConnectionProperties()));
+
+        Log.d(this, "createConferenceConnection, calling handleCreateConnectionSuccessful %s", callId);
+        mAdapter.handleCreateConnectionComplete(
+                callId,
+                request,
+                new ParcelableConnection(
+                request.getAccountHandle(),
+                connection.getState(),
+                connection.getConnectionCapabilities(),
+                connection.getConnectionProperties(),
+                connection.getSupportedAudioRoutes(),
+                connection.getAddress(),
+                connection.getAddressPresentation(),
+                connection.getCallerDisplayName(),
+                connection.getCallerDisplayNamePresentation(),
+                connection.getVideoProvider() == null ?
+                        null : connection.getVideoProvider().getInterface(),
+                connection.getVideoState(),
+                connection.isRingbackRequested(),
+                connection.getAudioModeIsVoip(),
+                connection.getConnectTimeMillis(),
+                connection.getConnectElapsedTimeMillis(),
+                connection.getStatusHints(),
+                connection.getDisconnectCause(),
+                createIdList(connection.getConferenceables()),
+                connection.getExtras()
+                connection.setIsAdhocConference()));
+        if (isIncoming && request.shouldShowIncomingCallUi() && isSelfManaged) {
+             // Tell ConnectionService to show its incoming call UX.
+             connection.onShowIncomingCallUi();
+         }
+    }
+
     /**
      * This can be used by telecom to either create a new outgoing call or attach to an existing
      * incoming call. In either case, telecom will cycle through a set of services and call
@@ -1671,12 +1758,20 @@ public abstract class ConnectionService extends Service {
 
     private void answerVideo(String callId, int videoState) {
         Log.d(this, "answerVideo %s", callId);
-        findConnectionForAction(callId, "answer").onAnswer(videoState);
+        if (mConnectionById.containsKey(callId)) {
+            findConnectionForAction(callId, "answer").onAnswer(videoState);
+        } else {
+            findConferenceForAction(callId, "answer").onAnswer(videoState);
+        }
     }
 
     private void answer(String callId) {
         Log.d(this, "answer %s", callId);
-        findConnectionForAction(callId, "answer").onAnswer();
+        if (mConnectionById.containsKey(callId)) {
+            findConnectionForAction(callId, "answer").onAnswer();
+        } else {
+            findConferenceForAction(callId, "answer").onAnswer();
+        }
     }
 
     private void deflect(String callId, Uri address) {
@@ -2186,6 +2281,21 @@ public abstract class ConnectionService extends Service {
             ConnectionRequest request) {
         return null;
     }
+    /**
+     * Create a {@code Connection} given an incoming request. This is used to attach to existing
+     * incoming conference call.
+     *
+     * @param connectionManagerPhoneAccount See description at
+     *         {@link #onCreateOutgoingConnection(PhoneAccountHandle, ConnectionRequest)}.
+     * @param request Details about the incoming call.
+     * @return The {@code Connection} object to satisfy this call, or {@code null} to
+     *         not handle the call.
+     */
+    public Connection onCreateIncomingConferenceConnection(
+            PhoneAccountHandle connectionManagerPhoneAccount,
+            ConnectionRequest request) {
+        return null;
+    }
 
     /**
      * Called after the {@link Connection} returned by
@@ -2275,6 +2385,36 @@ public abstract class ConnectionService extends Service {
             ConnectionRequest request) {
         return null;
     }
+
+    /**
+     * Create a {@code Connection} given an outgoing request. This is used to initiate new
+     * outgoing conference call.
+     *
+     * @param connectionManagerPhoneAccount The connection manager account to use for managing
+     *         this call.
+     *         <p>
+     *         If this parameter is not {@code null}, it means that this {@code ConnectionService}
+     *         has registered one or more {@code PhoneAccount}s having
+     *         {@link PhoneAccount#CAPABILITY_CONNECTION_MANAGER}. This parameter will contain
+     *         one of these {@code PhoneAccount}s, while the {@code request} will contain another
+     *         (usually but not always distinct) {@code PhoneAccount} to be used for actually
+     *         making the connection.
+     *         <p>
+     *         If this parameter is {@code null}, it means that this {@code ConnectionService} is
+     *         being asked to make a direct connection. The
+     *         {@link ConnectionRequest#getAccountHandle()} of parameter {@code request} will be
+     *         a {@code PhoneAccount} registered by this {@code ConnectionService} to use for
+     *         making the connection.
+     * @param request Details about the outgoing call.
+     * @return The {@code Connection} object to satisfy this call, or the result of an invocation
+     *         of {@link Connection#createFailedConnection(DisconnectCause)} to not handle the call.
+     */
+    public Connection onCreateOutgoingConferenceConnection(
+            PhoneAccountHandle connectionManagerPhoneAccount,
+            ConnectionRequest request) {
+        return null;
+    }
+
 
     /**
      * Called by Telecom to request that a {@link ConnectionService} creates an instance of an
@@ -2398,6 +2538,20 @@ public abstract class ConnectionService extends Service {
      * @hide
      */
     public Connection onCreateUnknownConnection(PhoneAccountHandle connectionManagerPhoneAccount,
+            ConnectionRequest request) {
+        return null;
+    }
+
+    /**
+     * Create a {@code Connection} for a new unknown call. An unknown call is a call originating
+     * from the ConnectionService that was neither a user-initiated outgoing conference call,
+     * nor an incoming conference call created using
+     * {@code TelecomManager#addNewIncomingCall(PhoneAccountHandle, android.os.Bundle)}.
+     *
+     * @hide
+     */
+    public Connection onCreateUnknownConferenceConnection(
+            PhoneAccountHandle connectionManagerPhoneAccount,
             ConnectionRequest request) {
         return null;
     }

@@ -54,6 +54,7 @@ public final class ParcelableConnection implements Parcelable {
     private final Bundle mExtras;
     private String mParentCallId;
     private @Call.Details.CallDirection int mCallDirection;
+    private boolean mIsAdhocConference;
 
     /** @hide */
     public ParcelableConnection(
@@ -77,7 +78,39 @@ public final class ParcelableConnection implements Parcelable {
             List<String> conferenceableConnectionIds,
             Bundle extras,
             String parentCallId,
-            @Call.Details.CallDirection int callDirection) {
+            @Call.Details.CallDirection int callDirection,
+            boolean isAdhocConference) {
+        this(phoneAccount, state, capabilities, properties, supportedAudioRoutes, address,
+                addressPresentation, callerDisplayName, callerDisplayNamePresentation,
+                videoProvider, videoState, ringbackRequested, isVoipAudioMode, connectTimeMillis,
+                connectElapsedTimeMillis, statusHints, disconnectCause, conferenceableConnectionIds,
+                extras);
+        mIsAdhocConference = isAdhocConference;
+    }
+
+    public ParcelableConnection(
+            PhoneAccountHandle phoneAccount,
+            int state,
+            int capabilities,
+            int properties,
+            int supportedAudioRoutes,
+            Uri address,
+            int addressPresentation,
+            String callerDisplayName,
+            int callerDisplayNamePresentation,
+            IVideoProvider videoProvider,
+            int videoState,
+            boolean ringbackRequested,
+            boolean isVoipAudioMode,
+            long connectTimeMillis,
+            long connectElapsedTimeMillis,
+            StatusHints statusHints,
+            DisconnectCause disconnectCause,
+            List<String> conferenceableConnectionIds,
+            Bundle extras,
+            String parentCallId,
+            @Call.Details.CallDirection int callDirection,
+
         this(phoneAccount, state, capabilities, properties, supportedAudioRoutes, address,
                 addressPresentation, callerDisplayName, callerDisplayNamePresentation,
                 videoProvider, videoState, ringbackRequested, isVoipAudioMode, connectTimeMillis,
@@ -107,7 +140,37 @@ public final class ParcelableConnection implements Parcelable {
             StatusHints statusHints,
             DisconnectCause disconnectCause,
             List<String> conferenceableConnectionIds,
+            Bundle extras,
+            boolean isAdhocConference) {
+        this(phoneAccount, state, capabilities, properties, supportedAudioRoutes, address,
+                addressPresentation, callerDisplayName, callerDisplayNamePresentation,
+                videoProvider, videoState, ringbackRequested, isVoipAudioMode, connectTimeMillis,
+                connectElapsedTimeMillis, statusHints, disconnectCause, conferenceableConnectionIds,
+                extras);
+        mIsAdhocConference = isAdhocConference;
+    }
+    /** @hide */
+    public ParcelableConnection(
+            PhoneAccountHandle phoneAccount,
+            int state,
+            int capabilities,
+            int properties,
+            int supportedAudioRoutes,
+            Uri address,
+            int addressPresentation,
+            String callerDisplayName,
+            int callerDisplayNamePresentation,
+            IVideoProvider videoProvider,
+            int videoState,
+            boolean ringbackRequested,
+            boolean isVoipAudioMode,
+            long connectTimeMillis,
+            long connectElapsedTimeMillis,
+            StatusHints statusHints,
+            DisconnectCause disconnectCause,
+            List<String> conferenceableConnectionIds,
             Bundle extras) {
+
         mPhoneAccount = phoneAccount;
         mState = state;
         mConnectionCapabilities = capabilities;
@@ -227,6 +290,10 @@ public final class ParcelableConnection implements Parcelable {
         return mCallDirection;
     }
 
+    public boolean isAdhocConference() {
+        return mIsAdhocConference;
+    }
+
     @Override
     public String toString() {
         return new StringBuilder()
@@ -276,6 +343,7 @@ public final class ParcelableConnection implements Parcelable {
             String parentCallId = source.readString();
             long connectElapsedTimeMillis = source.readLong();
             int callDirection = source.readInt();
+            boolean isAdhocConference = source.readInt() == 1;
 
             return new ParcelableConnection(
                     phoneAccount,
@@ -298,7 +366,8 @@ public final class ParcelableConnection implements Parcelable {
                     conferenceableConnectionIds,
                     extras,
                     parentCallId,
-                    callDirection);
+                    callDirection,
+                    isAdhocConference);
         }
 
         @Override
@@ -338,5 +407,6 @@ public final class ParcelableConnection implements Parcelable {
         destination.writeString(mParentCallId);
         destination.writeLong(mConnectElapsedTimeMillis);
         destination.writeInt(mCallDirection);
+        destination.writeInt(mIsAdhocConference ? 1 : 0);
     }
 }
