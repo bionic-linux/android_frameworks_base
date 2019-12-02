@@ -69,6 +69,7 @@ public abstract class Conference extends Conferenceable {
         public void onConnectionEvent(Conference c, String event, Bundle extras) {}
         public void onCallerDisplayNameChanged(
                 Conference c, String callerDisplayName, int presentation) {}
+        public void onRingbackRequested(Conference c, boolean ringback) {}
     }
 
     private final Set<Listener> mListeners = new CopyOnWriteArraySet<>();
@@ -97,6 +98,7 @@ public abstract class Conference extends Conferenceable {
     private int mAddressPresentation;
     private String mCallerDisplayName;
     private int mCallerDisplayNamePresentation;
+    private boolean mRingbackRequested = false;
 
     private final Connection.Listener mConnectionDeathListener = new Connection.Listener() {
         @Override
@@ -167,6 +169,14 @@ public abstract class Conference extends Conferenceable {
      */
     public final int getState() {
         return mState;
+    }
+
+    /**
+     * Returns whether this conference is requesting that the system play a ringback tone
+     * on its behalf.
+     */
+    public final boolean isRingbackRequested() {
+        return mRingbackRequested;
     }
 
     /**
@@ -307,6 +317,34 @@ public abstract class Conference extends Conferenceable {
      */
     public void onConnectionAdded(Connection connection) {}
 
+   /**
+    * Notifies this Conference, which is in {@link #STATE_RINGING}, of
+    * a request to accept.
+    * For managed {@link ConnectionService}s, this will be called when the user answers a call via
+    * the default dialer's {@link InCallService}.
+    *
+    * @param videoState The video state in which to answer the connection.
+    */
+    public void onAnswer(int videoState) {}
+
+   /**
+    * Notifies this Conference, which is in {@link #STATE_RINGING}, of
+    * a request to accept.
+    * For managed {@link ConnectionService}s, this will be called when the user answers a call via
+    * the default dialer's {@link InCallService}.
+    */
+    public final void onAnswer() {
+         onAnswer(VideoProfile.STATE_AUDIO_ONLY);
+    }
+
+    /**
+      * Notifies this Conference, which is in {@link #STATE_RINGING}, of
+      * a request to reject.
+      * For managed {@link ConnectionService}s, this will be called when the user rejects a call via
+      * the default dialer's {@link InCallService}.
+      */
+    public void onReject() {}
+
     /**
      * Sets state to be on hold.
      */
@@ -322,9 +360,17 @@ public abstract class Conference extends Conferenceable {
     }
 
     /**
+     * Sets state to be ringing.
+     */
+    public final void setRinging() {
+        setState(Connection.STATE_RINGING);
+    }
+
+    /**
      * Sets state to be active.
      */
     public final void setActive() {
+        setRingbackRequested(false);
         setState(Connection.STATE_ACTIVE);
     }
 
@@ -433,6 +479,21 @@ public abstract class Conference extends Conferenceable {
             }
         }
         fireOnConferenceableConnectionsChanged();
+    }
+
+    /**
+     * Requests that the framework play a ringback tone. This is to be invoked by implementations
+     * that do not play a ringback tone themselves in the conference's audio stream.
+     *
+     * @param ringback Whether the ringback tone is to be played.
+     */
+    public final void setRingbackRequested(boolean ringback) {
+        if (mRingbackRequested != ringback) {
+            mRingbackRequested = ringback;
+            for (Listener l : mListeners) {
+                l.onRingbackRequested(this, ringback);
+            }
+        }
     }
 
     /**
@@ -640,14 +701,6 @@ public abstract class Conference extends Conferenceable {
     }
 
     private void setState(int newState) {
-        if (newState != Connection.STATE_ACTIVE &&
-                newState != Connection.STATE_HOLDING &&
-                newState != Connection.STATE_DISCONNECTED) {
-            Log.w(this, "Unsupported state transition for Conference call.",
-                    Connection.stateToString(newState));
-            return;
-        }
-
         if (mState != newState) {
             int oldState = mState;
             mState = newState;
@@ -655,6 +708,37 @@ public abstract class Conference extends Conferenceable {
                 l.onStateChanged(this, oldState, newState);
             }
         }
+    }
+
+    private static class FailureSignalingConference extends Conference {
+        private boolean mImmutable = false;
+        public FailureSignalingConference(DisconnectCause disconnectCause,
+                PhoneAccountHandle phoneAccount) {
+            super(phoneAccount);
+            setDisconnected(disconnectCause);
+            mImmutable = true;
+        }
+        public void checkImmutable() {
+            if (mImmutable) {
+                throw new UnsupportedOperationException("Conference is immutable");
+            }
+        }
+    }
+
+    /**
+     * Return a {@code Conference} which represents a failed conference attempt. The returned
+     * {@code Conference} will have a {@link android.telecom.DisconnectCause} and as specified,
+     * and a {@link #getState()} of {@link #STATE_DISCONNECTED}.
+     * <p>
+     * The returned {@code Conference} can be assumed to {@link #destroy()} itself when appropriate,
+     * so users of this method need not maintain a reference to its return value to destroy it.
+     *
+     * @param disconnectCause The disconnect cause, ({@see android.telecomm.DisconnectCause}).
+     * @return A {@code Conference} which indicates failure.
+     */
+    public @NonNull static Conference createFailedConference(
+            @NonNull DisconnectCause disconnectCause, @NonNull PhoneAccountHandle phoneAccount) {
+        return new FailureSignalingConference(disconnectCause, phoneAccount);
     }
 
     private final void clearConferenceableList() {
@@ -667,11 +751,13 @@ public abstract class Conference extends Conferenceable {
     @Override
     public String toString() {
         return String.format(Locale.US,
-                "[State: %s,Capabilites: %s, VideoState: %s, VideoProvider: %s, ThisObject %s]",
+                "[State: %s,Capabilites: %s, VideoState: %s, VideoProvider: %s,"
+                + "isRingbackRequested: %s, ThisObject %s]",
                 Connection.stateToString(mState),
                 Call.Details.capabilitiesToString(mConnectionCapabilities),
                 getVideoState(),
                 getVideoProvider(),
+                isRingbackRequested() ? "Y" : "N",
                 super.toString());
     }
 
