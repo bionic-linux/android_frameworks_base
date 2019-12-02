@@ -3806,10 +3806,12 @@ public class UserManagerService extends IUserManager.Stub {
                 case WRITE_USER_MSG:
                     removeMessages(WRITE_USER_MSG, msg.obj);
                     synchronized (mPackagesLock) {
-                        int userId = ((UserData) msg.obj).info.id;
-                        UserData userData = getUserDataNoChecks(userId);
-                        if (userData != null) {
-                            writeUserLP(userData);
+                        if (msg.obj != null) {
+                            int userId = ((UserData) msg.obj).info.id;
+                            UserData userData = getUserDataNoChecks(userId);
+                            if (userData != null) {
+                                writeUserLP(userData);
+                            }
                         }
                     }
             }
