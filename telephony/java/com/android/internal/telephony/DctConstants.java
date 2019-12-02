@@ -111,6 +111,8 @@ public class DctConstants {
     public static final int EVENT_DATA_SERVICE_BINDING_CHANGED = BASE + 49;
     public static final int EVENT_DEVICE_PROVISIONED_CHANGE = BASE + 50;
     public static final int EVENT_DATA_ENABLED_OVERRIDE_RULES_CHANGED = BASE + 51;
+    public static final int EVENT_EVALUATE_URSP_DONE = BASE + 52;
+    public static final int EVENT_SETUP_NEW_PDU = BASE + 53;
 
     /***** Constants *****/
 
