@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "652d7b2f_0b283cdb",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-02T18:45:05Z",
+      "side": 1,
+      "message": "Okay this makes sense then, since you need to differentiate between VoLTE/VoWiFI.",
+      "parentUuid": "c7aaf039_941740ef",
+      "range": {
+        "startLine": 673,
+        "startChar": 66,
+        "endLine": 673,
+        "endChar": 78
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e789c3_682a5e12",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
         "patchSetId": 13
