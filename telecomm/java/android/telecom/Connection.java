@@ -1860,6 +1860,8 @@ public abstract class Connection extends Conferenceable {
     private int mState = STATE_NEW;
     private CallAudioState mCallAudioState;
     private Uri mAddress;
+    private List<Uri> mParticipants;
+    private boolean mIsAdhocConferenceCall;
     private int mAddressPresentation;
     private String mCallerDisplayName;
     private int mCallerDisplayNamePresentation;
@@ -1923,6 +1925,20 @@ public abstract class Connection extends Conferenceable {
      */
     public final Uri getAddress() {
         return mAddress;
+    }
+
+    /**
+     * @return The address's to which this Connection is currently communicating.
+     */
+    public final @Nullable List<Uri> getParticipants() {
+        return mParticipants;
+    }
+
+    /**
+     * @return true if connection is adhocConference call else false.
+     */
+    public final boolean isAdhocConferenceCall() {
+        return mIsAdhocConferenceCall;
     }
 
     /**
@@ -2218,6 +2234,25 @@ public abstract class Connection extends Conferenceable {
         for (Listener l : mListeners) {
             l.onAddressChanged(this, address, presentation);
         }
+    }
+
+    /**
+     * Sets the value of the {@link #getParticipants()} property.
+     *
+     * @param address The participant address's.
+     */
+    public final void setParticipants(@Nullable List<Uri> address) {
+        checkImmutable();
+        mParticipants = address;
+    }
+
+    /**
+     * Sets the value of the {@link #isAdhocConferenceCall()} property.
+     *
+     * @param isAdhocConferenceCall represents if the call is adhoc conference call or not.
+     */
+    public void setIsAdhocConferenceCall(boolean isAdhocConferenceCall) {
+        mIsAdhocConferenceCall = isAdhocConferenceCall;
     }
 
     /**
