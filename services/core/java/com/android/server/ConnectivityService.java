@@ -109,6 +109,7 @@ import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.TetheringManager;
+import android.net.TrafficDescriptor;
 import android.net.UidRange;
 import android.net.Uri;
 import android.net.VpnService;
@@ -5138,6 +5139,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,
             Messenger messenger, int timeoutMs, IBinder binder, int legacyType) {
+        TrafficDescriptor td = new TrafficDescriptor();
+        return requestNetworkWithNR(networkCapabilities, messenger, timeoutMs,
+                binder,legacyType, td);
+    }
+
+    @Override
+    public NetworkRequest requestNetworkWithNR(NetworkCapabilities networkCapabilities,
+            Messenger messenger, int timeoutMs, IBinder binder, int legacyType,
+            TrafficDescriptor td) {
         final NetworkRequest.Type type = (networkCapabilities == null)
                 ? NetworkRequest.Type.TRACK_DEFAULT
                 : NetworkRequest.Type.REQUEST;
@@ -5171,7 +5181,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ensureValid(networkCapabilities);
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
-                nextNetworkRequestId(), type);
+                nextNetworkRequestId(), type, td);
         NetworkRequestInfo nri = new NetworkRequestInfo(messenger, networkRequest, binder);
         if (DBG) log("requestNetwork for " + nri);
 
@@ -7205,6 +7215,47 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
 
             return mTNS;
+        }
+    }
+
+    public void handleEvaluatedNetworkRequest(int state, int netId,
+            NetworkRequest networkRequest) {
+        switch (state) {
+            case ConnectivityManager.URSP_RESULT_FAILED:
+                handleFailedNetworkRequest(networkRequest);
+                break;
+            case ConnectivityManager.URSP_RESULT_EXISTPDU:
+                handleExistPduNetworkRequest(netId, networkRequest);
+                break;
+            case ConnectivityManager.URSP_RESULT_NON3GPP:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleFailedNetworkRequest(final NetworkRequest request) {
+        NetworkRequestInfo nri = mNetworkRequests.get(request);
+        if (nri == null) {
+            return;
+        }
+        if (nri.mSatisfier != null) {
+            return;
+        }
+        log("handleEvaluatedFailedNetworkRequest " + request);
+        callCallbackForRequest(nri, null, ConnectivityManager.CALLBACK_UNAVAIL, 0);
+    }
+
+    private void handleExistPduNetworkRequest(int netId, NetworkRequest request) {
+        NetworkRequestInfo nri = mNetworkRequests.get(request);
+        if (nri == null) {
+            return;
+        }
+        log("handleExistPduNetworkRequest " + request + ", netId = " + netId);
+        NetworkAgentInfo nai = getNetworkAgentInfoForNetId(netId);
+        if (nai != null) {
+            nri.mSatisfier = nai;
+            callCallbackForRequest(nri, null, ConnectivityManager.CALLBACK_AVAILABLE, 0);
         }
     }
 }
