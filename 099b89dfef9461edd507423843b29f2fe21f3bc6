@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23cc2c6d_b6d0546b",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4082,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T11:17:58Z",
+      "side": 1,
+      "message": "remove it from @SystemApi and will put it in static library.",
+      "parentUuid": "e6cd2efc_02f8f5d7",
+      "range": {
+        "startLine": 4082,
+        "startChar": 27,
+        "endLine": 4082,
+        "endChar": 67
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051599dd_07dd9936",
         "filename": "api/system-current.txt",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "490063bf_5a526bf2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4098,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T11:17:58Z",
+      "side": 1,
+      "message": "Ack, will move these methods to static library.",
+      "parentUuid": "051599dd_07dd9936",
+      "range": {
+        "startLine": 4094,
+        "startChar": 0,
+        "endLine": 4098,
+        "endChar": 81
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7af1b161_b6383cf7",
         "filename": "api/system-current.txt",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e68a93a_27a225e1",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4119,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-02T11:17:58Z",
+      "side": 1,
+      "message": "Ack, will move to static lib.",
+      "parentUuid": "7af1b161_b6383cf7",
+      "range": {
+        "startLine": 4113,
+        "startChar": 0,
+        "endLine": 4119,
+        "endChar": 3
+      },
+      "revId": "099b89dfef9461edd507423843b29f2fe21f3bc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
