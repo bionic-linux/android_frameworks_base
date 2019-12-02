@@ -1695,6 +1695,45 @@ public class TelecomManager {
     }
 
     /**
+     * Registers a new incoming conference. A {@link ConnectionService} should invoke this method
+     * when it has an incoming conference. For managed {@link ConnectionService}s, the specified
+     * {@link PhoneAccountHandle} must have been registered with {@link #registerPhoneAccount} and
+     * the user must have enabled the corresponding {@link PhoneAccount}.  This can be checked using
+     * {@link #getPhoneAccount}. Self-managed {@link ConnectionService}s must have
+     * {@link android.Manifest.permission#MANAGE_OWN_CALLS} to add a new incoming call.
+     * <p>
+     * The incoming conference you are adding is assumed to have a video state of
+     * {@link VideoProfile#STATE_AUDIO_ONLY}, unless the extra value
+     * {@link #EXTRA_INCOMING_VIDEO_STATE} is specified.
+     * <p>
+     * Once invoked, this method will cause the system to bind to the {@link ConnectionService}
+     * associated with the {@link PhoneAccountHandle} and request additional information about the
+     * call (See {@link ConnectionService#onCreateIncomingConnection}) before starting the incoming
+     * call UI.
+     * <p>
+     * For a managed {@link ConnectionService}, a {@link SecurityException} will be thrown if either
+     * the {@link PhoneAccountHandle} does not correspond to a registered {@link PhoneAccount} or
+     * the associated {@link PhoneAccount} is not currently enabled by the user.
+     *
+     * @param phoneAccount A {@link PhoneAccountHandle} registered with
+     *            {@link #registerPhoneAccount}.
+     * @param extras A bundle that will be passed through to
+     *            {@link ConnectionService#onCreateIncomingConference}.
+     */
+
+    public void addNewIncomingConference(@NonNull PhoneAccountHandle phoneAccount,
+            @NonNull Bundle extras) {
+        try {
+            if (isServiceConnected()) {
+                getTelecomService().addNewIncomingConference(
+                        phoneAccount, extras == null ? new Bundle() : extras);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException adding a new incoming conference: " + phoneAccount, e);
+        }
+    }
+
+    /**
      * Registers a new unknown call with Telecom. This can only be called by the system Telephony
      * service. This is invoked when Telephony detects a new unknown connection that was neither
      * a new incoming call, nor an user-initiated outgoing call.
@@ -1891,6 +1930,30 @@ public class TelecomManager {
             }
             try {
                 service.placeCall(address, extras == null ? new Bundle() : extras,
+                        mContext.getOpPackageName());
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error calling ITelecomService#placeCall", e);
+            }
+        }
+    }
+
+
+    /**
+     * Place a new conference call with the provided participants using the system telecom service
+     * This method doesn't support placing of emergency calls.
+     *
+     * @param participants List of participants to start conference with
+     * @param videoState The desired video state to start conference
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.CALL_PHONE)
+    public void startConference(@NonNull List<Uri> participants,
+            @VideoProfile.VideoState int videoState) {
+        ITelecomService service = getTelecomService();
+        if (service != null) {
+            try {
+                service.startConference(participants, videoState,
                         mContext.getOpPackageName());
             } catch (RemoteException e) {
                 Log.e(TAG, "Error calling ITelecomService#placeCall", e);

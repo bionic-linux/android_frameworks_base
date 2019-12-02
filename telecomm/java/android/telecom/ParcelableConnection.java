@@ -108,6 +108,7 @@ public final class ParcelableConnection implements Parcelable {
             DisconnectCause disconnectCause,
             List<String> conferenceableConnectionIds,
             Bundle extras) {
+
         mPhoneAccount = phoneAccount;
         mState = state;
         mConnectionCapabilities = capabilities;

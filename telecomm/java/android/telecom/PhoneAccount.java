@@ -331,7 +331,13 @@ public final class PhoneAccount implements Parcelable {
      */
     public static final int CAPABILITY_EMERGENCY_PREFERRED = 0x2000;
 
-    /* NEXT CAPABILITY: 0x4000 */
+    /**
+     * Flag indicating that this {@code PhoneAccount} is currently able to initiate
+     * Adhoc Conference call.
+     */
+    public static final int CAPABILITY_ADHOC_CONFERENCE_CALLING = 0x4000;
+
+    /* NEXT CAPABILITY: 0x8000 */
 
     /**
      * URI scheme for telephone number URIs.
