@@ -32,7 +32,6 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
-import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -44,15 +43,10 @@ import java.util.ArrayList;
  * Service used to communicate with the network stack, which is running in a separate module.
  * @hide
  */
-public class NetworkStackClient {
+public class NetworkStackClient extends ConnectivityModuleClientBase {
     private static final String TAG = NetworkStackClient.class.getSimpleName();
 
-    private static final int NETWORKSTACK_TIMEOUT_MS = 10_000;
-
     private static NetworkStackClient sInstance;
-
-    @NonNull
-    private final Dependencies mDependencies;
 
     @NonNull
     @GuardedBy("mPendingNetStackRequests")
@@ -60,9 +54,6 @@ public class NetworkStackClient {
     @Nullable
     @GuardedBy("mPendingNetStackRequests")
     private INetworkStackConnector mConnector;
-
-    @GuardedBy("mLog")
-    private final SharedLog mLog = new SharedLog(TAG);
 
     private volatile boolean mWasSystemServerInitialized = false;
 
@@ -72,18 +63,11 @@ public class NetworkStackClient {
 
     @VisibleForTesting
     protected NetworkStackClient(@NonNull Dependencies dependencies) {
-        mDependencies = dependencies;
+        super(dependencies, new SharedLog(TAG));
     }
 
     private NetworkStackClient() {
         this(new DependenciesImpl());
-    }
-
-    @VisibleForTesting
-    protected interface Dependencies {
-        void addToServiceManager(@NonNull IBinder service);
-        void checkCallerUid();
-        ConnectivityModuleConnector getConnectivityModuleConnector();
     }
 
     private static class DependenciesImpl implements Dependencies {
@@ -186,24 +170,15 @@ public class NetworkStackClient {
         });
     }
 
-    private class NetworkStackConnection implements
-            ConnectivityModuleConnector.ModuleServiceCallback {
-        @Override
-        public void onModuleServiceConnected(IBinder service) {
-            logi("Network stack service connected");
-            registerNetworkStackService(service);
-        }
-    }
-
-    private void registerNetworkStackService(@NonNull IBinder service) {
+    @Override
+    protected void registerModuleService(@NonNull IBinder service) {
         final INetworkStackConnector connector = INetworkStackConnector.Stub.asInterface(service);
-        mDependencies.addToServiceManager(service);
         log("Network stack service registered");
 
         try {
-            TetheringManager.getInstance().start(service);
+            TetheringClient.getInstance().start(service);
         } catch (Throwable e) {
-            logWtf("BOOT FAILTURE start Tethering ", e);
+            logWtf(TAG, "BOOT FAILTURE start Tethering ", e);
         }
 
         final ArrayList<NetworkStackCallback> requests;
@@ -238,67 +213,8 @@ public class NetworkStackClient {
     public void start() {
         mDependencies.getConnectivityModuleConnector().startModuleService(
                 INetworkStackConnector.class.getName(), PERMISSION_MAINLINE_NETWORK_STACK,
-                new NetworkStackConnection());
+                new ModuleConnection());
         log("Network stack service start requested");
-    }
-
-    /**
-     * Log a message in the local log.
-     */
-    private void log(@NonNull String message) {
-        synchronized (mLog) {
-            mLog.log(message);
-        }
-    }
-
-    private void logWtf(@NonNull String message, @Nullable Throwable e) {
-        Slog.wtf(TAG, message);
-        synchronized (mLog) {
-            mLog.e(message, e);
-        }
-    }
-
-    private void loge(@NonNull String message, @Nullable Throwable e) {
-        synchronized (mLog) {
-            mLog.e(message, e);
-        }
-    }
-
-    /**
-     * Log a message in the local and system logs.
-     */
-    private void logi(@NonNull String message) {
-        synchronized (mLog) {
-            mLog.i(message);
-        }
-    }
-
-    /**
-     * For non-system server clients, get the connector registered by the system server.
-     */
-    private INetworkStackConnector getRemoteConnector() {
-        // Block until the NetworkStack connector is registered in ServiceManager.
-        // <p>This is only useful for non-system processes that do not have a way to be notified of
-        // registration completion. Adding a callback system would be too heavy weight considering
-        // that the connector is registered on boot, so it is unlikely that a client would request
-        // it before it is registered.
-        // TODO: consider blocking boot on registration and simplify much of the logic in this class
-        IBinder connector;
-        try {
-            final long before = System.currentTimeMillis();
-            while ((connector = ServiceManager.getService(Context.NETWORK_STACK_SERVICE)) == null) {
-                Thread.sleep(20);
-                if (System.currentTimeMillis() - before > NETWORKSTACK_TIMEOUT_MS) {
-                    loge("Timeout waiting for NetworkStack connector", null);
-                    return null;
-                }
-            }
-        } catch (InterruptedException e) {
-            loge("Error waiting for NetworkStack connector", e);
-            return null;
-        }
-
-        return INetworkStackConnector.Stub.asInterface(connector);
     }
 
     private void requestConnector(@NonNull NetworkStackCallback request) {
@@ -307,11 +223,17 @@ public class NetworkStackClient {
         if (!mWasSystemServerInitialized) {
             // The network stack is not being started in this process, e.g. this process is not
             // the system server. Get a remote connector registered by the system server.
-            final INetworkStackConnector connector = getRemoteConnector();
+            final IBinder serviceBinder = getRemoteConnector(Context.NETWORK_STACK_SERVICE);
             synchronized (mPendingNetStackRequests) {
-                mConnector = connector;
+                if (serviceBinder == null) {
+                    // Add the request to pending list, in case client request before
+                    // NetworkStackService is registered and getRemoteConnector is timeout.
+                    mPendingNetStackRequests.add(request);
+                    return;
+                }
+                mConnector = INetworkStackConnector.Stub.asInterface(serviceBinder);
             }
-            request.onNetworkStackConnected(connector);
+            request.onNetworkStackConnected(mConnector);
             return;
         }
 
@@ -329,6 +251,7 @@ public class NetworkStackClient {
 
     /**
      * Dump NetworkStackClient logs to the specified {@link PrintWriter}.
+     * TetheringClient logs would also be dumped at the same time.
      */
     public void dump(PrintWriter pw) {
         // dump is thread-safe on SharedLog
@@ -343,5 +266,8 @@ public class NetworkStackClient {
 
         pw.println();
         pw.println("pendingNetStackRequests length: " + requestsQueueLength);
+
+        pw.println();
+        TetheringClient.getInstance().dump(pw);
     }
 }
