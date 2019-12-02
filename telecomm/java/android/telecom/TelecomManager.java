@@ -1648,6 +1648,16 @@ public class TelecomManager {
         }
     }
 
+    public void processIncomingConference(PhoneAccountHandle phoneAccount, Bundle extras) {
+        try {
+            if (isServiceConnected()) {
+                getTelecomService().addNewIncomingConference(
+                        phoneAccount, extras == null ? new Bundle() : extras);
+        } catch (RemoteException e) {
+            Log.e(TAG, "RemoteException adding a new incoming conference: " + phoneAccount, e);
+        }
+    }
+
     /**
      * Registers a new unknown call with Telecom. This can only be called by the system Telephony
      * service. This is invoked when Telephony detects a new unknown connection that was neither
@@ -1845,6 +1855,25 @@ public class TelecomManager {
             }
             try {
                 service.placeCall(address, extras == null ? new Bundle() : extras,
+                        mContext.getOpPackageName());
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error calling ITelecomService#placeCall", e);
+            }
+        }
+    }
+
+
+    /*
+     * Place a new conference call with the provided participants using the system telecom service
+     * This method doesn't support placing of emergency calls
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.CALL_PHONE)
+    public void startConference(List<Uri> participants, int videoState) {
+        ITelecomService service = getTelecomService();
+        if (service != null) {
+            try {
+                service.startConference(participants, videoState,
                         mContext.getOpPackageName());
             } catch (RemoteException e) {
                 Log.e(TAG, "Error calling ITelecomService#placeCall", e);

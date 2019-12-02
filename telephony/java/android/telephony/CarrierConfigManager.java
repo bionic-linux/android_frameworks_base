@@ -1059,6 +1059,14 @@ public class CarrierConfigManager {
     public static final String KEY_IGNORE_RTT_MODE_SETTING_BOOL =
             "ignore_rtt_mode_setting_bool";
 
+
+    /**
+     * Determines whether adhoc conference calls are supported by a carrier.  When {@code true},
+     * adhoc conference calling is supported, {@code false otherwise}.
+     */
+    public static final String KEY_SUPPORT_ADHOC_CONFERENCING_BOOL =
+            "support_adhoc_conferencing_bool";
+
     /**
      * Determines whether conference calls are supported by a carrier.  When {@code true},
      * conference calling is supported, {@code false otherwise}.
@@ -3358,6 +3366,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CALL_FORWARDING_MAP_NON_NUMBER_TO_VOICEMAIL_BOOL, false);
         sDefaults.putBoolean(KEY_IGNORE_RTT_MODE_SETTING_BOOL, false);
         sDefaults.putInt(KEY_CDMA_3WAYCALL_FLASH_DELAY_INT , 0);
+        sDefaults.putBoolean(KEY_SUPPORT_ADHOC_CONFERENCING_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_IMS_CONFERENCE_CALL_BOOL, true);
         sDefaults.putBoolean(KEY_SUPPORT_MANAGE_IMS_CONFERENCE_CALL_BOOL, true);

@@ -1759,6 +1759,7 @@ public abstract class Connection extends Conferenceable {
     private int mState = STATE_NEW;
     private CallAudioState mCallAudioState;
     private Uri mAddress;
+    private List<Uri> mParticipantAddress;
     private int mAddressPresentation;
     private String mCallerDisplayName;
     private int mCallerDisplayNamePresentation;
@@ -1815,6 +1816,20 @@ public abstract class Connection extends Conferenceable {
      */
     public final Uri getAddress() {
         return mAddress;
+    }
+
+    /**
+     * @return The address's to which this Connection is currently communicating.
+     */
+    public final List<Uri> getParticipantAddress() {
+        return mParticipantAddress;
+    }
+
+    /**
+     * @return true if connection is adhocConference call else false.
+     */
+    public final boolean isAdhocConferenceCall() {
+        return mIsAdhocConferenceCall;
     }
 
     /**
@@ -2128,6 +2143,24 @@ public abstract class Connection extends Conferenceable {
         for (Listener l : mListeners) {
             l.onAddressChanged(this, address, presentation);
         }
+    }
+
+    /**
+     * Sets the value of the {@link #getParticipantAddress()} property.
+     *
+     * @param address The new address's.
+     * @param presentation The presentation requirements for the address.
+     *        See {@link TelecomManager} for valid values.
+     */
+    public final void setParticipantAddress(List<Uri> address, int presentation) {
+        checkImmutable();
+        Log.d(this, "setAddress %s", address);
+        mParticipantAddress = address;
+        mAddressPresentation = presentation;
+    }
+
+    public setIsAdhocConferenceCall(boolean isAdhocConferenceCall) {
+        mIsAdhocConferenceCall = isAdhocConferenceCall;
     }
 
     /**
