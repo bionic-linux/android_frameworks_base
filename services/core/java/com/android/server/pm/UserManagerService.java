@@ -2261,6 +2261,9 @@ public class UserManagerService extends IUserManager.Stub {
         if (DBG) {
             debug("scheduleWriteUser");
         }
+        if (UserData == null) {
+            return;
+        }
         // No need to wrap it within a lock -- worst case, we'll just post the same message
         // twice.
         if (!mHandler.hasMessages(WRITE_USER_MSG, UserData)) {
