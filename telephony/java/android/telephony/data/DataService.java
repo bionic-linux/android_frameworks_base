@@ -24,6 +24,7 @@ import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
 import android.net.LinkProperties;
+import android.net.TrafficDescriptor;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -161,6 +162,8 @@ public abstract class DataService extends Service {
                                   boolean isRoaming, boolean allowRoaming,
                                   @SetupDataReason int reason,
                                   @Nullable LinkProperties linkProperties,
+                                  TrafficDescriptor td,
+                                  RouteSelectionDescriptor rsd,
                                   @NonNull DataServiceCallback callback) {
             // The default implementation is to return unsupported.
             if (callback != null) {
@@ -279,14 +282,19 @@ public abstract class DataService extends Service {
         public final int reason;
         public final LinkProperties linkProperties;
         public final IDataServiceCallback callback;
+        public final RouteSelectionDescriptor rsd;
+        public final TrafficDescriptor td;
         SetupDataCallRequest(int accessNetworkType, DataProfile dataProfile, boolean isRoaming,
                              boolean allowRoaming, int reason, LinkProperties linkProperties,
+                             TrafficDescriptor td, RouteSelectionDescriptor rsd,
                              IDataServiceCallback callback) {
             this.accessNetworkType = accessNetworkType;
             this.dataProfile = dataProfile;
             this.isRoaming = isRoaming;
             this.allowRoaming = allowRoaming;
             this.linkProperties = linkProperties;
+            this.td = td;
+            this.rsd = rsd;
             this.reason = reason;
             this.callback = callback;
         }
@@ -377,7 +385,8 @@ public abstract class DataService extends Service {
                     serviceProvider.setupDataCall(setupDataCallRequest.accessNetworkType,
                             setupDataCallRequest.dataProfile, setupDataCallRequest.isRoaming,
                             setupDataCallRequest.allowRoaming, setupDataCallRequest.reason,
-                            setupDataCallRequest.linkProperties,
+                            setupDataCallRequest.linkProperties, setupDataCallRequest.td,
+                            setupDataCallRequest.rsd,
                             (setupDataCallRequest.callback != null)
                                     ? new DataServiceCallback(setupDataCallRequest.callback)
                                     : null);
@@ -504,10 +513,13 @@ public abstract class DataService extends Service {
         @Override
         public void setupDataCall(int slotIndex, int accessNetworkType, DataProfile dataProfile,
                                   boolean isRoaming, boolean allowRoaming, int reason,
-                                  LinkProperties linkProperties, IDataServiceCallback callback) {
+                                  LinkProperties linkProperties,
+                                  TrafficDescriptor td,
+                                  RouteSelectionDescriptor rsd,
+                                  IDataServiceCallback callback) {
             mHandler.obtainMessage(DATA_SERVICE_REQUEST_SETUP_DATA_CALL, slotIndex, 0,
                     new SetupDataCallRequest(accessNetworkType, dataProfile, isRoaming,
-                            allowRoaming, reason, linkProperties, callback))
+                            allowRoaming, reason, linkProperties, td, rsd, callback))
                     .sendToTarget();
         }
 

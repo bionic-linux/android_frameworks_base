@@ -29,6 +29,7 @@ import android.net.NetworkRequest;
 import android.net.NetworkState;
 import android.net.ISocketKeepaliveCallback;
 import android.net.ProxyInfo;
+import android.net.TrafficDescriptor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -224,4 +225,9 @@ interface IConnectivityManager
     void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
 
     IBinder startOrGetTestNetworkService();
+
+    void handleEvaluatedNetworkRequest(int state, int netId, in NetworkRequest networkRequest);
+    NetworkRequest requestNetworkWithNR(in NetworkCapabilities networkCapabilities,in Messenger messenger,
+    int timeoutSec, in IBinder binder, int legacy,in TrafficDescriptor td);
+
 }

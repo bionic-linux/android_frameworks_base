@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.IpSecManager.UdpEncapsulationSocket;
 import android.net.SocketKeepalive.Callback;
+import android.net.TrafficDescriptor;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -758,6 +759,36 @@ public class ConnectivityManager {
      * @hide
      */
     public static final int NETID_UNSET = 0;
+
+    /**
+     * URSP evaluate result is fail,call back CALLBACK_UNAVAIL to application
+     * @hide
+     */
+    public static final int URSP_RESULT_FAILED = 0;
+
+    /**
+     * URSP evaluate result is no policy to process
+     * @hide
+     */
+    public static final int URSP_RESULT_NO_POLICY = 1;
+
+    /**
+     * URSP evaluate result is exist PDU which could be reused
+     * @hide
+     */
+    public static final int URSP_RESULT_EXISTPDU = 2;
+
+    /**
+     * URSP evaluate result is non-3gpp policy
+     * @hide
+     */
+    public static final int URSP_RESULT_NON3GPP = 3;
+
+    /**
+     * URSP evaluate result is that need to set up new PDU
+     * @hide
+     */
+    public static final int URSP_RESULT_NEWPDU = 4;
 
     /**
      * Private DNS Mode values.
@@ -1685,7 +1716,7 @@ public class ConnectivityManager {
         l.delay = delay;
         l.expireSequenceNumber = 0;
         l.networkRequest = sendRequestForNetwork(
-                netCap, l.networkCallback, 0, REQUEST, type, getDefaultHandler());
+                netCap, l.networkCallback, 0, REQUEST, type, getDefaultHandler(), null);
         if (l.networkRequest == null) return null;
         sLegacyRequests.put(netCap, l);
         sendExpireMsgForFeature(netCap, l.expireSequenceNumber, delay);
@@ -3611,7 +3642,7 @@ public class ConnectivityManager {
     private static final int REQUEST = 2;
 
     private NetworkRequest sendRequestForNetwork(NetworkCapabilities need, NetworkCallback callback,
-            int timeoutMs, int action, int legacyType, CallbackHandler handler) {
+            int timeoutMs, int action, int legacyType, CallbackHandler handler, TrafficDescriptor td) {
         printStackTrace();
         checkCallbackNotNull(callback);
         Preconditions.checkArgument(action == REQUEST || need != null, "null NetworkCapabilities");
@@ -3629,8 +3660,13 @@ public class ConnectivityManager {
                 if (action == LISTEN) {
                     request = mService.listenForNetwork(need, messenger, binder);
                 } else {
-                    request = mService.requestNetwork(
-                            need, messenger, timeoutMs, binder, legacyType);
+                    if (td == null) {
+                        request = mService.requestNetwork(
+                                need, messenger, timeoutMs, binder, legacyType);
+                    } else {
+                        request = mService.requestNetworkWithNR(
+                                need, messenger, timeoutMs, binder, legacyType, td);
+                    }
                 }
                 if (request != null) {
                     sCallbacks.put(request, callback);
@@ -3661,7 +3697,8 @@ public class ConnectivityManager {
             @NonNull Handler handler) {
         CallbackHandler cbHandler = new CallbackHandler(handler);
         NetworkCapabilities nc = request.networkCapabilities;
-        sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler);
+        TrafficDescriptor td = request.trafficDescriptor;
+        sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler, td);
     }
 
     /**
@@ -3967,7 +4004,8 @@ public class ConnectivityManager {
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
         CallbackHandler cbHandler = new CallbackHandler(handler);
         NetworkCapabilities nc = request.networkCapabilities;
-        sendRequestForNetwork(nc, networkCallback, 0, LISTEN, TYPE_NONE, cbHandler);
+        TrafficDescriptor td = request.trafficDescriptor;
+        sendRequestForNetwork(nc, networkCallback, 0, LISTEN, TYPE_NONE, cbHandler, td);
     }
 
     /**
@@ -4048,7 +4086,7 @@ public class ConnectivityManager {
         // request, i.e., the system default network.
         CallbackHandler cbHandler = new CallbackHandler(handler);
         sendRequestForNetwork(null /* NetworkCapabilities need */, networkCallback, 0,
-                REQUEST, TYPE_NONE, cbHandler);
+                REQUEST, TYPE_NONE, cbHandler, null);
     }
 
     /**
@@ -4599,6 +4637,16 @@ public class ConnectivityManager {
                 sb.append(" [").append(stackTrace).append("]");
             }
             Log.d(TAG, "StackLog:" + sb.toString());
+        }
+    }
+
+    public void handleEvaluatedNetworkRequest(int state, int netId,
+            NetworkRequest networkRequest) {
+        try {
+            mService.handleEvaluatedNetworkRequest(state, netId,
+                    networkRequest);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 }
