@@ -114,6 +114,8 @@ public class DctConstants {
     public static final int EVENT_5G_NETWORK_CHANGED = BASE + 52;
     public static final int EVENT_5G_TIMER_HYSTERESIS = BASE + 53;
     public static final int EVENT_5G_TIMER_WATCHDOG = BASE + 54;
+    public static final int EVENT_EVALUATE_URSP_DONE = BASE + 52;
+    public static final int EVENT_SETUP_NEW_PDU = BASE + 53;
 
     /***** Constants *****/
 
