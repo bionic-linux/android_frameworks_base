@@ -19,7 +19,6 @@ package android.net;
 import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.LinkProperties;
-import android.net.ITetheringEventCallback;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -77,41 +76,6 @@ interface IConnectivityManager
     boolean isActiveNetworkMetered();
 
     boolean requestRouteToHostAddress(int networkType, in byte[] hostAddress);
-
-    int tether(String iface, String callerPkg);
-
-    int untether(String iface, String callerPkg);
-
-    @UnsupportedAppUsage
-    int getLastTetherError(String iface);
-
-    boolean isTetheringSupported(String callerPkg);
-
-    void startTethering(int type, in ResultReceiver receiver, boolean showProvisioningUi,
-            String callerPkg);
-
-    void stopTethering(int type, String callerPkg);
-
-    @UnsupportedAppUsage
-    String[] getTetherableIfaces();
-
-    @UnsupportedAppUsage
-    String[] getTetheredIfaces();
-
-    @UnsupportedAppUsage
-    String[] getTetheringErroredIfaces();
-
-    String[] getTetheredDhcpRanges();
-
-    @UnsupportedAppUsage
-    String[] getTetherableUsbRegexs();
-
-    @UnsupportedAppUsage
-    String[] getTetherableWifiRegexs();
-
-    String[] getTetherableBluetoothRegexs();
-
-    int setUsbTethering(boolean enable, String callerPkg);
 
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void reportInetCondition(int networkType, int percentage);
@@ -216,12 +180,6 @@ interface IConnectivityManager
     int getConnectionOwnerUid(in ConnectionInfo connectionInfo);
     boolean isCallerCurrentAlwaysOnVpnApp();
     boolean isCallerCurrentAlwaysOnVpnLockdownApp();
-
-    void getLatestTetheringEntitlementResult(int type, in ResultReceiver receiver,
-            boolean showEntitlementUi, String callerPkg);
-
-    void registerTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
-    void unregisterTetheringEventCallback(ITetheringEventCallback callback, String callerPkg);
 
     IBinder startOrGetTestNetworkService();
 }
