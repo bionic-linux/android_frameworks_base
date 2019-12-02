@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f6c623f_d8939b61",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-02T17:10:53Z",
+      "side": 1,
+      "message": "ImsStreamMediaProfile is still @hide, and the constants within are still not available unless you\u0027re a system app, so this can\u0027t be made a public API.  The Dialer app can\u0027t rely on hidden values.\n\nWas there no audio codec constants defined elsewhere in the platform that could be reused here?  \nIf not, you should define audio codec constants here.\n\nEg. \nAUDIO_CODEC_AMR\nAUDIO_CODEC_AMR_QB\nAUDIO_CODEC_QCELP13K\n\nSuggest naming this extra:\nEXTRA_AUDIO_CODEC",
+      "range": {
+        "startLine": 568,
+        "startChar": 6,
+        "endLine": 569,
+        "endChar": 35
+      },
+      "revId": "b00fb75a3581aa65a2dda7ae23265f5545431498",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
