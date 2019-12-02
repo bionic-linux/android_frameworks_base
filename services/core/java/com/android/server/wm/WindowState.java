@@ -1538,7 +1538,17 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
      * not the pending requested hidden state.
      */
     boolean isVisibleNow() {
-        return (!mToken.isHidden() || mAttrs.type == TYPE_APPLICATION_STARTING)
+        /*
+         * If window is App Window, we get visible from ActivityRecord.
+         * Because mToken.isHidden() is refreshed slower than ActivityRecord visible.
+         * Apps may still can retart itself at onPause state on some slow devices if we use mToken.isHidden()
+         */
+        boolean visible;
+        if (mAppToken != null)
+            visible = mAppToken.mActivityRecord.visible;
+        else
+            visible = !mToken.isHidden();
+        return (visible || mAttrs.type == TYPE_APPLICATION_STARTING)
                 && isVisible();
     }
 
