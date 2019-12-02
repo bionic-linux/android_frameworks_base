@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc04f211_f26f3593",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-02T18:54:46Z",
+      "side": 1,
+      "message": "This is a private API and was never intended to be used outside of Telephony. I would recommend not using this, since we will need to remove it in R down the line anyway. If you are looking to register/unregister capabilities based on the subscription associated with this controller, you can listen to subscription changes in telephony.",
+      "range": {
+        "startLine": 141,
+        "startChar": 32,
+        "endLine": 141,
+        "endChar": 48
+      },
+      "revId": "879b7f2cd6fcbd2d20701c354c55c9b6dba5d030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

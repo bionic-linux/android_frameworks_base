@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e53faa3c_fa2b824e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-02T18:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af3f13c_b47e40c1",
+      "range": {
+        "startLine": 532,
+        "startChar": 29,
+        "endLine": 532,
+        "endChar": 60
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c54097c_30d43c62",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
         "patchSetId": 13
@@ -93,6 +117,30 @@
       "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65a772b_90a2e33e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-02T18:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b08a59e_7b39770a",
+      "range": {
+        "startLine": 640,
+        "startChar": 18,
+        "endLine": 640,
+        "endChar": 46
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +259,30 @@
       "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6fddc6_e76cc047",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-02T18:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8820cdb4_3bbe0884",
+      "range": {
+        "startLine": 922,
+        "startChar": 51,
+        "endLine": 922,
+        "endChar": 59
+      },
+      "revId": "1a85879aa10d9a08e7cb1fada1746213d9f951bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
