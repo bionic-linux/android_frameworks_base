@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "148d5c6b_bbfd8674",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5674,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-02T03:41:24Z",
+      "side": 1,
+      "message": "I think you are right but as you point out we already have a patch out that fixes it let\u0027s not bother. I\u0027d do this if that was a known bug without a fix out.",
+      "parentUuid": "2925acbd_3158cbee",
+      "revId": "587758bea6f5e5fa8cb537a356571996cabdfbfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42827397_d346a5a9",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "587758bea6f5e5fa8cb537a356571996cabdfbfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4e5f6f_7cb9ead2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-02T03:41:24Z",
+      "side": 1,
+      "message": "Same. aosp/1169570 addresses this todo and it\u0027s 3 patches away and already +2\u0027d, so I say we don\u0027t bother.",
+      "parentUuid": "42827397_d346a5a9",
+      "revId": "587758bea6f5e5fa8cb537a356571996cabdfbfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
