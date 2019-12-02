@@ -17,6 +17,11 @@ KotlinKeyword: android.app.Notification#when:
     
 
 
+ManagerConstructor: android.net.TetheringManager#TetheringManager(android.content.Context, android.os.IBinder):
+    Managers must always be obtained from Context; no direct constructors
+
+
+
 MissingNullability: android.media.soundtrigger.SoundTriggerDetectionService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.media.tv.TvRecordingClient.RecordingCallback#onEvent(String, String, android.os.Bundle) parameter #0:
