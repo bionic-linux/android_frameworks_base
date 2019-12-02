@@ -223,11 +223,14 @@ interface ISms {
      *  Validity Period(Minimum) -> 5 mins
      *  Validity Period(Maximum) -> 635040 mins(i.e.63 weeks).
      *  Any Other values included Negative considered as Invalid Validity Period of the message.
+     * @param callbackNumber the Call-Back Number for the CDMA message. See 3GPP2 C.S0015-B, v2.0,
+     *  4.5.15 Call-Back Number)
      */
     void sendTextForSubscriberWithOptions(in int subId, String callingPkg, in String destAddr,
             in String scAddr, in String text, in PendingIntent sentIntent,
             in PendingIntent deliveryIntent, in boolean persistMessageForNonDefaultSmsApp,
-            in int priority, in boolean expectMore, in int validityPeriod);
+            in int priority, in boolean expectMore, in int validityPeriod,
+            in String callbackNumber);
 
     /**
      * Inject an SMS PDU into the android platform.
@@ -319,12 +322,14 @@ interface ISms {
      *  Validity Period(Minimum) -> 5 mins
      *  Validity Period(Maximum) -> 635040 mins(i.e.63 weeks).
      *  Any Other values included Negative considered as Invalid Validity Period of the message.
+     * @param callbackNumber the Call-Back Number for the CDMA message. See 3GPP2 C.S0015-B, v2.0,
+     *  4.5.15 Call-Back Number)
      */
     void sendMultipartTextForSubscriberWithOptions(in int subId, String callingPkg,
             in String destinationAddress, in String scAddress, in List<String> parts,
             in List<PendingIntent> sentIntents, in List<PendingIntent> deliveryIntents,
             in boolean persistMessageForNonDefaultSmsApp, in int priority, in boolean expectMore,
-            in int validityPeriod);
+            in int validityPeriod, in String callbackNumber);
 
     /**
      * Enable reception of cell broadcast (SMS-CB) messages with the given

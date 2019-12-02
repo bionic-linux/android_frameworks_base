@@ -213,41 +213,42 @@ public class SmsMessage extends SmsMessageBase {
     /**
      * Get an SMS-SUBMIT PDU for a destination address and a message
      *
-     * @param scAddr                Service Centre address.  Null means use default.
-     * @param destAddr              Address of the recipient.
-     * @param message               String representation of the message payload.
+     * @param scAddr Service Centre address. Null means use default.
+     * @param destAddr Address of the recipient.
+     * @param message String representation of the message payload.
      * @param statusReportRequested Indicates whether a report is requested for this message.
-     * @param smsHeader             Array containing the data for the User Data Header, preceded
-     *                              by the Element Identifiers.
-     * @return a <code>SubmitPdu</code> containing the encoded SC
-     *         address, if applicable, and the encoded message.
-     *         Returns null on encode error.
+     * @param smsHeader Array containing the data for the User Data Header, preceded by the Element
+     *                  Identifiers.
+     * @return a <code>SubmitPdu</code> containing the encoded SC address, if applicable, and the
+     *         encoded message. Returns null on encode error.
      * @hide
      */
     @UnsupportedAppUsage
     public static SubmitPdu getSubmitPdu(String scAddr, String destAddr, String message,
             boolean statusReportRequested, SmsHeader smsHeader) {
-        return getSubmitPdu(scAddr, destAddr, message, statusReportRequested, smsHeader, -1);
+        return getSubmitPdu(scAddr, destAddr, message, statusReportRequested, smsHeader,
+                -1 /* priority */, null /* callbackNumber */);
     }
 
     /**
      * Get an SMS-SUBMIT PDU for a destination address and a message
      *
-     * @param scAddr                Service Centre address.  Null means use default.
-     * @param destAddr              Address of the recipient.
-     * @param message               String representation of the message payload.
+     * @param scAddr Service Centre address. Null means use default.
+     * @param destAddr Address of the recipient.
+     * @param message String representation of the message payload.
      * @param statusReportRequested Indicates whether a report is requested for this message.
-     * @param smsHeader             Array containing the data for the User Data Header, preceded
-     *                              by the Element Identifiers.
-     * @param priority              Priority level of the message
-     * @return a <code>SubmitPdu</code> containing the encoded SC
-     *         address, if applicable, and the encoded message.
-     *         Returns null on encode error.
+     * @param smsHeader Array containing the data for the User Data Header, preceded by the Element
+     *                  Identifiers.
+     * @param priority Priority level of the message.
+     * @Param callbackNumber Call-Back Number of the message.
+     * @return a <code>SubmitPdu</code> containing the encoded SC address, if applicable, and the
+     *         encoded message. Returns null on encode error.
      * @hide
      */
     @UnsupportedAppUsage
     public static SubmitPdu getSubmitPdu(String scAddr, String destAddr, String message,
-            boolean statusReportRequested, SmsHeader smsHeader, int priority) {
+            boolean statusReportRequested, SmsHeader smsHeader, int priority,
+            String callbackNumber) {
 
         /**
          * TODO(cleanup): Do we really want silent failure like this?
@@ -261,7 +262,8 @@ public class SmsMessage extends SmsMessageBase {
         UserData uData = new UserData();
         uData.payloadStr = message;
         uData.userDataHeader = smsHeader;
-        return privateGetSubmitPdu(destAddr, statusReportRequested, uData, priority);
+        return privateGetSubmitPdu(destAddr, statusReportRequested, uData, priority,
+                callbackNumber);
     }
 
     /**
@@ -323,18 +325,19 @@ public class SmsMessage extends SmsMessageBase {
     /**
      * Get an SMS-SUBMIT PDU for a data message to a destination address &amp; port
      *
-     * @param destAddr the address of the destination for the message
-     * @param userData the data for the message
+     * @param destAddr the address of the destination for the message.
+     * @param userData the data for the message.
      * @param statusReportRequested Indicates whether a report is requested for this message.
-     * @param priority Priority level of the message
-     * @return a <code>SubmitPdu</code> containing the encoded SC
-     *         address, if applicable, and the encoded message.
-     *         Returns null on encode error.
+     * @param priority Priority level of the message.
+     * @param callbackNumber Call-Back Number of the message.
+     * @return a <code>SubmitPdu</code> containing the encoded SC address, if applicable, and the
+     *         encoded message. Returns null on encode error.
      */
     @UnsupportedAppUsage
     public static SubmitPdu getSubmitPdu(String destAddr, UserData userData,
-            boolean statusReportRequested, int priority) {
-        return privateGetSubmitPdu(destAddr, statusReportRequested, userData, priority);
+            boolean statusReportRequested, int priority, String callbackNumber) {
+        return privateGetSubmitPdu(destAddr, statusReportRequested, userData, priority,
+                callbackNumber);
     }
 
     /**
@@ -957,7 +960,8 @@ public class SmsMessage extends SmsMessageBase {
     @UnsupportedAppUsage
     private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
             UserData userData) {
-        return privateGetSubmitPdu(destAddrStr, statusReportRequested, userData, -1);
+        return privateGetSubmitPdu(destAddrStr, statusReportRequested, userData, -1 /* priority */,
+                null /* callbackNumber */);
     }
 
     /**
@@ -965,7 +969,7 @@ public class SmsMessage extends SmsMessageBase {
      * @return byte stream for SubmitPdu.
      */
     private static SubmitPdu privateGetSubmitPdu(String destAddrStr, boolean statusReportRequested,
-            UserData userData, int priority) {
+            UserData userData, int priority, String callbackNumber) {
 
         /**
          * TODO(cleanup): give this function a more meaningful name.
@@ -997,6 +1001,11 @@ public class SmsMessage extends SmsMessageBase {
         if (priority >= PRIORITY_NORMAL && priority <= PRIORITY_EMERGENCY) {
             bearerData.priorityIndicatorSet = true;
             bearerData.priority = priority;
+        }
+
+        if (!TextUtils.isEmpty(callbackNumber)) {
+            bearerData.callbackNumber = new CdmaSmsAddress();
+            bearerData.callbackNumber.address = callbackNumber;
         }
 
         bearerData.userData = userData;

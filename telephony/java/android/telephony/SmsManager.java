@@ -271,17 +271,6 @@ public final class SmsManager {
     public static final String MMS_CONFIG_CLOSE_CONNECTION =
             CarrierConfigManager.KEY_MMS_CLOSE_CONNECTION_BOOL;
 
-    /**
-     * 3gpp2 SMS priority is not specified
-     * @hide
-     */
-    public static final int SMS_MESSAGE_PRIORITY_NOT_SPECIFIED = -1;
-    /**
-     * 3gpp SMS period is not specified
-     * @hide
-     */
-    public static final int SMS_MESSAGE_PERIOD_NOT_SPECIFIED = -1;
-
     // result of asking the user for a subscription to perform an operation.
     private interface SubscriptionResolverResult {
         void onSuccess(int subId);
@@ -491,17 +480,20 @@ public final class SmsManager {
      *  Validity Period(Minimum) -> 5 mins
      *  Validity Period(Maximum) -> 635040 mins(i.e.63 weeks).
      *  Any Other values included Negative considered as Invalid Validity Period of the message.
+     * @param callbackNumber the Call-Back Number for the CDMA message. (See 3GPP2 C.S0015-B, v2.0,
+     *  4.5.15 Call-Back Number)
      *
      * @throws IllegalArgumentException if destinationAddress or text are empty
      * {@hide}
      */
     @UnsupportedAppUsage
     public void sendTextMessage(
-            String destinationAddress, String scAddress, String text,
-            PendingIntent sentIntent, PendingIntent deliveryIntent,
-            int priority, boolean expectMore, int validityPeriod) {
-        sendTextMessageInternal(destinationAddress, scAddress, text, sentIntent, deliveryIntent,
-                true /* persistMessage*/, priority, expectMore, validityPeriod);
+            String destinationAddress, String scAddress, String text, PendingIntent sentIntent,
+            PendingIntent deliveryIntent, int priority, boolean expectMore, int validityPeriod,
+            String callbackNumber) {
+        sendTextMessageInternal(
+                destinationAddress, scAddress, text, sentIntent, deliveryIntent,
+                true /* persistMessage */, priority, expectMore, validityPeriod, callbackNumber);
     }
 
     private void sendTextMessageInternal(String destinationAddress, String scAddress,
@@ -602,9 +594,9 @@ public final class SmsManager {
     }
 
     private void sendTextMessageInternal(
-            String destinationAddress, String scAddress, String text,
-            PendingIntent sentIntent, PendingIntent deliveryIntent, boolean persistMessage,
-            int priority, boolean expectMore, int validityPeriod) {
+            String destinationAddress, String scAddress, String text, PendingIntent sentIntent,
+            PendingIntent deliveryIntent, boolean persistMessage, int priority, boolean expectMore,
+            int validityPeriod, String callbackNumber) {
         if (TextUtils.isEmpty(destinationAddress)) {
             throw new IllegalArgumentException("Invalid destinationAddress");
         }
@@ -613,16 +605,6 @@ public final class SmsManager {
             throw new IllegalArgumentException("Invalid message body");
         }
 
-        if (priority < 0x00 || priority > 0x03) {
-            priority = SMS_MESSAGE_PRIORITY_NOT_SPECIFIED;
-        }
-
-        if (validityPeriod < 0x05 || validityPeriod > 0x09b0a0) {
-            validityPeriod = SMS_MESSAGE_PERIOD_NOT_SPECIFIED;
-        }
-
-        final int finalPriority = priority;
-        final int finalValidity = validityPeriod;
         // We will only show the SMS disambiguation dialog in the case that the message is being
         // persisted. This is for two reasons:
         // 1) Messages that are not persisted are sent by carrier/OEM apps for a specific
@@ -640,11 +622,10 @@ public final class SmsManager {
                     try {
                         ISms iSms = getISmsServiceOrThrow();
                         if (iSms != null) {
-                            iSms.sendTextForSubscriberWithOptions(subId,
-                                    ActivityThread.currentPackageName(), destinationAddress,
-                                    scAddress,
-                                    text, sentIntent, deliveryIntent, persistMessage, finalPriority,
-                                    expectMore, finalValidity);
+                            iSms.sendTextForSubscriberWithOptions(
+                                    subId, ActivityThread.currentPackageName(), destinationAddress,
+                                    scAddress, text, sentIntent, deliveryIntent, persistMessage,
+                                    priority, expectMore, validityPeriod, callbackNumber);
                         }
                     } catch (RemoteException e) {
                         Log.e(TAG, "sendTextMessageInternal: Couldn't send SMS, exception - "
@@ -662,11 +643,10 @@ public final class SmsManager {
             try {
                 ISms iSms = getISmsServiceOrThrow();
                 if (iSms != null) {
-                    iSms.sendTextForSubscriberWithOptions(getSubscriptionId(),
-                            ActivityThread.currentPackageName(), destinationAddress,
-                            scAddress,
-                            text, sentIntent, deliveryIntent, persistMessage, finalPriority,
-                            expectMore, finalValidity);
+                    iSms.sendTextForSubscriberWithOptions(
+                            getSubscriptionId(), ActivityThread.currentPackageName(),
+                            destinationAddress, scAddress, text, sentIntent, deliveryIntent,
+                            persistMessage, priority, expectMore, validityPeriod, callbackNumber);
                 }
             } catch (RemoteException e) {
                 Log.e(TAG, "sendTextMessageInternal(no persist): Couldn't send SMS, exception - "
@@ -694,17 +674,18 @@ public final class SmsManager {
      * correct subscription.
      * </p>
      *
-     * @see #sendTextMessage(String, String, String, PendingIntent,
-     * PendingIntent, int, boolean, int)
+     * @see #sendTextMessage(String, String, String, PendingIntent, PendingIntent, int, boolean,
+     * int, String)
      * @hide
      */
     @UnsupportedAppUsage
     public void sendTextMessageWithoutPersisting(
             String destinationAddress, String scAddress, String text,
             PendingIntent sentIntent, PendingIntent deliveryIntent, int priority,
-            boolean expectMore, int validityPeriod) {
-        sendTextMessageInternal(destinationAddress, scAddress, text, sentIntent, deliveryIntent,
-                false /* persistMessage */, priority, expectMore, validityPeriod);
+            boolean expectMore, int validityPeriod, String callbackNumber) {
+        sendTextMessageInternal(
+                destinationAddress, scAddress, text, sentIntent, deliveryIntent,
+                false /* persistMessage */, priority, expectMore, validityPeriod, callbackNumber);
     }
 
     /**
@@ -1130,6 +1111,8 @@ public final class SmsManager {
      *  Validity Period(Minimum) -> 5 mins
      *  Validity Period(Maximum) -> 635040 mins(i.e.63 weeks).
      *  Any Other values included Negative considered as Invalid Validity Period of the message.
+     * @param callbackNumber the Call-Back Number for the CDMA message. See 3GPP2 C.S0015-B, v2.0,
+     *  4.5.15 Call-Back Number)
      *
      * @throws IllegalArgumentException if destinationAddress or data are empty
      * {@hide}
@@ -1138,16 +1121,17 @@ public final class SmsManager {
     public void sendMultipartTextMessage(
             String destinationAddress, String scAddress, ArrayList<String> parts,
             ArrayList<PendingIntent> sentIntents, ArrayList<PendingIntent> deliveryIntents,
-            int priority, boolean expectMore, int validityPeriod) {
-        sendMultipartTextMessageInternal(destinationAddress, scAddress, parts, sentIntents,
-                deliveryIntents, true /* persistMessage*/, priority, expectMore,
-                validityPeriod);
+            int priority, boolean expectMore, int validityPeriod, String callbackNumber) {
+        sendMultipartTextMessageInternal(
+                destinationAddress, scAddress, parts, sentIntents, deliveryIntents,
+                true /* persistMessage*/, priority, expectMore, validityPeriod, callbackNumber);
     }
 
     private void sendMultipartTextMessageInternal(
             String destinationAddress, String scAddress, List<String> parts,
             List<PendingIntent> sentIntents, List<PendingIntent> deliveryIntents,
-            boolean persistMessage, int priority, boolean expectMore, int validityPeriod) {
+            boolean persistMessage, int priority, boolean expectMore, int validityPeriod,
+            String callbackNumber) {
         if (TextUtils.isEmpty(destinationAddress)) {
             throw new IllegalArgumentException("Invalid destinationAddress");
         }
@@ -1155,17 +1139,7 @@ public final class SmsManager {
             throw new IllegalArgumentException("Invalid message body");
         }
 
-        if (priority < 0x00 || priority > 0x03) {
-            priority = SMS_MESSAGE_PRIORITY_NOT_SPECIFIED;
-        }
-
-        if (validityPeriod < 0x05 || validityPeriod > 0x09b0a0) {
-            validityPeriod = SMS_MESSAGE_PERIOD_NOT_SPECIFIED;
-        }
-
         if (parts.size() > 1) {
-            final int finalPriority = priority;
-            final int finalValidity = validityPeriod;
             if (persistMessage) {
                 resolveSubscriptionForOperation(new SubscriptionResolverResult() {
                     @Override
@@ -1173,10 +1147,11 @@ public final class SmsManager {
                         try {
                             ISms iSms = getISmsServiceOrThrow();
                             if (iSms != null) {
-                                iSms.sendMultipartTextForSubscriberWithOptions(subId,
-                                        ActivityThread.currentPackageName(), destinationAddress,
-                                        scAddress, parts, sentIntents, deliveryIntents,
-                                        persistMessage, finalPriority, expectMore, finalValidity);
+                                iSms.sendMultipartTextForSubscriberWithOptions(
+                                        subId, ActivityThread.currentPackageName(),
+                                        destinationAddress, scAddress, parts, sentIntents,
+                                        deliveryIntents, persistMessage, priority, expectMore,
+                                        validityPeriod, callbackNumber);
                             }
                         } catch (RemoteException e) {
                             Log.e(TAG, "sendMultipartTextMessageInternal: Couldn't send SMS - "
@@ -1195,10 +1170,11 @@ public final class SmsManager {
                 try {
                     ISms iSms = getISmsServiceOrThrow();
                     if (iSms != null) {
-                        iSms.sendMultipartTextForSubscriberWithOptions(getSubscriptionId(),
-                                ActivityThread.currentPackageName(), destinationAddress,
-                                scAddress, parts, sentIntents, deliveryIntents,
-                                persistMessage, finalPriority, expectMore, finalValidity);
+                        iSms.sendMultipartTextForSubscriberWithOptions(
+                                getSubscriptionId(), ActivityThread.currentPackageName(),
+                                destinationAddress, scAddress, parts, sentIntents, deliveryIntents,
+                                persistMessage, priority, expectMore, validityPeriod,
+                                callbackNumber);
                     }
                 } catch (RemoteException e) {
                     Log.e(TAG, "sendMultipartTextMessageInternal (no persist): Couldn't send SMS - "
@@ -1215,9 +1191,9 @@ public final class SmsManager {
             if (deliveryIntents != null && deliveryIntents.size() > 0) {
                 deliveryIntent = deliveryIntents.get(0);
             }
-            sendTextMessageInternal(destinationAddress, scAddress, parts.get(0),
-                    sentIntent, deliveryIntent, persistMessage, priority, expectMore,
-                    validityPeriod);
+            sendTextMessageInternal(
+                    destinationAddress, scAddress, parts.get(0), sentIntent, deliveryIntent,
+                    persistMessage, priority, expectMore, validityPeriod, callbackNumber);
         }
     }
 

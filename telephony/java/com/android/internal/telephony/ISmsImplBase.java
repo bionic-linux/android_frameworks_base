@@ -73,10 +73,11 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
-    public void sendTextForSubscriberWithOptions(int subId, String callingPkg, String destAddr,
-            String scAddr, String text, PendingIntent sentIntent,
-            PendingIntent deliveryIntent, boolean persistMessageForNonDefaultSmsApp,
-            int priority, boolean expectMore, int validityPeriod) {
+    public void sendTextForSubscriberWithOptions(
+            int subId, String callingPkg, String destAddr, String scAddr, String text,
+            PendingIntent sentIntent, PendingIntent deliveryIntent,
+            boolean persistMessageForNonDefaultSmsApp, int priority, boolean expectMore,
+            int validityPeriod, String callbackNumber) {
         throw new UnsupportedOperationException();
     }
 
@@ -95,11 +96,11 @@ public class ISmsImplBase extends ISms.Stub {
     }
 
     @Override
-    public void sendMultipartTextForSubscriberWithOptions(int subId, String callingPkg,
-            String destinationAddress, String scAddress,
+    public void sendMultipartTextForSubscriberWithOptions(
+            int subId, String callingPkg, String destinationAddress, String scAddress,
             List<String> parts, List<PendingIntent> sentIntents,
             List<PendingIntent> deliveryIntents, boolean persistMessageForNonDefaultSmsApp,
-            int priority, boolean expectMore, int validityPeriod) {
+            int priority, boolean expectMore, int validityPeriod, String callbackNumber) {
         throw new UnsupportedOperationException();
     }
 
