@@ -1796,6 +1796,7 @@ public final class ContactsContract {
          *
          * @hide
          */
+        @SystemApi
         public static long ENTERPRISE_CONTACT_ID_BASE = 1000000000; // slightly smaller than 2 ** 30
 
         /**
@@ -5062,7 +5063,7 @@ public final class ContactsContract {
         *
         * @hide
         */
-        @TestApi
+        @SystemApi
         public static final Uri CORP_CONTENT_URI =
                 Uri.withAppendedPath(AUTHORITY_URI, "raw_contact_entities_corp");
 
@@ -6070,8 +6071,7 @@ public final class ContactsContract {
             *
             * @hide
             */
-            @UnsupportedAppUsage
-            @TestApi
+            @SystemApi
             public static final Uri ENTERPRISE_CONTENT_URI =
                     Uri.withAppendedPath(Data.ENTERPRISE_CONTENT_URI, "phones");
 
