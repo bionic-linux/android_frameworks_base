@@ -6331,18 +6331,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @NonNull private final Set<NetworkBgStatePair> mRematchedNetworks = new ArraySet<>();
-        @NonNull private final List<RequestReassignment> mReassignments = new ArrayList<>();
+        @NonNull private final Map<NetworkRequestInfo, RequestReassignment> mReassignments =
+                new ArrayMap<>();
 
         @NonNull Iterable<NetworkBgStatePair> getRematchedNetworks() {
             return mRematchedNetworks;
         }
 
         @NonNull Iterable<RequestReassignment> getRequestReassignments() {
-            return mReassignments;
+            return mReassignments.values();
         }
 
         void addRequestReassignment(@NonNull final RequestReassignment reassignment) {
-            mReassignments.add(reassignment);
+            final RequestReassignment oldChange = mReassignments.get(reassignment.mRequest);
+            if (null == oldChange) {
+                mReassignments.put(reassignment.mRequest, reassignment);
+                return;
+            }
+            if (oldChange.mNewNetwork != reassignment.mOldNetwork) {
+                throw new IllegalArgumentException("Trying to reassign " + reassignment.mRequest
+                        + " from " + reassignment.mOldNetwork + " to " + reassignment.mNewNetwork
+                        + " but it's already planned to be reassigned to " + oldChange.mNewNetwork);
+            }
+            mReassignments.put(reassignment.mRequest, new RequestReassignment(reassignment.mRequest,
+                    oldChange.mOldNetwork, reassignment.mNewNetwork));
         }
 
         void addRematchedNetwork(@NonNull final NetworkBgStatePair network) {
@@ -6530,13 +6542,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (null != event.mNewNetwork) {
                 notifyNetworkAvailable(event.mNewNetwork, event.mRequest);
             } else {
-                // TODO: Technically, sending CALLBACK_LOST here is
-                // incorrect if there is a replacement network currently
-                // connected that can satisfy nri, which is a request
-                // (not a listen). However, the only capability that can both
-                // a) be requested and b) change is NET_CAPABILITY_TRUSTED,
-                // so this code is only incorrect for a network that loses
-                // the TRUSTED capability, which is a rare case.
                 callCallbackForRequest(event.mRequest, event.mOldNetwork,
                         ConnectivityManager.CALLBACK_LOST, 0);
             }
