@@ -444,7 +444,8 @@ public class TetheringTest {
         mServiceContext.registerReceiver(mBroadcastReceiver,
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTethering = makeTethering();
-        verify(mStatsService, times(1)).registerNetworkStatsProvider(anyString(), any());
+        // One is by IpServer and another is by OffloadController.
+        verify(mStatsService, times(2)).registerNetworkStatsProvider(anyString(), any());
         verify(mNetd).registerUnsolicitedEventListener(any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =
                 ArgumentCaptor.forClass(PhoneStateListener.class);

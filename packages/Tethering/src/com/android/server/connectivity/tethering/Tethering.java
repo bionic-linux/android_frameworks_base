@@ -71,6 +71,9 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.NetworkState;
+import android.net.NetworkStats;
+import android.net.NetworkStatsProviderBase;
+import android.net.NetworkStatsProviderCallback;
 import android.net.NetworkUtils;
 import android.net.TetherStatesParcel;
 import android.net.TetheringConfigurationParcel;
@@ -172,6 +175,8 @@ public class Tethering {
     // Stopship: replace mNMService before production.
     private final INetworkManagementService mNMService;
     private final INetworkStatsService mStatsService;
+    private final NoOpStatsProvider mNoOpStatsProvider;
+    private final NetworkStatsProviderCallback mStatsProviderCb;
     private final INetworkPolicyManager mPolicyManager;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
@@ -225,6 +230,9 @@ public class Tethering {
         mOffloadController = new OffloadController(mHandler,
                 mDeps.getOffloadHardwareInterface(mHandler, mLog),
                 mContext.getContentResolver(), statsManager, mLog);
+        mNoOpStatsProvider = new NoOpStatsProvider();
+        mStatsProviderCb =
+                statsManager.registerNetworkStatsProvider("IpServer", mNoOpStatsProvider);
         mUpstreamNetworkMonitor = deps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new HashSet<>();
@@ -1782,6 +1790,25 @@ public class Tethering {
         }
     }
 
+    class NoOpStatsProvider extends NetworkStatsProviderBase {
+        @Override
+        public void requestStatsUpdate(int token) {
+            final NetworkStats emptyStats = new NetworkStats(0L, 0);
+            // Return an empty stats.
+            mStatsProviderCb.onStatsUpdated(0 /* unused */, emptyStats, emptyStats);
+        }
+
+        @Override
+        public void setLimit(String iface, long quotaBytes) {
+            // Do nothing
+        }
+
+        @Override
+        public void setAlert(long quotaBytes) {
+            // Do nothing
+        }
+    }
+
     private void startTrackDefaultNetwork() {
         mUpstreamNetworkMonitor.startTrackDefaultNetwork(mDeps.getDefaultNetworkRequest(),
                 mEntitlementMgr);
@@ -2018,7 +2045,7 @@ public class Tethering {
 
         mLog.log("adding TetheringInterfaceStateMachine for: " + iface);
         final TetherState tetherState = new TetherState(
-                new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
+                new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsProviderCb,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
                              mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);

@@ -51,12 +51,12 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import android.net.INetd;
-import android.net.INetworkStatsService;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
+import android.net.NetworkStatsProviderCallback;
 import android.net.RouteInfo;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpServer;
@@ -98,7 +98,7 @@ public class IpServerTest {
 
     @Mock private INetworkManagementService mNMService;
     @Mock private INetd mNetd;
-    @Mock private INetworkStatsService mStatsService;
+    @Mock private NetworkStatsProviderCallback mStatsProviderCb;
     @Mock private IpServer.Callback mCallback;
     @Mock private InterfaceConfiguration mInterfaceConfiguration;
     @Mock private SharedLog mSharedLog;
@@ -135,12 +135,12 @@ public class IpServerTest {
 
         mIpServer = new IpServer(
                 IFACE_NAME, mLooper.getLooper(), interfaceType, mSharedLog,
-                mNMService, mStatsService, mCallback, usingLegacyDhcp, mDependencies);
+                mNMService, mStatsProviderCb, mCallback, usingLegacyDhcp, mDependencies);
         mIpServer.start();
         // Starting the state machine always puts us in a consistent state and notifies
         // the rest of the world that we've changed from an unknown to available state.
         mLooper.dispatchAll();
-        reset(mNMService, mStatsService, mCallback);
+        reset(mNMService, mStatsProviderCb, mCallback);
         when(mNMService.getInterfaceConfig(IFACE_NAME)).thenReturn(mInterfaceConfiguration);
 
         when(mRaDaemon.start()).thenReturn(true);
@@ -158,7 +158,7 @@ public class IpServerTest {
         if (upstreamIface != null) {
             dispatchTetherConnectionChanged(upstreamIface);
         }
-        reset(mNMService, mStatsService, mCallback);
+        reset(mNMService, mStatsProviderCb, mCallback);
         when(mNMService.getInterfaceConfig(IFACE_NAME)).thenReturn(mInterfaceConfiguration);
     }
 
@@ -170,14 +170,14 @@ public class IpServerTest {
     @Test
     public void startsOutAvailable() {
         mIpServer = new IpServer(IFACE_NAME, mLooper.getLooper(),
-                TETHERING_BLUETOOTH, mSharedLog, mNMService, mStatsService, mCallback,
+                TETHERING_BLUETOOTH, mSharedLog, mNMService, mStatsProviderCb, mCallback,
                 false /* usingLegacyDhcp */, mDependencies);
         mIpServer.start();
         mLooper.dispatchAll();
         verify(mCallback).updateInterfaceState(
                 mIpServer, STATE_AVAILABLE, TETHER_ERROR_NO_ERROR);
         verify(mCallback).updateLinkProperties(eq(mIpServer), any(LinkProperties.class));
-        verifyNoMoreInteractions(mCallback, mNMService, mStatsService);
+        verifyNoMoreInteractions(mCallback, mNMService, mStatsProviderCb);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class IpServerTest {
             // None of these commands should trigger us to request action from
             // the rest of the system.
             dispatchCommand(command);
-            verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+            verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
         }
     }
 
@@ -208,7 +208,7 @@ public class IpServerTest {
         verify(mCallback).updateInterfaceState(
                 mIpServer, STATE_UNAVAILABLE, TETHER_ERROR_NO_ERROR);
         verify(mCallback).updateLinkProperties(eq(mIpServer), any(LinkProperties.class));
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -222,7 +222,7 @@ public class IpServerTest {
                 mIpServer, STATE_TETHERED, TETHER_ERROR_NO_ERROR);
         inOrder.verify(mCallback).updateLinkProperties(
                 eq(mIpServer), any(LinkProperties.class));
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -230,14 +230,14 @@ public class IpServerTest {
         initTetheredStateMachine(TETHERING_BLUETOOTH, null);
 
         dispatchCommand(IpServer.CMD_TETHER_UNREQUESTED);
-        InOrder inOrder = inOrder(mNMService, mNetd, mStatsService, mCallback);
+        InOrder inOrder = inOrder(mNMService, mNetd, mStatsProviderCb, mCallback);
         inOrder.verify(mNMService).untetherInterface(IFACE_NAME);
         inOrder.verify(mNetd).interfaceSetCfg(argThat(cfg -> IFACE_NAME.equals(cfg.ifName)));
         inOrder.verify(mCallback).updateInterfaceState(
                 mIpServer, STATE_AVAILABLE, TETHER_ERROR_NO_ERROR);
         inOrder.verify(mCallback).updateLinkProperties(
                 eq(mIpServer), any(LinkProperties.class));
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -254,7 +254,7 @@ public class IpServerTest {
         inOrder.verify(mCallback).updateLinkProperties(
                 eq(mIpServer), mLinkPropertiesCaptor.capture());
         assertIPv4AddressAndDirectlyConnectedRoute(mLinkPropertiesCaptor.getValue());
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -271,7 +271,7 @@ public class IpServerTest {
         inOrder.verify(mCallback).updateLinkProperties(
                 eq(mIpServer), mLinkPropertiesCaptor.capture());
         assertIPv4AddressAndDirectlyConnectedRoute(mLinkPropertiesCaptor.getValue());
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -284,7 +284,7 @@ public class IpServerTest {
         InOrder inOrder = inOrder(mNMService);
         inOrder.verify(mNMService).enableNat(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).startInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE);
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -292,13 +292,13 @@ public class IpServerTest {
         initTetheredStateMachine(TETHERING_BLUETOOTH, UPSTREAM_IFACE);
 
         dispatchTetherConnectionChanged(UPSTREAM_IFACE2);
-        InOrder inOrder = inOrder(mNMService, mStatsService);
-        inOrder.verify(mStatsService).forceUpdate();
+        InOrder inOrder = inOrder(mNMService, mStatsProviderCb);
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).enableNat(IFACE_NAME, UPSTREAM_IFACE2);
         inOrder.verify(mNMService).startInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE2);
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -308,12 +308,12 @@ public class IpServerTest {
         doThrow(RemoteException.class).when(mNMService).enableNat(IFACE_NAME, UPSTREAM_IFACE2);
 
         dispatchTetherConnectionChanged(UPSTREAM_IFACE2);
-        InOrder inOrder = inOrder(mNMService, mStatsService);
-        inOrder.verify(mStatsService).forceUpdate();
+        InOrder inOrder = inOrder(mNMService, mStatsProviderCb);
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).enableNat(IFACE_NAME, UPSTREAM_IFACE2);
-        inOrder.verify(mStatsService).forceUpdate();
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE2);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE2);
     }
@@ -326,13 +326,13 @@ public class IpServerTest {
                 IFACE_NAME, UPSTREAM_IFACE2);
 
         dispatchTetherConnectionChanged(UPSTREAM_IFACE2);
-        InOrder inOrder = inOrder(mNMService, mStatsService);
-        inOrder.verify(mStatsService).forceUpdate();
+        InOrder inOrder = inOrder(mNMService, mStatsProviderCb);
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).enableNat(IFACE_NAME, UPSTREAM_IFACE2);
         inOrder.verify(mNMService).startInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE2);
-        inOrder.verify(mStatsService).forceUpdate();
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE2);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE2);
     }
@@ -342,8 +342,8 @@ public class IpServerTest {
         initTetheredStateMachine(TETHERING_BLUETOOTH, UPSTREAM_IFACE);
 
         dispatchCommand(IpServer.CMD_TETHER_UNREQUESTED);
-        InOrder inOrder = inOrder(mNMService, mNetd, mStatsService, mCallback);
-        inOrder.verify(mStatsService).forceUpdate();
+        InOrder inOrder = inOrder(mNMService, mNetd, mStatsProviderCb, mCallback);
+        inOrder.verify(mStatsProviderCb).onAlertReached();
         inOrder.verify(mNMService).stopInterfaceForwarding(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).disableNat(IFACE_NAME, UPSTREAM_IFACE);
         inOrder.verify(mNMService).untetherInterface(IFACE_NAME);
@@ -352,7 +352,7 @@ public class IpServerTest {
                 mIpServer, STATE_AVAILABLE, TETHER_ERROR_NO_ERROR);
         inOrder.verify(mCallback).updateLinkProperties(
                 eq(mIpServer), any(LinkProperties.class));
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
     }
 
     @Test
@@ -413,11 +413,11 @@ public class IpServerTest {
     public void ignoresDuplicateUpstreamNotifications() throws Exception {
         initTetheredStateMachine(TETHERING_WIFI, UPSTREAM_IFACE);
 
-        verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+        verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
 
         for (int i = 0; i < 5; i++) {
             dispatchTetherConnectionChanged(UPSTREAM_IFACE);
-            verifyNoMoreInteractions(mNMService, mStatsService, mCallback);
+            verifyNoMoreInteractions(mNMService, mStatsProviderCb, mCallback);
         }
     }
 
