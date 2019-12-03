@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e642cca9_0388060c",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-03T21:41:44Z",
+      "side": 1,
+      "message": "Please also mark this @SystemApi/@TestApi",
+      "range": {
+        "startLine": 625,
+        "startChar": 32,
+        "endLine": 625,
+        "endChar": 53
+      },
+      "revId": "a83d725c8bf73f060470406bdae219ed23103661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be22de5_df54ec58",
+        "filename": "telephony/java/android/telephony/ImsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-03T21:41:44Z",
+      "side": 1,
+      "message": "Should this be @SystemApi \u0026 @TestApi instead.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "a83d725c8bf73f060470406bdae219ed23103661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a94c68c_3fe32969",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-03T21:41:44Z",
+      "side": 1,
+      "message": "Is this needed? Adding @SystemApi and @TestApi to the ImsRcsManager should also cause subclasses to be marked the same API level, although the rules may be different because it is static...",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "a83d725c8bf73f060470406bdae219ed23103661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afad2f4_f8a31be6",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-03T21:41:44Z",
+      "side": 1,
+      "message": "These methods still require @RequiresPermission tags, it looks like I forgot them before. Same with below",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "a83d725c8bf73f060470406bdae219ed23103661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291cb6d3_de1984e3",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-03T21:41:44Z",
+      "side": 1,
+      "message": "You should be able to just remove @hide from this method, if i remember correctly. If not,you can keep the api tags here.",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 12
+      },
+      "revId": "a83d725c8bf73f060470406bdae219ed23103661",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
