@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27875606_6285d7b4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-03T07:51:59Z",
+      "side": 1,
+      "message": "Do you want to rename it?\nIt\u0027s a kind of weird that the setter will return the old value.(People may not easy to know this method will also return the value.)\nHow about rename it as getAndSetNetworkCapabilities()?",
+      "range": {
+        "startLine": 297,
+        "startChar": 44,
+        "endLine": 297,
+        "endChar": 66
+      },
+      "revId": "c83c04cae718e442ab525acc9b6645682c364088",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
