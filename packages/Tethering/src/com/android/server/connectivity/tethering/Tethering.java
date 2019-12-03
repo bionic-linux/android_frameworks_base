@@ -200,6 +200,7 @@ public class Tethering {
     private boolean mWifiTetherRequested;
     private Network mTetherUpstream;
     private TetherStatesParcel mTetherStatesParcel;
+    private String mWifiP2pTetherInterface = null;
 
     public Tethering(TetheringDependencies deps) {
         mLog.mark("Tethering.constructed");
@@ -851,23 +852,26 @@ public class Tethering {
                 Log.d(TAG, "WifiP2pAction: P2pInfo: " + p2pInfo + " Group: " + group);
             }
 
-            if (p2pInfo == null) return;
-            // When a p2p group is disconnected, p2pInfo would be cleared.
-            // group is still valid for detecting whether this device is group owner.
-            if (group == null || !group.isGroupOwner()
-                    || TextUtils.isEmpty(group.getInterface())) return;
-
             synchronized (Tethering.this.mPublicSync) {
-                // Enter below only if this device is Group Owner with a valid interface.
-                if (p2pInfo.groupFormed) {
-                    TetherState tetherState = mTetherStates.get(group.getInterface());
-                    if (tetherState == null
-                            || (tetherState.lastState != IpServer.STATE_TETHERED
-                                && tetherState.lastState != IpServer.STATE_LOCAL_ONLY)) {
-                        enableWifiIpServingLocked(group.getInterface(), IFACE_IP_MODE_LOCAL_ONLY);
+                if (p2pInfo != null && group != null
+                        && group.isGroupOwner()
+                        && !TextUtils.isEmpty(group.getInterface())) {
+                    // already tethered, skip it if the same interference
+                    if (!TextUtils.isEmpty(mWifiP2pTetherInterface)) {
+                        if (mWifiP2pTetherInterface.equals(group.getInterface())) {
+                            return;
+                        } else {
+                            mLog.w("P2P tethered interface " + mWifiP2pTetherInterface
+                                    + "is different from current interface "
+                                    + group.getInterface() + ", re-tether it");
+                            disableWifiP2pIpServingLocked(mWifiP2pTetherInterface);
+                        }
                     }
-                } else {
-                    disableWifiP2pIpServingLocked(group.getInterface());
+                    mWifiP2pTetherInterface = group.getInterface();
+                    enableWifiIpServingLocked(mWifiP2pTetherInterface, IFACE_IP_MODE_LOCAL_ONLY);
+                } else if (group == null && !TextUtils.isEmpty(mWifiP2pTetherInterface)) {
+                    disableWifiP2pIpServingLocked(mWifiP2pTetherInterface);
+                    mWifiP2pTetherInterface = null;
                 }
             }
         }

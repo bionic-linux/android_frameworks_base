@@ -265,6 +265,8 @@ public class IpServerTest {
         InOrder inOrder = inOrder(mCallback, mNMService);
         inOrder.verify(mNMService).getInterfaceConfig(IFACE_NAME);
         inOrder.verify(mNMService).setInterfaceConfig(IFACE_NAME, mInterfaceConfiguration);
+        assertEquals(false, mInterfaceConfiguration.hasFlag(INetd.IF_STATE_UP));
+        assertEquals(false, mInterfaceConfiguration.hasFlag(INetd.IF_STATE_DOWN));
         inOrder.verify(mNMService).tetherInterface(IFACE_NAME);
         inOrder.verify(mCallback).updateInterfaceState(
                 mIpServer, STATE_LOCAL_ONLY, TETHER_ERROR_NO_ERROR);
