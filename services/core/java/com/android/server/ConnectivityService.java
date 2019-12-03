@@ -6451,7 +6451,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (VDBG || DDBG) log("   accepting network in place of null");
                 }
                 newSatisfier.unlingerRequest(nri.request);
-                nri.mSatisfier = newSatisfier;
                 if (!newSatisfier.addRequest(nri.request)) {
                     Slog.wtf(TAG, "BUG: " + newSatisfier.name() + " already has " + nri.request);
                 }
@@ -6468,8 +6467,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             " request " + nri.request.requestId);
                 }
                 newNetwork.removeRequest(nri.request.requestId);
-                nri.mSatisfier = null;
             }
+            nri.mSatisfier = newSatisfier;
             // Tell NetworkFactories about the new score, so they can stop
             // trying to connect if they know they cannot match it.
             // TODO - this could get expensive if we have a lot of requests for this
