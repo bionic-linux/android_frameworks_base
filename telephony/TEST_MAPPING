@@ -1,0 +1,41 @@
+{
+  "presubmit": [
+    {
+      "name": "TeleServiceTests",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        }
+      ]
+    },
+    {
+      "name": "TelecomUnitTests",
+      "options": [
+        {
+          "exclude-annotation": "androidx.test.filters.FlakyTest"
+        }
+      ]
+    },
+    {
+      "name": "TelephonyProviderTests",
+      "options": [
+        {
+          "instrumentation-arg": "notAnnotation:=androidx.test.filters.FlakyTest"
+        }
+      ]
+    }
+    // Un-comment below lines while b/123456 is resolved.
+    // {
+    //   "name": "FrameworksTelephonyTests",
+    //   "options": [
+    //     {
+    //       "exclude-annotation": "androidx.test.filters.FlakyTest"
+    //     },
+    //     {
+    //       "exclude-annotation": "org.junit.Ignore"
+    //     }
+    //   ]
+    // }
+  ]
+}
+
