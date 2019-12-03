@@ -405,7 +405,7 @@ public class TetheringTest {
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTetheringDependencies.reset();
         mTethering = makeTethering();
-        verify(mNMService).registerTetheringStatsProvider(any(), anyString());
+        verify(mStatsService, times(1)).registerNetworkStatsProvider(anyString(), any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =
                 ArgumentCaptor.forClass(PhoneStateListener.class);
         verify(mTelephonyManager).listen(phoneListenerCaptor.capture(),
