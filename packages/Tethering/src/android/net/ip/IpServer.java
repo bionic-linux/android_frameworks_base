@@ -456,7 +456,8 @@ public class IpServer extends StateMachine {
             InetAddress addr = parseNumericAddress(ipAsString);
             linkAddr = new LinkAddress(addr, prefixLen);
             ifcg.setLinkAddress(linkAddr);
-            if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
+            if (mInterfaceType == ConnectivityManager.TETHERING_WIFI
+                    || mInterfaceType == ConnectivityManager.TETHERING_WIFI_P2P) {
                 // The WiFi stack has ownership of the interface up/down state.
                 // It is unclear whether the Bluetooth or USB stacks will manage their own
                 // state.
