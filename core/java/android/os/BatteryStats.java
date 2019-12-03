@@ -4924,15 +4924,8 @@ public abstract class BatteryStats implements Parcelable {
         sb.setLength(0);
         sb.append(prefix);
         sb.append("     Cellular Rx signal strength (RSRP):");
-        final String[] cellularRxSignalStrengthDescription = new String[]{
-            "very poor (less than -128dBm): ",
-            "poor (-128dBm to -118dBm): ",
-            "moderate (-118dBm to -108dBm): ",
-            "good (-108dBm to -98dBm): ",
-            "great (greater than -98dBm): "};
         didOne = false;
-        final int numCellularRxBins = Math.min(CellSignalStrength.getNumSignalStrengthLevels(),
-            cellularRxSignalStrengthDescription.length);
+        final int numCellularRxBins = SignalStrength.NUM_SIGNAL_STRENGTH_BINS;
         for (int i=0; i<numCellularRxBins; i++) {
             final long time = getPhoneSignalStrengthTime(i, rawRealtime, which);
             if (time == 0) {
@@ -4941,7 +4934,7 @@ public abstract class BatteryStats implements Parcelable {
             sb.append("\n       ");
             sb.append(prefix);
             didOne = true;
-            sb.append(cellularRxSignalStrengthDescription[i]);
+            sb.append(SignalStrength.SIGNAL_STRENGTH_NAMES[i]);
             sb.append(" ");
             formatTimeMs(sb, time/1000);
             sb.append("(");
