@@ -6153,6 +6153,14 @@ package android.printservice.recommendation {
 
 package android.provider {
 
+  public static final class ContactsContract.CommonDataKinds.Phone implements android.provider.ContactsContract.CommonDataKinds.CommonColumns android.provider.ContactsContract.DataColumnsWithJoins {
+    field public static final android.net.Uri ENTERPRISE_CONTENT_URI;
+  }
+
+  public static class ContactsContract.Contacts implements android.provider.BaseColumns android.provider.ContactsContract.ContactNameColumns android.provider.ContactsContract.ContactOptionsColumns android.provider.ContactsContract.ContactStatusColumns android.provider.ContactsContract.ContactsColumns {
+    field public static long ENTERPRISE_CONTACT_ID_BASE;
+  }
+
   public static final class ContactsContract.MetadataSync implements android.provider.BaseColumns android.provider.ContactsContract.MetadataSyncColumns {
     field public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/contact_metadata";
     field public static final String CONTENT_TYPE = "vnd.android.cursor.dir/contact_metadata";
@@ -6181,6 +6189,10 @@ package android.provider {
     field public static final String ACCOUNT_TYPE = "account_type";
     field public static final String DATA_SET = "data_set";
     field public static final String STATE = "state";
+  }
+
+  public static final class ContactsContract.RawContactsEntity implements android.provider.BaseColumns android.provider.ContactsContract.DataColumns android.provider.ContactsContract.RawContactsColumns {
+    field public static final android.net.Uri CORP_CONTENT_URI;
   }
 
   public final class DeviceConfig {
