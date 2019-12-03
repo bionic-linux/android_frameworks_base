@@ -6540,9 +6540,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
                 if (currentNetwork == null || currentNetwork.getCurrentScore() < score) {
                     reassignedRequests.put(nri, newNetwork);
+                    changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
+                            nri, currentNetwork, newNetwork));
                 }
             } else if (newNetwork == currentNetwork) {
                 reassignedRequests.put(nri, null);
+                changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
+                        nri, currentNetwork, null));
             }
         }
         return reassignedRequests;
@@ -6583,8 +6587,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final NetworkRequestInfo nri = entry.getKey();
             final NetworkAgentInfo previousSatisfier = nri.mSatisfier;
             final NetworkAgentInfo newSatisfier = entry.getValue();
-            changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
-                    nri, previousSatisfier, newSatisfier));
             updateOldAndNewSatisfierNAIForRematchRequest(nri, previousSatisfier, newSatisfier, now);
         }
     }
