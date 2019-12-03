@@ -1627,7 +1627,7 @@ public final class SmsManager {
     }
 
     /**
-     * Delete the specified message from the ICC.
+     * Deletes the message at index from the ICC.
      * ICC (Integrated Circuit Card) is the card of the device.
      * For example, this can be the SIM or USIM for GSM.
      *
@@ -1641,14 +1641,12 @@ public final class SmsManager {
      * operation is performed on the correct subscription.
      * </p>
      *
-     * @param messageIndex is the record index of the message on ICC
-     * @return true for success
-     *
-     * {@hide}
+     * @param messageIndex the message index of the message in the ICC.
+     * @return true for success. Otherwise false.
+     * @hide
      */
-    @UnsupportedAppUsage
-    public boolean
-    deleteMessageFromIcc(int messageIndex) {
+    @SystemApi
+    public boolean deleteMessageFromIcc(int messageIndex) {
         boolean success = false;
 
         try {
@@ -1708,7 +1706,7 @@ public final class SmsManager {
     }
 
     /**
-     * Retrieves all messages currently stored on ICC.
+     * Retrieves all messages currently stored in the ICC.
      * ICC (Integrated Circuit Card) is the card of the device.
      * For example, this can be the SIM or USIM for GSM.
      *
@@ -1722,12 +1720,12 @@ public final class SmsManager {
      * operation is performed on the correct subscription.
      * </p>
      *
-     * @return <code>ArrayList</code> of <code>SmsMessage</code> objects
-     *
-     * {@hide}
+     * @return <code>List</code> of <code>SmsMessage</code> objects.
+     * @hide
      */
-    @UnsupportedAppUsage
-    public ArrayList<SmsMessage> getAllMessagesFromIcc() {
+    @SystemApi
+    @NonNull
+    public List<SmsMessage> getAllMessagesFromIcc() {
         List<SmsRawData> records = null;
 
         try {
@@ -1860,8 +1858,8 @@ public final class SmsManager {
     }
 
     /**
-     * Create a list of <code>SmsMessage</code>s from a list of RawSmsData
-     * records returned by <code>getAllMessagesFromIcc()</code>
+     * Creates a list of <code>SmsMessage</code>s from a list of SmsRawData records returned by
+     * <code>getAllMessagesFromIcc()</code>.
      *
      * <p class="note"><strong>Note:</strong> This method is intended for internal use by carrier
      * applications or the Telephony framework and will never trigger an SMS disambiguation
@@ -1873,11 +1871,10 @@ public final class SmsManager {
      * operation is performed on the correct subscription.
      * </p>
      *
-     * @param records SMS EF records, returned by
-     *   <code>getAllMessagesFromIcc</code>
-     * @return <code>ArrayList</code> of <code>SmsMessage</code> objects.
+     * @param records SMS EF records returned by <code>getAllMessagesFromIcc</code>.
+     * @return <code>List</code> of <code>SmsMessage</code> objects.
      */
-    private ArrayList<SmsMessage> createMessageListFromRawRecords(List<SmsRawData> records) {
+    private List<SmsMessage> createMessageListFromRawRecords(List<SmsRawData> records) {
         ArrayList<SmsMessage> messages = new ArrayList<SmsMessage>();
         if (records != null) {
             int count = records.size();
@@ -1885,7 +1882,7 @@ public final class SmsManager {
                 SmsRawData data = records.get(i);
                 // List contains all records, including "free" records (null)
                 if (data != null) {
-                    SmsMessage sms = SmsMessage.createFromEfRecord(i+1, data.getBytes(),
+                    SmsMessage sms = SmsMessage.createFromEfRecord(i + 1, data.getBytes(),
                             getSubscriptionId());
                     if (sms != null) {
                         messages.add(sms);
