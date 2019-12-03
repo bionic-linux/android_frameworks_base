@@ -6458,11 +6458,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // network.  Think about if there is a way to reduce this.  Push
                 // netid->request mapping to each factory?
                 sendUpdatedScoreToFactories(nri.request, newSatisfier);
-                if (isDefaultRequest(nri)) {
-                    if (previousSatisfier != null) {
-                        mLingerMonitor.noteLingerDefaultNetwork(previousSatisfier, newSatisfier);
-                    }
-                }
             } else {
                 // If "newNetwork" is listed as satisfying "nri" but no longer satisfies "nri",
                 // mark it as no longer satisfying "nri".  Because networks are processed by
@@ -6518,6 +6513,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 getOrElse(changes.getNewSatisfier(defaultRequestInfo), oldDefaultNetwork);
 
         if (oldDefaultNetwork != newDefaultNetwork) {
+            if (oldDefaultNetwork != null) {
+                mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
+            }
             updateDataActivityTracking(newDefaultNetwork, oldDefaultNetwork);
             // Notify system services that this network is up.
             makeDefault(newDefaultNetwork);
