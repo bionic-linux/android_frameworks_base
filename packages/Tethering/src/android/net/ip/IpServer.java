@@ -25,7 +25,6 @@ import static android.net.util.NetworkConstants.asByte;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
-import android.net.INetworkStatsService;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -188,7 +187,6 @@ public class IpServer extends StateMachine {
     private final SharedLog mLog;
     private final INetworkManagementService mNMService;
     private final INetd mNetd;
-    private final INetworkStatsService mStatsService;
     private final Callback mCallback;
     private final InterfaceController mInterfaceCtrl;
 
@@ -219,13 +217,12 @@ public class IpServer extends StateMachine {
 
     public IpServer(
             String ifaceName, Looper looper, int interfaceType, SharedLog log,
-            INetworkManagementService nMService, INetworkStatsService statsService,
+            INetworkManagementService nMService,
             Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
         super(ifaceName, looper);
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
         mNetd = deps.getNetdService();
-        mStatsService = statsService;
         mCallback = callback;
         mInterfaceCtrl = new InterfaceController(ifaceName, mNetd, mLog);
         mIfaceName = ifaceName;
@@ -901,12 +898,6 @@ public class IpServer extends StateMachine {
             // Sometimes interfaces are gone before we get
             // to remove their rules, which generates errors.
             // Just do the best we can.
-            try {
-                // About to tear down NAT; gather remaining statistics.
-                mStatsService.forceUpdate();
-            } catch (Exception e) {
-                if (VDBG) Log.e(TAG, "Exception in forceUpdate: " + e.toString());
-            }
             try {
                 mNMService.stopInterfaceForwarding(mIfaceName, upstreamIface);
             } catch (Exception e) {
