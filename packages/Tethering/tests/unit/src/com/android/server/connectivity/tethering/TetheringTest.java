@@ -502,13 +502,17 @@ public class TetheringTest {
 
     private void sendWifiP2pConnectionChanged(
             boolean isGroupFormed, boolean isGroupOwner, String ifname) {
+        WifiP2pGroup group = null;
         WifiP2pInfo p2pInfo = new WifiP2pInfo();
         p2pInfo.groupFormed = isGroupFormed;
-        p2pInfo.isGroupOwner = isGroupOwner;
+        if (isGroupFormed) {
+            p2pInfo.isGroupOwner = isGroupOwner;
 
-        WifiP2pGroup group = new WifiP2pGroup();
-        group.setIsGroupOwner(isGroupOwner);
-        group.setInterface(ifname);
+            // group is valid only if a group is formed.
+            group = new WifiP2pGroup();
+            group.setIsGroupOwner(isGroupOwner);
+            group.setInterface(ifname);
+        }
 
         final Intent intent = new Intent(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         intent.putExtra(WifiP2pManager.EXTRA_WIFI_P2P_INFO, p2pInfo);
