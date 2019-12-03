@@ -51,6 +51,77 @@ public final class BluetoothPbapClient implements BluetoothProfile {
     /** Connection canceled before completion. */
     public static final int RESULT_CANCELED = 2;
 
+    /**
+     * Broadcast Action: Indicates the status of downloading contacts from a remote device.
+     * <p>Always contains the extra fields: {@link BluetoothDevice#EXTRA_DEVICE},
+     * {@link #EXTRA_PHONEBOOK_PATH}, and {@link #EXTRA_STATUS_CODE}.
+     * <p>If {@link #EXTRA_STATUS_CODE} == {@link #DOWNLOAD_STATUS_SUCCESS}, then will also
+     * contain the extra fields: {@link #EXTRA_NUMBER_DOWNLOADED} and
+     * {@link #EXTRA_NUMBER_EXPECTED}.
+     * <p>Requires {@link android.Manifest.permission#READ_CONTACTS} to receive.
+     *
+     * @hide
+     */
+    public static final String ACTION_DOWNLOAD_STATUS =
+            "android.bluetooth.pbapclient.profile.action.DOWNLOAD_STATUS";
+
+    /**
+     * Used as a String extra field in {@link #ACTION_DOWNLOAD_STATUS} intent.
+     * It contains the phonebook being downloaded (e.g., favorites).
+     * <p>Possible values are:
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#PB_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#FAV_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#MCH_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#ICH_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#OCH_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#SIM_PB_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#SIM_MCH_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#SIM_ICH_PATH}
+     * {@link com.android.bluetooth.pbapclient.PbapClientConnectionHandler#SIM_OCH_PATH}
+     */
+    public static final String EXTRA_PHONEBOOK_PATH =
+            "android.bluetooth.pbapclient.profile.extra.PHONEBOOK_PATH";
+
+    /**
+     * Used as an Integer extra field in {@link #ACTION_DOWNLOAD_STATUS} intent.
+     * It contains the download status code.
+     * <p>Possible values are:
+     * {@link #DOWNLOAD_STATUS_UNKNOWN} when the value is unknown.
+     * {@link #DOWNLOAD_STATUS_ERROR} when there is an error.
+     * {@link #DOWNLOAD_STATUS_SUCCESS} when contacts have been successfully downloaded.
+     *
+     * @hide
+     */
+    public static final String EXTRA_STATUS_CODE =
+            "android.bluetooth.pbapclient.profile.extra.STATUS_CODE";
+
+    /**
+     * Used as the download status code for {@link #EXTRA_STATUS_CODE}
+     *
+     * @hide
+     */
+    public static final int DOWNLOAD_STATUS_UNKNOWN = -1;
+    public static final int DOWNLOAD_STATUS_ERROR = 0;
+    public static final int DOWNLOAD_STATUS_SUCCESS = 1;
+
+    /**
+     * Used as an Integer extra field in {@link #ACTION_DOWNLOAD_STATUS} intent.
+     * It contains the number of contacts that have been downloaded.
+     *
+     * @hide
+     */
+    public static final String EXTRA_NUMBER_DOWNLOADED =
+            "android.bluetooth.pbapclient.profile.extra.NUM_DOWNLOADED";
+
+    /**
+     * Used as an Integer extra field in {@link #ACTION_DOWNLOAD_STATUS} intent.
+     * It contains the number of contacts in the phonebook.
+     *
+     * @hide
+     */
+    public static final String EXTRA_NUMBER_EXPECTED =
+            "android.bluetooth.pbapclient.profile.extra.NUM_EXPECTED";
+
     private BluetoothAdapter mAdapter;
     private final BluetoothProfileConnector<IBluetoothPbapClient> mProfileConnector =
             new BluetoothProfileConnector(this, BluetoothProfile.PBAP_CLIENT,
