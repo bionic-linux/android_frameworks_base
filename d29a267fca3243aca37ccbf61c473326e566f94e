@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "d4496ee0_f9522199",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:30:52Z",
+      "side": 1,
+      "message": "In fact, you might not even need that boolean column. Just have the auto-reject and user-missed reasons in the same bit-space, and provide a utility method that determines whether a given reason is an auto-reject reason or if it\u0027s a user-missed-reason",
+      "parentUuid": "3382c051_b00afb5a",
+      "range": {
+        "startLine": 632,
+        "startChar": 81,
+        "endLine": 632,
+        "endChar": 93
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "260afe42_4ea73604",
         "filename": "core/java/android/provider/CallLog.java",
         "patchSetId": 11
