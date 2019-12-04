@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcc71bc0_518ef864",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2019-12-04T11:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04db07fd_f5c6ce24",
+      "range": {
+        "startLine": 615,
+        "startChar": 39,
+        "endLine": 615,
+        "endChar": 60
+      },
+      "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04529f6_98848de0",
         "filename": "telephony/java/android/telephony/Annotation.java",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-04T00:23:28Z",
       "side": 1,
       "message": "Can just call this AudioCodec; don\u0027t think its necessarily specific to IMS.",
+      "range": {
+        "startLine": 537,
+        "startChar": 22,
+        "endLine": 537,
+        "endChar": 35
+      },
+      "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115b485c_d1648f7f",
+        "filename": "telephony/java/android/telephony/Annotation.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2019-12-04T11:31:58Z",
+      "side": 1,
+      "message": "CS and IMS have different audio codec definitions\nhttps://cs.corp.google.com/android/frameworks/opt/telephony/src/java/com/android/internal/telephony/DriverCall.java?rcl\u003d026c33abb6324e42073880c9b6b17c543eec560f\u0026l\u003d49\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/ims/ImsStreamMediaProfile.java?l\u003d47\nConnection.AUDIO_CODEC_XX are from ImsStreamMediaProfile\nThat\u0027s why I add ims naming",
+      "parentUuid": "b04529f6_98848de0",
       "range": {
         "startLine": 537,
         "startChar": 22,
