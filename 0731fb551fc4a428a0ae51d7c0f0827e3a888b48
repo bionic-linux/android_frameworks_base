@@ -93,6 +93,30 @@
       "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40141f85_ee8d0243",
+        "filename": "telephony/java/android/telephony/Annotation.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-04T16:22:03Z",
+      "side": 1,
+      "message": "I guess for the name of the annotation it doesn\u0027t matter, but I was thinking that there\u0027s no reason this extra couldn\u0027t be used to communicate the GSM codec in use either; there have been carrier requirements to show an HD icon on GSM as well.",
+      "parentUuid": "115b485c_d1648f7f",
+      "range": {
+        "startLine": 537,
+        "startChar": 22,
+        "endLine": 537,
+        "endChar": 35
+      },
+      "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
