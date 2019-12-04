@@ -44,7 +44,7 @@ public class AppFuseBridge implements Runnable {
      */
     private static final String APPFUSE_MOUNT_NAME_TEMPLATE = "/mnt/appfuse/%d_%d";
 
-    @GuardedBy("this")
+    @GuardedBy("mScopes")
     private final SparseArray<MountScope> mScopes = new SparseArray<>();
 
     @GuardedBy("this")
@@ -57,10 +57,13 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor addBridge(MountScope mountScope)
             throws FuseUnavailableMountException, NativeDaemonConnectorException {
         try {
+            // make sure the native loop isn't destroyed while we are adding a bridge
             synchronized (this) {
-                Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
                 if (mNativeLoop == 0) {
                     throw new FuseUnavailableMountException(mountScope.mountId);
+                }
+                synchronized (mScopes) {
+                    Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
                 }
                 final int fd = native_add_bridge(
                         mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
@@ -68,7 +71,9 @@ public class AppFuseBridge implements Runnable {
                     throw new FuseUnavailableMountException(mountScope.mountId);
                 }
                 final ParcelFileDescriptor result = ParcelFileDescriptor.adoptFd(fd);
-                mScopes.put(mountScope.mountId, mountScope);
+                synchronized (mScopes) {
+                    mScopes.put(mountScope.mountId, mountScope);
+                }
                 mountScope = null;
                 return result;
             }
@@ -89,14 +94,14 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor openFile(int mountId, int fileId, int mode)
             throws FuseUnavailableMountException, InterruptedException {
         final MountScope scope;
-        synchronized (this) {
+        synchronized (mScopes) {
             scope = mScopes.get(mountId);
             if (scope == null) {
                 throw new FuseUnavailableMountException(mountId);
             }
         }
         final boolean result = scope.waitForMount();
-        if (result == false) {
+        if (!result) {
             throw new FuseUnavailableMountException(mountId);
         }
         try {
@@ -107,21 +112,25 @@ public class AppFuseBridge implements Runnable {
         }
     }
 
-    // Used by com_android_server_storage_AppFuse.cpp.
-    synchronized private void onMount(int mountId) {
-        final MountScope scope = mScopes.get(mountId);
-        if (scope != null) {
-            scope.setMountResultLocked(true);
+    // called by com_android_server_storage_AppFuse.cpp while holding FuseBridgeLoop._mutex
+    private void onMount(int mountId) {
+        synchronized (mScopes) {
+            final MountScope scope = mScopes.get(mountId);
+            if (scope != null) {
+                scope.setMountResultLocked(true);
+            }
         }
     }
 
-    // Used by com_android_server_storage_AppFuse.cpp.
-    synchronized private void onClosed(int mountId) {
-        final MountScope scope = mScopes.get(mountId);
-        if (scope != null) {
-            scope.setMountResultLocked(false);
-            IoUtils.closeQuietly(scope);
-            mScopes.remove(mountId);
+    // called by com_android_server_storage_AppFuse.cpp while holding FuseBridgeLoop._mutex
+    private void onClosed(int mountId) {
+        synchronized (mScopes) {
+            final MountScope scope = mScopes.get(mountId);
+            if (scope != null) {
+                scope.setMountResultLocked(false);
+                IoUtils.closeQuietly(scope);
+                mScopes.remove(mountId);
+            }
         }
     }
 
@@ -136,7 +145,7 @@ public class AppFuseBridge implements Runnable {
             this.mountId = mountId;
         }
 
-        @GuardedBy("AppFuseBridge.this")
+        @GuardedBy("AppFuseBridge.mScopes")
         void setMountResultLocked(boolean result) {
             if (mMounted.getCount() == 0) {
                 return;
