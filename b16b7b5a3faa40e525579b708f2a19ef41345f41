@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3af58ad_9094fbd6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "This should be immutable right ?\n\nNetworkStatsProviderCallback callback;\ntry {\n callback \u003d registerNetworkStatsProvider\n} catch {\n  log\n}\nmStatsProviderCb \u003d callback;\n\nOtherwise you have problems later in the file",
+      "range": {
+        "startLine": 90,
+        "startChar": 51,
+        "endLine": 90,
+        "endChar": 67
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0cdda2_88ddd1ef",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "But we do that don\u0027t we ? Do you want to update ?",
+      "range": {
+        "startLine": 210,
+        "startChar": 73,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6c1738_a71b3d5c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "This also @VisibleForTesting ?",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 9
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dca4e9e_5b2e8401",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "final while you\u0027re here",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 24
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7beafb4a_3a173c01",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "Do you have a notion of how many entries we are going to create here ? If it\u0027s a lot you may want to reuse the object. Now that Android has a generational GC it\u0027s not too bad, but if it\u0027s dozens of objects each time it\u0027s probably worth the small readability reduction. If it\u0027s one or two objects every time, keep the current code.",
+      "range": {
+        "startLine": 279,
+        "startChar": 49,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b015b96_89fe57b5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "Want to at least if (null) return ?",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 26
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e6dfef_f0be96f3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:15:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. IIUC the reason we have 2 calls to onStatsUpdated is that we\u0027ll call that once PER_IFACE and once PER_UID, but I don\u0027t see why we then will call getForwardedStats for RMNET0 twice. Can you explain or add comments ?",
+      "range": {
+        "startLine": 659,
+        "startChar": 44,
+        "endLine": 659,
+        "endChar": 61
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
