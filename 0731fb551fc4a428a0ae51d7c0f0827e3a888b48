@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04db07fd_f5c6ce24",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-04T00:23:28Z",
+      "side": 1,
+      "message": "These @IntDefs are @hide, so you can\u0027t @link to them in the public API.  You can @link to a few examples of the valid codes, however.  I\u0027d also not mention IMS here since audio codecs are generic; maybe something like:\n\nThe audio codec in use for the current {@link Connection}, if known.  Valid values include {@link #AUDIO_CODEC_AMR_WB} and {@link #AUDIO_CODEC_EVS_WB}.",
+      "range": {
+        "startLine": 615,
+        "startChar": 39,
+        "endLine": 615,
+        "endChar": 60
+      },
+      "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04529f6_98848de0",
+        "filename": "telephony/java/android/telephony/Annotation.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-04T00:23:28Z",
+      "side": 1,
+      "message": "Can just call this AudioCodec; don\u0027t think its necessarily specific to IMS.",
+      "range": {
+        "startLine": 537,
+        "startChar": 22,
+        "endLine": 537,
+        "endChar": 35
+      },
+      "revId": "0731fb551fc4a428a0ae51d7c0f0827e3a888b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
