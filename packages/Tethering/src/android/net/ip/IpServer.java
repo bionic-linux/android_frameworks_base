@@ -22,6 +22,7 @@ import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 import static android.net.util.NetworkConstants.asByte;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
@@ -185,6 +186,7 @@ public class IpServer extends StateMachine {
     private final State mTetheredState;
     private final State mUnavailableState;
 
+    private final Context mContext;
     private final SharedLog mLog;
     private final INetworkManagementService mNMService;
     private final INetd mNetd;
@@ -218,10 +220,11 @@ public class IpServer extends StateMachine {
     private RaParams mLastRaParams;
 
     public IpServer(
-            String ifaceName, Looper looper, int interfaceType, SharedLog log,
+            Context ctx, String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetworkManagementService nMService, INetworkStatsService statsService,
             Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
         super(ifaceName, looper);
+        mContext = ctx;
         mLog = log.forSubComponent(ifaceName);
         mNMService = nMService;
         mNetd = deps.getNetdService();
@@ -434,7 +437,11 @@ public class IpServer extends StateMachine {
             ipAsString = USB_NEAR_IFACE_ADDR;
             prefixLen = USB_PREFIX_LENGTH;
         } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
-            ipAsString = getRandomWifiIPv4Address();
+            ipAsString = mContext.getResources().getString(
+                        com.android.internal.R.string.config_wifi_tether_ip_address);
+            if (ipAsString == null) {
+                ipAsString = getRandomWifiIPv4Address();
+            }
             prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
         } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI_P2P) {
             ipAsString = WIFI_P2P_IFACE_ADDR;
