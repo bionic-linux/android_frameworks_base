@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a13f7f8a_a770fd7f",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "this happens whenever there\u0027s any sort of emergency call in progress, right? not just when it\u0027s outgoing and it\u0027s dialing?",
+      "range": {
+        "startLine": 613,
+        "startChar": 22,
+        "endLine": 613,
+        "endChar": 57
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c2be49_e479ea84",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "the system cannot support any more ringing calls.",
+      "range": {
+        "startLine": 620,
+        "startChar": 19,
+        "endLine": 620,
+        "endChar": 72
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de880353_c8f37883",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "better wording here might be \"automatically rejected by the system\" -- this is developer-facing documentation and \"telecom\" might not mean that much to them.\n\nhere and elsewhere in the file as well",
+      "range": {
+        "startLine": 626,
+        "startChar": 73,
+        "endLine": 626,
+        "endChar": 95
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3382c051_b00afb5a",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "this sort of mixed integer scheme isn\u0027t very developer-friendly -- it doesn\u0027t fit into the @IntDef developer guidance, and you end up with people having to consult a single integer for what is logically two pieces of information -- whether the call was auto-rejected by telecom and the reason for the call having a disconnectcause of missed.\n\nI\u0027d suggest making two new db columns actually -- a boolean indicating auto-reject or user missed, and a reason field that\u0027s a int flag. Both the auto-reject reasons and the user-missed reasons can be flags in the reason field -- you\u0027d just start AUTO_MISSED_EMERGENCY_CALL at 1 and USER_MISSED_SHORT_RING at 1 \u003c\u003c 4.\n\nApologies if this was in your design doc and I just missed it while reviewing.",
+      "range": {
+        "startLine": 632,
+        "startChar": 81,
+        "endLine": 632,
+        "endChar": 93
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260afe42_4ea73604",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "add documentation for this too if it needs to be in the api. Otherwise mark it @hide",
+      "range": {
+        "startLine": 643,
+        "startChar": 33,
+        "endLine": 643,
+        "endChar": 53
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c02023_743e97e9",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "Usually for bit flags we like to do 1 \u003c\u003c x -- this makes it clear that each variable only has one bit set among all its bits.",
+      "range": {
+        "startLine": 650,
+        "startChar": 55,
+        "endLine": 650,
+        "endChar": 65
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba768c09_8f9d87c8",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "see above for documentation",
+      "range": {
+        "startLine": 658,
+        "startChar": 32,
+        "endLine": 658,
+        "endChar": 47
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8980922a_e800595a",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-04T05:09:53Z",
+      "side": 1,
+      "message": "the call screening service",
+      "range": {
+        "startLine": 670,
+        "startChar": 11,
+        "endLine": 670,
+        "endChar": 33
+      },
+      "revId": "d29a267fca3243aca37ccbf61c473326e566f94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
