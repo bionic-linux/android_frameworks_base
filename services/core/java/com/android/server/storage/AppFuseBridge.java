@@ -18,6 +18,7 @@ package com.android.server.storage;
 
 import android.os.FileUtils;
 import android.os.ParcelFileDescriptor;
+import android.os.SystemClock;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.util.SparseArray;
@@ -27,6 +28,7 @@ import com.android.internal.util.Preconditions;
 import com.android.server.NativeDaemonConnectorException;
 import libcore.io.IoUtils;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Runnable that delegates FUSE command from the kernel to application.
@@ -44,8 +46,9 @@ public class AppFuseBridge implements Runnable {
      */
     private static final String APPFUSE_MOUNT_NAME_TEMPLATE = "/mnt/appfuse/%d_%d";
 
-    @GuardedBy("this")
+    @GuardedBy("mScopes")
     private final SparseArray<MountScope> mScopes = new SparseArray<>();
+    private final AtomicInteger mMountIdBeingAdded = new AtomicInteger(-1);
 
     @GuardedBy("this")
     private long mNativeLoop;
@@ -57,19 +60,26 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor addBridge(MountScope mountScope)
             throws FuseUnavailableMountException, NativeDaemonConnectorException {
         try {
+            // Make sure the native loop isn't destroyed while we are adding a bridge
             synchronized (this) {
-                Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
                 if (mNativeLoop == 0) {
                     throw new FuseUnavailableMountException(mountScope.mountId);
                 }
+                synchronized (mScopes) {
+                    Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) < 0);
+                }
+                mMountIdBeingAdded.set(mountScope.mountId);
                 final int fd = native_add_bridge(
                         mNativeLoop, mountScope.mountId, mountScope.open().detachFd());
                 if (fd == -1) {
                     throw new FuseUnavailableMountException(mountScope.mountId);
                 }
                 final ParcelFileDescriptor result = ParcelFileDescriptor.adoptFd(fd);
-                mScopes.put(mountScope.mountId, mountScope);
+                synchronized (mScopes) {
+                    mScopes.put(mountScope.mountId, mountScope);
+                }
                 mountScope = null;
+                mMountIdBeingAdded.set(-1);
                 return result;
             }
         } finally {
@@ -89,14 +99,13 @@ public class AppFuseBridge implements Runnable {
     public ParcelFileDescriptor openFile(int mountId, int fileId, int mode)
             throws FuseUnavailableMountException, InterruptedException {
         final MountScope scope;
-        synchronized (this) {
+        synchronized (mScopes) {
             scope = mScopes.get(mountId);
             if (scope == null) {
                 throw new FuseUnavailableMountException(mountId);
             }
         }
-        final boolean result = scope.waitForMount();
-        if (result == false) {
+        if (!scope.waitForMount()) {
             throw new FuseUnavailableMountException(mountId);
         }
         try {
@@ -107,21 +116,30 @@ public class AppFuseBridge implements Runnable {
         }
     }
 
-    // Used by com_android_server_storage_AppFuse.cpp.
-    synchronized private void onMount(int mountId) {
-        final MountScope scope = mScopes.get(mountId);
-        if (scope != null) {
-            scope.setMountResultLocked(true);
+    // Called by com_android_server_storage_AppFuse.cpp while holding FuseBridgeLoop.mutex_
+    private void onMount(int mountId) {
+        synchronized (mScopes) {
+            final MountScope scope = mScopes.get(mountId);
+            if (scope != null) {
+                scope.setMountResultLocked(true);
+            }
         }
     }
 
-    // Used by com_android_server_storage_AppFuse.cpp.
-    synchronized private void onClosed(int mountId) {
-        final MountScope scope = mScopes.get(mountId);
-        if (scope != null) {
-            scope.setMountResultLocked(false);
-            IoUtils.closeQuietly(scope);
-            mScopes.remove(mountId);
+    // Called by com_android_server_storage_AppFuse.cpp while holding FuseBridgeLoop.mutex_
+    private void onClosed(int mountId) {
+        // With the current synchronization between the java and native code,
+        // here we need to wait for add operation to finish to avoid dead lock
+        while(mMountIdBeingAdded.get() == mountId) {
+            SystemClock.sleep(10);
+        }
+        synchronized (mScopes) {
+            final MountScope scope = mScopes.get(mountId);
+            if (scope != null) {
+                scope.setMountResultLocked(false);
+                IoUtils.closeQuietly(scope);
+                mScopes.remove(mountId);
+            }
         }
     }
 
@@ -136,7 +154,7 @@ public class AppFuseBridge implements Runnable {
             this.mountId = mountId;
         }
 
-        @GuardedBy("AppFuseBridge.this")
+        @GuardedBy("AppFuseBridge.mScopes")
         void setMountResultLocked(boolean result) {
             if (mMounted.getCount() == 0) {
                 return;
