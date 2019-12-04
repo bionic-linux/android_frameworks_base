@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "243477c8_1a1f26be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6342,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-04T07:11:10Z",
+      "side": 1,
+      "message": "I\u0027m reviewing another commit and curious about why the name is removedRequests but not removedNetworks.\nSo I\u0027m back to see this patch and I still don\u0027t know why we named it removedRequests after seeing above discussion...",
+      "parentUuid": "88ac9b78_d82b7593",
+      "range": {
+        "startLine": 6342,
+        "startChar": 42,
+        "endLine": 6342,
+        "endChar": 58
+      },
+      "revId": "04820a16e4daf543f7d4286a76dcedab7200f2d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0dd5e8e_cc859eca",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
