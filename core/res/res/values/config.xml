@@ -408,8 +408,13 @@
          updated config_tether_dhcp_range has to be updated appropriately. -->
     <integer translatable="false" name="config_max_pan_devices">5</integer>
 
+    <!-- Default Wifi hotspot ip address, it should match config_tether_dhcp_range -->
+    <string translatable="false" name="config_wifi_tether_ip_address">172.16.10.1</string>
+
     <!-- Dhcp range (min, max) to use for tethering purposes -->
     <string-array translatable="false" name="config_tether_dhcp_range">
+        <item>"172.16.10.2"</item>
+        <item>"172.16.10.254"</item>
     </string-array>
 
     <!-- Regex of wired ethernet ifaces -->
