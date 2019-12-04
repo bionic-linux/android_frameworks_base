@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d64f7b_b241bdf6",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:18:55Z",
+      "side": 1,
+      "message": "Should we push instead ? IIUC this relies on the idea that the service will then request a poll from everyone. A push sounds much more logical and cheap, and the service will have to recompute the quotas anyway.",
+      "range": {
+        "startLine": 906,
+        "startChar": 33,
+        "endLine": 906,
+        "endChar": 47
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ff3df1_124b9ab2",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-04T14:18:55Z",
+      "side": 1,
+      "message": "Is this class going to be useful enough that it deserves to move to its own file ? If not, just leave it here.",
+      "range": {
+        "startLine": 1743,
+        "startChar": 10,
+        "endLine": 1743,
+        "endChar": 27
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
