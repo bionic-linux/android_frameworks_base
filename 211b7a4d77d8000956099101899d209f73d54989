@@ -22,6 +22,30 @@
       "revId": "211b7a4d77d8000956099101899d209f73d54989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bdca08_3b86b6dd",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T03:54:25Z",
+      "side": 0,
+      "message": "The new flow is TetheringManager -\u003e Tethering, the app should also migrate to new flow. The APPs may use reflection to call these UnsupportedAppUsage API. I think we can\u0027t support the APPs using these IConnectivityManager APIs because Tethering is no longer under ConnectivitySerice.",
+      "parentUuid": "6c6d5ed9_cb2f92ad",
+      "range": {
+        "startLine": 106,
+        "startChar": 5,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
