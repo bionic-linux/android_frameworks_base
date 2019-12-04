@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f8f9f5_60897d84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2019-12-04T19:11:49Z",
+      "side": 1,
+      "message": "sorry, I\u0027m confused - in BLE on we don\u0027t have classic so we shouldn\u0027t be auto connecting when we\u0027re in that state?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 56
+      },
+      "revId": "cd8e9ad587dc515608457216f456d4d004e2a126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
