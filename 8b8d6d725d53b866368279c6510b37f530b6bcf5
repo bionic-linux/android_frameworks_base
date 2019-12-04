@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c5ca82b_ca0978ad",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T16:53:27Z",
+      "side": 1,
+      "message": "Please also update IpServerTest. I haven\u0027t add the test back to presubmit, so please help manual run it. \nRun:\natest TetheringTests",
+      "range": {
+        "startLine": 460,
+        "startChar": 20,
+        "endLine": 460,
+        "endChar": 79
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144decb3_ca27157b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T16:53:27Z",
+      "side": 1,
+      "message": "Could you change to mLog.w(both log in dumpsys and system log) or mLog.log(only dumpsys) ??",
+      "range": {
+        "startLine": 864,
+        "startChar": 28,
+        "endLine": 864,
+        "endChar": 39
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31012b46_099c0dbd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-04T16:53:27Z",
+      "side": 1,
+      "message": "Do this case happen intended ?? P2P can change interface dynamically without removed previous interface ??",
+      "range": {
+        "startLine": 865,
+        "startChar": 38,
+        "endLine": 865,
+        "endChar": 75
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
