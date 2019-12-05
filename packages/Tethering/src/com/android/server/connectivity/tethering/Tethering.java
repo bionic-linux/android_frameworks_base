@@ -71,7 +71,6 @@ import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
-import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.TetherStatesParcel;
 import android.net.TetheringConfigurationParcel;
@@ -1145,7 +1144,7 @@ public class Tethering {
 
     // Needed because the canonical source of upstream truth is just the
     // upstream interface set, |mCurrentUpstreamIfaceSet|.
-    private boolean pertainsToCurrentUpstream(NetworkState ns) {
+    private boolean pertainsToCurrentUpstream(UpstreamNetworkState ns) {
         if (ns != null && ns.linkProperties != null && mCurrentUpstreamIfaceSet != null) {
             for (String ifname : ns.linkProperties.getAllInterfaceNames()) {
                 if (mCurrentUpstreamIfaceSet.ifnames.contains(ifname)) {
@@ -1313,7 +1312,7 @@ public class Tethering {
             maybeDunSettingChanged();
 
             final TetheringConfiguration config = mConfig;
-            final NetworkState ns = (config.chooseUpstreamAutomatically)
+            final UpstreamNetworkState ns = (config.chooseUpstreamAutomatically)
                     ? mUpstreamNetworkMonitor.getCurrentPreferredUpstream()
                     : mUpstreamNetworkMonitor.selectPreferredUpstreamType(
                             config.preferredUpstreamIfaceTypes);
@@ -1334,7 +1333,7 @@ public class Tethering {
             }
         }
 
-        protected void setUpstreamNetwork(NetworkState ns) {
+        protected void setUpstreamNetwork(UpstreamNetworkState ns) {
             InterfaceSet ifaces = null;
             if (ns != null) {
                 // Find the interface with the default IPv4 route. It may be the
@@ -1350,7 +1349,7 @@ public class Tethering {
             }
             notifyDownstreamsOfNewUpstreamIface(ifaces);
             if (ns != null && pertainsToCurrentUpstream(ns)) {
-                // If we already have NetworkState for this network update it immediately.
+                // If we already have UpstreamNetworkState for this network update it immediately.
                 handleNewUpstreamNetworkState(ns);
             } else if (mCurrentUpstreamIfaceSet == null) {
                 // There are no available upstream networks.
@@ -1388,7 +1387,7 @@ public class Tethering {
             }
         }
 
-        protected void handleNewUpstreamNetworkState(NetworkState ns) {
+        protected void handleNewUpstreamNetworkState(UpstreamNetworkState ns) {
             mIPv6TetheringCoordinator.updateUpstreamNetworkState(ns);
             mOffload.updateUpstreamNetworkState(ns);
         }
@@ -1452,7 +1451,7 @@ public class Tethering {
                 return;
             }
 
-            final NetworkState ns = (NetworkState) o;
+            final UpstreamNetworkState ns = (UpstreamNetworkState) o;
 
             if (ns == null || !pertainsToCurrentUpstream(ns)) {
                 // TODO: In future, this is where upstream evaluation and selection
@@ -1722,7 +1721,7 @@ public class Tethering {
                 mOffloadController.stop();
             }
 
-            public void updateUpstreamNetworkState(NetworkState ns) {
+            public void updateUpstreamNetworkState(UpstreamNetworkState ns) {
                 mOffloadController.setUpstreamLinkProperties(
                         (ns != null) ? ns.linkProperties : null);
             }

@@ -27,7 +27,6 @@ import static android.net.ConnectivityManager.TETHERING_USB;
 import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
-import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_WIFI_P2P;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
@@ -82,7 +81,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
-import android.net.NetworkState;
 import android.net.NetworkUtils;
 import android.net.RouteInfo;
 import android.net.TetherStatesParcel;
@@ -357,10 +355,8 @@ public class TetheringTest {
         }
     }
 
-    private static NetworkState buildMobileUpstreamState(boolean withIPv4, boolean withIPv6,
-            boolean with464xlat) {
-        final NetworkInfo info = new NetworkInfo(TYPE_MOBILE, 0, null, null);
-        info.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
+    private static UpstreamNetworkState buildMobileUpstreamState(boolean withIPv4,
+            boolean withIPv6, boolean with464xlat) {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_MOBILE_IFNAME);
 
@@ -390,22 +386,22 @@ public class TetheringTest {
 
         final NetworkCapabilities capabilities = new NetworkCapabilities()
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
-        return new NetworkState(info, prop, capabilities, new Network(100), null, "netid");
+        return new UpstreamNetworkState(prop, capabilities, new Network(100));
     }
 
-    private static NetworkState buildMobileIPv4UpstreamState() {
+    private static UpstreamNetworkState buildMobileIPv4UpstreamState() {
         return buildMobileUpstreamState(true, false, false);
     }
 
-    private static NetworkState buildMobileIPv6UpstreamState() {
+    private static UpstreamNetworkState buildMobileIPv6UpstreamState() {
         return buildMobileUpstreamState(false, true, false);
     }
 
-    private static NetworkState buildMobileDualStackUpstreamState() {
+    private static UpstreamNetworkState buildMobileDualStackUpstreamState() {
         return buildMobileUpstreamState(true, true, false);
     }
 
-    private static NetworkState buildMobile464xlatUpstreamState() {
+    private static UpstreamNetworkState buildMobile464xlatUpstreamState() {
         return buildMobileUpstreamState(false, true, true);
     }
 
@@ -560,7 +556,7 @@ public class TetheringTest {
         verifyNoMoreInteractions(mWifiManager);
     }
 
-    private void prepareUsbTethering(NetworkState upstreamState) {
+    private void prepareUsbTethering(UpstreamNetworkState upstreamState) {
         when(mUpstreamNetworkMonitor.getCurrentPreferredUpstream()).thenReturn(upstreamState);
         when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any()))
                 .thenReturn(upstreamState);
@@ -575,7 +571,7 @@ public class TetheringTest {
 
     @Test
     public void testUsbConfiguredBroadcastStartsTethering() throws Exception {
-        NetworkState upstreamState = buildMobileIPv4UpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
         prepareUsbTethering(upstreamState);
 
         // This should produce no activity of any kind.
@@ -655,14 +651,14 @@ public class TetheringTest {
     /**
      * Send CMD_IPV6_TETHER_UPDATE to IpServers as would be done by IPv6TetheringCoordinator.
      */
-    private void sendIPv6TetherUpdates(NetworkState upstreamState) {
+    private void sendIPv6TetherUpdates(UpstreamNetworkState upstreamState) {
         // IPv6TetheringCoordinator must have been notified of downstream
         verify(mIPv6TetheringCoordinator, times(1)).addActiveDownstream(
                 argThat(sm -> sm.linkProperties().getInterfaceName().equals(TEST_USB_IFNAME)),
                 eq(IpServer.STATE_TETHERED));
 
         for (IpServer ipSrv : mTetheringDependencies.mIpv6CoordinatorNotifyList) {
-            NetworkState ipv6OnlyState = buildMobileUpstreamState(false, true, false);
+            UpstreamNetworkState ipv6OnlyState = buildMobileUpstreamState(false, true, false);
             ipSrv.sendMessage(IpServer.CMD_IPV6_TETHER_UPDATE, 0, 0,
                     upstreamState.linkProperties.isIpv6Provisioned()
                             ? ipv6OnlyState.linkProperties
@@ -671,7 +667,7 @@ public class TetheringTest {
         mLooper.dispatchAll();
     }
 
-    private void runUsbTethering(NetworkState upstreamState) {
+    private void runUsbTethering(UpstreamNetworkState upstreamState) {
         prepareUsbTethering(upstreamState);
         sendUsbBroadcast(true, true, true);
         mLooper.dispatchAll();
@@ -679,7 +675,7 @@ public class TetheringTest {
 
     @Test
     public void workingMobileUsbTethering_IPv4() throws Exception {
-        NetworkState upstreamState = buildMobileIPv4UpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
         runUsbTethering(upstreamState);
 
         verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
@@ -694,7 +690,7 @@ public class TetheringTest {
     public void workingMobileUsbTethering_IPv4LegacyDhcp() {
         Settings.Global.putInt(mContentResolver, TETHER_ENABLE_LEGACY_DHCP_SERVER, 1);
         sendConfigurationChanged();
-        final NetworkState upstreamState = buildMobileIPv4UpstreamState();
+        final UpstreamNetworkState upstreamState = buildMobileIPv4UpstreamState();
         runUsbTethering(upstreamState);
         sendIPv6TetherUpdates(upstreamState);
 
@@ -703,7 +699,7 @@ public class TetheringTest {
 
     @Test
     public void workingMobileUsbTethering_IPv6() throws Exception {
-        NetworkState upstreamState = buildMobileIPv6UpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
 
         verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
@@ -716,7 +712,7 @@ public class TetheringTest {
 
     @Test
     public void workingMobileUsbTethering_DualStack() throws Exception {
-        NetworkState upstreamState = buildMobileDualStackUpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileDualStackUpstreamState();
         runUsbTethering(upstreamState);
 
         verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
@@ -731,7 +727,7 @@ public class TetheringTest {
 
     @Test
     public void workingMobileUsbTethering_MultipleUpstreams() throws Exception {
-        NetworkState upstreamState = buildMobile464xlatUpstreamState();
+        UpstreamNetworkState upstreamState = buildMobile464xlatUpstreamState();
         runUsbTethering(upstreamState);
 
         verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_XLAT_MOBILE_IFNAME);
@@ -748,7 +744,7 @@ public class TetheringTest {
     @Test
     public void workingMobileUsbTethering_v6Then464xlat() throws Exception {
         // Setup IPv6
-        NetworkState upstreamState = buildMobileIPv6UpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
 
         verify(mNetd, times(1)).tetherAddForward(TEST_USB_IFNAME, TEST_MOBILE_IFNAME);
@@ -785,7 +781,7 @@ public class TetheringTest {
         sendConfigurationChanged();
 
         // Setup IPv6
-        final NetworkState upstreamState = buildMobileIPv6UpstreamState();
+        final UpstreamNetworkState upstreamState = buildMobileIPv6UpstreamState();
         runUsbTethering(upstreamState);
 
         // UpstreamNetworkMonitor should choose upstream automatically
@@ -1161,7 +1157,7 @@ public class TetheringTest {
         TetherStatesParcel tetherState = callback.pollTetherStatesChanged();
         assertEquals(tetherState, null);
         // 2. Enable wifi tethering
-        NetworkState upstreamState = buildMobileDualStackUpstreamState();
+        UpstreamNetworkState upstreamState = buildMobileDualStackUpstreamState();
         when(mUpstreamNetworkMonitor.getCurrentPreferredUpstream()).thenReturn(upstreamState);
         when(mUpstreamNetworkMonitor.selectPreferredUpstreamType(any()))
                 .thenReturn(upstreamState);
