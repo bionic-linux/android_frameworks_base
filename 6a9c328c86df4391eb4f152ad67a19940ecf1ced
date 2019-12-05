@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b1938b_c6159496",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "Do we need a setRinging() method?",
+      "range": {
+        "startLine": 375,
+        "startChar": 3,
+        "endLine": 380,
+        "endChar": 5
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb853080_a49b2020",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "When would you expect to see a Connection with multiple participants?  I\u0027d expect that Telephony would expose an android.telecom.Conference to Telecom to represent the adhoc conference call.",
+      "range": {
+        "startLine": 1821,
+        "startChar": 5,
+        "endLine": 1834,
+        "endChar": 0
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0212b3e_a264fc17",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "I\u0027d expect this to be a Conference since that\u0027s what is being created; otherwise its a little odd as we end up creating a Connection which would be migrated to a Conference immediately after.\n\ne.g.\npublic @Nullable Conference onCreateIncomingConference(@Nullable PhoneAccountHandle connectionManagerPhoneAccount, @NonNull ConnectionRequest request)",
+      "range": {
+        "startLine": 2293,
+        "startChar": 11,
+        "endLine": 2293,
+        "endChar": 21
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a56d83_b94cd852",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2413,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "Similarly:\npublic @Nullable Conference onCreateOutgoingConference(@Nullable PhoneAccountHandle connectionManagerPhoneAccount, @NonNull ConnectionRequest request)",
+      "range": {
+        "startLine": 2411,
+        "startChar": 0,
+        "endLine": 2413,
+        "endChar": 40
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77505c12_20490347",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "What\u0027s the use-case for this?  I would expect onCreateUnknownConnection would be the method used.",
+      "range": {
+        "startLine": 2552,
+        "startChar": 4,
+        "endLine": 2552,
+        "endChar": 58
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c811ca_40133ffe",
+        "filename": "telecomm/java/android/telecom/PhoneAccount.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "Add:\nAn adhoc conference call is established by providing a list of addresses to {@link TelecomManager#startConference(List\u003cUri\u003e)} where the {@link ConnectionService} is responsible for connecting all indicated participants to a conference simultaneously.  This is in contrast to conferences formed by merging calls together (e.g. using {@link android.telecom.Call#mergeConference()}).",
+      "range": {
+        "startLine": 334,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 29
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7622630_12b63ec7",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "Please add Javadoc for the parameters and nullability/annotations as indicated below:\n\n@NonNull List\u003cUri\u003e participants, @VideoProfile.VideoState videoState",
+      "range": {
+        "startLine": 1872,
+        "startChar": 32,
+        "endLine": 1872,
+        "endChar": 70
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cd7de5_2a8afd3d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T18:53:36Z",
+      "side": 1,
+      "message": "Lets call this \nKEY_SUPPORT_ADHOC_CONFERENCE_CALLS_BOOL \nfor consistency with KEY_SUPPORT_CONFERENCE_CALL_BOOL.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 31,
+        "endLine": 1067,
+        "endChar": 66
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
