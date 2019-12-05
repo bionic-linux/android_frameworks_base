@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1da0e233_6bf2c4b2",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-12-05T04:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5ca82b_ca0978ad",
+      "range": {
+        "startLine": 460,
+        "startChar": 20,
+        "endLine": 460,
+        "endChar": 79
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "144decb3_ca27157b",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d34b52a_f0f7c302",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-12-05T04:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "144decb3_ca27157b",
+      "range": {
+        "startLine": 864,
+        "startChar": 28,
+        "endLine": 864,
+        "endChar": 39
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31012b46_099c0dbd",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2019-12-04T16:53:27Z",
       "side": 1,
       "message": "Do this case happen intended ?? P2P can change interface dynamically without removed previous interface ??",
+      "range": {
+        "startLine": 865,
+        "startChar": 38,
+        "endLine": 865,
+        "endChar": 75
+      },
+      "revId": "8b8d6d725d53b866368279c6510b37f530b6bcf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a29ec9_ce2ee319",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2019-12-05T04:57:39Z",
+      "side": 1,
+      "message": "It should not happen, just in case of any uncertain case.\n\nIf this case happens, the new group interface should be tethered instead of old one.",
+      "parentUuid": "31012b46_099c0dbd",
       "range": {
         "startLine": 865,
         "startChar": 38,
