@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "966e34d5_5e5c0845",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-05T07:30:32Z",
+      "side": 1,
+      "message": "After sync with Mark, the event is for downstream change.\nwe are not sure why we need to poll here.\nGiven that downstream event is not related to the stats of upstream.\nMaybe we should remove it?\n\nAn alternative solution is to listen to tethering downstream change event somewhere(e.g. NetworkStatsService). Then push or poll stats when that happens.\n\nalso +lorenzo@ for input?",
+      "parentUuid": "00d64f7b_b241bdf6",
+      "range": {
+        "startLine": 906,
+        "startChar": 33,
+        "endLine": 906,
+        "endChar": 47
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ff3df1_124b9ab2",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-04T14:18:55Z",
       "side": 1,
       "message": "Is this class going to be useful enough that it deserves to move to its own file ? If not, just leave it here.",
+      "range": {
+        "startLine": 1743,
+        "startChar": 10,
+        "endLine": 1743,
+        "endChar": 27
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70884c79_d594bdd3",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-05T07:30:32Z",
+      "side": 1,
+      "message": "It looks like useless except here.\nWe can move it outside later if someone tries to do the same thing.",
+      "parentUuid": "d2ff3df1_124b9ab2",
       "range": {
         "startLine": 1743,
         "startChar": 10,
