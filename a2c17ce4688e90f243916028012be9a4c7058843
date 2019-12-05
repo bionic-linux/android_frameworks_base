@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae3db46_511d5c33",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecKeycode.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-12-05T19:14:17Z",
+      "side": 1,
+      "message": "Instead this should map to root_menu\nAbove to this\n\n// Both KEYCODE_HOME and KEYCODE_MENU keys are sent as CEC_KEYCODE_ROOT_MENU\n// NOTE:the home key is not usually forwarded.\n// When CEC_KEYCODE_ROOT_MENU is received it is translated to KEYCODE_HOME\nnew KeycodeEntry(KeyEvent.KEYCODE_HOME, CEC_KEYCODE_ROOT_MENU),\nnew KeycodeEntry(KeyEvent.KEYCODE_MENU, CEC_KEYCODE_ROOT_MENU),",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 76
+      },
+      "revId": "a2c17ce4688e90f243916028012be9a4c7058843",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
