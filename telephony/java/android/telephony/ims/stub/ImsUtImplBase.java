@@ -16,6 +16,8 @@
 
 package android.telephony.ims.stub;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Bundle;
@@ -138,6 +140,13 @@ public class ImsUtImplBase {
             return ImsUtImplBase.this.updateCallBarringForServiceClass(
                     cbType, action, barrList, serviceClass);
         }
+
+        @Override
+        public int updateCallBarringWithPassword(int cbType, int action, String[] barrList,
+                int serviceClass, String password) throws RemoteException {
+            return ImsUtImplBase.this.updateCallBarringWithPassword(
+                    cbType, action, barrList, serviceClass, password);
+        }
     };
 
     /**
@@ -256,6 +265,14 @@ public class ImsUtImplBase {
      */
     public int updateCallBarringForServiceClass(int cbType, int action, String[] barrList,
             int serviceClass) {
+        return -1;
+    }
+
+    /**
+     * Updates the configuration of the call barring for specified service class with password.
+     */
+    public int updateCallBarringWithPassword(int cbType, int action, @Nullable String[] barrList,
+            int serviceClass, @NonNull String password) {
         return -1;
     }
 
