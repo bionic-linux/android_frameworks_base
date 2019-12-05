@@ -7740,6 +7740,11 @@ package android.telephony {
     field public static final String CELL_BROADCAST_SERVICE_INTERFACE = "android.telephony.CellBroadcastService";
   }
 
+  public abstract class CellLocation implements android.os.Parcelable {
+    method public final int describeContents();
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellLocation> CREATOR;
+  }
+
   public final class DataFailCause {
     field public static final int ACCESS_ATTEMPT_ALREADY_IN_PROGRESS = 2219; // 0x8ab
     field public static final int ACCESS_BLOCK = 2087; // 0x827
@@ -8851,6 +8856,11 @@ package android.telephony {
 
 package android.telephony.cdma {
 
+  public class CdmaCellLocation extends android.telephony.CellLocation implements android.os.Parcelable {
+    method public final void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.cdma.CdmaCellLocation> CREATOR;
+  }
+
   public final class CdmaSmsCbProgramData implements android.os.Parcelable {
     method public int describeContents();
     method public int getCategory();
@@ -9135,6 +9145,15 @@ package android.telephony.euicc {
   }
 
   @IntDef(flag=true, prefix={"POLICY_RULE_FLAG_"}, value={android.telephony.euicc.EuiccRulesAuthTable.POLICY_RULE_FLAG_CONSENT_REQUIRED}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public static @interface EuiccRulesAuthTable.PolicyRuleFlag {
+  }
+
+}
+
+package android.telephony.gsm {
+
+  public class GsmCellLocation extends android.telephony.CellLocation implements android.os.Parcelable {
+    method public final void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.gsm.GsmCellLocation> CREATOR;
   }
 
 }
