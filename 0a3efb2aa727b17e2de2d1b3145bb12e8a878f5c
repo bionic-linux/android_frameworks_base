@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2de049_6a211d47",
+        "filename": "core/java/android/net/DnsPacket.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-12-05T06:53:56Z",
+      "side": 1,
+      "message": "Then, would it make sense to return unmodifiableList(mRescords[sec]) ?\n\nhttps://docs.oracle.com/javase/7/docs/api/java/util/Collections.html#unmodifiableList(java.util.List)",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 41
+      },
+      "revId": "0a3efb2aa727b17e2de2d1b3145bb12e8a878f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
