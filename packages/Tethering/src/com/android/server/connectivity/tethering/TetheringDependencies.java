@@ -18,7 +18,6 @@ package com.android.server.connectivity.tethering;
 
 import android.content.Context;
 import android.net.INetd;
-import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.NetworkRequest;
 import android.net.ip.IpServer;
@@ -113,14 +112,6 @@ public abstract class TetheringDependencies {
     public INetworkStatsService getINetworkStatsService() {
         return INetworkStatsService.Stub.asInterface(
                 ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
-    }
-
-    /**
-     * Get a reference to INetworkPolicyManager to be used by tethering.
-     */
-    public INetworkPolicyManager getINetworkPolicyManager() {
-        return INetworkPolicyManager.Stub.asInterface(
-                ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
     }
 
     /**
