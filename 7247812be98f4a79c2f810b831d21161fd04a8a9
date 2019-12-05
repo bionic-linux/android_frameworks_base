@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69a0c8df_38da6dcc",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1605425
+      },
+      "writtenOn": "2019-12-05T14:07:10Z",
+      "side": 1,
+      "message": "Will remove this files changes and api/test-lint-baseline.txt once verified with @NonNull for password.",
+      "revId": "7247812be98f4a79c2f810b831d21161fd04a8a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
