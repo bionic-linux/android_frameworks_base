@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab9b47db_78a3b053",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-05T11:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f27d604_961a0d10",
+      "range": {
+        "startLine": 235,
+        "startChar": 8,
+        "endLine": 235,
+        "endChar": 47
+      },
+      "revId": "c808b97c70c3ce542cf0d1d63cb5b0d03c66645f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e64574e5_8378e365",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c808b97c70c3ce542cf0d1d63cb5b0d03c66645f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a8e1eb_536c4442",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-05T11:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e64574e5_8378e365",
+      "range": {
+        "startLine": 1010,
+        "startChar": 8,
+        "endLine": 1010,
+        "endChar": 20
+      },
+      "revId": "c808b97c70c3ce542cf0d1d63cb5b0d03c66645f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
