@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b5e0678_ce265725",
+        "filename": "services/core/java/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-12-05T07:58:26Z",
+      "side": 1,
+      "message": "typo: DnsProxyServer",
+      "range": {
+        "startLine": 340,
+        "startChar": 32,
+        "endLine": 340,
+        "endChar": 45
+      },
+      "revId": "7587725a20c1fb2ed555c5da8477156b783b6122",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
