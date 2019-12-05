@@ -118,8 +118,19 @@ interface IImsUt {
     int queryCallBarringForServiceClass(int cbType, int serviceClass);
 
     /**
+     * Retrieves the configuration of the call barring for specified service class with password.
+     */
+    int queryCallBarringWithPassword(int cbType, int serviceClass, String password);
+
+    /**
      * Updates the configuration of the call barring for specified service class.
      */
     int updateCallBarringForServiceClass(int cbType, int action, in String[] barrList,
             int serviceClass);
+
+    /**
+     * Updates the configuration of the call barring for specified service class with password.
+     */
+    int updateCallBarringWithPassword(int cbType, int action, in String[] barrList,
+            int serviceClass, String password);
 }

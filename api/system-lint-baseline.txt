@@ -1,6 +1,14 @@
 // Baseline format: 1.0
+ArrayReturn: android.net.NetworkScoreManager#requestScores(android.net.NetworkKey[]) parameter #0:
+    Method parameter should be Collection<NetworkKey> (or subclass) instead of raw array; was `android.net.NetworkKey[]`
 ArrayReturn: android.view.contentcapture.ViewNode#getAutofillOptions():
     
+
+
+ExecutorRegistration: android.net.ipsec.ike.IkeSession#closeChildSession(android.net.ipsec.ike.ChildSessionCallback):
+    Registration methods should have overload that accepts delivery Executor: `closeChildSession`
+ExecutorRegistration: android.net.ipsec.ike.IkeSession#openChildSession(android.net.ipsec.ike.ChildSessionOptions, android.net.ipsec.ike.ChildSessionCallback):
+    Registration methods should have overload that accepts delivery Executor: `openChildSession`
 
 
 GenericException: android.app.prediction.AppPredictor#finalize():
@@ -13,8 +21,16 @@ GenericException: android.service.autofill.augmented.FillWindow#finalize():
     
 
 
+IntentBuilderName: android.content.Context#registerReceiverForAllUsers(android.content.BroadcastReceiver, android.content.IntentFilter, String, android.os.Handler):
+    Methods creating an Intent should be named `create<Foo>Intent()`, was `registerReceiverForAllUsers`
+
+
 KotlinKeyword: android.app.Notification#when:
     
+
+
+KotlinOperator: android.telephony.CbGeoUtils.Geometry#contains(android.telephony.CbGeoUtils.LatLng):
+    Method can be invoked as a "in" operator from Kotlin: `contains` (this is usually desirable; just make sure it makes sense for this type of object)
 
 
 MissingNullability: android.media.soundtrigger.SoundTriggerDetectionService#onUnbind(android.content.Intent) parameter #0:
@@ -52,13 +68,13 @@ MissingNullability: android.service.notification.NotificationAssistantService#at
 MissingNullability: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallFurther(boolean):
     
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent):
-    Missing nullability on method `onBind` return
+    
 MissingNullability: android.telephony.CellBroadcastService#onBind(android.content.Intent) parameter #0:
-    Missing nullability on parameter `intent` in method `onBind`
+    
 MissingNullability: android.telephony.CellBroadcastService#onCdmaCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onCdmaCellBroadcastSms`
+    
 MissingNullability: android.telephony.CellBroadcastService#onGsmCellBroadcastSms(int, byte[]) parameter #1:
-    Missing nullability on parameter `message` in method `onGsmCellBroadcastSms`
+    
 MissingNullability: android.telephony.NetworkService#onUnbind(android.content.Intent) parameter #0:
     
 MissingNullability: android.telephony.SmsCbCmasInfo#toString():
@@ -95,6 +111,12 @@ MissingNullability: android.telephony.ims.stub.ImsSmsImplBase#onSmsStatusReportR
     
 MissingNullability: android.telephony.ims.stub.ImsSmsImplBase#onSmsStatusReportReceived(int, String, byte[]) parameter #2:
     
+MissingNullability: android.telephony.ims.stub.ImsUtImplBase#queryCallBarringWithPassword(int, int, String) parameter #2:
+    Missing nullability on parameter `password` in method `queryCallBarringWithPassword`
+MissingNullability: android.telephony.ims.stub.ImsUtImplBase#updateCallBarringWithPassword(int, int, String[], int, String) parameter #2:
+    Missing nullability on parameter `barrList` in method `updateCallBarringWithPassword`
+MissingNullability: android.telephony.ims.stub.ImsUtImplBase#updateCallBarringWithPassword(int, int, String[], int, String) parameter #4:
+    Missing nullability on parameter `password` in method `updateCallBarringWithPassword`
 MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(String):
     
 MissingNullability: android.telephony.mbms.DownloadRequest.Builder#setServiceId(String) parameter #0:
@@ -135,6 +157,10 @@ MutableBareField: android.net.wifi.WifiConfiguration#carrierId:
 
 NoClone: android.service.contentcapture.ContentCaptureService#dump(java.io.FileDescriptor, java.io.PrintWriter, String[]) parameter #0:
     
+
+
+NotCloseable: android.bluetooth.BluetoothPan:
+    Classes that release resources (finalize()) should implement AutoClosable and CloseGuard: class android.bluetooth.BluetoothPan
 
 
 ProtectedMember: android.printservice.recommendation.RecommendationService#attachBaseContext(android.content.Context):
@@ -191,6 +217,8 @@ SamShouldBeLast: android.app.AlarmManager#setWindow(int, long, long, String, and
     
 SamShouldBeLast: android.app.WallpaperInfo#dump(android.util.Printer, String):
     
+SamShouldBeLast: android.app.WallpaperManager#addOnColorsChangedListener(android.app.WallpaperManager.OnColorsChangedListener, android.os.Handler):
+    SAM-compatible parameters (such as parameter 1, "listener", in android.app.WallpaperManager.addOnColorsChangedListener) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 SamShouldBeLast: android.app.admin.DevicePolicyManager#installSystemUpdate(android.content.ComponentName, android.net.Uri, java.util.concurrent.Executor, android.app.admin.DevicePolicyManager.InstallSystemUpdateCallback):
     
 SamShouldBeLast: android.content.Context#bindIsolatedService(android.content.Intent, int, String, java.util.concurrent.Executor, android.content.ServiceConnection):
@@ -332,7 +360,7 @@ ServiceName: android.Manifest.permission#BIND_ATTENTION_SERVICE:
 ServiceName: android.Manifest.permission#BIND_AUGMENTED_AUTOFILL_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CELL_BROADCAST_SERVICE:
-    Inconsistent service value; expected `BIND_CELL_BROADCAST`, was `android.permission.BIND_CELL_BROADCAST_SERVICE`
+    
 ServiceName: android.Manifest.permission#BIND_CONTENT_CAPTURE_SERVICE:
     
 ServiceName: android.Manifest.permission#BIND_CONTENT_SUGGESTIONS_SERVICE:
@@ -369,3 +397,13 @@ ServiceName: android.Manifest.permission#PROVIDE_RESOLVER_RANKER_SERVICE:
     
 ServiceName: android.Manifest.permission#REQUEST_NOTIFICATION_ASSISTANT_SERVICE:
     
+
+
+UserHandleName: android.net.ipsec.ike.ChildSessionOptions:
+    Classes holding a set of parameters should be called `FooParams`, was `ChildSessionOptions`
+UserHandleName: android.net.ipsec.ike.IkeSessionOptions:
+    Classes holding a set of parameters should be called `FooParams`, was `IkeSessionOptions`
+UserHandleName: android.net.ipsec.ike.TransportModeChildSessionOptions:
+    Classes holding a set of parameters should be called `FooParams`, was `TransportModeChildSessionOptions`
+UserHandleName: android.net.ipsec.ike.TunnelModeChildSessionOptions:
+    Classes holding a set of parameters should be called `FooParams`, was `TunnelModeChildSessionOptions`

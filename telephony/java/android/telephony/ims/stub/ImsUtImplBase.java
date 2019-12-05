@@ -131,12 +131,24 @@ public class ImsUtImplBase {
                 throws RemoteException {
             return ImsUtImplBase.this.queryCallBarringForServiceClass(cbType, serviceClass);
         }
+        @Override
+        public int queryCallBarringWithPassword(int cbType, int serviceClass, String password)
+                throws RemoteException {
+            return ImsUtImplBase.this.queryCallBarringWithPassword(cbType, serviceClass, password);
+        }
 
         @Override
         public int updateCallBarringForServiceClass(int cbType, int action,
                 String[] barrList, int serviceClass) throws RemoteException {
             return ImsUtImplBase.this.updateCallBarringForServiceClass(
                     cbType, action, barrList, serviceClass);
+        }
+
+        @Override
+        public int updateCallBarringWithPassword(int cbType, int action, String[] barrList,
+                int serviceClass, String password) throws RemoteException {
+            return ImsUtImplBase.this.updateCallBarringWithPassword(
+                    cbType, action, barrList, serviceClass, password);
         }
     };
 
@@ -160,6 +172,13 @@ public class ImsUtImplBase {
      * Retrieves the configuration of the call barring for specified service class.
      */
     public int queryCallBarringForServiceClass(int cbType, int serviceClass) {
+        return -1;
+    }
+
+    /**
+     * Retrieves the configuration of the call barring for specified service class with password.
+     */
+    public int queryCallBarringWithPassword(int cbType, int serviceClass, String password) {
         return -1;
     }
 
@@ -256,6 +275,14 @@ public class ImsUtImplBase {
      */
     public int updateCallBarringForServiceClass(int cbType, int action, String[] barrList,
             int serviceClass) {
+        return -1;
+    }
+
+    /**
+     * Updates the configuration of the call barring for specified service class with password.
+     */
+    public int updateCallBarringWithPassword(int cbType, int action, String[] barrList,
+            int serviceClass, String password) {
         return -1;
     }
 
