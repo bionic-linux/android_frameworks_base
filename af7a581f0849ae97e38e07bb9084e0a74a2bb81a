@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418bf444_937b304f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-12-05T17:23:44Z",
+      "side": 1,
+      "message": "I guess this should be an empty default.",
+      "range": {
+        "startLine": 412,
+        "startChar": 70,
+        "endLine": 412,
+        "endChar": 81
+      },
+      "revId": "af7a581f0849ae97e38e07bb9084e0a74a2bb81a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1971f2_f067f0f9",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-12-05T17:23:44Z",
+      "side": 1,
+      "message": "Please remove this.",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 36
+      },
+      "revId": "af7a581f0849ae97e38e07bb9084e0a74a2bb81a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b685767_854f322e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-12-05T17:23:44Z",
+      "side": 1,
+      "message": "My main request would be to replace this entire block to support configurable interface IP address for all tethering technologies and not only WiFi. But before making changes please wait for connectivity team feedback.",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 453,
+        "endChar": 9
+      },
+      "revId": "af7a581f0849ae97e38e07bb9084e0a74a2bb81a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496a23cd_3a4503a1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-12-05T17:23:44Z",
+      "side": 1,
+      "message": "nit: please break lines over 100 cols",
+      "range": {
+        "startLine": 2020,
+        "startChar": 100,
+        "endLine": 2020,
+        "endChar": 102
+      },
+      "revId": "af7a581f0849ae97e38e07bb9084e0a74a2bb81a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
