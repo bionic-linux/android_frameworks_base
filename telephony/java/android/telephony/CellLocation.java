@@ -16,20 +16,42 @@
 
 package android.telephony;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
+import android.annotation.UnsupportedAppUsage;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-
-import android.annotation.UnsupportedAppUsage;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
+
 import com.android.internal.telephony.ITelephony;
 import com.android.internal.telephony.PhoneConstants;
 
 /**
  * Abstract class that represents the location of the device.  {@more}
  */
-public abstract class CellLocation {
+public abstract class CellLocation implements Parcelable {
+
+    /**
+     * Unknown subclass
+     * @hide
+     */
+    public static final int TYPE_UNKNOWN = 0;
+
+    /**
+     * Subclass {@link GsmCellLocation}
+     * @hide
+     */
+    public static final int TYPE_GSM = 1;
+
+    /**
+     * Subclass {@link CdmaCellLocation}
+     * @hide
+     */
+    public static final int TYPE_CDMA = 2;
 
     /**
      * Request an update of the current location.  If the location has changed,
@@ -107,4 +129,45 @@ public abstract class CellLocation {
             return null;
         }
     }
+
+    /** @hide */
+    @Override
+    @SystemApi
+    public final int describeContents() {
+        return 0;
+    }
+
+    /** @hide */
+    @Override
+    @SystemApi
+    public abstract void writeToParcel(Parcel dest, int flags);
+
+    /**
+     * Used by child classes for parceling.
+     *
+     * @hide
+     */
+    protected void writeToParcel(Parcel dest, int flags, int type) {
+        dest.writeInt(type);
+    }
+
+    /** @hide */
+    @SystemApi
+    public static final @NonNull Parcelable.Creator<CellLocation> CREATOR =
+            new Parcelable.Creator<CellLocation>() {
+        @Override
+        public CellLocation createFromParcel(Parcel in) {
+            int type = in.readInt();
+            switch (type) {
+                case TYPE_GSM: return GsmCellLocation.createFromParcelBody(in);
+                case TYPE_CDMA: return CdmaCellLocation.createFromParcelBody(in);
+                default: throw new RuntimeException("Bad CellLocation Parcel");
+            }
+        }
+
+        @Override
+        public CellLocation[] newArray(int size) {
+            return new CellLocation[size];
+        }
+    };
 }

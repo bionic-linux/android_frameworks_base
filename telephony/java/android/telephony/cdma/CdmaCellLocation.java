@@ -16,15 +16,19 @@
 
 package android.telephony.cdma;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telephony.CellLocation;
 
 /**
  * Represents the cell location on a CDMA phone.
  */
-public class CdmaCellLocation extends CellLocation {
+public class CdmaCellLocation extends CellLocation implements Parcelable {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private int mBaseStationId = -1;
 
@@ -78,6 +82,11 @@ public class CdmaCellLocation extends CellLocation {
         this.mBaseStationLongitude = bundle.getInt("baseStationLongitude", mBaseStationLongitude);
         this.mSystemId = bundle.getInt("systemId", mSystemId);
         this.mNetworkId = bundle.getInt("networkId", mNetworkId);
+    }
+
+    /** @hide */
+    public static CdmaCellLocation createFromParcelBody(Parcel in) {
+        return new CdmaCellLocation(in.readBundle());
     }
 
     /**
@@ -253,6 +262,29 @@ public class CdmaCellLocation extends CellLocation {
         return ((double)quartSec) / (3600 * 4);
     }
 
+    /** @hide */
+    @SystemApi
+    @Override
+    public final void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags, TYPE_CDMA);
+        Bundle data = new Bundle();
+        fillInNotifierBundle(data);
+        dest.writeBundle(data);
+    }
+
+    /** @hide */
+    @SystemApi
+    public static final @NonNull Parcelable.Creator<CdmaCellLocation> CREATOR =
+            new Parcelable.Creator<CdmaCellLocation>() {
+        @Override
+        public CdmaCellLocation createFromParcel(Parcel in) {
+            in.readInt(); // Skip the type.
+            return createFromParcelBody(in);
+        }
+
+        @Override
+        public CdmaCellLocation[] newArray(int size) {
+            return new CdmaCellLocation[size];
+        }
+    };
 }
-
-

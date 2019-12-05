@@ -16,15 +16,19 @@
 
 package android.telephony.gsm;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telephony.CellLocation;
 
 /**
  * Represents the cell location on a GSM phone.
  */
-public class GsmCellLocation extends CellLocation {
+public class GsmCellLocation extends CellLocation implements Parcelable {
     private int mLac;
     private int mCid;
     private int mPsc;
@@ -45,6 +49,11 @@ public class GsmCellLocation extends CellLocation {
         mLac = bundle.getInt("lac", -1);
         mCid = bundle.getInt("cid", -1);
         mPsc = bundle.getInt("psc", -1);
+    }
+
+    /** @hide */
+    public static GsmCellLocation createFromParcelBody(Parcel in) {
+        return new GsmCellLocation(in.readBundle());
     }
 
     /**
@@ -154,4 +163,30 @@ public class GsmCellLocation extends CellLocation {
     public boolean isEmpty() {
         return (mLac == -1 && mCid == -1 && mPsc == -1);
     }
+
+    /** @hide */
+    @SystemApi
+    @Override
+    public final void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags, TYPE_CDMA);
+        Bundle data = new Bundle();
+        fillInNotifierBundle(data);
+        dest.writeBundle(data);
+    }
+
+    /** @hide */
+    @SystemApi
+    public static final @NonNull Parcelable.Creator<GsmCellLocation> CREATOR =
+            new Parcelable.Creator<GsmCellLocation>() {
+        @Override
+        public GsmCellLocation createFromParcel(Parcel in) {
+            in.readInt(); // Skip the type.
+            return createFromParcelBody(in);
+        }
+
+        @Override
+        public GsmCellLocation[] newArray(int size) {
+            return new GsmCellLocation[size];
+        }
+    };
 }
