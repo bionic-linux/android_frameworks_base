@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "5cc4c7b4_11059216",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-05T19:36:47Z",
+      "side": 1,
+      "message": "We should name this addNewIncomingConference for consistency.\nSuggest prototype: \n\npublic voic addNewIncomingConference(@NonNull PhoneAccountHandle phoneAccount,\n@NonNull List\u003cUri\u003e participants, Bundle extras)",
+      "range": {
+        "startLine": 1651,
+        "startChar": 16,
+        "endLine": 1651,
+        "endChar": 41
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7622630_12b63ec7",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 3
