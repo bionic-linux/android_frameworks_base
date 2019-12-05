@@ -339,11 +339,6 @@ public class TetheringTest {
         }
 
         @Override
-        public INetworkPolicyManager getINetworkPolicyManager() {
-            return mPolicyManager;
-        }
-
-        @Override
         public INetd getINetd(Context context) {
             return mNetd;
         }
