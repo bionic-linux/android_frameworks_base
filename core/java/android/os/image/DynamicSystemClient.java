@@ -224,6 +224,12 @@ public class DynamicSystemClient {
      */
     public static final String KEY_USERDATA_SIZE = "KEY_USERDATA_SIZE";
 
+    /**
+     * Intent key: AVB public key used to sign the DSU package.
+     * @hide
+     */
+    public static final String KEY_PUBKEY = "KEY_PUBKEY";
+
 
     private static class IncomingHandler extends Handler {
         private final WeakReference<DynamicSystemClient> mWeakClient;
