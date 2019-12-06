@@ -46,6 +46,30 @@
       "revId": "212832bf8ab0f565c00057b4508fc58d76b5225e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cd4bc0_9044559d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-06T06:30:26Z",
+      "side": 1,
+      "message": "The reason I suggested this is that the word \"Transport\" is a bit generic, and since this file is not really very close to NetworkCapabilities, I think NetworkCapabilities.Transport would be clearer than just Transport.",
+      "parentUuid": "fb6307dd_e0991e09",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "212832bf8ab0f565c00057b4508fc58d76b5225e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
