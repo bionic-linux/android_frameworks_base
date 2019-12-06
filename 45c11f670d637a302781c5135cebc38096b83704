@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "587a9087_41276b08",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-06T14:49:02Z",
+      "side": 1,
+      "message": "it would be interesting to see if we can get rid of this, and use Compat FW for all the use cases instead. Not in this CL obviously :)\n\nThat would mean migrating hidden API enforcement to compat FW which seems like a good thing to do anyway..?",
+      "range": {
+        "startLine": 382,
+        "startChar": 8,
+        "endLine": 382,
+        "endChar": 69
+      },
+      "revId": "45c11f670d637a302781c5135cebc38096b83704",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034b81cf_bc7aee46",
+        "filename": "core/java/com/android/internal/os/WrapperInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-06T14:49:02Z",
+      "side": 1,
+      "message": "maybe better to make RuntimeInit support null here?",
+      "range": {
+        "startLine": 173,
+        "startChar": 61,
+        "endLine": 173,
+        "endChar": 97
+      },
+      "revId": "45c11f670d637a302781c5135cebc38096b83704",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1af53c3_c138e237",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-06T14:49:02Z",
+      "side": 1,
+      "message": "do we need to add mDisabledChanges to ProcessRecord? We could just keep it in a local variable within this method? (Or am I missing something?)",
+      "range": {
+        "startLine": 1666,
+        "startChar": 8,
+        "endLine": 1666,
+        "endChar": 42
+      },
+      "revId": "45c11f670d637a302781c5135cebc38096b83704",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
