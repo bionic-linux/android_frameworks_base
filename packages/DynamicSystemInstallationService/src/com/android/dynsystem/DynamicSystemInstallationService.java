@@ -74,6 +74,7 @@ public class DynamicSystemInstallationService extends Service
 
     // TODO (b/131866826): This is currently for test only. Will move this to System API.
     static final String KEY_ENABLE_WHEN_COMPLETED = "KEY_ENABLE_WHEN_COMPLETED";
+    static final String KEY_PUBKEY = "KEY_PUBKEY";
 
     /*
      * Intent actions
@@ -243,11 +244,12 @@ public class DynamicSystemInstallationService extends Service
         String url = intent.getDataString();
         long systemSize = intent.getLongExtra(DynamicSystemClient.KEY_SYSTEM_SIZE, 0);
         long userdataSize = intent.getLongExtra(DynamicSystemClient.KEY_USERDATA_SIZE, 0);
+        String pubKey = intent.getStringExtra(KEY_PUBKEY);
         mEnableWhenCompleted = intent.getBooleanExtra(KEY_ENABLE_WHEN_COMPLETED, false);
 
         // TODO: better constructor or builder
         mInstallTask = new InstallationAsyncTask(
-                url, systemSize, userdataSize, this, mDynSystem, this);
+                url, systemSize, userdataSize, pubKey, this, mDynSystem, this);
 
         mInstallTask.execute();
 
