@@ -22,6 +22,30 @@
       "revId": "212832bf8ab0f565c00057b4508fc58d76b5225e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6307dd_e0991e09",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-06T06:17:16Z",
+      "side": 1,
+      "message": "Is the reason to prevent if other files have the same annotation?",
+      "parentUuid": "53d81b98_a4dbb12e",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "212832bf8ab0f565c00057b4508fc58d76b5225e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
