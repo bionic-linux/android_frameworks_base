@@ -3136,7 +3136,7 @@ public class PackageManagerService extends IPackageManager.Stub
                         // No apps are running this early, so no need to freeze
                         clearAppDataLIF(ps.pkg, UserHandle.USER_ALL,
                                 FLAG_STORAGE_DE | FLAG_STORAGE_CE | FLAG_STORAGE_EXTERNAL
-                                        | Installer.FLAG_CLEAR_CODE_CACHE_ONLY);
+                                        | Installer.FLAG_CLEAR_CODE_CACHE_ONLY, false);
                     }
                 }
                 ver.fingerprint = Build.FINGERPRINT;
@@ -10211,7 +10211,8 @@ public class PackageManagerService extends IPackageManager.Stub
         return (userId == UserHandle.USER_ALL) ? sUserManager.getUserIds() : new int[] { userId };
     }
 
-    private void clearAppDataLIF(PackageParser.Package pkg, int userId, int flags) {
+    private void clearAppDataLIF(PackageParser.Package pkg, int userId,
+            int flags, boolean clearProfile) {
         if (pkg == null) {
             Slog.wtf(TAG, "Package was null!", new Throwable());
             return;
@@ -10221,8 +10222,13 @@ public class PackageManagerService extends IPackageManager.Stub
         for (int i = 0; i < childCount; i++) {
             clearAppDataLeafLIF(pkg.childPackages.get(i), userId, flags);
         }
+        if (clearProfile) {
+            clearAppProfilesLIF(pkg, UserHandle.USER_ALL);
+        }
+    }
 
-        clearAppProfilesLIF(pkg, UserHandle.USER_ALL);
+    private void clearAppDataLIF(PackageParser.Package pkg, int userId, int flags) {
+        clearAppDataLIF(pkg, userId, flags, true);
     }
 
     private void clearAppDataLeafLIF(PackageParser.Package pkg, int userId, int flags) {
@@ -19175,7 +19181,7 @@ public class PackageManagerService extends IPackageManager.Stub
         }
 
         clearAppDataLIF(pkg, userId,
-                FLAG_STORAGE_DE | FLAG_STORAGE_CE | FLAG_STORAGE_EXTERNAL);
+                FLAG_STORAGE_DE | FLAG_STORAGE_CE | FLAG_STORAGE_EXTERNAL, false);
 
         final int appId = UserHandle.getAppId(pkg.applicationInfo.uid);
         removeKeystoreDataIfNeeded(userId, appId);
@@ -19474,8 +19480,8 @@ public class PackageManagerService extends IPackageManager.Stub
                     final int flags = FLAG_STORAGE_DE | FLAG_STORAGE_CE | FLAG_STORAGE_EXTERNAL;
                     // We're only clearing cache files, so we don't care if the
                     // app is unfrozen and still able to run
-                    clearAppDataLIF(pkg, userId, flags | Installer.FLAG_CLEAR_CACHE_ONLY);
-                    clearAppDataLIF(pkg, userId, flags | Installer.FLAG_CLEAR_CODE_CACHE_ONLY);
+                    clearAppDataLIF(pkg, userId, flags | Installer.FLAG_CLEAR_CACHE_ONLY, false);
+                    clearAppDataLIF(pkg, userId, flags | Installer.FLAG_CLEAR_CODE_CACHE_ONLY, false);
                 }
             }
             if (observer != null) {
@@ -22047,7 +22053,7 @@ public class PackageManagerService extends IPackageManager.Stub
 
                 if (!Build.FINGERPRINT.equals(ver.fingerprint)) {
                     clearAppDataLIF(ps.pkg, UserHandle.USER_ALL, FLAG_STORAGE_DE | FLAG_STORAGE_CE
-                            | FLAG_STORAGE_EXTERNAL | Installer.FLAG_CLEAR_CODE_CACHE_ONLY);
+                            | FLAG_STORAGE_EXTERNAL | Installer.FLAG_CLEAR_CODE_CACHE_ONLY, false);
                 }
             }
         }
