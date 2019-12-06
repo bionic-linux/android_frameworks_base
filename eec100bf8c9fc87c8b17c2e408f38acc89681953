@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2142ce_cea5f0f1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-06T09:40:18Z",
+      "side": 1,
+      "message": "Instead of making this visible, maybe just use transportNamesOf() in the test.",
+      "range": {
+        "startLine": 711,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 18
+      },
+      "revId": "eec100bf8c9fc87c8b17c2e408f38acc89681953",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
