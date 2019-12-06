@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f2b450c2_ff4fa7e7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563418ac_1359e1b8",
+      "range": {
+        "startLine": 90,
+        "startChar": 51,
+        "endLine": 90,
+        "endChar": 67
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0cdda2_88ddd1ef",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513a171b_1f44ae58",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "No we don\u0027t, since HAL does not tell us.\nConsider below scenario:\n1. setLimit(rmnet1, 2MB);\n2. setLimit(rmnet2, 2MB);\n3. upstream is rmnet1, and reach the limit, onStoppedLimitReached fired but did not arrive yet.\n4. upstream change to rmnet2\n5. onStoppedLimitReached() arrived.\n6. we inform service by onLimitReached(currentUpstream())\n\nwe\u0027ll repoort rmnet2, but actually rmnet1 is the one who reached the limit.\nThus I\u0027ll keep the comment as is.\nReopen that if any question.",
+      "parentUuid": "ef0cdda2_88ddd1ef",
+      "range": {
+        "startLine": 210,
+        "startChar": 73,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6a072be5_29ab49bc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "No, the pushTetherStats only send the stats but does not trigger it for futher action.\nComment added.",
+      "parentUuid": "05902ad6_d81b717d",
+      "range": {
+        "startLine": 217,
+        "startChar": 24,
+        "endLine": 217,
+        "endChar": 88
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d6c1738_a71b3d5c",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 1
@@ -115,6 +187,30 @@
       "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0faa02ba_fe80fe1f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d6c1738_a71b3d5c",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 9
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "5b03a910_40450847",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dca4e9e_5b2e8401",
+      "range": {
+        "startLine": 274,
+        "startChar": 12,
+        "endLine": 274,
+        "endChar": 24
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7beafb4a_3a173c01",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 1
@@ -152,6 +272,30 @@
       "writtenOn": "2019-12-04T14:15:15Z",
       "side": 1,
       "message": "Do you have a notion of how many entries we are going to create here ? If it\u0027s a lot you may want to reuse the object. Now that Android has a generational GC it\u0027s not too bad, but if it\u0027s dozens of objects each time it\u0027s probably worth the small readability reduction. If it\u0027s one or two objects every time, keep the current code.",
+      "range": {
+        "startLine": 279,
+        "startChar": 49,
+        "endLine": 279,
+        "endChar": 52
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a43aaa9_bcd310a7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "it\u0027s one tx/rx per iface.\nso I\u0027ll leave it as is.",
+      "parentUuid": "7beafb4a_3a173c01",
       "range": {
         "startLine": 279,
         "startChar": 49,
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "de1d0792_2ea6c6d2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "This cannot be null given it is final and assigned at l.125, right?",
+      "parentUuid": "6b015b96_89fe57b5",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 26
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32e6dfef_f0be96f3",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
         "patchSetId": 1
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "c186e148_c2557361",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "The first 2 are triggered by updateStatsForAllUpstreams().\nWhere it will gather stats from HW for all old/new upstreams.\nThe last 2 at l.659 are triggered by the updating code in getTetherStats.\n\nRemoved, given that it is redundant.",
+      "parentUuid": "32e6dfef_f0be96f3",
+      "range": {
+        "startLine": 659,
+        "startChar": 44,
+        "endLine": 659,
+        "endChar": 61
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61343994_082285e9",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -230,6 +422,30 @@
       "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c894e11_36560e29",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-06T06:48:51Z",
+      "side": 1,
+      "message": "It will be addressed in follow-up commit.\nAfter all callers of the mStatsService are eliminated.\nCurrently I think it is obvioous we will to do that shortly, so TODO is not added.\nReopen this if you think the TODO is needed here.",
+      "parentUuid": "61343994_082285e9",
+      "range": {
+        "startLine": 229,
+        "startChar": 53,
+        "endLine": 229,
+        "endChar": 72
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
