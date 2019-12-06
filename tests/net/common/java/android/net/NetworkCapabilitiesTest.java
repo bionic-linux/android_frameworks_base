@@ -17,6 +17,8 @@
 package android.net;
 
 import static android.net.NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
+import static android.net.NetworkCapabilities.MAX_TRANSPORT;
+import static android.net.NetworkCapabilities.MIN_TRANSPORT;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_CBS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_EIMS;
@@ -33,6 +35,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_WIFI_P2P;
 import static android.net.NetworkCapabilities.RESTRICTED_CAPABILITIES;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_NAMES;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
@@ -592,5 +595,12 @@ public class NetworkCapabilitiesTest {
         assertEquals(TRANSPORT_WIFI, transportTypes[1]);
         assertEquals(TRANSPORT_VPN, transportTypes[2]);
         assertEquals(TRANSPORT_TEST, transportTypes[3]);
+    }
+
+    @Test
+    public void testGetTransportName() {
+        for (int type = MIN_TRANSPORT; type <= MAX_TRANSPORT; type++) {
+            assertEquals(TRANSPORT_NAMES[type], NetworkCapabilities.transportNameOf(type));
+        }
     }
 }
