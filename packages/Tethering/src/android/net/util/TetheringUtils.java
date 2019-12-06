@@ -32,5 +32,9 @@ public class TetheringUtils {
      * @param fd the socket's {@link FileDescriptor}.
      * @param ifIndex the interface index.
      */
-    public native static void setupRaSocket(FileDescriptor fd, String interfaceName, int ifIndex) throws SocketException;
+    public static native void setupRaSocket(FileDescriptor fd, String interfaceName, int ifIndex) throws SocketException;
+
+    public static int uint16(short s) {
+        return s & 0xffff;
+    }
 }

@@ -326,7 +326,7 @@ public class TetheringService extends Service {
                             try {
                                 mNetworkStackConnector.makeDhcpServer(ifName, params, cb);
                             } catch (RemoteException e) {
-                                e.rethrowFromSystemServer();
+                                throw new RuntimeException(e);
                             }
                         }
                     };

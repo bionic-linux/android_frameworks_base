@@ -24,6 +24,7 @@ import static android.net.TrafficStats.UID_TETHERING;
 import static android.provider.Settings.Global.TETHER_OFFLOAD_DISABLED;
 
 import android.content.ContentResolver;
+import android.net.InetAddresses;
 import android.net.ITetheringStatsProvider;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -477,9 +478,10 @@ public class OffloadController {
             if (!ri.hasGateway()) continue;
 
             final String gateway = ri.getGateway().getHostAddress();
-            if (ri.isIPv4Default()) {
+            final InetAddress address = ri.getDestination().getAddress();
+            if (ri.isDefaultRoute() && address instanceof Inet4Address) {
                 v4gateway = gateway;
-            } else if (ri.isIPv6Default()) {
+            } else if (ri.isDefaultRoute() && address instanceof Inet6Address) {
                 v6gateways.add(gateway);
             }
         }
@@ -547,7 +549,10 @@ public class OffloadController {
 
     private static boolean shouldIgnoreDownstreamRoute(RouteInfo route) {
         // Ignore any link-local routes.
-        if (!route.getDestinationLinkAddress().isGlobalPreferred()) return true;
+        final IpPrefix destination = route.getDestination();
+        final LinkAddress linkAddr = new LinkAddress(destination.getAddress(),
+                destination.getPrefixLength());
+        if (!linkAddr.isGlobalPreferred()) return true;
 
         return false;
     }
@@ -628,7 +633,7 @@ public class OffloadController {
 
     private static Inet4Address parseIPv4Address(String addrString) {
         try {
-            final InetAddress ip = InetAddress.parseNumericAddress(addrString);
+            final InetAddress ip = InetAddresses.parseNumericAddress(addrString);
             // TODO: Consider other sanitization steps here, including perhaps:
             //           not eql to 0.0.0.0
             //           not within 169.254.0.0/16

@@ -183,7 +183,6 @@ public class Tethering {
     private final TetheringDependencies mDeps;
     private final EntitlementManager mEntitlementMgr;
     private final Handler mHandler;
-    private final PhoneStateListener mPhoneStateListener;
     private final INetd mNetd;
     private final NetdCallback mNetdCallback;
     private final UserRestrictionActionListener mTetheringRestriction;
@@ -248,26 +247,6 @@ public class Tethering {
                     mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
                 });
 
-        mPhoneStateListener = new PhoneStateListener(mLooper) {
-            @Override
-            public void onActiveDataSubscriptionIdChanged(int subId) {
-                mLog.log("OBSERVED active data subscription change, from " + mActiveDataSubId
-                        + " to " + subId);
-                if (subId == mActiveDataSubId) return;
-
-                mActiveDataSubId = subId;
-                updateConfiguration();
-                // To avoid launching unexpected provisioning checks, ignore re-provisioning when
-                // no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning() will be
-                // triggered again when CarrierConfig is loaded.
-                if (mEntitlementMgr.getCarrierConfig(mConfig) != null) {
-                    mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
-                } else {
-                    mLog.log("IGNORED reevaluate provisioning due to no carrier config loaded");
-                }
-            }
-        };
-
         mStateReceiver = new StateReceiver();
 
         mNetdCallback = new NetdCallback();
@@ -290,8 +269,32 @@ public class Tethering {
 
     private void startStateMachineUpdaters(Handler handler) {
         mCarrierConfigChange.startListening();
-        mContext.getSystemService(TelephonyManager.class).listen(
-                mPhoneStateListener, PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE);
+        mHandler.post(() -> {
+            final PhoneStateListener phoneStateListener = new PhoneStateListener() {
+                @Override
+                public void onActiveDataSubscriptionIdChanged(int subId) {
+                    if (Looper.myLooper() != mLooper) {
+                        mLog.e("WARNING: PhoneStateListener callback from different thread");
+                    }
+                    mLog.log("OBSERVED active data subscription change, from " + mActiveDataSubId
+                            + " to " + subId);
+                    if (subId == mActiveDataSubId) return;
+
+                    mActiveDataSubId = subId;
+                    updateConfiguration();
+                    // To avoid launching unexpected provisioning checks, ignore re-provisioning
+                    // when no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning()
+                    // ill be triggered again when CarrierConfig is loaded.
+                    if (mEntitlementMgr.getCarrierConfig(mConfig) != null) {
+                        mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
+                    } else {
+                        mLog.log("IGNORED reevaluate provisioning, no carrier config loaded");
+                    }
+                }
+            };
+            mContext.getSystemService(TelephonyManager.class).listen(phoneStateListener,
+                    PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE);
+        });
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_STATE);
@@ -322,8 +325,7 @@ public class Tethering {
     }
 
     private void maybeDunSettingChanged() {
-        final boolean isDunRequired = TetheringConfiguration.checkDunRequired(
-                mContext, mActiveDataSubId);
+        final boolean isDunRequired = TetheringConfiguration.checkDunRequired(mContext);
         if (isDunRequired == mConfig.isDunRequired) return;
         updateConfiguration();
     }
