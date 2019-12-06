@@ -44,6 +44,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
@@ -396,6 +397,11 @@ public class NotificationRemoteInputManager implements Dumpable {
                 mCallback.onLockedWorkRemoteInput(userId, row, view);
                 return true;
             }
+        }
+
+        if (view instanceof ImageView) {
+            boolean enable = row.getPrivateLayout().getExpandedChild().isShown();
+            view.setSoundEffectsEnabled(enable);
         }
 
         if (riv != null && !riv.isAttachedToWindow()) {
