@@ -1631,3 +1631,14 @@ filegroup {
         "core/java/com/android/internal/util/DumpUtils.java"
     ],
 }
+
+java_library {
+    name: "link-check-demo-platform",
+    srcs: ["core/java/android/annotation/NonNull.java"],
+    platform_apis: true,
+}
+java_library {
+    name: "link-check-demo-sdk",
+    sdk_version: "current",
+    libs: ["link-check-demo-platform"],
+}
