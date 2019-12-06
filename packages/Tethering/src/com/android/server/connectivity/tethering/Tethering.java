@@ -120,6 +120,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  *
@@ -185,10 +187,11 @@ public class Tethering {
     private final TetheringDependencies mDeps;
     private final EntitlementManager mEntitlementMgr;
     private final Handler mHandler;
-    private final PhoneStateListener mPhoneStateListener;
     private final INetd mNetd;
     private final NetdCallback mNetdCallback;
     private final UserRestrictionActionListener mTetheringRestriction;
+    private final TetheringThreadExecutor mExecutor;
+    private final ActiveDataSubIdListener mActiveDataSubIdListener;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -222,6 +225,7 @@ public class Tethering {
         mTetherMasterSM.start();
 
         mHandler = mTetherMasterSM.getHandler();
+        mExecutor = new TetheringThreadExecutor(mHandler);
         mOffloadController = new OffloadController(mHandler,
                 mDeps.getOffloadHardwareInterface(mHandler, mLog),
                 mContext.getContentResolver(), mNMService,
@@ -252,26 +256,6 @@ public class Tethering {
                     mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
                 });
 
-        mPhoneStateListener = new PhoneStateListener(mLooper) {
-            @Override
-            public void onActiveDataSubscriptionIdChanged(int subId) {
-                mLog.log("OBSERVED active data subscription change, from " + mActiveDataSubId
-                        + " to " + subId);
-                if (subId == mActiveDataSubId) return;
-
-                mActiveDataSubId = subId;
-                updateConfiguration();
-                // To avoid launching unexpected provisioning checks, ignore re-provisioning when
-                // no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning() will be
-                // triggered again when CarrierConfig is loaded.
-                if (mEntitlementMgr.getCarrierConfig(mConfig) != null) {
-                    mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
-                } else {
-                    mLog.log("IGNORED reevaluate provisioning due to no carrier config loaded");
-                }
-            }
-        };
-
         mStateReceiver = new StateReceiver();
 
         mNetdCallback = new NetdCallback();
@@ -284,6 +268,7 @@ public class Tethering {
         final UserManager userManager = (UserManager) mContext.getSystemService(
                     Context.USER_SERVICE);
         mTetheringRestriction = new UserRestrictionActionListener(userManager, this);
+        mActiveDataSubIdListener = new ActiveDataSubIdListener(mExecutor);
 
         // Load tethering configuration.
         updateConfiguration();
@@ -294,8 +279,8 @@ public class Tethering {
 
     private void startStateMachineUpdaters(Handler handler) {
         mCarrierConfigChange.startListening();
-        mContext.getSystemService(TelephonyManager.class).listen(
-                mPhoneStateListener, PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE);
+        mContext.getSystemService(TelephonyManager.class).listen(mActiveDataSubIdListener,
+                PhoneStateListener.LISTEN_ACTIVE_DATA_SUBSCRIPTION_ID_CHANGE);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_STATE);
@@ -314,6 +299,43 @@ public class Tethering {
 
     }
 
+    private class TetheringThreadExecutor implements Executor {
+        private final Handler mTetherHandler;
+        TetheringThreadExecutor(Handler handler) {
+            mTetherHandler = handler;
+        }
+        @Override
+        public void execute(Runnable command) {
+            if (!mTetherHandler.post(command)) {
+                throw new RejectedExecutionException(mTetherHandler + " is shutting down");
+            }
+        }
+    }
+
+    private class ActiveDataSubIdListener extends PhoneStateListener {
+        ActiveDataSubIdListener(Executor executor) {
+            super(executor);
+        }
+
+        @Override
+        public void onActiveDataSubscriptionIdChanged(int subId) {
+            mLog.log("OBSERVED active data subscription change, from " + mActiveDataSubId
+                    + " to " + subId);
+            if (subId == mActiveDataSubId) return;
+
+            mActiveDataSubId = subId;
+            updateConfiguration();
+            // To avoid launching unexpected provisioning checks, ignore re-provisioning
+            // when no CarrierConfig loaded yet. Assume reevaluateSimCardProvisioning()
+            // ill be triggered again when CarrierConfig is loaded.
+            if (mEntitlementMgr.getCarrierConfig(mConfig) != null) {
+                mEntitlementMgr.reevaluateSimCardProvisioning(mConfig);
+            } else {
+                mLog.log("IGNORED reevaluate provisioning, no carrier config loaded");
+            }
+        }
+    }
+
     private WifiManager getWifiManager() {
         return (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
     }
@@ -326,8 +348,7 @@ public class Tethering {
     }
 
     private void maybeDunSettingChanged() {
-        final boolean isDunRequired = TetheringConfiguration.checkDunRequired(
-                mContext, mActiveDataSubId);
+        final boolean isDunRequired = TetheringConfiguration.checkDunRequired(mContext);
         if (isDunRequired == mConfig.isDunRequired) return;
         updateConfiguration();
     }

@@ -17,6 +17,7 @@
 package android.net.ip;
 
 import static android.net.InetAddresses.parseNumericAddress;
+import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
@@ -46,7 +47,6 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.util.Log;
-import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.internal.util.MessageUtils;
@@ -486,7 +486,9 @@ public class IpServer extends StateMachine {
         }
 
         // Directly-connected route.
-        final RouteInfo route = new RouteInfo(linkAddr);
+        final IpPrefix ipv4Prefix = new IpPrefix(linkAddr.getAddress(),
+                linkAddr.getPrefixLength());
+        final RouteInfo route = new RouteInfo(ipv4Prefix, null, null, RTN_UNICAST);
         if (enabled) {
             mLinkProperties.addLinkAddress(linkAddr);
             mLinkProperties.addRoute(route);
@@ -1007,7 +1009,7 @@ public class IpServer extends StateMachine {
             String ifname, HashSet<IpPrefix> prefixes) {
         final ArrayList<RouteInfo> localRoutes = new ArrayList<RouteInfo>();
         for (IpPrefix ipp : prefixes) {
-            localRoutes.add(new RouteInfo(ipp, null, ifname));
+            localRoutes.add(new RouteInfo(ipp, null, ifname, RTN_UNICAST));
         }
         return localRoutes;
     }
@@ -1019,7 +1021,7 @@ public class IpServer extends StateMachine {
         try {
             return Inet6Address.getByAddress(null, dnsBytes, 0);
         } catch (UnknownHostException e) {
-            Slog.wtf(TAG, "Failed to construct Inet6Address from: " + localPrefix);
+            Log.wtf(TAG, "Failed to construct Inet6Address from: " + localPrefix);
             return null;
         }
     }

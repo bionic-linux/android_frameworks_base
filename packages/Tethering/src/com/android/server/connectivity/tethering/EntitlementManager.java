@@ -38,7 +38,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.util.SharedLog;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -48,7 +47,6 @@ import android.os.PersistableBundle;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
 import android.os.SystemProperties;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.util.ArraySet;
@@ -379,12 +377,9 @@ public class EntitlementManager {
         intent.putExtra(EXTRA_PROVISION_CALLBACK, receiver);
         intent.putExtra(EXTRA_SUBID, subId);
         intent.setComponent(TETHER_SERVICE);
-        final long ident = Binder.clearCallingIdentity();
-        try {
-            mContext.startServiceAsUser(intent, UserHandle.CURRENT);
-        } finally {
-            Binder.restoreCallingIdentity(ident);
-        }
+        // Only primilary user can change tethering, it is fine to always start setting's
+        // background service as system user.
+        mContext.startService(intent);
     }
 
     private void runUiTetherProvisioning(int type, int subId) {
@@ -407,12 +402,9 @@ public class EntitlementManager {
         intent.putExtra(EXTRA_PROVISION_CALLBACK, receiver);
         intent.putExtra(EXTRA_SUBID, subId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        final long ident = Binder.clearCallingIdentity();
-        try {
-            mContext.startActivityAsUser(intent, UserHandle.CURRENT);
-        } finally {
-            Binder.restoreCallingIdentity(ident);
-        }
+        // Only launch entitlement UI for system user. Entitlement UI should not appear for other
+        // user because only primilary user is allowed to change tethering.
+        mContext.startActivity(intent);
     }
 
     // Not needed to check if this don't run on the handler thread because it's private.
