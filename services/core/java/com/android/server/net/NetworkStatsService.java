@@ -885,9 +885,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             mUidRecorder.maybePersistLocked(currentTime);
             mUidTagRecorder.maybePersistLocked(currentTime);
         }
-
-        // re-arm global alert
-        registerGlobalAlert();
     }
 
     @Override
@@ -1011,7 +1008,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mXtRecorder.setPersistThreshold(mSettings.getXtPersistBytes(mPersistThreshold));
         mUidRecorder.setPersistThreshold(mSettings.getUidPersistBytes(mPersistThreshold));
         mUidTagRecorder.setPersistThreshold(mSettings.getUidTagPersistBytes(mPersistThreshold));
+
+        final long oldGlobalAlertBytes = mGlobalAlertBytes;
         mGlobalAlertBytes = mSettings.getGlobalAlertBytes(mPersistThreshold);
+        // re-arm global alert if changed.
+        if (oldGlobalAlertBytes != mGlobalAlertBytes) {
+            registerGlobalAlert();
+        }
     }
 
     /**
