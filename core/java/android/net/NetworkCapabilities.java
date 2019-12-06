@@ -636,6 +636,7 @@ public final class NetworkCapabilities implements Parcelable {
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(prefix = { "TRANSPORT_" }, value = {
+            TRANSPORT_UNKNOWN,
             TRANSPORT_CELLULAR,
             TRANSPORT_WIFI,
             TRANSPORT_BLUETOOTH,
@@ -646,6 +647,13 @@ public final class NetworkCapabilities implements Parcelable {
             TRANSPORT_TEST,
     })
     public @interface Transport { }
+
+    /**
+     * Indicates unknown transport.
+     *
+     * @hide
+     */
+    public static final int TRANSPORT_UNKNOWN = -1;
 
     /**
      * Indicates this network uses a Cellular transport.
