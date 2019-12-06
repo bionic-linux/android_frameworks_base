@@ -800,6 +800,7 @@ public class Dialog implements DialogInterface, Window.Callback,
 
     @Override
     public void onDetachedFromWindow() {
+        mWindow.destroy();
     }
 
     /** @hide */
