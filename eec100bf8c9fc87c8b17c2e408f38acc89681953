@@ -22,6 +22,30 @@
       "revId": "eec100bf8c9fc87c8b17c2e408f38acc89681953",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ad9bbe_c345c8e6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2019-12-06T11:23:03Z",
+      "side": 1,
+      "message": "If we use transportNamesOf() to write the test, what I can think is:\n1. Declaration an int array and put all of the transport types into it.\n2. Declaration the expected answer which is returned by transportNamesOf().\n3. Call transportNamesOf() to get the string and compare it with the expected answer.\n   e.g. \"CELLULAR|WIFI|....\".\nSo the test case will be something like:\n@Test\npublic void testTransportNames() {\n    int[] transportTypes \u003d new int[MAX_TRANSPORT-MIN_TRANSPORT+1];\n    final String allTransportTypes \u003d \"CELLULAR|WIFI|BLUETOOTH|ETHERNET|VPN|WIFI_AWARE|LOWPAN\"\n            + \"|TEST\";\n    for (int type \u003d MIN_TRANSPORT; type \u003c\u003d MAX_TRANSPORT; type++) {\n        transportTypes[type] \u003d type;\n    }\n    assertEquals(allTransportTypes, NetworkCapabilities.transportNamesOf(transportTypes));\n}\n\nFor the patchset3, the test case will be failed, and we could know something is wrong:\nSTACKTRACE:\norg.junit.ComparisonFailure: expected:\u003c[CELLULAR|WIFI|BLUETOOTH|ETHERNET|VPN|WIFI_AWARE|LOWPAN|TEST]\u003e but was:\u003c[UNKNOWN|CELLULAR|WIFI|BLUETOOTH|ETHERNET|VPN|WIFI_AWARE|LOWPAN]\u003e\n\nIs this matching what you said?",
+      "parentUuid": "3d2142ce_cea5f0f1",
+      "range": {
+        "startLine": 711,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 18
+      },
+      "revId": "eec100bf8c9fc87c8b17c2e408f38acc89681953",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
