@@ -24,6 +24,7 @@ import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
 import android.os.image.DynamicSystemClient;
 import android.os.image.DynamicSystemManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.URLUtil;
 
@@ -63,6 +64,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         }
     }
 
+    private class KeyRevokedException extends RuntimeException {
+        private KeyRevokedException(String message) {
+            super(message);
+        }
+    }
+
     /** UNSET means the installation is not completed */
     static final int RESULT_UNSET = 0;
     static final int RESULT_OK = 1;
@@ -97,22 +104,26 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private final String mUrl;
     private final long mSystemSize;
     private final long mUserdataSize;
+    private final String mPubKey;
     private final Context mContext;
     private final DynamicSystemManager mDynSystem;
     private final ProgressListener mListener;
     private DynamicSystemManager.Session mInstallationSession;
+    private DynamicSystemKeyRevocationList mRevocationList;
 
     private boolean mIsZip;
+    private boolean mIsNetworkUrl;
     private boolean mIsCompleted;
 
     private InputStream mStream;
     private ZipFile mZipFile;
 
-    InstallationAsyncTask(String url, long systemSize, long userdataSize, Context context,
-            DynamicSystemManager dynSystem, ProgressListener listener) {
+    InstallationAsyncTask(String url, long systemSize, long userdataSize, String pubKey,
+            Context context, DynamicSystemManager dynSystem, ProgressListener listener) {
         mUrl = url;
         mSystemSize = systemSize;
         mUserdataSize = userdataSize;
+        mPubKey = pubKey;
         mContext = context;
         mDynSystem = dynSystem;
         mListener = listener;
@@ -123,6 +134,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         mUrl = url;
         mSystemSize = bundle.getLong(DynamicSystemClient.KEY_SYSTEM_SIZE, 0);
         mUserdataSize = bundle.getLong(DynamicSystemClient.KEY_USERDATA_SIZE, 0);
+        mPubKey = bundle.getString(DynamicSystemClient.KEY_PUBKEY);
         mContext = context;
         mDynSystem = dynSystem;
         mListener = listener;
@@ -154,7 +166,11 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
             mDynSystem.finishInstallation();
         } catch (Exception e) {
-            e.printStackTrace();
+            String stackTraceString = Log.getStackTraceString(e);
+            if (TextUtils.isEmpty(stackTraceString)) {
+                stackTraceString = e.toString();
+            }
+            Log.e(TAG, stackTraceString);
             mDynSystem.remove();
             return e;
         } finally {
@@ -217,7 +233,8 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
                 String.format(Locale.US, "Unsupported file format: %s", mUrl));
         }
 
-        if (URLUtil.isNetworkUrl(mUrl)) {
+        mIsNetworkUrl = URLUtil.isNetworkUrl(mUrl);
+        if (mIsNetworkUrl) {
             mStream = new URL(mUrl).openStream();
         } else if (URLUtil.isFileUrl(mUrl)) {
             if (mIsZip) {
@@ -230,6 +247,30 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         } else {
             throw new UnsupportedUrlException(
                     String.format(Locale.US, "Unsupported URL: %s", mUrl));
+        }
+
+        // TODO(yochiang): Bypass this check if device is unlocked
+        mRevocationList = new DynamicSystemKeyRevocationList();
+        try {
+            String listUrl = mContext.getString(R.string.dynamic_system_key_revocation_list_url);
+            mRevocationList = DynamicSystemKeyRevocationList.fromUrl(new URL(listUrl));
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to fetch Dynamic System Key Revocation List");
+            keyRevocationThrowOrWarning(e);
+        }
+        if (!TextUtils.isEmpty(mPubKey) && mRevocationList.isRevoked(mPubKey)) {
+            Log.d(TAG, "PubKey of DSUPackage is revoked");
+            keyRevocationThrowOrWarning(
+                    new KeyRevokedException("Public key is revoked: " + mPubKey));
+        }
+    }
+
+    private void keyRevocationThrowOrWarning(Exception e) throws Exception {
+        if (mIsNetworkUrl) {
+            throw e;
+        } else {
+            // If DSU is being installed from a local file URI, then be permissive
+            Log.w(TAG, e.toString());
         }
     }
 
