@@ -2021,13 +2021,7 @@ public class TelephonyManager {
                 return null;
             }
 
-            Bundle bundle = telephony.getCellLocation(mContext.getOpPackageName());
-            if (bundle == null || bundle.isEmpty()) {
-                Rlog.d(TAG, "getCellLocation returning null because CellLocation is unavailable");
-                return null;
-            }
-
-            CellLocation cl = CellLocation.newFromBundle(bundle);
+            CellLocation cl = telephony.getCellLocation(mContext.getOpPackageName());
             if (cl == null || cl.isEmpty()) {
                 Rlog.d(TAG, "getCellLocation returning null because CellLocation is empty or"
                         + " phone type doesn't match CellLocation type");
