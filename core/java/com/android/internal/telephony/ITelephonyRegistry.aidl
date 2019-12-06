@@ -22,6 +22,7 @@ import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.telephony.CallQuality;
 import android.telephony.CellInfo;
+import android.telephony.CellLocation;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.PhoneCapability;
 import android.telephony.PhysicalChannelConfig;
@@ -66,8 +67,8 @@ interface ITelephonyRegistry {
     void notifyDataConnectionFailed(String apnType);
     void notifyDataConnectionFailedForSubscriber(int phoneId, int subId, String apnType);
     @UnsupportedAppUsage(maxTargetSdk = 28)
-    void notifyCellLocation(in Bundle cellLocation);
-    void notifyCellLocationForSubscriber(in int subId, in Bundle cellLocation);
+    void notifyCellLocation(in CellLocation cellLocation);
+    void notifyCellLocationForSubscriber(in int subId, in CellLocation cellLocation);
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyOtaspChanged(in int subId, in int otaspMode);
     @UnsupportedAppUsage
