@@ -28,6 +28,7 @@ import static android.net.ConnectivityManager.TETHERING_WIFI;
 import static android.net.ConnectivityManager.TETHER_ERROR_NO_ERROR;
 import static android.net.ConnectivityManager.TETHER_ERROR_UNKNOWN_IFACE;
 import static android.net.ConnectivityManager.TYPE_WIFI_P2P;
+import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
@@ -357,7 +358,8 @@ public class TetheringTest {
 
         if (withIPv4) {
             prop.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
-                    NetworkUtils.numericToInetAddress("10.0.0.1"), TEST_MOBILE_IFNAME));
+                    NetworkUtils.numericToInetAddress("10.0.0.1"),
+                    TEST_MOBILE_IFNAME, RTN_UNICAST));
         }
 
         if (withIPv6) {
@@ -366,14 +368,16 @@ public class TetheringTest {
                     new LinkAddress(NetworkUtils.numericToInetAddress("2001:db8::"),
                             NetworkConstants.RFC7421_PREFIX_LENGTH));
             prop.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0),
-                    NetworkUtils.numericToInetAddress("2001:db8::1"), TEST_MOBILE_IFNAME));
+                    NetworkUtils.numericToInetAddress("2001:db8::1"),
+                    TEST_MOBILE_IFNAME, RTN_UNICAST));
         }
 
         if (with464xlat) {
             final LinkProperties stackedLink = new LinkProperties();
             stackedLink.setInterfaceName(TEST_XLAT_MOBILE_IFNAME);
             stackedLink.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0),
-                    NetworkUtils.numericToInetAddress("192.0.0.1"), TEST_XLAT_MOBILE_IFNAME));
+                    NetworkUtils.numericToInetAddress("192.0.0.1"),
+                    TEST_XLAT_MOBILE_IFNAME, RTN_UNICAST));
 
             prop.addStackedLink(stackedLink);
         }
@@ -439,6 +443,7 @@ public class TetheringTest {
         mServiceContext.registerReceiver(mBroadcastReceiver,
                 new IntentFilter(ACTION_TETHER_STATE_CHANGED));
         mTethering = makeTethering();
+        mLooper.dispatchAll();
         verify(mNMService).registerTetheringStatsProvider(any(), anyString());
         verify(mNetd).registerUnsolicitedEventListener(any());
         final ArgumentCaptor<PhoneStateListener> phoneListenerCaptor =

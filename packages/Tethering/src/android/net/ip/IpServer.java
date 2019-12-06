@@ -17,6 +17,7 @@
 package android.net.ip;
 
 import static android.net.InetAddresses.parseNumericAddress;
+import static android.net.RouteInfo.RTN_UNICAST;
 import static android.net.dhcp.IDhcpServer.STATUS_SUCCESS;
 import static android.net.util.NetworkConstants.FF;
 import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
@@ -466,7 +467,9 @@ public class IpServer extends StateMachine {
         }
 
         // Directly-connected route.
-        final RouteInfo route = new RouteInfo(mIpv4Address);
+        final IpPrefix ipv4Prefix = new IpPrefix(mIpv4Address.getAddress(),
+                mIpv4Address.getPrefixLength());
+        final RouteInfo route = new RouteInfo(ipv4Prefix, null, null, RTN_UNICAST);
         if (enabled) {
             mLinkProperties.addLinkAddress(mIpv4Address);
             mLinkProperties.addRoute(route);
@@ -747,9 +750,11 @@ public class IpServer extends StateMachine {
                 mNetd.tetherInterfaceAdd(mIfaceName);
                 mNetd.networkAddInterface(INetd.LOCAL_NET_ID, mIfaceName);
                 final ArrayList<RouteInfo> routes = new ArrayList<>();
-                // The RouteInfo constructor truncates the LinkAddress to a network prefix,
-                // thus making it suitable to use as a route destination.
-                routes.add(new RouteInfo(mIpv4Address, null, mIfaceName));
+                // Truncates the LinkAddress to a network prefix to use as a route destination.
+                final IpPrefix ipv4Prefix = new IpPrefix(mIpv4Address.getAddress(),
+                        mIpv4Address.getPrefixLength());
+
+                routes.add(new RouteInfo(ipv4Prefix, null, mIfaceName, RTN_UNICAST));
                 RouteUtils.addRoutesToLocalNetwork(mNetd, mIfaceName, routes);
             } catch (RemoteException | ServiceSpecificException e) {
                 mLog.e("Error Tethering: " + e);
@@ -1003,7 +1008,7 @@ public class IpServer extends StateMachine {
             String ifname, HashSet<IpPrefix> prefixes) {
         final ArrayList<RouteInfo> localRoutes = new ArrayList<RouteInfo>();
         for (IpPrefix ipp : prefixes) {
-            localRoutes.add(new RouteInfo(ipp, null, ifname));
+            localRoutes.add(new RouteInfo(ipp, null, ifname, RTN_UNICAST));
         }
         return localRoutes;
     }

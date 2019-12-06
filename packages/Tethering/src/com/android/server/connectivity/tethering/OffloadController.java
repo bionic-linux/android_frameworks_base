@@ -477,9 +477,10 @@ public class OffloadController {
             if (!ri.hasGateway()) continue;
 
             final String gateway = ri.getGateway().getHostAddress();
-            if (ri.isIPv4Default()) {
+            final InetAddress address = ri.getDestination().getAddress();
+            if (ri.isDefaultRoute() && address instanceof Inet4Address) {
                 v4gateway = gateway;
-            } else if (ri.isIPv6Default()) {
+            } else if (ri.isDefaultRoute() && address instanceof Inet6Address) {
                 v6gateways.add(gateway);
             }
         }
@@ -547,7 +548,10 @@ public class OffloadController {
 
     private static boolean shouldIgnoreDownstreamRoute(RouteInfo route) {
         // Ignore any link-local routes.
-        if (!route.getDestinationLinkAddress().isGlobalPreferred()) return true;
+        final IpPrefix destination = route.getDestination();
+        final LinkAddress linkAddr = new LinkAddress(destination.getAddress(),
+                destination.getPrefixLength());
+        if (!linkAddr.isGlobalPreferred()) return true;
 
         return false;
     }

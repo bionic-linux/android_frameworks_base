@@ -329,7 +329,7 @@ public class UpstreamNetworkMonitor {
         }
 
         // Log changes in upstream network signal strength, if available.
-        if (network.equals(mTetheringUpstreamNetwork) && newNc.hasSignalStrength()) {
+        if (network.equals(mTetheringUpstreamNetwork)) {
             final int newSignal = newNc.getSignalStrength();
             final String prevSignal = getSignalStrength(prev.networkCapabilities);
             mLog.logf("upstream network signal strength: %s -> %s", prevSignal, newSignal);

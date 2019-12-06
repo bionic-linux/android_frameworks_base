@@ -1,3 +1,5 @@
+rule android.net.shared.Inet4AddressUtils* android.net.tethering.shared.Inet4AddressUtils@1
+
 # Don't jar-jar the entire package because, this tethering still use some
 # internal classes (like BitUtils, Protocol and TrafficStatsConstants in
 # com.android.internal.util)
