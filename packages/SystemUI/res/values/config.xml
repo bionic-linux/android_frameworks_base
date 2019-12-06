@@ -346,6 +346,9 @@
      have been scrolled off-screen. -->
     <bool name="config_showNotificationShelf">true</bool>
 
+    <!-- Whether to show always notificationShelf in the shade -->
+    <bool name="config_AlwaysShowNotificationShelf">false</bool>
+
     <!-- Whether or not the notifications should always fade as they are dismissed. -->
     <bool name="config_fadeNotificationsOnDismiss">false</bool>
 

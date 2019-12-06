@@ -98,6 +98,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
     private Rect mClipRect = new Rect();
     private int mCutoutHeight;
     private int mGapHeight;
+    private boolean mAlwaysShowNotificationShelf;
 
     @Inject
     public NotificationShelf(@Named(VIEW_CONTEXT) Context context,
@@ -156,6 +157,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
         mShelfIcons.setPadding(padding, 0, padding, 0);
         mScrollFastThreshold = res.getDimensionPixelOffset(R.dimen.scroll_fast_threshold);
         mShowNotificationShelf = res.getBoolean(R.bool.config_showNotificationShelf);
+        mAlwaysShowNotificationShelf = res.getBoolean(R.bool.config_AlwaysShowNotificationShelf);
         mIconSize = res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_icon_size);
         mHiddenShelfIconSize = res.getDimensionPixelOffset(R.dimen.hidden_shelf_icon_size);
         mGapHeight = res.getDimensionPixelSize(R.dimen.qs_notification_padding);
@@ -169,6 +171,10 @@ public class NotificationShelf extends ActivatableNotificationView implements
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initDimens();
+    }
+
+    private boolean shouldShowNotificationShelf() {
+        return !mAmbientState.isOnKeyguard() && mAlwaysShowNotificationShelf;
     }
 
     @Override
@@ -193,7 +199,9 @@ public class NotificationShelf extends ActivatableNotificationView implements
             float maxShelfEnd = ambientState.getInnerHeight() + ambientState.getTopPadding()
                     + ambientState.getStackTranslation();
             ExpandableViewState lastViewState = lastView.getViewState();
-            float viewEnd = lastViewState.yTranslation + lastViewState.height;
+            float viewEnd = lastViewState.yTranslation + lastViewState.height
+                    + (shouldShowNotificationShelf()
+                    ? viewState.height + mPaddingBetweenElements : 0);
             viewState.copyFrom(lastViewState);
             viewState.height = getIntrinsicHeight();
 
@@ -269,6 +277,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
         int backgroundTop = 0;
         int clipTopAmount = 0;
         float firstElementRoundness = 0.0f;
+        boolean shouldShowShelf = shouldShowNotificationShelf();
         ActivatableNotificationView previousRow = null;
 
         for (int i = 0; i < mHostLayout.getChildCount(); i++) {
@@ -283,7 +292,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
             float notificationClipEnd;
             boolean aboveShelf = ViewState.getFinalTranslationZ(row) > baseZHeight
                     || row.isPinned();
-            boolean isLastChild = child == lastChild;
+            boolean isLastChild = shouldShowShelf ? false : child == lastChild;
             float rowTranslationY = row.getTranslationY();
             if ((isLastChild && !child.isInShelf()) || aboveShelf || backgroundForceHidden) {
                 notificationClipEnd = shelfStart + getIntrinsicHeight();
@@ -394,7 +403,8 @@ public class NotificationShelf extends ActivatableNotificationView implements
             updateContinuousClipping(row);
         }
         boolean hideBackground = numViewsInShelf < 1.0f;
-        setHideBackground(hideBackground || backgroundForceHidden);
+        setHideBackground(shouldShowShelf ? false
+                : hideBackground || backgroundForceHidden);
         if (mNotGoneIndex == -1) {
             mNotGoneIndex = notGoneIndex;
         }
@@ -769,7 +779,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
 
     @Override
     public boolean hasNoContentHeight() {
-        return true;
+        return shouldShowNotificationShelf() ? false : true;
     }
 
     private void setHideBackground(boolean hideBackground) {
