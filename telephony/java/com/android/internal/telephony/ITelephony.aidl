@@ -31,6 +31,7 @@ import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.CarrierRestrictionRules;
 import android.telephony.CellInfo;
+import android.telephony.CellLocation;
 import android.telephony.ClientRequestStats;
 import android.telephony.IccOpenLogicalChannelResponse;
 import android.telephony.ICellInfoCallback;
@@ -294,7 +295,7 @@ interface ITelephony {
      */
     boolean isDataConnectivityPossible(int subId);
 
-    Bundle getCellLocation(String callingPkg);
+    CellLocation getCellLocation(String callingPkg);
 
     /**
      * Returns the ISO country code equivalent of the current registered

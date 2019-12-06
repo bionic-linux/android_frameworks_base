@@ -19,6 +19,7 @@ package com.android.internal.telephony;
 import android.os.Bundle;
 import android.telephony.CallAttributes;
 import android.telephony.CellInfo;
+import android.telephony.CellLocation;
 import android.telephony.DataConnectionRealTimeInfo;
 import android.telephony.PhoneCapability;
 import android.telephony.PhysicalChannelConfig;
@@ -38,8 +39,7 @@ oneway interface IPhoneStateListener {
     void onMessageWaitingIndicatorChanged(boolean mwi);
     void onCallForwardingIndicatorChanged(boolean cfi);
 
-    // we use bundle here instead of CellLocation so it can get the right subclass
-    void onCellLocationChanged(in Bundle location);
+    void onCellLocationChanged(in CellLocation location);
     void onCallStateChanged(int state, String incomingNumber);
     void onDataConnectionStateChanged(int state, int networkType);
     void onDataActivity(int direction);
@@ -66,4 +66,3 @@ oneway interface IPhoneStateListener {
     void onCallDisconnectCauseChanged(in int disconnectCause, in int preciseDisconnectCause);
     void onImsCallDisconnectCauseChanged(in ImsReasonInfo imsReasonInfo);
 }
-

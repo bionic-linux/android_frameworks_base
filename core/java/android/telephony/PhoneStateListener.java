@@ -24,7 +24,6 @@ import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Looper;
@@ -32,6 +31,7 @@ import android.telephony.Annotation.CallState;
 import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SimActivationState;
 import android.telephony.Annotation.SrvccState;
+import android.telephony.CellLocation;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.ImsReasonInfo;
 
@@ -1047,8 +1047,7 @@ public class PhoneStateListener {
                     () -> mExecutor.execute(() -> psl.onCallForwardingIndicatorChanged(cfi)));
         }
 
-        public void onCellLocationChanged(Bundle bundle) {
-            CellLocation location = CellLocation.newFromBundle(bundle);
+        public void onCellLocationChanged(CellLocation location) {
             PhoneStateListener psl = mPhoneStateListenerWeakRef.get();
             if (psl == null) return;
 

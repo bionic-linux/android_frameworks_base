@@ -24,7 +24,6 @@ import android.content.Context;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.RemoteException;
@@ -41,6 +40,7 @@ import android.telephony.Annotation.SimActivationState;
 import android.telephony.Annotation.SrvccState;
 import android.telephony.CallQuality;
 import android.telephony.CellInfo;
+import android.telephony.CellLocation;
 import android.telephony.DisconnectCause;
 import android.telephony.PhoneCapability;
 import android.telephony.ServiceState;
@@ -676,10 +676,9 @@ public class TelephonyRegistryManager {
     }
 
     /**
-     * TODO change from bundle to CellLocation?
      * @hide
      */
-    public void notifyCellLocation(int subId, Bundle cellLocation) {
+    public void notifyCellLocation(int subId, CellLocation cellLocation) {
         try {
             sRegistry.notifyCellLocationForSubscriber(subId, cellLocation);
         } catch (RemoteException ex) {
