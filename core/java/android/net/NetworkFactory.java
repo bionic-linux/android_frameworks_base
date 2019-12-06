@@ -17,13 +17,15 @@
 package android.net;
 
 import android.annotation.NonNull;
-import android.compat.annotation.UnsupportedAppUsage;
+import android.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -122,6 +124,10 @@ public class NetworkFactory extends Handler {
      */
     public static final int EVENT_UNFULFILLABLE_REQUEST = BASE + 4;
 
+    // Bundle to hold additional metadata for the request.
+    public static final String NETWORK_REQUEST_BUNDLE_UID_KEY = "Uid";
+    public static final String NETWORK_REQUEST_BUNDLE_PACKAGE_NAME_KEY = "PackageName";
+
     private final Context mContext;
     private final ArrayList<Message> mPreConnectedQueue = new ArrayList<Message>();
     private final String LOG_TAG;
@@ -156,8 +162,9 @@ public class NetworkFactory extends Handler {
         mProvider = new NetworkProvider(mContext, NetworkFactory.this.getLooper(), LOG_TAG) {
             @Override
             public void onNetworkRequested(@NonNull NetworkRequest request, int score,
-                    int servingProviderId) {
-                handleAddRequest((NetworkRequest) request, score, servingProviderId);
+                    int servingProviderId, int uid, @NonNull String packageName) {
+                handleAddRequest(
+                            (NetworkRequest) request, score, servingProviderId, uid, packageName);
             }
 
             @Override
@@ -185,7 +192,10 @@ public class NetworkFactory extends Handler {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case CMD_REQUEST_NETWORK: {
-                handleAddRequest((NetworkRequest) msg.obj, msg.arg1, msg.arg2);
+                Bundle bundle = msg.getData();
+                handleAddRequest((NetworkRequest) msg.obj, msg.arg1, msg.arg2,
+                        bundle.getInt(NETWORK_REQUEST_BUNDLE_UID_KEY),
+                        bundle.getString(NETWORK_REQUEST_BUNDLE_PACKAGE_NAME_KEY));
                 break;
             }
             case CMD_CANCEL_REQUEST: {
@@ -207,13 +217,18 @@ public class NetworkFactory extends Handler {
         public final NetworkRequest request;
         public int score;
         public boolean requested; // do we have a request outstanding, limited by score
-        public int providerId;
+        public int factorySerialNumber;
+        public int requestorUid;
+        public String requestorPackageName;
 
-        NetworkRequestInfo(NetworkRequest request, int score, int providerId) {
+        NetworkRequestInfo(NetworkRequest request, int score, int factorySerialNumber,
+                int requestorUid, String requstorPackageName) {
             this.request = request;
             this.score = score;
             this.requested = false;
-            this.providerId = providerId;
+            this.factorySerialNumber = factorySerialNumber;
+            this.requestorUid = requestorUid;
+            this.requestorPackageName = requstorPackageName;
         }
 
         @Override
@@ -235,7 +250,7 @@ public class NetworkFactory extends Handler {
     // the entire tree.
     @VisibleForTesting
     protected void handleAddRequest(NetworkRequest request, int score) {
-        handleAddRequest(request, score, NetworkProvider.ID_NONE);
+        handleAddRequest(request, score, SerialNumber.NONE, Process.INVALID_UID, "");
     }
 
     /**
@@ -248,22 +263,21 @@ public class NetworkFactory extends Handler {
      *        currently satisfying this request.
      */
     @VisibleForTesting
-    protected void handleAddRequest(NetworkRequest request, int score, int servingProviderId) {
+    protected void handleAddRequest(NetworkRequest request, int score,
+            int servingFactorySerialNumber, int requestorUid, String requestorPackageName) {
         NetworkRequestInfo n = mNetworkRequests.get(request.requestId);
         if (n == null) {
             if (DBG) {
-                log("got request " + request + " with score " + score
-                        + " and providerId " + servingProviderId);
+                log("got request " + request + " with score " + score);
             }
-            n = new NetworkRequestInfo(request, score, servingProviderId);
+            n = new NetworkRequestInfo(request, score, servingFactorySerialNumber, requestorUid,
+                    requestorPackageName);
             mNetworkRequests.put(n.request.requestId, n);
         } else {
             if (VDBG) {
-                log("new score " + score + " for exisiting request " + request
-                        + " and providerId " + servingProviderId);
+                log("new score " + score + " for exisiting request " + request);
             }
             n.score = score;
-            n.providerId = servingProviderId;
         }
         if (VDBG) log("  my score=" + mScore + ", my filter=" + mCapabilityFilter);
 
@@ -312,18 +326,40 @@ public class NetworkFactory extends Handler {
         return true;
     }
 
+    /**
+     * Overridable function to provide complex filtering.
+     * Called for every request every time a new NetworkRequest is seen
+     * and whenever the filterScore or filterNetworkCapabilities change.
+     *
+     * acceptRequest can be overridden to provide complex filter behavior
+     * for the incoming requests
+     *
+     * For output, this class will call {@link #needNetworkFor} and
+     * {@link #releaseNetworkFor} for every request that passes the filters.
+     * If you don't need to see every request, you can leave the base
+     * implementations of those two functions and instead override
+     * {@link #startNetwork} and {@link #stopNetwork}.
+     *
+     * If you want to see every score fluctuation on every request, set
+     * your score filter to a very high number and watch {@link #needNetworkFor}.
+     *
+     * @return {@code true} to accept the request.
+     */
+    public boolean acceptRequest(NetworkRequest request, int score, int requestorUid,
+            @NonNull String requestorPackageName) {
+        return acceptRequest(request, score);
+    }
+
     private void evalRequest(NetworkRequestInfo n) {
         if (VDBG) {
             log("evalRequest");
             log(" n.requests = " + n.requested);
             log(" n.score = " + n.score);
             log(" mScore = " + mScore);
-            log(" n.providerId = " + n.providerId);
-            log(" mProviderId = " + mProviderId);
         }
         if (shouldNeedNetworkFor(n)) {
             if (VDBG) log("  needNetworkFor");
-            needNetworkFor(n.request, n.score);
+            needNetworkFor(n.request, n.score, n.requestorUid, n.requestorPackageName);
             n.requested = true;
         } else if (shouldReleaseNetworkFor(n)) {
             if (VDBG) log("  releaseNetworkFor");
@@ -340,13 +376,13 @@ public class NetworkFactory extends Handler {
             // If the score of this request is higher or equal to that of this factory and some
             // other factory is responsible for it, then this factory should not track the request
             // because it has no hope of satisfying it.
-            && (n.score < mScore || n.providerId == mProviderId)
+            && (n.score < mScore)
             // If this factory can't satisfy the capability needs of this request, then it
             // should not be tracked.
             && n.request.networkCapabilities.satisfiedByNetworkCapabilities(mCapabilityFilter)
             // Finally if the concrete implementation of the factory rejects the request, then
             // don't track it.
-            && acceptRequest(n.request, n.score);
+            && acceptRequest(n.request, n.score, n.requestorUid, n.requestorPackageName);
     }
 
     private boolean shouldReleaseNetworkFor(NetworkRequestInfo n) {
@@ -358,10 +394,10 @@ public class NetworkFactory extends Handler {
             //   assigned to the factory
             // - This factory can't satisfy the capability needs of the request
             // - The concrete implementation of the factory rejects the request
-            && ((n.score > mScore && n.providerId != mProviderId)
+            && (n.score > mScore
                     || !n.request.networkCapabilities.satisfiedByNetworkCapabilities(
                             mCapabilityFilter)
-                    || !acceptRequest(n.request, n.score));
+                    || !acceptRequest(n.request, n.score, n.requestorUid, n.requestorPackageName));
     }
 
     private void evalRequests() {
@@ -404,6 +440,12 @@ public class NetworkFactory extends Handler {
     // override to do fancier stuff
     protected void needNetworkFor(NetworkRequest networkRequest, int score) {
         if (++mRefCount == 1) startNetwork();
+    }
+
+    // override to do fancier stuff
+    protected void needNetworkFor(NetworkRequest networkRequest, int score, int requestorUid,
+            @NonNull String requestorPackageName) {
+        needNetworkFor(networkRequest, score);
     }
 
     protected void releaseNetworkFor(NetworkRequest networkRequest) {

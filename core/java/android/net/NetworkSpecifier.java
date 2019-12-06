@@ -48,8 +48,11 @@ public abstract class NetworkSpecifier {
      * @param requestorUid The UID of the requestor as obtained from its binder.
      *
      * @hide
+     * @deprecated  no longer need this. Use {@link NetworkFactory#needNetworkFor(NetworkRequest,
+     * int, int, String)} or {@link NetworkFactory#acceptRequest(NetworkRequest, int, int, String)}
+     * for retrieving the requestor info.
      */
-    @SystemApi
+    @Deprecated
     public void assertValidFromUid(int requestorUid) {
         // empty
     }

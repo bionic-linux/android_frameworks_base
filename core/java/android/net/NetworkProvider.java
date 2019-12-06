@@ -16,11 +16,15 @@
 
 package android.net;
 
+import static android.net.NetworkFactory.NETWORK_REQUEST_BUNDLE_PACKAGE_NAME_KEY;
+import static android.net.NetworkFactory.NETWORK_REQUEST_BUNDLE_UID_KEY;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -91,7 +95,10 @@ public class NetworkProvider {
             public void handleMessage(Message m) {
                 switch (m.what) {
                     case CMD_REQUEST_NETWORK:
-                        onNetworkRequested((NetworkRequest) m.obj, m.arg1, m.arg2);
+                        Bundle bundle = m.getData();
+                        onNetworkRequested((NetworkRequest) m.obj, m.arg1, m.arg2,
+                                bundle.getInt(NETWORK_REQUEST_BUNDLE_UID_KEY),
+                                bundle.getString(NETWORK_REQUEST_BUNDLE_PACKAGE_NAME_KEY));
                         break;
                     case CMD_CANCEL_REQUEST:
                         onRequestWithdrawn((NetworkRequest) m.obj);
@@ -136,11 +143,14 @@ public class NetworkProvider {
      * @param score the score of the network currently satisfying the request, or 0 if none.
      * @param providerId the ID of the provider that created the network currently satisfying this
      *                   request, or {@link #ID_NONE} if none.
+     * @param uid UID of the requestor.
+     * @param packageName Package Name of the requestor.
      *
      *  @hide
      */
     @SystemApi
-    public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId) {}
+    public void onNetworkRequested(@NonNull NetworkRequest request, int score, int providerId,
+            int uid, @NonNull String packageName) {}
 
     /**
      *  Called when a NetworkRequest is withdrawn.
