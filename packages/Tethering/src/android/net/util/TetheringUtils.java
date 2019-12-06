@@ -37,4 +37,11 @@ public class TetheringUtils {
      */
     public static native void setupRaSocket(FileDescriptor fd, String interfaceName, int ifIndex)
             throws SocketException;
+
+    /**
+     * Read s as an unsigned 16-bit integer.
+     */
+    public static int uint16(short s) {
+        return s & 0xffff;
+    }
 }
