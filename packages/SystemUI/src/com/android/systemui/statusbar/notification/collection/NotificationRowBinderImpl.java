@@ -217,6 +217,12 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
             if (oldImportance != null && entry.importance != oldImportance) {
                 if (entry.rowExists()) {
                     entry.getRow().onNotificationRankingUpdated();
+                    boolean isLowPriority = entry.ambient;
+                    boolean wasLowPriority = entry.getRow().isLowPriority();
+                    if (wasLowPriority != isLowPriority) {
+                        entry.getRow().setIsLowPriority(entry.ambient);
+                        entry.getRow().inflateViews();
+                    }
                 }
             }
         }
