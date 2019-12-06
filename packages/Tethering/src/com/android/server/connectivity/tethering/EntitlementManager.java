@@ -381,7 +381,7 @@ public class EntitlementManager {
         intent.setComponent(TETHER_SERVICE);
         final long ident = Binder.clearCallingIdentity();
         try {
-            mContext.startServiceAsUser(intent, UserHandle.CURRENT);
+            mContext.startService(intent);
         } finally {
             Binder.restoreCallingIdentity(ident);
         }

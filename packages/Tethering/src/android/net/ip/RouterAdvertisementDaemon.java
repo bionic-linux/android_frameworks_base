@@ -29,6 +29,7 @@ import android.net.LinkAddress;
 import android.net.NetworkUtils;
 import android.net.TrafficStats;
 import android.net.util.InterfaceParams;
+import android.net.util.SocketUtils;
 import android.net.util.TetheringUtils;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -37,8 +38,6 @@ import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.TrafficStatsConstants;
-
-import libcore.io.IoBridge;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -626,7 +625,7 @@ public class RouterAdvertisementDaemon {
     private void closeSocket() {
         if (mSocket != null) {
             try {
-                IoBridge.closeAndSignalBlockedThreads(mSocket);
+                SocketUtils.closeSocket(mSocket);
             } catch (IOException ignored) { }
         }
         mSocket = null;
