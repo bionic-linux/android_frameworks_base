@@ -5048,9 +5048,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             bindApplicationTimeMillis = SystemClock.elapsedRealtime();
             mAtmInternal.preBindApplication(app.getWindowProcessController());
             final ActiveInstrumentation instr2 = app.getActiveInstrumentation();
-            long[] disabledCompatChanges = {};
             if (mPlatformCompat != null) {
-                disabledCompatChanges = mPlatformCompat.getDisabledChanges(app.info);
                 mPlatformCompat.resetReporting(app.info);
             }
             if (app.isolatedEntryPoint != null) {
@@ -5069,7 +5067,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         app.compat, getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
                         buildSerial, autofillOptions, contentCaptureOptions,
-                        disabledCompatChanges);
+                        app.disabledCompatChanges);
             } else {
                 thread.bindApplication(processName, appInfo, providers, null, profilerInfo,
                         null, null, null, testMode,
@@ -5079,7 +5077,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         app.compat, getCommonServicesLocked(app.isolated),
                         mCoreSettingsObserver.getCoreSettingsLocked(),
                         buildSerial, autofillOptions, contentCaptureOptions,
-                        disabledCompatChanges);
+                        app.disabledCompatChanges);
             }
             if (profilerInfo != null) {
                 profilerInfo.closeFd();
