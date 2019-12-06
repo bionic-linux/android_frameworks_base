@@ -69,6 +69,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
@@ -96,6 +97,7 @@ import com.android.internal.util.MemInfoReader;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.Watchdog;
+import com.android.server.compat.PlatformCompat;
 import com.android.server.pm.dex.DexManager;
 import com.android.server.wm.ActivityServiceConnectionsHolder;
 import com.android.server.wm.WindowManagerService;
@@ -384,6 +386,8 @@ public final class ProcessList {
     final ArrayMap<AppZygote, ArrayList<ProcessRecord>> mAppZygoteProcesses =
             new ArrayMap<AppZygote, ArrayList<ProcessRecord>>();
 
+    private final PlatformCompat mPlatformCompat;
+
     final class IsolatedUidRange {
         @VisibleForTesting
         public final int mFirstUid;
@@ -563,6 +567,8 @@ public final class ProcessList {
         minfo.readMemInfo();
         mTotalMemMb = minfo.getTotalSize()/(1024*1024);
         updateOomLevels(0, 0, false);
+        mPlatformCompat = (PlatformCompat) ServiceManager.getService(
+                Context.PLATFORM_COMPAT_SERVICE);
     }
 
     void init(ActivityManagerService service, ActiveUids activeUids) {
@@ -1657,6 +1663,10 @@ public final class ProcessList {
             Slog.wtf(TAG, "startProcessLocked processName:" + app.processName
                     + " with non-zero pid:" + app.pid);
         }
+        app.mDisabledCompatChanges = null;
+        if (mPlatformCompat != null) {
+            app.mDisabledCompatChanges = mPlatformCompat.getDisabledChanges(app.info);
+        }
         final long startSeq = app.startSeq = ++mProcStartSeqCounter;
         app.setStartParams(uid, hostingRecord, seInfo, startTime);
         app.setUsingWrapper(invokeWith != null
@@ -1811,8 +1821,8 @@ public final class ProcessList {
                 startResult = startWebView(entryPoint,
                         app.processName, uid, uid, gids, runtimeFlags, mountExternal,
                         app.info.targetSdkVersion, seInfo, requiredAbi, instructionSet,
-                        app.info.dataDir, null, app.info.packageName,
-                        new String[] {PROC_START_SEQ_IDENT + app.startSeq});
+                        app.info.dataDir, null, app.info.packageName, app.mDisabledCompatChanges,
+                        new String[]{PROC_START_SEQ_IDENT + app.startSeq});
             } else if (hostingRecord.usesAppZygote()) {
                 final AppZygote appZygote = createAppZygoteForProcessIfNeeded(app);
 
@@ -1820,14 +1830,15 @@ public final class ProcessList {
                         app.processName, uid, uid, gids, runtimeFlags, mountExternal,
                         app.info.targetSdkVersion, seInfo, requiredAbi, instructionSet,
                         app.info.dataDir, null, app.info.packageName,
-                        /*useUsapPool=*/ false,
-                        new String[] {PROC_START_SEQ_IDENT + app.startSeq});
+                        /*useUsapPool=*/ false, app.mDisabledCompatChanges,
+                        new String[]{PROC_START_SEQ_IDENT + app.startSeq});
             } else {
                 startResult = Process.start(entryPoint,
                         app.processName, uid, uid, gids, runtimeFlags, mountExternal,
                         app.info.targetSdkVersion, seInfo, requiredAbi, instructionSet,
                         app.info.dataDir, invokeWith, app.info.packageName,
-                        new String[] {PROC_START_SEQ_IDENT + app.startSeq});
+                        app.mDisabledCompatChanges,
+                        new String[]{PROC_START_SEQ_IDENT + app.startSeq});
             }
             checkSlow(startTime, "startProcess: returned from zygote!");
             return startResult;
