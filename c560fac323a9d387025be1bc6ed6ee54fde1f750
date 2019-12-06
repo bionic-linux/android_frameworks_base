@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275b3dca_cd9f6392",
+        "filename": "core/java/android/telephony/PhoneStateListener.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-06T22:39:41Z",
+      "side": 1,
+      "message": "Ah, I see... so for all of these, you should just pass a CellIdentity and then do .asCellLocation() at the last moment, inside the client process.",
+      "range": {
+        "startLine": 1050,
+        "startChar": 42,
+        "endLine": 1050,
+        "endChar": 64
+      },
+      "revId": "c560fac323a9d387025be1bc6ed6ee54fde1f750",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
