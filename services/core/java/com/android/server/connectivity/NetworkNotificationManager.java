@@ -16,8 +16,11 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkCapabilities.MAX_TRANSPORT;
+import static android.net.NetworkCapabilities.MIN_TRANSPORT;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_UNKNOWN;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
@@ -27,6 +30,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.NetworkCapabilities;
 import android.net.NetworkSpecifier;
 import android.net.StringNetworkSpecifier;
 import android.net.wifi.WifiInfo;
@@ -98,13 +102,13 @@ public class NetworkNotificationManager {
     private static int getFirstTransportType(NetworkAgentInfo nai) {
         // TODO: The range is wrong, the safer and correct way is to change the range from
         // MIN_TRANSPORT to MAX_TRANSPORT.
-        for (int i = 0; i < 64; i++) {
-            if (nai.networkCapabilities.hasTransport(i)) return i;
+        for (int type = MIN_TRANSPORT; type <= MAX_TRANSPORT; type++) {
+            if (nai.networkCapabilities.hasTransport(type)) return type;
         }
-        return -1;
+        return TRANSPORT_UNKNOWN;
     }
 
-    private static String getTransportName(final int transportType) {
+    private static String getTransportName(@NetworkCapabilities.Transport final int transportType) {
         Resources r = Resources.getSystem();
         String[] networkTypes = r.getStringArray(R.array.network_switch_type_name);
         try {
