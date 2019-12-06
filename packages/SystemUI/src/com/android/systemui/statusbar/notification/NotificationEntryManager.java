@@ -552,4 +552,25 @@ public class NotificationEntryManager implements
         }
         return mNotificationRowBinder;
     }
+
+    /**
+     * pending infalte need to update when densitiy changed
+     */
+    public void updatePendingNotifications() {
+        int size = mPendingNotifications.size();
+        if (size != 0) {
+            Log.d(TAG, "updateNotificationsOnDensity PendingNotifications size:" + size);
+            for (NotificationEntry entry : mPendingNotifications.values()) {
+                entry.abortTask();
+                StatusBarNotification notification = entry.notification;
+                try {
+                    requireBinder().inflateViews(entry,
+                            () -> performRemoveNotification(notification,
+                            REASON_CANCEL));
+                } catch (InflationException e) {
+                    handleInflationException(notification, e);
+                }
+            }
+        }
+    }
 }

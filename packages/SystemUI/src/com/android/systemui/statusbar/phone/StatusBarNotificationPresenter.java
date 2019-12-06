@@ -284,6 +284,8 @@ public class StatusBarNotificationPresenter implements NotificationPresenter,
                 mGutsManager.onDensityOrFontScaleChanged(entry);
             }
         }
+        mEntryManager.updatePendingNotifications();
+
     }
 
     @Override
