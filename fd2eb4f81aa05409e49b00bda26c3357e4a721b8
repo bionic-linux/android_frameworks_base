@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816f51d2_643c07c6",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-06T17:39:47Z",
+      "side": 1,
+      "message": "nit: can we provide more info on this value? I think we should be careful to document that this is the physical slot number.",
+      "range": {
+        "startLine": 280,
+        "startChar": 46,
+        "endLine": 280,
+        "endChar": 49
+      },
+      "revId": "fd2eb4f81aa05409e49b00bda26c3357e4a721b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc0b60f_8a751992",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-06T17:39:47Z",
+      "side": 1,
+      "message": "Instead of using getReaders() to load the readers here, it might be better to move the shared logic in getReaders() to a new loadReaders() method",
+      "range": {
+        "startLine": 284,
+        "startChar": 8,
+        "endLine": 284,
+        "endChar": 21
+      },
+      "revId": "fd2eb4f81aa05409e49b00bda26c3357e4a721b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
