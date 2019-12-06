@@ -885,9 +885,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             mUidRecorder.maybePersistLocked(currentTime);
             mUidTagRecorder.maybePersistLocked(currentTime);
         }
-
-        // re-arm global alert
-        registerGlobalAlert();
     }
 
     @Override
