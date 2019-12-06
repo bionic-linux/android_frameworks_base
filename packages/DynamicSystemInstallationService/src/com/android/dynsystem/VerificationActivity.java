@@ -16,6 +16,7 @@
 
 package com.android.dynsystem;
 
+import static android.os.image.DynamicSystemClient.KEY_PUBKEY;
 import static android.os.image.DynamicSystemClient.KEY_SYSTEM_SIZE;
 import static android.os.image.DynamicSystemClient.KEY_USERDATA_SIZE;
 
@@ -92,6 +93,7 @@ public class VerificationActivity extends Activity {
         Uri url = callingIntent.getData();
         long systemSize = callingIntent.getLongExtra(KEY_SYSTEM_SIZE, 0);
         long userdataSize = callingIntent.getLongExtra(KEY_USERDATA_SIZE, 0);
+        String pubKey = callingIntent.getStringExtra(KEY_PUBKEY);
         boolean enableWhenCompleted = callingIntent.getBooleanExtra(
                 DynamicSystemInstallationService.KEY_ENABLE_WHEN_COMPLETED, false);
 
@@ -103,6 +105,7 @@ public class VerificationActivity extends Activity {
         intent.setAction(DynamicSystemClient.ACTION_START_INSTALL);
         intent.putExtra(KEY_SYSTEM_SIZE, systemSize);
         intent.putExtra(KEY_USERDATA_SIZE, userdataSize);
+        intent.putExtra(KEY_PUBKEY, pubKey);
         intent.putExtra(
                 DynamicSystemInstallationService.KEY_ENABLE_WHEN_COMPLETED, enableWhenCompleted);
 

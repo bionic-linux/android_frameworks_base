@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
 import android.os.image.DynamicSystemManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.URLUtil;
 
@@ -46,6 +47,10 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private static final int READ_BUFFER_SIZE = 1 << 13;
     private static final long MIN_PROGRESS_TO_PUBLISH = 1 << 27;
 
+    // TODO(yochiang): Update this to the correct URL
+    private static final String DSU_KEY_REVOCATION_LIST =
+            "https://dl.google.com/developers/android/qt/images/gsi/gsi-dsc.json";
+
     private static final List<String> UNSUPPORTED_PARTITIONS =
             Arrays.asList("vbmeta", "boot", "userdata", "dtbo", "super_empty", "system_other");
 
@@ -57,6 +62,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
     private class UnsupportedFormatException extends RuntimeException {
         private UnsupportedFormatException(String message) {
+            super(message);
+        }
+    }
+
+    private class KeyRevokedException extends RuntimeException {
+        private KeyRevokedException(String message) {
             super(message);
         }
     }
@@ -95,10 +106,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private final String mUrl;
     private final long mSystemSize;
     private final long mUserdataSize;
+    private final String mPubKey;
     private final Context mContext;
     private final DynamicSystemManager mDynSystem;
     private final ProgressListener mListener;
     private DynamicSystemManager.Session mInstallationSession;
+    private DynamicSystemKeyRevocationList mRevocationList;
 
     private boolean mIsZip;
     private boolean mIsCompleted;
@@ -106,11 +119,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private InputStream mStream;
     private ZipFile mZipFile;
 
-    InstallationAsyncTask(String url, long systemSize, long userdataSize, Context context,
-            DynamicSystemManager dynSystem, ProgressListener listener) {
+    InstallationAsyncTask(String url, long systemSize, long userdataSize, String pubKey,
+            Context context, DynamicSystemManager dynSystem, ProgressListener listener) {
         mUrl = url;
         mSystemSize = systemSize;
         mUserdataSize = userdataSize;
+        mPubKey = pubKey;
         mContext = context;
         mDynSystem = dynSystem;
         mListener = listener;
@@ -194,6 +208,15 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     }
 
     private void verifyAndPrepare() throws Exception {
+        // TODO(yochiang): Bypass this check if device is unlocked
+        mRevocationList = new DynamicSystemKeyRevocationList();
+        mRevocationList.fetch(new URL(DSU_KEY_REVOCATION_LIST));
+        if (!TextUtils.isEmpty(mPubKey) && mRevocationList.isRevoked(mPubKey)) {
+            Log.i(TAG, "PubKey of DSUPackage is revoked");
+            throw new KeyRevokedException(
+                String.format(Locale.US, "Public key is revoked: %s", mPubKey));
+        }
+
         String extension = mUrl.substring(mUrl.lastIndexOf('.') + 1);
 
         if ("gz".equals(extension) || "gzip".equals(extension)) {
