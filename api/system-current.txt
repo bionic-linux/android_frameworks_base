@@ -4121,6 +4121,7 @@ package android.net {
     field public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN = 13; // 0xd
     field public static final int TETHER_ERROR_NO_ERROR = 0; // 0x0
     field public static final int TETHER_ERROR_PROVISION_FAILED = 11; // 0xb
+    field public static final int TYPE_NONE = -1; // 0xffffffff
   }
 
   public abstract static class ConnectivityManager.OnStartTetheringCallback {
@@ -4367,7 +4368,22 @@ package android.net {
     method @Deprecated public int tether(@NonNull String);
     method public void unregisterTetheringEventCallback(@NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
     method @Deprecated public int untether(@NonNull String);
+    field public static final String ACTION_TETHER_STATE_CHANGED = "android.net.action.TETHER_STATE_CHANGED";
+    field public static final String EXTRA_ACTIVE_LOCAL_ONLY = "android.net.extra.ACTIVE_LOCAL_ONLY";
+    field public static final String EXTRA_ACTIVE_TETHER = "android.net.extra.ACTIVE_TETHER";
+    field public static final String EXTRA_ADD_TETHER_TYPE = "android.net.extra.ADD_TETHER_TYPE";
+    field public static final String EXTRA_AVAILABLE_TETHER = "android.net.extra.AVAILABLE_TETHER";
+    field public static final String EXTRA_ERRORED_TETHER = "android.net.extra.ERRORED_TETHER";
     field public static final String EXTRA_NETWORKSTACK = "android.net.extra.NETWORKSTACK";
+    field public static final String EXTRA_PROVISION_CALLBACK = "android.net.extra.PROVISION_CALLBACK";
+    field public static final String EXTRA_REM_TETHER_TYPE = "android.net.extra.REM_TETHER_TYPE";
+    field public static final String EXTRA_RUN_PROVISION = "android.net.extra.RUN_PROVISION";
+    field public static final String EXTRA_SET_ALARM = "android.net.extra.SET_ALARM";
+    field public static final int TETHERING_BLUETOOTH = 2; // 0x2
+    field public static final int TETHERING_INVALID = -1; // 0xffffffff
+    field public static final int TETHERING_USB = 1; // 0x1
+    field public static final int TETHERING_WIFI = 0; // 0x0
+    field public static final int TETHERING_WIFI_P2P = 3; // 0x3
     field public static final int TETHER_ERROR_DHCPSERVER_ERROR = 12; // 0xc
     field public static final int TETHER_ERROR_DISABLE_NAT_ERROR = 9; // 0x9
     field public static final int TETHER_ERROR_ENABLE_NAT_ERROR = 8; // 0x8
