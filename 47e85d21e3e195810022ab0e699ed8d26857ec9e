@@ -22,6 +22,30 @@
       "revId": "47e85d21e3e195810022ab0e699ed8d26857ec9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fffda2f_a90342e6",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1603799
+      },
+      "writtenOn": "2019-12-09T06:04:42Z",
+      "side": 1,
+      "message": "followed annotation as per above API (isBondingInitiatedLocally()).If we remove this annotation  here , we have to remove in above  mentioned API also.",
+      "parentUuid": "2e0b3d6e_912aaaf9",
+      "range": {
+        "startLine": 1251,
+        "startChar": 3,
+        "endLine": 1251,
+        "endChar": 24
+      },
+      "revId": "47e85d21e3e195810022ab0e699ed8d26857ec9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
