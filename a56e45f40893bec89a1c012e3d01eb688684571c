@@ -22,6 +22,30 @@
       "revId": "a56e45f40893bec89a1c012e3d01eb688684571c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66924bdd_a8316262",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 6259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-09T03:03:27Z",
+      "side": 1,
+      "message": "It\u0027s kind of related because by the refactoring in A23 the only remaining place calling this calls it with true. But it\u0027s also very fine splitting this, so I moved this part in a followup.",
+      "parentUuid": "db8ca344_156310a1",
+      "range": {
+        "startLine": 6259,
+        "startChar": 17,
+        "endLine": 6259,
+        "endChar": 38
+      },
+      "revId": "a56e45f40893bec89a1c012e3d01eb688684571c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
