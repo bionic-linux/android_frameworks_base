@@ -620,6 +620,7 @@ filegroup {
     name: "framework-tethering-annotations",
     srcs: [
         "core/java/android/annotation/NonNull.java",
+        "core/java/android/annotation/SdkConstant.java",
         "core/java/android/annotation/SystemApi.java",
     ],
 }
