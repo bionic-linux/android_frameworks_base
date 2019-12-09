@@ -379,6 +379,7 @@ public final class WindowManagerGlobal {
             view.setLayoutParams(wparams);
 
             mViews.add(view);
+            view.mDoneaddtoList = 1;
             mRoots.add(root);
             mParams.add(wparams);
 
@@ -423,6 +424,10 @@ public final class WindowManagerGlobal {
         }
 
         synchronized (mLock) {
+            if (view.mDoneaddtoList == 2) {
+                Log.d(TAG, "the view had been removed, no need to remove againt");
+                return;
+            }
             int index = findViewLocked(view, true);
             View curView = mRoots.get(index).getView();
             removeViewLocked(index, immediate);
@@ -503,6 +508,7 @@ public final class WindowManagerGlobal {
                 mRoots.remove(index);
                 mParams.remove(index);
                 final View view = mViews.remove(index);
+                view.mDoneaddtoList = 2;
                 mDyingViews.remove(view);
             }
         }

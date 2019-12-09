@@ -5163,6 +5163,14 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     private ContentCaptureSession mCachedContentCaptureSession;
 
     /**
+     * only use by WindowManagerGlobal
+     * set 1  when addView
+     * set 2 when doRemoveView
+     * check when removeView
+     */
+    int mDoneaddtoList = 0;
+
+    /**
      * Simple constructor to use when creating a view from code.
      *
      * @param context The Context the view is running in, through which it can
