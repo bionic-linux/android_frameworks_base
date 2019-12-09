@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3669d692_14fa52a8",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "Yes. We\u0027ll need setRinging(). I shall add this API in next patch-set.",
+      "parentUuid": "81b1938b_c6159496",
+      "range": {
+        "startLine": 375,
+        "startChar": 3,
+        "endLine": 380,
+        "endChar": 5
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb853080_a49b2020",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-05T18:53:36Z",
       "side": 1,
       "message": "When would you expect to see a Connection with multiple participants?  I\u0027d expect that Telephony would expose an android.telecom.Conference to Telecom to represent the adhoc conference call.",
+      "range": {
+        "startLine": 1821,
+        "startChar": 5,
+        "endLine": 1834,
+        "endChar": 0
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa7c7d1_2043bd60",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "We see a connection with multiple participants for adhoc conference call use-cases.\n\nTelephonyConnectionService#getTelephonyConnection() (new API added in https://android-review.googlesource.com/c/platform/packages/services/Telephony/+/1179044 File: ConnectionService.java), that is called from TelephonyConnectionService#onCreateOutgoingConferenceConnection() will use the respective set APIs\n\nAlso, isAdhocConferenceCall() is used in ImsConferenceController.java (check https://android-review.googlesource.com/c/platform/packages/services/Telephony/+/1179044 File: ImsConferenceController.java) to avoid creating a clone connection for MO/MT Conference calls.",
+      "parentUuid": "eb853080_a49b2020",
       "range": {
         "startLine": 1821,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86cb8109_a9b62022",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "Please see the reply to below comment.",
+      "parentUuid": "a0212b3e_a264fc17",
+      "range": {
+        "startLine": 2293,
+        "startChar": 11,
+        "endLine": 2293,
+        "endChar": 21
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6a56d83_b94cd852",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2019-12-05T18:53:36Z",
       "side": 1,
       "message": "Similarly:\npublic @Nullable Conference onCreateOutgoingConference(@Nullable PhoneAccountHandle connectionManagerPhoneAccount, @NonNull ConnectionRequest request)",
+      "range": {
+        "startLine": 2411,
+        "startChar": 0,
+        "endLine": 2413,
+        "endChar": 40
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89127a8_5ff77405",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2413,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "As per current conference call design, ImsConferenceController#startConference() will be invoked once we set the original connection for both MO Conference and MT Conference as per below flow, so there is no way to return a Conference object.\n\nTelephonyConnection#setOriginalConnection() ---\u003e  TelephonyConnectionService#mTelephonyConnectionListener#onOriginalConnectionConfigured() ---\u003e TelephonyConnectionService#addConnectionToConferenceController() ---\u003e ImsConferenceController#add() ---\u003e ImsConferenceController#recalculateConference() ---\u003e ImsConferenceController#startConference()\n\n\nDo you want me to avoid using above flow and instead create a conference object here and return it?\n\nAlso, I think we are fine with adding extra fields (i.e. private List\u003cUri\u003e mParticipants;\nprivate boolean mIsAdhocConference) to ConnectionRequest instead of introducing new file ConferenceRequest?",
+      "parentUuid": "c6a56d83_b94cd852",
       "range": {
         "startLine": 2411,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "40ebd382_0af03904",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "I was thinking that this is needed to add support for phantom conference calls. I shall remove this API for now and will re-visit later.",
+      "parentUuid": "77505c12_20490347",
+      "range": {
+        "startLine": 2552,
+        "startChar": 4,
+        "endLine": 2552,
+        "endChar": 58
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61c811ca_40133ffe",
         "filename": "telecomm/java/android/telecom/PhoneAccount.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2019-12-05T18:53:36Z",
       "side": 1,
       "message": "Add:\nAn adhoc conference call is established by providing a list of addresses to {@link TelecomManager#startConference(List\u003cUri\u003e)} where the {@link ConnectionService} is responsible for connecting all indicated participants to a conference simultaneously.  This is in contrast to conferences formed by merging calls together (e.g. using {@link android.telecom.Call#mergeConference()}).",
+      "range": {
+        "startLine": 334,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 29
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c16e1e_3ccea32f",
+        "filename": "telecomm/java/android/telecom/PhoneAccount.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "61c811ca_40133ffe",
       "range": {
         "startLine": 334,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "75a82611_2d7e20c6",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "I was of the opinion to re-use TelecomManager.EXTRA_INCOMING_CALL_ADDRESS extra, the way it is used for normal incoming call but will absorb your suggestion to pass List\u003cUri\u003e participants. BTW, List\u003cUri\u003e participants will always hold only one participant.",
+      "parentUuid": "5cc4c7b4_11059216",
+      "range": {
+        "startLine": 1651,
+        "startChar": 16,
+        "endLine": 1651,
+        "endChar": 41
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7622630_12b63ec7",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "7a51f9c5_c57e37d1",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "f7622630_12b63ec7",
+      "range": {
+        "startLine": 1872,
+        "startChar": 32,
+        "endLine": 1872,
+        "endChar": 70
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7cd7de5_2a8afd3d",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a4907e_b956382d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2019-12-09T08:50:53Z",
+      "side": 1,
+      "message": "Okay.",
+      "parentUuid": "e7cd7de5_2a8afd3d",
+      "range": {
+        "startLine": 1067,
+        "startChar": 31,
+        "endLine": 1067,
+        "endChar": 66
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
