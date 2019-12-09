@@ -28,7 +28,7 @@ public class SdkExtensions {
 
     private static final int R_EXTENSION_INT;
     static {
-        R_EXTENSION_INT = SystemProperties.getInt("persist.com.android.sdkext.sdk_info", 0);
+        R_EXTENSION_INT = SystemProperties.getInt("ro.build.version.r_extensions", 0);
     }
 
     /** Values suitable as parameters for {@link #getExtensionVersion(int)}. */
