@@ -46,6 +46,30 @@
       "revId": "211b7a4d77d8000956099101899d209f73d54989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8af39b20_d78b9adb",
+        "filename": "core/java/android/net/IConnectivityManager.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-09T16:27:53Z",
+      "side": 0,
+      "message": "I don\u0027t think we can afford to do this. Users rely on these apps but these apps now crash. We need to maintain backward compatibility.\nWhat you can (and probably should) do is make them unsupported app usage with a maximum SDK of Q. That way, any app that upgrades to target R+ doesn\u0027t see these methods anymore, and that ensures that old apps continue to work while updated apps have to stop using these.",
+      "parentUuid": "57bdca08_3b86b6dd",
+      "range": {
+        "startLine": 106,
+        "startChar": 5,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "211b7a4d77d8000956099101899d209f73d54989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
