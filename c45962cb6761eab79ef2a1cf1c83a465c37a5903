@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b559b0_885fe4b5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:12:57Z",
+      "side": 1,
+      "message": "what exactly does this fix? Is this reproducible?\nThe change looks good, but when would this be called while the panel is collapsed \u0026 what runnables would be pending?",
+      "revId": "c45962cb6761eab79ef2a1cf1c83a465c37a5903",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
