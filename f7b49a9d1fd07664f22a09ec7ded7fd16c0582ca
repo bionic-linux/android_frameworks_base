@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f5794c8_3e8d0201",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "Can\u0027t this be mNativeLoop?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553b1759_74637a21",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "nit: Capitalize.",
+      "range": {
+        "startLine": 60,
+        "startChar": 15,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6316792d_b9f2afd6",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t mScopes be kept locked until mScoped.put() below?",
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422df250_11968999",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "How about just !scope.waitForMount()?",
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99a742c_0afceabb",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "nit: Capitalize.",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 8
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b249869_4e3c32de",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "FuseBridgeLoop::mutex_",
+      "range": {
+        "startLine": 115,
+        "startChar": 70,
+        "endLine": 115,
+        "endChar": 91
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e01a206_f5865b36",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 8
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff5583b_5572a87e",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T05:14:30Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 125,
+        "startChar": 70,
+        "endLine": 125,
+        "endChar": 91
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
