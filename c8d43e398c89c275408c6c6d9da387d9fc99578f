@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e636c099_7ed260c8",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:30:36Z",
+      "side": 1,
+      "message": "Oops; gerrit seems to have posted both my drafts. Ignore the first of the two.",
+      "parentUuid": "e1c3732d_1f576bbb",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2439cf3a_93babe0e",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 14
