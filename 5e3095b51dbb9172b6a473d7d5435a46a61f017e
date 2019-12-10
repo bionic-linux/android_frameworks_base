@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac25da6_b4db0701",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T05:28:31Z",
+      "side": 1,
+      "message": "Is there one now ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "5e3095b51dbb9172b6a473d7d5435a46a61f017e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63ca03b_82a692ff",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T05:28:31Z",
+      "side": 1,
+      "message": "Suggest having a helper function like anyAddressFromFamily(int)",
+      "range": {
+        "startLine": 182,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 76
+      },
+      "revId": "5e3095b51dbb9172b6a473d7d5435a46a61f017e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4014dc_57afaff2",
+        "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T05:28:31Z",
+      "side": 1,
+      "message": "rename to findLikelyFreePort and add comments to explain this does not necessarily actually return a free port, it\u0027s just very likely that it will",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "5e3095b51dbb9172b6a473d7d5435a46a61f017e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9effd3e7_84051692",
+        "filename": "tests/net/java/com/android/internal/util/TestUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T05:28:31Z",
+      "side": 1,
+      "message": "final on these locals",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 30
+      },
+      "revId": "5e3095b51dbb9172b6a473d7d5435a46a61f017e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

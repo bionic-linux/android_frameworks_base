@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46fa669_c1844340",
+        "filename": "tests/net/java/android/net/netlink/InetDiagSocketTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T05:28:31Z",
+      "side": 0,
+      "message": "I don\u0027t think it\u0027s a great idea to just remove this test. What is the problem here, that there happens to be a UDP socket open with the same local and remote, so it returns the UID when it shouldn\u0027t ?",
+      "range": {
+        "startLine": 175,
+        "startChar": 32,
+        "endLine": 175,
+        "endChar": 43
+      },
+      "revId": "0013d45b2708dfe2c2c17a029bffbf14b2e2ff8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
