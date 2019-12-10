@@ -40,6 +40,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkCapabilities.transportNamesOf;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
@@ -6328,6 +6329,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mNetwork = network;
                 mOldBackground = oldBackground;
             }
+
+            public String toString() {
+                return "[" + netToSimpleString(mNetwork) + " oldBackground=" + mOldBackground + "]";
+            }
         }
 
         static class RequestReassignment {
@@ -6340,6 +6345,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mRequest = request;
                 mOldNetwork = oldNetwork;
                 mNewNetwork = newNetwork;
+            }
+
+            public String toString() {
+                return mRequest.request.requestId + " : " + netToSimpleString(mOldNetwork) + " → "
+                        + netToSimpleString(mNewNetwork);
             }
         }
 
@@ -6381,6 +6391,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 if (nri == event.mRequest) return event.mNewNetwork;
             }
             return null;
+        }
+
+        public String toString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("NetworkReassignment :");
+            if (mRematchedNetworks.isEmpty() && mReassignments.isEmpty()) {
+                return sb.append(" no changes").toString();
+            }
+            sb.append("\n  Rematched networks : ");
+            sb.append(TextUtils.join(", ", mRematchedNetworks));
+            for (final RequestReassignment rr : getRequestReassignments()) {
+                sb.append("\n  ").append(rr);
+            }
+            return sb.append("\n").toString();
         }
     }
 
@@ -6513,6 +6537,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
         final NetworkReassignment changes = computeNetworkReassignment(now);
+        if (VDBG || DDBG) log(changes.toString());
         applyNetworkReassignment(changes, oldDefaultNetwork, now);
     }
 
@@ -7364,5 +7389,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             return mTNS;
         }
+    }
+
+    /**
+     * Show a short string representing a Network.
+     *
+     * This is often not enough for debugging purposes for anything complex, but the full form
+     * is very long and hard to read, so this is useful when there isn't a lot of ambiguity.
+     * This represents the network with something like "[100 WIFI|VPN]" or "[108 MOBILE]".
+     */
+    @NonNull
+    private static String netToSimpleString(@Nullable final NetworkAgentInfo nai) {
+        if (null == nai) return "[null]";
+        return "[" + nai.network.netId + " "
+                + transportNamesOf(nai.networkCapabilities.getTransportTypes()) + "]";
     }
 }
