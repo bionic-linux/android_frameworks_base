@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2742bbf_dcedebf5",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T09:23:44Z",
+      "side": 1,
+      "message": "Why do you need this when you know StorageManagerService never calls addBridge() with the same mountId for multiple times?\n\nAlternatively, you can do either:\n- Just remove Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) \u003c 0) line, or\n- Just after the checkArgument(), insert a dummy entry (e.g. null) to mScopes, release the lock, put the real MountScope to mScopes later, or\n- Check mScopes.indexOfKey(mountScope.mountId) \u003c 0 just before calling mScopes.put() with a proper error handling to close the FD in case of failures.",
+      "revId": "6c1ff8ae39dc5eea58f6413637750ee8c1a94b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
