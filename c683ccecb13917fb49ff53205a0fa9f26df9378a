@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12c4d4e3_121d66e1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-10T01:59:00Z",
+      "side": 1,
+      "message": "wrong constant, ints can\u0027t be null.",
+      "range": {
+        "startLine": 3130,
+        "startChar": 70,
+        "endLine": 3130,
+        "endChar": 73
+      },
+      "revId": "c683ccecb13917fb49ff53205a0fa9f26df9378a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
