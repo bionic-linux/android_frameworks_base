@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cdedf403_a1601f9a",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-12-10T06:31:37Z",
+      "side": 1,
+      "message": "Do you mean？\n```java\n  @GuardedBy(\"mNativeLoop\")\n  private long mNativeLoop;\n```\n  \nWell, in java you better not sychronize on a non-final member viriable.",
+      "parentUuid": "4f5794c8_3e8d0201",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "553b1759_74637a21",
         "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
         "patchSetId": 2
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e25dfc5_b8552531",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-12-10T06:31:37Z",
+      "side": 1,
+      "message": "Well, I see your points, that seems to be the right way of synchronization, but it can\u0027t resolve this dead lock situation, -_-||",
+      "parentUuid": "6316792d_b9f2afd6",
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "422df250_11968999",
         "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
         "patchSetId": 2
@@ -76,6 +118,24 @@
       "writtenOn": "2019-12-10T05:14:30Z",
       "side": 1,
       "message": "How about just !scope.waitForMount()?",
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179bc25c_fc3cc346",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-12-10T06:31:37Z",
+      "side": 1,
+      "message": "Yeah, you bet.",
+      "parentUuid": "422df250_11968999",
       "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -116,6 +176,30 @@
       "writtenOn": "2019-12-10T05:14:30Z",
       "side": 1,
       "message": "FuseBridgeLoop::mutex_",
+      "range": {
+        "startLine": 115,
+        "startChar": 70,
+        "endLine": 115,
+        "endChar": 91
+      },
+      "revId": "f7b49a9d1fd07664f22a09ec7ded7fd16c0582ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539df404_8db39a07",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-12-10T06:31:37Z",
+      "side": 1,
+      "message": "-_-||",
+      "parentUuid": "7b249869_4e3c32de",
       "range": {
         "startLine": 115,
         "startChar": 70,
