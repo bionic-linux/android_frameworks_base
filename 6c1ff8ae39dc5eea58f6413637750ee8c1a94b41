@@ -52,6 +52,24 @@
       "revId": "6c1ff8ae39dc5eea58f6413637750ee8c1a94b41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f064f10_1b829a5d",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2019-12-10T11:26:15Z",
+      "side": 1,
+      "message": "1. mMountIdBeingAdded.get() \u003d\u003d mountId will be true if onClosed was invoked while the exact \n   mountId was being added.\n\n2. The two onClosed call in the diagram do not mean onClosed would be executed twice.\n   Only one of them would be executed, What I mean is onClosed could be invoked either before or \n   after `mScopes.put()` (depends on the cpu scheduling, etc)\n\n3. \"IMO it\u0027s better to properly handle failures than adding subtle synchronization code.\"\n    Could not disagree with you on this. ^_^",
+      "parentUuid": "dc0c9f20_3fd571a1",
+      "revId": "6c1ff8ae39dc5eea58f6413637750ee8c1a94b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
