@@ -16,11 +16,12 @@
 
 package android.security;
 
+import android.compat.annotation.UnsupportedAppUsage;
+
 import com.android.org.bouncycastle.util.io.pem.PemObject;
 import com.android.org.bouncycastle.util.io.pem.PemReader;
 import com.android.org.bouncycastle.util.io.pem.PemWriter;
 
-import android.annotation.UnsupportedAppUsage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
