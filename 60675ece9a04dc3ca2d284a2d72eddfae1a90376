@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4324b5d_02cd8f4f",
+        "filename": "telephony/java/android/telephony/ims/feature/RcsFeature.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-10T19:27:18Z",
+      "side": 0,
+      "message": "We need to also expose these CAPABILITY_TYPE_* constants",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 71
+      },
+      "revId": "60675ece9a04dc3ca2d284a2d72eddfae1a90376",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
