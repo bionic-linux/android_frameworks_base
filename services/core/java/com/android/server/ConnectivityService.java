@@ -223,6 +223,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -708,9 +709,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private void maybeLogBroadcast(NetworkAgentInfo nai, DetailedState state, int type,
                 boolean isDefaultNetwork) {
             if (DBG) {
-                log("Sending " + state +
-                        " broadcast for type " + type + " " + nai.name() +
-                        " isDefaultNetwork=" + isDefaultNetwork);
+                log("Sending " + state
+                        + " broadcast for type " + type + " " + nai.toShortString()
+                        + " isDefaultNetwork=" + isDefaultNetwork);
             }
         }
 
@@ -790,14 +791,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        private String naiToString(NetworkAgentInfo nai) {
-            String name = nai.name();
-            String state = (nai.networkInfo != null) ?
-                    nai.networkInfo.getState() + "/" + nai.networkInfo.getDetailedState() :
-                    "???/???";
-            return name + " " + state;
-        }
-
         public void dump(IndentingPrintWriter pw) {
             pw.println("mLegacyTypeTracker:");
             pw.increaseIndent();
@@ -812,7 +805,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 for (int type = 0; type < mTypeLists.length; type++) {
                     if (mTypeLists[type] == null || mTypeLists[type].isEmpty()) continue;
                     for (NetworkAgentInfo nai : mTypeLists[type]) {
-                        pw.println(type + " " + naiToString(nai));
+                        pw.println(type + " " + nai.toShortString());
                     }
                 }
             }
@@ -2754,7 +2747,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         final String logMsg = !TextUtils.isEmpty(redirectUrl)
                                  ? " with redirect to " + redirectUrl
                                  : "";
-                        log(nai.name() + " validation " + (valid ? "passed" : "failed") + logMsg);
+                        log(nai.toShortString() + " validation " + (valid ? "passed" : "failed")
+                                + logMsg);
                     }
                     if (valid != nai.lastValidated) {
                         if (wasDefault) {
@@ -2824,7 +2818,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.everCaptivePortalDetected |= visible;
                         if (nai.lastCaptivePortalDetected &&
                             Settings.Global.CAPTIVE_PORTAL_MODE_AVOID == getCaptivePortalMode()) {
-                            if (DBG) log("Avoiding captive portal network: " + nai.name());
+                            if (DBG) log("Avoiding captive portal network: " + nai.toShortString());
                             nai.asyncChannel.sendMessage(
                                     NetworkAgent.CMD_PREVENT_AUTOMATIC_RECONNECT);
                             teardownUnneededNetwork(nai);
@@ -3048,13 +3042,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         //    one lingered request, start lingering.
         nai.updateLingerTimer();
         if (nai.isLingering() && nai.numForegroundNetworkRequests() > 0) {
-            if (DBG) log("Unlingering " + nai.name());
+            if (DBG) log("Unlingering " + nai.toShortString());
             nai.unlinger();
             logNetworkEvent(nai, NetworkEvent.NETWORK_UNLINGER);
         } else if (unneeded(nai, UnneededFor.LINGER) && nai.getLingerExpiry() > 0) {
             if (DBG) {
                 final int lingerTime = (int) (nai.getLingerExpiry() - now);
-                log("Lingering " + nai.name() + " for " + lingerTime + "ms");
+                log("Lingering " + nai.toShortString() + " for " + lingerTime + "ms");
             }
             nai.linger();
             logNetworkEvent(nai, NetworkEvent.NETWORK_LINGER);
@@ -3118,7 +3112,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void disconnectAndDestroyNetwork(NetworkAgentInfo nai) {
         ensureRunningOnConnectivityServiceThread();
         if (DBG) {
-            log(nai.name() + " got DISCONNECTED, was satisfying " + nai.numNetworkRequests());
+            log(nai.toShortString() + " disconnected, was satisfying " + nai.numNetworkRequests());
         }
         // Clear all notifications of this network.
         mNotifier.clearNotification(nai.network.netId);
@@ -3176,7 +3170,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDefaultNetworkNai = null;
             updateDataActivityTracking(null /* newNetwork */, nai);
             notifyLockdownVpn(nai);
-            ensureNetworkTransitionWakelock(nai.name());
+            ensureNetworkTransitionWakelock(nai.toShortString());
         }
         mLegacyTypeTracker.remove(nai, wasDefault);
         if (!nai.networkCapabilities.hasTransport(TRANSPORT_VPN)) {
@@ -3410,8 +3404,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 boolean wasBackgroundNetwork = nai.isBackgroundNetwork();
                 nai.removeRequest(nri.request.requestId);
                 if (VDBG || DDBG) {
-                    log(" Removing from current network " + nai.name() +
-                            ", leaving " + nai.numNetworkRequests() + " requests.");
+                    log(" Removing from current network " + nai.toShortString()
+                            + ", leaving " + nai.numNetworkRequests() + " requests.");
                 }
                 // If there are still lingered requests on this network, don't tear it down,
                 // but resume lingering instead.
@@ -3420,7 +3414,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     notifyNetworkLosing(nai, now);
                 }
                 if (unneeded(nai, UnneededFor.TEARDOWN)) {
-                    if (DBG) log("no live requests for " + nai.name() + "; disconnecting");
+                    if (DBG) log("no live requests for " + nai.toShortString() + "; disconnecting");
                     teardownUnneededNetwork(nai);
                 } else {
                     wasKept = true;
@@ -3742,7 +3736,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.increaseIndent();
         for (NetworkAgentInfo nai : networksSortedById()) {
             if (nai.avoidUnvalidated) {
-                pw.println(nai.name());
+                pw.println(nai.toShortString());
             }
         }
         pw.decreaseIndent();
@@ -3854,7 +3848,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void handleNetworkUnvalidated(NetworkAgentInfo nai) {
         NetworkCapabilities nc = nai.networkCapabilities;
-        if (DBG) log("handleNetworkUnvalidated " + nai.name() + " cap=" + nc);
+        if (DBG) log("handleNetworkUnvalidated " + nai.toShortString() + " cap=" + nc);
 
         if (!nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
             return;
@@ -5169,7 +5163,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 detail = reason;
             }
             log(String.format("updateSignalStrengthThresholds: %s, sending %s to %s",
-                    detail, Arrays.toString(thresholdsArray.toArray()), nai.name()));
+                    detail, Arrays.toString(thresholdsArray.toArray()), nai.toShortString()));
         }
 
         nai.asyncChannel.sendMessage(
@@ -6093,9 +6087,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // newLp is already a defensive copy.
         newLp.ensureDirectlyConnectedRoutes();
         if (VDBG || DDBG) {
-            log("Update of LinkProperties for " + nai.name() +
-                    "; created=" + nai.created +
-                    "; everConnected=" + nai.everConnected);
+            log("Update of LinkProperties for " + nai.toShortString()
+                    + "; created=" + nai.created
+                    + "; everConnected=" + nai.everConnected);
         }
         updateLinkProperties(nai, newLp, new LinkProperties(nai.linkProperties));
     }
@@ -6262,7 +6256,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Unknown NetworkAgentInfo in handleLingerComplete");
             return;
         }
-        if (DBG) log("handleLingerComplete for " + oldNetwork.name());
+        if (DBG) log("handleLingerComplete for " + oldNetwork.toShortString());
 
         // If we get here it means that the last linger timeout for this network expired. So there
         // must be no other active linger timers, and we must stop lingering.
@@ -6345,6 +6339,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mNetwork = network;
                 mOldBackground = oldBackground;
             }
+
+            public String toString() {
+                return "[" + NetworkAgentInfo.toShortString(mNetwork)
+                        + " oldBackground=" + mOldBackground + "]";
+            }
         }
 
         static class RequestReassignment {
@@ -6357,6 +6356,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mRequest = request;
                 mOldNetwork = oldNetwork;
                 mNewNetwork = newNetwork;
+            }
+
+            public String toString() {
+                return mRequest.request.requestId + " : "
+                        + (null != mOldNetwork ? mOldNetwork.network.netId : "null")
+                        + " → " + (null != mNewNetwork ? mNewNetwork.network.netId : "null");
             }
         }
 
@@ -6406,6 +6411,36 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 if (nri == event.mRequest) return event;
             }
             return null;
+        }
+
+        public String toString() {
+            final StringJoiner sj = new StringJoiner(", " /* delimiter */,
+                    "NetReassign [" /* prefix */, "]" /* suffix */);
+            if (mRematchedNetworks.isEmpty() && mReassignments.isEmpty()) {
+                return sj.add("no changes").toString();
+            }
+            for (final RequestReassignment rr : getRequestReassignments()) {
+                sj.add(rr.toString());
+            }
+            return sj.toString();
+        }
+
+        public String debugString() {
+            final StringBuilder sb = new StringBuilder();
+            sb.append("NetworkReassignment :");
+            if (mRematchedNetworks.isEmpty() && mReassignments.isEmpty()) {
+                return sb.append(" no changes").toString();
+            }
+            final StringJoiner sj = new StringJoiner(", " /* delimiter */,
+                    "\n  Rematched networks : " /* prefix */, "" /* suffix */);
+            for (final NetworkBgStatePair rr : mRematchedNetworks) {
+                sj.add(rr.mNetwork.toShortString());
+            }
+            sb.append(sj.toString());
+            for (final RequestReassignment rr : getRequestReassignments()) {
+                sb.append("\n  ").append(rr);
+            }
+            return sb.append("\n").toString();
         }
     }
 
@@ -6479,7 +6514,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         changes.addRematchedNetwork(new NetworkReassignment.NetworkBgStatePair(newNetwork,
                 newNetwork.isBackgroundNetwork()));
 
-        if (VDBG || DDBG) log("rematching " + newNetwork.name());
+        if (VDBG || DDBG) log("rematching " + newNetwork.toShortString());
 
         computeRequestReassignmentForNetwork(changes, newNetwork);
     }
@@ -6489,10 +6524,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @Nullable final NetworkAgentInfo newSatisfier,
             final long now) {
         if (newSatisfier != null) {
-            if (VDBG) log("rematch for " + newSatisfier.name());
+            if (VDBG) log("rematch for " + newSatisfier.toShortString());
             if (previousSatisfier != null) {
                 if (VDBG || DDBG) {
-                    log("   accepting network in place of " + previousSatisfier.name());
+                    log("   accepting network in place of " + previousSatisfier.toShortString());
                 }
                 previousSatisfier.removeRequest(nri.request.requestId);
                 previousSatisfier.lingerRequest(nri.request, now, mLingerDelayMs);
@@ -6501,11 +6536,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             newSatisfier.unlingerRequest(nri.request);
             if (!newSatisfier.addRequest(nri.request)) {
-                Slog.wtf(TAG, "BUG: " + newSatisfier.name() + " already has " + nri.request);
+                Slog.wtf(TAG, "BUG: " + newSatisfier.toShortString() + " already has "
+                        + nri.request);
             }
         } else {
             if (DBG) {
-                log("Network " + previousSatisfier.name() + " stopped satisfying"
+                log("Network " + previousSatisfier.toShortString() + " stopped satisfying"
                         + " request " + nri.request.requestId);
             }
             previousSatisfier.removeRequest(nri.request.requestId);
@@ -6542,6 +6578,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long now = SystemClock.elapsedRealtime();
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
         final NetworkReassignment changes = computeNetworkReassignment();
+        if (VDBG || DDBG) log(changes.toString());
         applyNetworkReassignment(changes, oldDefaultNetwork, now);
     }
 
@@ -6650,7 +6687,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         notifyNetworkLosing(nai, now);
                     }
                 } else {
-                    if (DBG) log("Reaping " + nai.name());
+                    if (DBG) log("Reaping " + nai.toShortString());
                     teardownUnneededNetwork(nai);
                 }
             }
@@ -6798,8 +6835,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         notifyLockdownVpn(networkAgent);
 
         if (DBG) {
-            log(networkAgent.name() + " EVENT_NETWORK_INFO_CHANGED, going from " +
-                    oldInfo.getState() + " to " + state);
+            log(networkAgent.toShortString() + " EVENT_NETWORK_INFO_CHANGED, going from "
+                    + oldInfo.getState() + " to " + state);
         }
 
         if (!networkAgent.created
@@ -6817,7 +6854,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             networkAgent.everConnected = true;
 
             if (networkAgent.linkProperties == null) {
-                Slog.wtf(TAG, networkAgent.name() + " connected with null LinkProperties");
+                Slog.wtf(TAG, networkAgent.toShortString() + " connected with null LinkProperties");
             }
 
             // NetworkCapabilities need to be set before sending the private DNS config to
@@ -6877,7 +6914,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateNetworkScore(NetworkAgentInfo nai, NetworkScore ns) {
-        if (VDBG || DDBG) log("updateNetworkScore for " + nai.name() + " to " + ns);
+        if (VDBG || DDBG) log("updateNetworkScore for " + nai.toShortString() + " to " + ns);
         nai.setNetworkScore(ns);
         rematchAllNetworksAndRequests();
         sendUpdatedScoreToFactories(nai);
@@ -7023,7 +7060,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     protected void notifyNetworkCallbacks(NetworkAgentInfo networkAgent, int notifyType, int arg1) {
         if (VDBG || DDBG) {
             String notification = ConnectivityManager.getCallbackName(notifyType);
-            log("notifyType " + notification + " for " + networkAgent.name());
+            log("notifyType " + notification + " for " + networkAgent.toShortString());
         }
         for (int i = 0; i < networkAgent.numNetworkRequests(); i++) {
             NetworkRequest nr = networkAgent.requestAt(i);
