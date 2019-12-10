@@ -21,7 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
-import android.annotation.UnsupportedAppUsage;
+import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,8 +35,8 @@ import android.telephony.Annotation.SrvccState;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.ImsReasonInfo;
 
-import com.android.internal.telephony.IPhoneStateListener;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.telephony.IPhoneStateListener;
 
 import dalvik.system.VMRuntime;
 
