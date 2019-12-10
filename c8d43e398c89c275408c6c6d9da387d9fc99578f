@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ee795c7_a4834768",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "There\u0027s some custom mechanism that\u0027s already been in place, and as far as I can tell I can\u0027t change it due to backwards compatibility concerns. Stability is entirely dependent on not having breaking changes added into this file. I didn\u0027t see a nice way of making this safer without affecting devices upgrading to R",
+      "parentUuid": "2c2cb001_e413e3e6",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "426f2c6e_905a9171",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 14
@@ -36,6 +60,54 @@
       "writtenOn": "2019-12-09T05:06:04Z",
       "side": 1,
       "message": "Parceling/unparceling will blow up when one of these strings contains the \\0 character (or a comma for that matter) : do you have any sanitizing code ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c3732d_1f576bbb",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "Done; added as per comment in next patch set",
+      "parentUuid": "426f2c6e_905a9171",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "302773be_87b4ad49",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "Ack. I think this will make sense in the classes that set this value; while commas make sense from the settings menu, they would not from the public API.",
+      "parentUuid": "426f2c6e_905a9171",
       "range": {
         "startLine": 115,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8e618021_5bb9a8d4",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "Done. Enforcing 14-19, or 24",
+      "parentUuid": "01a8aa63_a315948c",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 35
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac7c5f3_4b974269",
         "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
         "patchSetId": 14
@@ -114,6 +210,30 @@
       "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002adcf9_f1017535",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac7c5f3_4b974269",
+      "range": {
+        "startLine": 70,
+        "startChar": 44,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f1558451_dd10c9b8",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "Possibly. I\u0027ve filed (b/145935008) a cleanup bug to do that after things settle down?",
+      "parentUuid": "b29c8c20_76a0276e",
+      "range": {
+        "startLine": 100,
+        "startChar": 10,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b82e38_7ca0fc58",
         "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
         "patchSetId": 14
@@ -151,6 +295,30 @@
       "writtenOn": "2019-12-09T05:06:04Z",
       "side": 1,
       "message": "I think that\u0027s not the only way this specific parcel can be valid right ? It\u0027s also fine if it has less fields I think.",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8bbc89_347e3bec",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 1,
+      "message": "For the parcelling and unparcelling, we should always have the exact same number of fields, shouldn\u0027t we? Otherwise we\u0027re losing information?\n\nThe encode decode should be able to handle less fields, but if the field count in unparcelling is mismatched, it seems like we\u0027d have an inconsistency in the Android platform. That could be disaster when passing thing from app space to the platform.",
+      "parentUuid": "65b82e38_7ca0fc58",
       "range": {
         "startLine": 116,
         "startChar": 8,

@@ -22,6 +22,30 @@
       "revId": "54ac39ef8b824450084a767ce8e1e5559bf8cdaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af10b787_e37b8ff3",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-10T18:25:20Z",
+      "side": 0,
+      "message": "The \"all fields must be kept non-null\" is no longer true with the proxy defaulting to null.\n\nAlso, \"clone()\" doesn\u0027t appear anywhere in Settings (the only place where it is modified), so I\u0027d assert that it\u0027s no longer true.",
+      "parentUuid": "30e7a9ea_39963336",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "54ac39ef8b824450084a767ce8e1e5559bf8cdaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
