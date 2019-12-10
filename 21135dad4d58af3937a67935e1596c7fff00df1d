@@ -22,6 +22,30 @@
       "revId": "21135dad4d58af3937a67935e1596c7fff00df1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5d4965_7cd1c421",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2019-12-10T19:11:57Z",
+      "side": 1,
+      "message": "isCapable does a slightly different thing... isCapable will return whether or not WiFi calling is capable for the current subscription (i.e. if user enabled and carrier configs are enabled), whereas isAvailable will return whether or not we are registered over IMS and WiFi calling is available. Is this okay for your use case? It seems like you would only want the wifi calling icon shown if we were registered.",
+      "parentUuid": "4fe86c4f_109fcc75",
+      "range": {
+        "startLine": 691,
+        "startChar": 32,
+        "endLine": 691,
+        "endChar": 41
+      },
+      "revId": "21135dad4d58af3937a67935e1596c7fff00df1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
