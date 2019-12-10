@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9481776b_d26f631e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-10T02:40:28Z",
+      "side": 1,
+      "message": "Should we updateNetworkEnabledNL first as what we did in other places?",
+      "range": {
+        "startLine": 1031,
+        "startChar": 16,
+        "endLine": 1031,
+        "endChar": 41
+      },
+      "revId": "a4a38475c3caf2c9345f183e12870c259b80ad99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
