@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a786804c_fe29dd41",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-12-10T22:50:03Z",
+      "side": 1,
+      "message": "This can be replaced with `argsForZygote.add(\"--disable-compat-changes\u003d\" + String.join(\u0027,\u0027, disableCompatChanges));`",
+      "range": {
+        "startLine": 632,
+        "startChar": 12,
+        "endLine": 641,
+        "endChar": 13
+      },
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d332d700_5015fe42",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-12-10T22:50:03Z",
+      "side": 1,
+      "message": "This can be replaced with `getAssignmentList()`",
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29185f87_4986e45b",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2019-12-10T22:50:03Z",
+      "side": 1,
+      "message": "If you are going to iterate backwards you could go full goes-to-operator:\n\nfor (int i \u003d params.length; i --\u003e 0;) { ... }",
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
