@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fe86c4f_109fcc75",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-12-10T11:29:46Z",
+      "side": 1,
+      "message": "Changed from #isAvailable to #isCapable because there is possibility that isAvailable does not return correct value by timing.",
+      "range": {
+        "startLine": 691,
+        "startChar": 32,
+        "endLine": 691,
+        "endChar": 41
+      },
+      "revId": "21135dad4d58af3937a67935e1596c7fff00df1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
