@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed18c0a_468a0f11",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-10T04:50:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is very tenable without so much as helper functions, and enforcement at least at encode() time. People writing their own code probably won\u0027t know to come and read this comment.\nAs you\u0027re adding this field, you can also make them private and add setters, sacrificing consistency for the sake of safety.",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 73
+      },
+      "revId": "920468b82fb88476e42394bcb8f4203ec5b00f1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
