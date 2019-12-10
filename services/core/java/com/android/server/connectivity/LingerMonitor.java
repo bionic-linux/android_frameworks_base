@@ -201,8 +201,9 @@ public class LingerMonitor {
         }
 
         if (DBG) {
-            Log.d(TAG, "Notifying switch from=" + fromNai.name() + " to=" + toNai.name() +
-                    " type=" + sNotifyTypeNames.get(notifyType, "unknown(" + notifyType + ")"));
+            Log.d(TAG, "Notifying switch from=" + fromNai.toShortString()
+                    + " to=" + toNai.toShortString()
+                    + " type=" + sNotifyTypeNames.get(notifyType, "unknown(" + notifyType + ")"));
         }
 
         mNotifications.put(fromNai.network.netId, toNai.network.netId);
@@ -223,10 +224,10 @@ public class LingerMonitor {
     public void noteLingerDefaultNetwork(@NonNull final NetworkAgentInfo fromNai,
             @Nullable final NetworkAgentInfo toNai) {
         if (VDBG) {
-            Log.d(TAG, "noteLingerDefaultNetwork from=" + fromNai.name() +
-                    " everValidated=" + fromNai.everValidated +
-                    " lastValidated=" + fromNai.lastValidated +
-                    " to=" + toNai.name());
+            Log.d(TAG, "noteLingerDefaultNetwork from=" + fromNai.toShortString()
+                    + " everValidated=" + fromNai.everValidated
+                    + " lastValidated=" + fromNai.lastValidated
+                    + " to=" + toNai.toShortString());
         }
 
         // If we are currently notifying the user because the device switched to fromNai, now that
@@ -271,7 +272,8 @@ public class LingerMonitor {
         // TODO: should we do this?
         if (everNotified(fromNai)) {
             if (VDBG) {
-                Log.d(TAG, "Not notifying handover from " + fromNai.name() + ", already notified");
+                Log.d(TAG, "Not notifying handover from " + fromNai.toShortString()
+                        + ", already notified");
             }
             return;
         }
