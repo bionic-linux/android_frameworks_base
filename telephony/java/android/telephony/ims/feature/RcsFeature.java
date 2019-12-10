@@ -193,7 +193,6 @@ public class RcsFeature extends ImsFeature {
      * of the capability and notify the capability status as true using
      * {@link #notifyCapabilitiesStatusChanged(RcsImsCapabilities)}. This will signal to the
      * framework that the capability is available for usage.
-     * @hide
      */
     public static class RcsImsCapabilities extends Capabilities {
         /** @hide*/
