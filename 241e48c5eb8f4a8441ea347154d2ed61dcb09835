@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817f7444_160c25ab",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-12-10T06:13:28Z",
+      "side": 1,
+      "message": "Legacy",
+      "range": {
+        "startLine": 2187,
+        "startChar": 7,
+        "endLine": 2187,
+        "endChar": 13
+      },
+      "revId": "241e48c5eb8f4a8441ea347154d2ed61dcb09835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed75832_0e8fa182",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2192,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2019-12-10T06:13:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2192,
+        "startChar": 7,
+        "endLine": 2192,
+        "endChar": 13
+      },
+      "revId": "241e48c5eb8f4a8441ea347154d2ed61dcb09835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
