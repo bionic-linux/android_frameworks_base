@@ -24,15 +24,15 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.provider.Settings.Global.TETHER_ENABLE_LEGACY_DHCP_SERVER;
 
 import static com.android.internal.R.array.config_mobile_hotspot_provision_app;
-import static com.android.internal.R.array.config_tether_bluetooth_regexs;
-import static com.android.internal.R.array.config_tether_dhcp_range;
-import static com.android.internal.R.array.config_tether_upstream_types;
-import static com.android.internal.R.array.config_tether_usb_regexs;
-import static com.android.internal.R.array.config_tether_wifi_p2p_regexs;
-import static com.android.internal.R.array.config_tether_wifi_regexs;
-import static com.android.internal.R.bool.config_tether_upstream_automatic;
 import static com.android.internal.R.integer.config_mobile_hotspot_provision_check_period;
 import static com.android.internal.R.string.config_mobile_hotspot_provision_app_no_ui;
+import static com.android.tethering.R.array.config_tether_bluetooth_regexs;
+import static com.android.tethering.R.array.config_tether_dhcp_range;
+import static com.android.tethering.R.array.config_tether_upstream_types;
+import static com.android.tethering.R.array.config_tether_usb_regexs;
+import static com.android.tethering.R.array.config_tether_wifi_p2p_regexs;
+import static com.android.tethering.R.array.config_tether_wifi_regexs;
+import static com.android.tethering.R.bool.config_tether_upstream_automatic;
 
 import android.content.ContentResolver;
 import android.content.Context;
