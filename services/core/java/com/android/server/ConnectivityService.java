@@ -6499,17 +6499,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void rematchAllNetworksAndRequests() {
         // TODO: This may be slow, and should be optimized.
         final long now = SystemClock.elapsedRealtime();
-        final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
         final NetworkReassignment changes = computeNetworkReassignment();
         if (VDBG || DDBG) log(changes.toString());
-        applyNetworkReassignment(changes, oldDefaultNetwork, now);
+        applyNetworkReassignment(changes, now);
     }
 
     private void applyNetworkReassignment(@NonNull final NetworkReassignment changes,
-            @Nullable final NetworkAgentInfo oldDefaultNetwork, final long now) {
+            final long now) {
         // First, update the lists of satisfied requests in the network agents. This is necessary
         // because some code later depends on this state to be correct, most prominently computing
         // the linger status.
+        final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
+
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
             updateOldAndNewSatisfierNAIForRematchRequest(event.mRequest, event.mOldNetwork,
