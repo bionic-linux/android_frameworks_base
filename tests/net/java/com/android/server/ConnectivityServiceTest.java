@@ -5660,6 +5660,9 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
         trustedCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
 
+        mCellNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+
         mCm.unregisterNetworkCallback(trustedCallback);
     }
 
