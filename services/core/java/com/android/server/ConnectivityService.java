@@ -154,7 +154,6 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
@@ -6518,37 +6517,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @NonNull private final Set<NetworkBgStatePair> mRematchedNetworks = new ArraySet<>();
-        @NonNull private final Map<NetworkRequestInfo, RequestReassignment> mReassignments =
-                new ArrayMap<>();
+        @NonNull private final ArrayList<RequestReassignment> mReassignments = new ArrayList<>();
 
         @NonNull Iterable<NetworkBgStatePair> getRematchedNetworks() {
             return mRematchedNetworks;
         }
 
         @NonNull Iterable<RequestReassignment> getRequestReassignments() {
-            return mReassignments.values();
+            return mReassignments;
         }
 
         void addRequestReassignment(@NonNull final RequestReassignment reassignment) {
-            final RequestReassignment oldChange = mReassignments.get(reassignment.mRequest);
-            if (null == oldChange) {
-                mReassignments.put(reassignment.mRequest, reassignment);
-                return;
-            }
-            if (oldChange.mNewNetwork != reassignment.mOldNetwork) {
-                throw new IllegalArgumentException("Reassignment <" + reassignment.mRequest + "> ["
-                        + reassignment.mOldNetwork + " -> " + reassignment.mNewNetwork
-                        + "] conflicts with ["
-                        + oldChange.mOldNetwork + " -> " + oldChange.mNewNetwork + "]");
-            }
-            // There was already a note to reassign this request from a network A to a network B,
-            // and a reassignment is added from network B to some other network C. The following
-            // synthesizes the merged reassignment that goes A -> C. An interesting (but not
-            // special) case to think about is when B is null, which can happen when the rematch
-            // loop notices the current satisfier doesn't satisfy the request any more, but
-            // hasn't yet encountered another network that could.
-            mReassignments.put(reassignment.mRequest, new RequestReassignment(reassignment.mRequest,
-                    oldChange.mOldNetwork, reassignment.mNewNetwork));
+            mReassignments.add(reassignment);
         }
 
         void addRematchedNetwork(@NonNull final NetworkBgStatePair network) {
