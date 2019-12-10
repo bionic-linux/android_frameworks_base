@@ -34,6 +34,24 @@
       "revId": "6c1ff8ae39dc5eea58f6413637750ee8c1a94b41",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0c9f20_3fd571a1",
+        "filename": "services/core/java/com/android/server/storage/AppFuseBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1069219
+      },
+      "writtenOn": "2019-12-10T10:46:12Z",
+      "side": 1,
+      "message": "\u003e Firstly, it might be the comment I added in the patchset(3) that misleads you, it should be replaced with the following:\n\u003e  // With the current synchronization between the java and native code,\n\u003e  // here we need to wait for add operation to finish to avoid data inconsistency\n\nonClosed() is called with a mount ID when the corresponding FD returned by native_add_bridge() is closed.\nSo mMountIdBeingAdded.get() \u003d\u003d mountId should never be true.\n\nSee:\n- https://android.googlesource.com/platform/frameworks/base/+/master/services/core/jni/com_android_server_storage_AppFuseBridge.cpp\n- https://android.googlesource.com/platform/system/core/+/master/libappfuse/FuseBridgeLoop.cc\n\n\u003e \n\u003e ------------------------------------------------\n\u003e Q: Why do you need this when you know StorageManagerService never calls addBridge() with the same mountId for multiple times?\n\u003e \n\u003e A: Because onClosed() could be invoked between `native_add_bridge(...)` and    \n\u003e `mScopes.put(mountScope.mountId, mountScope)`, see the thread model I described in a previous comment.\n\nI couldn\u0027t understand the diagram you wrote in the comment because onClosed() is called for the same mount ID twice, and onClosed() is called when the FD returned by native_add_bridge() cannot be closed.\nThese cannot happen as long as onClosed() is called only when closing the FD returned by native_add_bridge().\n\n\u003e \n\u003e ------------------------------------------\n\u003e Q: Just remove Preconditions.checkArgument(mScopes.indexOfKey(mountScope.mountId) \u003c 0) line, or\n\u003e \n\u003e A: You are correct.\n\u003e ------------------------------------------\n\u003e \n\u003e Q: ust after the checkArgument(), insert a dummy entry (e.g. null) to mScopes, release the lock, put the real MountScope to mScopes later, or Check mScopes.indexOfKey(mountScope.mountId) \u003c 0 just before calling mScopes.put() with a proper error handling to close the FD in case of failures.\n\u003e   \n\u003e A: I thought about it too, it is exactly the error handling code which I try to avoid in addBridge()\n\nIMO it\u0027s better to properly handle failures than adding subtle synchronization code.",
+      "parentUuid": "0981331b_5225357a",
+      "revId": "6c1ff8ae39dc5eea58f6413637750ee8c1a94b41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
