@@ -6476,7 +6476,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @Nullable final NetworkAgentInfo oldDefaultNetwork, final long now) {
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
-            if (event.mOldNetwork == event.mNewNetwork) continue;
             updateNetworkAgentInfoForRematchRequest(event.mRequest, event.mOldNetwork,
                     event.mNewNetwork, now);
         }
@@ -6503,8 +6502,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // before LegacyTypeTracker sends legacy broadcasts
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
-            if (event.mOldNetwork == event.mNewNetwork) continue;
-
             // Tell NetworkFactories about the new score, so they can stop
             // trying to connect if they know they cannot match it.
             // TODO - this could get expensive if we have a lot of requests for this
