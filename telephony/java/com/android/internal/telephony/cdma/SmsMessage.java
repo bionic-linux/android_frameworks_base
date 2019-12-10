@@ -18,6 +18,7 @@ package com.android.internal.telephony.cdma;
 
 import static com.android.internal.telephony.TelephonyProperties.PROPERTY_OPERATOR_IDP_STRING;
 
+import android.compat.annotation.UnsupportedAppUsage;
 import android.content.res.Resources;
 import android.os.SystemProperties;
 import android.telephony.PhoneNumberUtils;
@@ -43,8 +44,6 @@ import com.android.internal.telephony.cdma.sms.UserData;
 import com.android.internal.telephony.uicc.IccUtils;
 import com.android.internal.util.BitwiseInputStream;
 import com.android.internal.util.HexDump;
-
-import dalvik.annotation.compat.UnsupportedAppUsage;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
