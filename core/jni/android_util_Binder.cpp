@@ -911,6 +911,14 @@ void signalExceptionForError(JNIEnv* env, jobject obj, status_t err,
 
 // ----------------------------------------------------------------------------
 
+static void android_os_setWarnOnBlockingNative(jboolean warn)
+{
+    const ProcessState::CallRestriction restriction = warn
+        ? ProcessState::CallRestriction::ERROR_IF_NOT_ONEWAY
+        : ProcessState::CallRestriction::NONE;
+    return ProcessState::self()->setCallRestriction(restriction);
+}
+
 static jint android_os_Binder_getCallingPid()
 {
     return IPCThreadState::self()->getCallingPid();
@@ -1037,6 +1045,7 @@ static jobject android_os_Binder_waitForService(
 
 static const JNINativeMethod gBinderMethods[] = {
      /* name, signature, funcPtr */
+    { "setWarnOnBlockingNative", "(Z)V", (void*)android_os_setWarnOnBlockingNative },
     // @CriticalNative
     { "getCallingPid", "()I", (void*)android_os_Binder_getCallingPid },
     // @CriticalNative

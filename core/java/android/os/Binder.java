@@ -193,7 +193,10 @@ public class Binder implements IBinder {
      */
     public static void setWarnOnBlocking(boolean warnOnBlocking) {
         sWarnOnBlocking = warnOnBlocking;
+        setWarnOnBlockingNative(warnOnBlocking);
     }
+
+    private static native void setWarnOnBlockingNative(boolean warnOnBlocking);
 
     /**
      * Allow blocking calls on the given interface, overriding the requested
