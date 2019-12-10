@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe28386b_09c0027c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:09:43Z",
+      "side": 1,
+      "message": "this value should probably be renamed since its conflicting?",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f794e9_da054ebd",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:09:43Z",
+      "side": 1,
+      "message": "not sure this condition is right, by default we are always showing the shelf? should it be !onKeyguard || mAlwaysShow?",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896f6519_269c7b6e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:09:43Z",
+      "side": 1,
+      "message": "seems like this is a behavior change here, previously we weren\u0027t adding the viewstate height + padding. what is this for?",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67249c9d_fa80c2cf",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:09:43Z",
+      "side": 1,
+      "message": "this also seems to be a behavior change, we need to hide the background sometimes.",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff77046_77954d25",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-10T21:09:43Z",
+      "side": 1,
+      "message": "should this be inverted?",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
