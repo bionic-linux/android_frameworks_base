@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e7599fc_3117594e",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-10T18:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "817f7444_160c25ab",
+      "range": {
+        "startLine": 2187,
+        "startChar": 7,
+        "endLine": 2187,
+        "endChar": 13
+      },
+      "revId": "241e48c5eb8f4a8441ea347154d2ed61dcb09835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ed75832_0e8fa182",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "241e48c5eb8f4a8441ea347154d2ed61dcb09835",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01174220_8d1298b1",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2192,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2019-12-10T18:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed75832_0e8fa182",
+      "range": {
+        "startLine": 2192,
+        "startChar": 7,
+        "endLine": 2192,
+        "endChar": 13
+      },
+      "revId": "241e48c5eb8f4a8441ea347154d2ed61dcb09835",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
