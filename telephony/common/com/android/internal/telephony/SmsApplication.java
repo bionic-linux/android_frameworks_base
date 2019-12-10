@@ -20,6 +20,7 @@ import android.Manifest.permission;
 import android.annotation.Nullable;
 import android.app.AppOpsManager;
 import android.app.role.RoleManager;
+import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -39,15 +40,13 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.provider.Telephony;
 import android.provider.Telephony.Sms.Intents;
-import android.telephony.PackageChangeReceiver;
 import android.telephony.Rlog;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.android.internal.content.PackageMonitor;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-
-import dalvik.annotation.compat.UnsupportedAppUsage;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -782,7 +781,7 @@ public final class SmsApplication {
      * Tracks package changes and ensures that the default SMS app is always configured to be the
      * preferred activity for SENDTO sms/mms intents.
      */
-    private static final class SmsPackageMonitor extends PackageChangeReceiver {
+    private static final class SmsPackageMonitor extends PackageMonitor {
         final Context mContext;
 
         public SmsPackageMonitor(Context context) {
@@ -791,12 +790,12 @@ public final class SmsApplication {
         }
 
         @Override
-        public void onPackageDisappeared() {
+        public void onPackageDisappeared(String packageName, int reason) {
             onPackageChanged();
         }
 
         @Override
-        public void onPackageAppeared() {
+        public void onPackageAppeared(String packageName, int reason) {
             onPackageChanged();
         }
 
@@ -829,7 +828,7 @@ public final class SmsApplication {
 
     public static void initSmsPackageMonitor(Context context) {
         sSmsPackageMonitor = new SmsPackageMonitor(context);
-        sSmsPackageMonitor.register(context, context.getMainLooper(), UserHandle.ALL);
+        sSmsPackageMonitor.register(context, context.getMainLooper(), UserHandle.ALL, false);
     }
 
     @UnsupportedAppUsage
