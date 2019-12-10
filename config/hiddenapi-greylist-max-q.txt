@@ -268,10 +268,6 @@ Lcom/android/internal/R$array;->config_autoBrightnessLevels:I
 Lcom/android/internal/R$array;->config_mobile_hotspot_provision_app:I
 Lcom/android/internal/R$array;->config_sms_enabled_locking_shift_tables:I
 Lcom/android/internal/R$array;->config_sms_enabled_single_shift_tables:I
-Lcom/android/internal/R$array;->config_tether_bluetooth_regexs:I
-Lcom/android/internal/R$array;->config_tether_upstream_types:I
-Lcom/android/internal/R$array;->config_tether_usb_regexs:I
-Lcom/android/internal/R$array;->config_tether_wifi_regexs:I
 Lcom/android/internal/R$array;->maps_starting_lat_lng:I
 Lcom/android/internal/R$array;->maps_starting_zoom:I
 Lcom/android/internal/R$attr;->actionBarStyle:I
