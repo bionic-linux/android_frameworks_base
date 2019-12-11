@@ -267,6 +267,7 @@ filegroup {
     srcs: [
         ":framework-sdkext-sources",
         ":updatable-media-srcs",
+        ":tethering-client-srcs",
     ]
 }
 
@@ -296,6 +297,7 @@ java_defaults {
             "media/mca/filterpacks/java",
             "mms/java",
             "opengl/java",
+            "packages/Tethering/common/TetheringLib/src/",
             "rs/java",
             "sax/java",
             "telecomm/java",
@@ -368,6 +370,7 @@ java_defaults {
     libs: [
         "ext",
         "updatable_media_stubs",
+        "tethering_client_stubs",
     ],
 
     jarjar_rules: ":framework-jarjar-rules",
@@ -601,6 +604,21 @@ filegroup {
     name: "framework-tethering-shared-srcs",
     srcs: [
         "core/java/android/util/LocalLog.java",
+        "core/java/com/android/internal/util/BitUtils.java",
+        "core/java/com/android/internal/util/IndentingPrintWriter.java",
+        "core/java/com/android/internal/util/IState.java",
+        "core/java/com/android/internal/util/MessageUtils.java",
+        "core/java/com/android/internal/util/Preconditions.java",
+        "core/java/com/android/internal/util/State.java",
+        "core/java/com/android/internal/util/StateMachine.java",
+    ],
+}
+
+filegroup {
+    name: "framework-tethering-annotations",
+    srcs: [
+        "core/java/android/annotation/NonNull.java",
+        "core/java/android/annotation/SystemApi.java",
     ],
 }
 // Build ext.jar
@@ -846,6 +864,7 @@ subdirs = [
     "tools/*",
     "native/android",
     "native/graphics/jni",
+    "packages/Tethering/common/TetheringLib/",
 ]
 
 optional_subdirs = [
