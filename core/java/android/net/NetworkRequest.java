@@ -461,6 +461,13 @@ public class NetworkRequest implements Parcelable {
         return networkCapabilities.hasTransport(transportType);
     }
 
+    /**
+     * @see Builder#setNetworkSpecifier(NetworkSpecifier)
+     */
+    public NetworkSpecifier getNetworkSpecifier() {
+        return networkCapabilities.getNetworkSpecifier();
+    }
+
     public String toString() {
         return "NetworkRequest [ " + type + " id=" + requestId +
                 (legacyType != ConnectivityManager.TYPE_NONE ? ", legacyType=" + legacyType : "") +
