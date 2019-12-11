@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "217c01cb_c0e8ad7e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1294001
+      },
+      "writtenOn": "2019-12-11T01:51:27Z",
+      "side": 1,
+      "message": "Do you want to change the function name?\nplease give recommandation\nHow about \"shouldStackNotificaitonShelf()\"",
+      "parentUuid": "47eface6_582d5cb7",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "896f6519_269c7b6e",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
         "patchSetId": 1
