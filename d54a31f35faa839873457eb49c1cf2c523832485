@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "47eface6_582d5cb7",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1059880
+      },
+      "writtenOn": "2019-12-11T01:37:47Z",
+      "side": 1,
+      "message": "Ah, I see, the name is incredibly confusing here.\nshouldShowNotificationShelf() means that the shelf should be forcibly shown, but it would return false if it should show in the regular experience.",
+      "parentUuid": "c32ea2b8_46ff14b1",
+      "revId": "d54a31f35faa839873457eb49c1cf2c523832485",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "896f6519_269c7b6e",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/NotificationShelf.java",
         "patchSetId": 1
