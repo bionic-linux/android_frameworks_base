@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24f53d6e_7778cd17",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-11T07:11:13Z",
+      "side": 1,
+      "message": "nit: I fine for logic, but maybe avoid too many nested IF. It is not friendly for reader and may easy to lose some case.",
+      "range": {
+        "startLine": 856,
+        "startChar": 0,
+        "endLine": 869,
+        "endChar": 21
+      },
+      "revId": "23067430683531c2f1986c5d52716249d2e578d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
