@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae402000_e25e3353",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-12-11T16:43:13Z",
+      "side": 1,
+      "message": "No because the longs need to be first replaced by strings.\nThis could be done in one line with .stream().map but this seems better for performance",
+      "parentUuid": "a786804c_fe29dd41",
+      "range": {
+        "startLine": 632,
+        "startChar": 12,
+        "endLine": 641,
+        "endChar": 13
+      },
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d332d700_5015fe42",
         "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e96a428b_8210054e",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-12-11T16:43:13Z",
+      "side": 1,
+      "message": "Done in internal (it doesn\u0027t exist in aosp)",
+      "parentUuid": "d332d700_5015fe42",
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29185f87_4986e45b",
         "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2019-12-10T22:50:03Z",
       "side": 1,
       "message": "If you are going to iterate backwards you could go full goes-to-operator:\n\nfor (int i \u003d params.length; i --\u003e 0;) { ... }",
+      "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2e2dfa_9da8c23f",
+        "filename": "core/java/com/android/internal/os/ZygoteArguments.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-12-11T16:43:13Z",
+      "side": 1,
+      "message": "just replaced with forward iteration. I think --\u003e is less readable.",
+      "parentUuid": "29185f87_4986e45b",
       "revId": "ddb5514cc7dc10924c8aedcfa14fad7e21fae11b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
