@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dac97597_f934802c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Ack; tried to phrase it differently; thoughts?",
+      "parentUuid": "87cca00a_7242d4f9",
+      "range": {
+        "startLine": 132,
+        "startChar": 45,
+        "endLine": 132,
+        "endChar": 72
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3de43874_a4b430ba",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "8d300366e7786ee9583b328eb596639555513331",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfb5f23_64eb8917",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de43874_a4b430ba",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 27
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1aa406a3_080111e7",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done. Moved up one level to PlatformVpnProfile, and exposed aliases of these type values (a subset of the VpnProfile types)",
+      "parentUuid": "4e56fdc5_2c85a16c",
+      "range": {
+        "startLine": 166,
+        "startChar": 11,
+        "endLine": 166,
+        "endChar": 17
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f286852e_e95d4853",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "44516552_cf955423",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f286852e_e95d4853",
+      "range": {
+        "startLine": 439,
+        "startChar": 17,
+        "endLine": 439,
+        "endChar": 24
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82479e8_3c21912a",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 12
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "809e8d5f_d2fa4294",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done. Changes in this file turned out to be from a previous iteration of the API. removed.",
+      "parentUuid": "f82479e8_3c21912a",
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a07a30bb_2db59ae3",
         "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
         "patchSetId": 12
@@ -122,6 +236,24 @@
       "writtenOn": "2019-12-10T02:21:50Z",
       "side": 1,
       "message": "Generally speaking I question the usefulness of many of the tests there. Tests are an expensive way to make sure something stays working ; having many tests with very low marginal value doesn\u0027t always provide positive value.",
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161dd951_83b03972",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Most of these tests are ways that I can assert (to myself, and historically to Lorenzo) that the code works as expected. One could argue that they\u0027re no longer necessary and this of course assumes correct tests, but given that in the writing of them, I\u0027ve found some bugs, I would lean towards saying that the writing of tests has helped improve code health.\n\nThat said, I don\u0027t have a strong opinion if you\u0027d prefer doing something in a different way?",
+      "parentUuid": "a07a30bb_2db59ae3",
       "revId": "8d300366e7786ee9583b328eb596639555513331",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "201407c7_e0f9ad4a",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done; changed method name; i think that\u0027ll be more readable.",
+      "parentUuid": "987c24a0_7be703f9",
+      "range": {
+        "startLine": 77,
+        "startChar": 40,
+        "endLine": 77,
+        "endChar": 45
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3422a19f_89d7580d",
         "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
         "patchSetId": 12
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "e3724a60_b68f41b5",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Technically having a password set is acceptable at this layer; it\u0027ll simply get discarded when converting to the VpnProfile.\n\nI\u0027ve added assertions to the below tests converting to the (legacy) VpnProfile structure",
+      "parentUuid": "3422a19f_89d7580d",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "335e2590_81c63994",
         "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
         "patchSetId": 12
@@ -194,6 +374,30 @@
       "revId": "8d300366e7786ee9583b328eb596639555513331",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b41f222_48cd10b0",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-11T03:37:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335e2590_81c63994",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 12
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
