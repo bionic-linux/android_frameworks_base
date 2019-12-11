@@ -93,6 +93,30 @@
       "revId": "5eedaf348205612ed457aa8b46dc7dc0409cd5df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cf7b47_a659ad71",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4937,
+      "author": {
+        "id": 1326377
+      },
+      "writtenOn": "2019-12-11T18:55:01Z",
+      "side": 1,
+      "message": "Not exactly. But I think for these constants CellSignalStrength should be the place to look for them.",
+      "parentUuid": "a8ae4012_2c118ea4",
+      "range": {
+        "startLine": 4937,
+        "startChar": 37,
+        "endLine": 4937,
+        "endChar": 58
+      },
+      "revId": "5eedaf348205612ed457aa8b46dc7dc0409cd5df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
