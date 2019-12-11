@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "791fd827_6cf386aa",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2019-12-11T05:30:37Z",
+      "side": 1,
+      "message": "These codes are exactly same as config_callBarringMMI. Even same for 51008 and 51089. How would that fix the issue? Or do you have device specific resource overlay?",
+      "range": {
+        "startLine": 2800,
+        "startChar": 0,
+        "endLine": 2810,
+        "endChar": 19
+      },
+      "revId": "51dbc6585af4fc2fbc8be8b90264a86a0ef9ac96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
