@@ -6331,23 +6331,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     // An accumulator class to gather the list of changes that result from a rematch.
-    // TODO : enrich to represent an entire set of changes to apply.
     private static class NetworkReassignment {
-        static class NetworkBgStatePair {
-            @NonNull final NetworkAgentInfo mNetwork;
-            final boolean mOldBackground;
-            NetworkBgStatePair(@NonNull final NetworkAgentInfo network,
-                    final boolean oldBackground) {
-                mNetwork = network;
-                mOldBackground = oldBackground;
-            }
-
-            public String toString() {
-                return "[" + NetworkAgentInfo.toShortString(mNetwork)
-                        + " oldBackground=" + mOldBackground + "]";
-            }
-        }
-
         static class RequestReassignment {
             @NonNull public final NetworkRequestInfo mRequest;
             @Nullable public final NetworkAgentInfo mOldNetwork;
@@ -6367,12 +6351,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        @NonNull private final Set<NetworkBgStatePair> mRematchedNetworks = new ArraySet<>();
         @NonNull private final ArrayList<RequestReassignment> mReassignments = new ArrayList<>();
-
-        @NonNull Iterable<NetworkBgStatePair> getRematchedNetworks() {
-            return mRematchedNetworks;
-        }
 
         @NonNull Iterable<RequestReassignment> getRequestReassignments() {
             return mReassignments;
@@ -6380,10 +6359,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         void addRequestReassignment(@NonNull final RequestReassignment reassignment) {
             mReassignments.add(reassignment);
-        }
-
-        void addRematchedNetwork(@NonNull final NetworkBgStatePair network) {
-            mRematchedNetworks.add(network);
         }
 
         // Will return null if this reassignment does not change the network assigned to
@@ -6399,9 +6374,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public String toString() {
             final StringJoiner sj = new StringJoiner(", " /* delimiter */,
                     "NetReassign [" /* prefix */, "]" /* suffix */);
-            if (mRematchedNetworks.isEmpty() && mReassignments.isEmpty()) {
-                return sj.add("no changes").toString();
-            }
+            if (mReassignments.isEmpty()) return sj.add("no changes").toString();
             for (final RequestReassignment rr : getRequestReassignments()) {
                 sj.add(rr.toString());
             }
@@ -6411,15 +6384,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public String debugString() {
             final StringBuilder sb = new StringBuilder();
             sb.append("NetworkReassignment :");
-            if (mRematchedNetworks.isEmpty() && mReassignments.isEmpty()) {
-                return sb.append(" no changes").toString();
-            }
-            final StringJoiner sj = new StringJoiner(", " /* delimiter */,
-                    "\n  Rematched networks : " /* prefix */, "" /* suffix */);
-            for (final NetworkBgStatePair rr : mRematchedNetworks) {
-                sj.add(rr.mNetwork.toShortString());
-            }
-            sb.append(sj.toString());
+            if (mReassignments.isEmpty()) return sb.append(" no changes").toString();
             for (final RequestReassignment rr : getRequestReassignments()) {
                 sb.append("\n  ").append(rr);
             }
@@ -6467,8 +6432,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (final NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
             if (!nai.everConnected) continue;
             nais.add(nai);
-            changes.addRematchedNetwork(new NetworkReassignment.NetworkBgStatePair(nai,
-                    nai.isBackgroundNetwork()));
         }
 
         for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
@@ -6501,6 +6464,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // because some code later depends on this state to be correct, most prominently computing
         // the linger status.
         final NetworkAgentInfo oldDefaultNetwork = getDefaultNetwork();
+
+        final Collection<NetworkAgentInfo> nais = mNetworkAgentInfos.values();
+
+        // Since most of the time there are only 0 or 1 background networks, it would probably
+        // be more efficient to just use an ArrayList here. TODO : measure performance
+        final ArraySet<NetworkAgentInfo> oldBgNetworks = new ArraySet<>();
+        for (final NetworkAgentInfo nai : nais) {
+            if (nai.isBackgroundNetwork()) oldBgNetworks.add(nai);
+        }
 
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
@@ -6546,8 +6518,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        final Collection<NetworkAgentInfo> nais = mNetworkAgentInfos.values();
-
         // Update the linger state before processing listen callbacks, because the background
         // computation depends on whether the network is lingering. Don't send the LOSING callbacks
         // just yet though, because they have to be sent after the listens are processed to keep
@@ -6564,15 +6534,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        for (final NetworkReassignment.NetworkBgStatePair event : changes.getRematchedNetworks()) {
+        for (final NetworkAgentInfo nai : nais) {
+            if (!nai.everConnected) continue;
+            final boolean oldBackground = oldBgNetworks.contains(nai);
             // Process listen requests and update capabilities if the background state has
             // changed for this network. For consistency with previous behavior, send onLost
             // callbacks before onAvailable.
-            processNewlyLostListenRequests(event.mNetwork);
-            if (event.mOldBackground != event.mNetwork.isBackgroundNetwork()) {
-                applyBackgroundChangeForRematch(event.mNetwork);
+            processNewlyLostListenRequests(nai);
+            if (oldBackground != nai.isBackgroundNetwork()) {
+                applyBackgroundChangeForRematch(nai);
             }
-            processNewlySatisfiedListenRequests(event.mNetwork);
+            processNewlySatisfiedListenRequests(nai);
         }
 
         for (final NetworkAgentInfo nai : lingeredNetworks) {
