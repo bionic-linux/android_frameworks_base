@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a549b685_0a2d48fe",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4928,
+      "author": {
+        "id": 1326377
+      },
+      "writtenOn": "2019-12-11T00:53:39Z",
+      "side": 1,
+      "message": "We should use getNumSignalStrengthLevels() for mainline compatibility.",
+      "range": {
+        "startLine": 4928,
+        "startChar": 53,
+        "endLine": 4928,
+        "endChar": 77
+      },
+      "revId": "5eedaf348205612ed457aa8b46dc7dc0409cd5df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4603d67c_a41bc470",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4937,
+      "author": {
+        "id": 1326377
+      },
+      "writtenOn": "2019-12-11T00:53:39Z",
+      "side": 1,
+      "message": "This constant has been removed too, we can consider adding it back to SignalStrength but I see no problem keeping the cellularRxSignalStrengthDescription here.",
+      "range": {
+        "startLine": 4937,
+        "startChar": 37,
+        "endLine": 4937,
+        "endChar": 58
+      },
+      "revId": "5eedaf348205612ed457aa8b46dc7dc0409cd5df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
