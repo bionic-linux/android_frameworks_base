@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6f85d14_0892034f",
+        "filename": "core/java/android/net/INetworkStatsProvider.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "NSS doesn\u0027t know what interfaces each provider handles. That\u0027s for the provider to know.",
+      "parentUuid": "c336a622_c3909b57",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9edfa6db_ae46caa1",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -64,6 +88,52 @@
         "startChar": 99,
         "endLine": 32,
         "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30a7fd3_dcbbe687",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "How do I know if it\u0027s needed ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52f1342_f9fceb4a",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "So if a provider is associated with multiple interfaces it should block them all ? What if multiple providers are associated with one interface, should they all try to block egress packets on that interface ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 58
       },
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -117,6 +187,29 @@
     },
     {
       "key": {
+        "uuid": "7e20d8fa_96e13d97",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "call",
+      "range": {
+        "startLine": 60,
+        "startChar": 58,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b6a4bb4_1576f505",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -140,6 +233,29 @@
     },
     {
       "key": {
+        "uuid": "839cfbff_c619e54f",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "Does the linter let you do this ? I thought it wanted the annotation first.\n\nIf checkstyle is happy with this then I don\u0027t care",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36529a69_f50a6eab",
         "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
         "patchSetId": 6
@@ -156,6 +272,75 @@
         "startChar": 7,
         "endLine": 39,
         "endChar": 15
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ce7c47_379c8ad0",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "s/is an/are/\ns/needs/need/\n\nOr, if you prefer I suggest the following wording\n\n /**\n  * Notify the system of new network statistics.\n  *\n  * Send the network statistics recorded since the last call to {@link #onStatsUpdated}.\n  * Must be called within one minute of {@link #requestStatsUpdate} being called. The provider\n  * can also call this whenever it wants to reports new stats for any reason.\n  * Note that the system will not necessarily immediately propagate the statistics to reflect\n  * the update.\n  *\n  * @param ...\n  */\n\nDo the providers require a way to propagate immediately ? If they don\u0027t I suggest we don\u0027t write docs promising we\u0027ll do it.",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fd4e56_88667da3",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "the same stats ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63783d16_64202da1",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T13:09:27Z",
+      "side": 1,
+      "message": "has been",
+      "range": {
+        "startLine": 64,
+        "startChar": 62,
+        "endLine": 64,
+        "endChar": 64
       },
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
