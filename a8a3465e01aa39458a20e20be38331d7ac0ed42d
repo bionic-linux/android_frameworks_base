@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7e749b3_80f15678",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2019-12-12T23:15:28Z",
+      "side": 1,
+      "message": "Now that you\u0027ve got everything as a flag, you can add an IntDef with all the possible values for the flags.",
+      "range": {
+        "startLine": 619,
+        "startChar": 33,
+        "endLine": 619,
+        "endChar": 67
+      },
+      "revId": "a8a3465e01aa39458a20e20be38331d7ac0ed42d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
