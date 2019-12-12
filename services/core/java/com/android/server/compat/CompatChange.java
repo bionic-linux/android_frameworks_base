@@ -152,6 +152,9 @@ public final class CompatChange extends CompatibilityChangeInfo {
         if (getDisabled()) {
             sb.append("; disabled");
         }
+        if (getDescription() != null) {
+            sb.append("; description=").append(getDescription());
+        }
         if (mPackageOverrides != null && mPackageOverrides.size() > 0) {
             sb.append("; packageOverrides=").append(mPackageOverrides);
         }

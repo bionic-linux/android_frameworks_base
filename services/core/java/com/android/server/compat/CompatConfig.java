@@ -272,7 +272,7 @@ final class CompatConfig {
     void dumpConfig(PrintWriter pw) {
         synchronized (mChanges) {
             if (mChanges.size() == 0) {
-                pw.println("No compat overrides.");
+                pw.println("No compat changes known.");
                 return;
             }
             for (int i = 0; i < mChanges.size(); ++i) {
