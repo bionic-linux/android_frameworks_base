@@ -94,6 +94,30 @@
       "revId": "4a2679f1230eb971331b2e2e70a0ed8e2b392f85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e53650b4_111e8668",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2019-12-12T23:35:02Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/bionic/+/1189056",
+      "parentUuid": "ed3cf82a_812e31dd",
+      "range": {
+        "startLine": 1678,
+        "startChar": 22,
+        "endLine": 1678,
+        "endChar": 32
+      },
+      "revId": "4a2679f1230eb971331b2e2e70a0ed8e2b392f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
