@@ -62,6 +62,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.CaptivePortal;
+import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ICaptivePortal;
@@ -95,6 +96,7 @@ import android.net.NetworkMisc;
 import android.net.NetworkMonitorManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkProvider;
+import android.net.NetworkProvisioningInfo;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
@@ -535,6 +537,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * arg2 = A bitmask to describe which probes are successful.
      */
     public static final int EVENT_PROBE_STATUS_CHANGED = 46;
+
+    /**
+     * Event for NetworkMonitor to inform ConnectivityService that captive portal data has changed.
+     * arg1 = unused
+     * arg2 = netId
+     */
+    private static final int EVENT_CAPPORT_DATA_CHANGED = 47;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2836,6 +2845,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     updatePrivateDns(nai, (PrivateDnsConfig) msg.obj);
                     break;
                 }
+                case EVENT_CAPPORT_DATA_CHANGED: {
+                    final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
+                    if (nai == null) break;
+                    updateProvisioningInfo(nai, (CaptivePortalData) msg.obj);
+                    break;
+                }
             }
             return true;
         }
@@ -2919,6 +2934,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(
                     EVENT_PROBE_STATUS_CHANGED,
                     probesCompleted, probesSucceeded, new Integer(mNetId)));
+        }
+
+        @Override
+        public void notifyCaptivePortalDataChanged(CaptivePortalData data) {
+            mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(
+                    EVENT_CAPPORT_DATA_CHANGED,
+                    0, mNetId, data));
         }
 
         @Override
@@ -5962,6 +5984,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private void updateProvisioningInfo(NetworkAgentInfo nai, CaptivePortalData data) {
+        synchronized (nai) {
+            nai.setNetworkProvisioningInfo(
+                    new NetworkProvisioningInfo.Builder().setCaptivePortalData(data).build());
+        }
+
+        notifyNetworkCallbacks(nai, ConnectivityManager.CALLBACK_PROVISIONING_INFO_CHANGED);
+    }
+
     /**
      * Returns whether VPN isolation (ingress interface filtering) should be applied on the given
      * network.
@@ -6146,6 +6177,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nri.messenger == null) {
             return;  // Default request has no msgr
         }
+        final boolean hasProvisioningInfoPermission = checkSettingsPermission(nri.mPid, nri.mUid);
+        if (notificationType == ConnectivityManager.CALLBACK_PROVISIONING_INFO_CHANGED
+                && !hasProvisioningInfoPermission) {
+            // The provisioning info changed callback requires permission
+            return;
+        }
+
         Bundle bundle = new Bundle();
         // TODO: check if defensive copies of data is needed.
         putParcelable(bundle, new NetworkRequest(nri.request));
@@ -6159,6 +6197,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         networkAgent.networkCapabilities, nri.mPid, nri.mUid));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
+                bundle.putParcelable(NetworkProvisioningInfo.class.getSimpleName(),
+                        hasProvisioningInfoPermission ? networkAgent.getProvisioningInfo() : null);
                 // For this notification, arg1 contains the blocked status.
                 msg.arg1 = arg1;
                 break;
@@ -6182,6 +6222,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             case ConnectivityManager.CALLBACK_BLK_CHANGED: {
                 maybeLogBlockedStatusChanged(nri, networkAgent.network, arg1 != 0);
                 msg.arg1 = arg1;
+                break;
+            }
+            case ConnectivityManager.CALLBACK_PROVISIONING_INFO_CHANGED: {
+                putParcelable(bundle, networkAgent.getProvisioningInfo());
                 break;
             }
         }
