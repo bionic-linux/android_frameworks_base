@@ -16,6 +16,24 @@
       "revId": "d74255374616ad1127cf7742a4012c1c4d0fe2ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e38d4e7_a169ebb6",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2019-12-12T13:15:43Z",
+      "side": 1,
+      "message": "I think it\u0027s useful in the adb command.\nDo you think it\u0027s noisy/harmful for bugreports?",
+      "parentUuid": "09a8ba53_c7efee4e",
+      "revId": "d74255374616ad1127cf7742a4012c1c4d0fe2ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
