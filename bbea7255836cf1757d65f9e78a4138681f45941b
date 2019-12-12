@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d31b6b_7772aa85",
+        "filename": "api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 4454,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Why do we need separate errors for NO_ACCESS_PERMISSION and NO_PRIVILEGED_PERMISSION? Can\u0027t we just have TETHER_ERROR_PERMISSION_DENIED or something?",
+      "range": {
+        "startLine": 4454,
+        "startChar": 34,
+        "endLine": 4454,
+        "endChar": 71
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd06438_1e98e621",
+        "filename": "api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6642,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Seems like this should be TETHERING_SUPPORTED.",
+      "range": {
+        "startLine": 6642,
+        "startChar": 37,
+        "endLine": 6642,
+        "endChar": 53
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1927fb71_3f192a8d",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "This seems like a reasonable suggestion. Is it hard to implement? If not, I\u0027d say implement it.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf282ee_f63b3e3c",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3863,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Why does this not need to be @SystemApi? Is it only used internally in the framework?",
+      "range": {
+        "startLine": 3863,
+        "startChar": 7,
+        "endLine": 3863,
+        "endChar": 12
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480e04f4_230985fc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2355,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Nit: this seems like a long time. 100? 200?",
+      "range": {
+        "startLine": 2355,
+        "startChar": 33,
+        "endLine": 2355,
+        "endChar": 37
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3a2d75_f243739b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2358,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Why UOE? It\u0027s not unsupported, right? It just failed? If so, maybe IllegalStateException?",
+      "range": {
+        "startLine": 2358,
+        "startChar": 34,
+        "endLine": 2358,
+        "endChar": 63
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac664cf8_e868471f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Use SystemClock.sleep() so you don\u0027t need the catch statement.",
+      "range": {
+        "startLine": 2361,
+        "startChar": 12,
+        "endLine": 2361,
+        "endChar": 46
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

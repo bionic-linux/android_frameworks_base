@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceeba40f_9c5dacb7",
+        "filename": "config/hiddenapi-greylist.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 0,
+      "message": "Why remove these? They\u0027re still in ConnectivityManager, right?",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 85
+      },
+      "revId": "67dfdbc94f1a6020bb1a9a866fcb1c8ef61bc647",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b26a88_922cce27",
+        "filename": "Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "What does this do? Does it mean that any .aidl file in TetheringLib can be directly depended on by the framework? Is that what we want? Does it mean that the generated AIDL classes are in the bootclasspath and thus can never be changed?",
+      "range": {
+        "startLine": 300,
+        "startChar": 12,
+        "endLine": 300,
+        "endChar": 57
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c0ecfb_f36b6398",
+        "filename": "Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Out of curiosity, what does this do?",
+      "range": {
+        "startLine": 867,
+        "startChar": 4,
+        "endLine": 867,
+        "endChar": 46
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8af519_9a09de67",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem tethering related, so it should probably go into its own CL with its own commit message.\n\nAdditionally: there is already code to get the networkstack service in NetworkStackClient#getRemoteConnector. Should there be two ways to fetch the service?",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 16
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88804ba6_e81bb62e",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Why StaticApplicationContextServiceFetcher and not CachedServiceFetcher? StaticApplicationContextServiceFetcher is a special case and it has this comment on it:\n\n     * TODO: Delete this once its only user (ConnectivityManager) is known to work well in the\n     * case where multiple application components each have their own ConnectivityManager object.\n\nIf you want to use it, then you\u0027ll at least have to udpate that comment to mention TetheringManager as well. But it would seem better just to use CachedServiceFetcher, assuming it\u0027s safe for there to be multiple TetheringManagers in the same application (and if not, we should make it safe).",
+      "range": {
+        "startLine": 352,
+        "startChar": 20,
+        "endLine": 352,
+        "endChar": 58
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cff8455_793fd026",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Can you add a STOPSHIP to remove these?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 67
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ee7c88_5415385f",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Are these actually needed? Doesn\u0027t the bluetooth package do this?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f04318f_cdcce8b0",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Do we need all of these? If so, can you add comments to explain why?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 82
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb22939_d629fbc5",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Not for this CL, but this could be easily confused with TetherStatsParcel. Maybe rename to TetheringStateParcel?",
+      "range": {
+        "startLine": 91,
+        "startChar": 25,
+        "endLine": 91,
+        "endChar": 43
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5e3e00_5f026944",
+        "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Out of curiosity, what is the need for this? We don\u0027t seem to do anything like it for the network stack.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8765ae_1466c458",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/IIntResultListener.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "You can\u0027t listen to a module. Listen to module events?",
+      "range": {
+        "startLine": 20,
+        "startChar": 60,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dbc919_22a77f7f",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/IIntResultListener.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Does this need to be marked @hide? It\u0027s not in a path where it will go into the API text files, is it?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e9cc94_6d06808e",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringConnector.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7f0343_4bd321d4",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa4f2a7_08d10792",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Can you explain why we need these? Is it because MessageUtils uses them via reflection?",
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187aaa8a_dfbfa858",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Looks like this callback is switching from a single callback to a list of callbacks. Unlike most of this CL, that could cause a change in behaviour. There doesn\u0027t seem to be test coverage of it. Can it go into its own CL?\n\nOr am I misreading this?",
+      "range": {
+        "startLine": 1802,
+        "startChar": 0,
+        "endLine": 1807,
+        "endChar": 45
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2734f99_b176b26a",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "What is this dependency for? Does something in services.net talk to tethering?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ec0242_d2c92e6f",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "This contains a lot of implementation details about the tethering module which don\u0027t really seem appropriate here. Can we put them somewhere else? What was the reason they can\u0027t be in TetheringManager? How about putting them in NetworkStackClient?",
+      "range": {
+        "startLine": 2216,
+        "startChar": 0,
+        "endLine": 2222,
+        "endChar": 27
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c319f9_a7c7cbe0",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-12T15:34:47Z",
+      "side": 1,
+      "message": "Out of curiosity, what\u0027s the reason this no longer needs to be static?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
