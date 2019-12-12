@@ -797,6 +797,14 @@ public class ConnectivityServiceTest {
             mProbesSucceeded = probesSucceeded;
         }
 
+        void notifyCaptivePortalDataChanged(CaptivePortalData data) {
+            try {
+                mNmCallbacks.notifyCaptivePortalDataChanged(data);
+            } catch (RemoteException e) {
+                throw new AssertionError("This cannot happen", e);
+            }
+        }
+
         public String waitForRedirectUrl() {
             assertTrue(mNetworkStatusReceived.block(TIMEOUT_MS));
             return mRedirectUrl;
@@ -2806,6 +2814,34 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.expectPreventReconnectReceived();
 
         assertNoCallbacks(captivePortalCallback, validatedCallback);
+    }
+
+    @Test
+    public void testCaptivePortalApi() throws Exception {
+        mServiceContext.setPermission(
+                android.Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final TestNetworkCallback captivePortalCallback = new TestNetworkCallback();
+        final NetworkRequest captivePortalRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_CAPTIVE_PORTAL).build();
+        mCm.registerNetworkCallback(captivePortalRequest, captivePortalCallback);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        final String redirectUrl = "http://example.com/firstPath";
+
+        mWiFiNetworkAgent.connectWithCaptivePortal(redirectUrl, false /* isStrictMode */);
+        captivePortalCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+
+        final CaptivePortalData testData = new CaptivePortalData.Builder()
+                .setUserPortalUrl(Uri.parse(redirectUrl))
+                .setBytesRemaining(12345L)
+                .build();
+
+        mWiFiNetworkAgent.notifyCaptivePortalDataChanged(testData);
+        waitForIdle();
+
+        captivePortalCallback.expectLinkPropertiesThat(mWiFiNetworkAgent,
+                lp -> testData.equals(lp.getCaptivePortalData()));
     }
 
     private NetworkRequest.Builder newWifiRequestBuilder() {
