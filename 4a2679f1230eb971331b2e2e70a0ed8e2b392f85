@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6359de47_2544420b",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1229339
+      },
+      "writtenOn": "2019-12-12T21:32:36Z",
+      "side": 1,
+      "message": "This use of start-vs-offset confused me a bit, and I see that it\u0027s flipped from the macros in bionic/libc/private/bionic_page.h. Maybe we should flip these to match bionic_page.h?\n\ni.e. in bionic_page.h:\n - PAGE_START(x) is the address of the start of the page containing x (x \u0026 ~0xfff)\n - PAGE_OFFSET(x) is the offset of x within its page (x \u0026 0xfff)\n\nCurrently:\n - page_start here is PAGE_OFFSET in bionic_page.h\n - page_offset here is PAGE_START in bionic_page.h\n\nThe PAGE_START/PAGE_OFFSET in the commit message are similarly flipped from the names in bionic_page.h.",
+      "range": {
+        "startLine": 1678,
+        "startChar": 22,
+        "endLine": 1678,
+        "endChar": 32
+      },
+      "revId": "4a2679f1230eb971331b2e2e70a0ed8e2b392f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
