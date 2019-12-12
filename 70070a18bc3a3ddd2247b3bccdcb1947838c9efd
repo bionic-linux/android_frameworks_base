@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c336a622_c3909b57",
+        "filename": "core/java/android/net/INetworkStatsProvider.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "Why do we not take interface as a parameter?  That allows us to able to set different alert on different interfaces. E.g. For a ims interface using for VT, we can set a larger alert since the data size may increase rapidly. Maybe because of design simplification and align with previous design?",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edfa6db_ae46caa1",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "what is the external modules means here? outside framework?",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df49d414_5b93f5bb",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "May I know how does it set?",
+      "range": {
+        "startLine": 31,
+        "startChar": 99,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21867b17_887446c5",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "can\u0027t this align in previous line?",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a863f23e_d758d0fd",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "This seems unmatch the function. It cannot set for specified interface.",
+      "range": {
+        "startLine": 59,
+        "startChar": 79,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6a4bb4_1576f505",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "This can also be applied in alert? mean no alert?",
+      "range": {
+        "startLine": 65,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36529a69_f50a6eab",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-12T07:16:55Z",
+      "side": 1,
+      "message": "Notify?",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
