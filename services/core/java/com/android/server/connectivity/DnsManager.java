@@ -338,6 +338,10 @@ public class DnsManager {
                 : useTls ? paramsParcel.servers  // Opportunistic
                 : new String[0];            // Off
         paramsParcel.tlsFingerprints = new String[0];
+        // This field is unused but must be empty, otherwise Dnsresolver may reject this function
+        // call for avoiding security implications, see b/146100043.
+        // This field also cannot be null, because it is not nullable field.
+        paramsParcel.caCertificate = "";
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
         if (useTls) {

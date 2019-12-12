@@ -4665,6 +4665,7 @@ public class ConnectivityServiceTest {
         assertTrue(ArrayUtils.contains(resolvrParams.servers, "2001:db8::1"));
         // Opportunistic mode.
         assertTrue(ArrayUtils.contains(resolvrParams.tlsServers, "2001:db8::1"));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
 
         cellLp.addDnsServer(InetAddress.getByName("192.0.2.1"));
@@ -4680,6 +4681,7 @@ public class ConnectivityServiceTest {
         assertEquals(2, resolvrParams.tlsServers.length);
         assertTrue(ArrayUtils.containsAll(resolvrParams.tlsServers,
                 new String[]{"2001:db8::1", "192.0.2.1"}));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
 
         final String TLS_SPECIFIER = "tls.example.com";
@@ -4696,6 +4698,7 @@ public class ConnectivityServiceTest {
         assertEquals(2, resolvrParams.servers.length);
         assertTrue(ArrayUtils.containsAll(resolvrParams.servers,
                 new String[]{"2001:db8::1", "192.0.2.1"}));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
     }
 
@@ -4785,6 +4788,7 @@ public class ConnectivityServiceTest {
         assertEquals(2, resolvrParams.tlsServers.length);
         assertTrue(ArrayUtils.containsAll(resolvrParams.tlsServers,
                 new String[] { "2001:db8::1", "192.0.2.1" }));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
         cellNetworkCallback.expectCallback(CallbackEntry.AVAILABLE, mCellNetworkAgent);
         cellNetworkCallback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED,
@@ -4803,6 +4807,7 @@ public class ConnectivityServiceTest {
         assertEquals(2, resolvrParams.servers.length);
         assertTrue(ArrayUtils.containsAll(resolvrParams.servers,
                 new String[] { "2001:db8::1", "192.0.2.1" }));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
         cellNetworkCallback.assertNoCallback();
 
@@ -4816,6 +4821,7 @@ public class ConnectivityServiceTest {
         assertEquals(2, resolvrParams.tlsServers.length);
         assertTrue(ArrayUtils.containsAll(resolvrParams.tlsServers,
                 new String[] { "2001:db8::1", "192.0.2.1" }));
+        assertEquals("", resolvrParams.caCertificate);
         reset(mMockDnsResolver);
         cellNetworkCallback.assertNoCallback();
 
