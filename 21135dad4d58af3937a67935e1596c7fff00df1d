@@ -46,6 +46,30 @@
       "revId": "21135dad4d58af3937a67935e1596c7fff00df1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652c76d0_f5ad3c1c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2019-12-12T09:14:50Z",
+      "side": 1,
+      "message": "Thank you for your comments.\n\nReason why we cannot use #isAvailable:\n In #isAvailable, mMmTelCapabilities is referred but it is also updated triggered by #onCapabilitiesStatusChanged. This #isWifiCallingAvailable is also called triggered by #onCapabilitiesStatusChanged. So, there is possibility that #isAvailable does not return correct value.\n\nOptions:\n I think we have 2 options to decide if icon should be displayed or not.\n\nOption1:\n - #onCapabilitiesStatusChanged reports capabilities with Voice or Video\n - TelephonyManager#isImsRegistered returns true\n - TelephonyManager#getImsRegTechnologyForMmTel returns REGISTRATION_TECH_IWLAN\n\nOption2:\n - #onCapabilitiesStatusChanged reports capabilities with Voice or Video\n - ImsMmTelManager.RegistrationCallback#onRegistered reports REGISTRATION_TECH_IWLAN\n\nFor Option1, TelephonyManager#isImsRegistered and TelephonyManager#getImsRegTechnologyForMmTel are hide api. So, I think option2 is better. What do you think about that?",
+      "parentUuid": "de5d4965_7cd1c421",
+      "range": {
+        "startLine": 691,
+        "startChar": 32,
+        "endLine": 691,
+        "endChar": 41
+      },
+      "revId": "21135dad4d58af3937a67935e1596c7fff00df1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
