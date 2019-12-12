@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cbacc158_98a0759b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T14:23:37Z",
+      "side": 1,
+      "message": "I think this is a natural edge to push stats, but I agree with you it\u0027s not really necessary. Unless there is something about NAT that I don\u0027t understand and affects this ?",
+      "parentUuid": "966e34d5_5e5c0845",
+      "range": {
+        "startLine": 906,
+        "startChar": 33,
+        "endLine": 906,
+        "endChar": 47
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ff3df1_124b9ab2",
         "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It looks like useless except here.\nWe can move it outside later if someone tries to do the same thing.",
       "parentUuid": "d2ff3df1_124b9ab2",
+      "range": {
+        "startLine": 1743,
+        "startChar": 10,
+        "endLine": 1743,
+        "endChar": 27
+      },
+      "revId": "0c97d1ca91675957ab32ad2fac8ab5f1712bf662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20a4bbfd_f992dfcf",
+        "filename": "services/core/java/com/android/server/connectivity/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T14:23:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70884c79_d594bdd3",
       "range": {
         "startLine": 1743,
         "startChar": 10,
