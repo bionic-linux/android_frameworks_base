@@ -19,12 +19,23 @@ package android.net;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_2_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_3_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_4_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_5_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_UNKNOWN;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_GSM;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_LTE;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_NR;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UMTS;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.service.NetworkIdentityProto;
+import android.telephony.TelephonyManager;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
@@ -42,11 +53,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     /**
      * When enabled, combine all {@link #mSubType} together under
      * {@link #SUBTYPE_COMBINED}.
-     *
-     * @deprecated we no longer offer to collect statistics on a per-subtype
-     *             basis; this is always disabled.
      */
-    @Deprecated
+    // TODO: make this flag configurable through settings.
     public static final boolean COMBINE_SUBTYPE_ENABLED = true;
 
     public static final int SUBTYPE_COMBINED = -1;
@@ -187,13 +195,38 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     }
 
     /**
+     * Get a subType that is represented for a given {@code networkClass}.
+     *
+     * @param networkClass An integer defines in {@code TelephonyManager#NETWORK_CLASS_*}.
+     *                     See {@link TelephonyManager#getNetworkClass(int)}.
+     * @return A subType defines in {@code TelephonyManager#NETWORK_TYPE_*}.
+     */
+    public static int getCollapsedNetworkType(int networkClass) {
+        switch (networkClass) {
+            case NETWORK_CLASS_2_G:
+                return NETWORK_TYPE_GSM;
+            case NETWORK_CLASS_3_G:
+                return NETWORK_TYPE_UMTS;
+            case NETWORK_CLASS_4_G:
+                return NETWORK_TYPE_LTE;
+            case NETWORK_CLASS_5_G:
+                return NETWORK_TYPE_NR;
+            case NETWORK_CLASS_UNKNOWN:
+                return NETWORK_TYPE_UNKNOWN;
+            default:
+                throw new IllegalArgumentException("Unknown network class: " + networkClass);
+        }
+    }
+
+    /**
      * Build a {@link NetworkIdentity} from the given {@link NetworkState},
      * assuming that any mobile networks are using the current IMSI.
      */
     public static NetworkIdentity buildNetworkIdentity(Context context, NetworkState state,
             boolean defaultNetwork) {
         final int type = state.networkInfo.getType();
-        final int subType = state.networkInfo.getSubtype();
+        final int collapsedSubType = getCollapsedNetworkType(
+                TelephonyManager.getNetworkClass(state.networkInfo.getSubtype()));
 
         String subscriberId = null;
         String networkId = null;
@@ -224,8 +257,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
             }
         }
 
-        return new NetworkIdentity(type, subType, subscriberId, networkId, roaming, metered,
-                defaultNetwork);
+        return new NetworkIdentity(type, collapsedSubType, subscriberId, networkId, roaming,
+                metered, defaultNetwork);
     }
 
     @Override
