@@ -12,7 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
 
 // AIDL interfaces between the core system and the tethering mainline module.
 aidl_interface {
@@ -20,10 +19,7 @@ aidl_interface {
     local_include_dir: "src",
     include_dirs: ["frameworks/base/core/java"], // For framework parcelables.
     srcs: [
-        "src/android/net/ITetherInternalCallback.aidl",
-        "src/android/net/ITetheringConnector.aidl",
-        "src/android/net/TetheringConfigurationParcel.aidl",
-        "src/android/net/TetherStatesParcel.aidl",
+        "src/android/net/*.aidl",
     ],
     backend: {
         ndk: {
@@ -38,14 +34,61 @@ aidl_interface {
 java_library {
     name: "tethering-client",
     sdk_version: "system_current",
+    srcs: [
+        "src/android/net/TetheringManager.java",
+        ":framework-tethering-annotations",
+    ],
     static_libs: [
         "tethering-aidl-interfaces-java",
     ],
+    jarjar_rules: "jarjar-rules.txt",
+    installable: true,
+
+    libs: [
+        "android_system_stubs_current",
+    ],
 }
 
-// This is temporary file group which would be removed after TetheringManager is built
-// into tethering-client. Will be done by aosp/1156906.
+java_library {
+    name: "tethering_client_stubs",
+    sdk_version: "system_current",
+    srcs: [
+        ":tethering-client-stubs",
+    ],
+}
+
+metalava_tethering_client_args = " --error UnhiddenSystemApi " +
+    "--hide RequiresPermission " +
+    "--hide MissingPermission --hide BroadcastBehavior " +
+    "--hide HiddenSuperclass --hide DeprecationMismatch --hide UnavailableSymbol " +
+    "--hide SdkConstant --hide HiddenTypeParameter --hide Todo --hide Typo " +
+    "--hide HiddenTypedefConstant --show-annotation android.annotation.SystemApi "
+
+droidstubs {
+    name: "tethering-client-stubs",
+    srcs: [
+        ":tethering-client-srcs",
+        ":framework-tethering-annotations",
+    ],
+    args: metalava_tethering_client_args,
+    sdk_version: "system_current",
+    aidl: {
+        // For framework parcelables.
+        include_dirs: [
+            "frameworks/base/core/java",
+        ],
+    },
+}
+
 filegroup {
-    name: "tethering-manager",
-    srcs: ["src/android/net/TetheringManager.java"],
+    name: "tethering-client-srcs",
+    srcs: [
+        "src/android/net/TetheringManager.java",
+        "src/android/net/IIntResultListener.aidl",
+        "src/android/net/ITetheringEventCallback.aidl",
+        "src/android/net/ITetheringConnector.aidl",
+        "src/android/net/TetheringConfigurationParcel.aidl",
+        "src/android/net/TetherStatesParcel.aidl",
+    ],
+    path: "src"
 }

@@ -32,6 +32,7 @@ java_library_static {
         "android.hardware.tv.cec-V1.0-java",
         "app-compat-annotations",
         "vintf-vibrator-java",
+        "tethering-client",
     ],
 
     required: [

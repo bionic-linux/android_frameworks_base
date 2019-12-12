@@ -16,6 +16,7 @@
 
 apex {
     name: "com.android.tethering.apex",
+    java_libs: ["tethering-client"],
     apps: ["Tethering"],
     manifest: "manifest.json",
     key: "com.android.tethering.apex.key",
