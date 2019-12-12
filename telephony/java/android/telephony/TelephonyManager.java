@@ -12204,6 +12204,7 @@ public class TelephonyManager {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the voice call forwarding info {@link CallForwardingInfo}, given the call forward
      * reason.
      *
@@ -12390,14 +12391,23 @@ public class TelephonyManager {
 
     /**
      * Set allowing mobile data during voice call.
+=======
+     * Set allowing mobile data during voice call. This is used for allowing data on the non-default
+     * data SIM. When a voice call is placed on the non-default data SIM on DSDS devices, users will
+     * not be able to use mobile data. By calling this API, data will be temporarily enabled on the
+     * non-default data SIM during the life cycle of the voice call.
+>>>>>>> 66f08c4947d1... [Settings] Expose @hide #setDataAllowedDuringVoiceCall and #isDataAllowedInVoiceCall as @SystemApi
      *
      * @param allow {@code true} if allowing using data during voice call, {@code false} if
-     * disallowed
+     * disallowed.
      *
-     * @return {@code false} if the setting is changed.
+     * @return {@code true} if operation is successful. otherwise {@code false}.
+     *
+     * @throws SecurityException if the caller doesn't have the permission.
      *
      * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     public boolean setDataAllowedDuringVoiceCall(boolean allow) {
         try {
@@ -12406,6 +12416,7 @@ public class TelephonyManager {
                 return service.setDataAllowedDuringVoiceCall(getSubId(), allow);
             }
         } catch (RemoteException ex) {
+            // This could happen if binder process crashes.
             if (!isSystemProcess()) {
                 ex.rethrowAsRuntimeException();
             }
@@ -12414,13 +12425,18 @@ public class TelephonyManager {
     }
 
     /**
-     * Check whether data is allowed during voice call. Note this is for dual sim device that
-     * data might be disabled on non-default data subscription but explicitly turned on by settings.
+     * Check whether data is allowed during voice call. This is used for allowing data on the
+     * non-default data SIM. When a voice call is placed on the non-default data SIM on DSDS
+     * devices, users will not be able to use mobile data. By calling this API, data will be
+     * temporarily enabled on the non-default data SIM during the life cycle of the voice call.
      *
      * @return {@code true} if data is allowed during voice call.
      *
+     * @throws SecurityException if the caller doesn't have the permission.
+     *
      * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isDataAllowedInVoiceCall() {
         try {
@@ -12429,6 +12445,7 @@ public class TelephonyManager {
                 return service.isDataAllowedInVoiceCall(getSubId());
             }
         } catch (RemoteException ex) {
+            // This could happen if binder process crashes.
             if (!isSystemProcess()) {
                 ex.rethrowAsRuntimeException();
             }
