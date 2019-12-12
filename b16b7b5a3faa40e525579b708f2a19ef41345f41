@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f9d3423b_9b4f9121",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T14:07:09Z",
+      "side": 1,
+      "message": "Ah yes. I had misunderstood what this is doing. Thanks for the explanation.",
+      "parentUuid": "513a171b_1f44ae58",
+      "range": {
+        "startLine": 210,
+        "startChar": 73,
+        "endLine": 211,
+        "endChar": 43
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05902ad6_d81b717d",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 1
@@ -343,6 +367,30 @@
       "side": 1,
       "message": "This cannot be null given it is final and assigned at l.125, right?",
       "parentUuid": "6b015b96_89fe57b5",
+      "range": {
+        "startLine": 374,
+        "startChar": 12,
+        "endLine": 374,
+        "endChar": 26
+      },
+      "revId": "b16b7b5a3faa40e525579b708f2a19ef41345f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eab8e2a_0e13fc09",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-12T14:07:09Z",
+      "side": 1,
+      "message": "I had that confused with mStatsProviderCb : forget I said anything",
+      "parentUuid": "de1d0792_2ea6c6d2",
       "range": {
         "startLine": 374,
         "startChar": 12,
