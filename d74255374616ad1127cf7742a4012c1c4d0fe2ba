@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a8ba53_c7efee4e",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-12T12:52:13Z",
+      "side": 1,
+      "message": "just a passerby comment, do we really need descriptions in dumpsys / bugreports?\n\nI am not sure why we are trying to put them ~everywhere.. :-)",
+      "revId": "d74255374616ad1127cf7742a4012c1c4d0fe2ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
