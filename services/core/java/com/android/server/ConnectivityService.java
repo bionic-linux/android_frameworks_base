@@ -66,6 +66,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.CaptivePortal;
+import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityDiagnosticsManager.DataStallReport;
@@ -546,6 +547,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * arg2 = A bitmask to describe which probes are successful.
      */
     public static final int EVENT_PROBE_STATUS_CHANGED = 46;
+
+    /**
+     * Event for NetworkMonitor to inform ConnectivityService that captive portal data has changed.
+     * arg1 = unused
+     * arg2 = netId
+     */
+    private static final int EVENT_CAPPORT_DATA_CHANGED = 47;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2814,6 +2822,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     updatePrivateDns(nai, (PrivateDnsConfig) msg.obj);
                     break;
                 }
+                case EVENT_CAPPORT_DATA_CHANGED: {
+                    final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
+                    if (nai == null) break;
+                    handleCaptivePortalDataUpdate(nai, (CaptivePortalData) msg.obj);
+                    break;
+                }
             }
             return true;
         }
@@ -2981,6 +2995,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         @Override
+        public void notifyCaptivePortalDataChanged(CaptivePortalData data) {
+            mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(
+                    EVENT_CAPPORT_DATA_CHANGED,
+                    0, mNetId, data));
+        }
+
+        @Override
         public void showProvisioningNotification(String action, String packageName) {
             final Intent intent = new Intent(action);
             intent.setPackage(packageName);
@@ -3106,6 +3127,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         nai.clatd.setNat64Prefix(prefix);
         handleUpdateLinkProperties(nai, new LinkProperties(nai.linkProperties));
+    }
+
+    private void handleCaptivePortalDataUpdate(NetworkAgentInfo nai, CaptivePortalData data) {
+        if (nai == null) {
+            return;
+        }
+        final LinkProperties newLp = new LinkProperties(nai.linkProperties);
+        newLp.setCaptivePortalData(data);
+        handleUpdateLinkProperties(nai, newLp);
     }
 
     /**
