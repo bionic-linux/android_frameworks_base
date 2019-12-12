@@ -27,6 +27,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkMisc;
 import android.net.NetworkMonitorManager;
+import android.net.NetworkProvisioningInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
 import android.net.NetworkState;
@@ -128,6 +129,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // TODO: make this private with a getter.
     public NetworkCapabilities networkCapabilities;
     public final NetworkMisc networkMisc;
+    @NonNull private NetworkProvisioningInfo networkProvisioningInfo;
     // Indicates if netd has been told to create this Network. From this point on the appropriate
     // routing rules are setup and routes are added so packets can begin flowing over the Network.
     // This is a sticky bit; once set it is never cleared.
@@ -276,6 +278,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         mHandler = handler;
         networkMisc = misc;
         this.factorySerialNumber = factorySerialNumber;
+        this.networkProvisioningInfo = new NetworkProvisioningInfo.Builder().build();
     }
 
     /**
@@ -303,6 +306,13 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             nm.notifyNetworkCapabilitiesChanged(nc);
         }
         return oldNc;
+    }
+
+    /**
+     * Set the {@link NetworkProvisioningInfo} on this NetworkAgentInfo.
+     */
+    public void setNetworkProvisioningInfo(@NonNull NetworkProvisioningInfo info) {
+        networkProvisioningInfo = info;
     }
 
     public ConnectivityService connService() {
@@ -630,6 +640,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public void dumpLingerTimers(PrintWriter pw) {
         for (LingerTimer timer : mLingerTimers) { pw.println(timer); }
+    }
+
+    @NonNull
+    public NetworkProvisioningInfo getProvisioningInfo() {
+        return networkProvisioningInfo;
     }
 
     // TODO: Print shorter members first and only print the boolean variable which value is true

@@ -19,6 +19,7 @@ package android.net;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
@@ -1275,6 +1276,8 @@ public final class NetworkCapabilities implements Parcelable {
      * Gets the SSID of this network, or null if none or unknown.
      * @hide
      */
+    @SystemApi
+    @TestApi
     public @Nullable String getSSID() {
         return mSSID;
     }
