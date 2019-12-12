@@ -1448,6 +1448,7 @@ package android.net {
 
   public final class NetworkCapabilities implements android.os.Parcelable {
     method public int[] getCapabilities();
+    method @Nullable public String getSSID();
     method @NonNull public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
     field public static final int TRANSPORT_TEST = 7; // 0x7
