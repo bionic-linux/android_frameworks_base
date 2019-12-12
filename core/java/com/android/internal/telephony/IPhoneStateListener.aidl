@@ -45,7 +45,6 @@ oneway interface IPhoneStateListener {
     void onDataActivity(int direction);
     void onSignalStrengthsChanged(in SignalStrength signalStrength);
     void onPhysicalChannelConfigurationChanged(in List<PhysicalChannelConfig> configs);
-    void onOtaspChanged(in int otaspMode);
     void onCellInfoChanged(in List<CellInfo> cellInfo);
     void onPreciseCallStateChanged(in PreciseCallState callState);
     void onPreciseDataConnectionStateChanged(in PreciseDataConnectionState dataConnectionState);
