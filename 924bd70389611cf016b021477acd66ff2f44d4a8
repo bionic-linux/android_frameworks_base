@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6570b4fd_e2d148f9",
+        "filename": "core/java/android/view/WindowManagerGlobal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2019-12-12T04:14:33Z",
+      "side": 1,
+      "message": "you could just modify findViewLocked to return -1 when view is not found",
+      "range": {
+        "startLine": 427,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 13
+      },
+      "revId": "924bd70389611cf016b021477acd66ff2f44d4a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
