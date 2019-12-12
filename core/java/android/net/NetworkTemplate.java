@@ -33,10 +33,21 @@ import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkStats.ROAMING_NO;
 import static android.net.NetworkStats.ROAMING_YES;
 import static android.net.wifi.WifiInfo.removeDoubleQuotes;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_2_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_3_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_4_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_5_G;
+import static android.telephony.TelephonyManager.NETWORK_CLASS_UNKNOWN;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_GSM;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_LTE;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_NR;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UMTS;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN;
 
 import android.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.telephony.TelephonyManager;
 import android.util.BackupUtils;
 import android.util.Log;
 
@@ -391,6 +402,31 @@ public class NetworkTemplate implements Parcelable {
             return (sForceAllNetworkTypes || (ident.mType == TYPE_MOBILE && ident.mMetered))
                     && !ArrayUtils.isEmpty(mMatchSubscriberIds)
                     && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId);
+        }
+    }
+
+    /**
+     * Get a network type that is represented for a group of network type.
+     *
+     * @param networkType An integer defines in {@code TelephonyManager#NETWORK_TYPE_*}.
+     *                     See {@link TelephonyManager#getNetworkClass(int)}.
+     */
+    // TODO: Consider move this to TelephonyManager if used by other modules.
+    public static int getCollapsedNetworkType(int networkType) {
+        final int networkClass = TelephonyManager.getNetworkClass(networkType);
+        switch (networkClass) {
+            case NETWORK_CLASS_2_G:
+                return NETWORK_TYPE_GSM;
+            case NETWORK_CLASS_3_G:
+                return NETWORK_TYPE_UMTS;
+            case NETWORK_CLASS_4_G:
+                return NETWORK_TYPE_LTE;
+            case NETWORK_CLASS_5_G:
+                return NETWORK_TYPE_NR;
+            case NETWORK_CLASS_UNKNOWN:
+                return NETWORK_TYPE_UNKNOWN;
+            default:
+                throw new IllegalArgumentException("Unknown network class: " + networkClass);
         }
     }
 

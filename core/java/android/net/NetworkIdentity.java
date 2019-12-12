@@ -42,11 +42,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     /**
      * When enabled, combine all {@link #mSubType} together under
      * {@link #SUBTYPE_COMBINED}.
-     *
-     * @deprecated we no longer offer to collect statistics on a per-subtype
-     *             basis; this is always disabled.
      */
-    @Deprecated
+    // TODO: make this flag configurable through settings. See http://b/146415925
     public static final boolean COMBINE_SUBTYPE_ENABLED = true;
 
     public static final int SUBTYPE_COMBINED = -1;
@@ -191,9 +188,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      * assuming that any mobile networks are using the current IMSI.
      */
     public static NetworkIdentity buildNetworkIdentity(Context context, NetworkState state,
-            boolean defaultNetwork) {
+            boolean defaultNetwork, int subType) {
         final int type = state.networkInfo.getType();
-        final int subType = state.networkInfo.getSubtype();
 
         String subscriberId = null;
         String networkId = null;
