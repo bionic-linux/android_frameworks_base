@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a1f3c1a_662f68a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf8ef78c_a5f1eef9",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d70f3a3_8f7fe352",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400821b9_e88863b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d70f3a3_8f7fe352",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "8eae02ac_33611837",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "keep public",
+      "parentUuid": "9caa961d_826a98ca",
+      "range": {
+        "startLine": 444,
+        "startChar": 4,
+        "endLine": 444,
+        "endChar": 10
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7740f9ef_81bfb8e8",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -114,6 +186,30 @@
       "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32aef0aa_320ba28f",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7740f9ef_81bfb8e8",
+      "range": {
+        "startLine": 445,
+        "startChar": 8,
+        "endLine": 445,
+        "endChar": 37
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c7d5bc35_7d4f208f",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "public due to api lint error",
+      "parentUuid": "10bcec1b_ba530f30",
+      "range": {
+        "startLine": 449,
+        "startChar": 16,
+        "endLine": 449,
+        "endChar": 35
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b8b5d12_cbb445d3",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 3
@@ -175,6 +295,30 @@
       "writtenOn": "2019-10-09T06:57:59Z",
       "side": 1,
       "message": "protected if possible",
+      "range": {
+        "startLine": 460,
+        "startChar": 4,
+        "endLine": 460,
+        "endChar": 10
+      },
+      "revId": "a1ecbc83afef012784ad1a2f744a9b3640d49d34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bf0246_3e1f703c",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2019-12-12T08:31:48Z",
+      "side": 1,
+      "message": "keep public due to api lint error.",
+      "parentUuid": "6b8b5d12_cbb445d3",
       "range": {
         "startLine": 460,
         "startChar": 4,
