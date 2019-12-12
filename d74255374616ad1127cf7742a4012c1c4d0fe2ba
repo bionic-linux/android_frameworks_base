@@ -34,6 +34,24 @@
       "revId": "d74255374616ad1127cf7742a4012c1c4d0fe2ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c2bd50_05cc2221",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-12T13:20:49Z",
+      "side": 1,
+      "message": "Why? Is it not similar to developer UI? Wouldn\u0027t devs already know which changes they care about?\n\nNot necessarily harmful, but I think definitely noisy. I don\u0027t expect developers who want to know what a change does to do adb dump or look into bugreport. So why would it be there? Not necessarily needed for triage either I think?",
+      "parentUuid": "5e38d4e7_a169ebb6",
+      "revId": "d74255374616ad1127cf7742a4012c1c4d0fe2ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
