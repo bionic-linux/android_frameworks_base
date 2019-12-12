@@ -4423,6 +4423,44 @@ package android.net {
     method @NonNull public android.net.StaticIpConfiguration.Builder setIpAddress(@Nullable android.net.LinkAddress);
   }
 
+  public class TetheringManager {
+    ctor public TetheringManager(@NonNull android.content.Context, @NonNull android.os.IBinder);
+    method public int getLastTetherError(@NonNull String);
+    method @NonNull public String[] getTetherableBluetoothRegexs();
+    method @NonNull public String[] getTetherableIfaces();
+    method @NonNull public String[] getTetherableUsbRegexs();
+    method @NonNull public String[] getTetherableWifiRegexs();
+    method @Deprecated @NonNull public String[] getTetheredDhcpRanges();
+    method @NonNull public String[] getTetheredIfaces();
+    method @NonNull public String[] getTetheringErroredIfaces();
+    method public boolean isTetheringSupported();
+    method public void registerTetheringEventCallback(@NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
+    method public void requestLatestTetheringEntitlementResult(int, @NonNull android.os.ResultReceiver, boolean);
+    method @Deprecated public int setUsbTethering(boolean);
+    method public void startTethering(int, @NonNull android.os.ResultReceiver, boolean);
+    method public void stopAllTethering();
+    method public void stopTethering(int);
+    method @Deprecated public int tether(@NonNull String);
+    method public void unregisterTetheringEventCallback(@NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
+    method @Deprecated public int untether(@NonNull String);
+    field public static final int TETHER_ERROR_DHCPSERVER_ERROR = 12; // 0xc
+    field public static final int TETHER_ERROR_DISABLE_NAT_ERROR = 9; // 0x9
+    field public static final int TETHER_ERROR_ENABLE_NAT_ERROR = 8; // 0x8
+    field public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN = 13; // 0xd
+    field public static final int TETHER_ERROR_IFACE_CFG_ERROR = 10; // 0xa
+    field public static final int TETHER_ERROR_MASTER_ERROR = 5; // 0x5
+    field public static final int TETHER_ERROR_NO_ACCESS_PERMISSION = 15; // 0xf
+    field public static final int TETHER_ERROR_NO_ERROR = 0; // 0x0
+    field public static final int TETHER_ERROR_NO_PRIVILEGED_PERMISSION = 14; // 0xe
+    field public static final int TETHER_ERROR_PROVISION_FAILED = 11; // 0xb
+    field public static final int TETHER_ERROR_SERVICE_UNAVAIL = 2; // 0x2
+    field public static final int TETHER_ERROR_TETHER_IFACE_ERROR = 6; // 0x6
+    field public static final int TETHER_ERROR_UNAVAIL_IFACE = 4; // 0x4
+    field public static final int TETHER_ERROR_UNKNOWN_IFACE = 1; // 0x1
+    field public static final int TETHER_ERROR_UNSUPPORTED = 3; // 0x3
+    field public static final int TETHER_ERROR_UNTETHER_IFACE_ERROR = 7; // 0x7
+  }
+
   public class TrafficStats {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
@@ -6601,6 +6639,7 @@ package android.provider {
     field public static final String INSTALL_CARRIER_APP_NOTIFICATION_SLEEP_MILLIS = "install_carrier_app_notification_sleep_millis";
     field public static final String OTA_DISABLE_AUTOMATIC_UPDATE = "ota_disable_automatic_update";
     field public static final String REQUIRE_PASSWORD_TO_DECRYPT = "require_password_to_decrypt";
+    field public static final String TETHER_SUPPORTED = "tether_supported";
     field public static final String THEATER_MODE_ON = "theater_mode_on";
     field public static final String WEBVIEW_MULTIPROCESS = "webview_multiprocess";
     field public static final String WIFI_BADGING_THRESHOLDS = "wifi_badging_thresholds";

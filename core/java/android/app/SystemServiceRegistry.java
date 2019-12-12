@@ -111,6 +111,7 @@ import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
 import android.net.NetworkWatchlistManager;
 import android.net.TestNetworkManager;
+import android.net.TetheringManager;
 import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
 import android.net.nsd.INsdManager;
@@ -339,6 +340,22 @@ final class SystemServiceRegistry {
                 return ServiceManager.getServiceOrThrow(Context.NETD_SERVICE);
             }
         });
+
+        registerService(Context.NETWORK_STACK_SERVICE, IBinder.class,
+                new StaticServiceFetcher<IBinder>() {
+            @Override
+            public IBinder createService() throws ServiceNotFoundException {
+                return ServiceManager.getService(Context.NETWORK_STACK_SERVICE);
+            }});
+
+        registerService(Context.TETHERING_SERVICE, TetheringManager.class,
+                new StaticApplicationContextServiceFetcher<TetheringManager>() {
+            @Override
+            public TetheringManager createService(Context context) throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getService(Context.TETHERING_SERVICE);
+                return new TetheringManager(context, b);
+            }});
+
 
         registerService(Context.IPSEC_SERVICE, IpSecManager.class,
                 new CachedServiceFetcher<IpSecManager>() {
