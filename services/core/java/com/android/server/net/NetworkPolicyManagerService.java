@@ -89,6 +89,7 @@ import static android.telephony.CarrierConfigManager.KEY_DATA_LIMIT_NOTIFICATION
 import static android.telephony.CarrierConfigManager.KEY_DATA_RAPID_NOTIFICATION_BOOL;
 import static android.telephony.CarrierConfigManager.KEY_DATA_WARNING_NOTIFICATION_BOOL;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN;
 
 import static com.android.internal.util.ArrayUtils.appendInt;
 import static com.android.internal.util.Preconditions.checkNotNull;
@@ -1302,7 +1303,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             final int subId = mSubIdToSubscriberId.keyAt(i);
             final String subscriberId = mSubIdToSubscriberId.valueAt(i);
             final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
-                    TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
+                    NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
                     true);
             if (template.matches(probeIdent)) {
                 return subId;
@@ -1533,7 +1534,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // find and update the mobile NetworkPolicy for this subscriber id
         boolean policyUpdated = false;
         final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
-                TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true);
+                NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true);
         for (int i = mNetworkPolicy.size() - 1; i >= 0; i--) {
             final NetworkTemplate template = mNetworkPolicy.keyAt(i);
             if (template.matches(probeIdent)) {
@@ -1761,7 +1762,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     final String subscriberId = mSubIdToSubscriberId.valueAt(i);
 
                     final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
-                            TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
+                            NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true,
                             true);
                     // Template is matched when subscriber id matches.
                     if (template.matches(probeIdent)) {
@@ -1867,7 +1868,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
             if (state.networkInfo != null && state.networkInfo.isConnected()) {
                 final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, state,
-                        true);
+                        true, NETWORK_TYPE_UNKNOWN);
                 identified.put(state, ident);
             }
         }
@@ -2054,7 +2055,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private boolean ensureActiveMobilePolicyAL(int subId, String subscriberId) {
         // Poke around to see if we already have a policy
         final NetworkIdentity probeIdent = new NetworkIdentity(TYPE_MOBILE,
-                TelephonyManager.NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true);
+                NETWORK_TYPE_UNKNOWN, subscriberId, null, false, true, true);
         for (int i = mNetworkPolicy.size() - 1; i >= 0; i--) {
             final NetworkTemplate template = mNetworkPolicy.keyAt(i);
             if (template.matches(probeIdent)) {
