@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bedd7d17_2e0ab4fe",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2397,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-13T20:04:09Z",
+      "side": 1,
+      "message": "Similar to the reason I put on the review of ServiceStateTracker.java (https://android-review.googlesource.com/c/platform/frameworks/opt/telephony/+/968373/6/src/java/com/android/internal/telephony/ServiceStateTracker.java#4757), could you please use a single new key to manage 4G LTE signal measures usage, similar to KEY_PARAMETERS_USE_FOR_5G_NR_SIGNAL_BAR_INT, and deprecate KEY_USE_ONLY_RSRP_FOR_LTE_SIGNAL_BAR_BOOL?",
+      "range": {
+        "startLine": 2397,
+        "startChar": 31,
+        "endLine": 2397,
+        "endChar": 76
+      },
+      "revId": "41b41d24b1a7175b39b97a1e87aa6d4a6dde2f41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
