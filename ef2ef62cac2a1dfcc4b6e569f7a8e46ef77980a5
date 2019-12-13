@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef4e298_8682ab15",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1254163
+      },
+      "writtenOn": "2019-12-13T18:48:10Z",
+      "side": 1,
+      "message": "why is this LTE_NR? for 5G NSA, RAT should be LTE and for 5G SA(NR), RAT should be NR.\nIt does not make sense to put LTE_NR. Can you please check?",
+      "revId": "ef2ef62cac2a1dfcc4b6e569f7a8e46ef77980a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43deec60_3efaf4e6",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1254163
+      },
+      "writtenOn": "2019-12-13T18:48:10Z",
+      "side": 1,
+      "message": "Accessnetworktype for 5G should be NG-RAN?",
+      "revId": "ef2ef62cac2a1dfcc4b6e569f7a8e46ef77980a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
