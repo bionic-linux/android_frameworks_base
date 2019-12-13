@@ -20,6 +20,7 @@ import static android.os.Process.CLAT_UID;
 
 import android.annotation.NonNull;
 import android.annotation.UnsupportedAppUsage;
+import android.net.netstats.provider.NetworkStatsParcelableWrapper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -53,7 +54,7 @@ public class NetworkStats implements Parcelable {
     /** {@link #iface} value when interface details unavailable. */
     public static final String IFACE_ALL = null;
     /** {@link #uid} value when UID details unavailable. */
-    public static final int UID_ALL = -1;
+    public static final int UID_ALL = NetworkStatsParcelableWrapper.Entry.UID_ALL;
     /** {@link #tag} value matching any tag. */
     // TODO: Rename TAG_ALL to TAG_ANY.
     public static final int TAG_ALL = -1;
@@ -75,28 +76,30 @@ public class NetworkStats implements Parcelable {
 
     /** {@link #tag} value for total data across all tags. */
     // TODO: Rename TAG_NONE to TAG_ALL.
-    public static final int TAG_NONE = 0;
+    public static final int TAG_NONE = NetworkStatsParcelableWrapper.Entry.TAG_NONE;
 
     /** {@link #metered} value to account for all metered states. */
     public static final int METERED_ALL = -1;
     /** {@link #metered} value where native, unmetered data is accounted. */
-    public static final int METERED_NO = 0;
+    public static final int METERED_NO = NetworkStatsParcelableWrapper.Entry.METERED_NO;
     /** {@link #metered} value where metered data is accounted. */
-    public static final int METERED_YES = 1;
+    public static final int METERED_YES = NetworkStatsParcelableWrapper.Entry.METERED_YES;
 
     /** {@link #roaming} value to account for all roaming states. */
     public static final int ROAMING_ALL = -1;
     /** {@link #roaming} value where native, non-roaming data is accounted. */
-    public static final int ROAMING_NO = 0;
+    public static final int ROAMING_NO = NetworkStatsParcelableWrapper.Entry.ROAMING_NO;
     /** {@link #roaming} value where roaming data is accounted. */
-    public static final int ROAMING_YES = 1;
+    public static final int ROAMING_YES = NetworkStatsParcelableWrapper.Entry.ROAMING_YES;
 
     /** {@link #onDefaultNetwork} value to account for all default network states. */
     public static final int DEFAULT_NETWORK_ALL = -1;
     /** {@link #onDefaultNetwork} value to account for usage while not the default network. */
-    public static final int DEFAULT_NETWORK_NO = 0;
+    public static final int DEFAULT_NETWORK_NO =
+            NetworkStatsParcelableWrapper.Entry.DEFAULT_NETWORK_NO;
     /** {@link #onDefaultNetwork} value to account for usage while the default network. */
-    public static final int DEFAULT_NETWORK_YES = 1;
+    public static final int DEFAULT_NETWORK_YES =
+            NetworkStatsParcelableWrapper.Entry.DEFAULT_NETWORK_YES;
 
     /** Denotes a request for stats at the interface level. */
     public static final int STATS_PER_IFACE = 0;

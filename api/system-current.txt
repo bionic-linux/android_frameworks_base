@@ -4776,6 +4776,33 @@ package android.net.metrics {
 
 }
 
+package android.net.netstats.provider {
+
+  public class NetworkStatsParcelableWrapper {
+    ctor public NetworkStatsParcelableWrapper(int);
+    method public void combineAllValues(@NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper);
+    method @NonNull public android.net.netstats.provider.NetworkStatsParcelableWrapper combineValues(@NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper.Entry);
+    method @NonNull public android.net.netstats.provider.NetworkStatsParcelableWrapper subtract(@NonNull android.net.netstats.provider.NetworkStatsParcelableWrapper);
+  }
+
+  public static class NetworkStatsParcelableWrapper.Entry {
+    ctor public NetworkStatsParcelableWrapper.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
+    field public static final int DEFAULT_NETWORK_NO = 0; // 0x0
+    field public static final int DEFAULT_NETWORK_YES = 1; // 0x1
+    field public static final String IFACE_VT = "vt_data0";
+    field public static final int METERED_NO = 0; // 0x0
+    field public static final int METERED_YES = 1; // 0x1
+    field public static final int ROAMING_NO = 0; // 0x0
+    field public static final int ROAMING_YES = 1; // 0x1
+    field public static final int SET_DEFAULT = 0; // 0x0
+    field public static final int SET_FOREGROUND = 1; // 0x1
+    field public static final int TAG_NONE = 0; // 0x0
+    field public static final int UID_ALL = -1; // 0xffffffff
+    field public static final int UID_TETHERING = -5; // 0xfffffffb
+  }
+
+}
+
 package android.net.util {
 
   public final class SocketUtils {
