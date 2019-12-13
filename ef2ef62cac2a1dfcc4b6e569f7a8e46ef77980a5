@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b997e3b4_638b5f93",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2019-12-13T19:15:56Z",
+      "side": 1,
+      "message": "Yes, this should be NR_SA",
+      "parentUuid": "2ef4e298_8682ab15",
+      "revId": "ef2ef62cac2a1dfcc4b6e569f7a8e46ef77980a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43deec60_3efaf4e6",
         "filename": "telephony/java/android/telephony/ServiceState.java",
         "patchSetId": 1
