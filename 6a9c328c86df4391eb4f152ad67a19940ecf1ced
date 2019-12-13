@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "19703729_efded039",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-13T20:59:03Z",
+      "side": 1,
+      "message": "Ideally, the adhoc conference call should just get added to Telecom as an android.telecom.Conference with children connections for the participants.  \n\nWe never use an android.telecom.Connection to represent an ImsConference right now.  When the underlying ImsCall goes multiparty we remove the android.telecom.Connection and replace it with an ImsConference.",
+      "parentUuid": "8fa7c7d1_2043bd60",
+      "range": {
+        "startLine": 1821,
+        "startChar": 5,
+        "endLine": 1834,
+        "endChar": 0
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0212b3e_a264fc17",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "As per current conference call design, ImsConferenceController#startConference() will be invoked once we set the original connection for both MO Conference and MT Conference as per below flow, so there is no way to return a Conference object.\n\nTelephonyConnection#setOriginalConnection() ---\u003e  TelephonyConnectionService#mTelephonyConnectionListener#onOriginalConnectionConfigured() ---\u003e TelephonyConnectionService#addConnectionToConferenceController() ---\u003e ImsConferenceController#add() ---\u003e ImsConferenceController#recalculateConference() ---\u003e ImsConferenceController#startConference()\n\n\nDo you want me to avoid using above flow and instead create a conference object here and return it?\n\nAlso, I think we are fine with adding extra fields (i.e. private List\u003cUri\u003e mParticipants;\nprivate boolean mIsAdhocConference) to ConnectionRequest instead of introducing new file ConferenceRequest?",
       "parentUuid": "c6a56d83_b94cd852",
+      "range": {
+        "startLine": 2411,
+        "startChar": 0,
+        "endLine": 2413,
+        "endChar": 40
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba20a49_1efa28c5",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2413,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-13T20:59:03Z",
+      "side": 1,
+      "message": "It would be nice to avoid the flow above from a Telecom perspective; we would still have an ImsCall --\u003e ImsPhoneconnection (original connection) as the host connection in the ImsConference, so that\u0027s consistent with how we do things.\n\nReusing the connectionRequest seems reasonable.",
+      "parentUuid": "a89127a8_5ff77405",
       "range": {
         "startLine": 2411,
         "startChar": 0,
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "I was of the opinion to re-use TelecomManager.EXTRA_INCOMING_CALL_ADDRESS extra, the way it is used for normal incoming call but will absorb your suggestion to pass List\u003cUri\u003e participants. BTW, List\u003cUri\u003e participants will always hold only one participant.",
       "parentUuid": "5cc4c7b4_11059216",
+      "range": {
+        "startLine": 1651,
+        "startChar": 16,
+        "endLine": 1651,
+        "endChar": 41
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbe3cea_123d5922",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-13T20:59:03Z",
+      "side": 1,
+      "message": "If they\u0027d NEVER have more than one participant, then its reasonable to just do it as you proposed with the name addNewIncomingConference.\nI had assumed that we\u0027d get a list of the participants in the conference, but you\u0027re right, that would not normally happen.",
+      "parentUuid": "75a82611_2d7e20c6",
       "range": {
         "startLine": 1651,
         "startChar": 16,
