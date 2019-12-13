@@ -46,6 +46,30 @@
       "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a4d7e7_5d8f5224",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-12-13T18:37:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t break backwards compatibility, because @nullable only affects the generated code, and not the wire protocol between the client and the server. Same for changing the default value of the field.",
+      "parentUuid": "eef72688_7799d6d5",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 40
+      },
+      "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
