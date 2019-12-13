@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "46d02443_0bec1518",
+        "filename": "api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 4278,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-13T08:30:36Z",
+      "side": 1,
+      "message": "Why -Base? Seems like this should be called NetworkStatsProvider or AbstractNetworkStatsProvider.",
+      "range": {
+        "startLine": 4278,
+        "startChar": 24,
+        "endLine": 4278,
+        "endChar": 48
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c336a622_c3909b57",
         "filename": "core/java/android/net/INetworkStatsProvider.aidl",
         "patchSetId": 6
@@ -88,6 +111,52 @@
         "startChar": 99,
         "endLine": 32,
         "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e112082d_dab6dbdc",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-13T08:30:36Z",
+      "side": 1,
+      "message": "Is this random, or incrementing? If incrementing, maybe call it generationNumber?",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c610e44_17248425",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-13T08:30:36Z",
+      "side": 1,
+      "message": "long?",
+      "range": {
+        "startLine": 41,
+        "startChar": 44,
+        "endLine": 41,
+        "endChar": 47
       },
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
