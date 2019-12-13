@@ -70,6 +70,30 @@
       "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0a25f0_53070edc",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-12-13T18:59:29Z",
+      "side": 1,
+      "message": "Default value should be fine, but it\u0027s unclear to me for adding nullable.\njeongik said that std::string would be replaced to std::optional\u003cstd::string\u003e if nullable is added. I thought it is a type change, isn\u0027t it?\n\nAnyway, ISTM that the default value solution is better what we do here.\nCould it also be applied to tlsFingerprints field, which is also a field we just do initialzing here?",
+      "parentUuid": "a9a4d7e7_5d8f5224",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 40
+      },
+      "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
