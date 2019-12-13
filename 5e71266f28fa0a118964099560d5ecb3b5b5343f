@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc731869_4a11a155",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:03:13Z",
+      "side": 1,
+      "message": "While this is probably semi-okay because it\u0027s only usable internally, having a setter sounds wise. Or you can just leave a TODO",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "5e71266f28fa0a118964099560d5ecb3b5b5343f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc89f42_328dadd1",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:03:13Z",
+      "side": 1,
+      "message": "Strictly speaking it produces an Arrays.ArrayList, which is not the regular ArrayList we\u0027re familiar with. But probably it doesn\u0027t matter here",
+      "range": {
+        "startLine": 127,
+        "startChar": 84,
+        "endLine": 127,
+        "endChar": 96
+      },
+      "revId": "5e71266f28fa0a118964099560d5ecb3b5b5343f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

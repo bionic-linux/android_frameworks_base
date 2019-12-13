@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6e6f5004_9475deb8",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:03:13Z",
+      "side": 1,
+      "message": "Please add comments to the code to clarify.",
+      "parentUuid": "0ee795c7_a4834768",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "426f2c6e_905a9171",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 14
@@ -308,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "c29236e8_72e04991",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:03:13Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "f1558451_dd10c9b8",
+      "range": {
+        "startLine": 100,
+        "startChar": 10,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b82e38_7ca0fc58",
         "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
         "patchSetId": 14
@@ -352,6 +400,30 @@
       "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cb7d50_15d616cf",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:03:13Z",
+      "side": 1,
+      "message": "Yes but VPN profile is not passed from app space to the platform hopefully, as it\u0027s @hide. (I\u0027m not too concern about unsupported app usage)\n\nBut yes it needs to always have the same number of fields, in the light of your comment I now think the code is fine",
+      "parentUuid": "2a8bbc89_347e3bec",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "c8d43e398c89c275408c6c6d9da387d9fc99578f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
