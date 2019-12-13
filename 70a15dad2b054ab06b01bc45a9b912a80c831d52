@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd71cb18_eafb845c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:17:39Z",
+      "side": 1,
+      "message": "Suggest explaining here the semantics of dropping irrelevant values. You may want to enforce it (though I won\u0027t insist on it since this is not public API, leaving it to you).\n\nDitto below.",
+      "range": {
+        "startLine": 306,
+        "startChar": 96,
+        "endLine": 306,
+        "endChar": 97
+      },
+      "revId": "70a15dad2b054ab06b01bc45a9b912a80c831d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea9b14c_e7701e74",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:17:39Z",
+      "side": 1,
+      "message": "because ...\n\n(I feel this needs justification because it\u0027s the only member in the block that\u0027s not private ; frame the justification in that context)",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "70a15dad2b054ab06b01bc45a9b912a80c831d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

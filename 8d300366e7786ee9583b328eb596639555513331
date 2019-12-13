@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c4dc8c50_cf0ba11b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:17:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dac97597_f934802c",
+      "range": {
+        "startLine": 132,
+        "startChar": 45,
+        "endLine": 132,
+        "endChar": 72
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de43874_a4b430ba",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 12
@@ -260,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "455769a9_0a7fe6fb",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:17:39Z",
+      "side": 1,
+      "message": "No. I just think they are not worth the effort you put in writing them, but I don\u0027t think they are detrimental (change-detector tests often are, but these are not change-detector tests).",
+      "parentUuid": "161dd951_83b03972",
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "987c24a0_7be703f9",
         "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
         "patchSetId": 12
@@ -342,6 +384,30 @@
       "side": 1,
       "message": "Technically having a password set is acceptable at this layer; it\u0027ll simply get discarded when converting to the VpnProfile.\n\nI\u0027ve added assertions to the below tests converting to the (legacy) VpnProfile structure",
       "parentUuid": "3422a19f_89d7580d",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "8d300366e7786ee9583b328eb596639555513331",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95746ff2_cc3a858d",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-13T08:17:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3724a60_b68f41b5",
       "range": {
         "startLine": 136,
         "startChar": 8,
