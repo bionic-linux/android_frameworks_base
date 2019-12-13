@@ -4252,6 +4252,26 @@ package android.net {
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
   }
 
+  public class NetworkStatsParcelableWrapper {
+    method public void combineAllValues(@NonNull android.net.NetworkStatsParcelableWrapper);
+    method @NonNull public android.net.NetworkStatsParcelableWrapper combineValues(@NonNull android.net.NetworkStatsParcelableWrapper.Entry);
+    method @NonNull public static android.net.NetworkStatsParcelableWrapper subtract(@NonNull android.net.NetworkStatsParcelableWrapper, @NonNull android.net.NetworkStatsParcelableWrapper);
+  }
+
+  public static class NetworkStatsParcelableWrapper.Entry {
+    ctor public NetworkStatsParcelableWrapper.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
+    field public static final int DEFAULT_NETWORK_NO = 0; // 0x0
+    field public static final int DEFAULT_NETWORK_YES = 1; // 0x1
+    field public static final int METERED_NO = 0; // 0x0
+    field public static final int METERED_YES = 1; // 0x1
+    field public static final int ROAMING_NO = 0; // 0x0
+    field public static final int ROAMING_YES = 1; // 0x1
+    field public static final int SET_DEFAULT = 0; // 0x0
+    field public static final int SET_FOREGROUND = 1; // 0x1
+    field public static final int TAG_NONE = 0; // 0x0
+    field public static final int UID_ALL = -1; // 0xffffffff
+  }
+
   public final class RouteInfo implements android.os.Parcelable {
     ctor public RouteInfo(@Nullable android.net.IpPrefix, @Nullable java.net.InetAddress, @Nullable String, int);
     method public int getType();
