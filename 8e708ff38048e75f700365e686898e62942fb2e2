@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a36e7a3_015fa0ba",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-13T07:55:19Z",
+      "side": 0,
+      "message": "Is this correct? What if the user lowers the data limit from 50G to 500M? In that case we need to lower the threshold and re-arm the global alert, but we won\u0027t.\n\nAlternatively, only re-arm here if the newly-calculated mPersistThreshold is different from the previous mPersistThreshold.",
+      "range": {
+        "startLine": 888,
+        "startChar": 0,
+        "endLine": 890,
+        "endChar": 0
+      },
+      "revId": "8e708ff38048e75f700365e686898e62942fb2e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
