@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "21602d51_680ba342",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-13T03:34:50Z",
+      "side": 1,
+      "message": "This is blocking even though this method is asynchronous with a callback.\nOn first boot it can take some time for the service to be available (sometimes 10~20 seconds), blocking for that much time seems too much.\nI think it would be better if TetheringManager implemented the waiting for ITetheringManager, and TetheringManager gets registered immediately on boot.",
+      "range": {
+        "startLine": 2572,
+        "startChar": 7,
+        "endLine": 2572,
+        "endChar": 29
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cff8455_793fd026",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 20
