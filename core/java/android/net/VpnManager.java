@@ -20,8 +20,16 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.os.RemoteException;
+
+import com.android.internal.net.VpnProfile;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * This class provides an interface for apps to manage platform VPN profiles
@@ -41,6 +49,15 @@ public class VpnManager {
     @NonNull private final Context mContext;
     @NonNull private final IConnectivityManager mService;
 
+    private static Intent getIntentForConfirmation() {
+        final Intent intent = new Intent();
+        final ComponentName componentName = ComponentName.unflattenFromString(
+                Resources.getSystem().getString(
+                        com.android.internal.R.string.config_customVpnConfirmDialogComponent));
+        intent.setClassName(componentName.getPackageName(), componentName.getClassName());
+        return intent;
+    }
+
     /** @hide */
     public VpnManager(@NonNull Context ctx, @NonNull IConnectivityManager service) {
         mContext = checkNotNull(ctx, "missing Context");
@@ -50,18 +67,47 @@ public class VpnManager {
     /**
      * Install a VpnProfile configuration keyed on the calling app's package name.
      *
-     * @param profile the PlatformVpnProfile provided by this package. Will override any previous
-     *     PlatformVpnProfile stored for this package.
-     * @returns an intent to request user consent if needed (null otherwise).
+     * <p>This method returns {@code null} if user consent has already been granted, or an {@link
+     * Intent} to a system activity. If an intent is returned, the application should launch the
+     * activity using {@link Activity#startActivityForResult} to request user consent. The activity
+     * may pop up a dialog to require user action, and the result will come back via its {@link
+     * Activity#onActivityResult}. If the result is {@link Activity#RESULT_OK}, the user has
+     * consented, and the VPN profile can be started.
+     *
+     * @param profile the VpnProfile provided by this package. Will override any previous VpnProfile
+     *     stored for this package.
+     * @return an Intent requesting user consent to start the VPN, or null if consent is not
+     *     required based on privileges or previous user consent.
      */
     @Nullable
     public Intent provisionVpnProfile(@NonNull PlatformVpnProfile profile) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        VpnProfile internalProfile = null;
+
+        try {
+            internalProfile = profile.toVpnProfile();
+        } catch (GeneralSecurityException | IOException e) {
+            // Conversion to VpnProfile failed; this is an invalid profile.
+            throw new IllegalArgumentException("Failed to serialize PlatformVpnProfile", e);
+        }
+
+        try {
+            // Profile can never be null; it either gets set, or an exception is thrown.
+            if (mService.provisionVpnProfile(internalProfile, mContext.getOpPackageName())) {
+                return null;
+            }
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+        return getIntentForConfirmation();
     }
 
     /** Delete the VPN profile configuration that was provisioned by the calling app */
     public void deleteProvisionedVpnProfile() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.deleteVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -71,11 +117,19 @@ public class VpnManager {
      *     setup, or if user consent has not been granted
      */
     public void startProvisionedVpnProfile() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.startVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /** Tear down the VPN provided by the calling app (if any) */
     public void stopVpn() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            mService.stopVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 }
