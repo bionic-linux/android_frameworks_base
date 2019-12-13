@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e9fe1f_85223090",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4668,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-13T04:56:44Z",
+      "side": 1,
+      "message": "per sync, looks like we\u0027ll need to verify this is exact equals to \"\".",
+      "range": {
+        "startLine": 4668,
+        "startChar": 8,
+        "endLine": 4668,
+        "endChar": 21
+      },
+      "revId": "917782f7084eac093d63189c31c3c0f44864ec7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
