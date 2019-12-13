@@ -22,6 +22,30 @@
       "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef72688_7799d6d5",
+        "filename": "services/core/java/com/android/server/connectivity/DnsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2019-12-13T18:30:43Z",
+      "side": 1,
+      "message": "This field is fixed into V3, we discussed it in the bug, jeongik mentioned that marking the field nullable brakes backward-compatibility.",
+      "parentUuid": "703317c2_d8e6229a",
+      "range": {
+        "startLine": 344,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 40
+      },
+      "revId": "6f6ef021d45490604ac7404274fc95137b72d6bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
