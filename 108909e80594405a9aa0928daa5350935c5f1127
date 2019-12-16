@@ -22,6 +22,30 @@
       "revId": "108909e80594405a9aa0928daa5350935c5f1127",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9619b2_e5e588ff",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-16T15:42:03Z",
+      "side": 1,
+      "message": "Because com.android.tethering already be used as internal app.",
+      "parentUuid": "47fe2151_74954d55",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "108909e80594405a9aa0928daa5350935c5f1127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
