@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e45c44_8801be62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2019-12-16T09:19:10Z",
+      "side": 1,
+      "message": "Please add:\n\nMerged-In: Ib142979858012bb766b4c107d41a21b0324de506\n\n... and optionally:\n\n(cherry picked from commit 9aa7b74a7a64c37c1cc7bc42dc643c8916ac94fb)\n\n\n[The Merged-In line will probably avoid the goog/master conflict issues on treehugger]",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "0b4c292ce6530bb25a3935916fa13e28ae687c0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
