@@ -22,6 +22,7 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
+import android.os.ApexPackageNames;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
@@ -417,6 +418,10 @@ public class SystemConfig {
                 Environment.getSystemExtDirectory(), "etc", "sysconfig"), ALLOW_ALL);
         readPermissions(Environment.buildPath(
                 Environment.getSystemExtDirectory(), "etc", "permissions"), ALLOW_ALL);
+
+        // Read configuration of libs from apex module.
+        readPermissions(Environment.buildPath(
+                Environment.getApexDirectory(), ApexPackageNames.CRONET, "etc"), ALLOW_LIBS);
     }
 
     void readPermissions(File libraryDir, int permissionFlag) {
