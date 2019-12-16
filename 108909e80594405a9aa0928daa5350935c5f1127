@@ -70,6 +70,30 @@
       "revId": "108909e80594405a9aa0928daa5350935c5f1127",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33004c83_0bb0d56e",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-16T16:20:59Z",
+      "side": 1,
+      "message": "Yes, we know the apex itself would be com.android.tethering.apex.apex. Actually, we have internal discuss about this suffix naming problem. Finally, we still choose it because it explicitly say this is com.android.tethering\u0027s apex. Actually, we plan to use new apex (e.g. com.android.networking) to combine tethering and networkstack module in the future(maybe S?). Choosing new apex package name for merging modules to avoid duplicated package file for upgrade devices.",
+      "parentUuid": "036807c1_9b8d7d22",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "108909e80594405a9aa0928daa5350935c5f1127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
