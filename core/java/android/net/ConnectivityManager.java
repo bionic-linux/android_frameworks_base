@@ -50,6 +50,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -57,7 +58,6 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseIntArray;
 
-import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 import com.android.internal.util.Protocol;
 
@@ -802,6 +802,7 @@ public class ConnectivityManager {
 
     private INetworkManagementService mNMService;
     private INetworkPolicyManager mNPManager;
+    private TetheringManager mTetheringManager;
 
     /**
      * Tests if a given integer represents a valid network type.
@@ -2340,22 +2341,44 @@ public class ConnectivityManager {
         return getInstanceOrNull();
     }
 
+    private static final int TETHERING_TIMEOUT_MS = 60_000;
+    private final Object mTetheringLock = new Object();
+
+    private TetheringManager getTetheringManager() {
+        synchronized (mTetheringLock) {
+            if (mTetheringManager != null) {
+                return mTetheringManager;
+            }
+            IBinder service;
+            final long before = System.currentTimeMillis();
+            while ((service = ServiceManager.getService(Context.TETHERING_SERVICE)) == null) {
+                if (System.currentTimeMillis() - before > TETHERING_TIMEOUT_MS) {
+                    Log.e(TAG, "Timeout waiting tethering service not ready yet");
+                    throw new IllegalStateException("No tethering service yet");
+                }
+                SystemClock.sleep(200);
+            }
+
+            mTetheringManager = new TetheringManager(mContext, service);
+
+            return mTetheringManager;
+        }
+    }
+
     /**
      * Get the set of tetherable, available interfaces.  This list is limited by
      * device configuration and current interface existence.
      *
      * @return an array of 0 or more Strings of tetherable interface names.
      *
+     * @deprecated Applications should instead use {@link TetheringManager#getTetherableIfaces}.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableIfaces() {
-        try {
-            return mService.getTetherableIfaces();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetherableIfaces();
     }
 
     /**
@@ -2363,16 +2386,14 @@ public class ConnectivityManager {
      *
      * @return an array of 0 or more String of currently tethered interface names.
      *
+     * @deprecated Applications should instead use {@link TetheringManager#getTetheredIfaces}.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetheredIfaces() {
-        try {
-            return mService.getTetheredIfaces();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetheredIfaces();
     }
 
     /**
@@ -2386,31 +2407,28 @@ public class ConnectivityManager {
      * @return an array of 0 or more String indicating the interface names
      *        which failed to tether.
      *
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#getTetheringErroredIfaces}.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetheringErroredIfaces() {
-        try {
-            return mService.getTetheringErroredIfaces();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetheringErroredIfaces();
     }
 
     /**
      * Get the set of tethered dhcp ranges.
      *
      * @return an array of 0 or more {@code String} of tethered dhcp ranges.
+     * @deprecated Applications should instead use {@link TetheringManager#getTetheredDhcpRanges}.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    @Deprecated
     public String[] getTetheredDhcpRanges() {
-        try {
-            return mService.getTetheredDhcpRanges();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetheredDhcpRanges();
     }
 
     /**
@@ -2422,44 +2440,40 @@ public class ConnectivityManager {
      * access will of course fail until an upstream network interface becomes
      * active.
      *
-     * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
+     * <p>This method requires the caller to hold the
+     * {@link android.Manifest.permission#TETHER_PRIVILEGED} permission
      * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
-     *
-     * <p>WARNING: New clients should not use this function. The only usages should be in PanService
-     * and WifiStateMachine which need direct access. All other clients should use
-     * {@link #startTethering} and {@link #stopTethering} which encapsulate proper provisioning
-     * logic.</p>
+     * {@link android.provider.Settings.System#canWrite} when tethering provisioning is not
+     * needed.</p>
      *
      * @param iface the interface name to tether.
      * @return error a {@code TETHER_ERROR} value indicating success or failure type
      *
+     * @deprecated New clients should not use this function. The only usages should be in PanService
+     * and WifiStateMachine which need direct access. All other clients should use
+     * {@link TetheringManager#startTethering} and {@link TetheringManager#stopTethering} which
+     * encapsulate proper provisioning logic.
+     *
      * {@hide}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public int tether(String iface) {
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "tether caller:" + pkgName);
-            return mService.tether(iface, pkgName);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().tether(iface);
     }
 
     /**
      * Stop tethering the named interface.
      *
      * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
+     * {@link android.Manifest.permission#TETHER_PRIVILEGED} permission
      * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
-     *
-     * <p>WARNING: New clients should not use this function. The only usages should be in PanService
+     * {@link android.provider.Settings.System#canWrite} when tethering provisioning is not
+     * needed.</p>
+     * @deprecated New clients should not use this function. The only usages should be in PanService
      * and WifiStateMachine which need direct access. All other clients should use
-     * {@link #startTethering} and {@link #stopTethering} which encapsulate proper provisioning
-     * logic.</p>
+     * {@link TetheringManager#startTethering} and {@link TetheringManager#stopTethering} which
+     * encapsulate proper provisioning logic.
      *
      * @param iface the interface name to untether.
      * @return error a {@code TETHER_ERROR} value indicating success or failure type
@@ -2467,48 +2481,35 @@ public class ConnectivityManager {
      * {@hide}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public int untether(String iface) {
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "untether caller:" + pkgName);
-            return mService.untether(iface, pkgName);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().untether(iface);
     }
 
     /**
-     * Check if the device allows for tethering.  It may be disabled via
-     * {@code ro.tether.denied} system property, Settings.TETHER_SUPPORTED or
-     * due to device configuration.
+     * Check if the device allows for tethering.  It may be disabled via {@code ro.tether.denied}
+     * system property, Settings.TETHER_SUPPORTED or due to device configuration.
      *
-     * <p>If this app does not have permission to use this API, it will always
-     * return false rather than throw an exception.</p>
+     * <p>If this app does not have permission to use this API, it will always return false rather
+     * than throw an exception.</p>
      *
-     * <p>If the device has a hotspot provisioning app, the caller is required to hold the
+     * <p>If provisioning is needed, the caller is required to hold the
      * {@link android.Manifest.permission.TETHER_PRIVILEGED} permission.</p>
      *
-     * <p>Otherwise, this method requires the caller to hold the ability to modify system
+     * <p>Otherwise, this method can also be access if the caller hold the ability to modify system
      * settings as determined by {@link android.provider.Settings.System#canWrite}.</p>
      *
      * @return a boolean - {@code true} indicating Tethering is supported.
+     * @deprecated Applications should instead use {@link TetheringManager#isTetheringSupported}.
      *
      * {@hide}
      */
     @SystemApi
     @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
             android.Manifest.permission.WRITE_SETTINGS})
+    @Deprecated
     public boolean isTetheringSupported() {
-        String pkgName = mContext.getOpPackageName();
-        try {
-            return mService.isTetheringSupported(pkgName);
-        } catch (SecurityException e) {
-            // This API is not available to this caller, but for backward-compatibility
-            // this will just return false instead of throwing.
-            return false;
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().isTetheringSupported();
     }
 
     /**
@@ -2532,10 +2533,12 @@ public class ConnectivityManager {
      * Convenient overload for
      * {@link #startTethering(int, boolean, OnStartTetheringCallback, Handler)} which passes a null
      * handler to run on the current thread's {@link Looper}.
+     * @deprecated Applications should instead use {@link TetheringManager#startTethering}.
      * @hide
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @Deprecated
     public void startTethering(int type, boolean showProvisioningUi,
             final OnStartTetheringCallback callback) {
         startTethering(type, showProvisioningUi, callback, null);
@@ -2558,10 +2561,13 @@ public class ConnectivityManager {
      * @param callback an {@link OnStartTetheringCallback} which will be called to notify the caller
      *         of the result of trying to tether.
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @deprecated Applications should instead use {@link TetheringManager#startTethering}.
      * @hide
      */
     @SystemApi
-    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.WRITE_SETTINGS})
+    @Deprecated
     public void startTethering(int type, boolean showProvisioningUi,
             final OnStartTetheringCallback callback, Handler handler) {
         Preconditions.checkNotNull(callback, "OnStartTetheringCallback cannot be null.");
@@ -2577,14 +2583,7 @@ public class ConnectivityManager {
             }
         };
 
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "startTethering caller:" + pkgName);
-            mService.startTethering(type, wrappedCallback, showProvisioningUi, pkgName);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Exception trying to start tethering.", e);
-            wrappedCallback.send(TETHER_ERROR_SERVICE_UNAVAIL, null);
-        }
+        getTetheringManager().startTethering(type, wrappedCallback, showProvisioningUi);
     }
 
     /**
@@ -2595,18 +2594,15 @@ public class ConnectivityManager {
      *         {@link ConnectivityManager.TETHERING_WIFI},
      *         {@link ConnectivityManager.TETHERING_USB}, or
      *         {@link ConnectivityManager.TETHERING_BLUETOOTH}.
+     * @deprecated Applications should instead use {@link TetheringManager#stopTethering}.
      * @hide
      */
     @SystemApi
-    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.WRITE_SETTINGS})
+    @Deprecated
     public void stopTethering(int type) {
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "stopTethering caller:" + pkgName);
-            mService.stopTethering(type, pkgName);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        getTetheringManager().stopTethering(type);
     }
 
     /**
@@ -2628,10 +2624,6 @@ public class ConnectivityManager {
         public void onUpstreamChanged(@Nullable Network network) {}
     }
 
-    @GuardedBy("mTetheringEventCallbacks")
-    private final ArrayMap<OnTetheringEventCallback, ITetheringEventCallback>
-            mTetheringEventCallbacks = new ArrayMap<>();
-
     /**
      * Start listening to tethering change events. Any new added callback will receive the last
      * tethering status right away. If callback is registered when tethering has no upstream or
@@ -2640,36 +2632,20 @@ public class ConnectivityManager {
      *
      * @param executor the executor on which callback will be invoked.
      * @param callback the callback to be called when tethering has change events.
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#registerTetheringEventCallback}.
      * @hide
      */
     @SystemApi
-    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
+    @Deprecated
     public void registerTetheringEventCallback(
             @NonNull @CallbackExecutor Executor executor,
             @NonNull final OnTetheringEventCallback callback) {
         Preconditions.checkNotNull(callback, "OnTetheringEventCallback cannot be null.");
 
-        synchronized (mTetheringEventCallbacks) {
-            Preconditions.checkArgument(!mTetheringEventCallbacks.containsKey(callback),
-                    "callback was already registered.");
-            ITetheringEventCallback remoteCallback = new ITetheringEventCallback.Stub() {
-                @Override
-                public void onUpstreamChanged(Network network) throws RemoteException {
-                    Binder.withCleanCallingIdentity(() ->
-                            executor.execute(() -> {
-                                callback.onUpstreamChanged(network);
-                            }));
-                }
-            };
-            try {
-                String pkgName = mContext.getOpPackageName();
-                Log.i(TAG, "registerTetheringUpstreamCallback:" + pkgName);
-                mService.registerTetheringEventCallback(remoteCallback, pkgName);
-                mTetheringEventCallbacks.put(callback, remoteCallback);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
-        }
+        getTetheringManager().registerTetheringEventCallback(executor, callback);
     }
 
     /**
@@ -2677,23 +2653,17 @@ public class ConnectivityManager {
      * {@link #registerTetheringEventCallback}.
      *
      * @param callback previously registered callback.
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#unregisterTetheringEventCallback}.
      * @hide
      */
     @SystemApi
-    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
+    @Deprecated
     public void unregisterTetheringEventCallback(
             @NonNull final OnTetheringEventCallback callback) {
-        synchronized (mTetheringEventCallbacks) {
-            ITetheringEventCallback remoteCallback = mTetheringEventCallbacks.remove(callback);
-            Preconditions.checkNotNull(remoteCallback, "callback was not registered.");
-            try {
-                String pkgName = mContext.getOpPackageName();
-                Log.i(TAG, "unregisterTetheringEventCallback:" + pkgName);
-                mService.unregisterTetheringEventCallback(remoteCallback, pkgName);
-            } catch (RemoteException e) {
-                throw e.rethrowFromSystemServer();
-            }
-        }
+        getTetheringManager().unregisterTetheringEventCallback(callback);
     }
 
 
@@ -2705,16 +2675,15 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable usb interfaces.
      *
+     * @deprecated Applications should instead use {@link TetheringManager#getTetherableUsbRegexs}.
      * {@hide}
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableUsbRegexs() {
-        try {
-            return mService.getTetherableUsbRegexs();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetherableUsbRegexs();
     }
 
     /**
@@ -2725,16 +2694,16 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable wifi interfaces.
      *
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#getTetherableWifiRegexs}.
      * {@hide}
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableWifiRegexs() {
-        try {
-            return mService.getTetherableWifiRegexs();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetherableWifiRegexs();
     }
 
     /**
@@ -2745,16 +2714,16 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable bluetooth interfaces.
      *
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#getTetherableBluetoothRegexs}
      * {@hide}
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableBluetoothRegexs() {
-        try {
-            return mService.getTetherableBluetoothRegexs();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getTetherableBluetoothRegexs();
     }
 
     /**
@@ -2764,25 +2733,19 @@ public class ConnectivityManager {
      * interface on {@code true} or turn off tethering and switch off
      * Rndis on {@code false}.
      *
-     * <p>This method requires the caller to hold either the
-     * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
-     * or the ability to modify system settings as determined by
-     * {@link android.provider.Settings.System#canWrite}.</p>
-     *
      * @param enable a boolean - {@code true} to enable tethering
      * @return error a {@code TETHER_ERROR} value indicating success or failure type
      *
+     * @deprecated Applications should instead use {@link TetheringManager#startTethering}
+     * or {@link TetheringManager#stopTethering}.
      * {@hide}
      */
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.WRITE_SETTINGS})
     @UnsupportedAppUsage
+    @Deprecated
     public int setUsbTethering(boolean enable) {
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "setUsbTethering caller:" + pkgName);
-            return mService.setUsbTethering(enable, pkgName);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().setUsbTethering(enable);
     }
 
     /** {@hide} */
@@ -2825,16 +2788,15 @@ public class ConnectivityManager {
      * @return error The error code of the last error tethering or untethering the named
      *               interface
      *
+     * @deprecated Applications should instead use {@link TetheringManager#getLastTetherError}.
      * {@hide}
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @RequiresPermission(anyOf = {android.Manifest.permission.TETHER_PRIVILEGED,
+            android.Manifest.permission.ACCESS_NETWORK_STATE})
     @UnsupportedAppUsage
+    @Deprecated
     public int getLastTetherError(String iface) {
-        try {
-            return mService.getLastTetherError(iface);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        return getTetheringManager().getLastTetherError(iface);
     }
 
     /** @hide */
@@ -2882,10 +2844,13 @@ public class ConnectivityManager {
      * @param listener an {@link OnTetheringEntitlementResultListener} which will be called to
      *         notify the caller of the result of entitlement check. The listener may be called zero
      *         or one time.
+     * @deprecated Applications should instead use
+     * {@link TetheringManager#requestLatestTetheringEntitlementResult}.
      * {@hide}
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    @Deprecated
     public void getLatestTetheringEntitlementResult(int type, boolean showEntitlementUi,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull final OnTetheringEntitlementResultListener listener) {
@@ -2900,14 +2865,8 @@ public class ConnectivityManager {
             }
         };
 
-        try {
-            String pkgName = mContext.getOpPackageName();
-            Log.i(TAG, "getLatestTetheringEntitlementResult:" + pkgName);
-            mService.getLatestTetheringEntitlementResult(type, wrappedListener,
-                    showEntitlementUi, pkgName);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        getTetheringManager().requestLatestTetheringEntitlementResult(type, wrappedListener,
+                    showEntitlementUi);
     }
 
     /**
@@ -4332,6 +4291,7 @@ public class ConnectivityManager {
     public void factoryReset() {
         try {
             mService.factoryReset();
+            getTetheringManager().stopAllTethering();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
