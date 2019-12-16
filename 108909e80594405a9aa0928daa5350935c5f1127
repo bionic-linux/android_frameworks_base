@@ -46,6 +46,30 @@
       "revId": "108909e80594405a9aa0928daa5350935c5f1127",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "036807c1_9b8d7d22",
+        "filename": "core/jni/fd_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2019-12-16T15:44:01Z",
+      "side": 1,
+      "message": "I don\u0027t think .apex is a good choice. The filename of the apex itself would be com.android.tethering.apex.apex right? It looks like a source of future confusion",
+      "parentUuid": "cf9619b2_e5e588ff",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "108909e80594405a9aa0928daa5350935c5f1127",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
