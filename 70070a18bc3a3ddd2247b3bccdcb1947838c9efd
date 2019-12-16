@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2355d0f9_8b6387bf",
+        "filename": "api/system-current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 4278,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done, choose AbstractNetworkStatsProvider",
+      "parentUuid": "46d02443_0bec1518",
+      "range": {
+        "startLine": 4278,
+        "startChar": 24,
+        "endLine": 4278,
+        "endChar": 48
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c336a622_c3909b57",
         "filename": "core/java/android/net/INetworkStatsProvider.aidl",
         "patchSetId": 6
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f2b2afb8_c0ec5241",
+        "filename": "core/java/android/net/INetworkStatsProvider.aidl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Yes, ideally the setLimit should remove iface.\nHowever, this cannot be done because of tethering scenario:\n1. setLimit(wifi, 2MB)\n2. setLimit(mobile, 5MB)\n3. enable tethering for upstream is mobile\n4. the limit should be 5MB.\n5. change upstream to wifi\n6. the limit should become 2MB.\n\nAs for setAlert, since we want all interface applies to the same alert.\nThe interface might not be needed.",
+      "parentUuid": "e6f85d14_0892034f",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9edfa6db_ae46caa1",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1ee7e69f_d12b1b83",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Yes, could be a 3rd-party app that implemented by OEM  with appropriate permissions.",
+      "parentUuid": "9edfa6db_ae46caa1",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df49d414_5b93f5bb",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -115,6 +187,30 @@
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04421fba_2ea35a3e",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "The restriction are supposed to be implemented in NSS, but not set in parameter.\nA CTS are planned to be implemented to ensure NSS drop stats after 1 min.",
+      "parentUuid": "df49d414_5b93f5bb",
+      "range": {
+        "startLine": 31,
+        "startChar": 99,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,54 @@
     },
     {
       "key": {
+        "uuid": "aeaf1d97_15b8494f",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "maybe too long?\nI\u0027ll implement it incremented, but it could be also random,\nas long as the numbers are unique.\nthe implementation will not depend on the fact it is incrementing.\nThus I\u0027ll prefer token unless you feel strongly.\nleave this item open for discussion.",
+      "parentUuid": "e112082d_dab6dbdc",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8949ac_8333eb57",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "The same as above.\nOn second thought, \nthe token only requires to be unique in a certain of time.\nWe don\u0027t need it to be strictly incremental.\nThus maybe int is enough\ndoes this need to be long?",
+      "parentUuid": "9c610e44_17248425",
+      "range": {
+        "startLine": 41,
+        "startChar": 44,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e30a7fd3_dcbbe687",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -184,6 +328,30 @@
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a546ac83_c2f4b803",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done, revised.",
+      "parentUuid": "e30a7fd3_dcbbe687",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "5a146e90_7cee29c9",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Yes they should block all, but only in their domain.\nFor example, if rmnet_data0 reaches the limit.\nThe netd should block it with iptables rule.\nThe IPA should block offloaded traffic in hardware, or turn off hardware offload.\nThe VT should disconnect any on-going VT calls.\n\nRe-open this if you think the wording needs to be revised.",
+      "parentUuid": "f52f1342_f9fceb4a",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21867b17_887446c5",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -230,6 +422,30 @@
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378e82a8_b73eb50e",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21867b17_887446c5",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +495,54 @@
     },
     {
       "key": {
+        "uuid": "3e05377f_2fe3023d",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Oops.",
+      "parentUuid": "a863f23e_d758d0fd",
+      "range": {
+        "startLine": 59,
+        "startChar": 79,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be5bc9ea_b0679d24",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e20d8fa_96e13d97",
+      "range": {
+        "startLine": 60,
+        "startChar": 58,
+        "endLine": 60,
+        "endChar": 65
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b6a4bb4_1576f505",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "36699e40_dcf27b4e",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Yes, Done",
+      "parentUuid": "5b6a4bb4_1576f505",
+      "range": {
+        "startLine": 65,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "839cfbff_c619e54f",
         "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
         "patchSetId": 6
@@ -313,6 +601,30 @@
       "writtenOn": "2019-12-12T13:09:27Z",
       "side": 1,
       "message": "Does the linter let you do this ? I thought it wanted the annotation first.\n\nIf checkstyle is happy with this then I don\u0027t care",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca2cd18_b97f1077",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Linter is fine for this, but done",
+      "parentUuid": "839cfbff_c619e54f",
       "range": {
         "startLine": 31,
         "startChar": 4,
@@ -371,6 +683,54 @@
     },
     {
       "key": {
+        "uuid": "9d483174_f9179b8e",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36529a69_f50a6eab",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f84a6f0_203a28aa",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Looks like we record it correctly with token, they don\u0027t need to do so if\nthey don\u0027t require a immediate persist/update.\nDone, thanks for the write-up.",
+      "parentUuid": "32ce7c47_379c8ad0",
+      "range": {
+        "startLine": 39,
+        "startChar": 27,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82fd4e56_88667da3",
         "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
         "patchSetId": 6
@@ -394,6 +754,30 @@
     },
     {
       "key": {
+        "uuid": "f14ffe0f_fe8daa00",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82fd4e56_88667da3",
+      "range": {
+        "startLine": 52,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63783d16_64202da1",
         "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
         "patchSetId": 6
@@ -414,6 +798,30 @@
       "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3857a1_c3e6302a",
+        "filename": "core/java/android/net/NetworkStatsProviderCallback.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-16T15:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63783d16_64202da1",
+      "range": {
+        "startLine": 64,
+        "startChar": 62,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
