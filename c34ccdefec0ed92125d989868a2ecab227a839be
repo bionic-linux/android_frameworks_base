@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "1f79579d_163f81f4",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-16T13:00:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d926dbee_b09f7ab9",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 82
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb22939_d629fbc5",
         "filename": "packages/Tethering/common/TetheringLib/Android.bp",
         "patchSetId": 20
