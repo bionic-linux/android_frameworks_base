@@ -1,0 +1,15 @@
+# These must be kept in sync with the framework-tethering-shared-srcs filegroup.
+# If there are files in that filegroup that do not appear here, the classes in the
+# module will be overwritten by the ones in the framework.
+# Don't jar-jar the entire package because tethering still use some internal classes
+(like TrafficStatsConstants in com.android.internal.util)
+# TODO: simply these when tethering is built as system_current.
+rule com.android.internal.util.BitUtils* android.net.tethering.util.BitUtils@1
+rule com.android.internal.util.IndentingPrintWriter.java* android.net.tethering.util.IndentingPrintWriter.java@1
+rule com.android.internal.util.IState.java* android.net.tethering.util.IState.java@1
+rule com.android.internal.util.MessageUtils* android.net.tethering.util.MessageUtils@1
+rule com.android.internal.util.Preconditions* android.net.tethering.util.Preconditions@1
+rule com.android.internal.util.State* android.net.tethering.util.State@1
+rule com.android.internal.util.StateMachine* android.net.tethering.util.StateMachine@1
+
+rule android.net.LocalLog* android.net.tethering.LocalLog@1
