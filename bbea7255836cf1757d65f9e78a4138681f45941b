@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "69f919f0_34cea735",
+        "filename": "api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 4454,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Ack, makes sense.",
+      "parentUuid": "b20f8651_efb4ecf3",
+      "range": {
+        "startLine": 4454,
+        "startChar": 34,
+        "endLine": 4454,
+        "endChar": 71
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd06438_1e98e621",
         "filename": "api/system-current.txt",
         "patchSetId": 18
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Ack, already add these back in Patchset 19.",
       "parentUuid": "1927fb71_3f192a8d",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "bbea7255836cf1757d65f9e78a4138681f45941b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eac52e9e_4ad4ad2c",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "This file is identical between PS18 and PS19 (and the latest patchset too, I believe). If you don\u0027t want to fix it in this CL, then maybe file a bug to clean this up?",
+      "parentUuid": "ad83b86d_be0e5d23",
       "range": {
         "startLine": 20,
         "startChar": 0,

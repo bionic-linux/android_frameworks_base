@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "98408952_9d6fa886",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t that have the same problem? Context.getSystemService(Context.TETHERING_SERVICE) will return null just after boot, right?",
+      "parentUuid": "79b424b7_e32bcaaa",
+      "range": {
+        "startLine": 2572,
+        "startChar": 7,
+        "endLine": 2572,
+        "endChar": 29
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cff8455_793fd026",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 20
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "Yes, tethering need to call setBluetoothTethering or get bluetooth tethering setting from bluetooth package. Flow is: Settings -\u003e Tethering -\u003e PanService(need these permission) -\u003e if bluetooth interface created and configuration done -\u003e Tethering",
       "parentUuid": "66ee7c88_5415385f",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2946e52_be849b7b",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Ack. Might want to run this past the BT team then. Doesn\u0027t have to block this CL though, we can always fix that later (e.g., by making PanService#setBluetoothTethering check another permission).",
+      "parentUuid": "a945e148_78c9ef7f",
       "range": {
         "startLine": 29,
         "startChar": 0,
@@ -484,6 +532,30 @@
       "side": 1,
       "message": "This is used to solve circle dependencies as framework. That TetheringLib would be load into bootclass path and annotation is part of framework. So I have the problem that TetheringLib need annotation(framework) and framework need tethering. To fix this,  I static build annotation into  TetheringLib with jarar.",
       "parentUuid": "ea5e3e00_5f026944",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc767784_c1434116",
+        "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Ack. Is this the same way that other modules solve this problem?",
+      "parentUuid": "f8556c8c_cbd321cc",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -684,6 +756,30 @@
     },
     {
       "key": {
+        "uuid": "381090b0_5031d207",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "What do you mean \"we won\u0027t build this\"? If this file is included into TetheringLib, and TetheringLib is included in the framework, the code will be built. It just won\u0027t make it into the API text files.",
+      "parentUuid": "715041a3_5e326f47",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa4f2a7_08d10792",
         "filename": "packages/Tethering/proguard.flags",
         "patchSetId": 20
@@ -713,6 +809,24 @@
       "side": 1,
       "message": "Yes, MessageUtils parse input Class\u0027s static field which is similar as reflection.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java;l\u003d136?ss\u003dandroid\u0026q\u003dTethering.java\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/com/android/internal/util/MessageUtils.java;l\u003d52?ss\u003dandroid\u0026q\u003dMessageUtils.java",
       "parentUuid": "3fa4f2a7_08d10792",
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e6dd8fb_c9f3a783",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Then please add comments to explain that, since it\u0027s non-obvious.",
+      "parentUuid": "7d5ee134_4b65b8c1",
       "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -754,6 +868,30 @@
       "side": 1,
       "message": "Done, you don\u0027t misread. And thanks for point out this, I fix a bug when I improve the test for multiple callback registered 😜",
       "parentUuid": "187aaa8a_dfbfa858",
+      "range": {
+        "startLine": 1802,
+        "startChar": 0,
+        "endLine": 1807,
+        "endChar": 45
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1fb0164_e9db3787",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Well, the original question was \"can this go into its own CL\". :-) Can it? Or does that make things too complicated because lots of other changes need to happen as well?",
+      "parentUuid": "b1c1b359_bbd455cb",
       "range": {
         "startLine": 1802,
         "startChar": 0,
@@ -848,6 +986,30 @@
       "side": 1,
       "message": "The reason is all of these(ConnectivityModuleConnector and ServiceManager) are @hide, they can\u0027t be in TetheringManager.\nAgree with you that we should hide the implementation detail. Have a b/146312721 for TODO.",
       "parentUuid": "77ec0242_d2c92e6f",
+      "range": {
+        "startLine": 2216,
+        "startChar": 0,
+        "endLine": 2222,
+        "endChar": 27
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6bce61f_46da6962",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-16T15:52:03Z",
+      "side": 1,
+      "message": "Ack, thanks.",
+      "parentUuid": "bfa4a57f_cddfdd04",
       "range": {
         "startLine": 2216,
         "startChar": 0,
