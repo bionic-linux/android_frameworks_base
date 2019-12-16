@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee83d430_79df13d0",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2019-12-16T19:26:20Z",
+      "side": 1,
+      "message": "We should check if there is pending Active Source messages first.\n\nSee CEC 13.1.2\n\nIf the TV is brought out of the Standby state by an \u003cImage View On\u003e message, it should buffer \u003cActive\nSource\u003e messages received while it is powering up so that it may select the correct input (if necessary). If\nthis is not possible, or none were received, then it should enquire which device is the active source by\nsending a \u003cRequest Active Source\u003e message.",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 217,
+        "endChar": 5
+      },
+      "revId": "fd735087fe3937b594c2cd4a8412d0c8ac7de578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
