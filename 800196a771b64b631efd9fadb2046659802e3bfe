@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb9a53b6_3a18d764",
+        "filename": "core/java/android/os/UpdateEngine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2019-12-17T21:31:08Z",
+      "side": 1,
+      "message": "expand the parameter name",
+      "range": {
+        "startLine": 323,
+        "startChar": 58,
+        "endLine": 323,
+        "endChar": 61
+      },
+      "revId": "800196a771b64b631efd9fadb2046659802e3bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
