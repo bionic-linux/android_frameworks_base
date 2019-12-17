@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9777f09_a729a0f0",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-17T06:14:15Z",
+      "side": 1,
+      "message": "nit: did you mean remove the following test data?\ne.g.,\n// TODO(yochiang): Remove the following hard-coded data for testing",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
