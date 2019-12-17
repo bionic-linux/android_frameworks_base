@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d58993c_415474bc",
+        "filename": "Android.bp",
+        "patchSetId": 23
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-17T15:59:00Z",
+      "side": 1,
+      "message": "Suggest adding a comment to keep these in sync with the jarjar rules for the tethering module.",
+      "range": {
+        "startLine": 605,
+        "startChar": 0,
+        "endLine": 605,
+        "endChar": 11
+      },
+      "revId": "111d5ab184cb105928fcdc20e13c23e092ce04c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0e16e8e_17a413fd",
         "filename": "Android.bp",
         "patchSetId": 23
