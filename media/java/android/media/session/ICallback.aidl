@@ -1,5 +1,4 @@
-/*
- * Copyright 2019 The Android Open Source Project
+/* Copyright (C) 2016 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +15,21 @@
 
 package android.media.session;
 
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.media.session.MediaSession;
 import android.view.KeyEvent;
 
 /**
  * @hide
  */
-oneway interface IOnMediaKeyEventDispatchedListener {
-    void onMediaKeyEventDispatched(in KeyEvent event, in String packageName,
+oneway interface ICallback {
+    void onMediaKeyEventDispatchedToMediaSession(in KeyEvent event,
             in MediaSession.Token sessionToken);
+    void onMediaKeyEventDispatchedToMediaButtonReceiver(in KeyEvent event,
+            in ComponentName mediaButtonReceiver);
+
+    void onAddressedPlayerChangedToMediaSession(in MediaSession.Token sessionToken);
+    void onAddressedPlayerChangedToMediaButtonReceiver(in ComponentName mediaButtonReceiver);
 }
+
