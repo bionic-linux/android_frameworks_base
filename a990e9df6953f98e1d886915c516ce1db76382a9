@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "18e34770_067a9b46",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-12-17T06:49:02Z",
+      "side": 1,
+      "message": "Would you like to refactor this part as well? Since variables decoded from intent are not used in this scope. How about passing the intent to InstallationAsyncTask and decode them in its constructor? This shortens the code a bit.",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a333e284_130ae446",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-12-17T06:49:02Z",
+      "side": 1,
+      "message": "According to the design. The IOException should be handled differently with JSONException because network error should be tolerated in order to support the offline use case.",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9777f09_a729a0f0",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 2
@@ -19,6 +53,57 @@
         "endLine": 67,
         "endChar": 56
       },
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2662e2_166d7fc8",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-12-17T06:49:02Z",
+      "side": 1,
+      "message": "private ?",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db397f86_a284e6e3",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-12-17T06:49:02Z",
+      "side": 1,
+      "message": "The URL should be independent to the dessert release. Is it possible to have an URL that does not contain any words about the Android release?",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c125f43_9cc6c5fc",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/VerificationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2019-12-17T06:49:02Z",
+      "side": 1,
+      "message": "The KEY_PUBKEY is optional and may be absent. I tend not to pass it when it\u0027s null.",
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
