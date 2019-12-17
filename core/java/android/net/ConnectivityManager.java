@@ -3266,12 +3266,16 @@ public class ConnectivityManager {
          * @param network The {@link Network} of the satisfying network.
          * @param networkCapabilities The {@link NetworkCapabilities} of the satisfying network.
          * @param linkProperties The {@link LinkProperties} of the satisfying network.
+         * @param metadata The {@link NetworkMetadata} of the satisfying network; null if the
+         *                 application is not allowed to receive it.
          * @param blocked Whether access to the {@link Network} is blocked due to system policy.
          * @hide
          */
         public void onAvailable(@NonNull Network network,
                 @NonNull NetworkCapabilities networkCapabilities,
-                @NonNull LinkProperties linkProperties, boolean blocked) {
+                @NonNull LinkProperties linkProperties,
+                @Nullable NetworkMetadata metadata,
+                boolean blocked) {
             // Internally only this method is called when a new network is available, and
             // it calls the callback in the same way and order that older versions used
             // to call so as not to change the behavior.
@@ -3283,6 +3287,9 @@ public class ConnectivityManager {
             onCapabilitiesChanged(network, networkCapabilities);
             onLinkPropertiesChanged(network, linkProperties);
             onBlockedStatusChanged(network, blocked);
+            if (metadata != null) {
+                onMetadataChanged(network, metadata);
+            }
         }
 
         /**
@@ -3446,6 +3453,11 @@ public class ConnectivityManager {
          */
         public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {}
 
+        /** @hide */
+        @SystemApi
+        public void onMetadataChanged(@NonNull Network network,
+                @NonNull NetworkMetadata metadata) {}
+
         private NetworkRequest networkRequest;
     }
 
@@ -3494,21 +3506,24 @@ public class ConnectivityManager {
     public static final int CALLBACK_RESUMED             = BASE + 10;
     /** @hide */
     public static final int CALLBACK_BLK_CHANGED         = BASE + 11;
+    /** @hide */
+    public static final int CALLBACK_METADATA_CHANGED    = BASE + 12;
 
     /** @hide */
     public static String getCallbackName(int whichCallback) {
         switch (whichCallback) {
-            case CALLBACK_PRECHECK:     return "CALLBACK_PRECHECK";
-            case CALLBACK_AVAILABLE:    return "CALLBACK_AVAILABLE";
-            case CALLBACK_LOSING:       return "CALLBACK_LOSING";
-            case CALLBACK_LOST:         return "CALLBACK_LOST";
-            case CALLBACK_UNAVAIL:      return "CALLBACK_UNAVAIL";
-            case CALLBACK_CAP_CHANGED:  return "CALLBACK_CAP_CHANGED";
-            case CALLBACK_IP_CHANGED:   return "CALLBACK_IP_CHANGED";
-            case EXPIRE_LEGACY_REQUEST: return "EXPIRE_LEGACY_REQUEST";
-            case CALLBACK_SUSPENDED:    return "CALLBACK_SUSPENDED";
-            case CALLBACK_RESUMED:      return "CALLBACK_RESUMED";
-            case CALLBACK_BLK_CHANGED:  return "CALLBACK_BLK_CHANGED";
+            case CALLBACK_PRECHECK:         return "CALLBACK_PRECHECK";
+            case CALLBACK_AVAILABLE:        return "CALLBACK_AVAILABLE";
+            case CALLBACK_LOSING:           return "CALLBACK_LOSING";
+            case CALLBACK_LOST:             return "CALLBACK_LOST";
+            case CALLBACK_UNAVAIL:          return "CALLBACK_UNAVAIL";
+            case CALLBACK_CAP_CHANGED:      return "CALLBACK_CAP_CHANGED";
+            case CALLBACK_IP_CHANGED:       return "CALLBACK_IP_CHANGED";
+            case EXPIRE_LEGACY_REQUEST:     return "EXPIRE_LEGACY_REQUEST";
+            case CALLBACK_SUSPENDED:        return "CALLBACK_SUSPENDED";
+            case CALLBACK_RESUMED:          return "CALLBACK_RESUMED";
+            case CALLBACK_BLK_CHANGED:      return "CALLBACK_BLK_CHANGED";
+            case CALLBACK_METADATA_CHANGED: return "CALLBACK_METADATA_CHANGED";
             default:
                 return Integer.toString(whichCallback);
         }
@@ -3560,7 +3575,9 @@ public class ConnectivityManager {
                 case CALLBACK_AVAILABLE: {
                     NetworkCapabilities cap = getObject(message, NetworkCapabilities.class);
                     LinkProperties lp = getObject(message, LinkProperties.class);
-                    callback.onAvailable(network, cap, lp, message.arg1 != 0);
+                    // TODO: send metadata from ConnectivityService
+                    NetworkMetadata metadata = null;
+                    callback.onAvailable(network, cap, lp, metadata, message.arg1 != 0);
                     break;
                 }
                 case CALLBACK_LOSING: {
@@ -3596,6 +3613,12 @@ public class ConnectivityManager {
                 case CALLBACK_BLK_CHANGED: {
                     boolean blocked = message.arg1 != 0;
                     callback.onBlockedStatusChanged(network, blocked);
+                    break;
+                }
+                case CALLBACK_METADATA_CHANGED: {
+                    NetworkMetadata metadata = getObject(message, NetworkMetadata.class);
+                    callback.onMetadataChanged(network, metadata);
+                    break;
                 }
             }
         }
