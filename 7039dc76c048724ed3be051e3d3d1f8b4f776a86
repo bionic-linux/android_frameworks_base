@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c02dc2_f7bf5e8a",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 3776,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-17T05:42:05Z",
+      "side": 1,
+      "message": "Nit: It\u0027s defined in mobile stats. Maybe just name it rat_type that will be earier to understand. The naming condition is different from what we have in Networkinfo to support different sub types(?). Besides, there is even no type in the message. It\u0027s a little strange to me that there is a sub type field.\n\nditto for the other one.",
+      "range": {
+        "startLine": 3776,
+        "startChar": 19,
+        "endLine": 3776,
+        "endChar": 27
+      },
+      "revId": "7039dc76c048724ed3be051e3d3d1f8b4f776a86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
