@@ -6739,6 +6739,14 @@ package android.provider {
 
 }
 
+package android.se.omapi {
+
+  public final class Reader {
+    method public boolean reset();
+  }
+
+}
+
 package android.security.keystore {
 
   public abstract class AttestationUtils {
