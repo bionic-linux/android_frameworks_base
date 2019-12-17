@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44558173_9cba4dae",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1305591
+      },
+      "writtenOn": "2019-12-17T13:55:40Z",
+      "side": 1,
+      "message": "please add bug.",
+      "range": {
+        "startLine": 427,
+        "startChar": 11,
+        "endLine": 427,
+        "endChar": 15
+      },
+      "revId": "5eb2f853034f7aa7bd9ca9f7e0413932325e691b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
