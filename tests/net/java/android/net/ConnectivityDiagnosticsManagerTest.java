@@ -1,0 +1,92 @@
+/*
+ * Copyright (C) 2020 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.net;
+
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+
+import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
+import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.os.PersistableBundle;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+@RunWith(JUnit4.class)
+public class ConnectivityDiagnosticsManagerTest {
+    private static final int NET_ID = 1;
+    private static final long TIMESTAMP = 10L;
+    private static final String INTERFACE_NAME = "interface";
+    private static final String BUNDLE_KEY = "key";
+    private static final String BUNDLE_VALUE = "value";
+
+    private ConnectivityReport getSampleConnectivityReport() {
+        LinkProperties linkProperties = new LinkProperties();
+        linkProperties.setInterfaceName(INTERFACE_NAME);
+        NetworkCapabilities networkCapabilities = new NetworkCapabilities();
+        networkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_IMS);
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString(BUNDLE_KEY, BUNDLE_VALUE);
+
+        return new ConnectivityReport(
+                new Network(NET_ID), TIMESTAMP, linkProperties, networkCapabilities, bundle);
+    }
+
+    @Test
+    public void testPersistableBundleEquals() {
+        assertFalse(ConnectivityDiagnosticsManager.equals(null, PersistableBundle.EMPTY));
+        assertTrue(
+                ConnectivityDiagnosticsManager.equals(
+                        PersistableBundle.EMPTY, PersistableBundle.EMPTY));
+
+        PersistableBundle a = new PersistableBundle();
+        a.putString(BUNDLE_KEY, BUNDLE_VALUE);
+        PersistableBundle b = new PersistableBundle();
+        b.putString(BUNDLE_KEY, BUNDLE_VALUE);
+        PersistableBundle c = new PersistableBundle();
+        c.putString(BUNDLE_KEY, null);
+        assertFalse(ConnectivityDiagnosticsManager.equals(PersistableBundle.EMPTY, a));
+        assertTrue(ConnectivityDiagnosticsManager.equals(a, b));
+        assertFalse(ConnectivityDiagnosticsManager.equals(a, c));
+    }
+
+    @Test
+    public void testConnectivityReportEquals() {
+        assertEquals(getSampleConnectivityReport(), getSampleConnectivityReport());
+        assertNotEquals(
+                getSampleConnectivityReport(),
+                new ConnectivityReport(
+                        new Network(0),
+                        0L,
+                        new LinkProperties(),
+                        new NetworkCapabilities(),
+                        new PersistableBundle()));
+    }
+
+    @Test
+    public void testConnectivityReportParcelUnparcel() {
+        assertParcelingIsLossless(getSampleConnectivityReport());
+
+        assertParcelSane(getSampleConnectivityReport(), 5);
+    }
+}
