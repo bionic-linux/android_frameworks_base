@@ -22,6 +22,30 @@
       "revId": "307380a21a596edcdcdbe13ac5c773d24dc981b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1b1d79_18fbf53a",
+        "filename": "packages/Tethering/jarjar-rules.txt",
+        "patchSetId": 27
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f98909c_4e165698",
+      "range": {
+        "startLine": 4,
+        "startChar": 62,
+        "endLine": 4,
+        "endChar": 63
+      },
+      "revId": "307380a21a596edcdcdbe13ac5c773d24dc981b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
