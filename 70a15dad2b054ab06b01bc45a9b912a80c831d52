@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "891948a7_68777d5e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:02:59Z",
+      "side": 1,
+      "message": "Added a comment to that effect. I\u0027m not sure I follow with regards to enforcement; do you mean verify that the profile has only useful auth info after construction?",
+      "parentUuid": "fd71cb18_eafb845c",
+      "range": {
+        "startLine": 306,
+        "startChar": 96,
+        "endLine": 306,
+        "endChar": 97
+      },
+      "revId": "70a15dad2b054ab06b01bc45a9b912a80c831d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ea9b14c_e7701e74",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "70a15dad2b054ab06b01bc45a9b912a80c831d52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c28669_7d630d4e",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea9b14c_e7701e74",
+      "range": {
+        "startLine": 74,
+        "startChar": 26,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "70a15dad2b054ab06b01bc45a9b912a80c831d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
