@@ -2866,6 +2866,14 @@ public abstract class PackageManager {
     public static final String FEATURE_IPSEC_TUNNELS = "android.software.ipsec_tunnels";
 
     /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}:
+     *
+     * This feature means that disable the track of specific packets for ConnectivityPacketTracker.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_DISABLE_PACKET_TRACKER = "android.software.disable_packet_tracker";
+
+    /**
      * Extra field name for the URI to a verification file. Passed to a package
      * verifier.
      *
