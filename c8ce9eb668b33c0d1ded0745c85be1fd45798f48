@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f033aa26_71c6f3e4",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2019-12-17T07:54:25Z",
+      "side": 1,
+      "message": "This is a static IP then ? What happens if both devices have the same patch ?",
+      "range": {
+        "startLine": 412,
+        "startChar": 39,
+        "endLine": 412,
+        "endChar": 68
+      },
+      "revId": "c8ce9eb668b33c0d1ded0745c85be1fd45798f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
