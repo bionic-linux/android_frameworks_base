@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63985bda_960da7e5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarSignalPolicy.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2019-12-17T21:32:15Z",
+      "side": 1,
+      "message": "See below on the comment about setWifiCallingIndicator, but I think all of this can go away if we just send the icon in that callback instead of duplicating the logic over here. Too much of the iconography logic is dependent on the telephony so I think it\u0027s better to keep it all in one place.",
+      "range": {
+        "startLine": 247,
+        "startChar": 1,
+        "endLine": 269,
+        "endChar": 5
+      },
+      "revId": "6b7d965019d381188e02ce41bb745636697c6e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f76d098_ab8c3151",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2019-12-17T21:32:15Z",
+      "side": 1,
+      "message": "can we change this to \"error creating ImsMmTelManager for subId \u003cid\u003e\" or something a little more desriptive at the top level?",
+      "range": {
+        "startLine": 166,
+        "startChar": 48,
+        "endLine": 166,
+        "endChar": 49
+      },
+      "revId": "6b7d965019d381188e02ce41bb745636697c6e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70be5fa_9b0605a2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/MobileSignalController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2019-12-17T21:32:15Z",
+      "side": 1,
+      "message": "Why is this needed? The MobileSignalControllers should be properly created/destroyed if needed when subscriptions changed, and so I don\u0027t think this should need to register a subscriptions changed listener.",
+      "range": {
+        "startLine": 830,
+        "startChar": 0,
+        "endLine": 841,
+        "endChar": 6
+      },
+      "revId": "6b7d965019d381188e02ce41bb745636697c6e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d02b46_ed4ff9fe",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2019-12-17T21:32:15Z",
+      "side": 1,
+      "message": "Can we have this method take an IconState instead of the boolean? This would allow us to keep the iconography on the publisher\u0027s side instead of duplicating logic over in PhoneStatusBarPolicy.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "6b7d965019d381188e02ce41bb745636697c6e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d24d83_af1f1538",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkControllerImpl.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2019-12-17T21:32:15Z",
+      "side": 1,
+      "message": "Can you explain how this change is related to the wifi calling icon? I\u0027m not seeing how the multiple configs come into play here",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 582,
+        "endChar": 0
+      },
+      "revId": "6b7d965019d381188e02ce41bb745636697c6e26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
