@@ -17,6 +17,7 @@
 package android.net;
 
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport;
 
 import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
 import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
@@ -35,6 +36,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class ConnectivityDiagnosticsManagerTest {
     private static final int NET_ID = 1;
+    private static final int DETECTION_METHOD = 2;
     private static final long TIMESTAMP = 10L;
     private static final String INTERFACE_NAME = "interface";
     private static final String BUNDLE_KEY = "key";
@@ -93,5 +95,26 @@ public class ConnectivityDiagnosticsManagerTest {
         assertParcelingIsLossless(getSampleConnectivityReport());
 
         assertParcelSane(getSampleConnectivityReport(), 5);
+    }
+
+    private DataStallReport getSampleDataStallReport() {
+        final PersistableBundle bundle = new PersistableBundle();
+        bundle.putString(BUNDLE_KEY, BUNDLE_VALUE);
+        return new DataStallReport(new Network(NET_ID), TIMESTAMP, DETECTION_METHOD, bundle);
+    }
+
+    @Test
+    public void testDataStallReportEquals() {
+        assertEquals(getSampleDataStallReport(), getSampleDataStallReport());
+        assertNotEquals(
+                getSampleDataStallReport(),
+                new DataStallReport(new Network(0), 0L, 0, new PersistableBundle()));
+    }
+
+    @Test
+    public void testDataStallReportParcelUnparcel() {
+        assertParcelingIsLossless(getSampleDataStallReport());
+
+        assertParcelSane(getSampleDataStallReport(), 4);
     }
 }
