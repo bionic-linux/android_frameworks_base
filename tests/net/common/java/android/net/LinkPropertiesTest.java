@@ -73,6 +73,7 @@ public class LinkPropertiesTest {
     private static final LinkAddress LINKADDRV4 = new LinkAddress(ADDRV4, 32);
     private static final LinkAddress LINKADDRV6 = new LinkAddress(ADDRV6, 128);
     private static final LinkAddress LINKADDRV6LINKLOCAL = new LinkAddress("fe80::1/64");
+    private static final Uri CAPPORT_API_URL = Uri.parse("https://test.example.com/capportapi");
 
     private static InetAddress address(String addrString) {
         return InetAddresses.parseNumericAddress(addrString);
@@ -98,6 +99,7 @@ public class LinkPropertiesTest {
         assertFalse(lp.isIpv6Provisioned());
         assertFalse(lp.isPrivateDnsActive());
         assertFalse(lp.isWakeOnLanSupported());
+        assertNull(lp.getCaptivePortalApiUrl());
     }
 
     private LinkProperties makeTestObject() {
@@ -120,6 +122,7 @@ public class LinkPropertiesTest {
         lp.setTcpBufferSizes(TCP_BUFFER_SIZES);
         lp.setNat64Prefix(new IpPrefix("2001:db8:0:64::/96"));
         lp.setWakeOnLanSupported(true);
+        lp.setCaptivePortalApiUrl(CAPPORT_API_URL);
         return lp;
     }
 
@@ -160,6 +163,9 @@ public class LinkPropertiesTest {
 
         assertTrue(source.isIdenticalWakeOnLan(target));
         assertTrue(target.isIdenticalWakeOnLan(source));
+
+        assertTrue(source.isIdenticalCaptivePortalApiUrl(target));
+        assertTrue(target.isIdenticalCaptivePortalApiUrl(source));
 
         // Check result of equals().
         assertTrue(source.equals(target));
@@ -959,12 +965,13 @@ public class LinkPropertiesTest {
         source.setNat64Prefix(new IpPrefix("2001:db8:1:2:64:64::/96"));
 
         source.setWakeOnLanSupported(true);
+        source.setCaptivePortalApiUrl(CAPPORT_API_URL);
 
         final LinkProperties stacked = new LinkProperties();
         stacked.setInterfaceName("test-stacked");
         source.addStackedLink(stacked);
 
-        assertParcelSane(source, 15 /* fieldCount */);
+        assertParcelSane(source, 16 /* fieldCount */);
     }
 
     @Test
@@ -1097,5 +1104,14 @@ public class LinkPropertiesTest {
 
         lp.clear();
         assertFalse(lp.isWakeOnLanSupported());
+    }
+
+    @Test
+    public void testCaptivePortalApiUrl() {
+        final LinkProperties lp = makeTestObject();
+        assertEquals(CAPPORT_API_URL, lp.getCaptivePortalApiUrl());
+
+        lp.clear();
+        assertNull(lp.getCaptivePortalApiUrl());
     }
 }
