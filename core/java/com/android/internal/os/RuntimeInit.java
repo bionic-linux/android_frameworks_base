@@ -35,6 +35,7 @@ import com.android.internal.logging.AndroidConfig;
 import com.android.server.NetworkManagementSocketTagger;
 
 import dalvik.system.RuntimeHooks;
+import dalvik.system.ThreadPrioritySetter;
 import dalvik.system.VMRuntime;
 
 import libcore.content.type.MimeMap;
@@ -216,6 +217,32 @@ public class RuntimeInit {
         MimeMap.setDefaultSupplier(DefaultMimeMapFactory::create);
     }
 
+    /**
+     * Handler for a thread setting its priority.
+     */
+    private static class ThreadPriorityHandler implements ThreadPrioritySetter {
+
+        static final int[] NICE_VALUES = {
+            Process.THREAD_PRIORITY_LOWEST,  // 1 (MIN_PRIORITY)
+            Process.THREAD_PRIORITY_BACKGROUND + 6,
+            Process.THREAD_PRIORITY_BACKGROUND + 3,
+            Process.THREAD_PRIORITY_BACKGROUND,
+            Process.THREAD_PRIORITY_DEFAULT,  // 5 (NORM_PRIORITY)
+            Process.THREAD_PRIORITY_DEFAULT - 2,
+            Process.THREAD_PRIORITY_DEFAULT - 4,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY + 3,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY + 2,
+            Process.THREAD_PRIORITY_URGENT_DISPLAY  // 10 (MAX_PRIORITY)
+        };
+
+        @Override
+        public void setPriority(int priority) {
+            int new_nice = NICE_VALUES[priority - 1];
+            Slog.e(TAG, "priority = " + priority + " new nice = " + new_nice);
+            Process.setThreadPriority(new_nice);
+        }
+    }
+
     @UnsupportedAppUsage
     protected static final void commonInit() {
         if (DEBUG) Slog.d(TAG, "Entered RuntimeInit!");
@@ -227,6 +254,7 @@ public class RuntimeInit {
         LoggingHandler loggingHandler = new LoggingHandler();
         RuntimeHooks.setUncaughtExceptionPreHandler(loggingHandler);
         Thread.setDefaultUncaughtExceptionHandler(new KillApplicationHandler(loggingHandler));
+        Thread.setThreadPrioritySetter(new ThreadPriorityHandler());
 
         /*
          * Install a time zone supplier that uses the Android persistent time zone system property.
