@@ -70,6 +70,8 @@ public final class LinkProperties implements Parcelable {
     private String mTcpBufferSizes;
     private IpPrefix mNat64Prefix;
     private boolean mWakeOnLanSupported;
+    private Uri mCaptivePortalApiUrl;
+    private CaptivePortalData mCaptivePortalData;
 
     private static final int MIN_MTU    = 68;
     private static final int MIN_MTU_V6 = 1280;
@@ -201,6 +203,8 @@ public final class LinkProperties implements Parcelable {
             mTcpBufferSizes = source.mTcpBufferSizes;
             mNat64Prefix = source.mNat64Prefix;
             mWakeOnLanSupported = source.mWakeOnLanSupported;
+            mCaptivePortalApiUrl = source.mCaptivePortalApiUrl;
+            mCaptivePortalData = source.mCaptivePortalData;
         }
     }
 
@@ -875,6 +879,8 @@ public final class LinkProperties implements Parcelable {
         mTcpBufferSizes = null;
         mNat64Prefix = null;
         mWakeOnLanSupported = false;
+        mCaptivePortalApiUrl = null;
+        mCaptivePortalData = null;
     }
 
     /**
@@ -943,6 +949,14 @@ public final class LinkProperties implements Parcelable {
         if (mDhcpServerAddress != null) {
             resultJoiner.add("ServerAddress:");
             resultJoiner.add(mDhcpServerAddress.toString());
+        }
+
+        if (mCaptivePortalApiUrl != null) {
+            resultJoiner.add("CaptivePortalApiUrl: " + mCaptivePortalApiUrl);
+        }
+
+        if (mCaptivePortalData != null) {
+            resultJoiner.add("CaptivePortalData: " + mCaptivePortalData);
         }
 
         if (mTcpBufferSizes != null) {
@@ -1479,6 +1493,28 @@ public final class LinkProperties implements Parcelable {
     }
 
     /**
+     * Compares this {@code LinkProperties}'s CaptivePortalApiUrl against the target.
+     *
+     * @param target LinkProperties to compare.
+     * @return {@code true} if both are identical, {@code false} otherwise.
+     * @hide
+     */
+    public boolean isIdenticalCaptivePortalApiUrl(LinkProperties target) {
+        return Objects.equals(mCaptivePortalApiUrl, target.mCaptivePortalApiUrl);
+    }
+
+    /**
+     * Compares this {@code LinkProperties}'s CaptivePortalData against the target.
+     *
+     * @param target LinkProperties to compare.
+     * @return {@code true} if both are identical, {@code false} otherwise.
+     * @hide
+     */
+    public boolean isIdenticalCaptivePortalData(LinkProperties target) {
+        return Objects.equals(mCaptivePortalData, target.mCaptivePortalData);
+    }
+
+    /**
      * Set whether the network interface supports WakeOnLAN
      *
      * @param supported WakeOnLAN supported value
@@ -1496,6 +1532,56 @@ public final class LinkProperties implements Parcelable {
      */
     public boolean isWakeOnLanSupported() {
         return mWakeOnLanSupported;
+    }
+
+    /**
+     * Set the URL of the captive portal API endpoint to get more information about the network.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public void setCaptivePortalApiUrl(@Nullable Uri url) {
+        mCaptivePortalApiUrl = url;
+    }
+
+    /**
+     * Get the URL of the captive portal API endpoint to get more information about the network.
+     *
+     * <p>This is null unless the application has
+     * {@link android.Manifest.permission.NETWORK_SETTINGS} or
+     * {@link NetworkStack#PERMISSION_MAINLINE_NETWORK_STACK} permissions.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @Nullable
+    public Uri getCaptivePortalApiUrl() {
+        return mCaptivePortalApiUrl;
+    }
+
+    /**
+     * Set the CaptivePortalData obtained from the captive portal API (RFC7710bis).
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public void setCaptivePortalData(@Nullable CaptivePortalData data) {
+        mCaptivePortalData = data;
+    }
+
+    /**
+     * Get the CaptivePortalData obtained from the captive portal API (RFC7710bis).
+     *
+     * <p>This is null unless the application has
+     * {@link android.Manifest.permission.NETWORK_SETTINGS} or
+     * {@link NetworkStack#PERMISSION_MAINLINE_NETWORK_STACK} permissions.
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    @Nullable
+    public CaptivePortalData getCaptivePortalData() {
+        return mCaptivePortalData;
     }
 
     /**
@@ -1537,7 +1623,9 @@ public final class LinkProperties implements Parcelable {
                 && isIdenticalMtu(target)
                 && isIdenticalTcpBufferSizes(target)
                 && isIdenticalNat64Prefix(target)
-                && isIdenticalWakeOnLan(target);
+                && isIdenticalWakeOnLan(target)
+                && isIdenticalCaptivePortalApiUrl(target)
+                && isIdenticalCaptivePortalData(target);
     }
 
     /**
@@ -1655,7 +1743,8 @@ public final class LinkProperties implements Parcelable {
                 + mPcscfs.size() * 67
                 + ((null == mPrivateDnsServerName) ? 0 : mPrivateDnsServerName.hashCode())
                 + Objects.hash(mNat64Prefix)
-                + (mWakeOnLanSupported ? 71 : 0);
+                + (mWakeOnLanSupported ? 71 : 0)
+                + Objects.hash(mCaptivePortalApiUrl, mCaptivePortalData);
     }
 
     /**
@@ -1694,6 +1783,8 @@ public final class LinkProperties implements Parcelable {
         dest.writeList(stackedLinks);
 
         dest.writeBoolean(mWakeOnLanSupported);
+        dest.writeParcelable(mCaptivePortalApiUrl, 0);
+        dest.writeParcelable(mCaptivePortalData, 0);
     }
 
     private static void writeAddresses(@NonNull Parcel dest, @NonNull List<InetAddress> list) {
@@ -1785,6 +1876,8 @@ public final class LinkProperties implements Parcelable {
                     netProp.addStackedLink(stackedLink);
                 }
                 netProp.setWakeOnLanSupported(in.readBoolean());
+                netProp.setCaptivePortalApiUrl(in.readParcelable(null));
+                netProp.setCaptivePortalData(in.readParcelable(null));
                 return netProp;
             }
 
