@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "131f9833_a85bc51c",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2019-12-17T09:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc731869_4a11a155",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "5e71266f28fa0a118964099560d5ecb3b5b5343f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc89f42_328dadd1",
         "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
         "patchSetId": 18
