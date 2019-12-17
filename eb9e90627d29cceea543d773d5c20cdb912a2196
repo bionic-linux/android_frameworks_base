@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c04e19e_eb36a413",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-17T14:11:41Z",
+      "side": 1,
+      "message": "This changes the ordering in a few ways:\n\n1. registerGlobalAlert can be called from systemReady, and it will result in arming the global alert twice during that method\u0027s execution time. This does an extra call down to netd, so it might slow things down a tiny bit. But I don\u0027t think this is harmful because the first time registerGlobalAlert is called, the lock is held, so even if the alert were to fire immediately, I think the code would behave correctly because all initialization completes before the lock is released.\n\n2. It calls registerGlobalAlert with the lock held, which the code does not currently do. I don\u0027t think this can cause deadlocks because registerGlobalAlert doesn\u0027t take any locks except in netd.\n\n3. It also registers the global alert before persisting. (This is likely fine because the lock is held so the alert wouldn\u0027t do anything even if it fired).\n\nI don\u0027t think any of these changes are harmful, but we might not want to change the ordering. So maybe keep this code in adjustPersistThreshold where it was before? Something like the following?\n\n\n+       final long globalAlertBytes \u003d mGlobalAlertBytes;\n\n        // update and persist if beyond new thresholds\n        final long currentTime \u003d mClock.millis();\n        synchronized (mStatsLock) {\n            if (!mSystemReady) return;\n\n            updatePersistThresholdsLocked();\n\n            mDevRecorder.maybePersistLocked(currentTime);\n            mXtRecorder.maybePersistLocked(currentTime);\n            mUidRecorder.maybePersistLocked(currentTime);\n            mUidTagRecorder.maybePersistLocked(currentTime);\n        }\n\n        // re-arm global alert if it has changed\n-       registerGlobalAlert();\n+       if (globalAlertBytes !\u003d mGlobalAlertBytes) {\n+           registerGlobalAlert();\n+       }",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1017,
+        "endChar": 9
+      },
+      "revId": "eb9e90627d29cceea543d773d5c20cdb912a2196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
