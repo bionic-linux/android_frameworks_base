@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7823be44_f8abbf90",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-17T13:19:40Z",
+      "side": 1,
+      "message": "To tolerate IOException would contradict with the purpose of the revocation list. I imagine the revocation list URL need to be constantly available during installation, and a failed URL lookup should result to a catastrophic failure. If we allow IOException here, users can just turn off wifi and bypass this \"revocation list key check\". We should discuss this in our next meeting.",
+      "parentUuid": "a333e284_130ae446",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9777f09_a729a0f0",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 2
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "504544b7_823c6b05",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-17T13:19:40Z",
+      "side": 1,
+      "message": "yeah you\u0027re right, this is a TODO: Remove...",
+      "parentUuid": "e9777f09_a729a0f0",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c2662e2_166d7fc8",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 2
@@ -70,6 +112,24 @@
       "writtenOn": "2019-12-17T06:49:02Z",
       "side": 1,
       "message": "private ?",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f7aa9d_f2167a38",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-17T13:19:40Z",
+      "side": 1,
+      "message": "good point, I\u0027ll make it a private static class.",
+      "parentUuid": "2c2662e2_166d7fc8",
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
@@ -104,6 +164,24 @@
       "writtenOn": "2019-12-17T06:49:02Z",
       "side": 1,
       "message": "The KEY_PUBKEY is optional and may be absent. I tend not to pass it when it\u0027s null.",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c71203_4c50f494",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/VerificationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-17T13:19:40Z",
+      "side": 1,
+      "message": "I can refactor here so that callingIntent\u0027s \"extras bundle\" is copied directly to the new Intent. Use Intent.putExtras(Intent src) \nhttps://developer.android.com/reference/android/content/Intent.html#putExtras(android.content.Intent) \n\nPerhaps split it to another CL",
+      "parentUuid": "1c125f43_9cc6c5fc",
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
