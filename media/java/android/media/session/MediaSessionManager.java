@@ -16,7 +16,6 @@
 
 package android.media.session;
 
-import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -32,7 +31,6 @@ import android.media.MediaSession2;
 import android.media.Session2Token;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
@@ -52,7 +50,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 /**
  * Provides support for interacting with {@link MediaSession media sessions}
@@ -89,7 +86,7 @@ public final class MediaSessionManager {
     @GuardedBy("mLock")
     private final CallbackStub mCbStub = new CallbackStub();
     @GuardedBy("mLock")
-    private final Map<Callback, Executor> mCallbacks = new HashMap<>();
+    private final Map<Callback, Handler> mCallbacks = new HashMap<>();
     @GuardedBy("mLock")
     private MediaSession.Token mCurMediaButtonSession;
     @GuardedBy("mLock")
@@ -768,16 +765,13 @@ public final class MediaSessionManager {
      */
     // TODO: Remove this method once Bluetooth app stop calling it.
     public void setCallback(@Nullable Callback callback, @Nullable Handler handler) {
-        if (handler == null) {
-            handler = new Handler();
-        }
         synchronized (mLock) {
             if (mLegacyCallback != null) {
                 unregisterCallback(mLegacyCallback);
             }
             mLegacyCallback = callback;
             if (callback != null) {
-                registerCallback(new HandlerExecutor(handler), callback);
+                registerCallback(callback, handler);
             }
         }
     }
@@ -785,29 +779,27 @@ public final class MediaSessionManager {
     /**
      * Register a {@link Callback}.
      *
-     * @param executor The executor on which the callback should be invoked
      * @param callback A {@link Callback}.
+     * @param handler The handler on which the callback should be invoked, or {@code null}
+     *            if the callback should be invoked on the calling thread's looper.
      * @hide
      */
     @SystemApi
     @RequiresPermission(value = android.Manifest.permission.MEDIA_CONTENT_CONTROL)
-    public void registerCallback(@NonNull @CallbackExecutor Executor executor,
-            @NonNull Callback callback) {
-        if (executor == null) {
-            throw new NullPointerException("executor shouldn't be null");
-        }
+    public void registerCallback(@NonNull Callback callback, @Nullable Handler handler) {
         if (callback == null) {
             throw new NullPointerException("callback shouldn't be null");
         }
         synchronized (mLock) {
             try {
-                mCallbacks.put(callback, executor);
+                if (handler == null) {
+                    handler = new Handler();
+                }
+                mCallbacks.put(callback, handler);
                 if (mCurMediaButtonSession != null) {
-                    executor.execute(
-                            () -> callback.onAddressedPlayerChanged(mCurMediaButtonSession));
+                    handler.post(() -> callback.onAddressedPlayerChanged(mCurMediaButtonSession));
                 } else if (mCurMediaButtonReceiver != null) {
-                    executor.execute(
-                            () -> callback.onAddressedPlayerChanged(mCurMediaButtonReceiver));
+                    handler.post(() -> callback.onAddressedPlayerChanged(mCurMediaButtonReceiver));
                 }
 
                 if (mCallbacks.size() == 1) {
@@ -1155,8 +1147,8 @@ public final class MediaSessionManager {
         public void onMediaKeyEventDispatchedToMediaSession(KeyEvent event,
                 MediaSession.Token sessionToken) {
             synchronized (mLock) {
-                for (Map.Entry<Callback, Executor> e : mCallbacks.entrySet()) {
-                    e.getValue().execute(
+                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
+                    e.getValue().post(
                             () -> e.getKey().onMediaKeyEventDispatched(event, sessionToken));
                 }
             }
@@ -1166,8 +1158,8 @@ public final class MediaSessionManager {
         public void onMediaKeyEventDispatchedToMediaButtonReceiver(KeyEvent event,
                 ComponentName mediaButtonReceiver) {
             synchronized (mLock) {
-                for (Map.Entry<Callback, Executor> e : mCallbacks.entrySet()) {
-                    e.getValue().execute(
+                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
+                    e.getValue().post(
                             () -> e.getKey().onMediaKeyEventDispatched(event, mediaButtonReceiver));
                 }
             }
@@ -1178,8 +1170,8 @@ public final class MediaSessionManager {
             synchronized (mLock) {
                 mCurMediaButtonSession = sessionToken;
                 mCurMediaButtonReceiver = null;
-                for (Map.Entry<Callback, Executor> e : mCallbacks.entrySet()) {
-                    e.getValue().execute(() -> e.getKey().onAddressedPlayerChanged(sessionToken));
+                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
+                    e.getValue().post(() -> e.getKey().onAddressedPlayerChanged(sessionToken));
                 }
             }
         }
@@ -1190,8 +1182,8 @@ public final class MediaSessionManager {
             synchronized (mLock) {
                 mCurMediaButtonSession = null;
                 mCurMediaButtonReceiver = mediaButtonReceiver;
-                for (Map.Entry<Callback, Executor> e : mCallbacks.entrySet()) {
-                    e.getValue().execute(() -> e.getKey().onAddressedPlayerChanged(
+                for (Map.Entry<Callback, Handler> e : mCallbacks.entrySet()) {
+                    e.getValue().post(() -> e.getKey().onAddressedPlayerChanged(
                             mediaButtonReceiver));
                 }
             }
