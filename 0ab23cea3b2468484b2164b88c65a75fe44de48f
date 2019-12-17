@@ -22,6 +22,30 @@
       "revId": "0ab23cea3b2468484b2164b88c65a75fe44de48f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ca06b2_d1ae843f",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T09:15:38Z",
+      "side": 0,
+      "message": "Yes, mConnector is final and  passing in constructor that it shouldn\u0027t be null.",
+      "parentUuid": "80c7fdac_43d2be8f",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 9
+      },
+      "revId": "0ab23cea3b2468484b2164b88c65a75fe44de48f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

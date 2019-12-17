@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "f3b50d78_7752cf9e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T09:15:38Z",
+      "side": 1,
+      "message": "Yes, but application can aware this directly by null object instead of calling ConnectivityManager function and blocking a while. Currently I don\u0027t have better solution to deal with usage before boot complete. Remi\u0027s suggestion seems need to base on a service which live in system server and should also ready before tethering. That service can know whether tethering is ready and callback to handle queuing request of TetheringManager. But this seems strange that we just move our service(Tethering) out of system server. Another option is that maybe we can send a intent from tethering when it is ready. Then, TetheringManager can start to handle its queuing request when it receive intent. I will have follow up CL for this early boot problem. Lets review and discuss in that CL.",
+      "parentUuid": "98408952_9d6fa886",
+      "range": {
+        "startLine": 2572,
+        "startChar": 7,
+        "endLine": 2572,
+        "endChar": 29
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cff8455_793fd026",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 20
@@ -568,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "51ffd538_06069320",
+        "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T09:15:38Z",
+      "side": 1,
+      "message": "I found media team build annotation as shared library and set installable to false. But I assume why they can do that is their sdk version is core_platform.\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/media/Android.bp;l\u003d33?ss\u003dandroid\u0026q\u003dframeworks%2Fbase%2Fmedia%2FAndroid.bp\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/media/Android.bp;l\u003d30?ss\u003dandroid\u0026q\u003dframeworks%2Fbase%2Fmedia%2FAndroid.bp",
+      "parentUuid": "fc767784_c1434116",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8765ae_1466c458",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/IIntResultListener.aidl",
         "patchSetId": 20
@@ -780,6 +828,30 @@
     },
     {
       "key": {
+        "uuid": "972f9822_f65a1061",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/ITetheringEventCallback.aidl",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T09:15:38Z",
+      "side": 1,
+      "message": "It would not be built in framework_tethering_stubs(original name is tethering_client_stubs) \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1156906/23/packages/Tethering/common/TetheringLib/Android.bp#53\ndroidstubs would default skip @hide API.\n\nAnd I don\u0027t want framework and  other system service use our @hide class/method. I would like them just build framework_tethering_stubs.",
+      "parentUuid": "381090b0_5031d207",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa4f2a7_08d10792",
         "filename": "packages/Tethering/proguard.flags",
         "patchSetId": 20
@@ -892,6 +964,30 @@
       "side": 1,
       "message": "Well, the original question was \"can this go into its own CL\". :-) Can it? Or does that make things too complicated because lots of other changes need to happen as well?",
       "parentUuid": "b1c1b359_bbd455cb",
+      "range": {
+        "startLine": 1802,
+        "startChar": 0,
+        "endLine": 1807,
+        "endChar": 45
+      },
+      "revId": "c34ccdefec0ed92125d989868a2ecab227a839be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35829862_2046c3f6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-17T09:15:38Z",
+      "side": 1,
+      "message": "Keep it in the same CL would be simpler. Yes, the reason is they should be merged together.",
+      "parentUuid": "a1fb0164_e9db3787",
       "range": {
         "startLine": 1802,
         "startChar": 0,
