@@ -22,6 +22,30 @@
       "revId": "c8ce9eb668b33c0d1ded0745c85be1fd45798f48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e273fc20_0f8f5516",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2019-12-17T17:19:23Z",
+      "side": 1,
+      "message": "Yes, then it wouldn\u0027t work, but I believe this is not that much of an issue. Phone manufacturers are less likely to change this value (they don\u0027t need to). If they don\u0027t, it will work all the time.",
+      "parentUuid": "f033aa26_71c6f3e4",
+      "range": {
+        "startLine": 412,
+        "startChar": 39,
+        "endLine": 412,
+        "endChar": 68
+      },
+      "revId": "c8ce9eb668b33c0d1ded0745c85be1fd45798f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
