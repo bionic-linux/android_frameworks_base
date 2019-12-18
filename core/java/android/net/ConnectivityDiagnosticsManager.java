@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -380,6 +381,21 @@ public class ConnectivityDiagnosticsManager {
      * network connectivity events. Must be extended by applications wanting notifications.
      */
     public abstract static class ConnectivityDiagnosticsCallback {
+        private final Object mExecutorLock = new Object();
+        private Executor mExecutor;
+
+        /** @hide */
+        @VisibleForTesting
+        public final ConnectivityDiagnosticsBinder mBinder = new ConnectivityDiagnosticsBinder();
+
+        /** @hide */
+        @VisibleForTesting
+        public void setExecutor(Executor e) {
+            synchronized (mExecutorLock) {
+                mExecutor = e;
+            }
+        }
+
         /**
          * Called when the platform completes a data connectivity check. This will also be invoked
          * upon registration with the latest report.
@@ -409,6 +425,51 @@ public class ConnectivityDiagnosticsManager {
          */
         public void onNetworkConnectivityReported(
                 @NonNull Network network, boolean hasConnectivity) {}
+
+        /** @hide */
+        @VisibleForTesting
+        public class ConnectivityDiagnosticsBinder extends IConnectivityDiagnosticsCallback.Stub {
+            /** @hide */
+            public void onConnectivityReport(@NonNull ConnectivityReport report) {
+                synchronized (mExecutorLock) {
+                    if (mExecutor == null) return;
+                    Binder.withCleanCallingIdentity(() -> {
+                            mExecutor.execute(() -> {
+                                    ConnectivityDiagnosticsCallback.this
+                                            .onConnectivityReport(report);
+                            });
+                    });
+                }
+            }
+
+            /** @hide */
+            public void onDataStallSuspected(@NonNull DataStallReport report) {
+                synchronized (mExecutorLock) {
+                    if (mExecutor == null) return;
+                    Binder.withCleanCallingIdentity(() -> {
+                            mExecutor.execute(() -> {
+                                    ConnectivityDiagnosticsCallback.this
+                                            .onDataStallSuspected(report);
+                            });
+                    });
+                }
+            }
+
+            /** @hide */
+            public void onNetworkConnectivityReported(
+                    @NonNull Network network, boolean hasConnectivity) {
+                synchronized (mExecutorLock) {
+                    if (mExecutor == null) return;
+                    Binder.withCleanCallingIdentity(() -> {
+                            mExecutor.execute(() -> {
+                                    ConnectivityDiagnosticsCallback.this
+                                            .onNetworkConnectivityReported(
+                                                    network, hasConnectivity);
+                            });
+                    });
+                }
+            }
+        }
     }
 
     /**
