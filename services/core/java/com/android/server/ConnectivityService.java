@@ -7286,6 +7286,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     public int getConnectionOwnerUid(ConnectionInfo connectionInfo) {
         final Vpn vpn = enforceActiveVpnOrNetworkStackPermission();
+        if (vpn != null) {
+            NetworkMisc misc = getNetworkAgentInfoForNetId(vpn.getNetId()).networkMisc;
+            if (misc != null && misc.isCarrierVpn && !checkNetworkStackPermission()) {
+                throw new SecurityException(
+                        "Carrier VPN app must have the NETWORK_STACK permission.");
+            }
+        }
         if (connectionInfo.protocol != IPPROTO_TCP && connectionInfo.protocol != IPPROTO_UDP) {
             throw new IllegalArgumentException("Unsupported protocol " + connectionInfo.protocol);
         }

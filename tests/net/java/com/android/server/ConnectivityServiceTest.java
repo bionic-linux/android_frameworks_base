@@ -21,6 +21,7 @@ import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
@@ -129,6 +130,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
+import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -350,6 +352,7 @@ public class ConnectivityServiceTest {
 
         @Spy private Resources mResources;
         private final LinkedBlockingQueue<Intent> mStartedActivities = new LinkedBlockingQueue<>();
+        private List<String> mRemovedPermissions;
 
         MockContext(Context base, ContentProvider settingsProvider) {
             super(base);
@@ -371,6 +374,7 @@ public class ConnectivityServiceTest {
 
             mContentResolver = new MockContentResolver();
             mContentResolver.addProvider(Settings.AUTHORITY, settingsProvider);
+            mRemovedPermissions = new ArrayList<>();
         }
 
         @Override
@@ -433,6 +437,18 @@ public class ConnectivityServiceTest {
         public Intent registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
             mRegisteredReceivers.add(receiver);
             return super.registerReceiver(receiver, filter);
+        }
+
+        @Override
+        public int checkCallingOrSelfPermission(String permission) {
+            if (mRemovedPermissions.contains(permission)) {
+                return PERMISSION_DENIED;
+            }
+            return super.checkCallingOrSelfPermission(permission);
+        }
+
+        private void removePermission(String permission) {
+            mRemovedPermissions.add(permission);
         }
 
         public void clearRegisteredReceivers() {
@@ -6255,6 +6271,23 @@ public class ConnectivityServiceTest {
                 vpnNai, null /* networkCapabilities */));
     }
 
+    @Test
+    public void testGetConnectionOwnerUidFromCarrierVpnApp() throws Exception {
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("tun0");
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
+        // The uid range needs to cover the test app so the network is visible to it.
+        final UidRange vpnRange = UidRange.createForUser(VPN_USER);
+        final TestNetworkAgentWrapper vpnNetworkAgent = establishVpn(lp, VPN_UID,
+                Collections.singleton(vpnRange));
+        mService.getNetworkAgentInfoForNetwork(vpnNetworkAgent.getNetwork())
+                .networkMisc.isCarrierVpn = true;
+        mServiceContext.removePermission(android.Manifest.permission.NETWORK_STACK);
+
+        ConnectionInfo ci =
+                new ConnectionInfo(123, new InetSocketAddress(123), new InetSocketAddress(123));
+        assertThrows(SecurityException.class, () -> mService.getConnectionOwnerUid(ci));
+    }
 
     private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int ownerId,
             Set<UidRange> vpnRange) throws Exception {
