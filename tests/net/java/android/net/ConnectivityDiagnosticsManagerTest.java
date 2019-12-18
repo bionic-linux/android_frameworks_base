@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.ConnectivityDiagnosticsManager.DataStallReport;
 
@@ -32,14 +33,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+
 @RunWith(JUnit4.class)
 public class ConnectivityDiagnosticsManagerTest {
     private static final int NET_ID = 1;
     private static final int DETECTION_METHOD = 2;
     private static final long TIMESTAMP = 10L;
+    private static final long TIMEOUT_MILLIS = 200L;
     private static final String INTERFACE_NAME = "interface";
     private static final String BUNDLE_KEY = "key";
     private static final String BUNDLE_VALUE = "value";
+
+    private static final Executor INLINE_EXECUTOR = x -> x.run();
 
     private ConnectivityReport createSampleConnectivityReport() {
         final LinkProperties linkProperties = new LinkProperties();
@@ -192,5 +199,69 @@ public class ConnectivityDiagnosticsManagerTest {
     @Test
     public void testDataStallReportParcelUnparcel() {
         assertParcelSane(createSampleDataStallReport(), 4);
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onConnectivityReport(ConnectivityReport report) {
+                        assertEquals(createSampleConnectivityReport(), report);
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(INLINE_EXECUTOR);
+        cb.setBinder(cb.new ConnectivityDiagnosticsBinder());
+
+        // The callback will be invoked synchronously by inline executor. Immediately check the
+        // latch without waiting.
+        cb.mBinder.onConnectivityReport(createSampleConnectivityReport());
+        assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onDataStallSuspected(DataStallReport report) {
+                        assertEquals(createSampleDataStallReport(), report);
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(INLINE_EXECUTOR);
+        cb.setBinder(cb.new ConnectivityDiagnosticsBinder());
+
+        // The callback will be invoked synchronously by inline executor. Immediately check the
+        // latch without waiting.
+        cb.mBinder.onDataStallSuspected(createSampleDataStallReport());
+        assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnNetworkConnectivityReported() {
+        final Network n = new Network(NET_ID);
+        final boolean connectivity = true;
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onNetworkConnectivityReported(
+                            Network network, boolean hasConnectivity) {
+                        assertEquals(n, network);
+                        assertEquals(connectivity, hasConnectivity);
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(INLINE_EXECUTOR);
+        cb.setBinder(cb.new ConnectivityDiagnosticsBinder());
+
+        // The callback will be invoked synchronously by inline executor. Immediately check the
+        // latch without waiting.
+        cb.mBinder.onNetworkConnectivityReported(n, connectivity);
+        assertEquals(0, latch.getCount());
     }
 }
