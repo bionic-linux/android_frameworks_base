@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a6bae7_5bc58f0b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-18T19:18:59Z",
+      "side": 1,
+      "message": "I think CellSignalStrengthLte.USE_RSSNR should be removed.",
+      "range": {
+        "startLine": 3880,
+        "startChar": 47,
+        "endLine": 3880,
+        "endChar": 80
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd74692_67e0acc5",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-18T19:18:59Z",
+      "side": 1,
+      "message": "Should be USE_RSRP",
+      "range": {
+        "startLine": 182,
+        "startChar": 33,
+        "endLine": 182,
+        "endChar": 53
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57973b35_b7f3a34b",
+        "filename": "telephony/java/android/telephony/CellSignalStrengthLte.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-18T19:18:59Z",
+      "side": 1,
+      "message": "Should be USE_RSRP",
+      "range": {
+        "startLine": 237,
+        "startChar": 37,
+        "endLine": 237,
+        "endChar": 57
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
