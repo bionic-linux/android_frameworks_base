@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f3df78_8959ddab",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T14:53:24Z",
+      "side": 1,
+      "message": "This class doesn\u0027t seem very useful. Why not just use a ConditionVariable directly? Also, I personally find the name difficult to understand.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63345502_f8d13434",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T14:53:24Z",
+      "side": 1,
+      "message": "This looks strange, or at least very different from standard Android service patterns.\n\nTetheringConnector is basically the same as an Android system service such as ConnectivityService, NetworkStatsService, ActivityManagerService, etc.: it\u0027s a binder endpoint which accepts requests from clients through a manager class. So I\u0027d expect this to be called TetheringService (or TetheringSystemService or something similar), and be in its own class.\n\nInstead it\u0027s a static inner class of something called TetheringService, which is not a system service with a binder interface but a service that is bound by the system server, and as far as I can tell exists only so the system server can start tethering and communicate with it (which it doesn\u0027t usually do, because all communication with tethering goes through the manager class). So: why is TetherinConnector an inner class of TetheringService, if it\u0027s static, and there\u0027s only one TetheringService in the system and only one TetheringConnector for that service?\n\nAlso, the relationship to Tethering is strange. The inner class and the outer service both have a reference to mTethering, so there is no clear ownership model. But it seems that most of the methods in Tethering are used from the connector.\n\nFinally: if TetheringService is only intended to be a simple class that contains a TetheringConnector that does all the actual work, then why does it have methods of its own, that TetheringConnector calls out to? Why aren\u0027t those methods on TetheringConnector directly?\n\nISTM that this would be much easier to understand, or at least much more consistent with other services, if the class now called TetheringConnector were renamed to or TetheringService, and all the intelligence was in that class. Then what is now TetheringService could just be called TetheringStarter or TetheringSystemServerEndpoint, and it could be a very small class whose only job would be to bind to the service and keep it running.\n\nBut perhaps I\u0027m misunderstanding the design here.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f839bdba_7dee5008",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T14:53:24Z",
+      "side": 1,
+      "message": "This pattern seems risky and error-prone in that some validation of the input (e.g., permissions checks) are handled here in TetheringConnector, but some is handled in Tethering.\n\nI fear that this will be confusing and lead to programming errors like missing/contradictory/insufficient input validation and/or permission checking.\n\nIn this specific example, why can\u0027t we just make Tethering do the permission check and the check for tethering supported and return the int?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9f5ad8_9256d8f7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T14:53:24Z",
+      "side": 1,
+      "message": "There are many identical copies of this code. Please reduce code duplication somehow. One idea would be to do something like:\n\n    if (checkAndNotifyTetherChangePermissionDenied(listener, callerPkg)) return;\n    if (checkAndNotifyTetheringNotSupported(listener)) return;\n\nOr even merge those two into one method. Something like:\n\n    if (checkAndNotifyCommonError(listener, callerPkg)) return;",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafa6aed_eba956b6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T14:53:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t look great. Perhaps it\u0027s necessary for now, but it seems like we\u0027d want this to be asynchronous, such that this class would get a callback whenever the network stack is available? Did you work together with Remi on this?",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 46
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
