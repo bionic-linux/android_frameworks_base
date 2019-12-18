@@ -195,6 +195,7 @@ public class ConnectivityDiagnosticsManager {
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
         synchronized (callback.mBinder) {
+            // If this is true, the callback has never been registered in the first place
             if (callback.mBinder.mExecutor == null) return;
         }
 
