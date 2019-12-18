@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.ConnectivityDiagnosticsManager.DataStallReport;
 
@@ -29,18 +30,32 @@ import static org.junit.Assert.assertTrue;
 
 import android.os.PersistableBundle;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(JUnit4.class)
 public class ConnectivityDiagnosticsManagerTest {
     private static final int NET_ID = 1;
     private static final int DETECTION_METHOD = 2;
     private static final long TIMESTAMP = 10L;
+    private static final long TIMEOUT_MILLIS = 200L;
     private static final String INTERFACE_NAME = "interface";
     private static final String BUNDLE_KEY = "key";
     private static final String BUNDLE_VALUE = "value";
+
+    private Executor mExecutor;
+
+    @Before
+    public void setUp() {
+        mExecutor = Executors.newSingleThreadExecutor();
+    }
 
     private ConnectivityReport getSampleConnectivityReport() {
         final LinkProperties linkProperties = new LinkProperties();
@@ -116,5 +131,58 @@ public class ConnectivityDiagnosticsManagerTest {
         assertParcelingIsLossless(getSampleDataStallReport());
 
         assertParcelSane(getSampleDataStallReport(), 4);
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onConnectivityReport(ConnectivityReport report) {
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(mExecutor);
+
+        cb.mBinder.onConnectivityReport(getSampleConnectivityReport());
+        latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onDataStallSuspected(DataStallReport report) {
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(mExecutor);
+
+        cb.mBinder.onDataStallSuspected(getSampleDataStallReport());
+        latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnNetworkConnectivityReported()
+            throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onNetworkConnectivityReported(
+                            Network network, boolean hasConnectivity) {
+                        latch.countDown();
+                    }
+                };
+        cb.setExecutor(mExecutor);
+
+        cb.mBinder.onNetworkConnectivityReported(new Network(NET_ID), true);
+        latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        assertEquals(0, latch.getCount());
     }
 }
