@@ -24,6 +24,7 @@ import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.os.RemoteException;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
@@ -504,8 +505,22 @@ public class ConnectivityDiagnosticsManager {
             @NonNull NetworkRequest request,
             @NonNull Executor e,
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        synchronized (callback) {
+            // If callback.mExecutor is already set, this callback is currently registered. This
+            // guarantees uniqueness on the app-side.
+            if (callback.mExecutor != null) {
+                throw new IllegalArgumentException("Callbacks must be unique for each register()");
+            }
+
+            callback.setExecutor(e);
+            callback.setBinder(callback.new ConnectivityDiagnosticsBinder());
+        }
+
+        try {
+            mService.registerConnectivityDiagnosticsCallback(callback.mBinder, request);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -514,11 +529,24 @@ public class ConnectivityDiagnosticsManager {
      * <p>If the given callback is not currently registered with the System, this operation will be
      * a no-op.
      *
+     * <p>Callbacks cannot be reused after they are unregistered with the System.
+     *
      * @param callback The ConnectivityDiagnosticsCallback to be unregistered from the System.
      */
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        synchronized (callback) {
+            if (callback.mExecutor == null) {
+                // If executor is already null, it is not currently registered with the system.
+                // There is no need to call into ConnectivityService to ensure it is unregistered.
+                return;
+            }
+        }
+
+        try {
+            mService.unregisterConnectivityDiagnosticsCallback(callback.mBinder);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 }

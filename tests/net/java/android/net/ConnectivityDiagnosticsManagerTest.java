@@ -26,12 +26,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
+import android.content.Context;
 import android.os.PersistableBundle;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -46,7 +52,21 @@ public class ConnectivityDiagnosticsManagerTest {
     private static final String BUNDLE_KEY = "key";
     private static final String BUNDLE_VALUE = "value";
 
+
     private static final Executor INLINE_EXECUTOR = x -> x.run();
+
+    @Mock private Context mContext;
+    @Mock private IConnectivityManager mService;
+
+    private ConnectivityDiagnosticsManager mManager;
+
+    @Before
+    public void setUp() {
+        mContext = mock(Context.class);
+        mService = mock(IConnectivityManager.class);
+
+        mManager = new ConnectivityDiagnosticsManager(mContext, mService);
+    }
 
     private ConnectivityReport createSampleConnectivityReport() {
         final LinkProperties linkProperties = new LinkProperties();
@@ -263,5 +283,23 @@ public class ConnectivityDiagnosticsManagerTest {
         // latch without waiting.
         cb.mBinder.onNetworkConnectivityReported(n, connectivity);
         assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testRegisterConnectivityDiagnosticsCallback() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        final ConnectivityDiagnosticsCallback cb = new ConnectivityDiagnosticsCallback() {};
+        mManager.registerConnectivityDiagnosticsCallback(request, INLINE_EXECUTOR, cb);
+
+        verify(mService).registerConnectivityDiagnosticsCallback(eq(cb.mBinder), eq(request));
+    }
+
+    @Test
+    public void testUnregisterConnectivityDiagnosticsCallback() throws Exception {
+        final ConnectivityDiagnosticsCallback cb = new ConnectivityDiagnosticsCallback() {};
+        cb.setExecutor(INLINE_EXECUTOR);
+        mManager.unregisterConnectivityDiagnosticsCallback(cb);
+
+        verify(mService).unregisterConnectivityDiagnosticsCallback(eq(cb.mBinder));
     }
 }
