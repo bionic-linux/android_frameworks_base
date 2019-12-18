@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1e4b584_e6382f60",
+        "filename": "core/java/com/android/internal/util/MemInfoReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2019-12-18T22:29:32Z",
+      "side": 1,
+      "message": "Hm, that\u0027s kind of weird.\n- Could you document that in the javadoc of the constant?\n- Or, would it make sense to artificially subtract MEMINFO_SLAB_RECLAIMABLE from MEMINFO_KRECLAIMABLE?",
+      "revId": "02e84546be079aa352263ce2897724f27c6e5d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
