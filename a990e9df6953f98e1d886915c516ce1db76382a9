@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3bc5b2db_a09ac227",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-18T11:00:27Z",
+      "side": 1,
+      "message": "Exception handled in InstallationAsyncTask.verifyAndPrepare()",
+      "parentUuid": "7823be44_f8abbf90",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9777f09_a729a0f0",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 2
@@ -136,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "dbd1ad6d_338ebf6b",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-18T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10f7aa9d_f2167a38",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db397f86_a284e6e3",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 2
@@ -150,6 +186,24 @@
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87934741_dfa5da86",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-18T11:00:27Z",
+      "side": 1,
+      "message": "Ack\nalso change this to a resource string",
+      "parentUuid": "db397f86_a284e6e3",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
