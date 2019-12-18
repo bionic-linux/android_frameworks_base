@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "96da061a_682dc8f1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2019-12-18T23:30:36Z",
+      "side": 1,
+      "message": "Suggest name:\nKEY_PARAMETERS_USED_FOR_LTE_SIGNAL_BAR_INT\n\nI don\u0027t think having the \"4G\" in there is useful since we usually just refer to it was LTE.",
+      "range": {
+        "startLine": 2334,
+        "startChar": 31,
+        "endLine": 2334,
+        "endChar": 75
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a6bae7_5bc58f0b",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
