@@ -25,14 +25,21 @@ import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
+import android.content.Context;
 import android.os.PersistableBundle;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -47,11 +54,19 @@ public class ConnectivityDiagnosticsManagerTest {
     private static final String BUNDLE_KEY = "key";
     private static final String BUNDLE_VALUE = "value";
 
+    @Mock private Context mContext;
+    @Mock private IConnectivityManager mService;
+
     private Executor mInlineExecutor;
+    private ConnectivityDiagnosticsManager mManager;
 
     @Before
     public void setUp() {
+        mContext = mock(Context.class);
+        mService = mock(IConnectivityManager.class);
+
         mInlineExecutor = x -> x.run();
+        mManager = new ConnectivityDiagnosticsManager(mContext, mService);
     }
 
     private ConnectivityReport createSampleConnectivityReport() {
@@ -267,5 +282,25 @@ public class ConnectivityDiagnosticsManagerTest {
         // immediately check the latch without waiting.
         cb.mBinder.onNetworkConnectivityReported(n, connectivity);
         assertEquals(0, latch.getCount());
+    }
+
+    @Test
+    public void testRegisterConnectivityDiagnosticsCallback() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        final ConnectivityDiagnosticsCallback cb = new ConnectivityDiagnosticsCallback() {};
+        mManager.registerConnectivityDiagnosticsCallback(request, mInlineExecutor, cb);
+
+        assertNotNull(cb.mExecutor);
+        verify(mService).registerConnectivityDiagnosticsCallback(eq(cb.mBinder), eq(request));
+    }
+
+    @Test
+    public void testUnregisterConnectivityDiagnosticsCallback() throws Exception {
+        final ConnectivityDiagnosticsCallback cb = new ConnectivityDiagnosticsCallback() {};
+        cb.setExecutor(mInlineExecutor);
+        mManager.unregisterConnectivityDiagnosticsCallback(cb);
+
+        assertNull(cb.mExecutor);
+        verify(mService).unregisterConnectivityDiagnosticsCallback(eq(cb.mBinder));
     }
 }
