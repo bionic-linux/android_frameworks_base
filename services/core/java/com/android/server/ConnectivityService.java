@@ -536,6 +536,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public static final int EVENT_PROBE_STATUS_CHANGED = 46;
 
     /**
+     * Used to handle ConnectivityDiagnosticsCallback registration events from {@link
+     * android.net.ConnectivityDiagnosticsManager}.
+     *
+     * <p>Should only be used with {@link ConnectivityDiagnosticsHandler}.
+     */
+    public static final int EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK = 47;
+
+    /**
+     * Used to handle ConnectivityDiagnosticsCallback unregister events from {@link
+     * android.net.ConnectivityDiagnosticsManager}.
+     *
+     * <p>Should only be used with {@link ConnectivityDiagnosticsHandler}.
+     */
+    public static final int EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK = 48;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -563,6 +579,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     final private InternalHandler mHandler;
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
+    /** Handler used for processing {@link android.net.ConnectivityDiagnosticsManager} events */
+    private final ConnectivityDiagnosticsHandler mConnectivityDiagnosticsHandler;
+
     private final DnsManager mDnsManager;
 
     private boolean mSystemReady;
@@ -624,6 +643,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
+
+    private Map<IConnectivityDiagnosticsCallback, NetworkRequestInfo>
+            mConnectivityDiagnosticsCallbacks = new HashMap<>();
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -957,6 +979,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandlerThread.start();
         mHandler = new InternalHandler(mHandlerThread.getLooper());
         mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
+        mConnectivityDiagnosticsHandler =
+                new ConnectivityDiagnosticsHandler(mHandlerThread.getLooper());
 
         mReleasePendingIntentDelayMs = Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
@@ -7108,19 +7132,117 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    /**
+     * Handler used for managing all Connectivity Diagnostics related functions.
+     *
+     * @see android.net.ConnectivityDiagnosticsManager
+     */
+    private class ConnectivityDiagnosticsHandler extends Handler {
+        private ConnectivityDiagnosticsHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK: {
+                    final Pair<IConnectivityDiagnosticsCallback, NetworkRequestInfo> pair =
+                            (Pair) msg.obj;
+                    handleRegisterConnectivityDiagnosticsCallback(pair.first, pair.second);
+                    break;
+                }
+                case EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK: {
+                    handleUnregisterConnectivityDiagnosticsCallback(
+                            (IConnectivityDiagnosticsCallback) msg.obj, msg.arg1);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void handleRegisterConnectivityDiagnosticsCallback(
+            IConnectivityDiagnosticsCallback cb, NetworkRequestInfo nri) {
+        ensureRunningOnConnectivityServiceThread();
+
+        // This means that the client registered the same callback multiple times. Do
+        // not override the previous entry and exit silently.
+        if (mConnectivityDiagnosticsCallbacks.containsKey(cb)) {
+            log("Diagnostics callback is already registered");
+            return;
+        }
+
+        // Use {@link #handleRegisterNetworkRequest} to register the given NetworkRequestInfo (and
+        // its nested NetworkRequest) with matching NetworkAgents. ConnectivityService limits the
+        // number of NetworkRequestInfos registered per uid to {@link
+        // #MAX_NETWORK_REQUESTS_PER_UID}. NetworkRequestInfos created through {@link
+        // ConnectivityManager#registerNetworkCallback} and {@link
+        // android.net.ConnectivityDiagnosticsManager#registerConnectivityDiagnosticsCallback} will
+        // count towards this limit.
+        handleRegisterNetworkRequest(nri);
+        mConnectivityDiagnosticsCallbacks.put(cb, nri);
+
+        try {
+            cb.asBinder()
+                    .linkToDeath(
+                            () -> {
+                                log("ConnectivityDiagnosticsCallback IBinder died.");
+                                unregisterConnectivityDiagnosticsCallback(cb);
+                            },
+                            0);
+        } catch (RemoteException e) {
+            unregisterConnectivityDiagnosticsCallback(cb);
+        }
+    }
+
+    private void handleUnregisterConnectivityDiagnosticsCallback(
+            IConnectivityDiagnosticsCallback cb, int uid) {
+        ensureRunningOnConnectivityServiceThread();
+
+        if (!mConnectivityDiagnosticsCallbacks.containsKey(cb)) {
+            log("Attempting to remove diagnostics callback that is not currently registered");
+            return;
+        }
+
+        final NetworkRequestInfo nri = mConnectivityDiagnosticsCallbacks.get(cb);
+
+        // Uid checks are done in {@link #handleReleaseNetworkRequest} to verify that the caller
+        // has permission to unregister this callback.
+        handleReleaseNetworkRequest(nri.request, uid, /* callOnUnavailable */ false);
+        mConnectivityDiagnosticsCallbacks.remove(cb);
+    }
+
     @Override
     public void registerConnectivityDiagnosticsCallback(
             IConnectivityDiagnosticsCallback callback, NetworkRequest request) {
-        // TODO(b/146444622): implement register IConnectivityDiagnosticsCallback functionality
-        throw new UnsupportedOperationException(
-                "registerConnectivityDiagnosticsCallback not yet implemented");
+        final NetworkRequest requestWithId =
+                new NetworkRequest(
+                        request.networkCapabilities,
+                        request.legacyType,
+                        nextNetworkRequestId(),
+                        NetworkRequest.Type.LISTEN);
+
+        // Make NetworkRequestInfo on the Binder Thread so we get the caller's uid inside
+        // NetworkRequestInfo. NetworkRequestInfo limits each uid to {@link
+        // #MAX_NETWORK_REQUESTS_PER_UID} network. NetworkRequestInfos created through {@link
+        // ConnectivityManager#registerNetworkCallback} and {@link
+        // android.net.ConnectivityDiagnosticsManager#registerConnectivityDiagnosticsCallback} will
+        // count towards this limit.
+        final NetworkRequestInfo nri = new NetworkRequestInfo(requestWithId, null);
+
+        mConnectivityDiagnosticsHandler.sendMessage(
+                mConnectivityDiagnosticsHandler.obtainMessage(
+                        EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK,
+                        new Pair<>(callback, nri)));
     }
 
     @Override
     public void unregisterConnectivityDiagnosticsCallback(
             IConnectivityDiagnosticsCallback callback) {
-        // TODO(b/146444622): implement register IConnectivityDiagnosticsCallback functionality
-        throw new UnsupportedOperationException(
-                "unregisterConnectivityDiagnosticsCallback not yet implemented");
+        mConnectivityDiagnosticsHandler.sendMessage(
+                mConnectivityDiagnosticsHandler.obtainMessage(
+                        EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK,
+                        Binder.getCallingUid(),
+                        0,
+                        callback));
     }
 }
