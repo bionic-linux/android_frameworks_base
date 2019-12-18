@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06a3f6bb_76f5b1fc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "Out of curiosity, why change this back from 200 to 1000?",
+      "range": {
+        "startLine": 2359,
+        "startChar": 34,
+        "endLine": 2359,
+        "endChar": 38
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f83ae06_43dbbb69",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "Can this just be a conditionvariable?",
+      "range": {
+        "startLine": 49,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b3fc6c_2a6c2a53",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "Do you need two different constructors? If not, remove?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 9
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0d4ce5_13b86ef3",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "It\u0027s confusing and error-prone to have the same variable name both in the main class and in an inner class. Do we need both of them? Can we remove one of them? Looks like the other one might be unused?\n\nAlso, if this is of type RequestDispatcher, don\u0027t call this mWaitForCallback? Maybe call it mRequestDispatcher or mDispatcher?\n\nAlso - you don\u0027t seem to use any of the functions of RequestDispatcher on this particular instance. Why not just make it a ConditionVariable or a simple class that wraps a ConditionVariable and just has a blocking wait? It would be much clearer, because then RequestDispatcher would have only one job to do: send a request and wait for a response. Right now, it has two different jobs to do depending on the caller: one is to send a request and wait for a response, and one is to simply act like a conditionvariable.",
+      "range": {
+        "startLine": 147,
+        "startChar": 40,
+        "endLine": 147,
+        "endChar": 56
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ce8998_64366337",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "Why is this called waitForCallback. Maybe just rename to dispatcher, which matches the type?",
+      "range": {
+        "startLine": 204,
+        "startChar": 32,
+        "endLine": 204,
+        "endChar": 47
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeef1a80_35df08c6",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "will",
+      "range": {
+        "startLine": 323,
+        "startChar": 61,
+        "endLine": 323,
+        "endChar": 66
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627d9359_4d650daf",
+        "filename": "packages/Tethering/proguard.flags",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1,
+        "startChar": 56,
+        "endLine": 1,
+        "endChar": 62
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb07a0dc_d988664b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-18T07:51:45Z",
+      "side": 1,
+      "message": "Booleans can\u0027t be negative. Maybe say \"checkAndNoteWriteSettingsOperation will return false and the operation will be denied\"?",
+      "range": {
+        "startLine": 290,
+        "startChar": 11,
+        "endLine": 290,
+        "endChar": 21
+      },
+      "revId": "e51f003572496193402e51494980272d5f5887a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
