@@ -17,6 +17,9 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.content.Context;
+
+import com.android.internal.util.Preconditions;
 
 import java.util.concurrent.Executor;
 
@@ -43,8 +46,14 @@ import java.util.concurrent.Executor;
  * </ul>
  */
 public class ConnectivityDiagnosticsManager {
+    private final Context mContext;
+    private final IConnectivityManager mService;
+
     /** @hide */
-    public ConnectivityDiagnosticsManager() {}
+    public ConnectivityDiagnosticsManager(Context context, IConnectivityManager service) {
+        mContext = Preconditions.checkNotNull(context, "missing context");
+        mService = Preconditions.checkNotNull(service, "missing IConnectivityManager");
+    }
 
     /**
      * Abstract base class for Connectivity Diagnostics callbacks. Used for notifications about
