@@ -22,6 +22,29 @@
       "revId": "cf07dda292a38b537e7f5203664ad2c4cd839990",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63878d7c_fe7951f4",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2019-12-18T23:57:23Z",
+      "side": 1,
+      "message": "wait, unstable is only required if we don\u0027t update the API snapshots. Since you\u0027re updating them, do you need to switch to this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 36,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "cf07dda292a38b537e7f5203664ad2c4cd839990",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
