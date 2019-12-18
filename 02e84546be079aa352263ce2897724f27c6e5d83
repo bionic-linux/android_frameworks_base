@@ -16,6 +16,24 @@
       "revId": "02e84546be079aa352263ce2897724f27c6e5d83",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7862bd36_d41d049d",
+        "filename": "core/java/com/android/internal/util/MemInfoReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2019-12-18T22:46:43Z",
+      "side": 1,
+      "message": "That\u0027s how upstream kernel implemented this statistic. see: https://elixir.bootlin.com/linux/latest/source/Documentation/filesystems/proc.txt#L970\n\nI\u0027ll add a note where MEMINFO_KRECLAIMABLE is defined.",
+      "parentUuid": "e1e4b584_e6382f60",
+      "revId": "02e84546be079aa352263ce2897724f27c6e5d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
