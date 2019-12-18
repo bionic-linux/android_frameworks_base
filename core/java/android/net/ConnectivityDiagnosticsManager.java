@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.os.Binder;
 
 import java.util.concurrent.Executor;
 
@@ -51,6 +52,46 @@ public class ConnectivityDiagnosticsManager {
      * network connectivity events. Must be extended by applications wanting notifications.
      */
     public abstract static class ConnectivityDiagnosticsCallback {
+        private static class ConnectivityDiagnosticsBinder
+                extends IConnectivityDiagnosticsCallback.Stub {
+            private final ConnectivityDiagnosticsCallback mLocalCallback;
+            private Executor mExecutor;
+
+            private ConnectivityDiagnosticsBinder(ConnectivityDiagnosticsCallback localCallback) {
+                mLocalCallback = localCallback;
+            }
+
+            private void setExecutor(Executor e) {
+                mExecutor = e;
+            }
+
+            public void onConnectivityReport(@NonNull ConnectivityReport report) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () -> mExecutor.execute(() -> mLocalCallback.onConnectivityReport(report)));
+            }
+
+            public void onDataStallSuspected(@NonNull DataStallReport report) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () -> mExecutor.execute(() -> mLocalCallback.onDataStallSuspected(report)));
+            }
+
+            public void onNetworkConnectivityReported(
+                    @NonNull Network network, boolean hasConnectivity) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () ->
+                                mExecutor.execute(
+                                        () ->
+                                                mLocalCallback.onNetworkConnectivityReported(
+                                                        network, hasConnectivity)));
+            }
+        }
+
+        private final ConnectivityDiagnosticsBinder mBinder =
+                new ConnectivityDiagnosticsBinder(this);
+
         /**
          * Called when the platform completes a data connectivity check. This will also be invoked
          * upon registration with the latest report.
@@ -118,6 +159,14 @@ public class ConnectivityDiagnosticsManager {
             @NonNull NetworkRequest request,
             @NonNull Executor e,
             @NonNull ConnectivityDiagnosticsCallback callback) {
+        synchronized (callback.mBinder) {
+            if (callback.mBinder.mExecutor != null) {
+                throw new IllegalArgumentException("Callbacks must be unique for each register()");
+            }
+
+            callback.mBinder.setExecutor(e);
+        }
+
         // TODO(b/143187964): implement ConnectivityDiagnostics functionality
         throw new UnsupportedOperationException("registerCallback() not supported yet");
     }
