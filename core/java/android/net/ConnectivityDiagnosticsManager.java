@@ -24,6 +24,7 @@ import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.os.RemoteException;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
@@ -387,7 +388,9 @@ public class ConnectivityDiagnosticsManager {
                 extends IConnectivityDiagnosticsCallback.Stub {
             private final Object mExecutorLock = new Object();
             private final ConnectivityDiagnosticsCallback mLocalCallback;
-            private Executor mExecutor;
+
+            /** @hide */
+            @VisibleForTesting public Executor mExecutor;
 
             private ConnectivityDiagnosticsBinder(ConnectivityDiagnosticsCallback localCallback) {
                 mLocalCallback = localCallback;
@@ -510,8 +513,19 @@ public class ConnectivityDiagnosticsManager {
             @NonNull NetworkRequest request,
             @NonNull Executor e,
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        synchronized (callback.mBinder.mExecutorLock) {
+            if (callback.mBinder.mExecutor != null) {
+                throw new IllegalArgumentException("Callbacks must be unique for each register()");
+            }
+
+            callback.mBinder.setExecutor(e);
+        }
+
+        try {
+            mService.registerConnectivityDiagnosticsCallback(callback.mBinder, request);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -524,7 +538,18 @@ public class ConnectivityDiagnosticsManager {
      */
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        synchronized (callback.mBinder.mExecutorLock) {
+            if (callback.mBinder.mExecutor == null) {
+                // Executor has already been nulled out. Nothing else left to do here.
+                return;
+            }
+            callback.mBinder.setExecutor(null);
+        }
+
+        try {
+            mService.unregisterConnectivityDiagnosticsCallback(callback.mBinder);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 }
