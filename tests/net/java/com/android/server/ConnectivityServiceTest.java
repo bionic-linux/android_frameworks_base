@@ -135,6 +135,7 @@ import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.ConnectivityManager.PacketKeepaliveCallback;
 import android.net.ConnectivityManager.TooManyRequestsException;
 import android.net.ConnectivityThread;
+import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IDnsResolver;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetd;
@@ -175,6 +176,7 @@ import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Parcel;
@@ -205,6 +207,8 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.WakeupMessage;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.FakeSettingsProvider;
+import com.android.server.ConnectivityService.ConnectivityDiagnosticsCallbackInfo;
+import com.android.server.ConnectivityService.NetworkRequestInfo;
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
@@ -300,6 +304,7 @@ public class ConnectivityServiceTest {
     private INetworkPolicyListener mPolicyListener;
     private WrappedMultinetworkPolicyTracker mPolicyTracker;
     private HandlerThread mAlarmManagerThread;
+    private IConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
 
     @Mock IIpConnectivityMetrics mIpConnectivityMetrics;
     @Mock IpConnectivityMetrics.Logger mMetricsService;
@@ -315,6 +320,7 @@ public class ConnectivityServiceTest {
     @Mock UserManager mUserManager;
     @Mock NotificationManager mNotificationManager;
     @Mock AlarmManager mAlarmManager;
+    @Mock IBinder mIBinder;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -1090,6 +1096,14 @@ public class ConnectivityServiceTest {
         mAlarmManagerThread = new HandlerThread("TestAlarmManager");
         mAlarmManagerThread.start();
         initAlarmManager(mAlarmManager, mAlarmManagerThread.getThreadHandler());
+
+        mConnectivityDiagnosticsCallback =
+                new IConnectivityDiagnosticsCallback.Default() {
+                    @Override
+                    public IBinder asBinder() {
+                        return mIBinder;
+                    }
+                };
 
         mCsHandlerThread = new HandlerThread("TestConnectivityService");
         final ConnectivityService.Dependencies deps = makeDependencies();
@@ -6245,5 +6259,68 @@ public class ConnectivityServiceTest {
         packageInfo.applicationInfo.uid = UserHandle.getUid(UserHandle.USER_SYSTEM,
                 UserHandle.getAppId(uid));
         return packageInfo;
+    }
+
+    @Test
+    public void testRegisterUnregisterConnectivityDiagnosticsCallback() throws Exception {
+        final NetworkRequest wifiRequest =
+                new NetworkRequest.Builder().addTransportType(TRANSPORT_WIFI).build();
+        final CountDownLatch registerLatch = new CountDownLatch(1);
+        final CountDownLatch unregisterLatch = new CountDownLatch(1);
+        doAnswer(invocation -> {
+            registerLatch.countDown();
+            return null;
+        }).when(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+        doAnswer(invocation -> {
+            unregisterLatch.countDown();
+            return null;
+        }).when(mIBinder).unlinkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+
+        mService.registerConnectivityDiagnosticsCallback(
+                mConnectivityDiagnosticsCallback, wifiRequest);
+        registerLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+
+        assertTrue(
+                mService.mConnectivityDiagnosticsCallbacks.containsKey(
+                        mConnectivityDiagnosticsCallback));
+        verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+
+        mService.unregisterConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback);
+        unregisterLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+
+        assertFalse(
+                mService.mConnectivityDiagnosticsCallbacks.containsKey(
+                        mConnectivityDiagnosticsCallback));
+        verify(mIBinder).unlinkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
+    }
+
+    @Test
+    public void testUnregisterConnectivityDiagnosticsCallbackMismatchedUid() throws Exception {
+        final NetworkRequest request =
+                new NetworkRequest(
+                        new NetworkCapabilities(),
+                        ConnectivityManager.TYPE_NONE,
+                        0,
+                        NetworkRequest.Type.LISTEN);
+
+        // uid of nri != uid used to unregister the callback
+        final NetworkRequestInfo nri =
+                mService.new NetworkRequestInfo(request, Binder.getCallingUid() + 1);
+        final CountDownLatch unregisterLatch = new CountDownLatch(1);
+
+        mService.mConnectivityDiagnosticsCallbacks.put(
+                mConnectivityDiagnosticsCallback,
+                mService.new ConnectivityDiagnosticsCallbackInfo(
+                        mConnectivityDiagnosticsCallback, nri));
+
+        mService.unregisterConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback);
+
+        // Countdown the latch once the unregister event is done processing
+        mService.mConnectivityDiagnosticsHandler.post(() -> unregisterLatch.countDown());
+        unregisterLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+
+        assertTrue(
+                mService.mConnectivityDiagnosticsCallbacks.containsKey(
+                        mConnectivityDiagnosticsCallback));
     }
 }
