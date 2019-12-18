@@ -75,6 +75,7 @@ import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
 import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 
+import static com.android.server.ConnectivityService.ConnectivityDiagnosticsCallbackInfo;
 import static com.android.server.ConnectivityServiceTestUtilsKt.transportToLegacyType;
 import static com.android.testutils.ConcurrentUtilsKt.await;
 import static com.android.testutils.ConcurrentUtilsKt.durationOf;
@@ -135,6 +136,7 @@ import android.net.ConnectivityManager.PacketKeepalive;
 import android.net.ConnectivityManager.PacketKeepaliveCallback;
 import android.net.ConnectivityManager.TooManyRequestsException;
 import android.net.ConnectivityThread;
+import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IDnsResolver;
 import android.net.IIpConnectivityMetrics;
 import android.net.INetd;
@@ -175,6 +177,7 @@ import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.Looper;
 import android.os.Parcel;
@@ -315,6 +318,8 @@ public class ConnectivityServiceTest {
     @Mock UserManager mUserManager;
     @Mock NotificationManager mNotificationManager;
     @Mock AlarmManager mAlarmManager;
+    @Mock IBinder mIBinder;
+    @Mock IConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -6245,5 +6250,21 @@ public class ConnectivityServiceTest {
         packageInfo.applicationInfo.uid = UserHandle.getUid(UserHandle.USER_SYSTEM,
                 UserHandle.getAppId(uid));
         return packageInfo;
+    }
+
+    @Test
+    public void testRegisterConnectivityDiagnosticsCallback() throws Exception {
+        final NetworkRequest wifiRequest =
+                new NetworkRequest.Builder().addTransportType(TRANSPORT_WIFI).build();
+
+        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
+        mService.registerConnectivityDiagnosticsCallback(
+                mConnectivityDiagnosticsCallback, wifiRequest);
+
+        assertTrue(
+                mService.mConnectivityDiagnosticsCallbacks.containsKey(
+                        mConnectivityDiagnosticsCallback));
+        verify(mConnectivityDiagnosticsCallback).asBinder();
+        verify(mIBinder).linkToDeath(any(ConnectivityDiagnosticsCallbackInfo.class), anyInt());
     }
 }
