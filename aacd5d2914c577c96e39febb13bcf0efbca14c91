@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5715bce1_75079cd7",
+        "filename": "telephony/common/com/android/internal/telephony/SmsApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2019-12-18T11:12:04Z",
+      "side": 1,
+      "message": "unexpected diffs",
+      "range": {
+        "startLine": 784,
+        "startChar": 31,
+        "endLine": 784,
+        "endChar": 48
+      },
+      "revId": "aacd5d2914c577c96e39febb13bcf0efbca14c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
