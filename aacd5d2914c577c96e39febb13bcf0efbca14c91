@@ -22,6 +22,30 @@
       "revId": "aacd5d2914c577c96e39febb13bcf0efbca14c91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb2f030_5ad96e0f",
+        "filename": "telephony/common/com/android/internal/telephony/SmsApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2019-12-18T12:07:47Z",
+      "side": 1,
+      "message": "Done. Thanks for catching!",
+      "parentUuid": "5715bce1_75079cd7",
+      "range": {
+        "startLine": 784,
+        "startChar": 31,
+        "endLine": 784,
+        "endChar": 48
+      },
+      "revId": "aacd5d2914c577c96e39febb13bcf0efbca14c91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
