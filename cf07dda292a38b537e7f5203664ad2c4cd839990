@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a711fa2_57548cce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1273909
+      },
+      "writtenOn": "2019-12-18T21:27:48Z",
+      "side": 1,
+      "message": "valie -\u003e value\n\nBut the AIDL part is not done in this change. Here you could say that initializing the value is no longer necessary because ResolverParamsParcel has a default now.",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "cf07dda292a38b537e7f5203664ad2c4cd839990",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
