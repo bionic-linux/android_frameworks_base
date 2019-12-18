@@ -24,13 +24,16 @@ import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.os.RemoteException;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 
 /**
@@ -56,6 +59,11 @@ import java.util.concurrent.Executor;
  * </ul>
  */
 public class ConnectivityDiagnosticsManager {
+    /** @hide */
+    @VisibleForTesting
+    public static final Map<ConnectivityDiagnosticsCallback, ConnectivityDiagnosticsBinder>
+            sCallbacks = new ConcurrentHashMap<>();
+
     private final Context mContext;
     private final IConnectivityManager mService;
 
@@ -495,8 +503,21 @@ public class ConnectivityDiagnosticsManager {
             @NonNull NetworkRequest request,
             @NonNull Executor e,
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        final ConnectivityDiagnosticsBinder binder;
+        synchronized (sCallbacks) {
+            if (sCallbacks.containsKey(callback)) {
+                throw new IllegalArgumentException("Callbacks must be unique for each register()");
+            }
+
+            binder = new ConnectivityDiagnosticsBinder(callback, e);
+            sCallbacks.put(callback, binder);
+        }
+
+        try {
+            mService.registerConnectivityDiagnosticsCallback(binder, request);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -505,11 +526,21 @@ public class ConnectivityDiagnosticsManager {
      * <p>If the given callback is not currently registered with the System, this operation will be
      * a no-op.
      *
+     * <p>Callbacks cannot be reused after they are unregistered with the System.
+     *
      * @param callback The ConnectivityDiagnosticsCallback to be unregistered from the System.
      */
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        // unconditionally removing from sCallbacks prevents race conditions here, since remove() is
+        // atomic.
+        final ConnectivityDiagnosticsBinder binder = sCallbacks.remove(callback);
+        if (binder == null) return;
+
+        try {
+            mService.unregisterConnectivityDiagnosticsCallback(binder);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 }
