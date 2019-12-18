@@ -22,6 +22,30 @@
       "revId": "eb9e90627d29cceea543d773d5c20cdb912a2196",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93820fc7_ebc22304",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-18T02:59:36Z",
+      "side": 1,
+      "message": "Done,\nyes you are right.\nto call registerGlobalAlert while lock held is unnecessary and should be avoided.",
+      "parentUuid": "2c04e19e_eb36a413",
+      "range": {
+        "startLine": 1015,
+        "startChar": 0,
+        "endLine": 1017,
+        "endChar": 9
+      },
+      "revId": "eb9e90627d29cceea543d773d5c20cdb912a2196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
