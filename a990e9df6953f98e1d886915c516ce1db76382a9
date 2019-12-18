@@ -185,6 +185,24 @@
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee722a7_5e90ac8c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/VerificationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-18T08:21:43Z",
+      "side": 1,
+      "message": "aosp/1192001: VerificationActivity clones calling Intent",
+      "parentUuid": "31c71203_4c50f494",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
