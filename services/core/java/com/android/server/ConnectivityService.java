@@ -538,6 +538,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public static final int EVENT_PROBE_STATUS_CHANGED = 46;
 
     /**
+     * Used to handle ConnectivityDiagnosticsCallback registration events from {@link
+     * android.net.ConnectivityDiagnosticsManager}.
+     * obj = ConnectivityDiagnosticsCallbackInfo with IConnectivityDiagnosticsCallback and
+     * NetworkRequestInfo to be registered
+     *
+     * <p>Should only be used with {@link ConnectivityDiagnosticsHandler}.
+     */
+    public static final int EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK = 47;
+
+    /**
+     * Used to handle ConnectivityDiagnosticsCallback unregister events from {@link
+     * android.net.ConnectivityDiagnosticsManager}.
+     * obj = the IConnectivityDiagnosticsCallback to be unregistered
+     * arg1 = the uid of the caller
+     *
+     * <p>Should only be used with {@link ConnectivityDiagnosticsHandler}.
+     */
+    public static final int EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK = 48;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -558,13 +578,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 .asInterface(ServiceManager.getService("dnsresolver"));
     }
 
-    /** Handler thread used for both of the handlers below. */
+    /** Handler thread used for all of the handlers below. */
     @VisibleForTesting
     protected final HandlerThread mHandlerThread;
     /** Handler used for internal events. */
     final private InternalHandler mHandler;
     /** Handler used for incoming {@link NetworkStateTracker} events. */
     final private NetworkStateTrackerHandler mTrackerHandler;
+    /** Handler used for processing {@link android.net.ConnectivityDiagnosticsManager} events */
+    @VisibleForTesting
+    final ConnectivityDiagnosticsHandler mConnectivityDiagnosticsHandler;
+
     private final DnsManager mDnsManager;
 
     private boolean mSystemReady;
@@ -630,6 +654,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @VisibleForTesting
     final MultipathPolicyTracker mMultipathPolicyTracker;
+
+    @VisibleForTesting
+    final Map<IConnectivityDiagnosticsCallback, ConnectivityDiagnosticsCallbackInfo>
+            mConnectivityDiagnosticsCallbacks = new HashMap<>();
 
     /**
      * Implements support for the legacy "one network per network type" model.
@@ -963,6 +991,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandlerThread.start();
         mHandler = new InternalHandler(mHandlerThread.getLooper());
         mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
+        mConnectivityDiagnosticsHandler =
+                new ConnectivityDiagnosticsHandler(mHandlerThread.getLooper());
 
         mReleasePendingIntentDelayMs = Settings.Secure.getInt(context.getContentResolver(),
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
@@ -4988,7 +5018,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * Tracks info about the requester.
      * Also used to notice when the calling process dies so we can self-expire
      */
-    private class NetworkRequestInfo implements IBinder.DeathRecipient {
+    @VisibleForTesting
+    class NetworkRequestInfo implements IBinder.DeathRecipient {
         final NetworkRequest request;
         // The network currently satisfying this request, or null if none. Must only be touched
         // on the handler thread. This only makes sense for network requests and not for listens,
@@ -5029,6 +5060,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
             } catch (RemoteException e) {
                 binderDied();
             }
+        }
+
+        NetworkRequestInfo(NetworkRequest r, int uid) {
+            request = r;
+            ensureNetworkRequestHasType(request);
+            mPendingIntent = null;
+            messenger = null;
+            mBinder = null;
+            mPid = getCallingPid();
+            mUid = uid;
+            enforceRequestCountLimit();
         }
 
         private void enforceRequestCountLimit() {
@@ -7209,19 +7251,148 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    /**
+     * Handler used for managing all Connectivity Diagnostics related functions.
+     *
+     * @see android.net.ConnectivityDiagnosticsManager
+     */
+    @VisibleForTesting
+    class ConnectivityDiagnosticsHandler extends Handler {
+        private ConnectivityDiagnosticsHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK: {
+                    final ConnectivityDiagnosticsCallbackInfo cbInfo =
+                            (ConnectivityDiagnosticsCallbackInfo) msg.obj;
+                    handleRegisterConnectivityDiagnosticsCallback(cbInfo);
+                    break;
+                }
+                case EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK: {
+                    handleUnregisterConnectivityDiagnosticsCallback(
+                            (IConnectivityDiagnosticsCallback) msg.obj, msg.arg1);
+                    break;
+                }
+            }
+        }
+    }
+
+    /** Class used for cleaning up IConnectivityDiagnosticsCallback instances after their death. */
+    @VisibleForTesting
+    class ConnectivityDiagnosticsCallbackInfo implements Binder.DeathRecipient {
+        private final IConnectivityDiagnosticsCallback mCb;
+        private final NetworkRequestInfo mRequestInfo;
+
+        @VisibleForTesting
+        ConnectivityDiagnosticsCallbackInfo(
+                IConnectivityDiagnosticsCallback cb, NetworkRequestInfo nri) {
+            mCb = cb;
+            mRequestInfo = nri;
+        }
+
+        @Override
+        public void binderDied() {
+            log("ConnectivityDiagnosticsCallback IBinder died.");
+            unregisterConnectivityDiagnosticsCallback(mCb);
+        }
+    }
+
+    private void handleRegisterConnectivityDiagnosticsCallback(
+            ConnectivityDiagnosticsCallbackInfo cbInfo) {
+        ensureRunningOnConnectivityServiceThread();
+
+        final IConnectivityDiagnosticsCallback cb = cbInfo.mCb;
+        final NetworkRequestInfo nri = cbInfo.mRequestInfo;
+
+        // This means that the client registered the same callback multiple times. Do
+        // not override the previous entry, and exit silently.
+        if (mConnectivityDiagnosticsCallbacks.containsKey(cb)) {
+            log("Diagnostics callback is already registered");
+
+            // This unregisters the newly created NetworkRequestInfo. This needs to be done to avoid
+            // duplicate register() attempts from counting towards a uid's
+            // MAX_NETWORK_REQUESTS_PER_UID limit.
+            handleRemoveNetworkRequest(nri);
+            return;
+        }
+
+        // Use {@link #handleRegisterNetworkRequest} to register the given NetworkRequestInfo (and
+        // its nested NetworkRequest) with matching NetworkAgents. ConnectivityService limits the
+        // number of NetworkRequestInfos registered per uid to {@link
+        // #MAX_NETWORK_REQUESTS_PER_UID}. NetworkRequestInfos created through {@link
+        // ConnectivityManager#registerNetworkCallback} and {@link
+        // android.net.ConnectivityDiagnosticsManager#registerConnectivityDiagnosticsCallback} will
+        // count towards this limit.
+        handleRegisterNetworkRequest(nri);
+        mConnectivityDiagnosticsCallbacks.put(cb, cbInfo);
+
+        try {
+            cb.asBinder().linkToDeath(cbInfo, 0);
+        } catch (RemoteException e) {
+            cbInfo.binderDied();
+        }
+    }
+
+    private void handleUnregisterConnectivityDiagnosticsCallback(
+            IConnectivityDiagnosticsCallback cb, int uid) {
+        ensureRunningOnConnectivityServiceThread();
+
+        if (!mConnectivityDiagnosticsCallbacks.containsKey(cb)) {
+            log("Attempting to remove diagnostics callback that is not currently registered");
+            return;
+        }
+
+        final NetworkRequestInfo nri = mConnectivityDiagnosticsCallbacks.get(cb).mRequestInfo;
+
+        if (uid != nri.mUid) {
+            loge("Different uid than registrant attempting to unregister cb");
+            return;
+        }
+
+        handleRemoveNetworkRequest(nri);
+        cb.asBinder().unlinkToDeath(mConnectivityDiagnosticsCallbacks.remove(cb), 0);
+    }
+
     @Override
     public void registerConnectivityDiagnosticsCallback(
             IConnectivityDiagnosticsCallback callback, NetworkRequest request) {
-        // TODO(b/146444622): implement register IConnectivityDiagnosticsCallback functionality
-        throw new UnsupportedOperationException(
-                "registerConnectivityDiagnosticsCallback not yet implemented");
+        final NetworkRequest requestWithId =
+                new NetworkRequest(
+                        request.networkCapabilities,
+                        request.legacyType,
+                        nextNetworkRequestId(),
+                        NetworkRequest.Type.LISTEN);
+
+        // Make NetworkRequestInfo on the Binder Thread so we get the caller's uid inside
+        // NetworkRequestInfo. NetworkRequestInfo limits each uid to {@link
+        // #MAX_NETWORK_REQUESTS_PER_UID} network. NetworkRequestInfos created through {@link
+        // ConnectivityManager#registerNetworkCallback} and {@link
+        // android.net.ConnectivityDiagnosticsManager#registerConnectivityDiagnosticsCallback} will
+        // count towards this limit.
+        //
+        // Note: This does not bind nri to the death of callback. We explicitly bindToDeath() in
+        // handleRegisterConnectivityDiagnosticsCallback().
+        final NetworkRequestInfo nri =
+                new NetworkRequestInfo(requestWithId, Binder.getCallingUid());
+        final ConnectivityDiagnosticsCallbackInfo cbInfo =
+                new ConnectivityDiagnosticsCallbackInfo(callback, nri);
+
+        mConnectivityDiagnosticsHandler.sendMessage(
+                mConnectivityDiagnosticsHandler.obtainMessage(
+                        EVENT_REGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK, cbInfo));
     }
 
     @Override
     public void unregisterConnectivityDiagnosticsCallback(
             IConnectivityDiagnosticsCallback callback) {
-        // TODO(b/146444622): implement register IConnectivityDiagnosticsCallback functionality
-        throw new UnsupportedOperationException(
-                "unregisterConnectivityDiagnosticsCallback not yet implemented");
+        mConnectivityDiagnosticsHandler.sendMessage(
+                mConnectivityDiagnosticsHandler.obtainMessage(
+                        EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK,
+                        Binder.getCallingUid(),
+                        0,
+                        callback));
     }
 }
