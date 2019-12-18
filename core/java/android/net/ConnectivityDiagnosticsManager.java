@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -380,6 +381,46 @@ public class ConnectivityDiagnosticsManager {
      * network connectivity events. Must be extended by applications wanting notifications.
      */
     public abstract static class ConnectivityDiagnosticsCallback {
+        private static class ConnectivityDiagnosticsBinder
+                extends IConnectivityDiagnosticsCallback.Stub {
+            private final ConnectivityDiagnosticsCallback mLocalCallback;
+            private Executor mExecutor;
+
+            private ConnectivityDiagnosticsBinder(ConnectivityDiagnosticsCallback localCallback) {
+                mLocalCallback = localCallback;
+            }
+
+            private void setExecutor(Executor e) {
+                mExecutor = e;
+            }
+
+            public void onConnectivityReport(@NonNull ConnectivityReport report) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () -> mExecutor.execute(() -> mLocalCallback.onConnectivityReport(report)));
+            }
+
+            public void onDataStallSuspected(@NonNull DataStallReport report) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () -> mExecutor.execute(() -> mLocalCallback.onDataStallSuspected(report)));
+            }
+
+            public void onNetworkConnectivityReported(
+                    @NonNull Network network, boolean hasConnectivity) {
+                if (mExecutor == null) return;
+                Binder.withCleanCallingIdentity(
+                        () ->
+                                mExecutor.execute(
+                                        () ->
+                                                mLocalCallback.onNetworkConnectivityReported(
+                                                        network, hasConnectivity)));
+            }
+        }
+
+        private final ConnectivityDiagnosticsBinder mBinder =
+                new ConnectivityDiagnosticsBinder(this);
+
         /**
          * Called when the platform completes a data connectivity check. This will also be invoked
          * upon registration with the latest report.
