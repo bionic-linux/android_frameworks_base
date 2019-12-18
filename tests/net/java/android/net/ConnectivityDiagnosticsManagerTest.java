@@ -16,6 +16,7 @@
 
 package android.net;
 
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.ConnectivityDiagnosticsManager.DataStallReport;
 
@@ -33,11 +34,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 @RunWith(JUnit4.class)
 public class ConnectivityDiagnosticsManagerTest {
     private static final int NET_ID = 1;
     private static final int DETECTION_METHOD = 2;
     private static final long TIMESTAMP = 10L;
+    private static final long TIMEOUT_MILLIS = 200L;
     private static final String INTERFACE_NAME = "interface";
     private static final String BUNDLE_KEY = "key";
     private static final String BUNDLE_VALUE = "value";
@@ -116,5 +121,55 @@ public class ConnectivityDiagnosticsManagerTest {
         assertParcelingIsLossless(getSampleDataStallReport());
 
         assertParcelSane(getSampleDataStallReport(), 4);
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onConnectivityReport(ConnectivityReport report) {
+                        latch.countDown();
+                    }
+                };
+        cb.mBinder.setExecutor(x -> x.run());
+
+        cb.mBinder.onConnectivityReport(getSampleConnectivityReport());
+        assertTrue("Test timed out", latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onDataStallSuspected(DataStallReport report) {
+                        latch.countDown();
+                    }
+                };
+        cb.mBinder.setExecutor(x -> x.run());
+
+        cb.mBinder.onDataStallSuspected(getSampleDataStallReport());
+        assertTrue("Test timed out", latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnNetworkConnectivityReported()
+            throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ConnectivityDiagnosticsCallback cb =
+                new ConnectivityDiagnosticsCallback() {
+                    @Override
+                    public void onNetworkConnectivityReported(
+                            Network network, boolean hasConnectivity) {
+                        latch.countDown();
+                    }
+                };
+        cb.mBinder.setExecutor(x -> x.run());
+
+        cb.mBinder.onNetworkConnectivityReported(new Network(NET_ID), true);
+        assertTrue("Test timed out", latch.await(TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
     }
 }
