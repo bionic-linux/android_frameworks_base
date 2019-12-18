@@ -17,7 +17,11 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.content.Context;
 import android.os.Binder;
+import android.os.RemoteException;
+
+import com.android.internal.util.Preconditions;
 
 import java.util.concurrent.Executor;
 
@@ -44,8 +48,14 @@ import java.util.concurrent.Executor;
  * </ul>
  */
 public class ConnectivityDiagnosticsManager {
+    private final Context mContext;
+    private final IConnectivityManager mService;
+
     /** @hide */
-    public ConnectivityDiagnosticsManager() {}
+    public ConnectivityDiagnosticsManager(Context context, IConnectivityManager service) {
+        mContext = Preconditions.checkNotNull(context, "missing context");
+        mService = Preconditions.checkNotNull(service, "missing IConnectivityManager");
+    }
 
     /**
      * Abstract base class for Connectivity Diagnostics callbacks. Used for notifications about
@@ -167,8 +177,11 @@ public class ConnectivityDiagnosticsManager {
             callback.mBinder.setExecutor(e);
         }
 
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        try {
+            mService.registerConnectivityDiagnosticsCallback(callback.mBinder, request);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -181,7 +194,14 @@ public class ConnectivityDiagnosticsManager {
      */
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        synchronized (callback.mBinder) {
+            if (callback.mBinder.mExecutor == null) return;
+        }
+
+        try {
+            mService.unregisterConnectivityDiagnosticsCallback(callback.mBinder);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 }
