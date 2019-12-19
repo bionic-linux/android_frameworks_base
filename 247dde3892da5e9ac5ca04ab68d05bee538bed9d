@@ -458,6 +458,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6609f52c_08e4e4d2",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:17:24Z",
+      "side": 1,
+      "message": "Right now I think polling is the only way (and would only happen if called very early on boot), but it should be refactored to some utility class, so that clients can just call makeDhcpServer, which is already async.\nIt would probably be better to introduce that class in another change though, this one is big enough.",
+      "parentUuid": "644ebe4d_200842f6",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 46
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
