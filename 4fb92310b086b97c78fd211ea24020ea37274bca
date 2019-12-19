@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f424a95_8749a943",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6a8df8f8_a6583e77",
+      "range": {
+        "startLine": 1811,
+        "startChar": 25,
+        "endLine": 1811,
+        "endChar": 42
+      },
+      "revId": "4fb92310b086b97c78fd211ea24020ea37274bca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69cf6109_90e2e0b5",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 32
@@ -45,6 +69,30 @@
       "revId": "4fb92310b086b97c78fd211ea24020ea37274bca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cbffcc_32e17d3d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 3965,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ack, yes, original I have mark @deprecated in ConnectivityManager. By Lorenzo\u0027s request, I move them out of this CL to reduce API change.",
+      "parentUuid": "69cf6109_90e2e0b5",
+      "range": {
+        "startLine": 3965,
+        "startChar": 4,
+        "endLine": 3965,
+        "endChar": 15
+      },
+      "revId": "4fb92310b086b97c78fd211ea24020ea37274bca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

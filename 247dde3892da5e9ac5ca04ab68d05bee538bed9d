@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a5657e6_9e5c27e7",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ack, b/146533559",
+      "parentUuid": "767c15bf_d24425dc",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 349,
+        "endChar": 43
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc2b428_e600ea1c",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06710c8_bbe44640",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 2347,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Yes, this is also belong to waiting logic reactor. b/146533559",
+      "parentUuid": "7fc2b428_e600ea1c",
+      "range": {
+        "startLine": 2347,
+        "startChar": 29,
+        "endLine": 2347,
+        "endChar": 48
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "2d69cfe5_68370087",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee747182_06b3f3e4",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 42
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5e8400e_796fe8fb",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee747182_06b3f3e4",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 42
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a3ccd04_ee3084d3",
         "filename": "packages/Tethering/CleanSpec.mk",
         "patchSetId": 31
@@ -85,6 +181,24 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af6654e_a3e1b111",
+        "filename": "packages/Tethering/CleanSpec.mk",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a3ccd04_ee3084d3",
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "1bfddab4_c9a71090",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "This is not used to statically build into framework. It just used to generate system-api-stub-docs, aidl-mapping for UnSupportedAppUsage, ... For real use, currently framework will build with framework-tethering shared library. Actually I also want to generate a stubs that exclude all @hide class and method for building framework, after that framework may not able to use these AIDL anymore. And we can also consider to remove these if all of them are @hide. It would be added in follow up CL.\nhttps://docs.google.com/document/d/1Vz7WD0xz6DRym_m1Z_-lNArVntgEdGWT92wUr9Nteic/edit?pli\u003d1#heading\u003dh.92zkltdq8cw",
+      "parentUuid": "a2f6f9b9_33dea8e1",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 55
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f238c932_ffdb4b91",
         "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
         "patchSetId": 31
@@ -131,6 +269,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a6eae6_44949218",
+        "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f238c932_ffdb4b91",
+      "range": {
+        "startLine": 1,
+        "startChar": 27,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "f689fc9e_0c740818",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ack, yes, original this is added @SystemApi. By Lorenzo\u0027s request, I move them out of this CL to reduce API change.",
+      "parentUuid": "597aef5b_f4e92b75",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4639ba6_cf491cb8",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 31
@@ -177,6 +363,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7483736f_c84a3384",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ack, this is not used yet. Removed them in this CL and may add it back when I add the user.",
+      "parentUuid": "e4639ba6_cf491cb8",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -250,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "aa34a168_49c37cde",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "This is rare to used, only user may be bt tethering. If someone use it directly, it is worth to print its package name because tethering may not give it upstream if entitlement is needed.",
+      "parentUuid": "a9afc2fb_8ba9a285",
+      "range": {
+        "startLine": 204,
+        "startChar": 7,
+        "endLine": 204,
+        "endChar": 49
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce0eb652_6ca6e128",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 31
@@ -270,6 +504,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d407d76_bc2af67c",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T10:22:28Z",
+      "side": 1,
+      "message": "Ooops, this is bug. Thanks for catching it.",
+      "parentUuid": "ce0eb652_6ca6e128",
+      "range": {
+        "startLine": 397,
+        "startChar": 12,
+        "endLine": 397,
+        "endChar": 67
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
