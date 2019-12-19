@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99541e18_c4aec4a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351420
+      },
+      "writtenOn": "2019-12-19T03:40:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a711fa2_57548cce",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "cf07dda292a38b537e7f5203664ad2c4cd839990",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63878d7c_fe7951f4",
         "filename": "services/core/Android.bp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-18T23:57:23Z",
       "side": 1,
       "message": "wait, unstable is only required if we don\u0027t update the API snapshots. Since you\u0027re updating them, do you need to switch to this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 36,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "cf07dda292a38b537e7f5203664ad2c4cd839990",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bd1675_023d5d91",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1351420
+      },
+      "writtenOn": "2019-12-19T03:40:44Z",
+      "side": 1,
+      "message": "Because we are going to add new binder calls in next change. We can do it in next change together.",
+      "parentUuid": "63878d7c_fe7951f4",
       "range": {
         "startLine": 55,
         "startChar": 36,
