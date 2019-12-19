@@ -921,7 +921,7 @@ interface ITelephony {
     boolean setNetworkSelectionModeManual(
             int subId, in OperatorInfo operatorInfo, boolean persisSelection);
 
-    /**
+   /**
      * Set the preferred network type.
      * Used for device configuration by some CDMA operators.
      *
@@ -2137,4 +2137,13 @@ interface ITelephony {
      * Notify Rcs auto config received.
      */
     void notifyRcsAutoConfigurationReceived(int subId, in byte[] config, boolean isCompressed);
+    
+     /**
+     * Get the user manual network selection.
+     * Return empty string if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
 }
