@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ccaf975_7beb3342",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-19T15:41:09Z",
+      "side": 1,
+      "message": "Nit: suggest mCv.",
+      "range": {
+        "startLine": 94,
+        "startChar": 40,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb55b19_03df5012",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-19T15:41:09Z",
+      "side": 1,
+      "message": "Nit: consider just:\n\n\n    return new RequestDispatcher().waitForResult(...",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 25
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
