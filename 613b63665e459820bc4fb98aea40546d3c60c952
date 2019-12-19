@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c0f788b_fec9a164",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "Please add @hide here. This key will be a hidden key.",
+      "range": {
+        "startLine": 2333,
+        "startChar": 1,
+        "endLine": 2333,
+        "endChar": 7
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96da061a_682dc8f1",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -18,6 +41,122 @@
         "startChar": 31,
         "endLine": 2334,
         "endChar": 75
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e05f6b_2daac1a9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "I am Ok to removing \"4G\" as Tyler suggested. Reminder that these places are also needed to modify for this: line 2335, line 2307, and line 3879.",
+      "parentUuid": "96da061a_682dc8f1",
+      "range": {
+        "startLine": 2334,
+        "startChar": 31,
+        "endLine": 2334,
+        "endChar": 75
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15362f2f_bbc00c2c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "Please indicate the unit.",
+      "range": {
+        "startLine": 2643,
+        "startChar": 57,
+        "endLine": 2643,
+        "endChar": 66
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f98ab7a_a2c1837f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2644,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "Can you please also update in the HAL documentation? https://android.googlesource.com/platform/hardware/interfaces/+/refs/heads/master/radio/1.5/types.hal#57\nThanks!",
+      "range": {
+        "startLine": 2643,
+        "startChar": 0,
+        "endLine": 2644,
+        "endChar": 58
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0908d28_8acbeac0",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2644,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "Thanks for suggesting the new range that is applied in the new version of 3gpp. Can you please indicate the version of the 3gpp here? I think it could be V13.3.0.",
+      "range": {
+        "startLine": 2644,
+        "startChar": 7,
+        "endLine": 2644,
+        "endChar": 23
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ed5506_20820dae",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2656,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T01:05:24Z",
+      "side": 1,
+      "message": "Please try to indicate the unit, even it is 10*db .",
+      "range": {
+        "startLine": 2656,
+        "startChar": 57,
+        "endLine": 2656,
+        "endChar": 69
       },
       "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
