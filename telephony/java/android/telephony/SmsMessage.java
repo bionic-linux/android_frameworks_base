@@ -111,31 +111,6 @@ public class SmsMessage {
     @UnsupportedAppUsage
     public SmsMessageBase mWrappedSmsMessage;
 
-    /** Indicates the subId
-     *
-     * @hide
-     */
-    @UnsupportedAppUsage
-    private int mSubId = 0;
-
-    /** set Subscription information
-     *
-     * @hide
-     */
-    @UnsupportedAppUsage
-    public void setSubId(int subId) {
-        mSubId = subId;
-    }
-
-    /** get Subscription information
-     *
-     * @hide
-     */
-    @UnsupportedAppUsage
-    public int getSubId() {
-        return mSubId;
-    }
-
     public static class SubmitPdu {
 
         public byte[] encodedScAddress; // Null if not applicable.
