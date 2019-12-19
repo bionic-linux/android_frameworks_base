@@ -7519,6 +7519,30 @@ public class TelephonyManager {
     }
 
     /**
+     * Get the user manual network selection
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE} or that the calling
+     * app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @return manually selected network info on success or failure notice
+     */
+    @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
+    public @NonNull String getManualNetworkSelectionPlmn() {
+        try {
+            int subId = getSubId(SubscriptionManager.getDefaultDataSubscriptionId());
+            ITelephony telephony = getITelephony();
+            if (telephony != null && isManualNetworkSelectionAllowed()) {
+                return telephony.getManualNetworkSelectionPlmn(subId,
+                    mContext.getOpPackageName());
+            }
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "getManualNetworkSelectionPlmn RemoteException", ex);
+        }
+        return "Manual NetworkSelection not allowed or unavailable";
+    }
+
+    /**
      * Query Telephony to see if there has recently been an emergency SMS sent to the network by the
      * user and we are still within the time interval after the emergency SMS was sent that we are
      * considered in Emergency SMS mode.
