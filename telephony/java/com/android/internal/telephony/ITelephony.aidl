@@ -922,6 +922,23 @@ interface ITelephony {
             int subId, in OperatorInfo operatorInfo, boolean persisSelection);
 
     /**
+     * Get the allowed network types that store in the telephony provider.
+     *
+     * @param subId the id of the subscription.
+     * @return allowedNetworkTypes the allowed network types.
+     */
+    long getAllowedNetworkTypes(int subId);
+
+    /**
+     * Set the allowed network types.
+     *
+     * @param subId the id of the subscription.
+     * @param allowedNetworkTypes the allowed network types.
+     * @return true on success; false on any failure.
+     */
+    boolean setAllowedNetworkTypes(int subId, long allowedNetworkTypes);
+
+    /**
      * Set the preferred network type.
      * Used for device configuration by some CDMA operators.
      *
@@ -2137,4 +2154,13 @@ interface ITelephony {
      * Notify Rcs auto config received.
      */
     void notifyRcsAutoConfigurationReceived(int subId, in byte[] config, boolean isCompressed);
+
+     /**
+     * Get the user manual network selection.
+     * Return empty string if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
 }
