@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa15b1fa_25898653",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T04:52:53Z",
+      "side": 1,
+      "message": "Regarding \"@hide\" for carrier config key, Google(Brad) requested as below to remove it, so we Sony doesn\u0027t add it so far. Could you please double-check in Google Telephony team whether we should add it or not?\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/720220/2/telephony/java/android/telephony/CarrierConfigManager.java#1928\n\nBrad Ebinger   Jul 26, 2018\nRemove @hide annotation and run \"make update-api\" to generate API diff. We are trying to break the habit of adding hidden APIs in this file.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "parentUuid": "4c0f788b_fec9a164",
+      "range": {
+        "startLine": 2333,
+        "startChar": 1,
+        "endLine": 2333,
+        "endChar": 7
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96da061a_682dc8f1",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -175,6 +199,30 @@
       "writtenOn": "2019-12-18T19:18:59Z",
       "side": 1,
       "message": "I think CellSignalStrengthLte.USE_RSSNR should be removed.",
+      "range": {
+        "startLine": 3880,
+        "startChar": 47,
+        "endLine": 3880,
+        "endChar": 80
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a593470e_bbcfde35",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T04:52:53Z",
+      "side": 1,
+      "message": "Current AOSP behavior(in Q or earlier) uses RSRP and RSSNR as default. Could you please tell me the reason why RSSNR should be removed in this customization?\n\u003d\u003d\u003d\u003d\nCellSignalStrengthLte#updateLevel()　\n        ...\n        /* Choose a measurement type to use for notification */\n        if (snrIconLevel !\u003d -1 \u0026\u0026 rsrpIconLevel !\u003d -1) {\n            /*\n             * The number of bars displayed shall be the smaller of the bars\n             * associated with LTE RSRP and the bars associated with the LTE\n             * RS_SNR\n             */\n            mLevel \u003d (rsrpIconLevel \u003c snrIconLevel ? rsrpIconLevel : snrIconLevel);\n            return;\n        }\n\u003d\u003d\u003d\u003d",
+      "parentUuid": "65a6bae7_5bc58f0b",
       "range": {
         "startLine": 3880,
         "startChar": 47,
