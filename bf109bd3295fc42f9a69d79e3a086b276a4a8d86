@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04a5c8b_7f2c9d66",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:24:13Z",
+      "side": 1,
+      "message": "private final",
+      "range": {
+        "startLine": 650,
+        "startChar": 4,
+        "endLine": 650,
+        "endChar": 11
+      },
+      "revId": "bf109bd3295fc42f9a69d79e3a086b276a4a8d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1adaf0_5f41313b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7334,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-19T19:24:13Z",
+      "side": 1,
+      "message": "entry, and",
+      "range": {
+        "startLine": 7334,
+        "startChar": 37,
+        "endLine": 7334,
+        "endChar": 44
+      },
+      "revId": "bf109bd3295fc42f9a69d79e3a086b276a4a8d86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
