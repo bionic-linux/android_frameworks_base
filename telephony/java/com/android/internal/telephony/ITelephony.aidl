@@ -922,6 +922,15 @@ interface ITelephony {
             int subId, in OperatorInfo operatorInfo, boolean persisSelection);
 
     /**
+     * Get the user manual network selection.
+     * Return null if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
+
+    /**
      * Set the preferred network type.
      * Used for device configuration by some CDMA operators.
      *
