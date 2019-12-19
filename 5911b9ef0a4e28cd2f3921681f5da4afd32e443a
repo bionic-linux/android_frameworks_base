@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7465a0e_d9dec54f",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2019-12-19T22:38:24Z",
+      "side": 1,
+      "message": "please use reference\nconst auto\u0026 or const dmabufinfo::DmaBuffer\u0026",
+      "range": {
+        "startLine": 829,
+        "startChar": 9,
+        "endLine": 829,
+        "endChar": 34
+      },
+      "revId": "5911b9ef0a4e28cd2f3921681f5da4afd32e443a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
