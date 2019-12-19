@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c970ac0_e5caedf0",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f3df78_8959ddab",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63345502_f8d13434",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba59cb93_5358c8a0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T04:08:27Z",
+      "side": 1,
+      "message": "My original thought is TetheringService extend the service so I should call it TetheringService.\nITetheringConnector is a binder which client can use it to connect with tethering service.\nThis the relationship between TetheringService and ITetheringConnector. Tethering is an internal object which hide the main logic of tethering and hold by TetheringService. It is created in onCreate() an object that contains everything and has all the fields final.\nRefer the review background:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1131002/10/packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java#b185\n\nI also like your perspective, I think it is more clear because now there are three component ITetheringConnector, TetheringService, and Tethering. The naming of Tethering and TetheringService is very similar, so their role is not intuition for reader. The rename would touch much of code that you should already reviewed, I will have a follow up to rename and clean up your suggestion here.\nITetheringConnector -\u003e TetheringService\nTetheringService -\u003e TetheringStarter",
+      "parentUuid": "63345502_f8d13434",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aac83ed6_9eb67eb5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T04:08:27Z",
+      "side": 1,
+      "message": "Why you say some in TetheringConnector, but some is handled in Tethering ??\nI want all of them in TetheringConnector. That Tethering should be internal object that don\u0027t need to care about outside access permission. Now it is clear that all of outside access is come from ITetheringConnecotr. I just protect the permission here that it is also clear it is under handler thread in ITetheringConnector.\nPerhaps your concern is isTetheringSupported ?? I put it here just for TetheringDependcies that could be injection for test. I will also fix t his when I do the rename work that isTetheringSupported would be move into Tethering but its logic may still put in TetheringDependcies for testing injection.",
+      "parentUuid": "f839bdba_7dee5008",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed9f5ad8_9256d8f7",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 31
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "592ceb67_05d6a0c4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T04:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed9f5ad8_9256d8f7",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafa6aed_eba956b6",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 31
@@ -114,6 +210,30 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644ebe4d_200842f6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T04:08:27Z",
+      "side": 1,
+      "message": "Ack, yes. Will tracking by b/146312721",
+      "parentUuid": "fafa6aed_eba956b6",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 46
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
