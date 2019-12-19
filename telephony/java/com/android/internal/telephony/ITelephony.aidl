@@ -2244,4 +2244,12 @@ interface ITelephony {
     int setIccLockEnabled(int subId, boolean enabled, String password);
 
     int changeIccLockPassword(int subId, String oldPassword, String newPassword);
+    /**
+     * Get the user manual network selection.
+     * Return empty string if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
 }
