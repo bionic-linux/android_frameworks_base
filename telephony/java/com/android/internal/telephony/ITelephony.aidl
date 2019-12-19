@@ -922,6 +922,23 @@ interface ITelephony {
             int subId, in OperatorInfo operatorInfo, boolean persisSelection);
 
     /**
+     * Get the allowed network types that store in the telephony provider.
+     *
+     * @param subId the id of the subscription.
+     * @return allowedNetworkTypes the allowed network types.
+     */
+    long getAllowedNetworkTypes(int subId);
+
+    /**
+     * Set the allowed network types.
+     *
+     * @param subId the id of the subscription.
+     * @param allowedNetworkTypes the allowed network types.
+     * @return true on success; false on any failure.
+     */
+    boolean setAllowedNetworkTypes(int subId, long allowedNetworkTypes);
+
+    /**
      * Set the preferred network type.
      * Used for device configuration by some CDMA operators.
      *
@@ -1100,7 +1117,7 @@ interface ITelephony {
     /**
      * @hide
      */
-    String[] getMergedSubscriberIdsFromGroup(int subId, String callingPackage);
+    String[] getMergedImsisFromGroup(int subId, String callingPackage);
 
     /**
      * Override the operator branding for the current ICCID.
@@ -2087,6 +2104,11 @@ interface ITelephony {
     int getRadioHalVersion();
 
     /**
+     * Get the current calling package name.
+     */
+    String getCurrentPackageName();
+
+    /**
      * Returns true if the specified type of application (e.g. {@link #APPTYPE_CSIM} is present
      * on the UICC card.
      * @hide
@@ -2129,6 +2151,11 @@ interface ITelephony {
     boolean isDataAllowedInVoiceCall(int subId);
 
     /**
+     * Set whether a subscription always allows MMS connection.
+     */
+    boolean setAlwaysAllowMmsData(int subId, boolean allow);
+
+    /**
      * Command line command to enable or disable handling of CEP data for test purposes.
      */
     oneway void setCepEnabled(boolean isCepEnabled);
@@ -2137,4 +2164,19 @@ interface ITelephony {
      * Notify Rcs auto config received.
      */
     void notifyRcsAutoConfigurationReceived(int subId, in byte[] config, boolean isCompressed);
+
+    boolean isIccLockEnabled(int subId);
+
+    int setIccLockEnabled(int subId, boolean enabled, String password);
+
+    int changeIccLockPassword(int subId, String oldPassword, String newPassword);
+
+    /**
+     * Get the user manual network selection.
+     * Return empty string if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
 }
