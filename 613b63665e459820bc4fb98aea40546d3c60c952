@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7df3505_29bd919b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T18:00:25Z",
+      "side": 1,
+      "message": "Please change default to RSRP | RSSNR for backward compatibility.",
+      "range": {
+        "startLine": 2332,
+        "startChar": 65,
+        "endLine": 2332,
+        "endChar": 78
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c0f788b_fec9a164",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Regarding \"@hide\" for carrier config key, Google(Brad) requested as below to remove it, so we Sony doesn\u0027t add it so far. Could you please double-check in Google Telephony team whether we should add it or not?\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/720220/2/telephony/java/android/telephony/CarrierConfigManager.java#1928\n\nBrad Ebinger   Jul 26, 2018\nRemove @hide annotation and run \"make update-api\" to generate API diff. We are trying to break the habit of adding hidden APIs in this file.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
       "parentUuid": "4c0f788b_fec9a164",
+      "range": {
+        "startLine": 2333,
+        "startChar": 1,
+        "endLine": 2333,
+        "endChar": 7
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b567a4d0_d41ec55a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T18:00:25Z",
+      "side": 1,
+      "message": "Thanks for your question. @hide API is used for internal communication. We think this key is for internal use only at this time. If there is a need for this key to be used for external (out of telephony process) people, we will make it public without adding hide@.",
+      "parentUuid": "fa15b1fa_25898653",
       "range": {
         "startLine": 2333,
         "startChar": 1,
@@ -343,6 +390,30 @@
       "side": 1,
       "message": "Current AOSP behavior(in Q or earlier) uses RSRP and RSSNR as default. Could you please tell me the reason why RSSNR should be removed in this customization?\n\u003d\u003d\u003d\u003d\nCellSignalStrengthLte#updateLevel()　\n        ...\n        /* Choose a measurement type to use for notification */\n        if (snrIconLevel !\u003d -1 \u0026\u0026 rsrpIconLevel !\u003d -1) {\n            /*\n             * The number of bars displayed shall be the smaller of the bars\n             * associated with LTE RSRP and the bars associated with the LTE\n             * RS_SNR\n             */\n            mLevel \u003d (rsrpIconLevel \u003c snrIconLevel ? rsrpIconLevel : snrIconLevel);\n            return;\n        }\n\u003d\u003d\u003d\u003d",
       "parentUuid": "65a6bae7_5bc58f0b",
+      "range": {
+        "startLine": 3880,
+        "startChar": 47,
+        "endLine": 3880,
+        "endChar": 80
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1578a5f7_d2bf7eb6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2019-12-19T18:00:25Z",
+      "side": 1,
+      "message": "Ack. Then please change the default in documentation of the key for backward compatability: USE_RSRP | USE_RSSNR",
+      "parentUuid": "a593470e_bbcfde35",
       "range": {
         "startLine": 3880,
         "startChar": 47,
