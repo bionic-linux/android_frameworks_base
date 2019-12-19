@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1322d62_9c03d644",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T15:49:41Z",
+      "side": 1,
+      "message": "Ack, will address it in follow up CL if Reminv also happy for this CL.",
+      "parentUuid": "3ccaf975_7beb3342",
+      "range": {
+        "startLine": 94,
+        "startChar": 40,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb55b19_03df5012",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 34
@@ -45,6 +69,30 @@
       "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8238c93_29368bac",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-19T15:49:41Z",
+      "side": 1,
+      "message": "Ack, will address it in follow up CL if Reminv also happy for this CL.",
+      "parentUuid": "5cb55b19_03df5012",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 25
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
