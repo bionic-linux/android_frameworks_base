@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3176fe33_4e2e167c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T13:53:52Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "35e05f6b_2daac1a9",
+      "range": {
+        "startLine": 2334,
+        "startChar": 31,
+        "endLine": 2334,
+        "endChar": 75
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15362f2f_bbc00c2c",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -116,6 +140,30 @@
       "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc19b243_9f3be50a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2643,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T13:53:52Z",
+      "side": 1,
+      "message": "Done, added (dB).",
+      "parentUuid": "15362f2f_bbc00c2c",
+      "range": {
+        "startLine": 2643,
+        "startChar": 57,
+        "endLine": 2643,
+        "endChar": 66
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +213,54 @@
     },
     {
       "key": {
+        "uuid": "271f7e8f_a0416308",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2644,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T13:53:52Z",
+      "side": 1,
+      "message": "Got it, I\u0027ve loaded HAL code too.\nhttps://android-review.googlesource.com/c/platform/hardware/interfaces/+/1195315",
+      "parentUuid": "1f98ab7a_a2c1837f",
+      "range": {
+        "startLine": 2643,
+        "startChar": 0,
+        "endLine": 2644,
+        "endChar": 58
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "beeba4e2_4076aab6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2644,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T13:53:52Z",
+      "side": 1,
+      "message": "Done, since the range updated at v12.6.0, so I\u0027ve put the version number.",
+      "parentUuid": "e0908d28_8acbeac0",
+      "range": {
+        "startLine": 2644,
+        "startChar": 7,
+        "endLine": 2644,
+        "endChar": 23
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25ed5506_20820dae",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -185,6 +281,30 @@
       "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1668490_e49e6f4d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2656,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-19T13:53:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "25ed5506_20820dae",
+      "range": {
+        "startLine": 2656,
+        "startChar": 57,
+        "endLine": 2656,
+        "endChar": 69
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
