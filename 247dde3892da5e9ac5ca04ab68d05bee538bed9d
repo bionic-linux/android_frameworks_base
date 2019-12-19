@@ -2,6 +2,184 @@
   "comments": [
     {
       "key": {
+        "uuid": "767c15bf_d24425dc",
+        "filename": "core/java/android/app/SystemServiceRegistry.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "As discussed in chat, can you file a bug for the refactor to have the waiting logic in TetheringManager, so we never return null ?",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 349,
+        "endChar": 43
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc2b428_e600ea1c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 2347,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "As discussed in chat, logic like this would be moved to TetheringManager in the subsequent refactor",
+      "range": {
+        "startLine": 2347,
+        "startChar": 29,
+        "endLine": 2347,
+        "endChar": 48
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee747182_06b3f3e4",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "This would break Go devices because they would end up with both NetworkPermissionConfig and PlatformNetworkPermissionConfig.\nI think you can skip this because it\u0027s already required by NetworkStack, which will always be included.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 42
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3ccd04_ee3084d3",
+        "filename": "packages/Tethering/CleanSpec.mk",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "Newer clean steps must be at the end, which is not the case here (the InProcessTethering is in the middle)",
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f6f9b9_33dea8e1",
+        "filename": "packages/Tethering/common/TetheringLib/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "That does not sound right: the framework would be building the AIDLs as regular binder, even though tethering uses it built as aidl_interface (and potentially stable AIDL). It may work now but I don\u0027t think this is guaranteed.\nInstead I think the framework needs to depend on tethering-aidl-interfaces.",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 55
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f238c932_ffdb4b91",
+        "filename": "packages/Tethering/common/TetheringLib/jarjar-rules.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "Maybe com.android.tethering. to make it match the module package name ?",
+      "range": {
+        "startLine": 1,
+        "startChar": 27,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597aef5b_f4e92b75",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "UnsupportedAppUsage annotations in IConnectivityManager refer to this class as fallback. Is the plan to make it an API ? If yes can you add a TODO ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4639ba6_cf491cb8",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "Where is this read ? I don\u0027t see it read in this patch.\nWhich thread should this be accessed from ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0f3df78_8959ddab",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 31
@@ -46,6 +224,52 @@
       "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9afc2fb_8ba9a285",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "This seems a little verbose, maybe it\u0027s not necessary ?",
+      "range": {
+        "startLine": 204,
+        "startChar": 7,
+        "endLine": 204,
+        "endChar": 49
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0eb652_6ca6e128",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-19T05:13:00Z",
+      "side": 1,
+      "message": "Why is the callback put back ?",
+      "range": {
+        "startLine": 397,
+        "startChar": 12,
+        "endLine": 397,
+        "endChar": 67
+      },
+      "revId": "247dde3892da5e9ac5ca04ab68d05bee538bed9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
