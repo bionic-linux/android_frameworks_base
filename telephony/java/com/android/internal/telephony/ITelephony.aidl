@@ -2137,4 +2137,19 @@ interface ITelephony {
      * Notify Rcs auto config received.
      */
     void notifyRcsAutoConfigurationReceived(int subId, in byte[] config, boolean isCompressed);
+ 
+    boolean isIccLockEnabled(int subId);
+    
+    int setIccLockEnabled(int subId, boolean enabled, String password);
+    
+    int changeIccLockPassword(int subId, String oldPassword, String newPassword);
+`
+    /**
+     * Get the user manual network selection.
+     * Return empty string if in automatic selection.
+     *
+     * @param subId the id of the subscription
+     * @return operatorinfo on success
+     */
+    String getManualNetworkSelectionPlmn(int subId);
 }
