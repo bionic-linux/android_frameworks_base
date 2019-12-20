@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ba5edba_bbc6c933",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-20T06:53:28Z",
+      "side": 1,
+      "message": "I\u0027ll do this in aosp/1195978",
+      "parentUuid": "18e34770_067a9b46",
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a333e284_130ae446",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 2
@@ -116,6 +134,30 @@
       "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd7abee_cd2eab7e",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-20T06:53:28Z",
+      "side": 1,
+      "message": "Moved these inside unit test",
+      "parentUuid": "504544b7_823c6b05",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "a990e9df6953f98e1d886915c516ce1db76382a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
