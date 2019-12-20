@@ -1637,8 +1637,52 @@ interface ITelephony {
      *
      * @param subId subscription ID used for authentication
      * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
      */
     String[] getForbiddenPlmns(int subId, int appType, String callingPackage,
+             String callingFeatureId);
+
+    /**
+     * Returns a list of Operator controlled PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRECISE_PHONE_STATE or carrier privileges
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
+     */
+    String[] getOperatorPlmns(int subId, int appType, String callingPackage,
+             String callingFeatureId);
+
+    /**
+     * Returns a list of EquivalentHome PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRECISE_PHONE_STATE or carrier privileges
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
+     */
+    String[] getEquivalentHomePlmns(int subId, int appType, String callingPackage,
+             String callingFeatureId);
+
+    /**
+     * Returns a list of User PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRECISE_PHONE_STATE or carrier privileges
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
+     */
+    String[] getUserPlmns(int subId, int appType, String callingPackage,
              String callingFeatureId);
 
     /**
@@ -1802,8 +1846,12 @@ interface ITelephony {
 
     /**
      * Return the network selection mode on the subscription with id {@code subId}.
+     *
+     * @param subId subscription ID used for authentication
+     * @param callingPackage the op Package name.
+     * @param callingFeatureId the feature in the package.
      */
-     int getNetworkSelectionMode(int subId);
+     int getNetworkSelectionMode(int subId, String callingPackage, String callingFeatureId);
 
      /**
      * Return true if the device is in emergency sms mode, false otherwise.
