@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "173b6afd_bdcb3b4d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-20T23:51:24Z",
+      "side": 0,
+      "message": "This is removed because we want to allow apps to register callbacks before they are managing networks.\n\nConsider VPNs that are not yet active or carrier apps that are not currently the active subscription. They may want to register callbacks and see information about their networks as they\u0027re brought up (instead of having to wait until they are the active VPN or active subscription) to get information on their networks.\n\nThis does mean that any app could register callbacks. However, only callbacks registered by permissioned apps will be invoked.",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 19
+      },
+      "revId": "34091546840796ce8b5f7a9c88c02efff712f9dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
