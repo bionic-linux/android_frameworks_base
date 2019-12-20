@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9e78bd4_c177bd2b",
+        "filename": "core/java/android/se/omapi/Reader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-12-20T08:31:08Z",
+      "side": 1,
+      "message": "Call reset no matter closeSessions() throw exception or not.",
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
