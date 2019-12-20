@@ -6711,7 +6711,7 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns an array of Forbidden PLMNs from the USIM App
+     * Returns an array of Forbidden PLMNs from the USIM App.
      * Returns null if the query fails.
      *
      * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
@@ -6726,7 +6726,7 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns an array of Forbidden PLMNs from the specified SIM App
+     * Returns an array of Forbidden PLMNs from the specified SIM App.
      * Returns null if the query fails.
      *
      * @param subId subscription ID used for authentication
@@ -6741,6 +6741,120 @@ public class TelephonyManager {
             if (telephony == null)
                 return null;
             return telephony.getForbiddenPlmns(subId, appType, mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone starts
+            return null;
+        }
+    }
+
+    /**
+     * Returns an array of Opertor-controlled PLMNs from the USIM App.
+     * Returns null if the query fails.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getOperatorPlmns() {
+        return getOperatorPlmns(getSubId(), APPTYPE_USIM);
+    }
+
+     /**
+     * Returns an array of Operator-controlled PLMNs from the specified SIM App.
+     * Returns null if the query fails.
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getOperatorPlmns(int subId, int appType) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return null;
+            }
+            return telephony.getOperatorPlmns(subId, appType, mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone starts
+            return null;
+        }
+    }
+
+    /**
+     * Returns an array of Home PLMNs from the USIM App.
+     * Returns null if the query fails.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getEhplmns() {
+        return getEhplmns(getSubId(), APPTYPE_USIM);
+    }
+
+     /**
+     * Returns an array of Home PLMNs from the specified SIM App.
+     * Returns null if the query fails.
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getEhplmns(int subId, int appType) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return null;
+            }
+            return telephony.getEhplmns(subId, appType, mContext.getOpPackageName());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone starts
+            return null;
+        }
+    }
+
+    /**
+     * Returns an array of User PLMNs from the USIM App.
+     * Returns null if the query fails.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     */
+    @SuppressAutoDoc // Blocked by b/72967236 - no support for carrier privileges
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getUserPlmns() {
+        return getUserPlmns(getSubId(), APPTYPE_USIM);
+    }
+
+     /**
+     * Returns an array of User PLMNs from the specified SIM App.
+     * Returns null if the query fails.
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getUserPlmns(int subId, int appType) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return null;
+            }
+            return telephony.getUserPlmns(subId, appType, mContext.getOpPackageName());
         } catch (RemoteException ex) {
             return null;
         } catch (NullPointerException ex) {
@@ -7446,8 +7560,15 @@ public class TelephonyManager {
 
      * @return the network selection mode.
      *
-     * @hide
+     * <p>Requires Permission: READ_PRIVILEGED_PHONE_STATE, for the calling app to be the device or
+     * profile owner and have the READ_PHONE_STATE permission, or that the calling app has carrier
+     * privileges (see {@link #hasCarrierPrivileges}) on any active subscription. The profile owner
+     * is an app that owns a managed profile on the device; for more details see <a
+     * href="https://developer.android.com/work/managed-profiles">Work profiles</a>. Profile owner
+     * access is deprecated and will be removed in a future release.
+     *
      */
+    @SuppressAutoDoc // No support for device / profile owner or carrier privileges (b/72967236).
     @NetworkSelectionMode
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public int getNetworkSelectionMode() {
