@@ -47,7 +47,7 @@ import android.util.Pair;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
-import com.android.internal.net.LegacyVpnInfo;
+import com.android.internal.net.PlatformVpnInfo;;
 import com.android.internal.net.VpnConfig;
 import com.android.systemui.R;
 import com.android.systemui.settings.CurrentUserTracker;
@@ -345,8 +345,10 @@ public class SecurityControllerImpl extends CurrentUserTracker implements Securi
                 } else if (cfg.legacy) {
                     // Legacy VPNs should do nothing if the network is disconnected. Third-party
                     // VPN warnings need to continue as traffic can still go to the app.
-                    LegacyVpnInfo legacyVpn = mConnectivityManagerService.getLegacyVpnInfo(user.id);
-                    if (legacyVpn == null || legacyVpn.state != LegacyVpnInfo.STATE_CONNECTED) {
+                    PlatformVpnInfo platformVpn =
+                            mConnectivityManagerService.getPlatformVpnInfo(user.id);
+                    if (platformVpn == null
+                            || platformVpn.getState() != PlatformVpnInfo.STATE_CONNECTED) {
                         continue;
                     }
                 }
