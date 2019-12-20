@@ -163,6 +163,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.net.LegacyVpnInfo;
+import com.android.internal.net.PlatformVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
@@ -4531,12 +4532,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    /**
-     * Start legacy VPN, controlling native daemons as needed. Creates a
-     * secondary thread to perform connection work, returning quickly.
-     */
+    /** Shim method to ensure backward compatibility with UnsupportedAppUsage(s). */
     @Override
     public void startLegacyVpn(VpnProfile profile) {
+        startPlatformVpn(profile);
+    }
+
+    /**
+     * Start platform VPN, controlling native runners. Creates a secondary thread to perform
+     * connection work, returning quickly.
+     */
+    @Override
+    public void startPlatformVpn(VpnProfile profile) {
         int user = UserHandle.getUserId(Binder.getCallingUid());
         final LinkProperties egress = getActiveLinkProperties();
         if (egress == null) {
@@ -4544,21 +4551,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            mVpns.get(user).startLegacyVpn(profile, mKeyStore, egress);
+            mVpns.get(user).startPlatformVpn(profile, mKeyStore, egress);
         }
     }
 
-    /**
-     * Return the information of the ongoing legacy VPN. This method is used
-     * by VpnSettings and not available in ConnectivityManager. Permissions
-     * are checked in Vpn class.
-     */
+    /** Shim method to ensure backward compatibility with greylists (Android O compatibility). */
     @Override
     public LegacyVpnInfo getLegacyVpnInfo(int userId) {
+        return new LegacyVpnInfo(getPlatformVpnInfo(userId));
+    }
+
+    /**
+     * Return the information of the ongoing platform VPN. This method is used by VpnSettings and
+     * not available in ConnectivityManager. Permissions are checked in Vpn class.
+     */
+    @Override
+    public PlatformVpnInfo getPlatformVpnInfo(int userId) {
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            return mVpns.get(userId).getLegacyVpnInfo();
+            return mVpns.get(userId).getPlatformVpnInfo();
         }
     }
 
