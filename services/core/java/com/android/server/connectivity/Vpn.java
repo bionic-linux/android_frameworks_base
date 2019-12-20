@@ -365,11 +365,11 @@ public class Vpn {
     /**
      * Chooses whether to force all connections to go though VPN.
      *
-     * Used to enable/disable legacy VPN lockdown.
+     * <p>Used to enable/disable legacy VPN lockdown.
      *
-     * This uses the same ip rule mechanism as
-     * {@link #setAlwaysOnPackage(String, boolean, List<String>)}; previous settings from calling
-     * that function will be replaced and saved with the always-on state.
+     * <p>This uses the same ip rule mechanism as {@link #setAlwaysOnPackage(String, boolean,
+     * List<String>, Keystore)}; previous settings from calling that function will be replaced and
+     * saved with the always-on state.
      *
      * @param lockdown whether to prevent all traffic outside of a VPN.
      */
@@ -453,16 +453,16 @@ public class Vpn {
     }
 
     /**
-     * Configures an always-on VPN connection through a specific application.
-     * This connection is automatically granted and persisted after a reboot.
+     * Configures an always-on VPN connection through a specific application. This connection is
+     * automatically granted and persisted after a reboot.
      *
-     * <p>The designated package should exist and declare a {@link VpnService} in its
-     *    manifest guarded by {@link android.Manifest.permission.BIND_VPN_SERVICE},
-     *    otherwise the call will fail.
+     * <p>The designated package should exist and declare a {@link VpnService} in its manifest
+     * guarded by {@link android.Manifest.permission.BIND_VPN_SERVICE}, otherwise the call will
+     * fail.
      *
      * <p>Note that this method does not check if the VPN app supports always-on mode. The check is
-     *    delayed to {@link #startAlwaysOnVpn()}, which is always called immediately after this
-     *    method in {@link android.net.IConnectivityManager#setAlwaysOnVpnPackage}.
+     * delayed to {@link #startAlwaysOnVpn()}, which is always called immediately after this method
+     * in {@link android.net.IConnectivityManager#setAlwaysOnVpnPackage}.
      *
      * @param packageName the package to designate as always-on VPN supplier.
      * @param lockdown whether to prevent traffic outside of a VPN, for example while connecting.
@@ -470,10 +470,13 @@ public class Vpn {
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
     public synchronized boolean setAlwaysOnPackage(
-            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
+            @Nullable String packageName,
+            boolean lockdown,
+            @Nullable List<String> lockdownWhitelist,
+            @NonNull KeyStore keyStore) {
         enforceControlPermissionOrInternalCaller();
 
-        if (setAlwaysOnPackageInternal(packageName, lockdown, lockdownWhitelist)) {
+        if (setAlwaysOnPackageInternal(packageName, lockdown, lockdownWhitelist, keyStore)) {
             saveAlwaysOnPackage();
             return true;
         }
@@ -481,20 +484,23 @@ public class Vpn {
     }
 
     /**
-     * Configures an always-on VPN connection through a specific application, the same as
-     * {@link #setAlwaysOnPackage}.
+     * Configures an always-on VPN connection through a specific application, the same as {@link
+     * #setAlwaysOnPackage}.
      *
-     * Does not perform permission checks. Does not persist any of the changes to storage.
+     * <p>Does not perform permission checks. Does not persist any of the changes to storage.
      *
      * @param packageName the package to designate as always-on VPN supplier.
      * @param lockdown whether to prevent traffic outside of a VPN, for example while connecting.
      * @param lockdownWhitelist packages to be whitelisted from lockdown. This is only used if
-     *        {@code lockdown} is {@code true}. Packages must not contain commas.
+     *     {@code lockdown} is {@code true}. Packages must not contain commas.
      * @return {@code true} if the package has been set as always-on, {@code false} otherwise.
      */
     @GuardedBy("this")
     private boolean setAlwaysOnPackageInternal(
-            String packageName, boolean lockdown, List<String> lockdownWhitelist) {
+            @Nullable String packageName,
+            boolean lockdown,
+            @Nullable List<String> lockdownWhitelist,
+            @NonNull KeyStore keyStore) {
         if (VpnConfig.LEGACY_VPN.equals(packageName)) {
             Log.w(TAG, "Not setting legacy VPN \"" + packageName + "\" as always-on.");
             return false;
@@ -510,11 +516,10 @@ public class Vpn {
         }
 
         if (packageName != null) {
-            // TODO: Give the minimum permission possible; if there is a Platform VPN profile, only
-            // grant ACTIVATE_PLATFORM_VPN.
-            // Pre-authorize new always-on VPN package. Grant the full ACTIVATE_VPN appop, allowing
-            // both VpnService and Platform VPNs.
-            if (!setPackageAuthorization(packageName, true, false)) {
+            // Pre-authorize new always-on VPN package.
+            final boolean hasPlatformVpnProfile =
+                    keyStore.contains(getProfileNameForPackage(packageName), Process.SYSTEM_UID);
+            if (!setPackageAuthorization(packageName, true, hasPlatformVpnProfile)) {
                 return false;
             }
             mAlwaysOn = true;
