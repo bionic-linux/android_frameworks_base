@@ -82,6 +82,11 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.security.keymaster.ExportResult;
+import android.security.keymaster.KeymasterDefs;
+import android.security.keystore.AndroidKeyStoreKey;
+import android.security.keystore.AndroidKeyStorePrivateKey;
+import android.security.keystore.AndroidKeyStoreProvider;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
@@ -90,7 +95,6 @@ import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
@@ -112,8 +116,14 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.KeyStore.Entry;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -544,8 +554,8 @@ public class Vpn {
         return true;
     }
 
-    private static boolean isNullOrLegacyVpn(String packageName) {
-        return packageName == null || VpnConfig.LEGACY_VPN.equals(packageName);
+    private boolean isNullOrPlatformVpn() {
+        return mPackage == null || VpnConfig.LEGACY_VPN.equals(mPackage) || mVpnRunner != null;
     }
 
     /**
@@ -1387,7 +1397,7 @@ public class Vpn {
     @GuardedBy("this")
     private void setVpnForcedLocked(boolean enforce) {
         final List<String> exemptedPackages;
-        if (isNullOrLegacyVpn(mPackage)) {
+        if (isCurrentPackageNullOrPlatformVpn()) {
             exemptedPackages = null;
         } else {
             exemptedPackages = new ArrayList<>(mLockdownWhitelist);
@@ -1750,26 +1760,26 @@ public class Vpn {
      * secondary thread to perform connection work, returning quickly.
      *
      * Should only be called to respond to Binder requests as this enforces caller permission. Use
-     * {@link #startLegacyVpnPrivileged(VpnProfile, KeyStore, LinkProperties)} to skip the
+     * {@link #startPlatformVpnPrivileged(VpnProfile, KeyStore, LinkProperties)} to skip the
      * permission check only when the caller is trusted (or the call is initiated by the system).
      */
-    public void startLegacyVpn(VpnProfile profile, KeyStore keyStore, LinkProperties egress) {
+    public void startPlatformVpn(VpnProfile profile, KeyStore keyStore, LinkProperties egress) {
         enforceControlPermission();
         long token = Binder.clearCallingIdentity();
         try {
-            startLegacyVpnPrivileged(profile, keyStore, egress);
+            startPlatformVpnPrivileged(profile, keyStore, egress);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
     }
 
     /**
-     * Like {@link #startLegacyVpn(VpnProfile, KeyStore, LinkProperties)}, but does not check
+     * Like {@link #startPlatformVpn(VpnProfile, KeyStore, LinkProperties)}, but does not check
      * permissions under the assumption that the caller is the system.
      *
      * Callers are responsible for checking permissions if needed.
      */
-    public void startLegacyVpnPrivileged(VpnProfile profile, KeyStore keyStore,
+    public void startPlatformVpnPrivileged(VpnProfile profile, KeyStore keyStore,
             LinkProperties egress) {
         UserManager mgr = UserManager.get(mContext);
         UserInfo user = mgr.getUserInfo(mUserHandle);
@@ -1782,6 +1792,7 @@ public class Vpn {
         final String gateway = ipv4DefaultRoute.getGateway().getHostAddress();
         final String iface = ipv4DefaultRoute.getInterface();
 
+        Log.d("TEST", "loading certs");
         // Load certificates.
         String privateKey = "";
         String userCert = "";
@@ -1791,6 +1802,24 @@ public class Vpn {
             privateKey = Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
             byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
             userCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
+
+            Log.d("racoon", "Private Key ID: " + privateKey);
+            try {
+                java.security.KeyStore ks = java.security.KeyStore.getInstance("AndroidKeyStore");
+                ks.load(null);
+
+                Entry entry = ks.getEntry(privateKey, null);
+                AndroidKeyStorePrivateKey key = AndroidKeyStoreProvider.loadAndroidKeyStorePrivateKeyFromKeystore(keyStore, privateKey, Process.SYSTEM_UID);
+                Log.d("TEST", "Got key: " + key);
+                Log.d("TEST", "Got key: " + key.getAlgorithm());
+
+                Signature signGen = Signature.getInstance("SHA1withRSA");
+                signGen.initSign(key);
+                signGen.update("test".getBytes());
+                Log.d("TEST", "Got signature: " + Base64.getEncoder().encodeToString(signGen.sign()));
+            } catch (Exception e) {
+                Log.d("TEST", "Got exception", e);
+            }
         }
         if (!profile.ipsecCaCert.isEmpty()) {
             byte[] value = keyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
@@ -1923,29 +1952,27 @@ public class Vpn {
     /**
      * Return the information of the current ongoing legacy VPN.
      */
-    public synchronized LegacyVpnInfo getLegacyVpnInfo() {
+    public synchronized PlatformVpnInfo getPlatformVpnInfo() {
         // Check if the caller is authorized.
         enforceControlPermission();
-        return getLegacyVpnInfoPrivileged();
+        return getPlatformVpnInfoPrivileged();
     }
 
     /**
      * Return the information of the current ongoing legacy VPN.
      * Callers are responsible for checking permissions if needed.
      */
-    private synchronized LegacyVpnInfo getLegacyVpnInfoPrivileged() {
+    private synchronized PlatformVpnInfo getPlatformVpnInfoPrivileged() {
         if (mVpnRunner == null) return null;
 
-        final LegacyVpnInfo info = new LegacyVpnInfo();
-        info.key = mConfig.user;
-        info.state = LegacyVpnInfo.stateFromNetworkInfo(mNetworkInfo);
-        if (mNetworkInfo.isConnected()) {
-            info.intent = mStatusIntent;
-        }
-        return info;
+        return new PlatformVpnInfo(
+                mConfig.user,
+                mNetworkInfo,
+                mNetworkInfo.isConnected() ? mStatusIntent : null);
     }
 
-    public VpnConfig getLegacyVpnConfig() {
+    /** Retrieves config for a Platform VPN. */
+    public VpnConfig getPlatformVpnConfig() {
         if (mVpnRunner != null) {
             return mConfig;
         } else {
