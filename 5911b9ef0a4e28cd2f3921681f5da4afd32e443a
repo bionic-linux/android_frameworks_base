@@ -46,6 +46,30 @@
       "revId": "5911b9ef0a4e28cd2f3921681f5da4afd32e443a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69cf473_82a998a1",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2019-12-20T17:07:47Z",
+      "side": 1,
+      "message": "Fix posted under aosp/1196824",
+      "parentUuid": "050415ac_6dbf2ad3",
+      "range": {
+        "startLine": 829,
+        "startChar": 9,
+        "endLine": 829,
+        "endChar": 34
+      },
+      "revId": "5911b9ef0a4e28cd2f3921681f5da4afd32e443a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
