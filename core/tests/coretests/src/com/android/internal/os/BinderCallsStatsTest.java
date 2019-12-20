@@ -754,6 +754,53 @@ public class BinderCallsStatsTest {
     }
 
     @Test
+    public void testCallStatsObserver() {
+        TestBinderCallsStats bcs = new TestBinderCallsStats();
+        bcs.setSamplingInterval(1);
+        bcs.setTrackScreenInteractive(false);
+
+        final ArrayList<BinderCallsStats.CallStat> callStatsList = new ArrayList<>();
+        bcs.setCallStatsObserver(
+                (workSourceUid, incrementalCallCount, callStats) -> callStatsList.addAll(
+                        callStats));
+
+        Binder binder = new Binder();
+
+        CallSession callSession = bcs.callStarted(binder, 1, WORKSOURCE_UID);
+        bcs.time += 10;
+        bcs.callEnded(callSession, REQUEST_SIZE, REPLY_SIZE, WORKSOURCE_UID);
+
+        callSession = bcs.callStarted(binder, 1, WORKSOURCE_UID);
+        bcs.time += 20;
+        bcs.callEnded(callSession, REQUEST_SIZE, REPLY_SIZE, WORKSOURCE_UID);
+
+        callSession = bcs.callStarted(binder, 2, WORKSOURCE_UID);
+        bcs.time += 30;
+        bcs.callEnded(callSession, REQUEST_SIZE, REPLY_SIZE, WORKSOURCE_UID);
+
+        for (Runnable runnable: mHandler.mRunnables) {
+            // Execute all pending runnables. Ignore the delay.
+            runnable.run();
+        }
+
+        assertThat(callStatsList).hasSize(2);
+        for (int i = 0; i < 2; i++) {
+            BinderCallsStats.CallStat callStats = callStatsList.get(i);
+            if (callStats.transactionCode == 1) {
+                assertEquals(2, callStats.callCount);
+                assertEquals(2, callStats.recordedCallCount);
+                assertEquals(30, callStats.cpuTimeMicros);
+                assertEquals(20, callStats.maxCpuTimeMicros);
+            } else {
+                assertEquals(1, callStats.callCount);
+                assertEquals(1, callStats.recordedCallCount);
+                assertEquals(30, callStats.cpuTimeMicros);
+                assertEquals(30, callStats.maxCpuTimeMicros);
+            }
+        }
+    }
+
+    @Test
     public void testLatencyCollectionEnabled() {
         TestBinderCallsStats bcs = new TestBinderCallsStats();
         bcs.setCollectLatencyData(true);
