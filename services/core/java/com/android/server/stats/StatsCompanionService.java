@@ -61,13 +61,14 @@ import android.hardware.face.FaceManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.net.ConnectivityManager;
 import android.net.INetworkStatsService;
+import android.net.INetworkStatsSession;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.net.NetworkStats;
+import android.net.NetworkTemplate;
 import android.net.wifi.IWifiManager;
 import android.net.wifi.WifiActivityEnergyInfo;
 import android.os.BatteryStats;
-import android.os.BatteryStatsInternal;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -254,7 +255,8 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
 
     private final Context mContext;
     private final AlarmManager mAlarmManager;
-    private final INetworkStatsService mNetworkStatsService;
+    @Nullable
+    final INetworkStatsSession mNetworkStatsSession;
     @GuardedBy("sStatsdLock")
     private static IStatsManager sStatsd;
     private static final Object sStatsdLock = new Object();
@@ -308,8 +310,7 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
         super();
         mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        mNetworkStatsService = INetworkStatsService.Stub.asInterface(
-              ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        mNetworkStatsSession = getNetworkStatsSession();
         mBaseDir.mkdirs();
         mAppUpdateReceiver = new AppUpdateReceiver();
         mUserUpdateReceiver = new BroadcastReceiver() {
@@ -793,6 +794,44 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
         }
     }
 
+    private @Nullable INetworkStatsSession getNetworkStatsSession() {
+        final INetworkStatsService statsService = INetworkStatsService.Stub.asInterface(
+                ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
+        if (statsService == null) {
+            Slog.e(TAG, "NetworkStats Service is not available!");
+            return null;
+        }
+
+        final long token = Binder.clearCallingIdentity();
+        try {
+            return statsService.openSessionForUsageStats(0x0, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Cannot get NetworkStats session", e);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+        return null;
+    }
+
+    private @Nullable NetworkStats getUidNetworkStats(@NonNull NetworkTemplate template,
+            long elapsedNanos, long wallClockNanos, boolean withFGBG) {
+        if (mNetworkStatsSession == null) {
+            Slog.e(TAG, "NetworkStats session is not available!");
+            return null;
+        }
+        try {
+            final NetworkStats stats = mNetworkStatsSession.getSummaryForAllUid(template,
+                    (wallClockNanos - elapsedNanos) / 1000_000L, wallClockNanos / 1000_000L, false);
+            final NetworkStats groupedStats =
+                    withFGBG ? rollupNetworkStatsByFGBG(stats) : stats.groupedByUid();
+            return groupedStats;
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Pulling netstats for " + template
+                    + " fgbg= " + withFGBG + " bytes has error", e);
+        }
+        return null;
+    }
+
     /**
      * Allows rollups per UID but keeping the set (foreground/background) slicing.
      * Adapted from groupedByUid in frameworks/base/core/java/android/net/NetworkStats.java
@@ -876,74 +915,35 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
     private void pullWifiBytesTransfer(
             int tagId, long elapsedNanos, long wallClockNanos,
             List<StatsLogEventWrapper> pulledData) {
-        long token = Binder.clearCallingIdentity();
-        try {
-            // TODO: Consider caching the following call to get BatteryStatsInternal.
-            BatteryStatsInternal bs = LocalServices.getService(BatteryStatsInternal.class);
-            String[] ifaces = bs.getWifiIfaces();
-            if (ifaces.length == 0) {
-                return;
-            }
-            if (mNetworkStatsService == null) {
-                Slog.e(TAG, "NetworkStats Service is not available!");
-                return;
-            }
-            // Combine all the metrics per Uid into one record.
-            NetworkStats stats = mNetworkStatsService.getDetailedUidStats(ifaces).groupedByUid();
-            addNetworkStats(tagId, pulledData, stats, false);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Pulling netstats for wifi bytes has error", e);
-        } finally {
-            Binder.restoreCallingIdentity(token);
-        }
+        final NetworkTemplate template = NetworkTemplate.buildTemplateWifiWildcard();
+        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos,
+                false);
+        if (stats != null) addNetworkStats(tagId, pulledData, stats, false);
     }
 
     private void pullWifiBytesTransferByFgBg(
             int tagId, long elapsedNanos, long wallClockNanos,
             List<StatsLogEventWrapper> pulledData) {
-        long token = Binder.clearCallingIdentity();
-        try {
-            BatteryStatsInternal bs = LocalServices.getService(BatteryStatsInternal.class);
-            String[] ifaces = bs.getWifiIfaces();
-            if (ifaces.length == 0) {
-                return;
-            }
-            if (mNetworkStatsService == null) {
-                Slog.e(TAG, "NetworkStats Service is not available!");
-                return;
-            }
-            NetworkStats stats = rollupNetworkStatsByFGBG(
-                    mNetworkStatsService.getDetailedUidStats(ifaces));
-            addNetworkStats(tagId, pulledData, stats, true);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Pulling netstats for wifi bytes w/ fg/bg has error", e);
-        } finally {
-            Binder.restoreCallingIdentity(token);
-        }
+        final NetworkTemplate template = NetworkTemplate.buildTemplateWifiWildcard();
+        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos, true);
+        if (stats != null) addNetworkStats(tagId, pulledData, stats, true);
     }
 
     private void pullMobileBytesTransfer(
             int tagId, long elapsedNanos, long wallClockNanos,
             List<StatsLogEventWrapper> pulledData) {
-        long token = Binder.clearCallingIdentity();
-        try {
-            BatteryStatsInternal bs = LocalServices.getService(BatteryStatsInternal.class);
-            String[] ifaces = bs.getMobileIfaces();
-            if (ifaces.length == 0) {
-                return;
-            }
-            if (mNetworkStatsService == null) {
-                Slog.e(TAG, "NetworkStats Service is not available!");
-                return;
-            }
-            // Combine all the metrics per Uid into one record.
-            NetworkStats stats = mNetworkStatsService.getDetailedUidStats(ifaces).groupedByUid();
-            addNetworkStats(tagId, pulledData, stats, false);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Pulling netstats for mobile bytes has error", e);
-        } finally {
-            Binder.restoreCallingIdentity(token);
-        }
+        final NetworkTemplate template = NetworkTemplate.buildTemplateMobileWildcard();
+        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos,
+                false);
+        if (stats != null) addNetworkStats(tagId, pulledData, stats, false);
+    }
+
+    private void pullMobileBytesTransferByFgBg(
+            int tagId, long elapsedNanos, long wallClockNanos,
+            List<StatsLogEventWrapper> pulledData) {
+        final NetworkTemplate template = NetworkTemplate.buildTemplateMobileWildcard();
+        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos, true);
+        if (stats != null) addNetworkStats(tagId, pulledData, stats, true);
     }
 
     private void pullBluetoothBytesTransfer(
@@ -959,30 +959,6 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
                 e.writeLong(traffic.getTxBytes());
                 pulledData.add(e);
             }
-        }
-    }
-
-    private void pullMobileBytesTransferByFgBg(
-            int tagId, long elapsedNanos, long wallClockNanos,
-            List<StatsLogEventWrapper> pulledData) {
-        long token = Binder.clearCallingIdentity();
-        try {
-            BatteryStatsInternal bs = LocalServices.getService(BatteryStatsInternal.class);
-            String[] ifaces = bs.getMobileIfaces();
-            if (ifaces.length == 0) {
-                return;
-            }
-            if (mNetworkStatsService == null) {
-                Slog.e(TAG, "NetworkStats Service is not available!");
-                return;
-            }
-            NetworkStats stats = rollupNetworkStatsByFGBG(
-                    mNetworkStatsService.getDetailedUidStats(ifaces));
-            addNetworkStats(tagId, pulledData, stats, true);
-        } catch (RemoteException e) {
-            Slog.e(TAG, "Pulling netstats for mobile bytes w/ fg/bg has error", e);
-        } finally {
-            Binder.restoreCallingIdentity(token);
         }
     }
 
