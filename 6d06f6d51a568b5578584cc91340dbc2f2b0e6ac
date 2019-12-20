@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7280b925_24ae1089",
+        "filename": "Android.bp",
+        "patchSetId": 34
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-20T02:38:19Z",
+      "side": 1,
+      "message": "Hmm, this is used for framework-tethering which is in bootclass path. It can\u0027t use androidx.",
+      "parentUuid": "90892576_f0605100",
+      "range": {
+        "startLine": 625,
+        "startChar": 10,
+        "endLine": 625,
+        "endChar": 44
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ccaf975_7beb3342",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 34
