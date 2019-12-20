@@ -90,7 +90,6 @@ import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
@@ -544,8 +543,8 @@ public class Vpn {
         return true;
     }
 
-    private static boolean isNullOrLegacyVpn(String packageName) {
-        return packageName == null || VpnConfig.LEGACY_VPN.equals(packageName);
+    private boolean isNullOrPlatformVpn() {
+        return mPackage == null || VpnConfig.LEGACY_VPN.equals(mPackage) || mVpnRunner != null;
     }
 
     /**
@@ -1387,7 +1386,7 @@ public class Vpn {
     @GuardedBy("this")
     private void setVpnForcedLocked(boolean enforce) {
         final List<String> exemptedPackages;
-        if (isNullOrLegacyVpn(mPackage)) {
+        if (isCurrentPackageNullOrPlatformVpn()) {
             exemptedPackages = null;
         } else {
             exemptedPackages = new ArrayList<>(mLockdownWhitelist);
@@ -1750,26 +1749,26 @@ public class Vpn {
      * secondary thread to perform connection work, returning quickly.
      *
      * Should only be called to respond to Binder requests as this enforces caller permission. Use
-     * {@link #startLegacyVpnPrivileged(VpnProfile, KeyStore, LinkProperties)} to skip the
+     * {@link #startPlatformVpnPrivileged(VpnProfile, KeyStore, LinkProperties)} to skip the
      * permission check only when the caller is trusted (or the call is initiated by the system).
      */
-    public void startLegacyVpn(VpnProfile profile, KeyStore keyStore, LinkProperties egress) {
+    public void startPlatformVpn(VpnProfile profile, KeyStore keyStore, LinkProperties egress) {
         enforceControlPermission();
         long token = Binder.clearCallingIdentity();
         try {
-            startLegacyVpnPrivileged(profile, keyStore, egress);
+            startPlatformVpnPrivileged(profile, keyStore, egress);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
     }
 
     /**
-     * Like {@link #startLegacyVpn(VpnProfile, KeyStore, LinkProperties)}, but does not check
+     * Like {@link #startPlatformVpn(VpnProfile, KeyStore, LinkProperties)}, but does not check
      * permissions under the assumption that the caller is the system.
      *
      * Callers are responsible for checking permissions if needed.
      */
-    public void startLegacyVpnPrivileged(VpnProfile profile, KeyStore keyStore,
+    public void startPlatformVpnPrivileged(VpnProfile profile, KeyStore keyStore,
             LinkProperties egress) {
         UserManager mgr = UserManager.get(mContext);
         UserInfo user = mgr.getUserInfo(mUserHandle);
@@ -1923,29 +1922,27 @@ public class Vpn {
     /**
      * Return the information of the current ongoing legacy VPN.
      */
-    public synchronized LegacyVpnInfo getLegacyVpnInfo() {
+    public synchronized PlatformVpnInfo getPlatformVpnInfo() {
         // Check if the caller is authorized.
         enforceControlPermission();
-        return getLegacyVpnInfoPrivileged();
+        return getPlatformVpnInfoPrivileged();
     }
 
     /**
      * Return the information of the current ongoing legacy VPN.
      * Callers are responsible for checking permissions if needed.
      */
-    private synchronized LegacyVpnInfo getLegacyVpnInfoPrivileged() {
+    private synchronized PlatformVpnInfo getPlatformVpnInfoPrivileged() {
         if (mVpnRunner == null) return null;
 
-        final LegacyVpnInfo info = new LegacyVpnInfo();
-        info.key = mConfig.user;
-        info.state = LegacyVpnInfo.stateFromNetworkInfo(mNetworkInfo);
-        if (mNetworkInfo.isConnected()) {
-            info.intent = mStatusIntent;
-        }
-        return info;
+        return new PlatformVpnInfo(
+                mConfig.user,
+                mNetworkInfo,
+                mNetworkInfo.isConnected() ? mStatusIntent : null);
     }
 
-    public VpnConfig getLegacyVpnConfig() {
+    /** Retrieves config for a Platform VPN. */
+    public VpnConfig getPlatformVpnConfig() {
         if (mVpnRunner != null) {
             return mConfig;
         } else {

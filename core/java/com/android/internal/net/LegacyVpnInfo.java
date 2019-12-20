@@ -25,19 +25,22 @@ import android.util.Log;
 
 /**
  * A simple container used to carry information of the ongoing legacy VPN.
- * Internal use only.
+ * Internal use only; internal consumer should use {@link PlatformVpnInfo} instead.
+ *
+ * @deprecated Internal callers should switch to using PlatformVpnInfo
  *
  * @hide
  */
+@Deprecated
 public class LegacyVpnInfo implements Parcelable {
     private static final String TAG = "LegacyVpnInfo";
 
-    public static final int STATE_DISCONNECTED = 0;
-    public static final int STATE_INITIALIZING = 1;
-    public static final int STATE_CONNECTING = 2;
-    public static final int STATE_CONNECTED = 3;
-    public static final int STATE_TIMEOUT = 4;
-    public static final int STATE_FAILED = 5;
+    public static final int STATE_DISCONNECTED = PlatformVpnInfo.STATE_DISCONNECTED;
+    public static final int STATE_INITIALIZING = PlatformVpnInfo.STATE_INITIALIZING;
+    public static final int STATE_CONNECTING = PlatformVpnInfo.STATE_CONNECTING;
+    public static final int STATE_CONNECTED = PlatformVpnInfo.STATE_CONNECTED;
+    public static final int STATE_TIMEOUT = PlatformVpnInfo.STATE_TIMEOUT;
+    public static final int STATE_FAILED = PlatformVpnInfo.STATE_FAILED;
 
     @UnsupportedAppUsage
     public String key;
@@ -47,6 +50,13 @@ public class LegacyVpnInfo implements Parcelable {
 
     @UnsupportedAppUsage
     public LegacyVpnInfo() {
+    }
+
+    /** Convert from newer PlatformVpnInfo */
+    public LegacyVpnInfo(PlatformVpnInfo vpnInfo) {
+        this.key = vpnInfo.getKey();
+        this.state = vpnInfo.getState();
+        this.intent = vpnInfo.getIntent();
     }
 
     @Override
