@@ -36,6 +36,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.ResultReceiver;
 
 import com.android.internal.net.LegacyVpnInfo;
+import com.android.internal.net.PlatformVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
@@ -140,10 +141,16 @@ interface IConnectivityManager
 
     VpnConfig getVpnConfig(int userId);
 
+    /** @deprecated Replaced by getPlatformVpnInfo() */
     @UnsupportedAppUsage
     void startLegacyVpn(in VpnProfile profile);
 
+    void startPlatformVpn(in VpnProfile profile);
+
+    /** @deprecated Replaced by getPlatformVpnInfo() */
     LegacyVpnInfo getLegacyVpnInfo(int userId);
+
+    PlatformVpnInfo getPlatformVpnInfo(int userId);
 
     boolean updateLockdownVpn();
     boolean isAlwaysOnVpnPackageSupported(int userId, String packageName);
