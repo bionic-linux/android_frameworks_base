@@ -266,11 +266,6 @@ interface ITelecomService {
     **/
     Intent createManageBlockedNumbersIntent();
 
-   /**
-    * @see TelecomServiceImpl#createLaunchEmergencyDialerIntent
-    */
-    Intent createLaunchEmergencyDialerIntent(in String number);
-
     /**
      * @see TelecomServiceImpl#isIncomingCallPermitted
      */
