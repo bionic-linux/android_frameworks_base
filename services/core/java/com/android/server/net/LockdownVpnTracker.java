@@ -121,7 +121,7 @@ public class LockdownVpnTracker {
         final LinkProperties egressProp = mConnService.getActiveLinkProperties();
 
         final NetworkInfo vpnInfo = mVpn.getNetworkInfo();
-        final VpnConfig vpnConfig = mVpn.getLegacyVpnConfig();
+        final VpnConfig vpnConfig = mVpn.getPlatformVpnConfig();
 
         // Restart VPN when egress network disconnected or changed
         final boolean egressDisconnected = egressInfo == null
@@ -163,7 +163,7 @@ public class LockdownVpnTracker {
                 try {
                     // Use the privileged method because Lockdown VPN is initiated by the system, so
                     // no additional permission checks are necessary.
-                    mVpn.startLegacyVpnPrivileged(mProfile, KeyStore.getInstance(), egressProp);
+                    mVpn.startPlatformVpnPrivileged(mProfile, KeyStore.getInstance(), egressProp);
                 } catch (IllegalStateException e) {
                     mAcceptedEgressIface = null;
                     Slog.e(TAG, "Failed to start VPN", e);
