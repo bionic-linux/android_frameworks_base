@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "90892576_f0605100",
+        "filename": "Android.bp",
+        "patchSetId": 34
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-20T02:26:05Z",
+      "side": 1,
+      "message": "These should go away and use androidx. Can be done in a followup patch.",
+      "range": {
+        "startLine": 625,
+        "startChar": 10,
+        "endLine": 625,
+        "endChar": 44
+      },
+      "revId": "6d06f6d51a568b5578584cc91340dbc2f2b0e6ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ccaf975_7beb3342",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 34
