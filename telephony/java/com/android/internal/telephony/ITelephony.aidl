@@ -1622,6 +1622,39 @@ interface ITelephony {
     String[] getForbiddenPlmns(int subId, int appType, String callingPackage);
 
     /**
+     * Returns a list of Operator controlled PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     */
+    String[] getOperatorPlmns(int subId, int appType, String callingPackage);
+
+    /**
+     * Returns a list of Home PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     */
+    String[] getEhplmns(int subId, int appType, String callingPackage);
+
+    /**
+     * Returns a list of User PLMNs from the specified SIM App
+     * Returns null if the query fails.
+     *
+     * <p>Requires that the calling app has READ_PRIVILEGED_PHONE_STATE or READ_PHONE_STATE
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     */
+    String[] getUserPlmns(int subId, int appType, String callingPackage);
+
+    /**
      * Set the forbidden PLMN list from the givven app type (ex APPTYPE_USIM) on a particular
      * subscription.
      *
