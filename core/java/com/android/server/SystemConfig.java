@@ -463,6 +463,8 @@ public class SystemConfig {
             return;
         }
 
+        Slog.i(TAG, "Reading permissions from " + permFile);
+
         final boolean lowRam = ActivityManager.isLowRamDeviceStatic();
 
         try {
