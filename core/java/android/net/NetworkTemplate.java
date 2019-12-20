@@ -84,6 +84,10 @@ public class NetworkTemplate implements Parcelable {
     public static final int MATCH_BLUETOOTH = 8;
     public static final int MATCH_PROXY = 9;
 
+    /** Include all network types when filtering. {@hide} */
+    @UnsupportedAppUsage
+    public static final int NETWORK_TYPE_ALL = -1;
+
     private static boolean isKnownMatchRule(final int rule) {
         switch (rule) {
             case MATCH_MOBILE:
@@ -125,6 +129,17 @@ public class NetworkTemplate implements Parcelable {
     @UnsupportedAppUsage
     public static NetworkTemplate buildTemplateMobileAll(String subscriberId) {
         return new NetworkTemplate(MATCH_MOBILE, subscriberId, null);
+    }
+
+    /**
+     * Template to match {@link ConnectivityManager#TYPE_MOBILE} networks with
+     * the given {@code networkType}. Use {@link #NETWORK_TYPE_ALL} to include
+     * all network types when filtering.
+     */
+    @UnsupportedAppUsage
+    public static NetworkTemplate buildTemplateMobileWildcardWithNetworkType(int networkType) {
+        return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null, new String[]{null}, null,
+                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, networkType);
     }
 
     /**
@@ -203,6 +218,7 @@ public class NetworkTemplate implements Parcelable {
     private final int mMetered;
     private final int mRoaming;
     private final int mDefaultNetwork;
+    private final int mNetworkType;
 
     @UnsupportedAppUsage
     public NetworkTemplate(int matchRule, String subscriberId, String networkId) {
@@ -212,11 +228,11 @@ public class NetworkTemplate implements Parcelable {
     public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
             String networkId) {
         this(matchRule, subscriberId, matchSubscriberIds, networkId, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL);
+                DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL);
     }
 
     public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
-            String networkId, int metered, int roaming, int defaultNetwork) {
+            String networkId, int metered, int roaming, int defaultNetwork, int networkType) {
         mMatchRule = matchRule;
         mSubscriberId = subscriberId;
         mMatchSubscriberIds = matchSubscriberIds;
@@ -224,6 +240,7 @@ public class NetworkTemplate implements Parcelable {
         mMetered = metered;
         mRoaming = roaming;
         mDefaultNetwork = defaultNetwork;
+        mNetworkType = networkType;
 
         if (!isKnownMatchRule(matchRule)) {
             Log.e(TAG, "Unknown network template rule " + matchRule
@@ -239,6 +256,7 @@ public class NetworkTemplate implements Parcelable {
         mMetered = in.readInt();
         mRoaming = in.readInt();
         mDefaultNetwork = in.readInt();
+        mNetworkType = in.readInt();
     }
 
     @Override
@@ -250,6 +268,7 @@ public class NetworkTemplate implements Parcelable {
         dest.writeInt(mMetered);
         dest.writeInt(mRoaming);
         dest.writeInt(mDefaultNetwork);
+        dest.writeInt(mNetworkType);
     }
 
     @Override
@@ -282,13 +301,16 @@ public class NetworkTemplate implements Parcelable {
             builder.append(", defaultNetwork=").append(NetworkStats.defaultNetworkToString(
                     mDefaultNetwork));
         }
+        if (mNetworkType != NETWORK_TYPE_ALL) {
+            builder.append(", networkType=").append(mNetworkType);
+        }
         return builder.toString();
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(mMatchRule, mSubscriberId, mNetworkId, mMetered, mRoaming,
-                mDefaultNetwork);
+                mDefaultNetwork, mNetworkType);
     }
 
     @Override
@@ -300,7 +322,8 @@ public class NetworkTemplate implements Parcelable {
                     && Objects.equals(mNetworkId, other.mNetworkId)
                     && mMetered == other.mMetered
                     && mRoaming == other.mRoaming
-                    && mDefaultNetwork == other.mDefaultNetwork;
+                    && mDefaultNetwork == other.mDefaultNetwork
+                    && mNetworkType == other.mNetworkType;
         }
         return false;
     }
@@ -387,6 +410,11 @@ public class NetworkTemplate implements Parcelable {
             || (mDefaultNetwork == DEFAULT_NETWORK_NO && !ident.mDefaultNetwork);
     }
 
+    private boolean matchesNetworkType(NetworkIdentity ident) {
+        return mNetworkType == NETWORK_TYPE_ALL || getCollapsedNetworkType(mNetworkType)
+                == getCollapsedNetworkType(ident.mSubType);
+    }
+
     public boolean matchesSubscriberId(String subscriberId) {
         return ArrayUtils.contains(mMatchSubscriberIds, subscriberId);
     }
@@ -401,7 +429,8 @@ public class NetworkTemplate implements Parcelable {
         } else {
             return (sForceAllNetworkTypes || (ident.mType == TYPE_MOBILE && ident.mMetered))
                     && !ArrayUtils.isEmpty(mMatchSubscriberIds)
-                    && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId);
+                    && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId)
+                    && matchesNetworkType(ident);
         }
     }
 
@@ -457,7 +486,8 @@ public class NetworkTemplate implements Parcelable {
         if (ident.mType == TYPE_WIMAX) {
             return true;
         } else {
-            return sForceAllNetworkTypes || (ident.mType == TYPE_MOBILE && ident.mMetered);
+            return (sForceAllNetworkTypes || (ident.mType == TYPE_MOBILE && ident.mMetered))
+                    && matchesNetworkType(ident);
         }
     }
 
