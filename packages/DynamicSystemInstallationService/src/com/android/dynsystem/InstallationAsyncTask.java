@@ -19,8 +19,10 @@ package com.android.dynsystem;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.MemoryFile;
 import android.os.ParcelFileDescriptor;
+import android.os.image.DynamicSystemClient;
 import android.os.image.DynamicSystemManager;
 import android.util.Log;
 import android.webkit.URLUtil;
@@ -111,6 +113,17 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         mUrl = url;
         mSystemSize = systemSize;
         mUserdataSize = userdataSize;
+        mContext = context;
+        mDynSystem = dynSystem;
+        mListener = listener;
+    }
+
+    InstallationAsyncTask(String url, Bundle bundle,
+            Context context, DynamicSystemManager dynSystem, ProgressListener listener) {
+        mUrl = url;
+        mSystemSize = bundle.getLong(DynamicSystemClient.KEY_SYSTEM_SIZE, 0);
+        mUserdataSize = bundle.getLong(DynamicSystemClient.KEY_USERDATA_SIZE, 0);
+        mPubKey = bundle.getString(DynamicSystemClient.KEY_PUBKEY);
         mContext = context;
         mDynSystem = dynSystem;
         mListener = listener;
