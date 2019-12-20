@@ -25,6 +25,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkPolicy.LIMIT_DISABLED;
 import static android.net.NetworkPolicy.WARNING_DISABLED;
+import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.provider.Settings.Global.NETWORK_DEFAULT_DAILY_MULTIPATH_QUOTA_BYTES;
 
 import static com.android.server.net.NetworkPolicyManagerInternal.QUOTA_TYPE_MULTIPATH;
@@ -49,16 +50,14 @@ import android.net.NetworkRequest;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
 import android.net.StringNetworkSpecifier;
+import android.net.Uri;
 import android.os.BestClock;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.net.Uri;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.DataUnit;
 import android.util.DebugUtils;
-import android.util.Pair;
 import android.util.Range;
 import android.util.Slog;
 
@@ -74,7 +73,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -221,7 +219,7 @@ public class MultipathPolicyTracker {
             mNetworkTemplate = new NetworkTemplate(
                     NetworkTemplate.MATCH_MOBILE, subscriberId, new String[] { subscriberId },
                     null, NetworkStats.METERED_ALL, NetworkStats.ROAMING_ALL,
-                    NetworkStats.DEFAULT_NETWORK_NO);
+                    NetworkStats.DEFAULT_NETWORK_NO, NETWORK_TYPE_ALL);
             mUsageCallback = new UsageCallback() {
                 @Override
                 public void onThresholdReached(int networkType, String subscriberId) {
