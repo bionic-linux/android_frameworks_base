@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec6d85e5_0c2fb2f6",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2019-12-20T21:20:30Z",
+      "side": 1,
+      "message": "nit: \"Closes\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811be164_03c1c15e",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2019-12-20T21:20:30Z",
+      "side": 1,
+      "message": "\"resets\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 61
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42f0b4f_bd4ef8c0",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128278
+      },
+      "writtenOn": "2019-12-20T21:20:30Z",
+      "side": 1,
+      "message": "\"if the reset is successful\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 20,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9e78bd4_c177bd2b",
         "filename": "core/java/android/se/omapi/Reader.java",
         "patchSetId": 3
