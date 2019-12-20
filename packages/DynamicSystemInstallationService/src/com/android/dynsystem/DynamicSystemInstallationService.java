@@ -240,15 +240,10 @@ public class DynamicSystemInstallationService extends Service
             return;
         }
 
-        String url = intent.getDataString();
-        long systemSize = intent.getLongExtra(DynamicSystemClient.KEY_SYSTEM_SIZE, 0);
-        long userdataSize = intent.getLongExtra(DynamicSystemClient.KEY_USERDATA_SIZE, 0);
         mEnableWhenCompleted = intent.getBooleanExtra(KEY_ENABLE_WHEN_COMPLETED, false);
 
-        // TODO: better constructor or builder
-        mInstallTask = new InstallationAsyncTask(
-                url, systemSize, userdataSize, this, mDynSystem, this);
-
+        String url = intent.getDataString();
+        mInstallTask = new InstallationAsyncTask(url, intent.getExtras(), this, mDynSystem, this);
         mInstallTask.execute();
 
         // start fore ground
