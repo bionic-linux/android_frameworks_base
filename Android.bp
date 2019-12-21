@@ -585,6 +585,15 @@ java_library {
 }
 
 filegroup {
+    name: "framework-ike-shared-srcs",
+    srcs: [
+        "core/java/com/android/internal/util/IState.java",
+        "core/java/com/android/internal/util/State.java",
+        "core/java/com/android/internal/util/StateMachine.java",
+    ],
+}
+
+filegroup {
     name: "framework-networkstack-shared-srcs",
     srcs: [
         // TODO: remove these annotations as soon as we can use andoid.support.annotations.*
