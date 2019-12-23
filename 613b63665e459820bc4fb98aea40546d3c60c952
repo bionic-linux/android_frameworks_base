@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "115b3072_948d12d4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-23T08:01:18Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "a7df3505_29bd919b",
+      "range": {
+        "startLine": 2332,
+        "startChar": 65,
+        "endLine": 2332,
+        "endChar": 78
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c0f788b_fec9a164",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 9
@@ -93,6 +117,30 @@
       "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079374ea_36b401e3",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2333,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-23T08:01:18Z",
+      "side": 1,
+      "message": "Thank you for clarification, I got the policy and added @hide for this new key.",
+      "parentUuid": "b567a4d0_d41ec55a",
+      "range": {
+        "startLine": 2333,
+        "startChar": 1,
+        "endLine": 2333,
+        "endChar": 7
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -423,6 +471,30 @@
       "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2cc1f7_5c869aca",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1236374
+      },
+      "writtenOn": "2019-12-23T08:01:18Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "1578a5f7_d2bf7eb6",
+      "range": {
+        "startLine": 3880,
+        "startChar": 47,
+        "endLine": 3880,
+        "endChar": 80
+      },
+      "revId": "613b63665e459820bc4fb98aea40546d3c60c952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
