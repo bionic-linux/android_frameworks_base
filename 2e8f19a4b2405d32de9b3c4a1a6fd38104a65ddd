@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "875970cf_3581a317",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-12-23T11:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "811be164_03c1c15e",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 61
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a9d2da6_54ece3fe",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-12-23T11:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6d85e5_0c2fb2f6",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b42f0b4f_bd4ef8c0",
         "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927b65aa_d0ec5603",
+        "filename": "core/java/android/se/omapi/ISecureElementReader.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2019-12-23T11:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42f0b4f_bd4ef8c0",
+      "range": {
+        "startLine": 54,
+        "startChar": 20,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "2e8f19a4b2405d32de9b3c4a1a6fd38104a65ddd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
