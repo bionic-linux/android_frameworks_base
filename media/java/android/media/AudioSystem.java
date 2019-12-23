@@ -1121,6 +1121,11 @@ public class AudioSystem
     public static native float getStreamVolumeDB(int stream, int index, int device);
 
     /**
+     * Communicate supported system usages to audio policy service.
+     */
+    public static native int setSupportedSystemUsages(int[] systemUsages);
+
+    /**
      * @see AudioManager#setAllowedCapturePolicy()
      */
     public static native int setAllowedCapturePolicy(int uid, int flags);

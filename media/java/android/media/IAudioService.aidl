@@ -104,6 +104,10 @@ interface IAudioService {
 
     int getLastAudibleStreamVolume(int streamType);
 
+    void setSupportedSystemUsages(in int[] systemUsages);
+
+    int[] getSupportedSystemUsages();
+
     List<AudioProductStrategy> getAudioProductStrategies();
 
     boolean isMicrophoneMuted();
