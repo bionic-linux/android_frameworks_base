@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccb8197e_90255d0a",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1881dd20_f89f2ab8",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24843f04_9a30870a",
         "filename": "core/java/android/net/NetworkIdentity.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1ab0d2_f64dcfdd",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "24843f04_9a30870a",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 203,
+        "endChar": 11
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "181efda2_dcfbbb94",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "yes we do have a change in l.1871,\nwhere we change the parameter when building NetworkIdentity\nThus, I think it might be a good time to import.",
+      "parentUuid": "ac5f62b9_5642d742",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 69
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709accd8_eba2b584",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0276e0_c31971c1",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "709accd8_eba2b584",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 15
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f3ef7207_e55f5f0f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "Yes this would be addressed in later patches if no concern.\nOtherwise this change might be too complex to review.",
+      "parentUuid": "229e95d5_c5c20cbb",
+      "range": {
+        "startLine": 463,
+        "startChar": 40,
+        "endLine": 463,
+        "endChar": 58
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3e2bd1_71b6e42f",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4d1946_87e15aa9",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2019-12-23T09:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3e2bd1_71b6e42f",
+      "range": {
+        "startLine": 1159,
+        "startChar": 20,
+        "endLine": 1159,
+        "endChar": 48
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
