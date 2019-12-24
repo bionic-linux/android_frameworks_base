@@ -894,6 +894,11 @@ public final class SystemServer {
         traceBeginAndSlog("GpuService");
         mSystemServiceManager.startService(GpuService.class);
         traceEnd();
+
+        // Service for system config
+        traceBeginAndSlog("StartSystemConfigService");
+        mSystemServiceManager.startService(SystemConfigService.class);
+        traceEnd();
     }
 
     /**
