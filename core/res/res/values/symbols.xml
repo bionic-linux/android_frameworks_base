@@ -3842,4 +3842,5 @@
   <java-symbol type="layout" name="platlogo_layout" />
 
   <java-symbol type="bool" name="config_automotiveHideNavBarForKeyboard" />
+  <java-symbol type="bool" name="config_allow_ussd_over_ims" />
 </resources>
