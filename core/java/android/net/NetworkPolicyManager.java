@@ -18,8 +18,10 @@ package android.net;
 
 import static android.content.pm.PackageManager.GET_SIGNATURES;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
@@ -41,6 +43,8 @@ import android.util.Range;
 
 import com.google.android.collect.Sets;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,10 +52,10 @@ import java.util.Iterator;
 /**
  * Manager for creating and modifying network policy rules.
  *
- * {@hide}
+ * @hide
  */
-@SystemService(Context.NETWORK_POLICY_SERVICE)
 @SystemApi
+@SystemService(Context.NETWORK_POLICY_SERVICE)
 public class NetworkPolicyManager {
 
     /* POLICY_* are masks and can be ORed, although currently they are not.*/
@@ -87,6 +91,7 @@ public class NetworkPolicyManager {
      *
      * See network-policy-restrictions.md for more info.
      */
+
     /**
      * No specific rule was set
      * @hide
@@ -118,6 +123,7 @@ public class NetworkPolicyManager {
      * @hide
      */
     public static final int RULE_REJECT_ALL = 1 << 6;
+
     /**
      * Mask used to get the {@code RULE_xxx_METERED} rules
      * @hide
@@ -131,7 +137,6 @@ public class NetworkPolicyManager {
 
     /** @hide */
     public static final int FIREWALL_RULE_DEFAULT = 0;
-
     /** @hide */
     public static final String FIREWALL_CHAIN_NAME_NONE = "none";
     /** @hide */
@@ -163,6 +168,16 @@ public class NetworkPolicyManager {
      * Mask used to check if an override value is marked as congested.
      */
     public static final int OVERRIDE_CONGESTED = 1 << 1;
+
+    /**
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(flag = true, prefix = { "OVERRIDE_" }, value = {
+        OVERRIDE_UNMETERED,
+        OVERRIDE_CONGESTED
+    })
+    public @interface OverrideMask {}
 
     private final Context mContext;
     @UnsupportedAppUsage
@@ -271,6 +286,30 @@ public class NetworkPolicyManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /** @hide */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    @SystemApi
+    public void addSubscriptionListener(@NonNull SubscriptionListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener cannot be null.");
+        }
+
+        final SubscriptionListenerProxy proxyListener = new SubscriptionListenerProxy(listener);
+        listener.setListener(proxyListener);
+        registerListener(proxyListener);
+    }
+
+    /** @hide */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    @SystemApi
+    public void removeSubscriptionListener(@NonNull SubscriptionListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener cannot be null.");
+        }
+
+        unregisterListener(listener.getListener());
     }
 
     /** @hide */
@@ -480,6 +519,29 @@ public class NetworkPolicyManager {
     /** @hide */
     public static String resolveNetworkId(String ssid) {
         return WifiInfo.removeDoubleQuotes(ssid);
+    }
+
+    /**
+     * SubscriptionListener proxy for SubscriptionListener object.
+     * @hide
+     */
+    public class SubscriptionListenerProxy extends Listener {
+        private final SubscriptionListener mListener;
+
+        SubscriptionListenerProxy(SubscriptionListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onSubscriptionOverride(int subId, @OverrideMask int overrideMask,
+                int overrideValue) {
+            mListener.onSubscriptionOverride(subId, overrideMask, overrideValue);
+        }
+
+        @Override
+        public void onSubscriptionPlansChanged(int subId, SubscriptionPlan[] plans) {
+            mListener.onSubscriptionPlansChanged(subId, plans);
+        }
     }
 
     /** {@hide} */

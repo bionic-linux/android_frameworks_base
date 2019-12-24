@@ -4479,7 +4479,9 @@ package android.net {
   }
 
   public class NetworkPolicyManager {
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void addSubscriptionListener(@NonNull android.net.SubscriptionListener);
     method @Nullable public String getSubscriptionPlansOwner(int);
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void removeSubscriptionListener(@NonNull android.net.SubscriptionListener);
     method public void setSubscriptionOverride(int, int, int, long, @NonNull String);
     field public static final int OVERRIDE_CONGESTED = 2; // 0x2
     field public static final int OVERRIDE_UNMETERED = 1; // 0x1
@@ -4636,6 +4638,12 @@ package android.net {
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.StringNetworkSpecifier> CREATOR;
     field @NonNull public final String specifier;
+  }
+
+  public class SubscriptionListener {
+    ctor public SubscriptionListener();
+    method public void onSubscriptionOverride(int, int, int);
+    method public void onSubscriptionPlansChanged(int, @NonNull android.telephony.SubscriptionPlan[]);
   }
 
   public class TrafficStats {
