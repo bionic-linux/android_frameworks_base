@@ -46,6 +46,30 @@
       "revId": "8f8b1a083c84c445795548aba6088017c603e2ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4070dea_c088c932",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 0,
+      "message": "OK, can you add a comment to explain that this uses the active data subscription, which should be the one used by tethering ?\nDo we expect subId to always be the active data subscription ? What would happen if the user changes subscriptions while tethering ? Why do we pass the subId as argument to TetheringConfiguration if it\u0027s always the active one ? It seems strange to have the subId as argument in this class to query the subscription in most places, but only assume that it\u0027s the active data subscription here.",
+      "parentUuid": "0fee7e9b_ba037c0f",
+      "range": {
+        "startLine": 255,
+        "startChar": 30,
+        "endLine": 255,
+        "endChar": 59
+      },
+      "revId": "8f8b1a083c84c445795548aba6088017c603e2ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "492a1137_215c614b",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Oh right, but you still don\u0027t share a handler right ? Are there any messages deriving from BASE_TETHERING that are sent or received outside of the tethering module ?",
+      "parentUuid": "c55cc24f_a3da4426",
+      "range": {
+        "startLine": 611,
+        "startChar": 8,
+        "endLine": 611,
+        "endChar": 60
+      },
+      "revId": "4bbcf7e497bf19beb46e1c68465a1cece9785273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd26e7c0_5cd46c2c",
         "filename": "Android.bp",
         "patchSetId": 3

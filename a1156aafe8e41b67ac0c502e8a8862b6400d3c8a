@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6daa5f45_f6b8a99e",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Can you remove this from the build rule now ?",
+      "range": {
+        "startLine": 623,
+        "startChar": 7,
+        "endLine": 623,
+        "endChar": 57
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6609988f_2b212692",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Considering that the sets are not expected to receive any element after construction, I think this can just be new ArraySet\u003c\u003e(addrs.length).\n\nAlternatively new ArraySet\u003c\u003e(Arrays.asList(addrs)) would have worked I think (?), although the memory efficiency will depend on what the ArraySet constructor does (from what I can read right now I think it ends up being the same, e.g. it allocates just enough space, but this could change).",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 175,
+        "endChar": 66
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b05967_c5844a1b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Can you also point to where this is enforced ?\nI think Settings doesn\u0027t display the option to start tethering as secondary user, but could a system app still do it by calling the API ? Maybe the API should look at callers in that case ?\n\nThinking about it again I think it\u0027s not equivalent to previous code as I thought, since the binder call could be coming from the non-admin user at this point.",
+      "range": {
+        "startLine": 380,
+        "startChar": 31,
+        "endLine": 380,
+        "endChar": 51
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03fd45a_5b3f9af0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Nit: primary",
+      "range": {
+        "startLine": 380,
+        "startChar": 16,
+        "endLine": 380,
+        "endChar": 25
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332fe995_95906597",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Nit: can this be updated too ? It doesn\u0027t match the error message above now.\nActually, since this throws, maybe the Log can be removed to just have the message in the exception ?",
+      "range": {
+        "startLine": 282,
+        "startChar": 45,
+        "endLine": 282,
+        "endChar": 56
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561ed694_84005836",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "Since this is only used in the constructor, maybe a member is not necessary ?",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 52
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80da5664_970db43e",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2019-12-24T05:24:14Z",
+      "side": 1,
+      "message": "How about also logging the error here ?",
+      "range": {
+        "startLine": 343,
+        "startChar": 56,
+        "endLine": 343,
+        "endChar": 57
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
