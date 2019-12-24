@@ -2091,6 +2091,11 @@ interface ITelephony {
     boolean isDataAllowedInVoiceCall(int subId);
 
     /**
+     * Set whether a subscription always allows MMS connection.
+     */
+    boolean setAlwaysAllowMmsData(int subId, boolean allow);
+
+    /**
      * Command line command to enable or disable handling of CEP data for test purposes.
      */
     oneway void setCepEnabled(boolean isCepEnabled);
