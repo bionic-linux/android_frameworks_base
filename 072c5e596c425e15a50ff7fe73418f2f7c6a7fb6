@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f971deb_33ca0624",
+        "filename": "core/java/android/os/image/DynamicSystemClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-25T09:50:13Z",
+      "side": 1,
+      "message": "DSU picker \u0026 DynamicSystemInstallationService are using this key. Let\u0027s do this API-related changes altogether in another CL.",
+      "parentUuid": "6c484260_02783e72",
+      "range": {
+        "startLine": 231,
+        "startChar": 31,
+        "endLine": 231,
+        "endChar": 41
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cfb976_12385562",
         "filename": "packages/DynamicSystemInstallationService/res/values/strings.xml",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9298277c_841bf711",
+        "filename": "packages/DynamicSystemInstallationService/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-25T09:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11cfb976_12385562",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b1514a0_ab06ed2c",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17962527_1d2cc02e",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2019-12-25T09:50:13Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks for pointing this out!\n\npre-install: check Intent pubkey against bootimg key\npost-install: check image pubkey against bootimg key \u0026 revocation list",
+      "parentUuid": "7b1514a0_ab06ed2c",
+      "range": {
+        "startLine": 261,
+        "startChar": 69,
+        "endLine": 261,
+        "endChar": 76
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
