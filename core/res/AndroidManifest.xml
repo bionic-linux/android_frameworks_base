@@ -379,13 +379,13 @@
     <protected-broadcast android:name="android.net.wifi.p2p.PEERS_CHANGED" />
     <protected-broadcast android:name="android.net.wifi.p2p.CONNECTION_STATE_CHANGE" />
     <protected-broadcast android:name="android.net.wifi.p2p.PERSISTENT_GROUPS_CHANGED" />
-    <protected-broadcast android:name="android.net.conn.TETHER_STATE_CHANGED" />
     <protected-broadcast android:name="android.net.conn.INET_CONDITION_ACTION" />
     <protected-broadcast android:name="android.net.conn.NETWORK_CONDITIONS_MEASURED" />
     <protected-broadcast
             android:name="android.net.ConnectivityService.action.PKT_CNT_SAMPLE_INTERVAL_ELAPSED" />
     <protected-broadcast android:name="android.net.scoring.SCORE_NETWORKS" />
     <protected-broadcast android:name="android.net.scoring.SCORER_CHANGED" />
+    <protected-broadcast android:name="android.net.TETHER_STATE_CHANGED" />
     <protected-broadcast android:name="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE" />
     <protected-broadcast android:name="android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE" />
     <protected-broadcast android:name="android.intent.action.AIRPLANE_MODE" />
