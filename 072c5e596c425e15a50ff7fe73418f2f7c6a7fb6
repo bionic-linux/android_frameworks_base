@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c484260_02783e72",
+        "filename": "core/java/android/os/image/DynamicSystemClient.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-12-25T02:20:55Z",
+      "side": 1,
+      "message": "I think we have talked about this, sorry if I missed anything, who would be using this key?",
+      "range": {
+        "startLine": 231,
+        "startChar": 31,
+        "endLine": 231,
+        "endChar": 41
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cfb976_12385562",
+        "filename": "packages/DynamicSystemInstallationService/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-12-25T02:20:55Z",
+      "side": 1,
+      "message": "nit: just key_revocation_list_url",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1514a0_ab06ed2c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2019-12-25T02:20:55Z",
+      "side": 1,
+      "message": "My understanding is, we should check the key attached to the image, not the key from the caller, right?",
+      "range": {
+        "startLine": 261,
+        "startChar": 69,
+        "endLine": 261,
+        "endChar": 76
+      },
+      "revId": "072c5e596c425e15a50ff7fe73418f2f7c6a7fb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
