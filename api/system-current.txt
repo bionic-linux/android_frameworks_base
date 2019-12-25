@@ -1205,6 +1205,11 @@ package android.app.usage {
     field public static final String SERVICE_INTERFACE = "android.app.usage.CacheQuotaService";
   }
 
+  public class NetworkStatsManager {
+    method @NonNull @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public android.net.NetworkStatsProviderCallback registerNetworkStatsProvider(@NonNull String, @NonNull android.net.AbstractNetworkStatsProvider);
+    field public static final int QUOTA_UNLIMITED = -1; // 0xffffffff
+  }
+
   public static final class UsageEvents.Event {
     method public int getInstanceId();
     method @Nullable public String getNotificationChannelId();
@@ -3229,9 +3234,17 @@ package android.hardware.usb {
   }
 
   public class UsbManager {
+    method @RequiresPermission(android.Manifest.permission.MANAGE_USB) public long getCurrentFunctions();
     method @NonNull @RequiresPermission(android.Manifest.permission.MANAGE_USB) public java.util.List<android.hardware.usb.UsbPort> getPorts();
     method @RequiresPermission(android.Manifest.permission.MANAGE_USB) public void grantPermission(android.hardware.usb.UsbDevice, String);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_USB) public void setCurrentFunctions(long);
     field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final String ACTION_USB_PORT_CHANGED = "android.hardware.usb.action.USB_PORT_CHANGED";
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final String ACTION_USB_STATE = "android.hardware.usb.action.USB_STATE";
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final long FUNCTION_NONE = 0L; // 0x0L
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final long FUNCTION_RNDIS = 32L; // 0x20L
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final String USB_CONFIGURED = "configured";
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final String USB_CONNECTED = "connected";
+    field @RequiresPermission(android.Manifest.permission.MANAGE_USB) public static final String USB_FUNCTION_RNDIS = "rndis";
   }
 
   public final class UsbPort {
@@ -4210,6 +4223,13 @@ package android.metrics {
 
 package android.net {
 
+  public abstract class AbstractNetworkStatsProvider {
+    ctor public AbstractNetworkStatsProvider();
+    method public abstract void requestStatsUpdate(int);
+    method public abstract void setAlert(long);
+    method public abstract void setLimit(@NonNull String, long);
+  }
+
   public class CaptivePortal implements android.os.Parcelable {
     method public void logEvent(int, @NonNull String);
     method public void useNetwork();
@@ -4409,6 +4429,36 @@ package android.net {
 
   public class NetworkStack {
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
+  }
+
+  public final class NetworkStats implements android.os.Parcelable {
+    ctor public NetworkStats(long, int);
+    method public void combineAllValues(@NonNull android.net.NetworkStats);
+    method @NonNull public android.net.NetworkStats combineValues(@NonNull android.net.NetworkStats.Entry);
+    method @NonNull public android.net.NetworkStats subtract(@NonNull android.net.NetworkStats);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStats> CREATOR;
+    field public static final int DEFAULT_NETWORK_NO = 0; // 0x0
+    field public static final int DEFAULT_NETWORK_YES = 1; // 0x1
+    field @Nullable public static final String IFACE_ALL;
+    field public static final int METERED_NO = 0; // 0x0
+    field public static final int METERED_YES = 1; // 0x1
+    field public static final int ROAMING_NO = 0; // 0x0
+    field public static final int ROAMING_YES = 1; // 0x1
+    field public static final int SET_DEFAULT = 0; // 0x0
+    field public static final int SET_FOREGROUND = 1; // 0x1
+    field public static final int TAG_NONE = 0; // 0x0
+    field public static final int UID_ALL = -1; // 0xffffffff
+  }
+
+  public static class NetworkStats.Entry {
+    ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
+  }
+
+  public class NetworkStatsProviderCallback {
+    method public void onAlertReached();
+    method public void onLimitReached();
+    method public void onStatsUpdated(int, @NonNull android.net.NetworkStats, @NonNull android.net.NetworkStats);
+    method public void unregister();
   }
 
   public final class RouteInfo implements android.os.Parcelable {

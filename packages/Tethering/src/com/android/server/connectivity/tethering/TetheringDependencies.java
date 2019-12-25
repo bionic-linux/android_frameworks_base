@@ -18,7 +18,6 @@ package com.android.server.connectivity.tethering;
 
 import android.content.Context;
 import android.net.INetd;
-import android.net.INetworkStatsService;
 import android.net.NetworkRequest;
 import android.net.ip.IpServer;
 import android.net.util.SharedLog;
@@ -103,15 +102,6 @@ public abstract class TetheringDependencies {
     public INetworkManagementService getINetworkManagementService() {
         return INetworkManagementService.Stub.asInterface(
                 ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
-    }
-
-    /**
-     *  Get a reference to INetworkStatsService to force update tethering usage.
-     *  Note: This should be removed in R development cycle.
-     */
-    public INetworkStatsService getINetworkStatsService() {
-        return INetworkStatsService.Stub.asInterface(
-                ServiceManager.getService(Context.NETWORK_STATS_SERVICE));
     }
 
     /**

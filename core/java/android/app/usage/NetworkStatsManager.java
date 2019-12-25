@@ -18,16 +18,22 @@ package android.app.usage;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.annotation.UnsupportedAppUsage;
 import android.app.usage.NetworkStats.Bucket;
 import android.content.Context;
+import android.net.AbstractNetworkStatsProvider;
 import android.net.ConnectivityManager;
 import android.net.DataUsageRequest;
 import android.net.INetworkStatsService;
 import android.net.NetworkIdentity;
+import android.net.NetworkStatsProviderCallback;
+import android.net.NetworkStatsProviderWrapper;
 import android.net.NetworkTemplate;
 import android.os.Binder;
 import android.os.Handler;
@@ -118,6 +124,10 @@ public class NetworkStatsManager {
     public static final int FLAG_AUGMENT_WITH_SUBSCRIPTION_PLAN = 1 << 2;
 
     private int mFlags;
+
+    /** @hide */
+    @SystemApi
+    public static final int QUOTA_UNLIMITED = -1;
 
     /**
      * {@hide}
@@ -517,6 +527,34 @@ public class NetworkStatsManager {
          * @hide used for internal bookkeeping
          */
         private DataUsageRequest request;
+    }
+
+    /**
+     * Registers a custom provider of {@link android.net.NetworkStats} to combine the network
+     * statistics that cannot be seen by the kernel to system. To unregister, invoke
+     * {@link NetworkStatsProviderCallback#unregister()}.
+     *
+     * @param tag a human readable identifier of the custom network stats provider.
+     * @param provider a custom implementation of {@link AbstractNetworkStatsProvider} that needs to
+     *                 be registered to the system.
+     * @return a {@link NetworkStatsProviderCallback}, which can be used to report events to the
+     *         system.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    @NonNull public NetworkStatsProviderCallback registerNetworkStatsProvider(
+            @NonNull String tag,
+            @NonNull AbstractNetworkStatsProvider provider) {
+        try {
+            final NetworkStatsProviderWrapper wrapper = new NetworkStatsProviderWrapper(provider);
+            return new NetworkStatsProviderCallback(
+                    mService.registerNetworkStatsProvider(tag, wrapper));
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
+        // Unreachable code, but compiler doesn't know about it.
+        return null;
     }
 
     private static NetworkTemplate createTemplate(int networkType, String subscriberId) {

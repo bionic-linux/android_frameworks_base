@@ -51,6 +51,7 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothPan;
 import android.bluetooth.BluetoothProfile;
@@ -62,7 +63,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.hardware.usb.UsbManager;
 import android.net.INetd;
-import android.net.INetworkStatsService;
 import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
@@ -101,8 +101,8 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-import com.android.internal.notification.SystemNotificationChannels;
+//import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
+//import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.Protocol;
@@ -173,7 +173,6 @@ public class Tethering {
     private final BroadcastReceiver mStateReceiver;
     // Stopship: replace mNMService before production.
     private final INetworkManagementService mNMService;
-    private final INetworkStatsService mStatsService;
     private final Looper mLooper;
     private final StateMachine mTetherMasterSM;
     private final OffloadController mOffloadController;
@@ -210,7 +209,6 @@ public class Tethering {
         mDeps = deps;
         mContext = mDeps.getContext();
         mNMService = mDeps.getINetworkManagementService();
-        mStatsService = mDeps.getINetworkStatsService();
         mNetd = mDeps.getINetd(mContext);
         mLooper = mDeps.getTetheringLooper();
 
@@ -221,12 +219,13 @@ public class Tethering {
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper, deps);
         mTetherMasterSM.start();
 
+        final NetworkStatsManager statsManager =
+                (NetworkStatsManager) mContext.getSystemService(Context.NETWORK_STATS_SERVICE);
         mHandler = mTetherMasterSM.getHandler();
         mExecutor = new TetheringThreadExecutor(mHandler);
         mOffloadController = new OffloadController(mHandler,
                 mDeps.getOffloadHardwareInterface(mHandler, mLog),
-                mContext.getContentResolver(), mNMService,
-                mLog);
+                mContext.getContentResolver(), statsManager, mLog);
         mUpstreamNetworkMonitor = deps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new HashSet<>();
@@ -669,19 +668,19 @@ public class Tethering {
 
         if (usbTethered) {
             if (wifiTethered || bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
             } else {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_USB);
             }
         } else if (wifiTethered) {
             if (bluetoothTethered) {
-                showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
+                //showTetheredNotification(SystemMessage.NOTE_TETHER_GENERAL);
             } else {
                 /* We now have a status bar icon for WifiTethering, so drop the notification */
                 clearTetheredNotification();
             }
         } else if (bluetoothTethered) {
-            showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
+            //showTetheredNotification(SystemMessage.NOTE_TETHER_BLUETOOTH);
         } else {
             clearTetheredNotification();
         }
@@ -693,7 +692,8 @@ public class Tethering {
 
     @VisibleForTesting
     protected void showTetheredNotification(int id, boolean tetheringOn) {
-        NotificationManager notificationManager =
+        // Temp mark to development build as system_current.
+        /*NotificationManager notificationManager =
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null) {
             return;
@@ -758,6 +758,7 @@ public class Tethering {
 
         notificationManager.notifyAsUser(null, mLastNotificationId,
                 mTetheredNotificationBuilder.buildInto(new Notification()), UserHandle.ALL);
+        */
     }
 
     @VisibleForTesting
@@ -2057,7 +2058,7 @@ public class Tethering {
 
         mLog.log("adding TetheringInterfaceStateMachine for: " + iface);
         final TetherState tetherState = new TetherState(
-                new IpServer(iface, mLooper, interfaceType, mLog, mNMService, mStatsService,
+                new IpServer(iface, mLooper, interfaceType, mLog, mNMService,
                              makeControlCallback(), mConfig.enableLegacyDhcpServer,
                              mDeps.getIpServerDependencies()));
         mTetherStates.put(iface, tetherState);
