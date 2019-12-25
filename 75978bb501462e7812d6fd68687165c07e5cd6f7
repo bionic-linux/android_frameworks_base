@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3659bd75_21c5a3c4",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4183,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-25T03:34:52Z",
+      "side": 1,
+      "message": "No remediation URL yet? Do we plan to add it later? (That would be fine.)",
+      "range": {
+        "startLine": 4183,
+        "startChar": 62,
+        "endLine": 4183,
+        "endChar": 63
+      },
+      "revId": "75978bb501462e7812d6fd68687165c07e5cd6f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac0e922_ed706c93",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-25T03:34:52Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027ve seen this pattern before. Are there precedents in current.txt?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "75978bb501462e7812d6fd68687165c07e5cd6f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97eaea0_d8483afc",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-25T03:34:52Z",
+      "side": 1,
+      "message": "We should clearly document that this does not and cannot return the current number of bytes remaining. Instead, it represents the bytes remaining when the information was received by the portal.\n\nPerhaps \"remaining\" is the wrong word? getByteAllocation? getByteBudget?\n\nAlso - if it were public final, then it would be clearer to the caller that this number cannot change.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 5
+      },
+      "revId": "75978bb501462e7812d6fd68687165c07e5cd6f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bba580_d26c0929",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2019-12-25T03:34:52Z",
+      "side": 1,
+      "message": "Similar comments to above.",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 35
+      },
+      "revId": "75978bb501462e7812d6fd68687165c07e5cd6f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
