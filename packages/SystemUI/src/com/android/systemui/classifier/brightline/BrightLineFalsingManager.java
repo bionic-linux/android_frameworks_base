@@ -16,22 +16,24 @@
 
 package com.android.systemui.classifier.brightline;
 
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import static com.android.systemui.classifier.FalsingManagerImpl.FALSING_REMAIN_LOCKED;
+import static com.android.systemui.classifier.FalsingManagerImpl.FALSING_SUCCESS;
+
+import android.hardware.biometrics.BiometricSourceType;
 import android.net.Uri;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.android.internal.logging.MetricsLogger;
+import com.android.keyguard.KeyguardUpdateMonitor;
+import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.systemui.classifier.Classifier;
 import com.android.systemui.plugins.FalsingManager;
+import com.android.systemui.util.ProximitySensor;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * FalsingManager designed to make clear why a touch was rejected.
@@ -41,31 +43,49 @@ public class BrightLineFalsingManager implements FalsingManager {
     static final boolean DEBUG = false;
     private static final String TAG = "FalsingManagerPlugin";
 
-    private final SensorManager mSensorManager;
     private final FalsingDataProvider mDataProvider;
+    private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
+    private final ProximitySensor mProximitySensor;
     private boolean mSessionStarted;
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
     private boolean mShowingAod;
     private boolean mScreenOn;
 
     private final ExecutorService mBackgroundExecutor = Executors.newSingleThreadExecutor();
+=======
+    private MetricsLogger mMetricsLogger;
+    private int mIsFalseTouchCalls;
+    private boolean mShowingAod;
+    private boolean mScreenOn;
+    private boolean mJustUnlockedWithFace;
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
 
     private final List<FalsingClassifier> mClassifiers;
 
-    private SensorEventListener mSensorEventListener = new SensorEventListener() {
-        @Override
-        public synchronized void onSensorChanged(SensorEvent event) {
-            onSensorEvent(event);
-        }
+    private ProximitySensor.ProximitySensorListener mSensorEventListener = this::onProximityEvent;
 
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
+    private final KeyguardUpdateMonitorCallback mKeyguardUpdateCallback =
+            new KeyguardUpdateMonitorCallback() {
+                @Override
+                public void onBiometricAuthenticated(int userId,
+                        BiometricSourceType biometricSourceType) {
+                    if (userId == KeyguardUpdateMonitor.getCurrentUser()
+                            && biometricSourceType == BiometricSourceType.FACE) {
+                        mJustUnlockedWithFace = true;
+                    }
+                }
+            };
 
-    public BrightLineFalsingManager(FalsingDataProvider falsingDataProvider,
-            SensorManager sensorManager) {
+    public BrightLineFalsingManager(
+            FalsingDataProvider falsingDataProvider,
+            KeyguardUpdateMonitor keyguardUpdateMonitor,
+            ProximitySensor proximitySensor) {
+        mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mDataProvider = falsingDataProvider;
-        mSensorManager = sensorManager;
+        mProximitySensor = proximitySensor;
+        mKeyguardUpdateMonitor.registerCallback(mKeyguardUpdateCallback);
+
+        mMetricsLogger = new MetricsLogger();
         mClassifiers = new ArrayList<>();
         DistanceClassifier distanceClassifier = new DistanceClassifier(mDataProvider);
         ProximityClassifier proximityClassifier = new ProximityClassifier(distanceClassifier,
@@ -79,30 +99,22 @@ public class BrightLineFalsingManager implements FalsingManager {
     }
 
     private void registerSensors() {
-        Sensor s = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        if (s != null) {
-            // This can be expensive, and doesn't need to happen on the main thread.
-            mBackgroundExecutor.submit(() -> {
-                logDebug("registering sensor listener");
-                mSensorManager.registerListener(
-                        mSensorEventListener, s, SensorManager.SENSOR_DELAY_GAME);
-            });
-        }
+        mProximitySensor.register(mSensorEventListener);
     }
 
 
     private void unregisterSensors() {
-        // This can be expensive, and doesn't need to happen on the main thread.
-        mBackgroundExecutor.submit(() -> {
-            logDebug("unregistering sensor listener");
-            mSensorManager.unregisterListener(mSensorEventListener);
-        });
+        mProximitySensor.unregister(mSensorEventListener);
     }
 
     private void sessionStart() {
         if (!mSessionStarted && !mShowingAod && mScreenOn) {
             logDebug("Starting Session");
             mSessionStarted = true;
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
+=======
+            mJustUnlockedWithFace = false;
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
             registerSensors();
             mClassifiers.forEach(FalsingClassifier::onSessionStarted);
         }
@@ -115,6 +127,10 @@ public class BrightLineFalsingManager implements FalsingManager {
             unregisterSensors();
             mDataProvider.onSessionEnd();
             mClassifiers.forEach(FalsingClassifier::onSessionEnded);
+            if (mIsFalseTouchCalls != 0) {
+                mMetricsLogger.histogram(FALSING_REMAIN_LOCKED, mIsFalseTouchCalls);
+                mIsFalseTouchCalls = 0;
+            }
         }
     }
 
@@ -130,7 +146,7 @@ public class BrightLineFalsingManager implements FalsingManager {
 
     @Override
     public boolean isFalseTouch() {
-        boolean r = mClassifiers.stream().anyMatch(falsingClassifier -> {
+        boolean r = !mJustUnlockedWithFace && mClassifiers.stream().anyMatch(falsingClassifier -> {
             boolean result = falsingClassifier.isFalseTouch();
             if (result) {
                 logInfo(falsingClassifier.getClass().getName() + ": true");
@@ -153,14 +169,21 @@ public class BrightLineFalsingManager implements FalsingManager {
         mClassifiers.forEach((classifier) -> classifier.onTouchEvent(motionEvent));
     }
 
-    private void onSensorEvent(SensorEvent sensorEvent) {
+    private void onProximityEvent(ProximitySensor.ProximityEvent proximityEvent) {
         // TODO: some of these classifiers might allow us to abort early, meaning we don't have to
         // make these calls.
-        mClassifiers.forEach((classifier) -> classifier.onSensorEvent(sensorEvent));
+        mClassifiers.forEach((classifier) -> classifier.onProximityEvent(proximityEvent));
     }
 
     @Override
     public void onSucccessfulUnlock() {
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
+=======
+        if (mIsFalseTouchCalls != 0) {
+            mMetricsLogger.histogram(FALSING_SUCCESS, mIsFalseTouchCalls);
+            mIsFalseTouchCalls = 0;
+        }
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
         sessionEnd();
     }
 
@@ -320,6 +343,10 @@ public class BrightLineFalsingManager implements FalsingManager {
     @Override
     public void cleanup() {
         unregisterSensors();
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
+=======
+        mKeyguardUpdateMonitor.removeCallback(mKeyguardUpdateCallback);
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
     }
 
     static void logDebug(String msg) {
