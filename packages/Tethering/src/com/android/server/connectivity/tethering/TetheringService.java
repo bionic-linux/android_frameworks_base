@@ -306,13 +306,6 @@ public class TetheringService extends Service {
         if (mDeps == null) {
             mDeps = new TetheringDependencies() {
                 @Override
-                public NetworkRequest getDefaultNetworkRequest() {
-                    ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(
-                            Context.CONNECTIVITY_SERVICE);
-                    return cm.getDefaultRequest();
-                }
-
-                @Override
                 public Looper getTetheringLooper() {
                     final HandlerThread tetherThread = new HandlerThread("android.tethering");
                     tetherThread.start();

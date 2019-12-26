@@ -313,11 +313,6 @@ public class TetheringTest {
         }
 
         @Override
-        public NetworkRequest getDefaultNetworkRequest() {
-            return mNetworkRequest;
-        }
-
-        @Override
         public boolean isTetheringSupported() {
             mIsTetheringSupportedCalls++;
             return true;
