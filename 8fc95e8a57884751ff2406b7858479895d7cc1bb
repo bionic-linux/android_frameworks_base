@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06b6ade7_a3fe9fe4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T18:03:52Z",
+      "side": 1,
+      "message": "please get the subId from getSubId(). PTAL at some of the adjacent functions.",
+      "range": {
+        "startLine": 7534,
+        "startChar": 58,
+        "endLine": 7534,
+        "endChar": 63
+      },
+      "revId": "8fc95e8a57884751ff2406b7858479895d7cc1bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
