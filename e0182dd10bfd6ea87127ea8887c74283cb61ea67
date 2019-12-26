@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b51d0f1_41b26461",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2019-12-26T19:04:41Z",
+      "side": 1,
+      "message": "After looking at this again, I think we want to expose this as public API. This is intended to be a convenience method for apps migrating from using the Telephony APIs.",
+      "range": {
+        "startLine": 277,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 14
+      },
+      "revId": "e0182dd10bfd6ea87127ea8887c74283cb61ea67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
