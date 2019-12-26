@@ -619,6 +619,7 @@ filegroup {
         "core/java/com/android/internal/util/Protocol.java",
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
+        "core/java/com/android/internal/util/TrafficStatsConstants.java",
         "core/java/android/net/shared/Inet4AddressUtils.java",
         "core/java/com/google/android/collect/Sets.java",
     ],

@@ -74,11 +74,6 @@ public abstract class TetheringDependencies {
     }
 
     /**
-     * Get the NetworkRequest that should be fulfilled by the default network.
-     */
-    public abstract NetworkRequest getDefaultNetworkRequest();
-
-    /**
      * Get a reference to the EntitlementManager to be used by tethering.
      */
     public EntitlementManager getEntitlementManager(Context ctx, StateMachine target,
