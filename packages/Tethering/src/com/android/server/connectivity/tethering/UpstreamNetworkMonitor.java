@@ -19,7 +19,6 @@ package com.android.server.connectivity.tethering;
 import static android.net.ConnectivityManager.TYPE_MOBILE_DUN;
 import static android.net.ConnectivityManager.TYPE_MOBILE_HIPRI;
 import static android.net.ConnectivityManager.TYPE_NONE;
-import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_DUN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
@@ -216,7 +215,7 @@ public class UpstreamNetworkMonitor {
         // Additionally, we log a message to aid in any subsequent debugging.
         mLog.i("requesting mobile upstream network: " + mobileUpstreamRequest);
 
-        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
+        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, mHandler);
     }
 
     /** Release mobile network request. */
@@ -239,7 +238,7 @@ public class UpstreamNetworkMonitor {
         final TypeStatePair typeStatePair = findFirstAvailableUpstreamByType(
                 mNetworkMap.values(), preferredTypes, isCellularUpstreamPermitted());
 
-        mLog.log("preferred upstream type: " + getNetworkTypeName(typeStatePair.type));
+        mLog.log("preferred upstream type: " + typeStatePair.type);
 
         switch (typeStatePair.type) {
             case TYPE_MOBILE_DUN:
@@ -514,8 +513,7 @@ public class UpstreamNetworkMonitor {
             try {
                 nc = ConnectivityManager.networkCapabilitiesForType(type);
             } catch (IllegalArgumentException iae) {
-                Log.e(TAG, "No NetworkCapabilities mapping for legacy type: "
-                        + ConnectivityManager.getNetworkTypeName(type));
+                Log.e(TAG, "No NetworkCapabilities mapping for legacy type: " + type);
                 continue;
             }
             if (!isCellularUpstreamPermitted && isCellular(nc)) {
