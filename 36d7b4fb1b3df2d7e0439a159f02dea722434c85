@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c91a5a80_ef4c6886",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T20:23:40Z",
+      "side": 1,
+      "message": "the AppType isn\u0027t needed to get the manual network selection status.",
+      "range": {
+        "startLine": 7533,
+        "startChar": 58,
+        "endLine": 7533,
+        "endChar": 65
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c353fdf_d927df28",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T20:23:40Z",
+      "side": 1,
+      "message": "I think we should consider naming this something like getManualNetworkSelectionPlmn(). Then we need to document the return type to explain what it returns when manual network network selection isn\u0027t enabled.",
+      "range": {
+        "startLine": 7533,
+        "startChar": 28,
+        "endLine": 7533,
+        "endChar": 53
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecad5d4_2923cee7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T20:23:40Z",
+      "side": 1,
+      "message": "Does this need to be nullable? What about returning an empty String?",
+      "range": {
+        "startLine": 7533,
+        "startChar": 12,
+        "endLine": 7533,
+        "endChar": 20
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
