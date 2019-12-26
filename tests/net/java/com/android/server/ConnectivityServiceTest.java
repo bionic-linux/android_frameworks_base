@@ -5639,6 +5639,31 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(defaultCallback);
     }
 
+    @Test
+    public final void testLoseTrusted() throws Exception {
+        final NetworkRequest trustedRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_TRUSTED)
+                .build();
+        final TestNetworkCallback trustedCallback = new TestNetworkCallback();
+        mCm.requestNetwork(trustedRequest, trustedCallback);
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        trustedCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        trustedCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+
+        mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCellNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+
+        mCm.unregisterNetworkCallback(trustedCallback);
+    }
+
     @Ignore // 40%+ flakiness : figure out why and re-enable.
     @Test
     public final void testBatteryStatsNetworkType() throws Exception {
