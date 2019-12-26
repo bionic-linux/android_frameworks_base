@@ -154,6 +154,7 @@ import android.os.IThermalService;
 import android.os.IUserManager;
 import android.os.IncidentManager;
 import android.os.PowerManager;
+import android.os.Process;
 import android.os.RecoverySystem;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -936,12 +937,12 @@ public final class SystemServiceRegistry {
                 });
 
         registerService(Context.TV_INPUT_SERVICE, TvInputManager.class,
-                new CachedServiceFetcher<TvInputManager>() {
+                new StaticServiceFetcher<TvInputManager>() {
             @Override
-            public TvInputManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+            public TvInputManager createService() throws ServiceNotFoundException {
                 IBinder iBinder = ServiceManager.getServiceOrThrow(Context.TV_INPUT_SERVICE);
                 ITvInputManager service = ITvInputManager.Stub.asInterface(iBinder);
-                return new TvInputManager(service, ctx.getUserId());
+                return new TvInputManager(service, UserHandle.getUserId(Process.myUid()));
             }});
 
         registerService(Context.TV_TUNER_RESOURCE_MGR_SERVICE, TunerResourceManager.class,
@@ -1715,7 +1716,8 @@ public final class SystemServiceRegistry {
 
                     } catch (ServiceNotFoundException e) {
                         onServiceNotFound(e);
-
+                        // Make sure this process can be checked later
+                        newState = ContextImpl.STATE_READY;
                     } finally {
                         synchronized (cache) {
                             cache[mCacheIndex] = service;
