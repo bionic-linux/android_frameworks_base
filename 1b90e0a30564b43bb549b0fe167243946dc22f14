@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97cc6b4_aab8e1f3",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6809,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T17:50:15Z",
+      "side": 1,
+      "message": "the formatting for these javadocs requires that the first sentence be a single sentence (should be \u003c100 characters) and punctuated with a \".\"\n\nAfter that there can be paragraph explanation text. After that, are the params, followed by any \"notes\" like \"@see\" annotations.\n\nPlease rearrange the javadocs accordingly.",
+      "range": {
+        "startLine": 6809,
+        "startChar": 7,
+        "endLine": 6809,
+        "endChar": 39
+      },
+      "revId": "1b90e0a30564b43bb549b0fe167243946dc22f14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a9b147_f53adc56",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6818,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T17:50:15Z",
+      "side": 1,
+      "message": "Just readPhoneState should be fine for this I think.",
+      "range": {
+        "startLine": 6818,
+        "startChar": 31,
+        "endLine": 6818,
+        "endChar": 58
+      },
+      "revId": "1b90e0a30564b43bb549b0fe167243946dc22f14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb768d3_38ace867",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6828,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2019-12-26T17:50:15Z",
+      "side": 1,
+      "message": "the subId parameter should be fetched from the TelephonyManager instance using the private getSubId() method.",
+      "range": {
+        "startLine": 6828,
+        "startChar": 51,
+        "endLine": 6828,
+        "endChar": 56
+      },
+      "revId": "1b90e0a30564b43bb549b0fe167243946dc22f14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
