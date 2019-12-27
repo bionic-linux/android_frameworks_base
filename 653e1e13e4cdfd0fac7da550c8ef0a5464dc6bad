@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5f3c3c_65bba44c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-27T07:43:25Z",
+      "side": 1,
+      "message": "nit: for consistency, not sure should we define a final string above, like L76 for KEY_ENABLE_WHEN_COMPLETED.\n\nAnyway, looks like we\u0027ll have a refactor for this part in another CL, so this is probably not critical.",
+      "range": {
+        "startLine": 246,
+        "startChar": 47,
+        "endLine": 246,
+        "endChar": 57
+      },
+      "revId": "653e1e13e4cdfd0fac7da550c8ef0a5464dc6bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7911d605_939d42c4",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-27T07:43:25Z",
+      "side": 1,
+      "message": "This function looks very similar to getRevokeReasonForKey(), except the return value.\n\nI\u0027m wondering if will it be better to combine both into a single function like checkRevokeStatus() and returns a class e.g., \n\nclass revokeStatus {\n    boolean is_revoked; \n    String revoke_reason;\n}\n\nSo if we change/extend RevocationEntry later, we don\u0027t have to modify two places.\nThought?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "653e1e13e4cdfd0fac7da550c8ef0a5464dc6bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edca8d36_0cb11b2d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-27T07:43:25Z",
+      "side": 1,
+      "message": "nit: maybe add an example of the jsonString in the comment above (at L68).",
+      "range": {
+        "startLine": 73,
+        "startChar": 47,
+        "endLine": 73,
+        "endChar": 57
+      },
+      "revId": "653e1e13e4cdfd0fac7da550c8ef0a5464dc6bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6728258d_b4bde884",
+        "filename": "packages/DynamicSystemInstallationService/tests/src/com/android/dynsystem/DynamicSystemKeyRevocationListTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-27T07:43:25Z",
+      "side": 1,
+      "message": "nit: This seems not easy to parse by reading, how about adding a .json file for testing?\n\ne.g., similar to:\nhttps://android.googlesource.com/platform/frameworks/av/+/refs/heads/master/apex/testing",
+      "range": {
+        "startLine": 44,
+        "startChar": 57,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "653e1e13e4cdfd0fac7da550c8ef0a5464dc6bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744285b9_f162f477",
+        "filename": "packages/DynamicSystemInstallationService/tests/src/com/android/dynsystem/DynamicSystemKeyRevocationListTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1080813
+      },
+      "writtenOn": "2019-12-27T07:43:25Z",
+      "side": 1,
+      "message": "nit: to make string literals more meaningful, can consider adding comments to indicate the argument name.\n\ne.g.,\nURL mockUrl \u003d new URL(\"http\" /* protocol */, \"foo.bar\" /* host */, \n                      80 /* port */, \"baz\" /* file */, ...):",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "653e1e13e4cdfd0fac7da550c8ef0a5464dc6bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
