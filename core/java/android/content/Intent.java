@@ -649,6 +649,8 @@ public class Intent implements Parcelable, Cloneable {
     private static final String ATTR_DATA = "data";
     private static final String ATTR_FLAGS = "flags";
 
+    private static final int BLOB_MIN_SIZE = 524288; // 512KB
+
     // ---------------------------------------------------------------------
     // ---------------------------------------------------------------------
     // Standard intent activity actions (see action variable).
@@ -10638,6 +10640,25 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
+        Parcel data = Parcel.obtain();
+        try {
+            writeToParcelInner(data, flags);
+            int size = data.dataSize();
+            if (data.containsBinder() || size < BLOB_MIN_SIZE) {
+                out.writeBoolean(true);
+                out.appendFrom(data, 0, size);
+            } else {
+                out.writeBoolean(false);
+                byte[] bytes = data.marshall();
+                out.writeBlob(bytes);
+                Log.v(TAG, "writeToParcel via ashmem: " + out.dataSize());
+            }
+        } finally {
+            data.recycle();
+        }
+    }
+
+    private void writeToParcelInner(Parcel out, int flags) {
         out.writeString(mAction);
         Uri.writeToParcel(out, mData);
         out.writeString(mType);
@@ -10696,6 +10717,27 @@ public class Intent implements Parcelable, Cloneable {
     }
 
     public void readFromParcel(Parcel in) {
+        if (in.readBoolean()) {
+            readFromParcelInner(in);
+        } else {
+            byte[] bytes = in.readBlob();
+            if (bytes == null) {
+                Log.w(TAG, "readFromParcel: bytes is null");
+                return;
+            }
+            Parcel data = Parcel.obtain();
+            try {
+                data.unmarshall(bytes, 0, bytes.length);
+                data.setDataPosition(0);
+                readFromParcelInner(data);
+                Log.v(TAG, "readFromParcel via ashmem: " + data.dataSize());
+            } finally {
+                data.recycle();
+            }
+        }
+    }
+
+    private void readFromParcelInner(Parcel in) {
         setAction(in.readString());
         mData = Uri.CREATOR.createFromParcel(in);
         mType = in.readString();
