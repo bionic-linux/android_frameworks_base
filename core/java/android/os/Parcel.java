@@ -342,6 +342,16 @@ public final class Parcel {
     @CriticalNative
     private static native int nativeReadCallingWorkSourceUid(long nativePtr);
 
+    @CriticalNative
+    private static native boolean nativeContainsBinder(long nativePtr);
+
+    /**
+     * @hide
+     */
+    public boolean containsBinder() {
+        return nativeContainsBinder(mNativePtr);
+    }
+
     /** Last time exception with a stack trace was written */
     private static volatile long sLastWriteExceptionStackTrace;
     /** Used for throttling of writing stack trace, which is costly */

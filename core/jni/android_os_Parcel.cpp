@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2012 The Android Open Source Project
  *
@@ -688,6 +689,16 @@ static jboolean android_os_Parcel_replaceCallingWorkSourceUid(jlong nativePtr, j
     return false;
 }
 
+static jboolean android_os_Parcel_containsBinder(jlong nativePtr)
+{
+    Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
+    if (parcel == NULL) {
+       return false;
+    }
+
+    return parcel->objectsCount() != 0;
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gParcelMethods[] = {
@@ -763,6 +774,9 @@ static const JNINativeMethod gParcelMethods[] = {
     {"nativeReadCallingWorkSourceUid", "(J)I", (void*)android_os_Parcel_readCallingWorkSourceUid},
     // @CriticalNative
     {"nativeReplaceCallingWorkSourceUid", "(JI)Z", (void*)android_os_Parcel_replaceCallingWorkSourceUid},
+
+    // @CriticalNative
+    {"nativeContainsBinder", "(J)Z", (void*)android_os_Parcel_containsBinder},
 };
 
 const char* const kParcelPathName = "android/os/Parcel";
