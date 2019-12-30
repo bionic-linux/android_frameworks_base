@@ -4383,6 +4383,11 @@ package android.net {
     field public final android.net.WifiKey wifiKey;
   }
 
+  public class NetworkPolicyManager {
+    method @Nullable public String getSubscriptionPlansOwner(int);
+    method public void setSubscriptionOverride(int, int, int, long, @NonNull String);
+  }
+
   public abstract class NetworkRecommendationProvider {
     ctor public NetworkRecommendationProvider(android.content.Context, java.util.concurrent.Executor);
     method public final android.os.IBinder getBinder();
