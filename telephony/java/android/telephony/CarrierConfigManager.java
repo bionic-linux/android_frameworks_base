@@ -3329,6 +3329,17 @@ public class CarrierConfigManager {
     public static final String KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL =
             "prevent_clir_activation_and_deactivation_code_bool";
 
+    /**
+     * The package name for the Carrier app that will be treated as the owner for all networks
+     * managed by this carrier. The default package name will be the package for {@link
+     * CarrierService}.
+     *
+     * This key should only be set once per reset. Because the owner package isn't expected to be
+     * updated, we won't listen for changes on this key.
+     */
+    public static final String KEY_CARRIER_NETWORK_OWNER_PACKAGE_NAME =
+            "carrier_network_owner_package_name";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -3791,6 +3802,7 @@ public class CarrierConfigManager {
                 new int[] {4 /* BUSY */});
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
         sDefaults.putLong(KEY_DATA_SWITCH_VALIDATION_TIMEOUT_LONG, 2000);
+        sDefaults.putString(KEY_CARRIER_NETWORK_OWNER_PACKAGE_NAME, "android.service.carrier");
     }
 
     /**
