@@ -73,6 +73,7 @@ import android.telephony.Annotation.DataState;
 import android.telephony.Annotation.NetworkType;
 import android.telephony.Annotation.RadioPowerState;
 import android.telephony.Annotation.SimActivationState;
+import android.telephony.Annotation.UiccAppType;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
 import android.telephony.emergency.EmergencyNumber;
 import android.telephony.emergency.EmergencyNumber.EmergencyServiceCategories;
@@ -1464,23 +1465,22 @@ public class TelephonyManager {
             "android.telephony.extra.SIM_COMBINATION_NAMES";
 
     /**
-     * Broadcast Action: The time was set by the carrier (typically by the NITZ string).
-     * This is a sticky broadcast.
-     * The intent will have the following extra values:</p>
+     * Broadcast Action: The time was set by the carrier (typically by the NITZ string). This is a
+     * sticky broadcast. The intent will have the following extra values:
+     *
      * <ul>
-     *   <li><em>time</em> - The time as a long in UTC milliseconds.</li>
+     *   <li><em>time</em> - The time as a long in UTC milliseconds.
      * </ul>
      *
-     * <p class="note">
-     * Requires the READ_PHONE_STATE permission.
+     * <p class="note">Requires the READ_PHONE_STATE permission.
      *
-     * <p class="note">This is a protected intent that can only be sent
-     * by the system.
+     * <p class="note">This is a protected intent that can only be sent by the system.
      *
      * @hide
      */
     @SystemApi
-    public static final String ACTION_NETWORK_SET_TIME = "android.telephony.action.NETWORK_SET_TIME";
+    public static final String ACTION_NETWORK_SET_TIME =
+            "android.telephony.action.NETWORK_SET_TIME";
 
     //
     //
@@ -6672,19 +6672,6 @@ public class TelephonyManager {
         }
     }
 
-    /**
-     * UICC SIM Application Types
-     * @hide
-     */
-    @IntDef(prefix = { "APPTYPE_" }, value = {
-            APPTYPE_SIM,
-            APPTYPE_USIM,
-            APPTYPE_RUIM,
-            APPTYPE_CSIM,
-            APPTYPE_ISIM
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface UiccAppType{}
     /** UICC application type is SIM */
     public static final int APPTYPE_SIM = PhoneConstants.APPTYPE_SIM;
     /** UICC application type is USIM */
