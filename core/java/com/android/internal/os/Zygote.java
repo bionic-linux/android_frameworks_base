@@ -210,6 +210,112 @@ public final class Zygote {
      */
     public static final String USAP_POOL_SECONDARY_SOCKET_NAME = "usap_pool_secondary";
 
+    // Zygote supports sending unsolicited message to the system_server:
+    // each such message from zygote to system_server should begin with the length
+    // of the payload (3 bytes) and the type (1 byte).
+    //
+    // Overall the message format should be like this:
+    // +---------+--------+---------+
+    // | 3 bytes | 1 byte | X bytes |
+    // +---------+---------+--------+
+    // | length  | type   | payload |
+    // +---------+--------+---------+
+
+    /**
+     * A type for the unsolicited message from zygote to system_server, this one means unset.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_TYPE_RESERVED = 0;
+
+    /**
+     * A type for the unsolicited message from zygote to system_server, this one means a child
+     * process of this zygote stopped or terminated (died), its payload will include
+     * 3 integers: the pid/uid and the status code.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_TYPE_SIGCHILD = 1;
+
+    /**
+     * The offset to the zygote unsolicited message header.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_OFFSET_HEADER = 0;
+
+    /**
+     * The offset to the pid if the zygote unsolicited message type is
+     * {@link #ZYGOTE_MESSAGE_TYPE_SIGCHILD}.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_OFFSET_SIGCHLD_PID = 4;
+
+    /**
+     * The offset to the uid if the zygote unsolicited message type is
+     * {@link #ZYGOTE_MESSAGE_TYPE_SIGCHILD}.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_OFFSET_SIGCHLD_UID = 8;
+
+    /**
+     * The offset to the status code if the zygote unsolicited message type is
+     * {@link #ZYGOTE_MESSAGE_TYPE_SIGCHILD}.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    public static final int ZYGOTE_MESSAGE_OFFSET_SIGCHLD_STATUS = 12;
+
+    /**
+     * The bit mask for the "type" in a zygote unsolicited message header.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    private static final int ZYGOTE_MESSAGE_MASK_TYPE = 0xFF;
+
+    /**
+     * The bit mask for the "length" in a zygote unsolicited message header.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    private static final int ZYGOTE_MESSAGE_MASK_LENGTH = 0x00FFFFFF;
+
+    /**
+     * The shift for the "type" in a zygote unsolicited message header.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    private static final int ZYGOTE_MESSAGE_SHIFT_TYPE = 0;
+
+    /**
+     * The shift for the "length" in a zygote unsolicited message header.
+     *
+     * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+     *
+     * @hide for internal use only
+     */
+    private static final int ZYGOTE_MESSAGE_SHIFT_LENGTH = 8;
+
     private Zygote() {}
 
     /**
@@ -940,5 +1046,19 @@ public final class Zygote {
         for (String arg : args) {
             command.append(" '").append(arg.replace("'", "'\\''")).append("'");
         }
+    }
+
+    /**
+     * @hide for internal use only
+     */
+    public static int getZygoteMessageLength(int header) {
+        return (header >> ZYGOTE_MESSAGE_SHIFT_LENGTH) & ZYGOTE_MESSAGE_MASK_LENGTH;
+    }
+
+    /**
+     * @hide for internal use only
+     */
+    public static int getZygoteMessageType(int header) {
+        return (header >> ZYGOTE_MESSAGE_SHIFT_TYPE) & ZYGOTE_MESSAGE_MASK_TYPE;
     }
 }
