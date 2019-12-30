@@ -18,6 +18,9 @@ package android.net;
 
 import static android.content.pm.PackageManager.GET_SIGNATURES;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -48,14 +51,24 @@ import java.util.Iterator;
  * {@hide}
  */
 @SystemService(Context.NETWORK_POLICY_SERVICE)
+@SystemApi
 public class NetworkPolicyManager {
 
     /* POLICY_* are masks and can be ORed, although currently they are not.*/
-    /** No specific network policy, use system default. */
+    /**
+     * No specific network policy, use system default.
+     * @hide
+     */
     public static final int POLICY_NONE = 0x0;
-    /** Reject network usage on metered networks when application in background. */
+    /**
+     * Reject network usage on metered networks when application in background.
+     * @hide
+     */
     public static final int POLICY_REJECT_METERED_BACKGROUND = 0x1;
-    /** Allow metered network use in the background even when in data usage save mode. */
+    /**
+     * Allow metered network use in the background even when in data usage save mode.
+     * @hide
+     */
     public static final int POLICY_ALLOW_METERED_BACKGROUND = 0x4;
 
     /*
@@ -74,39 +87,70 @@ public class NetworkPolicyManager {
      *
      * See network-policy-restrictions.md for more info.
      */
-    /** No specific rule was set */
+    /**
+     * No specific rule was set
+     * @hide
+     */
     public static final int RULE_NONE = 0;
-    /** Allow traffic on metered networks. */
+    /**
+     * Allow traffic on metered networks.
+     * @hide
+     */
     public static final int RULE_ALLOW_METERED = 1 << 0;
-    /** Temporarily allow traffic on metered networks because app is on foreground. */
+    /**
+     * Temporarily allow traffic on metered networks because app is on foreground.
+     * @hide
+     */
     public static final int RULE_TEMPORARY_ALLOW_METERED = 1 << 1;
-    /** Reject traffic on metered networks. */
+    /**
+     * Reject traffic on metered networks.
+     * @hide
+     */
     public static final int RULE_REJECT_METERED = 1 << 2;
-    /** Network traffic should be allowed on all networks (metered or non-metered), although
-     * metered-network restrictions could still apply. */
+    /**
+     * Network traffic should be allowed on all networks (metered or non-metered), although
+     * metered-network restrictions could still apply.
+     * @hide
+     */
     public static final int RULE_ALLOW_ALL = 1 << 5;
-    /** Reject traffic on all networks. */
+    /**
+     * Reject traffic on all networks.
+     * @hide
+     */
     public static final int RULE_REJECT_ALL = 1 << 6;
-    /** Mask used to get the {@code RULE_xxx_METERED} rules */
+    /**
+     * Mask used to get the {@code RULE_xxx_METERED} rules
+     * @hide
+     */
     public static final int MASK_METERED_NETWORKS = 0b00001111;
-    /** Mask used to get the {@code RULE_xxx_ALL} rules */
+    /**
+     * Mask used to get the {@code RULE_xxx_ALL} rules
+     * @hide
+     */
     public static final int MASK_ALL_NETWORKS     = 0b11110000;
 
+    /** @hide */
     public static final int FIREWALL_RULE_DEFAULT = 0;
 
+    /** @hide */
     public static final String FIREWALL_CHAIN_NAME_NONE = "none";
+    /** @hide */
     public static final String FIREWALL_CHAIN_NAME_DOZABLE = "dozable";
+    /** @hide */
     public static final String FIREWALL_CHAIN_NAME_STANDBY = "standby";
+    /** @hide */
     public static final String FIREWALL_CHAIN_NAME_POWERSAVE = "powersave";
 
     private static final boolean ALLOW_PLATFORM_APP_POLICY = true;
 
+    /** @hide */
     public static final int FOREGROUND_THRESHOLD_STATE =
             ActivityManager.PROCESS_STATE_BOUND_FOREGROUND_SERVICE;
 
     /**
      * {@link Intent} extra that indicates which {@link NetworkTemplate} rule it
      * applies to.
+     * @hide
      */
     public static final String EXTRA_NETWORK_TEMPLATE = "android.net.NETWORK_TEMPLATE";
 
@@ -117,6 +161,7 @@ public class NetworkPolicyManager {
     @UnsupportedAppUsage
     private INetworkPolicyManager mService;
 
+    /** @hide */
     public NetworkPolicyManager(Context context, INetworkPolicyManager service) {
         if (service == null) {
             throw new IllegalArgumentException("missing INetworkPolicyManager");
@@ -125,6 +170,7 @@ public class NetworkPolicyManager {
         mService = service;
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public static NetworkPolicyManager from(Context context) {
         return (NetworkPolicyManager) context.getSystemService(Context.NETWORK_POLICY_SERVICE);
@@ -135,6 +181,7 @@ public class NetworkPolicyManager {
      *
      * @param policy should be {@link #POLICY_NONE} or any combination of {@code POLICY_} flags,
      *     although it is not validated.
+     * @hide
      */
     @UnsupportedAppUsage
     public void setUidPolicy(int uid, int policy) {
@@ -152,6 +199,7 @@ public class NetworkPolicyManager {
      *
      * @param policy should be {@link #POLICY_NONE} or any combination of {@code POLICY_} flags,
      *     although it is not validated.
+     * @hide
      */
     public void addUidPolicy(int uid, int policy) {
         try {
@@ -168,6 +216,7 @@ public class NetworkPolicyManager {
      *
      * @param policy should be {@link #POLICY_NONE} or any combination of {@code POLICY_} flags,
      *     although it is not validated.
+     * @hide
      */
     public void removeUidPolicy(int uid, int policy) {
         try {
@@ -177,6 +226,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public int getUidPolicy(int uid) {
         try {
@@ -186,6 +236,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public int[] getUidsWithPolicy(int policy) {
         try {
@@ -195,6 +246,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void registerListener(INetworkPolicyListener listener) {
         try {
@@ -204,6 +256,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public void unregisterListener(INetworkPolicyListener listener) {
         try {
@@ -213,6 +266,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     public void setNetworkPolicies(NetworkPolicy[] policies) {
         try {
             mService.setNetworkPolicies(policies);
@@ -221,6 +275,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public NetworkPolicy[] getNetworkPolicies() {
         try {
@@ -230,6 +285,7 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public void setRestrictBackground(boolean restrictBackground) {
         try {
@@ -239,10 +295,37 @@ public class NetworkPolicyManager {
         }
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public boolean getRestrictBackground() {
         try {
             return mService.getRestrictBackground();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Gets the package name by {@code subId} that owns the subscription plans.
+     */
+    @Nullable
+    public String getSubscriptionPlansOwner(int subId) {
+        try {
+            return mService.getSubscriptionPlansOwner(subId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Carrier apps to override their connections to be temporarily marked as either
+     * "UNMETERED" or "CONGESTED", along with automatic timeouts if desired.
+     */
+    public void setSubscriptionOverride(int subId, int overrideMask, int overrideValue,
+            long timeoutMillis, @NonNull String callingPackage) {
+        try {
+            mService.setSubscriptionOverride(subId, overrideMask, overrideValue, timeoutMillis,
+                    callingPackage);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -286,6 +369,7 @@ public class NetworkPolicyManager {
     /**
      * Check if given UID can have a {@link #setUidPolicy(int, int)} defined,
      * usually to protect critical system services.
+     * @hide
      */
     @Deprecated
     public static boolean isUidValidForPolicy(Context context, int uid) {
@@ -353,6 +437,7 @@ public class NetworkPolicyManager {
     /**
      * Returns true if {@param procState} is considered foreground and as such will be allowed
      * to access network when the device is idle or in battery saver mode. Otherwise, false.
+     * @hide
      */
     public static boolean isProcStateAllowedWhileIdleOrPowerSaveMode(int procState) {
         return procState <= FOREGROUND_THRESHOLD_STATE;
@@ -361,16 +446,19 @@ public class NetworkPolicyManager {
     /**
      * Returns true if {@param procState} is considered foreground and as such will be allowed
      * to access network when the device is in data saver mode. Otherwise, false.
+     * @hide
      */
     public static boolean isProcStateAllowedWhileOnRestrictBackground(int procState) {
         return procState <= FOREGROUND_THRESHOLD_STATE;
     }
 
+    /** @hide */
     public static String resolveNetworkId(WifiConfiguration config) {
         return WifiInfo.removeDoubleQuotes(config.isPasspoint()
                 ? config.providerFriendlyName : config.SSID);
     }
 
+    /** @hide */
     public static String resolveNetworkId(String ssid) {
         return WifiInfo.removeDoubleQuotes(ssid);
     }
