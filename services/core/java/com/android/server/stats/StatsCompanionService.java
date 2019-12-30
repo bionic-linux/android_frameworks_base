@@ -23,6 +23,13 @@ import static android.os.Process.getPidsForCommands;
 import static android.os.Process.getUidForPid;
 import static android.os.storage.VolumeInfo.TYPE_PRIVATE;
 import static android.os.storage.VolumeInfo.TYPE_PUBLIC;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_CDMA;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_EVDO_0;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_GSM;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_LTE;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_NR;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_UMTS;
+import static android.telephony.TelephonyProtoEnums.NETWORK_TYPE_UNKNOWN;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.server.am.MemoryStatUtil.readCmdlineFromProcfs;
@@ -777,7 +784,7 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
     }
 
     private void addNetworkStats(int tag, @NonNull List<StatsLogEventWrapper> ret,
-            @NonNull NetworkStats stats, boolean withFgbg) {
+            @NonNull NetworkStats stats, boolean withFgbg, @Nullable Integer networkType) {
         int size = stats.size();
         long elapsedNanos = SystemClock.elapsedRealtimeNanos();
         long wallClockNanos = SystemClock.currentTimeMicro() * 1000L;
@@ -793,6 +800,9 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
             e.writeLong(entry.rxPackets);
             e.writeLong(entry.txBytes);
             e.writeLong(entry.txPackets);
+            if (null != networkType) {
+                e.writeInt(networkType);
+            }
             ret.add(e);
         }
     }
@@ -917,17 +927,25 @@ public class StatsCompanionService extends IStatsCompanionService.Stub {
     private void pullWifiBytesTransfer(int tagId, long elapsedNanos, long wallClockNanos,
             @NonNull List<StatsLogEventWrapper> pulledData, boolean wifiFgbg) {
         final NetworkTemplate template = NetworkTemplate.buildTemplateWifiWildcard();
-        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos,
-                wifiFgbg);
-        if (stats != null) addNetworkStats(tagId, pulledData, stats, wifiFgbg);
+        final NetworkStats stats =
+                getUidNetworkStats(template, elapsedNanos, wallClockNanos, wifiFgbg);
+        if (stats != null) addNetworkStats(tagId, pulledData, stats, wifiFgbg, null);
     }
+
+    // See NetworkTemplate#getCollapsedNetworkType() for available groups of types.
+    static final int[] sCollectingNetworkTypes =
+            new int[]{NETWORK_TYPE_GSM, NETWORK_TYPE_CDMA, NETWORK_TYPE_EVDO_0, NETWORK_TYPE_UMTS,
+                    NETWORK_TYPE_LTE, NETWORK_TYPE_NR, NETWORK_TYPE_UNKNOWN};
 
     private void pullMobileBytesTransfer(int tagId, long elapsedNanos, long wallClockNanos,
             @NonNull List<StatsLogEventWrapper> pulledData, boolean withFgbg) {
-        final NetworkTemplate template = NetworkTemplate.buildTemplateMobileWildcard();
-        final NetworkStats stats = getUidNetworkStats(template, elapsedNanos, wallClockNanos,
-                withFgbg);
-        if (stats != null) addNetworkStats(tagId, pulledData, stats, withFgbg);
+        for (int networkType : sCollectingNetworkTypes) {
+            final NetworkTemplate template =
+                    NetworkTemplate.buildTemplateMobileWildcardWithSubType(networkType);
+            final NetworkStats stats =
+                    getUidNetworkStats(template, elapsedNanos, wallClockNanos, withFgbg);
+            if (stats != null) addNetworkStats(tagId, pulledData, stats, withFgbg, networkType);
+        }
     }
 
     private void pullBluetoothBytesTransfer(
