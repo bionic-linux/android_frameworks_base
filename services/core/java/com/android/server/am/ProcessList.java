@@ -20,6 +20,8 @@ import static android.app.ActivityManager.PROCESS_STATE_CACHED_ACTIVITY;
 import static android.app.ActivityManager.PROCESS_STATE_NONEXISTENT;
 import static android.app.ActivityThread.PROC_START_SEQ_IDENT;
 import static android.content.pm.PackageManager.MATCH_DIRECT_BOOT_AUTO;
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_ERROR;
+import static android.os.MessageQueue.OnFileDescriptorEventListener.EVENT_INPUT;
 import static android.os.Process.SYSTEM_UID;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static android.os.Process.getFreeMemory;
@@ -27,6 +29,7 @@ import static android.os.Process.getTotalMemory;
 import static android.os.Process.killProcessQuiet;
 import static android.os.Process.startWebView;
 
+import static com.android.internal.os.ZygoteConnectionConstants.CONNECTION_TIMEOUT_MILLIS;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_LRU;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_PROCESSES;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_PSS;
@@ -57,6 +60,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
 import android.os.AppZygote;
 import android.os.Binder;
 import android.os.Build;
@@ -74,6 +79,9 @@ import android.os.Trace;
 import android.os.UserHandle;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageManagerInternal;
+import android.system.Os;
+import android.system.OsConstants;
+import android.system.UnixSocketAddress;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.EventLog;
@@ -101,7 +109,9 @@ import com.android.server.wm.WindowManagerService;
 
 import dalvik.system.VMRuntime;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -245,6 +255,10 @@ public final class ProcessList {
     private static final String PROPERTY_USE_APP_IMAGE_STARTUP_CACHE =
             "persist.device_config.runtime_native.use_app_image_startup_cache";
 
+    // The socket path for zygote to send unsolicited msg.
+    // Must keep sync with com_android_internal_os_Zygote.cpp.
+    private static final String UNSOL_ZYGOTE_MSG_SOCKET_PATH = "/data/system/unsolzygotesocket";
+
     // Low Memory Killer Daemon command codes.
     // These must be kept in sync with lmk_cmd definitions in lmkd.h
     //
@@ -387,6 +401,18 @@ public final class ProcessList {
             new ArrayMap<AppZygote, ArrayList<ProcessRecord>>();
 
     private PlatformCompat mPlatformCompat = null;
+
+    /**
+     * The server socket in system_server, zygote will connect to it
+     * in order to send unsolicited messages to system_server.
+     */
+    private LocalServerSocket mSystemServerSocketForZygote;
+
+    /**
+     * All of the connections from zygotes to {@link #mSystemServerSocketForZygote}.
+     */
+    private SparseArray<DataInputStream> mZygoteMessageInputs =
+            new SparseArray<DataInputStream>();
 
     interface LmkdKillListener {
         /**
@@ -645,6 +671,13 @@ public final class ProcessList {
                         }
                     }
             );
+            // Start listening on incoming connections from zygotes.
+            mSystemServerSocketForZygote = createSystemServerSocketForZygote();
+            if (mSystemServerSocketForZygote != null) {
+                sKillHandler.getLooper().getQueue().addOnFileDescriptorEventListener(
+                        mSystemServerSocketForZygote.getFileDescriptor(),
+                        EVENT_INPUT | EVENT_ERROR, this::handleZygoteMessages);
+            }
         }
     }
 
@@ -3266,5 +3299,141 @@ public final class ProcessList {
                 mService.mHandler.post(()-> listener.onLmkdKillOccurred(pid, uid));
             }
         }
+    }
+
+    private void handleZygoteSigChld(int pid, int uid, int status) {
+        // Just log it now.
+        if (DEBUG_PROCESSES) {
+            Slog.i(TAG, "Got SIGCHLD from zygote: pid=" + pid + ", uid=" + uid
+                    + ", status=" + Integer.toHexString(status));
+        }
+    }
+
+    /**
+     * Create a server socket in system_server, zygote will connect to it
+     * in order to send unsolicited messages to system_server.
+     */
+    private LocalServerSocket createSystemServerSocketForZygote() {
+        // The file system entity for this socket is created with 0666 perms, owned
+        // by system:system. selinux restricts things so that only zygotes can
+        // access it.
+        final File socketFile = new File(UNSOL_ZYGOTE_MSG_SOCKET_PATH);
+        if (socketFile.exists()) {
+            socketFile.delete();
+        }
+
+        LocalServerSocket serverSocket = null;
+        FileDescriptor serverFd = null;
+        try {
+            serverFd = Os.socket(OsConstants.AF_UNIX, OsConstants.SOCK_STREAM, 0);
+            final UnixSocketAddress sockAddr = UnixSocketAddress.createFileSystem(
+                    UNSOL_ZYGOTE_MSG_SOCKET_PATH);
+            Os.bind(serverFd, sockAddr);
+            serverSocket = new LocalServerSocket(serverFd);
+            Os.chmod(UNSOL_ZYGOTE_MSG_SOCKET_PATH, 0666);
+        } catch (Exception e) {
+            if (serverFd != null) {
+                try {
+                    Os.close(serverFd);
+                } catch (Exception ex) {
+                }
+                serverFd = null;
+                serverSocket = null;
+            }
+        }
+        return serverSocket;
+    }
+
+    private void closeZygoteSocketFd(FileDescriptor fd) {
+        final int eventFd = fd.getInt$();
+        final DataInputStream in = mZygoteMessageInputs.get(eventFd);
+        mZygoteMessageInputs.remove(eventFd);
+        if (in != null) {
+            try {
+                in.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    /**
+     * Handle the unsolicited message from zygote.
+     */
+    private int handleZygoteMessages(FileDescriptor fd, int events) {
+        final int eventFd = fd.getInt$();
+        if ((events & EVENT_INPUT) != 0) {
+            final LocalServerSocket socket = mSystemServerSocketForZygote;
+            if (socket.getFileDescriptor().getInt$() == eventFd) {
+                // A new incoming connection from a zygote.
+                LocalSocket conn = null;
+                DataInputStream in = null;
+                try {
+                    // Accept it
+                    conn = socket.accept();
+                    conn.setSoTimeout(CONNECTION_TIMEOUT_MILLIS);
+                    // Create the wrapper input stream
+                    in = new DataInputStream(conn.getInputStream());
+                } catch (IOException e) {
+                    Slog.e(TAG, "IOException during accept()", e);
+                    if (conn != null) {
+                        try {
+                            conn.close();
+                        } catch (IOException ex) {
+                        }
+                        conn = null;
+                    }
+                }
+
+                if (conn != null) {
+                    mZygoteMessageInputs.put(conn.getFileDescriptor().getInt$(), in);
+
+                    // Monitor the input from it
+                    sKillHandler.getLooper().getQueue().addOnFileDescriptorEventListener(
+                            conn.getFileDescriptor(), EVENT_INPUT | EVENT_ERROR,
+                            this::handleZygoteMessages);
+                }
+            } else {
+                // An incoming message from zygote
+                final DataInputStream in = mZygoteMessageInputs.get(eventFd);
+                if (in != null) {
+                    try {
+                        final int header = in.readInt();
+                        final int type = Zygote.getZygoteMessageType(header);
+                        switch (type) {
+                            case Zygote.ZYGOTE_MESSAGE_TYPE_SIGCHILD:
+                                handleZygoteSigChld(
+                                        in.readInt() /* pid */,
+                                        in.readInt() /* uid */,
+                                        in.readInt() /* status */
+                                );
+                                break;
+                            default:
+                                break;
+                        }
+                    } catch (IOException e) {
+                        // Stream could have been closed by remote peer
+                        if (DEBUG_PROCESSES) {
+                            Slog.d(TAG, "Zygote stream closed", e);
+                        }
+                        closeZygoteSocketFd(fd);
+                        return 0;
+                    }
+                }
+            }
+        }
+        if ((events & EVENT_ERROR) != 0) {
+            if (DEBUG_PROCESSES) {
+                Slog.d(TAG, "Zygote stream error, fd=" + eventFd);
+            }
+            final DataInputStream in = mZygoteMessageInputs.get(eventFd);
+            if (in != null) {
+                closeZygoteSocketFd(fd);
+            } else {
+                // Shouldn't happen (the server socket shouldn't get error), log it
+                Slog.w(TAG, "Error event from unknown zygote socket, fd=" + eventFd);
+            }
+            return 0;
+        }
+        return (EVENT_INPUT | EVENT_ERROR);
     }
 }

@@ -77,6 +77,7 @@
 #include <bionic/page.h>
 #include <cutils/fs.h>
 #include <cutils/multiuser.h>
+#include <cutils/sockets.h>
 #include <private/android_filesystem_config.h>
 #include <utils/String8.h>
 #include <utils/Trace.h>
@@ -162,6 +163,12 @@ static std::atomic_uint32_t gUsapPoolCount = 0;
  * ZygoteServer.
  */
 static int gUsapPoolEventFD = -1;
+
+/**
+ * The socket file descriptor used to send notifications to the
+ * system_server.
+ */
+static int gSystemServerSocketFd = -1;
 
 /**
  * The maximum value that the gUSAPPoolSizeMax variable may take.  This value
@@ -305,6 +312,45 @@ enum RuntimeFlags : uint32_t {
   PROFILE_FROM_SHELL = 1 << 15,
 };
 
+// Must match values in com.android.internal.os.Zygote.
+enum ZygoteMessageTypes : uint32_t {
+  ZYGOTE_MESSAGE_TYPE_RESERVED = 0,
+  ZYGOTE_MESSAGE_TYPE_SIGCHILD = 1,
+};
+
+// Payload length of unsolicited msg "sigchld"
+static constexpr size_t ZYGOTE_MESSAGE_SIGCHLD_LEN = 3;
+
+// Keep sync with core/java/com/android/internal/os/Zygote.java
+enum {
+  ZYGOTE_MESSAGE_MASK_TYPE = 0xFF,
+  ZYGOTE_MESSAGE_MASK_LENGTH = 0xFFFFFF00,
+};
+
+// Keep sync with core/java/com/android/internal/os/Zygote.java
+enum {
+  ZYGOTE_MESSAGE_SHIFT_TYPE = 0,
+  ZYGOTE_MESSAGE_SHIFT_LENGTH = 8,
+};
+
+// Keep sync with core/java/com/android/internal/os/Zygote.java
+enum {
+  ZYGOTE_MESSAGE_OFFSET_HEADER = 0,
+  ZYGOTE_MESSAGE_OFFSET_SIGCHLD_PID = 1,
+  ZYGOTE_MESSAGE_OFFSET_SIGCHLD_UID = 2,
+  ZYGOTE_MESSAGE_OFFSET_SIGCHLD_STATUS = 3,
+};
+
+// Header of unsolicited msg "sigchld"
+static constexpr uint32_t ZYGOTE_MESSAGE_HEADER_SIGCHLD =
+  (((ZYGOTE_MESSAGE_SIGCHLD_LEN * sizeof(uint32_t)) << ZYGOTE_MESSAGE_SHIFT_LENGTH)
+    & ZYGOTE_MESSAGE_MASK_LENGTH)
+    | ((ZYGOTE_MESSAGE_TYPE_SIGCHILD << ZYGOTE_MESSAGE_SHIFT_TYPE) & ZYGOTE_MESSAGE_MASK_TYPE);
+
+
+// Keep sync with services/core/java/com/android/server/am/ProcessList.java
+static constexpr const char* kUnSolZygoteMsgSocketPath = "/data/system/unsolzygotesocket";
+
 // Forward declaration so we don't have to move the signal handler.
 static bool RemoveUsapTableEntry(pid_t usap_pid);
 
@@ -314,8 +360,47 @@ static void RuntimeAbort(JNIEnv* env, int line, const char* msg) {
   env->FatalError(oss.str().c_str());
 }
 
+static int getOrConnectToSystemServerSocket() {
+  if (gSystemServerSocketFd == -1) {
+    gSystemServerSocketFd = socket_local_client(kUnSolZygoteMsgSocketPath,
+                                                ANDROID_SOCKET_NAMESPACE_FILESYSTEM,
+                                                SOCK_STREAM);
+    if (gSystemServerSocketFd == -1) {
+      ALOGW("Unable to connect to system_server, this may be normal in early bootup\n");
+    }
+  }
+  return gSystemServerSocketFd;
+}
+
+static void closeConnectionToSystemServer() {
+  if (gSystemServerSocketFd != -1) {
+    close(gSystemServerSocketFd);
+    gSystemServerSocketFd = -1;
+  }
+}
+
+static void sendSigChildStatus(const int32_t pid,
+                               const int32_t uid,
+                               const int32_t status) {
+  int socketFd = getOrConnectToSystemServerSocket();
+  if (socketFd >= 0) {
+    // fill the message buffer
+    uint32_t buf[ZYGOTE_MESSAGE_SIGCHLD_LEN + 1];
+    buf[ZYGOTE_MESSAGE_OFFSET_HEADER] = htonl(ZYGOTE_MESSAGE_HEADER_SIGCHLD);
+    buf[ZYGOTE_MESSAGE_OFFSET_SIGCHLD_PID] = htonl(static_cast<uint32_t>(pid));
+    buf[ZYGOTE_MESSAGE_OFFSET_SIGCHLD_UID] = htonl(static_cast<uint32_t>(uid));
+    buf[ZYGOTE_MESSAGE_OFFSET_SIGCHLD_STATUS] = htonl(static_cast<uint32_t>(status));
+    if (TEMP_FAILURE_RETRY(write(socketFd, &buf, sizeof(buf))) == -1) {
+      async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
+                            "Zygote failed to write to system_server FD: %s",
+                            strerror(errno));
+      closeConnectionToSystemServer();
+    }
+  }
+}
+
 // This signal handler is for zygote mode, since the zygote must reap its children
-static void SigChldHandler(int /*signal_number*/) {
+static void SigChldHandler(int /*signal_number*/, siginfo_t *info, void* /*ucontext*/) {
   pid_t pid;
   int status;
   int64_t usaps_removed = 0;
@@ -329,6 +414,8 @@ static void SigChldHandler(int /*signal_number*/) {
   int saved_errno = errno;
 
   while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+    // Notify system_server that we received a SIGCHLD
+    sendSigChildStatus(pid, info->si_uid, status);
      // Log process-death status that we care about.
     if (WIFEXITED(status)) {
       async_safe_format_log(ANDROID_LOG_INFO, LOG_TAG,
@@ -402,8 +489,10 @@ static void SigChldHandler(int /*signal_number*/) {
 // This ends up being called repeatedly before each fork(), but there's
 // no real harm in that.
 static void SetSignalHandlers() {
-  struct sigaction sig_chld = {};
-  sig_chld.sa_handler = SigChldHandler;
+  struct sigaction sig_chld = {
+    .sa_flags = SA_SIGINFO,
+    .sa_sigaction = SigChldHandler
+  };
 
   if (sigaction(SIGCHLD, &sig_chld, nullptr) < 0) {
     ALOGW("Error setting SIGCHLD handler: %s", strerror(errno));
@@ -951,6 +1040,9 @@ static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
 
     // Turn fdsan back on.
     android_fdsan_set_error_level(fdsan_error_level);
+
+    // Reset the fd to the unsolicited zygote socket
+    gSystemServerSocketFd = -1;
   } else {
     ALOGD("Forked child process %d", pid);
   }
@@ -1372,6 +1464,11 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
       fds_to_ignore.push_back(gUsapPoolEventFD);
     }
 
+    if (gSystemServerSocketFd != -1) {
+      fds_to_close.push_back(gSystemServerSocketFd);
+      fds_to_ignore.push_back(gSystemServerSocketFd);
+    }
+
     pid_t pid = ForkCommon(env, false, fds_to_close, fds_to_ignore);
 
     if (pid == 0) {
@@ -1461,6 +1558,9 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
   fds_to_close.push_back(gZygoteSocketFD);
   fds_to_close.push_back(gUsapPoolEventFD);
   fds_to_close.insert(fds_to_close.end(), session_socket_fds.begin(), session_socket_fds.end());
+  if (gSystemServerSocketFd != -1) {
+    fds_to_close.push_back(gSystemServerSocketFd);
+  }
 
   fds_to_ignore.push_back(gZygoteSocketFD);
   fds_to_ignore.push_back(gUsapPoolSocketFD);
@@ -1468,6 +1568,9 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
   fds_to_ignore.push_back(read_pipe_fd);
   fds_to_ignore.push_back(write_pipe_fd);
   fds_to_ignore.insert(fds_to_ignore.end(), session_socket_fds.begin(), session_socket_fds.end());
+  if (gSystemServerSocketFd != -1) {
+    fds_to_ignore.push_back(gSystemServerSocketFd);
+  }
 
   pid_t usap_pid = ForkCommon(env, /* is_system_server= */ false, fds_to_close, fds_to_ignore);
 
