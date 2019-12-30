@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7c8c98a9_3e65e4a4",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Ack, removed.",
+      "parentUuid": "492a1137_215c614b",
+      "range": {
+        "startLine": 611,
+        "startChar": 8,
+        "endLine": 611,
+        "endChar": 60
+      },
+      "revId": "4bbcf7e497bf19beb46e1c68465a1cece9785273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd26e7c0_5cd46c2c",
         "filename": "Android.bp",
         "patchSetId": 3

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "710bbdca_06217460",
+        "filename": "Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6daa5f45_f6b8a99e",
+      "range": {
+        "startLine": 623,
+        "startChar": 7,
+        "endLine": 623,
+        "endChar": 57
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6609988f_2b212692",
         "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143a2598_3bb9169c",
+        "filename": "packages/Tethering/src/android/net/dhcp/DhcpServingParamsParcelExt.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6609988f_2b212692",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 175,
+        "endChar": 66
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "8fec6114_873bf244",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03fd45a_5b3f9af0",
+      "range": {
+        "startLine": 380,
+        "startChar": 16,
+        "endLine": 380,
+        "endChar": 25
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afb874a6_a50c9059",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Tracking at b/146993983. Tethering should be restricted for admin user, but there is a bug so only protect in Settings currently.",
+      "parentUuid": "e5b05967_c5844a1b",
+      "range": {
+        "startLine": 380,
+        "startChar": 31,
+        "endLine": 380,
+        "endChar": 51
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332fe995_95906597",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ddb2d5_493e51e7",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332fe995_95906597",
+      "range": {
+        "startLine": 282,
+        "startChar": 45,
+        "endLine": 282,
+        "endChar": 56
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c4705d43_9eb0810f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561ed694_84005836",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 52
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80da5664_970db43e",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1494524e_3a016c92",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80da5664_970db43e",
+      "range": {
+        "startLine": 343,
+        "startChar": 56,
+        "endLine": 343,
+        "endChar": 57
+      },
+      "revId": "a1156aafe8e41b67ac0c502e8a8862b6400d3c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

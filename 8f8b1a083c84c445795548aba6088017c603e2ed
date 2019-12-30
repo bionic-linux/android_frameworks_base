@@ -70,6 +70,30 @@
       "revId": "8f8b1a083c84c445795548aba6088017c603e2ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e05a35_a28eec0f",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2019-12-30T12:43:12Z",
+      "side": 0,
+      "message": "Currently tethering is always use active data subscription, we pass it to TetheringConfiguration to get the correct mcc mnc base resource overlay for tethering entitlement configuration. Rename subId as activeSubId to match current use case.\n\nTelehponyManager.isTetheringApnRequired() would always use active data sub id.\nhttps://cs.corp.google.com/android/frameworks/base/telephony/java/android/telephony/TelephonyManager.java?q\u003dcreateForSubscriptionId\u0026sq\u003dpackage:android\u0026dr\u003dCSs\u0026l\u003d7738",
+      "parentUuid": "d4070dea_c088c932",
+      "range": {
+        "startLine": 255,
+        "startChar": 30,
+        "endLine": 255,
+        "endChar": 59
+      },
+      "revId": "8f8b1a083c84c445795548aba6088017c603e2ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
