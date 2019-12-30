@@ -3675,7 +3675,8 @@ public class ActivityManagerService extends IActivityManager.Stub
         // and the app that died was not running instrumentation,
         // then tell everyone we are now low on memory.
         if (!mProcessList.haveBackgroundProcessLocked()) {
-            boolean doReport = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"));
+            boolean doReport = "1".equals(SystemProperties.get(SYSTEM_DEBUGGABLE, "0"))
+                    && "true".equals(SystemProperties.get("ro.lmk.debug", "false"));
             if (doReport) {
                 long now = SystemClock.uptimeMillis();
                 if (now < (mLastMemUsageReportTime+5*60*1000)) {
