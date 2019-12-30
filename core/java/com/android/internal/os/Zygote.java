@@ -941,4 +941,43 @@ public final class Zygote {
             command.append(" '").append(arg.replace("'", "'\\''")).append("'");
         }
     }
+
+    /**
+     * The definitions of unsolicited messages from zygote to system_server.
+     * @hide
+     */
+    public static final class UnsolicitedZygoteMessage {
+        /**
+         * A type for the unsolicited message from zygote to system_server, this one means unset.
+         *
+         * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+         *
+         * @hide for internal use only
+         */
+        public static final int TYPE_RESERVED = 0;
+
+        /**
+         * A type for the unsolicited message from zygote to system_server, this one means a child
+         * process of this zygote stopped or terminated (died), its payload will include
+         * 3 integers: the pid/uid and the status code.
+         *
+         * <p>Keep sync with core/jni/com_android_internal_os_Zygote.cpp</p>
+         *
+         * @hide for internal use only
+         */
+        public static final int TYPE_SIGCHLD = 1;
+    }
+
+    /**
+     * Read the unsolicited zygote message from the given socket fd; if the message is too long
+     * to fit into the given "out" buffer, or it'll be truncated; if the message is not supported,
+     * it'll be discarded and an UnsupportedOperationException will be thrown.
+     *
+     * @param socketFd The socket file descriptor it's going to be read from.
+     * @param out The output buffer where the message will be filled into.
+     * @return One of the message types defined in {@link UnsolicitedZygoteMessage}.
+     *
+     * @hide
+     */
+    public static native int nativeRecvUnsolMsg(int socketFd, int[] out) throws IOException;
 }

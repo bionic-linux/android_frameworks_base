@@ -26,6 +26,9 @@
 #define LOG_TAG "Zygote"
 #define ATRACE_TAG ATRACE_TAG_DALVIK
 
+// #define DEBUG_UNSOLICITED_MSG
+// #define LOG_NDEBUG 0
+
 #include <async_safe/log.h>
 
 // sys/mount.h has to come before linux/fs.h due to redefinition of MS_RDONLY, MS_BIND, etc
@@ -77,6 +80,7 @@
 #include <bionic/page.h>
 #include <cutils/fs.h>
 #include <cutils/multiuser.h>
+#include <cutils/sockets.h>
 #include <private/android_filesystem_config.h>
 #include <utils/String8.h>
 #include <utils/Trace.h>
@@ -164,10 +168,40 @@ static std::atomic_uint32_t gUsapPoolCount = 0;
 static int gUsapPoolEventFD = -1;
 
 /**
+ * The socket file descriptor used to send notifications to the
+ * system_server.
+ */
+static int gSystemServerSocketFd = -1;
+
+/**
  * The maximum value that the gUSAPPoolSizeMax variable may take.  This value
  * is a mirror of ZygoteServer.USAP_POOL_SIZE_MAX_LIMIT
  */
 static constexpr int USAP_POOL_SIZE_MAX_LIMIT = 100;
+
+enum UnsolicitedZygoteMessageTypes : uint32_t {
+    UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED = 0,
+    UNSOLICITED_ZYGOTE_MESSAGE_TYPE_SIGCHLD = 1,
+};
+
+struct UnsolicitedZygoteMessageHeader {
+    uint32_t length;
+    UnsolicitedZygoteMessageTypes type;
+    uint8_t payload[0];
+};
+
+struct UnsolicitedZygoteMessageSigChld {
+    pid_t pid;
+    uid_t uid;
+    int status;
+};
+
+union UnsolicitedZygoteMessagePayload {
+    struct UnsolicitedZygoteMessageSigChld sigChld;
+};
+
+// Keep sync with services/core/java/com/android/server/am/ProcessList.java
+static constexpr const char* kUnSolZygoteMsgSocketPath = "/data/system/unsolzygotesocket";
 
 /**
  * A helper class containing accounting information for USAPs.
@@ -314,74 +348,119 @@ static void RuntimeAbort(JNIEnv* env, int line, const char* msg) {
   env->FatalError(oss.str().c_str());
 }
 
+static int getOrConnectToSystemServerSocket() {
+    if (gSystemServerSocketFd == -1) {
+        gSystemServerSocketFd =
+                socket_local_client(kUnSolZygoteMsgSocketPath, ANDROID_SOCKET_NAMESPACE_FILESYSTEM,
+                                    SOCK_DGRAM | SOCK_NONBLOCK);
+        if (gSystemServerSocketFd == -1) {
+            ALOGW("Unable to connect to system_server, this may be normal in early bootup\n");
+        }
+    }
+    return gSystemServerSocketFd;
+}
+
+static void closeConnectionToSystemServer() {
+    if (gSystemServerSocketFd != -1) {
+        close(gSystemServerSocketFd);
+        gSystemServerSocketFd = -1;
+    }
+}
+
+static void sendSigChildStatus(const pid_t pid, const uid_t uid, const int status) {
+    int socketFd = getOrConnectToSystemServerSocket();
+    if (socketFd >= 0) {
+        // fill the message buffer
+        struct {
+            struct UnsolicitedZygoteMessageHeader header;
+            struct UnsolicitedZygoteMessageSigChld payload;
+        } data;
+        data.header.length = sizeof(struct UnsolicitedZygoteMessageSigChld);
+        data.header.type = UNSOLICITED_ZYGOTE_MESSAGE_TYPE_SIGCHLD;
+        data.payload.pid = pid;
+        data.payload.uid = uid;
+        data.payload.status = status;
+        // Ignore the dest address as it's been set in socket_local_client() above.
+        if (TEMP_FAILURE_RETRY(sendto(socketFd, &data, sizeof(data), 0, nullptr, 0)) == -1) {
+            async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
+                                  "Zygote failed to write to system_server FD: %s",
+                                  strerror(errno));
+            closeConnectionToSystemServer();
+        }
+    }
+}
+
 // This signal handler is for zygote mode, since the zygote must reap its children
-static void SigChldHandler(int /*signal_number*/) {
-  pid_t pid;
-  int status;
-  int64_t usaps_removed = 0;
+static void SigChldHandler(int /*signal_number*/, siginfo_t* info, void* /*ucontext*/) {
+    pid_t pid;
+    int status;
+    int64_t usaps_removed = 0;
 
-  // It's necessary to save and restore the errno during this function.
-  // Since errno is stored per thread, changing it here modifies the errno
-  // on the thread on which this signal handler executes. If a signal occurs
-  // between a call and an errno check, it's possible to get the errno set
-  // here.
-  // See b/23572286 for extra information.
-  int saved_errno = errno;
+    // It's necessary to save and restore the errno during this function.
+    // Since errno is stored per thread, changing it here modifies the errno
+    // on the thread on which this signal handler executes. If a signal occurs
+    // between a call and an errno check, it's possible to get the errno set
+    // here.
+    // See b/23572286 for extra information.
+    int saved_errno = errno;
 
-  while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
-     // Log process-death status that we care about.
-    if (WIFEXITED(status)) {
-      async_safe_format_log(ANDROID_LOG_INFO, LOG_TAG,
-                            "Process %d exited cleanly (%d)", pid, WEXITSTATUS(status));
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        // Notify system_server that we received a SIGCHLD
+        sendSigChildStatus(pid, info->si_uid, status);
+        // Log process-death status that we care about.
+        if (WIFEXITED(status)) {
+            async_safe_format_log(ANDROID_LOG_INFO, LOG_TAG, "Process %d exited cleanly (%d)", pid,
+                                  WEXITSTATUS(status));
 
-      // Check to see if the PID is in the USAP pool and remove it if it is.
-      if (RemoveUsapTableEntry(pid)) {
-        ++usaps_removed;
-      }
-    } else if (WIFSIGNALED(status)) {
-      async_safe_format_log(ANDROID_LOG_INFO, LOG_TAG,
-                            "Process %d exited due to signal %d (%s)%s", pid,
-                            WTERMSIG(status), strsignal(WTERMSIG(status)),
-                            WCOREDUMP(status) ? "; core dumped" : "");
+            // Check to see if the PID is in the USAP pool and remove it if it is.
+            if (RemoveUsapTableEntry(pid)) {
+                ++usaps_removed;
+            }
+        } else if (WIFSIGNALED(status)) {
+            async_safe_format_log(ANDROID_LOG_INFO, LOG_TAG,
+                                  "Process %d exited due to signal %d (%s)%s", pid,
+                                  WTERMSIG(status), strsignal(WTERMSIG(status)),
+                                  WCOREDUMP(status) ? "; core dumped" : "");
 
-      // If the process exited due to a signal other than SIGTERM, check to see
-      // if the PID is in the USAP pool and remove it if it is.  If the process
-      // was closed by the Zygote using SIGTERM then the USAP pool entry will
-      // have already been removed (see nativeEmptyUsapPool()).
-      if (WTERMSIG(status) != SIGTERM && RemoveUsapTableEntry(pid)) {
-        ++usaps_removed;
-      }
+            // If the process exited due to a signal other than SIGTERM, check to see
+            // if the PID is in the USAP pool and remove it if it is.  If the process
+            // was closed by the Zygote using SIGTERM then the USAP pool entry will
+            // have already been removed (see nativeEmptyUsapPool()).
+            if (WTERMSIG(status) != SIGTERM && RemoveUsapTableEntry(pid)) {
+                ++usaps_removed;
+            }
+        }
+
+        // If the just-crashed process is the system_server, bring down zygote
+        // so that it is restarted by init and system server will be restarted
+        // from there.
+        if (pid == gSystemServerPid) {
+            async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
+                                  "Exit zygote because system server (pid %d) has terminated", pid);
+            kill(getpid(), SIGKILL);
+        }
     }
 
-    // If the just-crashed process is the system_server, bring down zygote
-    // so that it is restarted by init and system server will be restarted
-    // from there.
-    if (pid == gSystemServerPid) {
-      async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
-                            "Exit zygote because system server (pid %d) has terminated", pid);
-      kill(getpid(), SIGKILL);
+    // Note that we shouldn't consider ECHILD an error because
+    // the secondary zygote might have no children left to wait for.
+    if (pid < 0 && errno != ECHILD) {
+        async_safe_format_log(ANDROID_LOG_WARN, LOG_TAG, "Zygote SIGCHLD error in waitpid: %s",
+                              strerror(errno));
     }
-  }
 
-  // Note that we shouldn't consider ECHILD an error because
-  // the secondary zygote might have no children left to wait for.
-  if (pid < 0 && errno != ECHILD) {
-    async_safe_format_log(ANDROID_LOG_WARN, LOG_TAG,
-                          "Zygote SIGCHLD error in waitpid: %s", strerror(errno));
-  }
-
-  if (usaps_removed > 0) {
-    if (TEMP_FAILURE_RETRY(write(gUsapPoolEventFD, &usaps_removed, sizeof(usaps_removed))) == -1) {
-      // If this write fails something went terribly wrong.  We will now kill
-      // the zygote and let the system bring it back up.
-      async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
-                            "Zygote failed to write to USAP pool event FD: %s",
-                            strerror(errno));
-      kill(getpid(), SIGKILL);
+    if (usaps_removed > 0) {
+        if (TEMP_FAILURE_RETRY(write(gUsapPoolEventFD, &usaps_removed, sizeof(usaps_removed))) ==
+            -1) {
+            // If this write fails something went terribly wrong.  We will now kill
+            // the zygote and let the system bring it back up.
+            async_safe_format_log(ANDROID_LOG_ERROR, LOG_TAG,
+                                  "Zygote failed to write to USAP pool event FD: %s",
+                                  strerror(errno));
+            kill(getpid(), SIGKILL);
+        }
     }
-  }
 
-  errno = saved_errno;
+    errno = saved_errno;
 }
 
 // Configures the SIGCHLD/SIGHUP handlers for the zygote process. This is
@@ -402,12 +481,11 @@ static void SigChldHandler(int /*signal_number*/) {
 // This ends up being called repeatedly before each fork(), but there's
 // no real harm in that.
 static void SetSignalHandlers() {
-  struct sigaction sig_chld = {};
-  sig_chld.sa_handler = SigChldHandler;
+    struct sigaction sig_chld = {.sa_flags = SA_SIGINFO, .sa_sigaction = SigChldHandler};
 
-  if (sigaction(SIGCHLD, &sig_chld, nullptr) < 0) {
-    ALOGW("Error setting SIGCHLD handler: %s", strerror(errno));
-  }
+    if (sigaction(SIGCHLD, &sig_chld, nullptr) < 0) {
+        ALOGW("Error setting SIGCHLD handler: %s", strerror(errno));
+    }
 
   struct sigaction sig_hup = {};
   sig_hup.sa_handler = SIG_IGN;
@@ -951,6 +1029,9 @@ static pid_t ForkCommon(JNIEnv* env, bool is_system_server,
 
     // Turn fdsan back on.
     android_fdsan_set_error_level(fdsan_error_level);
+
+    // Reset the fd to the unsolicited zygote socket
+    gSystemServerSocketFd = -1;
   } else {
     ALOGD("Forked child process %d", pid);
   }
@@ -1372,6 +1453,11 @@ static jint com_android_internal_os_Zygote_nativeForkAndSpecialize(
       fds_to_ignore.push_back(gUsapPoolEventFD);
     }
 
+    if (gSystemServerSocketFd != -1) {
+        fds_to_close.push_back(gSystemServerSocketFd);
+        fds_to_ignore.push_back(gSystemServerSocketFd);
+    }
+
     pid_t pid = ForkCommon(env, false, fds_to_close, fds_to_ignore);
 
     if (pid == 0) {
@@ -1461,6 +1547,9 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
   fds_to_close.push_back(gZygoteSocketFD);
   fds_to_close.push_back(gUsapPoolEventFD);
   fds_to_close.insert(fds_to_close.end(), session_socket_fds.begin(), session_socket_fds.end());
+  if (gSystemServerSocketFd != -1) {
+      fds_to_close.push_back(gSystemServerSocketFd);
+  }
 
   fds_to_ignore.push_back(gZygoteSocketFD);
   fds_to_ignore.push_back(gUsapPoolSocketFD);
@@ -1468,6 +1557,9 @@ static jint com_android_internal_os_Zygote_nativeForkUsap(JNIEnv* env,
   fds_to_ignore.push_back(read_pipe_fd);
   fds_to_ignore.push_back(write_pipe_fd);
   fds_to_ignore.insert(fds_to_ignore.end(), session_socket_fds.begin(), session_socket_fds.end());
+  if (gSystemServerSocketFd != -1) {
+      fds_to_ignore.push_back(gSystemServerSocketFd);
+  }
 
   pid_t usap_pid = ForkCommon(env, /* is_system_server= */ false, fds_to_close, fds_to_ignore);
 
@@ -1706,41 +1798,144 @@ static void com_android_internal_os_Zygote_nativeUnblockSigTerm(JNIEnv* env, jcl
   UnblockSignal(SIGTERM, fail_fn);
 }
 
+static jint com_android_internal_os_Zygote_nativeRecvUnsolMsg(JNIEnv* env, jclass, jint fd,
+                                                              jintArray out) {
+    struct {
+        struct UnsolicitedZygoteMessageHeader header;
+        union UnsolicitedZygoteMessagePayload payload;
+    } msg;
+    struct iovec iov = {&msg, sizeof(msg)};
+    struct msghdr hdr = {nullptr, 0, &iov, 1, nullptr, 0, 0};
+
+#ifdef DEBUG_UNSOLICITED_MSG
+    union {
+        struct cmsghdr cmsghdr;
+        uint8_t cred[CMSG_SPACE(sizeof(struct ucred))];
+    } control;
+
+    static enum {
+        DEBUG_UNINITIALIZED = 0,
+        DEBUG_INITIALIZED_SUCCESS = 1,
+        DEBUG_INITIALIZED_FAILED = 2,
+    } gDebug = DEBUG_UNINITIALIZED;
+
+    bool debug = gDebug == DEBUG_INITIALIZED_SUCCESS;
+    if (gDebug == DEBUG_UNINITIALIZED) {
+        int optval = 1;
+        gDebug = setsockopt(fd, SOL_SOCKET, SO_PASSCRED, &optval, sizeof(optval)) == -1
+                ? DEBUG_INITIALIZED_FAILED
+                : DEBUG_INITIALIZED_SUCCESS;
+    }
+    if (debug) {
+        control.cmsghdr.cmsg_len = CMSG_LEN(sizeof(struct ucred));
+        control.cmsghdr.cmsg_level = SOL_SOCKET;
+        control.cmsghdr.cmsg_type = SCM_CREDENTIALS;
+        hdr.msg_control = &control;
+        hdr.msg_controllen = sizeof(control);
+    }
+#endif
+
+    ssize_t ret;
+    if (TEMP_FAILURE_RETRY(ret = recvmsg(fd, &hdr, 0)) == -1) {
+        // something wrong
+        jniThrowIOException(env, errno);
+        return UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED;
+    }
+
+    if (ret < sizeof(msg.header)) {
+        String8 message;
+        message.appendFormat("Insufficient read: actual=%zd, expected(at least)=%zu\n", ret,
+                             sizeof(msg.header));
+        jniThrowException(env, "java/io/IOException", message.string());
+        return UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED;
+    }
+
+    if ((msg.header.length + sizeof(msg.header)) != ret) {
+        // insufficient read
+        String8 message;
+        message.appendFormat("Insufficient read: actual=%zd, expected=%zu\n", ret,
+                             msg.header.length + sizeof(msg.header));
+        jniThrowException(env, "java/io/IOException", message.string());
+        return UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED;
+    }
+
+#ifdef DEBUG_UNSOLICITED_MSG
+    if (debug) {
+        struct cmsghdr* cmsg = CMSG_FIRSTHDR(&hdr);
+        while (cmsg != NULL) {
+            if (cmsg->cmsg_level == SOL_SOCKET && cmsg->cmsg_type == SCM_CREDENTIALS) {
+                struct ucred* cred = (struct ucred*)CMSG_DATA(cmsg);
+                if (cred != nullptr) {
+                    ALOGD("Received unsolicited zygote message from %u(%u), type=%u\n", cred->pid,
+                          cred->uid, msg.header.type);
+                }
+                break;
+            }
+            cmsg = CMSG_NXTHDR(&hdr, cmsg);
+        }
+    }
+#endif
+
+    switch (msg.header.type) {
+        case UNSOLICITED_ZYGOTE_MESSAGE_TYPE_SIGCHLD: {
+            if (msg.header.length != sizeof(struct UnsolicitedZygoteMessageSigChld)) {
+                // shouldn't happen, but just discard it if it does.
+                break;
+            }
+            ScopedIntArrayRW buf(env, out);
+            if (buf.size() != 3) {
+                jniThrowException(env, "java/lang/IllegalArgumentException", nullptr);
+                return UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED;
+            }
+            buf[0] = msg.payload.sigChld.pid;
+            buf[1] = msg.payload.sigChld.uid;
+            buf[2] = msg.payload.sigChld.status;
+            return msg.header.type;
+        }
+        default:
+            break;
+    }
+    jniThrowException(env, "java/lang/UnsupportedOperationException", nullptr);
+    return UNSOLICITED_ZYGOTE_MESSAGE_TYPE_RESERVED;
+}
+
 static const JNINativeMethod gMethods[] = {
-    { "nativeForkAndSpecialize",
-      "(II[II[[IILjava/lang/String;Ljava/lang/String;[I[IZLjava/lang/String;Ljava/lang/String;)I",
-      (void *) com_android_internal_os_Zygote_nativeForkAndSpecialize },
-    { "nativeForkSystemServer", "(II[II[[IJJ)I",
-      (void *) com_android_internal_os_Zygote_nativeForkSystemServer },
-    { "nativeAllowFileAcrossFork", "(Ljava/lang/String;)V",
-      (void *) com_android_internal_os_Zygote_nativeAllowFileAcrossFork },
-    { "nativePreApplicationInit", "()V",
-      (void *) com_android_internal_os_Zygote_nativePreApplicationInit },
-    { "nativeInstallSeccompUidGidFilter", "(II)V",
-      (void *) com_android_internal_os_Zygote_nativeInstallSeccompUidGidFilter },
-    { "nativeForkUsap", "(II[I)I",
-      (void *) com_android_internal_os_Zygote_nativeForkUsap },
-    { "nativeSpecializeAppProcess",
-      "(II[II[[IILjava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V",
-      (void *) com_android_internal_os_Zygote_nativeSpecializeAppProcess },
-    { "nativeInitNativeState", "(Z)V",
-      (void *) com_android_internal_os_Zygote_nativeInitNativeState },
-    { "nativeGetUsapPipeFDs", "()[I",
-      (void *) com_android_internal_os_Zygote_nativeGetUsapPipeFDs },
-    { "nativeRemoveUsapTableEntry", "(I)Z",
-      (void *) com_android_internal_os_Zygote_nativeRemoveUsapTableEntry },
-    { "nativeGetUsapPoolEventFD", "()I",
-      (void *) com_android_internal_os_Zygote_nativeGetUsapPoolEventFD },
-    { "nativeGetUsapPoolCount", "()I",
-      (void *) com_android_internal_os_Zygote_nativeGetUsapPoolCount },
-    { "nativeEmptyUsapPool", "()V",
-      (void *) com_android_internal_os_Zygote_nativeEmptyUsapPool },
-    { "nativeDisableExecuteOnly", "()Z",
-      (void *) com_android_internal_os_Zygote_nativeDisableExecuteOnly },
-    { "nativeBlockSigTerm", "()V",
-      (void* ) com_android_internal_os_Zygote_nativeBlockSigTerm },
-    { "nativeUnblockSigTerm", "()V",
-      (void* ) com_android_internal_os_Zygote_nativeUnblockSigTerm }
+        {"nativeForkAndSpecialize",
+         "(II[II[[IILjava/lang/String;Ljava/lang/String;[I[IZLjava/lang/String;Ljava/lang/"
+         "String;)I",
+         (void *) com_android_internal_os_Zygote_nativeForkAndSpecialize },
+        {"nativeForkSystemServer", "(II[II[[IJJ)I",
+         (void *) com_android_internal_os_Zygote_nativeForkSystemServer },
+        {"nativeAllowFileAcrossFork", "(Ljava/lang/String;)V",
+         (void *) com_android_internal_os_Zygote_nativeAllowFileAcrossFork },
+        {"nativePreApplicationInit", "()V",
+         (void *) com_android_internal_os_Zygote_nativePreApplicationInit },
+        {"nativeInstallSeccompUidGidFilter", "(II)V",
+         (void *) com_android_internal_os_Zygote_nativeInstallSeccompUidGidFilter },
+        {"nativeForkUsap", "(II[I)I",
+         (void *) com_android_internal_os_Zygote_nativeForkUsap },
+        {"nativeSpecializeAppProcess",
+         "(II[II[[IILjava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V",
+         (void *) com_android_internal_os_Zygote_nativeSpecializeAppProcess },
+        {"nativeInitNativeState", "(Z)V",
+         (void *) com_android_internal_os_Zygote_nativeInitNativeState },
+        {"nativeGetUsapPipeFDs", "()[I",
+         (void *) com_android_internal_os_Zygote_nativeGetUsapPipeFDs },
+        {"nativeRemoveUsapTableEntry", "(I)Z",
+         (void *) com_android_internal_os_Zygote_nativeRemoveUsapTableEntry },
+        {"nativeGetUsapPoolEventFD", "()I",
+         (void *) com_android_internal_os_Zygote_nativeGetUsapPoolEventFD },
+        {"nativeGetUsapPoolCount", "()I",
+         (void *) com_android_internal_os_Zygote_nativeGetUsapPoolCount },
+        {"nativeEmptyUsapPool", "()V",
+         (void *) com_android_internal_os_Zygote_nativeEmptyUsapPool },
+        {"nativeDisableExecuteOnly", "()Z",
+         (void *) com_android_internal_os_Zygote_nativeDisableExecuteOnly },
+        {"nativeBlockSigTerm", "()V",
+         (void* ) com_android_internal_os_Zygote_nativeBlockSigTerm },
+        {"nativeUnblockSigTerm", "()V",
+         (void* ) com_android_internal_os_Zygote_nativeUnblockSigTerm },
+        {"nativeRecvUnsolMsg", "(I[I)I", (void*)com_android_internal_os_Zygote_nativeRecvUnsolMsg},
 };
 
 int register_com_android_internal_os_Zygote(JNIEnv* env) {
