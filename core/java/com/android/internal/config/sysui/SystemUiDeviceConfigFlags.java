@@ -106,7 +106,7 @@ public final class SystemUiDeviceConfigFlags {
      */
     public static final String HASH_SALT_MAX_DAYS = "hash_salt_max_days";
 
-    // Flags related to Assistant Handles
+    // Flags related to Assistant
 
     /**
      * (String) Which behavior mode for the Assistant Handles to use.
@@ -177,9 +177,46 @@ public final class SystemUiDeviceConfigFlags {
             "assist_handles_suppress_on_apps";
 
     /**
+     * Allow touch passthrough above assist area during a session.
+     */
+    public static final String ASSIST_TAP_PASSTHROUGH = "assist_tap_passthrough";
+
+    /**
      * (bool) Whether to show handles when taught.
      */
     public static final String ASSIST_HANDLES_SHOW_WHEN_TAUGHT = "assist_handles_show_when_taught";
+
+    /**
+     * (long) Duration per pixel, in milliseconds, of scrolling text at fast speed.
+     */
+    public static final String ASSIST_TRANSCRIPTION_DURATION_PER_PX_FAST =
+            "assist_transcription_duration_per_px_fast";
+
+    /**
+     * (long) Duration per pixel, in milliseconds, of scrolling text at regular speed.
+     */
+    public static final String ASSIST_TRANSCRIPTION_DURATION_PER_PX_REGULAR =
+            "assist_transcription_duration_per_px_regular";
+
+    /**
+     * (long) Duration, in milliseconds, over which text fades in.
+     */
+    public static final String ASSIST_TRANSCRIPTION_FADE_IN_DURATION =
+            "assist_transcription_fade_in_duration";
+
+    /**
+     * (long) Maximum total duration, in milliseconds, for a given transcription.
+     */
+    public static final String ASSIST_TRANSCRIPTION_MAX_DURATION =
+            "assist_transcription_max_duration";
+
+    /**
+     * (long) Minimum total duration, in milliseconds, for a given transcription.
+     */
+    public static final String ASSIST_TRANSCRIPTION_MIN_DURATION =
+            "assist_transcription_min_duration";
+
+    // Flags related to brightline falsing
 
     /**
      * (bool) Whether to use the new BrightLineFalsingManager.
@@ -191,6 +228,87 @@ public final class SystemUiDeviceConfigFlags {
      */
     public static final String BRIGHTLINE_FALSING_DISTANCE_SCREEN_FRACTION_MAX_DISTANCE =
             "brightline_falsing_distance_screen_fraction_max_distance";
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
+
+    /**
+     * (float) Multiplier for swipe velocity to convert it to pixels for a fling.
+     */
+    public static final String BRIGHTLINE_FALSING_DISTANCE_VELOCITY_TO_DISTANCE =
+            "brightline_falsing_distance_velcoity_to_distance";
+
+    /**
+     * (float) How far, in inches, must a fling travel horizontally to qualify as intentional.
+     */
+    public static final String BRIGHTLINE_FALSING_DISTANCE_HORIZONTAL_FLING_THRESHOLD_IN =
+            "brightline_falsing_distance_horizontal_fling_threshold_in";
+
+    /**
+     * (float) Maximum fraction of the screen required to qualify as a real swipe.
+     */
+    public static final String BRIGHTLINE_FALSING_DISTANCE_VERTICAL_FLING_THRESHOLD_IN =
+            "brightline_falsing_distance_vertical_fling_threshold_in";
+
+    /**
+     * (float) How far, in inches, must a continuous swipe travel horizontally to be intentional.
+     */
+    public static final String BRIGHTLINE_FALSING_DISTANCE_HORIZONTAL_SWIPE_THRESHOLD_IN =
+            "brightline_falsing_distance_horizontal_swipe_threshold_in";
+
+    /**
+     * (float) How far, in inches, must a continuous swipe travel vertically to be intentional.
+     */
+    public static final String BRIGHTLINE_FALSING_DISTANCE_VERTICAL_SWIPE_THRESHOLD_IN =
+            "brightline_falsing_distance_horizontal_swipe_threshold_in";
+
+    /**
+     * (float) Percentage of swipe with the proximity sensor covered that triggers a higher
+     * swipe distance requirement.
+     */
+    public static final String BRIGHTLINE_FALSING_PROXIMITY_PERCENT_COVERED_THRESHOLD =
+            "brightline_falsing_proximity_percent_covered_threshold";
+
+    /**
+     * (float) Angle, in radians, that a swipe can vary from horizontal and sill be intentional.
+     */
+    public static final String BRIGHTLINE_FALSING_DIAGONAL_HORIZONTAL_ANGLE_RANGE =
+            "brightline_falsing_diagonal_horizontal_angle_range";
+
+    /**
+     * (float) Angle, in radians, that a swipe can vary from vertical and sill be intentional.
+     */
+    public static final String BRIGHTLINE_FALSING_DIAGONAL_VERTICAL_ANGLE_RANGE =
+            "brightline_falsing_diagonal_horizontal_angle_range";
+
+    /**
+     * (float) Distance, in inches, that a swipe is allowed to vary in the horizontal direction for
+     * horizontal swipes.
+     */
+    public static final String BRIGHTLINE_FALSING_ZIGZAG_X_PRIMARY_DEVIANCE =
+            "brightline_falsing_zigzag_x_primary_deviance";
+
+    /**
+     * (float) Distance, in inches, that a swipe is allowed to vary in the vertical direction for
+     * vertical swipes.
+     */
+    public static final String BRIGHTLINE_FALSING_ZIGZAG_Y_PRIMARY_DEVIANCE =
+            "brightline_falsing_zigzag_y_primary_deviance";
+
+    /**
+     * (float) Distance, in inches, that a swipe is allowed to vary in the horizontal direction for
+     * horizontal swipes.
+     */
+    public static final String BRIGHTLINE_FALSING_ZIGZAG_X_SECONDARY_DEVIANCE =
+            "brightline_falsing_zigzag_x_secondary_deviance";
+
+    /**
+     * (float) Distance, in inches, that a swipe is allowed to vary in the vertical direction for
+     * vertical swipes.
+     */
+    public static final String BRIGHTLINE_FALSING_ZIGZAG_Y_SECONDARY_DEVIANCE =
+            "brightline_falsing_zigzag_y_secondary_deviance";
+
+=======
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
 
     /**
      * (float) Multiplier for swipe velocity to convert it to pixels for a fling.
@@ -270,5 +388,6 @@ public final class SystemUiDeviceConfigFlags {
             "brightline_falsing_zigzag_y_secondary_deviance";
 
 
-    private SystemUiDeviceConfigFlags() { }
+    private SystemUiDeviceConfigFlags() {
+    }
 }

@@ -19,10 +19,15 @@ package com.android.systemui.classifier.brightline;
 import static com.android.internal.config.sysui.SystemUiDeviceConfigFlags.BRIGHTLINE_FALSING_PROXIMITY_PERCENT_COVERED_THRESHOLD;
 import static com.android.systemui.classifier.Classifier.QUICK_SETTINGS;
 
+<<<<<<< HEAD   (46621e Merge "Fix FD leak in ConnectivityManager.getConnectionOwner)
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+=======
+>>>>>>> BRANCH (0d7e17 Merge cherrypicks of [9638173, 9638613, 9638413, 9638414, 96)
 import android.provider.DeviceConfig;
 import android.view.MotionEvent;
+
+import com.android.systemui.util.ProximitySensor;
 
 
 /**
@@ -97,14 +102,12 @@ class ProximityClassifier extends FalsingClassifier {
     }
 
     @Override
-    public void onSensorEvent(SensorEvent sensorEvent) {
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            logDebug("Sensor is: " + (sensorEvent.values[0] < sensorEvent.sensor.getMaximumRange())
-                    + " at time " + sensorEvent.timestamp);
-            update(
-                    sensorEvent.values[0] < sensorEvent.sensor.getMaximumRange(),
-                    sensorEvent.timestamp);
-        }
+    public void onProximityEvent(
+            ProximitySensor.ProximityEvent proximityEvent) {
+        boolean near = proximityEvent.getNear();
+        long timestampNs = proximityEvent.getTimestampNs();
+        logDebug("Sensor is: " + near + " at time " + timestampNs);
+        update(near, timestampNs);
     }
 
     @Override
