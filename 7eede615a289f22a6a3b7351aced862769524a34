@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4abe94f7_dc63e9ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-31T08:03:04Z",
+      "side": 1,
+      "message": "Ideally, it\u0027s better to have unit test for this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0980f0e7_32a985fe",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-31T08:03:04Z",
+      "side": 1,
+      "message": "Why do we always translate it to GSM system? Does this confuse the metrics if the 2G/3G is CDMA? e.g. VZW home network with CDMA rat but roaming with GSM. or that does no matter to your metrics?",
+      "range": {
+        "startLine": 418,
+        "startChar": 12,
+        "endLine": 421,
+        "endChar": 41
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74dc1e7f_5627689e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2019-12-31T08:03:04Z",
+      "side": 1,
+      "message": "Nit: would it be clearer to have comment on these parameters? \nE.g.\nnull /* networkId */, false /* roaming */, true /* metered */, true /* defaultNetwork */",
+      "range": {
+        "startLine": 1537,
+        "startChar": 52,
+        "endLine": 1537,
+        "endChar": 75
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
