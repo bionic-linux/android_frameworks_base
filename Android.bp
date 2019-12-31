@@ -590,6 +590,7 @@ filegroup {
         "core/java/com/android/internal/util/IState.java",
         "core/java/com/android/internal/util/State.java",
         "core/java/com/android/internal/util/StateMachine.java",
+        "core/java/android/net/shared/PolicyDirection.java",
     ],
 }
 
