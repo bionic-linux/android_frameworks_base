@@ -46,6 +46,9 @@ import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.net.TrafficStats.UID_REMOVED;
 import static android.net.TrafficStats.UID_TETHERING;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_LTE;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_NR;
+import static android.telephony.TelephonyManager.NETWORK_TYPE_UMTS;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -64,6 +67,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.annotation.NonNull;
 import android.app.AlarmManager;
 import android.app.usage.NetworkStatsManager;
 import android.content.Context;
@@ -522,7 +526,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     }
 
     @Test
-    public void testUid3g4gCombinedByTemplate() throws Exception {
+    public void testUid3gWimaxCombinedByTemplate() throws Exception {
         // pretend that network comes online
         expectDefaultSettings();
         NetworkState[] states = new NetworkState[] {buildMobile3gState(IMSI_1)};
@@ -549,7 +553,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         // now switch over to 4g network
         incrementCurrentTime(HOUR_IN_MILLIS);
         expectDefaultSettings();
-        states = new NetworkState[] {buildMobile4gState(TEST_IFACE2)};
+        states = new NetworkState[] {buildWimaxState(TEST_IFACE2)};
         expectNetworkStatsSummary(buildEmptyStats());
         expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
                 .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 1024L, 8L, 1024L, 8L, 0L)
@@ -574,6 +578,53 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // verify that ALL_MOBILE template combines both
         assertUidTotal(sTemplateImsi1, UID_RED, 1536L, 12L, 1280L, 10L, 10);
+    }
+
+    @Test
+    public void testMobileStatsByNetworkType() throws Exception {
+        final NetworkTemplate template3g =
+                NetworkTemplate.buildTemplateMobileWildcardWithNetworkType(NETWORK_TYPE_UMTS);
+        final NetworkTemplate template4g =
+                NetworkTemplate.buildTemplateMobileWildcardWithNetworkType(NETWORK_TYPE_LTE);
+        final NetworkTemplate template5g =
+                NetworkTemplate.buildTemplateMobileWildcardWithNetworkType(NETWORK_TYPE_NR);
+        final NetworkState[] states3g = new NetworkState[]{buildMobile3gState(IMSI_1)};
+        final NetworkState[] states4g = new NetworkState[]{
+                buildMobileStateWithNetworkType(IMSI_1, false, NETWORK_TYPE_LTE)};
+
+        // 3G network comes online.
+        expectNetworkStatsSummary(buildEmptyStats());
+        expectNetworkStatsUidDetail(buildEmptyStats());
+
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states3g, getActiveIface(states3g),
+                new VpnInfo[0]);
+
+        // Create some traffic.
+        incrementCurrentTime(MINUTE_IN_MILLIS);
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 12L, 18L, 14L, 1L, 0L));
+        forcePollAndWaitForIdle();
+
+        // Verify 3g templates gets stats.
+        assertUidTotal(sTemplateImsi1, UID_RED, 12L, 18L, 14L, 1L, 0);
+        assertUidTotal(template3g, UID_RED, 12L, 18L, 14L, 1L, 0);
+        assertUidTotal(template4g, UID_RED, 0L, 0L, 0L, 0L, 0);
+        assertUidTotal(template5g, UID_RED, 0L, 0L, 0L, 0L, 0);
+
+        // 4G network comes online.
+        incrementCurrentTime(MINUTE_IN_MILLIS);
+        mService.forceUpdateIfaces(NETWORKS_MOBILE, states4g, getActiveIface(states4g),
+                new VpnInfo[0]);
+        expectNetworkStatsUidDetail(new NetworkStats(getElapsedRealtime(), 1)
+                .addValues(TEST_IFACE, UID_RED, SET_DEFAULT, TAG_NONE, 12L, 18L, 14L, 1L, 0L)
+                .addValues(TEST_IFACE, UID_RED, SET_FOREGROUND, TAG_NONE, 33L, 27L, 8L, 10L, 1L));
+        forcePollAndWaitForIdle();
+
+        // Verify 4g template only gets 4g NetworkStats, while ALL_MOBILE template gets all.
+        assertUidTotal(sTemplateImsi1, UID_RED, 45L, 45L, 22L, 11L, 1);
+        assertUidTotal(template3g, UID_RED, 12L, 18L, 14L, 1L, 0);
+        assertUidTotal(template4g, UID_RED, 33L, 27L, 8L, 10L, 1);
+        assertUidTotal(template5g, UID_RED, 0L, 0L, 0L, 0L, 0);
     }
 
     @Test
@@ -1156,8 +1207,13 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     }
 
     private static NetworkState buildMobile3gState(String subscriberId, boolean isRoaming) {
+        return buildMobileStateWithNetworkType(subscriberId, isRoaming, NETWORK_TYPE_UMTS);
+    }
+
+    private static NetworkState buildMobileStateWithNetworkType(
+            @NonNull String subscriberId, boolean isRoaming, int networkType) {
         final NetworkInfo info = new NetworkInfo(
-                TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UMTS, null, null);
+                TYPE_MOBILE, networkType, null, null);
         info.setDetailedState(DetailedState.CONNECTED, null, null);
         info.setRoaming(isRoaming);
         final LinkProperties prop = new LinkProperties();
@@ -1168,7 +1224,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         return new NetworkState(info, prop, capabilities, MOBILE_NETWORK, subscriberId, null);
     }
 
-    private static NetworkState buildMobile4gState(String iface) {
+    private static NetworkState buildWimaxState(@NonNull String iface) {
         final NetworkInfo info = new NetworkInfo(TYPE_WIMAX, 0, null, null);
         info.setDetailedState(DetailedState.CONNECTED, null, null);
         final LinkProperties prop = new LinkProperties();
