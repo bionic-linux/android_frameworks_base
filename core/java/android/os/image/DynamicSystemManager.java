@@ -19,6 +19,7 @@ package android.os.image;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.gsi.AvbPublicKey;
 import android.gsi.GsiProgress;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -85,6 +86,22 @@ public class DynamicSystemManager {
                 throw new RuntimeException(e.toString());
             }
         }
+
+        /**
+         * Retrieve AVB public key from installing partition.
+         *
+         * @param dst           Output the AVB public key.
+         * @return              0 on success, an error code on failure.
+         */
+        @RequiresPermission(android.Manifest.permission.MANAGE_DYNAMIC_SYSTEM)
+        public int getAvbPublicKey(AvbPublicKey dst) {
+            try {
+                return mService.getAvbPublicKey(dst);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e.toString());
+            }
+        }
+
         /**
          * Finish write and make device to boot into the it after reboot.
          *
