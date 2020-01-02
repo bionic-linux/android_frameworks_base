@@ -22,6 +22,30 @@
       "revId": "12d0da3179081ce0f554584ef8ede8239251ee93",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5b18ae_843cf8a4",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-02T15:38:51Z",
+      "side": 1,
+      "message": "IIUC, aidl does not allow this. +Anna can speak more to this though..",
+      "parentUuid": "0d9ce6a0_bcb18ac6",
+      "range": {
+        "startLine": 53,
+        "startChar": 16,
+        "endLine": 53,
+        "endChar": 41
+      },
+      "revId": "12d0da3179081ce0f554584ef8ede8239251ee93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
