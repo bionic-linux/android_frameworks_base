@@ -2594,6 +2594,7 @@ public final class Settings {
             // these were originally in system but migrated to secure in the past,
             // so are duplicated in the Secure.* namespace
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.ADB_ENABLED);
+            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.ADB_WIFI_ENABLED);
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.BLUETOOTH_ON);
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DATA_ROAMING);
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.DEVICE_PROVISIONED);
@@ -5139,6 +5140,7 @@ public final class Settings {
 
             MOVED_TO_GLOBAL = new HashSet<>();
             MOVED_TO_GLOBAL.add(Settings.Global.ADB_ENABLED);
+            MOVED_TO_GLOBAL.add(Settings.Global.ADB_WIFI_ENABLED);
             MOVED_TO_GLOBAL.add(Settings.Global.ASSISTED_GPS_ENABLED);
             MOVED_TO_GLOBAL.add(Settings.Global.BLUETOOTH_ON);
             MOVED_TO_GLOBAL.add(Settings.Global.BUGREPORT_IN_POWER_MENU);
@@ -9739,9 +9741,15 @@ public final class Settings {
         private static final Validator BUGREPORT_IN_POWER_MENU_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Whether ADB is enabled.
+         * Whether ADB over USB is enabled.
          */
         public static final String ADB_ENABLED = "adb_enabled";
+
+        /**
+         * Whether ADB over Wifi is enabled.
+         * @hide
+         */
+        public static final String ADB_WIFI_ENABLED = "adb_wifi_enabled";
 
         /**
          * Whether Views are allowed to save their attribute data.
