@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "795033b3_7ab3e4aa",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T03:30:25Z",
+      "side": 1,
+      "message": "Agree.\n+jayachandranc@ for input:\nDoes GSM/1X matter for us? Or will it matter in future?\nIf yes, do we want to:\n1. add new NETWORK_CLASS_ for that?\nhttps://source.corp.google.com/aosp-android10/frameworks/base/telephony/java/android/telephony/TelephonyManager.java;cl\u003dandroid10-release;l\u003d2723?q\u003dNETWORK_CLASS\n\n2. Or add exceptions in this function, e.g.\ngetCollapsedNetworkType(int type) {\n  if(1X|CDMA) return 1X;\n  if(EVDO|EHRPD) return EVDO\n  else {\n    class \u003d getNetworkClass(type)\n    switch(class) {\n       ....\n    }\n}\n\nBesides, in SM04, I\u0027m not sure how we want to collect them.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1197846/2/core/java/android/net/NetworkTemplate.java#144",
+      "parentUuid": "0980f0e7_32a985fe",
+      "range": {
+        "startLine": 418,
+        "startChar": 12,
+        "endLine": 421,
+        "endChar": 41
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74dc1e7f_5627689e",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 4
