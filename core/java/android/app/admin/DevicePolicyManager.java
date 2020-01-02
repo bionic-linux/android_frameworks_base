@@ -8138,6 +8138,7 @@ public class DevicePolicyManager {
      * The settings that can be updated with this method are:
      * <ul>
      * <li>{@link android.provider.Settings.Global#ADB_ENABLED}</li>
+     * <li>{@link android.provider.Settings.Global#ADB_WIFI_ENABLED}</li>
      * <li>{@link android.provider.Settings.Global#AUTO_TIME}</li>
      * <li>{@link android.provider.Settings.Global#AUTO_TIME_ZONE}</li>
      * <li>{@link android.provider.Settings.Global#DATA_ROAMING}</li>
