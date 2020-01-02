@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "192bc3c3_28fd0b48",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-02T16:19:07Z",
+      "side": 1,
+      "message": "nit: number",
+      "range": {
+        "startLine": 209,
+        "startChar": 57,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40296e9_ca6bbd2e",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-02T16:19:07Z",
+      "side": 1,
+      "message": "Since we\u0027re adding this as public API, I think we need a full javadoc comment here. Along with this, we should probably document specific behaviors (ex: null is returned for an invalid slot number, etc). Thoughts?",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 8
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c7c4b0_0ff3510a",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-02T16:19:07Z",
+      "side": 1,
+      "message": "To make this clearer for callers, I think a name such as slotNumber, physicalSlotNumber, uiccSlotNumber, or something to that effect would be good here. Thoughts?",
+      "range": {
+        "startLine": 212,
+        "startChar": 47,
+        "endLine": 212,
+        "endChar": 50
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
