@@ -1724,6 +1724,8 @@ interface ITelephony {
      */
     void setDataRoamingEnabled(int subId, boolean isEnabled);
 
+    void setDataRoamingEnabled(int subId, int roamingEnableType);
+
     /**
      * Gets the roaming mode for the CDMA phone with the subscription id {@code subId}.
      *

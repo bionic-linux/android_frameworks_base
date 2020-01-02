@@ -8629,6 +8629,52 @@ public class TelephonyManager {
     }
 
     /**
+     * Don't allow data when roaming.
+     */
+    public static final int DATA_ROAMING_DISABLE = 0;
+
+    /**
+     * Allow data national roaming only.
+     */
+    public static final int DATA_ROAMING_NATIONAL = 1;
+
+    /**
+     * Allow data all networks.
+     */
+    public static final int DATA_ROAMING_ALL_NETWORKS = 2;
+
+    /**
+     * set the data roaming enable type on the subscription.
+     *
+     * <p>If this object has been created with {@link #createForSubscriptionId}, applies to the
+     * given subId. Otherwise, applies to {@link SubscriptionManager#getDefaultDataSubscriptionId()}
+     *
+     * <p> Requires permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE} or that the calling app has carrier
+     * privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @param roamingEnableType
+     * @see #DATA_ROAMING_DISABLE
+     * @see #DATA_ROAMING_NATIONAL
+     * @see #DATA_ROAMING_ALL_NETWORKS
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void setDataRoamingEnabled(int roamingEnableType) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                telephony.setDataRoamingEnabled(
+                        getSubId(SubscriptionManager.getDefaultDataSubscriptionId()), roamingEnableType);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#setDataRoamingEnabled", e);
+        }
+    }
+
+    /**
      * @deprecated use {@link #isDataEnabled()} instead.
      * @hide
      */
