@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbc3049b_58065abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T13:14:44Z",
+      "side": 1,
+      "message": "Added in SM04 given that in SM02 we don\u0027t have good interface to fetch stats by mobile network type.",
+      "parentUuid": "4abe94f7_dc63e9ca",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0980f0e7_32a985fe",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7b79e578_0661f8d0",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T13:14:44Z",
+      "side": 1,
+      "message": "Done by option 2 above, see if it works for you.",
+      "parentUuid": "795033b3_7ab3e4aa",
+      "range": {
+        "startLine": 418,
+        "startChar": 12,
+        "endLine": 421,
+        "endChar": 41
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74dc1e7f_5627689e",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 4
@@ -92,6 +140,30 @@
       "revId": "7eede615a289f22a6a3b7351aced862769524a34",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378aa3cf_143e46a2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T13:14:44Z",
+      "side": 1,
+      "message": "Prefer keep it as is given that we have several callers.",
+      "parentUuid": "74dc1e7f_5627689e",
+      "range": {
+        "startLine": 1537,
+        "startChar": 52,
+        "endLine": 1537,
+        "endChar": 75
+      },
+      "revId": "7eede615a289f22a6a3b7351aced862769524a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
