@@ -721,7 +721,7 @@ public class AdbDebuggingManager {
      * thread. When {@code enabled} is {@code false}, this disallows ADB debugging and shuts
      * down the handler thread.
      */
-    public void setAdbEnabled(boolean enabled) {
+    public void setAdbEnabled(boolean enabled, byte transportType) {
         mHandler.sendEmptyMessage(enabled ? AdbDebuggingHandler.MESSAGE_ADB_ENABLED
                                           : AdbDebuggingHandler.MESSAGE_ADB_DISABLED);
     }
