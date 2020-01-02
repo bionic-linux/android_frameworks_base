@@ -25,7 +25,7 @@ import static android.content.Intent.EXTRA_UID;
 import static android.net.ConnectivityManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.isNetworkTypeMobile;
-import static android.net.NetworkIdentity.COMBINE_SUBTYPE_ENABLED;
+import static android.net.NetworkIdentity.SUBTYPE_COMBINED;
 import static android.net.NetworkStack.checkNetworkStackPermission;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
 import static android.net.NetworkStats.IFACE_ALL;
@@ -50,6 +50,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.os.Trace.TRACE_TAG_NETWORK;
 import static android.provider.Settings.Global.NETSTATS_AUGMENT_ENABLED;
+import static android.provider.Settings.Global.NETSTATS_COMBINE_SUBTYPE_ENABLED;
 import static android.provider.Settings.Global.NETSTATS_DEV_BUCKET_DURATION;
 import static android.provider.Settings.Global.NETSTATS_DEV_DELETE_AGE;
 import static android.provider.Settings.Global.NETSTATS_DEV_PERSIST_BYTES;
@@ -230,11 +231,16 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      * Settings that can be changed externally.
      */
     public interface NetworkStatsSettings {
-        public long getPollInterval();
-        public boolean getSampleEnabled();
-        public boolean getAugmentEnabled();
+        long getPollInterval();
+        boolean getSampleEnabled();
+        boolean getAugmentEnabled();
+        /**
+         * When enabled, {@code subType} in all {@link NetworkIdentity} used to derive mapping from
+         * {@code iface} to {@link NetworkStatsHistory} are replaced by dummy value.
+         */
+        boolean getCombineSubtypeEnabled();
 
-        public static class Config {
+        class Config {
             public final long bucketDuration;
             public final long rotateAgeMillis;
             public final long deleteAgeMillis;
@@ -246,16 +252,16 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
-        public Config getDevConfig();
-        public Config getXtConfig();
-        public Config getUidConfig();
-        public Config getUidTagConfig();
+        Config getDevConfig();
+        Config getXtConfig();
+        Config getUidConfig();
+        Config getUidTagConfig();
 
-        public long getGlobalAlertBytes(long def);
-        public long getDevPersistBytes(long def);
-        public long getXtPersistBytes(long def);
-        public long getUidPersistBytes(long def);
-        public long getUidTagPersistBytes(long def);
+        long getGlobalAlertBytes(long def);
+        long getDevPersistBytes(long def);
+        long getXtPersistBytes(long def);
+        long getUidPersistBytes(long def);
+        long getUidTagPersistBytes(long def);
     }
 
     private final Object mStatsLock = new Object();
@@ -461,9 +467,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, currentRealtime,
                 mSettings.getPollInterval(), pollIntent);
 
-        // TODO: listen to changes from all subscriptions.
+        // TODO: 1. listen to changes from all subscriptions.
+        //       2. listen to settings changed to support dynamically enable/disable.
         // watch for networkType changes
-        if (!COMBINE_SUBTYPE_ENABLED) {
+        if (!mSettings.getCombineSubtypeEnabled()) {
             mTeleManager.listen(mPhoneListener, LISTEN_SERVICE_STATE);
         }
 
@@ -487,7 +494,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mContext.unregisterReceiver(mUserReceiver);
         mContext.unregisterReceiver(mShutdownReceiver);
 
-        if (!COMBINE_SUBTYPE_ENABLED) {
+        if (!mSettings.getCombineSubtypeEnabled()) {
             mTeleManager.listen(mPhoneListener, LISTEN_NONE);
         }
 
@@ -1225,7 +1232,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             if (state.networkInfo.isConnected()) {
                 final boolean isMobile = isNetworkTypeMobile(state.networkInfo.getType());
                 final boolean isDefault = ArrayUtils.contains(mDefaultNetworks, state.network);
-                final int subType = getSubTypeForState(mSubTypes, state);
+                final int subType = mSettings.getCombineSubtypeEnabled() ? SUBTYPE_COMBINED
+                        : getSubTypeForState(mSubTypes, state);
                 final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, state,
                         isDefault, subType);
 
@@ -1634,6 +1642,12 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 return;
             }
 
+            pw.println("Configs:");
+            pw.increaseIndent();
+            pw.printPair(NETSTATS_COMBINE_SUBTYPE_ENABLED, mSettings.getCombineSubtypeEnabled());
+            pw.println();
+            pw.decreaseIndent();
+
             pw.println("Active interfaces:");
             pw.increaseIndent();
             for (int i = 0; i < mActiveIfaces.size(); i++) {
@@ -1927,6 +1941,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @Override
         public boolean getAugmentEnabled() {
             return getGlobalBoolean(NETSTATS_AUGMENT_ENABLED, true);
+        }
+        @Override
+        public boolean getCombineSubtypeEnabled() {
+            return getGlobalBoolean(NETSTATS_COMBINE_SUBTYPE_ENABLED, false);
         }
         @Override
         public Config getDevConfig() {

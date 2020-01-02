@@ -1154,6 +1154,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
             throws Exception {
         when(mSettings.getPollInterval()).thenReturn(HOUR_IN_MILLIS);
         when(mSettings.getSampleEnabled()).thenReturn(true);
+        when(mSettings.getCombineSubtypeEnabled()).thenReturn(false);
 
         final Config config = new Config(bucketDuration, deleteAge, deleteAge);
         when(mSettings.getDevConfig()).thenReturn(config);
