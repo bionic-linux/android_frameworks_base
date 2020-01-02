@@ -950,7 +950,8 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         }
 
         if (DBG) {
-            Slog.d(TAG, "disable(): mBluetooth = " + mBluetooth + " mBinding = " + mBinding);
+            Slog.d(TAG, "disable(" + packageName + "): mBluetooth = "
+                    + mBluetooth + " mBinding = " + mBinding);
         }
 
         synchronized (mReceiver) {
@@ -1501,6 +1502,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             Message msg = mHandler.obtainMessage(MESSAGE_BLUETOOTH_SERVICE_CONNECTED);
             if (name.equals("com.android.bluetooth.btservice.AdapterService")) {
                 msg.arg1 = SERVICE_IBLUETOOTH;
+                mHandler.removeMessages(MESSAGE_TIMEOUT_BIND);
             } else if (name.equals("com.android.bluetooth.gatt.GattService")) {
                 msg.arg1 = SERVICE_IBLUETOOTHGATT;
             } else {
@@ -1725,9 +1727,6 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             break;
                         } // else must be SERVICE_IBLUETOOTH
 
-                        //Remove timeout
-                        mHandler.removeMessages(MESSAGE_TIMEOUT_BIND);
-
                         mBinding = false;
                         mBluetoothBinder = service;
                         mBluetooth = IBluetooth.Stub.asInterface(Binder.allowBlocking(service));
@@ -1796,6 +1795,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             == BluetoothAdapter.STATE_OFF)) {
                         if (mEnable) {
                             Slog.d(TAG, "Entering STATE_OFF but mEnabled is true; restarting.");
+                            mHandler.removeMessages(MESSAGE_RESTART_BLUETOOTH_SERVICE);
                             waitForOnOff(false, true);
                             Message restartMsg =
                                     mHandler.obtainMessage(MESSAGE_RESTART_BLUETOOTH_SERVICE);
