@@ -134,9 +134,13 @@ public class AdbService extends IAdbManager.Stub {
                 mAdbWifiEnabled = false;
 
                 // register observer to listen for settings changes
+                mObserver = new AdbSettingsObserver();
                 mContentResolver.registerContentObserver(
                         Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
-                        false, new AdbSettingsObserver());
+                        false, mObserver);
+                mContentResolver.registerContentObserver(
+                        Settings.Global.getUriFor(Settings.Global.ADB_WIFI_ENABLED),
+                        false, mObserver);
             } catch (Exception e) {
                 Slog.e(TAG, "Error initializing AdbHandler", e);
             }
@@ -173,10 +177,13 @@ public class AdbService extends IAdbManager.Stub {
                     break;
             }
         }
+
+        private ContentObserver mObserver;
     }
 
     private class AdbSettingsObserver extends ContentObserver {
         private final Uri mAdbUsbUri = Settings.Global.getUriFor(Settings.Global.ADB_ENABLED);
+        private final Uri mAdbWifiUri = Settings.Global.getUriFor(Settings.Global.ADB_WIFI_ENABLED);
 
         AdbSettingsObserver() {
             super(null);
@@ -188,8 +195,11 @@ public class AdbService extends IAdbManager.Stub {
                 boolean enable = (Settings.Global.getInt(mContentResolver,
                         Settings.Global.ADB_ENABLED, 0) > 0);
                 mHandler.sendMessage(MSG_ENABLE_ADB, enable, AdbTransportType.USB);
+            } else if (mAdbWifiUri.equals(uri)) {
+                boolean enable = (Settings.Global.getInt(mContentResolver,
+                        Settings.Global.ADB_WIFI_ENABLED, 0) > 0);
+                mHandler.sendMessage(MSG_ENABLE_ADB, enable, AdbTransportType.WIFI);
             }
-            // TODO: Add condition for WIFI transport
         }
     }
 
@@ -240,6 +250,8 @@ public class AdbService extends IAdbManager.Stub {
         try {
             Settings.Global.putInt(mContentResolver,
                     Settings.Global.ADB_ENABLED, mAdbUsbEnabled ? 1 : 0);
+            Settings.Global.putInt(mContentResolver,
+                    Settings.Global.ADB_WIFI_ENABLED, mAdbWifiEnabled ? 1 : 0);
         } catch (SecurityException e) {
             // If UserManager.DISALLOW_DEBUGGING_FEATURES is on, that this setting can't be changed.
             Slog.d(TAG, "ADB_ENABLED is restricted.");
