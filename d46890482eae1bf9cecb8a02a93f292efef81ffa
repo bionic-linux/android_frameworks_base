@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d353becb_4db6ac42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-02T02:08:16Z",
+      "side": 1,
+      "message": "maybe add \"(cherry-pick from ag/9673528)\"?",
+      "revId": "d46890482eae1bf9cecb8a02a93f292efef81ffa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
