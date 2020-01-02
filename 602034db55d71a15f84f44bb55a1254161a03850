@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4af03af_7263c66a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-02T02:51:45Z",
+      "side": 1,
+      "message": "It seems we can remove this function ?? Tethering no longer use NetworkStats directly.",
+      "range": {
+        "startLine": 396,
+        "startChar": 17,
+        "endLine": 396,
+        "endChar": 35
+      },
+      "revId": "602034db55d71a15f84f44bb55a1254161a03850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
