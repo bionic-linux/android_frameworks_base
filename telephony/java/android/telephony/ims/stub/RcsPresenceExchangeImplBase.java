@@ -26,6 +26,8 @@ import android.telephony.ims.feature.ImsFeature;
 import android.telephony.ims.feature.RcsFeature;
 import android.util.Log;
 
+import com.android.ims.RcsFeatureManager.StackPublishTriggerType;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
@@ -164,15 +166,17 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
      * This is typically used when trying to generate an initial PUBLISH for a new subscription to
      * the network. The device will cache all presence publications after boot until this method is
      * called once.
+     * @param publishTriggerType {@link StackPublishTriggerType} The type used to trigger publish.
      * @throws ImsException If this {@link RcsPresenceExchangeImplBase} instance is not currently
      * connected to the framework. This can happen if the {@link RcsFeature} is not
      * {@link ImsFeature#STATE_READY} and the {@link RcsFeature} has not received the
      * {@link ImsFeature#onFeatureReady()} callback. This may also happen in rare cases when the
      * Telephony stack has crashed.
      */
-    public final void onNotifyUpdateCapabilites() throws ImsException {
+    public final void onNotifyUpdateCapabilites(@StackPublishTriggerType int publishTriggerType)
+            throws ImsException {
         try {
-            getListener().onNotifyUpdateCapabilities();
+            getListener().onNotifyUpdateCapabilities(publishTriggerType);
         } catch (RemoteException e) {
             throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
