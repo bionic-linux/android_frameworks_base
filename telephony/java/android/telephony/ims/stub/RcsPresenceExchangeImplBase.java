@@ -113,6 +113,44 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
     })
     public @interface PresenceResponseCode {}
 
+
+    /** ETag expired. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_ETAG_EXPIRED = 0;
+    /** Move to LTE with VoPS disabled. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_LTE_VOPS_DISABLED = 1;
+    /** Move to LTE with VoPS enabled. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_LTE_VOPS_ENABLED = 2;
+    /** Move to eHRPD. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_EHRPD = 3;
+    /** Move to HSPA+. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_HSPAPLUS = 4;
+    /** Move to 3G. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_3G = 5;
+    /** Move to 2G. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_2G = 6;
+    /** Move to WLAN */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_WLAN = 7;
+    /** Move to IWLAN */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_IWLAN = 8;
+    /** Trigger is unknown. */
+    public static final int UCE_PRES_PUBLISH_TRIGGER_UNKNOWN = 9;
+
+    @IntDef(value = {
+            UCE_PRES_PUBLISH_TRIGGER_ETAG_EXPIRED,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_LTE_VOPS_DISABLED,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_LTE_VOPS_ENABLED,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_EHRPD,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_HSPAPLUS,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_3G,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_2G,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_WLAN,
+            UCE_PRES_PUBLISH_TRIGGER_MOVE_TO_IWLAN,
+            UCE_PRES_PUBLISH_TRIGGER_UNKNOWN
+    }, prefix = "UCE_PRES_PUBLISH_TRIGGER_")
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface StackPublishTriggerType {
+    }
+
     /**
      * Provide the framework with a subsequent network response update to
      * {@link #updateCapabilities(RcsContactUceCapability, int)} and
@@ -164,15 +202,17 @@ public class RcsPresenceExchangeImplBase extends RcsCapabilityExchange {
      * This is typically used when trying to generate an initial PUBLISH for a new subscription to
      * the network. The device will cache all presence publications after boot until this method is
      * called once.
+     * @param publishTriggerType {@link StackPublishTriggerType} The type used to trigger publish.
      * @throws ImsException If this {@link RcsPresenceExchangeImplBase} instance is not currently
      * connected to the framework. This can happen if the {@link RcsFeature} is not
      * {@link ImsFeature#STATE_READY} and the {@link RcsFeature} has not received the
      * {@link ImsFeature#onFeatureReady()} callback. This may also happen in rare cases when the
      * Telephony stack has crashed.
      */
-    public final void onNotifyUpdateCapabilites() throws ImsException {
+    public final void onNotifyUpdateCapabilites(@StackPublishTriggerType int publishTriggerType)
+            throws ImsException {
         try {
-            getListener().onNotifyUpdateCapabilities();
+            getListener().onNotifyUpdateCapabilities(publishTriggerType);
         } catch (RemoteException e) {
             throw new ImsException(e.getMessage(), ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
         }
