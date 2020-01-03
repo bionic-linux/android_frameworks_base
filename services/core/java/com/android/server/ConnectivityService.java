@@ -99,6 +99,7 @@ import android.net.NetworkPolicyManager;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
+import android.net.NetworkSelectionSettings;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
@@ -952,7 +953,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog = logger;
         mDefaultRequest = createDefaultInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
-        mNetworkRanker = new NetworkRanker(mDefaultRequest);
+        // TODO: NetworkSelectionSettings is a device-wide settings, should get it and assign it
+        // into NetworkRanker.
+        mNetworkRanker = new NetworkRanker(mDefaultRequest, new NetworkSelectionSettings());
         NetworkRequestInfo defaultNRI = new NetworkRequestInfo(null, mDefaultRequest, new Binder());
         mNetworkRequests.put(mDefaultRequest, defaultNRI);
         mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);

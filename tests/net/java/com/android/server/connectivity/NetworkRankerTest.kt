@@ -17,6 +17,9 @@
 package com.android.server.connectivity
 
 import android.net.NetworkRequest
+import android.net.NetworkScore
+import android.net.NetworkScore.LEGACY_SCORE
+import android.net.NetworkSelectionSettings
 import androidx.test.filters.SmallTest
 import androidx.test.runner.AndroidJUnit4
 import org.junit.Test
@@ -26,11 +29,14 @@ import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class NetworkRankerTest {
-    private val ranker = NetworkRanker(mock(NetworkRequest::class.java))
+    private val mRequest = mock(NetworkRequest::class.java)
+    private val mSelectionSettings = mock(NetworkSelectionSettings::class.java)
+    private val ranker = NetworkRanker(mRequest, mSelectionSettings)
 
     private fun makeNai(satisfy: Boolean, score: Int) = mock(NetworkAgentInfo::class.java).also {
         doReturn(satisfy).`when`(it).satisfies(any())
@@ -66,5 +72,12 @@ class NetworkRankerTest {
     fun testEmpty() {
         val someRequest = mock(NetworkRequest::class.java)
         assertNull(ranker.getBestNetwork(someRequest, emptyList()))
+    }
+
+    @Test
+    fun testCompareNetworks() {
+        val ns1 = NetworkScore().putIntExtension(LEGACY_SCORE, 50)
+        val ns2 = NetworkScore().putIntExtension(LEGACY_SCORE, 100)
+        assertTrue(ranker.compareNetworks(ns1, ns2, mRequest) < 0)
     }
 }

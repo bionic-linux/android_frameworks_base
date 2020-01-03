@@ -16,20 +16,30 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkScore.LEGACY_SCORE;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
+import android.net.NetworkSelectionSettings;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * A class that knows how to find the best network matching a request out of a list of networks.
  */
 public class NetworkRanker {
     private final NetworkRequest mDefaultRequest;
+    private NetworkSelectionSettings mSelectionSettings;
 
-    public NetworkRanker(@NonNull final NetworkRequest defaultRequest) {
+    public NetworkRanker(@NonNull final NetworkRequest defaultRequest,
+            @NonNull final NetworkSelectionSettings selectionSettings) {
         mDefaultRequest = defaultRequest;
+        mSelectionSettings = selectionSettings;
     }
 
     /**
@@ -50,5 +60,40 @@ public class NetworkRanker {
             }
         }
         return bestNetwork;
+    }
+
+    /**
+     * A setter for updating the NetworkSelectionSettings.
+     */
+    public void setNetworkSelectionSettings(
+            @NonNull final NetworkSelectionSettings selectionSettings) {
+        mSelectionSettings = selectionSettings;
+    }
+
+    /**
+     * Compares two {@link NetworkScore} for the given {@link NetworkRequest}.
+     *
+     * @param  ns1 The first {@link NetworkScore} to compare.
+     * @param  ns2 The second {@link NetworkScore} to compare.
+     * @param  request The {@link NetworkRequest} which is trying to find the best
+     *         {@link NetworkScore} to it.
+     * @return A negative integer, zero, or a positive integer is corresponding to the first
+     *         {@link NetworkScore} is less than, equal to, or greater than the second.
+     *
+     * TODO: Compares more fields of NetworkScore once all of them are ready.
+     */
+    @VisibleForTesting
+    protected int compareNetworks(@NonNull NetworkScore ns1, @NonNull NetworkScore ns2,
+            @NonNull NetworkRequest request) {
+        return Integer.compare(ns1.getIntExtension(LEGACY_SCORE),
+                ns2.getIntExtension(LEGACY_SCORE));
+    }
+
+    /**
+     * Return comparator for comparing NetworkScore.
+     */
+    @NonNull
+    public Comparator<NetworkScore> makeComparator(@NonNull NetworkRequest request) {
+        return (ns1, ns2) -> compareNetworks(ns1, ns2, request);
     }
 }
