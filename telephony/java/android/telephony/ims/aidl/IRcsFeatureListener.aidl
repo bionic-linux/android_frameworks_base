@@ -19,6 +19,8 @@ package android.telephony.ims.aidl;
 import android.net.Uri;
 import android.telephony.ims.RcsContactUceCapability;
 
+import com.android.ims.internal.uce.presence.PresPublishTriggerType;
+
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ interface IRcsFeatureListener {
     oneway void onNetworkResponse(int code, in String reason, int operationToken);
     oneway void onCapabilityRequestResponsePresence(in List<RcsContactUceCapability> infos,
     int operationToken);
-    oneway void onNotifyUpdateCapabilities();
+    oneway void onNotifyUpdateCapabilities(in PresPublishTriggerType publishTriggerType);
     oneway void onUnpublish();
     // RcsSipOptionsImplBase specific
     oneway void onCapabilityRequestResponseOptions(int code, in String reason,
