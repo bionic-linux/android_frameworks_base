@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58381d57_a572a480",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a392f1_051a0907",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3af53d8c_18b619e0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "52bbcd2c_78b1dd54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "As we discussed offline, it seems like this command doen\u0027t check the files under services.\nSo maybe it\u0027s unnecessary to put this check on \"Test\".",
+      "parentUuid": "3af53d8c_18b619e0",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "292f2ac0_2dbc7557",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-03T10:12:13Z",
       "side": 1,
       "message": "IIUC the settings will not take any effect if user doesn\u0027t call makeComparator.\nIs it better if we make NetworkSelectionSettings final and remove the setter?\nAnd make a new Ranker if Settings changed?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b1f63cd_e372853b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "The NetworkSelectionSettings may be changed by user, and NetworkRanker is created in the constructor of ConnectivityService for current design, so we may not make a new NetworkRanker once NetworkSelectionSettings is changed.\nBut maybe we could refactor the design, only create the NetworkRanker and fetch the NetworkSelectionSettings once we want to compare the networks.\nOtherwise we may need this setter to change the settings and also need to ensure there is no deadlock happened when ConnectivityService updated it.\nNot sure if you or Jean has another ideas?",
+      "parentUuid": "292f2ac0_2dbc7557",
       "range": {
         "startLine": 65,
         "startChar": 4,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "c750a579_0d3bbfa2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "Updated the description to what you suggested.",
+      "parentUuid": "8921484a_f700553c",
+      "range": {
+        "startLine": 75,
+        "startChar": 63,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0023a51f_85abec24",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc030d8c_9376f978",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06f31980_181c79ab",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acd6111_4ce3cd63",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f31980_181c79ab",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +321,30 @@
       "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04862ad_9cbf7f16",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:37:29Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "b6f3ca7f_8e43c940",
+      "range": {
+        "startLine": 83,
+        "startChar": 52,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
