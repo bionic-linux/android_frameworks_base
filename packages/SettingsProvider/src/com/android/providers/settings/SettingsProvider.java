@@ -1578,8 +1578,10 @@ public class SettingsProvider extends ContentProvider {
 
         // Special cases for location providers (sigh).
         if (Settings.Secure.LOCATION_PROVIDERS_ALLOWED.equals(name)) {
-            return updateLocationProvidersAllowedLocked(value, tag, owningUserId, makeDefault,
-                    forceNotify);
+            synchronized (mLock) {
+                return updateLocationProvidersAllowedLocked(value, tag, owningUserId, makeDefault,
+                        forceNotify);
+            }
         }
 
         // Mutate the value.
