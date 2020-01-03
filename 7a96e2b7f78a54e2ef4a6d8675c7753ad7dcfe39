@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4a4ba54_af5d75af",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "maybe add @Nullable/@NonNull for the members?",
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28d177f_b37bdc41",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "If we use setter then the parameter is not needed.",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 69
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae30f87_df56a009",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "style: extra space?",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349754b8_121187c0",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "style: wrong indention?\nSee \nhttps://source.corp.google.com/android/frameworks/base/core/java/android/net/ConnectivityManager.java;cl\u003dmaster;l\u003d1057?q\u003dConnectivityManager",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a66f6a8_428ffd3c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "IIUC we are not finding anything for it but just return the compare result of two score against this request.\nMaybe need to update this?",
+      "range": {
+        "startLine": 78,
+        "startChar": 50,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4610de_46f7158e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "sorry for misleading.\nHowever the less/greater are for countable numbers.\nIs it better if we use worse/better instead?",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159406d2_8f0db790",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "It does not make sense to me that the request parameter is needed,\nwhile you already provide that in makeComparator.\nIIUC you need to extend Comparator?",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43da2fbc_6985bd76",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "style: {@link NetworkScore} ? also applies to above function.",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53991c6_71a59375",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:00:31Z",
+      "side": 1,
+      "message": "1. These are not members, thus they should not named with m- prefix.\nmaybe mockRequest?\n2. If so, maybe we want to replace all similar usage below?",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
