@@ -22,6 +22,30 @@
       "revId": "602034db55d71a15f84f44bb55a1254161a03850",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e407a8b_b6df6110",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T13:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4af03af_7263c66a",
+      "range": {
+        "startLine": 396,
+        "startChar": 17,
+        "endLine": 396,
+        "endChar": 35
+      },
+      "revId": "602034db55d71a15f84f44bb55a1254161a03850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
