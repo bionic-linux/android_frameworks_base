@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a392f1_051a0907",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "maybe we want to be more specific?",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af53d8c_18b619e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "IIUC we need to validate if links in javadoc is correct by the following command:\nm doc-comment-check-docs -j",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292f2ac0_2dbc7557",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "IIUC the settings will not take any effect if user doesn\u0027t call makeComparator.\nIs it better if we make NetworkSelectionSettings final and remove the setter?\nAnd make a new Ranker if Settings changed?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8921484a_f700553c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "1. typo\n2. LEGACY_SCORE?",
+      "range": {
+        "startLine": 75,
+        "startChar": 63,
+        "endLine": 75,
+        "endChar": 68
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc030d8c_9376f978",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "IIUC \"Currently,...\" is redundant since the current behavior is obvious and the future work should be inside TODO.\nMaybe something like below?\nCompares two {@link NetworkScore} for the given {@link NetworkRequest}.\n...\n@return A negative integer, zero, or a positive integer as the first {@link NetworkScore} is \n        less than, equal to, or greater than the second.\n...",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f31980_181c79ab",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "1. nit: The result of comparision is very specific to the given request.\nDo we want to name it more specifically?\n2. Given that this function compares score instead of network (According to javadoc).\nmaybe we should name it accordingly?\n\nBased on 1 \u0026 2, how about something like compareScoreForRequest?",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f3ca7f_8e43c940",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "maybe just mock that as above test given that it is not used?",
+      "range": {
+        "startLine": 83,
+        "startChar": 52,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9e135b_22f93109",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-03T10:12:13Z",
+      "side": 1,
+      "message": "nit: will we assert this case frequently in future?\nIf so maybe refactor to assertLessThan.\nfeel free to ignore.",
+      "revId": "2385202caab3e7a7fbc7c91b76075020f76b9c7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
