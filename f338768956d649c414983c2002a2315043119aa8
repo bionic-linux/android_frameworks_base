@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c5df8b6_43caa2d1",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsEntryParcelable.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5486e0bc_f50bfd8e",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelable.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Nit: Extra space in front of each line from l.17 to l.24",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eeb33e1_ee8d209e",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Also @TestApi?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c7eae6_8dfbe3f8",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "You do not check the capacity while adding new item. As elements are added to an ArrayList, its capacity grows automatically. Why do we need this?",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0b653b_99831d55",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Will it be better to put these constant in NetworkStatsParcelableWrapper instead of inside Entry?",
+      "range": {
+        "startLine": 61,
+        "startChar": 35,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1061faa9_2ddee85d",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "May I know in what kind of case we will put a null Iface?",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2201f1_84061b67",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "@VisibleForTesting? ditto for other package private ones. \n\nMaybe used in other commits?",
+      "range": {
+        "startLine": 143,
+        "startChar": 14,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad184a65_e7015858",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Can\u0027t it be package private? Ditto for the other VisibleForTesting functions.",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 10
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dea9d36_0505e237",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Nit: capital",
+      "range": {
+        "startLine": 309,
+        "startChar": 15,
+        "endLine": 309,
+        "endChar": 16
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22338531_3ff59b98",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Nit: 0L /* elapsedRealtime */",
+      "range": {
+        "startLine": 338,
+        "startChar": 52,
+        "endLine": 338,
+        "endChar": 54
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042068e7_d9f04755",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsParcelableWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Nit: final",
+      "range": {
+        "startLine": 392,
+        "startChar": 8,
+        "endLine": 392,
+        "endChar": 9
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb61ca65_83c71c48",
+        "filename": "tests/net/java/android/net/netstats/provider/NetworkStatsParcelableWrapperTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-01-03T09:53:36Z",
+      "side": 1,
+      "message": "Nit: you may want to align with your other new files.",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "f338768956d649c414983c2002a2315043119aa8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
