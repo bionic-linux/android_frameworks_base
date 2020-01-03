@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c35981a2_9ea7ecad",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-03T11:46:37Z",
+      "side": 1,
+      "message": "\u003e Junyu: IIUC the settings will not take any effect if user doesn\u0027t call makeComparator.\nIs it better if we make NetworkSelectionSettings final and remove the setter?\nAnd make a new Ranker if Settings changed?\n\nThe NetworkSelectionSettings may be changed by user, and NetworkRanker is created in the constructor of ConnectivityService for current design, so we may not make a new NetworkRanker once NetworkSelectionSettings is changed.\nBut maybe we could refactor the design, only create the NetworkRanker and fetch the NetworkSelectionSettings once we want to compare the networks.\nOtherwise we may need this setter to change the settings and also need to ensure there is no deadlock happened when ConnectivityService updated it.\nNot sure if you or Jean has another ideas?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "29754c73ea27d7f61ceda9d17d058b806101fce5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
