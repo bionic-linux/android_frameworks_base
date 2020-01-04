@@ -24,10 +24,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.UserHandle;
-
-import com.android.internal.os.BackgroundThread;
 
 /**
  * Helper class for monitoring the state of packages: adding, removing,
@@ -35,6 +34,7 @@ import com.android.internal.os.BackgroundThread;
  */
 public abstract class PackageChangeReceiver extends BroadcastReceiver {
     static final IntentFilter sPackageIntentFilter = new IntentFilter();
+    private static HandlerThread sHandlerThread;
     static {
         sPackageIntentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
         sPackageIntentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
@@ -45,6 +45,7 @@ public abstract class PackageChangeReceiver extends BroadcastReceiver {
     }
     Context mRegisteredContext;
 
+
     /**
      * To register the intents that needed for monitoring the state of packages
      */
@@ -53,7 +54,7 @@ public abstract class PackageChangeReceiver extends BroadcastReceiver {
         if (mRegisteredContext != null) {
             throw new IllegalStateException("Already registered");
         }
-        Handler handler = (thread == null) ? BackgroundThread.getHandler() : new Handler(thread);
+        Handler handler = new Handler(thread == null ? getStaticLooper() : thread);
         mRegisteredContext = context;
         if (handler != null) {
             Context contextForUser = user == null ? context : context.createContextAsUser(user, 0);
@@ -72,6 +73,14 @@ public abstract class PackageChangeReceiver extends BroadcastReceiver {
         }
         mRegisteredContext.unregisterReceiver(this);
         mRegisteredContext = null;
+    }
+
+    private static synchronized Looper getStaticLooper() {
+        if (sHandlerThread == null) {
+            sHandlerThread = new HandlerThread(PackageChangeReceiver.class.getSimpleName());
+            sHandlerThread.start();
+        }
+        return sHandlerThread.getLooper();
     }
 
     /**
