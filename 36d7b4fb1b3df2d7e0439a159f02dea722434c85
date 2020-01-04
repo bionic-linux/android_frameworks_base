@@ -68,6 +68,78 @@
       "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1756a03a_46cc2d0a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-04T00:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c353fdf_d927df28",
+      "range": {
+        "startLine": 7533,
+        "startChar": 28,
+        "endLine": 7533,
+        "endChar": 53
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c662713_15593bbd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-04T00:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ecad5d4_2923cee7",
+      "range": {
+        "startLine": 7533,
+        "startChar": 12,
+        "endLine": 7533,
+        "endChar": 20
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5d6e6d9_9b0994eb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7533,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-04T00:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c91a5a80_ef4c6886",
+      "range": {
+        "startLine": 7533,
+        "startChar": 58,
+        "endLine": 7533,
+        "endChar": 65
+      },
+      "revId": "36d7b4fb1b3df2d7e0439a159f02dea722434c85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
