@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98b40be0_91185b29",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6771,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-04T01:08:18Z",
+      "side": 1,
+      "message": "I think it\u0027s a fair question whether we should use the appType; I have a feeling that we would always just prefer USIM over SIM if we have the option and that we can forgo this parameter, but we can ask tgunn@.",
+      "range": {
+        "startLine": 6771,
+        "startChar": 51,
+        "endLine": 6771,
+        "endChar": 58
+      },
+      "revId": "3cdb707f03ea1a97568eb8ccc7a02afad06fd6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7913b31e_084a73f1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6772,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-04T01:08:18Z",
+      "side": 1,
+      "message": "please use the getSubId() method to resolve the subId.",
+      "range": {
+        "startLine": 6772,
+        "startChar": 12,
+        "endLine": 6772,
+        "endChar": 17
+      },
+      "revId": "3cdb707f03ea1a97568eb8ccc7a02afad06fd6e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
