@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ac6b1e_2a842cde",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7467,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-04T00:53:06Z",
+      "side": 1,
+      "message": "Get the PLMN chosen for Manual Network Selection if active.",
+      "range": {
+        "startLine": 7467,
+        "startChar": 7,
+        "endLine": 7467,
+        "endChar": 44
+      },
+      "revId": "2460da172fdc4e1fdf2583d32afcdc73009fa879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd59b97f_463918b5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7473,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-04T00:53:06Z",
+      "side": 1,
+      "message": "\"an empty string if manual network selection isn\u0027t enabled\". We should talk to tgunn@ and confirm that empty string is preferable to null.",
+      "range": {
+        "startLine": 7473,
+        "startChar": 60,
+        "endLine": 7473,
+        "endChar": 74
+      },
+      "revId": "2460da172fdc4e1fdf2583d32afcdc73009fa879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
