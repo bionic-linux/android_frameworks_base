@@ -21,6 +21,7 @@ import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
@@ -182,6 +183,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -530,6 +532,7 @@ public class ConnectivityServiceTest {
         private int mProbesCompleted;
         private int mProbesSucceeded;
         private String mNmValidationRedirectUrl = null;
+        private PersistableBundle mValidationExtras = PersistableBundle.EMPTY;
         private boolean mNmProvNotificationRequested = false;
 
         private final ConditionVariable mNetworkStatusReceived = new ConditionVariable();
@@ -597,8 +600,8 @@ public class ConnectivityServiceTest {
             }
 
             mNmCallbacks.notifyProbeStatusChanged(mProbesCompleted, mProbesSucceeded);
-            mNmCallbacks.notifyNetworkTested(
-                    mNmValidationResult, mNmValidationRedirectUrl);
+            mNmCallbacks.notifyNetworkTestedWithExtras(
+                    mNmValidationResult, mNmValidationRedirectUrl, mValidationExtras);
 
             if (mNmValidationRedirectUrl != null) {
                 mNmCallbacks.showProvisioningNotification(
@@ -6322,5 +6325,47 @@ public class ConnectivityServiceTest {
         assertTrue(
                 mService.mConnectivityDiagnosticsCallbacks.containsKey(
                         mConnectivityDiagnosticsCallback));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+        final NetworkRequest request =
+                new NetworkRequest(
+                        new NetworkCapabilities(),
+                        ConnectivityManager.TYPE_NONE,
+                        0,
+                        NetworkRequest.Type.LISTEN);
+        final NetworkRequestInfo nri =
+                mService.new NetworkRequestInfo(request, Binder.getCallingUid());
+        final CountDownLatch onConnectivityReportLatch = new CountDownLatch(1);
+        final AtomicBoolean onConnectivityReportInvoked = new AtomicBoolean(false);
+        mConnectivityDiagnosticsCallback =
+                new IConnectivityDiagnosticsCallback.Default() {
+                    public void onConnectivityReport(ConnectivityReport report) {
+                        onConnectivityReportLatch.countDown();
+                        onConnectivityReportInvoked.set(true);
+                    }
+                };
+
+        // setUp() calls mockVpn(), which adds a VPN with our uid. This gives the callback
+        // permissions for receiving callbacks for the 'Active VPN' case.
+        mService.mConnectivityDiagnosticsCallbacks.put(
+                mConnectivityDiagnosticsCallback,
+                mService.new ConnectivityDiagnosticsCallbackInfo(
+                        mConnectivityDiagnosticsCallback, nri));
+
+        // Connect the cell agent and wait for the connected broadcast. This registers a network,
+        // which leads to the network being evaluated and calls notifyNetworkTestedWithExtras().
+        // This will lead to the ConnectivityDiagnosticsCallback being invoked.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_SUPL);
+        final ConditionVariable cv = registerConnectivityBroadcastThat(1,
+                intent -> intent.getIntExtra(EXTRA_NETWORK_TYPE, -1) == TYPE_MOBILE);
+        mCellNetworkAgent.connect(true);
+        waitFor(cv);
+
+        // Wait for onConnectivityReport to fire
+        onConnectivityReportLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        assertTrue("OnConnectivityReport wasn't called", onConnectivityReportInvoked.get());
     }
 }
