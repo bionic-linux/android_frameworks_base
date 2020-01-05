@@ -182,6 +182,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -530,6 +531,7 @@ public class ConnectivityServiceTest {
         private int mProbesCompleted;
         private int mProbesSucceeded;
         private String mNmValidationRedirectUrl = null;
+        private PersistableBundle mValidationExtras = PersistableBundle.EMPTY;
         private boolean mNmProvNotificationRequested = false;
 
         private final ConditionVariable mNetworkStatusReceived = new ConditionVariable();
@@ -597,8 +599,8 @@ public class ConnectivityServiceTest {
             }
 
             mNmCallbacks.notifyProbeStatusChanged(mProbesCompleted, mProbesSucceeded);
-            mNmCallbacks.notifyNetworkTested(
-                    mNmValidationResult, mNmValidationRedirectUrl);
+            mNmCallbacks.notifyNetworkTestedWithExtras(
+                    mNmValidationResult, mNmValidationRedirectUrl, mValidationExtras);
 
             if (mNmValidationRedirectUrl != null) {
                 mNmCallbacks.showProvisioningNotification(
@@ -6322,5 +6324,11 @@ public class ConnectivityServiceTest {
         assertTrue(
                 mService.mConnectivityDiagnosticsCallbacks.containsKey(
                         mConnectivityDiagnosticsCallback));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() {
+        // gives us permission to receive callback
+        mockVpn(Process.myUid());
     }
 }
