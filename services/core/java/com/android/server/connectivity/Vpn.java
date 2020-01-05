@@ -165,7 +165,8 @@ public class Vpn {
     private String mPackage;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
-    private String mInterface;
+    @VisibleForTesting
+    protected String mInterface;
     private Connection mConnection;
     private LegacyVpnRunner mLegacyVpnRunner;
     private PendingIntent mStatusIntent;
