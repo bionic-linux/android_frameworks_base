@@ -21,6 +21,8 @@ import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
@@ -182,6 +184,7 @@ import android.os.Looper;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -214,6 +217,7 @@ import com.android.server.connectivity.DefaultNetworkMetrics;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
+import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
@@ -354,6 +358,8 @@ public class ConnectivityServiceTest {
         @Spy private Resources mResources;
         private final LinkedBlockingQueue<Intent> mStartedActivities = new LinkedBlockingQueue<>();
 
+        private final List<String> mPermissions = new ArrayList<>();
+
         MockContext(Context base, ContentProvider settingsProvider) {
             super(base);
 
@@ -444,6 +450,18 @@ public class ConnectivityServiceTest {
             // For the same reason, don't bother clearing mRegisteredReceivers.
             for (final BroadcastReceiver rcv : mRegisteredReceivers) unregisterReceiver(rcv);
         }
+
+        @Override
+        public int checkPermission(String permission, int pid, int uid) {
+            // Explicitly enable specific permissions by adding them to mPermissions
+            if (pid == Binder.getCallingPid()
+                    && uid == Binder.getCallingUid()
+                    && mPermissions.contains(permission)) {
+                return PERMISSION_GRANTED;
+            }
+
+            return super.checkPermission(permission, pid, uid);
+        }
     }
 
     private void waitForIdle() {
@@ -530,6 +548,7 @@ public class ConnectivityServiceTest {
         private int mProbesCompleted;
         private int mProbesSucceeded;
         private String mNmValidationRedirectUrl = null;
+        private PersistableBundle mValidationExtras = PersistableBundle.EMPTY;
         private boolean mNmProvNotificationRequested = false;
 
         private final ConditionVariable mNetworkStatusReceived = new ConditionVariable();
@@ -597,8 +616,8 @@ public class ConnectivityServiceTest {
             }
 
             mNmCallbacks.notifyProbeStatusChanged(mProbesCompleted, mProbesSucceeded);
-            mNmCallbacks.notifyNetworkTested(
-                    mNmValidationResult, mNmValidationRedirectUrl);
+            mNmCallbacks.notifyNetworkTestedWithExtras(
+                    mNmValidationResult, mNmValidationRedirectUrl, mValidationExtras);
 
             if (mNmValidationRedirectUrl != null) {
                 mNmCallbacks.showProvisioningNotification(
@@ -6345,5 +6364,76 @@ public class ConnectivityServiceTest {
         assertTrue(
                 mService.mConnectivityDiagnosticsCallbacks.containsKey(
                         mConnectivityDiagnosticsCallback));
+    }
+
+    @Test
+    public void testCheckConnectivityDiagnosticsPermissions() {
+        final int pid = Binder.getCallingPid();
+        final int uid = Binder.getCallingUid();
+
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setEstablishingVpnAppUid(uid);
+        final NetworkAgentInfo naiWithoutUid =
+                new NetworkAgentInfo(
+                        null, null, null, null, null, new NetworkCapabilities(), null,
+                        mServiceContext, null, null, mService, null, null, null, 0);
+        final NetworkAgentInfo naiWithUid =
+                new NetworkAgentInfo(
+                        null, null, null, null, null, nc, null, mServiceContext, null, null,
+                        mService, null, null, null, 0);
+
+        mServiceContext.mPermissions.add(android.Manifest.permission.NETWORK_STACK);
+        assertTrue(
+                "NetworkStack permission not applied",
+                mService.checkConnectivityDiagnosticsPermissions(pid, uid, naiWithoutUid));
+
+        // setUp() calls mockVpn() which adds a VPN with our uid.
+        mServiceContext.mPermissions.clear();
+        assertTrue(
+                "Active VPN permission not applied",
+                mService.checkConnectivityDiagnosticsPermissions(pid, uid, naiWithoutUid));
+
+        synchronized (mService.mVpns) {
+            final int userId = UserHandle.getUserId(Process.myUid());
+            final MockVpn vpn = (MockVpn) mService.mVpns.get(userId);
+            vpn.disconnect();
+        }
+        assertTrue(
+                "NetworkCapabilities owner uid permission not applied",
+                mService.checkConnectivityDiagnosticsPermissions(pid, uid, naiWithUid));
+
+        // TODO(b/147391402): test permissions approach for cellular once implemented
+
+        // Use wrong pid and uid
+        assertFalse(
+                "Permissions allowed when they shouldn't be granted",
+                mService.checkConnectivityDiagnosticsPermissions(pid + 1, uid + 1, naiWithoutUid));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
+
+        // setUp() calls mockVpn(), which adds a VPN with our uid. This gives the callback
+        // permissions for receiving callbacks for the 'Active VPN' case.
+        mService.registerConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback, request);
+
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Connect the cell agent and wait for the connected broadcast. This registers a network,
+        // which leads to the network being evaluated and calls notifyNetworkTestedWithExtras().
+        // This will lead to the ConnectivityDiagnosticsCallback being invoked.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_SUPL);
+        final ConditionVariable cv = registerConnectivityBroadcastThat(1,
+                intent -> intent.getIntExtra(EXTRA_NETWORK_TYPE, -1) == TYPE_MOBILE);
+        mCellNetworkAgent.connect(true);
+        waitFor(cv);
+
+        // Wait for onConnectivityReport to fire
+        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+                .onConnectivityReport(any(ConnectivityReport.class));
     }
 }
