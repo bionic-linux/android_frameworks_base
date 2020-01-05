@@ -531,8 +531,8 @@ public class ConnectivityDiagnosticsManager {
      * Registers a ConnectivityDiagnosticsCallback with the System.
      *
      * <p>Only apps that offer network connectivity to the user should be registering callbacks.
-     * These are the only apps whose callbacks will be invoked by the system. Apps considered to
-     * meet these conditions include:
+     * These are the only apps whose callbacks will be invoked by the system. Apps that are
+     * considered to offer network connectivity generally include:
      *
      * <ul>
      *   <li>Carrier apps with active subscriptions
