@@ -49,6 +49,8 @@ import static android.system.OsConstants.IPPROTO_UDP;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import static java.util.Map.Entry;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.BroadcastOptions;
@@ -63,6 +65,7 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.CaptivePortal;
 import android.net.ConnectionInfo;
+import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityManager;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
@@ -131,6 +134,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
@@ -556,6 +560,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * <p>Should only be used with {@link ConnectivityDiagnosticsHandler}.
      */
     public static final int EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK = 48;
+
+    /**
+     * Event for NetworkMonitor/NetworkAgentInfo to inform ConnectivityService that the network has
+     * been tested.
+     * obj = String representing URL that Internet probe was redirect to, if it was redirected.
+     * arg1 = One of the NETWORK_TESTED_RESULT_* constants.
+     * arg2 = NetID.
+     * data = PersistableBundle of extras passed from NetworkMonitor.
+     *
+     * <p>See {@link #EVENT_NETWORK_TESTED}.
+     */
+    private static final int EVENT_NETWORK_TESTED_WITH_EXTRAS = 49;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2068,6 +2084,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
     }
 
+    private boolean checkNetworkStackPermission(int pid, int uid) {
+        return checkAnyPermissionOf(
+                pid,
+                uid,
+                android.Manifest.permission.NETWORK_STACK,
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);
+    }
+
     private boolean checkNetworkSignalStrengthWakeupPermission(int pid, int uid) {
         return checkAnyPermissionOf(pid, uid,
                 android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP,
@@ -2713,6 +2737,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     }
                     break;
                 }
+                case EVENT_NETWORK_TESTED_WITH_EXTRAS: {
+                    final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
+                    if (nai == null) break;
+
+                    final Message m =
+                            mConnectivityDiagnosticsHandler.obtainMessage(
+                                    EVENT_NETWORK_TESTED_WITH_EXTRAS, nai);
+                    m.setData(msg.getData());
+                    mConnectivityDiagnosticsHandler.sendMessage(m);
+                    // fall through
+                }
                 case EVENT_NETWORK_TESTED: {
                     final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
                     if (nai == null) break;
@@ -2909,6 +2944,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void notifyNetworkTested(int testResult, @Nullable String redirectUrl) {
             mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(EVENT_NETWORK_TESTED,
                     testResult, mNetId, redirectUrl));
+        }
+
+        @Override
+        public void notifyNetworkTestedWithExtras(
+                int testResult, @Nullable String redirectUrl, PersistableBundle extras) {
+            final Message msg =
+                    mTrackerHandler.obtainMessage(
+                            EVENT_NETWORK_TESTED_WITH_EXTRAS, testResult, mNetId, redirectUrl);
+            msg.setData(new Bundle(extras));
+            mTrackerHandler.sendMessage(msg);
         }
 
         @Override
@@ -7165,6 +7210,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mVpns")
     private Vpn getVpnIfOwner() {
         final int uid = Binder.getCallingUid();
+        return getVpnIfOwner(uid);
+    }
+
+    @GuardedBy("mVpns")
+    private Vpn getVpnIfOwner(int uid) {
         final int user = UserHandle.getUserId(uid);
 
         final Vpn vpn = mVpns.get(user);
@@ -7276,6 +7326,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             (IConnectivityDiagnosticsCallback) msg.obj, msg.arg1);
                     break;
                 }
+                case EVENT_NETWORK_TESTED_WITH_EXTRAS: {
+                    final NetworkAgentInfo nai = (NetworkAgentInfo) msg.obj;
+
+                    // This is safe because {@link
+                    // NetworkMonitorCallbacks#notifyNetworkTestedWithExtras} receives a
+                    // PersistableBundle and converts it to the Bundle in the incoming Message.
+                    final PersistableBundle extras = new PersistableBundle(msg.getData());
+                    handleNetworkTestedWithExtras(nai, extras);
+                    break;
+                }
             }
         }
     }
@@ -7354,6 +7414,51 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         handleRemoveNetworkRequest(nri);
         cb.asBinder().unlinkToDeath(mConnectivityDiagnosticsCallbacks.remove(cb), 0);
+    }
+
+    private void handleNetworkTestedWithExtras(NetworkAgentInfo nai, PersistableBundle extras) {
+        final ConnectivityReport report =
+                new ConnectivityReport(
+                        nai.network,
+                        System.currentTimeMillis(),
+                        nai.linkProperties,
+                        nai.networkCapabilities,
+                        extras);
+        for (Entry<IConnectivityDiagnosticsCallback, ConnectivityDiagnosticsCallbackInfo> entry :
+                mConnectivityDiagnosticsCallbacks.entrySet()) {
+            final NetworkRequestInfo nri = entry.getValue().mRequestInfo;
+            if (nai.satisfies(nri.request)) {
+                if (checkConnectivityDiagnosticsPermissions(nri.mPid, nri.mUid, nai)) {
+                    try {
+                        entry.getKey().onConnectivityReport(report);
+                    } catch (RemoteException e) {
+                        loge("Error invoking onConnectivityReport", e);
+                    }
+                }
+            }
+        }
+    }
+
+    @VisibleForTesting
+    boolean checkConnectivityDiagnosticsPermissions(
+            int callbackPid, int callbackUid, NetworkAgentInfo nai) {
+        if (checkNetworkStackPermission(callbackPid, callbackUid)) {
+            return true;
+        }
+        synchronized (mVpns) {
+            if (getVpnIfOwner(callbackUid) != null) {
+                return true;
+            }
+        }
+
+        final NetworkCapabilities nc = nai.networkCapabilities;
+        if (nc.getEstablishingVpnAppUid() != NetworkCapabilities.INVALID_UID) {
+            return nc.getEstablishingVpnAppUid() == callbackUid;
+        }
+
+        // TODO(b/147391402): resolve permissions checks for cellular
+
+        return false;
     }
 
     @Override
