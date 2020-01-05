@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.os.Process.INVALID_UID;
+
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -58,7 +60,6 @@ import java.util.StringJoiner;
  */
 public final class NetworkCapabilities implements Parcelable {
     private static final String TAG = "NetworkCapabilities";
-    private static final int INVALID_UID = -1;
 
     // Set to true when private DNS is broken.
     private boolean mPrivateDnsBroken;
