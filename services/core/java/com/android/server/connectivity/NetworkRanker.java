@@ -16,16 +16,26 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkScore.LEGACY_SCORE;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
+import android.net.NetworkSelectionSettings;
+
+import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * A class that knows how to find the best network matching a request out of a list of networks.
  */
 public class NetworkRanker {
+    @NonNull
+    private NetworkSelectionSettings mSelectionSettings;
+
     public NetworkRanker() { }
 
     /**
@@ -46,5 +56,37 @@ public class NetworkRanker {
             }
         }
         return bestNetwork;
+    }
+
+    /**
+     * A setter for updating the {@link NetworkSelectionSettings}.
+     */
+    public void setNetworkSelectionSettings(
+            @NonNull final NetworkSelectionSettings selectionSettings) {
+        mSelectionSettings = selectionSettings;
+    }
+
+    /**
+     * Compares two {@link NetworkScore} for the given {@link NetworkRequest}.
+     *
+     * @param ns1 The first {@link NetworkScore} to compare.
+     * @param ns2 The second {@link NetworkScore} to compare.
+     * @return A negative integer, zero, or a positive integer is corresponding to the first
+     *         {@link NetworkScore} is worse than, equal to, or better than the second.
+     *
+     * TODO: Compares more fields of {@link NetworkScore} once all of them are ready.
+     */
+    @VisibleForTesting
+    protected int compareScoreForRequest(@NonNull NetworkScore ns1, @NonNull NetworkScore ns2) {
+        return Integer.compare(ns1.getIntExtension(LEGACY_SCORE),
+                ns2.getIntExtension(LEGACY_SCORE));
+    }
+
+    /**
+     * Return comparator for comparing {@link NetworkScore}.
+     */
+    @NonNull
+    public Comparator<NetworkScore> makeComparator(@NonNull NetworkRequest request) {
+        return (ns1, ns2) -> compareScoreForRequest(ns1, ns2);
     }
 }
