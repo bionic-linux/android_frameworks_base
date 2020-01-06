@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649a0bdf_4248f687",
+        "filename": "telecomm/java/android/telecom/CallScreeningService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-06T21:07:46Z",
+      "side": 1,
+      "message": "I do not see a permission check anywhere here",
+      "range": {
+        "startLine": 295,
+        "startChar": 52,
+        "endLine": 295,
+        "endChar": 72
+      },
+      "revId": "ff4a125d6e09e25012b34f4e8618e21a0e8c335b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
