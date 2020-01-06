@@ -22,6 +22,30 @@
       "revId": "ff4a125d6e09e25012b34f4e8618e21a0e8c335b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23613df_3bac10af",
+        "filename": "telecomm/java/android/telecom/CallScreeningService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-06T21:12:15Z",
+      "side": 1,
+      "message": "Hard to do this in the builder; I presume it would be enforced in Telecom somewhere?",
+      "parentUuid": "649a0bdf_4248f687",
+      "range": {
+        "startLine": 295,
+        "startChar": 52,
+        "endLine": 295,
+        "endChar": 72
+      },
+      "revId": "ff4a125d6e09e25012b34f4e8618e21a0e8c335b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
