@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75713457_a8d0bf88",
+        "filename": "telephony/common/com/android/internal/telephony/PackageChangeReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-06T22:40:55Z",
+      "side": 1,
+      "message": "This is not part of the cl, but this will not work, see here: b/141323834 #9",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 87
+      },
+      "revId": "cc67a2f3e86cfac5afd4573df8e87ad72c2e38fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
