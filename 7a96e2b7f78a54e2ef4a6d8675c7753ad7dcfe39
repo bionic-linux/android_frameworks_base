@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaffa743_280a54d2",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a4ba54_af5d75af",
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f28d177f_b37bdc41",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5320ce5b_977dc3ec",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right.\nWe can use setter to set it later.",
+      "parentUuid": "f28d177f_b37bdc41",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 69
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae30f87_df56a009",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944c73e5_ce579067",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae30f87_df56a009",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,54 @@
     },
     {
       "key": {
+        "uuid": "c39c604f_6772a644",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "349754b8_121187c0",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0be3e07c_f50ba0bc",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "As my reply at line.87.\nLet\u0027s remove this parameter first.",
+      "parentUuid": "2a66f6a8_428ffd3c",
+      "range": {
+        "startLine": 78,
+        "startChar": 50,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4610de_46f7158e",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d8cd1d1f_5087e8ee",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4610de_46f7158e",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159406d2_8f0db790",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
@@ -145,6 +283,30 @@
       "writtenOn": "2020-01-03T13:00:31Z",
       "side": 1,
       "message": "It does not make sense to me that the request parameter is needed,\nwhile you already provide that in makeComparator.\nIIUC you need to extend Comparator?",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c196cb21_3caf9a2c",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Well, maybe you\u0027re right, the caller only need to compare two networks which are satisfying the same request.\nSo we don\u0027t need assign the request into this method again unless there are some factors inside the request will influence the comparing result, but I can\u0027t think of any example currently.\n\nI\u0027m not sure what do you mean for extending Comparator, let\u0027s discuss this when you back to office.",
+      "parentUuid": "159406d2_8f0db790",
       "range": {
         "startLine": 87,
         "startChar": 36,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "46113ca0_078cade4",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43da2fbc_6985bd76",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d53991c6_71a59375",
         "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
         "patchSetId": 4
@@ -200,6 +386,30 @@
       "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8820fd8c_07df442b",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkRankerTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-06T04:48:12Z",
+      "side": 1,
+      "message": "Since we don\u0027t need put NetworkSelectionSettings into constructor of NetworkRanker, so I will change the design back.",
+      "parentUuid": "d53991c6_71a59375",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
