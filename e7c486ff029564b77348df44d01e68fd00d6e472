@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c17a74a_203f0b85",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2020-01-06T16:48:36Z",
+      "side": 1,
+      "message": "there\u0027s a follow-on patch that overlays this (I assume you\u0027re just cherry picking what went into internal/master).\nthe followup deals with the fact that getMetrics() changes its argument.\nsee b/140763926",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 748,
+        "endChar": 18
+      },
+      "revId": "e7c486ff029564b77348df44d01e68fd00d6e472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
