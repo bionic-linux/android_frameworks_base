@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72007442_a9dd3c9e",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-01-07T06:12:52Z",
+      "side": 1,
+      "message": "Although it is to create new SMS on ICC, no need ACCESS_MESSAGES_ON_ICC for this API or other new permission?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 19,
+        "endLine": 1606,
+        "endChar": 35
+      },
+      "revId": "4f409b95588a9c0d868286b6dcc111738f6582ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
