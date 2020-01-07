@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cae0e06f_7919e603",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-07T00:49:05Z",
+      "side": 1,
+      "message": "Maybe add visibility to limit to the ike module ? Could be in a followup",
+      "range": {
+        "startLine": 596,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 1
+      },
+      "revId": "b877c5891f131a9ed0230413ce8e7b149840ce68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
