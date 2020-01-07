@@ -6616,8 +6616,7 @@ public class ConnectivityServiceTest {
                         Process.myPid() + 1, Process.myUid() + 1, naiWithoutUid));
     }
 
-    @Test
-    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+    private void setUpConnectivityDiagnosticsCallback() throws Exception {
         final NetworkRequest request = new NetworkRequest.Builder().build();
         when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
 
@@ -6635,6 +6634,11 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(true);
         callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         callback.assertNoCallback();
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReport() throws Exception {
+        setUpConnectivityDiagnosticsCallback();
 
         // Wait for onConnectivityReport to fire
         verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
@@ -6643,23 +6647,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
-        final NetworkRequest request = new NetworkRequest.Builder().build();
-        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
-
-        // setUp() calls mockVpn(), which adds a VPN with our uid. This gives the callback
-        // permissions for receiving callbacks for the 'Active VPN' case.
-        mService.registerConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback, request);
-
-        // Block until all other events are done processing.
-        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
-
-        // Connect the cell agent verify that it notifies TestNetworkCallback that it is available
-        final TestNetworkCallback callback = new TestNetworkCallback();
-        mCm.registerDefaultNetworkCallback(callback);
-        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
-        mCellNetworkAgent.connect(true);
-        callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
-        callback.assertNoCallback();
+        setUpConnectivityDiagnosticsCallback();
 
         // Trigger notifyDataStallSuspected() on the INetworkMonitorCallbacks instance in the
         // cellular network agent
@@ -6668,5 +6656,18 @@ public class ConnectivityServiceTest {
         // Wait for onDataStallSuspected to fire
         verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
                 .onDataStallSuspected(any(DataStallReport.class));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReported() throws Exception {
+        setUpConnectivityDiagnosticsCallback();
+
+        final Network n = mCellNetworkAgent.getNetwork();
+        final boolean connectivity = true;
+        mService.reportNetworkConnectivity(n, connectivity);
+
+        // Wait for onNetworkConnectivityReported to fire
+        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+                .onNetworkConnectivityReported(eq(n), eq(connectivity));
     }
 }
