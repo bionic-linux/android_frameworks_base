@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.UnsupportedAppUsage;
+import android.annotation.NonNull;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
@@ -135,6 +136,7 @@ public class NetworkFactory extends Handler {
 
     private int mRefCount = 0;
     private Messenger mMessenger = null;
+    private NetworkProvider mProvider = null;
     private int mSerialNumber;
 
     @UnsupportedAppUsage
@@ -146,21 +148,47 @@ public class NetworkFactory extends Handler {
         mCapabilityFilter = filter;
     }
 
-    public void register() {
-        if (DBG) log("Registering NetworkFactory");
-        if (mMessenger == null) {
-            mMessenger = new Messenger(this);
-            mSerialNumber = ConnectivityManager.from(mContext).registerNetworkFactory(mMessenger,
-                    LOG_TAG);
+    private void assertOnLooperThread(Looper looper) {
+        if (Thread.currentThread().getId() != looper.getThread().getId()) {
+            throw new AssertionError("Unexpected thread! " +
+                    Thread.currentThread().getId() + " != " + looper.getThread().getId());
         }
     }
 
-    public void unregister() {
-        if (DBG) log("Unregistering NetworkFactory");
-        if (mMessenger != null) {
-            ConnectivityManager.from(mContext).unregisterNetworkFactory(mMessenger);
-            mMessenger = null;
+    public void register() {
+        if (mProvider != null) {
+            Log.e(LOG_TAG, "Ignoring attempt to register already-registered NetworkFactory");
+            return;
         }
+        if (DBG) log("Registering NetworkFactory");
+
+        mProvider = new NetworkProvider(getLooper(), LOG_TAG) {
+            @Override
+            public void onNetworkRequested(@NonNull NetworkRequest request, int score,
+                    int servingFactorySerialNumber) {
+                assertOnLooperThread(getLooper());
+                handleAddRequest((NetworkRequest) request, score, servingFactorySerialNumber);
+            }
+
+            @Override
+            public void onRequestWithdrawn(@NonNull NetworkRequest request) {
+                assertOnLooperThread(getLooper());
+                handleRemoveRequest(request);
+            }
+        };
+
+        mMessenger = new Messenger(this);
+        mSerialNumber = ConnectivityManager.from(mContext).registerNetworkProvider(mProvider);
+    }
+
+    public void unregister() {
+        if (mProvider == null) {
+            Log.e(LOG_TAG, "Ignoring attempt to unregister unregistered NetworkFactory");
+            return;
+        }
+        if (DBG) log("Unregistering NetworkFactory");
+
+        ConnectivityManager.from(mContext).unregisterNetworkProvider(mProvider);
     }
 
     @Override
