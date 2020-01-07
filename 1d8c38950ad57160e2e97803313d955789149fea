@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f00c1b4_d4a5f868",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "Fixing typos (only if you respin the change, otherwise don\u0027t bother) :\n\n     * Called by {@code NetworkStatsService} when global polling is needed. Custom\n     * implementation of providers MUST respond to it by calling\n     * {@link NetworkStatsProviderCallback#onStatsUpdated} within one minute. Responding\n     * later than this may cause the stats to be dropped.\n     *\n     * @param token a positive number that is used by the system to associate a {@link NetworkStats}\n     *              object with the correct interfaces. Note that custom implementations of\n     *              providers MUST report the latest token with the current\n     *              {@link NetworkStats} to\n     *              {@link NetworkStatsProviderCallback#onStatsUpdated} before updating the\n     *              locally stored token.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 88
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb92adb_19b7f84a",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "* Called by {@code NetworkStatsService} when setting the interface quota for the specified\n     * upstream interface. When this is called, the custom implementation should block all egress packets\n     * on the {@code iface} associated with the provider when {@code quotaBytes} bytes have been\n     * reached, and MUST respond to it by calling\n     * {@link NetworkStatsProviderCallback#onLimitReached()}.\n     *\n     * @param iface the interface requiring the operation.\n     * @param quotaBytes the quota defined as the number of bytes, starting from zero and counting\n     *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no limit.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 99
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d53ca24_be8fd923",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "* Called by {@code NetworkStatsService} when setting the alert bytes. Custom implementations\n    * MUST call {@link NetworkStatsProviderCallback#onAlertReached()} when {@code quotaBytes} bytes\n    * have been reached. Unlike {@link #setLimit(String, long)}, the custom implementation should\n     * not block all egress packets.\n     *\n     * @param quotaBytes the quota defined as the number of bytes, starting from zero and counting\n     *                   from now. A value of {@link #QUOTA_UNLIMITED} indicates there is no alert.",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 69,
+        "endChar": 99
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c508b17e_6d52ae7c",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "callers to report",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01725e95_6322a859",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "Maybe\n\n  the latest token sent by the system in {@code #requestStatsUpdate()}. It is fine to send multiple updates with the same token until the system calls {@code #requestStatsUpdate()} with a new token.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1596735e_84e7dd28",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T12:18:59Z",
+      "side": 1,
+      "message": "FWIW I don\u0027t think it\u0027s important to enforce that the stats are dropped after 1 minute. We may want to enforce that they are not dropped after 55 seconds though.",
+      "parentUuid": "04421fba_2ea35a3e",
+      "range": {
+        "startLine": 31,
+        "startChar": 99,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e112082d_dab6dbdc",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6
