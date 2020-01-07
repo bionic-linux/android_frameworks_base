@@ -23,6 +23,7 @@ import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+import static android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import static android.net.ConnectivityManager.ACTION_CAPTIVE_PORTAL_SIGN_IN;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION_SUPL;
@@ -542,6 +543,9 @@ public class ConnectivityServiceTest {
                 | NETWORK_VALIDATION_RESULT_PARTIAL;
         private static final int VALIDATION_RESULT_INVALID = 0;
 
+        private static final long DATA_STALL_TIMESTAMP = 10L;
+        private static final int DATA_STALL_DETECTION_METHOD = 0;
+
         private INetworkMonitor mNetworkMonitor;
         private INetworkMonitorCallbacks mNmCallbacks;
         private int mNmValidationResult = VALIDATION_RESULT_BASE;
@@ -549,6 +553,7 @@ public class ConnectivityServiceTest {
         private int mProbesSucceeded;
         private String mNmValidationRedirectUrl = null;
         private PersistableBundle mValidationExtras = PersistableBundle.EMPTY;
+        private PersistableBundle mDataStallExtras = PersistableBundle.EMPTY;
         private boolean mNmProvNotificationRequested = false;
 
         private final ConditionVariable mNetworkStatusReceived = new ConditionVariable();
@@ -775,6 +780,13 @@ public class ConnectivityServiceTest {
 
         public void expectPreventReconnectReceived() {
             expectPreventReconnectReceived(TIMEOUT_MS);
+        }
+
+        void notifyDataStallSuspected() throws Exception {
+            if (mNmCallbacks != null) {
+                mNmCallbacks.notifyDataStallSuspected(
+                        DATA_STALL_TIMESTAMP, DATA_STALL_DETECTION_METHOD, mDataStallExtras);
+            }
         }
     }
 
@@ -6424,5 +6436,35 @@ public class ConnectivityServiceTest {
         // Wait for onConnectivityReport to fire
         verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
                 .onConnectivityReport(any(ConnectivityReport.class));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
+
+        // setUp() calls mockVpn(), which adds a VPN with our uid. This gives the callback
+        // permissions for receiving callbacks for the 'Active VPN' case.
+        mService.registerConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback, request);
+
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Connect the cell agent and wait for the connected broadcast. This registers a network,
+        // which can be used to invoke callbacks on an INetworkMonitorCallbacks instance.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_SUPL);
+        final ConditionVariable cv = registerConnectivityBroadcastThat(1,
+                intent -> intent.getIntExtra(EXTRA_NETWORK_TYPE, -1) == TYPE_MOBILE);
+        mCellNetworkAgent.connect(true);
+        waitFor(cv);
+
+        // Trigger notifyDataStallSuspected() on the INetworkMonitorCallbacks instance in the
+        // cellular network agent
+        mCellNetworkAgent.notifyDataStallSuspected();
+
+        // Wait for onDataStallSuspected to fire
+        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+                .onDataStallSuspected(any(DataStallReport.class));
     }
 }
