@@ -6478,4 +6478,34 @@ public class ConnectivityServiceTest {
         verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
                 .onDataStallSuspected(any(DataStallReport.class));
     }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReported() throws Exception {
+        final NetworkRequest request = new NetworkRequest.Builder().build();
+        when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
+
+        // setUp() calls mockVpn(), which adds a VPN with our uid. This gives the callback
+        // permissions for receiving callbacks for the 'Active VPN' case.
+        mService.registerConnectivityDiagnosticsCallback(mConnectivityDiagnosticsCallback, request);
+
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Connect the cell agent and wait for the connected broadcast. This registers a network,
+        // which can be used to invoke callbacks on an INetworkMonitorCallbacks instance.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_SUPL);
+        final ConditionVariable cv = registerConnectivityBroadcastThat(1,
+                intent -> intent.getIntExtra(EXTRA_NETWORK_TYPE, -1) == TYPE_MOBILE);
+        mCellNetworkAgent.connect(true);
+        waitFor(cv);
+
+        final Network n = mCellNetworkAgent.getNetwork();
+        final boolean connectivity = true;
+        mService.reportNetworkConnectivity(n, connectivity);
+
+        // Wait for onNetworkConnectivityReported to fire
+        verify(mConnectivityDiagnosticsCallback, timeout(TIMEOUT_MS))
+                .onNetworkConnectivityReported(eq(n), eq(connectivity));
+    }
 }
