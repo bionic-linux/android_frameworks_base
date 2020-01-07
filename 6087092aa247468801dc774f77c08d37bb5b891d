@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7d0212_2d1c500f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T07:15:44Z",
+      "side": 1,
+      "message": "IIUC, now this is not running on a shared looper any more so we don\u0027t need the base any more. But do we still need the 100 ? If not, just remove this constant. If we do (because we still use the same looper elsewhere) then we should have something similar to Protocol to define this constant.",
+      "range": {
+        "startLine": 155,
+        "startChar": 62,
+        "endLine": 155,
+        "endChar": 65
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42f9a31_7bb20039",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T07:15:44Z",
+      "side": 1,
+      "message": "Not sure what you mean by this, can you rephrase ?",
+      "range": {
+        "startLine": 381,
+        "startChar": 52,
+        "endLine": 381,
+        "endChar": 91
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c65cb4a_3491ec0a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T07:15:44Z",
+      "side": 1,
+      "message": "I\u0027m willing to approve as is as a stopgap, but considering isTetheringApnRequired() is @SystemApi (and getActiveDataSubscriptionId is public) I think Telephony would be willing to also expose isTetheringApnRequired(int) as @SystemApi. The old code was probably safer than the new one. Can we pursue this ? Immediately I think we should just keep the subId as an argument and add a TODO to use isTetheringApnRequired(int) when that is available.",
+      "range": {
+        "startLine": 255,
+        "startChar": 29,
+        "endLine": 255,
+        "endChar": 66
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7158a75d_1d0777f8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T07:15:44Z",
+      "side": 1,
+      "message": "Is this a bugfix ? It looks unrelated to this change.",
+      "range": {
+        "startLine": 346,
+        "startChar": 39,
+        "endLine": 346,
+        "endChar": 58
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
