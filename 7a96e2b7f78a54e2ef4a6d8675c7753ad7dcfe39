@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "4b4557b0_774d704a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T03:04:34Z",
+      "side": 1,
+      "message": "Not sure if this is what you trying to do, but\nIIUC you will need a class to hold the request and/or settings you passed in makeComparator.\nThus you can hold them in your comparator object.\nAnd you can reference to them via members of your comparator when comparing.\nE.g.\nclass MyComparator extends Comparator\u003cNetworkScore\u003e {\n   NetworkRequest mRequest;\n   NetworkSettings mSettings;\n   MyComparator(request, networksetting) {\n      mRequest \u003d request;\n      mSetting \u003d networksetting;\n   }\n   \n  @Override\n    public int compare(NetworkScore s1, NetworkScore s2) {\n        return ...\n    }\n}\n\nMyComparator makeComparator(request, networksettings) {\n   return new MyComparator(request, networksettings);\n}",
+      "parentUuid": "c196cb21_3caf9a2c",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43da2fbc_6985bd76",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
