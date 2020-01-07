@@ -579,6 +579,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_DATA_STALL_SUSPECTED = 50;
 
     /**
+     * Event for ConnectivityDiagnosticsHandler to handle network connectivity being reported to the
+     * platform. This event will invoke {@link
+     * IConnectivityDiagnosticsCallback#onNetworkConnectivityReported} for permissioned callbacks.
+     * obj = Network that was reported on
+     * arg1 = boolint for the quality reported
+     */
+    private static final int EVENT_NETWORK_CONNECTIVITY_REPORTED = 51;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -4162,6 +4171,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int connectivityInfo = encodeBool(hasConnectivity);
         mHandler.sendMessage(
                 mHandler.obtainMessage(EVENT_REVALIDATE_NETWORK, uid, connectivityInfo, network));
+        mConnectivityDiagnosticsHandler.sendMessage(
+                mConnectivityDiagnosticsHandler.obtainMessage(
+                        EVENT_NETWORK_CONNECTIVITY_REPORTED, connectivityInfo, 0, network));
     }
 
     private void handleReportNetworkConnectivity(
@@ -7325,6 +7337,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @VisibleForTesting
     class ConnectivityDiagnosticsHandler extends Handler {
+        private final String mTag = ConnectivityDiagnosticsHandler.class.getSimpleName();
+
         private ConnectivityDiagnosticsHandler(Looper looper) {
             super(looper);
         }
@@ -7362,6 +7376,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     final PersistableBundle extras = new PersistableBundle(msg.getData());
                     handleDataStallSuspected(nai, (long) msg.obj, msg.arg1, extras);
                     break;
+                }
+                case EVENT_NETWORK_CONNECTIVITY_REPORTED: {
+                    final boolean connectivity = toBool(msg.arg1);
+                    final Network n = (Network) msg.obj;
+                    handleNetworkConnectivityReported(n, connectivity);
+                    break;
+                }
+                default: {
+                    Log.e(mTag, "Unrecognized event in ConnectivityDiagnostics: " + msg.what);
                 }
             }
         }
@@ -7475,6 +7498,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         cb.onDataStallSuspected(report);
                     } catch (RemoteException e) {
                         loge("Error invoking onDataStallSuspected", e);
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleNetworkConnectivityReported(Network n, boolean connectivity) {
+        final NetworkAgentInfo nai;
+        if (n == null) {
+            nai = getDefaultNetwork();
+        } else {
+            nai = getNetworkAgentInfoForNetwork(n);
+        }
+        if (nai == null) {
+            return;
+        }
+
+        for (IConnectivityDiagnosticsCallback cb : mConnectivityDiagnosticsCallbacks.keySet()) {
+            final NetworkRequestInfo nri = mConnectivityDiagnosticsCallbacks.get(cb).mRequestInfo;
+            if (nai.satisfies(nri.request)) {
+                if (checkConnectivityDiagnosticsPermissions(nri.mPid, nri.mUid, nai)) {
+                    try {
+                        cb.onNetworkConnectivityReported(n, connectivity);
+                    } catch (RemoteException e) {
+                        loge("Error invoking onNetworkConnectivityReported", e);
                     }
                 }
             }
