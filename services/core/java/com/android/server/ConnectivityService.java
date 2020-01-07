@@ -3019,35 +3019,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void handleAsyncChannelHalfConnect(Message msg) {
         ensureRunningOnConnectivityServiceThread();
         final AsyncChannel ac = (AsyncChannel) msg.obj;
-        if (mNetworkFactoryInfos.containsKey(msg.replyTo)) {
-            if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
-                if (VDBG) log("NetworkFactory connected");
-                // Finish setting up the full connection
-                NetworkFactoryInfo nfi = mNetworkFactoryInfos.get(msg.replyTo);
-                nfi.completeConnection();
-                sendAllRequestsToFactory(nfi);
-            } else {
-                loge("Error connecting NetworkFactory");
-                mNetworkFactoryInfos.remove(msg.obj);
-            }
-        } else if (mNetworkAgentInfos.containsKey(msg.replyTo)) {
-            if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
-                if (VDBG) log("NetworkAgent connected");
-                // A network agent has requested a connection.  Establish the connection.
-                mNetworkAgentInfos.get(msg.replyTo).asyncChannel.
-                        sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
-            } else {
-                loge("Error connecting NetworkAgent");
-                NetworkAgentInfo nai = mNetworkAgentInfos.remove(msg.replyTo);
-                if (nai != null) {
-                    final boolean wasDefault = isDefaultNetwork(nai);
-                    synchronized (mNetworkForNetId) {
-                        mNetworkForNetId.remove(nai.network.netId);
-                    }
-                    mNetIdManager.releaseNetId(nai.network.netId);
-                    // Just in case.
-                    mLegacyTypeTracker.remove(nai, wasDefault);
+        if (!mNetworkAgentInfos.containsKey(msg.replyTo)) {
+            return;
+        }
+        if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
+            if (VDBG) log("NetworkAgent connected");
+            // A network agent has requested a connection.  Establish the connection.
+            mNetworkAgentInfos.get(msg.replyTo).asyncChannel.
+                    sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+        } else {
+            loge("Error connecting NetworkAgent");
+            NetworkAgentInfo nai = mNetworkAgentInfos.remove(msg.replyTo);
+            if (nai != null) {
+                final boolean wasDefault = isDefaultNetwork(nai);
+                synchronized (mNetworkForNetId) {
+                    mNetworkForNetId.remove(nai.network.netId);
                 }
+                mNetIdManager.releaseNetId(nai.network.netId);
+                // Just in case.
+                mLegacyTypeTracker.remove(nai, wasDefault);
             }
         }
     }
@@ -3059,9 +3049,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkAgentInfo nai = mNetworkAgentInfos.get(msg.replyTo);
         if (nai != null) {
             disconnectAndDestroyNetwork(nai);
-        } else {
-            NetworkFactoryInfo nfi = mNetworkFactoryInfos.remove(msg.replyTo);
-            if (DBG && nfi != null) log("unregisterNetworkFactory for " + nfi.name);
         }
     }
 
@@ -4916,8 +4903,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             this.factorySerialNumber = factorySerialNumber;
             this.deathRecipient = deathRecipient;
 
-            if ((mAsyncChannel == null) == (deathRecipient == null)) {
-                throw new AssertionError("Must pass exactly one of asyncChannel or deathRecipient");
+            if (mAsyncChannel != null) {
+                throw new AssertionError(name + ": AsyncChannel is not null!");
             }
         }
 
@@ -4935,38 +4922,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         void requestNetwork(NetworkRequest request, int score, int servingSerialNumber) {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.sendMessage(android.net.NetworkFactory.CMD_REQUEST_NETWORK, score,
-                        servingSerialNumber, request);
-            } else {
-                sendMessageToNetworkProvider(NetworkProvider.CMD_REQUEST_NETWORK, score,
-                            servingSerialNumber, request);
-            }
+            sendMessageToNetworkProvider(NetworkProvider.CMD_REQUEST_NETWORK, score,
+                    servingSerialNumber, request);
         }
 
         void cancelRequest(NetworkRequest request) {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.sendMessage(android.net.NetworkFactory.CMD_CANCEL_REQUEST, request);
-            } else {
-                sendMessageToNetworkProvider(NetworkProvider.CMD_CANCEL_REQUEST, 0, 0, request);
-            }
+            sendMessageToNetworkProvider(NetworkProvider.CMD_CANCEL_REQUEST, 0, 0, request);
         }
 
         void connect(Context context, Handler handler) {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.connect(context, handler, messenger);
-            } else {
-                try {
-                    messenger.getBinder().linkToDeath(deathRecipient, 0);
-                } catch (RemoteException e) {
-                    deathRecipient.binderDied();
-                }
-            }
-        }
-
-        void completeConnection() {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
+            try {
+                messenger.getBinder().linkToDeath(deathRecipient, 0);
+            } catch (RemoteException e) {
+                deathRecipient.binderDied();
             }
         }
     }
@@ -5345,15 +5313,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 EVENT_RELEASE_NETWORK_REQUEST, getCallingUid(), 0, networkRequest));
     }
 
-    @Override
-    public int registerNetworkFactory(Messenger messenger, String name) {
-        enforceNetworkFactoryPermission();
-        NetworkFactoryInfo nfi = new NetworkFactoryInfo(name, messenger, new AsyncChannel(),
-                NetworkFactory.SerialNumber.nextSerialNumber(), null /* deathRecipient */);
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_FACTORY, nfi));
-        return nfi.factorySerialNumber;
-    }
-
     private void handleRegisterNetworkFactory(NetworkFactoryInfo nfi) {
         if (mNetworkFactoryInfos.containsKey(nfi.messenger)) {
             // Just in case we receive a direct AIDL call.
@@ -5367,10 +5326,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) log("Got NetworkFactory Messenger for " + nfi.name);
         mNetworkFactoryInfos.put(nfi.messenger, nfi);
         nfi.connect(mContext, mTrackerHandler);
-        if (!nfi.isLegacyNetworkFactory()) {
-            // Legacy NetworkFactories get their requests when their AsyncChannel connects.
-            sendAllRequestsToFactory(nfi);
-        }
+        sendAllRequestsToFactory(nfi);
     }
 
     @Override
@@ -5384,14 +5340,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void unregisterNetworkFactory(Messenger messenger) {
+    public void unregisterNetworkProvider(Messenger messenger) {
         enforceNetworkFactoryPermission();
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_UNREGISTER_NETWORK_FACTORY, messenger));
-    }
-
-    @Override
-    public void unregisterNetworkProvider(Messenger messenger) {
-        unregisterNetworkFactory(messenger);
     }
 
     private void handleUnregisterNetworkFactory(Messenger messenger) {
