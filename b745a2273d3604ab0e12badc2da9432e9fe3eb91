@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e57ab93_b1596420",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T05:16:45Z",
+      "side": 1,
+      "message": "Question : do we want to continue supporting this scheme if we have to move the resource ? OEMs will have to do work in this space to migrate to R anyway, so maybe we want to remove this legacy scheme and always use the upstream_automatic mode.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 20
+      },
+      "revId": "b745a2273d3604ab0e12badc2da9432e9fe3eb91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
