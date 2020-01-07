@@ -22,6 +22,30 @@
       "revId": "7039dc76c048724ed3be051e3d3d1f8b4f776a86",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560cecf6_e51a741d",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 3776,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T05:22:19Z",
+      "side": 1,
+      "message": "+1, I agree with Chiachang this is easier understood as rat_type. But not feeling very strongly.",
+      "parentUuid": "13c02dc2_f7bf5e8a",
+      "range": {
+        "startLine": 3776,
+        "startChar": 19,
+        "endLine": 3776,
+        "endChar": 27
+      },
+      "revId": "7039dc76c048724ed3be051e3d3d1f8b4f776a86",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
