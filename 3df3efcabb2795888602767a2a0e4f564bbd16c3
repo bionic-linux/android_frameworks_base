@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62eba86d_736c27b6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T13:56:35Z",
+      "side": 1,
+      "message": "This will delay significantly gathering stats and I don\u0027t think it\u0027s a great idea. In most cases the providers will respond very soon (you\u0027ll probably have all stats within half a second in almost all cases), and it widens the race condition very significantly.\n\nIn a sense, it does ensure that asynchronicity is fine, but as I was saying on the other patch I don\u0027t really buy the justification that for UI the stats polling system should delay when it internally gathers numbers, so I\u0027m not very fond of this compared with patchset 5.\n\nThoughts ?",
+      "range": {
+        "startLine": 1383,
+        "startChar": 21,
+        "endLine": 1383,
+        "endChar": 44
+      },
+      "revId": "3df3efcabb2795888602767a2a0e4f564bbd16c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb51bf7_5c421f43",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-07T13:56:35Z",
+      "side": 1,
+      "message": "This is 30 minutes by default right ? So you want to delay polling the asynchronous providers b 30 minutes when performPollLocked is called ?",
+      "range": {
+        "startLine": 1384,
+        "startChar": 30,
+        "endLine": 1384,
+        "endChar": 42
+      },
+      "revId": "3df3efcabb2795888602767a2a0e4f564bbd16c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
