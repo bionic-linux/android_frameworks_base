@@ -22,6 +22,30 @@
       "revId": "4f409b95588a9c0d868286b6dcc111738f6582ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec91394_90492e96",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-07T23:04:14Z",
+      "side": 1,
+      "message": "Yeah ideally we should do that. However we don\u0027t have any usage of this API and it is left here just for backward compatibility. Do you have a use case for this? If yes, can you please upload a CL to update this API?",
+      "parentUuid": "72007442_a9dd3c9e",
+      "range": {
+        "startLine": 1606,
+        "startChar": 19,
+        "endLine": 1606,
+        "endChar": 35
+      },
+      "revId": "4f409b95588a9c0d868286b6dcc111738f6582ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
