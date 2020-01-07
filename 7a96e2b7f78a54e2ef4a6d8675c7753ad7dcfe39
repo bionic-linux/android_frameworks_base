@@ -343,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "976af875_9f7d85f7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-01-07T03:34:42Z",
+      "side": 1,
+      "message": "Hmm...I didn\u0027t think so complicated.\nI was thinking that someone could new NetworkRanker and get the comparator by calling makeComparator, then start to compare two NetworkScores.\n\nSomething like:\nNetworkRanker ranker \u003d new NetworkRanker();\nComparator\u003cNetworkScore\u003e scoreComparator \u003d ranker.makeComparator(mRequest);\nif (scoreComparator.compare(ns1, ns2) \u003e 0) {\n    do something...\n} else {\n    ...\n}\n\nAnd maybe the request is unnecessary to pass into makeComparator?\nI think the caller should know it only need to compare two NetworkScores which are satisfying that request.\nSo the information of request is only needed for caller?\n\nMaybe Jean has other ideas?",
+      "parentUuid": "4b4557b0_774d704a",
+      "range": {
+        "startLine": 87,
+        "startChar": 36,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "7a96e2b7f78a54e2ef4a6d8675c7753ad7dcfe39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43da2fbc_6985bd76",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 4
