@@ -140,6 +140,29 @@
       "revId": "1b90e0a30564b43bb549b0fe167243946dc22f14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c395486_985a326b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7612,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:05:04Z",
+      "side": 1,
+      "message": "Isn\u0027t this a per-subscription setting? If so, it should require carrier privileges on the precise subscription ID. Example: Fi should not be able to read the selection mode of a Verizon sub or vice-versa.\n\nIf it\u0027s a global setting that applies to all subs equally, then this comment is fine as-is.",
+      "range": {
+        "startLine": 7612,
+        "startChar": 54,
+        "endLine": 7612,
+        "endChar": 80
+      },
+      "revId": "1b90e0a30564b43bb549b0fe167243946dc22f14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
