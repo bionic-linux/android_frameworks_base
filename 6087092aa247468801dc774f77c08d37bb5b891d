@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dff6039_87fceef4",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-07T13:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7d0212_2d1c500f",
+      "range": {
+        "startLine": 155,
+        "startChar": 62,
+        "endLine": 155,
+        "endChar": 65
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a42f9a31_7bb20039",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1fd066_264313f9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/EntitlementManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-07T13:36:32Z",
+      "side": 1,
+      "message": "Oops, change to \"SilentTetherProvisioning don\u0027t need to show UI\",",
+      "parentUuid": "a42f9a31_7bb20039",
+      "range": {
+        "startLine": 381,
+        "startChar": 52,
+        "endLine": 381,
+        "endChar": 91
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,30 @@
       "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a18fc6d_778be61d",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-07T13:36:32Z",
+      "side": 1,
+      "message": "No, rethrowFromSystemServer is @hide. As Remi\u0027s suggestion, return the callback with a error log is better than throw exception here. Send error callback here means turning off tethering. Throw exception here would crash network stack.",
+      "parentUuid": "7158a75d_1d0777f8",
+      "range": {
+        "startLine": 346,
+        "startChar": 39,
+        "endLine": 346,
+        "endChar": 58
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
