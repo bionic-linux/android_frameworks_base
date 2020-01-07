@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4887eb0_13ffdea1",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "It might be safer to fully-specify this.\n\n    // Empty address, filled in by recvfrom.\n    private final InetSocketAddress mSolicitor \u003d new InetSocketAddress(Inet6Address.ANY, 0);",
+      "range": {
+        "startLine": 671,
+        "startChar": 75,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed75d7e_7639bf0a",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "Call this IN6ADDR_ANY for consistency with the C declarations?",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237ac147_5c30f960",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "INADDR_ANY",
+      "range": {
+        "startLine": 34,
+        "startChar": 37,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0514c091_74ae81d9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "Why do you need this? Can\u0027t you just pass in null here and lose the |host| parameter?",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedd2763_b9fec996",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "This will work but it will not be robust if future Android versions, or OEM customizations, change the ConnectivityService default request. Before you merge this CL, can you file a bug to add a proper system API for this? Something like registerDefaultPhysicalNetworkCallback. Or even an API to have ConnectivityService return the default network.",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 37
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fac6afa_be7c6a03",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 1,
+      "message": "This is @hide, so we can\u0027t use it, right? Do we need to make it @SystemApi? Or should we just fully specify the capabilities for the types that we use? If they\u0027re very simple maybe we can do that.",
+      "range": {
+        "startLine": 513,
+        "startChar": 41,
+        "endLine": 513,
+        "endChar": 67
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

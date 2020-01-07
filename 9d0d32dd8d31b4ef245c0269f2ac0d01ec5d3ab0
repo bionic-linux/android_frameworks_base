@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b9c573_5d6c2997",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 0,
+      "message": "Don\u0027t you need this defensive copy any more?",
+      "range": {
+        "startLine": 139,
+        "startChar": 55,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2af199_12f2f114",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-07T04:49:20Z",
+      "side": 0,
+      "message": "I think removing the legacyType will result in no CONNECTIVITY_ACTION broadcasts for this network. Is that OK? What do we use CONNECTIVITY_ACTION for? Do we need to address the TODO in handleUpstreamNetworkMonitorCallback that says that the code should handle UpstreamNetworkMonitor.EVENT_ON_LOST?",
+      "range": {
+        "startLine": 219,
+        "startChar": 78,
+        "endLine": 219,
+        "endChar": 88
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
