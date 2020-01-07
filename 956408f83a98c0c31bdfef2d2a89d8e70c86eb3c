@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c412aa8f_2a5e2d0a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6758,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T00:58:13Z",
+      "side": 1,
+      "message": "Nit: remove trailing empty line",
+      "range": {
+        "startLine": 6758,
+        "startChar": 5,
+        "endLine": 6758,
+        "endChar": 6
+      },
+      "revId": "956408f83a98c0c31bdfef2d2a89d8e70c86eb3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e168d953_7c164e85",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6796,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T00:58:13Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 6796,
+        "startChar": 5,
+        "endLine": 6796,
+        "endChar": 6
+      },
+      "revId": "956408f83a98c0c31bdfef2d2a89d8e70c86eb3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f9d960_7b4ee6c5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6834,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T00:58:13Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 6834,
+        "startChar": 5,
+        "endLine": 6834,
+        "endChar": 6
+      },
+      "revId": "956408f83a98c0c31bdfef2d2a89d8e70c86eb3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c210b0_a3b47737",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7563,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T00:58:13Z",
+      "side": 1,
+      "message": "Typically the very last thing in javadocs should be @param/@return/@hide etc.",
+      "range": {
+        "startLine": 7563,
+        "startChar": 7,
+        "endLine": 7563,
+        "endChar": 10
+      },
+      "revId": "956408f83a98c0c31bdfef2d2a89d8e70c86eb3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
