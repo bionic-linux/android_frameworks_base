@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c4919f_01dcbcb4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7467,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:46:42Z",
+      "side": 1,
+      "message": "What does this return if it\u0027s currently under automatic selection? Document that case.",
+      "range": {
+        "startLine": 7467,
+        "startChar": 56,
+        "endLine": 7467,
+        "endChar": 65
+      },
+      "revId": "e0ffdd8fd724a84c4ed3533d67f00068f7c1e484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6145d7d8_b1b9533a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7470,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:46:42Z",
+      "side": 1,
+      "message": "Strange formatting here. Doesn\u0027t the full {@link ...} fit on the first line of the paragraph?",
+      "range": {
+        "startLine": 7469,
+        "startChar": 19,
+        "endLine": 7470,
+        "endChar": 61
+      },
+      "revId": "e0ffdd8fd724a84c4ed3533d67f00068f7c1e484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69763ff9_93c6495d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7478,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:46:42Z",
+      "side": 1,
+      "message": "Why are we explicitly defaulting to voice here? getSubId() usually does the right thing, and on voice-capable devices it does in fact use the default voice subId. Add a comment if this is really what we want.",
+      "range": {
+        "startLine": 7478,
+        "startChar": 33,
+        "endLine": 7478,
+        "endChar": 82
+      },
+      "revId": "e0ffdd8fd724a84c4ed3533d67f00068f7c1e484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069ce2e2_55366fef",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:46:42Z",
+      "side": 1,
+      "message": "Make this a sentence. Capital G + period at the end.\n\nWhat happens if network selection is currently set to automatic for this subId? Document that too.",
+      "range": {
+        "startLine": 925,
+        "startChar": 7,
+        "endLine": 925,
+        "endChar": 44
+      },
+      "revId": "e0ffdd8fd724a84c4ed3533d67f00068f7c1e484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
