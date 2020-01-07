@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "cab29741_abb78853",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7470,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-07T01:55:02Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be READ_PHONE_STATE || carrierPrivileges? This is a getter, not a setter, so MODIFY doesn\u0027t really make sense here.",
+      "range": {
+        "startLine": 7470,
+        "startChar": 42,
+        "endLine": 7470,
+        "endChar": 60
+      },
+      "revId": "e0ffdd8fd724a84c4ed3533d67f00068f7c1e484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69763ff9_93c6495d",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 5
