@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ca7ce4e3_bc740ee6",
+        "filename": "core/java/android/net/NetworkStatsProviderBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1596735e_84e7dd28",
+      "range": {
+        "startLine": 31,
+        "startChar": 99,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "70070a18bc3a3ddd2247b3bccdcb1947838c9efd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e112082d_dab6dbdc",
         "filename": "core/java/android/net/NetworkStatsProviderBase.java",
         "patchSetId": 6

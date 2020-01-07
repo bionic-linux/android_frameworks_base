@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "783e22a9_e2af19ff",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Thanks for looking at this closely.\nAbout this \"providers MUST report the \u0027latest token\u0027 with the current {@link NetworkStats} ...\".\nWill the user confused about what token should be used?\nIn our plan they should report with current token on their hand, then updating the token locally.\nIn other words, the one passed by requestStatsUpdate is the latest, right?\nI find this is hard to explain clearly.",
+      "parentUuid": "4f00c1b4_d4a5f868",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 88
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb92adb_19b7f84a",
         "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "1d8c38950ad57160e2e97803313d955789149fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1685207_ff1a2260",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb92adb_19b7f84a",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 99
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e20fd5b5_847cb675",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d53ca24_be8fd923",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 69,
+        "endChar": 99
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c508b17e_6d52ae7c",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "307b7090_37e321fd",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c508b17e_6d52ae7c",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01725e95_6322a859",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2020-01-07T12:18:59Z",
       "side": 1,
       "message": "Maybe\n\n  the latest token sent by the system in {@code #requestStatsUpdate()}. It is fine to send multiple updates with the same token until the system calls {@code #requestStatsUpdate()} with a new token.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4be5a7d_17961c73",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-07T15:12:39Z",
+      "side": 1,
+      "message": "Done\nWait, sometimes it is not the latest one sent by the system, right?\nSee the other reply.",
+      "parentUuid": "01725e95_6322a859",
       "range": {
         "startLine": 48,
         "startChar": 24,
