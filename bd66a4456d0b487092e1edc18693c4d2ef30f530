@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f47eb8_83e381c0",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-07T04:12:02Z",
+      "side": 1,
+      "message": "How will the API consumer access @hide constants?  Is there a public alternative?",
+      "range": {
+        "startLine": 641,
+        "startChar": 24,
+        "endLine": 641,
+        "endChar": 77
+      },
+      "revId": "bd66a4456d0b487092e1edc18693c4d2ef30f530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6c2ab7_d6dcbe28",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-07T04:12:02Z",
+      "side": 1,
+      "message": "Are these defined in a spec somewhere?  Is there a need to define the allowed valued in Telephony so that the caller knows what can be passed in?",
+      "range": {
+        "startLine": 642,
+        "startChar": 27,
+        "endLine": 643,
+        "endChar": 73
+      },
+      "revId": "bd66a4456d0b487092e1edc18693c4d2ef30f530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
