@@ -64,6 +64,7 @@ import android.database.ContentObserver;
 import android.net.CaptivePortal;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+import android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import android.net.ConnectivityManager;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
@@ -566,6 +567,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * <p>See {@link #EVENT_NETWORK_TESTED}.
      */
     private static final int EVENT_NETWORK_TESTED_WITH_EXTRAS = 49;
+
+    /**
+     * Event for NetworkMonitor to inform ConnectivityService that a potential data stall has been
+     * detected on the network.
+     * obj = Long the timestamp (in millis) for when the suspected data stall was detected.
+     * arg1 = {@link DataStallReport#DetectionMethod} indicating the detection method.
+     * arg2 = NetID.
+     * data = PersistableBundle of extras passed from NetworkMonitor.
+     */
+    private static final int EVENT_DATA_STALL_SUSPECTED = 50;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -2984,6 +2995,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void hideProvisioningNotification() {
             mTrackerHandler.sendMessage(mTrackerHandler.obtainMessage(
                     EVENT_PROVISIONING_NOTIFICATION, PROVISIONING_NOTIFICATION_HIDE, mNetId));
+        }
+
+        @Override
+        public void notifyDataStallSuspected(
+                long timestampMillis, int detectionMethod, PersistableBundle extras) {
+            final Message msg =
+                    mTrackerHandler.obtainMessage(
+                            EVENT_DATA_STALL_SUSPECTED, detectionMethod, mNetId, timestampMillis);
+            msg.setData(new Bundle(extras));
+
+            // Since NetworkStateTrackerHandler currently doesn't take any actions based on data
+            // stalls, let's send the message directly to ConnectivityDiagnosticsHandler and avoid
+            // the cost of going through two handlers.
+            mConnectivityDiagnosticsHandler.sendMessage(msg);
         }
 
         @Override
@@ -7328,6 +7353,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     handleNetworkTestedWithExtras(nai, extras);
                     break;
                 }
+                case EVENT_DATA_STALL_SUSPECTED: {
+                    final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(msg.arg2);
+                    if (nai == null) break;
+
+                    // This is safe because {@link NetworkMonitorCallbacks#notifyDataStallSuspected}
+                    // receives a PersistableBundle and converts it to this Bundle.
+                    final PersistableBundle extras = new PersistableBundle(msg.getData());
+                    handleDataStallSuspected(nai, (long) msg.obj, msg.arg1, extras);
+                    break;
+                }
             }
         }
     }
@@ -7419,6 +7454,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         cb.onConnectivityReport(report);
                     } catch (RemoteException e) {
                         loge("Error invoking onConnectivityReport", e);
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleDataStallSuspected(
+            NetworkAgentInfo nai,
+            long timestampMillis,
+            int detectionMethod,
+            PersistableBundle extras) {
+        final DataStallReport report =
+                new DataStallReport(nai.network, timestampMillis, detectionMethod, extras);
+        for (IConnectivityDiagnosticsCallback cb : mConnectivityDiagnosticsCallbacks.keySet()) {
+            final NetworkRequestInfo nri = mConnectivityDiagnosticsCallbacks.get(cb).mRequestInfo;
+            if (nai.satisfies(nri.request)) {
+                if (checkConnectivityDiagnosticsPermissions(nri.mPid, nri.mUid, nai)) {
+                    try {
+                        cb.onDataStallSuspected(report);
+                    } catch (RemoteException e) {
+                        loge("Error invoking onDataStallSuspected", e);
                     }
                 }
             }
