@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3bd597e_2864d4c9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-08T22:05:57Z",
+      "side": 1,
+      "message": "Send out this CL first to unblock the work for ant farm. This TODO is blocked by ag/9958393 \u0026 ag/9871640. I will fix this when it\u0027s unblocked.",
+      "range": {
+        "startLine": 1642,
+        "startChar": 0,
+        "endLine": 1642,
+        "endChar": 97
+      },
+      "revId": "914cd2f32098e7a75d289855380eaed0e5137a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
