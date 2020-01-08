@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb0b2fa5_607d73e8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-08T09:12:59Z",
+      "side": 1,
+      "message": "Removed in SP03.",
+      "parentUuid": "62eba86d_736c27b6",
+      "range": {
+        "startLine": 1383,
+        "startChar": 21,
+        "endLine": 1383,
+        "endChar": 44
+      },
+      "revId": "3df3efcabb2795888602767a2a0e4f564bbd16c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eb51bf7_5c421f43",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3df3efcabb2795888602767a2a0e4f564bbd16c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d77628a_4ebc6b95",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-08T09:12:59Z",
+      "side": 1,
+      "message": "Removed in SP03.",
+      "parentUuid": "3eb51bf7_5c421f43",
+      "range": {
+        "startLine": 1384,
+        "startChar": 30,
+        "endLine": 1384,
+        "endChar": 42
+      },
+      "revId": "3df3efcabb2795888602767a2a0e4f564bbd16c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
