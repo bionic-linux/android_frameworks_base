@@ -1272,8 +1272,9 @@ public class ConnectivityManager {
      */
     @UnsupportedAppUsage
     public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId) {
+        final String callingPackageName = mContext.getOpPackageName();
         try {
-            return mService.getDefaultNetworkCapabilitiesForUser(userId);
+            return mService.getDefaultNetworkCapabilitiesForUser(userId, callingPackageName);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1354,8 +1355,9 @@ public class ConnectivityManager {
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @Nullable
     public NetworkCapabilities getNetworkCapabilities(@Nullable Network network) {
+        final String callingPackageName = mContext.getOpPackageName();
         try {
-            return mService.getNetworkCapabilities(network);
+            return mService.getNetworkCapabilities(network, callingPackageName);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

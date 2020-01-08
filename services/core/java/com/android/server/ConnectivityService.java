@@ -171,6 +171,7 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.AsyncChannel;
+import com.android.internal.util.ConnectivityUtil;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
@@ -1513,7 +1514,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId) {
+    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(
+                int userId, String callingPackageName) {
         // The basic principle is: if an app's traffic could possibly go over a
         // network, without the app doing anything multinetwork-specific,
         // (hence, by "default"), then include that network's capabilities in
@@ -1533,7 +1535,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
         NetworkAgentInfo nai = getDefaultNetwork();
-        NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
+        NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai, callingPackageName);
         if (nc != null) {
             result.put(nai.network, nc);
         }
@@ -1546,7 +1548,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (networks != null) {
                         for (Network network : networks) {
                             nai = getNetworkAgentInfoForNetwork(network);
-                            nc = getNetworkCapabilitiesInternal(nai);
+                            nc = getNetworkCapabilitiesInternal(nai, callingPackageName);
                             if (nc != null) {
                                 result.put(network, nc);
                             }
@@ -1611,13 +1613,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private NetworkCapabilities getNetworkCapabilitiesInternal(NetworkAgentInfo nai) {
+    private NetworkCapabilities getNetworkCapabilitiesInternal(
+                NetworkAgentInfo nai, String callerPkgName) {
         if (nai != null) {
             synchronized (nai) {
                 if (nai.networkCapabilities != null) {
                     return networkCapabilitiesRestrictedForCallerPermissions(
                             nai.networkCapabilities,
-                            Binder.getCallingPid(), Binder.getCallingUid());
+                            Binder.getCallingPid(), Binder.getCallingUid(), callerPkgName);
                 }
             }
         }
@@ -1625,13 +1628,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities getNetworkCapabilities(Network network) {
+    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
         enforceAccessPermission();
-        return getNetworkCapabilitiesInternal(getNetworkAgentInfoForNetwork(network));
+        return getNetworkCapabilitiesInternal(
+            getNetworkAgentInfoForNetwork(network), callingPackageName);
     }
 
     private NetworkCapabilities networkCapabilitiesRestrictedForCallerPermissions(
-            NetworkCapabilities nc, int callerPid, int callerUid) {
+            NetworkCapabilities nc, int callerPid, int callerUid, String callerPkgName) {
         final NetworkCapabilities newNc = new NetworkCapabilities(nc);
         if (!checkSettingsPermission(callerPid, callerUid)) {
             newNc.setUids(null);
@@ -1639,6 +1643,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         if (newNc.getNetworkSpecifier() != null) {
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
+        }
+        if (!new ConnectivityUtil(mContext)
+                    .isLocationPermissionEnforced(
+                            callerPkgName, null /* featureId */, callerUid, null /* message */)) {
+            newNc.setOwnerUid(INVALID_UID);
         }
         return newNc;
     }
@@ -1686,7 +1695,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public boolean isActiveNetworkMetered() {
         enforceAccessPermission();
 
-        final NetworkCapabilities caps = getNetworkCapabilities(getActiveNetwork());
+        final NetworkCapabilities caps = getNetworkCapabilities(getActiveNetwork(), "android");
         if (caps != null) {
             return !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         } else {
@@ -5806,7 +5815,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final Set<UidRange> ranges = nai.networkCapabilities.getUids();
-        final int vpnAppUid = nai.networkCapabilities.getEstablishingVpnAppUid();
+        final int vpnAppUid = nai.networkCapabilities.getOwnerUid();
         // TODO: this create a window of opportunity for apps to receive traffic between the time
         // when the old rules are removed and the time when new rules are added. To fix this,
         // make eBPF support two whitelisted interfaces so here new rules can be added before the
@@ -5985,7 +5994,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nc == null || lp == null) return false;
         return nai.isVPN()
                 && !nai.networkMisc.allowBypass
-                && nc.getEstablishingVpnAppUid() != Process.SYSTEM_UID
+                && nc.getOwnerUid() != Process.SYSTEM_UID
                 && lp.getInterfaceName() != null
                 && (lp.hasIPv4DefaultRoute() || lp.hasIPv6DefaultRoute());
     }
@@ -6034,11 +6043,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // to be removed will never overlap with the new range to be added.
             if (wasFiltering && !prevRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesRemoved(iface, prevRanges,
-                        prevNc.getEstablishingVpnAppUid());
+                        prevNc.getOwnerUid());
             }
             if (shouldFilter && !newRanges.isEmpty()) {
                 mPermissionMonitor.onVpnUidRangesAdded(iface, newRanges,
-                        newNc.getEstablishingVpnAppUid());
+                        newNc.getOwnerUid());
             }
         } catch (Exception e) {
             // Never crash!
@@ -6155,7 +6164,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         switch (notificationType) {
             case ConnectivityManager.CALLBACK_AVAILABLE: {
                 putParcelable(bundle, networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid));
+                        networkAgent.networkCapabilities, nri.mPid, nri.mUid, nri.mPackageName));
                 putParcelable(bundle, new LinkProperties(networkAgent.linkProperties));
                 // For this notification, arg1 contains the blocked status.
                 msg.arg1 = arg1;
@@ -6168,7 +6177,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
                 // networkAgent can't be null as it has been accessed a few lines above.
                 final NetworkCapabilities nc = networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid);
+                        networkAgent.networkCapabilities, nri.mPid, nri.mUid, nri.mPackageName);
                 putParcelable(bundle, nc);
                 break;
             }

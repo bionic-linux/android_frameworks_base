@@ -23,9 +23,11 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
 
@@ -82,7 +84,7 @@ public final class NetworkCapabilities implements Parcelable {
         mTransportInfo = null;
         mSignalStrength = SIGNAL_STRENGTH_UNSPECIFIED;
         mUids = null;
-        mEstablishingVpnAppUid = INVALID_UID;
+        mOwnerUid = INVALID_UID;
         mSSID = null;
         mPrivateDnsBroken = false;
     }
@@ -100,7 +102,7 @@ public final class NetworkCapabilities implements Parcelable {
         mTransportInfo = nc.mTransportInfo;
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
-        mEstablishingVpnAppUid = nc.mEstablishingVpnAppUid;
+        mOwnerUid = nc.mOwnerUid;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
         mSSID = nc.mSSID;
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
@@ -808,28 +810,36 @@ public final class NetworkCapabilities implements Parcelable {
      * UID of the app that manages this network, or INVALID_UID if none/unknown.
      *
      * This field keeps track of the UID of the app that created this network and is in charge
-     * of managing it. In the practice, it is used to store the UID of VPN apps so it is named
-     * accordingly, but it may be renamed if other mechanisms are offered for third party apps
-     * to create networks.
+     * of managing it. This field is only able to be got internally or from the app which owns
+     * this network which requires that app has location permission and enabled the location mode.
+     * To avoid apps being able to set this to whatever they want, this field is overwritten to
+     * INVALID_UID if it is sent from app side.
      *
-     * Because this field is only used in the services side (and to avoid apps being able to
-     * set this to whatever they want), this field is not parcelled and will not be conserved
-     * across the IPC boundary.
-     * @hide
      */
-    private int mEstablishingVpnAppUid = INVALID_UID;
+    private int mOwnerUid = INVALID_UID;
 
     /**
      * Set the UID of the managing app.
      * @hide
      */
-    public void setEstablishingVpnAppUid(final int uid) {
-        mEstablishingVpnAppUid = uid;
+    public void setOwnerUid(final int uid) {
+        mOwnerUid = uid;
     }
 
-    /** @hide */
-    public int getEstablishingVpnAppUid() {
-        return mEstablishingVpnAppUid;
+    /** hide */
+    public int getOwnerUid() {
+        return mOwnerUid;
+    }
+
+    /**
+     * Returns whether the caller is the owner of the network or not.
+     *
+     * <p> Please note that, when the caller does not have the permission to get the owner's UID or
+     * the platform does not have the information of the owner's UID, {@code false} will be
+     * returned.
+     */
+    public boolean isNetworkOwner(int callingUid) {
+        return callingUid == mOwnerUid;
     }
 
     /**
@@ -1102,7 +1112,7 @@ public final class NetworkCapabilities implements Parcelable {
      * member is null, then the network is not restricted by app UID. If it's an empty list, then
      * it means nobody can use it.
      * As a special exception, the app managing this network (as identified by its UID stored in
-     * mEstablishingVpnAppUid) can always see this network. This is embodied by a special check in
+     * mOwnerUid) can always see this network. This is embodied by a special check in
      * satisfiedByUids. That still does not mean the network necessarily <strong>applies</strong>
      * to the app that manages it as determined by #appliesToUid.
      * <p>
@@ -1209,7 +1219,7 @@ public final class NetworkCapabilities implements Parcelable {
      * in the passed nc (representing the UIDs that this network is available to).
      * <p>
      * As a special exception, the UID that created the passed network (as represented by its
-     * mEstablishingVpnAppUid field) always satisfies a NetworkRequest requiring it (of LISTEN
+     * mOwnerUid field) always satisfies a NetworkRequest requiring it (of LISTEN
      * or REQUEST types alike), even if the network does not apply to it. That is so a VPN app
      * can see its own network when it listens for it.
      * <p>
@@ -1220,7 +1230,7 @@ public final class NetworkCapabilities implements Parcelable {
     public boolean satisfiedByUids(@NonNull NetworkCapabilities nc) {
         if (null == nc.mUids || null == mUids) return true; // The network satisfies everything.
         for (UidRange requiredRange : mUids) {
-            if (requiredRange.contains(nc.mEstablishingVpnAppUid)) return true;
+            if (requiredRange.contains(nc.mOwnerUid)) return true;
             if (!nc.appliesToUidRange(requiredRange)) {
                 return false;
             }
@@ -1483,6 +1493,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeArraySet(mUids);
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
+        dest.writeInt(mOwnerUid);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1503,6 +1514,10 @@ public final class NetworkCapabilities implements Parcelable {
                         null /* ClassLoader, null for default */);
                 netCap.mSSID = in.readString();
                 netCap.mPrivateDnsBroken = in.readBoolean();
+                int ownerId = in.readInt();
+                netCap.mOwnerUid =
+                        Process.isApplicationUid(Binder.getCallingUid())
+                                ? INVALID_UID : ownerId;
                 return netCap;
             }
             @Override
@@ -1552,8 +1567,8 @@ public final class NetworkCapabilities implements Parcelable {
                 sb.append(" Uids: <").append(mUids).append(">");
             }
         }
-        if (mEstablishingVpnAppUid != INVALID_UID) {
-            sb.append(" EstablishingAppUid: ").append(mEstablishingVpnAppUid);
+        if (mOwnerUid != INVALID_UID) {
+            sb.append(" OwnerId: ").append(mOwnerUid);
         }
 
         if (null != mSSID) {
