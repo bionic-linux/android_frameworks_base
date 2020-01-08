@@ -133,6 +133,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
+import android.location.LocationManager;
 import android.net.CaptivePortalData;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
@@ -178,6 +179,7 @@ import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.os.BadParcelableException;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.Handler;
@@ -329,6 +331,7 @@ public class ConnectivityServiceTest {
     @Mock AlarmManager mAlarmManager;
     @Mock IConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
     @Mock IBinder mIBinder;
+    @Mock LocationManager mLocationManager;
     @Mock AppOpsManager mAppOpsManager;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
@@ -415,6 +418,7 @@ public class ConnectivityServiceTest {
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
             if (Context.ALARM_SERVICE.equals(name)) return mAlarmManager;
+            if (Context.LOCATION_SERVICE.equals(name)) return mLocationManager;
             if (Context.APP_OPS_SERVICE.equals(name)) return mAppOpsManager;
             return super.getSystemService(name);
         }
@@ -1116,6 +1120,10 @@ public class ConnectivityServiceTest {
                 Arrays.asList(new UserInfo[] {
                         new UserInfo(VPN_USER, "", 0),
                 }));
+        final ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.targetSdkVersion = Build.VERSION_CODES.Q;
+        when(mPackageManager.getApplicationInfoAsUser(anyString(), anyInt(), any()))
+                .thenReturn(applicationInfo);
 
         // InstrumentationTestRunner prepares a looper, but AndroidJUnitRunner does not.
         // http://b/25897652 .
@@ -2940,7 +2948,7 @@ public class ConnectivityServiceTest {
             networkCapabilities.addTransportType(TRANSPORT_WIFI)
                     .setNetworkSpecifier(new MatchAllNetworkSpecifier());
             mService.requestNetwork(networkCapabilities, null, 0, null,
-                    ConnectivityManager.TYPE_WIFI, TEST_PACKAGE_NAME);
+                    ConnectivityManager.TYPE_WIFI, mContext.getPackageName());
         });
 
         class NonParcelableSpecifier extends NetworkSpecifier {
@@ -6291,17 +6299,96 @@ public class ConnectivityServiceTest {
         assertEquals(wifiLp, mService.getActiveLinkProperties());
     }
 
-    @Test
-    public void testNetworkCapabilitiesRestrictedForCallerPermissions() {
-        int callerUid = Process.myUid();
+    private void setupLocationPermissions(int targetSdk, boolean locationToggle, String op,
+            String perm) throws Exception {
+        final ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.targetSdkVersion = targetSdk;
+        when(mPackageManager.getApplicationInfoAsUser(anyString(), anyInt(), any()))
+                .thenReturn(applicationInfo);
+
+        when(mLocationManager.isLocationEnabledForUser(any())).thenReturn(locationToggle);
+
+        if (op != null) {
+            when(mAppOpsManager.noteOp(eq(op), eq(Process.myUid()), eq(mContext.getPackageName())))
+                .thenReturn(AppOpsManager.MODE_ALLOWED);
+        }
+
+        if (perm != null) {
+            mServiceContext.setPermission(perm, PERMISSION_GRANTED);
+        }
+    }
+
+    private int getOwnerUidNetCapsForCallerPermission(int ownerUid, int callerUid) {
         final NetworkCapabilities originalNc = new NetworkCapabilities();
-        originalNc.setOwnerUid(callerUid);
+        originalNc.setOwnerUid(ownerUid);
 
         final NetworkCapabilities newNc =
-                mService.networkCapabilitiesRestrictedForCallerPermissions(
-                        originalNc, Process.myPid(), callerUid);
+                mService.maybeSanitizeLocationInfoForCaller(
+                        originalNc, callerUid, mContext.getPackageName());
 
-        assertEquals(Process.INVALID_UID, newNc.getOwnerUid());
+        return newNc.getOwnerUid();
+    }
+
+    @Test
+    public void testMaybeSanitizeLocationInfoForCallerWithFineLocationAfterQ() throws Exception {
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+    }
+
+    @Test
+    public void testMaybeSanitizeLocationInfoForCallerWithCoarseLocationPreQ()
+                throws Exception {
+        setupLocationPermissions(Build.VERSION_CODES.P, true, AppOpsManager.OPSTR_COARSE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+    }
+
+    @Test
+    public void ttestMaybeSanitizeLocationInfoForCallerLocationOff()
+                throws Exception {
+        // Test that even with fine location permission, and UIDs matching, the UID is sanitized.
+        setupLocationPermissions(Build.VERSION_CODES.Q, false, AppOpsManager.OPSTR_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+    }
+
+    @Test
+    public void testMaybeSanitizeLocationInfoForCallerWrongUid() throws Exception {
+        // Test that even with fine location permission, not being the owner leads to sanitization.
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+    }
+
+    @Test
+    public void testMaybeSanitizeLocationInfoForCallerWithCoarseLocationAfterQ()
+            throws Exception {
+        // Test that not having fine location permission leads to sanitization.
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_COARSE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        // Test that without the location permission, the owner field is sanitized.
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+    }
+
+    @Test
+    public void testMaybeSanitizeLocationInfoForCallerWithoutLocationPermission()
+            throws Exception {
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, null /* op */, null /* perm */);
+
+        // Test that without the location permission, the owner field is sanitized.
+        final int myUid = Process.myUid();
+        assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
     }
 
     private TestNetworkAgentWrapper establishVpn(
