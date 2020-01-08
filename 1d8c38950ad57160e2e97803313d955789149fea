@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2e07870e_736bab20",
+        "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T06:47:09Z",
+      "side": 1,
+      "message": "Called by {@code NetworkStatsService} when global polling is needed. Custom\nimplementation of providers MUST respond to it by calling\n{@link NetworkStatsProviderCallback#onStatsUpdated} within one minute. Responding\nlater than this may cause the stats to be dropped.\n\n@param token a positive number identifying the new state of the system under which\n             stats have to be gathered from now on. When this is called, custom\n             implementations of providers MUST report the latest stats with the previous token,\n             under which stats were being gathered so far.",
+      "parentUuid": "783e22a9_e2af19ff",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 88
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb92adb_19b7f84a",
         "filename": "core/java/android/net/netstats/provider/AbstractNetworkStatsProvider.java",
         "patchSetId": 9
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Done\nWait, sometimes it is not the latest one sent by the system, right?\nSee the other reply.",
       "parentUuid": "01725e95_6322a859",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "1d8c38950ad57160e2e97803313d955789149fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75db902c_8e82e3fc",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderCallback.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T06:47:09Z",
+      "side": 1,
+      "message": "@param token the token under which these stats were gathered. Providers can call this method\n             with the current token as often as they want, until the token changes. {@see AbstractNetworkStatsProvider#requestStatsUpdate()}",
+      "parentUuid": "c4be5a7d_17961c73",
       "range": {
         "startLine": 48,
         "startChar": 24,
