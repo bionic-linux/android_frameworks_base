@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24c7a492_acc317b7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7563,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-08T23:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12bd955c_a7959556",
+      "range": {
+        "startLine": 7562,
+        "startChar": 31,
+        "endLine": 7563,
+        "endChar": 62
+      },
+      "revId": "4b6dff7aff9ee7b805af2a20e8273ee6771ef0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdee5ac_ec6b1db4",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c57fa17e_86602f42",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7564,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-08T23:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdee5ac_ec6b1db4",
+      "range": {
+        "startLine": 7564,
+        "startChar": 54,
+        "endLine": 7564,
+        "endChar": 80
+      },
+      "revId": "4b6dff7aff9ee7b805af2a20e8273ee6771ef0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58560c9a_34945337",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "4b6dff7aff9ee7b805af2a20e8273ee6771ef0ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adc37a8_36c2aea8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7579,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-08T23:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58560c9a_34945337",
+      "range": {
+        "startLine": 7579,
+        "startChar": 67,
+        "endLine": 7579,
+        "endChar": 68
+      },
+      "revId": "4b6dff7aff9ee7b805af2a20e8273ee6771ef0ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
