@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ca510e7_77a0c014",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-08T06:32:04Z",
+      "side": 1,
+      "message": "The encoding constants needs to be added here and exposed then. The internal SmsConstants values can be reassigned to SmsMessage.ENCODING_* that you define here.",
+      "parentUuid": "96bb90a0_efa310a9",
+      "range": {
+        "startLine": 641,
+        "startChar": 24,
+        "endLine": 641,
+        "endChar": 77
+      },
+      "revId": "bd66a4456d0b487092e1edc18693c4d2ef30f530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b6c2ab7_d6dcbe28",
         "filename": "telephony/java/android/telephony/SmsMessage.java",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "languageTable is defined in 3GPP TS 23.040 9.2.3.24.15/16.\n\nThis API is only used by Bluetooth MAP profile to handle non UTF-8 messages, which is not today\u0027s usual SMS format. It is a workaround to get rid of Bluetooth usage of Telephony internal APIs. It wrapped up internal API usages like UserData, SmsHeader and getSubmitPdu().\n\nBut it\u0027s not a good API. Some of the input parameters are confusing and ideally should not be exposed to public developers (like the one you commented). We expect Bluetooth will be the only user of this API. \n\nThis workaround is not clean but it works. Any suggestion is welcomed.",
       "parentUuid": "2b6c2ab7_d6dcbe28",
+      "range": {
+        "startLine": 642,
+        "startChar": 27,
+        "endLine": 643,
+        "endChar": 73
+      },
+      "revId": "bd66a4456d0b487092e1edc18693c4d2ef30f530",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26e3129_02ba8590",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-08T06:32:04Z",
+      "side": 1,
+      "message": "Mentioning the spec would be useful. Tyler, do you think we still need to define allowed values?",
+      "parentUuid": "f08f65c8_9369addc",
       "range": {
         "startLine": 642,
         "startChar": 27,
