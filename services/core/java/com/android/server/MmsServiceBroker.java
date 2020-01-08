@@ -234,7 +234,8 @@ public class MmsServiceBroker extends SystemService {
             final Intent intent = new Intent();
             intent.setComponent(MMS_SERVICE_COMPONENT);
             try {
-                if (!mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE)) {
+                if (!mContext.bindServiceAsUser(
+                        intent, mConnection, Context.BIND_AUTO_CREATE, UserHandle.SYSTEM)) {
                     Slog.e(TAG, "Failed to bind to MmsService");
                 }
             } catch (SecurityException e) {
