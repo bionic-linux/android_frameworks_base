@@ -48,9 +48,7 @@ import static org.mockito.Mockito.when;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
-import android.net.NetworkCapabilities;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
@@ -212,7 +210,7 @@ public class ConnectivityManagerTest {
         ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
 
         // register callback
-        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt()))
+        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt(), any()))
                 .thenReturn(request);
         manager.requestNetwork(request, callback, handler);
 
@@ -240,7 +238,7 @@ public class ConnectivityManagerTest {
         ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
 
         // register callback
-        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt()))
+        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt(), any()))
                 .thenReturn(req1);
         manager.requestNetwork(req1, callback, handler);
 
@@ -258,7 +256,7 @@ public class ConnectivityManagerTest {
         verify(callback, timeout(100).times(0)).onLosing(any(), anyInt());
 
         // callback can be registered again
-        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt()))
+        when(mService.requestNetwork(any(), captor.capture(), anyInt(), any(), anyInt(), any()))
                 .thenReturn(req2);
         manager.requestNetwork(req2, callback, handler);
 
@@ -282,7 +280,8 @@ public class ConnectivityManagerTest {
         info.targetSdkVersion = VERSION_CODES.N_MR1 + 1;
 
         when(mCtx.getApplicationInfo()).thenReturn(info);
-        when(mService.requestNetwork(any(), any(), anyInt(), any(), anyInt())).thenReturn(request);
+        when(mService.requestNetwork(any(), any(), anyInt(), any(), anyInt(), any()))
+                .thenReturn(request);
 
         Handler handler = new Handler(Looper.getMainLooper());
         manager.requestNetwork(request, callback, handler);
