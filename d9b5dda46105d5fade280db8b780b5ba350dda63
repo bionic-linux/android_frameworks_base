@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dba1b589_87bb1885",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-01-08T08:33:54Z",
+      "side": 1,
+      "message": "Is it for backward compatibility only?",
+      "range": {
+        "startLine": 1806,
+        "startChar": 8,
+        "endLine": 1806,
+        "endChar": 72
+      },
+      "revId": "d9b5dda46105d5fade280db8b780b5ba350dda63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
