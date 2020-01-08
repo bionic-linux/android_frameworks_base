@@ -279,12 +279,12 @@ public class NetworkCapabilitiesTest {
     public void testParcelNetworkCapabilitiesWithPackageName() {
         final NetworkCapabilities netCap = new NetworkCapabilities()
                 .addCapability(NET_CAPABILITY_INTERNET)
-                .setOwnerUid(9304)
-                .setOwnerPackageName("com.android.test")
                 .addCapability(NET_CAPABILITY_EIMS)
                 .addCapability(NET_CAPABILITY_NOT_METERED);
         assertParcelingIsLossless(netCap);
         netCap.setSSID(TEST_SSID);
+        netCap.setOwnerUid(9304);
+        netCap.setOwnerPackageName("com.android.test");
         assertParcelSane(netCap, 14);
     }
 
