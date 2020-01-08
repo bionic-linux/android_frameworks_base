@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe6f6603_198fcc48",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3241,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T15:34:32Z",
+      "side": 1,
+      "message": "You don\u0027t need permission to access these fields, right? So maybe remove the RequiresPermission annotation on them?",
+      "range": {
+        "startLine": 3240,
+        "startChar": 0,
+        "endLine": 3241,
+        "endChar": 125
+      },
+      "revId": "3d1c8b9996a923f3d5010accbd03e1cb1d73d74a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
