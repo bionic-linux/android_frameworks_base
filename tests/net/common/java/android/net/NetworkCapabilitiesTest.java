@@ -48,6 +48,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import android.os.Parcel;
+import android.os.Process;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.ArraySet;
 
@@ -592,5 +594,18 @@ public class NetworkCapabilitiesTest {
         assertEquals(TRANSPORT_WIFI, transportTypes[1]);
         assertEquals(TRANSPORT_VPN, transportTypes[2]);
         assertEquals(TRANSPORT_TEST, transportTypes[3]);
+    }
+
+    @Test
+    public void testUnparcelOwnerId() {
+        int testAppUid = Process.myUid();
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setOwnerUid(testAppUid);
+
+        Parcel dest = Parcel.obtain();
+        nc.writeToParcel(dest, 0);
+
+        NetworkCapabilities destNc = NetworkCapabilities.CREATOR.createFromParcel(dest);
+        assertEquals(Process.INVALID_UID, destNc.getOwnerUid());
     }
 }
