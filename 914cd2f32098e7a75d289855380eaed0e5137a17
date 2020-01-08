@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b432a64_59620c39",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T23:09:35Z",
+      "side": 1,
+      "message": "Javadoc?",
+      "revId": "914cd2f32098e7a75d289855380eaed0e5137a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f07a5f_67ea92c1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T23:09:35Z",
+      "side": 1,
+      "message": "This boxes us into having a single owner UID for a given network, which precludes the multi-user and multi-profile case. Can we make this agnostic, as in \"boolean isNetworkOwner()\" instead?",
+      "range": {
+        "startLine": 832,
+        "startChar": 15,
+        "endLine": 832,
+        "endChar": 26
+      },
+      "revId": "914cd2f32098e7a75d289855380eaed0e5137a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3bd597e_2864d4c9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
