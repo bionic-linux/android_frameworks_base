@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd889152_d2c9a37a",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this method?  I\u0027d think we\u0027d want to always associate a Conference with a PhoneAccountHandle per the constructor below.",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833b26d8_50ee38df",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "This is an implementation detail in ImsConference is it not?",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e115a4_52b9b47f",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Why are these being made non-final?",
+      "range": {
+        "startLine": 334,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 10
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921296c6_fd53549f",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Looks like the Javadoc is missing something here (I see the counterpart in Connection is as well, but we might as well clean it up here since this is new).",
+      "range": {
+        "startLine": 762,
+        "startChar": 7,
+        "endLine": 762,
+        "endChar": 10
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8fbef2_b198ebd8",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "This method and setParticipants can be moved to ImsConference; its an implementation detail inherent to IMS conference calls.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 3,
+        "endLine": 1063,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4267a98a_3b60d674",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "We can handle this by adding a new Connection property \nPROPERTY_IS_ADHOC_CONFERENCE and applying it to the conference properties.",
+      "range": {
+        "startLine": 1065,
+        "startChar": 4,
+        "endLine": 1070,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cc42cb_bd3d62ac",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "These can be part of TelephonyConnection; its more an implementation detail related to how Telephony implements the adhoc conferences.",
+      "range": {
+        "startLine": 1930,
+        "startChar": 4,
+        "endLine": 1942,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e65e817_bfb69331",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2255,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "These can be part of TelephonyConnection; its more an implementation detail related to how Telephony implements the adhoc conferences.",
+      "range": {
+        "startLine": 2239,
+        "startChar": 4,
+        "endLine": 2255,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a022ee_6fbfdc10",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "minor: createConference",
+      "range": {
+        "startLine": 1717,
+        "startChar": 32,
+        "endLine": 1717,
+        "endChar": 48
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7262759_02cb3903",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Just pass in an empty list; its nullable but an empty list is probably safer.",
+      "range": {
+        "startLine": 1748,
+        "startChar": 16,
+        "endLine": 1748,
+        "endChar": 20
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0e1267_18b75da0",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2564,
+        "startChar": 23,
+        "endLine": 2564,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1feb68_a500cac2",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2567,
+        "startChar": 14,
+        "endLine": 2567,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39896a5_7f0f4139",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2569,
+        "startChar": 14,
+        "endLine": 2569,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33dd91b_bc3c0bc3",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2584,
+        "startChar": 23,
+        "endLine": 2584,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff1ebcb_1ce498c8",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2587,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2587,
+        "startChar": 14,
+        "endLine": 2587,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473ccf2b_9c5e68e1",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Conference",
+      "range": {
+        "startLine": 2589,
+        "startChar": 14,
+        "endLine": 2589,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e55da8_5bad3229",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Is this one needed?  Its just returning a Connection like the other one.  What\u0027s the use-case for this again?",
+      "range": {
+        "startLine": 2798,
+        "startChar": 4,
+        "endLine": 2810,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fab3872_d1e78e6f",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "minor: \nonCreateIncomingConference",
+      "range": {
+        "startLine": 1808,
+        "startChar": 42,
+        "endLine": 1808,
+        "endChar": 68
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de65708_bbf85863",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "You can remove the @hide/@SystemApi; this feels like its a valid top-level API.",
+      "range": {
+        "startLine": 2053,
+        "startChar": 5,
+        "endLine": 2053,
+        "endChar": 14
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f7cbb5_81aaf7b7",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2056,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Its probably a good idea to support specifying the phone account handle to use for multi-sim devices.\nFor consistency with #placeCall, you can replace the videoState parameter with a @NonNull Bundle and document the supported extras (placeCall has a list of them).",
+      "range": {
+        "startLine": 2055,
+        "startChar": 32,
+        "endLine": 2056,
+        "endChar": 52
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

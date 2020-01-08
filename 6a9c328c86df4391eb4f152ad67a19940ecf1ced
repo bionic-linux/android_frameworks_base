@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "ef83d63c_ebf29d44",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1834,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-08T16:26:11Z",
+      "side": 1,
+      "message": "Got it, I think that this stuff should ultimately be in the TelephonyConnection though.",
+      "parentUuid": "2ae73b24_febedfd7",
+      "range": {
+        "startLine": 1821,
+        "startChar": 5,
+        "endLine": 1834,
+        "endChar": 0
+      },
+      "revId": "6a9c328c86df4391eb4f152ad67a19940ecf1ced",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0212b3e_a264fc17",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 3
