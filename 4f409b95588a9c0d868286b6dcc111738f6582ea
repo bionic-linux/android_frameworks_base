@@ -46,6 +46,30 @@
       "revId": "4f409b95588a9c0d868286b6dcc111738f6582ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f89481_5c088749",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-01-08T00:19:40Z",
+      "side": 1,
+      "message": "CL:1188823 is using this API.",
+      "parentUuid": "7ec91394_90492e96",
+      "range": {
+        "startLine": 1606,
+        "startChar": 19,
+        "endLine": 1606,
+        "endChar": 35
+      },
+      "revId": "4f409b95588a9c0d868286b6dcc111738f6582ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
