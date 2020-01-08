@@ -187,6 +187,30 @@
       "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a01644da_d51ede61",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T00:37:34Z",
+      "side": 1,
+      "message": "I see, thanks for suggestion.",
+      "parentUuid": "bfa092c0_4a6645f0",
+      "range": {
+        "startLine": 346,
+        "startChar": 39,
+        "endLine": 346,
+        "endChar": 58
+      },
+      "revId": "6087092aa247468801dc774f77c08d37bb5b891d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
