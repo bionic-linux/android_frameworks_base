@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15c94beb_04159102",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e5e499_0c1bd043",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907d9df5_3ec6cd8d",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4807aa9_e0afa87e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907d9df5_3ec6cd8d",
+      "range": {
+        "startLine": 136,
+        "startChar": 46,
+        "endLine": 136,
+        "endChar": 48
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3248798_08fb5ffa",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7eecbf_ad5ccf48",
+      "range": {
+        "startLine": 396,
+        "startChar": 28,
+        "endLine": 396,
+        "endChar": 56
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94a53411_ba7dd969",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-06T23:38:27Z",
       "side": 1,
       "message": "or the first one if the string encodes for multiple certs.\n\nMaybe you want to throw to make a programming error passing multiple certs if the list contains multiple certs (possibly also if it contains none).",
+      "range": {
+        "startLine": 402,
+        "startChar": 40,
+        "endLine": 402,
+        "endChar": 42
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a58ca97_0ea68e52",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Javadoc updated.\n\nMissing certs should be caught by the validate() function, and in the multi-cert case, I think the only place that could happen is via the Settings VPN (the Ikev2VpnProfile builder requires exactly one cert), and in that case i think the most user-friendly thing we can do is try the first certificate (as opposed to failing entirely with no clear message to the user why it failed)",
+      "parentUuid": "94a53411_ba7dd969",
       "range": {
         "startLine": 402,
         "startChar": 40,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1e5ac80f_9dc38e3e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62a00c14_44704746",
+      "range": {
+        "startLine": 464,
+        "startChar": 37,
+        "endLine": 464,
+        "endChar": 42
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1e4c619_43310c07",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-06T23:38:27Z",
       "side": 1,
       "message": "If not required maybe we should allow to pass a null value to let implementations change their minds about providing a name. It\u0027s not very important.\n\nBy the way how do we behave UI-wise when there is no name ?",
+      "range": {
+        "startLine": 485,
+        "startChar": 27,
+        "endLine": 485,
+        "endChar": 43
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154757ad_2ee63c9b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Removed\n\nTurns out, this, and the VpnService version are dead code. This was once used in system managed notifications, but that has since been removed. I\u0027ll file a bug to remove this from VpnService (b/147257336)",
+      "parentUuid": "f1e4c619_43310c07",
       "range": {
         "startLine": 485,
         "startChar": 27,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "10bc9989_ca57f33c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done; reset all fields here before setting the new ones.",
+      "parentUuid": "38fb1447_54cca230",
+      "range": {
+        "startLine": 502,
+        "startChar": 57,
+        "endLine": 503,
+        "endChar": 33
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655f5ab7_c4de1f54",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -183,6 +351,30 @@
       "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221a0ae7_ca8fe049",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655f5ab7_c4de1f54",
+      "range": {
+        "startLine": 580,
+        "startChar": 24,
+        "endLine": 580,
+        "endChar": 28
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "d286af85_f197986d",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dac6e9b2_06457b31",
+      "range": {
+        "startLine": 581,
+        "startChar": 46,
+        "endLine": 581,
+        "endChar": 66
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0e2408_9a025f5a",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -229,6 +445,30 @@
       "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8d0a66_de34587b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0e2408_9a025f5a",
+      "range": {
+        "startLine": 621,
+        "startChar": 23,
+        "endLine": 621,
+        "endChar": 27
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "5b8d965c_3296d818",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done; added to parameter doc",
+      "parentUuid": "e3e1b122_06cb938e",
+      "range": {
+        "startLine": 633,
+        "startChar": 18,
+        "endLine": 633,
+        "endChar": 22
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd41895d_702c5e5e",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 18
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "c34f051a_6c99bb39",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cd41895d_702c5e5e",
+      "range": {
+        "startLine": 640,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 60
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a16a35_660f1643",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 18
@@ -289,6 +577,30 @@
       "writtenOn": "2020-01-06T23:38:27Z",
       "side": 1,
       "message": "Sorry I fail to see how this visibility prevents re-definition in other files",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfb2c3e_6f6a8e1b",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Reworded. Hopefully it\u0027s clearer?",
+      "parentUuid": "e2a16a35_660f1643",
       "range": {
         "startLine": 74,
         "startChar": 28,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "5d8c798c_090287db",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Primarily because we\u0027re mapping between X509Certificates and Strings.\n\nConverting a certificate to a PEM string used by VpnProfile uses the BouncyCastle\u0027s PEM writer, which throws an IOException (due to the ByteArrayOutputStream).\n\nSimilarly, parsing a certificate uses a ByteArrayInputStream, and that also throws an IOException",
+      "parentUuid": "cbb25a1b_b197aa9f",
+      "range": {
+        "startLine": 86,
+        "startChar": 53,
+        "endLine": 86,
+        "endChar": 64
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc0ec874_a4336030",
         "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
         "patchSetId": 18
@@ -344,6 +680,30 @@
       "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e3ca1b_be5a20fc",
+        "filename": "tests/net/java/android/net/Ikev2VpnProfileTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-08T04:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0ec874_a4336030",
+      "range": {
+        "startLine": 124,
+        "startChar": 66,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "8b936ee62f1cf47adeed3acf634f5957777224f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
