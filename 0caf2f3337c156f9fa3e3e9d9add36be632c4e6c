@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e03c246c_ab442251",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5962,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T12:44:09Z",
+      "side": 1,
+      "message": "Not sure this part of the comment is relevant here : now that this is just a function that sends all requests to a given factory, it shouldn\u0027t know whether it\u0027s been called because there was a new connection or some other possible use case.",
+      "range": {
+        "startLine": 5962,
+        "startChar": 10,
+        "endLine": 5962,
+        "endChar": 45
+      },
+      "revId": "0caf2f3337c156f9fa3e3e9d9add36be632c4e6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70280895_5da53367",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5965,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-08T12:44:09Z",
+      "side": 1,
+      "message": "Optional, as you\u0027re not changing this : Could lift this out of the loop",
+      "range": {
+        "startLine": 5965,
+        "startChar": 12,
+        "endLine": 5965,
+        "endChar": 52
+      },
+      "revId": "0caf2f3337c156f9fa3e3e9d9add36be632c4e6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
