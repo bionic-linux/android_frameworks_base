@@ -1532,7 +1532,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId) {
+    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(
+                int userId, String callingPackageName) {
         // The basic principle is: if an app's traffic could possibly go over a
         // network, without the app doing anything multinetwork-specific,
         // (hence, by "default"), then include that network's capabilities in
@@ -1554,7 +1555,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         NetworkAgentInfo nai = getDefaultNetwork();
         NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
         if (nc != null) {
-            result.put(nai.network, nc);
+            result.put(
+                    nai.network,
+                    maybeSanitizeLocationInfoForCaller(
+                            nc, Binder.getCallingUid(), callingPackageName));
         }
 
         synchronized (mVpns) {
@@ -1564,10 +1568,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     Network[] networks = vpn.getUnderlyingNetworks();
                     if (networks != null) {
                         for (Network network : networks) {
-                            nai = getNetworkAgentInfoForNetwork(network);
-                            nc = getNetworkCapabilitiesInternal(nai);
+                            nc = getNetworkCapabilitiesInternal(network);
                             if (nc != null) {
-                                result.put(network, nc);
+                                result.put(
+                                        network,
+                                        maybeSanitizeLocationInfoForCaller(
+                                                nc, Binder.getCallingUid(), callingPackageName));
                             }
                         }
                     }
@@ -1634,24 +1640,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private NetworkCapabilities getNetworkCapabilitiesInternal(Network network) {
+        return getNetworkCapabilitiesInternal(getNetworkAgentInfoForNetwork(network));
+    }
+
     private NetworkCapabilities getNetworkCapabilitiesInternal(NetworkAgentInfo nai) {
         if (nai == null) return null;
         synchronized (nai) {
             if (nai.networkCapabilities == null) return null;
             return networkCapabilitiesRestrictedForCallerPermissions(
-                    nai.networkCapabilities,
-                    Binder.getCallingPid(), Binder.getCallingUid());
+                    nai.networkCapabilities, Binder.getCallingPid(), Binder.getCallingUid());
         }
     }
 
     @Override
-    public NetworkCapabilities getNetworkCapabilities(Network network) {
+    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
         enforceAccessPermission();
-        return getNetworkCapabilitiesInternal(getNetworkAgentInfoForNetwork(network));
+        final NetworkCapabilities nc = getNetworkCapabilitiesInternal(network);
+        return nc == null
+            ? null
+            : maybeSanitizeLocationInfoForCaller(nc, Binder.getCallingUid(), callingPackageName);
     }
 
-    @VisibleForTesting
-    NetworkCapabilities networkCapabilitiesRestrictedForCallerPermissions(
+    private NetworkCapabilities networkCapabilitiesRestrictedForCallerPermissions(
             NetworkCapabilities nc, int callerPid, int callerUid) {
         final NetworkCapabilities newNc = new NetworkCapabilities(nc);
         if (!checkSettingsPermission(callerPid, callerUid)) {
@@ -1663,20 +1674,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         newNc.setAdministratorUids(Collections.EMPTY_LIST);
 
-        maybeSanitizeLocationInfoForCaller(newNc, callerUid);
-
         return newNc;
     }
 
-    private void maybeSanitizeLocationInfoForCaller(
-            NetworkCapabilities nc, int callerUid) {
-        // TODO(b/142072839): Conditionally reset the owner UID if the following
-        // conditions are not met:
-        // 1. The destination app is the network owner
-        // 2. The destination app has the ACCESS_COARSE_LOCATION permission granted
-        // if target SDK<29 or otherwise has the ACCESS_FINE_LOCATION permission granted
-        // 3. The user's location toggle is on
-        nc.setOwnerUid(INVALID_UID);
+    @VisibleForTesting
+    NetworkCapabilities maybeSanitizeLocationInfoForCaller(
+            @NonNull NetworkCapabilities nc, int callerUid, @NonNull String callerPkgName) {
+        final NetworkCapabilities newNc = new NetworkCapabilities(nc);
+        if (callerUid != newNc.getOwnerUid()) {
+            newNc.setOwnerUid(INVALID_UID);
+            return newNc;
+        }
+
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    if (!mLocationPermissionChecker.checkLocationPermission(
+                            callerPkgName, null /* featureId */, callerUid, null /* message */)) {
+                        // Caller does not have the requisite location permissions. Reset the
+                        // owner's UID in the NetworkCapabilities.
+                        newNc.setOwnerUid(INVALID_UID);
+                    }
+                }
+        );
+
+        return newNc;
     }
 
     private LinkProperties linkPropertiesRestrictedForCallerPermissions(
@@ -1751,7 +1772,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public boolean isActiveNetworkMetered() {
         enforceAccessPermission();
 
-        final NetworkCapabilities caps = getNetworkCapabilities(getActiveNetwork());
+        final NetworkCapabilities caps = getNetworkCapabilitiesInternal(getActiveNetwork());
         if (caps != null) {
             return !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         } else {
@@ -5285,8 +5306,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         public String toString() {
-            return "uid/pid:" + mUid + "/" + mPid + " " + request +
-                    (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
+            return "uid/pid:" + mUid + "/" + mPid + " " + request
+                    + (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
         }
     }
 
@@ -6375,8 +6396,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         switch (notificationType) {
             case ConnectivityManager.CALLBACK_AVAILABLE: {
-                putParcelable(bundle, networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid));
+                NetworkCapabilities nc =
+                        networkCapabilitiesRestrictedForCallerPermissions(
+                                networkAgent.networkCapabilities, nri.mPid, nri.mUid);
+                if (nc != null) {
+                    nc = maybeSanitizeLocationInfoForCaller(
+                            nc, nri.mUid, nri.request.getRequestorPackageName());
+                }
+                putParcelable(bundle, nc);
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 // For this notification, arg1 contains the blocked status.
@@ -6389,9 +6416,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
                 // networkAgent can't be null as it has been accessed a few lines above.
-                final NetworkCapabilities nc = networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid);
-                putParcelable(bundle, nc);
+                NetworkCapabilities netCap =
+                        networkCapabilitiesRestrictedForCallerPermissions(
+                                networkAgent.networkCapabilities, nri.mPid, nri.mUid);
+                if (netCap != null) {
+                    netCap = maybeSanitizeLocationInfoForCaller(
+                            netCap, nri.mUid, nri.request.getRequestorPackageName());
+                }
+                putParcelable(bundle, netCap);
                 break;
             }
             case ConnectivityManager.CALLBACK_IP_CHANGED: {
