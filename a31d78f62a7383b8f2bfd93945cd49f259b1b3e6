@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4de447e6_34ffbc9f",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "Inet6Address.ANY is @hide, InetSocketAddress would fill Inet6Address.ANY automatically if we just use InetSocketAddress(0).\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:libcore/ojluni/src/main/java/java/net/InetSocketAddress.java;l\u003d202?ss\u003dandroid\u0026q\u003dInetSocketAddress.java\n\nActually I think the source address would be replace no matter what initialize value it is if InetSocketAddress is not null.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:libcore/luni/src/main/native/libcore_io_Linux.cpp;bpv\u003d0;bpt\u003d1;l\u003d589",
+      "parentUuid": "c4887eb0_13ffdea1",
+      "range": {
+        "startLine": 671,
+        "startChar": 75,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed75d7e_7639bf0a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e190461a_0913c936",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed75d7e_7639bf0a",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "15640cd8_9e3fdb77",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237ac147_5c30f960",
+      "range": {
+        "startLine": 34,
+        "startChar": 37,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0514c091_74ae81d9",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9443f1_37a62cdd",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0514c091_74ae81d9",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "99adf89d_a4552e72",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bedd2763_b9fec996",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 37
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fac6afa_be7c6a03",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee132f9_c2b30cac",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 1,
+      "message": "This will be fixed by CL https://android-review.googlesource.com/c/platform/frameworks/base/+/1198860",
+      "parentUuid": "7fac6afa_be7c6a03",
+      "range": {
+        "startLine": 513,
+        "startChar": 41,
+        "endLine": 513,
+        "endChar": 67
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

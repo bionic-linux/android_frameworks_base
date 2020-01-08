@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af730a22_29e2d4d9",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 0,
+      "message": "Yes, now the NetworkRequest is new inside tethering instead of get from ConnectivityManager.",
+      "parentUuid": "07b9c573_5d6c2997",
+      "range": {
+        "startLine": 139,
+        "startChar": 55,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2af199_12f2f114",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a84c7e_d281ee34",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-08T07:07:29Z",
+      "side": 0,
+      "message": "I think they are equivalent. Or I read the wrong code ??\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/ConnectivityManager.java;l\u003d3680?ss\u003dandroid\u0026q\u003dConnectivityManager.java",
+      "parentUuid": "3d2af199_12f2f114",
+      "range": {
+        "startLine": 219,
+        "startChar": 78,
+        "endLine": 219,
+        "endChar": 88
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
