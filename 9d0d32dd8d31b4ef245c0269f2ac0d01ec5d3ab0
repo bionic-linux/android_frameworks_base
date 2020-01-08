@@ -93,6 +93,30 @@
       "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06361cd9_5ff1756b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T07:34:54Z",
+      "side": 0,
+      "message": "Unfortunately, inferLegacyTypeForNetworkCapabilities always returns TYPE_NONE unless the request contains SUPL:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/ConnectivityManager.java;bpv\u003d1;l\u003d1549\n\nThat code really isn\u0027t clear. Sorry about that, I think you can blame me for it. :-\\",
+      "parentUuid": "90a84c7e_d281ee34",
+      "range": {
+        "startLine": 219,
+        "startChar": 78,
+        "endLine": 219,
+        "endChar": 88
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
