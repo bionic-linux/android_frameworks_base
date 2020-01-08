@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3904c8_e32b173d",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-08T01:34:49Z",
+      "side": 1,
+      "message": "The java/android/net/shared package is intended for shared sources with the NetworkStack (see framework-networkstack-shared-srcs). This annotation is only for the IKE module and the framework right ?\nMaybe java/android/net/annotations/ would be a good place ?",
+      "range": {
+        "startLine": 596,
+        "startChar": 9,
+        "endLine": 596,
+        "endChar": 53
+      },
+      "revId": "450e8a15f0ce5bae13b6a373cb01de9f7b102397",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45aa169b_16a03417",
+        "filename": "core/java/android/net/shared/Annotation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-08T01:34:49Z",
+      "side": 1,
+      "message": "This class is really generic, it looks like its purpose is just to behave as a package to group classes under a common name.\nHow about just having PolicyDirection.java ? And maybe put it in an [something].annotation package if you want to group the annotations separately ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "450e8a15f0ce5bae13b6a373cb01de9f7b102397",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
