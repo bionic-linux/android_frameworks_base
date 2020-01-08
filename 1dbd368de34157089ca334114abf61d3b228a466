@@ -22,6 +22,30 @@
       "revId": "1dbd368de34157089ca334114abf61d3b228a466",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c6b2b8_7030d124",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2020-01-08T15:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d90828c_4befa5e9",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 55
+      },
+      "revId": "1dbd368de34157089ca334114abf61d3b228a466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
