@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d7f9937_faf695b0",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-01-08T03:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3904c8_e32b173d",
+      "range": {
+        "startLine": 596,
+        "startChar": 9,
+        "endLine": 596,
+        "endChar": 53
+      },
+      "revId": "450e8a15f0ce5bae13b6a373cb01de9f7b102397",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45aa169b_16a03417",
         "filename": "core/java/android/net/shared/Annotation.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "450e8a15f0ce5bae13b6a373cb01de9f7b102397",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97645059_89f7cbad",
+        "filename": "core/java/android/net/shared/Annotation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2020-01-08T03:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45aa169b_16a03417",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "450e8a15f0ce5bae13b6a373cb01de9f7b102397",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
