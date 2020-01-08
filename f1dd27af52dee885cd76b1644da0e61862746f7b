@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f37179_54c6899a",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-08T17:48:50Z",
+      "side": 1,
+      "message": "Please create an @IntDef like this for ENCODING_*",
+      "revId": "f1dd27af52dee885cd76b1644da0e61862746f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6861eda_805539aa",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-08T17:48:50Z",
+      "side": 1,
+      "message": "annotate this with the new IntDef that you define.",
+      "range": {
+        "startLine": 663,
+        "startChar": 77,
+        "endLine": 663,
+        "endChar": 89
+      },
+      "revId": "f1dd27af52dee885cd76b1644da0e61862746f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
