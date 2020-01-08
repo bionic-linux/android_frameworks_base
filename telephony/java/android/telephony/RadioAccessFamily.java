@@ -17,12 +17,11 @@
 package android.telephony;
 
 import android.annotation.UnsupportedAppUsage;
-import android.hardware.radio.V1_0.RadioTechnology;
-import android.hardware.radio.V1_4.CellInfo.Info;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.telephony.TelephonyManager.PrefNetworkMode;
+import android.util.Log;
 
 import com.android.internal.telephony.RILConstants;
 
@@ -33,6 +32,7 @@ import com.android.internal.telephony.RILConstants;
  * @hide
  */
 public class RadioAccessFamily implements Parcelable {
+    public static final String TAG = "RadioAccessFamily";
 
     /**
      * TODO: get rid of RAF definition in RadioAccessFamily and
@@ -263,18 +263,21 @@ public class RadioAccessFamily implements Parcelable {
     }
 
     /**
-     * Returns the highest capability of the RadioAccessFamily (4G > 3G > 2G).
+     * Returns the highest capability of the RadioAccessFamily (5G > 4G > 3G > 2G).
      * @param raf The RadioAccessFamily that we wish to filter
      * @return The highest radio capability
      */
     public static int getHighestRafCapability(int raf) {
+        if ((NR & raf) > 0) {
+            return TelephonyManager.NETWORK_CLASS_5_G;
+        }
         if ((LTE & raf) > 0) {
             return TelephonyManager.NETWORK_CLASS_4_G;
         }
-        if ((EVDO|HS|WCDMA & raf) > 0) {
+        if (((EVDO | HS | WCDMA | RAF_TD_SCDMA) & raf) > 0) {
             return TelephonyManager.NETWORK_CLASS_3_G;
         }
-        if((GSM|CDMA & raf) > 0) {
+        if (((GSM | CDMA) & raf) > 0) {
             return TelephonyManager.NETWORK_CLASS_2_G;
         }
         return TelephonyManager.NETWORK_CLASS_UNKNOWN;
@@ -353,6 +356,9 @@ public class RadioAccessFamily implements Parcelable {
             case (NR | LTE | RAF_TD_SCDMA | CDMA | EVDO | GSM | WCDMA):
                 return RILConstants.NETWORK_MODE_NR_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA;
             default:
+                // if the adjusted raf doesn't correspond exactly to a network mode
+                Log.e(TAG, "getNetworkTypeFromRaf: Cannot find mapping for raf = " + raf
+                        + ", using default preferred network mode");
                 return RILConstants.PREFERRED_NETWORK_MODE;
         }
     }
