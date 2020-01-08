@@ -6219,11 +6219,11 @@ public class ConnectivityServiceTest {
     }
 
 
-    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int establishingUid,
+    private TestNetworkAgentWrapper establishVpn(LinkProperties lp, int ownerUid,
             Set<UidRange> vpnRange) throws Exception {
         final TestNetworkAgentWrapper
                 vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp);
-        vpnNetworkAgent.getNetworkCapabilities().setEstablishingVpnAppUid(establishingUid);
+        vpnNetworkAgent.getNetworkCapabilities().setOwnerUid(ownerUid);
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
         mMockVpn.connect();
         mMockVpn.setUids(vpnRange);
