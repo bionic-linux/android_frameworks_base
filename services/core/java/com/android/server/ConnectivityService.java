@@ -170,6 +170,7 @@ import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.AsyncChannel;
+import com.android.internal.util.ConnectivityUtil;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
@@ -949,9 +950,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog = logger;
         mDefaultRequest = createDefaultInternetRequestForTransport(-1, NetworkRequest.Type.REQUEST);
-        NetworkRequestInfo defaultNRI = new NetworkRequestInfo(null, mDefaultRequest, new Binder());
-        mNetworkRequests.put(mDefaultRequest, defaultNRI);
-        mNetworkRequestInfoLogs.log("REGISTER " + defaultNRI);
+        NetworkRequestInfo defaultNri =
+                new NetworkRequestInfo(null, mDefaultRequest, new Binder());
+        mNetworkRequests.put(mDefaultRequest, defaultNri);
+        mNetworkRequestInfoLogs.log("REGISTER " + defaultNri);
 
         mDefaultMobileDataRequest = createDefaultInternetRequestForTransport(
                 NetworkCapabilities.TRANSPORT_CELLULAR, NetworkRequest.Type.BACKGROUND_REQUEST);
@@ -1184,8 +1186,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (enable) {
-            handleRegisterNetworkRequest(new NetworkRequestInfo(
-                    null, networkRequest, new Binder()));
+            handleRegisterNetworkRequest(
+                    new NetworkRequestInfo(null, networkRequest, new Binder()));
         } else {
             handleReleaseNetworkRequest(networkRequest, Process.SYSTEM_UID,
                     /* callOnUnavailable */ false);
@@ -1511,7 +1513,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(int userId) {
+    public NetworkCapabilities[] getDefaultNetworkCapabilitiesForUser(
+                int userId, String callingPackageName) {
         // The basic principle is: if an app's traffic could possibly go over a
         // network, without the app doing anything multinetwork-specific,
         // (hence, by "default"), then include that network's capabilities in
@@ -1531,7 +1534,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
         NetworkAgentInfo nai = getDefaultNetwork();
-        NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
+        NetworkCapabilities nc =
+                maybeSanitizeLocationInfoForCaller(
+                        getNetworkCapabilitiesInternal(nai),
+                        Binder.getCallingUid(), callingPackageName);
         if (nc != null) {
             result.put(nai.network, nc);
         }
@@ -1544,7 +1550,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (networks != null) {
                         for (Network network : networks) {
                             nai = getNetworkAgentInfoForNetwork(network);
-                            nc = getNetworkCapabilitiesInternal(nai);
+                            nc = maybeSanitizeLocationInfoForCaller(
+                                    getNetworkCapabilitiesInternal(nai),
+                                    Binder.getCallingUid(), callingPackageName);
                             if (nc != null) {
                                 result.put(network, nc);
                             }
@@ -1613,20 +1621,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private NetworkCapabilities getNetworkCapabilitiesInternal(NetworkAgentInfo nai) {
+    private NetworkCapabilities getNetworkCapabilitiesInternal(
+            NetworkAgentInfo nai) {
         if (nai == null) return null;
         synchronized (nai) {
             if (nai.networkCapabilities == null) return null;
             return networkCapabilitiesRestrictedForCallerPermissions(
-                    nai.networkCapabilities,
-                    Binder.getCallingPid(), Binder.getCallingUid());
+                    nai.networkCapabilities, Binder.getCallingPid(),
+                    Binder.getCallingUid());
         }
     }
 
     @Override
-    public NetworkCapabilities getNetworkCapabilities(Network network) {
+    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
         enforceAccessPermission();
-        return getNetworkCapabilitiesInternal(getNetworkAgentInfoForNetwork(network));
+        return maybeSanitizeLocationInfoForCaller(
+                getNetworkCapabilitiesInternal(
+                        getNetworkAgentInfoForNetwork(network)),
+                        Binder.getCallingUid(), callingPackageName);
     }
 
     @VisibleForTesting
@@ -1642,21 +1654,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         newNc.setAdministratorUids(Collections.EMPTY_LIST);
 
-        maybeSanitizeLocationInfoForCaller(newNc, callerUid);
-
         return newNc;
     }
 
-    private void maybeSanitizeLocationInfoForCaller(
-            NetworkCapabilities nc, int callerUid) {
-        // TODO(b/142072839): Conditionally reset the owner UID if the following
-        // conditions are not met:
-        // 1. The destination app is the network owner
-        // 2. The destination app has the ACCESS_COARSE_LOCATION permission granted
-        // if target SDK<29 or otherwise has the ACCESS_FINE_LOCATION permission granted
-        // 3. The user's location toggle is on
-        nc.setOwnerUid(INVALID_UID);
-        nc.setOwnerPackageName(null);
+    private NetworkCapabilities maybeSanitizeLocationInfoForCaller(
+            @NonNull NetworkCapabilities nc, int callerUid, @NonNull String callerPkgName) {
+        if (callerUid != nc.getOwnerUid()) {
+            nc.setOwnerUid(INVALID_UID);
+            return nc;
+        }
+
+        // TODO(b/148180968): Make connectivityUtil methods static so we don't need to instantiate.
+        final ConnectivityUtil connectivityUtil = new ConnectivityUtil(mContext);
+
+        // TODO(b/148180968): add a checkLocationPermission() to prevent the need for try-catching.
+        try {
+            Binder.withCleanCallingIdentity(
+                    () -> connectivityUtil.enforceLocationPermission(
+                            callerPkgName, null /* featureId */, callerUid, null /* message */)
+            );
+            // Caller has the requisite location permissions. Allow location revealing information
+        } catch (SecurityException e) {
+            // Sanitize anything that might leak location revealing information
+            nc.setOwnerUid(INVALID_UID);
+        }
+        return nc;
     }
 
     private LinkProperties linkPropertiesRestrictedForCallerPermissions(
@@ -1728,7 +1750,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public boolean isActiveNetworkMetered() {
         enforceAccessPermission();
 
-        final NetworkCapabilities caps = getNetworkCapabilities(getActiveNetwork());
+        final NetworkCapabilities caps =
+                getNetworkCapabilitiesInternal(getNetworkAgentInfoForNetwork(getActiveNetwork()));
         if (caps != null) {
             return !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         } else {
@@ -5106,8 +5129,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         public String toString() {
-            return "uid/pid:" + mUid + "/" + mPid + " " + request +
-                    (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
+            return "uid/pid:" + mUid + "/" + mPid + request
+                + (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
         }
     }
 
@@ -5195,6 +5218,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Messenger messenger, int timeoutMs, IBinder binder, int legacyType,
             @NonNull String callingPackageName) {
         final int callingUid = Binder.getCallingUid();
+        mAppOpsManager.checkPackage(callingUid, callingPackageName);
         final NetworkRequest.Type type = (networkCapabilities == null)
                 ? NetworkRequest.Type.TRACK_DEFAULT
                 : NetworkRequest.Type.REQUEST;
@@ -5299,6 +5323,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             PendingIntent operation, @NonNull String callingPackageName) {
         checkNotNull(operation, "PendingIntent cannot be null.");
         final int callingUid = Binder.getCallingUid();
+        mAppOpsManager.checkPackage(callingUid, callingPackageName);
         networkCapabilities = new NetworkCapabilities(networkCapabilities);
         enforceNetworkRequestPermissions(networkCapabilities);
         enforceMeteredApnPolicy(networkCapabilities);
@@ -5357,6 +5382,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities,
             Messenger messenger, IBinder binder, @NonNull String callingPackageName) {
         final int callingUid = Binder.getCallingUid();
+        mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackageName);
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
@@ -5385,6 +5411,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public void pendingListenForNetwork(NetworkCapabilities networkCapabilities,
             PendingIntent operation, @NonNull String callingPackageName) {
+        mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackageName);
         checkNotNull(operation, "PendingIntent cannot be null.");
         final int callingUid = Binder.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
@@ -6193,8 +6220,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         switch (notificationType) {
             case ConnectivityManager.CALLBACK_AVAILABLE: {
-                putParcelable(bundle, networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid));
+                putParcelable(bundle, maybeSanitizeLocationInfoForCaller(
+                        networkCapabilitiesRestrictedForCallerPermissions(
+                                networkAgent.networkCapabilities, nri.mPid, nri.mUid), nri.mUid,
+                                nri.request.getOwnerPackageName()));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 // For this notification, arg1 contains the blocked status.
@@ -6207,8 +6236,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             case ConnectivityManager.CALLBACK_CAP_CHANGED: {
                 // networkAgent can't be null as it has been accessed a few lines above.
-                final NetworkCapabilities nc = networkCapabilitiesRestrictedForCallerPermissions(
-                        networkAgent.networkCapabilities, nri.mPid, nri.mUid);
+                final NetworkCapabilities nc = maybeSanitizeLocationInfoForCaller(
+                        networkCapabilitiesRestrictedForCallerPermissions(
+                                networkAgent.networkCapabilities, nri.mPid, nri.mUid), nri.mUid,
+                                nri.request.getOwnerPackageName());
                 putParcelable(bundle, nc);
                 break;
             }
