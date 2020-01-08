@@ -41,33 +41,48 @@ public class ConnectivityUtil {
 
     private static final String TAG = "ConnectivityUtil";
 
-    private final Context mContext;
-    private final AppOpsManager mAppOps;
-    private final UserManager mUserManager;
-
-    public ConnectivityUtil(Context context) {
-        mContext = context;
-        mAppOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
-        mUserManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-    }
-
     /**
-     * API to determine if the caller has fine/coarse location permission (depending on
-     * config/targetSDK level) and the location mode is enabled for the user. SecurityException is
-     * thrown if the caller has no permission or the location mode is disabled.
+     * Check the location permission and location mode.
+     *
+     * Check whether the application has fine/coarse location permission (depending on
+     * config/targetSDK level) and the location mode is enabled for the user.
+     *
      * @param pkgName package name of the application requesting access
      * @param featureId The feature in the package
      * @param uid The uid of the package
      * @param message A message describing why the permission was checked. Only needed if this is
      *                not inside of a two-way binder call from the data receiver
      */
-    public void enforceLocationPermission(String pkgName, @Nullable String featureId, int uid,
-            @Nullable String message)
-            throws SecurityException {
-        checkPackage(uid, pkgName);
+    public static boolean checkLocationPermission(String pkgName, @Nullable String featureId,
+            int uid, @Nullable String message, Context context) {
+        try {
+            enforceLocationPermission(pkgName, featureId, uid, message, context);
+            return true;
+        } catch (SecurityException e) {
+            return false;
+        }
+    }
+
+    /**
+     * API to enforce the location permission and location mode.
+     *
+     * Enforce the application has fine/coarse location permission (depending on config/targetSDK
+     * level) and the location mode is enabled for the user. SecurityException is thrown if the
+     * application has no permission or the location mode is disabled.
+     *
+     * @param pkgName package name of the application requesting access
+     * @param featureId The feature in the package
+     * @param uid The uid of the package
+     * @param message A message describing why the permission was checked. Only needed if this is
+     *                not inside of a two-way binder call from the data receiver
+     */
+    public static void enforceLocationPermission(String pkgName, @Nullable String featureId,
+            int uid, @Nullable String message, Context context) throws SecurityException {
+
+        checkPackage(uid, pkgName, context);
 
         // Location mode must be enabled
-        if (!isLocationModeEnabled()) {
+        if (!isLocationModeEnabled(context)) {
             // Location mode is disabled, scan results cannot be returned
             throw new SecurityException("Location mode is disabled for the device");
         }
@@ -75,7 +90,7 @@ public class ConnectivityUtil {
         // LocationAccess by App: caller must have Coarse/Fine Location permission to have access to
         // location information.
         boolean canAppPackageUseLocation = checkCallersLocationPermission(pkgName, featureId,
-                uid, /* coarseForTargetSdkLessThanQ */ true, message);
+                uid, /* coarseForTargetSdkLessThanQ */ true, message, context);
 
         // If neither caller or app has location access, there is no need to check
         // any other permissions. Deny access to scan results.
@@ -84,7 +99,7 @@ public class ConnectivityUtil {
         }
         // If the User or profile is current, permission is granted
         // Otherwise, uid must have INTERACT_ACROSS_USERS_FULL permission.
-        if (!isCurrentProfile(uid) && !checkInteractAcrossUsersFull(uid)) {
+        if (!isCurrentProfile(uid, context) && !checkInteractAcrossUsersFull(uid, context)) {
             throw new SecurityException("UID " + uid + " profile not permitted");
         }
     }
@@ -102,30 +117,33 @@ public class ConnectivityUtil {
      * @param message A message describing why the permission was checked. Only needed if this is
      *                not inside of a two-way binder call from the data receiver
      */
-    public boolean checkCallersLocationPermission(String pkgName, @Nullable String featureId,
-            int uid, boolean coarseForTargetSdkLessThanQ, @Nullable String message) {
-        boolean isTargetSdkLessThanQ = isTargetSdkLessThan(pkgName, Build.VERSION_CODES.Q, uid);
+    public static boolean checkCallersLocationPermission(String pkgName, @Nullable String featureId,
+            int uid, boolean coarseForTargetSdkLessThanQ, @Nullable String message,
+            Context context) {
+        boolean isTargetSdkLessThanQ =
+                isTargetSdkLessThan(pkgName, Build.VERSION_CODES.Q, uid, context);
 
         String permissionType = Manifest.permission.ACCESS_FINE_LOCATION;
         if (coarseForTargetSdkLessThanQ && isTargetSdkLessThanQ) {
             // Having FINE permission implies having COARSE permission (but not the reverse)
             permissionType = Manifest.permission.ACCESS_COARSE_LOCATION;
         }
-        if (getUidPermission(permissionType, uid)
-                == PackageManager.PERMISSION_DENIED) {
+        if (getUidPermission(permissionType, uid, context) == PackageManager.PERMISSION_DENIED) {
             return false;
         }
 
+        AppOpsManager appOpsManager =
+                (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         // Always checking FINE - even if will not enforce. This will record the request for FINE
         // so that a location request by the app is surfaced to the user.
         boolean isFineLocationAllowed = noteAppOpAllowed(
-                AppOpsManager.OPSTR_FINE_LOCATION, pkgName, featureId, uid, message);
+                AppOpsManager.OPSTR_FINE_LOCATION, pkgName, featureId, uid, message, appOpsManager);
         if (isFineLocationAllowed) {
             return true;
         }
         if (coarseForTargetSdkLessThanQ && isTargetSdkLessThanQ) {
             return noteAppOpAllowed(AppOpsManager.OPSTR_COARSE_LOCATION, pkgName, featureId, uid,
-                    message);
+                    message, appOpsManager);
         }
         return false;
     }
@@ -133,9 +151,9 @@ public class ConnectivityUtil {
     /**
      * Retrieves a handle to LocationManager (if not already done) and check if location is enabled.
      */
-    public boolean isLocationModeEnabled() {
+    public static boolean isLocationModeEnabled(Context context) {
         LocationManager locationManager =
-                (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+                (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         try {
             return locationManager.isLocationEnabledForUser(UserHandle.of(
                     getCurrentUser()));
@@ -145,10 +163,11 @@ public class ConnectivityUtil {
         }
     }
 
-    private boolean isTargetSdkLessThan(String packageName, int versionCode, int callingUid) {
+    private static boolean isTargetSdkLessThan(
+            String packageName, int versionCode, int callingUid, Context context) {
         long ident = Binder.clearCallingIdentity();
         try {
-            if (mContext.getPackageManager().getApplicationInfoAsUser(
+            if (context.getPackageManager().getApplicationInfoAsUser(
                     packageName, 0,
                     UserHandle.getUserHandleForUid(callingUid)).targetSdkVersion
                     < versionCode) {
@@ -164,39 +183,43 @@ public class ConnectivityUtil {
         return false;
     }
 
-    private boolean noteAppOpAllowed(String op, String pkgName, @Nullable String featureId,
-            int uid, @Nullable String message) {
-        return mAppOps.noteOp(op, uid, pkgName) == AppOpsManager.MODE_ALLOWED;
+    private static boolean noteAppOpAllowed(String op, String pkgName, @Nullable String featureId,
+            int uid, @Nullable String message, AppOpsManager appOpsManager) {
+        return appOpsManager.noteOp(op, uid, pkgName) == AppOpsManager.MODE_ALLOWED;
     }
 
-    private void checkPackage(int uid, String pkgName) throws SecurityException {
+    private static void checkPackage(
+            int uid, String pkgName, Context context) throws SecurityException {
         if (pkgName == null) {
             throw new SecurityException("Checking UID " + uid + " but Package Name is Null");
         }
-        mAppOps.checkPackage(uid, pkgName);
+        AppOpsManager appOpsManager =
+                (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        appOpsManager.checkPackage(uid, pkgName);
     }
 
-    private boolean isCurrentProfile(int uid) {
+    private static boolean isCurrentProfile(int uid, Context context) {
         UserHandle currentUser = UserHandle.of(getCurrentUser());
         UserHandle callingUser = UserHandle.getUserHandleForUid(uid);
+        UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         return currentUser.equals(callingUser)
-                || mUserManager.isSameProfileGroup(
+                || userManager.isSameProfileGroup(
                         currentUser.getIdentifier(), callingUser.getIdentifier());
     }
 
-    private boolean checkInteractAcrossUsersFull(int uid) {
+    private static boolean checkInteractAcrossUsersFull(int uid, Context context) {
         return getUidPermission(
-                android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, uid)
+                android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, uid, context)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
     @VisibleForTesting
-    protected int getCurrentUser() {
+    protected static int getCurrentUser() {
         return ActivityManager.getCurrentUser();
     }
 
-    private int getUidPermission(String permissionType, int uid) {
+    private static int getUidPermission(String permissionType, int uid, Context context) {
         // We don't care about pid, pass in -1
-        return mContext.checkPermission(permissionType, -1, uid);
+        return context.checkPermission(permissionType, -1, uid);
     }
 }
