@@ -2570,6 +2570,7 @@ public class SubscriptionManager {
      *         carrier app provides no management activity.
      * @hide
      */
+    @SystemApi
     public @Nullable Intent createManageSubscriptionIntent(int subId) {
         // Bail if no owner
         final String owner = getSubscriptionPlansOwner(subId);
