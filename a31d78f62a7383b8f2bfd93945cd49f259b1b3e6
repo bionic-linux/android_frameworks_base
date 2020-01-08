@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7bb834e_082554cb",
+        "filename": "packages/Tethering/src/android/net/ip/RouterAdvertisementDaemon.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T07:40:18Z",
+      "side": 1,
+      "message": "I did look at that code. The thing that made me feel it would be safer is this comment.\n\n                        // Android-changed: Defaults to IPv6 if addr is null.\n                        // addr \u003d\u003d null ? InetAddress.anyLocalAddress() : addr,\n                        addr \u003d\u003d null ? Inet6Address.ANY : addr,\n\nwhich suggests that Android does not behave like JDK behaves, which suggests that the behaviour might change in the future.\n\nHowever: I agree that the address is replaced no matter what. And Inet6Address.ANY is @hide, so... LGTM.",
+      "parentUuid": "4de447e6_34ffbc9f",
+      "range": {
+        "startLine": 671,
+        "startChar": 75,
+        "endLine": 671,
+        "endChar": 76
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed75d7e_7639bf0a",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringInterfaceUtils.java",
         "patchSetId": 5
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "This will be fixed by CL https://android-review.googlesource.com/c/platform/frameworks/base/+/1198860",
       "parentUuid": "7fac6afa_be7c6a03",
+      "range": {
+        "startLine": 513,
+        "startChar": 41,
+        "endLine": 513,
+        "endChar": 67
+      },
+      "revId": "a31d78f62a7383b8f2bfd93945cd49f259b1b3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48df4358_88f87816",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T07:40:18Z",
+      "side": 1,
+      "message": "Ack. FTR I\u0027m not sure we should merge that CL - I think it would make more sense for Tethering to file its own requests. But we don\u0027t need to address this in this CL.",
+      "parentUuid": "eee132f9_c2b30cac",
       "range": {
         "startLine": 513,
         "startChar": 41,

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ae73ca4_e15a9038",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-08T07:40:18Z",
+      "side": 0,
+      "message": "Ack.",
+      "parentUuid": "af730a22_29e2d4d9",
+      "range": {
+        "startLine": 139,
+        "startChar": 55,
+        "endLine": 139,
+        "endChar": 74
+      },
+      "revId": "9d0d32dd8d31b4ef245c0269f2ac0d01ec5d3ab0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2af199_12f2f114",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
         "patchSetId": 5
