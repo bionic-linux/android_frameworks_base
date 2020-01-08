@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0bb74b0_f3e30c86",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Yes it\u0027s better not to catch exception here.\nKeep the same behavior in this function as before to throw exception for applications to handle it.",
+      "parentUuid": "06174de1_c45eb576",
+      "range": {
+        "startLine": 203,
+        "startChar": 17,
+        "endLine": 203,
+        "endChar": 28
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3fe769a_d16a0fa2",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "056735e1_1f0f1c3f",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3fe769a_d16a0fa2",
+      "range": {
+        "startLine": 215,
+        "startChar": 9,
+        "endLine": 217,
+        "endChar": 10
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c863e3_ab132da6",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-08T06:02:57Z",
       "side": 1,
       "message": "Is it possible to have a valid reader if the thing above fails? Probably just return null here?",
+      "range": {
+        "startLine": 220,
+        "startChar": 30,
+        "endLine": 220,
+        "endChar": 34
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9e42f3_03943dfe",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "It should be the same as getReaders() to not catch exception here.",
+      "parentUuid": "73c863e3_ab132da6",
       "range": {
         "startLine": 220,
         "startChar": 30,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "97728c22_40e31989",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f056f495_19f78b52",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9121e052_eaa59a09",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6617bdf2_a5eefef7",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9121e052_eaa59a09",
+      "range": {
+        "startLine": 303,
+        "startChar": 12,
+        "endLine": 303,
+        "endChar": 79
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "51027017_c3916e1e",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310f6df8_c1991af8",
+      "range": {
+        "startLine": 309,
+        "startChar": 22,
+        "endLine": 309,
+        "endChar": 38
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f158913_77f82761",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5d3145_a4110c7d",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T15:12:17Z",
+      "side": 1,
+      "message": "Yes, mSecureElementService.getReaders() would return empty string array if there is no Reader.",
+      "parentUuid": "9f158913_77f82761",
+      "range": {
+        "startLine": 312,
+        "startChar": 33,
+        "endLine": 312,
+        "endChar": 44
+      },
+      "revId": "7a716bbfe161be7ca275e9e9edc110b863cb6dce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
