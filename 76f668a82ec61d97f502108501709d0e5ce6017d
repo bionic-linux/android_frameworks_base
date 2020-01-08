@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fa32816_c628a823",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T03:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "192bc3c3_28fd0b48",
+      "range": {
+        "startLine": 209,
+        "startChar": 57,
+        "endLine": 209,
+        "endChar": 63
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f40296e9_ca6bbd2e",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "48fd20d9_b54a8054",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T03:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f40296e9_ca6bbd2e",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 8
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c7c4b0_0ff3510a",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed030fda_012f4f73",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-08T03:26:41Z",
+      "side": 1,
+      "message": "uiccSlotNumber seems clear, update it.",
+      "parentUuid": "e4c7c4b0_0ff3510a",
+      "range": {
+        "startLine": 212,
+        "startChar": 47,
+        "endLine": 212,
+        "endChar": 50
+      },
+      "revId": "76f668a82ec61d97f502108501709d0e5ce6017d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
