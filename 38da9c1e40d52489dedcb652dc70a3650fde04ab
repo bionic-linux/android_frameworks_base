@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea97d3ac_68c76d6d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7482,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-09T01:39:34Z",
+      "side": 1,
+      "message": "Nit: only used in one place, this can be inlined",
+      "range": {
+        "startLine": 7482,
+        "startChar": 24,
+        "endLine": 7482,
+        "endChar": 32
+      },
+      "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4d9170_8ff5826e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7484,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-09T01:39:34Z",
+      "side": 1,
+      "message": "I just noticed this - this is non-trivial for several reasons:\n- Using a @SystemApi\n- This method requires READ_PRIVILEGED_PHONE_STATE\n- Does a hidden IPC to PhoneInterfaceManager\n\nThis is going to erroneously throw SecurityExceptions for apps that only have READ_PHONE_STATE when they try to call getManualNetworkSelectionPlmn.\n\nThis would imply that either:\n1. getManualNetworkSelectionPlmn should have the same permissions as isManualNetworkSelectionAllowed: @SystemApi \u0026\u0026 (READ_PRIVILEGED_PHONE_STATE || hasCarrierPrivileges)\n2. isManualNetworkSelectionAllowed should be made public and have permissions of getManualNetworkSelectionPlmn: READ_PHONE_STATE || hasCarrierPrivileges\n\nI\u0027d suspect we want option 2 based on the direction we\u0027re moving, but please consult with Nathan on this.",
+      "range": {
+        "startLine": 7484,
+        "startChar": 37,
+        "endLine": 7484,
+        "endChar": 68
+      },
+      "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
