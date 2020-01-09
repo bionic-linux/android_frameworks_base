@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c20371ba_ca5edcb8",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3ad6b2_45398adc",
+      "range": {
+        "startLine": 170,
+        "startChar": 37,
+        "endLine": 170,
+        "endChar": 46
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22b173e8_535332fc",
         "filename": "core/java/android/net/NetworkFactory.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-09T08:27:22Z",
       "side": 1,
       "message": "Did you want to set mProvider to null here so the factory can be registered again later ?",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b039f936_a1978758",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "22b173e8_535332fc",
       "range": {
         "startLine": 193,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "49398865_a6ea28ee",
+        "filename": "core/java/android/net/NetworkProvider.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01b5d969_abc4b12c",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0c49dcd_c37f58e9",
         "filename": "core/java/android/net/NetworkProvider.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f19a6d32_12605333",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c49dcd_c37f58e9",
+      "range": {
+        "startLine": 34,
+        "startChar": 81,
+        "endLine": 34,
+        "endChar": 91
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f856b0_9b265a75",
         "filename": "core/java/android/net/NetworkProvider.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2020-01-09T08:27:22Z",
       "side": 1,
       "message": "\"any request\" I think ? We won\u0027t tear down a network if it is the one satisfying any request.",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795a9dd4_a2c09a30",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "63f856b0_9b265a75",
       "range": {
         "startLine": 41,
         "startChar": 39,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "312177a2_acb86d35",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b3db26_9438bbe7",
+      "range": {
+        "startLine": 48,
+        "startChar": 67,
+        "endLine": 48,
+        "endChar": 69
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea20582_c0de74f7",
         "filename": "core/java/android/net/NetworkProvider.java",
         "patchSetId": 5
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7d55ee37_8ca3463b",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Moved to ConnectivityService.",
+      "parentUuid": "2ea20582_c0de74f7",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "638924dd_dae0b2e5",
         "filename": "core/java/android/net/NetworkProvider.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2020-01-09T08:27:22Z",
       "side": 1,
       "message": "If register() is a method of NetworkProvider (calling through to registerNetworkProvider) then this can be private, but I don\u0027t think it really matters too much.",
+      "range": {
+        "startLine": 112,
+        "startChar": 31,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6816357_5466ac63",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Added a TODO, but given that this is a user-provided value, it seems reasonable to have a public geter for it.",
+      "parentUuid": "638924dd_dae0b2e5",
       "range": {
         "startLine": 112,
         "startChar": 31,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "34320048_5af94d17",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Oops. Done. :-)",
+      "parentUuid": "ce40ae71_db2fe851",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "264f42de_95da3d95",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -243,6 +459,30 @@
       "writtenOn": "2020-01-09T08:27:22Z",
       "side": 1,
       "message": "I\u0027m going to call for go/avoidwe after I spent five minutes figuring out this is the personification of the AIDL interface receiving a call to registerNetworkProvider bypassing the test in NetworkFactory.java:160",
+      "range": {
+        "startLine": 5359,
+        "startChar": 28,
+        "endLine": 5359,
+        "endChar": 30
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2be472_f68f27b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5359,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Really? It seems pretty clear to me that \"we\" is the code that is running right now. Done in the interests of avoiding bikeshedding :-)",
+      "parentUuid": "264f42de_95da3d95",
       "range": {
         "startLine": 5359,
         "startChar": 28,
@@ -275,6 +515,30 @@
       "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157c92d5_dd936ec9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5360,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0144e43_eaa78e6e",
+      "range": {
+        "startLine": 5360,
+        "startChar": 15,
+        "endLine": 5360,
+        "endChar": 92
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +586,30 @@
       "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc24d726_424aee9d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5394,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T10:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9207ce95_c61c045a",
+      "range": {
+        "startLine": 5394,
+        "startChar": 8,
+        "endLine": 5394,
+        "endChar": 32
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
