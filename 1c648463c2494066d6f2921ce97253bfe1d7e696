@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4375e81_2a1bfec4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:31:11Z",
+      "side": 0,
+      "message": "Are we happy having apps \u003c P calling this through reflection crash ? I say yes",
+      "range": {
+        "startLine": 3102,
+        "startChar": 16,
+        "endLine": 3102,
+        "endChar": 40
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

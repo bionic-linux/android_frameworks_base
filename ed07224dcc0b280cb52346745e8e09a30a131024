@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5fe83e8_614d3e99",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4894,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:31:11Z",
+      "side": 1,
+      "message": "Now that this is only ever used in connect(), it should be passed to connect() rather than the constructor I think.",
+      "range": {
+        "startLine": 4894,
+        "startChar": 45,
+        "endLine": 4894,
+        "endChar": 60
+      },
+      "revId": "ed07224dcc0b280cb52346745e8e09a30a131024",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4535df7_edd40497",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5326,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:31:11Z",
+      "side": 1,
+      "message": "How does this build ?",
+      "range": {
+        "startLine": 5326,
+        "startChar": 16,
+        "endLine": 5326,
+        "endChar": 39
+      },
+      "revId": "ed07224dcc0b280cb52346745e8e09a30a131024",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
