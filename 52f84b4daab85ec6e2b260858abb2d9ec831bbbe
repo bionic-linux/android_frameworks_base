@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b475cfec_3bf62868",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "This is a pretty bad situation, probably it warrants a wtf so at least we learn about it.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 67
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cbccb6_9df2c4d5",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "Because mStatsProvider and mStatsProviderCb are different binder objects there is no ordering between them. There is no constraint that onLimitReached must arrive after pushTetherStats right ? If there is we have a problem.",
+      "range": {
+        "startLine": 219,
+        "startChar": 24,
+        "endLine": 222,
+        "endChar": 88
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088a67de_dbac2f43",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "I think this returns the result instead of mutating the object (likewise for addValues above)\n\nIsn\u0027t there a test tripped by this ?",
+      "range": {
+        "startLine": 313,
+        "startChar": 24,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4bf9dc_e3b1e456",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "I think these two lines should be inside the if() because if the provider is not here you don\u0027t want to record the data as having been sent.\n\n(but anyway because there is no way to salvage any of this data if mStatsProviderCb is null, you may just want to start this method with if (null \u003d\u003d mStatsProviderCb) return; anyway)",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 35
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84ee168_ba33f59e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "Will fit on one line",
+      "range": {
+        "startLine": 459,
+        "startChar": 16,
+        "endLine": 459,
+        "endChar": 19
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc52e323_433167ea",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "To catch the issue that #add() now returns the sum instead of mutating the object, this probably should have a second batch of traffic. In fact, because we are having this design where we diff from the last time it\u0027s been fairly dangerous not to have one \u003c.\u003c",
+      "range": {
+        "startLine": 479,
+        "startChar": 4,
+        "endLine": 479,
+        "endChar": 5
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918af20d_b7d150fa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "Must these two be in order ? It doesn\u0027t look to me like it would be a bug if they were queried in the reverse order.",
+      "range": {
+        "startLine": 658,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 14
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a58ec5_d8ba4c45",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:59:48Z",
+      "side": 1,
+      "message": "Please also check that the hashcode is the same. I think the code is correct, but it\u0027s easy to break",
+      "range": {
+        "startLine": 543,
+        "startChar": 18,
+        "endLine": 543,
+        "endChar": 24
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
