@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a87ab32_31bb5240",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1324603
+      },
+      "writtenOn": "2020-01-09T12:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92a808a6_8bb8e37a",
+      "range": {
+        "startLine": 237,
+        "startChar": 36,
+        "endLine": 237,
+        "endChar": 39
+      },
+      "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04c0263_27d20dfe",
         "filename": "core/java/com/android/internal/os/RuntimeInit.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-09T10:37:28Z",
       "side": 1,
       "message": "Documentation for Process.setThreadPriority ought to be updated to mention that it\u0027s the native thread id not the managed one.",
+      "range": {
+        "startLine": 246,
+        "startChar": 20,
+        "endLine": 246,
+        "endChar": 37
+      },
+      "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75c2bac_739bf665",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1324603
+      },
+      "writtenOn": "2020-01-09T12:04:29Z",
+      "side": 1,
+      "message": "Sure. I can help on this.",
+      "parentUuid": "c04c0263_27d20dfe",
       "range": {
         "startLine": 246,
         "startChar": 20,
