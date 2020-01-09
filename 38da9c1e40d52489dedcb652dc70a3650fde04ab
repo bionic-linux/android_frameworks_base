@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d06b5596_50fbcf3c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7482,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-09T19:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea97d3ac_68c76d6d",
+      "range": {
+        "startLine": 7482,
+        "startChar": 24,
+        "endLine": 7482,
+        "endChar": 32
+      },
+      "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b4d9170_8ff5826e",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74a458d_c07ff5bb",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7484,
+      "author": {
+        "id": 1269899
+      },
+      "writtenOn": "2020-01-09T19:06:31Z",
+      "side": 1,
+      "message": "Agree with option #2, will sync up with Nathan",
+      "parentUuid": "7b4d9170_8ff5826e",
+      "range": {
+        "startLine": 7484,
+        "startChar": 37,
+        "endLine": 7484,
+        "endChar": 68
+      },
+      "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
