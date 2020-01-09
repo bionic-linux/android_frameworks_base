@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e075a0bb_56f65dcb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T10:24:44Z",
+      "side": 1,
+      "message": "No, mStatsProvider.pushTetherStats() is a local function that invoke mStatsProviderCb.onStatsUpdated().\nIt does not create binder call on mStatsProvider.\nSo there will be 2 binder calls on the same binder:\n  mStatsProviderCb.onStatsUpdated()\n  mStatsProviderCb.onLimitReached()\nIf the ordering of the same binder is preserved, then it should be fine, right?\n\nThe reason pushTetherStats() is inside mStatsProvider is it can read/update the\nmembers of provider without problem.\nReopen if anything disagreed.",
+      "parentUuid": "c1cbccb6_9df2c4d5",
+      "range": {
+        "startLine": 219,
+        "startChar": 24,
+        "endLine": 222,
+        "endChar": 88
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "088a67de_dbac2f43",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
