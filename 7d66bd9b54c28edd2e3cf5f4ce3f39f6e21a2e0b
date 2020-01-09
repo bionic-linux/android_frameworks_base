@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882ee129_144f386c",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-09T03:42:06Z",
+      "side": 1,
+      "message": "If an app that does not have the MANAGE_USB permission registers a BroadcastReceiver, will it immediately get an ACTION_USB_STATE broadcast that gives it the current functions? If so, then why does getCurrentFunctions require MANAGE_USB_STATE?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "7d66bd9b54c28edd2e3cf5f4ce3f39f6e21a2e0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
