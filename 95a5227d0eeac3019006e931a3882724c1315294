@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2f96c34_0b42120d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2060,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-01-09T22:50:46Z",
+      "side": 1,
+      "message": "I think this is supposed to be \"is present\"",
+      "range": {
+        "startLine": 2060,
+        "startChar": 58,
+        "endLine": 2060,
+        "endChar": 68
+      },
+      "revId": "95a5227d0eeac3019006e931a3882724c1315294",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
