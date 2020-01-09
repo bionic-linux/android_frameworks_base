@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a783bc_02a7cbdc",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "The public comments should be a little more expressive:\n\"A capability update has been requested due to the Entity Tag (ETag) expiring\".\n\nSame with below",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a94f7b_034503a7",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "\"CAPABILITY_UPDATE_TRIGGER_\" may be a better prefix",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc51f1f6_7632103f",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "Need to also add 5G triggers (see aosp/1198375)",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75ad196_c7bf36bf",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "Convention is usually unknown \u003d 0",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0247403f_3c0f9844",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "Need to move this to @hide, see PresenceResponseCode above",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 21
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1940416_b9588660",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-09T16:56:00Z",
+      "side": 1,
+      "message": "\"The reason for the capability update request.\"",
+      "range": {
+        "startLine": 205,
+        "startChar": 64,
+        "endLine": 205,
+        "endChar": 98
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
