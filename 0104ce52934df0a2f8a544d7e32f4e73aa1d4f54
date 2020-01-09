@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb1af8ec_dbe5a42d",
+        "filename": "telephony/java/android/telephony/RadioAccessFamily.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1615850
+      },
+      "writtenOn": "2020-01-09T06:26:31Z",
+      "side": 0,
+      "message": "The removal of these imports are causing presubmit merge failures, since they are already removed in git_master",
+      "revId": "0104ce52934df0a2f8a544d7e32f4e73aa1d4f54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
