@@ -45,6 +45,30 @@
       "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2c01b3_0be1bec5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7484,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-09T17:52:21Z",
+      "side": 1,
+      "message": "Let\u0027s go with option 2, but with READ_PRECISE_PHONE_STATE. (and we should expose the isAllowed... API as well: nice catch).",
+      "parentUuid": "7b4d9170_8ff5826e",
+      "range": {
+        "startLine": 7484,
+        "startChar": 37,
+        "endLine": 7484,
+        "endChar": 68
+      },
+      "revId": "38da9c1e40d52489dedcb652dc70a3650fde04ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
