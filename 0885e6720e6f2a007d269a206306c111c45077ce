@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f860b79_aae45727",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProviderWrapper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-01-09T02:14:56Z",
+      "side": 1,
+      "message": "Nit: private",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "0885e6720e6f2a007d269a206306c111c45077ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
