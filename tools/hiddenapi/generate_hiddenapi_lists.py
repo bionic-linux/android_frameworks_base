@@ -148,8 +148,13 @@ def extract_package(signature):
     Returns:
         The package name of the class containing the field/method.
     """
+    # Example: Landroid/hardware/radio/V1_2/IRadio$Proxy
     full_class_name = signature.split(";->")[0]
-    package_name = full_class_name[1:full_class_name.rindex("/")]
+    if (full_class_name[0] != "L"):
+        raise ValueError("Expected to start with 'L': %s" % full_class_name)
+    full_class_name = full_class_name[1:]
+    # If full_class_name doesn't contain '/', then package_name will be ''.
+    package_name = full_class_name.rpartition("/")[0]
     return package_name.replace('/', '.')
 
 class FlagsDict:
