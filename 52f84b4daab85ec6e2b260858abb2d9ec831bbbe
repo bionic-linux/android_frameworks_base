@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "285ad6bb_b683ba2c",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Oops",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b475cfec_3bf62868",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -22,6 +45,30 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7fad9b_2d151a55",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Doesn\u0027t have .wtf in SharedLog.\nChanged to Log.wtf.\nHowever this prints in different place.\nSee if this works for you.",
+      "parentUuid": "b475cfec_3bf62868",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 67
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ae0da707_98887f76",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "1. Oooops, you are right.\nUpdated.\nHowever I found it concerns me that\naddValues construct a new NetworkStats object everytime.\nFor uidStats it might be dozens of rows to insert.\nDo we need to expose addValues(Entry []) or something else?\n\n2. the unit test verifies the getTetherStats() but not the stats reported.\nSo this is not detected.\nDone.",
+      "parentUuid": "088a67de_dbac2f43",
+      "range": {
+        "startLine": 313,
+        "startChar": 24,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f4bf9dc_e3b1e456",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -115,6 +186,30 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fdefc4_aec7e0db",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f4bf9dc_e3b1e456",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 35
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "fb3ed4ea_4eb95d66",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c84ee168_ba33f59e",
+      "range": {
+        "startLine": 459,
+        "startChar": 16,
+        "endLine": 459,
+        "endChar": 19
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc52e323_433167ea",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
         "patchSetId": 10
@@ -161,6 +280,30 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897bd15e_4ac3145e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Done, To me the entire CL is very dangerous.@_@\n\nThe test itself already contains 2 batch of traffic.\nHowever there is no event to trigger it from reporting to service.\nWe only test the stats internally stored.\n\nThus we need to push manually to catch this.\nSee if this works for you.",
+      "parentUuid": "bc52e323_433167ea",
+      "range": {
+        "startLine": 479,
+        "startChar": 4,
+        "endLine": 479,
+        "endChar": 5
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "3fa2e8c9_ada91e4b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918af20d_b7d150fa",
+      "range": {
+        "startLine": 658,
+        "startChar": 8,
+        "endLine": 659,
+        "endChar": 14
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1a58ec5_d8ba4c45",
         "filename": "tests/net/java/android/net/NetworkStatsTest.java",
         "patchSetId": 10
@@ -207,6 +374,30 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7a15f7_fb61c45d",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-09T14:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a58ec5_d8ba4c45",
+      "range": {
+        "startLine": 543,
+        "startChar": 18,
+        "endLine": 543,
+        "endChar": 24
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
