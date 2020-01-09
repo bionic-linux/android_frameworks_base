@@ -22,6 +22,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -1611,5 +1612,39 @@ public final class NetworkStats implements Parcelable {
         long txPackets = Math.min(left.txPackets[i], right.txPackets);
         left.txPackets[i] -= txPackets;
         right.txPackets -= txPackets;
+    }
+
+    /** @hide */
+    @TestApi
+    @Override
+    public boolean equals(@NonNull Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final NetworkStats that = (NetworkStats) o;
+        if (elapsedRealtime != that.elapsedRealtime || size != that.size) return false;
+        final Entry left = new Entry();
+        final Entry right = new Entry();
+        // Order insensitive compare.
+        for (int i = 0; i < size; i++) {
+            getValues(i, left);
+            final int j = that.findIndexHinted(left.iface, left.uid, left.set, left.tag,
+                    left.metered, left.roaming, left.defaultNetwork, i);
+            that.getValues(j, right);
+            if (!left.equals(right)) return false;
+        }
+        return true;
+    }
+
+    /** @hide */
+    @Override
+    public int hashCode() {
+        int result = 31 * Objects.hash(elapsedRealtime, size);
+        final Entry entry = new Entry();
+        // Order insensitive hash.
+        for (int i = 0; i < size; i++) {
+            getValues(i, entry);
+            result += entry.hashCode();
+        }
+        return result;
     }
 }
