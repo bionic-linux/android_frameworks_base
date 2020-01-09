@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "953fee3a_ea81cb4d",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1516608
+      },
+      "writtenOn": "2020-01-09T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f37179_54c6899a",
+      "revId": "f1dd27af52dee885cd76b1644da0e61862746f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6861eda_805539aa",
         "filename": "telephony/java/android/telephony/SmsMessage.java",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "f1dd27af52dee885cd76b1644da0e61862746f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcaa6f1_e78ea95f",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1516608
+      },
+      "writtenOn": "2020-01-09T06:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6861eda_805539aa",
+      "range": {
+        "startLine": 663,
+        "startChar": 77,
+        "endLine": 663,
+        "endChar": 89
+      },
+      "revId": "f1dd27af52dee885cd76b1644da0e61862746f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
