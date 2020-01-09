@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8538729_78554a27",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T10:45:29Z",
+      "side": 1,
+      "message": "Did you mean 1 ? ISTM this will assign -1 \u003d\u003d ID_NONE to the first registered provider.",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 63,
+        "endChar": 50
+      },
+      "revId": "1f48930d1a9fd5f66b699c58fc06eb27450320d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01a1d00_d765739b",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T10:45:29Z",
+      "side": 1,
+      "message": "...or 0 if none",
+      "range": {
+        "startLine": 136,
+        "startChar": 14,
+        "endLine": 136,
+        "endChar": 19
+      },
+      "revId": "1f48930d1a9fd5f66b699c58fc06eb27450320d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4e5819_909df320",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5371,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T10:45:29Z",
+      "side": 1,
+      "message": "I still find this confusing. I don\u0027t see how the AIDL call registerNetworkFactory is different from the AIDL call registerNetworkProvider. I can see that ConnectivityManager#registerNetworkProvider will throw if the provider ID is not NONE, but if we\u0027re speaking AIDL calls, it\u0027s the same AFAICT.",
+      "range": {
+        "startLine": 5369,
+        "startChar": 13,
+        "endLine": 5371,
+        "endChar": 72
+      },
+      "revId": "1f48930d1a9fd5f66b699c58fc06eb27450320d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
