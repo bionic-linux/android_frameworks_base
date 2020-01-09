@@ -22,6 +22,30 @@
       "revId": "7d66bd9b54c28edd2e3cf5f4ce3f39f6e21a2e0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9f7052_fa0fbf6b",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2020-01-09T04:26:26Z",
+      "side": 1,
+      "message": "The USB CurrentFunctions carried in ACTION_USB_STATE intent are not necessarily the same as that returned by getCurrentFunctions by design. (Though in current code base, they will be synced upon intent sent. I remember in early Android versions, only MTP \u0026 RNDIS will be added for collaborating framework reacting on the USB_STATE change.)\nIn my opinion, I don\u0027t see any obvious security concern for getCurrentFunctions without MANAGE_USB_STATE permission.\nBut since it\u0027s an long-existing design, it may be worth digging the story behind.",
+      "parentUuid": "882ee129_144f386c",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "7d66bd9b54c28edd2e3cf5f4ce3f39f6e21a2e0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
