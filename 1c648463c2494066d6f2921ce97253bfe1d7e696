@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3ad6b2_45398adc",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "Suggest explicitly calling NetworkFactory.this.getLooper() so this doesn\u0027t silently start doing something else if there start being a getLooper() method on NetworkProvider",
+      "range": {
+        "startLine": 170,
+        "startChar": 37,
+        "endLine": 170,
+        "endChar": 46
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b173e8_535332fc",
+        "filename": "core/java/android/net/NetworkFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "Did you want to set mProvider to null here so the factory can be registered again later ?",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b5d969_abc4b12c",
+        "filename": "core/java/android/net/NetworkProvider.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this is still used",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c49dcd_c37f58e9",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "\"connect the device to networks\" maybe ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 81,
+        "endLine": 34,
+        "endChar": 91
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f856b0_9b265a75",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "\"any request\" I think ? We won\u0027t tear down a network if it is the one satisfying any request.",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b3db26_9438bbe7",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "It\u0027s also used to mean there is no provider currently satisfying a request, see comment in l.140",
+      "range": {
+        "startLine": 48,
+        "startChar": 67,
+        "endLine": 48,
+        "endChar": 69
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea20582_c0de74f7",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "So this being here means all processes have a copy of it in their process space, but I think it doesn\u0027t matter too much.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "638924dd_dae0b2e5",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "If register() is a method of NetworkProvider (calling through to registerNetworkProvider) then this can be private, but I don\u0027t think it really matters too much.",
+      "range": {
+        "startLine": 112,
+        "startChar": 31,
+        "endLine": 112,
+        "endChar": 43
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc5794b2_2dac2d9e",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "@param providerId the ID of the provider responsible for the NetworkAgent providing the network currently satisfying this request, or ID_NONE if none.\n\n(or anything less convoluted)",
+      "range": {
+        "startLine": 140,
+        "startChar": 83,
+        "endLine": 140,
+        "endChar": 93
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce40ae71_db2fe851",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "I can\u0027t find this in the system-current.txt changes, should it have been updated ?",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264f42de_95da3d95",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "I\u0027m going to call for go/avoidwe after I spent five minutes figuring out this is the personification of the AIDL interface receiving a call to registerNetworkProvider bypassing the test in NetworkFactory.java:160",
+      "range": {
+        "startLine": 5359,
+        "startChar": 28,
+        "endLine": 5359,
+        "endChar": 30
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0144e43_eaa78e6e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5360,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "I find this a bit confusing because this is not app code. Suggested wording :\n\n  The control will never come here if an app calls #registerNetworkProvider as such an app\n  would receive an exception while doing so.",
+      "range": {
+        "startLine": 5360,
+        "startChar": 15,
+        "endLine": 5360,
+        "endChar": 92
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e0631f_013ce582",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5394,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-09T08:27:22Z",
+      "side": 1,
+      "message": "Nit : as we want to keep UNP and remove UNR, suggest implementing UNR in terms of UNP rather than the other way around",
+      "range": {
+        "startLine": 5394,
+        "startChar": 8,
+        "endLine": 5394,
+        "endChar": 32
+      },
+      "revId": "1c648463c2494066d6f2921ce97253bfe1d7e696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
