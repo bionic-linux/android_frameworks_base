@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f810ff42_f71895f7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7562,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-09T00:11:17Z",
+      "side": 1,
+      "message": "Discussed offline, let\u0027s just simplify this to the standard \"READ_PHONE_STATE || hasCarrierPrivileges\" comment:\n\n     * \u003cp\u003eRequires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}\n     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).",
+      "range": {
+        "startLine": 7562,
+        "startChar": 0,
+        "endLine": 7562,
+        "endChar": 100
+      },
+      "revId": "2bdefea6d0f80313fc884fe0ec71b00eaaa92884",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
