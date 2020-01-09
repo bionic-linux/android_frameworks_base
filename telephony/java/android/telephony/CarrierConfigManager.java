@@ -713,9 +713,7 @@ public class CarrierConfigManager {
      *
      * As of now, Verizon is the only carrier enforcing this dependency in their
      * WFC awareness and activation requirements.
-     *
-     * @hide
-     *  */
+     */
     public static final String KEY_CARRIER_VOLTE_OVERRIDE_WFC_PROVISIONING_BOOL
             = "carrier_volte_override_wfc_provisioning_bool";
 
@@ -1193,8 +1191,7 @@ public class CarrierConfigManager {
      * Determine whether user can switch Wi-Fi preferred or Cellular preferred in calling preference.
      * Some operators support Wi-Fi Calling only, not VoLTE.
      * They don't need "Cellular preferred" option.
-     * In this case, set uneditalbe attribute for preferred preference.
-     * @hide
+     * In this case, set uneditable attribute for preferred preference.
      */
     public static final String KEY_EDITABLE_WFC_MODE_BOOL = "editable_wfc_mode_bool";
 
@@ -1619,7 +1616,6 @@ public class CarrierConfigManager {
      * Example:
      * {@link com.android.carrierdefaultapp.CarrierActionUtils#CARRIER_ACTION_DISABLE_METERED_APNS
      * disable_metered_apns}
-     * @hide
      */
     @UnsupportedAppUsage
     public static final String KEY_CARRIER_DEFAULT_ACTIONS_ON_REDIRECTION_STRING_ARRAY =
@@ -1650,7 +1646,6 @@ public class CarrierConfigManager {
      * {@link com.android.carrierdefaultapp.CarrierActionUtils CarrierActionUtils}
      * Example:
      * {@link com.android.carrierdefaultapp.CarrierActionUtils#CARRIER_ACTION_DISABLE_METERED_APNS}
-     * @hide
      */
     public static final String KEY_CARRIER_DEFAULT_ACTIONS_ON_DCFAILURE_STRING_ARRAY =
             "carrier_default_actions_on_dcfailure_string_array";
@@ -1665,7 +1660,6 @@ public class CarrierConfigManager {
      * Example:
      * {@link com.android.carrierdefaultapp.CarrierActionUtils
      * #CARRIER_ACTION_CANCEL_ALL_NOTIFICATIONS clear all notifications on reset}
-     * @hide
      */
     public static final String KEY_CARRIER_DEFAULT_ACTIONS_ON_RESET =
             "carrier_default_actions_on_reset_string_array";
@@ -1685,13 +1679,12 @@ public class CarrierConfigManager {
      * Example:
      * {@link com.android.carrierdefaultapp.CarrierActionUtils
      * #CARRIER_ACTION_ENABLE_DEFAULT_URL_HANDLER enable the app as the default URL handler}
-     * @hide
      */
     public static final String KEY_CARRIER_DEFAULT_ACTIONS_ON_DEFAULT_NETWORK_AVAILABLE =
             "carrier_default_actions_on_default_network_available_string_array";
+
     /**
      * Defines a list of acceptable redirection url for default carrier app
-     * @hides
      */
     public static final String KEY_CARRIER_DEFAULT_REDIRECTION_URL_STRING_ARRAY =
             "carrier_default_redirection_url_string_array";
@@ -2000,8 +1993,6 @@ public class CarrierConfigManager {
     /**
      * Whether system apps are allowed to use fallback if carrier video call is not available.
      * Defaults to {@code true}.
-     *
-     * @hide
      */
     public static final String KEY_ALLOW_VIDEO_CALLING_FALLBACK_BOOL =
             "allow_video_calling_fallback_bool";
@@ -2085,7 +2076,6 @@ public class CarrierConfigManager {
      *                 {@link #KEY_USE_WFC_HOME_NETWORK_MODE_IN_ROAMING_NETWORK_BOOL} is false. If
      *                 {@link #KEY_USE_WFC_HOME_NETWORK_MODE_IN_ROAMING_NETWORK_BOOL} is true, this
      *                 configuration is ignored and roaming preference cannot be changed.
-     * @hide
      */
     public static final String KEY_EDITABLE_WFC_ROAMING_MODE_BOOL =
             "editable_wfc_roaming_mode_bool";
@@ -2618,7 +2608,6 @@ public class CarrierConfigManager {
     /**
      * Determines whether any carrier has been identified and its specific config has been applied,
      * default to false.
-     * @hide
      */
     public static final String KEY_CARRIER_CONFIG_APPLIED_BOOL = "carrier_config_applied_bool";
 
@@ -3373,7 +3362,6 @@ public class CarrierConfigManager {
 
     /**
      * Holds the list of carrier certificate hashes. Note that each carrier has its own certificates
-     * @hide
      */
     public static final String KEY_CARRIER_CERTIFICATE_STRING_ARRAY =
             "carrier_certificate_string_array";
