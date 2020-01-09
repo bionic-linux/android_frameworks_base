@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99723298_4afde074",
+        "filename": "core/java/android/se/omapi/Reader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-01-09T01:07:25Z",
+      "side": 1,
+      "message": "what kind of permission is enforced on this call?",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 7
+      },
+      "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
