@@ -37,8 +37,10 @@ import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.net.NetworkStats.Entry;
 import android.os.Process;
 import android.util.ArrayMap;
 
@@ -517,6 +519,33 @@ public class NetworkStatsTest {
 
         assertEquals(128L + 512L + 128L, original.getTotalBytes());
         assertEquals(128L + 512L, clone.getTotalBytes());
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        final Entry[] testEntry = new Entry[] {
+                new Entry(TEST_IFACE, 100, SET_DEFAULT, TAG_NONE, 128L, 8L, 0L, 2L, 20L),
+                new Entry(TEST_IFACE2, 100, SET_DEFAULT, TAG_NONE, 512L, 32L, 0L, 0L, 0L)
+        };
+
+        // Verify equals of empty stats regardless of initial capacity.
+        final NetworkStats red = new NetworkStats(TEST_START, 0);
+        final NetworkStats blue = new NetworkStats(TEST_START, 1);
+        assertEquals(red, blue);
+        assertEquals(blue, red);
+        assertEquals(red.hashCode(), blue.hashCode());
+
+        // Verify not equal.
+        red.combineValues(testEntry[1]);
+        blue.combineValues(testEntry[0]).combineValues(testEntry[1]);
+        assertNotEquals(red, blue);
+        assertNotEquals(blue, red);
+
+        // Verify equals even if the order of entries are not the same.
+        red.combineValues(testEntry[0]);
+        assertEquals(red, blue);
+        assertEquals(blue, red);
+        assertEquals(red.hashCode(), blue.hashCode());
     }
 
     @Test
