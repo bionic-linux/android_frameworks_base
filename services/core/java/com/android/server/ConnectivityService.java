@@ -366,10 +366,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_PROXY_HAS_CHANGED = 16;
 
     /**
-     * used internally when registering NetworkFactories
-     * obj = NetworkFactoryInfo
+     * used internally when registering NetworkProviders
+     * obj = NetworkProviderInfo
      */
-    private static final int EVENT_REGISTER_NETWORK_FACTORY = 17;
+    private static final int EVENT_REGISTER_NETWORK_PROVIDER = 17;
 
     /**
      * used internally when registering NetworkAgents
@@ -405,10 +405,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_RELEASE_NETWORK_REQUEST = 22;
 
     /**
-     * used internally when registering NetworkFactories
+     * used internally when registering NetworkProviders
      * obj = Messenger
      */
-    private static final int EVENT_UNREGISTER_NETWORK_FACTORY = 23;
+    private static final int EVENT_UNREGISTER_NETWORK_PROVIDER = 23;
 
     /**
      * used internally to expire a wakelock when transitioning
@@ -2387,9 +2387,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
-        pw.print("NetworkFactories for:");
-        for (NetworkFactoryInfo nfi : mNetworkFactoryInfos.values()) {
-            pw.print(" " + nfi.name);
+        pw.print("NetworkProviders for:");
+        for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
+            pw.print(" " + npi.name);
         }
         pw.println();
         pw.println();
@@ -2720,7 +2720,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         nai.lastValidated = valid;
                         nai.everValidated |= valid;
                         updateCapabilities(oldScore, nai, nai.networkCapabilities);
-                        // If score has changed, rebroadcast to NetworkFactories. b/17726566
+                        // If score has changed, rebroadcast to NetworkProviders. b/17726566
                         if (oldScore != nai.getCurrentScore()) sendUpdatedScoreToFactories(nai);
                         if (valid) {
                             handleFreshlyValidatedNetwork(nai);
@@ -2835,6 +2835,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
 
+        // TODO: delete when direct use of registerNetworkFactory is no longer supported.
         private boolean maybeHandleNetworkFactoryMessage(Message msg) {
             switch (msg.what) {
                 default:
@@ -3024,16 +3025,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void handleAsyncChannelHalfConnect(Message msg) {
         ensureRunningOnConnectivityServiceThread();
         final AsyncChannel ac = (AsyncChannel) msg.obj;
-        if (mNetworkFactoryInfos.containsKey(msg.replyTo)) {
+        if (mNetworkProviderInfos.containsKey(msg.replyTo)) {
             if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
                 if (VDBG) log("NetworkFactory connected");
                 // Finish setting up the full connection
-                NetworkFactoryInfo nfi = mNetworkFactoryInfos.get(msg.replyTo);
-                nfi.completeConnection();
+                NetworkProviderInfo npi = mNetworkProviderInfos.get(msg.replyTo);
+                npi.completeConnection();
                 sendAllRequestsToFactory(nfi);
             } else {
                 loge("Error connecting NetworkFactory");
-                mNetworkFactoryInfos.remove(msg.obj);
+                mNetworkProviderInfos.remove(msg.obj);
             }
         } else if (mNetworkAgentInfos.containsKey(msg.replyTo)) {
             if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
@@ -3065,8 +3066,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai != null) {
             disconnectAndDestroyNetwork(nai);
         } else {
-            NetworkFactoryInfo nfi = mNetworkFactoryInfos.remove(msg.replyTo);
-            if (DBG && nfi != null) log("unregisterNetworkFactory for " + nfi.name);
+            NetworkProviderInfo npi = mNetworkProviderInfos.remove(msg.replyTo);
+            if (DBG && npi != null) log("unregisterNetworkFactory for " + npi.name);
         }
     }
 
@@ -3149,7 +3150,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // ip[6]tables to flush routes and remove the incoming packet mark rule, so do it
             // after we've rematched networks with requests which should make a potential
             // fallback network the default or requested a new network from the
-            // NetworkFactories, so network traffic isn't interrupted for an unnecessarily
+            // NetworkProviders, so network traffic isn't interrupted for an unnecessarily
             // long time.
             destroyNativeNetwork(nai);
             mDnsManager.removeNetwork(nai.network);
@@ -3412,8 +3413,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
 
-            for (NetworkFactoryInfo nfi : mNetworkFactoryInfos.values()) {
-                nfi.cancelRequest(nri.request);
+            for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
+                npi.cancelRequest(nri.request);
             }
         } else {
             // listens don't have a singular affectedNetwork.  Check all networks to see
@@ -3848,11 +3849,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     handleApplyDefaultProxy((ProxyInfo)msg.obj);
                     break;
                 }
-                case EVENT_REGISTER_NETWORK_FACTORY: {
-                    handleRegisterNetworkFactory((NetworkFactoryInfo)msg.obj);
+                case EVENT_REGISTER_NETWORK_PROVIDER: {
+                    handleRegisterNetworkFactory((NetworkProviderInfo) msg.obj);
                     break;
                 }
-                case EVENT_UNREGISTER_NETWORK_FACTORY: {
+                case EVENT_UNREGISTER_NETWORK_PROVIDER: {
                     handleUnregisterNetworkFactory((Messenger)msg.obj);
                     break;
                 }
@@ -4898,7 +4899,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     };
 
-    private final HashMap<Messenger, NetworkFactoryInfo> mNetworkFactoryInfos = new HashMap<>();
+    private final HashMap<Messenger, NetworkProviderInfo> mNetworkProviderInfos = new HashMap<>();
     private final HashMap<NetworkRequest, NetworkRequestInfo> mNetworkRequests = new HashMap<>();
 
     private static final int MAX_NETWORK_REQUESTS_PER_UID = 100;
@@ -4906,18 +4907,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @GuardedBy("mUidToNetworkRequestCount")
     private final SparseIntArray mUidToNetworkRequestCount = new SparseIntArray();
 
-    private static class NetworkFactoryInfo {
+    private static class NetworkProviderInfo {
         public final String name;
         public final Messenger messenger;
         private final AsyncChannel mAsyncChannel;
         private final IBinder.DeathRecipient mDeathRecipient;
-        public final int factorySerialNumber;
+        public final int providerId;
 
-        NetworkFactoryInfo(String name, Messenger messenger, AsyncChannel asyncChannel,
-                int factorySerialNumber, IBinder.DeathRecipient deathRecipient) {
+        NetworkProviderInfo(String name, Messenger messenger, AsyncChannel asyncChannel,
+                int providerId, IBinder.DeathRecipient deathRecipient) {
             this.name = name;
             this.messenger = messenger;
-            this.factorySerialNumber = factorySerialNumber;
+            this.providerId = providerId;
             mAsyncChannel = asyncChannel;
             mDeathRecipient = deathRecipient;
 
@@ -4935,17 +4936,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 messenger.send(Message.obtain(null /* handler */, what, arg1, arg2, obj));
             } catch (RemoteException e) {
                 // Remote process died. Ignore; the death recipient will remove this
-                // NetworkFactoryInfo from mNetworkFactoryInfos.
+                // NetworkProviderInfo from mNetworkProviderInfos.
             }
         }
 
-        void requestNetwork(NetworkRequest request, int score, int servingSerialNumber) {
+        void requestNetwork(NetworkRequest request, int score, int servingProviderId) {
             if (isLegacyNetworkFactory()) {
                 mAsyncChannel.sendMessage(android.net.NetworkFactory.CMD_REQUEST_NETWORK, score,
-                        servingSerialNumber, request);
+                        servingProviderId, request);
             } else {
                 sendMessageToNetworkProvider(NetworkProvider.CMD_REQUEST_NETWORK, score,
-                            servingSerialNumber, request);
+                            servingProviderId, request);
             }
         }
 
@@ -5358,27 +5359,27 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public int registerNetworkFactory(Messenger messenger, String name) {
         enforceNetworkFactoryPermission();
-        NetworkFactoryInfo nfi = new NetworkFactoryInfo(name, messenger, new AsyncChannel(),
+        NetworkProviderInfo npi = new NetworkProviderInfo(name, messenger, new AsyncChannel(),
                 nextNetworkProviderId(), null /* deathRecipient */);
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_FACTORY, nfi));
-        return nfi.factorySerialNumber;
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_PROVIDER, npi));
+        return npi.providerId;
     }
 
-    private void handleRegisterNetworkFactory(NetworkFactoryInfo nfi) {
-        if (mNetworkFactoryInfos.containsKey(nfi.messenger)) {
+    private void handleRegisterNetworkFactory(NetworkProviderInfo npi) {
+        if (mNetworkProviderInfos.containsKey(npi.messenger)) {
             // Avoid creating duplicates. even if an app makes a direct AIDL call.
             // This will never happen if an app calls ConnectivityManager#registerNetworkProvider,
             // as that will throw if a duplicate provider is registered.
-            Slog.e(TAG, "Attempt to register existing NetworkFactoryInfo "
-                    + mNetworkFactoryInfos.get(nfi.messenger).name);
+            Slog.e(TAG, "Attempt to register existing NetworkProviderInfo "
+                    + mNetworkProviderInfos.get(npi.messenger).name);
             return;
         }
 
-        if (DBG) log("Got NetworkFactory Messenger for " + nfi.name);
-        mNetworkFactoryInfos.put(nfi.messenger, nfi);
-        nfi.connect(mContext, mTrackerHandler);
-        if (!nfi.isLegacyNetworkFactory()) {
-            // Legacy NetworkFactories get their requests when their AsyncChannel connects.
+        if (DBG) log("Got NetworkFactory Messenger for " + npi.name);
+        mNetworkProviderInfos.put(npi.messenger, npi);
+        npi.connect(mContext, mTrackerHandler);
+        if (!npi.isLegacyNetworkFactory()) {
+            // Legacy NetworkProviders get their requests when their AsyncChannel connects.
             sendAllRequestsToFactory(nfi);
         }
     }
@@ -5386,17 +5387,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public int registerNetworkProvider(Messenger messenger, String name) {
         enforceNetworkFactoryPermission();
-        NetworkFactoryInfo nfi = new NetworkFactoryInfo(name, messenger,
+        NetworkProviderInfo npi = new NetworkProviderInfo(name, messenger,
                 null /* asyncChannel */, nextNetworkProviderId(),
                 () -> unregisterNetworkProvider(messenger));
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_FACTORY, nfi));
-        return nfi.factorySerialNumber;
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_REGISTER_NETWORK_PROVIDER, npi));
+        return npi.providerId;
     }
 
     @Override
     public void unregisterNetworkProvider(Messenger messenger) {
         enforceNetworkFactoryPermission();
-        mHandler.sendMessage(mHandler.obtainMessage(EVENT_UNREGISTER_NETWORK_FACTORY, messenger));
+        mHandler.sendMessage(mHandler.obtainMessage(EVENT_UNREGISTER_NETWORK_PROVIDER, messenger));
     }
 
     @Override
@@ -5405,12 +5406,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleUnregisterNetworkFactory(Messenger messenger) {
-        NetworkFactoryInfo nfi = mNetworkFactoryInfos.remove(messenger);
-        if (nfi == null) {
+        NetworkProviderInfo npi = mNetworkProviderInfos.remove(messenger);
+        if (npi == null) {
             loge("Failed to find Messenger in unregisterNetworkFactory");
             return;
         }
-        if (DBG) log("unregisterNetworkFactory for " + nfi.name);
+        if (DBG) log("unregisterNetworkFactory for " + npi.name);
     }
 
     @Override
@@ -5484,7 +5485,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
             int currentScore, NetworkMisc networkMisc) {
         return registerNetworkAgent(messenger, networkInfo, linkProperties, networkCapabilities,
-                currentScore, networkMisc, NetworkFactory.SerialNumber.NONE);
+                currentScore, networkMisc, NetworkProvider.ID_NONE);
     }
 
     /**
@@ -5500,11 +5501,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @param currentScore the initial score of the network. See
      *         {@link NetworkAgentInfo#getCurrentScore}.
      * @param networkMisc metadata about the network. This is never updated.
-     * @param factorySerialNumber the serial number of the factory owning this NetworkAgent.
+     * @param providerId the ID of the provider owning this NetworkAgent.
      */
     public int registerNetworkAgent(Messenger messenger, NetworkInfo networkInfo,
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
-            int currentScore, NetworkMisc networkMisc, int factorySerialNumber) {
+            int currentScore, NetworkMisc networkMisc, int providerId) {
         enforceNetworkFactoryPermission();
 
         LinkProperties lp = new LinkProperties(linkProperties);
@@ -5517,7 +5518,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo nai = new NetworkAgentInfo(messenger, new AsyncChannel(),
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
                 ns, mContext, mTrackerHandler, new NetworkMisc(networkMisc), this, mNetd,
-                mDnsResolver, mNMS, factorySerialNumber);
+                mDnsResolver, mNMS, providerId);
         // Make sure the network capabilities reflect what the agent info says.
         nai.getAndSetNetworkCapabilities(mixInCapabilities(nai, nc));
         final String extraInfo = networkInfo.getExtraInfo();
@@ -5796,7 +5797,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // Once a NetworkAgent is connected, complain if some immutable capabilities are removed.
          // Don't complain for VPNs since they're not driven by requests and there is no risk of
          // causing a connect/teardown loop.
-         // TODO: remove this altogether and make it the responsibility of the NetworkFactories to
+         // TODO: remove this altogether and make it the responsibility of the NetworkProviders to
          // avoid connect/teardown loops.
         if (nai.everConnected &&
                 !nai.isVPN() &&
@@ -6031,18 +6032,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         int serial = 0;
         if (nai != null) {
             score = nai.getCurrentScore();
-            serial = nai.factorySerialNumber;
+            serial = nai.providerId;
         }
         if (VDBG || DDBG){
             log("sending new Min Network Score(" + score + "): " + networkRequest.toString());
         }
-        for (NetworkFactoryInfo nfi : mNetworkFactoryInfos.values()) {
-            nfi.requestNetwork(networkRequest, score, serial);
+        for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
+            npi.requestNetwork(networkRequest, score, serial);
         }
     }
 
     /** Sends all current NetworkRequests to the specified factory. */
-    private void sendAllRequestsToFactory(NetworkFactoryInfo nfi) {
+    private void sendAllRequestsToFactory(NetworkProviderInfo npi) {
         ensureRunningOnConnectivityServiceThread();
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             if (nri.request.isListen()) continue;
@@ -6051,12 +6052,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             final int serial;
             if (nai != null) {
                 score = nai.getCurrentScore();
-                serial = nai.factorySerialNumber;
+                serial = nai.providerId;
             } else {
                 score = 0;
-                serial = NetworkFactory.SerialNumber.NONE;
+                serial = NetworkProvider.ID_NONE;
             }
-            nfi.requestNetwork(nri.request, score, serial);
+            npi.requestNetwork(nri.request, score, serial);
         }
     }
 
@@ -6337,7 +6338,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     Slog.wtf(TAG, "BUG: " + newSatisfier.name() + " already has " + nri.request);
                 }
                 addedRequests.add(nri);
-                // Tell NetworkFactories about the new score, so they can stop
+                // Tell NetworkProviders about the new score, so they can stop
                 // trying to connect if they know they cannot match it.
                 // TODO - this could get expensive if we have a lot of requests for this
                 // network.  Think about if there is a way to reduce this.  Push
