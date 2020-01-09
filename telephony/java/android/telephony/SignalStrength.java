@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,9 @@ public class SignalStrength implements Parcelable {
 
     /* The type of signal measurement */
     private static final String MEASUREMENT_TYPE_RSCP = "rscp";
+
+    // timeStamp of signalStrength in nanoseconds since boot
+    private long mTimeStamp = Long.MAX_VALUE;
 
     CellSignalStrengthCdma mCdma;
     CellSignalStrengthGsm mGsm;
@@ -132,6 +136,7 @@ public class SignalStrength implements Parcelable {
         mTdscdma = tdscdma;
         mLte = lte;
         mNr = nr;
+        mTimeStamp = SystemClock.elapsedRealtimeNanos();
     }
 
     /**
@@ -266,6 +271,7 @@ public class SignalStrength implements Parcelable {
         mTdscdma.updateLevel(cc, ss);
         mLte.updateLevel(cc, ss);
         mNr.updateLevel(cc, ss);
+        mTimeStamp = SystemClock.elapsedRealtimeNanos();
     }
 
     /**
@@ -291,6 +297,7 @@ public class SignalStrength implements Parcelable {
         mTdscdma = new CellSignalStrengthTdscdma(s.mTdscdma);
         mLte = new CellSignalStrengthLte(s.mLte);
         mNr = new CellSignalStrengthNr(s.mNr);
+        mTimeStamp = s.getTimeStamp();
     }
 
     /**
@@ -308,6 +315,7 @@ public class SignalStrength implements Parcelable {
         mTdscdma = in.readParcelable(CellSignalStrengthTdscdma.class.getClassLoader());
         mLte = in.readParcelable(CellSignalStrengthLte.class.getClassLoader());
         mNr = in.readParcelable(CellSignalStrengthLte.class.getClassLoader());
+        mTimeStamp = in.readLong();
     }
 
     /**
@@ -320,9 +328,17 @@ public class SignalStrength implements Parcelable {
         out.writeParcelable(mTdscdma, flags);
         out.writeParcelable(mLte, flags);
         out.writeParcelable(mNr, flags);
+        out.writeLong(mTimeStamp);
     }
 
     /**
+     * @return mTimeStamp in nanoseconds
+     */
+    public long getTimeStamp() {
+        return mTimeStamp;
+    }
+
+   /**
      * {@link Parcelable#describeContents}
      */
     public int describeContents() {
