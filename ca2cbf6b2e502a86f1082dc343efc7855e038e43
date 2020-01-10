@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cb1892d_f9616c68",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4245,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-10T07:35:28Z",
+      "side": 1,
+      "message": "\"Remaining\" suggests that this number is current, but it\u0027s not - it\u0027s the bytes remaining when the object was created. Any better ideas? getByteQuota? getByteAllocation? getByteLimit?",
+      "range": {
+        "startLine": 4245,
+        "startChar": 41,
+        "endLine": 4245,
+        "endChar": 50
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b03a06_ff06693d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4247,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-10T07:35:28Z",
+      "side": 1,
+      "message": "Should this have a unit? getRefreshTimeMillis? getRefreshTimeNanos? Should it be an Instant? ZonedDateTime?",
+      "range": {
+        "startLine": 4247,
+        "startChar": 33,
+        "endLine": 4247,
+        "endChar": 37
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27d70a0_2e551264",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-10T07:35:28Z",
+      "side": 1,
+      "message": "Is this typically what we use to represent URIs?",
+      "range": {
+        "startLine": 4264,
+        "startChar": 89,
+        "endLine": 4264,
+        "endChar": 114
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
