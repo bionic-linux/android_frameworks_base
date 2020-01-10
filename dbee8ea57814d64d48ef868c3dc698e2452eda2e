@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70bfa564_1ae782c6",
+        "filename": "tools/hiddenapi/generate_hiddenapi_lists.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-01-10T12:50:31Z",
+      "side": 1,
+      "message": "nit: this is not a full signature (e.g. \u0027Lfoo/bar/Baz;-\u003emethod()V\u0027), just the result of the split.",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 56
+      },
+      "revId": "dbee8ea57814d64d48ef868c3dc698e2452eda2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
