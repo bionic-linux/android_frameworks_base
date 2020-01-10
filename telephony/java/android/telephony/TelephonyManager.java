@@ -1530,6 +1530,40 @@ public class TelephonyManager {
             "android.telephony.extra.SIM_COMBINATION_NAMES";
 
     /**
+     * <p>Broadcast Action: The emergency callback mode is changed.
+     * <ul>
+     *   <li><em>EXTRA_PHONE_IN_ECM_STATE</em> - A boolean value,true=phone in ECM,
+     *   false=ECM off</li>
+     * </ul>
+     * <p class="note">
+     * You can <em>not</em> receive this through components declared
+     * in manifests, only by explicitly registering for it with
+     * {@link android.content.Context#registerReceiver(android.content.BroadcastReceiver,
+     * android.content.IntentFilter) Context.registerReceiver()}.
+     *
+     * <p class="note">This is a protected intent that can only be sent by the system.
+     *
+     * @see #EXTRA_PHONE_IN_ECM_STATE
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String ACTION_EMERGENCY_CALLBACK_MODE_CHANGED =
+            "android.intent.action.EMERGENCY_CALLBACK_MODE_CHANGED";
+
+
+    /**
+     * Extra included in {@link #ACTION_EMERGENCY_CALLBACK_MODE_CHANGED}.
+     * Indicates whether the phone is in an emergency phone state.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_PHONE_IN_ECM_STATE =
+            "android.telephony.extra.PHONE_IN_ECM_STATE";
+
+    /**
      * <p>Broadcast Action: when data connections get redirected with validation failure.
      * intended for sim/account status checks and only sent to the specified carrier app
      * The intent will have the following extra values:</p>
@@ -1715,6 +1749,96 @@ public class TelephonyManager {
     @SystemApi
     @SuppressLint("ActionValue")
     public static final String EXTRA_DEFAULT_NETWORK_AVAILABLE = "defaultNetworkAvailable";
+
+    /**
+     * <p>Broadcast Action: The emergency call state is changed.
+     * <ul>
+     *   <li><em>EXTRA_PHONE_IN_EMERGENCY_CALL</em> - A boolean value, true if phone in emergency
+     *   call, false otherwise</li>
+     * </ul>
+     * <p class="note">
+     * You can <em>not</em> receive this through components declared
+     * in manifests, only by explicitly registering for it with
+     * {@link android.content.Context#registerReceiver(android.content.BroadcastReceiver,
+     * android.content.IntentFilter) Context.registerReceiver()}.
+     *
+     * <p class="note">This is a protected intent that can only be sent by the system.
+     *
+     * @see #EXTRA_PHONE_IN_EMERGENCY_CALL
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String ACTION_EMERGENCY_CALL_STATE_CHANGED =
+            "android.intent.action.EMERGENCY_CALL_STATE_CHANGED";
+
+
+    /**
+     * Extra included in {@link #ACTION_EMERGENCY_CALL_STATE_CHANGED}.
+     * It indicates whether the phone is making an emergency call.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String EXTRA_PHONE_IN_EMERGENCY_CALL =
+            "android.telephony.extra.PHONE_IN_EMERGENCY_CALL";
+
+    /**
+     * <p>Broadcast Action: It indicates the Emergency callback mode blocks datacall/sms
+     * <p class="note">.
+     * This is to pop up a notice to show user that the phone is in emergency callback mode
+     * and data calls and outgoing sms are blocked.
+     *
+     * <p class="note">This is a protected intent that can only be sent by the system.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String ACTION_SHOW_NOTICE_ECM_BLOCK_OTHERS =
+            "android.telephony.action.SHOW_NOTICE_ECM_BLOCK_OTHERS";
+
+    /**
+     * Broadcast Action: The default data subscription has changed in a multi-SIM device.
+     * This has the following extra values:</p>
+     * <ul>
+     *   <li><em>subscription</em> - A int, the current data default subscription.</li>
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String ACTION_DEFAULT_DATA_SUBSCRIPTION_CHANGED =
+            "android.intent.action.ACTION_DEFAULT_DATA_SUBSCRIPTION_CHANGED";
+
+    /**
+     * Broadcast Action: The default voice subscription has changed in a mult-SIm device.
+     * This has the following extra values:</p>
+     * <ul>
+     *   <li><em>subscription</em> - A int, the current voice default subscription.</li>
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String ACTION_DEFAULT_VOICE_SUBSCRIPTION_CHANGED =
+            "android.intent.action.ACTION_DEFAULT_VOICE_SUBSCRIPTION_CHANGED";
+
+    /**
+     * Broadcast Action: This triggers a client initiated OMA-DM session to the OMA server.
+     * <p class="note">
+     * Open Mobile Alliance (OMA) Device Management (DM).
+     *
+     * This intent is used by the system components to trigger OMA-DM
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String ACTION_REQUEST_OMADM_CONFIGURATION_UPDATE =
+            "com.android.omadm.service.CONFIGURATION_UPDATE";
 
     //
     //
