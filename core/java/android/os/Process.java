@@ -741,7 +741,8 @@ public class Process {
     /**
      * Set the priority of a thread, based on Linux priorities.
      * 
-     * @param tid The identifier of the thread/process to change.
+     * @param tid The identifier of the thread/process to change. It should be
+     * the native thread id but not the managed id of {@link java.lang.Thread}.
      * @param priority A Linux priority level, from -20 for highest scheduling
      * priority to 19 for lowest scheduling priority.
      * 
