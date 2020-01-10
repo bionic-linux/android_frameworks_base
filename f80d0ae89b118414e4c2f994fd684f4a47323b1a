@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3c8a41_fc9461e0",
+        "filename": "tools/aapt2/ResourceParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1133997
+      },
+      "writtenOn": "2020-01-10T14:53:45Z",
+      "side": 1,
+      "message": "Thanks! I\u0027m loving the new comment 😊",
+      "range": {
+        "startLine": 1647,
+        "startChar": 4,
+        "endLine": 1648,
+        "endChar": 30
+      },
+      "revId": "f80d0ae89b118414e4c2f994fd684f4a47323b1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
