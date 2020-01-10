@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "878cd1c5_0bd1da52",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-01-10T03:12:24Z",
+      "side": 1,
+      "message": "This is copied from https://source.corp.google.com/android/frameworks/base/core/java/com/android/ims/internal/uce/presence/PresPublishTriggerType.java;l\u003d49\n\nI found the constant value is consistent between AOSP and QC\nhttps://source.corp.google.com/android/vendor/qcom/proprietary/interfaces/com/qualcomm/qti/uceservice/2.0/types.hal;cl\u003dmaster;l\u003d187?\n\nIt seems we should not change it.",
+      "parentUuid": "e75ad196_c7bf36bf",
+      "range": {
+        "startLine": 136,
+        "startChar": 28,
+        "endLine": 136,
+        "endChar": 60
+      },
+      "revId": "19d7dc7513ccdc4a11f4c3e5f86bc2758d3039c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0247403f_3c0f9844",
         "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
         "patchSetId": 4
