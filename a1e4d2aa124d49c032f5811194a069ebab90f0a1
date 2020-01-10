@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d57b9d_efff6a4d",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-01-10T21:53:30Z",
+      "side": 1,
+      "message": "nit: slotNumber, since uicc is probably redundant with the method name?",
+      "range": {
+        "startLine": 215,
+        "startChar": 46,
+        "endLine": 215,
+        "endChar": 60
+      },
+      "revId": "a1e4d2aa124d49c032f5811194a069ebab90f0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
