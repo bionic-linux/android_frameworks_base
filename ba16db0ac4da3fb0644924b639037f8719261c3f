@@ -93,6 +93,30 @@
       "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c8f8da_e52b4992",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1324603
+      },
+      "writtenOn": "2020-01-10T07:59:14Z",
+      "side": 1,
+      "message": "aosp/1205613 for it.",
+      "parentUuid": "c75c2bac_739bf665",
+      "range": {
+        "startLine": 246,
+        "startChar": 20,
+        "endLine": 246,
+        "endChar": 37
+      },
+      "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
