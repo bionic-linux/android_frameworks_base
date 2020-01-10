@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f10f41e_8255c60f",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T04:15:02Z",
+      "side": 1,
+      "message": "javadoc @return",
+      "range": {
+        "startLine": 337,
+        "startChar": 7,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "b937d12daf47c2aaa0b6507e02a389bef2ada981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831f8671_923d25e8",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-10T04:15:02Z",
+      "side": 1,
+      "message": "Remove if this is not used.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 5
+      },
+      "revId": "b937d12daf47c2aaa0b6507e02a389bef2ada981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
