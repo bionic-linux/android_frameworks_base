@@ -46,6 +46,30 @@
       "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8cec53_d4612fe4",
+        "filename": "core/java/android/se/omapi/Reader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-01-10T21:55:24Z",
+      "side": 1,
+      "message": "ok let\u0027s hold this patch then, until that permission is added",
+      "parentUuid": "745fb624_d2199346",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 7
+      },
+      "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
