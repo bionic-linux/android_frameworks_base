@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7db32111_fae99b95",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "6b7fad9b_2d151a55",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 67
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1cbccb6_9df2c4d5",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "No, mStatsProvider.pushTetherStats() is a local function that invoke mStatsProviderCb.onStatsUpdated().\nIt does not create binder call on mStatsProvider.\nSo there will be 2 binder calls on the same binder:\n  mStatsProviderCb.onStatsUpdated()\n  mStatsProviderCb.onLimitReached()\nIf the ordering of the same binder is preserved, then it should be fine, right?\n\nThe reason pushTetherStats() is inside mStatsProvider is it can read/update the\nmembers of provider without problem.\nReopen if anything disagreed.",
       "parentUuid": "c1cbccb6_9df2c4d5",
+      "range": {
+        "startLine": 219,
+        "startChar": 24,
+        "endLine": 222,
+        "endChar": 88
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c43c08d_516d60fc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "Ah yes sorry. I had missed that. Thanks for the detailed explanation.",
+      "parentUuid": "e075a0bb_56f65dcb",
       "range": {
         "startLine": 219,
         "startChar": 24,
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "635e5c91_86e23e57",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "I think performance concerns should be addressed in two ways :\n• Measuring\n• Optimizing for what we need\nIn this case I think a simple optimization is to use data structures that can share internal state. For example, if you want to share-append to a list of entries, you could have a single-linked list in reverse order, and add to the end :\n\nNetworkStats1 :       entries\n                         ↓\n  obj1 ← obj2 ← obj3 ← obj4\n\n\nWhen you copy and append, you just have a ref to the list.\n\nNetworkStats1 :       entries\n                         ↓\n  obj1 ← obj2 ← obj3 ← obj4 ← obj5\n                                ↑\nNetworkStats2 :              entries\n\nThis makes this particular operation very cheap.",
+      "parentUuid": "ae0da707_98887f76",
+      "range": {
+        "startLine": 313,
+        "startChar": 24,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f4bf9dc_e3b1e456",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -210,6 +282,29 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "651290b7_30c88fe8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "Is this supported by the HAL today ?",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 38
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
@@ -295,6 +390,30 @@
       "side": 1,
       "message": "Done, To me the entire CL is very dangerous.@_@\n\nThe test itself already contains 2 batch of traffic.\nHowever there is no event to trigger it from reporting to service.\nWe only test the stats internally stored.\n\nThus we need to push manually to catch this.\nSee if this works for you.",
       "parentUuid": "bc52e323_433167ea",
+      "range": {
+        "startLine": 479,
+        "startChar": 4,
+        "endLine": 479,
+        "endChar": 5
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f6306d_5cf319eb",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "What, bugs in your code ? Nowai !\n\nYes I think the new tests are good. Maybe at some point in the future we want to have some helpers to easily send multiple batches to make sure everything increases as expected, including in the presence of multiple concurrent pushes, but I think the refactoring should go before we do this to lower the burden of updating the tests.\n\nI will probably come back with a vengeance and ask you to write comprehensive stress tests for your new push providers though. Oops, actually already did it b/147481056. Sorry.",
+      "parentUuid": "897bd15e_4ac3145e",
       "range": {
         "startLine": 479,
         "startChar": 4,

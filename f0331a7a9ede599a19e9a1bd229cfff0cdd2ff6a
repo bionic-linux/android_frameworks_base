@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "480bd2c2_9d934b30",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-10T15:19:31Z",
+      "side": 1,
+      "message": "Can this be private ? With it not being final any more non-private visibility makes me super nervous.\n\nAlso I recommend having a comment explaining this must only ever be touched on the handler thread.",
+      "range": {
+        "startLine": 268,
+        "startChar": 8,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "f0331a7a9ede599a19e9a1bd229cfff0cdd2ff6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
