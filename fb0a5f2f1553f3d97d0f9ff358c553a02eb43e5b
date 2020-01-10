@@ -22,6 +22,30 @@
       "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745fb624_d2199346",
+        "filename": "core/java/android/se/omapi/Reader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-10T10:12:14Z",
+      "side": 1,
+      "message": "android.permission.SECURE_ELEMENT_PRIVILEGED should be added here after we merged the new added permission.",
+      "parentUuid": "99723298_4afde074",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 7
+      },
+      "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
