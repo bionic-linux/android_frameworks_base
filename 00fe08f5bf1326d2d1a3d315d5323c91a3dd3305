@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c27b2fd9_ca5c259d",
+        "filename": "packages/SystemUI/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1156808
+      },
+      "writtenOn": "2020-01-10T23:42:27Z",
+      "side": 0,
+      "message": "It appears here too.",
+      "revId": "00fe08f5bf1326d2d1a3d315d5323c91a3dd3305",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
