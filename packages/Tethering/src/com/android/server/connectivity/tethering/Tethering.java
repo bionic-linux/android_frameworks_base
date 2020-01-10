@@ -1000,7 +1000,7 @@ public class Tethering {
         }
 
         if (!TextUtils.isEmpty(ifname)) {
-            maybeTrackNewInterfaceLocked(ifname);
+            maybeTrackNewInterfaceLocked(ifname, TETHERING_WIFI);
             changeInterfaceState(ifname, ipServingMode);
         } else {
             mLog.e(String.format(
