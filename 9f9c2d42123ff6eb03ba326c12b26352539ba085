@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "399176d3_4ac20a8a",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "I ended up adding this constructor since it is required after I introduced FailureSignalingConference. I removed the default constructor usage. Please check next patch-set.",
+      "parentUuid": "dd889152_d2c9a37a",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833b26d8_50ee38df",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 7
@@ -45,6 +69,64 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ba5c80_4d21ee50",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Removed this API",
+      "parentUuid": "833b26d8_50ee38df",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cbda7c1_c2121665",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "We cannot have final for this method since we need to override in ImsConference to answer MT Conference call",
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a980a538_261fb799",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "We cannot have final for this method since we need to override in ImsConference to reject MT Conference call",
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "6450e0fa_bb225156",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Made these final methods",
+      "parentUuid": "58e115a4_52b9b47f",
+      "range": {
+        "startLine": 334,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 10
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921296c6_fd53549f",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 7
@@ -91,6 +197,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5112f155_b9671db7",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "I\u0027m not using this API any more. I forgot to clean-up so removing this API.",
+      "parentUuid": "921296c6_fd53549f",
+      "range": {
+        "startLine": 762,
+        "startChar": 7,
+        "endLine": 762,
+        "endChar": 10
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "eb67ee5c_fa96156c",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8fbef2_b198ebd8",
+      "range": {
+        "startLine": 1058,
+        "startChar": 3,
+        "endLine": 1063,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4267a98a_3b60d674",
         "filename": "telecomm/java/android/telecom/Conference.java",
         "patchSetId": 7
@@ -137,6 +291,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8235e7_8cc0f0b2",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4267a98a_3b60d674",
+      "range": {
+        "startLine": 1065,
+        "startChar": 4,
+        "endLine": 1070,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "5d8af414_3b673224",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02cc42cb_bd3d62ac",
+      "range": {
+        "startLine": 1930,
+        "startChar": 4,
+        "endLine": 1942,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e65e817_bfb69331",
         "filename": "telecomm/java/android/telecom/Connection.java",
         "patchSetId": 7
@@ -183,6 +385,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48c9585_eb3e0a66",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2255,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e65e817_bfb69331",
+      "range": {
+        "startLine": 2239,
+        "startChar": 4,
+        "endLine": 2255,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "cd52b225_3fddf4bb",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a022ee_6fbfdc10",
+      "range": {
+        "startLine": 1717,
+        "startChar": 32,
+        "endLine": 1717,
+        "endChar": 48
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7262759_02cb3903",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 7
@@ -229,6 +479,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8eec662_199233e9",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7262759_02cb3903",
+      "range": {
+        "startLine": 1748,
+        "startChar": 16,
+        "endLine": 1748,
+        "endChar": 20
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "32c79e11_357eda37",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0e1267_18b75da0",
+      "range": {
+        "startLine": 2564,
+        "startChar": 23,
+        "endLine": 2564,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa1feb68_a500cac2",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 7
@@ -275,6 +573,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c025b6_ecdb43e3",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1feb68_a500cac2",
+      "range": {
+        "startLine": 2567,
+        "startChar": 14,
+        "endLine": 2567,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +623,30 @@
     },
     {
       "key": {
+        "uuid": "f5d0c9b7_6b431240",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2569,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39896a5_7f0f4139",
+      "range": {
+        "startLine": 2569,
+        "startChar": 14,
+        "endLine": 2569,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a33dd91b_bc3c0bc3",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 7
@@ -321,6 +667,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc9338b_41820615",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a33dd91b_bc3c0bc3",
+      "range": {
+        "startLine": 2584,
+        "startChar": 23,
+        "endLine": 2584,
+        "endChar": 33
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "09709be2_2919f703",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2587,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff1ebcb_1ce498c8",
+      "range": {
+        "startLine": 2587,
+        "startChar": 14,
+        "endLine": 2587,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "473ccf2b_9c5e68e1",
         "filename": "telecomm/java/android/telecom/ConnectionService.java",
         "patchSetId": 7
@@ -367,6 +761,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f6779e_faff8866",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473ccf2b_9c5e68e1",
+      "range": {
+        "startLine": 2589,
+        "startChar": 14,
+        "endLine": 2589,
+        "endChar": 24
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +811,30 @@
     },
     {
       "key": {
+        "uuid": "48c3ef32_77724cb6",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "I forgot to clean this up. Removed this API now",
+      "parentUuid": "f4e55da8_5bad3229",
+      "range": {
+        "startLine": 2798,
+        "startChar": 4,
+        "endLine": 2810,
+        "endChar": 5
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fab3872_d1e78e6f",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 7
@@ -413,6 +855,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969dedf3_9b46d03f",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fab3872_d1e78e6f",
+      "range": {
+        "startLine": 1808,
+        "startChar": 42,
+        "endLine": 1808,
+        "endChar": 68
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +905,30 @@
     },
     {
       "key": {
+        "uuid": "8f43758d_22a96683",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2053,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de65708_bbf85863",
+      "range": {
+        "startLine": 2053,
+        "startChar": 5,
+        "endLine": 2053,
+        "endChar": 14
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f7cbb5_81aaf7b7",
         "filename": "telecomm/java/android/telecom/TelecomManager.java",
         "patchSetId": 7
@@ -459,6 +949,30 @@
       "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e64af5b_3b4669c9",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2056,
+      "author": {
+        "id": 1594446
+      },
+      "writtenOn": "2020-01-10T13:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82f7cbb5_81aaf7b7",
+      "range": {
+        "startLine": 2055,
+        "startChar": 32,
+        "endLine": 2056,
+        "endChar": 52
+      },
+      "revId": "9f9c2d42123ff6eb03ba326c12b26352539ba085",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
