@@ -22,6 +22,29 @@
       "revId": "bed8a24e6a66de0642af6ab847aa901919edd4af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65af8929_9a4e0457",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 7659,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-11T01:29:56Z",
+      "side": 1,
+      "message": "Let\u0027s update this one to PRECISE now, even though the underlying check isn\u0027t ready. Update annotation and javadoc here.",
+      "range": {
+        "startLine": 7659,
+        "startChar": 52,
+        "endLine": 7659,
+        "endChar": 68
+      },
+      "revId": "bed8a24e6a66de0642af6ab847aa901919edd4af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
