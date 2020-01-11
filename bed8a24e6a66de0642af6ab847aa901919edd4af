@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277ca4b1_3cbcedfd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 7657,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-11T01:28:36Z",
+      "side": 1,
+      "message": "No need to mention device/profile owner, just carrier privileges",
+      "range": {
+        "startLine": 7657,
+        "startChar": 39,
+        "endLine": 7657,
+        "endChar": 61
+      },
+      "revId": "bed8a24e6a66de0642af6ab847aa901919edd4af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
