@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6de18705_36f34403",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "the CS Handler? or a new handler on the CS HandlerThread?",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5980b6a4_b47da8e9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "Any arguments?",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 541,
+        "endChar": 6
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0386e14_267db5ba",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "update?",
+      "range": {
+        "startLine": 575,
+        "startChar": 32,
+        "endLine": 575,
+        "endChar": 36
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b26ed6d_e52fa7c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7149,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "I\u0027m still not quite a fan of the pair. Can we use a static inner class?\n\nSpecifically, type erasure can make us hit some ugly edge cases with the Java language",
+      "range": {
+        "startLine": 7149,
+        "startChar": 26,
+        "endLine": 7149,
+        "endChar": 30
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

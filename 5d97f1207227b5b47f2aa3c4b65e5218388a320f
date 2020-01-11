@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99687c4f_e45940ca",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "Suggest just leaving a note that this ensures uniqueness (on the app side at least)",
+      "range": {
+        "startLine": 516,
+        "startChar": 39,
+        "endLine": 516,
+        "endChar": 52
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13f874_744453d2",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "As per comment in other CL, we potentially could make this nicer by having the inner binder class non-static, and pop the executor up one level\n\nNo strong preference here though",
+      "range": {
+        "startLine": 517,
+        "startChar": 16,
+        "endLine": 517,
+        "endChar": 42
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d996685d_9818a4ba",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-11T03:10:30Z",
+      "side": 1,
+      "message": "Q: Why not? We probably need a comment explaining why we can happily avoid doing the unregistration",
+      "range": {
+        "startLine": 543,
+        "startChar": 57,
+        "endLine": 543,
+        "endChar": 86
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
