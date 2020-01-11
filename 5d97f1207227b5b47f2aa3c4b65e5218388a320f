@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eef98483_b8be013b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-11T07:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99687c4f_e45940ca",
+      "range": {
+        "startLine": 516,
+        "startChar": 39,
+        "endLine": 516,
+        "endChar": 52
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d13f874_744453d2",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "650bfc82_993bb257",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-11T07:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d13f874_744453d2",
+      "range": {
+        "startLine": 517,
+        "startChar": 16,
+        "endLine": 517,
+        "endChar": 42
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d996685d_9818a4ba",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dd0be2_2a8812a1",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-11T07:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d996685d_9818a4ba",
+      "range": {
+        "startLine": 543,
+        "startChar": 57,
+        "endLine": 543,
+        "endChar": 86
+      },
+      "revId": "5d97f1207227b5b47f2aa3c4b65e5218388a320f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
