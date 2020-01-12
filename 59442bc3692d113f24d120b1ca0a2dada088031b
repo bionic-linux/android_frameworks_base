@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6b66e9_453ca14e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-12T02:26:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a hostname?",
+      "range": {
+        "startLine": 65,
+        "startChar": 34,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "59442bc3692d113f24d120b1ca0a2dada088031b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee698d8_72dc14d5",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-12T02:26:41Z",
+      "side": 1,
+      "message": "\" + MIN_MTU_V6",
+      "range": {
+        "startLine": 137,
+        "startChar": 77,
+        "endLine": 137,
+        "endChar": 82
+      },
+      "revId": "59442bc3692d113f24d120b1ca0a2dada088031b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b110035f_f1a3dddb",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-12T02:26:41Z",
+      "side": 1,
+      "message": "Does this have to be non-null? It would be possible to validate this cert from the system CA store given the hostname, right?",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 88
+      },
+      "revId": "59442bc3692d113f24d120b1ca0a2dada088031b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
