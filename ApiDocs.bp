@@ -161,6 +161,9 @@ droiddoc {
     srcs: [
         ":framework-doc-stubs",
     ],
+    libs: [
+        "unsupportedappusage",
+    ],
     args: framework_docs_only_args + " -referenceonly -parsecomments",
     installable: false,
 }
