@@ -22,6 +22,30 @@
       "revId": "a1e4d2aa124d49c032f5811194a069ebab90f0a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d781794_2814f041",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-13T08:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d57b9d_efff6a4d",
+      "range": {
+        "startLine": 215,
+        "startChar": 46,
+        "endLine": 215,
+        "endChar": 60
+      },
+      "revId": "a1e4d2aa124d49c032f5811194a069ebab90f0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
