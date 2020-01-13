@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec62ee3_b964ac09",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T05:06:48Z",
+      "side": 1,
+      "message": "Should we at least mention dnsmasq here? Maybe copy some/all of the text from the old setting, which was:\n\n\u003d\u003d\u003d\u003d\u003d\nUse the old dnsmasq DHCP server for tethering instead of the framework implementation.",
+      "range": {
+        "startLine": 50,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 59
+      },
+      "revId": "c48e69a98aa1bd6509ea1ad8c1ad68a9e42f3b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274d2e18_9d879ac1",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T05:06:48Z",
+      "side": 1,
+      "message": "Not for this CL, but the scheme used by NetworkStack uses two resources: a default_* resource and a config_* resource. We might want to be consistent with that scheme here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "c48e69a98aa1bd6509ea1ad8c1ad68a9e42f3b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d56c6d_cc78fedb",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T05:06:48Z",
+      "side": 1,
+      "message": "Typo, Config.",
+      "range": {
+        "startLine": 347,
+        "startChar": 31,
+        "endLine": 347,
+        "endChar": 36
+      },
+      "revId": "c48e69a98aa1bd6509ea1ad8c1ad68a9e42f3b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fb9669_73155db1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T05:06:48Z",
+      "side": 1,
+      "message": "Not for this CL, but seems like we should use a Dependencies class instead, so we don\u0027t need to mock statics. Maybe add a TODO?",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 47
+      },
+      "revId": "c48e69a98aa1bd6509ea1ad8c1ad68a9e42f3b29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
