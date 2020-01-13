@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4f2b155_d00958c3",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08ca3148_a9dfd783",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a1136c_64acfa0c",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f8e800_ac869170",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "No, what we do is:\nIf legacy dhcp server is enabled, this res would be used. If this res is empty, then we use hardcode range.\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java;l\u003d294?ss\u003dandroid\u0026q\u003dgetLegacyDhcpRanges",
+      "parentUuid": "32a1136c_64acfa0c",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "3340b0d0_24557da8",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d84d558_db3bfb62",
+      "range": {
+        "startLine": 98,
+        "startChar": 64,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0f078c8_5b3d93e7",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50641ef_a8b39b28",
+      "range": {
+        "startLine": 98,
+        "startChar": 28,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e51c2c_f53d06ca",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f6a8cf28_56f3ae66",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Ack, yes. We should add extra name here. For now, I don\u0027t add it yet. Settings still rely on res in framework. Will also note what extras here.",
+      "parentUuid": "16e51c2c_f53d06ca",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 22
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d03f18f_73371a74",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79755584_2b6f1723",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d03f18f_73371a74",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 51
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "f32f2e43_e9b4fd56",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8998cd_f6f91209",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c55d01e1_5c19f57c",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea9fccd_657aa6c1",
+      "range": {
+        "startLine": 119,
+        "startChar": 30,
+        "endLine": 119,
+        "endChar": 66
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6023ed0_3055c176",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e886efa5_773b70bd",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:07:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6023ed0_3055c176",
+      "range": {
+        "startLine": 124,
+        "startChar": 41,
+        "endLine": 124,
+        "endChar": 58
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
