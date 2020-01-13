@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f48fb2e_c54f43a1",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-13T23:11:57Z",
+      "side": 1,
+      "message": "Chat with moltmann offline and ignore the featureId together with message in this function call since the API with these two variables hasn\u0027t been available for AOSP yet.",
+      "range": {
+        "startLine": 169,
+        "startChar": 30,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "7e3e536eef08a9e0dcf9249672bf13f25ae204b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
