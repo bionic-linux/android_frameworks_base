@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f4b31c78_1fe0382d",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T10:09:12Z",
+      "side": 1,
+      "message": "Interesting. But then... how do we ensure that wifi is always 192.168.43.1? The default DHCP ranges start with 192.168.42.2-192.168.42.254, so I\u0027d expect that when enabling wifi tethering with USB tethering disabled, wifi would get 192.168.42.2. Or does dnsmasq look at wlan0, see 192.168.43.1, and automatically pick the appropriate DHCP range for that interface based on the IP address?",
+      "parentUuid": "e3f8e800_ac869170",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50641ef_a8b39b28",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4b2ecc_f12cc7ed",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T10:09:12Z",
+      "side": 1,
+      "message": "\"intent\". Don\u0027t bother respinning just for this.",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 46
+      },
+      "revId": "89a05a5d22c585a149df9e1d8ade10a5dd511615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
