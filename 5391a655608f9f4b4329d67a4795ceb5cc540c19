@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f3d1f7_c3d1cc9d",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10457,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T08:29:16Z",
+      "side": 0,
+      "message": "This will be removed in follow up CL because this is still be used for tests in internal master branch.",
+      "range": {
+        "startLine": 10457,
+        "startChar": 35,
+        "endLine": 10457,
+        "endChar": 67
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
