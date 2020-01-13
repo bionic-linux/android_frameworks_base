@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5f130e0_b3dcace0",
+        "filename": "cmds/statsd/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-01-13T23:03:15Z",
+      "side": 1,
+      "message": "can you remove jian",
+      "revId": "0afec205a3c902655cbc7353ea0b58da4a3c1505",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
