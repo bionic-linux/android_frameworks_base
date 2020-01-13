@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eca0e69_c14e9562",
+        "filename": "core/java/android/os/image/DynamicSystemManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2020-01-13T05:05:20Z",
+      "side": 1,
+      "message": "I tend to use a boolean as the return value for consistency,",
+      "revId": "4c397f34d0d0dbadd82575a1b99afe161163d341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
