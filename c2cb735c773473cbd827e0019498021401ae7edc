@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d33faf1f_7e4eb068",
+        "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-01-13T05:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83f349c_eac45628",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 22
+      },
+      "revId": "c2cb735c773473cbd827e0019498021401ae7edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da566da_61c40e68",
         "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-10T23:59:26Z",
       "side": 1,
       "message": "nit: shouldKeepBluetoothOn() for clarity on what we\u0027re doing when we ignore the change",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 37
+      },
+      "revId": "c2cb735c773473cbd827e0019498021401ae7edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220d3d59_e08e9579",
+        "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-01-13T05:56:36Z",
+      "side": 1,
+      "message": "But when this function returns false it does not always mean we should not keep Bluetooth ON. For most of the time it means we should pass the airplane mode change to the BluetoothManagerService to re-enable the Bluetooth.",
+      "parentUuid": "7da566da_61c40e68",
       "range": {
         "startLine": 134,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b9d3ea36_1e542c42",
+        "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-01-13T05:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac52bd7_156ebb3e",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 39
+      },
+      "revId": "c2cb735c773473cbd827e0019498021401ae7edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d49afd76_2af94bc3",
         "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "c2cb735c773473cbd827e0019498021401ae7edc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297aeaf0_c8b940a0",
+        "filename": "services/core/java/com/android/server/BluetoothAirplaneModeListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-01-13T05:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d49afd76_2af94bc3",
+      "range": {
+        "startLine": 229,
+        "startChar": 20,
+        "endLine": 229,
+        "endChar": 36
+      },
+      "revId": "c2cb735c773473cbd827e0019498021401ae7edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
