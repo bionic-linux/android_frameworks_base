@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "330242db_e82dfa8c",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T15:02:27Z",
+      "side": 1,
+      "message": "Yes, I think so. dnsmasq would make sure selected dhcp address isn\u0027t in use by the server itself.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:external/dnsmasq/src/dhcp.c;l\u003d335",
+      "parentUuid": "f4b31c78_1fe0382d",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50641ef_a8b39b28",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
