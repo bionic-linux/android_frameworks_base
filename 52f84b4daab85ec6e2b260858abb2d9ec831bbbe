@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ed2a787c_a530088b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-13T04:58:21Z",
+      "side": 1,
+      "message": "Yes. Indeed.\nThanks for explanation.\nHowever linkList looks like took several times of mem space than current implementation.\nAnd it has to be also considered with other type of operations.\nHowever we could do it later when brain storming.",
+      "parentUuid": "635e5c91_86e23e57",
+      "range": {
+        "startLine": 313,
+        "startChar": 24,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f4bf9dc_e3b1e456",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -296,6 +320,30 @@
       "writtenOn": "2020-01-10T15:19:31Z",
       "side": 1,
       "message": "Is this supported by the HAL today ?",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 38
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e879d8e_c149cdf1",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-13T04:58:21Z",
+      "side": 1,
+      "message": "No, not yet.",
+      "parentUuid": "651290b7_30c88fe8",
       "range": {
         "startLine": 330,
         "startChar": 20,
@@ -414,6 +462,30 @@
       "side": 1,
       "message": "What, bugs in your code ? Nowai !\n\nYes I think the new tests are good. Maybe at some point in the future we want to have some helpers to easily send multiple batches to make sure everything increases as expected, including in the presence of multiple concurrent pushes, but I think the refactoring should go before we do this to lower the burden of updating the tests.\n\nI will probably come back with a vengeance and ask you to write comprehensive stress tests for your new push providers though. Oops, actually already did it b/147481056. Sorry.",
       "parentUuid": "897bd15e_4ac3145e",
+      "range": {
+        "startLine": 479,
+        "startChar": 4,
+        "endLine": 479,
+        "endChar": 5
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "130b1056_31892de4",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/OffloadControllerTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-13T04:58:21Z",
+      "side": 1,
+      "message": "Thanks.\nI also think that is needed.",
+      "parentUuid": "11f6306d_5cf319eb",
       "range": {
         "startLine": 479,
         "startChar": 4,
