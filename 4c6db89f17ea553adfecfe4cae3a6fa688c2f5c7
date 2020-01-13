@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f3b78a9_4168760a",
+        "filename": "services/core/java/com/android/server/stats/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-01-13T23:05:22Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 6
+      },
+      "revId": "4c6db89f17ea553adfecfe4cae3a6fa688c2f5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03b0d88_aab10393",
+        "filename": "services/core/java/com/android/server/stats/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-01-13T23:05:22Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "4c6db89f17ea553adfecfe4cae3a6fa688c2f5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d5b0f5_56f67f11",
+        "filename": "services/core/java/com/android/server/stats/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-01-13T23:05:22Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "4c6db89f17ea553adfecfe4cae3a6fa688c2f5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
