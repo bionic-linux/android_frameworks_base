@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ca3148_a9dfd783",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "Not for this CL, but the NetworkStack overlays define two resources for each config item: a default_* resource and a config_* resource. Consider doing the same for consistency.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a1136c_64acfa0c",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "Is this actually used? IIRC the actual values are not taken from here but instead are hardcoded. If this is not currently used, we should remove it and add it back later when it is used.",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50641ef_a8b39b28",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "will send an intent",
+      "range": {
+        "startLine": 98,
+        "startChar": 28,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d84d558_db3bfb62",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "the specified",
+      "range": {
+        "startLine": 98,
+        "startChar": 64,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e51c2c_f53d06ca",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "the extras\n\nAlso, are the names of these extras @SystemApi? They need to be, right? Because they are a contract between the module and Settings? If so, then we should probably note here what the extras are.",
+      "range": {
+        "startLine": 99,
+        "startChar": 17,
+        "endLine": 99,
+        "endChar": 22
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d03f18f_73371a74",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "will pass the specified name",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 51
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea9fccd_657aa6c1",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "by sending an intent with the package name.",
+      "range": {
+        "startLine": 119,
+        "startChar": 30,
+        "endLine": 119,
+        "endChar": 66
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8998cd_f6f91209",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "the provisioning",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6023ed0_3055c176",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-13T06:07:50Z",
+      "side": 1,
+      "message": "Not for this CL, but should this string have a SystemApi constant for it?",
+      "range": {
+        "startLine": 124,
+        "startChar": 41,
+        "endLine": 124,
+        "endChar": 58
+      },
+      "revId": "5391a655608f9f4b4329d67a4795ceb5cc540c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
