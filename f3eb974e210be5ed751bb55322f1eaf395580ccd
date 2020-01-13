@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ea658c7_c83b1230",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-13T06:55:18Z",
+      "side": 1,
+      "message": "mEntries and class RevocationEntry is package-private visibility so that unittests can access them.",
+      "parentUuid": "57b6deca_bf17a976",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17c92681_be8d4956",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15a5ba2d_07e50b78",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-13T06:55:18Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! I wasn\u0027t familiar with JAVA conventions, I\u0027ll rename it to readFully()",
+      "parentUuid": "17c92681_be8d4956",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b8ba7d8_a35c09eb",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab66bcc8_e05d61a1",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-13T06:55:18Z",
+      "side": 1,
+      "message": "I\u0027ll do the public key related check in another CL/topic after getAvbPublicKey() is merged.",
+      "parentUuid": "5b8ba7d8_a35c09eb",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
