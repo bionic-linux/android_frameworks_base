@@ -16,6 +16,24 @@
       "revId": "4c397f34d0d0dbadd82575a1b99afe161163d341",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fd5af9_47f2352a",
+        "filename": "core/java/android/os/image/DynamicSystemManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-13T07:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eca0e69_c14e9562",
+      "revId": "4c397f34d0d0dbadd82575a1b99afe161163d341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
