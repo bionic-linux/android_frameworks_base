@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "824fb822_2d2632c1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-13T21:52:13Z",
+      "side": 1,
+      "message": "You need to expose these constants since getNetworkSelection mode uses them.",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 62
+      },
+      "revId": "556277862bf0c0ac8f014bf3c81d67480fc02e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc604c2_64eb9bd0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6840,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-13T21:52:13Z",
+      "side": 1,
+      "message": "operator",
+      "range": {
+        "startLine": 6840,
+        "startChar": 27,
+        "endLine": 6840,
+        "endChar": 34
+      },
+      "revId": "556277862bf0c0ac8f014bf3c81d67480fc02e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7926d5_362c52fe",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6888,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-13T21:52:13Z",
+      "side": 1,
+      "message": "Is this a Canadian API?  Should be getPlmnsEh?\n\nCurious though; what\u0027s EH mean?  Does getHomePlmns make more sense?",
+      "range": {
+        "startLine": 6888,
+        "startChar": 30,
+        "endLine": 6888,
+        "endChar": 40
+      },
+      "revId": "556277862bf0c0ac8f014bf3c81d67480fc02e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999ea22d_d6273a34",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7661,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-13T21:52:13Z",
+      "side": 1,
+      "message": "Can refer to the intdef for the values I mentioned exposing above.",
+      "range": {
+        "startLine": 7661,
+        "startChar": 9,
+        "endLine": 7661,
+        "endChar": 13
+      },
+      "revId": "556277862bf0c0ac8f014bf3c81d67480fc02e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
