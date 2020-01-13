@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57b6deca_bf17a976",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2020-01-13T05:39:58Z",
+      "side": 1,
+      "message": "How about having a constructor and make this private?",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c92681_be8d4956",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2020-01-13T05:39:58Z",
+      "side": 1,
+      "message": "I tend to avoid using the toString naming because it\u0027s normally a method that is used to described the status of an instance.",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8ba7d8_a35c09eb",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2020-01-13T05:39:58Z",
+      "side": 1,
+      "message": "When mPubKey !\u003d null, we may need to check if it\u0027s revoked.",
+      "revId": "f3eb974e210be5ed751bb55322f1eaf395580ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
