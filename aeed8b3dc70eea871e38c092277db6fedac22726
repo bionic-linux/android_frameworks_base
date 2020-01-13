@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36abb5cb_c8c757e5",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-13T23:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a2019b_b32c28c5",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 37
+      },
+      "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8b84344_77335a5d",
         "filename": "core/java/com/android/internal/net/VpnProfile.java",
         "patchSetId": 21
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-06T11:25:19Z",
       "side": 1,
       "message": "I\u0027d almost say we should mark this field transient, because that\u0027s what it is though we won\u0027t use the modifier in practice",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 10
+      },
+      "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15bf3c7b_3fe565cb",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-13T23:21:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b84344_77335a5d",
       "range": {
         "startLine": 139,
         "startChar": 4,
