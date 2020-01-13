@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "496bd610_86d43841",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T03:06:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "165e95d6_e94a7694",
+      "range": {
+        "startLine": 380,
+        "startChar": 45,
+        "endLine": 380,
+        "endChar": 69
+      },
+      "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5d01f0_a2b255f1",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc9651c_b9dc5ecc",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T03:06:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9a5d01f0_a2b255f1",
+      "range": {
+        "startLine": 386,
+        "startChar": 45,
+        "endLine": 386,
+        "endChar": 70
+      },
+      "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df7fed20_e881be52",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T03:06:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "975df742_27adcc68",
+      "range": {
+        "startLine": 392,
+        "startChar": 45,
+        "endLine": 392,
+        "endChar": 74
+      },
+      "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31669950_4880bdd5",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01eef45_26e32183",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-13T03:06:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "31669950_4880bdd5",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 405,
+        "endChar": 19
+      },
+      "revId": "d3e15a06e5788d5030c845a55110920b1fd86557",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
