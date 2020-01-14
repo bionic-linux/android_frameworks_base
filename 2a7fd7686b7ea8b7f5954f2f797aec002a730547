@@ -187,6 +187,30 @@
       "revId": "2a7fd7686b7ea8b7f5954f2f797aec002a730547",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a8f9049_538a9ecf",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T08:03:26Z",
+      "side": 1,
+      "message": "I believe there might have been some synchronicity requirement in the past when called from the handler thread (maybe in tests or something ?). It seems there may not be any more.",
+      "parentUuid": "f5a0e4c7_92566211",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 15
+      },
+      "revId": "2a7fd7686b7ea8b7f5954f2f797aec002a730547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
