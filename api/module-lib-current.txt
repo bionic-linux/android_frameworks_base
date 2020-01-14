@@ -67,6 +67,10 @@ package android.app.timezonedetector {
 
 package android.os {
 
+  public class SystemProperties {
+    method public static void set(@NonNull String, @Nullable String);
+  }
+
   public final class TimestampedValue<T> implements android.os.Parcelable {
     ctor public TimestampedValue(long, @Nullable T);
     method public int describeContents();
