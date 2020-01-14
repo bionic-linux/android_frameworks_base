@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7bb1af77_4c1f6d4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2020-01-14T01:08:40Z",
+      "side": 1,
+      "message": "If this is a cherry-pick then don\u0027t use \u0027DO NOT MERGE\u0027, instead add a Merged-In tag with the Change-Id with which the CL was merged downstream.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "7e3e536eef08a9e0dcf9249672bf13f25ae204b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f48fb2e_c54f43a1",
         "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
         "patchSetId": 2
