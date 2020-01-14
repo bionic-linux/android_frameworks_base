@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "cf646682_4dc6fce8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6888,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-14T00:03:03Z",
+      "side": 1,
+      "message": "E -\u003e Extended. I think we did getForbiddenPlmns.... so @Tgunn you\u0027re totally right (sorry I just breezed past it), these should be:\n\ngetHomePlmns()\ngetExtendedHomePlmns()\ngetUserPlmns()",
+      "parentUuid": "ad7926d5_362c52fe",
+      "range": {
+        "startLine": 6888,
+        "startChar": 30,
+        "endLine": 6888,
+        "endChar": 40
+      },
+      "revId": "556277862bf0c0ac8f014bf3c81d67480fc02e85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999ea22d_d6273a34",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 11
