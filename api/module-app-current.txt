@@ -7,3 +7,11 @@ package android.app {
 
 }
 
+package android.os {
+
+  public class SystemProperties {
+    method public static void set(@NonNull String, @Nullable String);
+  }
+
+}
+
