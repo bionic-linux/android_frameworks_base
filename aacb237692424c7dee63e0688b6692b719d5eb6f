@@ -138,6 +138,53 @@
       "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebf854f_00f32508",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-14T09:28:12Z",
+      "side": 1,
+      "message": "There is still an opportunity to reduce the network bandwidth and client processing by leveraging the \"if-modified-since\" field in HTTP request (or URLConnection).\nWe may re-think the API (e.g., call update() before getRevocationEntryForKey()) to incorporate this.",
+      "parentUuid": "7aa9d2c7_183199a2",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494d3f21_63e06eb7",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-14T09:28:12Z",
+      "side": 1,
+      "message": "Inline this method and make mIsNetworkUrl a local var?",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 39
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
