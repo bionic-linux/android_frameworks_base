@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674933c5_a7b87aba",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T23:39:46Z",
+      "side": 1,
+      "message": "Next paragraph? Javadoc style generally states that the first paragraph should be limited to one line.",
+      "range": {
+        "startLine": 838,
+        "startChar": 69,
+        "endLine": 838,
+        "endChar": 70
+      },
+      "revId": "2f9c15a85b98533c7e10474c86d6588e58cebf9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4204ac6_be9edf60",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T23:39:46Z",
+      "side": 1,
+      "message": "Are you allowed to link to non-public fields in public documentation?",
+      "range": {
+        "startLine": 840,
+        "startChar": 83,
+        "endLine": 840,
+        "endChar": 92
+      },
+      "revId": "2f9c15a85b98533c7e10474c86d6588e58cebf9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
