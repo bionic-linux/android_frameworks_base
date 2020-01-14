@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b42a346e_49528025",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-14T22:28:19Z",
+      "side": 1,
+      "message": "Since we plan to keep this as hide API, I add the hide back and the javadoc may not needed.",
+      "parentUuid": "1b432a64_59620c39",
+      "revId": "914cd2f32098e7a75d289855380eaed0e5137a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1f07a5f_67ea92c1",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2020-01-08T23:09:35Z",
       "side": 1,
       "message": "This boxes us into having a single owner UID for a given network, which precludes the multi-user and multi-profile case. Can we make this agnostic, as in \"boolean isNetworkOwner()\" instead?",
+      "range": {
+        "startLine": 832,
+        "startChar": 15,
+        "endLine": 832,
+        "endChar": 26
+      },
+      "revId": "914cd2f32098e7a75d289855380eaed0e5137a17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a2ea98_c6665916",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-14T22:28:19Z",
+      "side": 1,
+      "message": "I\u0027m OK for both of these APIs, Lorenzo / Jean, how do you think about this? AFAIK, we have a plan to change the OnwerUid to an int[] and the boolean API may be more flexible for that plan.",
+      "parentUuid": "e1f07a5f_67ea92c1",
       "range": {
         "startLine": 832,
         "startChar": 15,
