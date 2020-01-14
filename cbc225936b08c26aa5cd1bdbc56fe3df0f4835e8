@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9748a6_d58013f9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10519,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-14T00:17:08Z",
+      "side": 1,
+      "message": "Since this API existed in the past we need to make sure it still supports the old permissionit used to require:\n@RequiresPermission(anyOf \u003d {android.Manifest.permission.READ_PRECISE_PHONE_STATE,\nandroid.Manifest.permission.READ_PRIVILEGED_PHONE_STATE})",
+      "range": {
+        "startLine": 10519,
+        "startChar": 4,
+        "endLine": 10519,
+        "endChar": 77
+      },
+      "revId": "cbc225936b08c26aa5cd1bdbc56fe3df0f4835e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
