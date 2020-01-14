@@ -22,6 +22,30 @@
       "revId": "4fc9cf2ef33b331cf208cb456b0a72cdade7bfef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1022685a_8aead404",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-14T07:55:34Z",
+      "side": 0,
+      "message": "If so is it ok to add some trigger points to push stats in offloadController?\nE.g.\nhttps://source.corp.google.com/aosp-master/frameworks/base/packages/Tethering/src/com/android/server/connectivity/tethering/OffloadHardwareInterface.java;cl\u003dmaster;l\u003d161?q\u003donStoppedError\u0026sq\u003dpackage:aosp-master",
+      "parentUuid": "35a75a34_9b3299d3",
+      "range": {
+        "startLine": 884,
+        "startChar": 0,
+        "endLine": 889,
+        "endChar": 13
+      },
+      "revId": "4fc9cf2ef33b331cf208cb456b0a72cdade7bfef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
