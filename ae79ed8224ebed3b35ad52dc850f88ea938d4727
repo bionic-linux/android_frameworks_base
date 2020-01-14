@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aeee0eca_46824382",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T00:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de18705_36f34403",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5980b6a4_b47da8e9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ac8887_7143b420",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T00:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5980b6a4_b47da8e9",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 541,
+        "endChar": 6
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4edcc9a4_887f6e70",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T00:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0386e14_267db5ba",
+      "range": {
+        "startLine": 575,
+        "startChar": 32,
+        "endLine": 575,
+        "endChar": 36
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b26ed6d_e52fa7c1",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fd71dd_da7630eb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7149,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T00:04:07Z",
+      "side": 1,
+      "message": "Updated to use ConnectivityDiagnosticsCallbackInfo, which contains the ICallback and NetworkRequestInfo. Done.",
+      "parentUuid": "8b26ed6d_e52fa7c1",
+      "range": {
+        "startLine": 7149,
+        "startChar": 26,
+        "endLine": 7149,
+        "endChar": 30
+      },
+      "revId": "ae79ed8224ebed3b35ad52dc850f88ea938d4727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
