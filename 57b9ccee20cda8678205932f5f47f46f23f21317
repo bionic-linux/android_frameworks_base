@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f694b740_b801eb93",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-14T21:24:27Z",
+      "side": 1,
+      "message": "Since its final, it can\u0027t even be overridden in Telephony or other ConnectionServices; lets just @hide this method; the one with a video state is sufficient.",
+      "range": {
+        "startLine": 330,
+        "startChar": 3,
+        "endLine": 338,
+        "endChar": 5
+      },
+      "revId": "57b9ccee20cda8678205932f5f47f46f23f21317",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
