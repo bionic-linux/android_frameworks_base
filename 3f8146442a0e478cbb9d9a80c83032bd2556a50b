@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ae5b26_3bc0ac67",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11760,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-14T21:07:30Z",
+      "side": 1,
+      "message": "Please create an @IntDef for these.",
+      "range": {
+        "startLine": 11757,
+        "startChar": 28,
+        "endLine": 11760,
+        "endChar": 68
+      },
+      "revId": "3f8146442a0e478cbb9d9a80c83032bd2556a50b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
