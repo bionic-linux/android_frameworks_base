@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ef15ab_c1907588",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-14T00:53:38Z",
+      "side": 1,
+      "message": "current.txt has getTimestamp, getTimeStamp, getTimestampNanos. Check with Tyler to see which one is correct.",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 28
+      },
+      "revId": "56d0f1e423833cb4ca9acc7332671ab4d6288b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
