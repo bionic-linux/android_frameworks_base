@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "344e9bb4_2f70295a",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T13:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90c7f8d_71b6775c",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baebf98f_6e1db76d",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 11
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0096c19_fd51e2ff",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T13:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baebf98f_6e1db76d",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee88e0f2_004badae",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 11
@@ -115,6 +163,30 @@
       "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2894f1d_9756ab40",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T13:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee88e0f2_004badae",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
