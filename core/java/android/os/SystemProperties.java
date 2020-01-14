@@ -16,6 +16,9 @@
 
 package android.os;
 
+import static android.annotation.SystemApi.Client.MODULE_APPS;
+import static android.annotation.SystemApi.Process.ALL;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -52,6 +55,7 @@ import java.util.HashMap;
  * {@hide}
  */
 @SystemApi
+@SystemApi(client = MODULE_APPS, process = ALL)
 @TestApi
 public class SystemProperties {
     private static final String TAG = "SystemProperties";
@@ -228,6 +232,7 @@ public class SystemProperties {
      * SELinux. libc will log the underlying reason.
      * @hide
      */
+    @SystemApi(client = MODULE_APPS, process = ALL)
     @UnsupportedAppUsage
     public static void set(@NonNull String key, @Nullable String val) {
         if (val != null && !val.startsWith("ro.") && val.length() > PROP_VALUE_MAX) {
