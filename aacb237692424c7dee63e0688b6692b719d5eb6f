@@ -114,6 +114,30 @@
       "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa9d2c7_183199a2",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T04:48:49Z",
+      "side": 1,
+      "message": "I think the whole point of the revocation list is to load it from the internet every time, so that the list content don\u0027t go stale.\nWhen the list is updated, the change needs to reach the end users as soon as possible. If this was a singleton, then it\u0027s possible that an end user won\u0027t fetch the new list until the device is rebooted or system-server restarted.",
+      "parentUuid": "d27b95d6_ef3a4195",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
