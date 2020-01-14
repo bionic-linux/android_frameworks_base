@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "413acd07_19b68248",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T05:46:05Z",
+      "side": 1,
+      "message": "Yes, agreed. FWIW my suggestion requires we first switch to a list of Entry anyway. Also it\u0027s just an example, but we can use the same principles to meet the same performance requirements in ways that change less from the current implementation.",
+      "parentUuid": "ed2a787c_a530088b",
+      "range": {
+        "startLine": 313,
+        "startChar": 24,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f4bf9dc_e3b1e456",
         "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
         "patchSetId": 10
@@ -353,6 +377,30 @@
       "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4598b4_20161c20",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-14T05:46:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e879d8e_c149cdf1",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 38
+      },
+      "revId": "52f84b4daab85ec6e2b260858abb2d9ec831bbbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
