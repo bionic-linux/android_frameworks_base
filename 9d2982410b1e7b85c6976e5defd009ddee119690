@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc11022_a8ae38b2",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:46:10Z",
+      "side": 1,
+      "message": "Slightly redundant",
+      "range": {
+        "startLine": 493,
+        "startChar": 41,
+        "endLine": 493,
+        "endChar": 76
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2214bd2_593d6220",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:46:10Z",
+      "side": 1,
+      "message": "Privileged apps is a very specific Android keyword that means it\u0027s installed on the privileged partition.\n\nSuggest merging these two sentences:\n\nCallbacks from apps not meeting the above criteria will not be invoked.",
+      "range": {
+        "startLine": 494,
+        "startChar": 21,
+        "endLine": 494,
+        "endChar": 33
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e0fc85_8f64bd23",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-14T06:46:10Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t need to be said; just throw a SecurityException at them :)",
+      "range": {
+        "startLine": 538,
+        "startChar": 7,
+        "endLine": 540,
+        "endChar": 25
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
