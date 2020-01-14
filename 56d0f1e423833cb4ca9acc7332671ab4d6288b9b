@@ -46,6 +46,30 @@
       "revId": "56d0f1e423833cb4ca9acc7332671ab4d6288b9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c494b4c_b542914d",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1612418
+      },
+      "writtenOn": "2020-01-14T01:41:09Z",
+      "side": 1,
+      "message": "This is good suggestion. The design was as you suggested. But then Nanos are dropped to be consistent with the getTimeStamp API in CellInfo.",
+      "parentUuid": "6b407ef8_3798429e",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 28
+      },
+      "revId": "56d0f1e423833cb4ca9acc7332671ab4d6288b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
