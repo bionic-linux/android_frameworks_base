@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "165f51d7_221ad1e6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c97a317f_dabb053a",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 553,
+        "endChar": 6
+      },
+      "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b49d174_6b4a973a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d808e2d_6a6069ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 7312,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:32:49Z",
+      "side": 1,
+      "message": "Per our conversation offline, this is done to release resources allocated for the current register request. It does not release old resources in its place.\n\nAdded a comment clarifying this behavior. Done.",
+      "parentUuid": "1b49d174_6b4a973a",
+      "range": {
+        "startLine": 7312,
+        "startChar": 12,
+        "endLine": 7312,
+        "endChar": 39
+      },
+      "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "26669c59_b86d8786",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ef3e64_3e4363d8",
+      "range": {
+        "startLine": 1100,
+        "startChar": 0,
+        "endLine": 1107,
+        "endChar": 0
+      },
+      "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92828eb7_18aa2668",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "24da9f26_98e103ec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 6265,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92828eb7_18aa2668",
+      "range": {
+        "startLine": 6265,
+        "startChar": 20,
+        "endLine": 6265,
+        "endChar": 28
+      },
+      "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2b73ed_7ee859b3",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 14
@@ -114,6 +210,30 @@
       "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4039940d_29df01bf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 6286,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2b73ed_7ee859b3",
+      "range": {
+        "startLine": 6286,
+        "startChar": 15,
+        "endLine": 6286,
+        "endChar": 23
+      },
+      "revId": "3d5304a8a73635a0fa2b7e780fe1c27c7dc5a73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
