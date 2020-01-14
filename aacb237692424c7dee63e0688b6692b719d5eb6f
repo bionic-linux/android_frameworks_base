@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee3a734f_7d74e16a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T10:23:03Z",
+      "side": 1,
+      "message": "I\u0027d like to do it in a follow-up CL, as it\u0027s blocked by yet another CL..",
+      "parentUuid": "2d3b08df_995e3ffe",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d90c7f8d_71b6775c",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
         "patchSetId": 11
@@ -165,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "4d8b815d_a75614d0",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T10:23:03Z",
+      "side": 1,
+      "message": "hmm, that doesn\u0027t sound right to me. That would mean for each call to getRevocationEntryForKey(), we would do a if-modified-since HTTP GET just to check if we need to update the list. That sounds more bandwidth consuming .",
+      "parentUuid": "2ebf854f_00f32508",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494d3f21_63e06eb7",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 11
@@ -176,6 +224,30 @@
       "writtenOn": "2020-01-14T09:28:12Z",
       "side": 1,
       "message": "Inline this method and make mIsNetworkUrl a local var?",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 39
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a2778e_e60fc3f8",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-14T10:23:03Z",
+      "side": 1,
+      "message": "keyRevocationThrowOrWarning() shall have other users when I complete the TODOs. Such as post-install key check would call keyRevocationThrowOrWarning() when check is failed.",
+      "parentUuid": "494d3f21_63e06eb7",
       "range": {
         "startLine": 246,
         "startChar": 12,
