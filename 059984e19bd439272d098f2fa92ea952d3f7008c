@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b2cb80_24959815",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7355,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:53:45Z",
+      "side": 1,
+      "message": "change to handleRemoveNetworkRequest()",
+      "range": {
+        "startLine": 7355,
+        "startChar": 8,
+        "endLine": 7355,
+        "endChar": 35
+      },
+      "revId": "059984e19bd439272d098f2fa92ea952d3f7008c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
