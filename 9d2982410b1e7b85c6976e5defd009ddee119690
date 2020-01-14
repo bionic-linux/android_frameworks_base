@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "916c5fe4_27bea405",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc11022_a8ae38b2",
+      "range": {
+        "startLine": 493,
+        "startChar": 41,
+        "endLine": 493,
+        "endChar": 76
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2214bd2_593d6220",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b3e7057f_d3c19433",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:43:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2214bd2_593d6220",
+      "range": {
+        "startLine": 494,
+        "startChar": 21,
+        "endLine": 494,
+        "endChar": 33
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e0fc85_8f64bd23",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a59f2e_5951272c",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-14T23:43:29Z",
+      "side": 1,
+      "message": "Removed the comment. We can\u0027t throw a SecurityException because we only know this once we are on the ConnectivityService Thread.",
+      "parentUuid": "52e0fc85_8f64bd23",
+      "range": {
+        "startLine": 538,
+        "startChar": 7,
+        "endLine": 540,
+        "endChar": 25
+      },
+      "revId": "9d2982410b1e7b85c6976e5defd009ddee119690",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
