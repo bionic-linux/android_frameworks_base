@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3b08df_995e3ffe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-01-14T04:00:21Z",
+      "side": 1,
+      "message": "This will be done within this CL, right?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90c7f8d_71b6775c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-01-14T04:00:21Z",
+      "side": 1,
+      "message": "nit: as it\u0027s an internal class for the package com.android.dynsystem, this can be just KeyRevocationList.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baebf98f_6e1db76d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-01-14T04:00:21Z",
+      "side": 1,
+      "message": "nit: could be shortened a little bit, otherwise it\u0027s not fully displayed on logcat. e.g., DsuKeyRevocationList",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee88e0f2_004badae",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-01-14T04:00:21Z",
+      "side": 1,
+      "message": "Can this be a HashMap? I suppose keys are unique?",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27b95d6_ef3a4195",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-01-14T04:00:21Z",
+      "side": 1,
+      "message": "Ideally this can be a singleton, so that we don\u0027t need to load it from the internet every time we need it.",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
