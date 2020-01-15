@@ -70,6 +70,30 @@
       "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5774d9e_4e237e90",
+        "filename": "core/java/android/se/omapi/Reader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-01-15T08:39:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8cec53_d4612fe4",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 7
+      },
+      "revId": "fb0a5f2f1553f3d97d0f9ff358c553a02eb43e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
