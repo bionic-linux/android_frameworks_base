@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "792c40cb_84aa5428",
+        "filename": "telephony/common/com/android/internal/telephony/TelephonyPermissions.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-01-15T02:34:43Z",
+      "side": 1,
+      "message": "This will fail to compile :-(",
+      "range": {
+        "startLine": 527,
+        "startChar": 17,
+        "endLine": 527,
+        "endChar": 21
+      },
+      "revId": "3f8146442a0e478cbb9d9a80c83032bd2556a50b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7ae5b26_3bc0ac67",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 7
