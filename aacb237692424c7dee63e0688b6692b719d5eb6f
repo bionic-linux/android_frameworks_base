@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "36cc71ee_c87dfeff",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-15T09:48:05Z",
+      "side": 1,
+      "message": "You\u0027re right. etag+if-none-match is more reliable.",
+      "parentUuid": "c7cc58e0_1b922e20",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494d3f21_63e06eb7",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 11
