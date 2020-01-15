@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2450b13b_6f6504d0",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-15T09:06:09Z",
+      "side": 1,
+      "message": "Please add documentation.",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "4366cc30d72e275eb78aa6c478a948c65da09eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106d4466_fe518001",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-15T09:06:09Z",
+      "side": 1,
+      "message": "Could you please add more documentation?\n\ngetSubscriptionPlansOwner\n-- Specify who can call this and what happens if unauthorized callers call this.\n-- Specify what subId argument means here and purpose of it.\n\nsetSubscriptionOverride\n-- Javadoc summary needs to be a verb phrase (see http://go/java-practices/javadoc#summary_methods)\n-- Please explain what the arguments mean (for e.g. what is the time base of timeoutMillis)\n-- Taking callingPackage as the argument instead of using mContext.getOpPackageName() feels a bit strange to me but let\u0027s \n   see what API reviewers say.\n-- \"UNMETERED\" or \"CONGESTED\", are these constants defined somewhere?",
+      "range": {
+        "startLine": 309,
+        "startChar": 3,
+        "endLine": 332,
+        "endChar": 5
+      },
+      "revId": "4366cc30d72e275eb78aa6c478a948c65da09eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
