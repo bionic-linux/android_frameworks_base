@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0eee7acc_c3c6186a",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-01-15T20:52:01Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "3c18b944_e550f724",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "0d6108f952b1656071f6ac55faeb2364f59ca9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ee81f2_98e4208e",
         "filename": "core/java/android/net/StringNetworkSpecifier.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0d6108f952b1656071f6ac55faeb2364f59ca9e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11614676_68974dcc",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-01-15T20:52:01Z",
+      "side": 1,
+      "message": "The old one (with String parameter) which has detailed information in javadoc. Thanks",
+      "parentUuid": "21ee81f2_98e4208e",
+      "range": {
+        "startLine": 32,
+        "startChar": 84,
+        "endLine": 32,
+        "endChar": 90
+      },
+      "revId": "0d6108f952b1656071f6ac55faeb2364f59ca9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
