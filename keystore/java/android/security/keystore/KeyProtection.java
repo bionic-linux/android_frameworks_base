@@ -225,6 +225,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     private final @KeyProperties.BlockModeEnum String[] mBlockModes;
     private final boolean mRandomizedEncryptionRequired;
     private final boolean mUserAuthenticationRequired;
+    private final AuthType mUserAuthenticationType;
     private final int mUserAuthenticationValidityDurationSeconds;
     private final boolean mUserPresenceRequred;
     private final boolean mUserAuthenticationValidWhileOnBody;
@@ -246,6 +247,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
             @KeyProperties.BlockModeEnum String[] blockModes,
             boolean randomizedEncryptionRequired,
             boolean userAuthenticationRequired,
+            AuthType userAuthenticationType,
             int userAuthenticationValidityDurationSeconds,
             boolean userPresenceRequred,
             boolean userAuthenticationValidWhileOnBody,
@@ -267,6 +269,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         mBlockModes = ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(blockModes));
         mRandomizedEncryptionRequired = randomizedEncryptionRequired;
         mUserAuthenticationRequired = userAuthenticationRequired;
+        mUserAuthenticationType = userAuthenticationType;
         mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
         mUserPresenceRequred = userPresenceRequred;
         mUserAuthenticationValidWhileOnBody = userAuthenticationValidWhileOnBody;
@@ -277,6 +280,11 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         mUnlockedDeviceRequired = unlockedDeviceRequired;
         mIsStrongBoxBacked = isStrongBoxBacked;
     }
+
+    public enum AuthType {
+        BIOMETRIC,
+        PASSWORD
+    };
 
     /**
      * Gets the time instant before which the key is not yet valid.
@@ -429,6 +437,10 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         return mUserConfirmationRequired;
     }
 
+    public AuthType getUserAuthenticationType() {
+        return mUserAuthenticationType;
+    }
+
     /**
      * Gets the duration of time (seconds) for which this key is authorized to be used after the
      * user is successfully authenticated. This has effect only if user authentication is required
@@ -555,6 +567,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         private @KeyProperties.BlockModeEnum String[] mBlockModes;
         private boolean mRandomizedEncryptionRequired = true;
         private boolean mUserAuthenticationRequired;
+        private AuthType mUserAuthenticationType;
         private int mUserAuthenticationValidityDurationSeconds = -1;
         private boolean mUserPresenceRequired = false;
         private boolean mUserAuthenticationValidWhileOnBody;
@@ -857,7 +870,31 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
             if (seconds < -1) {
                 throw new IllegalArgumentException("seconds must be -1 or larger");
             }
+            if (seconds == -1) {
+                return setUserAuthenticationParameters(0, Biometric);
+            }
+            return setUserAuthenticationParameters(seconds, Biometric);
+        }
+
+        /**
+         * TBD
+         *
+         * @param seconds duration in seconds or {@code 0} if user authentication must take place
+         *        for every use of the key.
+         *
+         * @see #setUserAuthenticationRequired(boolean)
+         * @see BiometricPrompt
+         * @see BiometricPrompt.CryptoObject
+         * @see KeyguardManager
+         */
+        @NonNull
+        public Builder setUserAuthenticationParameters(@IntRange(from = 0) int seconds,
+                                                       AuthType type) {
+            if (seconds < 0) {
+                throw new IllegalArgumentException("seconds must be 0 or larger");
+            }
             mUserAuthenticationValidityDurationSeconds = seconds;
+            mUserAuthenticationType = type;
             return this;
         }
 
@@ -1002,6 +1039,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
                     mBlockModes,
                     mRandomizedEncryptionRequired,
                     mUserAuthenticationRequired,
+                    mUserAuthenticationType,
                     mUserAuthenticationValidityDurationSeconds,
                     mUserPresenceRequired,
                     mUserAuthenticationValidWhileOnBody,

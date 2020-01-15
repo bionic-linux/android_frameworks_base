@@ -28,6 +28,7 @@ public interface UserAuthArgs {
 
     boolean isUserAuthenticationRequired();
     int getUserAuthenticationValidityDurationSeconds();
+    KeyProtection.AuthType getUserAuthenticationType();
     boolean isUserAuthenticationValidWhileOnBody();
     boolean isInvalidatedByBiometricEnrollment();
     boolean isUserConfirmationRequired();
