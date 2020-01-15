@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c18b944_e550f724",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-15T19:22:28Z",
+      "side": 1,
+      "message": "use",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "0d6108f952b1656071f6ac55faeb2364f59ca9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ee81f2_98e4208e",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2020-01-15T19:22:28Z",
+      "side": 1,
+      "message": "Do we want to link to the old deprecated method or the newer one that accepts a NetworkSpecifier. Currently this would link to the old one.",
+      "range": {
+        "startLine": 32,
+        "startChar": 84,
+        "endLine": 32,
+        "endChar": 90
+      },
+      "revId": "0d6108f952b1656071f6ac55faeb2364f59ca9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
