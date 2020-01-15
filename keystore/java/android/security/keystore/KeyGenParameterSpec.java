@@ -262,6 +262,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
     private final boolean mRandomizedEncryptionRequired;
     private final boolean mUserAuthenticationRequired;
     private final int mUserAuthenticationValidityDurationSeconds;
+    private final @KeyProperties.AuthEnum int mUserAuthenticationType;
     private final boolean mUserPresenceRequired;
     private final byte[] mAttestationChallenge;
     private final boolean mUniqueIdIncluded;
@@ -299,6 +300,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
             boolean randomizedEncryptionRequired,
             boolean userAuthenticationRequired,
             int userAuthenticationValidityDurationSeconds,
+            @KeyProperties.AuthEnum int userAuthenticationType,
             boolean userPresenceRequired,
             byte[] attestationChallenge,
             boolean uniqueIdIncluded,
@@ -349,6 +351,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         mUserAuthenticationRequired = userAuthenticationRequired;
         mUserPresenceRequired = userPresenceRequired;
         mUserAuthenticationValidityDurationSeconds = userAuthenticationValidityDurationSeconds;
+        mUserAuthenticationType = userAuthenticationType;
         mAttestationChallenge = Utils.cloneIfNotNull(attestationChallenge);
         mUniqueIdIncluded = uniqueIdIncluded;
         mUserAuthenticationValidWhileOnBody = userAuthenticationValidWhileOnBody;
@@ -600,6 +603,9 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         return mUserAuthenticationValidityDurationSeconds;
     }
 
+    public @KeyProperties.AuthEnum int getUserAuthenticationType() {
+        return mUserAuthenticationType;
+    }
     /**
      * Returns {@code true} if the key is authorized to be used only if a test of user presence has
      * been performed between the {@code Signature.initSign()} and {@code Signature.sign()} calls.
@@ -732,6 +738,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         private boolean mRandomizedEncryptionRequired = true;
         private boolean mUserAuthenticationRequired;
         private int mUserAuthenticationValidityDurationSeconds = -1;
+        private @KeyProperties.AuthEnum int mUserAuthenticationType;
         private boolean mUserPresenceRequired = false;
         private byte[] mAttestationChallenge = null;
         private boolean mUniqueIdIncluded = false;
@@ -795,6 +802,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
             mUserAuthenticationRequired = sourceSpec.isUserAuthenticationRequired();
             mUserAuthenticationValidityDurationSeconds =
                 sourceSpec.getUserAuthenticationValidityDurationSeconds();
+            mUserAuthenticationType = sourceSpec.getUserAuthenticationType();
             mUserPresenceRequired = sourceSpec.isUserPresenceRequired();
             mAttestationChallenge = sourceSpec.getAttestationChallenge();
             mUniqueIdIncluded = sourceSpec.isUniqueIdIncluded();
@@ -1194,7 +1202,31 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
             if (seconds < -1) {
                 throw new IllegalArgumentException("seconds must be -1 or larger");
             }
+            if (seconds == -1) {
+                return setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC);
+            }
+            return setUserAuthenticationParameters(seconds, KeyProperties.AUTH_BIOMETRIC);
+        }
+
+        /**
+         * TBD
+         *
+         * @param seconds duration in seconds or {@code 0} if user authentication must take place
+         *        for every use of the key.
+         *
+         * @see #setUserAuthenticationRequired(boolean)
+         * @see BiometricPrompt
+         * @see BiometricPrompt.CryptoObject
+         * @see KeyguardManager
+         */
+        @NonNull
+        public Builder setUserAuthenticationParameters(@IntRange(from = 0) int seconds,
+                                                       @KeyProperties.AuthEnum int type) {
+            if (seconds < 0) {
+                throw new IllegalArgumentException("seconds must be 0 or larger");
+            }
             mUserAuthenticationValidityDurationSeconds = seconds;
+            mUserAuthenticationType = type;
             return this;
         }
 
@@ -1358,6 +1390,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
                     mRandomizedEncryptionRequired,
                     mUserAuthenticationRequired,
                     mUserAuthenticationValidityDurationSeconds,
+                    mUserAuthenticationType,
                     mUserPresenceRequired,
                     mAttestationChallenge,
                     mUniqueIdIncluded,

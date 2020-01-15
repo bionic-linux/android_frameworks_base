@@ -39,6 +39,55 @@ public abstract class KeyProperties {
      * @hide
      */
     @Retention(RetentionPolicy.SOURCE)
+    @IntDef(flag = true, prefix = { "AUTH_" }, value = {
+            AUTH_BIOMETRIC,
+            AUTH_PASSWORD,
+    })
+    public @interface AuthEnum {}
+
+    /**
+     *
+     */
+    public static final int AUTH_PASSWORD = 1 << 0;
+
+    /**
+     *
+     */
+    public static final int AUTH_BIOMETRIC = 1 << 1;
+
+    /**
+     * @hide
+     *//*
+    public static abstract class Auth {
+        private Auth() {}
+
+        public static int toKeymaster(@AuthEnum int auth) {
+            switch (auth) {
+                case AUTH_PASSWORD:
+                    return KeymasterDefs.HW_AUTH_PASSWORD;
+                case AUTH_BIOMETRIC:
+                    return KeymasterDefs.HW_AUTH_BIOMETRIC;
+                default:
+                    throw new IllegalArgumentException("Unknown auth type: " + auth);
+            }
+        }
+
+        public static @AuthEnum int fromKeymaster(int auth) {
+            switch (auth) {
+                case KeymasterDefs.HW_AUTH_PASSWORD:
+                    return AUTH_PASSWORD;
+                case KeymasterDefs.HW_AUTH_BIOMETRIC:
+                    return AUTH_BIOMETRIC;
+                default:
+                    throw new IllegalArgumentException("Unknown auth type: " + auth);
+            }
+        }
+    }*/
+
+    /**
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(flag = true, prefix = { "PURPOSE_" }, value = {
             PURPOSE_ENCRYPT,
             PURPOSE_DECRYPT,
