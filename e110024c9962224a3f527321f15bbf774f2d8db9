@@ -22,6 +22,30 @@
       "revId": "e110024c9962224a3f527321f15bbf774f2d8db9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88902f57_d17b6057",
+        "filename": "telephony/java/android/telephony/ims/stub/RcsPresenceExchangeImplBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-01-15T11:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8bcd06_bce0ee56",
+      "range": {
+        "startLine": 118,
+        "startChar": 53,
+        "endLine": 118,
+        "endChar": 55
+      },
+      "revId": "e110024c9962224a3f527321f15bbf774f2d8db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
