@@ -22,6 +22,53 @@
       "revId": "23067430683531c2f1986c5d52716249d2e578d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abcad50_3988b49c",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T05:57:29Z",
+      "side": 1,
+      "message": "+1. Use named variables, local functions and early returns to increase legibility.\n\n  private static boolean isGroupOwner(WifiP2pGroup group) {\n    return group !\u003d null \u0026\u0026 group.isGroupOwner() \u0026\u0026 !TextUtils.isEmpty(group.getInterface());\n  }\n\n  ...\n  synchronized() {\n    if (p2pInfo !\u003d null \u0026\u0026 isGroupOwner(group)) {\n      // If already serving from the correct interface, nothing to do.\n      if (mWifiP2pTetherInterface.equals(group.getInterface())) return;\n      // If already serving from another interface, turn it down first.\n      if (!TextUtils.isEmpty(mWifiP2pTetherInterface)) {\n        disableWifP2pIpServingLocked(mWifiP2pTetherInterface);\n      }\n      // Finally bring up serving on the new interface\n      mWifiP2pTetherInterface \u003d group.getInterface();\n      enableWifiIpServingLocked();\n      return;\n    }\n    // If there is a group but the device is not the owner, or the device is not\n    // already tethered, bail out.\n    if (group !\u003d null \u0026\u0026 TextUtils.isEmpty(mWifiP2pTetherInterface)) return;\n    disableWifiP2pIpServingLocked(mWifiP2pTetherInterface);\n    mWifiP2pTetherInterface \u003d null;\n  }\n\nSomething like this may be more legible. I particular, it makes clear that at the end there seem to be a complex case that may not be very well handled.\n• If there is a group but the device is not the owner, do we not need to tear down tethering by calling disableWifiP2pIpServingLocked ever if mWifiP2pTetherInterface is not null ?\n• Can p2pInfo be null when group is non-null ? If so this function does nothing, is that expected ?\n• In fact, can p2pInfo be null at all ?\n\n\nOr another option could be to store the old interface name in a local, the new interface name in a local, and finish always with the same code. Something like :\n\n  String oldInterface;\n  String newInterface;\n  if (!TextUtils.isEmpty(mWifiP2pTetherInterface)) oldInterface \u003d mWifiP2pTetherInterface;\n  if (isGroupOwner(group)) newInterface \u003d group.getInterface();\n  if (TextUtils.equals(oldInterface, newInterface)) return;\n\n  if (null !\u003d oldInterface) disableWifiP2pIpServingLocked(oldInterface));\n  mWifiP2pTetherInterface \u003d newInterface;\n  if (null !\u003d newInterface) enableWifiIpServingLocked(newInterface, IFACE_IP_MODE_LOCAL_ONLY);\n\n...this is very easy to read. However it doesn\u0027t do exactly the same thing, some conditions have been removed for simplicity. It looks to me like it\u0027s closer to what you really want though, but I don\u0027t understand everything about those conditions and if all of them are needed the code won\u0027t necessarily be as legible.\n\nAnyway. +2 for now as I believe the logic is probably correct. If in the light of my comments you realize there is a problem, fix it before submitting :) If not, then improve readability of this after the deadline when time is less tight.",
+      "parentUuid": "24f53d6e_7778cd17",
+      "range": {
+        "startLine": 856,
+        "startChar": 0,
+        "endLine": 869,
+        "endChar": 21
+      },
+      "revId": "23067430683531c2f1986c5d52716249d2e578d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7651bf2_80a792f3",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-15T05:57:29Z",
+      "side": 1,
+      "message": "I think that to correctly test your change, you also need at least that will test bringing up as group owner, and then bringing down ; also a test for handover of the interface.\n\nIt\u0027s fine to address this as a followup.",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 38
+      },
+      "revId": "23067430683531c2f1986c5d52716249d2e578d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
