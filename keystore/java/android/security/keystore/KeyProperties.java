@@ -39,6 +39,26 @@ public abstract class KeyProperties {
      * @hide
      */
     @Retention(RetentionPolicy.SOURCE)
+    @IntDef(flag = true, prefix = { "AUTH_" }, value = {
+            AUTH_BIOMETRIC,
+            AUTH_PASSWORD,
+    })
+    public @interface AuthEnum {}
+
+    /**
+     *
+     */
+    public static final int AUTH_PASSWORD = 1 << 0;
+
+    /**
+     *
+     */
+    public static final int AUTH_BIOMETRIC = 1 << 1;
+
+    /**
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(flag = true, prefix = { "PURPOSE_" }, value = {
             PURPOSE_ENCRYPT,
             PURPOSE_DECRYPT,
