@@ -9116,10 +9116,13 @@ public class TelephonyManager {
      * is NOT persistent across boots. On reboot, SIM will power up normally.
      */
     /** @hide */
+    @SystemApi
     public static final int CARD_POWER_DOWN = 0;
     /** @hide */
+    @SystemApi
     public static final int CARD_POWER_UP = 1;
     /** @hide */
+    @SystemApi
     public static final int CARD_POWER_UP_PASS_THROUGH = 2;
 
     /**
