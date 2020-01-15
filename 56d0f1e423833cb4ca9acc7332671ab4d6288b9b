@@ -94,6 +94,30 @@
       "revId": "56d0f1e423833cb4ca9acc7332671ab4d6288b9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7897c9aa_79d2a4e9",
+        "filename": "telephony/java/android/telephony/SignalStrength.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1612418
+      },
+      "writtenOn": "2020-01-15T17:54:40Z",
+      "side": 1,
+      "message": "Use getTimestampNanos()",
+      "parentUuid": "ce19e6eb_b87fe6c3",
+      "range": {
+        "startLine": 337,
+        "startChar": 16,
+        "endLine": 337,
+        "endChar": 28
+      },
+      "revId": "56d0f1e423833cb4ca9acc7332671ab4d6288b9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
