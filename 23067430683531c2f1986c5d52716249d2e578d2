@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5deee1fa_b871813b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2020-01-15T10:09:49Z",
+      "side": 1,
+      "message": "I revised the code to be more legible according to the first suggestion.\n\nThe logic is listed as below:\n* if no p2p info or no group, bring down any tethering p2p interface if existing.\n* if there is a group\n  * do nothing for group client or already serving p2p interface.\n  * if the serving p2p interface is different from current one, tear it down.\n  * serving current p2p interface.\n\nQuestion clarification:\n• If there is a group but the device is not the owner, do we not need to tear down tethering by calling disableWifiP2pIpServingLocked ever if mWifiP2pTetherInterface is not null ?\n\n  Tearing it down should be better since we only support one group now, a device is either group owner or group client. This case is abnormal and should align the state to current group, i.e. clean up the abnormal tethering interface.\n\n• Can p2pInfo be null when group is non-null ? If so this function does nothing, is that expected ?\n\n  p2p info would never be null normally. if this abnormal case occurs, tearing p2p tethering down might be better to avoid leaking a tethering interface.\n\n• In fact, can p2pInfo be null at all ?\n\n  p2p info would never be null normally, the null check is just in case any abnormal condition.",
+      "parentUuid": "3abcad50_3988b49c",
+      "range": {
+        "startLine": 856,
+        "startChar": 0,
+        "endLine": 869,
+        "endChar": 21
+      },
+      "revId": "23067430683531c2f1986c5d52716249d2e578d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7651bf2_80a792f3",
         "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2020-01-15T05:57:29Z",
       "side": 1,
       "message": "I think that to correctly test your change, you also need at least that will test bringing up as group owner, and then bringing down ; also a test for handover of the interface.\n\nIt\u0027s fine to address this as a followup.",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 38
+      },
+      "revId": "23067430683531c2f1986c5d52716249d2e578d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d606688a_75a6851e",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1322948
+      },
+      "writtenOn": "2020-01-15T10:09:49Z",
+      "side": 1,
+      "message": "bringing up as group owner/client and then bringing it down are done in TetheringTest already.\nThis part just addresses the ignorance of interface up/down event.\n\nHangover case is a little complex (lots of verification for a tethering case), and I would address this as a followup.",
+      "parentUuid": "d7651bf2_80a792f3",
       "range": {
         "startLine": 261,
         "startChar": 16,
