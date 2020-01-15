@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "c7cc58e0_1b922e20",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemKeyRevocationList.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-15T03:27:08Z",
+      "side": 1,
+      "message": "Got it. However I don\u0027t feel confortable using \"if-modified-since\" field, because it depends on the server\u0027s clock and we cannot ensure the server clock won\u0027t skew. how about \"etag\" \u0026 \"if-none-match\"",
+      "parentUuid": "6925c9c8_d7cfdf12",
+      "range": {
+        "startLine": 94,
+        "startChar": 15,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "aacb237692424c7dee63e0688b6692b719d5eb6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "494d3f21_63e06eb7",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 11
