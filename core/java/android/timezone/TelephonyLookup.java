@@ -36,9 +36,6 @@ public class TelephonyLookup {
     @GuardedBy("sLock")
     private static TelephonyLookup sInstance;
 
-    @NonNull
-    private final libcore.timezone.TelephonyLookup mDelegate;
-
     /**
      * Obtains an instance for use when resolving telephony time zone information. This method never
      * returns {@code null}.
@@ -52,6 +49,9 @@ public class TelephonyLookup {
             return sInstance;
         }
     }
+
+    @NonNull
+    private final libcore.timezone.TelephonyLookup mDelegate;
 
     private TelephonyLookup(@NonNull libcore.timezone.TelephonyLookup delegate) {
         mDelegate = Objects.requireNonNull(delegate);
