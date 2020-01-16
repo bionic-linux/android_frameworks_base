@@ -516,6 +516,30 @@
       "revId": "059984e19bd439272d098f2fa92ea952d3f7008c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d9a1b9_b825421f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6334,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-16T00:42:01Z",
+      "side": 1,
+      "message": "Addressed in aosp/1209526.",
+      "parentUuid": "d1a58702_592b6366",
+      "range": {
+        "startLine": 6334,
+        "startChar": 24,
+        "endLine": 6334,
+        "endChar": 29
+      },
+      "revId": "059984e19bd439272d098f2fa92ea952d3f7008c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
