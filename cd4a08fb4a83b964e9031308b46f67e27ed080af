@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b91db7e_86729085",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-01-16T00:42:47Z",
+      "side": 1,
+      "message": "Can you use PermissionChecker?",
+      "revId": "cd4a08fb4a83b964e9031308b46f67e27ed080af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
