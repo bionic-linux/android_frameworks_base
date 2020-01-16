@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f2db18c_040fec2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-01-16T05:53:36Z",
+      "side": 1,
+      "message": "nit: Maybe add a line to give more context of the cherry-pick.\nNot feel strongly.\n(clean cherry-pick from ag/xxxxxx)",
+      "revId": "dcaf6e22b4e761092c325759058303667156082e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
