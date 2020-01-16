@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4785b6eb_2b3b0c91",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Somewhat out of scope, and maybe in a follow-up CL: since we\u0027re modifying this file, could we use Process.INVALID_UID instead?",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb254df4_41bda517",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "accessed",
+      "range": {
+        "startLine": 813,
+        "startChar": 53,
+        "endLine": 813,
+        "endChar": 56
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a02d072_a1b625c6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "For NetworkCapability instances being sent from the System Server, this value MUST be set to Process.INVALID_UID unless the destination is the owner, AND has the fine (?) location permission granted.",
+      "range": {
+        "startLine": 813,
+        "startChar": 23,
+        "endLine": 813,
+        "endChar": 46
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fd12a8_893116b0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "I thought apps no longer can, after the API change?",
+      "range": {
+        "startLine": 813,
+        "startChar": 0,
+        "endLine": 814,
+        "endChar": 19
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b514f949_bf7bacf5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "When a NetworkCapabilities instance is sent by an app to the System Server, the value MUST be reset to Process.INVALID_UID",
+      "range": {
+        "startLine": 815,
+        "startChar": 7,
+        "endLine": 816,
+        "endChar": 47
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c16ed29_0aee3dd3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "I think we need a @param",
+      "range": {
+        "startLine": 836,
+        "startChar": 5,
+        "endLine": 836,
+        "endChar": 6
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3521ed_c439648b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "This probably can be an @returns statement:\n\n@returns {@code true} if the app is the owner, or {@code false} otherwise.",
+      "range": {
+        "startLine": 837,
+        "startChar": 11,
+        "endLine": 837,
+        "endChar": 30
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bd16c2_7e16c337",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Is the caller expected to call Process.myUid() every time?\n\nI think I prefer the previous iteration, since the API is clear to the app that if they are checking this, it\u0027s checking for themselves (and only themselves). Perhaps that could be the public-API convenience method, while this is hidden?\n\nJean, thoughts? I expect the main use case is for apps trying to figure out if they are they owner of a given network (assuming they have the relevant permissions)",
+      "range": {
+        "startLine": 841,
+        "startChar": 34,
+        "endLine": 841,
+        "endChar": 48
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c669b07_34ee0e33",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "I think this is supposed to guard against the app sending a UID to the system server, and is checked on the SystemServer side?\n\nA short comment would be nice :)",
+      "range": {
+        "startLine": 1519,
+        "startChar": 49,
+        "endLine": 1519,
+        "endChar": 55
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a922bb_e0f4820a",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Usually this would be named checkLocationPermission (as per Context.check*)",
+      "range": {
+        "startLine": 63,
+        "startChar": 19,
+        "endLine": 63,
+        "endChar": 47
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6682bbc2_d5eca65b",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Is this nullable?",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cf1162_4818092e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Does this have to be a new instance? Can the method be static? or the context be passed in?",
+      "range": {
+        "startLine": 1647,
+        "startChar": 13,
+        "endLine": 1647,
+        "endChar": 43
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76f79b7_d0891547",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Is this a magic keyword? If so, suggest a constant",
+      "range": {
+        "startLine": 1698,
+        "startChar": 85,
+        "endLine": 1698,
+        "endChar": 92
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3650563_dd6adef0",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Process.myUid()",
+      "range": {
+        "startLine": 602,
+        "startChar": 25,
+        "endLine": 602,
+        "endChar": 48
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a35c03b_c204e8e5",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Note that this does mean passing NetworkCapabilities objects within an app via AIDLs might clear the UID",
+      "range": {
+        "startLine": 610,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 64
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca46f6d6_ac17989f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "Do we need this? Can we unconditionally return the mocked appopsmanager?",
+      "range": {
+        "startLine": 357,
+        "startChar": 24,
+        "endLine": 357,
+        "endChar": 45
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbefb31_63c19cb6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6278,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-16T02:50:14Z",
+      "side": 1,
+      "message": "owner (typo)",
+      "range": {
+        "startLine": 6278,
+        "startChar": 72,
+        "endLine": 6278,
+        "endChar": 80
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
