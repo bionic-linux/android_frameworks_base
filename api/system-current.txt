@@ -4630,7 +4630,6 @@ package android.net {
   }
 
   public abstract class NetworkSpecifier {
-    method public void assertValidFromUid(int);
     method @Nullable public android.net.NetworkSpecifier redact();
     method public abstract boolean satisfiedBy(@Nullable android.net.NetworkSpecifier);
   }

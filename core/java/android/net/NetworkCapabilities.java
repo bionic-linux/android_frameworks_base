@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
+import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
 
@@ -87,6 +88,7 @@ public final class NetworkCapabilities implements Parcelable {
         mUids = null;
         mAdministratorUids.clear();
         mOwnerUid = Process.INVALID_UID;
+        mOwnerPackageName = null;
         mSSID = null;
         mPrivateDnsBroken = false;
     }
@@ -106,6 +108,7 @@ public final class NetworkCapabilities implements Parcelable {
         setUids(nc.mUids); // Will make the defensive copy
         setAdministratorUids(nc.mAdministratorUids);
         mOwnerUid = nc.mOwnerUid;
+        mOwnerPackageName = nc.mOwnerPackageName;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
         mSSID = nc.mSSID;
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
@@ -833,6 +836,86 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * Package Name of the owner app.
+     *
+     * <p>This field keeps track of the UID of the app that created this network and is in charge of
+     * its lifecycle. This could be the UID of apps such as the Wifi network suggestor, the running
+     * VPN, or Carrier Service app managing a cellular data connection.
+     */
+    private String mOwnerPackageName = null;
+
+    /**
+     * Set the package name of the owner app.
+     */
+    public @NonNull NetworkCapabilities setOwnerPackageName(@Nullable String packageName) {
+        mOwnerPackageName = packageName;
+        return this;
+    }
+
+    /**
+     * Retrieves the package name of the owner app.
+     */
+    public @Nullable String getOwnerPackageName() {
+        return mOwnerPackageName;
+    }
+
+    /**
+     * Tests if the owner of the 2 capabilities match. If either of the capabilities have an
+     * unset uid / package name, then the result is assumed to be true.
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    private boolean equalsOwner(@NonNull NetworkCapabilities nc) {
+        return mOwnerUid == nc.mOwnerUid
+                && TextUtils.equals(mOwnerPackageName, nc.mOwnerPackageName);
+    }
+
+    /**
+     * Test whether the passed NetworkCapabilities satisfies the ownership restrictions of this
+     * capabilities.
+     *
+     * This method is called on the NetworkCapabilities embedded in a request with the
+     * capabilities of an available network. If the available network, sets a specific
+     * owner (by uid and optionally package name), then this will only match a request from the
+     * same app. If either of the capabilities have an unset uid or package name, then it matches
+     * everything.
+     * <p>
+     * nc is assumed nonnull. Else, NPE.
+     * @hide
+     */
+    public boolean satisfiedByOwner(@NonNull NetworkCapabilities nc) {
+        // No uid set, matches everything.
+        if (mOwnerUid == Process.INVALID_UID || nc.mOwnerUid == Process.INVALID_UID) return true;
+        // uids don't match.
+        if (mOwnerUid != nc.mOwnerUid) return false;
+        // No package names set, matches everything
+        if (null == nc.mOwnerPackageName || null == mOwnerPackageName) return true;
+        // check for package name match.
+        return TextUtils.equals(mOwnerPackageName, nc.mOwnerPackageName);
+    }
+
+    /**
+     * Combine the ownership of this network currently applies to ownership of the passed
+     * NetworkCapabilities apply to.
+     * <p>
+     * This is only legal if either the package name of this object is null, or both package names
+     * are equal.
+     * nc is assumed nonnull.
+     */
+    private void combineOwner(@NonNull NetworkCapabilities nc) {
+        if (mOwnerUid != Process.INVALID_UID && mOwnerUid != nc.mOwnerUid) {
+            throw new IllegalStateException("Can't combine two uids");
+        }
+        if (mOwnerPackageName != null && !mOwnerPackageName.equals(nc.mOwnerPackageName)) {
+            throw new IllegalStateException("Can't combine two package names");
+        }
+        setOwnerUid(nc.mOwnerUid);
+        setOwnerPackageName(nc.mOwnerPackageName);
+    }
+
+
+    /**
      * UIDs of packages that are administrators of this network, or empty if none.
      *
      * <p>This field tracks the UIDs of packages that have permission to manage this network.
@@ -1384,6 +1467,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineTransportInfos(nc);
         combineSignalStrength(nc);
         combineUids(nc);
+        combineOwner(nc);
         combineSSIDs(nc);
     }
 
@@ -1404,6 +1488,7 @@ public final class NetworkCapabilities implements Parcelable {
                 && satisfiedBySpecifier(nc)
                 && (onlyImmutable || satisfiedBySignalStrength(nc))
                 && (onlyImmutable || satisfiedByUids(nc))
+                && (onlyImmutable || satisfiedByOwner(nc))
                 && (onlyImmutable || satisfiedBySSID(nc)));
     }
 
@@ -1488,7 +1573,7 @@ public final class NetworkCapabilities implements Parcelable {
     public boolean equals(@Nullable Object obj) {
         if (obj == null || (obj instanceof NetworkCapabilities == false)) return false;
         NetworkCapabilities that = (NetworkCapabilities) obj;
-        return (equalsNetCapabilities(that)
+        return equalsNetCapabilities(that)
                 && equalsTransportTypes(that)
                 && equalsLinkBandwidths(that)
                 && equalsSignalStrength(that)
@@ -1496,7 +1581,8 @@ public final class NetworkCapabilities implements Parcelable {
                 && equalsTransportInfo(that)
                 && equalsUids(that)
                 && equalsSSID(that)
-                && equalsPrivateDnsBroken(that));
+                && equalsPrivateDnsBroken(that)
+                && equalsOwner(that);
     }
 
     @Override
@@ -1514,7 +1600,9 @@ public final class NetworkCapabilities implements Parcelable {
                 + Objects.hashCode(mUids) * 31
                 + Objects.hashCode(mSSID) * 37
                 + Objects.hashCode(mTransportInfo) * 41
-                + Objects.hashCode(mPrivateDnsBroken) * 43;
+                + Objects.hashCode(mPrivateDnsBroken) * 43
+                + Objects.hashCode(mOwnerUid) * 47
+                + Objects.hashCode(mOwnerPackageName) * 53;
     }
 
     @Override
@@ -1537,6 +1625,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeBoolean(mPrivateDnsBroken);
         dest.writeList(mAdministratorUids);
         dest.writeInt(mOwnerUid);
+        dest.writeString(mOwnerPackageName);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1559,6 +1648,7 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mPrivateDnsBroken = in.readBoolean();
                 netCap.setAdministratorUids(in.readArrayList(null));
                 netCap.mOwnerUid = in.readInt();
+                netCap.mOwnerPackageName = in.readString();
                 return netCap;
             }
             @Override
@@ -1610,6 +1700,9 @@ public final class NetworkCapabilities implements Parcelable {
         }
         if (mOwnerUid != Process.INVALID_UID) {
             sb.append(" OwnerUid: ").append(mOwnerUid);
+        }
+        if (null != mOwnerPackageName) {
+            sb.append(" OwnerPackageName: ").append(mOwnerPackageName);
         }
 
         if (!mAdministratorUids.isEmpty()) {

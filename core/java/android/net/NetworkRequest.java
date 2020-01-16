@@ -494,6 +494,29 @@ public class NetworkRequest implements Parcelable {
         return networkCapabilities.getNetworkSpecifier();
     }
 
+    /**
+     * @return returns the UID of the owner app.
+     *
+     * Note: This could return {@link Process#INVALID_UID} if the {@link NetworkRequest} object was
+     * not obtained from {@link ConnectivityManager} or if this request applies to more than
+     * 1 uid.
+     */
+    public int getOwnerUid() {
+        return networkCapabilities.getOwnerUid();
+    }
+
+    /**
+     * @return returns the packag name of the owner app.
+     *
+     * Note: This could return {@code null} if the {@link NetworkRequest} object was not obtained
+     * from {@link ConnectivityManager} or if this request applies to more than
+     * 1 uid.
+     */
+    @Nullable
+    public String getOwnerPackageName() {
+        return networkCapabilities.getOwnerPackageName();
+    }
+
     public String toString() {
         return "NetworkRequest [ " + type + " id=" + requestId +
                 (legacyType != ConnectivityManager.TYPE_NONE ? ", legacyType=" + legacyType : "") +

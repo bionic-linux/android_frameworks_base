@@ -119,6 +119,7 @@ import static org.mockito.Mockito.when;
 import android.Manifest;
 import android.annotation.NonNull;
 import android.app.AlarmManager;
+import android.app.AppOpsManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -296,6 +297,7 @@ public class ConnectivityServiceTest {
     private static final String MOBILE_IFNAME = "test_rmnet_data0";
     private static final String WIFI_IFNAME = "test_wlan0";
     private static final String WIFI_WOL_IFNAME = "test_wlan_wol";
+    private static final String TEST_PACKAGE_NAME = "com.android.test.package";
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     private MockContext mServiceContext;
@@ -327,6 +329,7 @@ public class ConnectivityServiceTest {
     @Mock AlarmManager mAlarmManager;
     @Mock IConnectivityDiagnosticsCallback mConnectivityDiagnosticsCallback;
     @Mock IBinder mIBinder;
+    @Mock AppOpsManager mAppOpsManager;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -412,6 +415,7 @@ public class ConnectivityServiceTest {
             if (Context.NETWORK_STACK_SERVICE.equals(name)) return mNetworkStack;
             if (Context.USER_SERVICE.equals(name)) return mUserManager;
             if (Context.ALARM_SERVICE.equals(name)) return mAlarmManager;
+            if (Context.APP_OPS_SERVICE.equals(name)) return mAppOpsManager;
             return super.getSystemService(name);
         }
 
@@ -636,7 +640,7 @@ public class ConnectivityServiceTest {
 
             if (mNmValidationRedirectUrl != null) {
                 mNmCallbacks.showProvisioningNotification(
-                        "test_provisioning_notif_action", "com.android.test.package");
+                        "test_provisioning_notif_action", TEST_PACKAGE_NAME);
                 mNmProvNotificationRequested = true;
             }
         }
@@ -2936,7 +2940,7 @@ public class ConnectivityServiceTest {
             networkCapabilities.addTransportType(TRANSPORT_WIFI)
                     .setNetworkSpecifier(new MatchAllNetworkSpecifier());
             mService.requestNetwork(networkCapabilities, null, 0, null,
-                    ConnectivityManager.TYPE_WIFI);
+                    ConnectivityManager.TYPE_WIFI, TEST_PACKAGE_NAME);
         });
 
         class NonParcelableSpecifier extends NetworkSpecifier {
@@ -2971,37 +2975,6 @@ public class ConnectivityServiceTest {
             parcelR.unmarshall(bytes, 0, bytes.length);
             parcelR.setDataPosition(0);
             NetworkRequest rereadNr = NetworkRequest.CREATOR.createFromParcel(parcelR);
-        });
-    }
-
-    @Test
-    public void testNetworkSpecifierUidSpoofSecurityException() throws Exception {
-        class UidAwareNetworkSpecifier extends NetworkSpecifier implements Parcelable {
-            @Override
-            public boolean satisfiedBy(NetworkSpecifier other) {
-                return true;
-            }
-
-            @Override
-            public void assertValidFromUid(int requestorUid) {
-                throw new SecurityException("failure");
-            }
-
-            @Override
-            public int describeContents() { return 0; }
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {}
-        }
-
-        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
-        mWiFiNetworkAgent.connect(false);
-
-        UidAwareNetworkSpecifier networkSpecifier = new UidAwareNetworkSpecifier();
-        NetworkRequest networkRequest = newWifiRequestBuilder().setNetworkSpecifier(
-                networkSpecifier).build();
-        TestNetworkCallback networkCallback = new TestNetworkCallback();
-        assertThrows(SecurityException.class, () -> {
-            mCm.requestNetwork(networkRequest, networkCallback);
         });
     }
 
