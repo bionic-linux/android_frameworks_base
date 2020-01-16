@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6d785e11_56af45d4",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-16T08:23:15Z",
+      "side": 1,
+      "message": "It\u0027s written in commit message. It\u0027s for bandwidth saving so we don\u0027t need to fetch the whole list every time.",
+      "parentUuid": "16256dc1_05c2c7f0",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "992dae92a26cdfc06da41e507b986878e306a9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f2e9b8_631b3aae",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 14
