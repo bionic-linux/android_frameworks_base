@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3170f92d_bd611d48",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "DEFAULT_CERT or EMPTY_CERT.\n\nNO_CERT_PROVIDED is kinda odd name.",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5450cc1_7cfb3837",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "does MTU change, if not, then just mMtu. Coz, \u0027max\u0027 makes it sound that it could be tweaked.",
+      "range": {
+        "startLine": 85,
+        "startChar": 22,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5bb752_8bef0488",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "Another common pattern to avoid passing in tons of arguments is to simply pass the instance of Builder itself. That ways, you are simply adding only one argument, and requires no changes in future since new fields would be added to the Builder directly.\n\nSo,\n\nprivate Ikev2VpnProfile(Builder builder) {\n  // and then directly reference fields of Builder, even though they are private - since Builder is an inner class. Let me know if you need to see some examples.\n}",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5606b8_33161465",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "should we make a copy of this one as well?",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2610deeb_4ec0406f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "It is a common practice to validate passed arguments in the Builder#build() before constructing the instance.",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 19
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee17d68e_467c9923",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be just \u0027\u003c\u0027? I think MIN_MTU_V6 should be acceptable.",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 22
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca3d59e_2fdc517e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "consider renaming this to reflect the \u0027always\u0027 aspect of meteredness.\nPerhaps something like isAlwaysMetered or isMeteredAlways.",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 28
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8ce1c4_3b994283",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "nit: this should be the argument name.",
+      "range": {
+        "startLine": 307,
+        "startChar": 56,
+        "endLine": 307,
+        "endChar": 67
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7b6f5e_217b4c69",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "(nit)\nalso, it is slightly cleaner to specify what the intended visibility should have been.\nNote, this isn\u0027t required always and in some cases is obvious.\nLike in this case, if you are marking this as \u0027public\u0027, then it would be helpful:\n@VisibleForTesting(otherwise \u003d PRIVATE) or @VisibleForTesting(otherwise \u003d PACKAGE_PRIVATE)\n\nBut if it already package private, then \u0027otherwise\u0027 is not necessary, as the other option left is PRIVATE.",
+      "range": {
+        "startLine": 383,
+        "startChar": 5,
+        "endLine": 383,
+        "endChar": 22
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a1d1a9_dbdf3da6",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "In general, methods annotated with @VFT can be package-private if you are testing these in their respective test classes.",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 10
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801273c6_4db0f358",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "Bit hard to read. \nWhy not something simple certs.get(0)?",
+      "range": {
+        "startLine": 409,
+        "startChar": 44,
+        "endLine": 409,
+        "endChar": 67
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521b7a9d_6e4c75b0",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "It seems something like this can be added to some general util class.",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 443,
+        "endChar": 5
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59dfb9a_18b095b3",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "this should be the constant defined in LinkProperties.",
+      "range": {
+        "startLine": 469,
+        "startChar": 30,
+        "endLine": 469,
+        "endChar": 34
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc50581f_c5b561ed",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "This is kinda not necessary, given that you have a validate() (also see my comment regarding validate being called in the build() method instead of constructor above).",
+      "range": {
+        "startLine": 472,
+        "startChar": 33,
+        "endLine": 472,
+        "endChar": 80
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ab337d_aa7e44b3",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "nit: For tags such as @param, @return, @throws, @see - They are typically not ended with a punctuation if it is a single line.\n\nAlso, if you plan on discarding all of the javadoc related advise, then it may help at least to be consistent (either add punctuation it in all such places. Same goes for the summary fragment).",
+      "range": {
+        "startLine": 474,
+        "startChar": 70,
+        "endLine": 474,
+        "endChar": 71
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ebdda8_9e029bf5",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "also specify what is the minimum in the javadoc. I think it would be better to expose a public constant in this class for easy referencing. Other option is to copy the value in the javadoc which is ugly in case the min. were to be changed in future.",
+      "range": {
+        "startLine": 614,
+        "startChar": 90,
+        "endLine": 615,
+        "endChar": 23
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a081243_de61fd38",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "These are mentioned in comments above:\n1) validate() should be part of build() (before constructing Ikev2VpnProfile)\n2) pass Builder instance to Ikev2VpnProfile constructor. So,\nreturn new Ikev2VpnProfile(this);",
+      "range": {
+        "startLine": 669,
+        "startChar": 11,
+        "endLine": 669,
+        "endChar": 20
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ee36ff_65733fd2",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "Consider adding a line or two (in next para) about what platform-based means (and possibly, how it is different than the other (TUN based) VPN).",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 69
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10aa414e_2f08775c",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "why not declare them inside PlatformVpnType interface?\nAt the very least you won\u0027t need \u0027public static final\u0027.\nPlus, that yields a better encapsulation, and much cleaner in terms of referencing these fields.",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877633af_970e84d0",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "punctuation",
+      "range": {
+        "startLine": 63,
+        "startChar": 39,
+        "endLine": 63,
+        "endChar": 40
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58220e6e_25a9fb0b",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T20:48:08Z",
+      "side": 1,
+      "message": "can these be made final?",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
