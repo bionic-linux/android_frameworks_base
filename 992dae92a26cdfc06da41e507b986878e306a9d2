@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "16256dc1_05c2c7f0",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-16T05:34:02Z",
+      "side": 1,
+      "message": "Sorry for not being clear. I mean being more explicit about why we want to add the cache (i.e., for retrieving the revocation list) so that readers don\u0027t need to dig out code history to find out.",
+      "parentUuid": "4b661f64_e7c34267",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "992dae92a26cdfc06da41e507b986878e306a9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f2e9b8_631b3aae",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 14
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "getStackTraceString returns an empty string if |e| is caused directly or indirectly by a UnknownHostException. Log the string representation of |e| if that\u0027s the case.",
       "parentUuid": "91f2e9b8_631b3aae",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "992dae92a26cdfc06da41e507b986878e306a9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdc1bf0_73d75a04",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-16T05:34:02Z",
+      "side": 1,
+      "message": "Use Log.e(TAG, e.toString(), e) then. It will take care of the UnknowHostException case.",
+      "parentUuid": "0bfe1b5e_4148c0fe",
       "range": {
         "startLine": 157,
         "startChar": 12,
