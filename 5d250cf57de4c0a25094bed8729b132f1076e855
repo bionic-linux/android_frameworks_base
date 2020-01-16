@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6854bd80_c45b9952",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4326,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-16T02:51:58Z",
+      "side": 1,
+      "message": "Since these are so specific to Telephony, it feels like they belong in packages/services/Telephony rather than in this config.xml file.",
+      "range": {
+        "startLine": 4326,
+        "startChar": 4,
+        "endLine": 4326,
+        "endChar": 50
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc986b1a_6e872272",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4327,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-16T02:51:58Z",
+      "side": 1,
+      "message": "This name is not entirely clear; how about something like:\nuse_pdp_retry_for_data_reject",
+      "range": {
+        "startLine": 4327,
+        "startChar": 16,
+        "endLine": 4327,
+        "endChar": 53
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906ff40b_fccc5b79",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4331,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-16T02:51:58Z",
+      "side": 1,
+      "message": "What are the units?  sec?\ndata_retry_delay_sec\ndata_retry_idle_delay_sec",
+      "range": {
+        "startLine": 4329,
+        "startChar": 4,
+        "endLine": 4331,
+        "endChar": 54
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52953af8_4ae44088",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4336,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-16T02:51:58Z",
+      "side": 1,
+      "message": "Are these strings only used internally?  String values defined in a config.xml can\u0027t be translated; these should likely be moved to the strings.xml in packages/services/Telephony.",
+      "range": {
+        "startLine": 4333,
+        "startChar": 4,
+        "endLine": 4336,
+        "endChar": 63
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
