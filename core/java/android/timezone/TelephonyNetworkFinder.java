@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package android.timezone;
 
 import android.annotation.NonNull;
@@ -23,7 +22,7 @@ import android.annotation.SystemApi;
 import java.util.Objects;
 
 /**
- * A class that can find telephony networks loaded via {@link TelephonyLookup}.
+ * A class that can find telephony network information loaded via {@link TelephonyLookup}.
  *
  * @hide
  */

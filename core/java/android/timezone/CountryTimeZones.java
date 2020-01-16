@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package android.timezone;
 
 import android.annotation.NonNull;
@@ -43,6 +42,7 @@ public final class CountryTimeZones {
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final class TimeZoneMapping {
 
+        @NonNull
         private libcore.timezone.CountryTimeZones.TimeZoneMapping mDelegate;
 
         TimeZoneMapping(libcore.timezone.CountryTimeZones.TimeZoneMapping delegate) {
