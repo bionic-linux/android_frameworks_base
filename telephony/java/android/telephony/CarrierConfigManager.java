@@ -1576,7 +1576,6 @@ public class CarrierConfigManager {
     public static final String KEY_MMS_UA_PROF_TAG_NAME_STRING = "uaProfTagName";
     public static final String KEY_MMS_UA_PROF_URL_STRING = "uaProfUrl";
     public static final String KEY_MMS_USER_AGENT_STRING = "userAgent";
-    /** @hide */
     public static final String KEY_MMS_CLOSE_CONNECTION_BOOL = "mmsCloseConnection";
 
     /**
