@@ -52,6 +52,7 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.AppOpsManager;
 import android.app.BroadcastOptions;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -592,7 +593,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private Set<String> mWolSupportedInterfaces;
 
-    private TelephonyManager mTelephonyManager;
+    private final TelephonyManager mTelephonyManager;
+    private final AppOpsManager mAppOpsManager;
 
     private KeepaliveTracker mKeepaliveTracker;
     private NetworkNotificationManager mNotifier;
@@ -983,6 +985,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNetd = netd;
         mKeyStore = KeyStore.getInstance();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        mAppOpsManager = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
 
         // To ensure uid rules are synchronized with Network Policy, register for
         // NetworkPolicyManagerService events must happen prior to NetworkPolicyManagerService
@@ -1653,6 +1656,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // if target SDK<29 or otherwise has the ACCESS_FINE_LOCATION permission granted
         // 3. The user's location toggle is on
         nc.setOwnerUid(INVALID_UID);
+        nc.setOwnerPackageName(null);
     }
 
     private LinkProperties linkPropertiesRestrictedForCallerPermissions(
@@ -1678,14 +1682,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return newLp;
     }
 
-    private void restrictRequestUidsForCaller(NetworkCapabilities nc) {
+    private void restrictRequestUidsAndSetOwnerForCaller(NetworkCapabilities nc,
+            int callingUid, String callingPackageName) {
         if (!checkSettingsPermission()) {
-            nc.setSingleUid(Binder.getCallingUid());
+            nc.setOwnerUid(callingUid);
+            nc.setOwnerPackageName(callingPackageName);
         }
         nc.setAdministratorUids(Collections.EMPTY_LIST);
-
-        // Clear owner UID; this can never come from an app.
-        nc.setOwnerUid(INVALID_UID);
     }
 
     private void restrictBackgroundRequestForCaller(NetworkCapabilities nc) {
@@ -5118,7 +5121,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // This checks that the passed capabilities either do not request a
     // specific SSID/SignalStrength, or the calling app has permission to do so.
     private void ensureSufficientPermissionsForRequest(NetworkCapabilities nc,
-            int callerPid, int callerUid) {
+            int callerPid, int callerUid, String callerPackageName) {
         if (null != nc.getSSID() && !checkSettingsPermission(callerPid, callerUid)) {
             throw new SecurityException("Insufficient permissions to request a specific SSID");
         }
@@ -5127,6 +5130,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 && !checkNetworkSignalStrengthWakeupPermission(callerPid, callerUid)) {
             throw new SecurityException(
                     "Insufficient permissions to request a specific signal strength");
+        }
+
+        if (!checkSettingsPermission(callerPid, callerUid)) {
+            mAppOpsManager.checkPackage(callerUid, callerPackageName);
         }
     }
 
@@ -5174,7 +5181,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
         MatchAllNetworkSpecifier.checkNotMatchAllNetworkSpecifier(ns);
-        ns.assertValidFromUid(Binder.getCallingUid());
     }
 
     private void ensureValid(NetworkCapabilities nc) {
@@ -5186,7 +5192,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,
-            Messenger messenger, int timeoutMs, IBinder binder, int legacyType) {
+            Messenger messenger, int timeoutMs, IBinder binder, int legacyType,
+            @NonNull String callingPackageName) {
+        final int callingUid = Binder.getCallingUid();
         final NetworkRequest.Type type = (networkCapabilities == null)
                 ? NetworkRequest.Type.TRACK_DEFAULT
                 : NetworkRequest.Type.REQUEST;
@@ -5194,7 +5202,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // the default network request. This allows callers to keep track of
         // the system default network.
         if (type == NetworkRequest.Type.TRACK_DEFAULT) {
-            networkCapabilities = createDefaultNetworkCapabilitiesForUid(Binder.getCallingUid());
+            networkCapabilities = createDefaultNetworkCapabilitiesForUid(callingUid);
             enforceAccessPermission();
         } else {
             networkCapabilities = new NetworkCapabilities(networkCapabilities);
@@ -5206,13 +5214,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
-                Binder.getCallingPid(), Binder.getCallingUid());
+                Binder.getCallingPid(), callingUid, callingPackageName);
         // Set the UID range for this request to the single UID of the requester, or to an empty
         // set of UIDs if the caller has the appropriate permission and UIDs have not been set.
         // This will overwrite any allowed UIDs in the requested capabilities. Though there
         // are no visible methods to set the UIDs, an app could use reflection to try and get
         // networks for other apps so it's essential that the UIDs are overwritten.
-        restrictRequestUidsForCaller(networkCapabilities);
+        restrictRequestUidsAndSetOwnerForCaller(
+                networkCapabilities, callingUid, callingPackageName);
 
         if (timeoutMs < 0) {
             throw new IllegalArgumentException("Bad timeout specified");
@@ -5287,16 +5296,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkRequest pendingRequestForNetwork(NetworkCapabilities networkCapabilities,
-            PendingIntent operation) {
+            PendingIntent operation, @NonNull String callingPackageName) {
         checkNotNull(operation, "PendingIntent cannot be null.");
+        final int callingUid = Binder.getCallingUid();
         networkCapabilities = new NetworkCapabilities(networkCapabilities);
         enforceNetworkRequestPermissions(networkCapabilities);
         enforceMeteredApnPolicy(networkCapabilities);
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
-                Binder.getCallingPid(), Binder.getCallingUid());
+                Binder.getCallingPid(), callingUid, callingPackageName);
         ensureValidNetworkSpecifier(networkCapabilities);
-        restrictRequestUidsForCaller(networkCapabilities);
+        restrictRequestUidsAndSetOwnerForCaller(
+                networkCapabilities, callingUid, callingPackageName);
 
         NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, TYPE_NONE,
                 nextNetworkRequestId(), NetworkRequest.Type.REQUEST);
@@ -5344,15 +5355,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities,
-            Messenger messenger, IBinder binder) {
+            Messenger messenger, IBinder binder, @NonNull String callingPackageName) {
+        final int callingUid = Binder.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
 
         NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
-                Binder.getCallingPid(), Binder.getCallingUid());
-        restrictRequestUidsForCaller(nc);
+                Binder.getCallingPid(), callingUid, callingPackageName);
+        restrictRequestUidsAndSetOwnerForCaller(nc, callingUid, callingPackageName);
         // Apps without the CHANGE_NETWORK_STATE permission can't use background networks, so
         // make all their listens include NET_CAPABILITY_FOREGROUND. That way, they will get
         // onLost and onAvailable callbacks when networks move in and out of the background.
@@ -5372,17 +5384,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void pendingListenForNetwork(NetworkCapabilities networkCapabilities,
-            PendingIntent operation) {
+            PendingIntent operation, @NonNull String callingPackageName) {
         checkNotNull(operation, "PendingIntent cannot be null.");
+        final int callingUid = Binder.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
         ensureValid(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
-                Binder.getCallingPid(), Binder.getCallingUid());
+                Binder.getCallingPid(), callingUid, callingPackageName);
 
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
-        restrictRequestUidsForCaller(nc);
+        restrictRequestUidsAndSetOwnerForCaller(nc, callingUid, callingPackageName);
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
                 NetworkRequest.Type.LISTEN);
