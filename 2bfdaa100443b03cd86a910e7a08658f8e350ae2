@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed5cfda_77ae599f",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T17:31:01Z",
+      "side": 0,
+      "message": "Why are we dropping this again ? I thought it was a good idea. It gives you the time when the network last validated and its NC and LP at that time, which may be valuable.",
+      "range": {
+        "startLine": 402,
+        "startChar": 73,
+        "endLine": 403,
+        "endChar": 52
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

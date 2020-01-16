@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "081d11a1_41101391",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T17:31:01Z",
+      "side": 1,
+      "message": "Let\u0027s not limit it to that because when we add such a category we may forget to update this list, and even if we don\u0027t old documentation will stay on the net forever. So I prefer to be a little bit more vague and insinuate the list may or may not be exhaustive ; the criterion above is what is authoritative.",
+      "range": {
+        "startLine": 480,
+        "startChar": 78,
+        "endLine": 481,
+        "endChar": 33
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b3ac91_3242096b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-16T17:31:01Z",
+      "side": 1,
+      "message": "Won\u0027t we throw in their face if they try to register without those permissions ? I do see the consistency problem with the case where an app stops satisfying the requirements, but I think it\u0027s easier to understand for developers than to let them register and never do anything for them, and that\u0027s probably more important in this case.\nI guess you can add that any app that stops satisfying the requirements after it registered will stop seeing the callbacks.",
+      "range": {
+        "startLine": 489,
+        "startChar": 89,
+        "endLine": 489,
+        "endChar": 90
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
