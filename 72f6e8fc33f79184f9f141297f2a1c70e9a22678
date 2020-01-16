@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bff331e_e0663b7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-16T16:07:25Z",
+      "side": 1,
+      "message": "Please document the test steps performed to verify this change.  I presume its enough to have run the unit tests for the code which uses this constant.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "72f6e8fc33f79184f9f141297f2a1c70e9a22678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
