@@ -4480,9 +4480,11 @@ package android.net {
 
   public class NetworkPolicyManager {
     method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void addSubscriptionListener(@NonNull android.net.SubscriptionListener);
+    method @NonNull public android.telephony.SubscriptionPlan[] getSubscriptionPlans(int, @NonNull String);
     method @Nullable public String getSubscriptionPlansOwner(int);
     method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void removeSubscriptionListener(@NonNull android.net.SubscriptionListener);
     method public void setSubscriptionOverride(int, int, int, long, @NonNull String);
+    method public void setSubscriptionPlans(int, @NonNull android.telephony.SubscriptionPlan[], @NonNull String);
     field public static final int OVERRIDE_CONGESTED = 2; // 0x2
     field public static final int OVERRIDE_UNMETERED = 1; // 0x1
   }
