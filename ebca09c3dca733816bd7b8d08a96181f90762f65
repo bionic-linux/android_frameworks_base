@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fd95c7_e2cb7d73",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "javadoc nit: Summary fragments should end with a punctuation. Add \".\".\nAdd so in other places in this class.",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca61dd4_0a511df6",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "A side note - reading this and the fact that this needs to be backwards compatible makes custom encoding and decoding a lot painful (and not to mention, error prone). A slightly better alternative that comes to mind is using protos which are serializable and parcelable (depending on which proto generator you use. For instance, nano protos are parcelable AFAIR), and you don\u0027t have to deal at all with any custom encoding and decoding, simply use proto encode and decode methods which do all this for you while taking care of backwards compatibility.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 95
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bbc15b2a_a64b99dd",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "nit: consider renaming this to something similar to other booleans (like isBypassable) so that it is understandable that this field is a boolean. Perhaps something like \u0027areAuthParamsInline\u0027.",
+      "range": {
+        "startLine": 135,
+        "startChar": 19,
+        "endLine": 135,
+        "endChar": 35
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d9416e_68ced9d4",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "Consider documenting IllegalArgumentException. So here it is fine to throw IllegalArgEx since an argument passed is being validated (unlike below in encode() which should be IllegalStateEx).",
+      "range": {
+        "startLine": 187,
+        "startChar": 5,
+        "endLine": 187,
+        "endChar": 7
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd2202c_9f1f5fd0",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "Might be better to replace \u0027\u003d\u003d\u0027 with \u0027\u003e\u003d\u0027 (assuming this should not be more that 24)",
+      "range": {
+        "startLine": 240,
+        "startChar": 80,
+        "endLine": 240,
+        "endChar": 82
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2e2434_2f316f8a",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "Adding a \u0027!\u0027 makes it harder to read. In general negating conditions makes it less readable.\nSo in this case, you could do something like:\n\nif (len \u003c 14 || len \u003e 19) {\n  if (len \u003d\u003d 24) {\n    return null;\n  }\n}\n\nOr a slightly better option:\n\nfinal boolean isNonStandardProfile \u003d len \u003c 14 || len \u003e 19;\nif (isNonStandardProfile \u0026\u0026 len \u003d\u003d 24) {\n  return null;\n}",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 87
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5105e9_830ed47f",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "From a readability stand point, this should be IllegalStateException (or some other variant) since method encode() is not accepting any arguments.",
+      "range": {
+        "startLine": 298,
+        "startChar": 24,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb67c7f_8055f94e",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "nit: define a constant which would also help understanding what this represents.",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 37
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065fa3af_d3becce3",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "toSTring conversion is redundant, StringBuilder supports appending \u0027int\u0027 directly.",
+      "range": {
+        "startLine": 338,
+        "startChar": 47,
+        "endLine": 338,
+        "endChar": 63
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f341552_90fe8d72",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "Seems unnecessary. Single line comments (if they can fit) should be fine.",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 356,
+        "endChar": 6
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8900b69_44217d85",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "nit: would be nice to be a little more specific.",
+      "range": {
+        "startLine": 407,
+        "startChar": 72,
+        "endLine": 407,
+        "endChar": 79
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2789c44_e504967f",
+        "filename": "tests/net/java/com/android/internal/net/VpnProfileTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-16T18:50:53Z",
+      "side": 1,
+      "message": "optional: a slightly cleaner alternative is to use assertThrows (lets you skip the try/catch):\n\nassertThrows(IllegalArgumentException.class () -\u003e profile.setAllowedAlgorithms(...));",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "ebca09c3dca733816bd7b8d08a96181f90762f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
