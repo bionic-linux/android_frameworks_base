@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d15a519b_26f327d4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6840,
+      "author": {
+        "id": 1170206
+      },
+      "writtenOn": "2020-01-16T04:50:29Z",
+      "side": 1,
+      "message": "nit:\nis anyone outside TelephonyManager using it? if not, consider make it private or just combine with public API above",
+      "range": {
+        "startLine": 6840,
+        "startChar": 4,
+        "endLine": 6840,
+        "endChar": 10
+      },
+      "revId": "9a1ae29e8204a90b4fd23bb8941807b951ac86cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
