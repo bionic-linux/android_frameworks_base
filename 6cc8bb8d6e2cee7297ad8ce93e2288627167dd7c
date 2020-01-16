@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5c1d4c_4f238ea4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-16T00:48:05Z",
+      "side": 1,
+      "message": "I think you will need to add a description for it to get Tyler\u0027s +1.",
+      "revId": "6cc8bb8d6e2cee7297ad8ce93e2288627167dd7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
