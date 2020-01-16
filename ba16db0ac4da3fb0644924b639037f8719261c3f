@@ -117,6 +117,30 @@
       "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b5becc2_a4e01bed",
+        "filename": "core/java/com/android/internal/os/RuntimeInit.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1324603
+      },
+      "writtenOn": "2020-01-16T06:34:07Z",
+      "side": 1,
+      "message": "Patch merged.",
+      "parentUuid": "26c8f8da_e52b4992",
+      "range": {
+        "startLine": 246,
+        "startChar": 20,
+        "endLine": 246,
+        "endChar": 37
+      },
+      "revId": "ba16db0ac4da3fb0644924b639037f8719261c3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
