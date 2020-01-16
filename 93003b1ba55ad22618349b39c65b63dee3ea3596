@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42b3bb21_d13056a1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9121,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-01-16T00:35:29Z",
+      "side": 1,
+      "message": "can you separate the giant docstring above into separate docstrings for each of the constants?",
+      "range": {
+        "startLine": 9121,
+        "startChar": 0,
+        "endLine": 9121,
+        "endChar": 16
+      },
+      "revId": "93003b1ba55ad22618349b39c65b63dee3ea3596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
