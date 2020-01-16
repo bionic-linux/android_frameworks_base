@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71abf2e0_94937541",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-16T02:50:01Z",
+      "side": 1,
+      "message": "Add comments to indicate how it is used",
+      "range": {
+        "startLine": 150,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "992dae92a26cdfc06da41e507b986878e306a9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f2e9b8_631b3aae",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-01-16T02:50:01Z",
+      "side": 1,
+      "message": "Why do you need to handle empty stack trace?\nHow about just Log.e(TAG, msg, e)?",
+      "range": {
+        "startLine": 157,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "992dae92a26cdfc06da41e507b986878e306a9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
