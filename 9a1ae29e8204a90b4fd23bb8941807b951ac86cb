@@ -22,6 +22,30 @@
       "revId": "9a1ae29e8204a90b4fd23bb8941807b951ac86cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b4b70a_8919c313",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6840,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-16T20:48:21Z",
+      "side": 1,
+      "message": "Yes, make this version that takes in a subId @hide please. Same for other APIs.",
+      "parentUuid": "d15a519b_26f327d4",
+      "range": {
+        "startLine": 6840,
+        "startChar": 4,
+        "endLine": 6840,
+        "endChar": 10
+      },
+      "revId": "9a1ae29e8204a90b4fd23bb8941807b951ac86cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
