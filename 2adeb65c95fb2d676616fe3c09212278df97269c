@@ -22,6 +22,30 @@
       "revId": "2adeb65c95fb2d676616fe3c09212278df97269c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526db07c_8832f1f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2020-01-16T16:12:09Z",
+      "side": 1,
+      "message": "Since it was just exposing constants, I wasn\u0027t sure what tests to run, but I\u0027ve updated the comment with the build commands I ran to test.",
+      "parentUuid": "4aa15aea_2d1b8fe4",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "2adeb65c95fb2d676616fe3c09212278df97269c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
