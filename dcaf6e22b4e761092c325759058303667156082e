@@ -16,6 +16,24 @@
       "revId": "dcaf6e22b4e761092c325759058303667156082e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e503f0_fd3c3b0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-01-17T08:30:52Z",
+      "side": 1,
+      "message": "Oh sorry Treehugger autosubmitted before I could address this. Hopefully the Merged-In tag is sufficient to give the reader a hint that it might be a cherry pick.",
+      "parentUuid": "6f2db18c_040fec2a",
+      "revId": "dcaf6e22b4e761092c325759058303667156082e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
