@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96043066_65750bb2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7519,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T00:59:07Z",
+      "side": 1,
+      "message": "Please do this much earlier to narrow the race condition – immediately in reportNetworkConnectivity. The argument here should be @NonNull.",
+      "range": {
+        "startLine": 7519,
+        "startChar": 11,
+        "endLine": 7519,
+        "endChar": 38
+      },
+      "revId": "7796113314b4074e9a17e5c00aff0586b867b6cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024a1735_79896565",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6470,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T00:59:07Z",
+      "side": 1,
+      "message": "There is a lot of copy-paste involved here again ; can you please try to have less duplicated logic ?",
+      "range": {
+        "startLine": 6470,
+        "startChar": 16,
+        "endLine": 6470,
+        "endChar": 73
+      },
+      "revId": "7796113314b4074e9a17e5c00aff0586b867b6cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
