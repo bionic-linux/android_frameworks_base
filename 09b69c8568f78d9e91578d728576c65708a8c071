@@ -70,6 +70,30 @@
       "revId": "09b69c8568f78d9e91578d728576c65708a8c071",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1f9b799_eaa3b95b",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72229,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-17T17:18:13Z",
+      "side": 1,
+      "message": "Yeah, I realize the syntax here is kind of arbitrary, but since it losely follows Java syntax, I\u0027d have expected a comma. I\u0027ve emailed aurimas about it.",
+      "parentUuid": "9f7c131b_93374f98",
+      "range": {
+        "startLine": 72229,
+        "startChar": 94,
+        "endLine": 72229,
+        "endChar": 95
+      },
+      "revId": "09b69c8568f78d9e91578d728576c65708a8c071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
