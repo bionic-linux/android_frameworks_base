@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fade43cf_ca4dc2b5",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72229,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-17T16:26:49Z",
+      "side": 1,
+      "message": "peteg: I\u0027m surprised that there is no comma here, is that a Metalava bug?",
+      "range": {
+        "startLine": 72229,
+        "startChar": 94,
+        "endLine": 72229,
+        "endChar": 95
+      },
+      "revId": "09b69c8568f78d9e91578d728576c65708a8c071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
