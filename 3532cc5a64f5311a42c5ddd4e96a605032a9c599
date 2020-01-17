@@ -22,6 +22,30 @@
       "revId": "3532cc5a64f5311a42c5ddd4e96a605032a9c599",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bf0b19_705d8f68",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2020-01-17T05:51:25Z",
+      "side": 1,
+      "message": "Good suggestion, this will help guys who are confused on the recently changes on the API.",
+      "parentUuid": "3fa34769_9d03f5fc",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "3532cc5a64f5311a42c5ddd4e96a605032a9c599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
