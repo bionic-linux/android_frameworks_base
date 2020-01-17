@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64a4feda_e27901c2",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Completed in aosp/1192773 as part of b/147848028.",
+      "parentUuid": "8434fa08_a97d4404",
+      "range": {
+        "startLine": 543,
+        "startChar": 61,
+        "endLine": 544,
+        "endChar": 78
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d8ce88_f1871f31",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08fe983_b8a67c96",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d8ce88_f1871f31",
+      "range": {
+        "startLine": 546,
+        "startChar": 6,
+        "endLine": 546,
+        "endChar": 74
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36ff8c3e_eb50e0a9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5067,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Currently, we are using Type.LISTEN as we also need the NetworkRequest to be matched with its appropriate Networks. The logic for that process is fairly complicated and may not be easily refactored. I\u0027ve filed b/147849190 to track possibly adding a new type.",
+      "parentUuid": "faad6d36_e8684978",
+      "range": {
+        "startLine": 5067,
+        "startChar": 12,
+        "endLine": 5067,
+        "endChar": 39
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32996902_8b64184f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a5eb8797_8384adcb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5073,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32996902_8b64184f",
+      "range": {
+        "startLine": 5073,
+        "startChar": 12,
+        "endLine": 5073,
+        "endChar": 36
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57140b5_4eaaf885",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -105,6 +201,30 @@
       "writtenOn": "2020-01-16T17:24:55Z",
       "side": 1,
       "message": "This is only for tests right ? Test-only code in the production code is something we should try to avoid as much as possible, and when we can\u0027t it should be marked very clearly with comments. In this case I think you should remove this and rearchitecture the tests – see comments on ConnectivityServiceTests for hints on how to do this.",
+      "range": {
+        "startLine": 5065,
+        "startChar": 8,
+        "endLine": 5074,
+        "endChar": 9
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31c71f3_9cef2a30",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "This is used for more than just tests.\n\nThe intent here is to be able to create a NetworkRequestInfo with an arbitrary NetworkRequest and uid. This constructor for register() - I think it makes more sense than the NetworkRequestInfo(NetworkRequest, PendingIntent) constructor, where we pass in a null PendingIntent. It is also used to test that our permissions check works correctly for mismatched uids on unregistering callbacks (see testUnregisterConnectivityDiagnosticsCallbackMismatchedUid).",
+      "parentUuid": "d57140b5_4eaaf885",
       "range": {
         "startLine": 5065,
         "startChar": 8,
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "63081a12_a8d24404",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7260,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Filed b/147816404 to track this.",
+      "parentUuid": "23c1a70e_4053d044",
+      "range": {
+        "startLine": 7260,
+        "startChar": 10,
+        "endLine": 7260,
+        "endChar": 40
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "484a219b_af1a3a50",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7260,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "The linter does not say anything. Additionally, NetworkStateTrackerHandler and InternalHandler are both non-static inner classes.\n\nAre we sure that this what we want? If so, we should probably update all of the handlers to be static.",
+      "parentUuid": "39b6824a_c7daaf69",
+      "range": {
+        "startLine": 7260,
+        "startChar": 4,
+        "endLine": 7260,
+        "endChar": 9
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01ba87de_30e7cc19",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -174,6 +342,30 @@
       "writtenOn": "2020-01-16T17:24:55Z",
       "side": 1,
       "message": "What you wrote is fine but you can afford to just inline this",
+      "range": {
+        "startLine": 7269,
+        "startChar": 62,
+        "endLine": 7269,
+        "endChar": 68
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62f6295d_0580fde6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7269,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ba87de_30e7cc19",
       "range": {
         "startLine": 7269,
         "startChar": 62,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0e136fab_78f1231a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7322,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "I think Type.LISTEN makes sense for these requests. \n\nIt appears that l.6143 already handles this case and exits early when no messenger is present. Thoughts?",
+      "parentUuid": "8d2fac6c_5032b04e",
+      "range": {
+        "startLine": 7322,
+        "startChar": 8,
+        "endLine": 7322,
+        "endChar": 36
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f0d930_a782ee4c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -229,6 +445,30 @@
       "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4192bc1b_114c347d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7358,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f0d930_a782ee4c",
+      "range": {
+        "startLine": 7358,
+        "startChar": 0,
+        "endLine": 7358,
+        "endChar": 43
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "f8eed54a_2ca1820e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7364,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1504f661_ff5af32f",
+      "range": {
+        "startLine": 7364,
+        "startChar": 66,
+        "endLine": 7364,
+        "endChar": 68
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c96a464_2858a075",
         "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
         "patchSetId": 19
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "e294b9cc_a7be496e",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c96a464_2858a075",
+      "range": {
+        "startLine": 293,
+        "startChar": 25,
+        "endLine": 293,
+        "endChar": 34
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ea5994_82d4a143",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 19
@@ -289,6 +577,30 @@
       "writtenOn": "2020-01-16T17:24:55Z",
       "side": 1,
       "message": "This is not very close to a real scenario. Take a look at how other tests in this file proceed with callbacks : it\u0027s more realistic and simpler, it needs less access to the internals of ConnectivityService, and it doesn\u0027t require any test-only code in the production codebase.\n\n(the drawback is how much instrumentation we had to build, but that instrumentation mostly is already there for you now ; also take a look at how the TestCallback class works and its parent classes, there is pretty great tooling there that you can reuse to test your callbacks going forward)",
+      "range": {
+        "startLine": 6263,
+        "startChar": 17,
+        "endLine": 6263,
+        "endChar": 56
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60fdd85_79a1ea8c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6263,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-17T23:22:18Z",
+      "side": 1,
+      "message": "This is not testing code - it is calling the aidl function for registering a ConnectivityDiagnosticsBinder with ConnectivityService.\n\nGiven that registering a callback is a silent operation (currently no callbacks are invoked), we should verify that ConnectivityService state is mutated as expected. In this case, that means we check the callbacks map to ensure that it is updated.\n\nFiled b/147849853 to track invoking onConnectivityReport after register() is complete. However, I do think verifying that register() mutates state inside ConnectivityService is a worthwhile test.\n\nThoughts?",
+      "parentUuid": "31ea5994_82d4a143",
       "range": {
         "startLine": 6263,
         "startChar": 17,
