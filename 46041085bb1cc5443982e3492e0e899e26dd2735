@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab33b1d_4ccd156a",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-17T01:34:22Z",
+      "side": 1,
+      "message": "nit: suggest to call out WifiNetworkSpecifier as well with @see annotations.",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 63
+      },
+      "revId": "46041085bb1cc5443982e3492e0e899e26dd2735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
