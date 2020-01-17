@@ -93,6 +93,29 @@
       "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "773b5e5f_a91b31dd",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T14:23:15Z",
+      "side": 1,
+      "message": "Why remove this ?",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 33
+      },
+      "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
