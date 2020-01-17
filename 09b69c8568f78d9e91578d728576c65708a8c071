@@ -46,6 +46,30 @@
       "revId": "09b69c8568f78d9e91578d728576c65708a8c071",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f7c131b_93374f98",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72229,
+      "author": {
+        "id": 1203210
+      },
+      "writtenOn": "2020-01-17T16:45:01Z",
+      "side": 1,
+      "message": "I don\u0027t actually know what the expected syntax for this file is (it isn\u0027t Java, it just looks a bit like it sometimes), so I don\u0027t actually know whether the comma is expected.\n\nHowever, if it\u0027s a bug, this isn\u0027t the first place we hit it, e.g. TreeSet is declare as\n\n  public class TreeSet\u003cE\u003e extends java.util.AbstractSet\u003cE\u003e implements java.lang.Cloneable java.util.NavigableSet\u003cE\u003e java.io.Serializable {\n\nwith no commas between the three interfaces implemented.\n\nSo I don\u0027t think it should stop this change being submitted, you can follow up elsewhere if you\u0027re worried I think?",
+      "parentUuid": "e9569db8_b3475ab7",
+      "range": {
+        "startLine": 72229,
+        "startChar": 94,
+        "endLine": 72229,
+        "endChar": 95
+      },
+      "revId": "09b69c8568f78d9e91578d728576c65708a8c071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
