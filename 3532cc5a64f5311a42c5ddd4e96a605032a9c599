@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa34769_9d03f5fc",
+        "filename": "core/java/android/net/StringNetworkSpecifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-17T05:26:34Z",
+      "side": 1,
+      "message": "To help API review I suggest you add a small comment saying this was tentatively made SystemApi in December in the scramble for publishing mainline APIs, and we should remove this before R is published.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "3532cc5a64f5311a42c5ddd4e96a605032a9c599",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
