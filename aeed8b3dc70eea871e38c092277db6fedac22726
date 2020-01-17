@@ -116,6 +116,30 @@
       "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19ee063_4f1b4671",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T22:22:10Z",
+      "side": 1,
+      "message": "After adding the call to validate in the setter, this appeared to be a no-op check, and impossible to hit. Since Ikev2VpnProfile validates in the builder, and then later uses the setter (upon building), the list of algorithms are guaranteed to be valid.\n\nIn the case of a malicious app, this check would never stop them from pushing an invalid profile directly over the binder interface. In the system server, any non-binder decoding already has to be in a try-catch block (since the argument count also throws an exception) in order to prevent system server crashes.\n\nIn the case where an app uses reflection to modify the list, it should fail to unparcel after the binder and an exception straight back at them.\n\nSo my thought was that this is a useless check. If you\u0027d prefer, I can add it back in.",
+      "parentUuid": "773b5e5f_a91b31dd",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 33
+      },
+      "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
