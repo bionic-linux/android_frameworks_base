@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "b0e8b920_efb9602f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Eh, that part is probably good to have for safety. We don\u0027t know what the future usage might be.\n\nWe could do Process.isApplicationUid(Binder.getCallingUid()) \u0026\u0026 !Process.isApplicationUid(Process.myUid()), which basically says that it\u0027s being sent from an app, but being received by a system service.",
+      "parentUuid": "e36d0a79_32f784d5",
+      "range": {
+        "startLine": 1519,
+        "startChar": 49,
+        "endLine": 1519,
+        "endChar": 55
+      },
+      "revId": "c9e4f9d503bcd678cd1f193d1c3df519b513757e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a922bb_e0f4820a",
         "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
         "patchSetId": 3

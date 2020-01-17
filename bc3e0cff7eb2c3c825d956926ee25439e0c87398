@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9caafe5_94dcca8d",
+        "filename": "api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 29064,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Is this meant to be exposed?",
+      "range": {
+        "startLine": 29064,
+        "startChar": 0,
+        "endLine": 29064,
+        "endChar": 36
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6795be7d_83367f7e",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "These probably could be inlined. I\u0027m not one to argue here though.",
+      "range": {
+        "startLine": 1275,
+        "startChar": 0,
+        "endLine": 1275,
+        "endChar": 70
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a24d83f_af9ddb31",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "We\u0027re missing an \u0027@\u0027 here",
+      "range": {
+        "startLine": 832,
+        "startChar": 8,
+        "endLine": 832,
+        "endChar": 9
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fb39d0_e458b257",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Optional: If this is not INVALID_UID, we\u0027re the owner, right (the system server should never be using this anyways)?\n\nThis could be mOwnerUid !\u003d Process.INVALID_UID\n\nBut again, very optional. (and I might be missing an edge case)",
+      "range": {
+        "startLine": 845,
+        "startChar": 15,
+        "endLine": 845,
+        "endChar": 43
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49af4389_fda3e898",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Smallest of nits:\n\nFirst para should be a single line, there should be a space between any paragraph and the params",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 6
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713af73c_870b6a99",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "I\u0027m still not sure what this is used for",
+      "range": {
+        "startLine": 240,
+        "startChar": 32,
+        "endLine": 240,
+        "endChar": 48
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7384414c_aa7ac1b4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "defaultNri",
+      "range": {
+        "startLine": 952,
+        "startChar": 27,
+        "endLine": 952,
+        "endChar": 37
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2c0243_bc9b8a00",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Remove extra line?",
+      "range": {
+        "startLine": 1199,
+        "startChar": 0,
+        "endLine": 1199,
+        "endChar": 0
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcce027_f039237e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t this return true if there is location permission? should this entire check be negated?",
+      "range": {
+        "startLine": 1648,
+        "startChar": 17,
+        "endLine": 1648,
+        "endChar": 48
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe78252_56e61c48",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "We should make sure this pulls the right one. I think it\u0027s correct, since no calling identity is cleared in establish(), but we need to make sure this is correct at some point.",
+      "range": {
+        "startLine": 953,
+        "startChar": 41,
+        "endLine": 953,
+        "endChar": 63
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18d596ef_c37fb62b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-17T02:30:29Z",
+      "side": 1,
+      "message": "Suggest what this is testing for\n\ntestUnparcelOwnerUidClearsForAppToSystem",
+      "range": {
+        "startLine": 600,
+        "startChar": 33,
+        "endLine": 600,
+        "endChar": 35
+      },
+      "revId": "bc3e0cff7eb2c3c825d956926ee25439e0c87398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
