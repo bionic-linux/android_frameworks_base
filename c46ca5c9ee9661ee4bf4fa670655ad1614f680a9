@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "115fae5a_f7aa5510",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Did we miss this previously?",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 317,
+        "endChar": 32
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffc4fae_bf432daf",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "nit: can be statically imported. Will make it less verbose.",
+      "range": {
+        "startLine": 390,
+        "startChar": 36,
+        "endLine": 390,
+        "endChar": 64
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32af94bd_92e77463",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "\".\"",
+      "range": {
+        "startLine": 479,
+        "startChar": 79,
+        "endLine": 479,
+        "endChar": 80
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84469e18_c321f810",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Does validate throw this exception or IllegalState?",
+      "range": {
+        "startLine": 680,
+        "startChar": 46,
+        "endLine": 680,
+        "endChar": 70
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

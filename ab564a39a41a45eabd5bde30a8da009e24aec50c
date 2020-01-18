@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ff82f2d0_1ad8160c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about it. Passing in a Builder avoids passing in a gazillion arguemnts, that\u0027s all.\n\nAlso, per EJ it is preferable to pass in Builder instance directly to the constructor - https://effectivejava.googleplex.com/third-edition#page\u003d31",
+      "parentUuid": "1579427b_185ed3b2",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5606b8_33161465",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 31
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "ProxyInfo instances appear to be more or less immutable (no setter functions) after initialization, so it felt like that wasn\u0027t necessary",
       "parentUuid": "ff5606b8_33161465",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac587d20_4261cf41",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Hmmm...making a defensive copy is slightly preferable since then you don\u0027t have to worry about any changes made in future to ProxyInfo (say it becomes mutable in future).",
+      "parentUuid": "d9e419da_5bd8cf15",
       "range": {
         "startLine": 117,
         "startChar": 8,
@@ -234,6 +282,30 @@
       "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae0997b_8cfa6c31",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Also from the link you shared (anyways, don\u0027t feel too strongly about it. My suggestion was more based on my experience in general):\n\n\u003e Any validation that can be done on individual property values should ideally happen immediately in the setter for that value (throwing IllegalArgumentException). But if that\u0027s infeasible, validating at build time (throwing IllegalStateException) is fine.",
+      "parentUuid": "16d3fa5e_03d60d8b",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 19
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "cca0738e_61695787",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e30be452_34f5b5c1",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 28
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e8ce1c4_3b994283",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 31
@@ -366,6 +462,30 @@
       "side": 1,
       "message": "Key is the argument name (however badly named xD). This is additionally stating that the key is not being used.",
       "parentUuid": "5e8ce1c4_3b994283",
+      "range": {
+        "startLine": 307,
+        "startChar": 56,
+        "endLine": 307,
+        "endChar": 67
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7458343b_5068df06",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Well that was not at all clear 😊\nWhat I meant was that argument annotations typically should just be the actual argument name.\n\nSo if the constructor looks like:\npublic VpnProfile(String key)\n\nThen you annotate it (in case passing null or empty string) as:\nnew VpnProfile(\"\" /* key */);\n\nThat makes it clear what \u0027empty\u0027 string represents. The fact that it is unused is sort of clear.",
+      "parentUuid": "6ba5cce7_c9e65b9b",
       "range": {
         "startLine": 307,
         "startChar": 56,
@@ -566,6 +686,30 @@
     },
     {
       "key": {
+        "uuid": "21f417ff_e163cf47",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a669a88b_5054c4c6",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 443,
+        "endChar": 5
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c59dfb9a_18b095b3",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 31
@@ -657,6 +801,30 @@
       "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33d7dff_ca1f9583",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Fair point.",
+      "parentUuid": "e4b7ec3a_193bedd2",
+      "range": {
+        "startLine": 472,
+        "startChar": 33,
+        "endLine": 472,
+        "endChar": 80
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -892,6 +1060,30 @@
       "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e33bb7_391fad13",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1399364
+      },
+      "writtenOn": "2020-01-18T00:03:39Z",
+      "side": 1,
+      "message": "Ah I see.",
+      "parentUuid": "aa9ddf74_deb057ba",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
