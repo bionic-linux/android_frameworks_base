@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68498f8_452b5593",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "I think you should dispense with the synchronized block in the following manner :\n\n  binder \u003d new CDB()\n  if (null !\u003d sCallbacks.putIfAbsent(callback, binder)) throw();\n  try {\n    register\n  }\n\nThat does mean in the rare case apps try to register the same callback a second time, the code will create a Binder object and throw it away to be garbage collected. I don\u0027t think it matters, but you can only call putIfAbsent after testing if the object is not already there or just using computeIfAbsent :\n\n  if (null !\u003d sCallbacks.computeIfAbsent(callback, (k) -\u003e new Binder(callback, k))) throw();\n  try { register }\n\n...in which case the Binder object only gets thrown away in the losing thread of a race condition where 2 threads try to do this at the same time. This is not very costly and it\u0027s a very rare event, so it\u0027s likely it\u0027s a lot cheaper than to lock always.",
+      "range": {
+        "startLine": 507,
+        "startChar": 8,
+        "endLine": 507,
+        "endChar": 20
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8a8f26_daa44c78",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "① Have you considered using android.os.RemoteCallbackList ? (not sure it\u0027s best as I don\u0027t know this class very well, but it looks like a good fit and might (maybe) let you completely remove ConnectivityDiagnosticsCallbackInfo)\n② Can this live inside in one of the ConnectivityDiagnostics classes ? If that\u0027s reasonable it should provide better encapsulation.",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 45
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d029289_5960fc7d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "What are the semantics of this with respect to the uid field in the NetworkCapabilities stored in the NetworkRequest ? See restrictRequestUidsForCaller.",
+      "range": {
+        "startLine": 5061,
+        "startChar": 49,
+        "endLine": 5061,
+        "endChar": 52
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6ab5e5_ae68de2a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "Can you add a TODO to move this to a different (set of) file(s) ?",
+      "range": {
+        "startLine": 7256,
+        "startChar": 10,
+        "endLine": 7256,
+        "endChar": 40
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b618f661_dc71b8eb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "This has never been done with this nri right ? IIUC, the NRI has been created once, stashed in the CallbackInfo, and sent here for registration, so I don\u0027t think we need to remove it ?",
+      "range": {
+        "startLine": 7328,
+        "startChar": 12,
+        "endLine": 7328,
+        "endChar": 38
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a99a9dd_1c51ddc0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter for this change but I think future tests will actually need to create their own callbacks so that they can check more things and multiple callbacks concurrently. Creating a callback in a test is also fairly easy. You may find that writing something like TestNetworkCallback for this too is advantageous.\n\nBut at this point it doesn\u0027t matter yet.",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 76
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff7ea1e_9a557ea5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 6332,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T07:54:55Z",
+      "side": 1,
+      "message": "I still strongly dislike how deep inside the internal implementation details of ConnectivityService this reaches. The more I think about it and the less I think this test provides net positive value ; it really tests that when an internal object is created in a very particular manner another internal object is affected in a specific way, and none of that is observable from outside. I have trouble thinking of real issues it may actually detect, but no trouble thinking of legitimate, no-visible-effects refactorings that will require this test to be updated, increasing maintenance cost.\n\nI appreciate the concern about making sure one app can\u0027t unregister a callback from another app (how they\u0027d have obtained that binder token in the first place is a good question), but if you really want to test that, I think you should do this by testing the edges of ConnectivityService, no the edges of some of its implementation detail classes.",
+      "range": {
+        "startLine": 6332,
+        "startChar": 14,
+        "endLine": 6332,
+        "endChar": 32
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
