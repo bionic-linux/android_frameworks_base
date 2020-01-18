@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "544d5d74_8d8e9b63",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:08:32Z",
+      "side": 1,
+      "message": "I see, thanks for the explanation. Added more relevant comments on the relationship with the UID inside NR.NC on the new patchset.",
+      "parentUuid": "c31c71f3_9cef2a30",
+      "range": {
+        "startLine": 5065,
+        "startChar": 8,
+        "endLine": 5074,
+        "endChar": 9
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39b6824a_c7daaf69",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "8299e9c0_80912d63",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:08:32Z",
+      "side": 1,
+      "message": "Ideally yes, but for now let\u0027s just make sure we don\u0027t have issues that we notice now. There is a lot to improve in the existing code and I have no intention to ask you to fix those : there\u0027d be no end to it.\n\nI guess in this specific case it doesn\u0027t actually matter because there is only one instance of ConnectivityService ever and its lifetime is the lifetime of the system server. So... drop this. I mean, if you respin the change and feel like making it static do it, otherwise ignore.",
+      "parentUuid": "484a219b_af1a3a50",
+      "range": {
+        "startLine": 7260,
+        "startChar": 4,
+        "endLine": 7260,
+        "endChar": 9
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ba87de_30e7cc19",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -422,6 +470,30 @@
       "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa92418_0d518adb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:08:32Z",
+      "side": 1,
+      "message": "Hm, all right, I see how that makes sense. Please add comments about this here, on LISTEN, and update the comment in l.6144 (6140 in patchset 23).",
+      "parentUuid": "0e136fab_78f1231a",
+      "range": {
+        "startLine": 7322,
+        "startChar": 8,
+        "endLine": 7322,
+        "endChar": 36
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -601,6 +673,30 @@
       "side": 1,
       "message": "This is not testing code - it is calling the aidl function for registering a ConnectivityDiagnosticsBinder with ConnectivityService.\n\nGiven that registering a callback is a silent operation (currently no callbacks are invoked), we should verify that ConnectivityService state is mutated as expected. In this case, that means we check the callbacks map to ensure that it is updated.\n\nFiled b/147849853 to track invoking onConnectivityReport after register() is complete. However, I do think verifying that register() mutates state inside ConnectivityService is a worthwhile test.\n\nThoughts?",
       "parentUuid": "31ea5994_82d4a143",
+      "range": {
+        "startLine": 6263,
+        "startChar": 17,
+        "endLine": 6263,
+        "endChar": 56
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d713489d_43451dfe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6263,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:08:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by\n\u003e This is not testing code - it is calling the aidl function for registering a ConnectivityDiagnosticsBinder with ConnectivityService.\n\nWell but that\u0027s code isn\u0027t it ? Or are you trying to test Binder ? Binder has its own tests, here is not the right place to test Binder.\n\nBut more holistically, if your point is that we don\u0027t yet have external effects to observe so this is the only thing we can test now and we\u0027ll remove the test when we can have more meaningful ones, then I think it\u0027s not worth spending time on this (writing it, reviewing it, deleting it). The entire implementation is already under review essentially, and if that\u0027s not at all how we\u0027ll test this functionality at the end, then I don\u0027t think we should be writing this temporarily, possibly adding @VisibleForTesting things that we might remove to hide again later.",
+      "parentUuid": "d60fdd85_79a1ea8c",
       "range": {
         "startLine": 6263,
         "startChar": 17,
