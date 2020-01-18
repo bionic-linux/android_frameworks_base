@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "0cb360f6_b9f7c0a0",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac587d20_4261cf41",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2610deeb_4ec0406f",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 31
@@ -495,6 +519,30 @@
       "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98859a4_33a9a145",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Yep; I\u0027ve also used this, but since this is an important field in VpnProfile for other use cases, I want to explicitly call out the fact that it\u0027s unused here, and not an omission.\n\nI\u0027ve added a little more clarity.",
+      "parentUuid": "7458343b_5068df06",
+      "range": {
+        "startLine": 307,
+        "startChar": 56,
+        "endLine": 307,
+        "endChar": 67
+      },
+      "revId": "ab564a39a41a45eabd5bde30a8da009e24aec50c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

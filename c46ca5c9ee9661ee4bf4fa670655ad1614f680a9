@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a81e57f_691e9d99",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Yeah, I found it in the wrong commit (one of the future ones), and it was supposed to have been rebased to this one.",
+      "parentUuid": "115fae5a_f7aa5510",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 317,
+        "endChar": 32
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ffc4fae_bf432daf",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 32
@@ -45,6 +69,30 @@
       "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3862a9_2d422700",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Done, also added this to the other VisibleForTesting",
+      "parentUuid": "1ffc4fae_bf432daf",
+      "range": {
+        "startLine": 390,
+        "startChar": 36,
+        "endLine": 390,
+        "endChar": 64
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "83b7668f_3d583255",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32af94bd_92e77463",
+      "range": {
+        "startLine": 479,
+        "startChar": 79,
+        "endLine": 479,
+        "endChar": 80
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84469e18_c321f810",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 32
@@ -91,6 +163,30 @@
       "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99f0f34_b1e31668",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-18T03:20:15Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve removed this, and the ones on setAuthUsernamePassword(), and setAuthRsa(). They now throw IAE.",
+      "parentUuid": "84469e18_c321f810",
+      "range": {
+        "startLine": 680,
+        "startChar": 46,
+        "endLine": 680,
+        "endChar": 70
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
