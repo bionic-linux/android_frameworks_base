@@ -9314,6 +9314,7 @@ package android.telephony {
     field public static final String ACTION_SIM_APPLICATION_STATE_CHANGED = "android.telephony.action.SIM_APPLICATION_STATE_CHANGED";
     field public static final String ACTION_SIM_CARD_STATE_CHANGED = "android.telephony.action.SIM_CARD_STATE_CHANGED";
     field public static final String ACTION_SIM_SLOT_STATUS_CHANGED = "android.telephony.action.SIM_SLOT_STATUS_CHANGED";
+    field public static final String ACTION_SPN_STRINGS_UPDATED = "android.provider.Telephony.SPN_STRINGS_UPDATED";
     field public static final int CARD_POWER_DOWN = 0; // 0x0
     field public static final int CARD_POWER_UP = 1; // 0x1
     field public static final int CARD_POWER_UP_PASS_THROUGH = 2; // 0x2
@@ -9323,7 +9324,12 @@ package android.telephony {
     field public static final int CARRIER_PRIVILEGE_STATUS_RULES_NOT_LOADED = -1; // 0xffffffff
     field public static final String EXTRA_ANOMALY_DESCRIPTION = "android.telephony.extra.ANOMALY_DESCRIPTION";
     field public static final String EXTRA_ANOMALY_ID = "android.telephony.extra.ANOMALY_ID";
+    field public static final String EXTRA_DATA_SPN = "spnData";
+    field public static final String EXTRA_PLMN = "plmn";
+    field public static final String EXTRA_SHOW_PLMN = "showPlmn";
+    field public static final String EXTRA_SHOW_SPN = "showSpn";
     field public static final String EXTRA_SIM_STATE = "android.telephony.extra.SIM_STATE";
+    field public static final String EXTRA_SPN = "spn";
     field public static final String EXTRA_VISUAL_VOICEMAIL_ENABLED_BY_USER_BOOL = "android.telephony.extra.VISUAL_VOICEMAIL_ENABLED_BY_USER_BOOL";
     field public static final String EXTRA_VOICEMAIL_SCRAMBLED_PIN_STRING = "android.telephony.extra.VOICEMAIL_SCRAMBLED_PIN_STRING";
     field public static final int INVALID_EMERGENCY_NUMBER_DB_VERSION = -1; // 0xffffffff

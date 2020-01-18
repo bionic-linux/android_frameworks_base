@@ -1436,6 +1436,86 @@ public class TelephonyManager {
     public static final String EXTRA_SIM_COMBINATION_NAMES =
             "android.telephony.extra.SIM_COMBINATION_NAMES";
 
+    /**
+     * Broadcast Action: The Service Provider string(s) have been updated. Activities or
+     * services that use these strings should update their display.
+     *
+     * <p>The intent will have the following extra values:
+     * <dl>
+     *   <dt>{@link #EXTRA_SHOW_PLMN}</dt>
+     *   <dd>Boolean that indicates whether the PLMN should be shown.</dd>
+     *   <dt>{@link #EXTRA_PLMN}</dt>
+     *   <dd>The operator name of the registered network, as a string.</dd>
+     *   <dt>{@link #EXTRA_SHOW_SPN}</dt>
+     *   <dd>Boolean that indicates whether the SPN should be shown.</dd>
+     *   <dt>{@link #EXTRA_SPN}</dt>
+     *   <dd>The service provider name, as a string.</dd>
+     *   <dt>{@link #EXTRA_DATA_SPN}</dt>
+     *   <dd>The service provider name for data service, as a string.</dd>
+     * </dl>
+     *
+     * Note that {@link #EXTRA_SHOW_PLMN} may indicate that {@link #EXTRA_PLMN} should be displayed,
+     * even though the value for {@link #EXTRA_PLMN} is null. This can happen, for example, if the
+     * phone has not registered to a network yet. In this case the receiver may substitute an
+     * appropriate placeholder string (eg, "No service").
+     *
+     * It is recommended to display {@link #EXTRA_PLMN} before / above {@link #EXTRA_SPN} if
+     * both are displayed.
+     *
+     * <p>Note: this is a protected intent that can only be sent by the system.
+     * @hide
+     */
+    @SystemApi
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    @SuppressLint("ActionValue")
+    public static final String ACTION_SPN_STRINGS_UPDATED =
+            "android.provider.Telephony.SPN_STRINGS_UPDATED";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SPN_STRINGS_UPDATED} to indicate
+     * whether the PLMN should be shown.
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String EXTRA_SHOW_PLMN = "showPlmn";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SPN_STRINGS_UPDATED} to indicate
+     * the operator name of the registered network.
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String EXTRA_PLMN = "plmn";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SPN_STRINGS_UPDATED} to indicate
+     * whether the PLMN should be shown.
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String EXTRA_SHOW_SPN = "showSpn";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SPN_STRINGS_UPDATED} to indicate
+     * the service provider name.
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String EXTRA_SPN = "spn";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SPN_STRINGS_UPDATED} to indicate
+     * the service provider name for data service.
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("ActionValue")
+    public static final String EXTRA_DATA_SPN = "spnData";
+
     //
     //
     // Device Info
