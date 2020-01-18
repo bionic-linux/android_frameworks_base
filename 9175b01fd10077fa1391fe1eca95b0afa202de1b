@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d6dc0694_656512af",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:29:04Z",
+      "side": 1,
+      "message": "I like the new wording, thanks.",
+      "parentUuid": "295aec4f_1132fc31",
+      "range": {
+        "startLine": 480,
+        "startChar": 78,
+        "endLine": 481,
+        "endChar": 33
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b3ac91_3242096b",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 19
@@ -93,6 +117,30 @@
       "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca03c33_0a6d374b",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-18T08:29:04Z",
+      "side": 1,
+      "message": "Indeed, and also there is the point that Nathan made in our last meeting where an app may want to register before it has permissions so that it learns about things as soon as it gets them.\n\nI wonder if there is any way to let callers know when they have permissions. Maybe we should have a function onPermissionsChanged on the callback or something.",
+      "parentUuid": "ec076d78_57a2469e",
+      "range": {
+        "startLine": 489,
+        "startChar": 89,
+        "endLine": 489,
+        "endChar": 90
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
