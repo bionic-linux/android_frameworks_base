@@ -143,6 +143,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.ITetheringAvailableListener;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
@@ -6245,5 +6246,31 @@ public class ConnectivityServiceTest {
         packageInfo.applicationInfo.uid = UserHandle.getUid(UserHandle.USER_SYSTEM,
                 UserHandle.getAppId(uid));
         return packageInfo;
+    }
+
+    private class TestTetheringAvailableListener extends ITetheringAvailableListener.Stub {
+        boolean mReady = false;
+        @Override
+        public void onTetheringAvailable() {
+            mReady = true;
+        }
+
+        public void assertStatusMatch(boolean expectAvailable) {
+            assertEquals(mReady, expectAvailable);
+        }
+    }
+
+    @Test
+    public void testTetheringAvailableListener() throws Exception {
+        final TestTetheringAvailableListener listener1 = new TestTetheringAvailableListener();
+        final TestTetheringAvailableListener listener2 = new TestTetheringAvailableListener();
+
+        mService.registerTetheringAvailableListener(listener1);
+        listener1.assertStatusMatch(false /** expectAvailable */);
+        mService.tetheringReady();
+        listener1.assertStatusMatch(true /** expectAvailable */);
+        listener2.assertStatusMatch(false /** expectAvailable */);
+        mService.registerTetheringAvailableListener(listener2);
+        listener2.assertStatusMatch(true /** expectAvailable */);
     }
 }
