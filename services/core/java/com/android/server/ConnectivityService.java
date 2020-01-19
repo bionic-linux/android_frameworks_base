@@ -77,6 +77,7 @@ import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
 import android.net.ISocketKeepaliveCallback;
+import android.net.ITetheringAvailableListener;
 import android.net.InetAddresses;
 import android.net.IpMemoryStore;
 import android.net.IpPrefix;
@@ -132,6 +133,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.PowerManager;
 import android.os.Process;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
@@ -316,6 +318,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private final RemoteCallbackList<ITetheringAvailableListener> mTetheringAvailableListeners =
+            new RemoteCallbackList<>();
+    private boolean mTetheringReady = false;
 
     /**
      * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
@@ -2185,6 +2190,43 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_CONFIGURE_ALWAYS_ON_NETWORKS));
 
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
+    }
+
+    /**
+     * Called when the tethering is ready and callback to notify all of listeners.
+     */
+    @VisibleForTesting
+    public void tetheringReady() {
+        synchronized (mTetheringAvailableListeners) {
+            mTetheringReady = true;
+            final int length = mTetheringAvailableListeners.beginBroadcast();
+            try {
+                for (int i = 0; i < length; i++) {
+                    try {
+                        mTetheringAvailableListeners.getBroadcastItem(i).onTetheringAvailable();
+                    } catch (RemoteException e) {
+                        // Not really very much to do here.
+                    }
+                }
+            } finally {
+                mTetheringAvailableListeners.finishBroadcast();
+            }
+        }
+    }
+
+    @Override
+    public void registerTetheringAvailableListener(ITetheringAvailableListener listener) {
+        synchronized (mTetheringAvailableListeners) {
+            if (mTetheringReady) {
+                try {
+                    listener.onTetheringAvailable();
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+                return;
+            }
+            mTetheringAvailableListeners.register(listener);
+        }
     }
 
     /**
