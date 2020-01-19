@@ -38,6 +38,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.INetworkActivityListener;
@@ -51,7 +52,6 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -2353,17 +2353,61 @@ public class ConnectivityManager {
             if (mTetheringManager != null) {
                 return mTetheringManager;
             }
-            final long before = System.currentTimeMillis();
-            while ((mTetheringManager = (TetheringManager) mContext.getSystemService(
-                    Context.TETHERING_SERVICE)) == null) {
-                if (System.currentTimeMillis() - before > TETHERING_TIMEOUT_MS) {
+
+            mTetheringManager = (TetheringManager) mContext.getSystemService(
+                    Context.TETHERING_SERVICE);
+
+            if (mTetheringManager == null) {
+                final ConditionVariable waiting = new ConditionVariable();
+                final OnTetheringAvailableCallback callback = new OnTetheringAvailableCallback() {
+                    @Override
+                    public void onTetheringAvailable(TetheringManager tm) {
+                        mTetheringManager = tm;
+                    }
+                };
+                requestTetheringManager(callback);
+                if (!waiting.block(TETHERING_TIMEOUT_MS)) {
                     Log.e(TAG, "Timeout waiting tethering service not ready yet");
                     throw new IllegalStateException("No tethering service yet");
                 }
-                SystemClock.sleep(100);
             }
 
             return mTetheringManager;
+        }
+    }
+
+    /**
+     * Callback for use with {@link #requestTetheringManager} to find out whether tethering
+     * availalbe.
+     *
+     * {@hide}
+     */
+    public abstract static class OnTetheringAvailableCallback {
+        /** Called when tethering is available */
+        public void onTetheringAvailable(TetheringManager tm) {}
+    }
+
+    /**
+     * TetheringManager would not be available before boot complete. This is used to get callback
+     * when tethering is available.
+     *
+     * @param callback an {@link OnTetheringAvailableCallback} which will be called to notify the
+     *         caller that tethering is available.
+     * {@hide}
+     */
+    public void requestTetheringManager(OnTetheringAvailableCallback callback) {
+        final ITetheringAvailableListener listener = new ITetheringAvailableListener.Stub() {
+            @Override
+            public void onTetheringAvailable() {
+                final TetheringManager tm = (TetheringManager) mContext.getSystemService(
+                        Context.TETHERING_SERVICE);
+                callback.onTetheringAvailable(tm);
+            }
+        };
+        try {
+            mService.registerTetheringAvailableListener(listener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 

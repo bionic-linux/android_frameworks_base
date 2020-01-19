@@ -18,6 +18,7 @@ package android.net;
 
 import android.app.PendingIntent;
 import android.net.ConnectionInfo;
+import android.net.ITetheringAvailableListener;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -211,4 +212,6 @@ interface IConnectivityManager
     boolean isCallerCurrentAlwaysOnVpnLockdownApp();
 
     IBinder startOrGetTestNetworkService();
+
+    void registerTetheringAvailableListener(ITetheringAvailableListener listener);
 }
