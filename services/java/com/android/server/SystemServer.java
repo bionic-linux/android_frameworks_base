@@ -2220,6 +2220,7 @@ public final class SystemServer {
                             ServiceManager.addService(Context.TETHERING_SERVICE, service,
                                     false /* allowIsolated */,
                                     DUMP_FLAG_PRIORITY_HIGH | DUMP_FLAG_PRIORITY_NORMAL);
+                            connectivityF.tetheringReady();
                         });
             } catch (Throwable e) {
                 reportWtf("starting Tethering", e);
