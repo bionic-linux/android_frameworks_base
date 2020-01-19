@@ -69,6 +69,11 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
      */
     public static final int RESPONSE_DOES_NOT_EXIST_ANYWHERE = 4;
 
+    /**
+     * Indicating that the request could not be understood with a 400 BAD REQUEST response.
+     */
+    public static final int RESPONSE_BAD_REQUEST = 5;
+
     /** @hide*/
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(prefix = "RESPONSE_", value = {
@@ -77,7 +82,8 @@ public class RcsSipOptionsImplBase extends RcsCapabilityExchange {
             RESPONSE_TEMPORARILY_UNAVAILABLE,
             RESPONSE_REQUEST_TIMEOUT,
             RESPONSE_NOT_FOUND,
-            RESPONSE_DOES_NOT_EXIST_ANYWHERE
+            RESPONSE_DOES_NOT_EXIST_ANYWHERE,
+            RESPONSE_BAD_REQUEST
     })
     public @interface SipResponseCode {}
 
