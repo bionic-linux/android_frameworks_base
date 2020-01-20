@@ -93,6 +93,7 @@ public abstract class Conference extends Conferenceable {
     private int mConnectionCapabilities;
     private int mConnectionProperties;
     private String mDisconnectMessage;
+    private long mCreateTimeMillis = CONNECT_TIME_NOT_SPECIFIED;
     private long mConnectTimeMillis = CONNECT_TIME_NOT_SPECIFIED;
     private long mConnectionStartElapsedRealTime = CONNECT_TIME_NOT_SPECIFIED;
     private StatusHints mStatusHints;
@@ -621,6 +622,19 @@ public abstract class Conference extends Conferenceable {
     }
 
     /**
+     * Sets the connection create time of the {@code Conference}.  This is used in the call log to
+     * indicate the date and time when the conference took place.
+     * <p>
+     * Should be specified in wall-clock time returned by {@link System#currentTimeMillis()}.
+     *
+     * @param creationTimeMillis The creation time, in milliseconds, as returned by
+     *                             {@link System#currentTimeMillis()}.
+     */
+    public final void setCreationTime(long creationTimeMillis) {
+        mCreateTimeMillis = creationTimeMillis;
+    }
+
+    /**
      * @hide
      * @deprecated Use {@link #setConnectionTime}.
      */
@@ -681,6 +695,17 @@ public abstract class Conference extends Conferenceable {
     public final void setConnectionStartElapsedRealtimeMillis(
             @ElapsedRealtimeLong long connectionStartElapsedRealTime) {
         mConnectionStartElapsedRealTime = connectionStartElapsedRealTime;
+    }
+
+    /**
+     * Retrieves the connection create time of the {@code Conference}, if specified.  A value of
+     * {@link #CONNECT_TIME_NOT_SPECIFIED} indicates that Telecom should determine the create time
+     * of the conference.
+     *
+     * @return The time at which the {@code Conference} was created.
+     */
+    public final long getCreationTime() {
+        return mCreateTimeMillis;
     }
 
     /**
