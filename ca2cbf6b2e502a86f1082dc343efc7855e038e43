@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "254ad647_e5a2aa02",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4245,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-20T13:58:26Z",
+      "side": 1,
+      "message": "ByteLimit sounds fine: changed to getByteLimit.",
+      "parentUuid": "6cb1892d_f9616c68",
+      "range": {
+        "startLine": 4245,
+        "startChar": 41,
+        "endLine": 4245,
+        "endChar": 50
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b03a06_ff06693d",
         "filename": "api/system-current.txt",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edf11562_3f54d4e4",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4247,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-20T13:58:26Z",
+      "side": 1,
+      "message": "Rename to *Millis. I looked for other usages but could not find much using Instant; also there was no API guideline regarding dates. So keeping as a long.",
+      "parentUuid": "b6b03a06_ff06693d",
+      "range": {
+        "startLine": 4247,
+        "startChar": 33,
+        "endLine": 4247,
+        "endChar": 37
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27d70a0_2e551264",
         "filename": "api/system-current.txt",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b88bb6d_2f965d9e",
+        "filename": "api/system-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-20T13:58:26Z",
+      "side": 1,
+      "message": "Yes, as per API guidelines 8.14",
+      "parentUuid": "d27d70a0_2e551264",
+      "range": {
+        "startLine": 4264,
+        "startChar": 89,
+        "endLine": 4264,
+        "endChar": 114
+      },
+      "revId": "ca2cbf6b2e502a86f1082dc343efc7855e038e43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
