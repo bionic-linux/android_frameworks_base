@@ -17,8 +17,6 @@
 package android.telecom;
 
 import android.annotation.NonNull;
-import android.annotation.Nullable;
-import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SystemApi;
 import android.app.Service;
@@ -1616,6 +1614,7 @@ public abstract class ConnectionService extends Service {
                         connection.getVideoState(),
                         connection.isRingbackRequested(),
                         connection.getAudioModeIsVoip(),
+                        connection.getCreateTimeMillis(),
                         connection.getConnectTimeMillis(),
                         connection.getConnectElapsedTimeMillis(),
                         connection.getStatusHints(),
@@ -2059,6 +2058,7 @@ public abstract class ConnectionService extends Service {
                     conference.getVideoProvider() == null ?
                             null : conference.getVideoProvider().getInterface(),
                     conference.getVideoState(),
+                    conference.getCreationTime(),
                     conference.getConnectTimeMillis(),
                     conference.getConnectionStartElapsedRealTime(),
                     conference.getStatusHints(),
@@ -2150,6 +2150,7 @@ public abstract class ConnectionService extends Service {
                     connection.getVideoState(),
                     connection.isRingbackRequested(),
                     connection.getAudioModeIsVoip(),
+                    connection.getCreateTimeMillis(),
                     connection.getConnectTimeMillis(),
                     connection.getConnectElapsedTimeMillis(),
                     connection.getStatusHints(),
