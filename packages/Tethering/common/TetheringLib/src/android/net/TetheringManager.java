@@ -16,8 +16,11 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.content.Context;
-import android.net.ConnectivityManager.OnTetheringEventCallback;
+import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -34,7 +37,8 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
-// TODO: make it @SystemApi
+@SystemApi
+@TestApi
 public class TetheringManager {
     private static final String TAG = TetheringManager.class.getSimpleName();
     private static final int DEFAULT_TIMEOUT_MS = 60_000;
@@ -72,7 +76,7 @@ public class TetheringManager {
      * gives a String[] listing all the interfaces currently in local-only
      * mode (ie, has DHCPv4+IPv6-ULA support and no packet forwarding)
      */
-    public static final String EXTRA_ACTIVE_LOCAL_ONLY = "localOnlyArray";
+    public static final String EXTRA_ACTIVE_LOCAL_ONLY = "android.net.extra.ACTIVE_LOCAL_ONLY";
 
     /**
      * gives a String[] listing all the interfaces currently tethered
@@ -121,29 +125,39 @@ public class TetheringManager {
     /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
+     *
+     * {@hide}
      */
     public static final String EXTRA_ADD_TETHER_TYPE = "extraAddTetherType";
 
     /**
      * Extra used for communicating with the TetherService. Includes the type of tethering for
      * which to cancel provisioning.
+     *
+     * {@hide}
      */
     public static final String EXTRA_REM_TETHER_TYPE = "extraRemTetherType";
 
     /**
      * Extra used for communicating with the TetherService. True to schedule a recheck of tether
      * provisioning.
+     *
+     * {@hide}
      */
     public static final String EXTRA_SET_ALARM = "extraSetAlarm";
 
     /**
      * Tells the TetherService to run a provision check now.
+     *
+     * {@hide}
      */
     public static final String EXTRA_RUN_PROVISION = "extraRunProvision";
 
     /**
      * Extra used for communicating with the TetherService. Contains the {@link ResultReceiver}
      * which will receive provisioning results. Can be left empty.
+     *
+     * {@hide}
      */
     public static final String EXTRA_PROVISION_CALLBACK = "extraProvisionCallback";
 
@@ -166,6 +180,8 @@ public class TetheringManager {
 
     /**
      * Create a TetheringManager object for interacting with the tethering service.
+     *
+     * {@hide}
      */
     public TetheringManager(@NonNull final Context context, @NonNull final IBinder service) {
         mContext = context;
@@ -275,6 +291,8 @@ public class TetheringManager {
      *
      * @param iface the interface name to tether.
      * @return error a {@code TETHER_ERROR} value indicating success or failure type
+     *
+     * {@hide}
      */
     @Deprecated
     public int tether(@NonNull final String iface) {
@@ -296,6 +314,8 @@ public class TetheringManager {
      *
      * @deprecated The only usages is PanService. It uses this for legacy reasons
      * and will migrate away as soon as possible.
+     *
+     * {@hide}
      */
     @Deprecated
     public int untether(@NonNull final String iface) {
@@ -320,6 +340,8 @@ public class TetheringManager {
      * #startTethering or #stopTethering which encapsulate proper entitlement logic. If the API is
      * used and an entitlement check is needed, downstream USB tethering will be enabled but will
      * not have any upstream.
+     *
+     * {@hide}
      */
     @Deprecated
     public int setUsbTethering(final boolean enable) {
@@ -373,7 +395,7 @@ public class TetheringManager {
      * @param executor {@link Executor} to specify the thread upon which the callback of
      *         TetheringRequest will be invoked.
      */
-    public void startTethering(TetheringRequest request, @NonNull Executor executor) {
+    public void startTethering(@NonNull TetheringRequest request, @NonNull Executor executor) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "startTethering caller:" + callerPkg);
 
@@ -429,11 +451,61 @@ public class TetheringManager {
     }
 
     /**
+     * Callback for use with {@link #getLatestTetheringEntitlementResult} to find out whether
+     * entitlement succeeded.
+     */
+    public interface OnTetheringEntitlementResultListener  {
+        /**
+         * Called to notify entitlement result.
+         *
+         * @param resultCode an int value of entitlement result. It may be one of
+         *         {@link #TETHER_ERROR_NO_ERROR},
+         *         {@link #TETHER_ERROR_PROVISION_FAILED}, or
+         *         {@link #TETHER_ERROR_ENTITLEMENT_UNKONWN}.
+         */
+        void onTetheringEntitlementResult(int resultCode);
+    }
+
+    /**
      * Request the latest value of the tethering entitlement check.
      *
      * Note: Allow privileged apps who have TETHER_PRIVILEGED permission to access. If it turns
      * out some such apps are observed to abuse this API, change to per-UID limits on this API
      * if it's really needed.
+     *
+     * @param type the downstream type of tethering. Must be one of #TETHERING_*
+     * @param showEntitlementUi a boolean indicating whether to run UI-based entitlement check.
+     * @param executor the executor on which callback will be invoked.
+     * @param listener an {@link OnTetheringEntitlementResultListener} which will be called to
+     *         notify the caller of the result of entitlement check. The listener may be called zero
+     *         or one time.
+     */
+    public void requestLatestTetheringEntitlementResult(int type, boolean showEntitlementUi,
+            @NonNull Executor executor,
+            @NonNull final OnTetheringEntitlementResultListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException(
+                    "OnTetheringEntitlementResultListener cannot be null.");
+        }
+
+        ResultReceiver wrappedListener = new ResultReceiver(null) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                executor.execute(() -> {
+                    listener.onTetheringEntitlementResult(resultCode);
+                });
+            }
+        };
+
+        requestLatestTetheringEntitlementResult(type, wrappedListener,
+                    showEntitlementUi);
+    }
+
+    /**
+     * Helper function of #requestLatestTetheringEntitlementResult to backward compatible with
+     * ConnectivityManager#getLatestTetheringEntitlementResult
+     *
+     * {@hide}
      */
     // TODO: improve the usage of ResultReceiver, b/145096122
     public void requestLatestTetheringEntitlementResult(final int type,
@@ -447,6 +519,22 @@ public class TetheringManager {
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    /**
+     * Callback for use with {@link registerTetheringEventCallback} to find out tethering
+     * upstream status.
+     */
+    public abstract static class OnTetheringEventCallback {
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time.
+         *
+         * @param network the {@link Network} of tethering upstream. Null means tethering doesn't
+         * have any upstream.
+         */
+        public void onUpstreamChanged(@Nullable Network network) {}
     }
 
     /**

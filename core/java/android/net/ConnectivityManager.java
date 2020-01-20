@@ -2414,10 +2414,12 @@ public class ConnectivityManager {
      *
      * @return an array of 0 or more Strings of tetherable interface names.
      *
+     * @deprecated Use {@link TetheringManager#getTetherableIfaces} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableIfaces() {
         return getTetheringManager().getTetherableIfaces();
     }
@@ -2427,10 +2429,12 @@ public class ConnectivityManager {
      *
      * @return an array of 0 or more String of currently tethered interface names.
      *
+     * @deprecated Use {@link TetheringManager#getTetheredIfaces} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetheredIfaces() {
         return getTetheringManager().getTetheredIfaces();
     }
@@ -2446,10 +2450,12 @@ public class ConnectivityManager {
      * @return an array of 0 or more String indicating the interface names
      *        which failed to tether.
      *
+     * @deprecated Use {@link TetheringManager#getTetheringErroredIfaces} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetheringErroredIfaces() {
         return getTetheringManager().getTetheringErroredIfaces();
     }
@@ -2490,6 +2496,7 @@ public class ConnectivityManager {
      * {@hide}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public int tether(String iface) {
         return getTetheringManager().tether(iface);
     }
@@ -2513,6 +2520,7 @@ public class ConnectivityManager {
      * {@hide}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public int untether(String iface) {
         return getTetheringManager().untether(iface);
     }
@@ -2533,6 +2541,7 @@ public class ConnectivityManager {
      *
      * @return a boolean - {@code true} indicating Tethering is supported.
      *
+     * @deprecated Use {@link TetheringManager#isTetheringSupported} instead.
      * {@hide}
      */
     @SystemApi
@@ -2544,9 +2553,12 @@ public class ConnectivityManager {
 
     /**
      * Callback for use with {@link #startTethering} to find out whether tethering succeeded.
+     *
+     * @deprecated Use {@link TetheringManager#TetheringRequest} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     public static abstract class OnStartTetheringCallback {
         /**
          * Called when tethering has been successfully started.
@@ -2563,9 +2575,12 @@ public class ConnectivityManager {
      * Convenient overload for
      * {@link #startTethering(int, boolean, OnStartTetheringCallback, Handler)} which passes a null
      * handler to run on the current thread's {@link Looper}.
+     *
+     * @deprecated Use {@link TetheringManager#startTethering} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void startTethering(int type, boolean showProvisioningUi,
             final OnStartTetheringCallback callback) {
@@ -2589,9 +2604,12 @@ public class ConnectivityManager {
      * @param callback an {@link OnStartTetheringCallback} which will be called to notify the caller
      *         of the result of trying to tether.
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     *
+     * @deprecated Use {@link TetheringManager#startTethering} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void startTethering(int type, boolean showProvisioningUi,
             final OnStartTetheringCallback callback, Handler handler) {
@@ -2632,9 +2650,12 @@ public class ConnectivityManager {
      *         {@link ConnectivityManager.TETHERING_WIFI},
      *         {@link ConnectivityManager.TETHERING_USB}, or
      *         {@link ConnectivityManager.TETHERING_BLUETOOTH}.
+     *
+     * @deprecated Use {@link TetheringManager#stopTethering} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void stopTethering(int type) {
         getTetheringManager().stopTethering(type);
@@ -2644,9 +2665,11 @@ public class ConnectivityManager {
      * Callback for use with {@link registerTetheringEventCallback} to find out tethering
      * upstream status.
      *
-     *@hide
+     * @deprecated Use {@line TetheringManager#OnTetheringEventCallback} instead.
+     * @hide
      */
     @SystemApi
+    @Deprecated
     public abstract static class OnTetheringEventCallback {
 
         /**
@@ -2659,6 +2682,9 @@ public class ConnectivityManager {
         public void onUpstreamChanged(@Nullable Network network) {}
     }
 
+    private final ArrayMap<OnTetheringEventCallback, TetheringManager.OnTetheringEventCallback>
+            mTetheringEventCallbacks = new ArrayMap<>();
+
     /**
      * Start listening to tethering change events. Any new added callback will receive the last
      * tethering status right away. If callback is registered when tethering has no upstream or
@@ -2667,16 +2693,30 @@ public class ConnectivityManager {
      *
      * @param executor the executor on which callback will be invoked.
      * @param callback the callback to be called when tethering has change events.
+     *
+     * @deprecated Use {@line TetheringManager#registerTetheringEventCallback} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void registerTetheringEventCallback(
             @NonNull @CallbackExecutor Executor executor,
             @NonNull final OnTetheringEventCallback callback) {
         Preconditions.checkNotNull(callback, "OnTetheringEventCallback cannot be null.");
 
-        getTetheringManager().registerTetheringEventCallback(executor, callback);
+        final TetheringManager.OnTetheringEventCallback tetherCallback =
+                new TetheringManager.OnTetheringEventCallback() {
+                    @Override
+                    public void onUpstreamChanged(@Nullable Network network) {
+                        callback.onUpstreamChanged(network);
+                    }
+                };
+
+        synchronized (mTetheringEventCallbacks) {
+            mTetheringEventCallbacks.put(callback, tetherCallback);
+            getTetheringManager().registerTetheringEventCallback(executor, tetherCallback);
+        }
     }
 
     /**
@@ -2684,13 +2724,20 @@ public class ConnectivityManager {
      * {@link #registerTetheringEventCallback}.
      *
      * @param callback previously registered callback.
+     *
+     * @deprecated Use {@link TetheringManager#unregisterTetheringEventCallback} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void unregisterTetheringEventCallback(
             @NonNull final OnTetheringEventCallback callback) {
-        getTetheringManager().unregisterTetheringEventCallback(callback);
+        synchronized (mTetheringEventCallbacks) {
+            final TetheringManager.OnTetheringEventCallback tetherCallback =
+                    mTetheringEventCallbacks.remove(callback);
+            getTetheringManager().unregisterTetheringEventCallback(tetherCallback);
+        }
     }
 
 
@@ -2702,10 +2749,12 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable usb interfaces.
      *
+     * @deprecated Use {@link TetheringManager#getTetherableUsbRegexs} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableUsbRegexs() {
         return getTetheringManager().getTetherableUsbRegexs();
     }
@@ -2718,10 +2767,12 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable wifi interfaces.
      *
+     * @deprecated Use {@link TetheringManager#getTetherableWifiRegexs} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableWifiRegexs() {
         return getTetheringManager().getTetherableWifiRegexs();
     }
@@ -2734,10 +2785,12 @@ public class ConnectivityManager {
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable bluetooth interfaces.
      *
+     * @deprecated Use {@link TetheringManager#getTetherableBluetoothRegexs} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public String[] getTetherableBluetoothRegexs() {
         return getTetheringManager().getTetherableBluetoothRegexs();
     }
@@ -2760,41 +2813,56 @@ public class ConnectivityManager {
      * {@hide}
      */
     @UnsupportedAppUsage
+    @Deprecated
     public int setUsbTethering(boolean enable) {
         return getTetheringManager().setUsbTethering(enable);
     }
 
     /** {@hide} */
     @SystemApi
-    public static final int TETHER_ERROR_NO_ERROR           = 0;
+    @Deprecated
+    public static final int TETHER_ERROR_NO_ERROR = TetheringManager.TETHER_ERROR_NO_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_UNKNOWN_IFACE      = 1;
+    public static final int TETHER_ERROR_UNKNOWN_IFACE =
+            TetheringManager.TETHER_ERROR_UNKNOWN_IFACE;
     /** {@hide} */
-    public static final int TETHER_ERROR_SERVICE_UNAVAIL    = 2;
+    public static final int TETHER_ERROR_SERVICE_UNAVAIL =
+            TetheringManager.TETHER_ERROR_SERVICE_UNAVAIL;
     /** {@hide} */
-    public static final int TETHER_ERROR_UNSUPPORTED        = 3;
+    public static final int TETHER_ERROR_UNSUPPORTED = TetheringManager.TETHER_ERROR_UNSUPPORTED;
     /** {@hide} */
-    public static final int TETHER_ERROR_UNAVAIL_IFACE      = 4;
+    public static final int TETHER_ERROR_UNAVAIL_IFACE =
+            TetheringManager.TETHER_ERROR_UNAVAIL_IFACE;
     /** {@hide} */
-    public static final int TETHER_ERROR_MASTER_ERROR       = 5;
+    public static final int TETHER_ERROR_MASTER_ERROR = TetheringManager.TETHER_ERROR_MASTER_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_TETHER_IFACE_ERROR = 6;
+    public static final int TETHER_ERROR_TETHER_IFACE_ERROR =
+            TetheringManager.TETHER_ERROR_TETHER_IFACE_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_UNTETHER_IFACE_ERROR = 7;
+    public static final int TETHER_ERROR_UNTETHER_IFACE_ERROR =
+            TetheringManager.TETHER_ERROR_UNTETHER_IFACE_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_ENABLE_NAT_ERROR     = 8;
+    public static final int TETHER_ERROR_ENABLE_NAT_ERROR =
+            TetheringManager.TETHER_ERROR_ENABLE_NAT_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_DISABLE_NAT_ERROR    = 9;
+    public static final int TETHER_ERROR_DISABLE_NAT_ERROR =
+            TetheringManager.TETHER_ERROR_DISABLE_NAT_ERROR;
     /** {@hide} */
-    public static final int TETHER_ERROR_IFACE_CFG_ERROR      = 10;
+    public static final int TETHER_ERROR_IFACE_CFG_ERROR =
+            TetheringManager.TETHER_ERROR_PROVISION_FAILED;
     /** {@hide} */
     @SystemApi
-    public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
+    @Deprecated
+    public static final int TETHER_ERROR_PROVISION_FAILED =
+            TetheringManager.TETHER_ERROR_PROVISION_FAILED;
     /** {@hide} */
-    public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
+    public static final int TETHER_ERROR_DHCPSERVER_ERROR =
+            TetheringManager.TETHER_ERROR_DHCPSERVER_ERROR;
     /** {@hide} */
     @SystemApi
-    public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN  = 13;
+    @Deprecated
+    public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN =
+            TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKONWN;
 
     /**
      * Get a more detailed error code after a Tethering or Untethering
@@ -2804,10 +2872,12 @@ public class ConnectivityManager {
      * @return error The error code of the last error tethering or untethering the named
      *               interface
      *
+     * @deprecated Use {@link TetheringManager#getLastTetherError} instead.
      * {@hide}
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     @UnsupportedAppUsage
+    @Deprecated
     public int getLastTetherError(String iface) {
         return getTetheringManager().getLastTetherError(iface);
     }
@@ -2825,9 +2895,12 @@ public class ConnectivityManager {
     /**
      * Callback for use with {@link #getLatestTetheringEntitlementResult} to find out whether
      * entitlement succeeded.
+     *
+     * @deprecated Use {@link TetheringManager#OnTetheringEntitlementResultListener} instead.
      * @hide
      */
     @SystemApi
+    @Deprecated
     public interface OnTetheringEntitlementResultListener  {
         /**
          * Called to notify entitlement result.
@@ -2857,9 +2930,11 @@ public class ConnectivityManager {
      * @param listener an {@link OnTetheringEntitlementResultListener} which will be called to
      *         notify the caller of the result of entitlement check. The listener may be called zero
      *         or one time.
+     * @deprecated Use {@link TetheringManager#requestLatestTetheringEntitlementResult} instead.
      * {@hide}
      */
     @SystemApi
+    @Deprecated
     @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
     public void getLatestTetheringEntitlementResult(int type, boolean showEntitlementUi,
             @NonNull @CallbackExecutor Executor executor,
