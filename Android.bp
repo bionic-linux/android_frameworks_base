@@ -522,7 +522,6 @@ java_library {
     ],
     installable: false,
     plugins: [
-        "unsupportedappusage-annotation-processor",
         "compat-changeid-annotation-processor",
     ],
 }
