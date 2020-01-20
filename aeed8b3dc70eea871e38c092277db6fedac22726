@@ -140,6 +140,30 @@
       "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433a00a1_60028b32",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:27:56Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "e19ee063_4f1b4671",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 33
+      },
+      "revId": "aeed8b3dc70eea871e38c092277db6fedac22726",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
