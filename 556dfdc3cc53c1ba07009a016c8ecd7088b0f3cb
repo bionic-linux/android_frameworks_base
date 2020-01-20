@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a609cb82_09e93785",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "I think you may want to additionally make a defensive copy. As sad as it is, unmodifiableList only returns a view that can\u0027t be used to modify, but if I do :\n\n  final ArrayList\u003cString\u003e algs \u003d new ArrayList\u003c\u003e();\n  builder.setAlgorithms(algs);\n  final Profile \u003d builder.build();\n  algs.add(myRogueAlgorithm);\n\n...it will be reflected in the list.",
+      "range": {
+        "startLine": 119,
+        "startChar": 58,
+        "endLine": 119,
+        "endChar": 75
+      },
+      "revId": "556dfdc3cc53c1ba07009a016c8ecd7088b0f3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512ab92c_f7ec6603",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "via + noun I think ?",
+      "range": {
+        "startLine": 611,
+        "startChar": 95,
+        "endLine": 612,
+        "endChar": 32
+      },
+      "revId": "556dfdc3cc53c1ba07009a016c8ecd7088b0f3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7d33ef_b5042dbd",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "I think you should be more specific as what is implemented in the OS, because the OS still implements some of it in the VpnService case (permission checks, etc) – I think you mean the forwarding of packets through interfaces.",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "556dfdc3cc53c1ba07009a016c8ecd7088b0f3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c62d5d0_c33afdb3",
+        "filename": "core/java/android/net/PlatformVpnProfile.java",
+        "patchSetId": 35
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "As this is the public constant it should be the other way around.\n(doesn\u0027t have to be in this patch though)",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 55,
+        "endChar": 94
+      },
+      "revId": "556dfdc3cc53c1ba07009a016c8ecd7088b0f3cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

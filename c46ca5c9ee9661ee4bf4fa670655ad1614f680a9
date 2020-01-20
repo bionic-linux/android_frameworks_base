@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f502f63b_5e72307e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "I think it\u0027s fine as a limitation for now but I can see how an app may want to have a smaller MTU when on v4 than is allowed on v6 networks.",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb8f20e_1d546a4d",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-20T15:25:52Z",
+      "side": 1,
+      "message": "Nit : I don\u0027t think it\u0027s necessary to say this because that\u0027s true of all fields",
+      "range": {
+        "startLine": 250,
+        "startChar": 58,
+        "endLine": 250,
+        "endChar": 93
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "115fae5a_f7aa5510",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 32
