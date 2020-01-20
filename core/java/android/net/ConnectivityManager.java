@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.IpSecManager.UdpEncapsulationSocket;
 import android.net.SocketKeepalive.Callback;
+import android.net.TetheringManager.TetheringRequest;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -2596,18 +2597,31 @@ public class ConnectivityManager {
             final OnStartTetheringCallback callback, Handler handler) {
         Preconditions.checkNotNull(callback, "OnStartTetheringCallback cannot be null.");
 
-        ResultReceiver wrappedCallback = new ResultReceiver(handler) {
+        final Executor executor = new Executor() {
             @Override
-            protected void onReceiveResult(int resultCode, Bundle resultData) {
-                if (resultCode == TETHER_ERROR_NO_ERROR) {
-                    callback.onTetheringStarted();
+            public void execute(Runnable command) {
+                if (handler == null) {
+                    command.run();
                 } else {
-                    callback.onTetheringFailed();
+                    handler.post(command);
                 }
             }
         };
 
-        getTetheringManager().startTethering(type, wrappedCallback, showProvisioningUi);
+        final TetheringRequest request = new TetheringRequest(type) {
+            @Override
+            public void onRequestSuccessful() {
+                callback.onTetheringStarted();
+            }
+
+            @Override
+            public void onRequestError(int errorCode) {
+                callback.onTetheringFailed();
+            }
+        };
+        if (!showProvisioningUi) request.silentProvisioning();
+
+        getTetheringManager().startTethering(request, executor);
     }
 
     /**

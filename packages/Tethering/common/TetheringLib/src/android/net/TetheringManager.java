@@ -338,18 +338,94 @@ public class TetheringManager {
     }
 
     /**
+     *  Use with {@link #startTethering} to specify the parameter to request tethering starting and
+     *  find out whether tethering succeeded.
+     */
+    public static class TetheringRequest {
+        /** A configuration set for TetheringRequest. */
+        private final TetheringRequestParcel mRequestParcel;
+
+        public TetheringRequest(final int type) {
+            mRequestParcel = new TetheringRequestParcel();
+            mRequestParcel.tetheringType = type;
+            mRequestParcel.ipv4Address = null;
+            mRequestParcel.disableDhcpServer = false;
+            mRequestParcel.exemptEntitlementCheck = false;
+            mRequestParcel.showProvisioningUi = true;
+
+        }
+
+        /** Set preferred ipv4 address if needed. */
+        public void setIpv4Address(final LinkAddress ipv4Address) {
+            mRequestParcel.ipv4Address = ipv4Address;
+        }
+
+         /** Disable dhcp server. */
+        public void disableDhcpServer() {
+            mRequestParcel.disableDhcpServer = true;
+        }
+
+         /** Exempt entitlement check. */
+        public void exemptEntitlementCheck() {
+            mRequestParcel.exemptEntitlementCheck = true;
+        }
+
+        /** Always run silent entitlement check. */
+        public void silentProvisioning() {
+            mRequestParcel.showProvisioningUi = false;
+        }
+
+        /** Get TetheringRequestParcel. */
+        public TetheringRequestParcel getParcel() {
+            return mRequestParcel;
+        }
+
+        /** Called when tethering has been successfully requested. */
+        public void onRequestSuccessful() { }
+
+        /** Called when requesting tethering failed. */
+        public void onRequestError(int errorCode) { }
+
+        /** String of TetheringRequest detail. */
+        public String toString() {
+            return "TetheringRequest [ type= " + mRequestParcel.tetheringType + ", ipv4Address= "
+                    + mRequestParcel.ipv4Address + ", disableDhcpServer= "
+                    + mRequestParcel.disableDhcpServer + ", exemptEntitlementCheck= "
+                    + mRequestParcel.exemptEntitlementCheck + ", showProvisioningUi= "
+                    + mRequestParcel.showProvisioningUi + " ]";
+        }
+    }
+
+    /**
      * Starts tethering and runs tether provisioning for the given type if needed. If provisioning
      * fails, stopTethering will be called automatically.
      *
+     * @param request an {@link TetheringRequest} which can specify prefered configuration and will
+     *         be called to notify the caller of the result of trying to tether.
+     * @param executor {@link Executor} to specify the thread upon which the callback of
+     *         TetheringRequest will be invoked.
      */
-    // TODO: improve the usage of ResultReceiver, b/145096122
-    public void startTethering(final int type, @NonNull final ResultReceiver receiver,
-            final boolean showProvisioningUi) {
+    public void startTethering(@NonNull final TetheringRequest request,
+            @NonNull final Executor executor) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "startTethering caller:" + callerPkg);
 
+        final IIntResultListener listener = new IIntResultListener.Stub() {
+            @Override
+            public void onResult(final int resultCode) {
+                if (resultCode == TETHER_ERROR_NO_ERROR) {
+                    executor.execute(() -> {
+                        request.onRequestSuccessful();
+                    });
+                } else {
+                    executor.execute(() -> {
+                        request.onRequestError(resultCode);
+                    });
+                }
+            }
+        };
         try {
-            mConnector.startTethering(type, receiver, showProvisioningUi, callerPkg);
+            mConnector.startTethering(request.getParcel(), callerPkg, listener);
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
