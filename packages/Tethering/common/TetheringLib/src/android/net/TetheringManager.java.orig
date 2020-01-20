@@ -342,49 +342,19 @@ public class TetheringManager {
      *  find out whether tethering succeeded.
      */
     public static class TetheringRequest {
-        private final int mType;
-        private LinkAddress mIpv4Address = null;
-        private boolean mDisableDhcpServer = false;
-        private boolean mExemptEntitlementCheck = false;
-        private boolean mShowProvisioningUi = true;
+        /** Tethering type, one of #TETHERING_*. */
+        public final int tetheringType;
+        /** Use to specifiy ipv4 address for #tetheringType interface. */
+        public LinkAddress ipv4Address = null;
+        /** Disable dhcp server. */
+        public boolean disableDhcpServer = false;
+        /** Exempt entitlement check */
+        public boolean exemptEntitlementCheck = false;
+        /** Show provisioning UI when first time entitlement check for this request. */
+        public boolean showProvisioningUi = true;
 
         public TetheringRequest(final int type) {
-            mType = type;
-        }
-
-        /** Set preferred ipv4 address if needed. */
-        public void setIpv4Address(final LinkAddress ipv4Address) {
-            mIpv4Address = ipv4Address;
-        }
-
-         /** Disable dhcp server. */
-        public void disableDhcpServer() {
-            mDisableDhcpServer = true;
-        }
-
-         /** Exempt entitlement check. */
-        public void exemptEntitlementCheck() {
-            mExemptEntitlementCheck = true;
-        }
-
-        /** Always run silent entitlement check. */
-        public void silentProvisioning() {
-            mShowProvisioningUi = false;
-        }
-
-        /**
-         * Write to TetheringRequestParcel.
-         *
-         */
-        public TetheringRequestParcel toTetheringRequestParcel() {
-            final TetheringRequestParcel requestParcel = new TetheringRequestParcel();
-            requestParcel.tetheringType = mType;
-            requestParcel.ipv4Address = mIpv4Address;
-            requestParcel.disableDhcpServer = mDisableDhcpServer;
-            requestParcel.exemptEntitlementCheck = mExemptEntitlementCheck;
-            requestParcel.showProvisioningUi = mShowProvisioningUi;
-
-            return requestParcel;
+            tetheringType = type;
         }
 
         /** Called when tethering has been successfully requested. */
@@ -403,12 +373,11 @@ public class TetheringManager {
      * @param executor {@link Executor} to specify the thread upon which the callback of
      *         TetheringRequest will be invoked.
      */
-    public void startTethering(@NonNull final TetheringRequest request,
-            @NonNull final Executor executor) {
+    public void startTethering(TetheringRequest request, @NonNull Executor executor) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "startTethering caller:" + callerPkg);
 
-        final TetheringRequestParcel requestParcel = request.toTetheringRequestParcel();
+        final TetheringRequestParcel requestParcel = generateTetheringRequestParcel(request);
         final IIntResultListener listener = new IIntResultListener.Stub() {
             @Override
             public void onResult(final int resultCode) {
@@ -428,6 +397,16 @@ public class TetheringManager {
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private TetheringRequestParcel generateTetheringRequestParcel(TetheringRequest request) {
+        final TetheringRequestParcel requestParcel = new TetheringRequestParcel();
+        requestParcel.ipv4Address = request.ipv4Address;
+        requestParcel.disableDhcpServer = request.disableDhcpServer;
+        requestParcel.exemptEntitlementCheck = request.exemptEntitlementCheck;
+        requestParcel.showProvisioningUi = request.showProvisioningUi;
+
+        return requestParcel;
     }
 
     /**

@@ -2619,7 +2619,7 @@ public class ConnectivityManager {
                 callback.onTetheringFailed();
             }
         };
-        if (!showProvisioningUi) request.silentProvisioning();
+        request.showProvisioningUi = showProvisioningUi;
 
         getTetheringManager().startTethering(request, executor);
     }
