@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1308ae6a_3ad7e4ff",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T19:41:26Z",
+      "side": 1,
+      "message": "Ack. My thought was that being able to force the virtual interface to have a lower MTU than the MIN_MTU_V6 seemed like a not-very-useful use case, and may add complexity if the server assigns us a IPv6 only network.\n\nIn the case of a physical link that has a lower MTU, this may have to drop below MIN_MTU_V6, but I\u0027m not sure I want random apps to be able to clamp this super low.",
+      "parentUuid": "f502f63b_5e72307e",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb8f20e_1d546a4d",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 32
@@ -45,6 +69,30 @@
       "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6346e656_05cd155b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 32
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-20T19:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb8f20e_1d546a4d",
+      "range": {
+        "startLine": 250,
+        "startChar": 58,
+        "endLine": 250,
+        "endChar": 93
+      },
+      "revId": "c46ca5c9ee9661ee4bf4fa670655ad1614f680a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
