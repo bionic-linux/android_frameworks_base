@@ -338,18 +338,93 @@ public class TetheringManager {
     }
 
     /**
+     *  Use with {@link #startTethering} to specify the parameter to request tethering starting and
+     *  find out whether tethering succeeded.
+     */
+    public static class TetheringRequest {
+        private final int mType;
+        private LinkAddress mIpv4Address = null;
+        private boolean mDisableDhcpServer = false;
+        private boolean mExemptEntitlementCheck = false;
+        private boolean mShowProvisioningUi = true;
+
+        public TetheringRequest(final int type) {
+            mType = type;
+        }
+
+        /** Set preferred ipv4 address if needed. */
+        public void setIpv4Address(final LinkAddress ipv4Address) {
+            mIpv4Address = ipv4Address;
+        }
+
+         /** Disable dhcp server. */
+        public void disableDhcpServer() {
+            mDisableDhcpServer = true;
+        }
+
+         /** Exempt entitlement check. */
+        public void exemptEntitlementCheck() {
+            mExemptEntitlementCheck = true;
+        }
+
+        /** Always run silent entitlement check. */
+        public void silentProvisioning() {
+            mShowProvisioningUi = false;
+        }
+
+        /**
+         * Write to TetheringRequestParcel.
+         *
+         */
+        public TetheringRequestParcel toTetheringRequestParcel() {
+            final TetheringRequestParcel requestParcel = new TetheringRequestParcel();
+            requestParcel.tetheringType = mType;
+            requestParcel.ipv4Address = mIpv4Address;
+            requestParcel.disableDhcpServer = mDisableDhcpServer;
+            requestParcel.exemptEntitlementCheck = mExemptEntitlementCheck;
+            requestParcel.showProvisioningUi = mShowProvisioningUi;
+
+            return requestParcel;
+        }
+
+        /** Called when tethering has been successfully requested. */
+        public void onRequestSuccessful() { }
+
+        /** Called when requesting tethering failed. */
+        public void onRequestError(int errorCode) { }
+    }
+
+    /**
      * Starts tethering and runs tether provisioning for the given type if needed. If provisioning
      * fails, stopTethering will be called automatically.
      *
+     * @param request an {@link TetheringRequest} which can specify prefered configuration and will
+     *         be called to notify the caller of the result of trying to tether.
+     * @param executor {@link Executor} to specify the thread upon which the callback of
+     *         TetheringRequest will be invoked.
      */
-    // TODO: improve the usage of ResultReceiver, b/145096122
-    public void startTethering(final int type, @NonNull final ResultReceiver receiver,
-            final boolean showProvisioningUi) {
+    public void startTethering(@NonNull final TetheringRequest request,
+            @NonNull final Executor executor) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "startTethering caller:" + callerPkg);
 
+        final TetheringRequestParcel requestParcel = request.toTetheringRequestParcel();
+        final IIntResultListener listener = new IIntResultListener.Stub() {
+            @Override
+            public void onResult(final int resultCode) {
+                if (resultCode == TETHER_ERROR_NO_ERROR) {
+                    executor.execute(() -> {
+                        request.onRequestSuccessful();
+                    });
+                } else {
+                    executor.execute(() -> {
+                        request.onRequestError(resultCode);
+                    });
+                }
+            }
+        };
         try {
-            mConnector.startTethering(type, receiver, showProvisioningUi, callerPkg);
+            mConnector.startTethering(requestParcel, callerPkg, listener);
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
