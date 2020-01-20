@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be532235_3af44537",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-20T21:10:27Z",
+      "side": 1,
+      "message": "We try to avoid for-each loop in framework to avoid creating an iterator object. (Previous code was fine since it was iterating over an array)",
+      "range": {
+        "startLine": 1817,
+        "startChar": 13,
+        "endLine": 1817,
+        "endChar": 44
+      },
+      "revId": "239c8778d11daf51cc9527421d51e993572357be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b100e3_dad316b9",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2020-01-20T21:10:27Z",
+      "side": 1,
+      "message": "nit: make it final and why can\u0027t this be just one statement?",
+      "range": {
+        "startLine": 2022,
+        "startChar": 7,
+        "endLine": 2023,
+        "endChar": 35
+      },
+      "revId": "239c8778d11daf51cc9527421d51e993572357be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
