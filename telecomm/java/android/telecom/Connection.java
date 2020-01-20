@@ -1947,6 +1947,7 @@ public abstract class Connection extends Conferenceable {
     private int mSupportedAudioRoutes = CallAudioState.ROUTE_ALL;
     private VideoProvider mVideoProvider;
     private boolean mAudioModeIsVoip;
+    private long mCreateTimeMillis = Conference.CONNECT_TIME_NOT_SPECIFIED;
     private long mConnectTimeMillis = Conference.CONNECT_TIME_NOT_SPECIFIED;
     private long mConnectElapsedTimeMillis = Conference.CONNECT_TIME_NOT_SPECIFIED;
     private StatusHints mStatusHints;
@@ -2092,6 +2093,25 @@ public abstract class Connection extends Conferenceable {
      */
     public final boolean getAudioModeIsVoip() {
         return mAudioModeIsVoip;
+    }
+
+    /**
+     * Retrieves the connection create time of the {@code Connnection}, if specified.  A value of
+     * {@link Conference#CONNECT_TIME_NOT_SPECIFIED} indicates that Telecom should determine the
+     * create time of the conference.
+     * <p>
+     * Note: This is an implementation detail specific to IMS conference calls over a mobile
+     * network.
+     *
+     * @return The time at which the {@code Connnection} was created. Will be a value as retrieved
+     * from {@link System#currentTimeMillis()}.
+     *
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public final long getCreateTimeMillis() {
+        return mCreateTimeMillis;
     }
 
     /**
@@ -2544,6 +2564,23 @@ public abstract class Connection extends Conferenceable {
         for (Listener l : mListeners) {
             l.onAudioModeIsVoipChanged(this, isVoip);
         }
+    }
+
+    /**
+     * Sets the time at which a call is generated on this Connection. This is set only
+     * when a conference call is generated on this connection.
+     * <p>
+     * Used by telephony to maintain calls associated with an IMS Conference.
+     *
+     * @param createTimeMillis The creation time, in milliseconds.  Should be set using a value
+     *                          obtained from {@link System#currentTimeMillis()}.
+     *
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public final void setCreateTimeMillis(long createTimeMillis) {
+        mCreateTimeMillis = createTimeMillis;
     }
 
     /**
