@@ -4644,6 +4644,13 @@ package android.net {
     field @NonNull public final String specifier;
   }
 
+  public final class TetheredClient implements android.os.Parcelable {
+    ctor public TetheredClient();
+    method public int describeContents();
+    method public void writeToParcel(android.os.Parcel, int);
+    field public static final android.os.Parcelable.Creator<android.net.TetheredClient> CREATOR;
+  }
+
   public class TrafficStats {
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();

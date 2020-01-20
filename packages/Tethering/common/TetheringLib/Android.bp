@@ -63,6 +63,8 @@ filegroup {
     name: "framework-tethering-srcs",
     srcs: [
         "src/android/net/TetheringManager.java",
+        "src/android/net/TetheredClient.aidl",
+        "src/android/net/TetheredClient.java",
         "src/android/net/IIntResultListener.aidl",
         "src/android/net/ITetheringEventCallback.aidl",
         "src/android/net/ITetheringConnector.aidl",
