@@ -8153,7 +8153,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                         .setBackupServiceActive(userId, makeActive);
             }
         } catch (RemoteException e) {
-            throw new IllegalStateException("Failed deactivating backup service.", e);
+            throw new IllegalStateException("Failed " + (makeActive ? "" : "de") + "activating backup service.", e);
         } finally {
             mInjector.binderRestoreCallingIdentity(ident);
         }
@@ -8204,6 +8204,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         mOwners.removeProfileOwner(userId);
         mOwners.writeProfileOwner(userId);
         deleteTransferOwnershipBundleLocked(userId);
+        //Reactivate backup service
+        toggleBackupServiceActive(userId, /* makeActive= */ true);
     }
 
     @Override
