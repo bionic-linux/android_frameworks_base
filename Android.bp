@@ -647,6 +647,7 @@ filegroup {
     srcs: [
         "core/java/android/annotation/NonNull.java",
         "core/java/android/annotation/SystemApi.java",
+        "core/java/android/annotation/TestApi.java",
     ],
 }
 // Build ext.jar
