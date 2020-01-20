@@ -16,6 +16,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.content.Context;
 import android.net.ConnectivityManager.OnTetheringEventCallback;
 import android.os.ConditionVariable;
@@ -25,6 +26,8 @@ import android.os.ResultReceiver;
 import android.util.ArrayMap;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -46,6 +49,8 @@ public class TetheringManager {
     private final Context mContext;
     private final ArrayMap<OnTetheringEventCallback, ITetheringEventCallback>
             mTetheringEventCallbacks = new ArrayMap<>();
+    // Tethered client by downstream interface
+    private final ArrayMap<String, List<TetheredClient>> mTetheredClients = new ArrayMap<>();
 
     private TetheringConfigurationParcel mTetheringConfiguration;
     private TetherStatesParcel mTetherStatesParcel;
@@ -253,6 +258,12 @@ public class TetheringManager {
         @Override
         public void onTetherStatesChanged(TetherStatesParcel states) {
             mTetherStatesParcel = states;
+        }
+
+        @Override
+        public void onTetherClientsChanged(String ifName, List<TetheredClient> clients) {
+            mTetheredClients.put(ifName, clients);
+
         }
 
         public void waitForStarted() {

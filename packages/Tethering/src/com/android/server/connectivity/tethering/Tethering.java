@@ -71,9 +71,12 @@ import android.net.ITetheringEventCallback;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.TetherStatesParcel;
+import android.net.TetheredClient;
+import android.net.TetheredClient.AddressInfo;
 import android.net.TetheringConfigurationParcel;
 import android.net.ip.IpServer;
 import android.net.shared.NetdUtils;
@@ -82,6 +85,7 @@ import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.net.util.VersionedBroadcastListener;
+import android.net.wifi.WifiClient;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
@@ -89,6 +93,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteCallbackList;
@@ -120,8 +125,12 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
@@ -192,6 +201,23 @@ public class Tethering {
     private final NetdCallback mNetdCallback;
     private final UserRestrictionActionListener mTetheringRestriction;
     private final ActiveDataSubIdListener mActiveDataSubIdListener;
+
+    @NonNull
+    private List<WifiClient> mLastWifiClients = Collections.emptyList();
+
+    /**
+     * List of client mac addresses for which there is a valid IP address, but the client has
+     * disconnected at layer 2. The client may come back later and start using the address again,
+     * but it is currently disconnected, so will not show up in the list of connected clients.
+     *
+     * For some clients, Tethering has no information on whether L2 is connected / disconnected;
+     * for example a client could be behind a bridge, and some link types do not provide
+     * notifications on connect/disconnect even for directly connected clients. In that case the
+     * lease is never considered disconnected.
+     */
+    @NonNull
+    private Set<MacAddress> mDisconnectedClientsWithLease = Collections.emptySet();
+
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -275,6 +301,9 @@ public class Tethering {
 
         startStateMachineUpdaters(mHandler);
         startTrackDefaultNetwork();
+        getWifiManager().registerSoftApCallback(
+                new HandlerExecutor(mHandler),
+        );
     }
 
     private void startStateMachineUpdaters(Handler handler) {
@@ -366,6 +395,22 @@ public class Tethering {
         @Override
         public void onInterfaceRemoved(String ifName) {
             mHandler.post(() -> interfaceRemoved(ifName));
+        }
+    }
+
+    private class TetheringSoftApCallBack implements WifiManager.SoftApCallback {
+        // TODO: Remove onStateChanged override when this method has default on
+        // WifiManager#SoftApCallback interface.
+        // Wifi listener for state change of the soft AP
+        @Override
+        public void onStateChanged(final int state, final int failureReason) {
+            // Nothing
+        }
+
+        // Called by wifi when the number of soft AP clients changed.
+        @Override
+        public void onConnectedClientsChanged(final List<WifiClient> clients) {
+            updateConnectedClients(clients);
         }
     }
 
@@ -1476,6 +1521,9 @@ public class Tethering {
             mOffload.excludeDownstreamInterface(who.interfaceName());
             mForwardedDownstreams.remove(who);
 
+            // TODO: figure out if Tethering should be notified of WiFi clients disconnection, or if
+            // the AP callback does it by itself on shutdown
+
             // If this is a Wi-Fi interface, tell WifiManager of any errors
             // or the inactive serving state.
             if (who.interfaceType() == TETHERING_WIFI) {
@@ -1905,6 +1953,127 @@ public class Tethering {
         }
     }
 
+    private void reportTetherClientsChanged(List<TetheredClient> clients) {
+        final int length = mTetheringEventCallbacks.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetherClientsChanged(clients);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
+        }
+    }
+
+
+    private static boolean hasExpiredAddress(List<AddressInfo> addresses, long now) {
+        for (AddressInfo info : addresses) {
+            if (info.getExpirationTime() <= now) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Nullable
+    private static TetheredClient getRemainingAddresses(TetheredClient client, long now) {
+        final List<AddressInfo> addresses = client.getAddresses();
+        if (!hasExpiredAddress(addresses, now)) return client;
+
+        final ArrayList<AddressInfo> newAddrs = new ArrayList<>(addresses.size() - 1);
+        for (AddressInfo info : addresses) {
+            if (info.getExpirationTime() > now) {
+                newAddrs.add(info);
+            }
+        }
+
+        if (newAddrs.size() == 0) {
+            return null;
+        }
+        return new TetheredClient(client.getMacAddress(), newAddrs, client.getTetheringType());
+    }
+
+    private void updateConnectedClients(@NonNull List<WifiClient> wifiClients) {
+        final long now = System.currentTimeMillis();
+
+        // Build the list of non-expired leases from all IpServers
+        final List<TetheredClient> validLeases = new ArrayList<>();
+        for (IpServer server : mForwardedDownstreams) {
+            for (TetheredClient client : server.dhcpLeases()) {
+                final TetheredClient remainingAddrs = getRemainingAddresses(client, now);
+                if (remainingAddrs == null) continue;
+                validLeases.add(remainingAddrs);
+            }
+        }
+
+        final Set<MacAddress> currentWifiClients = getClientMacs(wifiClients);
+        final Set<MacAddress> lostWifiClients = getClientMacs(mLastWifiClients);
+        lostWifiClients.removeAll(currentWifiClients);
+
+        mLastWifiClients = wifiClients;
+
+        final Set<MacAddress> leasesMacs = getLeasesMacs(validLeases);
+        // A client is no longer "disconnected with a lease" if it's connected, or has no lease
+        mDisconnectedClientsWithLease.removeIf(c ->
+                currentWifiClients.contains(c) || (!leasesMacs.contains(c)));
+
+
+        // Build the list of tethered clients to report, grouped by mac address
+        final Map<MacAddress, TetheredClient> clientsMap = new HashMap<>();
+        for (TetheredClient leaseInfo : validLeases) {
+            if (mDisconnectedClientsWithLease.contains(leaseInfo.getMacAddress())) {
+                // Skip this lease as it belongs to a disconnected client
+                continue;
+            } else if (lostWifiClients.contains(leaseInfo.getMacAddress())) {
+                // The owner of this lease just disconnected
+                mDisconnectedClientsWithLease.add(leaseInfo.getMacAddress());
+                continue;
+            }
+
+            final TetheredClient aggregateClient = clientsMap.getOrDefault(
+                    leaseInfo.getMacAddress(), leaseInfo);
+            if (aggregateClient != leaseInfo) {
+                // Only add the address info; this assumes that the tethering type is the same when
+                // the mac address is the same. If a client is connected through different tethering
+                // types with the same mac address, connected clients callbacks will report all of
+                // its addresses under only one of these tethering types. This keeps the API simple
+                // considering that such a scenario would really be a rare edge case.
+                clientsMap.put(leaseInfo.getMacAddress(), aggregateClient.addAddresses(leaseInfo));
+            }
+        }
+
+        // TODO: add IPv6 addresses from netlink
+
+        // Add connected WiFi clients that do not have any known address
+        for (WifiClient client : wifiClients) {
+            final MacAddress macAddr = client.getMacAddress();
+            if (clientsMap.containsKey(macAddr)) continue;
+            clientsMap.put(macAddr, new TetheredClient(
+                    macAddr, Collections.emptyList() /* addresses */, TETHERING_WIFI));
+        }
+
+        reportTetherClientsChanged(new ArrayList<>(clientsMap.values()));
+    }
+
+    private static Set<MacAddress> getClientMacs(@NonNull List<WifiClient> clients) {
+        final Set<MacAddress> macs = new HashSet<>(clients.size());
+        for (WifiClient c : clients) {
+            macs.add(c.getMacAddress());
+        }
+        return macs;
+    }
+
+    private static Set<MacAddress> getLeasesMacs(@NonNull List<TetheredClient> leases) {
+        final Set<MacAddress> macs = new HashSet<>(leases.size());
+        for (TetheredClient c : leases) {
+            macs.add(c.getMacAddress());
+        }
+        return macs;
+    }
+
     void dump(@NonNull FileDescriptor fd, @NonNull PrintWriter writer, @Nullable String[] args) {
         // Binder.java closes the resource for us.
         @SuppressWarnings("resource")
@@ -1995,6 +2164,11 @@ public class Tethering {
             @Override
             public void updateLinkProperties(IpServer who, LinkProperties newLp) {
                 notifyLinkPropertiesChanged(who, newLp);
+            }
+
+            @Override
+            public void dhcpLeasesChanged() {
+                updateConnectedClients(mLastWifiClients);
             }
         };
     }
