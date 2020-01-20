@@ -19,7 +19,13 @@ aidl_interface {
     local_include_dir: "src",
     include_dirs: ["frameworks/base/core/java"], // For framework parcelables.
     srcs: [
-        "src/android/net/*.aidl",
+        // @JavaOnlyStableParcelable aidl declarations must not be listed here, as this would cause
+        // compilation to fail (b/148001843).
+        "src/android/net/IIntResultListener.aidl",
+        "src/android/net/ITetheringConnector.aidl",
+        "src/android/net/ITetheringEventCallback.aidl",
+        "src/android/net/TetheringConfigurationParcel.aidl",
+        "src/android/net/TetherStatesParcel.aidl",
     ],
     backend: {
         ndk: {
@@ -63,6 +69,8 @@ filegroup {
     name: "framework-tethering-srcs",
     srcs: [
         "src/android/net/TetheringManager.java",
+        "src/android/net/TetheredClient.aidl",
+        "src/android/net/TetheredClient.java",
         "src/android/net/IIntResultListener.aidl",
         "src/android/net/ITetheringEventCallback.aidl",
         "src/android/net/ITetheringConnector.aidl",
