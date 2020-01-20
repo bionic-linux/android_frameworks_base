@@ -338,21 +338,75 @@ public class TetheringManager {
     }
 
     /**
+     *  Use with {@link #startTethering} to specify the parameter to request tethering starting and
+     *  find out whether tethering succeeded.
+     */
+    public static class TetheringRequest {
+        /** Tethering type, one of #TETHERING_*. */
+        public final int tetheringType;
+        /** Use to specifiy ipv4 address for #tetheringType interface. */
+        public LinkAddress ipv4Address = null;
+        /** Disable dhcp server. */
+        public boolean disableDhcpServer = false;
+        /** Exempt entitlement check */
+        public boolean exemptEntitlementCheck = false;
+        /** Show provisioning UI when first time entitlement check for this request. */
+        public boolean showProvisioningUi = true;
+
+        public TetheringRequest(final int type) {
+            tetheringType = type;
+        }
+
+        /** Called when tethering has been successfully requested. */
+        public void onRequestSuccessful() { }
+
+        /** Called when requesting tethering failed. */
+        public void onRequestError(int errorCode) { }
+    }
+
+    /**
      * Starts tethering and runs tether provisioning for the given type if needed. If provisioning
      * fails, stopTethering will be called automatically.
      *
+     * @param request an {@link TetheringRequest} which can specify prefered configuration and will
+     *         be called to notify the caller of the result of trying to tether.
+     * @param executor {@link Executor} to specify the thread upon which the callback of
+     *         TetheringRequest will be invoked.
      */
-    // TODO: improve the usage of ResultReceiver, b/145096122
-    public void startTethering(final int type, @NonNull final ResultReceiver receiver,
-            final boolean showProvisioningUi) {
+    public void startTethering(TetheringRequest request, @NonNull Executor executor) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "startTethering caller:" + callerPkg);
 
+        final TetheringRequestParcel requestParcel = generateTetheringRequestParcel(request);
+        final IIntResultListener listener = new IIntResultListener.Stub() {
+            @Override
+            public void onResult(final int resultCode) {
+                if (resultCode == TETHER_ERROR_NO_ERROR) {
+                    executor.execute(() -> {
+                        request.onRequestSuccessful();
+                    });
+                } else {
+                    executor.execute(() -> {
+                        request.onRequestError(resultCode);
+                    });
+                }
+            }
+        };
         try {
-            mConnector.startTethering(type, receiver, showProvisioningUi, callerPkg);
+            mConnector.startTethering(requestParcel, callerPkg, listener);
         } catch (RemoteException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private TetheringRequestParcel generateTetheringRequestParcel(TetheringRequest request) {
+        final TetheringRequestParcel requestParcel = new TetheringRequestParcel();
+        requestParcel.ipv4Address = request.ipv4Address;
+        requestParcel.disableDhcpServer = request.disableDhcpServer;
+        requestParcel.exemptEntitlementCheck = request.exemptEntitlementCheck;
+        requestParcel.showProvisioningUi = request.showProvisioningUi;
+
+        return requestParcel;
     }
 
     /**
