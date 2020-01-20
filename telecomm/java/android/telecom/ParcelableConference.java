@@ -21,11 +21,11 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.android.internal.telecom.IVideoProvider;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.android.internal.telecom.IVideoProvider;
 
 /**
  * A parcelable representation of a conference connection.
@@ -39,6 +39,7 @@ public final class ParcelableConference implements Parcelable {
         private int mConnectionCapabilities;
         private int mConnectionProperties;
         private List<String> mConnectionIds = Collections.emptyList();
+        private long mCreateTimeMillis = Conference.CREATE_TIME_NOT_SPECIFIED;
         private long mConnectTimeMillis = Conference.CONNECT_TIME_NOT_SPECIFIED;
         private IVideoProvider mVideoProvider;
         private int mVideoState = VideoProfile.STATE_AUDIO_ONLY;
@@ -94,6 +95,11 @@ public final class ParcelableConference implements Parcelable {
             return this;
         }
 
+        public Builder setCreateTimeMillis(long createTimeMillis) {
+            mCreateTimeMillis = createTimeMillis;
+            return this;
+        }
+
         public Builder setConnectTimeMillis(long connectTimeMillis, long connectElapsedTimeMillis) {
             mConnectTimeMillis = connectTimeMillis;
             mConnectElapsedTimeMillis = connectElapsedTimeMillis;
@@ -130,9 +136,10 @@ public final class ParcelableConference implements Parcelable {
         public ParcelableConference build() {
             return new ParcelableConference(mPhoneAccount, mState, mConnectionCapabilities,
                     mConnectionProperties, mConnectionIds, mVideoProvider, mVideoState,
-                    mConnectTimeMillis, mConnectElapsedTimeMillis, mStatusHints, mExtras, mAddress,
-                    mAddressPresentation, mCallerDisplayName, mCallerDisplayNamePresentation,
-                    mDisconnectCause, mRingbackRequested, mCallDirection);
+                    mCreateTimeMillis, mConnectTimeMillis, mConnectElapsedTimeMillis, mStatusHints,
+                    mExtras, mAddress, mAddressPresentation, mCallerDisplayName,
+                    mCallerDisplayNamePresentation, mDisconnectCause, mRingbackRequested,
+                    mCallDirection);
         }
     }
 
@@ -142,6 +149,7 @@ public final class ParcelableConference implements Parcelable {
     private final int mConnectionCapabilities;
     private final int mConnectionProperties;
     private final List<String> mConnectionIds;
+    private final long mCreateTimeMillis;
     private final long mConnectTimeMillis;
     private final IVideoProvider mVideoProvider;
     private final int mVideoState;
@@ -164,6 +172,7 @@ public final class ParcelableConference implements Parcelable {
             List<String> connectionIds,
             IVideoProvider videoProvider,
             int videoState,
+            long createTimeMillis,
             long connectTimeMillis,
             long connectElapsedTimeMillis,
             StatusHints statusHints,
@@ -182,6 +191,7 @@ public final class ParcelableConference implements Parcelable {
         mConnectionIds = connectionIds;
         mVideoProvider = videoProvider;
         mVideoState = videoState;
+        mCreateTimeMillis = createTimeMillis;
         mConnectTimeMillis = connectTimeMillis;
         mStatusHints = statusHints;
         mExtras = extras;
@@ -206,6 +216,8 @@ public final class ParcelableConference implements Parcelable {
                 .append(Connection.capabilitiesToString(mConnectionCapabilities))
                 .append(", properties: ")
                 .append(Connection.propertiesToString(mConnectionProperties))
+                .append(", createTime: ")
+                .append(mCreateTimeMillis)
                 .append(", connectTime: ")
                 .append(mConnectTimeMillis)
                 .append(", children: ")
@@ -241,6 +253,10 @@ public final class ParcelableConference implements Parcelable {
 
     public List<String> getConnectionIds() {
         return mConnectionIds;
+    }
+
+    public long getCreateTimeMillis() {
+        return mCreateTimeMillis;
     }
 
     public long getConnectTimeMillis() {
@@ -312,12 +328,13 @@ public final class ParcelableConference implements Parcelable {
             DisconnectCause disconnectCause = source.readParcelable(classLoader);
             boolean isRingbackRequested = source.readInt() == 1;
             int callDirection = source.readInt();
+            long createTimeMillis = source.readLong();
 
             return new ParcelableConference(phoneAccount, state, capabilities, properties,
-                    connectionIds, videoCallProvider, videoState, connectTimeMillis,
-                    connectElapsedTimeMillis, statusHints, extras, address, addressPresentation,
-                    callerDisplayName, callerDisplayNamePresentation, disconnectCause,
-                    isRingbackRequested, callDirection);
+                    connectionIds, videoCallProvider, videoState, createTimeMillis,
+                    connectTimeMillis, connectElapsedTimeMillis, statusHints, extras, address,
+                    addressPresentation, callerDisplayName, callerDisplayNamePresentation,
+                    disconnectCause, isRingbackRequested, callDirection);
         }
 
         @Override
@@ -354,5 +371,6 @@ public final class ParcelableConference implements Parcelable {
         destination.writeParcelable(mDisconnectCause, 0);
         destination.writeInt(mRingbackRequested ? 1 : 0);
         destination.writeInt(mCallDirection);
+        destination.writeLong(mCreateTimeMillis);
     }
 }

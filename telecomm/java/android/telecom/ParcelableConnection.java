@@ -46,6 +46,7 @@ public final class ParcelableConnection implements Parcelable {
     private final int mVideoState;
     private final boolean mRingbackRequested;
     private final boolean mIsVoipAudioMode;
+    private final long mCreateTimeMillis;
     private final long mConnectTimeMillis;
     private final long mConnectElapsedTimeMillis;
     private final StatusHints mStatusHints;
@@ -71,6 +72,7 @@ public final class ParcelableConnection implements Parcelable {
             int videoState,
             boolean ringbackRequested,
             boolean isVoipAudioMode,
+            long createTimeMillis,
             long connectTimeMillis,
             long connectElapsedTimeMillis,
             StatusHints statusHints,
@@ -82,9 +84,9 @@ public final class ParcelableConnection implements Parcelable {
             @Connection.VerificationStatus int callerNumberVerificationStatus) {
         this(phoneAccount, state, capabilities, properties, supportedAudioRoutes, address,
                 addressPresentation, callerDisplayName, callerDisplayNamePresentation,
-                videoProvider, videoState, ringbackRequested, isVoipAudioMode, connectTimeMillis,
-                connectElapsedTimeMillis, statusHints, disconnectCause, conferenceableConnectionIds,
-                extras, callerNumberVerificationStatus);
+                videoProvider, videoState, ringbackRequested, isVoipAudioMode, createTimeMillis,
+                connectTimeMillis, connectElapsedTimeMillis, statusHints, disconnectCause,
+                conferenceableConnectionIds, extras, callerNumberVerificationStatus);
         mParentCallId = parentCallId;
         mCallDirection = callDirection;
     }
@@ -104,6 +106,7 @@ public final class ParcelableConnection implements Parcelable {
             int videoState,
             boolean ringbackRequested,
             boolean isVoipAudioMode,
+            long createTimeMillis,
             long connectTimeMillis,
             long connectElapsedTimeMillis,
             StatusHints statusHints,
@@ -124,6 +127,7 @@ public final class ParcelableConnection implements Parcelable {
         mVideoState = videoState;
         mRingbackRequested = ringbackRequested;
         mIsVoipAudioMode = isVoipAudioMode;
+        mCreateTimeMillis = createTimeMillis;
         mConnectTimeMillis = connectTimeMillis;
         mConnectElapsedTimeMillis = connectElapsedTimeMillis;
         mStatusHints = statusHints;
@@ -197,6 +201,10 @@ public final class ParcelableConnection implements Parcelable {
 
     public boolean getIsVoipAudioMode() {
         return mIsVoipAudioMode;
+    }
+
+    public long getCreateTimeMillis() {
+        return mCreateTimeMillis;
     }
 
     public long getConnectTimeMillis() {
@@ -285,6 +293,7 @@ public final class ParcelableConnection implements Parcelable {
             long connectElapsedTimeMillis = source.readLong();
             int callDirection = source.readInt();
             int callerNumberVerificationStatus = source.readInt();
+            long createTimeMillis = source.readLong();
 
             return new ParcelableConnection(
                     phoneAccount,
@@ -300,6 +309,7 @@ public final class ParcelableConnection implements Parcelable {
                     videoState,
                     ringbackRequested,
                     audioModeIsVoip,
+                    createTimeMillis,
                     connectTimeMillis,
                     connectElapsedTimeMillis,
                     statusHints,
@@ -349,5 +359,6 @@ public final class ParcelableConnection implements Parcelable {
         destination.writeLong(mConnectElapsedTimeMillis);
         destination.writeInt(mCallDirection);
         destination.writeInt(mCallerNumberVerificationStatus);
+        destination.writeLong(mCreateTimeMillis);
     }
 }

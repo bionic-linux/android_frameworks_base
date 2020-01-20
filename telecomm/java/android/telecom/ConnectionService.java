@@ -1993,6 +1993,7 @@ public abstract class ConnectionService extends Service {
                 .setVideoAttributes(conference.getVideoProvider() == null
                                 ? null : conference.getVideoProvider().getInterface(),
                         conference.getVideoState())
+                .setCreateTimeMillis(conference.getCreationTime())
                 .setConnectTimeMillis(conference.getConnectTimeMillis(),
                         conference.getConnectionStartElapsedRealtimeMillis())
                 .setStatusHints(conference.getStatusHints())
@@ -2127,6 +2128,7 @@ public abstract class ConnectionService extends Service {
                         connection.getVideoState(),
                         connection.isRingbackRequested(),
                         connection.getAudioModeIsVoip(),
+                        connection.getCreateTimeMillis(),
                         connection.getConnectTimeMillis(),
                         connection.getConnectionStartElapsedRealtimeMillis(),
                         connection.getStatusHints(),
@@ -2700,6 +2702,7 @@ public abstract class ConnectionService extends Service {
                     .setVideoAttributes(conference.getVideoProvider() == null
                                     ? null : conference.getVideoProvider().getInterface(),
                             conference.getVideoState())
+                    .setCreateTimeMillis(conference.getCreationTime())
                     .setConnectTimeMillis(conference.getConnectTimeMillis(),
                             conference.getConnectionStartElapsedRealtimeMillis())
                     .setStatusHints(conference.getStatusHints())
@@ -2799,6 +2802,7 @@ public abstract class ConnectionService extends Service {
                     connection.getVideoState(),
                     connection.isRingbackRequested(),
                     connection.getAudioModeIsVoip(),
+                    connection.getCreateTimeMillis(),
                     connection.getConnectTimeMillis(),
                     connection.getConnectionStartElapsedRealtimeMillis(),
                     connection.getStatusHints(),
