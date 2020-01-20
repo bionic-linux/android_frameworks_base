@@ -14,26 +14,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Merge mutliple CSV files, possibly with different columns, writing to stdout.
+Merge multiple CSV files, possibly with different columns.
 """
 
+import argparse
 import csv
-import sys
+import os
 
-csv_readers = [
-    csv.DictReader(open(csv_file, 'r'), delimiter=',', quotechar='|')
-    for csv_file in sys.argv[1:]
-]
+args_parser = argparse.ArgumentParser(description='Merge given CSV files into a single one.')
+args_parser.add_argument('--header', help='Comma separated field names; '
+                                          'if missing determines the header from input files.')
+args_parser.add_argument('--csv_name', help='Find CSV file in an input directory.')
+args_parser.add_argument('--output', help='Output file for merged CSV.', default='-',
+                         type=argparse.FileType('w'))
+args_parser.add_argument('files', nargs=argparse.REMAINDER)
+args = args_parser.parse_args()
+
+csv_readers = []
+for file in args.files:
+    if os.path.isdir(file):
+        file = os.path.join(file, args.csv_name)
+    # Check the file actually exists
+    if os.path.isfile(file):
+        csv_readers.append(csv.DictReader(open(file, 'r'), delimiter=',', quotechar='|'))
 
 # Build union of all columns from source files:
 headers = set()
 for reader in csv_readers:
     headers = headers.union(reader.fieldnames)
+if args.header:
+    fieldnames = args.header.split(',')
+    assert headers == set(fieldnames), "Header mismatch."
+else:
+    fieldnames = sorted(headers)
 
 # Concatenate all files to output:
-out = csv.DictWriter(sys.stdout, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL,
-                     dialect='unix', fieldnames=sorted(headers))
-out.writeheader()
+writer = csv.DictWriter(args.output, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL,
+                        dialect='unix', fieldnames=fieldnames)
+writer.writeheader()
 for reader in csv_readers:
     for row in reader:
-        out.writerow(row)
+        writer.writerow(row)
