@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210d3b2d_ec1d7289",
+        "filename": "core/java/android/timezone/TimeZoneFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-21T16:16:14Z",
+      "side": 1,
+      "message": "Would it be feasible to introduce a tiny type representing the version and which implements Comparable appropriately?",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a22067c_f87fd88e",
+        "filename": "core/java/android/timezone/TzDataSetVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-21T16:16:14Z",
+      "side": 1,
+      "message": "Compile-time dependencies (such as calls to static methods) are hostile to tests (we can\u0027t replace the implementation with a mock/fake during tests).\n\nPerhaps the static methods here and/or in libcore should we perhaps have instance methods? The default implementation could still do the same thing, but could be replaced during tests.\n\nWDYT?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2dcc0f5_c5620cc4",
+        "filename": "core/java/android/timezone/ZoneInfoDB.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-21T16:16:14Z",
+      "side": 1,
+      "message": "can we call this ZoneInfoDb?",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
