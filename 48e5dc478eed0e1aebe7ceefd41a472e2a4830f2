@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e44299a3_c67b776e",
+        "filename": "api/test-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T10:30:40Z",
+      "side": 1,
+      "message": "isSessionExtendable",
+      "range": {
+        "startLine": 1365,
+        "startChar": 26,
+        "endLine": 1365,
+        "endChar": 42
+      },
+      "revId": "48e5dc478eed0e1aebe7ceefd41a472e2a4830f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
