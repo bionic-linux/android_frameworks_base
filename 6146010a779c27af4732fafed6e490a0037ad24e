@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3593463_11ce54fb",
+        "filename": "core/java/android/timezone/TimeZoneFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-21T17:21:41Z",
+      "side": 1,
+      "message": "Feasible, yes. Worth it, no. String is fine. I don\u0027t think we get anything from adding a type that wraps the String. There\u0027s no hidden information. String is already comparable, etc.",
+      "parentUuid": "210d3b2d_ec1d7289",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a5cdb9d_72b778d8",
         "filename": "core/java/android/timezone/TzDataSetVersion.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-21T16:24:57Z",
       "side": 1,
       "message": "Is or isn\u0027t mDelegate (and therefore this type here) an immutable value type?\n\nShould the class implement Comparable? If not, why not?",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d418fc02_8b5d611d",
+        "filename": "core/java/android/timezone/TzDataSetVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-21T17:21:41Z",
+      "side": 1,
+      "message": "It is immutable, yes.\n\n\u003e Should the class implement Comparable? If not, why not?\n\nBecause that\u0027s not how version compatibility works. Versions aren\u0027t something you would want to sort. Simple ordering won\u0027t provide a guarantee of compatibility or being \"better\" for time zone data.\n\ne.g.\n1.1.2015a.2\n1.2.2015b.1\n2.1.2015a.1\n\nwhich one is \"better\" than the others? It depends on the device this is for.\n\nHence \"isCompatibleWithThisDevice()\" exists.\n\nThe other methods are mostly to provide information for debugging / for testing / to make a well-rounded API, and in case we want to be more prescriptive.\n\nFor example, I\u0027ve put in a test that asserts a \"floor\" iana version for R. I don\u0027t want to be more prescriptive than that right now, but if we have trouble with the release process / branching, I\u0027d update MTS with the exact version I expect, for which I\u0027d need the extra methods.\n\nI could remove all the methods / associated tests and just leave \"isCompatibleWithThisDevice()\", but it\u0027s not my preference for the reason above.",
+      "parentUuid": "8a5cdb9d_72b778d8",
       "range": {
         "startLine": 49,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cc29ff93_5f9f2228",
+        "filename": "core/java/android/timezone/TzDataSetVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-21T17:21:41Z",
+      "side": 1,
+      "message": "It think it\u0027s unnecessary / slightly misleading. I can\u0027t think of any case where you\u0027d want to mock them. Also, all the classes are mostly missing constructors / declared final deliberately.\n\nUltimately, these methods provide access to final static int constant values baked into the platform.",
+      "parentUuid": "5a22067c_f87fd88e",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2dcc0f5_c5620cc4",
         "filename": "core/java/android/timezone/ZoneInfoDB.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e0b79c_3d036e4f",
+        "filename": "core/java/android/timezone/ZoneInfoDB.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-01-21T17:21:41Z",
+      "side": 1,
+      "message": "If you\u0027re asking if I can change it: sure, if you insist.\n\nI assume you\u0027re up for the review.\n\nFirst, though, I can make the adjustment only in android.timezone to unblock this change. I\u0027ll leave the libcore version fully qualified to avoid churn.\n\nThen, I\u0027d like to change the libcore.timezone class to match the new name because I anticipate these proxy classes going away in the S cycle, to be replaced by \"the real\" libcore classes (that will be moved under android.timezone in libcore and exposed by a mainline module instead).\n\nI have various other changes to make where they\u0027ve diverged (mostly direct field access Vs accessors in the module API), so I can do it as part of that.",
+      "parentUuid": "a2dcc0f5_c5620cc4",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
