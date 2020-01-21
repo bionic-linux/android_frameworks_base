@@ -4717,7 +4717,7 @@ public class ConnectivityManager {
      * @param remote The remote {@link InetSocketAddress} of a connection.
      *
      * @return {@code uid} if the connection is found and the app has permission to observe it
-     * (e.g., if it is associated with the calling VPN app's tunnel) or
+     * (e.g., if it is associated with the calling VPN app's VpnService tunnel) or
      * {@link android.os.Process#INVALID_UID} if the connection is not found.
      * Throws {@link SecurityException} if the caller is not the active VPN for the current user.
      * Throws {@link IllegalArgumentException} if an unsupported protocol is requested.
