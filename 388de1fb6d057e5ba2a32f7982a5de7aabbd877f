@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "f0234015_0acc4154",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-21T18:48:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s fair to ask for a complete refactor of the CLs at this point, which would surely mean that this code doesn\u0027t land in R. I\u0027m open to doing something like this post-IC provided:\n\n1) we can all sit down and soberly discuss whether it\u0027s the right thing to do, rather than as an inline comment deep in a patch stack.\n2) we can figure out why this is only apparent post-design-review and very late in the code review process.\n\nSuch inefficiencies are just not something in any of our interest (including the interest of our code reviewers), so we really need to avoid them at all costs.",
+      "parentUuid": "6bc03d02_d0fbc52e",
+      "range": {
+        "startLine": 7256,
+        "startChar": 10,
+        "endLine": 7256,
+        "endChar": 40
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b618f661_dc71b8eb",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
