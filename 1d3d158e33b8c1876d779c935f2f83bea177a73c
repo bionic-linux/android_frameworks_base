@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79ddcd2_621960da",
+        "filename": "core/java/android/net/CaptivePortalData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "Can\u0027t you just (Uri) p.readParcelable(null) ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c1c09d_a82a9d2c",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "...and the network provided the URL",
+      "range": {
+        "startLine": 1552,
+        "startChar": 73,
+        "endLine": 1552,
+        "endChar": 74
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7958d4_8e185f05",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "IIUC the difference between getLinkProperties(NAI) and getLinkPropertiesInternal(NAI) is that the latter sanitizes and the former doesn\u0027t.\n\nAt face value it seems reversed, but I think we should clarify by calling one getLPSanitized() and the other getLPNotSanitized() or something.",
+      "range": {
+        "startLine": 1594,
+        "startChar": 27,
+        "endLine": 1594,
+        "endChar": 44
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea4f95b_6fb3b432",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "I know you\u0027re just mimicking the code above, but it happens to be an outlier (you can fix it here if you want). We try to use the return-fast policy in our code (instead of single-return, which this also doesn\u0027t respect) so I would advocate for :\n\n  if (nai \u003d\u003d null) return null;\n  sync() {\n    if (nai.lp \u003d\u003d null) return null;\n    return ...\n  }",
+      "range": {
+        "startLine": 1617,
+        "startChar": 8,
+        "endLine": 1617,
+        "endChar": 26
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbac5eb_c11f5fb6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "If this is an optimization then maybe write a short one-liner of comment about it",
+      "range": {
+        "startLine": 1651,
+        "startChar": 12,
+        "endLine": 1651,
+        "endChar": 92
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5e579a_25c29bd9",
+        "filename": "tests/net/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "You don\u0027t need to specify the type here and it\u0027s pretty obvious",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 57
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621235a9_52aacc2f",
+        "filename": "tests/net/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "Suggest :\n\n  fun CaptivePortalData.mutate(mutator: (CaptivePortalData) -\u003e Unit) \u003d Builder(this).let { mutator(it) }.build\n\n  private fun assertNotEqualsAfterChange(mutator) \u003d assertNotEquals(data, newBuilder.mutate(mutator))\n\n...only if you like it better. If you don\u0027t just move build() at the end of the also{} block, as also{} returns the builder. Also I would prefer .let{} than .also{} because this is not a drive-by thing you\u0027re doing here, it\u0027s actually core to the logic.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57e826f_bb76737b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "How about having mMockedPermission be a Map\u003cString, Integer\u003e instead ?",
+      "range": {
+        "startLine": 435,
+        "startChar": 19,
+        "endLine": 435,
+        "endChar": 26
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d951a4_b4ae9bd2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1789,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T13:03:24Z",
+      "side": 1,
+      "message": "Please also test with registerDefaultNetworkCallback",
+      "range": {
+        "startLine": 1789,
+        "startChar": 12,
+        "endLine": 1789,
+        "endChar": 35
+      },
+      "revId": "1d3d158e33b8c1876d779c935f2f83bea177a73c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
