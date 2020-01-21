@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25138de3_aa6967d1",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4657,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "Yes, your suggestion is better.",
+      "parentUuid": "1690e4eb_10d2c49d",
+      "range": {
+        "startLine": 4657,
+        "startChar": 4,
+        "endLine": 4657,
+        "endChar": 58
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca6fbae2_0137fbb6",
         "filename": "api/system-current.txt",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-21T09:29:03Z",
       "side": 1,
       "message": "What do we want to do about these? They\u0027re synchronous, which means that an app calling them could race with the tethering service starting and either block indefinitely or return null. Perhaps we could avoid adding these for now, and instead provide an async way of fetching this information? In the meantime, clients can continue to use the hidden or deprecated methods in ConnectivityManager.",
+      "range": {
+        "startLine": 4658,
+        "startChar": 0,
+        "endLine": 4661,
+        "endChar": 62
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b47745_e29d27fd",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4661,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "Ack, yes, should just keep them @hide.",
+      "parentUuid": "ca6fbae2_0137fbb6",
       "range": {
         "startLine": 4658,
         "startChar": 0,
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "Rationale: the ConnectivityManager method is not and has never been an API and is not UnsupportedAppUsage. It only returns the ranges used by dnsmasq, which is deprecated and off by default.",
       "parentUuid": "702731de_6469071f",
+      "range": {
+        "startLine": 4662,
+        "startChar": 4,
+        "endLine": 4662,
+        "endChar": 72
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a86cd35_4af7022c",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4662,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "Yes, indeed.",
+      "parentUuid": "e0a1e3d2_1c0e7b4d",
       "range": {
         "startLine": 4662,
         "startChar": 4,
@@ -326,6 +398,30 @@
     },
     {
       "key": {
+        "uuid": "2e14426b_f9fa8a10",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2823,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "TETHER_ERROR_NO_ERROR is deprecated. Don\u0027t catch you question.",
+      "parentUuid": "4cc4542a_55084a19",
+      "range": {
+        "startLine": 2823,
+        "startChar": 4,
+        "endLine": 2823,
+        "endChar": 11
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd89c712_f7cb1809",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 3
@@ -349,6 +445,30 @@
     },
     {
       "key": {
+        "uuid": "bca4b854_ebecb3c2",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "Because this is @hide which is not the API. Others are @UnsupportedAppUsage.",
+      "parentUuid": "cd89c712_f7cb1809",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 54
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd3799c_5abd3956",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
         "patchSetId": 3
@@ -360,6 +480,30 @@
       "writtenOn": "2020-01-21T09:29:03Z",
       "side": 1,
       "message": "Perhaps not for this CL, but... isn\u0027t TetherService in Settings? If so, shouldn\u0027t this be a system API that the module provides to Settings?",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 14
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601a07be_7dabd665",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "Settings can access @hide and I think this is better to not be access for other application.",
+      "parentUuid": "ecd3799c_5abd3956",
       "range": {
         "startLine": 129,
         "startChar": 7,
@@ -530,6 +674,30 @@
       "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f71f32_8f2c9c81",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-01-21T17:54:40Z",
+      "side": 1,
+      "message": "zero time case: entitlement app crash or don\u0027t send the result for some reason(one possible case is the entitlement UI need to interactive with user, but user don\u0027t click it and keep it there), then callback would not happen. We don\u0027t have timeout for UI base entitlement check.",
+      "parentUuid": "9996fb96_38c5c2f4",
+      "range": {
+        "startLine": 514,
+        "startChar": 96,
+        "endLine": 514,
+        "endChar": 100
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
