@@ -22,6 +22,30 @@
       "revId": "48e5dc478eed0e1aebe7ceefd41a472e2a4830f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf16891d_cd6d1bb8",
+        "filename": "api/test-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T12:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e44299a3_c67b776e",
+      "range": {
+        "startLine": 1365,
+        "startChar": 26,
+        "endLine": 1365,
+        "endChar": 42
+      },
+      "revId": "48e5dc478eed0e1aebe7ceefd41a472e2a4830f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
