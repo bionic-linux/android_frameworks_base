@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1690e4eb_10d2c49d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4657,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Can we instead not add this and replace it with an int extra in the state change broadcast? Or, add an onTetheringError callback to OnTetheringEventCallback?",
+      "range": {
+        "startLine": 4657,
+        "startChar": 4,
+        "endLine": 4657,
+        "endChar": 58
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6fbae2_0137fbb6",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4661,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "What do we want to do about these? They\u0027re synchronous, which means that an app calling them could race with the tethering service starting and either block indefinitely or return null. Perhaps we could avoid adding these for now, and instead provide an async way of fetching this information? In the meantime, clients can continue to use the hidden or deprecated methods in ConnectivityManager.",
+      "range": {
+        "startLine": 4658,
+        "startChar": 0,
+        "endLine": 4661,
+        "endChar": 62
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "702731de_6469071f",
         "filename": "api/system-current.txt",
         "patchSetId": 3
@@ -25,6 +71,99 @@
     },
     {
       "key": {
+        "uuid": "e0a1e3d2_1c0e7b4d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4662,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Rationale: the ConnectivityManager method is not and has never been an API and is not UnsupportedAppUsage. It only returns the ranges used by dnsmasq, which is deprecated and off by default.",
+      "parentUuid": "702731de_6469071f",
+      "range": {
+        "startLine": 4662,
+        "startChar": 4,
+        "endLine": 4662,
+        "endChar": 72
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7167376a_50297bab",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4664,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Is it possible *not* to add these two methods? Rationale: an application can get this information by registering a BroadcastReceiver for ACTION_TETHER_STATE_CHANGED and examining the EXTRA_ACTIVE_TETHER and EXTRA_ERRORED_TETHER extras.\n\nIf that works, then I\u0027d just suggest updating the deprecation notice in ConnectivityManager and not adding these APIs.\n\nAlternatively, we could add onTetheredInterfacesChanged(String[] iface) and onErroredInterfacesChanged(String[] iface) to OnTetheringEventCallback.",
+      "range": {
+        "startLine": 4663,
+        "startChar": 0,
+        "endLine": 4664,
+        "endChar": 64
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f847fc_53b063ae",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4665,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "This is also synchronous and blocking. Maybe avoid adding this for now, and we can replace it with something better after API complete? If we don\u0027t end up doing that, then we can add it later, or apps can still call the ConnectivityManager method.",
+      "range": {
+        "startLine": 4665,
+        "startChar": 4,
+        "endLine": 4665,
+        "endChar": 49
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cf36ce_b2052834",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4704,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "I don\u0027t think callback classes start with On*. Rename to TetheringEventCallack?",
+      "range": {
+        "startLine": 4704,
+        "startChar": 48,
+        "endLine": 4704,
+        "endChar": 72
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f5fa2e6_de701f74",
         "filename": "api/system-lint-baseline.txt",
         "patchSetId": 3
@@ -36,6 +175,30 @@
       "writtenOn": "2020-01-21T06:56:56Z",
       "side": 1,
       "message": "Maybe add a comment that it\u0027s broadcasts that need to keep the same name to maintain application compatibility ?\nNit: maybe add at the end ? Adding at the top seems unusual. Is that the standard way ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 11
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ac6cf6_d45a8b08",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "2f5fa2e6_de701f74",
       "range": {
         "startLine": 2,
         "startChar": 0,
@@ -179,6 +342,190 @@
         "startChar": 31,
         "endLine": 79,
         "endChar": 54
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd3799c_5abd3956",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but... isn\u0027t TetherService in Settings? If so, shouldn\u0027t this be a system API that the module provides to Settings?",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 14
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23b42c4_b6b1c240",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Say that this disables the DHCP server.",
+      "range": {
+        "startLine": 378,
+        "startChar": 47,
+        "endLine": 378,
+        "endChar": 48
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e702b0_debe926b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "The documentation should say somewhere what permission is needed to call this. Also, provide more details? Perhaps something like:\n\n\u003d\u003d\u003d\u003d\u003d\nDisables checks on the downstream type specified when constructing this object. No entitlement check will be performed when enabling tethering on downstream type, and no periodic checks will be made until tethering is stopped on this downstream type.",
+      "range": {
+        "startLine": 396,
+        "startChar": 36,
+        "endLine": 396,
+        "endChar": 37
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce29167_62cb5a42",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Explain what this does when the carrier requests a UI check. Will entitlement simply fail? Will the check be converted to a silent check? ...?\n\nWhat about periodic checks?",
+      "range": {
+        "startLine": 404,
+        "startChar": 8,
+        "endLine": 404,
+        "endChar": 51
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dc2913_208a2b04",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "This should say whether this method:\n- always causes an entitlement check to happen,\n- never causes an entitlement check to happen,\n- may cause an an entitlement check to happen (and optionally, when it will do so).",
+      "range": {
+        "startLine": 504,
+        "startChar": 66,
+        "endLine": 504,
+        "endChar": 67
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d929c961_7fb52cdd",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Remove this since it contains implementation details. Add @RequiresPermission annotation.",
+      "range": {
+        "startLine": 506,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 29
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f187a817_924cbcac",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "the {@code TETHERING_*} constants.",
+      "range": {
+        "startLine": 510,
+        "startChar": 68,
+        "endLine": 510,
+        "endChar": 80
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9996fb96_38c5c2f4",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-21T09:29:03Z",
+      "side": 1,
+      "message": "Not for this CL, but... this is really unhelpful. Is there a reason we can\u0027t call guarantee that this will be called exactly once?",
+      "range": {
+        "startLine": 514,
+        "startChar": 96,
+        "endLine": 514,
+        "endChar": 100
       },
       "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
