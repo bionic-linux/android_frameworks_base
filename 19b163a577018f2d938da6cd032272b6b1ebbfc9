@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d6b1bc8_09865165",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-01-21T07:52:46Z",
+      "side": 1,
+      "message": "should probably error out here if it doesn\u0027t exist?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccd71a2_a2e3d7cc",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-01-21T07:52:46Z",
+      "side": 1,
+      "message": "Better to raise?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
