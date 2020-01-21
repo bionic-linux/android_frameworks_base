@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5483aca8_dfb534b0",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T23:39:28Z",
+      "side": 1,
+      "message": "factors which may have lead the user to miss the call.",
+      "range": {
+        "startLine": 713,
+        "startChar": 21,
+        "endLine": 713,
+        "endChar": 53
+      },
+      "revId": "df290bf895eb799f57b9391da6b1e8bbbd91ac87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafcc6ce_3ce8f49a",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T23:39:28Z",
+      "side": 1,
+      "message": "PRobably good to add another sentence:\nAuto missed cases are those where a call was missed because it was not possible for the incoming call to be presented to the user at all.  User missed cases are those where the incoming call was presented to the user, but factors such as a low ringing volume may have contributed to the call being missed.",
+      "range": {
+        "startLine": 717,
+        "startChar": 75,
+        "endLine": 717,
+        "endChar": 77
+      },
+      "revId": "df290bf895eb799f57b9391da6b1e8bbbd91ac87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
