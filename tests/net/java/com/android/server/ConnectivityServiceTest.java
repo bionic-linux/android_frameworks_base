@@ -77,6 +77,7 @@ import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
 import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
+import static android.system.OsConstants.IPPROTO_TCP;
 
 import static com.android.server.ConnectivityServiceTestUtilsKt.transportToLegacyType;
 import static com.android.testutils.ConcurrentUtilsKt.await;
@@ -136,6 +137,7 @@ import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.CaptivePortalData;
+import android.net.ConnectionInfo;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -151,6 +153,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.InetAddresses;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
 import android.net.IpSecManager;
@@ -174,6 +177,7 @@ import android.net.RouteInfo;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
 import android.net.Uri;
+import android.net.VpnManager;
 import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
@@ -449,6 +453,17 @@ public class ConnectivityServiceTest {
                 // All non-mocked permissions should be held by the test or unnecessary: check as
                 // normal to make sure the code does not rely on unexpected permissions.
                 return super.checkPermission(permission, pid, uid);
+            }
+            return granted;
+        }
+
+        @Override
+        public int checkCallingOrSelfPermission(String permission) {
+            final Integer granted = mMockedPermissions.get(permission);
+            if (granted == null) {
+                // All non-mocked permissions should be held by the test or unnecessary: check as
+                // normal to make sure the code does not rely on unexpected permissions.
+                return super.checkCallingOrSelfPermission(permission);
             }
             return granted;
         }
@@ -982,6 +997,7 @@ public class ConnectivityServiceTest {
         // Careful ! This is different from mNetworkAgent, because MockNetworkAgent does
         // not inherit from NetworkAgent.
         private TestNetworkAgentWrapper mMockNetworkAgent;
+        private int mVpnType = VpnManager.TYPE_VPN_SERVICE;
 
         private VpnInfo mVpnInfo;
 
@@ -1002,6 +1018,10 @@ public class ConnectivityServiceTest {
             updateCapabilities(null /* defaultNetwork */);
         }
 
+        public void setVpnType(int vpnType) {
+            mVpnType = vpnType;
+        }
+
         @Override
         public int getNetId() {
             if (mMockNetworkAgent == null) {
@@ -1016,8 +1036,20 @@ public class ConnectivityServiceTest {
         }
 
         @Override
+        public VpnInfo getVpnInfo() {
+            final VpnInfo info = new VpnInfo();
+            info.ownerUid = mNetworkCapabilities.getOwnerUid();
+            return mConnected ? info : null; // Similar trickery
+        }
+
+        @Override
         protected boolean isCallerEstablishedOwnerLocked() {
             return mConnected;  // Similar trickery
+        }
+
+        @Override
+        public int getActiveAppVpnType() {
+            return mVpnType;
         }
 
         private void connect(boolean isAlwaysMetered) {
@@ -6387,6 +6419,28 @@ public class ConnectivityServiceTest {
                         originalNc, Process.myPid(), callerUid);
 
         assertEquals(Process.INVALID_UID, newNc.getOwnerUid());
+    }
+
+    @Test
+    public void testGetConnectionOwnerUidPlatformVpn() throws Exception {
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        establishVpn(new LinkProperties(), VPN_UID, vpnRange);
+        mMockVpn.setVpnType(VpnManager.TYPE_VPN_PLATFORM);
+
+        // Test as VPN app
+        mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
+        mServiceContext.setPermission(
+                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, PERMISSION_DENIED);
+
+        final ConnectionInfo info = new ConnectionInfo(IPPROTO_TCP,
+                new InetSocketAddress(InetAddresses.parseNumericAddress("1.2.3.4"), 1234),
+                new InetSocketAddress(InetAddresses.parseNumericAddress("2.3.4.5"), 2345));
+
+        try {
+            mService.getConnectionOwnerUid(info);
+            fail("Expected SecurityException for non-VpnService app");
+        } catch (SecurityException expected) {
+        }
     }
 
     private TestNetworkAgentWrapper establishVpn(
