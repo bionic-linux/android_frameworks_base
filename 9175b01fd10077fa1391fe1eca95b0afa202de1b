@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f2647ee2_6d117f1f",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:07:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6dc0694_656512af",
+      "range": {
+        "startLine": 480,
+        "startChar": 78,
+        "endLine": 481,
+        "endChar": 33
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b3ac91_3242096b",
         "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
         "patchSetId": 19
@@ -141,6 +165,30 @@
       "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af24d495_8c8793e8",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:07:12Z",
+      "side": 1,
+      "message": "I think this would be a good feature to add for a future release. It does mean that ConnectivityService needs to start caring about / tracking permissions for all of the registered callbacks, which seems to be a non-trivial amount of work to add.\n\nI suggest considering it for S. Thoughts?",
+      "parentUuid": "0ca03c33_0a6d374b",
+      "range": {
+        "startLine": 489,
+        "startChar": 89,
+        "endLine": 489,
+        "endChar": 90
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
