@@ -189,6 +189,30 @@
       "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14520b2_f766263d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T17:15:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to track per callback ; we\u0027ll need to track per UID anyway and when that changes it\u0027s fairly easy to go through the callbacks to see who gained and who lost permission.\n\nI fear it might be a fairly annoying limitation, but we are out of time to consider such things now, so I don\u0027t think it can make R.",
+      "parentUuid": "af24d495_8c8793e8",
+      "range": {
+        "startLine": 489,
+        "startChar": 89,
+        "endLine": 489,
+        "endChar": 90
+      },
+      "revId": "9175b01fd10077fa1391fe1eca95b0afa202de1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
