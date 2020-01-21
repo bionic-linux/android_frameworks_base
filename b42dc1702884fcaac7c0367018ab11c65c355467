@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db69af8_86cb60cd",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T12:28:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s great to expose the parcelable as part of the API; I think the previous patchset you had might be better, with getParcel() @hide and only used by TetheringManager",
+      "range": {
+        "startLine": 379,
+        "startChar": 8,
+        "endLine": 379,
+        "endChar": 49
+      },
+      "revId": "b42dc1702884fcaac7c0367018ab11c65c355467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d123f2_4930be0f",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T12:28:29Z",
+      "side": 1,
+      "message": "Nit: createTetheringRequestParcel",
+      "range": {
+        "startLine": 471,
+        "startChar": 35,
+        "endLine": 471,
+        "endChar": 62
+      },
+      "revId": "b42dc1702884fcaac7c0367018ab11c65c355467",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
