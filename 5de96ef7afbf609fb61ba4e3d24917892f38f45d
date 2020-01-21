@@ -22,6 +22,30 @@
       "revId": "5de96ef7afbf609fb61ba4e3d24917892f38f45d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db72879a_7a31a031",
+        "filename": "tools/hiddenapi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-21T12:15:31Z",
+      "side": 1,
+      "message": "Do you mean something beyond what\u0027s in the topic? go/aesop/1211977",
+      "parentUuid": "c2aae2c5_fe4d5049",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "5de96ef7afbf609fb61ba4e3d24917892f38f45d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
