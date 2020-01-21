@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2aae2c5_fe4d5049",
+        "filename": "tools/hiddenapi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-01-21T07:48:39Z",
+      "side": 1,
+      "message": "if we\u0027re adding this, we should probably update the way that the build depends on it? (To use the built artifact rather than referring directly to the source file?)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "5de96ef7afbf609fb61ba4e3d24917892f38f45d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
