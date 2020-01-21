@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6df2f345_e09da580",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-21T12:39:44Z",
+      "side": 1,
+      "message": "This is where I am struggling right now.. Soong doesn\u0027t (at the moment at least) support getting generated files from annotation processors. So, I can\u0027t pass generated .csv files directly. Instead, I am passing a directory where generated files would go (with SOURCE_OUTPUT), and trying to find and csv files there. Now, in sharded mode, not every shard would generate a csv file, but I can\u0027t filter those dirs on soong side...\n\nI pinged Soong team, maybe they have better suggestions.",
+      "parentUuid": "1d6b1bc8_09865165",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ccd71a2_a2e3d7cc",
         "filename": "tools/hiddenapi/merge_csv.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-21T07:52:46Z",
       "side": 1,
       "message": "Better to raise?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c273915e_126dec3f",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-01-21T12:39:44Z",
+      "side": 1,
+      "message": "Assert raises AssertionError already?",
+      "parentUuid": "9ccd71a2_a2e3d7cc",
       "range": {
         "startLine": 47,
         "startChar": 4,
