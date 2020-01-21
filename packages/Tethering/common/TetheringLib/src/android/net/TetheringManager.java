@@ -16,8 +16,11 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.content.Context;
-import android.net.ConnectivityManager.OnTetheringEventCallback;
+import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -25,7 +28,15 @@ import android.os.ResultReceiver;
 import android.util.ArrayMap;
 import android.util.Log;
 
+import androidx.annotation.RequiresPermission;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 
 /**
  * This class provides the APIs to control the tethering service.
@@ -34,7 +45,8 @@ import java.util.concurrent.Executor;
  *
  * @hide
  */
-// TODO: make it @SystemApi
+@SystemApi
+@TestApi
 public class TetheringManager {
     private static final String TAG = TetheringManager.class.getSimpleName();
     private static final int DEFAULT_TIMEOUT_MS = 60_000;
@@ -44,7 +56,7 @@ public class TetheringManager {
     private final ITetheringConnector mConnector;
     private final TetheringCallbackInternal mCallback;
     private final Context mContext;
-    private final ArrayMap<OnTetheringEventCallback, ITetheringEventCallback>
+    private final ArrayMap<TetheringEventCallback, ITetheringEventCallback>
             mTetheringEventCallbacks = new ArrayMap<>();
 
     private TetheringConfigurationParcel mTetheringConfiguration;
@@ -72,7 +84,7 @@ public class TetheringManager {
      * gives a String[] listing all the interfaces currently in local-only
      * mode (ie, has DHCPv4+IPv6-ULA support and no packet forwarding)
      */
-    public static final String EXTRA_ACTIVE_LOCAL_ONLY = "localOnlyArray";
+    public static final String EXTRA_ACTIVE_LOCAL_ONLY = "android.net.extra.ACTIVE_LOCAL_ONLY";
 
     /**
      * gives a String[] listing all the interfaces currently tethered
@@ -121,29 +133,39 @@ public class TetheringManager {
     /**
      * Extra used for communicating with the TetherService. Includes the type of tethering to
      * enable if any.
+     *
+     * {@hide}
      */
     public static final String EXTRA_ADD_TETHER_TYPE = "extraAddTetherType";
 
     /**
      * Extra used for communicating with the TetherService. Includes the type of tethering for
      * which to cancel provisioning.
+     *
+     * {@hide}
      */
     public static final String EXTRA_REM_TETHER_TYPE = "extraRemTetherType";
 
     /**
      * Extra used for communicating with the TetherService. True to schedule a recheck of tether
      * provisioning.
+     *
+     * {@hide}
      */
     public static final String EXTRA_SET_ALARM = "extraSetAlarm";
 
     /**
      * Tells the TetherService to run a provision check now.
+     *
+     * {@hide}
      */
     public static final String EXTRA_RUN_PROVISION = "extraRunProvision";
 
     /**
      * Extra used for communicating with the TetherService. Contains the {@link ResultReceiver}
      * which will receive provisioning results. Can be left empty.
+     *
+     * {@hide}
      */
     public static final String EXTRA_PROVISION_CALLBACK = "extraProvisionCallback";
 
@@ -160,12 +182,14 @@ public class TetheringManager {
     public static final int TETHER_ERROR_IFACE_CFG_ERROR      = 10;
     public static final int TETHER_ERROR_PROVISION_FAILED     = 11;
     public static final int TETHER_ERROR_DHCPSERVER_ERROR     = 12;
-    public static final int TETHER_ERROR_ENTITLEMENT_UNKONWN  = 13;
+    public static final int TETHER_ERROR_ENTITLEMENT_UNKNOWN = 13;
     public static final int TETHER_ERROR_NO_CHANGE_TETHERING_PERMISSION = 14;
     public static final int TETHER_ERROR_NO_ACCESS_TETHERING_PERMISSION = 15;
 
     /**
      * Create a TetheringManager object for interacting with the tethering service.
+     *
+     * {@hide}
      */
     public TetheringManager(@NonNull final Context context, @NonNull final IBinder service) {
         mContext = context;
@@ -275,6 +299,8 @@ public class TetheringManager {
      *
      * @param iface the interface name to tether.
      * @return error a {@code TETHER_ERROR} value indicating success or failure type
+     *
+     * {@hide}
      */
     @Deprecated
     public int tether(@NonNull final String iface) {
@@ -296,6 +322,8 @@ public class TetheringManager {
      *
      * @deprecated The only usages is PanService. It uses this for legacy reasons
      * and will migrate away as soon as possible.
+     *
+     * {@hide}
      */
     @Deprecated
     public int untether(@NonNull final String iface) {
@@ -320,6 +348,8 @@ public class TetheringManager {
      * #startTethering or #stopTethering which encapsulate proper entitlement logic. If the API is
      * used and an entitlement check is needed, downstream USB tethering will be enabled but will
      * not have any upstream.
+     *
+     * {@hide}
      */
     @Deprecated
     public int setUsbTethering(final boolean enable) {
@@ -375,11 +405,63 @@ public class TetheringManager {
     }
 
     /**
+     * Callback for use with {@link #getLatestTetheringEntitlementResult} to find out whether
+     * entitlement succeeded.
+     */
+    public interface OnTetheringEntitlementResultListener  {
+        /**
+         * Called to notify entitlement result.
+         *
+         * @param resultCode an int value of entitlement result. It may be one of
+         *         {@link #TETHER_ERROR_NO_ERROR},
+         *         {@link #TETHER_ERROR_PROVISION_FAILED}, or
+         *         {@link #TETHER_ERROR_ENTITLEMENT_UNKNOWN}.
+         */
+        void onTetheringEntitlementResult(int resultCode);
+    }
+
+    /**
      * Request the latest value of the tethering entitlement check.
      *
-     * Note: Allow privileged apps who have TETHER_PRIVILEGED permission to access. If it turns
-     * out some such apps are observed to abuse this API, change to per-UID limits on this API
-     * if it's really needed.
+     * <p>This method will only return the latest entitlement result if it is available. If no
+     * cached entitlement result is available, and {@code showEntitlementUi} is false,
+     * {@link #TETHER_ERROR_ENTITLEMENT_UNKNOWN} will be returned. If {@code showEntitlementUi} is
+     * true, entitlement will be run.
+     *
+     * @param type the downstream type of tethering. Must be one of {@code #TETHERING_*} constants.
+     * @param showEntitlementUi a boolean indicating whether to run UI-based entitlement check.
+     * @param executor the executor on which callback will be invoked.
+     * @param listener an {@link OnTetheringEntitlementResultListener} which will be called to
+     *         notify the caller of the result of entitlement check. The listener may be called zero
+     *         or one time.
+     */
+    @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED)
+    public void requestLatestTetheringEntitlementResult(int type, boolean showEntitlementUi,
+            @NonNull Executor executor,
+            @NonNull final OnTetheringEntitlementResultListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException(
+                    "OnTetheringEntitlementResultListener cannot be null.");
+        }
+
+        ResultReceiver wrappedListener = new ResultReceiver(null /* handler */) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                executor.execute(() -> {
+                    listener.onTetheringEntitlementResult(resultCode);
+                });
+            }
+        };
+
+        requestLatestTetheringEntitlementResult(type, wrappedListener,
+                    showEntitlementUi);
+    }
+
+    /**
+     * Helper function of #requestLatestTetheringEntitlementResult to remain backwards compatible
+     * with ConnectivityManager#getLatestTetheringEntitlementResult
+     *
+     * {@hide}
      */
     // TODO: improve the usage of ResultReceiver, b/145096122
     public void requestLatestTetheringEntitlementResult(final int type,
@@ -396,9 +478,77 @@ public class TetheringManager {
     }
 
     /**
+     * Callback for use with {@link registerTetheringEventCallback} to find out tethering
+     * upstream status.
+     */
+    public abstract static class TetheringEventCallback {
+
+        /**
+         * Called when tethering upstream changed. This can be called multiple times and can be
+         * called any time.
+         *
+         * @param network the {@link Network} of tethering upstream. Null means tethering doesn't
+         * have any upstream.
+         */
+        public void onUpstreamChanged(@Nullable Network network) {}
+
+        /**
+         * Called when there was a change in tethering configuration.
+         * @param configuration The new configuration.
+         */
+        public void onConfigurationChanged(@NonNull TetheringConfiguration configuration) {}
+
+        /**
+         * Called when there was a change in the list of tetherable interfaces.
+         * @param interfaces The list of tetherable interfaces.
+         */
+        public void onTetherableInterfacesChanged(@NonNull List<String> interfaces) {}
+
+        /**
+         * Called when there was a change in the list of tethered interfaces.
+         * @param interfaces The list of tethered interfaces.
+         */
+        public void onTetheredInterfacesChanged(@NonNull List<String> interfaces) {}
+
+        /**
+         * Called when an error occurred configuring tethering.
+         * @param error
+         */
+        public void onError(@NonNull String ifName, int error) {}
+    }
+
+    /**
+     * Configuration of the tethering service.
+     */
+    public static class TetheringConfiguration {
+        private final String[] mTetherableBluetoothRegexs;
+        private final String[] mTetherableUsbRegexs;
+        private final String[] mTetherableWifiRegexs;
+
+        public TetheringConfiguration(String[] tetherableBluetoothRegexs,
+                String[] tetherableUsbRegexs, String[] tetherableWifiRegexs) {
+            mTetherableBluetoothRegexs = tetherableBluetoothRegexs.clone();
+            mTetherableUsbRegexs = tetherableUsbRegexs.clone();
+            mTetherableWifiRegexs = tetherableWifiRegexs.clone();
+        }
+
+        public List<String> getTetherableBluetoothRegexs() {
+            return Collections.unmodifiableList(Arrays.asList(mTetherableBluetoothRegexs));
+        }
+
+        public List<String> getTetherableUsbRegexs() {
+            return Collections.unmodifiableList(Arrays.asList(mTetherableUsbRegexs));
+        }
+
+        public List<String> getTetherableWifiRegexs() {
+            return Collections.unmodifiableList(Arrays.asList(mTetherableWifiRegexs));
+        }
+    }
+
+    /**
      * Start listening to tethering change events. Any new added callback will receive the last
      * tethering status right away. If callback is registered,
-     * {@link OnTetheringEventCallback#onUpstreamChanged} will immediately be called. If tethering
+     * {@link TetheringEventCallback#onUpstreamChanged} will immediately be called. If tethering
      * has no upstream or disabled, the argument of callback will be null. The same callback object
      * cannot be registered twice.
      *
@@ -406,15 +556,20 @@ public class TetheringManager {
      * @param callback the callback to be called when tethering has change events.
      */
     public void registerTetheringEventCallback(@NonNull Executor executor,
-            @NonNull OnTetheringEventCallback callback) {
+            @NonNull TetheringEventCallback callback) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "registerTetheringEventCallback caller:" + callerPkg);
 
         synchronized (mTetheringEventCallbacks) {
-            if (!mTetheringEventCallbacks.containsKey(callback)) {
+            if (mTetheringEventCallbacks.containsKey(callback)) {
                 throw new IllegalArgumentException("callback was already registered.");
             }
             final ITetheringEventCallback remoteCallback = new ITetheringEventCallback.Stub() {
+                // Only accessed with a lock on this object
+                private final HashMap<String, Integer> mErrorStates = new HashMap<>();
+                private String[] mLastTetherableInterfaces = null;
+                private String[] mLastTetheredInterfaces = null;
+
                 @Override
                 public void onUpstreamChanged(Network network) throws RemoteException {
                     executor.execute(() -> {
@@ -422,11 +577,43 @@ public class TetheringManager {
                     });
                 }
 
+                private synchronized void sendErrorCallbacks(final TetherStatesParcel newStates) {
+                    for (int i = 0; i < newStates.erroredIfaceList.length; i++) {
+                        final String iface = newStates.erroredIfaceList[i];
+                        final Integer lastError = mErrorStates.get(iface);
+                        final int newError = newStates.lastErrorList[i];
+                        if (newError != TETHER_ERROR_NO_ERROR
+                                && !Objects.equals(lastError, newError)) {
+                            callback.onError(iface, newError);
+                        }
+                        mErrorStates.put(iface, newError);
+                    }
+                }
+
+                private synchronized void maybeSendTetherableIfacesChangedCallback(
+                        final TetherStatesParcel newStates) {
+                    if (Arrays.equals(mLastTetherableInterfaces, newStates.availableList)) return;
+                    mLastTetherableInterfaces = newStates.availableList.clone();
+                    callback.onTetherableInterfacesChanged(
+                            Collections.unmodifiableList(Arrays.asList(mLastTetherableInterfaces)));
+                }
+
+                private synchronized void maybeSendTetheredIfacesChangedCallback(
+                        final TetherStatesParcel newStates) {
+                    if (Arrays.equals(mLastTetheredInterfaces, newStates.tetheredList)) return;
+                    mLastTetheredInterfaces = newStates.tetheredList.clone();
+                    callback.onTetheredInterfacesChanged(
+                            Collections.unmodifiableList(Arrays.asList(mLastTetheredInterfaces)));
+                }
+
                 @Override
                 public void onCallbackStarted(Network network, TetheringConfigurationParcel config,
                         TetherStatesParcel states) {
                     executor.execute(() -> {
                         callback.onUpstreamChanged(network);
+                        sendErrorCallbacks(states);
+                        maybeSendTetherableIfacesChangedCallback(states);
+                        maybeSendTetheredIfacesChangedCallback(states);
                     });
                 }
 
@@ -438,10 +625,22 @@ public class TetheringManager {
                 }
 
                 @Override
-                public void onConfigurationChanged(TetheringConfigurationParcel config) { }
+                public void onConfigurationChanged(TetheringConfigurationParcel config) {
+                    executor.execute(() -> callback.onConfigurationChanged(
+                            new TetheringConfiguration(
+                                    config.tetherableBluetoothRegexs,
+                                    config.tetherableUsbRegexs,
+                                    config.tetherableWifiRegexs)));
+                }
 
                 @Override
-                public void onTetherStatesChanged(TetherStatesParcel states) { }
+                public void onTetherStatesChanged(TetherStatesParcel states) {
+                    executor.execute(() -> {
+                        sendErrorCallbacks(states);
+                        maybeSendTetherableIfacesChangedCallback(states);
+                        maybeSendTetheredIfacesChangedCallback(states);
+                    });
+                }
             };
             try {
                 mConnector.registerTetheringEventCallback(remoteCallback, callerPkg);
@@ -458,7 +657,7 @@ public class TetheringManager {
      *
      * @param callback previously registered callback.
      */
-    public void unregisterTetheringEventCallback(@NonNull final OnTetheringEventCallback callback) {
+    public void unregisterTetheringEventCallback(@NonNull final TetheringEventCallback callback) {
         final String callerPkg = mContext.getOpPackageName();
         Log.i(TAG, "unregisterTetheringEventCallback caller:" + callerPkg);
 
@@ -482,6 +681,7 @@ public class TetheringManager {
      * @param iface The name of the interface of interest
      * @return error The error code of the last error tethering or untethering the named
      *               interface
+     * @hide
      */
     public int getLastTetherError(@NonNull final String iface) {
         mCallback.waitForStarted();
@@ -503,6 +703,7 @@ public class TetheringManager {
      *
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable usb interfaces.
+     * @hide
      */
     public @NonNull String[] getTetherableUsbRegexs() {
         mCallback.waitForStarted();
@@ -516,6 +717,7 @@ public class TetheringManager {
      *
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable wifi interfaces.
+     * @hide
      */
     public @NonNull String[] getTetherableWifiRegexs() {
         mCallback.waitForStarted();
@@ -529,6 +731,7 @@ public class TetheringManager {
      *
      * @return an array of 0 or more regular expression Strings defining
      *        what interfaces are considered tetherable bluetooth interfaces.
+     * @hide
      */
     public @NonNull String[] getTetherableBluetoothRegexs() {
         mCallback.waitForStarted();
@@ -540,6 +743,7 @@ public class TetheringManager {
      * device configuration and current interface existence.
      *
      * @return an array of 0 or more Strings of tetherable interface names.
+     * @hide
      */
     public @NonNull String[] getTetherableIfaces() {
         mCallback.waitForStarted();
@@ -570,6 +774,7 @@ public class TetheringManager {
      *
      * @return an array of 0 or more String indicating the interface names
      *        which failed to tether.
+     * @hide
      */
     public @NonNull String[] getTetheringErroredIfaces() {
         mCallback.waitForStarted();
@@ -582,6 +787,7 @@ public class TetheringManager {
      * Get the set of tethered dhcp ranges.
      *
      * @deprecated This API just return the default value which is not used in DhcpServer.
+     * @hide
      */
     @Deprecated
     public @NonNull String[] getTetheredDhcpRanges() {
@@ -595,6 +801,7 @@ public class TetheringManager {
      * due to device configuration.
      *
      * @return a boolean - {@code true} indicating Tethering is supported.
+     * @hide
      */
     public boolean isTetheringSupported() {
         final String callerPkg = mContext.getOpPackageName();
@@ -609,6 +816,26 @@ public class TetheringManager {
         });
 
         return ret == TETHER_ERROR_NO_ERROR;
+    }
+
+    /**
+     * Asynchronously check if the device allows for tethering. It may be disabled via
+     * {@code ro.tether.denied} system property, Settings.TETHER_SUPPORTED or due to device
+     * configuration.
+     * @param supported Callback that will be called to indicate whether tethering is supported.
+     */
+    public void queryTetheringSupported(@NonNull Consumer<Boolean> supported) {
+        final String callerPkg = mContext.getOpPackageName();
+        try {
+            mConnector.isTetheringSupported(callerPkg, new IIntResultListener.Stub() {
+                @Override
+                public void onResult(int resultCode) {
+                    supported.accept(resultCode == TETHER_ERROR_NO_ERROR);
+                }
+            });
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     /**
