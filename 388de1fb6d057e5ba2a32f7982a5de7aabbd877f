@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76e75242_d72f3b37",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68498f8_452b5593",
+      "range": {
+        "startLine": 507,
+        "startChar": 8,
+        "endLine": 507,
+        "endChar": 20
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8a8f26_daa44c78",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-18T07:54:55Z",
       "side": 1,
       "message": "① Have you considered using android.os.RemoteCallbackList ? (not sure it\u0027s best as I don\u0027t know this class very well, but it looks like a good fit and might (maybe) let you completely remove ConnectivityDiagnosticsCallbackInfo)\n② Can this live inside in one of the ConnectivityDiagnostics classes ? If that\u0027s reasonable it should provide better encapsulation.",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 45
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3451eb8d_df981b1a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "① I wasn\u0027t aware of this, but on an initial glance I\u0027m not sure this is what we want. It would take care of unregistering the Callback on Binder death, but would not free up its allocated resources (the NetworkRequestInfo created for it).\n\n② This can be moved inside the ConnectivityDiagnosticsHandler. However, my understanding of the general abstraction here is that Handlers are supposed to handle/process events that occur, and the Service is supposed to manage the overall state of the service. If this is accurate, moving this Map to the Handler breaks that abstraction, right?",
+      "parentUuid": "ae8a8f26_daa44c78",
       "range": {
         "startLine": 640,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "12b4c0c2_ad4b1a4c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Could you please elaborate on this comment?\n\nRemoved this parameter to only take NetworkRequest, since we don\u0027t test for mismatched UIDs now.",
+      "parentUuid": "6d029289_5960fc7d",
+      "range": {
+        "startLine": 5061,
+        "startChar": 49,
+        "endLine": 5061,
+        "endChar": 52
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e6ab5e5_ae68de2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -91,6 +163,30 @@
       "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f39c52b_c2b32ffd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Added a TODO.\n\nGiven that we use non-static methods to utilize pre-existing ConnectivityService functionality (the Type.LISTEN behavior discussed for handleRegisterNetworkRequest), I\u0027m not sure how feasible this is.",
+      "parentUuid": "0e6ab5e5_ae68de2a",
+      "range": {
+        "startLine": 7256,
+        "startChar": 10,
+        "endLine": 7256,
+        "endChar": 40
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "990fcda7_c276a9c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7328,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Correct. However, we do need to cleanup the NetworkRequestInfo made in registerConnectivityDiagnosticsCallback(). Creating the NetworkRequestInfo leads to the uid-NetworkRequestCount increasing, so we need to free those resources if we won\u0027t be persisting the nri.\n\nRefactored the logic used to decrement the count from registerConnectivityDiagnosticsCallback to \u0027decrementNetworkRequestPerUidCount\u0027.",
+      "parentUuid": "b618f661_dc71b8eb",
+      "range": {
+        "startLine": 7328,
+        "startChar": 12,
+        "endLine": 7328,
+        "endChar": 38
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a99a9dd_1c51ddc0",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 23
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-18T07:54:55Z",
       "side": 1,
       "message": "It doesn\u0027t matter for this change but I think future tests will actually need to create their own callbacks so that they can check more things and multiple callbacks concurrently. Creating a callback in a test is also fairly easy. You may find that writing something like TestNetworkCallback for this too is advantageous.\n\nBut at this point it doesn\u0027t matter yet.",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 76
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62ce1b67_31b9cf08",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Agreed. TestNetworkCallback may make sense in the future, but for now this should suffice.",
+      "parentUuid": "2a99a9dd_1c51ddc0",
       "range": {
         "startLine": 322,
         "startChar": 0,
@@ -160,6 +304,30 @@
       "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98692636_0f1b0fd5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 6332,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Removed test.",
+      "parentUuid": "cff7ea1e_9a557ea5",
+      "range": {
+        "startLine": 6332,
+        "startChar": 14,
+        "endLine": 6332,
+        "endChar": 32
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

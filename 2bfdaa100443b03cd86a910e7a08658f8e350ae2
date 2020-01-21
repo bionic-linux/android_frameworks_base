@@ -497,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "61a0646c_9093bd43",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 7322,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa92418_0d518adb",
+      "range": {
+        "startLine": 7322,
+        "startChar": 8,
+        "endLine": 7322,
+        "endChar": 36
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f0d930_a782ee4c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -697,6 +721,30 @@
       "side": 1,
       "message": "I\u0027m not sure what you mean by\n\u003e This is not testing code - it is calling the aidl function for registering a ConnectivityDiagnosticsBinder with ConnectivityService.\n\nWell but that\u0027s code isn\u0027t it ? Or are you trying to test Binder ? Binder has its own tests, here is not the right place to test Binder.\n\nBut more holistically, if your point is that we don\u0027t yet have external effects to observe so this is the only thing we can test now and we\u0027ll remove the test when we can have more meaningful ones, then I think it\u0027s not worth spending time on this (writing it, reviewing it, deleting it). The entire implementation is already under review essentially, and if that\u0027s not at all how we\u0027ll test this functionality at the end, then I don\u0027t think we should be writing this temporarily, possibly adding @VisibleForTesting things that we might remove to hide again later.",
       "parentUuid": "d60fdd85_79a1ea8c",
+      "range": {
+        "startLine": 6263,
+        "startChar": 17,
+        "endLine": 6263,
+        "endChar": 56
+      },
+      "revId": "2bfdaa100443b03cd86a910e7a08658f8e350ae2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edaa481_e61feec1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6263,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-21T01:06:49Z",
+      "side": 1,
+      "message": "This is not trying to test Binder. This is calling an aidl method directly on the ConnectivityService object - AFAICT no Binders will be used to plumb that method call to the implementation defined in ConnectivityService.\n\nThis test is verifying that registering callbacks with the System results in them being persisted in ConnectivityService. This does require looking at the internals of ConnectivityService to verify the state, but I think this is reasonable for a unit test. This testing is intended to permanent / is not planned for later removal.\n\nIntegration testing that checks only external behavior will be added through CTS (b/148032944 and b/148014250)",
+      "parentUuid": "d713489d_43451dfe",
       "range": {
         "startLine": 6263,
         "startChar": 17,
