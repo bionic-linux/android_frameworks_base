@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "515233ed_34e548fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 5071,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T17:12:12Z",
+      "side": 1,
+      "message": "Can this entire body just be spelt\n\n  this(r, null);\n\n?",
+      "range": {
+        "startLine": 5064,
+        "startChar": 10,
+        "endLine": 5071,
+        "endChar": 39
+      },
+      "revId": "01a45dca141961c15dd6ef83b62dafcc192a409e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

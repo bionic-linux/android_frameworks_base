@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "09e0c706_c76f67d4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T17:12:12Z",
+      "side": 1,
+      "message": "Yes ; I think the better state of affairs in the end is to have a ConnectivityDiagnosticsTracker class or similarly named, and that class would embark this member as well as the handler and all the logic that goes with diagnostics.\n\nThe fact that it\u0027s all in CS.java is hurting more and more \u003e_\u003c",
+      "parentUuid": "3451eb8d_df981b1a",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 45
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d029289_5960fc7d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "34444337_c25fb5c9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T17:12:12Z",
+      "side": 1,
+      "message": "NetworkRequests already embark a UID in the form of the mUids field in NetworkCapabilities. They actually match on this (see NetworkCapabilities#satisfiedByUids). This lets the code tell in particular whether a VPN should be matched to a request.\nIn this context I was wondering whether we need this UID and when it will be different.",
+      "parentUuid": "12b4c0c2_ad4b1a4c",
+      "range": {
+        "startLine": 5061,
+        "startChar": 49,
+        "endLine": 5061,
+        "endChar": 52
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e6ab5e5_ae68de2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Added a TODO.\n\nGiven that we use non-static methods to utilize pre-existing ConnectivityService functionality (the Type.LISTEN behavior discussed for handleRegisterNetworkRequest), I\u0027m not sure how feasible this is.",
       "parentUuid": "0e6ab5e5_ae68de2a",
+      "range": {
+        "startLine": 7256,
+        "startChar": 10,
+        "endLine": 7256,
+        "endChar": 40
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bc03d02_d0fbc52e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-21T17:12:12Z",
+      "side": 1,
+      "message": "No I think we have to. This is going to be a large pain to maintain if it\u0027s interspersed in CS like that and I don\u0027t want to impose that to my team.\n\nI\u0027m not saying CS can have no support at all beyond the members and occasional forwarding function. But we should have much better separation in this. You can look at the patch stacks for ProxyTracker or PermissionMonitor to see how we disentangled some of this to move most of the logic to different classes. Doing this will force us to have a much cleaner surface between CS and the diagnostics code, which will also vastly help with maintenability ; in fact, the more I read this code the less I am sympathetic to the idea of checking it in before doing this work.",
+      "parentUuid": "5f39c52b_c2b32ffd",
       "range": {
         "startLine": 7256,
         "startChar": 10,
