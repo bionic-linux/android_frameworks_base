@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "702731de_6469071f",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4662,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Can this not be added to the system API ? If anyone is using this, they\u0027re calling ConnectivityManager#getTetheredDhcpRanges. So just marking ConnectivityManager#getTetheredDhcpRanges as deprecated would be enough ?",
+      "range": {
+        "startLine": 4662,
+        "startChar": 4,
+        "endLine": 4662,
+        "endChar": 72
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5fa2e6_de701f74",
+        "filename": "api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Maybe add a comment that it\u0027s broadcasts that need to keep the same name to maintain application compatibility ?\nNit: maybe add at the end ? Adding at the top seems unusual. Is that the standard way ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 11
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef8311d_6a7774d4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2499,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Nit: also indicate which API should be used instead (TetheringManager#startTethering ? since entitlement should normally be run)",
+      "range": {
+        "startLine": 2499,
+        "startChar": 5,
+        "endLine": 2499,
+        "endChar": 15
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3305f60a_ac94516b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Nit: @GuardedBy(\"mTetheringEventCallbacks\")",
+      "range": {
+        "startLine": 2686,
+        "startChar": 12,
+        "endLine": 2686,
+        "endChar": 36
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaac63e5_37f3ecd4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2739,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Maybe check the null case and throw a helpful exception, saying that the callback was not registered (since TetheringManager#unregisterTetheringEventCallback has @NonNull on callback)",
+      "range": {
+        "startLine": 2739,
+        "startChar": 67,
+        "endLine": 2739,
+        "endChar": 81
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a450387_064f493d",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2816,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Nit: also add doc on what to use instead ?",
+      "range": {
+        "startLine": 2816,
+        "startChar": 5,
+        "endLine": 2816,
+        "endChar": 15
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc4542a_55084a19",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2823,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Why is this not deprecated (and not the others) ? Can you add it to the javadoc ?",
+      "range": {
+        "startLine": 2823,
+        "startChar": 4,
+        "endLine": 2823,
+        "endChar": 11
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd89c712_f7cb1809",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Question: why is it OK to change this one and not the others ? Was it added in R ?",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 54
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7930ad_5933f3ca",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Nit: add comment on what this is",
+      "range": {
+        "startLine": 525,
+        "startChar": 60,
+        "endLine": 525,
+        "endChar": 64
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c786415_80c3b75c",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-21T06:56:56Z",
+      "side": 1,
+      "message": "Nit: to remain backwards compatible with",
+      "range": {
+        "startLine": 539,
+        "startChar": 67,
+        "endLine": 539,
+        "endChar": 89
+      },
+      "revId": "2204ab2dafaf6fb321f7b96763466fd3a93c38c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
