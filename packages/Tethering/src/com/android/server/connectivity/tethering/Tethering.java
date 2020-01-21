@@ -74,6 +74,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.TetherStatesParcel;
+import android.net.TetheringCallbackStartedParcel;
 import android.net.TetheringConfigurationParcel;
 import android.net.ip.IpServer;
 import android.net.shared.NetdUtils;
@@ -1844,9 +1845,13 @@ public class Tethering {
     void registerTetheringEventCallback(ITetheringEventCallback callback) {
         mHandler.post(() -> {
             mTetheringEventCallbacks.register(callback);
+            final TetheringCallbackStartedParcel parcel = new TetheringCallbackStartedParcel();
+            parcel.tetheringSupported = mDeps.isTetheringSupported();
+            parcel.upstreamNetwork = mTetherUpstream;
+            parcel.config = mConfig.toStableParcelable();
+            parcel.states = mTetherStatesParcel;
             try {
-                callback.onCallbackStarted(mTetherUpstream, mConfig.toStableParcelable(),
-                        mTetherStatesParcel);
+                callback.onCallbackStarted(parcel);
             } catch (RemoteException e) {
                 // Not really very much to do here.
             }
