@@ -1118,9 +1118,7 @@ public class Vpn {
         try {
             // Restricted users are not allowed to create VPNs, they are tied to Owner
             UserInfo user = mgr.getUserInfo(mUserHandle);
-            if (user.isRestricted()) {
-                throw new SecurityException("Restricted users cannot establish VPNs");
-            }
+            enforceRestrictedUser();
 
             ResolveInfo info = AppGlobals.getPackageManager().resolveService(intent,
                     null, 0, mUserHandle);
@@ -1679,6 +1677,24 @@ public class Vpn {
     }
 
     /**
+     * Gets the currently running App-based VPN type
+     *
+     * @return the {@link VpnManager.VpnType}. {@link VpnManager.TYPE_VPN_NONE} if not running an
+     *     app-based VPN.
+     */
+    public synchronized int getActiveAppVpnType() {
+        if (VpnConfig.SETTINGS_VPN.equals(mPackage)) {
+            return VpnManager.TYPE_VPN_NONE;
+        }
+
+        if (mVpnRunner != null && mVpnRunner instanceof IkeV2VpnRunner) {
+            return VpnManager.TYPE_PLATFORM_VPN;
+        } else {
+            return VpnManager.TYPE_VPN_SERVICE;
+        }
+    }
+
+    /**
      * @param uid The target uid.
      *
      * @return {@code true} if {@code uid} is included in one of the mBlockedUidsAsToldToNetd
@@ -1809,6 +1825,14 @@ public class Vpn {
         }
 
         throw new IllegalStateException("Unable to find IPv4 default gateway");
+    }
+
+    private void enforceRestrictedUser() {
+        UserManager mgr = UserManager.get(mContext);
+        UserInfo user = mgr.getUserInfo(mUserHandle);
+        if (user.isRestricted()) {
+            throw new SecurityException("Restricted users cannot establish VPNs");
+        }
     }
 
     /**
@@ -2675,6 +2699,7 @@ public class Vpn {
         checkNotNull(keyStore, "KeyStore missing");
 
         verifyCallingUidAndPackage(packageName);
+        enforceRestrictedUser();
 
         final byte[] encodedProfile = profile.encode();
         if (encodedProfile.length > MAX_VPN_PROFILE_SIZE_BYTES) {
@@ -2710,6 +2735,7 @@ public class Vpn {
         checkNotNull(keyStore, "KeyStore missing");
 
         verifyCallingUidAndPackage(packageName);
+        enforceRestrictedUser();
 
         Binder.withCleanCallingIdentity(
                 () -> {
@@ -2751,6 +2777,8 @@ public class Vpn {
             @NonNull String packageName, @NonNull KeyStore keyStore) {
         checkNotNull(packageName, "No package name provided");
         checkNotNull(keyStore, "KeyStore missing");
+
+        enforceRestrictedUser();
 
         // Prepare VPN for startup
         if (!prepare(packageName, null /* newPackage */, VpnManager.TYPE_VPN_PLATFORM)) {
@@ -2812,6 +2840,8 @@ public class Vpn {
      */
     public synchronized void stopVpnProfile(@NonNull String packageName) {
         checkNotNull(packageName, "No package name provided");
+
+        enforceRestrictedUser();
 
         // To stop the VPN profile, the caller must be the current prepared package and must be
         // running an Ikev2VpnProfile.
