@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170c6664_154833ef",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "The prefix should be android.telephony.action; also recommend a slightly different name:\nandroid.telephony.action.SERVICE_PROVIDERS_UPDATED",
+      "range": {
+        "startLine": 1472,
+        "startChar": 13,
+        "endLine": 1472,
+        "endChar": 59
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc27218_5b597e16",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "android.telephony.extra.SHOW_PLMN",
+      "range": {
+        "startLine": 1481,
+        "startChar": 49,
+        "endLine": 1481,
+        "endChar": 59
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c08c43_a430ddcc",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "android.telephony.extra.PLMN",
+      "range": {
+        "startLine": 1490,
+        "startChar": 45,
+        "endLine": 1490,
+        "endChar": 49
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dab09e_7eee7ec0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "android.telephony.extra.SHOW_SPN",
+      "range": {
+        "startLine": 1499,
+        "startChar": 49,
+        "endLine": 1499,
+        "endChar": 56
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de6c7cf_824f8f26",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "android.telephony.extra.SPN",
+      "range": {
+        "startLine": 1508,
+        "startChar": 44,
+        "endLine": 1508,
+        "endChar": 47
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d235880_5505988a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-21T22:58:31Z",
+      "side": 1,
+      "message": "android.telephony.extra.DATA_SPN",
+      "range": {
+        "startLine": 1517,
+        "startChar": 49,
+        "endLine": 1517,
+        "endChar": 56
+      },
+      "revId": "1a06878ac5005a717e65663f00926f1e5bdf387c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
