@@ -79,6 +79,8 @@ public class ConnectivityDiagnosticsManager {
 
     /** Class that includes connectivity information for a specific Network at a specific time. */
     public static final class ConnectivityReport implements Parcelable {
+        public static final String KEY_NETWORK_TEST_RESULT = "networkTestResult";
+
         /** The Network for which this ConnectivityReport applied */
         @NonNull private final Network mNetwork;
 
@@ -245,6 +247,13 @@ public class ConnectivityDiagnosticsManager {
                 prefix = {"DETECTION_METHOD_"},
                 value = {DETECTION_METHOD_DNS_EVENTS, DETECTION_METHOD_TCP_METRICS})
         public @interface DetectionMethod {}
+
+        public static final String KEY_TCP_PACKET_FAIL_RATE = "tcpPacketFailRate";
+        public static final String KEY_TCP_PACKETS_SENT_SINCE_LAST_RECVD =
+                "tcpPacketsSentSinceLastRecvd";
+        public static final String KEY_TCP_PACKETS_RECVD_LASTEST_POLLING =
+                "tcpPacketsRecvdLatestPolling";
+        public static final String KEY_DNS_CONSECUTIVE_TIMEOUTS = "dnsConsecutiveTimeouts";
 
         /** The Network for which this DataStallReport applied */
         @NonNull private final Network mNetwork;
