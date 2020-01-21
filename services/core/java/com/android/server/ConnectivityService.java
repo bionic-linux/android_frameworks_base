@@ -7339,7 +7339,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 connectionInfo.local, connectionInfo.remote);
 
         /* Filter out Uids not associated with the VPN. */
-        if (vpn != null && !vpn.appliesToUid(uid)) {
+        if (vpn != null && !vpn.appliesToUid(uid)
+                && vpn.getVpnType() == VpnManager.TYPE_VPN_SERVICE) {
             return INVALID_UID;
         }
 
