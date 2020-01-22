@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f93d675_db3a7243",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-01-22T19:13:52Z",
+      "side": 1,
+      "message": "This call requires android.Manifest.permission.READ_PHONE_STATE that the application may not have.",
+      "range": {
+        "startLine": 890,
+        "startChar": 43,
+        "endLine": 890,
+        "endChar": 89
+      },
+      "revId": "bc2423795c03f1104aaec5905f4935c8da4e1cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
