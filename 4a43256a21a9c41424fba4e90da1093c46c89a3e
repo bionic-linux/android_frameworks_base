@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8af530_d401e19f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7298,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:54:14Z",
+      "side": 1,
+      "message": "Here again, I think we should have less intrusive ways to test this. Observe that NetworkRequestInfo is private and not @VisibleForTesting.\n\nNot important immediately.",
+      "range": {
+        "startLine": 7298,
+        "startChar": 5,
+        "endLine": 7298,
+        "endChar": 22
+      },
+      "revId": "4a43256a21a9c41424fba4e90da1093c46c89a3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3e9a7cb_574b2884",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 7329,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:54:14Z",
+      "side": 1,
+      "message": "Maybe just \"decrement the reference count\", and ideally this comment should mention it was incremented in enforceRequestCountLimit because the name of that method really doesn\u0027t make clear it increments the reference count \u003c.\u003c",
+      "range": {
+        "startLine": 7329,
+        "startChar": 15,
+        "endLine": 7329,
+        "endChar": 25
+      },
+      "revId": "4a43256a21a9c41424fba4e90da1093c46c89a3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631c5749_8b8b9946",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:54:14Z",
+      "side": 1,
+      "message": "Nit : this is probably better done in tearDown()",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 58
+      },
+      "revId": "4a43256a21a9c41424fba4e90da1093c46c89a3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1c8509_cdb53625",
+        "filename": "tests/net/java/android/net/ConnectivityDiagnosticsManagerTest.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:54:14Z",
+      "side": 1,
+      "message": "You may want to additionally try to re-register the same callback afterwards.",
+      "range": {
+        "startLine": 295,
+        "startChar": 79,
+        "endLine": 295,
+        "endChar": 80
+      },
+      "revId": "4a43256a21a9c41424fba4e90da1093c46c89a3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

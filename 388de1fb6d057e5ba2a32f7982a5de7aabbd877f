@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "08e13d25_87336ca3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 7256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:54:14Z",
+      "side": 1,
+      "message": "I was saying this in the context of this being a TODO, in response to Cody\u0027s assertion that it might not be feasible. I think it needs to happen eventually, and sooner rather than later, but I didn\u0027t mean before API complete.\n\nTo your point 2), it did come up in design review and I have the comment link to prove it : https://docs.google.com/document/d/1pBpFsnCw51lebMnvFnN45AOpv5ccVZJCk9RBYXp3DSo/edit?disco\u003dAAAAD-eM-7o : I *did* ask for that upfront on Nov.27 anticipating this issue. That doesn\u0027t change the feasibility of it at this point in time, but I like to set the record straight :)",
+      "parentUuid": "f0234015_0acc4154",
+      "range": {
+        "startLine": 7256,
+        "startChar": 10,
+        "endLine": 7256,
+        "endChar": 40
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b618f661_dc71b8eb",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
