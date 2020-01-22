@@ -1,0 +1,43 @@
+/*
+ * Copyright (C) 2020 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto2";
+package android.net;
+
+import "frameworks/base/core/proto/android/privacy.proto";
+
+option java_multiple_files = true;
+
+// Debug proto for android.net.RouteInfo
+message RouteInfoProto {
+  option (.android.msg_privacy).dest = DEST_EXPLICIT;
+  // From android.net.RouteInfo#RouteType
+  enum RouteType {
+    RT_UNKNOWN = 0;
+    RT_UNICAST = 1;
+    RT_UNREACHABLE = 2;
+    RT_THROW = 3;
+  };
+  optional RouteType route_type = 1;
+  // The ip destination address for this route. e.g. 192.0.2.0/24
+  optional string destination = 2;
+  // The gateway ip address for this route.
+  optional string gateway = 3;
+  // Network interface. e.g. wlan0
+  optional string interface = 4;
+  // The MTU size for this route.
+  optional int32 mtu = 5;
+}

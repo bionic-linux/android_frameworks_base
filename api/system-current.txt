@@ -4317,6 +4317,7 @@ package android.net {
 
   public final class CaptivePortalData implements android.os.Parcelable {
     method public int describeContents();
+    method public void dumpDebug(@NonNull android.util.proto.ProtoOutputStream);
     method public long getByteLimit();
     method public long getExpiryTimeMillis();
     method public long getRefreshTimeMillis();
@@ -4486,6 +4487,7 @@ package android.net {
     method public boolean addDnsServer(@NonNull java.net.InetAddress);
     method public boolean addLinkAddress(@NonNull android.net.LinkAddress);
     method public boolean addPcscfServer(@NonNull java.net.InetAddress);
+    method public void dumpDebug(@NonNull android.util.proto.ProtoOutputStream);
     method @NonNull public java.util.List<java.net.InetAddress> getAddresses();
     method @NonNull public java.util.List<java.lang.String> getAllInterfaceNames();
     method @NonNull public java.util.List<android.net.LinkAddress> getAllLinkAddresses();

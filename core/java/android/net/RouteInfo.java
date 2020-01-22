@@ -25,6 +25,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.proto.ProtoOutputStream;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -498,6 +499,31 @@ public final class RouteInfo implements Parcelable {
             }
         }
         return bestRoute;
+    }
+
+    /**
+     * Dump debugging info as RouteInfoProto
+     *
+     * If the output belongs to a sub message, the caller is responsible for wrapping this function
+     * between {@link ProtoOutputStream#start(long)} and {@link ProtoOutputStream#end(long)}.
+     *
+     * @param proto the ProtoOutputStream to write to
+     * @hide
+     */
+    public void dumpDebug(ProtoOutputStream proto) {
+        if (mType == RTN_UNREACHABLE) {
+            proto.write(RouteInfoProto.ROUTE_TYPE, RouteInfoProto.RT_UNREACHABLE);
+        } else if (mType == RTN_THROW) {
+            proto.write(RouteInfoProto.ROUTE_TYPE, RouteInfoProto.RT_THROW);
+        } else if (mType == RTN_UNICAST) {
+            proto.write(RouteInfoProto.ROUTE_TYPE, RouteInfoProto.RT_UNICAST);
+        } else {
+            proto.write(RouteInfoProto.ROUTE_TYPE, RouteInfoProto.RT_UNKNOWN);
+        }
+        proto.write(RouteInfoProto.DESTINATION, String.valueOf(mDestination));
+        proto.write(RouteInfoProto.GATEWAY, String.valueOf(mGateway));
+        proto.write(RouteInfoProto.INTERFACE, String.valueOf(mInterface));
+        proto.write(RouteInfoProto.MTU, mMtu);
     }
 
     /**

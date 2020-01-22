@@ -22,6 +22,7 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.proto.ProtoOutputStream;
 
 import java.util.Objects;
 
@@ -277,5 +278,27 @@ public final class CaptivePortalData implements Parcelable {
                 + ", expiryTime: " + mExpiryTimeMillis
                 + ", captive: " + mCaptive
                 + "}";
+    }
+
+    /**
+     * Dump debugging info as CaptivePortalDataProto
+     *
+     * If the output belongs to a sub message, the caller is responsible for wrapping this function
+     * between {@link ProtoOutputStream#start(long)} and {@link ProtoOutputStream#end(long)}.
+     *
+     * @param proto the ProtoOutputStream to write to
+     */
+    public void dumpDebug(@NonNull ProtoOutputStream proto) {
+        proto.write(CaptivePortalDataProto.REFRESH_TIME_MILLIS, mRefreshTimeMillis);
+        if (mUserPortalUrl != null) {
+            proto.write(CaptivePortalDataProto.USER_PORTAL_URL, mUserPortalUrl.toString());
+        }
+        if (mVenueInfoUrl != null) {
+            proto.write(CaptivePortalDataProto.VENUE_INFO_URL, mVenueInfoUrl.toString());
+        }
+        proto.write(CaptivePortalDataProto.IS_SESSION_EXTENDABLE, mIsSessionExtendable);
+        proto.write(CaptivePortalDataProto.BYTE_LIMIT, mByteLimit);
+        proto.write(CaptivePortalDataProto.EXPIRY_TIME_MILLIS, mExpiryTimeMillis);
+        proto.write(CaptivePortalDataProto.CAPTIVE, mCaptive);
     }
 }

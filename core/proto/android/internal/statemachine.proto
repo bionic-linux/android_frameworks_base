@@ -1,0 +1,59 @@
+/*
+ * Copyright (C) 2020 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto2";
+package com.android.internal.util;
+
+import "frameworks/base/core/proto/android/privacy.proto";
+
+option java_multiple_files = true;
+
+// Debug proto for com.android.internal.util.StateMachine
+message StateMachineProto {
+  option (.android.msg_privacy).dest = DEST_AUTOMATIC;
+
+  optional string name = 1;
+  // The total number of records processed
+  optional int32 total_records = 2;
+  optional string current_state = 3;
+
+  // The string pool for msg.what
+  message WhatKey {
+    option (.android.msg_privacy).dest = DEST_AUTOMATIC;
+    // Message code used in LogRecord message
+    optional int64 what = 1;
+    // String representation of the message code
+    optional string what_string = 2;
+  }
+  repeated WhatKey what_keys = 4;
+
+  message LogRecord {
+    option (.android.msg_privacy).dest = DEST_AUTOMATIC;
+
+    optional int64 time = 1;
+    // The state which handled the message
+    optional string state = 2;
+    // The first state that received the message but did not process the message
+    optional string org_state = 3;
+    // The state that was transitioned to after the message was processed
+    optional string dst_state = 4;
+    // User-defined message code so that the recipient can identify what this message is about
+    optional int64 what = 5;
+    // Additional info. Optional.
+    optional string info = 6 [(.android.privacy).dest = DEST_EXPLICIT];
+  }
+  repeated LogRecord log_records = 5;
+}
