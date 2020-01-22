@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc15b676_709f4eaf",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4338,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "No order is guaranteed by the API (added to the javadoc). Also changed to collection.",
+      "parentUuid": "fc774ddb_37c90800",
+      "range": {
+        "startLine": 4338,
+        "startChar": 59,
+        "endLine": 4338,
+        "endChar": 63
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf484ca_533504fd",
         "filename": "api/system-current.txt",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-22T15:10:51Z",
       "side": 1,
       "message": "Do we actually need this class? If all we need is an IP address and a hostname, I think you could just use InetAddress, because InetAddress objects actually can contain a hostname. (Though to be fair, I generally find myself considering that a bug, not a feature).\n\nInetAddresses don\u0027t contain the subnet prefix length, but I\u0027m not sure that is meaningful here The prefix length is necessary to configure the address on an interface for communication, but not really for accounting purposes, which is the purpose of this class.\n\nThat said, I don\u0027t feel very strongly about this, and if we expect we\u0027ll add other data to this class in the future, that might be a reason to define this class. I can\u0027t think of anything we\u0027d want to put here that we couldn\u0027t put directly in TetheredClient though.\n\nAddressInfo also doesn\u0027t seem like a great name, because hostnames aren\u0027t really a property of the address - they are names that the address can be mapped to.",
+      "range": {
+        "startLine": 4668,
+        "startChar": 43,
+        "endLine": 4668,
+        "endChar": 54
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548b9ba5_b02731e2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4668,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "LinkAddress also will have (has ?) an expiration, so InetAddress would not be enough, since this also tracks the lease expiration (in this patch the expiration is in a non-API field, but would be moved to the API field inside LinkAddress once that\u0027s in).\n\nWith an IPv6 client, would it not be good to know which /64 it has, rather than a specific address ? Not sure if that\u0027s achievable though.\n\nChanged to LeaseInfo, but does that make sense for IPv6 ?",
+      "parentUuid": "7bf484ca_533504fd",
       "range": {
         "startLine": 4668,
         "startChar": 43,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "466159f7_1d09026c",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027ll need a shim because this class is in the module too, and if it was not, the parcelable could not be accessed directly (because then the parcelable getter and the parcelable would need to be module API), so I\u0027m not sure we could avoid using a shim.\n\nNot having equals and hashcode is quite annoying yes, also writing the wrapper for the parcelable by keeping it immutable would be a little annoying too. Since this is defined inside the module I\u0027d prefer to have a normal class.",
+      "parentUuid": "20d7108e_54bdb16b",
+      "range": {
+        "startLine": 36,
+        "startChar": 34,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64d07f9e_1912c357",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-22T15:10:51Z",
       "side": 1,
       "message": "Not for this CL, but should we have an @IntDef in TetheringManager for the tethering type?",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fa1b1f_2adeb57a",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "Added a TODO",
+      "parentUuid": "64d07f9e_1912c357",
       "range": {
         "startLine": 41,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d68ea3ad_a9160884",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "null works here because the classloader for MacAddress is always the same as the classloader for Parcel (because when passing null, Parcel uses its own classloader).\nWent for null to simplify.",
+      "parentUuid": "8b34673f_cc48224b",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ca0752_ec5135f1",
         "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2020-01-22T15:10:51Z",
       "side": 1,
       "message": "Is there a reason this can\u0027t be just in.readParcelableArray?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4751e696_90367f8d",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "Not really, that\u0027s what the IDE generated code recommended. It looks like it\u0027s slightly more efficient than readParcelableArray because it does not store the type, as the caller is supposed to pass the creator when unparceling.",
+      "parentUuid": "14ca0752_ec5135f1",
       "range": {
         "startLine": 52,
         "startChar": 16,
@@ -160,6 +304,30 @@
       "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76e4d3d_44b4b9b8",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T16:51:09Z",
+      "side": 1,
+      "message": "This should not be necessary for its current usage, but added to avoid surprises.",
+      "parentUuid": "a68e5278_ba7c6e66",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
