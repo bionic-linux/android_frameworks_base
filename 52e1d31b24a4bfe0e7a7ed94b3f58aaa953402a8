@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "944a2ce1_7a5ff09e",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1060050
+      },
+      "writtenOn": "2020-01-22T14:16:43Z",
+      "side": 1,
+      "message": "I don\u0027t think that AOSP should reference GTS tests (here and in the commit description). I\u0027d just say that this is useful for tests, like in https://android-review.googlesource.com/c/platform/frameworks/base/+/1205113",
+      "range": {
+        "startLine": 222,
+        "startChar": 33,
+        "endLine": 222,
+        "endChar": 36
+      },
+      "revId": "52e1d31b24a4bfe0e7a7ed94b3f58aaa953402a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b343805_43c7c20c",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1060050
+      },
+      "writtenOn": "2020-01-22T14:16:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you also modify \ndata/etc/privapp-permissions-platform.xml (like https://android-review.googlesource.com/c/platform/frameworks/base/+/1191706)?",
+      "range": {
+        "startLine": 223,
+        "startChar": 53,
+        "endLine": 224,
+        "endChar": 67
+      },
+      "revId": "52e1d31b24a4bfe0e7a7ed94b3f58aaa953402a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
