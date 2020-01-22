@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6944549d_943c566a",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-01-22T19:31:36Z",
+      "side": 1,
+      "message": "Looking at bug 20224972 you should use tm.getDefaultOutgoingPhoneAccount(PhoneAccount.SCHEME_TEL) instead but this still requires READ_PHONE_STATE",
+      "range": {
+        "startLine": 889,
+        "startChar": 55,
+        "endLine": 889,
+        "endChar": 41
+      },
+      "revId": "bc2423795c03f1104aaec5905f4935c8da4e1cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f93d675_db3a7243",
         "filename": "media/java/android/media/RingtoneManager.java",
         "patchSetId": 5
@@ -13,6 +36,30 @@
       "writtenOn": "2020-01-22T19:13:52Z",
       "side": 1,
       "message": "This call requires android.Manifest.permission.READ_PHONE_STATE that the application may not have.",
+      "range": {
+        "startLine": 890,
+        "startChar": 43,
+        "endLine": 890,
+        "endChar": 89
+      },
+      "revId": "bc2423795c03f1104aaec5905f4935c8da4e1cc6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33a824d_1d20dc0d",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-01-22T19:31:36Z",
+      "side": 1,
+      "message": "Wrong line, and perm is actually READ_PRIVILEGED_PHONE_STATE",
+      "parentUuid": "9f93d675_db3a7243",
       "range": {
         "startLine": 890,
         "startChar": 43,
