@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a846aa14_790e733b",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T07:14:24Z",
+      "side": 1,
+      "message": "Do we still need this? It\u0027s already provided in TetheringEventCallback#onTetheredInterfacesChanged right?",
+      "range": {
+        "startLine": 4658,
+        "startChar": 4,
+        "endLine": 4658,
+        "endChar": 56
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d37902_ca689787",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4659,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T07:14:24Z",
+      "side": 1,
+      "message": "Per in-person: instead of maintaining custom callback state here, why not add an onTetheringSupported(boolean supported) to TetheringEventCallback, and say in the documentation that:\n- onTetheringSupported is guaranteed to be called as soon as the callback is registered\n- callbacks on tethering state will not be called until onTetheringSupported is called with true",
+      "range": {
+        "startLine": 4659,
+        "startChar": 4,
+        "endLine": 4659,
+        "endChar": 104
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76898188_3e157087",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4703,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T07:14:24Z",
+      "side": 1,
+      "message": "It looks like the entire current contents of this TetheringConfiguration class are things that we want to move away from. If these things are basically mostly deprecated, then can we instead rename this object to TetheringInterfaceRegexps (and rename onConfigurationChanged to onTetherableInterfaceRegexpsChanged) and make it deprecated?",
+      "range": {
+        "startLine": 4698,
+        "startChar": 0,
+        "endLine": 4703,
+        "endChar": 3
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffde0d92_3015443d",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T07:14:24Z",
+      "side": 1,
+      "message": "Not for this CL, but should we have an onStopped as well? Or is it implicit in onTetheredInterfacesChanged with no interfaces?",
+      "range": {
+        "startLine": 4712,
+        "startChar": 2,
+        "endLine": 4712,
+        "endChar": 3
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
