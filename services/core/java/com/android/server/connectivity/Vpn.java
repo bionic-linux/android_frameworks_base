@@ -193,7 +193,7 @@ public class Vpn {
     @VisibleForTesting protected String mPackage;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
-    private String mInterface;
+    @VisibleForTesting protected String mInterface;
     private Connection mConnection;
 
     /** Tracks the runners for all VPN types managed by the platform (eg. LegacyVpn, PlatformVpn) */
@@ -1525,7 +1525,8 @@ public class Vpn {
         }
     }
 
-    private INetworkManagementEventObserver mObserver = new BaseNetworkObserver() {
+    @VisibleForTesting
+    INetworkManagementEventObserver mObserver = new BaseNetworkObserver() {
         @Override
         public void interfaceStatusChanged(String interfaze, boolean up) {
             synchronized (Vpn.this) {
@@ -2011,7 +2012,8 @@ public class Vpn {
     /**
      * This class represents the common interface for all VPN runners.
      */
-    private abstract class VpnRunner extends Thread {
+    @VisibleForTesting
+    abstract class VpnRunner extends Thread {
 
         protected VpnRunner(String name) {
             super(name);
@@ -2056,10 +2058,10 @@ public class Vpn {
         @NonNull
         private final ConnectivityManager.NetworkCallback mNetworkCallback = buildNetworkCallback();
 
-        @Nullable private UdpEncapsulationSocket mEncapSocket;
-        @Nullable private IpSecTunnelInterface mTunnelIface;
-        @Nullable private IkeSession mSession;
-        @Nullable private Network mActiveNetwork;
+        @VisibleForTesting @Nullable UdpEncapsulationSocket mEncapSocket;
+        @VisibleForTesting @Nullable IpSecTunnelInterface mTunnelIface;
+        @VisibleForTesting @Nullable IkeSession mSession;
+        @VisibleForTesting @Nullable Network mActiveNetwork;
 
         IkeV2VpnRunner(@NonNull Ikev2VpnProfile profile) throws UnknownHostException {
             super(TAG);
@@ -2119,15 +2121,15 @@ public class Vpn {
                     Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
                     return;
                 }
+            }
 
-                try {
-                    // Transforms do not need to be persisted; the IkeSession will keep
-                    // them alive for us
-                    mIpSecManager.applyTunnelModeTransform(mTunnelIface, direction, transform);
-                } catch (IOException e) {
-                    Log.d(TAG, "Transform application failed for network " + network, e);
-                    handleSessionLost(network);
-                }
+            try {
+                // Transforms do not need to be persisted; the IkeSession will keep
+                // them alive for us
+                mIpSecManager.applyTunnelModeTransform(mTunnelIface, direction, transform);
+            } catch (IOException e) {
+                Log.d(TAG, "Transform application failed for network " + network, e);
+                handleSessionLost(network);
             }
         }
 
