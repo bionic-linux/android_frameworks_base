@@ -1,0 +1,57 @@
+/*
+ * Copyright (C) 2020 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto2";
+package android.net;
+
+import "frameworks/base/core/proto/android/net/captiveportaldata.proto";
+import "frameworks/base/core/proto/android/net/routeinfo.proto";
+import "frameworks/base/core/proto/android/net/proxyinfo.proto";
+import "frameworks/base/core/proto/android/privacy.proto";
+
+option java_multiple_files = true;
+
+message LinkPropertiesProto {
+    option (.android.msg_privacy).dest = DEST_EXPLICIT;
+
+    message TcpBufferSizes {
+        optional int32 rmem_min = 1;
+        optional int32 rmem_def = 2;
+        optional int32 rmem_max = 3;
+        optional int32 wmem_min = 4;
+        optional int32 wmem_def = 5;
+        optional int32 wmem_max = 6;
+    }
+    optional string interface_name = 1;
+    repeated string link_addresses = 2;
+    repeated string dns_servers = 3;
+    optional bool using_private_dns = 4;
+    optional string private_dns_server_name = 5;
+    repeated string pcscf_addresses = 6;
+    repeated string validated_private_dns_servers = 7;
+    optional string domains = 8;
+    optional int32 mtu = 9;
+    optional bool wake_on_lan_supported = 10;
+    optional string dhcp_server_address = 11;
+    optional string captive_portal_api_url = 12;
+    optional CaptivePortalDataProto captive_portal_data = 13;
+    optional TcpBufferSizes tcp_buffer_sizes = 14;
+    repeated RouteInfoProto routes = 15;
+    optional ProxyInfoProto proxy = 16;
+    optional string nat64_prefix = 17;
+
+    // Next tag: 18
+}
