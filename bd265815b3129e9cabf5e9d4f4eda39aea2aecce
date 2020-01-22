@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6f0673c_14e43374",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4658,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T09:01:57Z",
+      "side": 1,
+      "message": "Oops - removed",
+      "parentUuid": "a846aa14_790e733b",
+      "range": {
+        "startLine": 4658,
+        "startChar": 4,
+        "endLine": 4658,
+        "endChar": 56
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77d37902_ca689787",
         "filename": "api/system-current.txt",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e31ee5_5c206936",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4659,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T09:01:57Z",
+      "side": 1,
+      "message": "Done, but did not add the second point to the documentation, because it\u0027s possible for clients to get callbacks about configuration change even if tethering is (currently) not supported",
+      "parentUuid": "77d37902_ca689787",
+      "range": {
+        "startLine": 4659,
+        "startChar": 4,
+        "endLine": 4659,
+        "endChar": 104
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e6a79f65_befa1a9c",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4703,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T09:01:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76898188_3e157087",
+      "range": {
+        "startLine": 4698,
+        "startChar": 0,
+        "endLine": 4703,
+        "endChar": 3
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffde0d92_3015443d",
         "filename": "api/system-current.txt",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2020-01-22T07:14:24Z",
       "side": 1,
       "message": "Not for this CL, but should we have an onStopped as well? Or is it implicit in onTetheredInterfacesChanged with no interfaces?",
+      "range": {
+        "startLine": 4712,
+        "startChar": 2,
+        "endLine": 4712,
+        "endChar": 3
+      },
+      "revId": "bd265815b3129e9cabf5e9d4f4eda39aea2aecce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5080da75_7e705e56",
+        "filename": "api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 4712,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T09:01:57Z",
+      "side": 1,
+      "message": "I would include it in onTetheredInterfacesChanged, as otherwise there could be two ways to get stopped status.",
+      "parentUuid": "ffde0d92_3015443d",
       "range": {
         "startLine": 4712,
         "startChar": 2,
