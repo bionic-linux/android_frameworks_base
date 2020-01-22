@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc774ddb_37c90800",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4338,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Is there any implication of ordering here? Should this be Collection?",
+      "range": {
+        "startLine": 4338,
+        "startChar": 59,
+        "endLine": 4338,
+        "endChar": 63
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf484ca_533504fd",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4668,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Do we actually need this class? If all we need is an IP address and a hostname, I think you could just use InetAddress, because InetAddress objects actually can contain a hostname. (Though to be fair, I generally find myself considering that a bug, not a feature).\n\nInetAddresses don\u0027t contain the subnet prefix length, but I\u0027m not sure that is meaningful here The prefix length is necessary to configure the address on an interface for communication, but not really for accounting purposes, which is the purpose of this class.\n\nThat said, I don\u0027t feel very strongly about this, and if we expect we\u0027ll add other data to this class in the future, that might be a reason to define this class. I can\u0027t think of anything we\u0027d want to put here that we couldn\u0027t put directly in TetheredClient though.\n\nAddressInfo also doesn\u0027t seem like a great name, because hostnames aren\u0027t really a property of the address - they are names that the address can be mapped to.",
+      "range": {
+        "startLine": 4668,
+        "startChar": 43,
+        "endLine": 4668,
+        "endChar": 54
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d7108e_54bdb16b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Is there a reason we can\u0027t just use stable AIDL for this? The data types used here (a @JavaOnlyStableParcelable, an array of @JavaOnlyStableParcelable, and an int) should be supported, no? Is it because you need equals and hashCode?\n\nUsing a stable AIDL parcelable directly would remove the need for a shim in the module if we ever change the contents of this object in the future.",
+      "range": {
+        "startLine": 36,
+        "startChar": 34,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d07f9e_1912c357",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Not for this CL, but should we have an @IntDef in TetheringManager for the tethering type?",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b34673f_cc48224b",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Is there a reason we can\u0027t use null here? Is it just a compiler issue (e.g., the compiler can\u0027t infer it and you can\u0027t use a temporary because this() needs to be the first statement)? Or is it some more complex problem? If the latter, we should have a comment ehre.",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ca0752_ec5135f1",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Is there a reason this can\u0027t be just in.readParcelableArray?",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68e5278_ba7c6e66",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-01-22T15:10:51Z",
+      "side": 1,
+      "message": "Should this do some deduplication?",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "a291b2626fbcec4516ec8ac14667f518c7ff3aa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
