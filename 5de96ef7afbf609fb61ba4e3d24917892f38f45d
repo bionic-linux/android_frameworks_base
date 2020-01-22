@@ -46,6 +46,30 @@
       "revId": "5de96ef7afbf609fb61ba4e3d24917892f38f45d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3c91ea_b6a63690",
+        "filename": "tools/hiddenapi/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-01-22T07:56:44Z",
+      "side": 1,
+      "message": "No, I wrote this before I saw the other CLs :)",
+      "parentUuid": "db72879a_7a31a031",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "5de96ef7afbf609fb61ba4e3d24917892f38f45d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
