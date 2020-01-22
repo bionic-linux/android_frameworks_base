@@ -187,7 +187,7 @@ public class Vpn {
     @VisibleForTesting protected String mPackage;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
-    private String mInterface;
+    @VisibleForTesting protected String mInterface;
     private Connection mConnection;
 
     /** Tracks the runners for all VPN types managed by the platform (eg. LegacyVpn, PlatformVpn) */
@@ -2001,7 +2001,8 @@ public class Vpn {
     /**
      * This class represents the common interface for all VPN runners.
      */
-    private abstract class VpnRunner extends Thread {
+    @VisibleForTesting
+    abstract class VpnRunner extends Thread {
 
         protected VpnRunner(String name) {
             super(name);
@@ -2025,7 +2026,8 @@ public class Vpn {
      * As a new default is selected, old IKE sessions will be torn down, and a new one will be
      * started.
      */
-    private class IkeV2VpnRunner extends VpnRunner {
+    @VisibleForTesting
+    class IkeV2VpnRunner extends VpnRunner {
         @NonNull private static final String TAG = "IkeV2VpnRunner";
 
         @NonNull private final IpSecManager mIpSecManager;
@@ -2049,119 +2051,138 @@ public class Vpn {
             return Objects.equals(mActiveNetwork, network);
         }
 
-        private IkeSessionCallback buildIkeSessionCallback(@NonNull Network network) {
-            return new IkeSessionCallback() {
-                @Override
-                public void onOpened(@NonNull IkeSessionConfiguration ikeSessionConfig) {
-                    Log.d(TAG, "IkeOpened for network " + network);
-                }
+        private class IkeSessionCallbackImpl implements IkeSessionCallback {
+            public final Network network;
 
-                @Override
-                public void onClosed() {
-                    Log.d(TAG, "IkeClosed for network " + network);
-                    handleSessionLost(network); // Server requested we close. Retry?
-                }
+            private IkeSessionCallbackImpl(Network network) {
+                this.network = network;
+            }
 
-                @Override
-                public void onClosedExceptionally(@NonNull IkeException exception) {
-                    Log.d(TAG, "IkeClosedExceptionally for network " + network, exception);
-                    handleSessionLost(network);
-                }
+            @Override
+            public void onOpened(@NonNull IkeSessionConfiguration ikeSessionConfig) {
+                Log.d(TAG, "IkeOpened for network " + network);
+            }
 
-                @Override
-                public void onError(@NonNull IkeProtocolException exception) {
-                    Log.d(TAG, "IkeError for network " + network, exception);
-                    // Non-fatal, log and continue.
-                }
-            };
+            @Override
+            public void onClosed() {
+                Log.d(TAG, "IkeClosed for network " + network);
+                handleSessionLost(network); // Server requested we close. Retry?
+            }
+
+            @Override
+            public void onClosedExceptionally(@NonNull IkeException exception) {
+                Log.d(TAG, "IkeClosedExceptionally for network " + network, exception);
+                handleSessionLost(network);
+            }
+
+            @Override
+            public void onError(@NonNull IkeProtocolException exception) {
+                Log.d(TAG, "IkeError for network " + network, exception);
+                // Non-fatal, log and continue.
+            }
         }
 
-        private ChildSessionCallback buildChildSessionCallback(@NonNull Network network) {
-            return new ChildSessionCallback() {
-                @Override
-                public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
-                    synchronized (Vpn.this) {
-                        if (!isCurrentActiveNetwork(network)) {
-                            Log.d(TAG, "onOpened called for obsolete network " + network);
-                            return;
+        /**
+         * Implementation of ChildSessionCallback
+         *
+         * <p>This is not an anonymous class in order to facilitate debugging and testing.
+         */
+        @VisibleForTesting
+        class ChildSessionCallbackImpl implements ChildSessionCallback {
+            public final Network network;
+
+            private ChildSessionCallbackImpl(Network network) {
+                this.network = network;
+            }
+
+            @Override
+            public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
+                final Collection<RouteInfo> routes =
+                        VpnIkev2Utils.getRoutesFromTrafficSelectors(
+                                childConfig.getOutboundTrafficSelectors());
+                onOpened(childConfig.getInternalAddresses(), routes);
+            }
+
+            @VisibleForTesting
+            public void onOpened(@NonNull List<LinkAddress> internalAddresses,
+                    @NonNull Collection<RouteInfo> routes) {
+                synchronized (Vpn.this) {
+                    if (!isCurrentActiveNetwork(network)) {
+                        Log.d(TAG, "onOpened called for obsolete network " + network);
+                        return;
+                    }
+
+                    Log.d(TAG, "ChildOpened for network " + network);
+                    try {
+                        mInterface = mTunnelIface.getInterfaceName();
+                        mConfig.mtu = mProfile.getMaxMtu();
+
+                        mConfig.addresses.clear();
+                        for (final LinkAddress address : internalAddresses) {
+                            mTunnelIface.addAddress(
+                                    address.getAddress(), address.getPrefixLength());
+                            mConfig.addresses.add(address);
                         }
 
-                        Log.d(TAG, "ChildOpened for network " + network);
-                        try {
-                            mInterface = mTunnelIface.getInterfaceName();
-                            mConfig.mtu = mProfile.getMaxMtu();
+                        mConfig.routes.clear();
+                        mConfig.routes.addAll(routes);
 
-                            mConfig.addresses.clear();
-                            for (final LinkAddress address : childConfig.getInternalAddresses()) {
-                                mTunnelIface.addAddress(
-                                        address.getAddress(), address.getPrefixLength());
-                                mConfig.addresses.add(address);
-                            }
+                        // TODO: Add DNS servers from negotiation
 
-                            mConfig.routes.clear();
-                            mConfig.routes.addAll(VpnIkev2Utils.getRoutesFromTrafficSelectors(
-                                    childConfig.getOutboundTrafficSelectors()));
-
-                            // TODO: Add DNS servers from negotiation
-
-                            if (mNetworkAgent != null) {
-                                // Update to use the new interface and configuration
-                                mNetworkAgent.sendLinkProperties(makeLinkProperties());
-                            } else {
-                                if (isSettingsVpn()) prepareStatusIntent();
-                                agentConnect();
-                            }
-                        } catch (Exception e) {
-                            Log.d(TAG, "Error in ChildOpened for network " + network, e);
-                            handleSessionLost(network);
+                        if (mNetworkAgent != null) {
+                            // Update to use the new interface and configuration
+                            mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                        } else {
+                            if (isSettingsVpn()) prepareStatusIntent();
+                            agentConnect();
                         }
+                    } catch (Exception e) {
+                        Log.d(TAG, "Error in ChildOpened for network " + network, e);
+                        handleSessionLost(network);
                     }
                 }
+            }
 
-                @Override
-                public void onClosed() {
-                    Log.d(TAG, "ChildClosed for network " + network);
-                    handleSessionLost(network);
-                }
+            @Override
+            public void onClosed() {
+                Log.d(TAG, "ChildClosed for network " + network);
+                handleSessionLost(network);
+            }
 
-                @Override
-                public void onClosedExceptionally(@NonNull IkeException exception) {
-                    Log.d(TAG, "ChildClosedExceptionally for network " + network, exception);
-                    handleSessionLost(network);
-                }
+            @Override
+            public void onClosedExceptionally(@NonNull IkeException exception) {
+                Log.d(TAG, "ChildClosedExceptionally for network " + network, exception);
+                handleSessionLost(network);
+            }
 
-                @Override
-                public void onIpSecTransformCreated(
-                        @NonNull IpSecTransform transform, int direction) {
-                    synchronized (Vpn.this) {
-                        if (!isCurrentActiveNetwork(network)) {
-                            Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
-                            return;
-                        }
-
-                        Log.d(TAG, "ChildTransformCreated; Direction: " + direction + "; network "
-                                + network);
-                        try {
-                            // Transforms do not need to be persisted; the IkeSession will keep
-                            // them alive for us
-                            mIpSecManager.applyTunnelModeTransform(
-                                    mTunnelIface, direction, transform);
-                        } catch (IOException e) {
-                            Log.d(TAG, "Transform application failed for network " + network, e);
-                            handleSessionLost(network);
-                        }
+            @Override
+            public void onIpSecTransformCreated(@NonNull IpSecTransform transform, int direction) {
+                synchronized (Vpn.this) {
+                    if (!isCurrentActiveNetwork(network)) {
+                        Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
+                        return;
                     }
-                }
 
-                @Override
-                public void onIpSecTransformDeleted(
-                        @NonNull IpSecTransform transform, int direction) {
-                    // Nothing to be done; we don't hold any references, so this will be cleaned up
-                    // by IKE automatically.
-                    Log.d(TAG, "ChildTransformDeleted; Direction: " + direction + "; for network "
+                    Log.d(TAG, "ChildTransformCreated; Direction: " + direction + "; network "
                             + network);
+                    try {
+                        // Transforms do not need to be persisted; the IkeSession will keep
+                        // them alive for us
+                        mIpSecManager.applyTunnelModeTransform(mTunnelIface, direction, transform);
+                    } catch (IOException e) {
+                        Log.d(TAG, "Transform application failed for network " + network, e);
+                        handleSessionLost(network);
+                    }
                 }
-            };
+            }
+
+            @Override
+            public void onIpSecTransformDeleted(@NonNull IpSecTransform transform, int direction) {
+                // Nothing to be done; we don't hold any references, so this will be cleaned up
+                // by IKE automatically.
+                Log.d(TAG, "ChildTransformDeleted; Direction: " + direction + "; for network "
+                        + network);
+            }
         }
 
         private ConnectivityManager.NetworkCallback buildNetworkCallback() {
@@ -2203,8 +2224,8 @@ public class Vpn {
                                             ikeSessionParams,
                                             childSessionParams,
                                             Executors.newSingleThreadExecutor(),
-                                            buildIkeSessionCallback(network),
-                                            buildChildSessionCallback(network));
+                                            new IkeSessionCallbackImpl(network),
+                                            new ChildSessionCallbackImpl(network));
                             Log.d(TAG, "Ike Session started for network " + network);
                         } catch (Exception e) {
                             Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
