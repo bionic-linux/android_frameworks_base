@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "ad9bd5ac_2ca93e84",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T10:57:37Z",
+      "side": 1,
+      "message": "Ah yes sorry.",
+      "parentUuid": "b1b40e2a_76f2bac7",
+      "range": {
+        "startLine": 988,
+        "startChar": 32,
+        "endLine": 988,
+        "endChar": 64
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "979bc093_084830bf",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 12
