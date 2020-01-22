@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c025a32_7fa25b00",
+        "filename": "telephony/java/android/telephony/ImsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-22T06:48:58Z",
+      "side": 1,
+      "message": "is is",
+      "range": {
+        "startLine": 65,
+        "startChar": 87,
+        "endLine": 65,
+        "endChar": 89
+      },
+      "revId": "0ea6ca3fec7c03b94e61435ed4a39aec0eec081a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d7fdb2_c12fc1de",
+        "filename": "telephony/java/android/telephony/ImsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-01-22T06:48:58Z",
+      "side": 1,
+      "message": "Is there a specific permission for this?",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 69
+      },
+      "revId": "0ea6ca3fec7c03b94e61435ed4a39aec0eec081a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
