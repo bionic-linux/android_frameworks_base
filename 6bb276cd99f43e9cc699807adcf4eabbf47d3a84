@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36c2b2f1_24b8df9f",
+        "filename": "api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 29086,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "I think we agreed to make getOwnerUid() public API instead. Can you please merge with the latest updates of aosp/1212336 ?",
+      "range": {
+        "startLine": 29086,
+        "startChar": 26,
+        "endLine": 29086,
+        "endChar": 40
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac14d4b_9524dd83",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "The documentation must match what the method actually does.",
+      "range": {
+        "startLine": 840,
+        "startChar": 7,
+        "endLine": 842,
+        "endChar": 31
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1accb32_7cddc476",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "This is sending the privacy-sensitive UID to all apps unconditionally. Apps can read directly the wire format from the binder so we must make sure this information is never sent to them.",
+      "range": {
+        "startLine": 1499,
+        "startChar": 0,
+        "endLine": 1499,
+        "endChar": 33
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4a81f2_dbc666ab",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "Curious : why change this ? Was there anything wrong with the public constructor ? I liked that it made clear that it creates a new object.",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d58d7f5_45bf3454",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "I think \"checkLocationPermission\" is more in line with how implementations call methods that just return true or false\n\nAlso can you please have it the other way around ? Not only having the permission is a common thing on many devices (some users have the location toggle off all the time for example), it\u0027s just more natural to say\n\n  boolean check() {\n    return true or false\n  }\n  void enforce() {\n    if check throw\n  }\n\n...than\n\n  void enforce() {\n    if not permission throw\n  }\n  boolean check() {\n    try { enforce(); true; } catch { false; }\n  }",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc3b6f0_9b3d2bb5",
+        "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "\"Uid $UID does not hold the location permission\" ?\n\nOr if this is a common thing, do we really need to log ? enforce* methods typically log because they are typically called in a situation where they would succeed in normal operation, but checks routinely return false without this indicating a security issue.",
+      "range": {
+        "startLine": 77,
+        "startChar": 24,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851aa836_0bce4705",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "Why is this not final ?",
+      "range": {
+        "startLine": 597,
+        "startChar": 12,
+        "endLine": 597,
+        "endChar": 25
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b061f9c_8c4501ed",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to pass this here because what networks are relevant to this don\u0027t depend on the app. I think the NC should be sanitized before sending to apps rather than passing this through the stack up to every place that reads a NC from internal structures.",
+      "range": {
+        "startLine": 1516,
+        "startChar": 35,
+        "endLine": 1516,
+        "endChar": 53
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69280c8_1166e949",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5034,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "I thought Roshan\u0027s change was storing this in the request ?",
+      "range": {
+        "startLine": 5034,
+        "startChar": 21,
+        "endLine": 5034,
+        "endChar": 33
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23c395c_5bc60b1f",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "This will leave the binder state for the test harness in a broken state.",
+      "range": {
+        "startLine": 603,
+        "startChar": 0,
+        "endLine": 603,
+        "endChar": 38
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59951deb_607d5c23",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "The doc says this argument is an opaque token. You just can\u0027t forge one like this, even if it works today :\n• There is no guarantee it continues working. The Binder internal implementation must be able to change without breaking tests that have nothing to do with it.\n• OEMs may have a different implementation of the token, but they need to be able to run your tests.",
+      "range": {
+        "startLine": 604,
+        "startChar": 15,
+        "endLine": 604,
+        "endChar": 81
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca9eda5_645430cc",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "This is not processing a binder call : calling this makes no sense here. If you want the current process UID use Process.myUid().",
+      "range": {
+        "startLine": 606,
+        "startChar": 30,
+        "endLine": 606,
+        "endChar": 43
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab96c34a_96e3f791",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "This is a bit crude ; can we at least mock permissions per-uid ?\n\n(you\u0027re in luck, Rémi just submitted https://android-review.googlesource.com/c/platform/frameworks/base/+/1191702/17/tests/net/java/com/android/server/ConnectivityServiceTest.java which implements this in a comprehensive way)",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 52
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1994f0_3de2d685",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T16:14:41Z",
+      "side": 1,
+      "message": "final please",
+      "range": {
+        "startLine": 1091,
+        "startChar": 8,
+        "endLine": 1091,
+        "endChar": 23
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
