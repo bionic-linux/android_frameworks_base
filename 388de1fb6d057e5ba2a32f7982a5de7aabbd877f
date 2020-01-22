@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "b5cae9fc_3471b6f9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5061,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-22T00:45:17Z",
+      "side": 1,
+      "message": "Added a call to restrictRequestUidsForCaller() in the register() method.",
+      "parentUuid": "34444337_c25fb5c9",
+      "range": {
+        "startLine": 5061,
+        "startChar": 49,
+        "endLine": 5061,
+        "endChar": 52
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e6ab5e5_ae68de2a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
