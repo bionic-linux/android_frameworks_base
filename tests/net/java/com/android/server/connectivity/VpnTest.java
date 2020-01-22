@@ -28,15 +28,20 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.system.OsConstants.AF_INET;
+import static android.system.OsConstants.IPPROTO_UDP;
+import static android.system.OsConstants.SOCK_DGRAM;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.AdditionalMatchers.aryEq;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
@@ -59,12 +64,18 @@ import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.Ikev2VpnProfile;
+import android.net.IpSecManager;
+import android.net.IpSecTunnelInterfaceResponse;
+import android.net.IpSecUdpEncapResponse;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
 import android.net.UidRange;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.ipsec.ike.ChildSessionCallback;
+import android.net.ipsec.ike.IkeSessionCallback;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.INetworkManagementService;
@@ -74,6 +85,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.system.Os;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 
@@ -83,11 +95,13 @@ import androidx.test.runner.AndroidJUnit4;
 import com.android.internal.R;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
+import com.android.server.IpSecService;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -124,6 +138,9 @@ public class VpnTest {
     }
 
     static final String TEST_VPN_PKG = "com.dummy.vpn";
+    private static final String TEST_VPN_SERVER = "vpn.dummy.com";
+    private static final String TEST_VPN_IDENTITY = "identity";
+    private static final byte[] TEST_VPN_PSK = "psk".getBytes();
 
     /**
      * Names and UIDs for some fake packages. Important points:
@@ -150,12 +167,24 @@ public class VpnTest {
     @Mock private Vpn.SystemServices mSystemServices;
     @Mock private Vpn.Ikev2SessionCreator mIkev2SessionCreator;
     @Mock private ConnectivityManager mConnectivityManager;
+    @Mock private IpSecService mIpSecService;
     @Mock private KeyStore mKeyStore;
-    private final VpnProfile mVpnProfile = new VpnProfile("key");
+    private final VpnProfile mVpnProfile;
+
+    private IpSecManager mIpSecManager;
+
+    public VpnTest() throws Exception {
+        final Ikev2VpnProfile.Builder builder =
+                new Ikev2VpnProfile.Builder(TEST_VPN_SERVER, TEST_VPN_IDENTITY);
+        builder.setAuthPsk(TEST_VPN_PSK);
+        mVpnProfile = builder.build().toVpnProfile();
+    }
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+
+        mIpSecManager = new IpSecManager(mContext, mIpSecService);
 
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
         setMockedPackages(mPackages);
@@ -167,6 +196,7 @@ public class VpnTest {
                 .thenReturn(mNotificationManager);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
                 .thenReturn(mConnectivityManager);
+        when(mContext.getSystemService(eq(Context.IPSEC_SERVICE))).thenReturn(mIpSecManager);
         when(mContext.getString(R.string.config_customVpnAlwaysOnDisconnectedDialogComponent))
                 .thenReturn(Resources.getSystem().getString(
                         R.string.config_customVpnAlwaysOnDisconnectedDialogComponent));
@@ -755,6 +785,48 @@ public class VpnTest {
 
         // Verify that the the ACTIVATE_VPN appop was checked, but no error was thrown.
         verify(mAppOps).noteOpNoThrow(AppOpsManager.OP_ACTIVATE_VPN, Process.myUid(), TEST_VPN_PKG);
+    }
+
+    @Test
+    public void testIkev2VpnRunner() throws Exception {
+        IpSecUdpEncapResponse udpEncapResp =
+                new IpSecUdpEncapResponse(
+                        IpSecManager.Status.OK,
+                        0x1234,
+                        0x5678,
+                        Os.socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
+        when(mIpSecService.openUdpEncapsulationSocket(eq(0), anyObject())).thenReturn(udpEncapResp);
+
+        IpSecTunnelInterfaceResponse dummyResponse =
+                new IpSecTunnelInterfaceResponse(IpSecManager.Status.OK, 0x2345, "TEST_INTF");
+        when(mIpSecService.createTunnelInterface(any(), any(), any(), any(), any()))
+                .thenReturn(dummyResponse);
+
+        startVpnAndVerify();
+
+        // Verify and capture the NetworkRequest registration
+        ArgumentCaptor<ConnectivityManager.NetworkCallback> cbCaptor =
+                ArgumentCaptor.forClass(ConnectivityManager.NetworkCallback.class);
+        verify(mConnectivityManager).requestNetwork(any(), cbCaptor.capture());
+
+        ConnectivityManager.NetworkCallback networkCb = cbCaptor.getValue();
+        assertNotNull(networkCb);
+
+        // Trigger the onAvailable callback
+        final Network network = new Network(1);
+        networkCb.onAvailable(network);
+
+        // Verify and capture the IKE session creation
+        ArgumentCaptor<IkeSessionCallback> ikeCbCaptor =
+                ArgumentCaptor.forClass(IkeSessionCallback.class);
+        ArgumentCaptor<ChildSessionCallback> childCbCaptor =
+                ArgumentCaptor.forClass(ChildSessionCallback.class);
+        verify(mIkev2SessionCreator).createIkeSession(
+                any(), any(), any(), any(), ikeCbCaptor.capture(), childCbCaptor.capture());
+
+        IkeSessionCallback ikeCb = ikeCbCaptor.getValue();
+        ChildSessionCallback childCb = childCbCaptor.getValue();
+        assertNotNull(ikeCb);
     }
 
     @Test
