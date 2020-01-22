@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e44049a1_e54734c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-01-22T22:44:31Z",
+      "side": 1,
+      "message": "b/147816404 has been filed to track moving this out of ConnectivityService",
+      "parentUuid": "09e0c706_c76f67d4",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 45
+      },
+      "revId": "388de1fb6d057e5ba2a32f7982a5de7aabbd877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d029289_5960fc7d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 23
