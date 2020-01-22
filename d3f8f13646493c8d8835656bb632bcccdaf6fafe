@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31058c25_43b7f8bb",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T11:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f52499f_b2b8c0c7",
+      "range": {
+        "startLine": 194,
+        "startChar": 21,
+        "endLine": 194,
+        "endChar": 50
+      },
+      "revId": "d3f8f13646493c8d8835656bb632bcccdaf6fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cff8170_87e42bf4",
         "filename": "core/java/android/net/LinkProperties.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "d3f8f13646493c8d8835656bb632bcccdaf6fafe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e5ffae_62c21087",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-22T11:12:56Z",
+      "side": 1,
+      "message": "Done - I guess it\u0027s better to have no side-effect if the exception is caught",
+      "parentUuid": "1cff8170_87e42bf4",
+      "range": {
+        "startLine": 897,
+        "startChar": 12,
+        "endLine": 897,
+        "endChar": 34
+      },
+      "revId": "d3f8f13646493c8d8835656bb632bcccdaf6fafe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
