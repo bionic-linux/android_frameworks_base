@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37fa81f7_65312d40",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T12:05:50Z",
+      "side": 1,
+      "message": "This will now return an empty LP if state.linkPoperties is null, is this intended ?",
+      "range": {
+        "startLine": 1576,
+        "startChar": 15,
+        "endLine": 1576,
+        "endChar": 59
+      },
+      "revId": "78cff0fb5556838f25058dcb27920629db581252",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
