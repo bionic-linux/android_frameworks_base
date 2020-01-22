@@ -2411,4 +2411,30 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: R
     SETTINGS_PLATFORM_COMPAT_DASHBOARD = 1805;    
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: R
+    SETTINGS_ADB_WIRELESS = 1827;
+
+    // ACTION: Settings > Developer Options > Toggle on Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: R
+    ACTION_ADB_WIRELESS_ON = 1828;
+
+    // ACTION: Settings > Developer Options > Toggle off Wireless debugging
+    // CATEGORY: SETTINGS
+    // OS: R
+    ACTION_ADB_WIRELESS_OFF = 1829;
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    //   > Pair device with pairing code > Pairing code dialog
+    // CATEGORY: SETTINGS
+    // OS: R
+    ADB_WIRELESS_DEVICE_PAIRING_DIALOG = 1830;
+
+    // OPEN: Settings > Developer Options > Wireless debugging
+    //   > Pair device with QR code > Scan QR code > Pairing device dialog
+    // CATEGORY: SETTINGS
+    ADB_WIRELESS_DEVICE_QR_PAIRING_DIALOG = 1831;
 }
