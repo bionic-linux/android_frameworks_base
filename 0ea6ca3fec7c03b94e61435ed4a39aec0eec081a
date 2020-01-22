@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53cfa4d0_5260d29c",
+        "filename": "telephony/java/android/telephony/ImsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-22T16:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c025a32_7fa25b00",
+      "range": {
+        "startLine": 65,
+        "startChar": 87,
+        "endLine": 65,
+        "endChar": 89
+      },
+      "revId": "0ea6ca3fec7c03b94e61435ed4a39aec0eec081a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33d7fdb2_c12fc1de",
         "filename": "telephony/java/android/telephony/ImsManager.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0ea6ca3fec7c03b94e61435ed4a39aec0eec081a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b68f71_d3eb0816",
+        "filename": "telephony/java/android/telephony/ImsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-01-22T16:54:02Z",
+      "side": 1,
+      "message": "Unfortunately not. Currently, we do not restrict this broadcast to settings only or use a permission.",
+      "parentUuid": "33d7fdb2_c12fc1de",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 69
+      },
+      "revId": "0ea6ca3fec7c03b94e61435ed4a39aec0eec081a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
