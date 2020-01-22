@@ -1417,6 +1417,7 @@ package android.net {
     ctor public LinkProperties(@Nullable android.net.LinkProperties);
     method public boolean addDnsServer(@NonNull java.net.InetAddress);
     method public boolean addLinkAddress(@NonNull android.net.LinkAddress);
+    method public void dump(@NonNull android.util.proto.ProtoOutputStream);
     method @Nullable public android.net.Uri getCaptivePortalApiUrl();
     method @Nullable public android.net.CaptivePortalData getCaptivePortalData();
     method @NonNull public java.util.List<java.net.InetAddress> getPcscfServers();

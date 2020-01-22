@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.proto.ProtoOutputStream;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -1007,6 +1008,85 @@ public final class LinkProperties implements Parcelable {
         }
 
         return resultJoiner.toString();
+    }
+
+    /**
+     * Dump debugging info as LinkPropertiesProto
+     *
+     * If the output belongs to a sub message, the caller is responsible for wrapping this function
+     * between {@link ProtoOutputStream#start(long)} and {@link ProtoOutputStream#end(long)}.
+     *
+     * @param proto the ProtoOutputStream to write to
+     * @hide
+     */
+    @SystemApi
+    @TestApi
+    public void dump(@NonNull ProtoOutputStream proto) {
+        if (mIfaceName != null) {
+            proto.write(LinkPropertiesProto.INTERFACE_NAME, mIfaceName);
+        }
+        mLinkAddresses.forEach(addr -> {
+            proto.write(LinkPropertiesProto.LINK_ADDRESSES, addr.toString());
+        });
+        mDnses.forEach(dns -> {
+            proto.write(LinkPropertiesProto.DNS_ADDRESSES, dns.toString());
+        });
+        proto.write(LinkPropertiesProto.USE_PRIVATE_DNS, mUsePrivateDns);
+        if (!TextUtils.isEmpty(mPrivateDnsServerName)) {
+            proto.write(LinkPropertiesProto.PRIVATE_DNS_SERVER_NAME, mPrivateDnsServerName);
+        }
+        mPcscfs.forEach(pcscf -> {
+            proto.write(LinkPropertiesProto.PCSCF_ADDRESSES, pcscf.toString());
+        });
+        mValidatedPrivateDnses.forEach(dns -> {
+            proto.write(LinkPropertiesProto.VALIDATED_PRIVATE_DNSES, dns.toString());
+        });
+        proto.write(LinkPropertiesProto.DOMAINS, mDomains);
+        proto.write(LinkPropertiesProto.MTU, mMtu);
+        proto.write(LinkPropertiesProto.WAKE_ON_LAN_SUPPORTED, mWakeOnLanSupported);
+
+        if (!TextUtils.isEmpty(mTcpBufferSizes)) {
+            String[] sizes = mTcpBufferSizes.split(",");
+            if (sizes.length == 6) {
+                long sToken = proto.start(LinkPropertiesProto.TCP_BUFFER_SIZES);
+                try {
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.RMEM_MIN,
+                            Integer.parseInt(sizes[0]));
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.RMEM_DEF,
+                            Integer.parseInt(sizes[1]));
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.RMEM_MAX,
+                            Integer.parseInt(sizes[2]));
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.WMEM_MIN,
+                            Integer.parseInt(sizes[3]));
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.WMEM_DEF,
+                            Integer.parseInt(sizes[4]));
+                    proto.write(LinkPropertiesProto.TcpBufferSizes.WMEM_MAX,
+                            Integer.parseInt(sizes[5]));
+                } catch (NumberFormatException e) {
+                    // Wrong format. Skip dumping mTcpBufferSizes.
+                }
+                proto.end(sToken);
+            }
+        }
+
+        mRoutes.forEach(route -> {
+            long token = proto.start(LinkPropertiesProto.ROUTE_INFOS);
+            route.dump(proto);
+            proto.end(token);
+        });
+        if (mHttpProxy != null) {
+            long token = proto.start(LinkPropertiesProto.PROXY_INFO);
+            mHttpProxy.dump(proto);
+            proto.end(token);
+        }
+        if (mNat64Prefix != null) {
+            proto.write(LinkPropertiesProto.NAT64_PREFIX, mNat64Prefix.toString());
+        }
+        mStackedLinks.values().forEach(link -> {
+            long token = proto.start(LinkPropertiesProto.STACKED_LINKS);
+            link.dump(proto);
+            proto.end(token);
+        });
     }
 
     /**
