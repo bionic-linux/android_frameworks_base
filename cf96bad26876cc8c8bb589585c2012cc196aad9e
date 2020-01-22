@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be83ecd_f5b4ef61",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T07:40:56Z",
+      "side": 1,
+      "message": "As we discussed offline, this defines the contract for this object and can\u0027t ever change, so let\u0027s make it final",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286bb145_ffe137c2",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T07:40:56Z",
+      "side": 1,
+      "message": "Just write nulls if mPSF is false",
+      "range": {
+        "startLine": 1816,
+        "startChar": 7,
+        "endLine": 1817,
+        "endChar": 56
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e491d657_80fc8bd5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T07:40:56Z",
+      "side": 1,
+      "message": "Do you still need this now that we have the sanitizing code in LP ?",
+      "range": {
+        "startLine": 1613,
+        "startChar": 27,
+        "endLine": 1613,
+        "endChar": 53
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4865daf_3105bfaa",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T07:40:56Z",
+      "side": 1,
+      "message": "I think you need to test both behaviors",
+      "range": {
+        "startLine": 988,
+        "startChar": 32,
+        "endLine": 988,
+        "endChar": 64
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979bc093_084830bf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T07:40:56Z",
+      "side": 1,
+      "message": ".equals()\n\nI think this works because it\u0027s interned but I don\u0027t think it\u0027s a great idea to rely on this",
+      "range": {
+        "startLine": 447,
+        "startChar": 23,
+        "endLine": 447,
+        "endChar": 26
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
