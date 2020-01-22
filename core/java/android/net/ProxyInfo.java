@@ -22,6 +22,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.proto.ProtoOutputStream;
 
 import java.net.InetSocketAddress;
 import java.net.URLConnection;
@@ -263,6 +264,28 @@ public class ProxyInfo implements Parcelable {
             }
         }
         return proxy;
+    }
+
+    /**
+     * Dump debugging info as ProxyInfoProto
+     *
+     * If the output belongs to a sub message, the caller is responsible for wrapping this function
+     * between {@link ProtoOutputStream#start(long)} and {@link ProtoOutputStream#end(long)}.
+     *
+     * @param proto the ProtoOutputStream to write to
+     * @hide
+     */
+    public void dumpDebug(ProtoOutputStream proto) {
+        if (!Uri.EMPTY.equals(mPacFileUrl)) {
+            proto.write(ProxyInfoProto.PAC_FILE_URL, mPacFileUrl.toString());
+        }
+        if (!TextUtils.isEmpty(mHost)) {
+            proto.write(ProxyInfoProto.HOST, mHost);
+            proto.write(ProxyInfoProto.PORT, mPort);
+            if (!TextUtils.isEmpty(mExclusionList)) {
+                proto.write(ProxyInfoProto.EXCLUSION_LIST, mExclusionList);
+            }
+        }
     }
 
     @Override
