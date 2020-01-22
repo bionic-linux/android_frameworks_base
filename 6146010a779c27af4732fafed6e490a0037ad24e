@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e25adbc6_aed43450",
+        "filename": "core/java/android/timezone/TimeZoneFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-22T12:14:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3593463_11ce54fb",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a5cdb9d_72b778d8",
         "filename": "core/java/android/timezone/TzDataSetVersion.java",
         "patchSetId": 3
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1abcdca0_11c5b183",
+        "filename": "core/java/android/timezone/TzDataSetVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-22T12:14:21Z",
+      "side": 1,
+      "message": "If there\u0027s no ordering for the set of all of these versions then perhaps there should be a Comparable type composing format{Major,Minor}Version? I see that isCompatibleWithThisDevice basically just makes a comparison against that part of the version. Wouldn\u0027t it be better to replace TzDataSetVersion.CURREN_FORMAT_{MINOR,MAJOR}_VERSION with an instance of such a value type?\n\nI\u0027ll leave it up to you how to prioritize your time, since you indicated that you have much more important things to do than to polish the API surface.",
+      "parentUuid": "d418fc02_8b5d611d",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a22067c_f87fd88e",
         "filename": "core/java/android/timezone/TzDataSetVersion.java",
         "patchSetId": 3
@@ -140,6 +188,30 @@
       "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eaab14_dcef2bc3",
+        "filename": "core/java/android/timezone/TzDataSetVersion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-22T12:14:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc29ff93_5f9f2228",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 51
+      },
+      "revId": "6146010a779c27af4732fafed6e490a0037ad24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
