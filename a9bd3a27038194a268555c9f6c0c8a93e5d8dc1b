@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8b242b_ef38a0dd",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:18:44Z",
+      "side": 1,
+      "message": "If you respin this change, initialize the boolean first and then return if source \u003d\u003d null",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 29
+      },
+      "revId": "a9bd3a27038194a268555c9f6c0c8a93e5d8dc1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

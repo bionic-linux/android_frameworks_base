@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5f11a8b4_a4305808",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-22T11:18:44Z",
+      "side": 1,
+      "message": "Sure, but ISTM the right way to do this is to just call getLinkProperties(), and if you need them to propagate the sensitive fields call .make... afterwards, don\u0027t you think ? It\u0027s both less duplicated code and easier to understand.",
+      "parentUuid": "76ce9371_3902566c",
+      "range": {
+        "startLine": 1613,
+        "startChar": 27,
+        "endLine": 1613,
+        "endChar": 53
+      },
+      "revId": "cf96bad26876cc8c8bb589585c2012cc196aad9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4865daf_3105bfaa",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 12
