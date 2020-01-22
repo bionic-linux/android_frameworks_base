@@ -39,6 +39,7 @@ import android.net.InetAddresses;
 import android.net.IpPrefix;
 import android.net.IpSecManager.UdpEncapsulationSocket;
 import android.net.IpSecTransform;
+import android.net.LinkAddress;
 import android.net.Network;
 import android.net.RouteInfo;
 import android.net.eap.EapSessionConfig;
@@ -64,6 +65,7 @@ import android.net.util.IpRange;
 import android.system.OsConstants;
 import android.util.Log;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.HexDump;
 
@@ -279,8 +281,17 @@ public class VpnIkev2Utils {
 
         @Override
         public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
+            final Collection<RouteInfo> routes =
+                    getRoutesFromTrafficSelectors(childConfig.getOutboundTrafficSelectors());
+            onOpened(mNetwork, childConfig.getInternalAddresses(), routes);
+        }
+
+        /** Test method to allow for injection of onOpened parameters. */
+        @VisibleForTesting
+        void onOpened(@NonNull Network network, @NonNull List<LinkAddress> linkAddresses,
+                @NonNull Collection<RouteInfo> routes) {
             Log.d(mTag, "ChildOpened for network " + mNetwork);
-            mCallbacks.handleChildOpened(mNetwork, childConfig);
+            mCallbacks.handleChildOpened(mNetwork, linkAddresses, routes);
         }
 
         @Override
