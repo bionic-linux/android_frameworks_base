@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "298bcb2e_2eb03133",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-23T00:24:31Z",
+      "side": 1,
+      "message": "Add all the sanity check into ConnectivityService",
+      "parentUuid": "e1accb32_7cddc476",
+      "range": {
+        "startLine": 1499,
+        "startChar": 0,
+        "endLine": 1499,
+        "endChar": 33
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4a81f2_dbc666ab",
         "filename": "core/java/com/android/internal/util/ConnectivityUtil.java",
         "patchSetId": 8
