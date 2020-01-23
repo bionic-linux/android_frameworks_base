@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10831b53_7280d35c",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-23T12:56:35Z",
+      "side": 1,
+      "message": "Why prefer getMessage() over toString()? I though it\u0027s important to log the exception type?\ncomma will print the whole stack trace which may be too verbose, I\u0027d like to use toString() so that both the exception type and message is logged.",
+      "parentUuid": "b80d74c3_77c08c87",
+      "range": {
+        "startLine": 162,
+        "startChar": 61,
+        "endLine": 162,
+        "endChar": 64
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22edf8b5_4da25cc4",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 17
