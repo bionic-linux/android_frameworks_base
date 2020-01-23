@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "06b2c6f7_8b693093",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/KeyRevocationList.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-23T02:32:56Z",
+      "side": 1,
+      "message": "e.g. have a new function:\n\nInputStream openUrl() throws IOException {\n            URLConnection connection \u003d url.openConnection();\n            connection.setUseCaches(true);\n            connection.addRequestProperty(\"Cache-Control\", \"max-age\u003d0\");\n            return connection.getInputStream();\n}\n\nthen\n\n\ntry(InputStream stream \u003d openUrl()) {\n    ...\n}",
+      "parentUuid": "e3a98858_ab9ee8a1",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 13
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a392cafa_7d4200c2",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/KeyRevocationList.java",
         "patchSetId": 17
