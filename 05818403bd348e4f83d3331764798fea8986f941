@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "52827400_8bdc184d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-23T07:45:09Z",
+      "side": 1,
+      "message": "Sorry I missed this.\nThis is thrown when a key is revoked. The key checking code is however in a follow-up change, I should move this to the follow-up change, too.",
+      "parentUuid": "22edf8b5_4da25cc4",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cfac7d9_7550a8c5",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 17
@@ -59,6 +83,30 @@
       "writtenOn": "2020-01-23T02:28:40Z",
       "side": 1,
       "message": "This is effectively logging it twice...",
+      "range": {
+        "startLine": 168,
+        "startChar": 23,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f78db0_26841329",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-23T07:45:09Z",
+      "side": 1,
+      "message": "This is because Log.e(TAG, message, e) doesn\u0027t log \"e\" if \"e\" is of type \"UnknownHostException\". Use this so that at least the exception type is logged when e is UnknownHostException.\nOur rationale here: https://android-review.googlesource.com/c/platform/frameworks/base/+/1183407/14/packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java#161",
+      "parentUuid": "1cfac7d9_7550a8c5",
       "range": {
         "startLine": 168,
         "startChar": 23,
@@ -169,6 +217,30 @@
       "writtenOn": "2020-01-23T02:15:53Z",
       "side": 1,
       "message": "You may use:\n\n   new JSONObject(new BufferedReader(new InputStreamReader(connection.getInputStream()));\n\nThis saves you the buffer to store the whole file.\n\nNot sure if you should or should not add a BufferedReader in between.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de055492_3ecd5fae",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/KeyRevocationList.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-23T07:45:09Z",
+      "side": 1,
+      "message": "JSONObject\u0027s constructor accepts a String object but not InputStream or Reader. That\u0027s why I need the readFully() because I want to convert InputStream to String.",
+      "parentUuid": "a392cafa_7d4200c2",
       "range": {
         "startLine": 137,
         "startChar": 0,
