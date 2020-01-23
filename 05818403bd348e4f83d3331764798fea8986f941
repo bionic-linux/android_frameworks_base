@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a392cafa_7d4200c2",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/KeyRevocationList.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-23T02:15:53Z",
+      "side": 1,
+      "message": "You may use:\n\n   new JSONObject(new BufferedReader(new InputStreamReader(connection.getInputStream()));\n\nThis saves you the buffer to store the whole file.\n\nNot sure if you should or should not add a BufferedReader in between.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 53
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
