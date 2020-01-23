@@ -34,6 +34,10 @@ void AConfiguration_delete(AConfiguration* config) {
     delete config;
 }
 
+void AConfiguration_foobar(AConfiguration* config) {
+    return config;
+}
+
 void AConfiguration_fromAssetManager(AConfiguration* out, AAssetManager* am) {
     ScopedLock<AssetManager2> locked_mgr(*AssetManagerForNdkAssetManager(am));
     ResTable_config config = locked_mgr->GetConfiguration();

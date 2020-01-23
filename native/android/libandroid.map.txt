@@ -26,6 +26,7 @@ LIBANDROID {
     AConfiguration_copy;
     AConfiguration_delete;
     AConfiguration_diff;
+    AConfiguration_fooBar;
     AConfiguration_fromAssetManager;
     AConfiguration_getCountry;
     AConfiguration_getDensity;
