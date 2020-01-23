@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df0f639a_1d6d1f4c",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8208,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-01-23T18:56:38Z",
+      "side": 1,
+      "message": "userId",
+      "range": {
+        "startLine": 8208,
+        "startChar": 34,
+        "endLine": 8208,
+        "endChar": 56
+      },
+      "revId": "3fdd9f658406265ba7ac2a9e715372cc780de279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
