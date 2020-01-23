@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef58f0f_4b472405",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "Question : while this is correct, is it necessary, or can we afford to only send the owner UID in a subset of the calls ?\n\n(I mean, what you are doing here is the Right thing to do in the great scheme of things, but I\u0027m wondering if we can get away with less danger/less effort even at the price of some correctness)",
+      "range": {
+        "startLine": 1277,
+        "startChar": 37,
+        "endLine": 1277,
+        "endChar": 53
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fa149f_ac090f50",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "Suggest adding some context about why this is the rule. Something like :\n\nThe owner UID is location-sensitive because apps that request a network could know where the device are if they can tell for sure the system has connected to the network they requested.",
+      "range": {
+        "startLine": 822,
+        "startChar": 8,
+        "endLine": 822,
+        "endChar": 12
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a440978a_ccd9e1db",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "...by the system server.",
+      "range": {
+        "startLine": 825,
+        "startChar": 38,
+        "endLine": 825,
+        "endChar": 39
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9485f8e9_f482db41",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "I think having this argument here makes this code very unwieldly. There are only three calls of getNetworkCapabilitiesInternal : it should be easy to audit whether they need to sanitize, and if they do, call the method that does (networkCapabilitiesRestrictedForCallerPermissions). For example it\u0027s pretty clear that l.1744 should not need to pass this.\n\nYou can take a look at how it\u0027s done for LinkProperties (it was just done yesterday) : instead of having getLinkProperties(NAI) sanitize, getLinkProperties simply returns and the caller sanitizes if necessary.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 34,
+        "endLine": 1618,
+        "endChar": 54
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f53764_c01965fc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "Sorry to trouble you, can you add @NonNull on this and @Nullable to callerPkgName please ?",
+      "range": {
+        "startLine": 1653,
+        "startChar": 12,
+        "endLine": 1653,
+        "endChar": 31
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c307a92d_0f29b285",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "return",
+      "range": {
+        "startLine": 1657,
+        "startChar": 42,
+        "endLine": 1657,
+        "endChar": 43
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c071f6_44772168",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6368,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-23T06:03:21Z",
+      "side": 1,
+      "message": "Suggest adding one that gives all permissions but passes a different package name, and one that passes a null package name, and make sure the UID is absent.",
+      "range": {
+        "startLine": 6368,
+        "startChar": 4,
+        "endLine": 6368,
+        "endChar": 5
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
