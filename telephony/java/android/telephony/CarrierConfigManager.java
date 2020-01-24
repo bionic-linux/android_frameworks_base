@@ -1043,6 +1043,15 @@ public class CarrierConfigManager {
         "show_signal_strength_in_sim_status_bool";
 
     /**
+     * Flag specifying if we should show one more bar for cell signal strength
+     * This is a replacement for the resource config_inflateSignalStrength
+     * The default value is false.
+     * @hide
+     */
+    public static final String KEY_ADD_SIGNAL_STRENGTH_BAR_BOOL =
+            "add_signal_strength_bar_bool";
+
+    /**
      * Flag specifying whether an additional (client initiated) intent needs to be sent on System
      * update
      */
@@ -3674,6 +3683,7 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_CARRIER_VVM_PACKAGE_NAME_STRING_ARRAY, null);
         sDefaults.putBoolean(KEY_SHOW_ICCID_IN_SIM_STATUS_BOOL, false);
         sDefaults.putBoolean(KEY_SHOW_SIGNAL_STRENGTH_IN_SIM_STATUS_BOOL, true);
+        sDefaults.putBoolean(KEY_ADD_SIGNAL_STRENGTH_BAR_BOOL, false);
         sDefaults.putBoolean(KEY_CI_ACTION_ON_SYS_UPDATE_BOOL, false);
         sDefaults.putString(KEY_CI_ACTION_ON_SYS_UPDATE_INTENT_STRING, "");
         sDefaults.putString(KEY_CI_ACTION_ON_SYS_UPDATE_EXTRA_STRING, "");
