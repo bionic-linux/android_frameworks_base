@@ -1013,7 +1013,7 @@ public class CarrierConfigManager {
 
     /**
      * Flag specifying if we should show one more bar for cell signal strength
-     * This is a replacement for the resource config_inflateSignalStrength
+     * This is a replacement for the former resource config_inflateSignalStrength
      * The default value is false.
      * @hide
      */
