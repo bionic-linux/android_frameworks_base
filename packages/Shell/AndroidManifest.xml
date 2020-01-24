@@ -219,6 +219,9 @@
     <!-- Permission required for CTS test - TetheringManagerTest -->
     <uses-permission android:name="android.permission.TETHER_PRIVILEGED"/>
 
+    <!-- permissions required for CTS test - PhoneStateListenerTest -->
+    <uses-permission android:name="android.permission.LISTEN_ALWAYS_REPORTED_SIGNAL_STRENGTH" />
+  
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
