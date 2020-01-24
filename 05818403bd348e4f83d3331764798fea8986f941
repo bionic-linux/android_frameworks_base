@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3f449e50_b52a4ff9",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-01-24T02:50:36Z",
+      "side": 1,
+      "message": "Ah I see; UnknownHostException is special.\n\nFrom Log.java:\n\n            // This is to reduce the amount of log spew that apps do in the non-error\n            // condition of the network being unavailable.",
+      "parentUuid": "03f78db0_26841329",
+      "range": {
+        "startLine": 168,
+        "startChar": 23,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e0009e_3a213391",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 17
