@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b0e31e0d_783705d2",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-25T13:38:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "52827400_8bdc184d",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfac7d9_7550a8c5",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 17
@@ -208,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "55b483c0_3b3dc2bd",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-25T13:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e0009e_3a213391",
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072d8031_f261504e",
         "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
         "patchSetId": 17
@@ -228,6 +270,30 @@
       "revId": "05818403bd348e4f83d3331764798fea8986f941",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1c480a_12e6bc08",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-25T13:38:21Z",
+      "side": 1,
+      "message": "Ack\nExplained in CL reply",
+      "parentUuid": "072d8031_f261504e",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 82
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -275,6 +341,30 @@
       "revId": "05818403bd348e4f83d3331764798fea8986f941",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65090297_717d216d",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/KeyRevocationList.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-01-25T13:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b2c6f7_8b693093",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 13
+      },
+      "revId": "05818403bd348e4f83d3331764798fea8986f941",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
