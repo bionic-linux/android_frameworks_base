@@ -784,10 +784,10 @@ public class Vpn {
                     // ignore
                 }
                 mContext.unbindService(mConnection);
-                mConnection = null;
+                cleanupVpnStateLocked();
             } else if (mVpnRunner != null) {
+                // Will call cleanupVpnStateLocked transitively
                 mVpnRunner.exit();
-                mVpnRunner = null;
             }
 
             try {
@@ -1530,23 +1530,29 @@ public class Vpn {
         public void interfaceRemoved(String interfaze) {
             synchronized (Vpn.this) {
                 if (interfaze.equals(mInterface) && jniCheck(interfaze) == 0) {
-                    mStatusIntent = null;
-                    mNetworkCapabilities.setUids(null);
-                    mConfig = null;
-                    mInterface = null;
                     if (mConnection != null) {
                         mContext.unbindService(mConnection);
-                        mConnection = null;
-                        agentDisconnect();
+                        cleanupVpnStateLocked();
                     } else if (mVpnRunner != null) {
-                        // agentDisconnect must be called from mVpnRunner.exit()
+                        // cleanupVpnStateLocked is called from mVpnRunner.exit()
                         mVpnRunner.exit();
-                        mVpnRunner = null;
                     }
                 }
             }
         }
     };
+
+    private void cleanupVpnStateLocked() {
+        mStatusIntent = null;
+        mNetworkCapabilities.setUids(null);
+        mConfig = null;
+        mInterface = null;
+
+        // Unconditionally clear both VpnService and VpnRunner fields.
+        mVpnRunner = null;
+        mConnection = null;
+        agentDisconnect();
+    }
 
     private void enforceControlPermission() {
         mContext.enforceCallingPermission(Manifest.permission.CONTROL_VPN, "Unauthorized Caller");
@@ -1995,7 +2001,13 @@ public class Vpn {
 
         public abstract void run();
 
-        protected abstract void exit();
+        protected abstract void exitVpnRunner();
+
+        /** Exits the VPN and cleans up any current VPN state. */
+        protected void exit() {
+            exitVpnRunner();
+            cleanupVpnStateLocked();
+        }
     }
 
     /**
@@ -2300,7 +2312,7 @@ public class Vpn {
         }
 
         @Override
-        public void exit() {
+        public void exitVpnRunner() {
             synchronized (Vpn.this) {
                 exitLocked();
             }
@@ -2399,10 +2411,9 @@ public class Vpn {
 
         /** Tears down this LegacyVpn connection */
         @Override
-        public void exit() {
+        public void exitVpnRunner() {
             // We assume that everything is reset after stopping the daemons.
             interrupt();
-            agentDisconnect();
             try {
                 mContext.unregisterReceiver(mBroadcastReceiver);
             } catch (IllegalArgumentException e) {}
