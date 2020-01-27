@@ -17,6 +17,8 @@
 #define LOG_NDEBUG 0
 #define LOG_TAG "BootAnimation"
 
+#include <vector>
+
 #include <stdint.h>
 #include <inttypes.h>
 #include <sys/inotify.h>
@@ -341,6 +343,16 @@ bool BootAnimation::preloadAnimation() {
     return false;
 }
 
+bool BootAnimation::findBootAnimationFileInternal(const std::vector<std::string> &files) {
+    for (const std::string& f : files) {
+        if (access(f.c_str(), R_OK) == 0) {
+            mZipFileName = f.c_str();
+            return true;
+        }
+    }
+    return false;
+}
+
 void BootAnimation::findBootAnimationFile() {
     // If the device has encryption turned on or is in process
     // of being encrypted we show the encrypted boot animation.
@@ -351,28 +363,33 @@ void BootAnimation::findBootAnimationFile() {
         !strcmp("trigger_restart_min_framework", decrypt);
 
     if (!mShuttingDown && encryptedAnimation) {
-        static const char* encryptedBootFiles[] =
-            {PRODUCT_ENCRYPTED_BOOTANIMATION_FILE, SYSTEM_ENCRYPTED_BOOTANIMATION_FILE};
-        for (const char* f : encryptedBootFiles) {
-            if (access(f, R_OK) == 0) {
-                mZipFileName = f;
-                return;
-            }
+        static const std::vector<std::string> encryptedBootFiles = {
+            PRODUCT_ENCRYPTED_BOOTANIMATION_FILE, SYSTEM_ENCRYPTED_BOOTANIMATION_FILE,
+        };
+        if (findBootAnimationFileInternal(encryptedBootFiles)) {
+            return;
         }
     }
 
     const bool playDarkAnim = android::base::GetIntProperty("ro.boot.theme", 0) == 1;
-    static const char* bootFiles[] =
-        {APEX_BOOTANIMATION_FILE, playDarkAnim ? PRODUCT_BOOTANIMATION_DARK_FILE : PRODUCT_BOOTANIMATION_FILE,
-         OEM_BOOTANIMATION_FILE, SYSTEM_BOOTANIMATION_FILE};
-    static const char* shutdownFiles[] =
-        {PRODUCT_SHUTDOWNANIMATION_FILE, OEM_SHUTDOWNANIMATION_FILE, SYSTEM_SHUTDOWNANIMATION_FILE, ""};
+    static const std::vector<std::string> bootFiles = {
+        APEX_BOOTANIMATION_FILE, playDarkAnim ? PRODUCT_BOOTANIMATION_DARK_FILE : PRODUCT_BOOTANIMATION_FILE,
+        OEM_BOOTANIMATION_FILE, SYSTEM_BOOTANIMATION_FILE
+    };
+    static const std::vector<std::string> shutdownFiles = {
+        PRODUCT_SHUTDOWNANIMATION_FILE, OEM_SHUTDOWNANIMATION_FILE, SYSTEM_SHUTDOWNANIMATION_FILE, ""
+    };
+    static const std::vector<std::string> userspaceRebootFiles = {
+        "/product/media/userspace-reboot.zip", "/oem/media/userspace-reboot.zip",
+         "/system/media/userspace-reboot.zip"
+    };
 
-    for (const char* f : (!mShuttingDown ? bootFiles : shutdownFiles)) {
-        if (access(f, R_OK) == 0) {
-            mZipFileName = f;
-            return;
-        }
+    if (android::base::GetBoolProperty("sys.init.userspace_reboot.in_progress", false)) {
+        findBootAnimationFileInternal(userspaceRebootFiles);
+    } else if (mShuttingDown) {
+        findBootAnimationFileInternal(shutdownFiles);
+    } else {
+        findBootAnimationFileInternal(bootFiles);
     }
 }
 
