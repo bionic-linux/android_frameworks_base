@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181d63cb_0604cfe5",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-27T03:24:29Z",
+      "side": 1,
+      "message": "Strictly speaking this is not true, as you can re-register a callback that you have previously unregistered. Suggest changing this message to \"Callback already registered\".",
+      "range": {
+        "startLine": 677,
+        "startChar": 48,
+        "endLine": 677,
+        "endChar": 92
+      },
+      "revId": "cd87e76897da59edb50e48dc475d7bc8159c09d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21756c7a_b3608752",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-27T03:24:29Z",
+      "side": 1,
+      "message": "This line really looks to me like a change-detector test. What\u0027s wrong functionally if this was called 1 or 3 times ?",
+      "range": {
+        "startLine": 6387,
+        "startChar": 8,
+        "endLine": 6387,
+        "endChar": 70
+      },
+      "revId": "cd87e76897da59edb50e48dc475d7bc8159c09d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
