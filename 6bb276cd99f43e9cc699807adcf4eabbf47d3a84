@@ -521,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "fce7aea9_f11f1630",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5034,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "Chat with Roshan again and he said after having a long meeting with Lorenzo, he planed to add this into NetworkRequest. His CL is in internal and I have a copy in AOSP locally and make my CL depend on his CL.",
+      "parentUuid": "a931ad4b_9a844a07",
+      "range": {
+        "startLine": 5034,
+        "startChar": 21,
+        "endLine": 5034,
+        "endChar": 33
+      },
+      "revId": "6bb276cd99f43e9cc699807adcf4eabbf47d3a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23c395c_5bc60b1f",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 8

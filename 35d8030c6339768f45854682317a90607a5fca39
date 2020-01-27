@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c9f2724_df24231a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "I didn\u0027t find any other way to get this information from service side. And getDefaultNetworkCapabilitiesForUser \u0026 getNetworkCapabilities doesn\u0027t have much common logic. So I don\u0027t think we can move some part of the logic to manager and use one internal API. \n\nBen, do you have any idea?",
+      "parentUuid": "1ef58f0f_4b472405",
+      "range": {
+        "startLine": 1277,
+        "startChar": 37,
+        "endLine": 1277,
+        "endChar": 53
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75fa149f_ac090f50",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6abd9657_9156864c",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75fa149f_ac090f50",
+      "range": {
+        "startLine": 822,
+        "startChar": 8,
+        "endLine": 822,
+        "endChar": 12
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a440978a_ccd9e1db",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "35d8030c6339768f45854682317a90607a5fca39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa059882_46834549",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a440978a_ccd9e1db",
+      "range": {
+        "startLine": 825,
+        "startChar": 38,
+        "endLine": 825,
+        "endChar": 39
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d936563d_bcea1edd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "Remove the null situation for the callerPkgName, so I mark it as nonNull",
+      "parentUuid": "f9f53764_c01965fc",
+      "range": {
+        "startLine": 1653,
+        "startChar": 12,
+        "endLine": 1653,
+        "endChar": 31
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c307a92d_0f29b285",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 13
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "6088834b_68ab6938",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c307a92d_0f29b285",
+      "range": {
+        "startLine": 1657,
+        "startChar": 42,
+        "endLine": 1657,
+        "endChar": 43
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38c071f6_44772168",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 13
@@ -160,6 +280,30 @@
       "revId": "35d8030c6339768f45854682317a90607a5fca39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514abf98_3e1639db",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6368,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-27T21:35:50Z",
+      "side": 1,
+      "message": "For the different package name case, we have testNetworkCapabilitiesRestrictedForCallerPermissionsWrongUid for the cast that UID and callingPkgName is mismatched. \n\nFor the case that package name is null, I\u0027ve already marked it as @NonNull for the latest patch since I think we don\u0027t need package name to be nullable anymore.",
+      "parentUuid": "38c071f6_44772168",
+      "range": {
+        "startLine": 6368,
+        "startChar": 4,
+        "endLine": 6368,
+        "endChar": 5
+      },
+      "revId": "35d8030c6339768f45854682317a90607a5fca39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
