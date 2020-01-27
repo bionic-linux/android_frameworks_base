@@ -350,15 +350,20 @@ void BootAnimation::findBootAnimationFile() {
     bool encryptedAnimation = atoi(decrypt) != 0 ||
         !strcmp("trigger_restart_min_framework", decrypt);
 
+#define FIND_FILE(files) { \
+    for (const char* f : (files)) { \
+        if (access(f, R_OK) == 0) { \
+            mZipFileName = f; \
+            return; \
+        } \
+    } \
+}
+
     if (!mShuttingDown && encryptedAnimation) {
         static const char* encryptedBootFiles[] =
             {PRODUCT_ENCRYPTED_BOOTANIMATION_FILE, SYSTEM_ENCRYPTED_BOOTANIMATION_FILE};
-        for (const char* f : encryptedBootFiles) {
-            if (access(f, R_OK) == 0) {
-                mZipFileName = f;
-                return;
-            }
-        }
+        FIND_FILE(encryptedBootFiles);
+        return;
     }
 
     const bool playDarkAnim = android::base::GetIntProperty("ro.boot.theme", 0) == 1;
@@ -367,12 +372,16 @@ void BootAnimation::findBootAnimationFile() {
          OEM_BOOTANIMATION_FILE, SYSTEM_BOOTANIMATION_FILE};
     static const char* shutdownFiles[] =
         {PRODUCT_SHUTDOWNANIMATION_FILE, OEM_SHUTDOWNANIMATION_FILE, SYSTEM_SHUTDOWNANIMATION_FILE, ""};
+    static const char* userspaceRebootFiles[] =
+        {"/product/media/userspace-reboot.zip", "/oem/media/userspace-reboot.zip",
+         "/system/media/userspace-reboot.zip"};
 
-    for (const char* f : (!mShuttingDown ? bootFiles : shutdownFiles)) {
-        if (access(f, R_OK) == 0) {
-            mZipFileName = f;
-            return;
-        }
+    if (android::base::GetBoolProperty("sys.init.userspace_reboot.in_progress", false)) {
+        FIND_FILE(userspaceRebootFiles);
+    } else if (mShuttingDown) {
+        FIND_FILE(shutdownFiles);
+    } else {
+        FIND_FILE(bootFiles);
     }
 }
 
