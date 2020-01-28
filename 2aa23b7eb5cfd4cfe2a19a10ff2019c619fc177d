@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2a9624_8dc5d495",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-01-28T15:39:34Z",
+      "side": 1,
+      "message": "Uh-oh. The values of SCHED_GROUP_* seems to have changed since I wrote this in 2018. SCHED_GROUP_TOP_APP_BOUND is now 4, which will be out of bounds for this array.",
+      "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
