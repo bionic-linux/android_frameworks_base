@@ -22,6 +22,30 @@
       "revId": "0b944cc61aff720bfc28bb3751eb76b4310b02d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a9b99f_ec0698d7",
+        "filename": "core/res/res/drawable/sym_def_app_icon_foreground.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2020-01-28T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e86bb7_bea6e9de",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 571
+      },
+      "revId": "0b944cc61aff720bfc28bb3751eb76b4310b02d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
