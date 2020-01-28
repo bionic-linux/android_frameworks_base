@@ -16,6 +16,24 @@
       "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38603114_4db7c4e9",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-01-28T15:44:00Z",
+      "side": 1,
+      "message": "Ah, THREAD_GROUP_RESTRICTED was inserted, shifting other values upward: https://cs.android.com/android/_/android/platform/frameworks/base/+/fef10a47a810f375f762e77240718774a5f518aa:services/core/java/com/android/server/am/ProcessList.java;dlc\u003d528b18b3f0c6981f52d0e0830571485325cb040d\n\nIf this is to be merged, we must adapt to that by extending the CGROUP_CPU_SHARES and numSchedGroup arrays. And adding another block in the if-else chain above.",
+      "parentUuid": "ad2a9624_8dc5d495",
+      "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
