@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62974b9_ac4f0ef3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 833,
+        "startChar": 29,
+        "endLine": 833,
+        "endChar": 32
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3aace5_0d6a1d04",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "server",
+      "range": {
+        "startLine": 837,
+        "startChar": 53,
+        "endLine": 837,
+        "endChar": 58
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10d6c84_d92634fe",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Suggest not calling this out explicitly, though I don\u0027t mind so much",
+      "range": {
+        "startLine": 860,
+        "startChar": 7,
+        "endLine": 862,
+        "endChar": 22
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd16ce7_87a7a1fc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "The previous code makes it clear that this can return null, but the argument to maybeSanitizeLocationInfoForCaller takes a @NonNull argument and will NPE and crash the system server if null.\n\nRather than making the arg @Nullable I suggest only calling maybeSanitize inside the if() below\n\nLikewise a few lines below",
+      "range": {
+        "startLine": 1542,
+        "startChar": 24,
+        "endLine": 1542,
+        "endChar": 54
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f42d658_619545d1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Please document that this returns its first argument rather than creating a copy",
+      "range": {
+        "startLine": 1665,
+        "startChar": 19,
+        "endLine": 1665,
+        "endChar": 21
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a03df0a_ee666ea1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Is this comment appropriate here ? I don\u0027t think it\u0027s yet known at this line that the caller does have the location permission.",
+      "range": {
+        "startLine": 1668,
+        "startChar": 11,
+        "endLine": 1668,
+        "endChar": 94
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59349e4_d4bfce54",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "This method is still catching an exception rather than checking directly. Considering on many devices this is going to be called very frequently and end up in unwinding the stack I don\u0027t think this is fine for performance.",
+      "range": {
+        "startLine": 1670,
+        "startChar": 49,
+        "endLine": 1670,
+        "endChar": 72
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7c97c1_01d407fa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "So the permission is checked, but we don\u0027t reset the UID if the target package doesn\u0027t have the necessary permissions ?",
+      "range": {
+        "startLine": 1670,
+        "startChar": 22,
+        "endLine": 1671,
+        "endChar": 91
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badef6cb_b8bf8c3c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Why this change ?",
+      "range": {
+        "startLine": 5125,
+        "startChar": 52,
+        "endLine": 5125,
+        "endChar": 59
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75679e26_edb52ab5",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Let\u0027s not have whitespace-only changes in the same patch",
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7836a87_efbe4fd0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-28T15:08:10Z",
+      "side": 1,
+      "message": "Can you please reduce copy-pasting by having a helper function ?",
+      "range": {
+        "startLine": 6328,
+        "startChar": 16,
+        "endLine": 6328,
+        "endChar": 76
+      },
+      "revId": "0530aeb7213a223397794edb9d77a8648df8b490",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
