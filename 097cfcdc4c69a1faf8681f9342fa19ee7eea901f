@@ -22,6 +22,30 @@
       "revId": "097cfcdc4c69a1faf8681f9342fa19ee7eea901f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6eb153_1bfe2b81",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2020-01-28T13:21:58Z",
+      "side": 1,
+      "message": "It can, but passing const char*[] to a function is also messy. We can probably change all this static const char*[] to static constexpr std::array\u003cconst char*\u003e, but given that there is only a single reference to std library in the whole file, I\u0027m a little bit reluctant to such change.\n\nWDYT?",
+      "parentUuid": "e2151bcd_be5e3013",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "097cfcdc4c69a1faf8681f9342fa19ee7eea901f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
