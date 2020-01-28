@@ -34,6 +34,24 @@
       "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3f1150_73bceb95",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-28T17:39:22Z",
+      "side": 1,
+      "message": "May be paranoid, but cpu.shared on bg group used to give us bad prio inversion on \"N\", so what if things actually depends on the throttled per-uid group? And there are many things in root cgroup?",
+      "parentUuid": "38603114_4db7c4e9",
+      "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
