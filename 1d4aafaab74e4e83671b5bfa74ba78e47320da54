@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26682814_508362a5",
+        "filename": "services/core/jni/com_android_server_am_Cgroups.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2020-01-28T17:40:38Z",
+      "side": 1,
+      "message": "TEMP_FAILURE_RETRY wrap? or just use WriteStringToFile https://cs.android.com/android/platform/superproject/+/android-9.0.0_r8:system/core/base/include/android-base/file.h;bpv\u003d1;bpt\u003d1;l\u003d40",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "1d4aafaab74e4e83671b5bfa74ba78e47320da54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
