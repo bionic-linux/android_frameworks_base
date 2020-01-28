@@ -46,6 +46,30 @@
       "revId": "097cfcdc4c69a1faf8681f9342fa19ee7eea901f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e4e495_58a384b0",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-01-28T13:27:42Z",
+      "side": 1,
+      "message": "I feel like at a minimum the return should be replaced with a break. Returning from the \"calling\" function seems like a very odd behavior for a function-looking thing to be doing",
+      "parentUuid": "7d6eb153_1bfe2b81",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "097cfcdc4c69a1faf8681f9342fa19ee7eea901f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
