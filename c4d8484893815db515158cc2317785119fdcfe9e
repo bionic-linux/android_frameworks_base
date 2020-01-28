@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fba66cc_cae97151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-01-28T21:44:30Z",
+      "side": 1,
+      "message": "Can you move this to a comment on this review",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7ae8bc_8db04424",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-01-28T21:44:30Z",
+      "side": 1,
+      "message": "In this case I cannot approve the review. Permissions and APIs might change. We need people adding functionality to keep maintaining their code.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 3
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
