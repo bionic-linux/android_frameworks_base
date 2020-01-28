@@ -22,6 +22,30 @@
       "revId": "de8a42e45b0c86472d70a6b87e24db508d3ee2e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622793f6_8abeae58",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2020-01-28T15:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56945b94_c902c737",
+      "range": {
+        "startLine": 383,
+        "startChar": 7,
+        "endLine": 384,
+        "endChar": 11
+      },
+      "revId": "de8a42e45b0c86472d70a6b87e24db508d3ee2e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
