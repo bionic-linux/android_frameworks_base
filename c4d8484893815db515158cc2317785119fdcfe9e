@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65d2835b_62c06877",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-01-28T23:51:29Z",
+      "side": 1,
+      "message": "\"Shell\" indirectly cares about the signal strength because of CTS. There are many permissions that are approved to add into the Shell for this purposes.",
+      "parentUuid": "fbaa8c37_f1f2b467",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fba66cc_cae97151",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96a3a63b_15621321",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-01-28T23:51:29Z",
+      "side": 1,
+      "message": "\u003e Did you talk to the API provider that this is the right API to use?\nYes.",
+      "parentUuid": "4fba66cc_cae97151",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7ae8bc_8db04424",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2020-01-28T21:44:30Z",
       "side": 1,
       "message": "In this case I cannot approve the review. Permissions and APIs might change. We need people adding functionality to keep maintaining their code.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 3
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81f65e_1468e198",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-01-28T23:51:29Z",
+      "side": 1,
+      "message": "Can you please provide a way to sign up for this?",
+      "parentUuid": "cd7ae8bc_8db04424",
       "range": {
         "startLine": 19,
         "startChar": 0,
