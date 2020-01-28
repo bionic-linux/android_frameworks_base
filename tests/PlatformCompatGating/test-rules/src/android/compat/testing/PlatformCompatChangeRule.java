@@ -94,8 +94,9 @@ public class PlatformCompatChangeRule extends CoreCompatChangeRule {
                 throw new IllegalStateException("Could not get IPlatformCompat service!");
             }
             uiAutomation.adoptShellPermissionIdentity(
-                    Manifest.permission.READ_COMPAT_CHANGE_CONFIG,
-                    Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG);
+                    Manifest.permission.LOG_COMPAT_CHANGE,
+                    Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG,
+                    Manifest.permission.READ_COMPAT_CHANGE_CONFIG);
             Compatibility.setOverrides(mConfig);
             try {
                 platformCompat.setOverridesForTest(new CompatibilityChangeConfig(mConfig),
