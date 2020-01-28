@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c9d417_18fd5afb",
+        "filename": "core/res/res/values/public.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3034,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-01-28T06:03:46Z",
+      "side": 1,
+      "message": "This isn\u0027t part of your change.",
+      "range": {
+        "startLine": 3024,
+        "startChar": 4,
+        "endLine": 3034,
+        "endChar": 19
+      },
+      "revId": "4ca27f40dab42c9e9afeb690429d6f2fb39c8411",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
