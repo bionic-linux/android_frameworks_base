@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752f0361_6516b61a",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeGroupChangeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-01-28T17:05:55Z",
+      "side": 1,
+      "message": "lose",
+      "range": {
+        "startLine": 160,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 68
+      },
+      "revId": "e51c9aac02a999c4b74fa1277376c84d43b6e49b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
