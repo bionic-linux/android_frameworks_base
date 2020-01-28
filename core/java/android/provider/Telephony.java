@@ -3995,16 +3995,6 @@ public final class Telephony {
         })
         @Retention(RetentionPolicy.SOURCE)
         public @interface EditStatus {}
-
-        /** @hide */
-        @IntDef({
-                SKIP_464XLAT_DEFAULT,
-                SKIP_464XLAT_DISABLE,
-                SKIP_464XLAT_ENABLE,
-        })
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface Skip464XlatStatus {}
-
     }
 
     /**
