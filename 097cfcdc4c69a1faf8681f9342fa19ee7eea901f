@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2151bcd_be5e3013",
+        "filename": "cmds/bootanimation/BootAnimation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-01-28T12:24:43Z",
+      "side": 1,
+      "message": "is there a reason this can\u0027t be a function?",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "097cfcdc4c69a1faf8681f9342fa19ee7eea901f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
