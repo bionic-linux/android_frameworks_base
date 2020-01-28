@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbaa8c37_f1f2b467",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-01-28T21:45:37Z",
+      "side": 1,
+      "message": "Which app needs the data? I assume the shell does not care about signal strength",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fba66cc_cae97151",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
