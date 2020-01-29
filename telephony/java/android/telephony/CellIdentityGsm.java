@@ -71,8 +71,9 @@ public final class CellIdentityGsm extends CellIdentity {
      *
      * @hide
      */
-    public CellIdentityGsm(int lac, int cid, int arfcn, int bsic, String mccStr,
-                            String mncStr, String alphal, String alphas) {
+    public CellIdentityGsm(int lac, int cid, int arfcn, int bsic,
+            @Nullable String mccStr, @Nullable String mncStr,
+            @Nullable String alphal, @Nullable String alphas) {
         super(TAG, CellInfo.TYPE_GSM, mccStr, mncStr, alphal, alphas);
         mLac = inRangeOrUnavailable(lac, 0, MAX_LAC);
         mCid = inRangeOrUnavailable(cid, 0, MAX_CID);
@@ -81,20 +82,20 @@ public final class CellIdentityGsm extends CellIdentity {
     }
 
     /** @hide */
-    public CellIdentityGsm(android.hardware.radio.V1_0.CellIdentityGsm cid) {
+    public CellIdentityGsm(@NonNull android.hardware.radio.V1_0.CellIdentityGsm cid) {
         this(cid.lac, cid.cid, cid.arfcn,
                 cid.bsic == (byte) 0xFF ? CellInfo.UNAVAILABLE : cid.bsic,
                 cid.mcc, cid.mnc, "", "");
     }
 
     /** @hide */
-    public CellIdentityGsm(android.hardware.radio.V1_2.CellIdentityGsm cid) {
+    public CellIdentityGsm(@NonNull android.hardware.radio.V1_2.CellIdentityGsm cid) {
         this(cid.base.lac, cid.base.cid, cid.base.arfcn,
                 cid.base.bsic == (byte) 0xFF ? CellInfo.UNAVAILABLE : cid.base.bsic, cid.base.mcc,
                 cid.base.mnc, cid.operatorNames.alphaLong, cid.operatorNames.alphaShort);
     }
 
-    private CellIdentityGsm(CellIdentityGsm cid) {
+    private CellIdentityGsm(@NonNull CellIdentityGsm cid) {
         this(cid.mLac, cid.mCid, cid.mArfcn, cid.mBsic, cid.mMccStr,
                 cid.mMncStr, cid.mAlphaLong, cid.mAlphaShort);
     }

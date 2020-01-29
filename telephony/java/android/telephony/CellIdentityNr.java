@@ -53,8 +53,8 @@ public final class CellIdentityNr extends CellIdentity {
      *
      * @hide
      */
-    public CellIdentityNr(int pci, int tac, int nrArfcn, String mccStr, String mncStr,
-            long nci, String alphal, String alphas) {
+    public CellIdentityNr(int pci, int tac, int nrArfcn, @Nullable String mccStr,
+            @Nullable String mncStr, long nci, @Nullable String alphal, @Nullable String alphas) {
         super(TAG, CellInfo.TYPE_NR, mccStr, mncStr, alphal, alphas);
         mPci = inRangeOrUnavailable(pci, 0, MAX_PCI);
         mTac = inRangeOrUnavailable(tac, 0, MAX_TAC);
@@ -63,7 +63,7 @@ public final class CellIdentityNr extends CellIdentity {
     }
 
     /** @hide */
-    public CellIdentityNr(android.hardware.radio.V1_4.CellIdentityNr cid) {
+    public CellIdentityNr(@NonNull android.hardware.radio.V1_4.CellIdentityNr cid) {
         this(cid.pci, cid.tac, cid.nrarfcn, cid.mcc, cid.mnc, cid.nci, cid.operatorNames.alphaLong,
                 cid.operatorNames.alphaShort);
     }

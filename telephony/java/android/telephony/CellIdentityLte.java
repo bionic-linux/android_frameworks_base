@@ -93,8 +93,9 @@ public final class CellIdentityLte extends CellIdentity {
      *
      * @hide
      */
-    public CellIdentityLte(int ci, int pci, int tac, int earfcn, int bandwidth, String mccStr,
-            String mncStr, String alphal, String alphas) {
+    public CellIdentityLte(int ci, int pci, int tac, int earfcn, int bandwidth,
+            @Nullable String mccStr, @Nullable String mncStr,
+            @Nullable String alphal, @Nullable String alphas) {
         super(TAG, CellInfo.TYPE_LTE, mccStr, mncStr, alphal, alphas);
         mCi = inRangeOrUnavailable(ci, 0, MAX_CI);
         mPci = inRangeOrUnavailable(pci, 0, MAX_PCI);
@@ -104,18 +105,18 @@ public final class CellIdentityLte extends CellIdentity {
     }
 
     /** @hide */
-    public CellIdentityLte(android.hardware.radio.V1_0.CellIdentityLte cid) {
+    public CellIdentityLte(@NonNull android.hardware.radio.V1_0.CellIdentityLte cid) {
         this(cid.ci, cid.pci, cid.tac, cid.earfcn, CellInfo.UNAVAILABLE, cid.mcc, cid.mnc, "", "");
     }
 
     /** @hide */
-    public CellIdentityLte(android.hardware.radio.V1_2.CellIdentityLte cid) {
+    public CellIdentityLte(@NonNull android.hardware.radio.V1_2.CellIdentityLte cid) {
         this(cid.base.ci, cid.base.pci, cid.base.tac, cid.base.earfcn, cid.bandwidth,
                 cid.base.mcc, cid.base.mnc, cid.operatorNames.alphaLong,
                 cid.operatorNames.alphaShort);
     }
 
-    private CellIdentityLte(CellIdentityLte cid) {
+    private CellIdentityLte(@NonNull CellIdentityLte cid) {
         this(cid.mCi, cid.mPci, cid.mTac, cid.mEarfcn, cid.mBandwidth, cid.mMccStr,
                 cid.mMncStr, cid.mAlphaLong, cid.mAlphaShort);
     }

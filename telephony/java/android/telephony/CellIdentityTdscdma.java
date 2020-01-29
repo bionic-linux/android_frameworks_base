@@ -72,7 +72,7 @@ public final class CellIdentityTdscdma extends CellIdentity {
      * @hide
      */
     public CellIdentityTdscdma(String mcc, String mnc, int lac, int cid, int cpid, int uarfcn,
-            String alphal, String alphas) {
+            @Nullable String alphal, @Nullable String alphas) {
         super(TAG, CellInfo.TYPE_TDSCDMA, mcc, mnc, alphal, alphas);
         mLac = inRangeOrUnavailable(lac, 0, MAX_LAC);
         mCid = inRangeOrUnavailable(cid, 0, MAX_CID);
@@ -80,18 +80,18 @@ public final class CellIdentityTdscdma extends CellIdentity {
         mUarfcn = inRangeOrUnavailable(uarfcn, 0, MAX_UARFCN);
     }
 
-    private CellIdentityTdscdma(CellIdentityTdscdma cid) {
+    private CellIdentityTdscdma(@NonNull CellIdentityTdscdma cid) {
         this(cid.mMccStr, cid.mMncStr, cid.mLac, cid.mCid,
                 cid.mCpid, cid.mUarfcn, cid.mAlphaLong, cid.mAlphaShort);
     }
 
     /** @hide */
-    public CellIdentityTdscdma(android.hardware.radio.V1_0.CellIdentityTdscdma cid) {
+    public CellIdentityTdscdma(@NonNull android.hardware.radio.V1_0.CellIdentityTdscdma cid) {
         this(cid.mcc, cid.mnc, cid.lac, cid.cid, cid.cpid, CellInfo.UNAVAILABLE, "", "");
     }
 
     /** @hide */
-    public CellIdentityTdscdma(android.hardware.radio.V1_2.CellIdentityTdscdma cid) {
+    public CellIdentityTdscdma(@NonNull android.hardware.radio.V1_2.CellIdentityTdscdma cid) {
         this(cid.base.mcc, cid.base.mnc, cid.base.lac, cid.base.cid, cid.base.cpid,
                 cid.uarfcn, cid.operatorNames.alphaLong, cid.operatorNames.alphaShort);
     }
