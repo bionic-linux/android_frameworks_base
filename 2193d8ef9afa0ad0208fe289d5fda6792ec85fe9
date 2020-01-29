@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2e405f9_105307c0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not seeing any change here except NRI -\u003e Nri?\n\nIn general, avoid fixing style issues in the same CL as actual code changes. The linter probably wasn\u0027t happy, but this could affect git blame, and make it harder to debug.",
+      "range": {
+        "startLine": 955,
+        "startChar": 8,
+        "endLine": 958,
+        "endChar": 62
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4eea1b_0e06458e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 1641,
+        "startChar": 8,
+        "endLine": 1641,
+        "endChar": 27
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca53e27_b40b0eb0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Nit: Suggest using null here instead; since that\u0027s the value, it reduces the cognitive load on a reader to figure out that nc is guaranteed to be null.",
+      "range": {
+        "startLine": 1644,
+        "startChar": 14,
+        "endLine": 1644,
+        "endChar": 16
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0445d1_5521317c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Do we need to return this if it\u0027s mutating? I tend to find it more readable if a mutating function does not return a value at all.",
+      "range": {
+        "startLine": 1669,
+        "startChar": 4,
+        "endLine": 1669,
+        "endChar": 23
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff1c38e_fb07d1c4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1675,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Remove one of these two empty lines?",
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa52fe2b_38dd5163",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Do we need to clear OwnerPackageName as well?",
+      "range": {
+        "startLine": 1683,
+        "startChar": 51,
+        "endLine": 1683,
+        "endChar": 52
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b46c72_377e0542",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1761,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Nit/Optional: We use this in a few places; this probably could be extracted into a getNetworkCapabilitiesInternal(Network network);",
+      "range": {
+        "startLine": 1761,
+        "startChar": 16,
+        "endLine": 1761,
+        "endChar": 97
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9292d2_96445df4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5139,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "This looks like it\u0027ll be formatted incorrectly as\n\n\"uid/pid:1234/2345NetworkRequest [ 1 id\u003d5...\"\n\nas opposed to \n\n\"uid/pid:1234/2345 NetworkRequest...\"",
+      "range": {
+        "startLine": 5139,
+        "startChar": 45,
+        "endLine": 5139,
+        "endChar": 59
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c7d02b_546d98dd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6232,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Nit: This is a lot of nesting with multiple arguments interleaved. Maybe a local variable?\n\n\u003e NetworkCapabilities nc \u003d networkCapabilitiesRestrictedForCallerPermission();\nnc \u003d maybeSanitizeLocationInfoForCaller(nc, ...);\nputParcelable(bundle, nc);\n\nAlternatively, since maybeSanitizeLocationInfoForCaller mutates, you could make nc final and not reset the pointer in the second line",
+      "range": {
+        "startLine": 6232,
+        "startChar": 24,
+        "endLine": 6232,
+        "endChar": 59
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91bacc1_039f6499",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6250,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "ditto; separating might make this more readable.",
+      "range": {
+        "startLine": 6250,
+        "startChar": 32,
+        "endLine": 6250,
+        "endChar": 81
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862e3bc2_0f92ce98",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Why the change here? If these are unconditionally parcelled, shouldn\u0027t the parcelling should be lossless?",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 55
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c170bb5e_ec3ec3a1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6338,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Does this fit on the line above?",
+      "range": {
+        "startLine": 6338,
+        "startChar": 16,
+        "endLine": 6338,
+        "endChar": 34
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642e7f2b_ddc704b2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6347,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "single t",
+      "range": {
+        "startLine": 6347,
+        "startChar": 16,
+        "endLine": 6347,
+        "endChar": 18
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da0a78b_503838d0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6354,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this fail? ie, return INVALID_UID?\n\nSome of the others also appear to have that same issue.",
+      "range": {
+        "startLine": 6354,
+        "startChar": 21,
+        "endLine": 6354,
+        "endChar": 26
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8de620_1f656129",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 6364,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-29T04:52:09Z",
+      "side": 1,
+      "message": "This is supposed to be testing wrongUid, no?",
+      "range": {
+        "startLine": 6364,
+        "startChar": 66,
+        "endLine": 6364,
+        "endChar": 78
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
