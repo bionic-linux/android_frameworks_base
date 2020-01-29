@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3aa5ca3_4cce62be",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2054,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-01-29T01:25:19Z",
+      "side": 1,
+      "message": "there are 2 points to make here.\n1) This will return searching if the device is searching for service in either CS or PS domain.\n2) This API only concerns itself with WWAN; searching is not reported for WLAN.\n\nSuggest:\n\nThis API reports the modem searching status for {@link AccessNetworkConstants#TRANSPORT_TYPE_WWAN} (cellular) service in either {@link NetworkRegistrationInfo#DOMAIN_CS} or {@link NetworkRegistrationInfo#DOMAIN_PS}. This API will not report searching status for {@link AccessNetworkConstants#TRANSPORT_TYPE_WLAN}.",
+      "range": {
+        "startLine": 2053,
+        "startChar": 7,
+        "endLine": 2054,
+        "endChar": 57
+      },
+      "revId": "c8986f2c3e9e1011176fb535103225afdf0fabb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
