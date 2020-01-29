@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5946944_57a9ad4f",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-01-29T07:16:11Z",
+      "side": 1,
+      "message": "remove the tab maybe?",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 2
+      },
+      "revId": "1812ec4393b2350c46e36d4a47164c194bccac0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
