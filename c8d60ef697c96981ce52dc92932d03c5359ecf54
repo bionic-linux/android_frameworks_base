@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a448aacc_17c355eb",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1084818
+      },
+      "writtenOn": "2020-01-29T04:36:09Z",
+      "side": 1,
+      "message": "Can you add a comment here to say that this is for testing only similar as below?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "c8d60ef697c96981ce52dc92932d03c5359ecf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
