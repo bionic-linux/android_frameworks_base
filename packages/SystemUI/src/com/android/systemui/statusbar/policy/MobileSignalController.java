@@ -26,8 +26,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings.Global;
+import android.telephony.AccessNetworkConstants;
 import android.telephony.CellSignalStrength;
 import android.telephony.CellSignalStrengthCdma;
+import android.telephony.DataSpecificRegistrationInfo;
 import android.telephony.NetworkRegistrationInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -283,9 +285,9 @@ public class MobileSignalController extends SignalController<
 
     private int getNumLevels() {
         if (mInflateSignalStrengths) {
-            return SignalStrength.NUM_SIGNAL_STRENGTH_BINS + 1;
+            return CellSignalStrength.getNumSignalStrengthLevels() + 1;
         }
-        return SignalStrength.NUM_SIGNAL_STRENGTH_BINS;
+        return CellSignalStrength.getNumSignalStrengthLevels();
     }
 
     @Override
@@ -736,10 +738,22 @@ public class MobileSignalController extends SignalController<
             if (mDataNetType == TelephonyManager.NETWORK_TYPE_LTE) {
                 if (isCarrierSpecificDataIcon()) {
                     mDataNetType = NETWORK_TYPE_LTE_CA_5GE;
-                } else if (mServiceState != null && mServiceState.isUsingCarrierAggregation()) {
+                } else if (mServiceState != null && isUsingCarrierAggregation(mServiceState)) {
                     mDataNetType = TelephonyManager.NETWORK_TYPE_LTE_CA;
                 }
             }
+        }
+
+        private boolean isUsingCarrierAggregation(ServiceState serviceState) {
+            NetworkRegistrationInfo nri = serviceState.getNetworkRegistrationInfo(
+                    NetworkRegistrationInfo.DOMAIN_PS, AccessNetworkConstants.TRANSPORT_TYPE_WWAN);
+            if (nri != null) {
+                DataSpecificRegistrationInfo dsri = nri.getDataSpecificInfo();
+                if (dsri != null) {
+                    return dsri.isUsingCarrierAggregation();
+                }
+            }
+            return false;
         }
 
         @Override
