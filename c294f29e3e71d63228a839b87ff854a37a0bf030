@@ -22,6 +22,30 @@
       "revId": "c294f29e3e71d63228a839b87ff854a37a0bf030",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b4f1b3_ff54d841",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-29T10:14:21Z",
+      "side": 1,
+      "message": "[NS B04] is a first step, which gets completed in [NS B05]. Amended the cover comment.",
+      "parentUuid": "6155e1b2_cf344b47",
+      "range": {
+        "startLine": 14,
+        "startChar": 37,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "c294f29e3e71d63228a839b87ff854a37a0bf030",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
