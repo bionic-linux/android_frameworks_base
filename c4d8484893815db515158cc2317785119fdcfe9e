@@ -140,6 +140,30 @@
       "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d021f9ba_7a2548bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-01-29T00:40:34Z",
+      "side": 1,
+      "message": "Gotcha. I would like to re-apply the comment in this review.\n\n\u003e Are you signing up to remove the permission once not needed anymore?\nYes.",
+      "parentUuid": "de81f65e_1468e198",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 3
+      },
+      "revId": "c4d8484893815db515158cc2317785119fdcfe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
