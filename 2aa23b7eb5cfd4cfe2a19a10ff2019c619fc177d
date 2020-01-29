@@ -52,6 +52,24 @@
       "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76320d11_93e16cce",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-01-29T08:00:21Z",
+      "side": 1,
+      "message": "Bound processes may be boosted to another SCHED_GROUP_*. The exact boost depends on BIND_IMPORTANT and similar BIND_* flags.\n\nIIRC, the bg cgroup of old made _all_ the bg tasks share 20% or so of the CPU. Inside of that cgroup, it was every task for itself -- one app could deplete the group\u0027s cpu share, preventing a waking app from getting any runtime for a while.\n\nIn that regard, this configuration is more fair: each uid has its own share, and no one else can deplete it.\n\n\u003e And there are many things in root cgroup?\n\nEach individual (non-RT) task in the root cgroup will have the same amount of cpu share as a whole per-uid cgroup at SCHED_GROUP_DEFAULT. As noted in the commit message of 678001, those tasks -- if they misbehave -- could easily starve apps, yes. This could be avoided by assigning these tasks to special cgroups, with an appropriately allocated cpu share.",
+      "parentUuid": "1e3f1150_73bceb95",
+      "revId": "2aa23b7eb5cfd4cfe2a19a10ff2019c619fc177d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
