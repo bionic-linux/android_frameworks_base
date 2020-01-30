@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f2cf82e_b1171519",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T15:02:05Z",
+      "side": 1,
+      "message": "s/be //",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d246c4_880fae04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T15:02:05Z",
+      "side": 1,
+      "message": "Can you give a little bit more details ? It\u0027s unclear from this description both what it would mean for them to coexist and what is supported and what is not.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 57
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4d0e3b_8ccedb3e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T15:02:05Z",
+      "side": 1,
+      "message": "Maybe not \"dummy\", it\u0027s a value that codes for all subtypes combined.",
+      "range": {
+        "startLine": 239,
+        "startChar": 72,
+        "endLine": 239,
+        "endChar": 77
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cbf3f2_63207f1f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T15:02:05Z",
+      "side": 1,
+      "message": "IIUC turning on combining subtypes means we\u0027ll record combined, so if we turn it off later the stats per-RAT are not available. Correct ?\n\nAlso IIUC this is expected, because the whole point of using this setting is to increase performance, and that wouldn\u0027t work if we only combined when we read. Correct ?",
+      "range": {
+        "startLine": 471,
+        "startChar": 20,
+        "endLine": 472,
+        "endChar": 40
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29b8ba1a_96e71c74",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T15:02:05Z",
+      "side": 1,
+      "message": "So we don\u0027t have any coverage for combined subtypes ?",
+      "range": {
+        "startLine": 1157,
+        "startChar": 8,
+        "endLine": 1157,
+        "endChar": 69
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
