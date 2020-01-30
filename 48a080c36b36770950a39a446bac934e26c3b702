@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b9a9adc_12ba9cf0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit: This probably fits on the previous line. Run google-java-format --aosp?",
+      "range": {
+        "startLine": 820,
+        "startChar": 7,
+        "endLine": 820,
+        "endChar": 14
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae52f3c7_e1a0c16c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "FYI (optional): If you wanted, you could handle the nulls in the maybeSanitize...() call",
+      "range": {
+        "startLine": 1645,
+        "startChar": 14,
+        "endLine": 1645,
+        "endChar": 51
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "397ef1fa_c90d03be",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5226,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit: This could be callingUid as defined above",
+      "range": {
+        "startLine": 5226,
+        "startChar": 36,
+        "endLine": 5226,
+        "endChar": 46
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d1e1ad_17f3c934",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5331,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit: This could be callingUid as defined above",
+      "range": {
+        "startLine": 5331,
+        "startChar": 36,
+        "endLine": 5331,
+        "endChar": 46
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a49875_b1e47d44",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5390,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit: this could be callingUid as defined above",
+      "range": {
+        "startLine": 5390,
+        "startChar": 36,
+        "endLine": 5390,
+        "endChar": 58
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b868800a_f158954d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6232,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit: Suggest always using the return value, or never doing so",
+      "range": {
+        "startLine": 6232,
+        "startChar": 20,
+        "endLine": 6232,
+        "endChar": 54
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9729b012_30b9e4fa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6320,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "technically this is is the same reference, right?\n\nI\u0027m wondering whether this could be confusing, or we should just \"return mService.maybeSanitize...\"",
+      "range": {
+        "startLine": 6320,
+        "startChar": 34,
+        "endLine": 6320,
+        "endChar": 39
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4cf5d4_d6766ef8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6333,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Nit (very optional): this could be abstracted even further with:\n\n\u003e private void verifyOwnerUidNetCapsForCallerPermission(boolean hasMatchingUids, boolean isSanitized) {\n    final int myUid \u003d Process.myUid();\n    final int callerUid \u003d hasMatchingUids ? myUid : myUid + 1);\n    final int expectedResult \u003d isSanitized ? INVALID_UID : myUid;\n    assertEquals(expectedResult, getOwnerUidNetCapsForCallerPermission(myUid, callerUid);\n}\n\nI don\u0027t have a strong opinion here though",
+      "range": {
+        "startLine": 6332,
+        "startChar": 8,
+        "endLine": 6333,
+        "endChar": 81
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7dc7ca45_821fd26c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Ack.\n\nAt the time I think we were changing the constructor, so it made sense to rename it, but now that we\u0027re not making functional changes, we shouldn\u0027t be just renaming things",
+      "parentUuid": "7cb2033f_c8ad02fe",
+      "range": {
+        "startLine": 955,
+        "startChar": 8,
+        "endLine": 958,
+        "endChar": 62
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4eea1b_0e06458e",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -296,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "dc1cd33b_80c09838",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "It looks like it\u0027s called in his CL (patchset Base), but I think we didn\u0027t copy that over when resolving conflicts?",
+      "parentUuid": "9c26457e_1c8fd2ea",
+      "range": {
+        "startLine": 1683,
+        "startChar": 51,
+        "endLine": 1683,
+        "endChar": 52
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43b46c72_377e0542",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
@@ -519,6 +567,30 @@
       "side": 1,
       "message": "This change is because setOwnerUid \u0026 setOwnerPackageName don\u0027t return NetworkCapabilities.",
       "parentUuid": "862e3bc2_0f92ce98",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 55
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5dae3b6a_4fa17a0c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T00:22:03Z",
+      "side": 1,
+      "message": "Ack. Does strike me as odd that we have assertParcelingIsLossless() as well as assertParcelSane(), which internally calls assertParcelingIsLossless().\n\nBut that isn\u0027t from your CL",
+      "parentUuid": "22053e94_d920b88f",
       "range": {
         "startLine": 286,
         "startChar": 0,
