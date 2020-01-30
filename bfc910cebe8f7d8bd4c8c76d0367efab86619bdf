@@ -22,6 +22,30 @@
       "revId": "bfc910cebe8f7d8bd4c8c76d0367efab86619bdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6826ac50_2c51c3f0",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-30T23:48:54Z",
+      "side": 1,
+      "message": "Wait no, that\u0027s not quite right.\n\n\napi/system-current.txt does contain new API elements (why? I thought that required further @SystemApi annotations throughout this file, I seem to be mistaken?).\n\nI think the problem is that you exposed API that has AddressInfo in the signature, but that class in turn is not part of the API surface.\n\nEither way, something is wrong witht he API surface.",
+      "parentUuid": "ff7588dd_62139eae",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "bfc910cebe8f7d8bd4c8c76d0367efab86619bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
