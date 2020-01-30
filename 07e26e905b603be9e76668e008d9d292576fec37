@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f550830a_361a257e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T14:47:01Z",
+      "side": 1,
+      "message": "Can you explain this in a little more detail ? The changes look to me like the result is less correct than before (although it doesn\u0027t really matter at that scale). It would be nice to explain a bit more why that is the case.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "07e26e905b603be9e76668e008d9d292576fec37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ee587f_bb3af84b",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T14:47:01Z",
+      "side": 1,
+      "message": "Now that you have a generic method, is it a large change to inline this and the function below ? If it\u0027s not let\u0027s do it",
+      "range": {
+        "startLine": 1205,
+        "startChar": 32,
+        "endLine": 1205,
+        "endChar": 50
+      },
+      "revId": "07e26e905b603be9e76668e008d9d292576fec37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
