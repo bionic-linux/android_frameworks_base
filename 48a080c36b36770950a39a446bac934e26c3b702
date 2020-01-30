@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "eaa74510_77edc01d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-01-30T01:00:19Z",
+      "side": 1,
+      "message": "I think we need to make a copy. This is now used in cases where we don\u0027t make a clone\n\neg:\ngetNetworkCapabilitiesInternal() returns the nai\u0027s NetworkCapabilities (l.1635), and in getNetworkCapbilities() we then sanitize it (l.1645)",
+      "range": {
+        "startLine": 1670,
+        "startChar": 41,
+        "endLine": 1670,
+        "endChar": 43
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "397ef1fa_c90d03be",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
