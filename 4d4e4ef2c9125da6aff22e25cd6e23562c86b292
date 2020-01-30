@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650e71e9_bf47e86c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2968,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-01-30T14:08:07Z",
+      "side": 1,
+      "message": "This seems like the correct place to unregister.  Since this isn\u0027t working, an ideal fix would be contained in this file.  Is finalize() never called?",
+      "range": {
+        "startLine": 2968,
+        "startChar": 0,
+        "endLine": 2968,
+        "endChar": 64
+      },
+      "revId": "4d4e4ef2c9125da6aff22e25cd6e23562c86b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
