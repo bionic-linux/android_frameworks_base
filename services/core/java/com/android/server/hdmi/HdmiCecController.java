@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.os.SystemProperties;
+import android.sysprop.HdmiProperties;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -38,8 +39,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import sun.util.locale.LanguageTag;
 
@@ -127,8 +130,16 @@ final class HdmiCecController {
     private HdmiCecController(HdmiControlService service, NativeWrapper nativeWrapper) {
         mService = service;
         mNativeWrapperImpl = nativeWrapper;
-        mNeverAssignLogicalAddresses = mService.getIntList(SystemProperties.get(
-            Constants.PROPERTY_HDMI_CEC_NEVER_ASSIGN_LOGICAL_ADDRESSES));
+        List<Integer> neverAssignLogicalAddresses =
+                HdmiProperties.property_hdmi_cec_never_assign_logical_addresses();
+        if (neverAssignLogicalAddresses.contains(null)) {
+            Slog.w(TAG, "Error parsing never_assign_logical_addresses: " + SystemProperties.get(
+                    "ro.hdmi.property_hdmi_cec_never_assign_logical_addresses"));
+            neverAssignLogicalAddresses =
+                    neverAssignLogicalAddresses.stream().filter(Objects::nonNull)
+                            .collect(Collectors.toList());
+        }
+        mNeverAssignLogicalAddresses = neverAssignLogicalAddresses;
     }
 
     /**
