@@ -19,7 +19,6 @@ package com.android.server.hdmi;
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_ADD_DEVICE;
 import static android.hardware.hdmi.HdmiControlManager.DEVICE_EVENT_REMOVE_DEVICE;
 
-import static com.android.internal.os.RoSystemProperties.PROPERTY_HDMI_IS_DEVICE_HDMI_CEC_SWITCH;
 import static com.android.server.hdmi.Constants.ADDR_UNREGISTERED;
 import static com.android.server.hdmi.Constants.DISABLED;
 import static com.android.server.hdmi.Constants.ENABLED;
@@ -67,6 +66,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings.Global;
+import android.sysprop.HdmiProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -94,6 +94,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Provides a service for sending and processing HDMI control messages,
@@ -431,7 +433,14 @@ public class HdmiControlService extends SystemService {
 
     public HdmiControlService(Context context) {
         super(context);
-        mLocalDevices = getIntList(SystemProperties.get(Constants.PROPERTY_DEVICE_TYPE));
+        List<Integer> deviceTypes = HdmiProperties.device_type();
+        if (deviceTypes.contains(null)) {
+            Slog.w(TAG, "Error parsing ro.hdmi.device.type: " + SystemProperties.get(
+                    "ro.hdmi.device_type"));
+            deviceTypes = deviceTypes.stream().filter(Objects::nonNull).collect(
+                    Collectors.toList());
+        }
+        mLocalDevices = deviceTypes;
         mSettingsObserver = new SettingsObserver(mHandler);
     }
 
@@ -2516,8 +2525,7 @@ public class HdmiControlService extends SystemService {
     }
 
     boolean isSwitchDevice() {
-        return SystemProperties.getBoolean(
-            PROPERTY_HDMI_IS_DEVICE_HDMI_CEC_SWITCH, false);
+        return HdmiProperties.property_is_device_hdmi_cec_switch().orElse(false);
     }
 
     boolean isTvDeviceEnabled() {
