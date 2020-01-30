@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ceb7d8ac_a911dade",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T14:47:21Z",
+      "side": 1,
+      "message": "With an example or something",
+      "parentUuid": "f550830a_361a257e",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "07e26e905b603be9e76668e008d9d292576fec37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6ee587f_bb3af84b",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 5
