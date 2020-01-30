@@ -16,7 +16,9 @@
 
 java_defaults {
     name: "TetheringAndroidLibraryDefaults",
-    sdk_version: "system_current",
+    // b/148190005: this should be system_core, but cannot because aidl_interface rules always build
+    // against system_current
+    sdk_version: "core_platform",
     srcs: [
         "src/**/*.java",
         ":framework-tethering-shared-srcs",
@@ -32,7 +34,12 @@ java_defaults {
         "net-utils-framework-common",
     ],
     libs: [
+        // Order matters: framework-tethering needs to be before the system stubs, otherwise
+        // hidden fields in the framework-tethering classes (which are also used to generate stubs)
+        // will not be found.
         "framework-tethering",
+        "android_system_stubs_current",
+        "framework-res",
         "unsupportedappusage",
     ],
     plugins: ["java_api_finder"],
@@ -81,7 +88,9 @@ cc_library {
 // Common defaults for compiling the actual APK.
 java_defaults {
     name: "TetheringAppDefaults",
-    sdk_version: "system_current",
+    // b/148190005: this should be system_core, but cannot because aidl_interface rules always build
+    // against system_current
+    sdk_version: "core_platform",
     privileged: true,
     // Build system doesn't track transitive dependeicies for jni_libs, list all the dependencies
     // explicitly.
@@ -95,7 +104,12 @@ java_defaults {
         "res",
     ],
     libs: [
+        // Order matters: framework-tethering needs to be before the system stubs, otherwise
+        // hidden fields in the framework-tethering classes (which are also used to generate stubs)
+        // will not be found.
         "framework-tethering",
+        "android_system_stubs_current",
+        "framework-res",
     ],
     jarjar_rules: "jarjar-rules.txt",
     optimize: {
