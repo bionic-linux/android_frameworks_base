@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19de46ad_62e53449",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "There are too many changes by google-java-format. I just simply move this to the previous line.",
+      "parentUuid": "6b9a9adc_12ba9cf0",
+      "range": {
+        "startLine": 820,
+        "startChar": 7,
+        "endLine": 820,
+        "endChar": 14
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae52f3c7_e1a0c16c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "4d16d3a0_bfd09ff9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5226,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "397ef1fa_c90d03be",
+      "range": {
+        "startLine": 5226,
+        "startChar": 36,
+        "endLine": 5226,
+        "endChar": 46
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d1e1ad_17f3c934",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
@@ -114,6 +162,30 @@
       "revId": "48a080c36b36770950a39a446bac934e26c3b702",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29326640_f7d44d2c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5331,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2d1e1ad_17f3c934",
+      "range": {
+        "startLine": 5331,
+        "startChar": 36,
+        "endLine": 5331,
+        "endChar": 46
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "9ecde974_c4d18851",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 5390,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a49875_b1e47d44",
+      "range": {
+        "startLine": 5390,
+        "startChar": 36,
+        "endLine": 5390,
+        "endChar": 58
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b868800a_f158954d",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
@@ -160,6 +256,30 @@
       "revId": "48a080c36b36770950a39a446bac934e26c3b702",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aea92bf_6f89069c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6232,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b868800a_f158954d",
+      "range": {
+        "startLine": 6232,
+        "startChar": 20,
+        "endLine": 6232,
+        "endChar": 54
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "53db75b5_d2898732",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6320,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9729b012_30b9e4fa",
+      "range": {
+        "startLine": 6320,
+        "startChar": 34,
+        "endLine": 6320,
+        "endChar": 39
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b4cf5d4_d6766ef8",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 21
@@ -206,6 +350,30 @@
       "revId": "48a080c36b36770950a39a446bac934e26c3b702",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee491ac_629d27ff",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 6333,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b4cf5d4_d6766ef8",
+      "range": {
+        "startLine": 6332,
+        "startChar": 8,
+        "endLine": 6333,
+        "endChar": 81
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -344,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "0817bd26_7a4dfda7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:10:05Z",
+      "side": 1,
+      "message": "I will double confirm with Roshan to see what situation the packageName should be sanitized. Now I only reset it when when the owner UID needed to be reset.",
+      "parentUuid": "dc1cd33b_80c09838",
+      "range": {
+        "startLine": 1683,
+        "startChar": 51,
+        "endLine": 1683,
+        "endChar": 52
+      },
+      "revId": "2193d8ef9afa0ad0208fe289d5fda6792ec85fe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43b46c72_377e0542",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 19
