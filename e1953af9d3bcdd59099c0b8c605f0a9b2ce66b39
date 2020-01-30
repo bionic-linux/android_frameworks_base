@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7734b339_ee2ab54b",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "Nit : defined",
+      "range": {
+        "startLine": 417,
+        "startChar": 37,
+        "endLine": 417,
+        "endChar": 44
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181c656a_8ace8276",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "Nit : networkSubtype ? or networkRatType ? Or networkTechnology ? Or networkTelephonyType ? Or something else that makes clear it can\u0027t be TYPE_WIFI ?\n\nNot feeling strongly as all these constants are already Telephony.NETWORK_TYPE_*. You could also import just Telephony and call them explicitly Telephony.NETWORK_... if you think that clarifies things.",
+      "range": {
+        "startLine": 421,
+        "startChar": 41,
+        "endLine": 421,
+        "endChar": 44
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b1b4f46_387d7767",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "Nit : If TelephonyManager starts implementing this you won\u0027t use their implementation ; do you want to have something closer to\n\n  class \u003d TM.getClass()\n  switch() {\n    default: // unsupported, try custom code below\n  }\n\n  case (networkType) {\n    default: // out of options\n      throw IAE\n  }\n\n\n(only if you think it\u0027s better)",
+      "range": {
+        "startLine": 449,
+        "startChar": 26,
+        "endLine": 449,
+        "endChar": 50
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c8aa5b_83456c79",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "This is only right because the subtype is never used in matching against a template right ? Does this warrant a comment ?",
+      "range": {
+        "startLine": 1871,
+        "startChar": 30,
+        "endLine": 1871,
+        "endChar": 50
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56ed30e_88ee5b00",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "checkstyle lets you get away with this O.o\nIf checkstyle doesn\u0027t care I also don\u0027t",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 21
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34f9b674_9a6814ed",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "I don\u0027t understand well how this makes sense, because by definition a NetworkTemplate can match any set of networks. What happens for a NetworkTemplate that matches everything ?",
+      "range": {
+        "startLine": 289,
+        "startChar": 45,
+        "endLine": 289,
+        "endChar": 60
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d715f61f_02392bf0",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "If this must reference the member of the parent class I think it should not embark a pointer and the class should not become static. In fact I was about to recommend making a defensive copy of this until I understood it had to be the same.\n\nThere are multiple ways to make this principled. You could make the class static, pass a ref to NetworkStatsService, and add methods to write to this. Better, you could have an interface implemented by NetworkStatsService to do this.\n\nIn this case though I just suggest you simply don\u0027t have a member, don\u0027t make the class static, and simply reference the parent mSubtypes directly, seeing how you must write to it (and it\u0027s final anyway).",
+      "range": {
+        "startLine": 1155,
+        "startChar": 24,
+        "endLine": 1155,
+        "endChar": 32
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1f6b61_12738300",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "if (collapsed !\u003d mLastCollapsed) return;",
+      "range": {
+        "startLine": 1162,
+        "startChar": 0,
+        "endLine": 1162,
+        "endChar": 97
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b3a659_a98b94eb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "IIUC this never happens because you only ever put the return value of NetworkTemplate.buildTemplateMobileWildcard() in the map and that always return a template with MATCH_MOBILE_WILDCARD.\n\nGenerally speaking I don\u0027t understand well the intention here. Do remember that the map will slot by hashCode() and equals(), and the template is something that matches. If you want two separate last states for these two use cases, just have two different members I think. If you do this because you plan to extend it to a number of subscriptions, maybe an array of pairs or something is more suited. Or you could roll out your own identity map like I said we want in b/148006299 if that\u0027s what you want. Or if what you really need is just the subtype for a given subscription, a SparseArray\u003cInteger\u003e, or even an int[] (assuming subscription IDs have to start at 0 or 1 and be consecutive, which I\u0027m not sure of).\n\nBut as is, I don\u0027t understand where you\u0027re coming from with this.",
+      "range": {
+        "startLine": 1308,
+        "startChar": 21,
+        "endLine": 1308,
+        "endChar": 33
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

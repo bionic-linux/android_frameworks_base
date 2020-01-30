@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "4207137c_cb4353e3",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 1,
+      "message": "There is a required change in l.1871.\n\nHowever I tend to agree with Jaya that at this point it\u0027s better to just spell out TelephonyManager.NETWORK_TYPE_UNKNOWN in l.1871 than to import this.",
+      "parentUuid": "ac5f62b9_5642d742",
+      "range": {
+        "startLine": 92,
+        "startChar": 49,
+        "endLine": 92,
+        "endChar": 69
+      },
+      "revId": "8885bcae2b82122c8393a51a8bd976ae46012ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "709accd8_eba2b584",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 3

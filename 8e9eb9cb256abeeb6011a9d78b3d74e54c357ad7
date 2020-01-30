@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a59965_7e8be83b",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-30T09:11:37Z",
+      "side": 0,
+      "message": "Undeprecating something is fairly dangerous ; do we know for sure this has all the exact semantics the old API used to have ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "8e9eb9cb256abeeb6011a9d78b3d74e54c357ad7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
