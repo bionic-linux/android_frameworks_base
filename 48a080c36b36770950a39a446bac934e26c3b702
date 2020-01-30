@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ceec16db_9284a006",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-01-30T01:15:17Z",
+      "side": 1,
+      "message": "getNetworkCapabilitiesInternal will call networkCapabilitiesRestrictedForCallerPermissions which will make a local copy. But as we discussed offline, making a local copy will be safer.",
+      "parentUuid": "eaa74510_77edc01d",
+      "range": {
+        "startLine": 1670,
+        "startChar": 41,
+        "endLine": 1670,
+        "endChar": 43
+      },
+      "revId": "48a080c36b36770950a39a446bac934e26c3b702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397ef1fa_c90d03be",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 21
