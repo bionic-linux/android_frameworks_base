@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0187eb37_2ceb9b84",
+        "filename": "core/java/android/app/timedetector/ManualTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-01-30T18:11:35Z",
+      "side": 1,
+      "message": "Is this referring to getUtcTime()? If so, why are the docs not on that method? Or is it about the constructor parameter? If so, put this on the constructor javadoc.",
+      "range": {
+        "startLine": 34,
+        "startChar": 56,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "9ad5151f064ac9cfdc5359d289bc3a2ed13e557b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2fb72d_caa7cfc2",
+        "filename": "core/java/android/app/timedetector/ManualTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-01-30T18:11:35Z",
+      "side": 1,
+      "message": "Need javadocs",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "9ad5151f064ac9cfdc5359d289bc3a2ed13e557b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6372b511_f54c8745",
+        "filename": "core/java/android/app/timedetector/PhoneTimeSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-01-30T18:11:35Z",
+      "side": 1,
+      "message": "It is not clear to me why we need this. Do these \"debug\" values exist in production builds of the OS? How large to we expect these strings to get? Will this expose PII?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 64
+      },
+      "revId": "9ad5151f064ac9cfdc5359d289bc3a2ed13e557b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513e93da_af95127b",
+        "filename": "core/java/android/app/timezonedetector/PhoneTimeZoneSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1086749
+      },
+      "writtenOn": "2020-01-30T18:11:35Z",
+      "side": 1,
+      "message": "This is a really odd way to refer to arguments, why not just put each argument documentation next to each getter?",
+      "range": {
+        "startLine": 191,
+        "startChar": 10,
+        "endLine": 191,
+        "endChar": 89
+      },
+      "revId": "9ad5151f064ac9cfdc5359d289bc3a2ed13e557b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
