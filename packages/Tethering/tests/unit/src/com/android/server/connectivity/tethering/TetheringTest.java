@@ -86,6 +86,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.RouteInfo;
 import android.net.TetherStatesParcel;
+import android.net.TetheredClient;
 import android.net.TetheringCallbackStartedParcel;
 import android.net.TetheringConfigurationParcel;
 import android.net.TetheringRequestParcel;
@@ -139,6 +140,7 @@ import java.net.Inet6Address;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 @RunWith(AndroidJUnit4.class)
@@ -1122,6 +1124,11 @@ public class TetheringTest {
         @Override
         public void onTetherStatesChanged(TetherStatesParcel states) {
             mTetherStates.add(states);
+        }
+
+        @Override
+        public void onTetherClientsChanged(List<TetheredClient> clients) {
+            // TODO: check this
         }
 
         @Override

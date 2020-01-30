@@ -23,6 +23,7 @@ import static android.hardware.usb.UsbManager.USB_FUNCTION_RNDIS;
 import static android.net.ConnectivityManager.ACTION_RESTRICT_BACKGROUND_CHANGED;
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.EXTRA_NETWORK_INFO;
+import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.net.TetheringManager.ACTION_TETHER_STATE_CHANGED;
 import static android.net.TetheringManager.EXTRA_ACTIVE_LOCAL_ONLY;
 import static android.net.TetheringManager.EXTRA_ACTIVE_TETHER;
@@ -75,6 +76,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.TetherStatesParcel;
+import android.net.TetheredClient;
 import android.net.TetheringCallbackStartedParcel;
 import android.net.TetheringConfigurationParcel;
 import android.net.TetheringRequestParcel;
@@ -85,6 +87,7 @@ import android.net.util.InterfaceSet;
 import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.net.util.VersionedBroadcastListener;
+import android.net.wifi.WifiClient;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pInfo;
@@ -123,8 +126,10 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
@@ -139,6 +144,10 @@ public class Tethering {
     private static final String TAG = Tethering.class.getSimpleName();
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
+
+    // TODO: should these permissions be @SystemApi ?
+    private static final String PERMISSION_NETWORK_SETTINGS = "android.permission.NETWORK_SETTINGS";
+    private static final String PERMISSION_NETWORK_STACK = "android.permission.NETWORK_STACK";
 
     private static final Class[] sMessageClasses = {
             Tethering.class, TetherMasterSM.class, IpServer.class
@@ -171,6 +180,17 @@ public class Tethering {
         }
     }
 
+    /**
+     * Cookie added when registering {@link android.net.TetheringManager.TetheringEventCallback}.
+     */
+    private static class CallbackCookie {
+        public final boolean hasListClientsPermission;
+
+        private CallbackCookie(boolean hasListClientsPermission) {
+            this.hasListClientsPermission = hasListClientsPermission;
+        }
+    }
+
     private final SharedLog mLog = new SharedLog(TAG);
     private final RemoteCallbackList<ITetheringEventCallback> mTetheringEventCallbacks =
             new RemoteCallbackList<>();
@@ -186,7 +206,8 @@ public class Tethering {
     private final UpstreamNetworkMonitor mUpstreamNetworkMonitor;
     // TODO: Figure out how to merge this and other downstream-tracking objects
     // into a single coherent structure.
-    private final HashSet<IpServer> mForwardedDownstreams;
+    // Use LinkedHashSet for predictable ordering order for ConnectedClientsTracker.
+    private final LinkedHashSet<IpServer> mForwardedDownstreams;
     private final VersionedBroadcastListener mCarrierConfigChange;
     private final TetheringDependencies mDeps;
     private final EntitlementManager mEntitlementMgr;
@@ -195,6 +216,7 @@ public class Tethering {
     private final NetdCallback mNetdCallback;
     private final UserRestrictionActionListener mTetheringRestriction;
     private final ActiveDataSubIdListener mActiveDataSubIdListener;
+    private final ConnectedClientsTracker mConnectedClientsTracker;
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -222,6 +244,7 @@ public class Tethering {
         mPublicSync = new Object();
 
         mTetherStates = new ArrayMap<>();
+        mConnectedClientsTracker = new ConnectedClientsTracker();
 
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper, deps);
         mTetherMasterSM.start();
@@ -234,7 +257,7 @@ public class Tethering {
                 statsManager, mLog);
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
-        mForwardedDownstreams = new HashSet<>();
+        mForwardedDownstreams = new LinkedHashSet<>();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_CARRIER_CONFIG_CHANGED);
@@ -278,6 +301,9 @@ public class Tethering {
 
         startStateMachineUpdaters(mHandler);
         startTrackDefaultNetwork();
+        getWifiManager().registerSoftApCallback(
+                mHandler::post /* executor */,
+                new TetheringSoftApCallback());
     }
 
     private void startStateMachineUpdaters(Handler handler) {
@@ -369,6 +395,23 @@ public class Tethering {
         @Override
         public void onInterfaceRemoved(String ifName) {
             mHandler.post(() -> interfaceRemoved(ifName));
+        }
+    }
+
+    private class TetheringSoftApCallback implements WifiManager.SoftApCallback {
+        // TODO: Remove onStateChanged override when this method has default on
+        // WifiManager#SoftApCallback interface.
+        // Wifi listener for state change of the soft AP
+        @Override
+        public void onStateChanged(final int state, final int failureReason) {
+            // Nothing
+        }
+
+        // Called by wifi when the number of soft AP clients changed.
+        @Override
+        public void onConnectedClientsChanged(final List<WifiClient> clients) {
+            reportTetherClientsChanged(mConnectedClientsTracker.updateConnectedClients(
+                    mForwardedDownstreams, clients));
         }
     }
 
@@ -1850,19 +1893,30 @@ public class Tethering {
 
     /** Register tethering event callback */
     void registerTetheringEventCallback(ITetheringEventCallback callback) {
+        final boolean hasListPermission =
+                hasCallingOrSelfPermission(PERMISSION_NETWORK_SETTINGS)
+                        || hasCallingOrSelfPermission(PERMISSION_MAINLINE_NETWORK_STACK)
+                        || hasCallingOrSelfPermission(PERMISSION_NETWORK_STACK);
         mHandler.post(() -> {
-            mTetheringEventCallbacks.register(callback);
+            mTetheringEventCallbacks.register(callback, new CallbackCookie(hasListPermission));
             final TetheringCallbackStartedParcel parcel = new TetheringCallbackStartedParcel();
             parcel.tetheringSupported = mDeps.isTetheringSupported();
             parcel.upstreamNetwork = mTetherUpstream;
             parcel.config = mConfig.toStableParcelable();
             parcel.states = mTetherStatesParcel;
+            parcel.tetheredClients = hasListPermission
+                    ? mConnectedClientsTracker.getLastTetheredClients()
+                    : Collections.emptyList();
             try {
                 callback.onCallbackStarted(parcel);
             } catch (RemoteException e) {
                 // Not really very much to do here.
             }
         });
+    }
+
+    private boolean hasCallingOrSelfPermission(@NonNull String permission) {
+        return mContext.checkCallingOrSelfPermission(permission) == PERMISSION_GRANTED;
     }
 
     /** Unregister tethering event callback */
@@ -1909,6 +1963,24 @@ public class Tethering {
             for (int i = 0; i < length; i++) {
                 try {
                     mTetheringEventCallbacks.getBroadcastItem(i).onTetherStatesChanged(states);
+                } catch (RemoteException e) {
+                    // Not really very much to do here.
+                }
+            }
+        } finally {
+            mTetheringEventCallbacks.finishBroadcast();
+        }
+    }
+
+    private void reportTetherClientsChanged(List<TetheredClient> clients) {
+        final int length = mTetheringEventCallbacks.beginBroadcast();
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    final CallbackCookie cookie =
+                            (CallbackCookie) mTetheringEventCallbacks.getBroadcastCookie(i);
+                    if (!cookie.hasListClientsPermission) continue;
+                    mTetheringEventCallbacks.getBroadcastItem(i).onTetherClientsChanged(clients);
                 } catch (RemoteException e) {
                     // Not really very much to do here.
                 }
@@ -2008,6 +2080,12 @@ public class Tethering {
             @Override
             public void updateLinkProperties(IpServer who, LinkProperties newLp) {
                 notifyLinkPropertiesChanged(who, newLp);
+            }
+
+            @Override
+            public void dhcpLeasesChanged() {
+                reportTetherClientsChanged(mConnectedClientsTracker.updateConnectedClients(
+                        mForwardedDownstreams, null /* wifiClients */));
             }
         };
     }
