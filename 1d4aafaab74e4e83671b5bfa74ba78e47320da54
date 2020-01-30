@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c287b1b_b015e719",
+        "filename": "services/core/jni/com_android_server_am_Cgroups.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-01-30T15:27:44Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with task profiles. I\u0027ll take a look and see if I can make it work.",
+      "parentUuid": "a14a674d_d69dacdd",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "1d4aafaab74e4e83671b5bfa74ba78e47320da54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26682814_508362a5",
         "filename": "services/core/jni/com_android_server_am_Cgroups.cpp",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2020-01-28T18:47:47Z",
       "side": 1,
       "message": "IMO this fits in libprocessgroup library and can be exposed via existing Process JNI class (see https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Process.java#1145, https://android.googlesource.com/platform/frameworks/base/+/master/core/jni/android_util_Process.cpp#1229, https://android.googlesource.com/platform/system/core/+/master/libprocessgroup/processgroup.cpp#370 for example of how killProcessGroup is implemented and exposed via JNI).",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 1
+      },
+      "revId": "1d4aafaab74e4e83671b5bfa74ba78e47320da54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a11254_df85ae99",
+        "filename": "services/core/jni/com_android_server_am_Cgroups.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2020-01-30T15:27:44Z",
+      "side": 1,
+      "message": "Makes sense, will do.",
+      "parentUuid": "9d7497eb_a0796ef0",
       "range": {
         "startLine": 57,
         "startChar": 0,
