@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff7588dd_62139eae",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-01-30T23:43:57Z",
+      "side": 1,
+      "message": "You added TetheredClient to @SystemApi/@TestApi but didn\u0027t add any of its members.\n\nThis was detected by android.signature.cts.api.AnnotationTest#testAnnotation\n\nSee http://b/148609988",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "bfc910cebe8f7d8bd4c8c76d0367efab86619bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
