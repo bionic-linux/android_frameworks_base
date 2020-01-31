@@ -46,6 +46,30 @@
       "revId": "bfc910cebe8f7d8bd4c8c76d0367efab86619bdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfdb23c_93252386",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheredClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-01-31T03:11:21Z",
+      "side": 1,
+      "message": "Because the top-level class is @SystemApi, everything in this class will end up @SystemApi unless marked as @hide, that\u0027s the members are also @SystemApi.\nActually AddressInfo is also @SystemApi as shown in the system-current.txt file\n\nI think the test may be failing because of jarjar rules on the @SystemApi annotation - having a look on how to fix that.",
+      "parentUuid": "6826ac50_2c51c3f0",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "bfc910cebe8f7d8bd4c8c76d0367efab86619bdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
