@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4cbb15_a2105605",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2020-01-31T13:04:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be FrameworksLog?",
+      "range": {
+        "startLine": 219,
+        "startChar": 28,
+        "endLine": 219,
+        "endChar": 36
+      },
+      "revId": "c7df347f92fff53f5f2a496ef4d7320ffa7bffa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
