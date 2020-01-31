@@ -22,6 +22,30 @@
       "revId": "c7df347f92fff53f5f2a496ef4d7320ffa7bffa6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15be87f_c1a574c9",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-01-31T13:18:35Z",
+      "side": 1,
+      "message": "That\u0027s only available in internal AFAIK",
+      "parentUuid": "0e4cbb15_a2105605",
+      "range": {
+        "startLine": 219,
+        "startChar": 28,
+        "endLine": 219,
+        "endChar": 36
+      },
+      "revId": "c7df347f92fff53f5f2a496ef4d7320ffa7bffa6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
