@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6570621f_160bf209",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T16:46:34Z",
+      "side": 1,
+      "message": "nit : I think \"a ConnectivityDiagnosticsCallback instance that is not registered\" or something because this sounds like it must have been unregistered first.\n\nMaybe don\u0027t bother respinning for this.",
+      "range": {
+        "startLine": 657,
+        "startChar": 50,
+        "endLine": 657,
+        "endChar": 62
+      },
+      "revId": "c549b801d7e28b3e344e0a0ae8ffa04b12df7e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3b8a3f_4a242a7a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 7473,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T16:46:34Z",
+      "side": 1,
+      "message": "What was wrong with restrictRequestUidsForCaller ? Here you\u0027re not resetting the UID ranges.",
+      "range": {
+        "startLine": 7471,
+        "startChar": 7,
+        "endLine": 7473,
+        "endChar": 0
+      },
+      "revId": "c549b801d7e28b3e344e0a0ae8ffa04b12df7e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

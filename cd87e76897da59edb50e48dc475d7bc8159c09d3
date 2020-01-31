@@ -93,6 +93,30 @@
       "revId": "cd87e76897da59edb50e48dc475d7bc8159c09d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c98d5080_d66c0f23",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-01-31T16:46:34Z",
+      "side": 1,
+      "message": "I think the test itself had value, but with atLeastOnce(). Testing that it\u0027s exactly two tests the exact implementation, and your explanation makes that clear because it simply describes how the current implementation chooses to do this.",
+      "parentUuid": "e25d390c_e05a6dab",
+      "range": {
+        "startLine": 6387,
+        "startChar": 8,
+        "endLine": 6387,
+        "endChar": 70
+      },
+      "revId": "cd87e76897da59edb50e48dc475d7bc8159c09d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
