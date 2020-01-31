@@ -135,7 +135,8 @@ public final class PreciseDataConnectionState implements Parcelable {
     }
 
     /**
-     * To check the SDK version for {@link PreciseDataConnectionState#getDataConnectionState}.
+     * To check the SDK version for android.telephony
+     * .PreciseDataConnectionState#getDataConnectionState.
      */
     @ChangeId
     @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.Q)
