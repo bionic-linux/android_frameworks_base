@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34119609_ea9f439a",
+        "filename": "core/java/com/android/internal/compat/ChangeReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1463094
+      },
+      "writtenOn": "2020-01-31T13:28:07Z",
+      "side": 1,
+      "message": "SOURCE_SYSTEM_SERVER?",
+      "range": {
+        "startLine": 180,
+        "startChar": 23,
+        "endLine": 180,
+        "endChar": 88
+      },
+      "revId": "be407f1b117ff70b295a2e5221986635f1e7f618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
