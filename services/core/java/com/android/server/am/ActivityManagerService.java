@@ -18285,7 +18285,9 @@ public class ActivityManagerService extends IActivityManager.Stub
             final HashSet<ConnectionRecord> toDisconnect = (HashSet<ConnectionRecord>) conns;
             synchronized(ActivityManagerService.this) {
                 for (ConnectionRecord cr : toDisconnect) {
-                    mServices.removeConnectionLocked(cr, null, holder);
+                    //check the validity of connection before removing
+                    if (!cr.serviceDead && cr.binding.connections.contains(cr))
+                        mServices.removeConnectionLocked(cr, null, holder);
                 }
             }
         }
