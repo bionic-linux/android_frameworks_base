@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ee3760d4_c404309e",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T03:20:08Z",
+      "side": 1,
+      "message": "Your wording is great. Thanks.",
+      "parentUuid": "83506171_d8818b9c",
+      "range": {
+        "startLine": 657,
+        "startChar": 50,
+        "endLine": 657,
+        "endChar": 62
+      },
+      "revId": "c549b801d7e28b3e344e0a0ae8ffa04b12df7e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e3b8a3f_4a242a7a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 33
