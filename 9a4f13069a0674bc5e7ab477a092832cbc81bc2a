@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a453b1_3ce6545f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 7372,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T04:47:55Z",
+      "side": 1,
+      "message": "So wait you\u0027re making it explicitly possible (in this code) for profile-based VPN to get the UID ?\n\nISTM we should not have this test here and instead say in this method\n\n  if (vpn.getActiveAppVpnType() !\u003d VpnManager.TYPE_VPN_SERVICE) return INVALID_UID;",
+      "range": {
+        "startLine": 7372,
+        "startChar": 16,
+        "endLine": 7372,
+        "endChar": 75
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b3929a_fb493d30",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T04:47:55Z",
+      "side": 1,
+      "message": "Remove this unused local",
+      "range": {
+        "startLine": 1120,
+        "startChar": 21,
+        "endLine": 1120,
+        "endChar": 25
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bbe826_2f75ad35",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T04:47:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we return TYPE_VPN_LEGACY if there is a runner in this case ?",
+      "range": {
+        "startLine": 1687,
+        "startChar": 30,
+        "endLine": 1687,
+        "endChar": 43
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2896b2b_941de869",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-02T04:47:55Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 1832,
+        "startChar": 8,
+        "endLine": 1832,
+        "endChar": 16
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
