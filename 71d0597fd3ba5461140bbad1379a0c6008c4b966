@@ -22,6 +22,30 @@
       "revId": "71d0597fd3ba5461140bbad1379a0c6008c4b966",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e6e852_d7609325",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2020-02-03T23:41:54Z",
+      "side": 1,
+      "message": "Done, also in stage-aosp-master: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/10233005",
+      "parentUuid": "beb281eb_e660040f",
+      "range": {
+        "startLine": 354,
+        "startChar": 60,
+        "endLine": 354,
+        "endChar": 63
+      },
+      "revId": "71d0597fd3ba5461140bbad1379a0c6008c4b966",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
