@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "569534c3_60fa0515",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 7372,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T02:58:11Z",
+      "side": 1,
+      "message": "Ahh, fixed. I\u0027ve also moved the check up so if the app doesn\u0027t have permission to do so, we don\u0027t need to make an additional Netlink call",
+      "parentUuid": "42a453b1_3ce6545f",
+      "range": {
+        "startLine": 7372,
+        "startChar": 16,
+        "endLine": 7372,
+        "endChar": 75
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06b3929a_fb493d30",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 24
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "abf94418_6690a661",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b3929a_fb493d30",
+      "range": {
+        "startLine": 1120,
+        "startChar": 21,
+        "endLine": 1120,
+        "endChar": 25
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21bbe826_2f75ad35",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 24
@@ -59,6 +107,30 @@
       "writtenOn": "2020-02-02T04:47:55Z",
       "side": 1,
       "message": "Shouldn\u0027t we return TYPE_VPN_LEGACY if there is a runner in this case ?",
+      "range": {
+        "startLine": 1687,
+        "startChar": 30,
+        "endLine": 1687,
+        "endChar": 43
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e15622b_a3939a2b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T02:58:11Z",
+      "side": 1,
+      "message": "The method is meant to only return the app-based VPN type; the LegacyVpn codepaths use getLegacyVpnInfo().",
+      "parentUuid": "21bbe826_2f75ad35",
       "range": {
         "startLine": 1687,
         "startChar": 30,
@@ -91,6 +163,30 @@
       "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6f22b3_f3796494",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-04T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2896b2b_941de869",
+      "range": {
+        "startLine": 1832,
+        "startChar": 8,
+        "endLine": 1832,
+        "endChar": 16
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
