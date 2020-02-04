@@ -3657,6 +3657,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (nm == null) return;
 
             if (request == CaptivePortal.APP_REQUEST_REEVALUATION_REQUIRED) {
+                enforceNetworkStackOrSettingsPermission();
                 nm.forceReevaluation(Binder.getCallingUid());
             }
         }
