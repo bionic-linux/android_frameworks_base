@@ -22,6 +22,30 @@
       "revId": "32b02e1d20e080c220b0fce27e9d01502d0d5737",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02666d2_d12c08a9",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4312,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-04T11:51:46Z",
+      "side": 1,
+      "message": "Sure, but it should probably update to NETWORK_STACK permission. I will upload another commit for that.",
+      "parentUuid": "867b9098_1a05c5f1",
+      "range": {
+        "startLine": 4310,
+        "startChar": 4,
+        "endLine": 4312,
+        "endChar": 36
+      },
+      "revId": "32b02e1d20e080c220b0fce27e9d01502d0d5737",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
