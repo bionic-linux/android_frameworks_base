@@ -2321,7 +2321,7 @@ public class CarrierConfigManager {
      *  {@link CellSignalStrengthLte#USE_RSRQ}, {@link CellSignalStrengthLte#USE_RSSNR}.
      *
      * For example, if both RSRP and RSRQ are used, the value of key is 3 (1 << 0 | 1 << 1).
-     * If the key is invalid or not configured, a default value (RSRP | RSSNR = 1 << 0 | 1 << 2)
+     * If the key is invalid or not configured, a default value (RSRP = 1 << 0)
      * will apply.
      *
      * @hide
@@ -3734,7 +3734,7 @@ public class CarrierConfigManager {
                 null);
         sDefaults.putInt(KEY_LTE_EARFCNS_RSRP_BOOST_INT, 0);
         sDefaults.putStringArray(KEY_BOOSTED_LTE_EARFCNS_STRING_ARRAY, null);
-        sDefaults.putBoolean(KEY_USE_ONLY_RSRP_FOR_LTE_SIGNAL_BAR_BOOL, false);
+        sDefaults.putBoolean(KEY_USE_ONLY_RSRP_FOR_LTE_SIGNAL_BAR_BOOL, true);
         sDefaults.putBoolean(KEY_DISABLE_VOICE_BARRING_NOTIFICATION_BOOL, false);
         sDefaults.putInt(IMSI_KEY_AVAILABILITY_INT, 0);
         sDefaults.putString(IMSI_KEY_DOWNLOAD_URL_STRING, null);
@@ -3891,7 +3891,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_PREVENT_CLIR_ACTIVATION_AND_DEACTIVATION_CODE_BOOL, false);
         sDefaults.putLong(KEY_DATA_SWITCH_VALIDATION_TIMEOUT_LONG, 2000);
         sDefaults.putInt(KEY_PARAMETERS_USED_FOR_LTE_SIGNAL_BAR_INT,
-                CellSignalStrengthLte.USE_RSRP | CellSignalStrengthLte.USE_RSSNR);
+                CellSignalStrengthLte.USE_RSRP);
     }
 
     /**
