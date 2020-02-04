@@ -35,6 +35,7 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.LargeTest;
 import androidx.test.filters.MediumTest;
 import androidx.test.filters.SmallTest;
+import androidx.test.filters.Suppress;
 
 import junit.framework.Assert;
 
@@ -466,8 +467,9 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
             // expected
         }
     }
-    
+
     @MediumTest
+    @Suppress // _Tokenize function is disabled in b/139186193. Remove Suppress once it is enabled
     public void testTokenize() throws Exception {
         Cursor c;
         mDatabase.execSQL("CREATE TABLE tokens (" +
