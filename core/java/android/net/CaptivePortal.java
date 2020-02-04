@@ -16,6 +16,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.IBinder;
@@ -153,6 +154,9 @@ public class CaptivePortal implements Parcelable {
      */
     @SystemApi
     @TestApi
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK})
     public void reevaluateNetwork() {
         try {
             ICaptivePortal.Stub.asInterface(mBinder).appRequest(APP_REQUEST_REEVALUATION_REQUIRED);

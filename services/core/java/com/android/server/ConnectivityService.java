@@ -3653,6 +3653,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public void appRequest(final int request) {
+            if (!checkNetworkStackPermission()) {
+                throw new SecurityException("appRequest requires NETWORK_STACK permission");
+            }
             final NetworkMonitorManager nm = getNetworkMonitorManager(mNetwork);
             if (nm == null) return;
 
