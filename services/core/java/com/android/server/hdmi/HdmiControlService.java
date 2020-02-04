@@ -62,6 +62,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
@@ -155,6 +156,8 @@ public class HdmiControlService extends SystemService {
     private static final boolean isHdmiCecNeverClaimPlaybackLogicAddr =
             SystemProperties.getBoolean(
                     Constants.PROPERTY_HDMI_CEC_NEVER_CLAIM_PLAYBACK_LOGICAL_ADDRESS, false);
+
+    private static final int ON_STANDBY_WAKE_LOCK_TIMEOUT = 10000;
 
     /**
      * Interface to report send result.
@@ -357,6 +360,9 @@ public class HdmiControlService extends SystemService {
 
     @Nullable
     private Looper mIoLooper;
+
+    @Nullable
+    private  WakeLock mWakeLock;
 
     // Thread safe physical address
     @GuardedBy("mLock")
@@ -2243,6 +2249,10 @@ public class HdmiControlService extends SystemService {
         synchronized (mLock) {
             mHotplugEventListenerRecords.add(record);
         }
+        if (mWakeLock == null) {
+            mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        }
+        mWakeLock.acquire(ON_STANDBY_WAKE_LOCK_TIMEOUT);
 
         // Inform the listener of the initial state of each HDMI port by generating
         // hotplug events.
@@ -2650,6 +2660,9 @@ public class HdmiControlService extends SystemService {
                 devices.remove(device);
                 if (devices.isEmpty()) {
                     onStandbyCompleted(standbyAction);
+                    if (mWakeLock != null) {
+                        mWakeLock.release();
+                    }
                     // We will not clear local devices here, since some OEM/SOC will keep passing
                     // the received packets until the application processor enters to the sleep
                     // actually.
