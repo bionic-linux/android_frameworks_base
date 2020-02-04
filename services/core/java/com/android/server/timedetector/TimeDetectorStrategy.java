@@ -23,11 +23,13 @@ import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.PhoneTimeSuggestion;
 import android.os.TimestampedValue;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 import java.io.PrintWriter;
 
 /**
- * The interface for classes that implement the time detection algorithm used by the
- * TimeDetectorService.
+ * The interface for the class that implements the time detection algorithm used by the
+ * {@link TimeDetectorService}.
  *
  * <p>Most calls will be handled by a single thread but that is not true for all calls. For example
  * {@link #dump(PrintWriter, String[])}) may be called on a different thread so implementations must
@@ -87,6 +89,7 @@ public interface TimeDetectorStrategy {
     void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSuggestion);
 
     /** Handle the auto-time setting being toggled on or off. */
+    @VisibleForTesting
     void handleAutoTimeDetectionChanged();
 
     /** Dump debug information. */
