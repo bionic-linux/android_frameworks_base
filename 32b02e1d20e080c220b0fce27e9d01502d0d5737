@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867b9098_1a05c5f1",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4312,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-04T11:15:35Z",
+      "side": 1,
+      "message": "Nit: logEvent() and useNetwork() are checking NETWORK_SEETINGS permission. Could you  add @RequiresPermission for these API as well.",
+      "range": {
+        "startLine": 4310,
+        "startChar": 4,
+        "endLine": 4312,
+        "endChar": 36
+      },
+      "revId": "32b02e1d20e080c220b0fce27e9d01502d0d5737",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
