@@ -227,6 +227,13 @@ public class HdmiControlService extends SystemService {
             } else {
                 String language = locale.getISO3Language();
 
+                // If the language is norwegian, return "nor" instead of "nob or "nno"
+                // "nob" : Norwegian Bokmal
+                // "nno" : Norwegian Nynorsk
+                if (language.equals("nob") || language.equals("nno")) {
+                    language = "nor";
+                }
+
                 // locale.getISO3Language() returns terminology code and need to
                 // send it as bibliographic code instead since the Bibliographic
                 // codes of ISO/FDIS 639-2 shall be used.
