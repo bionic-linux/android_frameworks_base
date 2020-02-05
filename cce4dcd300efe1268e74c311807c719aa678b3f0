@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340889d6_c5626190",
+        "filename": "services/core/java/com/android/server/timezonedetector/TimeZoneDetectorStrategyImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-02-05T15:49:52Z",
+      "side": 1,
+      "message": "This looks like an add in gerrit, but it\u0027s a rename of the implementation after the interface has been extracted.\n\nDiffs can be seen in: https://r.android.com/1226419",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 47
+      },
+      "revId": "cce4dcd300efe1268e74c311807c719aa678b3f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
