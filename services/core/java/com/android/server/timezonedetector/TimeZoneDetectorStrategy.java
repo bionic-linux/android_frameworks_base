@@ -40,27 +40,29 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
 /**
- * A singleton, stateful time zone detection strategy that is aware of user (manual) suggestions and
- * suggestions from multiple phone devices. Suggestions are acted on or ignored as needed, dependent
- * on the current "auto time zone detection" setting.
+ * An implementation of {@link TimeZoneDetectorStrategy} that handle telephony and manual
+ * suggestions. Suggestions are acted on or ignored as needed, dependent on the current "auto time
+ * zone detection" setting.
  *
  * <p>For automatic detection it keeps track of the most recent suggestion from each phone it uses
  * the best suggestion based on a scoring algorithm. If several phones provide the same score then
  * the phone with the lowest numeric ID "wins". If the situation changes and it is no longer
  * possible to be confident about the time zone, phones must submit an empty suggestion in order to
  * "withdraw" their previous suggestion.
+ *
+ * <p>Most public methods are marked synchronized to ensure thread safety around internal state.
  */
-public class TimeZoneDetectorStrategy {
+public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrategy {
 
     /**
-     * Used by {@link TimeZoneDetectorStrategy} to interact with the surrounding service. It can be
-     * faked for tests.
+     * Used by {@link TimeZoneDetectorStrategyImpl} to interact with the surrounding service. It can
+     * be faked for tests.
      *
      * <p>Note: Because the system properties-derived values like
      * {@link #isAutoTimeZoneDetectionEnabled()}, {@link #isAutoTimeZoneDetectionEnabled()},
      * {@link #getDeviceTimeZone()} can be modified independently and from different threads (and
      * processes!), their use are prone to race conditions. That will be true until the
-     * responsibility for setting their values is moved to {@link TimeZoneDetectorStrategy}.
+     * responsibility for setting their values is moved to {@link TimeZoneDetectorStrategyImpl}.
      */
     @VisibleForTesting
     public interface Callback {
@@ -181,19 +183,19 @@ public class TimeZoneDetectorStrategy {
             new ArrayMapWithHistory<>(KEEP_PHONE_SUGGESTION_HISTORY_SIZE);
 
     /**
-     * Creates a new instance of {@link TimeZoneDetectorStrategy}.
+     * Creates a new instance of {@link TimeZoneDetectorStrategyImpl}.
      */
-    public static TimeZoneDetectorStrategy create(Context context) {
+    public static TimeZoneDetectorStrategyImpl create(Context context) {
         Callback timeZoneDetectionServiceHelper = new TimeZoneDetectorCallbackImpl(context);
-        return new TimeZoneDetectorStrategy(timeZoneDetectionServiceHelper);
+        return new TimeZoneDetectorStrategyImpl(timeZoneDetectionServiceHelper);
     }
 
     @VisibleForTesting
-    public TimeZoneDetectorStrategy(Callback callback) {
+    public TimeZoneDetectorStrategyImpl(Callback callback) {
         mCallback = Objects.requireNonNull(callback);
     }
 
-    /** Process the suggested manually- / user-entered time zone. */
+    @Override
     public synchronized void suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion) {
         Objects.requireNonNull(suggestion);
 
@@ -202,14 +204,7 @@ public class TimeZoneDetectorStrategy {
         setDeviceTimeZoneIfRequired(ORIGIN_MANUAL, timeZoneId, cause);
     }
 
-    /**
-     * Suggests a time zone for the device, or withdraws a previous suggestion if
-     * {@link PhoneTimeZoneSuggestion#getZoneId()} is {@code null}. The suggestion is scoped to a
-     * specific {@link PhoneTimeZoneSuggestion#getSlotIndex() phone}.
-     * See {@link PhoneTimeZoneSuggestion} for an explanation of the metadata associated with a
-     * suggestion. The strategy uses suggestions to decide whether to modify the device's time zone
-     * setting and what to set it to.
-     */
+    @Override
     public synchronized void suggestPhoneTimeZone(@NonNull PhoneTimeZoneSuggestion suggestion) {
         if (DBG) {
             Slog.d(LOG_TAG, "Phone suggestion received. newSuggestion=" + suggestion);
@@ -418,11 +413,8 @@ public class TimeZoneDetectorStrategy {
         return findBestPhoneSuggestion();
     }
 
-    /**
-     * Called when there has been a change to the automatic time zone detection setting.
-     */
-    @VisibleForTesting
-    public synchronized void handleAutoTimeZoneDetectionChange() {
+    @Override
+    public synchronized void handleAutoTimeZoneDetectionChanged() {
         if (DBG) {
             Slog.d(LOG_TAG, "handleTimeZoneDetectionChange() called");
         }
@@ -437,7 +429,8 @@ public class TimeZoneDetectorStrategy {
     /**
      * Dumps internal state such as field values.
      */
-    public synchronized void dumpState(PrintWriter pw, String[] args) {
+    @Override
+    public synchronized void dump(PrintWriter pw, String[] args) {
         IndentingPrintWriter ipw = new IndentingPrintWriter(pw, " ");
         ipw.println("TimeZoneDetectorStrategy:");
 
