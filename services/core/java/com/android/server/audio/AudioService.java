@@ -2114,6 +2114,12 @@ public class AudioService extends IAudioService.Stub
         Preconditions.checkNotNull(attr, "attr must not be null");
         // @todo not hold the caller context, post message
         int stream = AudioProductStrategy.getLegacyStreamTypeForStrategyWithAudioAttributes(attr);
+        try {
+            ensureValidStreamType(stream);
+        } catch (IllegalArgumentException e) {
+            // Use default stream type, aka MUSIC to get device
+            stream = AudioSystem.STREAM_MUSIC;
+        }
         final int device = getDeviceForStream(stream);
 
         int oldIndex = AudioSystem.getVolumeIndexForAttributes(attr, device);
@@ -2126,6 +2132,13 @@ public class AudioService extends IAudioService.Stub
             return;
         }
         for (final int groupedStream : avg.getLegacyStreamTypes()) {
+            try {
+                ensureValidStreamType(groupedStream);
+            } catch (IllegalArgumentException e) {
+                Log.d(TAG, "volume group " + volumeGroup + " has internal streams (" + groupedStream
+                        + "), do not change associated stream volume");
+                continue;
+            }
             setStreamVolume(groupedStream, index, flags, callingPackage, callingPackage,
                             Binder.getCallingUid());
         }
