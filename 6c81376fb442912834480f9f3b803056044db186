@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d969382d_389eae75",
+        "filename": "core/java/android/timezone/CountryTimeZones.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-02-05T16:06:49Z",
+      "side": 1,
+      "message": "nit: Could be clearer about what \"prefer\" means and what happens when the preference can not be matched / when bias is null.\n\n\"or {@code null} to indicate that there is no preference.\"\n\"or {@code null} to pick an arbitrary matching TimeZone.\"\n\"The TimeZone to return if it matches the constraints. If there is no match or if {@code bias \u003d\u003d null}, an arbitrary matching TimeZone will be used.\"\n?",
+      "range": {
+        "startLine": 214,
+        "startChar": 44,
+        "endLine": 214,
+        "endChar": 63
+      },
+      "revId": "6c81376fb442912834480f9f3b803056044db186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9d1c97_fba7ccbe",
+        "filename": "core/java/android/timezone/CountryTimeZones.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-02-05T16:06:49Z",
+      "side": 1,
+      "message": "no longer possible",
+      "range": {
+        "startLine": 217,
+        "startChar": 38,
+        "endLine": 217,
+        "endChar": 66
+      },
+      "revId": "6c81376fb442912834480f9f3b803056044db186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df8f81a_196dd188",
+        "filename": "core/java/android/timezone/CountryTimeZones.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-02-05T16:06:49Z",
+      "side": 1,
+      "message": "@return An {@link OffsetResult} composing a matching {@link TimeZone} plus\n        information about the match, or null if there is no match.\n\n?",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 7
+      },
+      "revId": "6c81376fb442912834480f9f3b803056044db186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f41a0fc_d8b0a124",
+        "filename": "core/java/android/timezone/CountryTimeZones.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-02-05T16:06:49Z",
+      "side": 1,
+      "message": "nit: The parameter order seems a bit arbitrary; would it make more sense to move bias to the start or the end?\n\nIs my impression right that when this is null, then that\u0027s typically only when callers explicitly pass in a null liteal? For example, TimeZone.getDefault() looks like it\u0027s never null and should be an error if null. In that case, it might make most sense to move bias to the end make it an optional parameter, but enforce that it is non-null when passed? WDYT?",
+      "range": {
+        "startLine": 220,
+        "startChar": 64,
+        "endLine": 220,
+        "endChar": 87
+      },
+      "revId": "6c81376fb442912834480f9f3b803056044db186",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
