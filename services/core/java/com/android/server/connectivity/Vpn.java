@@ -2047,11 +2047,32 @@ public class Vpn {
     class IkeV2VpnRunner extends VpnRunner implements IkeV2VpnRunnerCallback {
         @NonNull private static final String TAG = "IkeV2VpnRunner";
 
+        /**
+         * Internal lock used by Ikev2VpnRunner to guard access to all mutable fields.
+         *
+         * <p>This lock MUST always be acquired AFTER the broader Vpn instance lock is acquired.
+         * This ordering is required due to calls from the Vpn instance into the VpnRunner holding
+         * the Vpn instance lock
+         *
+         * <p>This lock was added to prevent major computations being done with the VPN lock held.
+         * Holding the VPN lock could block synchronized VPN methods on other threads, which could
+         * block other critical threads (such as ConnectivityService).
+         *
+         * <p>This lock prevents the hitting of IpSecService resource limits when multiple Networks
+         * come up at the same time.
+         */
+        @NonNull private final Object mLockObject = new Object();
+
         @NonNull private final IpSecManager mIpSecManager;
         @NonNull private final Ikev2VpnProfile mProfile;
         @NonNull private final Executor mExecutor = Executors.newSingleThreadExecutor();
-        @NonNull private final ConnectivityManager.NetworkCallback mNetworkCallback;
 
+        /**
+         * The network callback used for listening to network events.
+         *
+         * <p>{@code null} once exit() is called
+         */
+        @Nullable private ConnectivityManager.NetworkCallback mNetworkCallback;
         @Nullable private UdpEncapsulationSocket mEncapSocket;
         @Nullable private IpSecTunnelInterface mTunnelIface;
         @Nullable private IkeSession mSession;
@@ -2064,77 +2085,93 @@ public class Vpn {
             mNetworkCallback = new VpnIkev2Utils.Ikev2VpnNetworkCallback(TAG, this);
         }
 
+        @GuardedBy("mLockObject")
         private boolean isCurrentActiveNetwork(@Nullable Network network) {
             return Objects.equals(mActiveNetwork, network);
         }
 
         public void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig) {
-            synchronized (Vpn.this) {
-                if (!isCurrentActiveNetwork(network)) {
-                    Log.d(TAG, "onOpened called for obsolete network " + network);
+            synchronized (Vpn.this) { // Touches mutable Vpn instance fields.
+                synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                    try {
+                        if (!isCurrentActiveNetwork(network)) {
+                            Log.d(TAG, "onOpened called for obsolete network " + network);
 
-                    // Do nothing; this signals that either: (1) a new/better Network was found,
-                    // the VPN has already switch to it, or (2) this IKE session was already shut
-                    // down (exited, or an error was encountered somewhere else). In both cases, all
-                    // resources and sessions are torn down via resetIkeStateLocked().
-                    return;
-                }
-
-                try {
-                    mInterface = mTunnelIface.getInterfaceName();
-                    mConfig.mtu = mProfile.getMaxMtu();
-
-                    mConfig.addresses.clear();
-                    for (final LinkAddress address : childConfig.getInternalAddresses()) {
-                        mTunnelIface.addAddress(address.getAddress(), address.getPrefixLength());
-                        mConfig.addresses.add(address);
-                    }
-
-                    mConfig.routes.clear();
-                    mConfig.routes.addAll(
-                            VpnIkev2Utils.getRoutesFromTrafficSelectors(
-                                    childConfig.getOutboundTrafficSelectors()));
-
-                    // TODO: Add DNS servers from negotiation
-
-                    if (mNetworkAgent != null) {
-                        // Update to use the new interface and configuration
-                        mNetworkAgent.sendLinkProperties(makeLinkProperties());
-                    } else {
-                        if (isSettingsVpnLocked()) {
-                            prepareStatusIntent();
+                            // Do nothing; this signals that either: (1) a new/better Network was
+                            // found, the VPN has already switched to it, or (2) this IKE session
+                            // was already shut down (exited, or an error was encountered somewhere
+                            // else). In both cases, all resources and sessions are torn down via
+                            // resetIkeStateLocked().
+                            return;
                         }
-                        agentConnect();
+
+                        mInterface = mTunnelIface.getInterfaceName();
+                        mConfig.mtu = mProfile.getMaxMtu();
+
+                        mConfig.addresses.clear();
+                        for (final LinkAddress address : childConfig.getInternalAddresses()) {
+                            mTunnelIface.addAddress(
+                                    address.getAddress(), address.getPrefixLength());
+                            mConfig.addresses.add(address);
+                        }
+
+                        mConfig.routes.clear();
+                        mConfig.routes.addAll(
+                                VpnIkev2Utils.getRoutesFromTrafficSelectors(
+                                        childConfig.getOutboundTrafficSelectors()));
+
+                        // TODO: Add DNS servers from negotiation
+
+                        if (mNetworkAgent != null) {
+                            // Update to use the new interface and configuration
+                            mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                        } else {
+                            if (isSettingsVpnLocked()) {
+                                prepareStatusIntent();
+                            }
+                            agentConnect();
+                        }
+                    } catch (Exception e) {
+                        Log.d(TAG, "Error in ChildOpened for network " + network, e);
+
+                        // Can be called inside of mLockObject-guarded section, since Vpn instance
+                        // lock and mLockObject are already held in the right order.
+                        onSessionLost(network);
                     }
-                } catch (Exception e) {
-                    Log.d(TAG, "Error in ChildOpened for network " + network, e);
-                    onSessionLost(network);
                 }
             }
         }
 
         public void onChildTransformCreated(
                 @NonNull Network network, @NonNull IpSecTransform transform, int direction) {
-            synchronized (Vpn.this) {
-                if (!isCurrentActiveNetwork(network)) {
-                    Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
+            try {
+                // No mutable Vpn instance fields used; no need to lock on Vpn instance.
+                synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                    if (!isCurrentActiveNetwork(network)) {
+                        Log.d(TAG, "ChildTransformCreated for obsolete network " + network);
 
-                    // Do nothing; this signals that either: (1) a new/better Network was found,
-                    // the VPN has already switch to it, or (2) this IKE session was already shut
-                    // down (exited, or an error was encountered somewhere else). In both cases, all
-                    // resources and sessions are torn down via resetIkeStateLocked().
-                    return;
-                }
+                        // Do nothing; this signals that either: (1) a new/better Network was found,
+                        // the VPN has already switched to it, or (2) this IKE session was already
+                        // shut down (exited, or an error was encountered somewhere else). In both
+                        // cases, all resources and sessions are torn down via
+                        // resetIkeStateLocked().
+                        return;
+                    }
 
-                try {
                     // Transforms do not need to be persisted; the IkeSession will keep
                     // them alive for us
                     mIpSecManager.applyTunnelModeTransform(mTunnelIface, direction, transform);
-                } catch (IOException e) {
-                    Log.d(TAG, "Transform application failed for network " + network, e);
-                    onSessionLost(network);
                 }
+            } catch (IOException e) {
+                Log.d(TAG, "Transform application failed for network " + network, e);
+
+                // MUST be called outside of mLockObject-guarded section due to lock ordering
+                // (Vpn instance lock MUST be acquired before mLockObject.) While this unlock and
+                // relock could result in a race condition, use of a SingleThreadExecutor, along
+                // with the isActiveNetwork() check at the start of any critical section both
+                // ensure that all state is consistent.
+                onSessionLost(network);
             }
         }
 
@@ -2142,10 +2179,15 @@ public class Vpn {
             Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
 
             mExecutor.execute(() -> {
-                synchronized (Vpn.this) {
-                    try {
-                        // Without MOBIKE, we have no way to seamlessly migrate. Close on old
-                        // (non-default) network, and start the new one.
+                try {
+                    // No mutable Vpn instance fields used; no need to lock on Vpn instance.
+                    synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                        if (mNetworkCallback == null) {
+                            return; // VPN has been shut down.
+                        }
+
+                        // Without MOBIKE, we have no way to seamlessly migrate. Close on
+                        // old (non-default) network, and start the new one.
                         resetIkeStateLocked();
                         mActiveNetwork = network;
 
@@ -2180,80 +2222,96 @@ public class Vpn {
                                         new VpnIkev2Utils.ChildSessionCallbackImpl(
                                                 TAG, IkeV2VpnRunner.this, network));
                         Log.d(TAG, "Ike Session started for network " + network);
-                    } catch (Exception e) {
-                        Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
-                        onFatal(network);
                     }
+                } catch (Exception e) {
+                    Log.i(TAG, "Setup failed for network " + network + ". Aborting", e);
+
+                    // MUST be called outside of mLockObject-guarded section due to lock ordering
+                    // (Vpn instance lock MUST be acquired before mLockObject.) While this unlock
+                    // and relock could result in a race condition, use of a SingleThreadExecutor,
+                    // along with the isActiveNetwork() check at the start of any critical section
+                    // both ensures that all state is consistent.
+                    onFatal(network);
                 }
             });
         }
 
         @Override
         public void run() {
-            // Explicitly use only the network that ConnectivityService thinks is the "best." In
-            // other words, only ever use the currently selected default network. This does mean
-            // that in both onLost() and onConnected(), any old sessions MUST be torn down. This
-            // does NOT include VPNs.
-            final ConnectivityManager cm = ConnectivityManager.from(mContext);
-            cm.requestNetwork(cm.getDefaultRequest(), mNetworkCallback);
+            synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                // Explicitly use only the network that ConnectivityService thinks is the "best." In
+                // other words, only ever use the currently selected default network. This does mean
+                // that in both onLost() and onConnected(), any old sessions MUST be torn down. This
+                // does NOT include VPNs.
+                final ConnectivityManager cm = ConnectivityManager.from(mContext);
+                cm.requestNetwork(cm.getDefaultRequest(), mNetworkCallback);
+            }
         }
 
         public void onFatal(@NonNull Network network) {
-            synchronized (Vpn.this) {
-                if (!isCurrentActiveNetwork(network)) {
-                    Log.d(TAG, "onFatal() called for obsolete network " + network);
+            synchronized (Vpn.this) { // Touches mutable Vpn instance fields.
+                synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                    if (!isCurrentActiveNetwork(network)) {
+                        Log.d(TAG, "onFatal() called for obsolete network " + network);
 
-                    // Do nothing; this signals that either: (1) a new/better Network was found,
-                    // the VPN has already switch to it, or (2) this IKE session was already shut
-                    // down (exited, or an error was encountered somewhere else). In both cases, all
-                    // resources and sessions are torn down via resetIkeStateLocked().
-                    return;
+                        // Do nothing; this signals that either: (1) a new/better Network was found,
+                        // the VPN has already switched to it, or (2) this IKE session was already
+                        // shut down (exited, or an error was encountered somewhere else). In both
+                        // cases, all resources and sessions are torn down via
+                        // resetIkeStateLocked().
+                        return;
+                    }
+
+                    exitLocked();
                 }
-
-                exitLocked();
             }
         }
 
         public void onSessionLost(@NonNull Network network) {
-            synchronized (Vpn.this) {
-                if (!isCurrentActiveNetwork(network)) {
-                    Log.d(TAG, "onSessionLost() called for obsolete network " + network);
+            synchronized (Vpn.this) { // Touches mutable Vpn instance fields.
+                synchronized (mLockObject) { // Touches mutable Ikev2VpnRunner instance fields.
+                    if (!isCurrentActiveNetwork(network)) {
+                        Log.d(TAG, "onSessionLost() called for obsolete network " + network);
 
-                    // Do nothing; this signals that either: (1) a new/better Network was found,
-                    // the VPN has already switch to it, or (2) this IKE session was already shut
-                    // down (exited, or an error was encountered somewhere else). In both cases, all
-                    // resources and sessions are torn down via resetIkeStateLocked().
-                    return;
-                }
-
-                mActiveNetwork = null;
-
-                // Close all obsolete state, but keep VPN alive incase a usable network comes up.
-                // (Mirrors VpnService behavior)
-                Log.d(TAG, "Resetting state for network: " + network);
-
-                // Since this method handles non-fatal errors only, set mInterface to null to
-                // prevent the NetworkManagementEventObserver from killing this VPN based on the
-                // interface going down (which we expect).
-                mInterface = null;
-
-                // Set as unroutable to prevent traffic leaking while the interface is down.
-                if (mConfig != null && mConfig.routes != null) {
-                    final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
-
-                    mConfig.routes.clear();
-                    for (final RouteInfo route : oldRoutes) {
-                        mConfig.routes.add(new RouteInfo(route.getDestination(), RTN_UNREACHABLE));
+                        // Do nothing; this signals that either: (1) a new/better Network was found,
+                        // the VPN has already switched to it, or (2) this IKE session was already
+                        // shut down (exited, or an error was encountered somewhere else). In both
+                        // cases, all resources and sessions are torn down via
+                        // resetIkeStateLocked().
+                        return;
                     }
-                    if (mNetworkAgent != null) {
-                        mNetworkAgent.sendLinkProperties(makeLinkProperties());
-                    }
-                }
 
-                resetIkeStateLocked();
+                    mActiveNetwork = null;
+
+                    // Close all obsolete state, but keep VPN alive incase a usable network comes
+                    // up. (Mirrors VpnService behavior)
+                    Log.d(TAG, "Resetting state for network: " + network);
+
+                    // Since this method handles non-fatal errors only, set mInterface to null to
+                    // prevent the NetworkManagementEventObserver from killing this VPN based on the
+                    // interface going down (which we expect).
+                    mInterface = null;
+
+                    // Set as unroutable to prevent traffic leaking while the interface is down.
+                    if (mConfig != null && mConfig.routes != null) {
+                        final List<RouteInfo> oldRoutes = new ArrayList<>(mConfig.routes);
+
+                        mConfig.routes.clear();
+                        for (final RouteInfo route : oldRoutes) {
+                            mConfig.routes.add(
+                                    new RouteInfo(route.getDestination(), RTN_UNREACHABLE));
+                        }
+                        if (mNetworkAgent != null) {
+                            mNetworkAgent.sendLinkProperties(makeLinkProperties());
+                        }
+                    }
+
+                    resetIkeStateLocked();
+                }
             }
         }
 
+        @GuardedBy("mLockObject")
         private void resetIkeStateLocked() {
             if (mTunnelIface != null) {
                 mTunnelIface.close();
@@ -2273,11 +2331,11 @@ public class Vpn {
             }
         }
 
+        @GuardedBy("Vpn.this, mLockObject")
         private void exitLocked() {
-            mActiveNetwork = null;
-
             final ConnectivityManager cm = ConnectivityManager.from(mContext);
             cm.unregisterNetworkCallback(mNetworkCallback);
+            mNetworkCallback = null;
 
             agentDisconnect();
             resetIkeStateLocked();
@@ -2288,7 +2346,9 @@ public class Vpn {
         @Override
         public void exit() {
             synchronized (Vpn.this) {
-                exitLocked();
+                synchronized (mLockObject) {
+                    exitLocked();
+                }
             }
         }
     }
