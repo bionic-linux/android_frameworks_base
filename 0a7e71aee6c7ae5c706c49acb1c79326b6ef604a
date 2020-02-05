@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001521940",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1226716?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ac48f9ae_e2d7bed2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12207,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-02-05T07:16:49Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 12207,
+        "startChar": 1,
+        "endLine": 12207,
+        "endChar": 7
+      },
+      "revId": "0a7e71aee6c7ae5c706c49acb1c79326b6ef604a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
