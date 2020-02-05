@@ -30,7 +30,9 @@ public class TetheringUtils {
      * permission to create netlink netfilter sockets. Create two netlink netfilter sockets and
      * share them with offload management process.
      */
-    public static native boolean configOffload();
+    public static boolean configOffload() {
+        return false;
+    }
 
     /**
      * Configures a socket for receiving ICMPv6 router solicitations and sending advertisements.
