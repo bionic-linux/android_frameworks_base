@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e8ad415_795cdcc3",
+        "filename": "api/system-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 4466,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9282a0b4_3dd15488",
+      "range": {
+        "startLine": 4466,
+        "startChar": 23,
+        "endLine": 4466,
+        "endChar": 27
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036f944d_5fd46117",
         "filename": "api/test-current.txt",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f4ca4f_96b847c8",
+        "filename": "api/test-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036f944d_5fd46117",
+      "range": {
+        "startLine": 1420,
+        "startChar": 23,
+        "endLine": 1420,
+        "endChar": 27
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8bf5d6d1_0657a36a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9976da78_600b8207",
+      "range": {
+        "startLine": 1085,
+        "startChar": 0,
+        "endLine": 1089,
+        "endChar": 11
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aa59bf5_fbf0c209",
         "filename": "core/java/android/net/ProxyInfo.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a27910_f28f4c49",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "I checked. When initializing ProxyInfo with a PAC proxy, mPort is always set to LOCAL_PORT (-1):\n    /**\n     * Create a ProxyProperties that points at a PAC URL.\n     * @hide\n     */\n    public ProxyInfo(@NonNull Uri pacFileUrl) {\n        mHost \u003d LOCAL_HOST;\n        mPort \u003d LOCAL_PORT;\n        mExclusionList \u003d LOCAL_EXCL_LIST;\n        mParsedExclusionList \u003d parseExclusionList(mExclusionList);\n        if (pacFileUrl \u003d\u003d null) {\n            throw new NullPointerException();\n        }\n        mPacFileUrl \u003d pacFileUrl;\n    }",
+      "parentUuid": "0aa59bf5_fbf0c209",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 9
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "664cd86f_cead0f73",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759afd3f_4b1b0da1",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 9
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7870a42_2a1d87cc",
         "filename": "core/java/com/android/internal/util/StateMachineDump.java",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2020-02-06T01:57:33Z",
       "side": 1,
       "message": "StateMachine is not public API and there is no guarantee that it will be consistent or even exist on any particular device. Also, many (most?) of the users of StateMachine are mainline modules which cannot use the system copy of StateMachine which may be the same or different from the one in framework.jar. (Instead, they copy and jarjar it.) They also cannot use this class, because it\u0027s @hide and mainline module code cannot use @hide code.\n\nIf apps copy and jarjar this file too, will that work? If not, I don\u0027t think this class is very useful.",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b85dbff_ea54f835",
+        "filename": "core/java/com/android/internal/util/StateMachineDump.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "I think as long as the mainline module use the same version of StateMachine and StateMachineDump together, i.e. copy both, it will be fine.\nTested it on WiFi module. It seems to work.",
+      "parentUuid": "f7870a42_2a1d87cc",
       "range": {
         "startLine": 31,
         "startChar": 54,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a7ea5a42_b8bbd1a0",
+        "filename": "core/proto/android/net/linkproperties.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4f71d5_6dff8796",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb31b7b_b75a8ed7",
         "filename": "core/proto/android/net/linkproperties.proto",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38972448_b4b4f05a",
+        "filename": "core/proto/android/net/linkproperties.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb31b7b_b75a8ed7",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "698546ce_3a5d595d",
+        "filename": "core/proto/android/net/linkproperties.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e8d6a8_6f2083e3",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21d55290_8c5e73ed",
         "filename": "core/proto/android/net/linkproperties.proto",
         "patchSetId": 3
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "d8d3d007_1645e73d",
+        "filename": "core/proto/android/net/linkproperties.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d55290_8c5e73ed",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2ce320_15cd5356",
         "filename": "core/proto/android/net/linkproperties.proto",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c99b62_4cbe0bf9",
+        "filename": "core/proto/android/net/linkproperties.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1291102
+      },
+      "writtenOn": "2020-02-06T05:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2ce320_15cd5356",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "f70e04757be9dbd6d234d98acbd32214c2f4c9f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
