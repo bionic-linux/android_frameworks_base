@@ -16,6 +16,24 @@
       "revId": "e822852c133707c56f9e98a361474ebb3464a9b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ff0237_b8f52e3f",
+        "filename": "core/tests/coretests/src/android/database/DatabaseGeneralTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1335058
+      },
+      "writtenOn": "2020-02-06T04:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b591a749_5bd01bdd",
+      "revId": "e822852c133707c56f9e98a361474ebb3464a9b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
