@@ -93,6 +93,30 @@
       "revId": "ddc49bb5c93413c31e9ada470cc7e345b4a97f0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3263942e_dc88d591",
+        "filename": "core/java/android/net/CaptivePortal.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:25:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a158b802_81589fff",
+      "range": {
+        "startLine": 158,
+        "startChar": 40,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "ddc49bb5c93413c31e9ada470cc7e345b4a97f0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
