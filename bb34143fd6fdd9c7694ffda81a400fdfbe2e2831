@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26797418_1134f508",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-06T08:24:32Z",
+      "side": 1,
+      "message": "Oh I just realized we are also using it in @TestApi.",
+      "range": {
+        "startLine": 1627,
+        "startChar": 10,
+        "endLine": 1627,
+        "endChar": 19
+      },
+      "revId": "bb34143fd6fdd9c7694ffda81a400fdfbe2e2831",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
