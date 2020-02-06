@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "817f0097_1e226857",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 7519,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-06T15:53:59Z",
+      "side": 1,
+      "message": "Not relevant now, given that we currently get the NetworkAgentInfo on the NetworkStateTrackerHandler, then pass it to the ConnectivityDiagnosticsHandler.",
+      "parentUuid": "c742108a_89bf6aba",
+      "range": {
+        "startLine": 7519,
+        "startChar": 11,
+        "endLine": 7519,
+        "endChar": 38
+      },
+      "revId": "7796113314b4074e9a17e5c00aff0586b867b6cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024a1735_79896565",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 15
