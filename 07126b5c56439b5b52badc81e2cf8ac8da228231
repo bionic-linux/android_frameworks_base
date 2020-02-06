@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce9db90_8b635be7",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-02-06T22:37:27Z",
+      "side": 1,
+      "message": "Not sure why you should use Macro Language instead of individual language when sending a \u003cSet Menu Language\u003e from a TV.\n\nIs there Guidance in BCP-47\n\nIf we want to do this, follow the pattern in  mTerminologyToBibliographicMap",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 17
+      },
+      "revId": "07126b5c56439b5b52badc81e2cf8ac8da228231",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
