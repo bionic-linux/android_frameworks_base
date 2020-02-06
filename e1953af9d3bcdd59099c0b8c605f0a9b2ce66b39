@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bfaa1ad_ed714899",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7734b339_ee2ab54b",
+      "range": {
+        "startLine": 417,
+        "startChar": 37,
+        "endLine": 417,
+        "endChar": 44
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "181c656a_8ace8276",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-01-30T09:11:37Z",
       "side": 1,
       "message": "Nit : networkSubtype ? or networkRatType ? Or networkTechnology ? Or networkTelephonyType ? Or something else that makes clear it can\u0027t be TYPE_WIFI ?\n\nNot feeling strongly as all these constants are already Telephony.NETWORK_TYPE_*. You could also import just Telephony and call them explicitly Telephony.NETWORK_... if you think that clarifies things.",
+      "range": {
+        "startLine": 421,
+        "startChar": 41,
+        "endLine": 421,
+        "endChar": 44
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d359b366_680a844e",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "181c656a_8ace8276",
       "range": {
         "startLine": 421,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f4e0dc9a_f514d31e",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Not sure what case you are trying to deal with.\nCan you make an example?",
+      "parentUuid": "8b1b4f46_387d7767",
+      "range": {
+        "startLine": 449,
+        "startChar": 26,
+        "endLine": 449,
+        "endChar": 50
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19c8aa5b_83456c79",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7098a97f_7d6f91b2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "In follow-up patches, subtypes are used in matching against template in NetworkStatsService.\nHowever this property is not used in matching policies in NPMS.\nThus I mark this as unused.\nSee if this make sense.",
+      "parentUuid": "19c8aa5b_83456c79",
+      "range": {
+        "startLine": 1871,
+        "startChar": 30,
+        "endLine": 1871,
+        "endChar": 50
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56ed30e_88ee5b00",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2020-01-30T09:11:37Z",
       "side": 1,
       "message": "checkstyle lets you get away with this O.o\nIf checkstyle doesn\u0027t care I also don\u0027t",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 21
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e0d470d_80cf993e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56ed30e_88ee5b00",
       "range": {
         "startLine": 285,
         "startChar": 4,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "06df161d_0d253010",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "34f9b674_9a6814ed",
+      "range": {
+        "startLine": 289,
+        "startChar": 45,
+        "endLine": 289,
+        "endChar": 60
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d715f61f_02392bf0",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b96159_43ccd98f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d715f61f_02392bf0",
+      "range": {
+        "startLine": 1155,
+        "startChar": 24,
+        "endLine": 1155,
+        "endChar": 32
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "239cad04_a5aa3121",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1f6b61_12738300",
+      "range": {
+        "startLine": 1162,
+        "startChar": 0,
+        "endLine": 1162,
+        "endChar": 97
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b3a659_a98b94eb",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4be1ac_abb89bad",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-06T14:37:24Z",
+      "side": 1,
+      "message": "The intention is to extend this to a number of subscriptions.\nBecause all subscriptions have their own RAT state.\nThus a HashMap\u003csubscriberId, int\u003e might be more suitable.\nAnd see if we could generalize it for wifi(use networkId instead of subscriberId) to extend in the future.\nBut looks like I\u0027m thinking too much.\nSo let me remove those confusing codes.",
+      "parentUuid": "55b3a659_a98b94eb",
+      "range": {
+        "startLine": 1308,
+        "startChar": 21,
+        "endLine": 1308,
+        "endChar": 33
+      },
+      "revId": "e1953af9d3bcdd59099c0b8c605f0a9b2ce66b39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
