@@ -22,6 +22,30 @@
       "revId": "497afcff0ca3bfd60de4c5647ad7bb0167e6abb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553c03ee_79f4adfb",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-07T13:11:58Z",
+      "side": 0,
+      "message": "In my testing, memory seems be the same or very little change I can\u0027t aware. But this seems be fine to keep.",
+      "parentUuid": "e06668bc_fe069098",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "497afcff0ca3bfd60de4c5647ad7bb0167e6abb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
