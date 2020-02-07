@@ -7840,8 +7840,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
 
-        if (!mLocationPermissionChecker.checkLocationPermission(
-                callbackPackageName, null /* featureId */, callbackUid, null /* message */)) {
+        try {
+            if (!mLocationPermissionChecker.checkLocationPermission(
+                    callbackPackageName, null /* featureId */, callbackUid, null /* message */)) {
+                return false;
+            }
+        } catch (SecurityException e) {
             return false;
         }
 
