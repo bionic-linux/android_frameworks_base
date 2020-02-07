@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665fa15c_5f7d5296",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-07T10:53:21Z",
+      "side": 1,
+      "message": "This comment looks familiar. :-)\n\nYou should at least a) check that it\u0027s still true, and b) rename \"NetworkStack\" to whatever your build target is.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "3fa44e82d897714e19f6e5433d7dde821c87a27d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

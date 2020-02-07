@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06668bc_fe069098",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-07T10:53:21Z",
+      "side": 0,
+      "message": "Does keeping -Wl,--exclude-libs\u003dALL save memory?",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "497afcff0ca3bfd60de4c5647ad7bb0167e6abb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
