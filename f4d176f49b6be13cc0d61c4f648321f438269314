@@ -93,6 +93,30 @@
       "revId": "f4d176f49b6be13cc0d61c4f648321f438269314",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad828cb9_c94308f6",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-02-07T12:26:31Z",
+      "side": 1,
+      "message": "Ok, thanks!",
+      "parentUuid": "8d1e35be_a56932b5",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 52
+      },
+      "revId": "f4d176f49b6be13cc0d61c4f648321f438269314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
