@@ -250,9 +250,11 @@ static const char* kNoGenerationalCCRuntimeOption = "-Xgc:nogenerational_cc";
 static const char* PROFILE_BOOT_CLASS_PATH = "profilebootclasspath";
 
 // Feature flag name for running the JIT in Zygote experiment, b/119800099.
-static const char* ENABLE_APEX_IMAGE = "enable_apex_image";
-// Flag to pass to the runtime when using the apex image.
-static const char* kApexImageOption = "-Ximage:/system/framework/apex.art";
+// TODO: Rename the server-level flag or remove.
+static const char* ENABLE_JITZYGOTE_IMAGE = "enable_apex_image";
+// Flag to pass to the runtime when using the JIT Zygote image.
+static const char* kJitZygoteImageOption =
+    "boot.art:/nonx/boot-framework.art!/system/etc/boot-image.prof";
 
 // Feature flag name for disabling lock profiling.
 static const char* DISABLE_LOCK_PROFILING = "disable_lock_profiling";
@@ -728,17 +730,19 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
         addOption("-Xjitsaveprofilinginfo");
     }
 
-    std::string use_apex_image_flag =
+    std::string use_jitzygote_image_flag =
         server_configurable_flags::GetServerConfigurableFlag(RUNTIME_NATIVE_BOOT_NAMESPACE,
-                                                             ENABLE_APEX_IMAGE,
+                                                             ENABLE_JITZYGOTE_IMAGE,
                                                              /*default_value=*/ "");
     // Use the APEX boot image for boot class path profiling to get JIT samples on BCP methods.
     // Also use the APEX boot image if it's explicitly enabled via configuration flag.
-    const bool use_apex_image = profile_boot_class_path || (use_apex_image_flag == "true");
+    const bool use_apex_image = profile_boot_class_path || (use_jitzygote_image_flag == "true");
     if (use_apex_image) {
-        addOption(kApexImageOption);
-        ALOGI("Using Apex boot image: '%s'\n", kApexImageOption);
-    } else if (parseRuntimeOption("dalvik.vm.boot-image", bootImageBuf, "-Ximage:")) {
+        ALOGI("Overriding dalvik.vm.boot-image due to phenotype flag");
+        property_set("dalvik.vm.boot-image", kJitZygoteImageOption);
+    }
+
+    if (parseRuntimeOption("dalvik.vm.boot-image", bootImageBuf, "-Ximage:")) {
         ALOGI("Using dalvik.vm.boot-image: '%s'\n", bootImageBuf);
     } else {
         ALOGI("Using default boot image");
