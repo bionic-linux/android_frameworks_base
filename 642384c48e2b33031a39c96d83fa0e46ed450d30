@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df8423c3_41443488",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 5395,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-02-07T00:18:44Z",
+      "side": 1,
+      "message": "This is already done inside |ensureSufficientPermissionsForRequest|. Same for the others below.",
+      "range": {
+        "startLine": 5395,
+        "startChar": 0,
+        "endLine": 5395,
+        "endChar": 68
+      },
+      "revId": "642384c48e2b33031a39c96d83fa0e46ed450d30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
