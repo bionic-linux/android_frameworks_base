@@ -238,10 +238,10 @@ public final class PinnerService extends SystemService {
     private void handlePinOnStart() {
         final String bootImage = SystemProperties.get("dalvik.vm.boot-image", "");
         String[] filesToPin = null;
-        if (bootImage.endsWith("apex.art")) {
+        if (bootImage.endsWith("boot-image.prof")) {
             // Use the files listed for that specific boot image
             filesToPin = mContext.getResources().getStringArray(
-                  com.android.internal.R.array.config_apexBootImagePinnerServiceFiles);
+                  com.android.internal.R.array.config_jitzygoteBootImagePinnerServiceFiles);
         } else {
             // Files to pin come from the overlay and can be specified per-device config
             filesToPin = mContext.getResources().getStringArray(
