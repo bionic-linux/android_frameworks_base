@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb86abf7_9c9e5aa5",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-02-07T12:09:43Z",
+      "side": 1,
+      "message": "Two questions:\n- why not \"nonexistent\" ?\n- why keep the \"/boot-framework.art\" part, the path is still invalid?",
+      "range": {
+        "startLine": 257,
+        "startChar": 15,
+        "endLine": 257,
+        "endChar": 38
+      },
+      "revId": "f4d176f49b6be13cc0d61c4f648321f438269314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60755f0b_231ecdc5",
+        "filename": "services/core/java/com/android/server/PinnerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-02-07T12:09:43Z",
+      "side": 1,
+      "message": "This seems weird: why using the profile should imply using the jitzygote image? Maybe it needs a comment.",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 52
+      },
+      "revId": "f4d176f49b6be13cc0d61c4f648321f438269314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
