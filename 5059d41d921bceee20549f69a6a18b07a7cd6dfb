@@ -22,6 +22,30 @@
       "revId": "5059d41d921bceee20549f69a6a18b07a7cd6dfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1fd76a_91637a7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-07T10:52:28Z",
+      "side": 1,
+      "message": "Because TetheredClient is a public API and it returns a list, so I think it would be confusing for API users if they often get different order when iterating through the addresses.\nFor example an implementation that displays clients on screen could get the UI changing randomly if the order was not stable.\n\nIt also makes it easier in the tests to verify behavior",
+      "parentUuid": "9efc667f_596e10de",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "5059d41d921bceee20549f69a6a18b07a7cd6dfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
