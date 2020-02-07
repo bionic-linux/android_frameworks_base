@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "293e46fa_b1a80477",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2020-02-07T12:13:14Z",
+      "side": 1,
+      "message": "Disregard the question: Vladimir explained that boot-framework.art is needed in ART for easier expansion of image name into BCP components. And \"nonx\" just follows the convention elsewhere.",
+      "parentUuid": "bb86abf7_9c9e5aa5",
+      "range": {
+        "startLine": 257,
+        "startChar": 15,
+        "endLine": 257,
+        "endChar": 38
+      },
+      "revId": "f4d176f49b6be13cc0d61c4f648321f438269314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60755f0b_231ecdc5",
         "filename": "services/core/java/com/android/server/PinnerService.java",
         "patchSetId": 1
