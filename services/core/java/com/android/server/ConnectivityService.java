@@ -7819,8 +7819,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
 
-        if (!mLocationPermissionChecker.checkLocationPermission(
-                callbackPackageName, null /* featureId */, callbackUid, null /* message */)) {
+        try {
+            if (!mLocationPermissionChecker.checkLocationPermission(
+                    callbackPackageName, null /* featureId */, callbackUid, null /* message */)) {
+                return false;
+            }
+        } catch (SecurityException e) {
+            // callbackUid and callbackPackageName don't match, so return false
             return false;
         }
 
