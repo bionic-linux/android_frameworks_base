@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1829c26_8d0f147f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2020-02-10T18:57:36Z",
+      "side": 1,
+      "message": "Do we need to add a log here?",
+      "range": {
+        "startLine": 2120,
+        "startChar": 12,
+        "endLine": 2120,
+        "endChar": 63
+      },
+      "revId": "07f66b9505cf5d15a08ad642dc36a6268574c753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
