@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66a0b5d_9dcd9cb6",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-10T07:34:25Z",
+      "side": 1,
+      "message": "nit: not very sure about this part.\nbut trust the comment on l.87",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "0d5a36beab71174ac11e8100ae23273104bf173a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
