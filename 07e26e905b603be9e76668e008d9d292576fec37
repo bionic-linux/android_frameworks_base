@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c0368d4b_7e5da5c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-11T03:11:39Z",
+      "side": 1,
+      "message": "See if below example helps:\n\n1. Consider below 1hour record:\n[Ident IMSI\u003d\"12345...\" subType\u003dCOMBINED]\n  timestamp\u003d0 tx\u003d50\n\n2. If we distributed it into 30min bucket like what the test case does. Then it would be:\n[Ident IMSI\u003d\"12345...\" subType\u003dCOMBINED]\n  timestamp\u003d0 tx\u003d25\n  timestamp\u003d1800 tx\u003d25\n\n3. However if the original 1hour records are grouped by different subtype:\n[Ident IMSI\u003d\"12345...\" subType\u003d1]\n  timestamp\u003d0 tx\u003d13\n[Ident IMSI\u003d\"12345...\" subType\u003d2]\n  timestamp\u003d0 tx\u003d37\n\n4. Then if we distributed it into 30min bucket. It would be the place rounding problem occurs:\n[Ident IMSI\u003d\"12345...\" subType\u003d1]\n  timestamp\u003d0 tx\u003d6\n  timestamp\u003d1800 tx\u003d7\n[Ident IMSI\u003d\"12345...\" subType\u003d2]\n  timestamp\u003d0 tx\u003d18\n  timestamp\u003d1800 tx\u003d19\n\n5. Thus, when we verify the stats during 0~1800sec, the total would be 6+18\u003d24; and for 1800~3600 it would be 7+19\u003d26\nAlthough the total tx is the same as (2), but you could see the two records are slightly different with the result in (2)\n\nWhat in our existing test cases are binary raw data that grouped like (3), but the way we read it is changing from (2) to (4).\nThat is why I make the changes in the numbers.\nAny way to make this more clear would be appreciated.",
+      "parentUuid": "ceb7d8ac_a911dade",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "07e26e905b603be9e76668e008d9d292576fec37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6ee587f_bb3af84b",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 5
