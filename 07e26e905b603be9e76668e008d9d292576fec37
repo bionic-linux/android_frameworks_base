@@ -93,6 +93,30 @@
       "revId": "07e26e905b603be9e76668e008d9d292576fec37",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2af37b_b5822df2",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-11T05:30:01Z",
+      "side": 1,
+      "message": "Now it\u0027s gone, see the newest patch.\nReopen if needed.",
+      "parentUuid": "d6ee587f_bb3af84b",
+      "range": {
+        "startLine": 1205,
+        "startChar": 32,
+        "endLine": 1205,
+        "endChar": 50
+      },
+      "revId": "07e26e905b603be9e76668e008d9d292576fec37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
