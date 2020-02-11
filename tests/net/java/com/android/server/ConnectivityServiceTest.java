@@ -301,6 +301,8 @@ public class ConnectivityServiceTest {
 
     private static final long TIMESTAMP = 1234L;
 
+    private static final int NET_ID = 10;
+
     private static final String CLAT_PREFIX = "v4-";
     private static final String MOBILE_IFNAME = "test_rmnet_data0";
     private static final String WIFI_IFNAME = "test_wlan0";
@@ -994,6 +996,7 @@ public class ConnectivityServiceTest {
         private TestNetworkAgentWrapper mMockNetworkAgent;
 
         private VpnInfo mVpnInfo;
+        private Network[] mUnderlyingNetworks;
 
         public MockVpn(int userId) {
             super(startHandlerThreadAndReturnLooper(), mServiceContext, mNetworkManagementService,
@@ -1076,6 +1079,18 @@ public class ConnectivityServiceTest {
 
         private void setVpnInfo(VpnInfo vpnInfo) {
             mVpnInfo = vpnInfo;
+        }
+
+        @Override
+        public synchronized Network[] getUnderlyingNetworks() {
+            if (mUnderlyingNetworks != null) return mUnderlyingNetworks;
+
+            return super.getUnderlyingNetworks();
+        }
+
+        /** Don't override behavior for {@link Vpn#setUnderlyingNetworks}. */
+        private void overrideUnderlyingNetworks(Network[] underlyingNetworks) {
+            mUnderlyingNetworks = underlyingNetworks;
         }
     }
 
@@ -6533,9 +6548,10 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testCheckConnectivityDiagnosticsPermissionsActiveVpn() throws Exception {
+        final Network network = new Network(NET_ID);
         final NetworkAgentInfo naiWithoutUid =
                 new NetworkAgentInfo(
-                        null, null, null, null, null, new NetworkCapabilities(), null,
+                        null, null, network, null, null, new NetworkCapabilities(), null,
                         mServiceContext, null, null, mService, null, null, null, 0);
 
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
@@ -6548,8 +6564,35 @@ public class ConnectivityServiceTest {
         info.ownerUid = Process.myUid();
         info.vpnIface = "interface";
         mMockVpn.setVpnInfo(info);
+        mMockVpn.overrideUnderlyingNetworks(new Network[] {network});
         assertTrue(
                 "Active VPN permission not applied",
+                mService.checkConnectivityDiagnosticsPermissions(
+                        Process.myPid(), Process.myUid(), naiWithoutUid,
+                        mContext.getOpPackageName()));
+    }
+
+    @Test
+    public void testCheckConnectivityDiagnosticsPermissionsActiveVpnWithoutUnderlyingNetwork()
+            throws Exception {
+        final Network network = new Network(NET_ID);
+        final NetworkAgentInfo naiWithoutUid =
+                new NetworkAgentInfo(
+                        null, null, network, null, null, new NetworkCapabilities(), null,
+                        mServiceContext, null, null, mService, null, null, null, 0);
+
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
+
+        // setUp() calls mockVpn() which adds a VPN with the Test Runner's uid. Configure it to be
+        // active
+        final VpnInfo info = new VpnInfo();
+        info.ownerUid = Process.myUid();
+        info.vpnIface = "interface";
+        mMockVpn.setVpnInfo(info);
+        assertFalse(
+                "VPN shouldn't receive callback on non-underlying network",
                 mService.checkConnectivityDiagnosticsPermissions(
                         Process.myPid(), Process.myUid(), naiWithoutUid,
                         mContext.getOpPackageName()));

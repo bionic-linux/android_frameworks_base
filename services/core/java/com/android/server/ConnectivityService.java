@@ -7888,8 +7888,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         synchronized (mVpns) {
-            if (getVpnIfOwner(callbackUid) != null) {
-                return true;
+            final Vpn vpn = getVpnIfOwner(callbackUid);
+            if (vpn != null && vpn.getUnderlyingNetworks() != null) {
+                final List<Network> underlyingNetworks = Arrays.asList(vpn.getUnderlyingNetworks());
+                if (underlyingNetworks.contains(nai.network)) {
+                    return true;
+                }
             }
         }
 
