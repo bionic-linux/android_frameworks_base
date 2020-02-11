@@ -63,6 +63,10 @@ public class CertificateTransparencyLogInstallReceiver extends ConfigUpdateInsta
             throw new IOException("Unable to set permissions on " +
                     updateDir.getCanonicalPath());
         }
+        if (!updateDir.setExecutable(true, false)) {
+            throw new IOException("Unable to set permissions on " +
+                    updateDir.getCanonicalPath());
+        }
         File currentSymlink = new File(updateDir, "current");
         File newVersion = new File(updateDir, LOGDIR_PREFIX + String.valueOf(version));
         File oldDirectory;
@@ -88,6 +92,10 @@ public class CertificateTransparencyLogInstallReceiver extends ConfigUpdateInsta
             if (!newVersion.setReadable(true, false)) {
                 throw new IOException("Failed to set " +newVersion.getCanonicalPath() +
                         " readable");
+            }
+            if (!newVersion.setExecutable(true, false)) {
+                throw new IOException("Failed to set " +newVersion.getCanonicalPath() +
+                        " openable");
             }
 
             // 4. For each log in the log file create the corresponding file in <new_version>/ .
