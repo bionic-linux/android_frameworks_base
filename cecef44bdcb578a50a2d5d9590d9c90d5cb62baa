@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61a7026d_cbe7c65c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7891,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-12T04:32:17Z",
+      "side": 1,
+      "message": "I think this is the only call that needs to be inside the synchronized block. Once you have the defensive final vpn you\u0027re safe, no? the iteration through the list doesn\u0027t write, so you could get stale info but you shouldn\u0027t get an exception since you\u0027re only reading.",
+      "range": {
+        "startLine": 7891,
+        "startChar": 28,
+        "endLine": 7891,
+        "endChar": 41
+      },
+      "revId": "cecef44bdcb578a50a2d5d9590d9c90d5cb62baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
