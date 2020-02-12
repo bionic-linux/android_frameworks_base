@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf3f642_06809cf0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7878,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-02-12T04:40:40Z",
+      "side": 1,
+      "message": "this seems fine. Sometimes there\u0027s an alternate version of methods like this like \"checkLocationPermissionNoThrow(). If not then whatevs.",
+      "range": {
+        "startLine": 7878,
+        "startChar": 10,
+        "endLine": 7878,
+        "endChar": 15
+      },
+      "revId": "82f562cef9930a433896cd8452a81fb28718d85b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
