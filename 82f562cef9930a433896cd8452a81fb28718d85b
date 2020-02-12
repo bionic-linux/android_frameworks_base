@@ -22,6 +22,30 @@
       "revId": "82f562cef9930a433896cd8452a81fb28718d85b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af25a62c_3d8c27c4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7878,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-12T16:59:08Z",
+      "side": 1,
+      "message": "In this case there\u0027s only checkLocationPersmission() and enforceLocationPermission(), so leaving as-is.",
+      "parentUuid": "cdf3f642_06809cf0",
+      "range": {
+        "startLine": 7878,
+        "startChar": 10,
+        "endLine": 7878,
+        "endChar": 15
+      },
+      "revId": "82f562cef9930a433896cd8452a81fb28718d85b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
