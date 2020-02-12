@@ -29,6 +29,7 @@ import static android.net.TetheringManager.EXTRA_ACTIVE_LOCAL_ONLY;
 import static android.net.TetheringManager.EXTRA_ACTIVE_TETHER;
 import static android.net.TetheringManager.EXTRA_AVAILABLE_TETHER;
 import static android.net.TetheringManager.EXTRA_ERRORED_TETHER;
+import static android.net.TetheringManager.EXTRA_HARDWARE_OFFLOAD;
 import static android.net.TetheringManager.TETHERING_BLUETOOTH;
 import static android.net.TetheringManager.TETHERING_ETHERNET;
 import static android.net.TetheringManager.TETHERING_INVALID;
@@ -41,6 +42,9 @@ import static android.net.TetheringManager.TETHER_ERROR_NO_ERROR;
 import static android.net.TetheringManager.TETHER_ERROR_SERVICE_UNAVAIL;
 import static android.net.TetheringManager.TETHER_ERROR_UNAVAIL_IFACE;
 import static android.net.TetheringManager.TETHER_ERROR_UNKNOWN_IFACE;
+import static android.net.TetheringManager.TETHER_HARDWARE_OFFLOAD_STARTED;
+import static android.net.TetheringManager.TETHER_HARDWARE_OFFLOAD_STOPPED;
+import static android.net.TetheringManager.TETHER_HARDWARE_OFFLOAD_UNKNOWN;
 import static android.net.util.TetheringMessageBase.BASE_MASTER;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_INTERFACE_NAME;
 import static android.net.wifi.WifiManager.EXTRA_WIFI_AP_MODE;
@@ -216,6 +220,7 @@ public class Tethering {
     private TetherStatesParcel mTetherStatesParcel;
     private boolean mDataSaverEnabled = false;
     private String mWifiP2pTetherInterface = null;
+    private int mOffloadStatus = TETHER_HARDWARE_OFFLOAD_UNKNOWN;
 
     @GuardedBy("mPublicSync")
     private EthernetManager.TetheredInterfaceRequest mEthernetIfaceRequest;
@@ -676,8 +681,10 @@ public class Tethering {
         return mEntitlementMgr.isTetherProvisioningRequired(cfg);
     }
 
-    // TODO: Figure out how to update for local hotspot mode interfaces.
-    private void sendTetherStateChangedBroadcast() {
+    // sendIntentOnly means no real interface status change(no IpServer change),
+    // so TetheringNotification is not needed and the only use case is for offload
+    // status change.
+    private void sendTetherStateChangedBroadcast(boolean sendIntentOnly) {
         if (!mDeps.isTetheringSupported()) return;
 
         final ArrayList<String> availableList = new ArrayList<>();
@@ -691,7 +698,6 @@ public class Tethering {
         boolean bluetoothTethered = false;
 
         final TetheringConfiguration cfg = mConfig;
-        mTetherStatesParcel = new TetherStatesParcel();
 
         synchronized (mPublicSync) {
             for (int i = 0; i < mTetherStates.size(); i++) {
@@ -717,6 +723,30 @@ public class Tethering {
             }
         }
 
+        final Intent bcast = new Intent(ACTION_TETHER_STATE_CHANGED);
+        bcast.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        bcast.putStringArrayListExtra(EXTRA_AVAILABLE_TETHER, availableList);
+        bcast.putStringArrayListExtra(EXTRA_ACTIVE_LOCAL_ONLY, localOnlyList);
+        bcast.putStringArrayListExtra(EXTRA_ACTIVE_TETHER, tetherList);
+        bcast.putStringArrayListExtra(EXTRA_ERRORED_TETHER, erroredList);
+        bcast.putExtra(EXTRA_HARDWARE_OFFLOAD, mOffloadStatus);
+        mContext.sendStickyBroadcastAsUser(bcast, UserHandle.ALL);
+        if (DBG) {
+            Log.d(TAG, String.format(
+                    "sendTetherStateChangedBroadcast %s=[%s] %s=[%s] %s=[%s] %s=[%s] %s=[%d]",
+                    "avail", TextUtils.join(",", availableList),
+                    "local_only", TextUtils.join(",", localOnlyList),
+                    "tether", TextUtils.join(",", tetherList),
+                    "error", TextUtils.join(",", erroredList),
+                    "hardware_offload", mOffloadStatus));
+        }
+
+        // TODO: Current tethering only notify offload status by intent broadcast.
+        // sendIntentOnly flag should be removed when supporting offload status update by
+        // callback.
+        if (sendIntentOnly) return;
+
+        mTetherStatesParcel = new TetherStatesParcel();
         mTetherStatesParcel.availableList = availableList.toArray(new String[0]);
         mTetherStatesParcel.tetheredList = tetherList.toArray(new String[0]);
         mTetherStatesParcel.localOnlyList = localOnlyList.toArray(new String[0]);
@@ -727,22 +757,6 @@ public class Tethering {
             mTetherStatesParcel.lastErrorList[i] = iterator.next().intValue();
         }
         reportTetherStateChanged(mTetherStatesParcel);
-
-        final Intent bcast = new Intent(ACTION_TETHER_STATE_CHANGED);
-        bcast.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
-        bcast.putStringArrayListExtra(EXTRA_AVAILABLE_TETHER, availableList);
-        bcast.putStringArrayListExtra(EXTRA_ACTIVE_LOCAL_ONLY, localOnlyList);
-        bcast.putStringArrayListExtra(EXTRA_ACTIVE_TETHER, tetherList);
-        bcast.putStringArrayListExtra(EXTRA_ERRORED_TETHER, erroredList);
-        mContext.sendStickyBroadcastAsUser(bcast, UserHandle.ALL);
-        if (DBG) {
-            Log.d(TAG, String.format(
-                    "sendTetherStateChangedBroadcast %s=[%s] %s=[%s] %s=[%s] %s=[%s]",
-                    "avail", TextUtils.join(",", availableList),
-                    "local_only", TextUtils.join(",", localOnlyList),
-                    "tether", TextUtils.join(",", tetherList),
-                    "error", TextUtils.join(",", erroredList)));
-        }
 
         if (usbTethered) {
             if (wifiTethered || bluetoothTethered) {
@@ -1853,12 +1867,13 @@ public class Tethering {
         // OffloadController implementation.
         class OffloadWrapper {
             public void start() {
-                mOffloadController.start();
+                updateOffloadStatus(mOffloadController.start());
                 sendOffloadExemptPrefixes();
             }
 
             public void stop() {
                 mOffloadController.stop();
+                updateOffloadStatus(false /** isStarted */);
             }
 
             public void updateUpstreamNetworkState(UpstreamNetworkState ns) {
@@ -1918,6 +1933,16 @@ public class Tethering {
                 }
 
                 mOffloadController.setLocalPrefixes(localPrefixes);
+            }
+
+            private void updateOffloadStatus(boolean isStarted) {
+                final int newStatus = isStarted ? TETHER_HARDWARE_OFFLOAD_STARTED :
+                        TETHER_HARDWARE_OFFLOAD_STOPPED;
+
+                if (newStatus == mOffloadStatus) return;
+
+                mOffloadStatus = newStatus;
+                sendTetherStateChangedBroadcast(true /** sendIntentOnly */);
             }
         }
     }
@@ -2148,7 +2173,7 @@ public class Tethering {
                 return;
         }
         mTetherMasterSM.sendMessage(which, state, 0, who);
-        sendTetherStateChangedBroadcast();
+        sendTetherStateChangedBroadcast(false /** sendIntentOnly */);
     }
 
     private void notifyLinkPropertiesChanged(IpServer who, LinkProperties newLp) {
