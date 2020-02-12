@@ -162,7 +162,7 @@ public class Visualizer {
     /**
      * Lock to synchronize access to mState
      */
-    private final Object mStateLock = new Object();
+    private static final Object sStateLock = new Object();
     /**
      * System wide unique Identifier of the visualizer engine used by this Visualizer instance
      */
@@ -207,7 +207,7 @@ public class Visualizer {
     throws UnsupportedOperationException, RuntimeException {
         int[] id = new int[1];
 
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             mState = STATE_UNINITIALIZED;
             // native initialization
             int result = native_setup(new WeakReference<Visualizer>(this), audioSession, id,
@@ -236,7 +236,7 @@ public class Visualizer {
      * visualization engine when not in use.
      */
     public void release() {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             native_release();
             mState = STATE_UNINITIALIZED;
         }
@@ -256,7 +256,7 @@ public class Visualizer {
      */
     public int setEnabled(boolean enabled)
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("setEnabled() called in wrong state: "+mState));
             }
@@ -278,7 +278,7 @@ public class Visualizer {
      */
     public boolean getEnabled()
     {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("getEnabled() called in wrong state: "+mState));
             }
@@ -313,7 +313,7 @@ public class Visualizer {
      */
     public int setCaptureSize(int size)
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState != STATE_INITIALIZED) {
                 throw(new IllegalStateException("setCaptureSize() called in wrong state: "+mState));
             }
@@ -327,7 +327,7 @@ public class Visualizer {
      */
     public int getCaptureSize()
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("getCaptureSize() called in wrong state: "+mState));
             }
@@ -345,7 +345,7 @@ public class Visualizer {
      */
     public int setScalingMode(int mode)
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("setScalingMode() called in wrong state: "
                         + mState));
@@ -362,7 +362,7 @@ public class Visualizer {
      */
     public int getScalingMode()
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("getScalingMode() called in wrong state: "
                         + mState));
@@ -381,7 +381,7 @@ public class Visualizer {
      */
     public int setMeasurementMode(int mode)
             throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("setMeasurementMode() called in wrong state: "
                         + mState));
@@ -399,7 +399,7 @@ public class Visualizer {
      */
     public int getMeasurementMode()
             throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("getMeasurementMode() called in wrong state: "
                         + mState));
@@ -414,7 +414,7 @@ public class Visualizer {
      */
     public int getSamplingRate()
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState == STATE_UNINITIALIZED) {
                 throw(new IllegalStateException("getSamplingRate() called in wrong state: "+mState));
             }
@@ -435,7 +435,7 @@ public class Visualizer {
      */
     public int getWaveForm(byte[] waveform)
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState != STATE_ENABLED) {
                 throw(new IllegalStateException("getWaveForm() called in wrong state: "+mState));
             }
@@ -502,7 +502,7 @@ public class Visualizer {
      */
     public int getFft(byte[] fft)
     throws IllegalStateException {
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState != STATE_ENABLED) {
                 throw(new IllegalStateException("getFft() called in wrong state: "+mState));
             }
@@ -541,7 +541,7 @@ public class Visualizer {
             Log.e(TAG, "Cannot store measurements in a null object");
             return ERROR_BAD_VALUE;
         }
-        synchronized (mStateLock) {
+        synchronized (sStateLock) {
             if (mState != STATE_ENABLED) {
                 throw (new IllegalStateException("getMeasurementPeakRms() called in wrong state: "
                         + mState));
