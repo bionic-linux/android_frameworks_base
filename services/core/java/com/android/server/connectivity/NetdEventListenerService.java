@@ -41,7 +41,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.BitUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.RingBuffer;
-import com.android.internal.util.TokenBucket;
+import com.android.net.module.util.TokenBucket;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.PrintWriter;
