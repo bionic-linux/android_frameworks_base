@@ -19,7 +19,7 @@ package android.net.metrics;
 import android.net.NetworkCapabilities;
 
 import com.android.internal.util.BitUtils;
-import com.android.internal.util.TokenBucket;
+import com.android.net.module.util.TokenBucket;
 
 import java.util.StringJoiner;
 

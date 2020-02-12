@@ -22,7 +22,7 @@ import android.util.IntArray;
 import android.util.SparseIntArray;
 
 import com.android.internal.util.BitUtils;
-import com.android.internal.util.TokenBucket;
+import com.android.net.module.util.TokenBucket;
 
 /**
  * A class that aggregates connect() statistics.
