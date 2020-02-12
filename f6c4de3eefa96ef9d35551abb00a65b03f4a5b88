@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57de095f_286b1733",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "Suggest additionally saying that this is populated by the network agents.",
+      "range": {
+        "startLine": 850,
+        "startChar": 5,
+        "endLine": 850,
+        "endChar": 7
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e053458a_72c20481",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "This call is only part of the SDK30+, so I don\u0027t think we should mention the backward compatibility tenet in the public comment, since apps are not supposed to be able to call this with target SDK \u003c\u003d 29 (worse, mentioning it may encourage them to compile against an older SDK and use it through reflection).\n\nThe behavior of course is good, it\u0027s just about not mentioning backward compat in the comment and just saying an app needs ACCESS_FINE_LOCATION",
+      "range": {
+        "startLine": 868,
+        "startChar": 13,
+        "endLine": 868,
+        "endChar": 95
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73880f83_8fed4ee2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "I think you need to check that this package name actually belongs to this UID with\n\n  mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackageName);\n\n...since this is now accessible directly from ConnectivityManager.",
+      "range": {
+        "startLine": 1657,
+        "startChar": 78,
+        "endLine": 1657,
+        "endChar": 96
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fb8499_b611adf6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "All calls to this method are guarded against passing null, so I suggest you annotate this @Nullable and immediately return null if the argument is null.",
+      "range": {
+        "startLine": 1666,
+        "startChar": 12,
+        "endLine": 1666,
+        "endChar": 34
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5ee83f_85a6b45a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 6399,
+        "startChar": 16,
+        "endLine": 6399,
+        "endChar": 35
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e8d86e_684dc8d7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 6396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-12T05:26:29Z",
+      "side": 1,
+      "message": "final\n\nAlternatively as setOwnerUid returns `this` you could inline it completely by saying\n\n  .maybeSanitize(new NetworkCapabilities().setOwnerUid(ownerUid),\n        callerUid, getPackageName())\n\n(though it\u0027s not necessarily more readable)",
+      "range": {
+        "startLine": 6396,
+        "startChar": 8,
+        "endLine": 6396,
+        "endChar": 27
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
