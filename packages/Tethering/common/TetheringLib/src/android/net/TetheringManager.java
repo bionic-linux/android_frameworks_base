@@ -113,6 +113,11 @@ public class TetheringManager {
     public static final String EXTRA_ERRORED_TETHER = "erroredArray";
 
     /**
+     * Gives a int provides tethering hardware offload status.
+     */
+    public static final String EXTRA_HARDWARE_OFFLOAD = "android.net.extra.HARDWARE_OFFLOAD";
+
+    /**
      * Invalid tethering type.
      * @see #startTethering.
      */
@@ -171,6 +176,10 @@ public class TetheringManager {
     public static final int TETHER_ERROR_ENTITLEMENT_UNKNOWN = 13;
     public static final int TETHER_ERROR_NO_CHANGE_TETHERING_PERMISSION = 14;
     public static final int TETHER_ERROR_NO_ACCESS_TETHERING_PERMISSION = 15;
+
+    public static final int TETHER_HARDWARE_OFFLOAD_STOPPED = 0;
+    public static final int TETHER_HARDWARE_OFFLOAD_STARTED = 1;
+    public static final int TETHER_HARDWARE_OFFLOAD_UNKNOWN = 2;
 
     /**
      * Create a TetheringManager object for interacting with the tethering service.
