@@ -22,6 +22,30 @@
       "revId": "07f66b9505cf5d15a08ad642dc36a6268574c753",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab1edd0_b507a285",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2020-02-12T14:44:26Z",
+      "side": 1,
+      "message": "good point, a log warn is welcomed. Note: this change will be removed once we do have the API to get device for attributes that JM will provide.",
+      "parentUuid": "c1829c26_8d0f147f",
+      "range": {
+        "startLine": 2120,
+        "startChar": 12,
+        "endLine": 2120,
+        "endChar": 63
+      },
+      "revId": "07f66b9505cf5d15a08ad642dc36a6268574c753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
