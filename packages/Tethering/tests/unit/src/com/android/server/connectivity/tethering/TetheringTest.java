@@ -933,9 +933,10 @@ public class TetheringTest {
         // In tethering mode, in the default configuration, an explicit request
         // for a mobile network is also made.
         verify(mUpstreamNetworkMonitor, times(1)).registerMobileNetworkRequest();
-        // This will be called twice, one is on entering IpServer.STATE_AVAILABLE,
-        // and another one is on IpServer.STATE_TETHERED/IpServer.STATE_LOCAL_ONLY.
-        assertEquals(2, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // This will be called three times, one is on entering IpServer.STATE_AVAILABLE,
+        // and seond one is on IpServer.STATE_TETHERED/IpServer.STATE_LOCAL_ONLY, third one
+        // is offload status change.
+        assertEquals(3, mTetheringDependencies.mIsTetheringSupportedCalls);
 
         /////
         // We do not currently emulate any upstream being found.
@@ -1006,9 +1007,9 @@ public class TetheringTest {
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_UNSPECIFIED);
         verify(mWifiManager).updateInterfaceIpState(
                 TEST_WLAN_IFNAME, WifiManager.IFACE_IP_MODE_TETHERED);
-        // There are 3 state change event:
-        // AVAILABLE -> STATE_TETHERED -> STATE_AVAILABLE.
-        assertEquals(3, mTetheringDependencies.mIsTetheringSupportedCalls);
+        // There are 4 state change event:
+        // AVAILABLE -> STATE_TETHERED -> OFFLOAD CHANGE -> STATE_AVAILABLE.
+        assertEquals(4, mTetheringDependencies.mIsTetheringSupportedCalls);
         verifyTetheringBroadcast(TEST_WLAN_IFNAME, EXTRA_AVAILABLE_TETHER);
         // This is called, but will throw.
         verify(mNetd, times(1)).ipfwdEnableForwarding(TETHERING_NAME);
