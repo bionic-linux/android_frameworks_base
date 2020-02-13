@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1c3d5553_35f29dfa",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "Ah I see. Ideally if you respin this change add a small line to the description saying \"While service-based VPN is always app-based and legacy VPN is always Settings-based, platform VPN can be either.\" or some better wording",
+      "parentUuid": "2e15622b_a3939a2b",
+      "range": {
+        "startLine": 1687,
+        "startChar": 30,
+        "endLine": 1687,
+        "endChar": 43
+      },
+      "revId": "9a4f13069a0674bc5e7ab477a092832cbc81bc2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2896b2b_941de869",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 24

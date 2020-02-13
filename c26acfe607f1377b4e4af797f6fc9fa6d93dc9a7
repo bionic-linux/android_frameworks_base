@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d9fef9_93978eb7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "Now unused",
+      "range": {
+        "startLine": 1106,
+        "startChar": 20,
+        "endLine": 1106,
+        "endChar": 23
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963fc16e_c42e3514",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "More like enforceUnrestrictedUser right ?",
+      "range": {
+        "startLine": 1120,
+        "startChar": 19,
+        "endLine": 1120,
+        "endChar": 20
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8332e2e2_7ccd9ffb",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "final especially for this kind of dangerous thing\n\nAlternatively, use withClearCallingIdentity",
+      "range": {
+        "startLine": 1818,
+        "startChar": 8,
+        "endLine": 1818,
+        "endChar": 12
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275eafc5_44342696",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "Instead of copy-pasting, could we factor this ?\n\n  private int checkMockedPermission(String permission, Supplier\u003cInteger\u003e ifAbsent) {\n    final Integer granted \u003d mMockedPermissions.get(permission);\n    if granted !\u003d null ? granted : ifAbsent();\n  }\n\n  @Override public int checkPermission(String permission, int pid, int uid) {\n    return checkMockedPermission(permission, () -\u003e super.checkPermission(permission, pid, uid));\n  }\n\n  @Override public int checkCallingOrSelfPermission(String permission) {\n    return checkMockedPermission(permission, () -\u003e super.checkCallingOrSelfPermission(permission));\n  }\n\n...or similar",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 469,
+        "endChar": 9
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e9881d_a8f4bf07",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 6440,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:48:18Z",
+      "side": 1,
+      "message": "Can you add a few lines to this test to make sure\n• service VPN does receive the UID\n• a different app gets thrown at\n\nIn fact, this should really be a CTS, and it should test calling the CM method rather than the CS method. Though there is nothing wrong with having this here.",
+      "range": {
+        "startLine": 6440,
+        "startChar": 8,
+        "endLine": 6440,
+        "endChar": 9
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
