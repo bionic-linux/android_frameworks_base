@@ -4166,7 +4166,7 @@ public final class Telephony {
          * The subscription which received this cell broadcast message.
          * <P>Type: INTEGER</P>
          */
-        public static final String SUB_ID = "sub_id";
+        public static final String SUBSCRIPTION_ID = "sub_id";
 
         /**
          * The slot which received this cell broadcast message.
@@ -4243,6 +4243,15 @@ public final class Telephony {
          * <P>Type: TEXT</P>
          */
         public static final String LANGUAGE_CODE = "language";
+
+        /**
+         * Dats coding scheme of the message.
+         * <p>
+         * The data coding scheme (dcs) value defined in 3GPP TS 23.038 section 4
+         * </p>
+         * <P>Type: INTEGER</P>
+         */
+        public static final String DATA_CODING_SCHEME = "dcs";
 
         /**
          * Message body.
@@ -4332,16 +4341,30 @@ public final class Telephony {
         public static final String DEFAULT_SORT_ORDER = DELIVERY_TIME + " DESC";
 
         /**
-         * The timestamp in millisecond of when the device received the message.
+         * The timestamp in millisecond, reported by {@link System#currentTimeMillis()}, when the
+         * device received the message.
          * <P>Type: BIGINT</P>
          */
         public static final String RECEIVED_TIME = "received_time";
 
         /**
+         * The timestamp in millisecond, reported by {@link System#currentTimeMillis()}, when
+         * location was checked last time. Note this is only applicable to geo-targeting message.
+         * For non geo-targeting message. the field will be set to -1.
+         * <P>Type: BIGINT</P>
+         */
+        public static final String LOCATION_CHECK_TIME = "location_check_time";
+        /**
          * Indicates that whether the message has been broadcasted to the application.
          * <P>Type: BOOLEAN</P>
          */
         public static final String MESSAGE_BROADCASTED = "message_broadcasted";
+
+        /**
+         * Indicates that whether the message has been displayed to the user.
+         * <P>Type: BOOLEAN</P>
+         */
+        public static final String MESSAGE_DISPLAYED = "message_displayed";
 
         /**
          * The Warning Area Coordinates Elements. This element is used for geo-fencing purpose.
@@ -4424,7 +4447,7 @@ public final class Telephony {
         public static final String[] QUERY_COLUMNS_FWK = {
                 _ID,
                 SLOT_INDEX,
-                SUB_ID,
+                SUBSCRIPTION_ID,
                 GEOGRAPHICAL_SCOPE,
                 PLMN,
                 LAC,

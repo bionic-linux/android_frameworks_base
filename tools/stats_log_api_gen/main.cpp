@@ -511,7 +511,10 @@ print_usage()
     fprintf(stderr, "  --javaClass CLASS    the class name of the java class.\n");
     fprintf(stderr, "                       Optional for Java with module.\n");
     fprintf(stderr, "                       Default is \"StatsLogInternal\"\n");
-    fprintf(stderr, "  --supportQ           Include support for Android Q.\n");
+    fprintf(stderr, "  --supportQ           Include runtime support for Android Q.\n");
+    fprintf(stderr, "  --worksource         Include support for logging WorkSource objects.\n");
+    fprintf(stderr, "  --compileQ           Include compile-time support for Android Q "
+            "(Java only).\n");
 }
 
 /**
@@ -534,6 +537,8 @@ run(int argc, char const*const* argv)
     string javaPackage = DEFAULT_JAVA_PACKAGE;
     string javaClass = DEFAULT_JAVA_CLASS;
     bool supportQ = false;
+    bool supportWorkSource = false;
+    bool compileQ = false;
 
     int index = 1;
     while (index < argc) {
@@ -626,6 +631,10 @@ run(int argc, char const*const* argv)
             atomsInfoCppHeaderImport = argv[index];
         } else if (0 == strcmp("--supportQ", argv[index])) {
             supportQ = true;
+        } else if (0 == strcmp("--worksource", argv[index])) {
+            supportWorkSource = true;
+        } else if (0 == strcmp("--compileQ", argv[index])) {
+            compileQ = true;
         }
 
         index++;
@@ -641,9 +650,15 @@ run(int argc, char const*const* argv)
         return 1;
     }
 
-    if (DEFAULT_MODULE_NAME == moduleName && supportQ) {
+    if (DEFAULT_MODULE_NAME == moduleName && (supportQ || compileQ)) {
         // Support for Q schema is not needed for default module.
         fprintf(stderr, "%s cannot support Q schema\n", moduleName.c_str());
+        return 1;
+    }
+
+    if (supportQ && compileQ) {
+        // Runtime Q support is redundant if compile-time Q support is required.
+        fprintf(stderr, "Cannot specify compileQ and supportQ simultaneously.\n");
         return 1;
     }
 
@@ -728,19 +743,15 @@ run(int argc, char const*const* argv)
             fprintf(stderr, "Unable to open file for write: %s\n", javaFilename.c_str());
             return 1;
         }
-        // If this is for a specific module, the java package must also be provided.
-        if (moduleName != DEFAULT_MODULE_NAME && javaPackage== DEFAULT_JAVA_PACKAGE) {
-            fprintf(stderr, "Must supply --javaPackage if supplying a specific module\n");
-            return 1;
-        }
 
 #if defined(STATS_SCHEMA_LEGACY)
         if (moduleName == DEFAULT_MODULE_NAME) {
             errorCount = android::stats_log_api_gen::write_stats_log_java_q(
-                    out, atoms, attributionDecl);
+                    out, atoms, attributionDecl, supportWorkSource);
         } else {
             errorCount = android::stats_log_api_gen::write_stats_log_java_q_for_module(
-                    out, atoms, attributionDecl, moduleName, javaClass, javaPackage);
+                    out, atoms, attributionDecl, moduleName, javaClass, javaPackage,
+                    supportWorkSource);
 
         }
 #else
@@ -748,8 +759,15 @@ run(int argc, char const*const* argv)
             javaClass = "StatsLogInternal";
             javaPackage = "android.util";
         }
-        errorCount = android::stats_log_api_gen::write_stats_log_java(
-                out, atoms, attributionDecl, moduleName, javaClass, javaPackage, supportQ);
+        if (compileQ) {
+            errorCount = android::stats_log_api_gen::write_stats_log_java_q_for_module(
+                    out, atoms, attributionDecl, moduleName, javaClass, javaPackage,
+                    supportWorkSource);
+        } else {
+            errorCount = android::stats_log_api_gen::write_stats_log_java(
+                    out, atoms, attributionDecl, moduleName, javaClass, javaPackage, supportQ,
+                    supportWorkSource);
+        }
 #endif
 
         fclose(out);

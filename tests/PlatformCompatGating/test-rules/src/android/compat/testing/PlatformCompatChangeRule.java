@@ -24,7 +24,9 @@ import android.compat.Compatibility.ChangeConfig;
 import android.content.Context;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+
 
 import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.compat.IPlatformCompat;
@@ -93,8 +95,9 @@ public class PlatformCompatChangeRule extends CoreCompatChangeRule {
                 throw new IllegalStateException("Could not get IPlatformCompat service!");
             }
             uiAutomation.adoptShellPermissionIdentity(
-                    Manifest.permission.READ_COMPAT_CHANGE_CONFIG,
-                    Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG);
+                    Manifest.permission.LOG_COMPAT_CHANGE,
+                    Manifest.permission.OVERRIDE_COMPAT_CHANGE_CONFIG,
+                    Manifest.permission.READ_COMPAT_CHANGE_CONFIG);
             Compatibility.setOverrides(mConfig);
             try {
                 platformCompat.setOverridesForTest(new CompatibilityChangeConfig(mConfig),

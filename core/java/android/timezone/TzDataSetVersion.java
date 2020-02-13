@@ -17,7 +17,6 @@
 package android.timezone;
 
 import android.annotation.NonNull;
-import android.annotation.SystemApi;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -45,7 +44,6 @@ import java.util.Objects;
  * @hide
  */
 @VisibleForTesting
-@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class TzDataSetVersion {
 
     /**
@@ -88,8 +86,7 @@ public final class TzDataSetVersion {
      * A checked exception used in connection with time zone data sets.
      * @hide
      */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-    public static class TzDataSetException extends Exception {
+    public static final class TzDataSetException extends Exception {
 
         /** Creates an instance with a message. */
         public TzDataSetException(String message) {
@@ -111,23 +108,23 @@ public final class TzDataSetVersion {
 
     /** Returns the major version number. See {@link TzDataSetVersion}. */
     public int getFormatMajorVersion() {
-        return mDelegate.formatMajorVersion;
+        return mDelegate.getFormatMajorVersion();
     }
 
     /** Returns the minor version number. See {@link TzDataSetVersion}. */
     public int getFormatMinorVersion() {
-        return mDelegate.formatMinorVersion;
+        return mDelegate.getFormatMinorVersion();
     }
 
     /** Returns the tzdb version string. See {@link TzDataSetVersion}. */
     @NonNull
     public String getRulesVersion() {
-        return mDelegate.rulesVersion;
+        return mDelegate.getRulesVersion();
     }
 
     /** Returns the Android revision. See {@link TzDataSetVersion}. */
     public int getRevision() {
-        return mDelegate.revision;
+        return mDelegate.getRevision();
     }
 
     @Override

@@ -218,6 +218,14 @@ filegroup {
 }
 
 filegroup {
+    name: "framework-wifi-updatable-exported-aidl-sources",
+    srcs: [
+        "wifi/aidl-export/**/*.aidl",
+    ],
+    path: "wifi/aidl-export",
+}
+
+filegroup {
     name: "framework-non-updatable-sources",
     srcs: [
         // Java/AIDL sources under frameworks/base
@@ -270,7 +278,8 @@ filegroup {
 
         // etc.
         ":framework-javastream-protos",
-        ":framework-statslog-gen",
+        ":framework-statslog-gen", // StatsLogInternal.java
+        ":statslog-framework-java-gen", // FrameworkStatsLog.java
     ],
 }
 
@@ -279,6 +288,7 @@ filegroup {
     srcs: [
         ":framework-sdkextensions-sources",
         ":framework-tethering-srcs",
+        ":framework-wifi-updatable-exported-aidl-sources",
         ":updatable-media-srcs",
         ":ike-srcs",
     ]
@@ -316,6 +326,7 @@ java_defaults {
             "telecomm/java",
             "telephony/java",
             "wifi/java",
+            "wifi/aidl-export",
         ],
     },
 }
@@ -526,7 +537,6 @@ java_library {
     host_supported: true,
     srcs: [
         "core/java/android/annotation/IntDef.java",
-        "core/java/android/annotation/UnsupportedAppUsage.java",
     ],
     static_libs: [
         "art.module.api.annotations",
@@ -552,8 +562,16 @@ java_library {
 genrule {
     name: "framework-statslog-gen",
     tools: ["stats-log-api-gen"],
-    cmd: "$(location stats-log-api-gen) --java $(out)",
+    cmd: "$(location stats-log-api-gen) --java $(out) --worksource",
     out: ["android/util/StatsLogInternal.java"],
+}
+
+genrule {
+    name: "statslog-framework-java-gen",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --java $(out) --module framework" +
+         " --javaPackage com.android.internal.util --javaClass FrameworkStatsLog --worksource",
+    out: ["com/android/internal/util/FrameworkStatsLog.java"],
 }
 
 gensrcs {
@@ -591,7 +609,6 @@ filegroup {
         "core/java/android/annotation/IntDef.java",
         "core/java/android/annotation/IntRange.java",
         "core/java/android/annotation/SystemApi.java",
-        "core/java/android/annotation/UnsupportedAppUsage.java",
         "core/java/com/android/internal/annotations/GuardedBy.java",
         "core/java/com/android/internal/annotations/VisibleForTesting.java",
     ],
@@ -662,6 +679,7 @@ filegroup {
         "core/java/android/annotation/RequiresPermission.java",
         "core/java/android/annotation/SystemApi.java",
         "core/java/android/annotation/TestApi.java",
+        "core/java/com/android/internal/annotations/GuardedBy.java",
     ],
 }
 // Build ext.jar
@@ -927,7 +945,6 @@ java_library {
         "core/java/android/annotation/Nullable.java",
         "core/java/android/annotation/SystemApi.java",
         "core/java/android/annotation/TestApi.java",
-        "core/java/android/annotation/UnsupportedAppUsage.java",
         "core/java/android/os/HidlMemory.java",
         "core/java/android/os/HwBinder.java",
         "core/java/android/os/HwBlob.java",
@@ -994,7 +1011,6 @@ filegroup {
         "core/java/android/annotation/StringDef.java",
         "core/java/android/annotation/SystemApi.java",
         "core/java/android/annotation/TestApi.java",
-        "core/java/android/annotation/UnsupportedAppUsage.java",
         "core/java/com/android/internal/annotations/GuardedBy.java",
     ],
 }

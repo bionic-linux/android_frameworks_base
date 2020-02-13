@@ -26,7 +26,7 @@ import android.os.SystemClock;
 import libcore.timezone.CountryTimeZones;
 import libcore.timezone.CountryTimeZones.TimeZoneMapping;
 import libcore.timezone.TimeZoneFinder;
-import libcore.timezone.ZoneInfoDB;
+import libcore.timezone.ZoneInfoDb;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -79,8 +79,8 @@ public class TimeUtils {
             return null;
         }
         CountryTimeZones.OffsetResult offsetResult = countryTimeZones.lookupByOffsetWithBias(
-                offsetMillis, isDst, null /* dstOffsetMillis */, whenMillis, bias);
-        return offsetResult != null ? offsetResult.mTimeZone : null;
+                whenMillis, bias, offsetMillis, isDst);
+        return offsetResult != null ? offsetResult.getTimeZone() : null;
     }
 
     /**
@@ -108,8 +108,8 @@ public class TimeUtils {
 
         List<String> timeZoneIds = new ArrayList<>();
         for (TimeZoneMapping timeZoneMapping : countryTimeZones.getTimeZoneMappings()) {
-            if (timeZoneMapping.showInPicker) {
-                timeZoneIds.add(timeZoneMapping.timeZoneId);
+            if (timeZoneMapping.isShownInPicker()) {
+                timeZoneIds.add(timeZoneMapping.getTimeZoneId());
             }
         }
         return Collections.unmodifiableList(timeZoneIds);
@@ -133,7 +133,7 @@ public class TimeUtils {
      * during the lifetime of an activity.
      */
     public static String getTimeZoneDatabaseVersion() {
-        return ZoneInfoDB.getInstance().getVersion();
+        return ZoneInfoDb.getInstance().getVersion();
     }
 
     /** @hide Field length that can hold 999 days of time */

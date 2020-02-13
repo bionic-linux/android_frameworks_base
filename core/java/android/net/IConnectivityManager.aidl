@@ -116,9 +116,17 @@ interface IConnectivityManager
 
     boolean prepareVpn(String oldPackage, String newPackage, int userId);
 
-    void setVpnPackageAuthorization(String packageName, int userId, boolean authorized);
+    void setVpnPackageAuthorization(String packageName, int userId, int vpnType);
 
     ParcelFileDescriptor establishVpn(in VpnConfig config);
+
+    boolean provisionVpnProfile(in VpnProfile profile, String packageName);
+
+    void deleteVpnProfile(String packageName);
+
+    void startVpnProfile(String packageName);
+
+    void stopVpnProfile(String packageName);
 
     VpnConfig getVpnConfig(int userId);
 
@@ -213,7 +221,7 @@ interface IConnectivityManager
     boolean isCallerCurrentAlwaysOnVpnLockdownApp();
 
     void registerConnectivityDiagnosticsCallback(in IConnectivityDiagnosticsCallback callback,
-            in NetworkRequest request);
+            in NetworkRequest request, String callingPackageName);
     void unregisterConnectivityDiagnosticsCallback(in IConnectivityDiagnosticsCallback callback);
 
     IBinder startOrGetTestNetworkService();

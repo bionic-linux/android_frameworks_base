@@ -16,8 +16,6 @@
 
 package android.telephony;
 
-import com.android.telephony.Rlog;
-
 import static android.telephony.TelephonyManager.PHONE_TYPE_CDMA;
 
 import android.Manifest;
@@ -40,12 +38,12 @@ import com.android.internal.telephony.SmsHeader;
 import com.android.internal.telephony.SmsMessageBase;
 import com.android.internal.telephony.SmsMessageBase.SubmitPduBase;
 import com.android.internal.telephony.cdma.sms.UserData;
+import com.android.telephony.Rlog;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 /**
  * A Short Message Service message.
@@ -629,7 +627,7 @@ public class SmsMessage {
                     destinationAddress, message, statusReportRequested);
         }
 
-        return new SubmitPdu(spb);
+        return spb != null ? new SubmitPdu(spb) : null;
     }
 
     /**
@@ -657,7 +655,7 @@ public class SmsMessage {
                     destinationAddress, destinationPort, data, statusReportRequested);
         }
 
-        return new SubmitPdu(spb);
+        return spb != null ? new SubmitPdu(spb) : null;
     }
 
     // TODO: SubmitPdu class is used for SMS-DELIVER also now. Refactor for SubmitPdu and new

@@ -1485,9 +1485,8 @@ public final class BluetoothAdapter {
      * <p>The Bluetooth scan mode determines if the local adapter is
      * connectable and/or discoverable from remote Bluetooth devices.
      * <p>For privacy reasons, discoverable mode is automatically turned off
-     * after <code>duration</code> seconds. For example, 120 seconds should be
-     * enough for a remote device to initiate and complete its discovery
-     * process.
+     * after <code>durationMillis</code> milliseconds. For example, 120000 milliseconds should be
+     * enough for a remote device to initiate and complete its discovery process.
      * <p>Valid scan mode values are:
      * {@link #SCAN_MODE_NONE},
      * {@link #SCAN_MODE_CONNECTABLE},
@@ -1502,24 +1501,29 @@ public final class BluetoothAdapter {
      * </code>instead.
      *
      * @param mode valid scan mode
-     * @param duration time in seconds to apply scan mode, only used for {@link
+     * @param durationMillis time in milliseconds to apply scan mode, only used for {@link
      * #SCAN_MODE_CONNECTABLE_DISCOVERABLE}
      * @return true if the scan mode was set, false otherwise
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
-    public boolean setScanMode(@ScanMode int mode, int duration) {
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean setScanMode(@ScanMode int mode, long durationMillis) {
         if (getState() != STATE_ON) {
             return false;
         }
         try {
             mServiceLock.readLock().lock();
             if (mService != null) {
-                return mService.setScanMode(mode, duration);
+                int durationSeconds = Math.toIntExact(durationMillis / 1000);
+                return mService.setScanMode(mode, durationSeconds);
             }
         } catch (RemoteException e) {
             Log.e(TAG, "", e);
+        } catch (ArithmeticException ex) {
+            Log.e(TAG, "setScanMode: Duration in seconds outside of the bounds of an int");
+            throw new IllegalArgumentException("Duration not in bounds. In seconds, the "
+                    + "durationMillis must be in the range of an int");
         } finally {
             mServiceLock.readLock().unlock();
         }
@@ -1552,13 +1556,22 @@ public final class BluetoothAdapter {
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean setScanMode(@ScanMode int mode) {
         if (getState() != STATE_ON) {
             return false;
         }
-        /* getDiscoverableTimeout() to use the latest from NV than use 0 */
-        return setScanMode(mode, getDiscoverableTimeout());
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.setScanMode(mode, getDiscoverableTimeout());
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
     }
 
     /** @hide */
@@ -1766,6 +1779,45 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Removes the active device for the grouping of @ActiveDeviceUse specified
+     *
+     * @param profiles represents the purpose for which we are setting this as the active device.
+     *                 Possible values are:
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_AUDIO},
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PHONE_CALL},
+     *                 {@link BluetoothAdapter#ACTIVE_DEVICE_ALL}
+     * @return false on immediate error, true otherwise
+     * @throws IllegalArgumentException if device is null or profiles is not one of
+     * {@link ActiveDeviceUse}
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean removeActiveDevice(@ActiveDeviceUse int profiles) {
+        if (profiles != ACTIVE_DEVICE_AUDIO && profiles != ACTIVE_DEVICE_PHONE_CALL
+                && profiles != ACTIVE_DEVICE_ALL) {
+            Log.e(TAG, "Invalid profiles param value in removeActiveDevice");
+            throw new IllegalArgumentException("Profiles must be one of "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_AUDIO, "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PHONE_CALL, or "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_ALL");
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.removeActiveDevice(profiles);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+
+        return false;
+    }
+
+    /**
+     * Sets device as the active devices for the profiles passed into the function
      *
      * @param device is the remote bluetooth device
      * @param profiles represents the purpose for which we are setting this as the active device.
@@ -1774,18 +1826,26 @@ public final class BluetoothAdapter {
      *                 {@link BluetoothAdapter#ACTIVE_DEVICE_PHONE_CALL},
      *                 {@link BluetoothAdapter#ACTIVE_DEVICE_ALL}
      * @return false on immediate error, true otherwise
+     * @throws IllegalArgumentException if device is null or profiles is not one of
+     * {@link ActiveDeviceUse}
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
-    public boolean setActiveDevice(@Nullable BluetoothDevice device,
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public boolean setActiveDevice(@NonNull BluetoothDevice device,
             @ActiveDeviceUse int profiles) {
+        if (device == null) {
+            Log.e(TAG, "setActiveDevice: Null device passed as parameter");
+            throw new IllegalArgumentException("device cannot be null");
+        }
         if (profiles != ACTIVE_DEVICE_AUDIO && profiles != ACTIVE_DEVICE_PHONE_CALL
                 && profiles != ACTIVE_DEVICE_ALL) {
             Log.e(TAG, "Invalid profiles param value in setActiveDevice");
-            return false;
+            throw new IllegalArgumentException("Profiles must be one of "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_AUDIO, "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_PHONE_CALL, or "
+                    + "BluetoothAdapter.ACTIVE_DEVICE_ALL");
         }
-
         try {
             mServiceLock.readLock().lock();
             if (mService != null) {
@@ -1801,15 +1861,19 @@ public final class BluetoothAdapter {
     }
 
     /**
-     * Connects all enabled and supported bluetooth profiles between the local and remote device
+     * Connects all enabled and supported bluetooth profiles between the local and remote device.
+     * Connection is asynchronous and you should listen to each profile's broadcast intent
+     * ACTION_CONNECTION_STATE_CHANGED to verify whether connection was successful. For example,
+     * to verify a2dp is connected, you would listen for
+     * {@link BluetoothA2dp#ACTION_CONNECTION_STATE_CHANGED}
      *
      * @param device is the remote device with which to connect these profiles
-     * @return true if all profiles successfully connected, false if an error occurred
+     * @return true if message sent to try to connect all profiles, false if an error occurred
      *
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean connectAllEnabledProfiles(@NonNull BluetoothDevice device) {
         try {
             mServiceLock.readLock().lock();
@@ -1826,15 +1890,19 @@ public final class BluetoothAdapter {
     }
 
     /**
-     * Disconnects all enabled and supported bluetooth profiles between the local and remote device
+     * Disconnects all enabled and supported bluetooth profiles between the local and remote device.
+     * Disconnection is asynchronous and you should listen to each profile's broadcast intent
+     * ACTION_CONNECTION_STATE_CHANGED to verify whether disconnection was successful. For example,
+     * to verify a2dp is disconnected, you would listen for
+     * {@link BluetoothA2dp#ACTION_CONNECTION_STATE_CHANGED}
      *
      * @param device is the remote device with which to disconnect these profiles
-     * @return true if all profiles successfully disconnected, false if an error occurred
+     * @return true if message sent to try to disconnect all profiles, false if an error occurred
      *
      * @hide
      */
     @SystemApi
-    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
     public boolean disconnectAllEnabledProfiles(@NonNull BluetoothDevice device) {
         try {
             mServiceLock.readLock().lock();
@@ -2159,6 +2227,33 @@ public final class BluetoothAdapter {
                 result.send(0, null);
             }
         }
+    }
+
+    /**
+     * Fetches a list of the most recently connected bluetooth devices ordered by how recently they
+     * were connected with most recently first and least recently last
+     *
+     * @return {@link List} of bonded {@link BluetoothDevice} ordered by how recently they were
+     * connected
+     *
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_ADMIN)
+    public @NonNull List<BluetoothDevice> getMostRecentlyConnectedDevices() {
+        if (getState() != STATE_ON) {
+            return new ArrayList<>();
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.getMostRecentlyConnectedDevices();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return new ArrayList<>();
     }
 
     /**

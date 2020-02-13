@@ -153,22 +153,55 @@ public final class AccessNetworkConstants {
         public static final int BAND_12 = 12;
         public static final int BAND_13 = 13;
         public static final int BAND_14 = 14;
-        /** band 15, 16, 17, 18 are reserved */
+        // band 15, 16, 17, 18 are reserved
         public static final int BAND_19 = 19;
         public static final int BAND_20 = 20;
         public static final int BAND_21 = 21;
         public static final int BAND_22 = 22;
-        /** band 23, 24 are reserved */
+        // band 23, 24 are reserved
         public static final int BAND_25 = 25;
         public static final int BAND_26 = 26;
 
-        /** Frequency bands for TD-SCDMA. Defined in 3GPP TS 25.102, Table 5.2. */
+        // Frequency bands for TD-SCDMA. Defined in 3GPP TS 25.102, Table 5.2.
+
+        /**
+         * Band A
+         * 1900 - 1920 MHz: Uplink and downlink transmission
+         * 2010 - 2025 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_A = 101;
+
+        /**
+         * Band B
+         * 1850 - 1910 MHz: Uplink and downlink transmission
+         * 1930 - 1990 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_B = 102;
+
+        /**
+         * Band C
+         * 1910 - 1930 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_C = 103;
+
+        /**
+         * Band D
+         * 2570 - 2620 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_D = 104;
+
+        /**
+         * Band E
+         * 2300—2400 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_E = 105;
+
+        /**
+         * Band F
+         * 1880 - 1920 MHz: Uplink and downlink transmission
+         */
         public static final int BAND_F = 106;
+
         /** @hide */
         private UtranBand() {}
     }
@@ -316,6 +349,159 @@ public final class AccessNetworkConstants {
         public static final int BAND_258 = 258;
         public static final int BAND_260 = 260;
         public static final int BAND_261 = 261;
+
+        /**
+         * NR Bands
+         *
+         * @hide */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(prefix = {"BAND_"},
+                value = {BAND_1,
+                        BAND_2,
+                        BAND_3,
+                        BAND_5,
+                        BAND_7,
+                        BAND_8,
+                        BAND_12,
+                        BAND_14,
+                        BAND_18,
+                        BAND_20,
+                        BAND_25,
+                        BAND_28,
+                        BAND_29,
+                        BAND_30,
+                        BAND_34,
+                        BAND_38,
+                        BAND_39,
+                        BAND_40,
+                        BAND_41,
+                        BAND_48,
+                        BAND_50,
+                        BAND_51,
+                        BAND_65,
+                        BAND_66,
+                        BAND_70,
+                        BAND_71,
+                        BAND_74,
+                        BAND_75,
+                        BAND_76,
+                        BAND_77,
+                        BAND_78,
+                        BAND_79,
+                        BAND_80,
+                        BAND_81,
+                        BAND_82,
+                        BAND_83,
+                        BAND_84,
+                        BAND_86,
+                        BAND_90,
+                        BAND_257,
+                        BAND_258,
+                        BAND_260,
+                        BAND_261})
+        public @interface NgranBand {}
+
+        /**
+         * Unknown NR frequency.
+         *
+         * @hide
+         */
+        @SystemApi
+        @TestApi
+        public static final int FREQUENCY_RANGE_GROUP_UNKNOWN = 0;
+
+        /**
+         * NR frequency group 1 defined in 3GPP TS 38.101-1 table 5.2-1
+         *
+         * @hide
+         */
+        @SystemApi
+        @TestApi
+        public static final int FREQUENCY_RANGE_GROUP_1 = 1;
+
+        /**
+         * NR frequency group 2 defined in 3GPP TS 38.101-2 table 5.2-1
+         *
+         * @hide
+         */
+        @SystemApi
+        @TestApi
+        public static final int FREQUENCY_RANGE_GROUP_2 = 2;
+
+        /**
+         * Radio frequency range group
+         *
+         * @hide
+         */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(prefix = {"FREQUENCY_RANGE_GROUP_"},
+                value = {
+                        FREQUENCY_RANGE_GROUP_UNKNOWN,
+                        FREQUENCY_RANGE_GROUP_1,
+                        FREQUENCY_RANGE_GROUP_2})
+        public @interface FrequencyRangeGroup {}
+
+        /**
+         * Get frequency range group
+         *
+         * @param band NR band
+         * @return The frequency range group
+         *
+         * @hide
+         */
+        @SystemApi
+        @TestApi
+        public static @FrequencyRangeGroup int getFrequencyRangeGroup(@NgranBand int band) {
+            switch (band) {
+                case BAND_1:
+                case BAND_2:
+                case BAND_3:
+                case BAND_5:
+                case BAND_7:
+                case BAND_8:
+                case BAND_12:
+                case BAND_14:
+                case BAND_18:
+                case BAND_20:
+                case BAND_25:
+                case BAND_28:
+                case BAND_29:
+                case BAND_30:
+                case BAND_34:
+                case BAND_38:
+                case BAND_39:
+                case BAND_40:
+                case BAND_41:
+                case BAND_48:
+                case BAND_50:
+                case BAND_51:
+                case BAND_65:
+                case BAND_66:
+                case BAND_70:
+                case BAND_71:
+                case BAND_74:
+                case BAND_75:
+                case BAND_76:
+                case BAND_77:
+                case BAND_78:
+                case BAND_79:
+                case BAND_80:
+                case BAND_81:
+                case BAND_82:
+                case BAND_83:
+                case BAND_84:
+                case BAND_86:
+                case BAND_90:
+                    return FREQUENCY_RANGE_GROUP_1;
+                case BAND_257:
+                case BAND_258:
+                case BAND_260:
+                case BAND_261:
+                    return FREQUENCY_RANGE_GROUP_2;
+                default:
+                    return FREQUENCY_RANGE_GROUP_UNKNOWN;
+            }
+        };
 
         /** @hide */
         private NgranBands() {}

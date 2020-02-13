@@ -25,13 +25,16 @@ import android.os.Binder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.os.RemoteException;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 
 /**
@@ -57,6 +60,11 @@ import java.util.concurrent.Executor;
  * </ul>
  */
 public class ConnectivityDiagnosticsManager {
+    /** @hide */
+    @VisibleForTesting
+    public static final Map<ConnectivityDiagnosticsCallback, ConnectivityDiagnosticsBinder>
+            sCallbacks = new ConcurrentHashMap<>();
+
     private final Context mContext;
     private final IConnectivityManager mService;
 
@@ -194,7 +202,7 @@ public class ConnectivityDiagnosticsManager {
          */
         @NetworkProbe
         public static final String KEY_NETWORK_PROBES_ATTEMPTED_BITMASK =
-                "networkProbesAttemped";
+                "networkProbesAttempted";
 
         /** @hide */
         @StringDef(prefix = {"KEY_"}, value = {
@@ -244,8 +252,8 @@ public class ConnectivityDiagnosticsManager {
                 @NonNull PersistableBundle additionalInfo) {
             mNetwork = network;
             mReportTimestamp = reportTimestamp;
-            mLinkProperties = linkProperties;
-            mNetworkCapabilities = networkCapabilities;
+            mLinkProperties = new LinkProperties(linkProperties);
+            mNetworkCapabilities = new NetworkCapabilities(networkCapabilities);
             mAdditionalInfo = additionalInfo;
         }
 
@@ -425,6 +433,12 @@ public class ConnectivityDiagnosticsManager {
         /** The detection method used to identify the suspected data stall */
         @DetectionMethod private final int mDetectionMethod;
 
+        /** LinkProperties available on the Network at the reported timestamp */
+        @NonNull private final LinkProperties mLinkProperties;
+
+        /** NetworkCapabilities available on the Network at the reported timestamp */
+        @NonNull private final NetworkCapabilities mNetworkCapabilities;
+
         /** PersistableBundle that may contain additional information on the suspected data stall */
         @NonNull private final PersistableBundle mStallDetails;
 
@@ -438,16 +452,23 @@ public class ConnectivityDiagnosticsManager {
          * @param network The Network for which this DataStallReport applies
          * @param reportTimestamp The timestamp for the report
          * @param detectionMethod The detection method used to identify this data stall
+         * @param linkProperties The LinkProperties available on network at reportTimestamp
+         * @param networkCapabilities The NetworkCapabilities available on network at
+         *     reportTimestamp
          * @param stallDetails A PersistableBundle that may contain additional info about the report
          */
         public DataStallReport(
                 @NonNull Network network,
                 long reportTimestamp,
                 @DetectionMethod int detectionMethod,
+                @NonNull LinkProperties linkProperties,
+                @NonNull NetworkCapabilities networkCapabilities,
                 @NonNull PersistableBundle stallDetails) {
             mNetwork = network;
             mReportTimestamp = reportTimestamp;
             mDetectionMethod = detectionMethod;
+            mLinkProperties = new LinkProperties(linkProperties);
+            mNetworkCapabilities = new NetworkCapabilities(networkCapabilities);
             mStallDetails = stallDetails;
         }
 
@@ -480,6 +501,26 @@ public class ConnectivityDiagnosticsManager {
         }
 
         /**
+         * Returns the LinkProperties available when this report was taken.
+         *
+         * @return LinkProperties available on the Network at the reported timestamp
+         */
+        @NonNull
+        public LinkProperties getLinkProperties() {
+            return new LinkProperties(mLinkProperties);
+        }
+
+        /**
+         * Returns the NetworkCapabilities when this report was taken.
+         *
+         * @return NetworkCapabilities available on the Network at the reported timestamp
+         */
+        @NonNull
+        public NetworkCapabilities getNetworkCapabilities() {
+            return new NetworkCapabilities(mNetworkCapabilities);
+        }
+
+        /**
          * Returns a PersistableBundle with additional info for this report.
          *
          * <p>Gets a bundle with details about the suspected data stall including information
@@ -505,12 +546,20 @@ public class ConnectivityDiagnosticsManager {
             return mReportTimestamp == that.mReportTimestamp
                     && mDetectionMethod == that.mDetectionMethod
                     && mNetwork.equals(that.mNetwork)
+                    && mLinkProperties.equals(that.mLinkProperties)
+                    && mNetworkCapabilities.equals(that.mNetworkCapabilities)
                     && persistableBundleEquals(mStallDetails, that.mStallDetails);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(mNetwork, mReportTimestamp, mDetectionMethod, mStallDetails);
+            return Objects.hash(
+                    mNetwork,
+                    mReportTimestamp,
+                    mDetectionMethod,
+                    mLinkProperties,
+                    mNetworkCapabilities,
+                    mStallDetails);
         }
 
         /** {@inheritDoc} */
@@ -525,6 +574,8 @@ public class ConnectivityDiagnosticsManager {
             dest.writeParcelable(mNetwork, flags);
             dest.writeLong(mReportTimestamp);
             dest.writeInt(mDetectionMethod);
+            dest.writeParcelable(mLinkProperties, flags);
+            dest.writeParcelable(mNetworkCapabilities, flags);
             dest.writeParcelable(mStallDetails, flags);
         }
 
@@ -536,6 +587,8 @@ public class ConnectivityDiagnosticsManager {
                                 in.readParcelable(null),
                                 in.readLong(),
                                 in.readInt(),
+                                in.readParcelable(null),
+                                in.readParcelable(null),
                                 in.readParcelable(null));
                     }
 
@@ -631,8 +684,9 @@ public class ConnectivityDiagnosticsManager {
     /**
      * Registers a ConnectivityDiagnosticsCallback with the System.
      *
-     * <p>Only apps that offer network connectivity to the user are allowed to register callbacks.
-     * This includes:
+     * <p>Only apps that offer network connectivity to the user should be registering callbacks.
+     * These are the only apps whose callbacks will be invoked by the system. Apps considered to
+     * meet these conditions include:
      *
      * <ul>
      *   <li>Carrier apps with active subscriptions
@@ -640,15 +694,14 @@ public class ConnectivityDiagnosticsManager {
      *   <li>WiFi Suggesters
      * </ul>
      *
-     * <p>Callbacks will be limited to receiving notifications for networks over which apps provide
-     * connectivity.
+     * <p>Callbacks registered by apps not meeting the above criteria will not be invoked.
      *
      * <p>If a registering app loses its relevant permissions, any callbacks it registered will
      * silently stop receiving callbacks.
      *
-     * <p>Each register() call <b>MUST</b> use a unique ConnectivityDiagnosticsCallback instance. If
-     * a single instance is registered with multiple NetworkRequests, an IllegalArgumentException
-     * will be thrown.
+     * <p>Each register() call <b>MUST</b> use a ConnectivityDiagnosticsCallback instance that is
+     * not currently registered. If a ConnectivityDiagnosticsCallback instance is registered with
+     * multiple NetworkRequests, an IllegalArgumentException will be thrown.
      *
      * @param request The NetworkRequest that will be used to match with Networks for which
      *     callbacks will be fired
@@ -657,15 +710,22 @@ public class ConnectivityDiagnosticsManager {
      *     System
      * @throws IllegalArgumentException if the same callback instance is registered with multiple
      *     NetworkRequests
-     * @throws SecurityException if the caller does not have appropriate permissions to register a
-     *     callback
      */
     public void registerConnectivityDiagnosticsCallback(
             @NonNull NetworkRequest request,
             @NonNull Executor e,
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        final ConnectivityDiagnosticsBinder binder = new ConnectivityDiagnosticsBinder(callback, e);
+        if (sCallbacks.putIfAbsent(callback, binder) != null) {
+            throw new IllegalArgumentException("Callback is currently registered");
+        }
+
+        try {
+            mService.registerConnectivityDiagnosticsCallback(
+                    binder, request, mContext.getOpPackageName());
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -678,7 +738,15 @@ public class ConnectivityDiagnosticsManager {
      */
     public void unregisterConnectivityDiagnosticsCallback(
             @NonNull ConnectivityDiagnosticsCallback callback) {
-        // TODO(b/143187964): implement ConnectivityDiagnostics functionality
-        throw new UnsupportedOperationException("registerCallback() not supported yet");
+        // unconditionally removing from sCallbacks prevents race conditions here, since remove() is
+        // atomic.
+        final ConnectivityDiagnosticsBinder binder = sCallbacks.remove(callback);
+        if (binder == null) return;
+
+        try {
+            mService.unregisterConnectivityDiagnosticsCallback(binder);
+        } catch (RemoteException exception) {
+            exception.rethrowFromSystemServer();
+        }
     }
 }

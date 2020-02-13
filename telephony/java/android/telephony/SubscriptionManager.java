@@ -16,10 +16,8 @@
 
 package android.telephony;
 
-import com.android.telephony.Rlog;
-
-import static android.net.NetworkPolicyManager.OVERRIDE_CONGESTED;
-import static android.net.NetworkPolicyManager.OVERRIDE_UNMETERED;
+import static android.net.NetworkPolicyManager.SUBSCRIPTION_OVERRIDE_CONGESTED;
+import static android.net.NetworkPolicyManager.SUBSCRIPTION_OVERRIDE_UNMETERED;
 
 import android.Manifest;
 import android.annotation.CallbackExecutor;
@@ -46,6 +44,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.INetworkPolicyManager;
 import android.net.NetworkCapabilities;
+import android.net.NetworkPolicyManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -58,7 +57,6 @@ import android.os.ServiceManager;
 import android.provider.Telephony.SimInfo;
 import android.telephony.euicc.EuiccManager;
 import android.telephony.ims.ImsMmTelManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
 
@@ -67,6 +65,7 @@ import com.android.internal.telephony.ISub;
 import com.android.internal.telephony.PhoneConstants;
 import com.android.internal.telephony.util.HandlerExecutor;
 import com.android.internal.util.Preconditions;
+import com.android.telephony.Rlog;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -965,6 +964,11 @@ public class SubscriptionManager {
         mContext = context;
     }
 
+    private NetworkPolicyManager getNetworkPolicyManager() {
+        return (NetworkPolicyManager) mContext
+                .getSystemService(Context.NETWORK_POLICY_SERVICE);
+    }
+
     /**
      * @deprecated developers should always obtain references directly from
      *             {@link Context#getSystemService(Class)}.
@@ -975,7 +979,7 @@ public class SubscriptionManager {
                 .getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     }
 
-    private final INetworkPolicyManager getNetworkPolicy() {
+    private INetworkPolicyManager getINetworkPolicyManager() {
         if (mNetworkPolicy == null) {
             mNetworkPolicy = INetworkPolicyManager.Stub
                     .asInterface(ServiceManager.getService(Context.NETWORK_POLICY_SERVICE));
@@ -2375,23 +2379,24 @@ public class SubscriptionManager {
         final SubscriptionInfo subInfo =
                 SubscriptionManager.from(context).getActiveSubscriptionInfo(subId);
 
-        Configuration config = context.getResources().getConfiguration();
-        Configuration newConfig = new Configuration();
-        newConfig.setTo(config);
+        Configuration overrideConfig = new Configuration();
         if (subInfo != null) {
-            newConfig.mcc = subInfo.getMcc();
-            newConfig.mnc = subInfo.getMnc();
-            if (newConfig.mnc == 0) newConfig.mnc = Configuration.MNC_ZERO;
+            overrideConfig.mcc = subInfo.getMcc();
+            overrideConfig.mnc = subInfo.getMnc();
+            if (overrideConfig.mnc == 0) overrideConfig.mnc = Configuration.MNC_ZERO;
         }
 
         if (useRootLocale) {
-            newConfig.setLocale(Locale.ROOT);
+            overrideConfig.setLocale(Locale.ROOT);
         }
 
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        DisplayMetrics newMetrics = new DisplayMetrics();
-        newMetrics.setTo(metrics);
-        Resources res = new Resources(context.getResources().getAssets(), newMetrics, newConfig);
+        // Create new context with new configuration so that we can avoid modifying the passed in
+        // context.
+        // Note that if the original context configuration changes, the resources here will also
+        // change for all values except those overridden by newConfig (e.g. if the device has an
+        // orientation change).
+        Context newContext = context.createConfigurationContext(overrideConfig);
+        Resources res = newContext.getResources();
 
         if (cacheKey != null) {
             // Save the newly created Resources in the resource cache.
@@ -2449,14 +2454,10 @@ public class SubscriptionManager {
      *             outlined above.
      */
     public @NonNull List<SubscriptionPlan> getSubscriptionPlans(int subId) {
-        try {
-            SubscriptionPlan[] subscriptionPlans =
-                    getNetworkPolicy().getSubscriptionPlans(subId, mContext.getOpPackageName());
-            return subscriptionPlans == null
-                    ? Collections.emptyList() : Arrays.asList(subscriptionPlans);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        SubscriptionPlan[] subscriptionPlans =
+                getNetworkPolicyManager().getSubscriptionPlans(subId, mContext.getOpPackageName());
+        return subscriptionPlans == null
+                ? Collections.emptyList() : Arrays.asList(subscriptionPlans);
     }
 
     /**
@@ -2482,18 +2483,14 @@ public class SubscriptionManager {
      *             defined in {@link SubscriptionPlan}.
      */
     public void setSubscriptionPlans(int subId, @NonNull List<SubscriptionPlan> plans) {
-        try {
-            getNetworkPolicy().setSubscriptionPlans(subId,
-                    plans.toArray(new SubscriptionPlan[plans.size()]), mContext.getOpPackageName());
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        getNetworkPolicyManager().setSubscriptionPlans(subId,
+                plans.toArray(new SubscriptionPlan[plans.size()]), mContext.getOpPackageName());
     }
 
     /** @hide */
     private String getSubscriptionPlansOwner(int subId) {
         try {
-            return getNetworkPolicy().getSubscriptionPlansOwner(subId);
+            return getINetworkPolicyManager().getSubscriptionPlansOwner(subId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -2524,13 +2521,10 @@ public class SubscriptionManager {
      */
     public void setSubscriptionOverrideUnmetered(int subId, boolean overrideUnmetered,
             @DurationMillisLong long timeoutMillis) {
-        try {
-            final int overrideValue = overrideUnmetered ? OVERRIDE_UNMETERED : 0;
-            getNetworkPolicy().setSubscriptionOverride(subId, OVERRIDE_UNMETERED, overrideValue,
-                    timeoutMillis, mContext.getOpPackageName());
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+
+        final int overrideValue = overrideUnmetered ? SUBSCRIPTION_OVERRIDE_UNMETERED : 0;
+        getNetworkPolicyManager().setSubscriptionOverride(subId, SUBSCRIPTION_OVERRIDE_UNMETERED,
+                overrideValue, timeoutMillis, mContext.getOpPackageName());
     }
 
     /**
@@ -2559,13 +2553,9 @@ public class SubscriptionManager {
      */
     public void setSubscriptionOverrideCongested(int subId, boolean overrideCongested,
             @DurationMillisLong long timeoutMillis) {
-        try {
-            final int overrideValue = overrideCongested ? OVERRIDE_CONGESTED : 0;
-            getNetworkPolicy().setSubscriptionOverride(subId, OVERRIDE_CONGESTED, overrideValue,
-                    timeoutMillis, mContext.getOpPackageName());
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
+        final int overrideValue = overrideCongested ? SUBSCRIPTION_OVERRIDE_CONGESTED : 0;
+        getNetworkPolicyManager().setSubscriptionOverride(subId, SUBSCRIPTION_OVERRIDE_CONGESTED,
+                overrideValue, timeoutMillis, mContext.getOpPackageName());
     }
 
     /**
@@ -3274,31 +3264,6 @@ public class SubscriptionManager {
 
         if (VDBG) logd("getEnabledSubscriptionId, subId = " + subId);
         return subId;
-    }
-
-    /**
-     * Set whether a subscription always allows MMS connection. If true, MMS network
-     * request will be accepted by telephony even if user turns "mobile data" off
-     * on this subscription.
-     *
-     * @param subId which subscription it's setting to.
-     * @param alwaysAllow whether Mms data is always allowed.
-     * @return whether operation is successful.
-     *
-     * @hide
-     */
-    public boolean setAlwaysAllowMmsData(int subId, boolean alwaysAllow) {
-        try {
-            ISub iSub = ISub.Stub.asInterface(ServiceManager.getService("isub"));
-            if (iSub != null) {
-                return iSub.setAlwaysAllowMmsData(subId, alwaysAllow);
-            }
-        } catch (RemoteException ex) {
-            if (!isSystemProcess()) {
-                ex.rethrowAsRuntimeException();
-            }
-        }
-        return false;
     }
 
     private interface CallISubMethodHelper {
