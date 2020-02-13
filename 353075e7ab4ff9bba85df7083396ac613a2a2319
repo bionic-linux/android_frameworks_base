@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678dc2ca_902a75b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:06:07Z",
+      "side": 1,
+      "message": "You don\u0027t need this check any more.",
+      "range": {
+        "startLine": 1656,
+        "startChar": 15,
+        "endLine": 1658,
+        "endChar": 14
+      },
+      "revId": "353075e7ab4ff9bba85df7083396ac613a2a2319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2eca02d_8b575b64",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 6413,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:06:07Z",
+      "side": 1,
+      "message": "You don\u0027t need this check any more, as now maybeSanitize handles null correctly",
+      "range": {
+        "startLine": 6413,
+        "startChar": 16,
+        "endLine": 6413,
+        "endChar": 33
+      },
+      "revId": "353075e7ab4ff9bba85df7083396ac613a2a2319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b3d9d1_d905c560",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 6433,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:06:07Z",
+      "side": 1,
+      "message": "Likewise, and likewise for final (either have two locals, or inline something)",
+      "range": {
+        "startLine": 6433,
+        "startChar": 17,
+        "endLine": 6433,
+        "endChar": 37
+      },
+      "revId": "353075e7ab4ff9bba85df7083396ac613a2a2319",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

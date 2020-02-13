@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3b3c64a9_49dbdaaa",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:06:07Z",
+      "side": 1,
+      "message": "Heh sorry I meant in the public documentation (which this is) but not in the internal doc. It doesn\u0027t matter.",
+      "parentUuid": "a8f23526_4a4e8b33",
+      "range": {
+        "startLine": 868,
+        "startChar": 13,
+        "endLine": 868,
+        "endChar": 95
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73880f83_8fed4ee2",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 25
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "nc is reassigned in the if block.",
       "parentUuid": "2a5ee83f_85a6b45a",
+      "range": {
+        "startLine": 6399,
+        "startChar": 16,
+        "endLine": 6399,
+        "endChar": 35
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5c12b9_8a84c805",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T05:06:07Z",
+      "side": 1,
+      "message": "So make a different local and keep them final. Or, inline.",
+      "parentUuid": "5a4d3274_6e5e1f77",
       "range": {
         "startLine": 6399,
         "startChar": 16,
