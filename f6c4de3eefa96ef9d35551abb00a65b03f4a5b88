@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ffc94afd_1e8c219f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-02-13T18:47:51Z",
+      "side": 1,
+      "message": "Jean, do you mean networkCapabilitiesRestrictedForCallerPermissions or maybeSanitizeLocationInfoForCaller? I feel like you mean maybeSanitizeLocationInfoForCaller since all the input NC of that function are guarded by null checking.",
+      "parentUuid": "b9d1fce5_a739f259",
+      "range": {
+        "startLine": 1666,
+        "startChar": 12,
+        "endLine": 1666,
+        "endChar": 34
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a5ee83f_85a6b45a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 25
