@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10bfb9ba_31b1ea77",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T14:41:03Z",
+      "side": 1,
+      "message": "Some doc on the difference between this and exit() would be welcome.",
+      "range": {
+        "startLine": 2058,
+        "startChar": 32,
+        "endLine": 2058,
+        "endChar": 45
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9660d268_78716562",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T14:41:03Z",
+      "side": 1,
+      "message": "Looks like you want to make this method final ? The goal is to prevent subclasses from shooting themselves in the foot by forgetting to synchronize or not cleaning up correctly right ? Then the method should be final.",
+      "range": {
+        "startLine": 2061,
+        "startChar": 8,
+        "endLine": 2061,
+        "endChar": 17
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccb8cb2_a984265c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-13T14:41:03Z",
+      "side": 1,
+      "message": "Looks like this is now useless ? (and a bit confusing considering there is now a cleanupVpnStateLocked and the use case is almost the same)",
+      "range": {
+        "startLine": 2400,
+        "startChar": 8,
+        "endLine": 2404,
+        "endChar": 9
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
