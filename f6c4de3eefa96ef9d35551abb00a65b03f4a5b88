@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "f98371f3_eddfb8c0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-02-13T23:55:38Z",
+      "side": 1,
+      "message": "I see. I\u0027ve reverted my changes for networkCapabilitiesRestrictedForCallerPermissions and add that check for maybeSanitizeLocationInfoForCaller in the latest branch.",
+      "parentUuid": "bd4b4219_4d204a81",
+      "range": {
+        "startLine": 1666,
+        "startChar": 12,
+        "endLine": 1666,
+        "endChar": 34
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5ee83f_85a6b45a",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 25
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "So make a different local and keep them final. Or, inline.",
       "parentUuid": "5a4d3274_6e5e1f77",
+      "range": {
+        "startLine": 6399,
+        "startChar": 16,
+        "endLine": 6399,
+        "endChar": 35
+      },
+      "revId": "f6c4de3eefa96ef9d35551abb00a65b03f4a5b88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae01dc3d_da5bb9c1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 6399,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-02-13T23:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5c12b9_8a84c805",
       "range": {
         "startLine": 6399,
         "startChar": 16,
