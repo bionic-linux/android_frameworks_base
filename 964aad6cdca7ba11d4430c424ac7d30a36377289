@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2da7a3_bc7d2097",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3136,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-14T08:34:14Z",
+      "side": 1,
+      "message": "Is this persisted anywhere else than just in this LinkProperties object? If so, then what happens if after this method is called, the NetworkAgent reports a new LinkProperties object to ConnectivityService? Does the captive portal data get lost? If so, then I think this will need to be persisted somewhere (e.g., in the nai). Can you add a test for this?",
+      "range": {
+        "startLine": 3136,
+        "startChar": 14,
+        "endLine": 3136,
+        "endChar": 34
+      },
+      "revId": "964aad6cdca7ba11d4430c424ac7d30a36377289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7903ade5_ec8ea7df",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2841,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-14T08:34:14Z",
+      "side": 1,
+      "message": "You don\u0027t need waitForIdle here, you can just wait for the callback to arrive.",
+      "range": {
+        "startLine": 2841,
+        "startChar": 8,
+        "endLine": 2841,
+        "endChar": 22
+      },
+      "revId": "964aad6cdca7ba11d4430c424ac7d30a36377289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9136b0_6e172fb2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2843,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-14T08:34:14Z",
+      "side": 1,
+      "message": "Per comment in the other file, suggest sending a LinkProperties object to CS before and after this, to check that the new LinkProperties update doesn\u0027t cause the captive portal data to disappear.",
+      "range": {
+        "startLine": 2843,
+        "startChar": 30,
+        "endLine": 2843,
+        "endChar": 54
+      },
+      "revId": "964aad6cdca7ba11d4430c424ac7d30a36377289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
