@@ -22,6 +22,30 @@
       "revId": "a063f3c069b34763c4d8df46ccd1fe16628c0e82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a5ca91_a29cb354",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1167034
+      },
+      "writtenOn": "2020-02-14T00:21:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether I understand correctly or not. But currently, in the latest version, I only did the null checking in maybeSanitize and remove all the null checking before that function. (It should be the same as the 2nd example you given.)\n\nIn my previous patch (Patchset 25), I add the null checking in networkCapabilitiesRestrictedForCallerPermissions which I think it\u0027s not necessary. So I revert that change in my latest patchset.",
+      "parentUuid": "0dda549a_cdbc9662",
+      "range": {
+        "startLine": 1656,
+        "startChar": 16,
+        "endLine": 1656,
+        "endChar": 46
+      },
+      "revId": "a063f3c069b34763c4d8df46ccd1fe16628c0e82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
