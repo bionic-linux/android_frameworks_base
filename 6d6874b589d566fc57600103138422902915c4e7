@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ba5f7e9_43ff91f0",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-14T09:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a2899f_7ff77b19",
+      "range": {
+        "startLine": 290,
+        "startChar": 62,
+        "endLine": 290,
+        "endChar": 86
+      },
+      "revId": "6d6874b589d566fc57600103138422902915c4e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a60a9cf8_f28f6181",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4949eed8_54a24f1f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-14T09:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a60a9cf8_f28f6181",
+      "range": {
+        "startLine": 1358,
+        "startChar": 37,
+        "endLine": 1358,
+        "endChar": 39
+      },
+      "revId": "6d6874b589d566fc57600103138422902915c4e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "751b8f0f_3c3fae10",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "6d6874b589d566fc57600103138422902915c4e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8390a63f_cc811ab2",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-14T09:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "751b8f0f_3c3fae10",
+      "range": {
+        "startLine": 1359,
+        "startChar": 43,
+        "endLine": 1359,
+        "endChar": 50
+      },
+      "revId": "6d6874b589d566fc57600103138422902915c4e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
