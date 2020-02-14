@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18584338_3687cc24",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10bfb9ba_31b1ea77",
+      "range": {
+        "startLine": 2058,
+        "startChar": 32,
+        "endLine": 2058,
+        "endChar": 45
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9660d268_78716562",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 26
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "047c12ec_e5af6ac1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9660d268_78716562",
+      "range": {
+        "startLine": 2061,
+        "startChar": 8,
+        "endLine": 2061,
+        "endChar": 17
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bccb8cb2_a984265c",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 26
@@ -68,6 +116,30 @@
       "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86dd0856_6b3921d1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 2404,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:46:49Z",
+      "side": 1,
+      "message": "Done; inlined with exitVpnRunner(). Thanks.",
+      "parentUuid": "bccb8cb2_a984265c",
+      "range": {
+        "startLine": 2400,
+        "startChar": 8,
+        "endLine": 2404,
+        "endChar": 9
+      },
+      "revId": "944cb7d4d8d9ede7d7124de91ff2e2e8747c13ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
