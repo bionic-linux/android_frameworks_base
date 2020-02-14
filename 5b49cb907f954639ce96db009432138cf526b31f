@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a3436e8_d40ed55c",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2020-02-14T23:00:23Z",
+      "side": 1,
+      "message": "nit: add a comment about \"verify\" (ie we\u0027re going to compile to /data, and system server cannot load executable there)",
+      "range": {
+        "startLine": 653,
+        "startChar": 61,
+        "endLine": 653,
+        "endChar": 67
+      },
+      "revId": "5b49cb907f954639ce96db009432138cf526b31f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
