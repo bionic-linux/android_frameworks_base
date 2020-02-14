@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dda549a_cdbc9662",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T00:00:05Z",
+      "side": 1,
+      "message": "I\u0027m sorry I gave you the comment on the wrong method but... this is going to crash, or at least return a different result than before. getNetworkCapabilitiesInternal can definitely return null. I only meant remove the null check in front of maybeSanitize because now maybeSanitize was handling null gracefully.\n\nYou had :\n\n  NetworkCapabilities maybeSanitize(@NonNull NetworkCapabilities nc) { ... }\n  ...\n  return nc \u003d\u003d null ? null: maybeSanitize(nc);\n  ...\n  nc2 \u003d nc \u003d\u003d null ? null : maybeSanitize(nc);\n  ...\n  netcap2 \u003d netcap \u003d\u003d null ? null : maybeSanitize(netcap);\n\nI wanted to avoid code duplication by saying just :\n\n  NetworkCapabilities maybeSanitize(@Nullable NetworkCapabilities nc) { if (nc \u003d\u003d null) return null; ... }\n  ...\n  return maybeSanitize(nc);\n  ...\n  nc2 \u003d maybeSanitize(nc);\n  ...\n  netcap2 \u003d maybeSanitize(netcap);\n\nI didn\u0027t want to you change networkCapabilitiesRestrictedForCallerPermissions.",
+      "range": {
+        "startLine": 1656,
+        "startChar": 16,
+        "endLine": 1656,
+        "endChar": 46
+      },
+      "revId": "a063f3c069b34763c4d8df46ccd1fe16628c0e82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
