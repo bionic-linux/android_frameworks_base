@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2454b8f5_4236e0e9",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-14T19:29:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed since the setting is new",
+      "range": {
+        "startLine": 2584,
+        "startChar": 0,
+        "endLine": 2584,
+        "endChar": 69
+      },
+      "revId": "25049518d59032642f142f7a122b5a95a24dfee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274a4c08_b9b7a2ef",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5130,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-02-14T19:29:58Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 5130,
+        "startChar": 0,
+        "endLine": 5130,
+        "endChar": 66
+      },
+      "revId": "25049518d59032642f142f7a122b5a95a24dfee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
