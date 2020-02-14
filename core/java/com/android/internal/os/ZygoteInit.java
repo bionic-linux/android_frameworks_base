@@ -650,14 +650,15 @@ public class ZygoteInit {
             // System server is fully AOTed and never profiled
             // for profile guided compilation.
             String systemServerFilter = SystemProperties.get(
-                    "dalvik.vm.systemservercompilerfilter", "speed");
+                    "dalvik.vm.systemservercompilerfilter", "verify");
 
+            String classLoaderContext =
+                        getSystemServerClassLoaderContext(classPathForElement);
             int dexoptNeeded;
             try {
                 dexoptNeeded = DexFile.getDexOptNeeded(
                         classPathElement, instructionSet, systemServerFilter,
-                        null /* classLoaderContext */, false /* newProfile */,
-                        false /* downgrade */);
+                        classLoaderContext, false /* newProfile */, false /* downgrade */);
             } catch (FileNotFoundException ignored) {
                 // Do not add to the classpath.
                 Log.w(TAG, "Missing classpath element for system server: " + classPathElement);
@@ -678,8 +679,6 @@ public class ZygoteInit {
                 final String compilerFilter = systemServerFilter;
                 final String uuid = StorageManager.UUID_PRIVATE_INTERNAL;
                 final String seInfo = null;
-                final String classLoaderContext =
-                        getSystemServerClassLoaderContext(classPathForElement);
                 final int targetSdkVersion = 0;  // SystemServer targets the system's SDK version
                 try {
                     installd.dexopt(classPathElement, Process.SYSTEM_UID, packageName,
