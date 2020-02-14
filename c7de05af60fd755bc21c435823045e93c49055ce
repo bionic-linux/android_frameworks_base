@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "656a768f_77ab099b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:28:54Z",
+      "side": 1,
+      "message": "obj \u003d captive portal data",
+      "range": {
+        "startLine": 555,
+        "startChar": 5,
+        "endLine": 555,
+        "endChar": 6
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f4ac72_a37f0a4f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:28:54Z",
+      "side": 1,
+      "message": "You never call this with a null arg : make the arg @NonNull and remove the check",
+      "range": {
+        "startLine": 3133,
+        "startChar": 8,
+        "endLine": 3135,
+        "endChar": 9
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06f0b55_aa9dedc2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2830,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:28:54Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 2830,
+        "startChar": 8,
+        "endLine": 2830,
+        "endChar": 14
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
