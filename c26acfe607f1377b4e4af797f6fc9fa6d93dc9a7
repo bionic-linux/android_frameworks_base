@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b321c05_88029cc7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d9fef9_93978eb7",
+      "range": {
+        "startLine": 1106,
+        "startChar": 20,
+        "endLine": 1106,
+        "endChar": 23
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "963fc16e_c42e3514",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 36
@@ -45,6 +69,30 @@
       "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a864e21d_e923e642",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:45:27Z",
+      "side": 1,
+      "message": "Done; Changed to enforceNotRestrictedUser()",
+      "parentUuid": "963fc16e_c42e3514",
+      "range": {
+        "startLine": 1120,
+        "startChar": 19,
+        "endLine": 1120,
+        "endChar": 20
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5ebebed_52b39d99",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8332e2e2_7ccd9ffb",
+      "range": {
+        "startLine": 1818,
+        "startChar": 8,
+        "endLine": 1818,
+        "endChar": 12
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275eafc5_44342696",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 36
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ae28c1f9_35739c91",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275eafc5_44342696",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 469,
+        "endChar": 9
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e9881d_a8f4bf07",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 36
@@ -114,6 +210,30 @@
       "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b3d169_30010fa2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 6440,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-02-14T05:45:27Z",
+      "side": 1,
+      "message": "Done; added both. Unfortunately with the successful VpnService cases I couldn\u0027t verify the UID, since the syscall appears to actually go down to the kernel. But I can ensure that it doesn\u0027t throw.",
+      "parentUuid": "08e9881d_a8f4bf07",
+      "range": {
+        "startLine": 6440,
+        "startChar": 8,
+        "endLine": 6440,
+        "endChar": 9
+      },
+      "revId": "c26acfe607f1377b4e4af797f6fc9fa6d93dc9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
