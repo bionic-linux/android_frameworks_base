@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea3cd02_b6d7b5c3",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:36:10Z",
+      "side": 1,
+      "message": "Nullable",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "2fdce39b5bff39ac66757ea568541e2660a0c192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567a8571_4ebb72df",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:36:10Z",
+      "side": 1,
+      "message": "Optionally : if nonnull ?",
+      "range": {
+        "startLine": 151,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 18
+      },
+      "revId": "2fdce39b5bff39ac66757ea568541e2660a0c192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573a22bb_774912ea",
+        "filename": "core/java/android/net/DhcpResults.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:36:10Z",
+      "side": 1,
+      "message": "Everyone else has a getter and a setter, you should probably add one",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 26
+      },
+      "revId": "2fdce39b5bff39ac66757ea568541e2660a0c192",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
