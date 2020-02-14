@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "781302f9_98deadcb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T04:49:02Z",
+      "side": 1,
+      "message": "s/that //",
+      "range": {
+        "startLine": 288,
+        "startChar": 18,
+        "endLine": 288,
+        "endChar": 22
+      },
+      "revId": "e531410160577a8a0bc3d5405088d797ffa83cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f39177_fb9ec00f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T04:49:02Z",
+      "side": 1,
+      "message": "to respond",
+      "range": {
+        "startLine": 288,
+        "startChar": 54,
+        "endLine": 288,
+        "endChar": 55
+      },
+      "revId": "e531410160577a8a0bc3d5405088d797ffa83cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641ab7ac_ddb604a1",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T04:49:02Z",
+      "side": 1,
+      "message": "Let\u0027s have a constant for this (it unfortunately matches MAX_STATS_PROVIDER_COUNT although it means something else entirely)",
+      "range": {
+        "startLine": 1354,
+        "startChar": 92,
+        "endLine": 1354,
+        "endChar": 95
+      },
+      "revId": "e531410160577a8a0bc3d5405088d797ffa83cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf03331_ff43cebb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T04:49:02Z",
+      "side": 1,
+      "message": "Suggest printing mStatsProviderSem.availablePermits() and the number of callbacks to see how many providers didn\u0027t reply. Possibly add a comment saying that strictly speaking it\u0027s possible a provider happened to deliver between the timeout and the log, and that it doesn\u0027t matter too much as this is just a debug log",
+      "range": {
+        "startLine": 1357,
+        "startChar": 0,
+        "endLine": 1357,
+        "endChar": 59
+      },
+      "revId": "e531410160577a8a0bc3d5405088d797ffa83cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
