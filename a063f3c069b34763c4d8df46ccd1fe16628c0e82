@@ -46,6 +46,30 @@
       "revId": "a063f3c069b34763c4d8df46ccd1fe16628c0e82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af32f7f5_796f407f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T00:28:58Z",
+      "side": 1,
+      "message": "PS25 has no change to the implementation of networkCapabilitiesRestrictedForCallerPermissions other than removing @VisibleForTesting though ?",
+      "parentUuid": "a1a5ca91_a29cb354",
+      "range": {
+        "startLine": 1656,
+        "startChar": 16,
+        "endLine": 1656,
+        "endChar": 46
+      },
+      "revId": "a063f3c069b34763c4d8df46ccd1fe16628c0e82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
