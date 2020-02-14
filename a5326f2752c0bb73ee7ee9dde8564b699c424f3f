@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7032f8_8bb9e84d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-14T05:59:24Z",
+      "side": 1,
+      "message": "but that\u0027s going to be done in cleanupVpnStateLocked, which is always called after this right ?",
+      "range": {
+        "startLine": 2424,
+        "startChar": 16,
+        "endLine": 2424,
+        "endChar": 31
+      },
+      "revId": "a5326f2752c0bb73ee7ee9dde8564b699c424f3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
