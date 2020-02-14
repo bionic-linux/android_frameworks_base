@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfba0b5a_dc2cbf3d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-14T06:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "656a768f_77ab099b",
+      "range": {
+        "startLine": 555,
+        "startChar": 5,
+        "endLine": 555,
+        "endChar": 6
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f4ac72_a37f0a4f",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b13df5b0_5f84f5a1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-14T06:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f4ac72_a37f0a4f",
+      "range": {
+        "startLine": 3133,
+        "startChar": 8,
+        "endLine": 3135,
+        "endChar": 9
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06f0b55_aa9dedc2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bceb1f6_05a3534a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2830,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-02-14T06:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06f0b55_aa9dedc2",
+      "range": {
+        "startLine": 2830,
+        "startChar": 8,
+        "endLine": 2830,
+        "endChar": 14
+      },
+      "revId": "c7de05af60fd755bc21c435823045e93c49055ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
