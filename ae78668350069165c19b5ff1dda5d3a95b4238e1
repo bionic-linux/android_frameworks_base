@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7113dea9_07280fc4",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:42:28Z",
+      "side": 1,
+      "message": "The route that was added has a nexthop of null, but here the code is removing a route with a nexthop of |address|. Suggest using null here to prove that the route is not removed even though the next hop matches.",
+      "range": {
+        "startLine": 428,
+        "startChar": 46,
+        "endLine": 428,
+        "endChar": 53
+      },
+      "revId": "ae78668350069165c19b5ff1dda5d3a95b4238e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
