@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "772dff9c_52ec2e70",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5814,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Put these in local variables so you can use them later?\n\n    final RouteInfo defaultRoute \u003d new RouteInfo((IpPrefix) null, myIpv6.getAddress(), MOBILE_IFNAME);\n    final RouteInfo hostRoute \u003d new RouteInfo(myIpv6, null, MOBILE_IFNAME);",
+      "range": {
+        "startLine": 5813,
+        "startChar": 0,
+        "endLine": 5814,
+        "endChar": 68
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0f441b_a3b0fef4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5843,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Could you add a bit more detail? Something like:\n\n    verify(mNetworkManagementService).addRoute(eq(cellNetId), eq(defaultRoute));\n    verify(mNetworkManagementService).addRoute(eq(cellNetId), eq(hostRoute));\n\nAlso, for readability this should probably be around line 5829, not here.",
+      "range": {
+        "startLine": 5843,
+        "startChar": 8,
+        "endLine": 5843,
+        "endChar": 83
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ecd214_a080cba3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5856,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Here you should probably reset mMockNetworkManagementService as well.",
+      "range": {
+        "startLine": 5856,
+        "startChar": 31,
+        "endLine": 5856,
+        "endChar": 32
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d744e48d_88dd7f93",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5860,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Nit: I suspect this doesn\u0027t do anything because no such route was added. If so, feel free to remove it.",
+      "range": {
+        "startLine": 5860,
+        "startChar": 8,
+        "endLine": 5860,
+        "endChar": 71
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd925f2_8754b48e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5907,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Suggest storing this:\n\n    final RouteInfo ipv4Default \u003d new RouteInfo(myIpv4, null, MOBILE_IFNAME);",
+      "range": {
+        "startLine": 5907,
+        "startChar": 24,
+        "endLine": 5907,
+        "endChar": 66
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4edd5b_5d78b123",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5909,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Note: I think this 4 actually includes the 2 above. When you add the reset at line 5856 it will become 2. That said - how about actually verifying what routes are actually set?\n\nI believe you could put this around line 5882:\n\n    final RouteInfo stackedDefault \u003d new RouteInfo(null, myIpv4, CLAT_PREFIX + MOBILE_IFNAME);\n    verify(mNetworkManagementService).addRoute(eq(cellNetId), eq(stackedDefault));\n\nand this here: \n\n    final RouteInfo ipv4Default \u003d new RouteInfo(null, myIpv4, MOBILE_IFNAME);\n    verify(mNetworkManagementService).addRoute(eq(cellNetId), eq(ipv4Default));",
+      "range": {
+        "startLine": 5909,
+        "startChar": 42,
+        "endLine": 5909,
+        "endChar": 50
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9659f578_0fc0dcf7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5929,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Reset mNetworkManagementService here too",
+      "range": {
+        "startLine": 5929,
+        "startChar": 31,
+        "endLine": 5929,
+        "endChar": 32
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ff65c2_8d32abf4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5942,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-15T08:06:57Z",
+      "side": 1,
+      "message": "Similarly to the suggestion in the comments above, can you split this up into three separate verify statements? One of these is likely the removal of the stacked IPv4 default when clat goes down. Not sure what the other ones are, but it should be easy to find out by running the test.",
+      "range": {
+        "startLine": 5942,
+        "startChar": 42,
+        "endLine": 5942,
+        "endChar": 50
+      },
+      "revId": "d8a728b914b5fdb1dbd3650104a768b924b15400",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
