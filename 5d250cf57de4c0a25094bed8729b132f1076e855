@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45846302_5a53cb19",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4326,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-02-15T00:01:08Z",
+      "side": 1,
+      "message": "Assuming they are used in frameworks/opt/telephony, you can move them to frameworks/opt/telephony/res",
+      "parentUuid": "6854bd80_c45b9952",
+      "range": {
+        "startLine": 4326,
+        "startChar": 4,
+        "endLine": 4326,
+        "endChar": 50
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc986b1a_6e872272",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
