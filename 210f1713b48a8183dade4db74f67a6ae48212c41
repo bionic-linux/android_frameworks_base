@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1d6118_f0b59b07",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7823,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-16T06:06:48Z",
+      "side": 1,
+      "message": "This patch is not at fault, but it sounds really bizarre that we\u0027d have a method that returns whether the permission is granted but ALSO will throw SecurityException in some cases.",
+      "range": {
+        "startLine": 7823,
+        "startChar": 0,
+        "endLine": 7823,
+        "endChar": 68
+      },
+      "revId": "210f1713b48a8183dade4db74f67a6ae48212c41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
