@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92d7589f_60ea4c57",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7894,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-16T03:29:40Z",
+      "side": 1,
+      "message": "Two bugs here. One is, you have no guarantee at all that getUnderlyingNetworks() will return non-null the second time. That\u0027s the joy of mutable stuff. Therefore, you will NPE in 7895 at least some of the time. Note by the way that in a recent language like Kotlin this doesn\u0027t even compile (because the compiler knows what I just wrote).\n\nFurther, getUnderlyingNetworks is synchronized and thus takes the lock on the Vpn object. There is unfortunately an awful assumption in CS that the individual VPN locks won\u0027t be taken outside of the mVpns lock :( This is something we really need to fix, but for now, I don\u0027t think you can get away with that. So more something like :\n\n  final List\u003cNetworks\u003e underlying;\n  sync(mVpns) {\n    final Vpn vpn \u003d getifowner\n    underlying \u003d null \u003d\u003d vpn ? null : vpn.getUnderyling\n  }\n  if (null !\u003d underlying \u0026\u0026 contains(nai.network)) return true;",
+      "range": {
+        "startLine": 7894,
+        "startChar": 31,
+        "endLine": 7894,
+        "endChar": 52
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edc0a7c_1e802b8f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-16T03:29:40Z",
+      "side": 1,
+      "message": "In actual practice NetIds start at 100, so let\u0027s make this 110 or something",
+      "range": {
+        "startLine": 304,
+        "startChar": 38,
+        "endLine": 304,
+        "endChar": 40
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac27951_83da4b95",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-16T03:29:40Z",
+      "side": 1,
+      "message": "This is useless because the setter is not synchronized. Without a write barrier after the write the thread executing this has every right to not see the change operated in the setter (ever).\n\nIf you\u0027ve done this because you mimicked the code above... then fix the code above, it\u0027s wrong too :)",
+      "range": {
+        "startLine": 1085,
+        "startChar": 15,
+        "endLine": 1085,
+        "endChar": 27
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
