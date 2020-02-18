@@ -22,6 +22,30 @@
       "revId": "ae78668350069165c19b5ff1dda5d3a95b4238e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a690873_48dc08f7",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-02-18T19:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7113dea9_07280fc4",
+      "range": {
+        "startLine": 428,
+        "startChar": 46,
+        "endLine": 428,
+        "endChar": 53
+      },
+      "revId": "ae78668350069165c19b5ff1dda5d3a95b4238e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
