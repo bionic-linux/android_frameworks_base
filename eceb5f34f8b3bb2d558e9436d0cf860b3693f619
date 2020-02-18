@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "223a3b8d_3ccce21f",
+        "filename": "core/java/android/os/image/IDynamicSystemService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-18T08:53:12Z",
+      "side": 1,
+      "message": "What do we return if the key is not present in the image? Empty key or false?\nPlease document the case.",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "eceb5f34f8b3bb2d558e9436d0cf860b3693f619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
