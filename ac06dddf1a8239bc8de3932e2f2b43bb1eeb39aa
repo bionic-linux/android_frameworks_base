@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1ebc905_208aef36",
+        "filename": "core/java/android/os/image/DynamicSystemManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-18T10:25:21Z",
+      "side": 1,
+      "message": "Missed this one. Please update this as well.",
+      "range": {
+        "startLine": 94,
+        "startChar": 11,
+        "endLine": 94,
+        "endChar": 65
+      },
+      "revId": "ac06dddf1a8239bc8de3932e2f2b43bb1eeb39aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
