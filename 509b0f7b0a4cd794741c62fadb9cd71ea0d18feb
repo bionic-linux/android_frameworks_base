@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5259c08c_4021d865",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7894,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-18T21:36:42Z",
+      "side": 1,
+      "message": "Good point on the mutability for underlying networks - updated.\n\nThanks for explaining the assumption on accessing VPN locks - is it worth adding a clarifying comment on mVpns to explain that VPNs locks should only be taken with mVpn? I\u0027m not aware of any current mention of this (if there already is, apologies for missing it)",
+      "parentUuid": "92d7589f_60ea4c57",
+      "range": {
+        "startLine": 7894,
+        "startChar": 31,
+        "endLine": 7894,
+        "endChar": 52
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5edc0a7c_1e802b8f",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7706127d_16951d66",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-18T21:36:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5edc0a7c_1e802b8f",
+      "range": {
+        "startLine": 304,
+        "startChar": 38,
+        "endLine": 304,
+        "endChar": 40
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac27951_83da4b95",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcccabd_a0286c63",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-02-18T21:36:42Z",
+      "side": 1,
+      "message": "Initially included this because Vpn#getUnderlyingNetworks declares this method as synchronized and I don\u0027t want to break that guarantee here.\n\nUpdated both the setters to also be synchronized.",
+      "parentUuid": "7ac27951_83da4b95",
+      "range": {
+        "startLine": 1085,
+        "startChar": 15,
+        "endLine": 1085,
+        "endChar": 27
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
