@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53933cf0_60905223",
+        "filename": "core/java/android/os/image/IDynamicSystemService.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-02-18T10:03:23Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 117,
+        "startChar": 77,
+        "endLine": 117,
+        "endChar": 79
+      },
+      "revId": "847c714e0debedcd7c2058e81a0e31412a579dab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
