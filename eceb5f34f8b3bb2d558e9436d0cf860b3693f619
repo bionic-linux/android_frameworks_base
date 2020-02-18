@@ -22,6 +22,30 @@
       "revId": "eceb5f34f8b3bb2d558e9436d0cf860b3693f619",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0835231_32db9d42",
+        "filename": "core/java/android/os/image/IDynamicSystemService.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-02-18T09:48:41Z",
+      "side": 1,
+      "message": "If partition doesn\u0027t have a valid VBMeta block then return false.\nElse AVB key is read from VBMeta block and placed in |dst| parcel and true is returned.",
+      "parentUuid": "223a3b8d_3ccce21f",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "eceb5f34f8b3bb2d558e9436d0cf860b3693f619",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
