@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "749e4a8f_392fef32",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-02-19T17:17:07Z",
+      "side": 1,
+      "message": "Refactored significantly. Not applicable anymore.",
+      "parentUuid": "19afaa63_f8ef2b4f",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ccd71a2_a2e3d7cc",
         "filename": "tools/hiddenapi/merge_csv.py",
         "patchSetId": 3
@@ -141,6 +165,30 @@
       "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872f1113_4619476c",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-02-19T17:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8254cbb_bcd2c3f7",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "19b163a577018f2d938da6cd032272b6b1ebbfc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
