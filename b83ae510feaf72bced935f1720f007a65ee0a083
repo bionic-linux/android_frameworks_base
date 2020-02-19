@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29141d0c_cefa303e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2020-02-19T18:41:16Z",
+      "side": 1,
+      "message": "what\u0027s the bug? link?",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "b83ae510feaf72bced935f1720f007a65ee0a083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
