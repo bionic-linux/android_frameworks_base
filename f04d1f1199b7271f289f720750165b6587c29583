@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e009a3_0b26cf9f",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-02-19T18:38:59Z",
+      "side": 1,
+      "message": "not testing equality here?",
+      "range": {
+        "startLine": 716,
+        "startChar": 47,
+        "endLine": 716,
+        "endChar": 49
+      },
+      "revId": "f04d1f1199b7271f289f720750165b6587c29583",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
