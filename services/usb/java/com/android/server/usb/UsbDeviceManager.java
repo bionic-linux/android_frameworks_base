@@ -41,7 +41,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.debug.AdbManagerInternal;
-import android.debug.AdbTransportType;
 import android.debug.IAdbTransport;
 import android.hardware.usb.ParcelableUsbPort;
 import android.hardware.usb.UsbAccessory;
@@ -775,10 +774,8 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
             }
 
             @Override
-            public void onAdbEnabled(boolean enabled, byte transportType) {
-                if (transportType == AdbTransportType.USB) {
-                    mHandler.sendMessage(MSG_ENABLE_ADB, enabled);
-                }
+            public void onAdbEnabled(boolean enabled) {
+                mHandler.sendMessage(MSG_ENABLE_ADB, enabled);
             }
         }
 
@@ -1172,8 +1169,7 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
         }
 
         protected boolean isAdbEnabled() {
-            return LocalServices.getService(AdbManagerInternal.class)
-                    .isAdbEnabled(AdbTransportType.USB);
+            return LocalServices.getService(AdbManagerInternal.class).isAdbEnabled();
         }
 
         protected void updateAdbNotification(boolean force) {
