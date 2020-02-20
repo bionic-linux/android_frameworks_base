@@ -46,6 +46,30 @@
       "revId": "4ef7a1a594058c21e91fa79e9efe20a70d53c363",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5725ed29_9cb06b1b",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-02-20T16:32:07Z",
+      "side": 1,
+      "message": "Technically, you\u0027re leaking file handles, and the DictReader examples use `with` statements to prevent this, so it shouldn\u0027t hurt. http://go/pylib/csv.html#csv.DictReader\nThe GC may be clever enough to release them, but if not, you may hit an issue if there are more than ~32k .csv files.",
+      "parentUuid": "86ab032f_2e782a17",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "4ef7a1a594058c21e91fa79e9efe20a70d53c363",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
