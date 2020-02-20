@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad0571b_beca66c9",
+        "filename": "tools/hiddenapi/merge_csv.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-02-20T14:46:53Z",
+      "side": 1,
+      "message": "nit: You could switch to using a `with` statement instead. Not sure if the GC is able to prevent the maximum open files limit being reached. Same for zip.open(entry)",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "4ef7a1a594058c21e91fa79e9efe20a70d53c363",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
