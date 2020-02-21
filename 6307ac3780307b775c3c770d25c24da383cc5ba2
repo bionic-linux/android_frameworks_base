@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5cdabc_abf8aed6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5804,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-21T09:04:34Z",
+      "side": 1,
+      "message": "Actually, this is not ipv4Default, it\u0027s ipv4HostRoute. Maybe change it to an actual default route like so?\n\n    final RouteInfo ipv4Default \u003d new RouteInfo((IpPrefix) null, myIpv4, MOBILE_IFNAME);",
+      "range": {
+        "startLine": 5804,
+        "startChar": 24,
+        "endLine": 5804,
+        "endChar": 35
+      },
+      "revId": "6307ac3780307b775c3c770d25c24da383cc5ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
