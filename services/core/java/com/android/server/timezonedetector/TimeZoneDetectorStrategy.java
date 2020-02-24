@@ -18,6 +18,7 @@ package com.android.server.timezonedetector;
 import android.annotation.NonNull;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
+import android.app.timezonedetector.TimeZoneDetectorConfiguration;
 
 import java.io.PrintWriter;
 
@@ -32,6 +33,29 @@ import java.io.PrintWriter;
  * @hide
  */
 public interface TimeZoneDetectorStrategy {
+
+    /** A listener for strategy events. */
+    interface StrategyListener {
+        /**
+         * Invoked when the configuration has been changed. All the fields will be populated, not
+         * only the ones that have changed.
+         */
+        void onConfigurationChanged(TimeZoneDetectorConfiguration configuration);
+    }
+
+    /** Sets the listener that enables the strategy to communicate with the surrounding service. */
+    void setStrategyListener(@NonNull StrategyListener listener);
+
+    /**
+     * Updates the configuration settings that control time zone detector behavior.
+     */
+    void updateConfiguration(@NonNull TimeZoneDetectorConfiguration configuration);
+
+    /**
+     * Returns the configuration settings that control time zone detector behavior.
+     */
+    @NonNull
+    TimeZoneDetectorConfiguration getConfiguration();
 
     /** Process the suggested manually-entered (i.e. user sourced) time zone. */
     void suggestManualTimeZone(@NonNull ManualTimeZoneSuggestion suggestion);
@@ -48,6 +72,9 @@ public interface TimeZoneDetectorStrategy {
 
     /**
      * Called when there has been a change to the automatic time zone detection setting.
+     *
+     * <p>Note: This can be removed if / when all time zone detection enabled changes take place via
+     * {@link #updateConfiguration(TimeZoneDetectorConfiguration)}.
      */
     void handleAutoTimeZoneDetectionChanged();
 

@@ -16,8 +16,10 @@
 
 package android.app.timezonedetector;
 
+import android.app.timezonedetector.ITimeZoneDetectorConfigurationListener;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
+import android.app.timezonedetector.TimeZoneDetectorConfiguration;
 
 /**
  * System private API to communicate with time zone detector service.
@@ -33,6 +35,10 @@ import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
  * {@hide}
  */
 interface ITimeZoneDetectorService {
+  TimeZoneDetectorConfiguration getConfiguration();
+  void updateConfiguration(in TimeZoneDetectorConfiguration configuration);
+  void addConfigurationListener(ITimeZoneDetectorConfigurationListener listener);
+
   void suggestManualTimeZone(in ManualTimeZoneSuggestion timeZoneSuggestion);
   void suggestTelephonyTimeZone(in TelephonyTimeZoneSuggestion timeZoneSuggestion);
 }
