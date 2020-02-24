@@ -288,15 +288,18 @@ public class OffloadController {
 
         @Override
         public void setLimit(String iface, long quotaBytes) {
-            mLog.i("setLimit: " + iface + "," + quotaBytes);
             // Listen for all iface is necessary since upstream might be changed after limit
             // is set.
             mHandler.post(() -> {
-                if (quotaBytes == QUOTA_UNLIMITED) {
-                    mInterfaceQuotas.remove(iface);
-                } else {
-                    mInterfaceQuotas.put(iface, quotaBytes);
-                }
+                final Long curIfaceQuota = mInterfaceQuotas.get(iface);
+                final long oldQuota = curIfaceQuota != null ? curIfaceQuota : Long.MAX_VALUE;
+                final long newQuota = quotaBytes == QUOTA_UNLIMITED ? Long.MAX_VALUE : quotaBytes;
+
+                // If the quota is unlimited, it is not useful to set it multiple times.
+                // Otherwise, the quota needs to be updated to tell HAL to re-count from now.
+                if (newQuota == Long.MAX_VALUE && oldQuota == newQuota) return;
+
+                mInterfaceQuotas.put(iface, newQuota);
                 maybeUpdateDataLimit(iface);
             });
         }
@@ -323,7 +326,6 @@ public class OffloadController {
 
         @Override
         public void requestStatsUpdate(int token) {
-            mLog.i("requestStatsUpdate: " + token);
             // Do not attempt to update stats by querying the offload HAL
             // synchronously from a different thread than the Handler thread. http://b/64771555.
             mHandler.post(() -> {
