@@ -739,7 +739,7 @@ public final class CardEmulation {
      */
     @RequiresPermission(android.Manifest.permission.NFC_PREFERRED_PAYMENT_INFO)
     @Nullable
-    public String getDescriptionForPreferredPaymentService() {
+    public CharSequence getDescriptionForPreferredPaymentService() {
         try {
             ApduServiceInfo serviceInfo = sService.getPreferredPaymentService(mContext.getUserId());
             return (serviceInfo != null ? serviceInfo.getDescription() : null);
