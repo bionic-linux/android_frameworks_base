@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beab9823_087209dd",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-24T12:08:39Z",
+      "side": 1,
+      "message": "Please add this permission to cts permission2 manifest.xml like aosp/1110761. Otherwise, you will not pass the presubmit.",
+      "range": {
+        "startLine": 1644,
+        "startChar": 4,
+        "endLine": 1646,
+        "endChar": 54
+      },
+      "revId": "cfe9bc2c919c1ce49c79c9f4beb43eebb804422a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
