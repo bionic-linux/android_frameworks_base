@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1475acf0_a23a08f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-02-24T11:40:50Z",
+      "side": 1,
+      "message": "Nit: Do we cover this scenario in TetheringTests?",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "42969db67fe7f6ac13894930123b0a073b32563f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
