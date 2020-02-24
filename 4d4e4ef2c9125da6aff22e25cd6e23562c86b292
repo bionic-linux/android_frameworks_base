@@ -22,6 +22,30 @@
       "revId": "4d4e4ef2c9125da6aff22e25cd6e23562c86b292",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786862bd_4a15a007",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2968,
+      "author": {
+        "id": 1603799
+      },
+      "writtenOn": "2020-02-24T07:02:24Z",
+      "side": 1,
+      "message": "finalize() called only during shutdown. if we test for long hours without reboot ,its lead to Global reference table overflow",
+      "parentUuid": "650e71e9_bf47e86c",
+      "range": {
+        "startLine": 2968,
+        "startChar": 0,
+        "endLine": 2968,
+        "endChar": 64
+      },
+      "revId": "4d4e4ef2c9125da6aff22e25cd6e23562c86b292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
