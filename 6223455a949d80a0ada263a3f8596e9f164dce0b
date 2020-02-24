@@ -22,6 +22,30 @@
       "revId": "6223455a949d80a0ada263a3f8596e9f164dce0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875d8c0e_06869ac4",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-24T13:15:31Z",
+      "side": 1,
+      "message": "Changed back to the same semantic: remove if unlimited.",
+      "parentUuid": "c578ddb9_ff8d09e6",
+      "range": {
+        "startLine": 117,
+        "startChar": 34,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "6223455a949d80a0ada263a3f8596e9f164dce0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
