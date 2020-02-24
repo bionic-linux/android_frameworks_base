@@ -20,12 +20,14 @@ import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.MATCH_TYP
 import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_MULTIPLE_ZONES_WITH_DIFFERENT_OFFSETS;
 import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_MULTIPLE_ZONES_WITH_SAME_OFFSET;
 import static android.app.timezonedetector.TelephonyTimeZoneSuggestion.QUALITY_SINGLE_ZONE;
+import static android.app.timezonedetector.TimeZoneDetectorConfiguration.PROPERTY_AUTOMATIC_DETECTION_ENABLED;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
+import android.app.timezonedetector.TimeZoneDetectorConfiguration;
 import android.content.Context;
 import android.util.LocalLog;
 import android.util.Slog;
@@ -55,8 +57,8 @@ import java.util.Objects;
 public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrategy {
 
     /**
-     * Used by {@link TimeZoneDetectorStrategyImpl} to interact with the surrounding service. It can
-     * be faked for tests.
+     * Used by {@link TimeZoneDetectorStrategyImpl} to interact with device settings. It can be
+     * faked for tests.
      *
      * <p>Note: Because the system properties-derived values like
      * {@link #isAutoTimeZoneDetectionEnabled()}, {@link #isAutoTimeZoneDetectionEnabled()},
@@ -65,7 +67,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
      * responsibility for setting their values is moved to {@link TimeZoneDetectorStrategyImpl}.
      */
     @VisibleForTesting
-    public interface Callback {
+    public interface SettingsCallback {
 
         /**
          * Returns true if automatic time zone detection is enabled in settings.
@@ -86,6 +88,11 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
          * Sets the device's time zone.
          */
         void setDeviceTimeZone(@NonNull String zoneId);
+
+        /**
+         * Sets automatic time zone detection to enabled / disabled.
+         */
+        void setAutoTimeZoneDetectionEnabled(boolean enabled);
     }
 
     private static final String LOG_TAG = "TimeZoneDetectorStrategy";
@@ -167,7 +174,11 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
     private static final int KEEP_SUGGESTION_HISTORY_SIZE = 10;
 
     @NonNull
-    private final Callback mCallback;
+    private final SettingsCallback mSettingsCallback;
+
+    /** Non-null after {@link #setStrategyListener(StrategyListener)} is called. */
+    @Nullable
+    private StrategyListener mListener;
 
     /**
      * A log that records the decisions / decision metadata that affected the device's time zone.
@@ -189,13 +200,68 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
      * Creates a new instance of {@link TimeZoneDetectorStrategyImpl}.
      */
     public static TimeZoneDetectorStrategyImpl create(Context context) {
-        Callback timeZoneDetectionServiceHelper = new TimeZoneDetectorCallbackImpl(context);
+        SettingsCallback timeZoneDetectionServiceHelper =
+                new TimeZoneDetectorSettingsCallbackImpl(context);
         return new TimeZoneDetectorStrategyImpl(timeZoneDetectionServiceHelper);
     }
 
     @VisibleForTesting
-    public TimeZoneDetectorStrategyImpl(Callback callback) {
-        mCallback = Objects.requireNonNull(callback);
+    public TimeZoneDetectorStrategyImpl(SettingsCallback settingsCallback) {
+        mSettingsCallback = Objects.requireNonNull(settingsCallback);
+    }
+
+    /**
+     * Sets a listener that allows the strategy to communicate with the surrounding service. This
+     * must be called before the instance is used and must only be called once.
+     */
+    @Override
+    public synchronized void setStrategyListener(@NonNull StrategyListener listener) {
+        if (mListener != null) {
+            throw new IllegalStateException("Strategy already has a listener");
+        }
+        mListener = Objects.requireNonNull(listener);
+    }
+
+    @Override
+    public synchronized void updateConfiguration(
+            @NonNull TimeZoneDetectorConfiguration configuration) {
+        Objects.requireNonNull(configuration);
+
+        boolean configurationChanged = false;
+
+        final boolean hasAutomaticDetectionEnabled =
+                configuration.hasProperty(PROPERTY_AUTOMATIC_DETECTION_ENABLED);
+        if (hasAutomaticDetectionEnabled) {
+            boolean oldDetectionEnabled = mSettingsCallback.isAutoTimeZoneDetectionEnabled();
+            boolean newAutomaticDetectionEnabled = configuration.isAutomaticDetectionEnabled();
+            if (oldDetectionEnabled != newAutomaticDetectionEnabled) {
+                mSettingsCallback.setAutoTimeZoneDetectionEnabled(newAutomaticDetectionEnabled);
+                configurationChanged = true;
+
+                // Note: we could rerun time zone detection here, but that is handled by
+                // handleAutoTimeZoneDetectionChanged() in response to the underlying setting value
+                // changing. So, it does not need to be handled here. If we get to a point where all
+                // configuration changes are guaranteed to happen in response to an
+                // updateConfiguration() call, then we can remove that path and do it here instead.
+            }
+        }
+
+        if (configurationChanged) {
+            String logMsg = "Configuration changed:" + configuration;
+            mTimeZoneChangesLog.log(logMsg);
+            if (DBG) {
+                Slog.d(LOG_TAG, logMsg);
+            }
+            mListener.onConfigurationChanged(getConfiguration());
+        }
+    }
+
+    @NonNull
+    @Override
+    public synchronized TimeZoneDetectorConfiguration getConfiguration() {
+        return new TimeZoneDetectorConfiguration.Builder()
+                .setAutomaticDetectionEnabled(mSettingsCallback.isAutoTimeZoneDetectionEnabled())
+                .build();
     }
 
     @Override
@@ -258,7 +324,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
      */
     @GuardedBy("this")
     private void doAutoTimeZoneDetection(@NonNull String detectionReason) {
-        if (!mCallback.isAutoTimeZoneDetectionEnabled()) {
+        if (!mSettingsCallback.isAutoTimeZoneDetectionEnabled()) {
             // Avoid doing unnecessary work with this (race-prone) check.
             return;
         }
@@ -278,7 +344,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
 
         // Special case handling for uninitialized devices. This should only happen once.
         String newZoneId = bestTelephonySuggestion.suggestion.getZoneId();
-        if (newZoneId != null && !mCallback.isDeviceTimeZoneInitialized()) {
+        if (newZoneId != null && !mSettingsCallback.isDeviceTimeZoneInitialized()) {
             String cause = "Device has no time zone set. Attempting to set the device to the best"
                     + " available suggestion."
                     + " bestTelephonySuggestion=" + bestTelephonySuggestion
@@ -323,7 +389,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
 
         boolean isOriginAutomatic = isOriginAutomatic(origin);
         if (isOriginAutomatic) {
-            if (!mCallback.isAutoTimeZoneDetectionEnabled()) {
+            if (!mSettingsCallback.isAutoTimeZoneDetectionEnabled()) {
                 if (DBG) {
                     Slog.d(LOG_TAG, "Auto time zone detection is not enabled."
                             + " origin=" + origin
@@ -333,7 +399,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
                 return;
             }
         } else {
-            if (mCallback.isAutoTimeZoneDetectionEnabled()) {
+            if (mSettingsCallback.isAutoTimeZoneDetectionEnabled()) {
                 if (DBG) {
                     Slog.d(LOG_TAG, "Auto time zone detection is enabled."
                             + " origin=" + origin
@@ -344,7 +410,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
             }
         }
 
-        String currentZoneId = mCallback.getDeviceTimeZone();
+        String currentZoneId = mSettingsCallback.getDeviceTimeZone();
 
         // Avoid unnecessary changes / intents.
         if (newZoneId.equals(currentZoneId)) {
@@ -360,7 +426,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
             return;
         }
 
-        mCallback.setDeviceTimeZone(newZoneId);
+        mSettingsCallback.setDeviceTimeZone(newZoneId);
         String msg = "Set device time zone."
                 + " origin=" + origin
                 + ", currentZoneId=" + currentZoneId
@@ -424,7 +490,7 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
         if (DBG) {
             Slog.d(LOG_TAG, "handleTimeZoneDetectionChange() called");
         }
-        if (mCallback.isAutoTimeZoneDetectionEnabled()) {
+        if (mSettingsCallback.isAutoTimeZoneDetectionEnabled()) {
             // When the user enabled time zone detection, run the time zone detection and change the
             // device time zone if possible.
             String reason = "Auto time zone detection setting enabled.";
@@ -441,12 +507,12 @@ public final class TimeZoneDetectorStrategyImpl implements TimeZoneDetectorStrat
         ipw.println("TimeZoneDetectorStrategy:");
 
         ipw.increaseIndent(); // level 1
-        ipw.println("mCallback.isTimeZoneDetectionEnabled()="
-                + mCallback.isAutoTimeZoneDetectionEnabled());
-        ipw.println("mCallback.isDeviceTimeZoneInitialized()="
-                + mCallback.isDeviceTimeZoneInitialized());
-        ipw.println("mCallback.getDeviceTimeZone()="
-                + mCallback.getDeviceTimeZone());
+        ipw.println("mSettingsCallback.isTimeZoneDetectionEnabled()="
+                + mSettingsCallback.isAutoTimeZoneDetectionEnabled());
+        ipw.println("mSettingsCallback.isDeviceTimeZoneInitialized()="
+                + mSettingsCallback.isDeviceTimeZoneInitialized());
+        ipw.println("mSettingsCallback.getDeviceTimeZone()="
+                + mSettingsCallback.getDeviceTimeZone());
 
         ipw.println("Time zone change log:");
         ipw.increaseIndent(); // level 2

@@ -25,16 +25,17 @@ import android.os.SystemProperties;
 import android.provider.Settings;
 
 /**
- * The real implementation of {@link TimeZoneDetectorStrategyImpl.Callback}.
+ * The real implementation of {@link TimeZoneDetectorStrategyImpl.SettingsCallback}.
  */
-public final class TimeZoneDetectorCallbackImpl implements TimeZoneDetectorStrategyImpl.Callback {
+public final class TimeZoneDetectorSettingsCallbackImpl
+        implements TimeZoneDetectorStrategyImpl.SettingsCallback {
 
     private static final String TIMEZONE_PROPERTY = "persist.sys.timezone";
 
     private final Context mContext;
     private final ContentResolver mCr;
 
-    TimeZoneDetectorCallbackImpl(Context context) {
+    TimeZoneDetectorSettingsCallbackImpl(Context context) {
         mContext = context;
         mCr = context.getContentResolver();
     }
@@ -55,6 +56,11 @@ public final class TimeZoneDetectorCallbackImpl implements TimeZoneDetectorStrat
         // TODO b/150583524 Avoid the use of a deprecated API.
         return mContext.getSystemService(ConnectivityManager.class)
                 .isNetworkSupported(ConnectivityManager.TYPE_MOBILE);
+    }
+
+    @Override
+    public void setAutoTimeZoneDetectionEnabled(boolean enabled) {
+        Settings.Global.putInt(mCr, Settings.Global.AUTO_TIME_ZONE, enabled ? 1 : 0);
     }
 
     @Override

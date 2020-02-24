@@ -41,6 +41,26 @@ public interface TimeZoneDetector {
     }
 
     /**
+     * Returns the complete, current time zone detection configuration.
+     */
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    @NonNull TimeZoneDetectorConfiguration getConfiguration();
+
+    /**
+     * Updates the time zone detection configuration. If configuration is not complete then only the
+     * specified properties will be updated.
+     */
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    void updateConfiguration(@NonNull TimeZoneDetectorConfiguration configuration);
+
+    /**
+     * Registers a listener that will be informed when the configuration changes. The complete
+     * configuration is passed to the listener.
+     */
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    void addConfigurationListener(@NonNull ITimeZoneDetectorConfigurationListener listener);
+
+    /**
      * Suggests the current time zone, determined using telephony signals, to the detector. The
      * detector may ignore the signal based on system settings, whether better information is
      * available, and so on.

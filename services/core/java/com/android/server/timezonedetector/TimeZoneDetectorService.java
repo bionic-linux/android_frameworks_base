@@ -18,22 +18,30 @@ package com.android.server.timezonedetector;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.timezonedetector.ITimeZoneDetectorConfigurationListener;
 import android.app.timezonedetector.ITimeZoneDetectorService;
 import android.app.timezonedetector.ManualTimeZoneSuggestion;
 import android.app.timezonedetector.TelephonyTimeZoneSuggestion;
+import android.app.timezonedetector.TimeZoneDetectorConfiguration;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.provider.Settings;
+import android.util.Slog;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.DumpUtils;
 import com.android.server.FgThread;
 import com.android.server.SystemService;
+import com.android.server.timezonedetector.TimeZoneDetectorStrategy.StrategyListener;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -65,6 +73,10 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     @NonNull private final Handler mHandler;
     @NonNull private final TimeZoneDetectorStrategy mTimeZoneDetectorStrategy;
 
+    @GuardedBy("mConfigurationListeners")
+    @NonNull private final ArrayList<ITimeZoneDetectorConfigurationListener>
+            mConfigurationListeners = new ArrayList<>();
+
     private static TimeZoneDetectorService create(@NonNull Context context) {
         final TimeZoneDetectorStrategy timeZoneDetectorStrategy =
                 TimeZoneDetectorStrategyImpl.create(context);
@@ -90,6 +102,75 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
         mContext = Objects.requireNonNull(context);
         mHandler = Objects.requireNonNull(handler);
         mTimeZoneDetectorStrategy = Objects.requireNonNull(timeZoneDetectorStrategy);
+        mTimeZoneDetectorStrategy.setStrategyListener(new StrategyListener() {
+            @Override
+            public void onConfigurationChanged(TimeZoneDetectorConfiguration configuration) {
+                handleConfigurationChanged(configuration);
+            }
+        });
+    }
+
+    @Override
+    @NonNull
+    public TimeZoneDetectorConfiguration getConfiguration() {
+        enforceManageTimeZoneDetectorConfigurationPermission();
+        return mTimeZoneDetectorStrategy.getConfiguration();
+    }
+
+    @Override
+    public void updateConfiguration(@NonNull TimeZoneDetectorConfiguration configuration) {
+        enforceManageTimeZoneDetectorConfigurationPermission();
+        Objects.requireNonNull(configuration);
+
+        // This is implemented synchronously for cases where the client wants to wait to know the
+        // configuration has actually been updated.
+        // TODO: Check that doing it synchronously also ensures that the caller must have permission
+        //  to change the settings, e.g. device policy checks? Should this do a DevicePolicyManager
+        //  check explicitly?
+        mTimeZoneDetectorStrategy.updateConfiguration(configuration);
+    }
+
+    @Override
+    public void addConfigurationListener(@NonNull ITimeZoneDetectorConfigurationListener listener) {
+        enforceManageTimeZoneDetectorConfigurationPermission();
+        Objects.requireNonNull(listener);
+
+        final IBinder.DeathRecipient deathRecipient = new IBinder.DeathRecipient() {
+            @Override
+            public void binderDied() {
+                synchronized (mConfigurationListeners) {
+                    Slog.i(TAG, "Configuration listener died: " + listener);
+                    mConfigurationListeners.remove(listener);
+                }
+            }
+        };
+
+        synchronized (mConfigurationListeners) {
+            try {
+                // Remove the record of listener if the client process dies.
+                listener.asBinder().linkToDeath(deathRecipient, 0 /* flags */);
+
+                // Only add the listener if we can linkToDeath().
+                mConfigurationListeners.add(listener);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "Unable to linkToDeath() for listener=" + listener, e);
+            }
+        }
+    }
+
+    void handleConfigurationChanged(@NonNull TimeZoneDetectorConfiguration configuration) {
+        Objects.requireNonNull(configuration);
+
+        synchronized (mConfigurationListeners) {
+            for (ITimeZoneDetectorConfigurationListener listener : mConfigurationListeners) {
+                try {
+                    listener.onChange(configuration);
+                } catch (RemoteException e) {
+                    Slog.w(TAG, "Unable to notify listener="
+                            + listener + " of updated configuration=" + configuration, e);
+                }
+            }
+        }
     }
 
     @Override
@@ -120,6 +201,13 @@ public final class TimeZoneDetectorService extends ITimeZoneDetectorService.Stub
     @VisibleForTesting
     public void handleAutoTimeZoneDetectionChanged() {
         mHandler.post(mTimeZoneDetectorStrategy::handleAutoTimeZoneDetectionChanged);
+    }
+
+    private void enforceManageTimeZoneDetectorConfigurationPermission() {
+        // TODO Switch to a dedicated MANAGE_TIME_AND_ZONE_CONFIGURATION permission.
+        mContext.enforceCallingPermission(
+                android.Manifest.permission.WRITE_SECURE_SETTINGS,
+                "manage time and time zone configuration");
     }
 
     private void enforceSuggestTelephonyTimeZonePermission() {
