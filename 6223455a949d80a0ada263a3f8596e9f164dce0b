@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c578ddb9_ff8d09e6",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-02-24T12:33:45Z",
+      "side": 1,
+      "message": "The value of mInterfaceQuotas may have different meaning that the both of null and MAX_INT are represent unlimited. It is not straightforward for understanding. Could we have comment ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 34,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "6223455a949d80a0ada263a3f8596e9f164dce0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
