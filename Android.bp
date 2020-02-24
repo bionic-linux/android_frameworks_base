@@ -29,7 +29,6 @@ filegroup {
     name: "framework-core-sources",
     srcs: [
         "core/java/**/*.java",
-        "core/java/**/*.aidl",
     ],
     path: "core/java",
 }
