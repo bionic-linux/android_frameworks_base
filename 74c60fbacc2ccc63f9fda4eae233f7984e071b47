@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "120806b0_1c6ed373",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-02-24T17:17:23Z",
+      "side": 1,
+      "message": "should you use something like ScopedStringChars?",
+      "range": {
+        "startLine": 295,
+        "startChar": 4,
+        "endLine": 295,
+        "endChar": 16
+      },
+      "revId": "74c60fbacc2ccc63f9fda4eae233f7984e071b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
