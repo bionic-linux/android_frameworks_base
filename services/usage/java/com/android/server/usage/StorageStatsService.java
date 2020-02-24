@@ -384,7 +384,7 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
         enforcePermission(Binder.getCallingUid(), callingPackage);
 
         final int[] appIds = getAppIds(userId);
-        final long[] stats;
+        long[] stats = null;
         try {
             stats = mInstaller.getExternalSize(volumeUuid, userId, getDefaultFlags(), appIds);
 
@@ -398,12 +398,14 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
         }
 
         final ExternalStorageStats res = new ExternalStorageStats();
-        res.totalBytes = stats[0];
-        res.audioBytes = stats[1];
-        res.videoBytes = stats[2];
-        res.imageBytes = stats[3];
-        res.appBytes = stats[4];
-        res.obbBytes = stats[5];
+        if (stats != null && status.length == 6) {
+            res.totalBytes = stats[0];
+            res.audioBytes = stats[1];
+            res.videoBytes = stats[2];
+            res.imageBytes = stats[3];
+            res.appBytes = stats[4];
+            res.obbBytes = stats[5];
+        }
         return res;
     }
 
