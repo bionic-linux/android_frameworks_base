@@ -22,6 +22,30 @@
       "revId": "42969db67fe7f6ac13894930123b0a073b32563f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553f694c_a74781f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-24T11:54:13Z",
+      "side": 1,
+      "message": "No, given that this does not actually change functionality.\nAdd such tests might increase the maintain efforts in future.\nReopen if feel strongly.",
+      "parentUuid": "1475acf0_a23a08f3",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "42969db67fe7f6ac13894930123b0a073b32563f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
