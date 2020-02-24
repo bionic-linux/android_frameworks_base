@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c887da4_922d14db",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-24T11:56:26Z",
+      "side": 1,
+      "message": "Should be android.content.pm.PackageManager.PERMISSION_GRANTED?",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "1e712f48a693feb92648c5c6088f3da10411ee05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75841a53_9ded1479",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-02-24T11:56:26Z",
+      "side": 1,
+      "message": "Nit: maybe \"Copy from\"",
+      "range": {
+        "startLine": 1770,
+        "startChar": 13,
+        "endLine": 1770,
+        "endChar": 29
+      },
+      "revId": "1e712f48a693feb92648c5c6088f3da10411ee05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
