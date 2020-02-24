@@ -22,6 +22,30 @@
       "revId": "f04d1f1199b7271f289f720750165b6587c29583",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53743f9_d39a7533",
+        "filename": "core/java/android/os/MessageQueue.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1593367
+      },
+      "writtenOn": "2020-02-24T10:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e009a3_0b26cf9f",
+      "range": {
+        "startLine": 716,
+        "startChar": 47,
+        "endLine": 716,
+        "endChar": 49
+      },
+      "revId": "f04d1f1199b7271f289f720750165b6587c29583",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
