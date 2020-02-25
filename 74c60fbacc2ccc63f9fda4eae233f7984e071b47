@@ -22,6 +22,30 @@
       "revId": "74c60fbacc2ccc63f9fda4eae233f7984e071b47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667d4d07_e74776cd",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1130394
+      },
+      "writtenOn": "2020-02-25T04:36:43Z",
+      "side": 1,
+      "message": "Maybe, but we didn\u0027t before, and it\u0027s simple enough to use a direct approach here.",
+      "parentUuid": "120806b0_1c6ed373",
+      "range": {
+        "startLine": 295,
+        "startChar": 4,
+        "endLine": 295,
+        "endChar": 16
+      },
+      "revId": "74c60fbacc2ccc63f9fda4eae233f7984e071b47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
