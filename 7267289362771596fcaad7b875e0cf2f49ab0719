@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f170de3_01ef0f62",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T05:16:05Z",
+      "side": 1,
+      "message": "I don\u0027t think negative quotas mean anything so you could use a negative value if this specific detail worries you.\nI don\u0027t think it should worry you and I think the current code is natural, so I don\u0027t think there is any strong reason to change it.\n\n(also \"no one can actually reach it\")",
+      "range": {
+        "startLine": 298,
+        "startChar": 58,
+        "endLine": 298,
+        "endChar": 97
+      },
+      "revId": "7267289362771596fcaad7b875e0cf2f49ab0719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1f46f15_f2b1cc55",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T05:16:05Z",
+      "side": 1,
+      "message": "nit : \"as the\"",
+      "range": {
+        "startLine": 301,
+        "startChar": 44,
+        "endLine": 301,
+        "endChar": 48
+      },
+      "revId": "7267289362771596fcaad7b875e0cf2f49ab0719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1dacbf_924be846",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/OffloadController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-02-25T05:16:05Z",
+      "side": 1,
+      "message": "What you wrote is fine, but wouldn\u0027t have the following been a bit simpler ?\n\n  final Long curIfaceQuota \u003d mInterfaceQuota.get(iface);\n  // Same comment as today\n  if (null \u003d\u003d curIfaceQuota \u0026\u0026 QUOTA_UNLIMITED \u003d\u003d quotabytes) return;\n  if (quotaBytes \u003d\u003d QUOTA_UNLIMITED) {\n    ...\n\n(it doesn\u0027t matter because what you wrote is plenty clear)",
+      "range": {
+        "startLine": 302,
+        "startChar": 16,
+        "endLine": 302,
+        "endChar": 79
+      },
+      "revId": "7267289362771596fcaad7b875e0cf2f49ab0719",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
