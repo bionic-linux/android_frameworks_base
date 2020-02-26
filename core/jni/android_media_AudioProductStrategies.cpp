@@ -68,6 +68,8 @@ static struct {
     jmethodID    toArray;
 } gArrayListMethods;
 
+static jclass gPairClass;
+static jmethodID gPairCstor;
 
 static jint convertAudioProductStrategiesFromNative(
         JNIEnv *env, jobject *jAudioStrategy, const AudioProductStrategy &strategy)
@@ -207,12 +209,52 @@ exit:
     return jStatus;
 }
 
+static jobject
+android_media_AudioSystem_getPreferredDeviceForStrategy(JNIEnv *env, jobject clazz, jint strategyId)
+{
+    AudioDeviceTypeAddr device;
+    status_t status = AudioSystem::getPreferredDeviceForStrategy(
+                static_cast<product_strategy_t>(strategyId), device);
+    if (status != NO_ERROR) {
+        return nullptr;
+    }
+    jstring jAddress = env->NewStringUTF(device.mAddress.c_str());
+    return env->NewObject(gPairClass, gPairCstor, device.mType, jAddress);
+}
+
+static int
+android_media_AudioSystem_setPreferredDeviceForStrategy(
+        JNIEnv *env, jobject clazz, jint strategyId, jint deviceType, jstring deviceAddress)
+{
+    const char *c_deviceAddress = env->GetStringUTFChars(deviceAddress, NULL);
+    AudioDeviceTypeAddr device{static_cast<audio_devices_t>(deviceType), c_deviceAddress};
+    status_t status = AudioSystem::setPreferredDeviceForStrategy(
+                static_cast<product_strategy_t>(strategyId), device);
+    env->ReleaseStringUTFChars(deviceAddress, c_deviceAddress);
+    return nativeToJavaStatus(status);
+}
+
+static int
+android_media_AudioSystem_removePreferredDeviceForStrategy(
+        JNIEnv *env, jobject clazz, jint strategyId)
+{
+    status_t status = AudioSystem::removePreferredDeviceForStrategy(
+                static_cast<product_strategy_t>(strategyId));
+    return nativeToJavaStatus(status);
+}
+
 /*
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
     {"native_list_audio_product_strategies", "(Ljava/util/ArrayList;)I",
                         (void *)android_media_AudioSystem_listAudioProductStrategies},
+    {"native_get_preferred_device_for_strategy", "(I)Landroid/util/Pair;",
+                        (void *)android_media_AudioSystem_getPreferredDeviceForStrategy},
+    {"native_set_preferred_device_for_strategy", "(IILjava/lang/String;)I",
+                        (void *)android_media_AudioSystem_setPreferredDeviceForStrategy},
+    {"native_remove_preferred_device_for_strategy", "(I)I",
+                        (void *)android_media_AudioSystem_removePreferredDeviceForStrategy},
 };
 
 int register_android_media_AudioProductStrategies(JNIEnv *env)
@@ -250,6 +292,10 @@ int register_android_media_AudioProductStrategies(JNIEnv *env)
 
     env->DeleteLocalRef(audioProductStrategyClass);
     env->DeleteLocalRef(audioAttributesGroupClass);
+
+    jclass pairClass = FindClassOrDie(env, "android/util/Pair");
+    gPairClass = MakeGlobalRefOrDie(env, pairClass);
+    gPairCstor = GetMethodIDOrDie(env, pairClass, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
 
     return RegisterMethodsOrDie(env, kClassPathName, gMethods, NELEM(gMethods));
 }
