@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1d5a450_b1be2f72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-26T06:52:17Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "8f2cf82e_b1171519",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d246c4_880fae04",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5e6f0f_e68200e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-26T06:52:17Z",
+      "side": 1,
+      "message": "rephrased",
+      "parentUuid": "02d246c4_880fae04",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 57
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f3d5f556_e5fcfa98",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-26T06:52:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b4d0e3b_8ccedb3e",
+      "range": {
+        "startLine": 239,
+        "startChar": 72,
+        "endLine": 239,
+        "endChar": 77
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cbf3f2_63207f1f",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3e268ef6_d60d6095",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-26T06:52:17Z",
+      "side": 1,
+      "message": "Yes.\nIt only affects how we\u0027ll record.\nBut how we read is not affected.\nSo if it was enabled in one period,\ncombined and non-combined records might both show up.\nUser can query them with suitable NetworkTemplate.",
+      "parentUuid": "10cbf3f2_63207f1f",
+      "range": {
+        "startLine": 471,
+        "startChar": 20,
+        "endLine": 472,
+        "endChar": 40
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29b8ba1a_96e71c74",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2020-01-30T15:02:05Z",
       "side": 1,
       "message": "So we don\u0027t have any coverage for combined subtypes ?",
+      "range": {
+        "startLine": 1157,
+        "startChar": 8,
+        "endLine": 1157,
+        "endChar": 69
+      },
+      "revId": "d93036d77c87d8754a759feccb12b265c2d191c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d542ff3_a4ed6eac",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-02-26T06:52:17Z",
+      "side": 1,
+      "message": "Hmmm, you are right.\nHowever it looks like not a easy fix to me,\ngiven that settings are read in system ready,\nand PhoneStateListner is initialized at that time.\nIn unit test it is done during setup().\nIt might be easier to do this when we can listen to settings change event in NSS.\nThus we could disable the setting in the specific test case,\nand test combined behavior accordingly.\n\nany thought?",
+      "parentUuid": "29b8ba1a_96e71c74",
       "range": {
         "startLine": 1157,
         "startChar": 8,
