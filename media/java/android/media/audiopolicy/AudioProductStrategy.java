@@ -20,17 +20,21 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.media.AudioAttributes;
+import android.media.AudioDeviceInfo;
+import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.MediaRecorder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -78,6 +82,38 @@ public final class AudioProductStrategy implements Parcelable {
             }
         }
         return sAudioProductStrategies;
+    }
+
+    /**
+     * @hide
+     * @return the preferred {@link AudioDeviceInfo} for the given AudioProductStrategy.
+     */
+    @Nullable
+    public AudioDeviceInfo getPreferredDevice() {
+        final Pair<Integer, String> deviceTypeAddress =
+                native_get_preferred_device_for_strategy(mId);
+        if (deviceTypeAddress == null) {
+            return null;
+        }
+        return Arrays.asList(AudioManager.getDevicesStatic(AudioManager.GET_DEVICES_OUTPUTS))
+                .stream()
+                .filter(device -> device.getId() == deviceTypeAddress.first
+                        && deviceTypeAddress.second.equals(device.getAddress()))
+                .findFirst().orElse(null);
+    }
+    /**
+     * @hide
+     */
+    public boolean setPreferredDevice(@NonNull AudioDeviceInfo device) {
+        return native_set_preferred_device_for_strategy(
+                mId, device.getPort().type(), device.getAddress()) == AudioManager.SUCCESS;
+    }
+
+    /**
+     * @hide
+     */
+    public boolean removePreferredDevice() {
+        return native_remove_preferred_device_for_strategy(mId) == AudioManager.SUCCESS;
     }
 
     /**
@@ -162,6 +198,14 @@ public final class AudioProductStrategy implements Parcelable {
 
     private static native int native_list_audio_product_strategies(
             ArrayList<AudioProductStrategy> strategies);
+
+    private static native Pair<Integer, String> native_get_preferred_device_for_strategy(
+            int strategyId);
+
+    private static native int native_set_preferred_device_for_strategy(
+            int strategyId, int deviceType, String deviceAddress);
+
+    private static native int native_remove_preferred_device_for_strategy(int strategyId);
 
     @Override
     public boolean equals(@Nullable Object o) {
