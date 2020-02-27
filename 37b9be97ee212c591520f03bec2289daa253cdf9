@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5e2149_a8e71dc1",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/CellularTile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-02-27T14:41:44Z",
+      "side": 1,
+      "message": "I would like it if there was some kind of message as to why the tile is unavailable, matching the other UNAVAILABLE states.",
+      "revId": "37b9be97ee212c591520f03bec2289daa253cdf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
