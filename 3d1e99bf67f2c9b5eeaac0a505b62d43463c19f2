@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67dc2b2_c4bb173c",
+        "filename": "telephony/java/android/telephony/ModemActivityInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-02-27T19:23:58Z",
+      "side": 1,
+      "message": "Indicates if the modem has reported valid {@link ModemActivityInfo}.",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 83
+      },
+      "revId": "3d1e99bf67f2c9b5eeaac0a505b62d43463c19f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
