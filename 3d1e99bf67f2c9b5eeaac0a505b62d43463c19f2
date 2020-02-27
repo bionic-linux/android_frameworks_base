@@ -22,6 +22,30 @@
       "revId": "3d1e99bf67f2c9b5eeaac0a505b62d43463c19f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86488121_d5a85f07",
+        "filename": "telephony/java/android/telephony/ModemActivityInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-02-27T21:19:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d67dc2b2_c4bb173c",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 83
+      },
+      "revId": "3d1e99bf67f2c9b5eeaac0a505b62d43463c19f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
