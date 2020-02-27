@@ -2501,24 +2501,25 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
         // that don't return the complete set of values and have different types. In Keyguard we
         // need IccCardConstants, but TelephonyManager would only give us
         // TelephonyManager.SIM_STATE*, so we retrieve it manually.
-        final TelephonyManager tele = TelephonyManager.from(mContext);
-        int simState =  tele.getSimState(slotId);
-        State state;
-        try {
-            state = State.intToState(simState);
-        } catch(IllegalArgumentException ex) {
-            Log.w(TAG, "Unknown sim state: " + simState);
-            state = State.UNKNOWN;
-        }
         SimData data = mSimDatas.get(subId);
         final boolean changed;
         if (data == null) {
+            final TelephonyManager tele = TelephonyManager.from(mContext);
+            int simState = tele.getSimState(slotId);
+            State state;
+            try {
+                state = State.intToState(simState);
+            } catch (IllegalArgumentException ex) {
+                Log.w(TAG, "Unknown sim state: " + simState);
+                state = State.UNKNOWN;
+            }
             data = new SimData(state, slotId, subId);
             mSimDatas.put(subId, data);
             changed = true; // no data yet; force update
         } else {
-            changed = data.simState != state;
-            data.simState = state;
+            changed = false;
+            Log.d(TAG, "refreshSimState: update simdata, changed:" + changed
+                    + " simdata:" + data.toString());
         }
         return changed;
     }
