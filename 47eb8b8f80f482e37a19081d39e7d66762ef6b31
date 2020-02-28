@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127c094d_a817c3ca",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-02-28T18:21:04Z",
+      "side": 1,
+      "message": "(this is actually just hwcap.)",
+      "range": {
+        "startLine": 987,
+        "startChar": 20,
+        "endLine": 987,
+        "endChar": 27
+      },
+      "revId": "47eb8b8f80f482e37a19081d39e7d66762ef6b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afd5d1c_595f2bc0",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-02-28T18:21:04Z",
+      "side": 1,
+      "message": "\": %m\"?\n\nshould this actually be fatal if it\u0027s anything other than \"PAC not supported by this kernel/hardware\"? (and maybe ignored in that case?)",
+      "range": {
+        "startLine": 992,
+        "startChar": 42,
+        "endLine": 992,
+        "endChar": 43
+      },
+      "revId": "47eb8b8f80f482e37a19081d39e7d66762ef6b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
