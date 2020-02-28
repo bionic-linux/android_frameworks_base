@@ -16,6 +16,24 @@
       "revId": "37b9be97ee212c591520f03bec2289daa253cdf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1762a009_6a3b4634",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/tiles/CellularTile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1233564
+      },
+      "writtenOn": "2020-02-28T12:17:51Z",
+      "side": 1,
+      "message": "Good point!\n\nI have added a new string in Patchset 3 for this purpose.\n\nI assume you want an UX-designer from Google to decide the exact wording of this new string?\n\nIn my proposal I used the following string as a placeholder:\n\"Not available for Guest\"",
+      "parentUuid": "fd5e2149_a8e71dc1",
+      "revId": "37b9be97ee212c591520f03bec2289daa253cdf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
