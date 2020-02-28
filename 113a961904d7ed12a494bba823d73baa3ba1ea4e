@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac80228_5b1fe5d2",
+        "filename": "api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-28T04:52:14Z",
+      "side": 1,
+      "message": "-1?",
+      "range": {
+        "startLine": 92,
+        "startChar": 68,
+        "endLine": 92,
+        "endChar": 69
+      },
+      "revId": "113a961904d7ed12a494bba823d73baa3ba1ea4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfa4aaa_9a9a11a2",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-28T04:52:14Z",
+      "side": 1,
+      "message": "Add an @IntDef for this. For an example of how to do this, use RESTRICT_BACKGROUND_STATUS_*.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 64
+      },
+      "revId": "113a961904d7ed12a494bba823d73baa3ba1ea4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269e2290_5a462bbc",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-28T04:52:14Z",
+      "side": 1,
+      "message": "Per IM, let\u0027s wait and see if we can make this only use the callback.",
+      "range": {
+        "startLine": 733,
+        "startChar": 4,
+        "endLine": 733,
+        "endChar": 74
+      },
+      "revId": "113a961904d7ed12a494bba823d73baa3ba1ea4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51793d54_aa1a3b3e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-02-28T04:52:14Z",
+      "side": 1,
+      "message": "Typo, send.",
+      "range": {
+        "startLine": 953,
+        "startChar": 15,
+        "endLine": 953,
+        "endChar": 20
+      },
+      "revId": "113a961904d7ed12a494bba823d73baa3ba1ea4e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
