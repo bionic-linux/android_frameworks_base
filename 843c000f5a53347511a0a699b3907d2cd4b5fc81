@@ -16,6 +16,24 @@
       "revId": "843c000f5a53347511a0a699b3907d2cd4b5fc81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac523c18_5e23877a",
+        "filename": "packages/SystemUI/res/layout/menu_ime.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-03-03T17:28:41Z",
+      "side": 1,
+      "message": "That seems to be the case for every navigation keys.\nSee packages/SystemUI/res/layout/clipboard.xml",
+      "parentUuid": "412f4826_11a37446",
+      "revId": "843c000f5a53347511a0a699b3907d2cd4b5fc81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
