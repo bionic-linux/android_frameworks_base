@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "412f4826_11a37446",
+        "filename": "packages/SystemUI/res/layout/menu_ime.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2020-03-03T17:26:58Z",
+      "side": 1,
+      "message": "Can you clarify why we should be setting the width to a padding value?",
+      "revId": "843c000f5a53347511a0a699b3907d2cd4b5fc81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
