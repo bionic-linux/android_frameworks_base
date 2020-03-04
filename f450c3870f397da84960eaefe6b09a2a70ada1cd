@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2193330_bb87f99c",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-03-04T18:18:16Z",
+      "side": 1,
+      "message": "(one of these days i\u0027ll do this code a favor and make RuntimeAbort varargs...)",
+      "revId": "f450c3870f397da84960eaefe6b09a2a70ada1cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
