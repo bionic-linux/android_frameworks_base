@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80f9140_ce1faa72",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7847,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-04T05:50:15Z",
+      "side": 1,
+      "message": "Why not just use getVpnUnderlyingNetworks(callbackUid) ?",
+      "range": {
+        "startLine": 7840,
+        "startChar": 8,
+        "endLine": 7847,
+        "endChar": 0
+      },
+      "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2388f63_1b51f37b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6597,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-04T05:50:15Z",
+      "side": 1,
+      "message": "For more safety I suggest you do this test immediately after the one that succeeds, in the same function. It will ensure the failing part is actually the underlying network – otherwise some patch requiring a change to this function might miss it and cause it to fail for some other reason, at which point this test is neutered and won\u0027t detect what it tries to prevent.\n\nIt will also let you remove some code duplication.",
+      "range": {
+        "startLine": 6589,
+        "startChar": 0,
+        "endLine": 6597,
+        "endChar": 54
+      },
+      "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
