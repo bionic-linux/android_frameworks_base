@@ -93,6 +93,30 @@
       "revId": "47eb8b8f80f482e37a19081d39e7d66762ef6b31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "223ae0e5_a8940e05",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1470412
+      },
+      "writtenOn": "2020-03-04T18:15:34Z",
+      "side": 1,
+      "message": "In case of PAC is not supported then the kernel should not report the HWCAP so error from this prctl is not expected.",
+      "parentUuid": "65ebee9f_019c035f",
+      "range": {
+        "startLine": 992,
+        "startChar": 42,
+        "endLine": 992,
+        "endChar": 43
+      },
+      "revId": "47eb8b8f80f482e37a19081d39e7d66762ef6b31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
