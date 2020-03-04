@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36bc92fc_96426f26",
+        "filename": "core/java/android/hardware/GeomagneticField.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1074523
+      },
+      "writtenOn": "2020-03-04T18:58:03Z",
+      "side": 1,
+      "message": "Would you please comment on the effect of this? As far as I know, a few hours of difference does not change the output much.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "2acfca890ad88e9b83cc1a46a3f197a352cd8dfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
