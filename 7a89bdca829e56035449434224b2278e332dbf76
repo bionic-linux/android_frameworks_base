@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3578a95e_d91eedfd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6747,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-04T05:54:41Z",
+      "side": 1,
+      "message": "I see very little point in catching specifically SecurityException here just to call fail(). Any exception will crash the test, which is as it should be.\nIf you want you can just have a comment saying\n\n  // This is called on the CS handler thread so it should never throw. In particular\n  // some of the used primitives throw SecurityException when the passed package name\n  // doesn\u0027t match the uid.",
+      "range": {
+        "startLine": 6745,
+        "startChar": 7,
+        "endLine": 6747,
+        "endChar": 9
+      },
+      "revId": "7a89bdca829e56035449434224b2278e332dbf76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
