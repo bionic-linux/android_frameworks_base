@@ -46,6 +46,30 @@
       "revId": "2acfca890ad88e9b83cc1a46a3f197a352cd8dfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def68767_a74815ce",
+        "filename": "core/java/android/hardware/GeomagneticField.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003476
+      },
+      "writtenOn": "2020-03-04T23:46:39Z",
+      "side": 1,
+      "message": "Ah, the wonders of date libraries :)\n\nFor 99.9% of the use cases, even updating the model is not strictly needed, but it doesn\u0027t hurt to provide as much precision as we can.",
+      "parentUuid": "585e8a8d_6a34c25e",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "2acfca890ad88e9b83cc1a46a3f197a352cd8dfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
