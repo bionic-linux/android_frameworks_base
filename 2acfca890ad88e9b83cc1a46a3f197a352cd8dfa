@@ -22,6 +22,30 @@
       "revId": "2acfca890ad88e9b83cc1a46a3f197a352cd8dfa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585e8a8d_6a34c25e",
+        "filename": "core/java/android/hardware/GeomagneticField.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1039309
+      },
+      "writtenOn": "2020-03-04T19:33:35Z",
+      "side": 1,
+      "message": "A few hours will make a slight difference, like you said. However, the main issue is that the previous revision was specifying \"1\" for the month, which is February since months start at 0. So the base time is an entire month off which makes the error quite a bit larger. The current tests are fairly forgiving in their precision so this error likely went unnoticed\n\nThe calculations are meant to be done using UTC time so by starting with a local time we are already adding error into our results. For example: Tests on our local machines would pass, but when submitted to our CI server they would fail due to the servers being in a different time zone and the error ends up being larger. This class should output consistent results. The magnetic field for, say, New York should not change just because I calculated it on the East coast vs. someone who calculates it while on the West coast. Hence why I changed the base time to be in UTC.",
+      "parentUuid": "36bc92fc_96426f26",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "2acfca890ad88e9b83cc1a46a3f197a352cd8dfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
