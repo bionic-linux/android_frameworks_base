@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46e55b29_cecc76ee",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/Tethering.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "SuperNit: unusual blank line ?",
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1fdad7_6cffe8ea",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "Nit: add comments to explain parameters (/* offloadConfig */, /* offloadControl */ etc)",
+      "range": {
+        "startLine": 465,
+        "startChar": 37,
+        "endLine": 465,
+        "endChar": 38
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32d9c88_7f795444",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "Nit: expectedStatus",
+      "range": {
+        "startLine": 1176,
+        "startChar": 57,
+        "endLine": 1176,
+        "endChar": 71
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8717cc9b_d69a45b3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to explicity box here",
+      "range": {
+        "startLine": 1178,
+        "startChar": 51,
+        "endLine": 1178,
+        "endChar": 62
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453efdd1_dc006823",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "Same here and in onCallbackStarted",
+      "range": {
+        "startLine": 1208,
+        "startChar": 31,
+        "endLine": 1208,
+        "endChar": 42
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f8cd70_240b7756",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "Nit: add comments to explain parameters (/* offloadConfig */, /* offloadControl */ etc)",
+      "range": {
+        "startLine": 1343,
+        "startChar": 38,
+        "endLine": 1343,
+        "endChar": 39
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e3cd60_cdcca223",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-05T09:57:39Z",
+      "side": 1,
+      "message": "defaultDisabled ?",
+      "range": {
+        "startLine": 1372,
+        "startChar": 52,
+        "endLine": 1372,
+        "endChar": 70
+      },
+      "revId": "48838d71882c4f63819756d53bcd2aa6eb485edc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
