@@ -631,6 +631,9 @@ public final class DisplayCutout {
         if (TextUtils.isEmpty(spec)) {
             return NULL_PAIR;
         }
+
+        android.util.Log.d("tcman", "1 pathAndDisplayCutoutFromSpec (" + spec + ", "
+                + sCachedSpec + ", " +  sCachedCutout + ")");
         synchronized (CACHE_LOCK) {
             if (spec.equals(sCachedSpec) && sCachedDisplayWidth == displayWidth
                     && sCachedDisplayHeight == displayHeight
@@ -714,6 +717,8 @@ public final class DisplayCutout {
             sCachedDisplayHeight = displayHeight;
             sCachedDensity = density;
             sCachedCutout = result;
+            android.util.Log.d("tcman", "2 pathAndDisplayCutoutFromSpec ("
+                    + spec + ", " + sCachedSpec + ", " +  sCachedCutout + ")");
         }
         return result;
     }
