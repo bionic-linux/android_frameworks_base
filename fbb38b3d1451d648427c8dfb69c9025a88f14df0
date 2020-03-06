@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d097a5d7_6ab4bbe9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7847,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-03-06T06:31:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s what we want here - getVpnUnderlyingNetworks seems to have more strings attached. Specifically, it requires that the callbackUid be in a UID range for the NetworkCapabilities underpinning the VPN.\n\nIn our case, we need to unconditionally get all underlying networks if there is a VPN owned by the callbackUid.\n\nThoughts?",
+      "parentUuid": "e80f9140_ce1faa72",
+      "range": {
+        "startLine": 7840,
+        "startChar": 8,
+        "endLine": 7847,
+        "endChar": 0
+      },
+      "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2388f63_1b51f37b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b2825a_9c31b1ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6597,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-03-06T06:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2388f63_1b51f37b",
+      "range": {
+        "startLine": 6589,
+        "startChar": 0,
+        "endLine": 6597,
+        "endChar": 54
+      },
+      "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
