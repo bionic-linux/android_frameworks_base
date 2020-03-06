@@ -42,6 +42,11 @@ interface IImsUt {
     int queryCallForward(int condition, String number);
 
     /**
+     * Retrieves the configuration of the call forward for specified service class.
+     */
+    int queryCallForwardForServiceClass(int condition, String number, int serviceClass);
+
+    /**
      * Retrieves the configuration of the call waiting.
      */
     int queryCallWaiting();
