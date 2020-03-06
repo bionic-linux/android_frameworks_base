@@ -26,7 +26,6 @@ import static android.net.NetworkStats.UID_TETHERING;
 import static android.provider.Settings.Global.TETHER_OFFLOAD_DISABLED;
 
 import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.app.usage.NetworkStatsManager;
 import android.content.ContentResolver;
 import android.net.InetAddresses;
@@ -39,8 +38,7 @@ import android.net.RouteInfo;
 import android.net.netlink.ConntrackMessage;
 import android.net.netlink.NetlinkConstants;
 import android.net.netlink.NetlinkSocket;
-import android.net.netstats.provider.AbstractNetworkStatsProvider;
-import android.net.netstats.provider.NetworkStatsProviderCallback;
+import android.net.netstats.provider.NetworkStatsProvider;
 import android.net.util.SharedLog;
 import android.os.Handler;
 import android.provider.Settings;
@@ -90,7 +88,6 @@ public class OffloadController {
     private final OffloadHardwareInterface mHwInterface;
     private final ContentResolver mContentResolver;
     private final @NonNull OffloadTetheringStatsProvider mStatsProvider;
-    private final @Nullable NetworkStatsProviderCallback mStatsProviderCb;
     private final SharedLog mLog;
     private final HashMap<String, LinkProperties> mDownstreams;
     private boolean mConfigInitialized;
@@ -129,14 +126,11 @@ public class OffloadController {
         mDownstreams = new HashMap<>();
         mExemptPrefixes = new HashSet<>();
         mLastLocalPrefixStrs = new HashSet<>();
-        NetworkStatsProviderCallback providerCallback = null;
         try {
-            providerCallback = nsm.registerNetworkStatsProvider(
-                    getClass().getSimpleName(), mStatsProvider);
+            nsm.registerNetworkStatsProvider(getClass().getSimpleName(), mStatsProvider);
         } catch (RuntimeException e) {
             Log.wtf(TAG, "Cannot register offload stats provider: " + e);
         }
-        mStatsProviderCb = providerCallback;
     }
 
     /** Start hardware offload. */
@@ -220,7 +214,7 @@ public class OffloadController {
                         mStatsProvider.pushTetherStats();
                         // Push stats to service does not cause the service react to it immediately.
                         // Inform the service about limit reached.
-                        if (mStatsProviderCb != null) mStatsProviderCb.onLimitReached();
+                        if (mStatsProvider.isRegistered()) mStatsProvider.limitReached();
                     }
 
                     @Override
@@ -263,13 +257,17 @@ public class OffloadController {
     }
 
     @VisibleForTesting
-    class OffloadTetheringStatsProvider extends AbstractNetworkStatsProvider {
+    class OffloadTetheringStatsProvider extends NetworkStatsProvider {
         // These stats must only ever be touched on the handler thread.
         @NonNull
         private NetworkStats mIfaceStats = new NetworkStats(0L, 0);
         @NonNull
         private NetworkStats mUidStats = new NetworkStats(0L, 0);
 
+        /**
+         * A helper function that collect tether stats from local hashmap. Note that this does not
+         * invoke binder call.
+         */
         @VisibleForTesting
         @NonNull
         NetworkStats getTetherStats(@NonNull StatsType how) {
@@ -287,7 +285,7 @@ public class OffloadController {
         }
 
         @Override
-        public void setLimit(String iface, long quotaBytes) {
+        public void onSetLimit(String iface, long quotaBytes) {
             // Listen for all iface is necessary since upstream might be changed after limit
             // is set.
             mHandler.post(() -> {
@@ -315,13 +313,13 @@ public class OffloadController {
          */
         public void pushTetherStats() {
             // TODO: remove the accumulated stats and report the diff from HAL directly.
-            if (null == mStatsProviderCb) return;
+            if (!mStatsProvider.isRegistered()) return;
             final NetworkStats ifaceDiff =
                     getTetherStats(StatsType.STATS_PER_IFACE).subtract(mIfaceStats);
             final NetworkStats uidDiff =
                     getTetherStats(StatsType.STATS_PER_UID).subtract(mUidStats);
             try {
-                mStatsProviderCb.onStatsUpdated(0 /* token */, ifaceDiff, uidDiff);
+                mStatsProvider.statsUpdated(0 /* token */, ifaceDiff, uidDiff);
                 mIfaceStats = mIfaceStats.add(ifaceDiff);
                 mUidStats = mUidStats.add(uidDiff);
             } catch (RuntimeException e) {
@@ -330,7 +328,7 @@ public class OffloadController {
         }
 
         @Override
-        public void requestStatsUpdate(int token) {
+        public void onRequestStatsUpdate(int token) {
             // Do not attempt to update stats by querying the offload HAL
             // synchronously from a different thread than the Handler thread. http://b/64771555.
             mHandler.post(() -> {
@@ -340,7 +338,7 @@ public class OffloadController {
         }
 
         @Override
-        public void setAlert(long quotaBytes) {
+        public void onSetAlert(long quotaBytes) {
             // TODO: Ask offload HAL to notify alert without stopping traffic.
         }
     }

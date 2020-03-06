@@ -30,9 +30,8 @@ import android.net.DataUsageRequest;
 import android.net.INetworkStatsService;
 import android.net.NetworkIdentity;
 import android.net.NetworkTemplate;
-import android.net.netstats.provider.AbstractNetworkStatsProvider;
-import android.net.netstats.provider.NetworkStatsProviderCallback;
-import android.net.netstats.provider.NetworkStatsProviderWrapper;
+import android.net.netstats.provider.INetworkStatsProviderCallback;
+import android.net.netstats.provider.NetworkStatsProvider;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.Looper;
@@ -527,32 +526,46 @@ public class NetworkStatsManager {
 
     /**
      * Registers a custom provider of {@link android.net.NetworkStats} to provide network statistics
-     * to the system. To unregister, invoke {@link NetworkStatsProviderCallback#unregister()}.
+     * to the system. To unregister, invoke {@link #unregisterNetworkStatsProvider}.
      * Note that no de-duplication of statistics between providers is performed, so each provider
      * must only report network traffic that is not being reported by any other provider.
      *
      * @param tag a human readable identifier of the custom network stats provider. This is only
      *            used for debugging.
-     * @param provider the subclass of {@link AbstractNetworkStatsProvider} that needs to be
+     * @param provider the subclass of {@link NetworkStatsProvider} that needs to be
      *                 registered to the system.
-     * @return a {@link NetworkStatsProviderCallback}, which can be used to report events to the
-     *         system or unregister the provider.
      * @hide
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
-    @NonNull public NetworkStatsProviderCallback registerNetworkStatsProvider(
+    @NonNull public void registerNetworkStatsProvider(
             @NonNull String tag,
-            @NonNull AbstractNetworkStatsProvider provider) {
+            @NonNull NetworkStatsProvider provider) {
         try {
-            final NetworkStatsProviderWrapper wrapper = new NetworkStatsProviderWrapper(provider);
-            return new NetworkStatsProviderCallback(
-                    mService.registerNetworkStatsProvider(tag, wrapper));
+            final INetworkStatsProviderCallback cbBinder =
+                    mService.registerNetworkStatsProvider(tag, provider.getProviderBinder());
+            provider.setProviderCallbackBinder(cbBinder);
         } catch (RemoteException e) {
             e.rethrowAsRuntimeException();
         }
-        // Unreachable code, but compiler doesn't know about it.
-        return null;
+    }
+
+    /**
+     * Unregisters a subclass of {@link NetworkStatsProvider}.
+     *
+     * @param provider the subclass of {@link NetworkStatsProvider} that needs to be
+     *                 unregistered to the system.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    @NonNull public void unregisterNetworkStatsProvider(@NonNull NetworkStatsProvider provider) {
+        try {
+            provider.getProviderCallbackBinderOrThrow().unregister();
+            provider.setProviderCallbackBinder(null);
+        } catch (RemoteException e) {
+            e.rethrowAsRuntimeException();
+        }
     }
 
     private static NetworkTemplate createTemplate(int networkType, String subscriberId) {

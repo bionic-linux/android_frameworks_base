@@ -24,8 +24,8 @@ import android.net.NetworkStats;
  * @hide
  */
 oneway interface INetworkStatsProviderCallback {
-    void onStatsUpdated(int token, in NetworkStats ifaceStats, in NetworkStats uidStats);
-    void onAlertReached();
-    void onLimitReached();
+    void statsUpdated(int token, in NetworkStats ifaceStats, in NetworkStats uidStats);
+    void alertReached();
+    void limitReached();
     void unregister();
 }
