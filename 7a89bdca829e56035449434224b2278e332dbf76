@@ -22,6 +22,30 @@
       "revId": "7a89bdca829e56035449434224b2278e332dbf76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb710e9f_4f31c386",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6747,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-03-06T02:24:36Z",
+      "side": 1,
+      "message": "Ack. Fixed in aosp/1252047",
+      "parentUuid": "3578a95e_d91eedfd",
+      "range": {
+        "startLine": 6745,
+        "startChar": 7,
+        "endLine": 6747,
+        "endChar": 9
+      },
+      "revId": "7a89bdca829e56035449434224b2278e332dbf76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
