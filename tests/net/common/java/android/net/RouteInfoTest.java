@@ -23,15 +23,34 @@ import static com.android.testutils.MiscAssertsKt.assertNotEqualEitherWay;
 import static com.android.testutils.ParcelUtilsKt.assertParcelSane;
 import static com.android.testutils.ParcelUtilsKt.assertParcelingIsLossless;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import junit.framework.TestCase;
+import android.os.Build;
+
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
+
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRule.IgnoreAfter;
+import com.android.testutils.DevSdkIgnoreRule.IgnoreUpTo;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 
-public class RouteInfoTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class RouteInfoTest {
+    @Rule
+    public final DevSdkIgnoreRule ignoreRule = new DevSdkIgnoreRule();
 
     private InetAddress Address(String addr) {
         return InetAddress.parseNumericAddress(addr);
@@ -41,7 +60,7 @@ public class RouteInfoTest extends TestCase {
         return new IpPrefix(prefix);
     }
 
-    @SmallTest
+    @Test
     public void testConstructor() {
         RouteInfo r;
 
@@ -74,6 +93,7 @@ public class RouteInfoTest extends TestCase {
         assertNull(r.getInterface());
     }
 
+    @Test
     public void testMatches() {
         class PatchedRouteInfo {
             private final RouteInfo mRouteInfo;
@@ -113,6 +133,7 @@ public class RouteInfoTest extends TestCase {
         assertFalse(ipv4Default.matches(Address("2001:db8::f00")));
     }
 
+    @Test
     public void testEquals() {
         // IPv4
         RouteInfo r1 = new RouteInfo(Prefix("2001:db8:ace::/48"), Address("2001:db8::1"), "wlan0");
@@ -146,6 +167,7 @@ public class RouteInfoTest extends TestCase {
         assertNotEqualEitherWay(r1, r3);
     }
 
+    @Test
     public void testHostAndDefaultRoutes() {
         RouteInfo r;
 
@@ -228,6 +250,7 @@ public class RouteInfoTest extends TestCase {
         assertFalse(r.isIPv6Default());
     }
 
+    @Test
     public void testTruncation() {
       LinkAddress l;
       RouteInfo r;
@@ -244,6 +267,7 @@ public class RouteInfoTest extends TestCase {
     // Make sure that creating routes to multicast addresses doesn't throw an exception. Even though
     // there's nothing we can do with them, we don't want to crash if, e.g., someone calls
     // requestRouteToHostAddress("230.0.0.0", MOBILE_HIPRI);
+    @Test
     public void testMulticastRoute() {
       RouteInfo r;
       r = new RouteInfo(Prefix("230.0.0.0/32"), Address("192.0.2.1"), "wlan0");
@@ -251,16 +275,27 @@ public class RouteInfoTest extends TestCase {
       // No exceptions? Good.
     }
 
-    public void testParceling() {
+    @Test @IgnoreAfter(Build.VERSION_CODES.Q)
+    public void testParceling_Q() {
+        assertParcelSane(testParceling(), 6);
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
+    public void testParcelingAfterQ() {
+        assertParcelSane(testParceling(), 7);
+    }
+
+    private RouteInfo testParceling() {
         RouteInfo r;
 
         r = new RouteInfo(Prefix("::/0"), Address("2001:db8::"), null);
         assertParcelingIsLossless(r);
 
         r = new RouteInfo(Prefix("192.0.2.0/24"), null, "wlan0");
-        assertParcelSane(r, 7);
+        return r;
     }
 
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
     public void testMtu() {
         RouteInfo r;
         r = new RouteInfo(Prefix("0.0.0.0/0"), Address("0.0.0.0"), "wlan0",
