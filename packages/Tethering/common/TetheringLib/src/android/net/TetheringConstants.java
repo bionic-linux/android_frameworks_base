@@ -60,4 +60,17 @@ public final class TetheringConstants {
      * which will receive provisioning results. Can be left empty.
      */
     public static final String EXTRA_PROVISION_CALLBACK = "extraProvisionCallback";
+
+    /**
+     * Extra used for communicating with the TetherService. Contains the subId tethering mobile
+     * upstream.
+     * @hide
+     */
+    public static final String EXTRA_SUBID = "subId";
+
+    /**
+     * Extra used for TetherService to receive the response of provisioning check.
+     * @hide
+     */
+    public static final String EXTRA_PROVISION_RESPONSE = "android.net.extra.PROVISION_RESPONSE";
 }
