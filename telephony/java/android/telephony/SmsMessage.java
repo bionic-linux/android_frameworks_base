@@ -491,9 +491,14 @@ public class SmsMessage {
         }
 
         String newMsgBody = null;
+        boolean is7bitsSinglePart = false;
+        if (ted.codeUnitSize == SmsConstants.ENCODING_7BIT && ted.msgCount == 1) {
+            is7bitsSinglePart = true;
+        }
         Resources r = Resources.getSystem();
         if (r.getBoolean(com.android.internal.R.bool.config_sms_force_7bit_encoding)) {
-            newMsgBody = Sms7BitEncodingTranslator.translate(text, isCdma);
+            // Only single-part CDMA SMS uses 7-bit ASCII encoding.
+            newMsgBody = Sms7BitEncodingTranslator.translate(text, isCdma && is7bitsSinglePart);
         }
         if (TextUtils.isEmpty(newMsgBody)) {
             newMsgBody = text;
