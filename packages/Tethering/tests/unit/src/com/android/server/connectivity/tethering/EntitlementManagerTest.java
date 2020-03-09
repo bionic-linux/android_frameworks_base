@@ -126,13 +126,15 @@ public final class EntitlementManagerTest {
         }
 
         @Override
-        protected void runUiTetherProvisioning(int type, int subId, ResultReceiver receiver) {
+        protected void runUiTetherProvisioning(final int type, final TetheringConfiguration config,
+                final ResultReceiver receiver) {
             uiProvisionCount++;
             receiver.send(fakeEntitlementResult, null);
         }
 
         @Override
-        protected void runSilentTetherProvisioning(int type, int subId) {
+        protected void runSilentTetherProvisioning(final int type,
+                final TetheringConfiguration config) {
             silentProvisionCount++;
             addDownstreamMapping(type, fakeEntitlementResult);
         }

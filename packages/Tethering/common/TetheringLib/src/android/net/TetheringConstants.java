@@ -60,4 +60,8 @@ public class TetheringConstants {
      * which will receive provisioning results. Can be left empty.
      */
     public static final String EXTRA_PROVISION_CALLBACK = "extraProvisionCallback";
+    /**
+     * Extra used for TetherService to receive the response of provisioning check.
+     */
+    public static final String EXTRA_PROVISION_RESPONSE = "android.net.extra.PROVISION_RESPONSE";
 }
