@@ -414,6 +414,29 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_PARTIAL_CONNECTIVITY);
 
     /**
+     * Capabilities that are not allowed for test networks.
+     */
+    private static final long TEST_NETWORKS_DISALLOWED_CAPABILITIES =
+            (1 << NET_CAPABILITY_MMS)
+            | (1 << NET_CAPABILITY_SUPL)
+            | (1 << NET_CAPABILITY_DUN)
+            | (1 << NET_CAPABILITY_FOTA)
+            | (1 << NET_CAPABILITY_IMS)
+            | (1 << NET_CAPABILITY_CBS)
+            | (1 << NET_CAPABILITY_WIFI_P2P)
+            | (1 << NET_CAPABILITY_IA)
+            | (1 << NET_CAPABILITY_RCS)
+            | (1 << NET_CAPABILITY_XCAP)
+            | (1 << NET_CAPABILITY_EIMS)
+            | (1 << NET_CAPABILITY_INTERNET)
+            | (1 << NET_CAPABILITY_TRUSTED)
+            | (1 << NET_CAPABILITY_VALIDATED)
+            | (1 << NET_CAPABILITY_CAPTIVE_PORTAL)
+            | (1 << NET_CAPABILITY_FOREGROUND)
+            | (1 << NET_CAPABILITY_OEM_PAID)
+            | (1 << NET_CAPABILITY_MCX);
+
+    /**
      * Adds the given capability to this {@code NetworkCapability} instance.
      * Multiple capabilities may be applied sequentially.  Note that when searching
      * for a network to satisfy a request, all capabilities requested must be satisfied.
@@ -641,6 +664,15 @@ public final class NetworkCapabilities implements Parcelable {
         if (deduceRestrictedCapability()) {
             removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
         }
+    }
+
+    /**
+     * Test networks have strong restrictions on what they can have. Enforce these restrictions.
+     * @hide
+     */
+    public void restrictCapabilitesForTestNetwork() {
+        mTransportTypes = 1 << TRANSPORT_TEST;
+        mNetworkCapabilities &= ~TEST_NETWORKS_DISALLOWED_CAPABILITIES;
     }
 
     /**

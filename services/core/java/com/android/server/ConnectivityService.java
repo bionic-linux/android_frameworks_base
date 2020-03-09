@@ -40,6 +40,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
@@ -52,6 +53,7 @@ import static com.android.internal.util.Preconditions.checkNotNull;
 
 import static java.util.Map.Entry;
 
+import android.Manifest;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.AppOpsManager;
@@ -5803,7 +5805,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public Network registerNetworkAgent(Messenger messenger, NetworkInfo networkInfo,
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
             int currentScore, NetworkAgentConfig networkAgentConfig, int providerId) {
-        enforceNetworkFactoryPermission();
+        if (networkCapabilities.hasTransport(TRANSPORT_TEST)) {
+            enforceAnyPermissionOf(Manifest.permission.MANAGE_TEST_NETWORKS);
+            networkCapabilities.restrictCapabilitesForTestNetwork();
+        } else {
+            enforceNetworkFactoryPermission();
+        }
 
         LinkProperties lp = new LinkProperties(linkProperties);
         lp.ensureDirectlyConnectedRoutes();
@@ -6151,6 +6158,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!newNc.hasTransport(TRANSPORT_CELLULAR)) {
             newNc.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
             newNc.addCapability(NET_CAPABILITY_NOT_ROAMING);
+        }
+
+        if (nai.networkCapabilities.hasTransport(TRANSPORT_TEST)) {
+            newNc.restrictCapabilitesForTestNetwork();
         }
 
         return newNc;
