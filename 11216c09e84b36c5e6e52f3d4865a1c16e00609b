@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0487219d_f31efa57",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-03-09T19:40:03Z",
+      "side": 1,
+      "message": "nit: \"NFC is enabled and the\"?",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 26
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04845339_deeda50f",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-03-09T19:40:03Z",
+      "side": 1,
+      "message": "nit: User selected",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 19
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4794eadc_ed907c38",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-03-09T19:40:03Z",
+      "side": 1,
+      "message": "who is doing the register/unregister? what does it mean for the preferred payment to be updated?",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
