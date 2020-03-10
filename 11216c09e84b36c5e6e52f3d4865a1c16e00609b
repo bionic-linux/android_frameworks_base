@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25497ad2_e318442d",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-03-10T02:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0487219d_f31efa57",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 26
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04845339_deeda50f",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9f4be2de_b01b66c5",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-03-10T02:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04845339_deeda50f",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 19
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4794eadc_ed907c38",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2020-03-09T19:40:03Z",
       "side": 1,
       "message": "who is doing the register/unregister? what does it mean for the preferred payment to be updated?",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6a1505_3eada10e",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-03-10T02:59:15Z",
+      "side": 1,
+      "message": "The payment application could dynamically register new aids and unregister them. It could be designed with user interaction or not. For \"preferred payment to be updated\", I want to describe the condition the payment application is updated to another or newer version. The register aids of the application may also changed.",
+      "parentUuid": "4794eadc_ed907c38",
       "range": {
         "startLine": 264,
         "startChar": 7,
