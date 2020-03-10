@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4eb7671_7b6d40f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T06:40:49Z",
+      "side": 1,
+      "message": "about\n\n(but it does not matter)",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1cd3c4e_90335b3c",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T06:40:49Z",
+      "side": 1,
+      "message": "Optional : you may want to align this on the public API names.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24d30c9a_05182ce8",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T06:40:49Z",
+      "side": 1,
+      "message": "You may return null here, because it may have been unregistered between these two lines.",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb00bbf_771e48d5",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T06:40:49Z",
+      "side": 1,
+      "message": "This is a bit dangerous as a design. Consider :\n\nThread 1 :\nregister(myProvider);\n...\nunregister(myProvider);\n...\nregister(myProvider);\n\nThread 2 :\nif (isRegistered()) {\n  /* here */\n}\n\nNot only you might crash because the provider might have been unregistered, it\u0027s also very possible you\u0027re going to send data to the old value of the binder and the call is ignored.\n\nA common pattern to avoid this is to make the object one-shot, as in : you make it illegal to re-register a provider that has been unregistered. The simplest way to do this is probably to say that mProviderCbBinder can only be null before it\u0027s registered and only goes null → non-null, which saves you a lot of multithreading headaches. And then in register(), if it\u0027s already non-null you throw. This is similar to a lateinit var in Kotlin, which can only be null before it\u0027s been initialized once.\n\n(unfortunately that will require you change the tests)",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35030b5a_12c52137",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T06:40:49Z",
+      "side": 1,
+      "message": "Let\u0027s use the names suggested by michaelwr@",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
