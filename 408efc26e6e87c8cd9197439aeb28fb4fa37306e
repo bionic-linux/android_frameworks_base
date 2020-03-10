@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "786dcdf8_5bd34d95",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-10T23:05:48Z",
+      "side": 1,
+      "message": "Here is what I suggest :\n\n  NetworkStatsProvider.java :\n  // Only null before registering, never null once non-null\n  @Nullable\n  private INetworkStatsProviderCallback mProviderCbBinder;\n\n  @hide public getProviderCallbackBinder() {\n    return mProviderCbBinder;\n  }\n  // Remove isRegistered() method\n\n\n  NetworkStatsProvider.java :\n  public void registerNetworkStatsProvider(tag, provider) {\n    if (provider.getProviderCallbackBinder() !\u003d null) {\n      throw \"Already registered\";\n    }\n    final INetworkStatsProviderCallback cbBinder \u003d\n     mService.registerNetworkStatsProvider(tag, provider.getProviderBinder());\n    provider.setProviderCallbackBinder(cbBinder);\n  }\n\n  public void unregisterNetworkStatsProvider(provider) {\n    provider.getProviderCallbackBinder().unregister();\n  }\n\nAfter unregister, getProviderCallbackBinder() continues to return the old object, and that\u0027s fine\n\nOptionally, you may have\n  @hide public setProviderCallbackBinder(newBinder) {\n    if (null \u003d\u003d newBinder) throw \"Can\u0027t set to a null value\";\n    if (null !\u003d mProviderCbBinder) throw \"Already set\";\n    mProviderCbBinder \u003d newBinder;\n  }",
+      "parentUuid": "097fc994_5bceb9f3",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35030b5a_12c52137",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
         "patchSetId": 1
