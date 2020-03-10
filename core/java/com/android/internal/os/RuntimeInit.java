@@ -251,6 +251,9 @@ public class RuntimeInit {
     protected static final void commonInit() {
         if (DEBUG) Slog.d(TAG, "Entered RuntimeInit!");
 
+        //Set to just call _exit() while System.exit().
+        nativeSetExitWithoutCleanup(true);
+
         /*
          * set handlers; these apply to all threads in the VM. Apps can replace
          * the default handler, but not the pre handler.
