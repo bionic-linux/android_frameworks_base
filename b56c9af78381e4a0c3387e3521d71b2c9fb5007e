@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abf32475_d2bdfb87",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-10T08:04:49Z",
+      "side": 1,
+      "message": "updated",
+      "parentUuid": "d5ba53fe_36ca0a20",
+      "range": {
+        "startLine": 285,
+        "startChar": 42,
+        "endLine": 285,
+        "endChar": 43
+      },
+      "revId": "b56c9af78381e4a0c3387e3521d71b2c9fb5007e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7138b69b_4cd4fa8f",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7952408d_a8c4c8e4",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-10T08:04:49Z",
+      "side": 1,
+      "message": "updated",
+      "parentUuid": "7138b69b_4cd4fa8f",
+      "range": {
+        "startLine": 291,
+        "startChar": 12,
+        "endLine": 291,
+        "endChar": 71
+      },
+      "revId": "b56c9af78381e4a0c3387e3521d71b2c9fb5007e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d76b91b2_45b636e4",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2020-03-10T04:00:03Z",
       "side": 1,
       "message": "There\u0027s one assert here and one assert in the caller using the return value, that\u0027s rather inelegant/inconsistent.\nHow about having assertParcelSane for both instances of RouteInfo inside this method, and just call assertFieldCountEquals in the test method ?",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 33
+      },
+      "revId": "b56c9af78381e4a0c3387e3521d71b2c9fb5007e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32326017_2885db79",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-10T08:04:49Z",
+      "side": 1,
+      "message": "assertParcelSane will also test assertFieldCountEquals. I should not able to put that in a generic function. Are you saying to use assertParcelingIsLossless in this function? I updated a  new version. See if it works to you.",
+      "parentUuid": "d76b91b2_45b636e4",
       "range": {
         "startLine": 292,
         "startChar": 8,
