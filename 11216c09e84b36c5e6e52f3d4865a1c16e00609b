@@ -140,6 +140,30 @@
       "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfa96fe_873edbcc",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-03-10T05:46:24Z",
+      "side": 1,
+      "message": "cool, can we clarify the wording to something like:\n\nCurrent preferred payment has issued an update (perhaps registered/unregistered AIDs, or has been updated itself).",
+      "parentUuid": "0c6a1505_3eada10e",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "11216c09e84b36c5e6e52f3d4865a1c16e00609b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
