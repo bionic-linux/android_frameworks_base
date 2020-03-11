@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5bb29b3_1f9abf9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T09:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4eb7671_7b6d40f5",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1cd3c4e_90335b3c",
         "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-10T06:40:49Z",
       "side": 1,
       "message": "Optional : you may want to align this on the public API names.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2845b4b_bb86b6d0",
+        "filename": "core/java/android/net/netstats/provider/INetworkStatsProviderCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T09:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cd3c4e_90335b3c",
       "range": {
         "startLine": 27,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71c2685_df42cef6",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T09:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d30c9a_05182ce8",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "318b8796_9259ac13",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T09:59:13Z",
+      "side": 1,
+      "message": "Done\nI\u0027d like to keep getProviderCallbackBinderOrThrow() method since it is useful since we don\u0027t need to do null check everywhere.\nSee if this works for you.\n\nAlso in OffloadController I added some protection to prevent crash if not registered.\nSince it is in mainline module we may want that to stay stable in user rom\nif anything wrong, does it make sense?",
+      "parentUuid": "0abac6ef_982021fe",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35030b5a_12c52137",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
         "patchSetId": 1
@@ -186,6 +282,30 @@
       "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1a203c_9b9cadac",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T09:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35030b5a_12c52137",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
