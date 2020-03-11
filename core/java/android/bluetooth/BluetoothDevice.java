@@ -1246,27 +1246,6 @@ public final class BluetoothDevice implements Parcelable {
     }
 
     /**
-     * Set the Out Of Band data for a remote device to be used later
-     * in the pairing mechanism. Users can obtain this data through other
-     * trusted channels
-     *
-     * <p>Requires {@link android.Manifest.permission#BLUETOOTH_ADMIN}.
-     *
-     * @param hash Simple Secure pairing hash
-     * @param randomizer The random key obtained using OOB
-     * @return false on error; true otherwise
-     * @hide
-     */
-    public boolean setDeviceOutOfBandData(byte[] hash, byte[] randomizer) {
-        //TODO(BT)
-      /*
-      try {
-        return sService.setDeviceOutOfBandData(this, hash, randomizer);
-      } catch (RemoteException e) {Log.e(TAG, "", e);} */
-        return false;
-    }
-
-    /**
      * Cancel an in-progress bonding request started with {@link #createBond}.
      *
      * @return true on success, false on error
