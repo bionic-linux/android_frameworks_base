@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "378e08e1_086c9ac6",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5569,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-11T13:37:23Z",
+      "side": 1,
+      "message": "Nit: maybe just enforceProfileOrDeviceOwner(who) in case the implementation inside are changed in the future. It need to double modified or even missed.",
+      "range": {
+        "startLine": 5567,
+        "startChar": 8,
+        "endLine": 5569,
+        "endChar": 9
+      },
+      "revId": "43fcc1c31ab6da94fcc4305595d21736429583b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
