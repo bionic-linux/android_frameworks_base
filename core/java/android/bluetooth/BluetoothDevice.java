@@ -1206,7 +1206,6 @@ public final class BluetoothDevice implements Parcelable {
      * @param transport - Transport to use
      * @param oobData - Out Of Band data
      * @return false on immediate error, true if bonding will begin
-     * @hide
      */
     public boolean createBondOutOfBand(int transport, OobData oobData) {
         final IBluetooth service = sService;
