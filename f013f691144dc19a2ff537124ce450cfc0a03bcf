@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20333364_dcdb1074",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1018108
+      },
+      "writtenOn": "2020-03-11T16:02:56Z",
+      "side": 1,
+      "message": "Bad conflict resolution. The CL you are trying to revert did not touch these fields, so they must have been removed by some other change.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 79
+      },
+      "revId": "f013f691144dc19a2ff537124ce450cfc0a03bcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
