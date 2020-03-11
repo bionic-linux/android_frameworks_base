@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0abac6ef_982021fe",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-11T01:23:28Z",
+      "side": 1,
+      "message": "Thanks for writing up.\nYes I understand the idea.\nBut what confused me is the isRegistered part.\nWithout that we don\u0027t have a method for client side to know what is the status.\nUnless every client or NetworkStatsProvider remember this with an additional mIsRegistered boolen, right?",
+      "parentUuid": "786dcdf8_5bd34d95",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "408efc26e6e87c8cd9197439aeb28fb4fa37306e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35030b5a_12c52137",
         "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
         "patchSetId": 1
