@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ee5cb0_44ef08a2",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5563,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-03-12T13:44:03Z",
+      "side": 1,
+      "message": "Can you add some comment to DevicePolicyManager.java to mention this permission? (Cann\u0027t add to the method javadoc since you can\u0027t reference system API there, so just some regular comments would do)",
+      "range": {
+        "startLine": 5563,
+        "startChar": 44,
+        "endLine": 5563,
+        "endChar": 77
+      },
+      "revId": "3d091fa0c9886a18c0c0bf638b1144a72f567958",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
