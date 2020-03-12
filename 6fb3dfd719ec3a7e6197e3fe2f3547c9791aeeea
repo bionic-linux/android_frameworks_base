@@ -22,6 +22,53 @@
       "revId": "6fb3dfd719ec3a7e6197e3fe2f3547c9791aeeea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eabf73f9_1163d438",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T07:43:07Z",
+      "side": 1,
+      "message": "Kind of ? This is a symbolic object that identifies a network on which traffic may flow. It\u0027s a token used by the system and apps to agree on what network they are speaking about.",
+      "parentUuid": "d3d878a6_b72dcfbd",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "6fb3dfd719ec3a7e6197e3fe2f3547c9791aeeea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "954d1895_5f1bef80",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T07:43:07Z",
+      "side": 1,
+      "message": "I prefered \u0027unique\u0027 here.",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "6fb3dfd719ec3a7e6197e3fe2f3547c9791aeeea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
