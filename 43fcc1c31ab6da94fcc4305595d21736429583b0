@@ -22,6 +22,30 @@
       "revId": "43fcc1c31ab6da94fcc4305595d21736429583b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e850cf_8b7d1ca1",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5569,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-12T05:20:33Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right.\nIt also reminds me that maybe I should name it \"enforceNetworkStackOrProfileOrDeviceOwner\". (Move the \"NetworkStack\" to the front)\nUpdated.",
+      "parentUuid": "378e08e1_086c9ac6",
+      "range": {
+        "startLine": 5567,
+        "startChar": 8,
+        "endLine": 5569,
+        "endChar": 9
+      },
+      "revId": "43fcc1c31ab6da94fcc4305595d21736429583b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
