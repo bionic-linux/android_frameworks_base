@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001933717",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1255306?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "db4cc816_7092ad5a",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 2596,
+                "startChar": 79,
+                "endLine": 2596,
+                "endChar": 83
+              },
+              "replacement": "this"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "224f1c84_7f79078a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2596,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-12T02:48:38Z",
+      "side": 1,
+      "message": "Common typo found: \"thsi\" -- should it be \"this\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 2596,
+        "startChar": 79,
+        "endLine": 2596,
+        "endChar": 83
+      },
+      "revId": "f27e4f9f7f9bee4ce9f4d34441c3bc5beb709c9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
