@@ -68,6 +68,54 @@
       "revId": "39e97de493db2cf6442997ac5a0a8bfc4236ee73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0316fd_1c955a62",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-12T06:51:06Z",
+      "side": 1,
+      "message": "Per talk in person that if we just replace \"Android Network\" to {@link Network}. It means this object instance, but netId represent the id of connection instead of network object.",
+      "parentUuid": "39d87b4f_c1355f32",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 43
+      },
+      "revId": "39e97de493db2cf6442997ac5a0a8bfc4236ee73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8ac4d1b_8fdcf88b",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-12T06:51:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f76c5229_6a9f7025",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "39e97de493db2cf6442997ac5a0a8bfc4236ee73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
