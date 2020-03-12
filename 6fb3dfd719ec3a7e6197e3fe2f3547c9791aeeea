@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d878a6_b72dcfbd",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-12T06:57:04Z",
+      "side": 1,
+      "message": "question: not for this CL.\nIs that a recursive definition?",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "6fb3dfd719ec3a7e6197e3fe2f3547c9791aeeea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
