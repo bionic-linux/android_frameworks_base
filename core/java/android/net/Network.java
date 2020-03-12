@@ -61,6 +61,7 @@ import javax.net.SocketFactory;
 public class Network implements Parcelable {
 
     /**
+     * An unique id of the Android Network.
      * @hide
      */
     @SystemApi
