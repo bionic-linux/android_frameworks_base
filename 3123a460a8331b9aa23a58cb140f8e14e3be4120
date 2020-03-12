@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87fa4ed_be94e7fe",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "an instance\n\n(the subclass is a class and not an instance ; an instance of a subclass of NetworkStatsProvider is always by definition an instance of NetworkStatsProvider)",
+      "range": {
+        "startLine": 558,
+        "startChar": 19,
+        "endLine": 558,
+        "endChar": 29
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25847c69_59c3dd2c",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "that was returned",
+      "range": {
+        "startLine": 71,
+        "startChar": 29,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5828410a_b4190748",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "Ideally this method (rather than register()) should throw if the member is not null. For now it would be annoying for tests, so you can keep it unless you have a good idea of how to fix it cheaply (I don\u0027t)",
+      "range": {
+        "startLine": 72,
+        "startChar": 41,
+        "endLine": 72,
+        "endChar": 95
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d683359b_70ecc7ef",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 81,
+        "startChar": 27,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cac1ba_f9f490b2",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "was",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 18
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bea2a7c_5338b063",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "Document what happens if it doesn\u0027t",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 21
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f277c93_4dfb3031",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is very clear because implementors don\u0027t necessarily know the history of why we say this and the word isn\u0027t very appropriate. How about just \"when it requires to know updated stats\" ?",
+      "range": {
+        "startLine": 155,
+        "startChar": 50,
+        "endLine": 155,
+        "endChar": 64
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f24123_eb64cd83",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "This forces the system to keep all tokens for a minute even if it changes thousands of times, do we want to be a little bit more conservative and say something like \"The provider must respond as soon as possible. Responding later increases the probability stats will be dropped. Memory allowing, the system will try to take stats into account up to one minute after calling onRequestStatsUpdate.\"",
+      "range": {
+        "startLine": 157,
+        "startChar": 74,
+        "endLine": 158,
+        "endChar": 57
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5cd785_c4340d1c",
+        "filename": "core/java/android/net/netstats/provider/NetworkStatsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T08:46:39Z",
+      "side": 1,
+      "message": "tally and report\n\n(this clarifies that the provider has to say everything, and that after that it\u0027s finished for this token)",
+      "range": {
+        "startLine": 162,
+        "startChar": 61,
+        "endLine": 162,
+        "endChar": 67
+      },
+      "revId": "3123a460a8331b9aa23a58cb140f8e14e3be4120",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
