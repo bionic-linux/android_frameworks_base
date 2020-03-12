@@ -61,6 +61,7 @@ import javax.net.SocketFactory;
 public class Network implements Parcelable {
 
     /**
+     * The network id of the network.
      * @hide
      */
     @SystemApi
