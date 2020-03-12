@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd372c3_83264f54",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-12T09:00:07Z",
+      "side": 1,
+      "message": "Let\u0027s make this an allowed list instead. That way, whenever we add a new capability, we don\u0027t need to remember to add it to this list. With the code as is, we could create a security vulnerability if we add a new NET_CAPABILITY_SUPER_USEFUL and forget to add that to this list.",
+      "range": {
+        "startLine": 419,
+        "startChar": 30,
+        "endLine": 419,
+        "endChar": 67
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a03ba46_9897d5bb",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-12T09:00:07Z",
+      "side": 1,
+      "message": "Should this be \"\u003d TRANSPORT_TEST\" instead? We don\u0027t want to allow a NetworkAgent to do something like TRANSPORT_TEST|TRANSPORT_WIFI and have NetworkRequests for TRANSPORT_WIFI match that agent, do we?\n\nAlso: for now, should we disallow setting other things that may not be necessary, such as signalStrength, UIDs and so on? In fact, should we start off with something paranoid such as:\n\n    // Ensures that this object only has the fields that are currently used in tests.\n    final int caps \u003d mNetworkCapabilities;\n    final NetworkSpecifier specifier \u003d mNetworkSpecifier;\n    clear();\n    mTransportTypes \u003d TRANSPORT_TEST;\n    mNetworkCapabilities \u003d caps \u0026 TEST_NETWORKS_ALLOWED_CAPABILITIES;\n    mNetworkSpecifier \u003d specifier;\n\n?",
+      "range": {
+        "startLine": 674,
+        "startChar": 24,
+        "endLine": 674,
+        "endChar": 45
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c102fc_36c6c5bf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5810,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-12T09:00:07Z",
+      "side": 1,
+      "message": "Do you need to do this, given the call to mixInCapabilities at line 5825?  If you\u0027re doing this just for readability reasons, then I think you can just use a comment such as:\n\n    // No need to restrict capabilities here, as that will be done by the call to\n    // mixInCapabilities a few lines below.",
+      "range": {
+        "startLine": 5810,
+        "startChar": 12,
+        "endLine": 5810,
+        "endChar": 68
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
