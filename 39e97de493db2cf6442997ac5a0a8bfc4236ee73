@@ -45,6 +45,29 @@
       "revId": "39e97de493db2cf6442997ac5a0a8bfc4236ee73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76c5229_6a9f7025",
+        "filename": "core/java/android/net/Network.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-12T06:11:40Z",
+      "side": 1,
+      "message": "The",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "39e97de493db2cf6442997ac5a0a8bfc4236ee73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
