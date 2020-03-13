@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57b386a_55919a0f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T07:15:36Z",
+      "side": 1,
+      "message": "Add more detail here? Something like: these must be set so that it is safe for an unprivileged user to create a network with these capabilities via shell. As such, they must never contain capabilities that are generally useful to the system, such as INTERNET, IMS, SUPL, etc.",
+      "range": {
+        "startLine": 417,
+        "startChar": 54,
+        "endLine": 417,
+        "endChar": 55
+      },
+      "revId": "be4385ceaeb787c74001f25d1766a48527e1f17d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be4775f_a9239871",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T07:15:36Z",
+      "side": 1,
+      "message": "Is this one necessary? Agents can never set it, can they?",
+      "range": {
+        "startLine": 426,
+        "startChar": 20,
+        "endLine": 426,
+        "endChar": 55
+      },
+      "revId": "be4385ceaeb787c74001f25d1766a48527e1f17d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
