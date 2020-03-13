@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3875697_3f2c4cb5",
+        "filename": "packages/Tethering/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-13T06:18:04Z",
+      "side": 0,
+      "message": "This will break bluetooth tethering on rvc-dev. Make sure you don\u0027t cherry-pick it to rvc until  aosp/1253150 is cherry-picked.",
+      "range": {
+        "startLine": 30,
+        "startChar": 54,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "88d585becf9d530701776a04487d8f6898ce28d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
