@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf16d20_c4c933cf",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5314,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-13T12:34:38Z",
+      "side": 1,
+      "message": "can pass the permission check",
+      "range": {
+        "startLine": 5314,
+        "startChar": 55,
+        "endLine": 5314,
+        "endChar": 77
+      },
+      "revId": "00fc289a8306b6fe7182f9d9acfdd2e8a139bc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf92e0c_de3b833f",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5315,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-13T12:34:38Z",
+      "side": 1,
+      "message": "if it holds",
+      "range": {
+        "startLine": 5315,
+        "startChar": 46,
+        "endLine": 5315,
+        "endChar": 55
+      },
+      "revId": "00fc289a8306b6fe7182f9d9acfdd2e8a139bc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896ff7d6_13ea1f40",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5317,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-13T12:34:38Z",
+      "side": 1,
+      "message": "the NetworkStack mainline module",
+      "range": {
+        "startLine": 5317,
+        "startChar": 36,
+        "endLine": 5317,
+        "endChar": 51
+      },
+      "revId": "00fc289a8306b6fe7182f9d9acfdd2e8a139bc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
