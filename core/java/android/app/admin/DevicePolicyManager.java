@@ -5311,6 +5311,10 @@ public class DevicePolicyManager {
         throwIfParentInstance("isAlwaysOnVpnLockdownEnabled");
         if (mService != null) {
             try {
+                // In Android R, the caller could pass the enforce check in
+                // DevicePolicyManagerService by having android.permission.MAINLINE_NETWORK_STACK.
+                // Note that the android.permission.MAINLINE_NETWORK_STACK is a signature permission
+                // which is used by mainline module.
                 return mService.isAlwaysOnVpnLockdownEnabled(admin);
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
