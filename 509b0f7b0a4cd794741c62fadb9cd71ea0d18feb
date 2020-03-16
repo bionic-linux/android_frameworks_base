@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5324bcc2_f5c382d2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7894,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T10:59:04Z",
+      "side": 1,
+      "message": "No I think it\u0027s CS lore and we deal with this with reviews, and there isn\u0027t a good place to write this. Hopefully this code will get clearer in the future with Ben\u0027s improvements.",
+      "parentUuid": "a1e5722e_db2b7890",
+      "range": {
+        "startLine": 7894,
+        "startChar": 31,
+        "endLine": 7894,
+        "endChar": 52
+      },
+      "revId": "509b0f7b0a4cd794741c62fadb9cd71ea0d18feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5edc0a7c_1e802b8f",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2

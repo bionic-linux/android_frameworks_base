@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3ebef786_38e376d9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7847,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-16T10:59:04Z",
+      "side": 1,
+      "message": "Ah yes. I had looked that up and wondered why that was not okay, but now that you point out again that callbackUid is that of the VPN, it\u0027s not even included in the ranges for horrible legacy reasons.",
+      "parentUuid": "d097a5d7_6ab4bbe9",
+      "range": {
+        "startLine": 7840,
+        "startChar": 8,
+        "endLine": 7847,
+        "endChar": 0
+      },
+      "revId": "fbb38b3d1451d648427c8dfb69c9025a88f14df0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2388f63_1b51f37b",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
