@@ -1537,8 +1537,13 @@ public class ConnectivityManager {
      * omitting these broadcasts causes unacceptable app breakage, then for backwards
      * compatibility we can send them:
      *
-     * if (targetSdkVersion < Build.VERSION_CODES.M) &&        // legacy API unsupported >= M
-     *     targetSdkVersion >= Build.VERSION_CODES.LOLLIPOP))  // requestNetwork not present < L
+     * // legacy API unsupported >= M
+     * if (targetSdkVersion < Build.VERSION_CODES.M)
+     *     // requestNetwork not present < L
+     *     && targetSdkVersion >= Build.VERSION_CODES.LOLLIPOP)
+     *     // only networkstack can request DUN with legacy CONNECTIVITY_BROADCAST
+     *     && (!netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_DUN)
+     *     || uid ! = Process.NETWORK_STACK_UID))
      *
      * TODO - This should be removed when the legacy APIs are removed.
      */
@@ -1551,8 +1556,13 @@ public class ConnectivityManager {
             return TYPE_NONE;
         }
 
+        final int uid = Binder.getCallingUid();
         // Do this only for SUPL, until GnssLocationProvider is fixed. http://b/25876485 .
-        if (!netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_SUPL)) {
+        if (!netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_SUPL)
+                // Support legacy CONNECTIVITY_ACTION broadcasat for DUN, util tethering deprecate
+                // CONNECTIVITY_ACTION usage.
+                && (!netCap.hasCapability(NetworkCapabilities.NET_CAPABILITY_DUN)
+                || uid != Process.NETWORK_STACK_UID)) {
             // NOTE: if this causes app breakage, we should not just comment out this early return;
             // instead, we should make this early return conditional on the requesting app's target
             // SDK version, as described in the comment above.
@@ -3774,11 +3784,6 @@ public class ConnectivityManager {
     /**
      * Helper function to request a network with a particular legacy type.
      *
-     * @deprecated This is temporarily public for tethering to backwards compatibility that uses
-     * the NetworkRequest API to request networks with legacy type and relies on
-     * CONNECTIVITY_ACTION broadcasts instead of NetworkCallbacks. New caller should use
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback, Handler)} instead.
-     *
      * TODO: update said system code to rely on NetworkCallbacks and make this method private.
 
      * @param request {@link NetworkRequest} describing this request.
@@ -3792,7 +3797,6 @@ public class ConnectivityManager {
      *
      * @hide
      */
-    @SystemApi
     @Deprecated
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback, int timeoutMs, int legacyType,

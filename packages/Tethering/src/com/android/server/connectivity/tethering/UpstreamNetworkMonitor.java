@@ -234,17 +234,12 @@ public class UpstreamNetworkMonitor {
         // Therefore, to avoid duplicate notifications, we only register a no-op.
         mMobileNetworkCallback = new UpstreamNetworkCallback(CALLBACK_MOBILE_REQUEST);
 
-        // The following use of the legacy type system cannot be removed until
-        // upstream selection no longer finds networks by legacy type.
-        // See also http://b/34364553 .
-        final int legacyType = mDunRequired ? TYPE_MOBILE_DUN : TYPE_MOBILE_HIPRI;
-
         // TODO: Change the timeout from 0 (no onUnavailable callback) to some
         // moderate callback timeout. This might be useful for updating some UI.
         // Additionally, we log a message to aid in any subsequent debugging.
         mLog.i("requesting mobile upstream network: " + mobileUpstreamRequest);
 
-        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
+        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, mHandler);
     }
 
     /** Release mobile network request. */

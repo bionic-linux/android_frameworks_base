@@ -31,7 +31,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.reset;
@@ -190,7 +189,7 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.registerMobileNetworkRequest();
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_HIPRI);
+        assertUpstreamTypeRequested(NET_CAPABILITY_INTERNET);
         assertFalse(isDunRequested());
 
         mUNM.stop();
@@ -212,11 +211,10 @@ public class UpstreamNetworkMonitorTest {
         mUNM.updateMobileRequiresDun(true);
         mUNM.registerMobileNetworkRequest();
         verify(mCM, times(1)).requestNetwork(
-                any(NetworkRequest.class), any(NetworkCallback.class), anyInt(), anyInt(),
-                any(Handler.class));
+                any(NetworkRequest.class), any(NetworkCallback.class), any(Handler.class));
 
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertUpstreamTypeRequested(NET_CAPABILITY_DUN);
         assertTrue(isDunRequested());
 
         // Try a few things that must not result in any state change.
@@ -225,7 +223,7 @@ public class UpstreamNetworkMonitorTest {
         mUNM.registerMobileNetworkRequest();
 
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertUpstreamTypeRequested(NET_CAPABILITY_DUN);
         assertTrue(isDunRequested());
 
         mUNM.stop();
@@ -249,7 +247,7 @@ public class UpstreamNetworkMonitorTest {
 
         mUNM.registerMobileNetworkRequest();
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertUpstreamTypeRequested(NET_CAPABILITY_DUN);
         assertTrue(isDunRequested());
 
         mUNM.stop();
@@ -265,17 +263,17 @@ public class UpstreamNetworkMonitorTest {
         mUNM.updateMobileRequiresDun(false);
         mUNM.registerMobileNetworkRequest();
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_HIPRI);
+        assertUpstreamTypeRequested(NET_CAPABILITY_INTERNET);
         assertFalse(isDunRequested());
         mUNM.updateMobileRequiresDun(true);
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
+        assertUpstreamTypeRequested(NET_CAPABILITY_DUN);
         assertTrue(isDunRequested());
 
         // Test going from DUN to no-DUN correctly re-registers callbacks.
         mUNM.updateMobileRequiresDun(false);
         assertTrue(mUNM.mobileNetworkRequested());
-        assertUpstreamTypeRequested(TYPE_MOBILE_HIPRI);
+        assertUpstreamTypeRequested(NET_CAPABILITY_INTERNET);
         assertFalse(isDunRequested());
 
         mUNM.stop();
@@ -551,11 +549,10 @@ public class UpstreamNetworkMonitorTest {
         assertTrue(nc.satisfiedByNetworkCapabilities(ns.networkCapabilities));
     }
 
-    private void assertUpstreamTypeRequested(int upstreamType) throws Exception {
+    private void assertUpstreamTypeRequested(int upstreamCap) throws Exception {
         assertEquals(1, mCM.requested.size());
-        assertEquals(1, mCM.legacyTypeMap.size());
-        assertEquals(Integer.valueOf(upstreamType),
-                mCM.legacyTypeMap.values().iterator().next());
+        NetworkRequest request = mCM.requested.values().iterator().next();
+        request.hasCapability(upstreamCap);
     }
 
     private boolean isDunRequested() {
@@ -573,7 +570,6 @@ public class UpstreamNetworkMonitorTest {
         public TestNetworkAgent defaultNetwork = null;
         public Map<NetworkCallback, NetworkRequest> listening = new HashMap<>();
         public Map<NetworkCallback, NetworkRequest> requested = new HashMap<>();
-        public Map<NetworkCallback, Integer> legacyTypeMap = new HashMap<>();
 
         private int mNetworkId = 100;
 
@@ -585,16 +581,14 @@ public class UpstreamNetworkMonitorTest {
             return allCallbacks.isEmpty()
                     && trackingDefault.isEmpty()
                     && listening.isEmpty()
-                    && requested.isEmpty()
-                    && legacyTypeMap.isEmpty();
+                    && requested.isEmpty();
         }
 
         boolean onlyHasDefaultCallbacks() {
             return (allCallbacks.size() == 1)
                     && (trackingDefault.size() == 1)
                     && listening.isEmpty()
-                    && requested.isEmpty()
-                    && legacyTypeMap.isEmpty();
+                    && requested.isEmpty();
         }
 
         boolean isListeningForAll() {
@@ -651,14 +645,7 @@ public class UpstreamNetworkMonitorTest {
         @Override
         public void requestNetwork(NetworkRequest req, NetworkCallback cb,
                 int timeoutMs, int legacyType, Handler h) {
-            assertFalse(allCallbacks.containsKey(cb));
-            allCallbacks.put(cb, h);
-            assertFalse(requested.containsKey(cb));
-            requested.put(cb, req);
-            assertFalse(legacyTypeMap.containsKey(cb));
-            if (legacyType != ConnectivityManager.TYPE_NONE) {
-                legacyTypeMap.put(cb, legacyType);
-            }
+            fail("Should never be called.");
         }
 
         @Override
@@ -692,7 +679,6 @@ public class UpstreamNetworkMonitorTest {
                 listening.remove(cb);
             } else if (requested.containsKey(cb)) {
                 requested.remove(cb);
-                legacyTypeMap.remove(cb);
             } else {
                 fail("Unexpected callback removed");
             }
