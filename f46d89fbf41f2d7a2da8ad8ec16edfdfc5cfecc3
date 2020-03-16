@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e158d97a_64d93b7a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T10:48:49Z",
+      "side": 1,
+      "message": "Should there be a defensive copy here?",
+      "range": {
+        "startLine": 2716,
+        "startChar": 44,
+        "endLine": 2716,
+        "endChar": 77
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ebf1e7_4b210e69",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5816,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-16T10:48:49Z",
+      "side": 1,
+      "message": "You should make the defensive copy of NetworkCapabilities before restricting the capabilities. Otherwise a caller in the same process could pass the check at line 5811 and then modify the NetworkCapabilities before we make the defensive copy at line 5825. Yes, anyone in this process is already privileged, but still.",
+      "range": {
+        "startLine": 5816,
+        "startChar": 32,
+        "endLine": 5816,
+        "endChar": 65
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
