@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e993e0f9_4bd8ad61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-03-16T02:47:15Z",
+      "side": 1,
+      "message": "Please change to \"Add method in Handler to remove messages with equal object",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "8444538c45d841cf5346b84d63de977fc33cb419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab674318_b6b6802e",
+        "filename": "core/java/android/os/Handler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-03-16T02:47:15Z",
+      "side": 1,
+      "message": "you need to add @hide in this method, as we\u0027re not adding it to the SDK API quite yet.",
+      "range": {
+        "startLine": 795,
+        "startChar": 5,
+        "endLine": 795,
+        "endChar": 7
+      },
+      "revId": "8444538c45d841cf5346b84d63de977fc33cb419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
