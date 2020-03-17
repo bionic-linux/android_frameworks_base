@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de6925e0_efdd6299",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-17T04:40:19Z",
+      "side": 1,
+      "message": "It\u0027s unnecessary ; the only caller of this already makes a copy.\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/NetworkAgent.java;l\u003d642?q\u003dEVENT_NETWORK_CAPABILITIES_CHANGED\n\n(the search hit on the message name in NetworkMonitor is a red herring)\n\nAlso updateCapabilities starts by calling mixInCapabilities which makes a defensive copy first thing, though the damage would be done by that point by mutating the original : https://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/ConnectivityService.java;l\u003d6145?q\u003dConnectivityService.java\n\n\nThat being said if you feel that it\u0027s safer, I can make that copy. For now I added comments explaining the above.",
+      "parentUuid": "e158d97a_64d93b7a",
+      "range": {
+        "startLine": 2716,
+        "startChar": 44,
+        "endLine": 2716,
+        "endChar": 77
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95ebf1e7_4b210e69",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88079bbf_b881a870",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5816,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-17T04:40:19Z",
+      "side": 1,
+      "message": "Done, though I think anyone sending a test network agent with some of the restricted caps had it coming when it\u0027s reset for them 😊\nBut sure, it would be unexpected. Done.",
+      "parentUuid": "95ebf1e7_4b210e69",
+      "range": {
+        "startLine": 5816,
+        "startChar": 32,
+        "endLine": 5816,
+        "endChar": 65
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
