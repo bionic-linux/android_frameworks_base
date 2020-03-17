@@ -43,6 +43,7 @@ enum ReturnCode {
     RC_EAI_BADHINTS = 12;
     RC_EAI_PROTOCOL = 13;
     RC_EAI_OVERFLOW = 14;
+    RC_RESOLV_INTERNAL_ERROR = 254;
     RC_RESOLV_TIMEOUT = 255;
     RC_EAI_MAX = 256;
 }
@@ -197,6 +198,131 @@ enum CacheStatus{
     CS_SKIP = 3;
 }
 
+enum SystemError {
+    SYS_EPERM = 1;         // Not super-user
+    SYS_ENOENT = 2;        // No such file or directory
+    SYS_ESRCH = 3;         // No such process
+    SYS_EINTR = 4;         // Interrupted system call
+    SYS_EIO = 5;           // I/O error
+    SYS_ENXIO = 6;         // No such device or address
+    SYS_E2BIG = 7;         // Arg list too long
+    SYS_ENOEXEC = 8;       // Exec format error
+    SYS_EBADF = 9;         // Bad file number
+    SYS_ECHILD = 10;       // No children
+    SYS_EAGAIN = 11;       // No more processes
+    SYS_ENOMEM = 12;       // Not enough core
+    SYS_EACCES = 13;       // Permission denied
+    SYS_EFAULT = 14;       // Bad address
+    SYS_ENOTBLK = 15;      // Block device required
+    SYS_EBUSY = 16;        // Mount device busy
+    SYS_EEXIST = 17;       // File exists
+    SYS_EXDEV = 18;        // Cross-device link
+    SYS_ENODEV = 19;       // No such device
+    SYS_ENOTDIR = 20;      // Not a directory
+    SYS_EISDIR = 21;       // Is a directory
+    SYS_EINVAL = 22;       // Invalid argument
+    SYS_ENFILE = 23;       // Too many open files in system
+    SYS_EMFILE = 24;       // Too many open files
+    SYS_ENOTTY = 25;       // Not a typewriter
+    SYS_ETXTBSY = 26;      // Text file busy
+    SYS_EFBIG = 27;        // File too large
+    SYS_ENOSPC = 28;       // No space left on device
+    SYS_ESPIPE = 29;       // Illegal seek
+    SYS_EROFS = 30;        // Read only file system
+    SYS_EMLINK = 31;       // Too many links
+    SYS_EPIPE = 32;        // Broken pipe
+    SYS_EDOM = 33;         // Math arg out of domain of func
+    SYS_ERANGE = 34;       // Math result not representable
+    SYS_ENOMSG = 35;       // No message of desired type
+    SYS_EIDRM = 36;        // Identifier removed
+    SYS_ECHRNG = 37;       // Channel number out of range
+    SYS_EL2NSYNC = 38;     // Level 2 not synchronized
+    SYS_EL3HLT = 39;       // Level 3 halted
+    SYS_EL3RST = 40;       // Level 3 reset
+    SYS_ELNRNG = 41;       // Link number out of range
+    SYS_EUNATCH = 42;      // Protocol driver not attached
+    SYS_ENOCSI = 43;       // No CSI structure available
+    SYS_EL2HLT = 44;       // Level 2 halted
+    SYS_EDEADLK = 45;      // Deadlock condition
+    SYS_ENOLCK = 46;       // No record locks available
+    SYS_EBADE = 50;        // Invalid exchange
+    SYS_EBADR = 51;        // Invalid request descriptor
+    SYS_EXFULL = 52;       // Exchange full
+    SYS_ENOANO = 53;       // No anode
+    SYS_EBADRQC = 54;      // Invalid request code
+    SYS_EBADSLT = 55;      // Invalid slot
+    SYS_EDEADLOCK = 56;    // File locking deadlock error
+    SYS_EBFONT = 57;       // Bad font file fmt
+    SYS_ENOSTR = 60;       // Device not a stream
+    SYS_ENODATA = 61;      // No data (for no delay io)
+    SYS_ETIME = 62;        // Timer expired
+    SYS_ENOSR = 63;        // Out of streams resources
+    SYS_ENONET = 64;       // Machine is not on the network
+    SYS_ENOPKG = 65;       // Package not installed
+    SYS_EREMOTE = 66;      // The object is remote
+    SYS_ENOLINK = 67;      // The link has been severed
+    SYS_EADV = 68;         // Advertise error
+    SYS_ESRMNT = 69;       // Srmount error
+    SYS_ECOMM = 70;        // Communication error on send
+    SYS_EPROTO = 71;       // Protocol error
+    SYS_EMULTIHOP = 74;    // Multihop attempted
+    SYS_ELBIN = 75;        // Inode is remote (not really error)
+    SYS_EDOTDOT = 76;      // Cross mount point (not really error)
+    SYS_EBADMSG = 77;      // Trying to read unreadable message
+    SYS_EFTYPE = 79;       // Inappropriate file type or format
+    SYS_ENOTUNIQ = 80;     // Given log. name not unique
+    SYS_EBADFD = 81;       // f.d. invalid for this operation
+    SYS_EREMCHG = 82;      // Remote address changed
+    SYS_ELIBACC = 83;      // Can't access a needed shared lib
+    SYS_ELIBBAD = 84;      // Accessing a corrupted shared lib
+    SYS_ELIBSCN = 85;      // .lib section in a.out corrupted
+    SYS_ELIBMAX = 86;      // Attempting to link in too many libs
+    SYS_ELIBEXEC = 87;     // Attempting to exec a shared library
+    SYS_ENOSYS = 88;       // Function not implemented
+    SYS_ENMFILE = 89;      // No more files
+    SYS_ENOTEMPTY = 90;    // Directory not empty
+    SYS_ENAMETOOLONG = 91; // File or path name too long
+    SYS_ELOOP = 92;        // Too many symbolic links
+    SYS_EOPNOTSUPP = 95;   // Operation not supported on transport endpoint
+    SYS_EPFNOSUPPORT = 96; // Protocol family not supported
+    SYS_ECONNRESET = 104;  // Connection reset by peer
+    SYS_ENOBUFS = 105;     // No buffer space available
+    SYS_EAFNOSUPPORT = 106;// Address family not supported by protocol family
+    SYS_EPROTOTYPE = 107;  // Protocol wrong type for socket
+    SYS_ENOTSOCK = 108;    // Socket operation on non-socket
+    SYS_ENOPROTOOPT = 109; // Protocol not available
+    SYS_ESHUTDOWN = 110;   // Can't send after socket shutdown
+    SYS_ECONNREFUSED = 111;     // Connection refused
+    SYS_EADDRINUSE = 112;       // Address already in use
+    SYS_ECONNABORTED = 113;     // Connection aborted
+    SYS_ENETUNREACH = 114;      // Network is unreachable
+    SYS_ENETDOWN = 115;         // Network interface is not configured
+    SYS_ETIMEDOUT = 116;        // Connection timed out
+    SYS_EHOSTDOWN = 117;        // Host is down
+    SYS_EHOSTUNREACH = 118;     // Host is unreachable
+    SYS_EINPROGRESS = 119;      // Connection already in progress
+    SYS_EALREADY = 120;         // Socket already connected
+    SYS_EDESTADDRREQ = 121;     // Destination address required
+    SYS_EMSGSIZE = 122;         // Message too long
+    SYS_EPROTONOSUPPORT = 123;  // Unknown protocol
+    SYS_ESOCKTNOSUPPORT = 124;  // Socket type not supported
+    SYS_EADDRNOTAVAIL = 125;    // Address not available
+    SYS_ENETRESET = 126;
+    SYS_EISCONN = 127;          // Socket is already connected
+    SYS_ENOTCONN = 128;         // Socket is not connected
+    SYS_ETOOMANYREFS = 129;
+    SYS_EPROCLIM = 130;
+    SYS_EUSERS = 131;
+    SYS_EDQUOT = 132;
+    SYS_ESTALE = 133;
+    SYS_ENOTSUP = 134;     // Not supported
+    SYS_ENOMEDIUM = 135;   // No medium (in tape drive)
+    SYS_ENOSHARE = 136;    // No such host or network path
+    SYS_ECASECLASH = 137;  // Filename exists with different case
+    SYS_EILSEQ = 138;
+    SYS_EOVERFLOW = 139;   // Value too large for defined data type
+}
+
 message DnsQueryEvent {
     optional android.stats.dnsresolver.NsRcode rcode = 1;
 
@@ -218,6 +344,8 @@ message DnsQueryEvent {
     optional bool connected = 8;
 
     optional int32 latency_micros = 9;
+
+    optional android.stats.dnsresolver.SystemError systemerr = 10;
 }
 
 message DnsQueryEvents {
