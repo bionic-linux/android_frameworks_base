@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000001991379",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1260901?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "f891f2b9_f993b044",
+          "description": "Change to \"media/java/android/media/audiofx/Visualizer.java\"",
+          "replacements": [
+            {
+              "path": "media/java/android/media/audiofx/Visualizer.java",
+              "range": {
+                "startLine": 707,
+                "startChar": 73,
+                "endLine": 707,
+                "endChar": 79
+              },
+              "replacement": "Message"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "259216d5_f2cd2ab0",
+        "filename": "media/java/android/media/audiofx/Visualizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-03-17T00:37:31Z",
+      "side": 1,
+      "message": "Common typo found: \"Messge\" -- should it be \"Message\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 707,
+        "startChar": 73,
+        "endLine": 707,
+        "endChar": 79
+      },
+      "revId": "775a0ac1f17bd5326b7e8b9349919e578df6c29f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
