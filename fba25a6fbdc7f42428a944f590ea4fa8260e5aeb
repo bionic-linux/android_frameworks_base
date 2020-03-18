@@ -52,6 +52,24 @@
       "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3534834_b21cdf8d",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-18T07:17:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5545f76f_2eaf4b2f",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
