@@ -16,6 +16,24 @@
       "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a719a3_71826556",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-18T04:00:55Z",
+      "side": 1,
+      "message": "Verizon supports dual IMSI. MCCMNC for Verizon will be changed to 20404 while GSM roaming. This will depend on how you use this resource such as combining with MVNO information to tell if it\u0027s Verizon SIM or other SIM. But I think it seems no way to use such information in android resource. Do you have the corresponding design how you read this resource?",
+      "parentUuid": "ea497114_c4e29bd2",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
