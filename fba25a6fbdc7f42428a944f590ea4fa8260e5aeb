@@ -70,6 +70,24 @@
       "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84a3b43d_409cc70d",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-18T10:18:25Z",
+      "side": 1,
+      "message": "Sorry, I may cause misunderstand here. My question is for Paul. I wonder how does he handle this with current configuration.",
+      "parentUuid": "b3534834_b21cdf8d",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
