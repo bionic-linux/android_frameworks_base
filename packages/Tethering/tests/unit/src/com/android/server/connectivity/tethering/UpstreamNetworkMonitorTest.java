@@ -76,6 +76,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -212,8 +213,8 @@ public class UpstreamNetworkMonitorTest {
         mUNM.updateMobileRequiresDun(true);
         mUNM.registerMobileNetworkRequest();
         verify(mCM, times(1)).requestNetwork(
-                any(NetworkRequest.class), any(NetworkCallback.class), anyInt(), anyInt(),
-                any(Handler.class));
+                any(NetworkRequest.class), anyInt(), anyInt(), any(Executor.class),
+                any(NetworkCallback.class));
 
         assertTrue(mUNM.mobileNetworkRequested());
         assertUpstreamTypeRequested(TYPE_MOBILE_DUN);
@@ -568,7 +569,7 @@ public class UpstreamNetworkMonitorTest {
     }
 
     public static class TestConnectivityManager extends ConnectivityManager {
-        public Map<NetworkCallback, Handler> allCallbacks = new HashMap<>();
+        public Map<NetworkCallback, NetworkRequest> allCallbacks = new HashMap<>();
         public Set<NetworkCallback> trackingDefault = new HashSet<>();
         public TestNetworkAgent defaultNetwork = null;
         public Map<NetworkCallback, NetworkRequest> listening = new HashMap<>();
@@ -633,7 +634,7 @@ public class UpstreamNetworkMonitorTest {
         @Override
         public void requestNetwork(NetworkRequest req, NetworkCallback cb, Handler h) {
             assertFalse(allCallbacks.containsKey(cb));
-            allCallbacks.put(cb, h);
+            allCallbacks.put(cb, req);
             if (sDefaultRequest.equals(req)) {
                 assertFalse(trackingDefault.contains(cb));
                 trackingDefault.add(cb);
@@ -649,10 +650,10 @@ public class UpstreamNetworkMonitorTest {
         }
 
         @Override
-        public void requestNetwork(NetworkRequest req, NetworkCallback cb,
-                int timeoutMs, int legacyType, Handler h) {
+        public void requestNetwork(NetworkRequest req,
+                int timeoutMs, int legacyType, Executor e, NetworkCallback cb) {
             assertFalse(allCallbacks.containsKey(cb));
-            allCallbacks.put(cb, h);
+            allCallbacks.put(cb, req);
             assertFalse(requested.containsKey(cb));
             requested.put(cb, req);
             assertFalse(legacyTypeMap.containsKey(cb));
@@ -664,7 +665,7 @@ public class UpstreamNetworkMonitorTest {
         @Override
         public void registerNetworkCallback(NetworkRequest req, NetworkCallback cb, Handler h) {
             assertFalse(allCallbacks.containsKey(cb));
-            allCallbacks.put(cb, h);
+            allCallbacks.put(cb, req);
             assertFalse(listening.containsKey(cb));
             listening.put(cb, req);
         }

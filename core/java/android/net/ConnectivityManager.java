@@ -3631,22 +3631,22 @@ public class ConnectivityManager {
     private class CallbackHandler extends Handler {
         private static final String TAG = "ConnectivityManager.CallbackHandler";
         private static final boolean DBG = false;
+        private final Executor mExecutor;
 
-        CallbackHandler(Looper looper) {
+        CallbackHandler(Looper looper, Executor executor) {
             super(looper);
+            mExecutor = executor;
         }
 
         CallbackHandler(Handler handler) {
-            this(Preconditions.checkNotNull(handler, "Handler cannot be null.").getLooper());
+            this(Preconditions.checkNotNull(handler, "Handler cannot be null.").getLooper(), null);
         }
 
-        @Override
-        public void handleMessage(Message message) {
-            if (message.what == EXPIRE_LEGACY_REQUEST) {
-                expireRequest((NetworkCapabilities) message.obj, message.arg1);
-                return;
-            }
+        CallbackHandler(Executor executor) {
+            this(getDefaultHandler().getLooper(), executor);
+        }
 
+        private void processCallback(Message message) {
             final NetworkRequest request = getObject(message, NetworkRequest.class);
             final Network network = getObject(message, Network.class);
             final NetworkCallback callback;
@@ -3714,6 +3714,20 @@ public class ConnectivityManager {
             }
         }
 
+        @Override
+        public void handleMessage(Message message) {
+            if (message.what == EXPIRE_LEGACY_REQUEST) {
+                expireRequest((NetworkCapabilities) message.obj, message.arg1);
+                return;
+            }
+
+            if (mExecutor == null) {
+                processCallback(message);
+            } else {
+                mExecutor.execute(() -> processCallback(message));
+            }
+        }
+
         private <T> T getObject(Message msg, Class<T> c) {
             return (T) msg.getData().getParcelable(c.getSimpleName());
         }
@@ -3722,7 +3736,8 @@ public class ConnectivityManager {
     private CallbackHandler getDefaultHandler() {
         synchronized (sCallbacks) {
             if (sCallbackHandler == null) {
-                sCallbackHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper());
+                sCallbackHandler = new CallbackHandler(ConnectivityThread.getInstanceLooper(),
+                        null);
             }
             return sCallbackHandler;
         }
@@ -3774,13 +3789,10 @@ public class ConnectivityManager {
     /**
      * Helper function to request a network with a particular legacy type.
      *
-     * @deprecated This is temporarily public for tethering to backwards compatibility that uses
-     * the NetworkRequest API to request networks with legacy type and relies on
+     * Tethering is the only user of this API that request networks with legacy type and relies on
      * CONNECTIVITY_ACTION broadcasts instead of NetworkCallbacks. New caller should use
      * {@link #requestNetwork(NetworkRequest, NetworkCallback, Handler)} instead.
      *
-     * TODO: update said system code to rely on NetworkCallbacks and make this method private.
-
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
      *                        the callback must not be shared - it uniquely specifies this request.
@@ -3788,16 +3800,15 @@ public class ConnectivityManager {
      *                  before {@link NetworkCallback#onUnavailable()} is called. The timeout must
      *                  be a positive value (i.e. >0).
      * @param legacyType to specify the network type(#TYPE_*).
-     * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @param executor The executor on which callback will be invoked.
      *
      * @hide
      */
     @SystemApi
-    @Deprecated
     public void requestNetwork(@NonNull NetworkRequest request,
-            @NonNull NetworkCallback networkCallback, int timeoutMs, int legacyType,
-            @NonNull Handler handler) {
-        CallbackHandler cbHandler = new CallbackHandler(handler);
+            int timeoutMs, int legacyType, @NonNull Executor executor,
+            @NonNull NetworkCallback networkCallback) {
+        CallbackHandler cbHandler = new CallbackHandler(executor);
         NetworkCapabilities nc = request.networkCapabilities;
         sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler);
     }
@@ -3896,7 +3907,8 @@ public class ConnectivityManager {
             @NonNull NetworkCallback networkCallback, @NonNull Handler handler) {
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         CallbackHandler cbHandler = new CallbackHandler(handler);
-        requestNetwork(request, networkCallback, 0, legacyType, cbHandler);
+        NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(nc, networkCallback, 0, REQUEST, legacyType, cbHandler);
     }
 
     /**
@@ -3930,7 +3942,9 @@ public class ConnectivityManager {
             @NonNull NetworkCallback networkCallback, int timeoutMs) {
         checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
-        requestNetwork(request, networkCallback, timeoutMs, legacyType, getDefaultHandler());
+        NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType,
+                getDefaultHandler());
     }
 
     /**
@@ -3957,7 +3971,8 @@ public class ConnectivityManager {
         checkTimeout(timeoutMs);
         int legacyType = inferLegacyTypeForNetworkCapabilities(request.networkCapabilities);
         CallbackHandler cbHandler = new CallbackHandler(handler);
-        requestNetwork(request, networkCallback, timeoutMs, legacyType, cbHandler);
+        NetworkCapabilities nc = request.networkCapabilities;
+        sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler);
     }
 
     /**

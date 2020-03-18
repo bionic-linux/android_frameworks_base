@@ -244,7 +244,8 @@ public class UpstreamNetworkMonitor {
         // Additionally, we log a message to aid in any subsequent debugging.
         mLog.i("requesting mobile upstream network: " + mobileUpstreamRequest);
 
-        cm().requestNetwork(mobileUpstreamRequest, mMobileNetworkCallback, 0, legacyType, mHandler);
+        cm().requestNetwork(mobileUpstreamRequest, 0, legacyType, mHandler::post /* executor */,
+                mMobileNetworkCallback);
     }
 
     /** Release mobile network request. */
