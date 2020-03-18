@@ -34,6 +34,24 @@
       "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5545f76f_2eaf4b2f",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-18T07:03:58Z",
+      "side": 1,
+      "message": "No I don\u0027t. Let\u0027s check this in first even if we end up removing it, which I hope we will. In any case we can\u0027t afford to display this on a non-Verizon network.",
+      "parentUuid": "31a719a3_71826556",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
