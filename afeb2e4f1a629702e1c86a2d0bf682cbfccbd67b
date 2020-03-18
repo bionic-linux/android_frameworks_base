@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce3ef3d_c8e225c5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11436,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-03-18T16:59:54Z",
+      "side": 1,
+      "message": "This should not include a subId parameter and should rely on the mSubId the current TelephonyManager is pinned to.",
+      "range": {
+        "startLine": 11436,
+        "startChar": 19,
+        "endLine": 11436,
+        "endChar": 46
+      },
+      "revId": "afeb2e4f1a629702e1c86a2d0bf682cbfccbd67b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
