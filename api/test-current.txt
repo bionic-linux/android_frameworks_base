@@ -1511,10 +1511,21 @@ package android.net {
   }
 
   public final class NetworkCapabilities implements android.os.Parcelable {
+    method @NonNull public int[] getAdministratorUids();
     method public int[] getCapabilities();
+    method public int getOwnerUid();
+    method @Nullable public String getSSID();
     method @NonNull public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
     field public static final int TRANSPORT_TEST = 7; // 0x7
+  }
+
+  public static class NetworkCapabilities.Builder {
+    method @NonNull public android.net.NetworkCapabilities.Builder setAdministratorUids(@NonNull int[]);
+    method @NonNull public android.net.NetworkCapabilities.Builder setOwnerUid(int);
+    method @NonNull public android.net.NetworkCapabilities.Builder setRequestorPackageName(@NonNull String);
+    method @NonNull public android.net.NetworkCapabilities.Builder setRequestorUid(int);
+    method @NonNull public android.net.NetworkCapabilities.Builder setSsid(@NonNull String);
   }
 
   public class NetworkStack {
