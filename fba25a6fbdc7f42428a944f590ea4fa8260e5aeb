@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea497114_c4e29bd2",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-18T03:42:08Z",
+      "side": 1,
+      "message": "204 04 is Vodaphone in the Netherlands. It doesn\u0027t sound like you have the codes right",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
