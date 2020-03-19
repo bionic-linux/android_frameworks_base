@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f14935_fa1c73f5",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3777,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-19T01:22:12Z",
+      "side": 1,
+      "message": "This API is only for use in internal system code that requests networks",
+      "range": {
+        "startLine": 3777,
+        "startChar": 7,
+        "endLine": 3777,
+        "endChar": 67
+      },
+      "revId": "9ad9be90344d7c1b7cf5ff702ac22c49c181fa32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987225e1_38a47874",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3895,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-19T01:22:12Z",
+      "side": 1,
+      "message": "Now that Paul has removed the legacy type everywhere, can you ensure that ConnectivityService#requestNetwork does a permissions check for NETWORK_STACK or MAINLINE_NETWORK_STACK if the legacy type is not TYPE_NONE?",
+      "range": {
+        "startLine": 3895,
+        "startChar": 35,
+        "endLine": 3895,
+        "endChar": 45
+      },
+      "revId": "9ad9be90344d7c1b7cf5ff702ac22c49c181fa32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
