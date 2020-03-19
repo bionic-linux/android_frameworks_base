@@ -152,10 +152,6 @@ public class HdmiControlService extends SystemService {
     @GuardedBy("mLock")
     private boolean mSystemAudioActivated = false;
 
-    private static final boolean isHdmiCecNeverClaimPlaybackLogicAddr =
-            SystemProperties.getBoolean(
-                    Constants.PROPERTY_HDMI_CEC_NEVER_CLAIM_PLAYBACK_LOGICAL_ADDRESS, false);
-
     /**
      * Interface to report send result.
      */
@@ -704,8 +700,7 @@ public class HdmiControlService extends SystemService {
         // A container for [Device type, Local device info].
         ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
         for (int type : mLocalDevices) {
-            if (type == HdmiDeviceInfo.DEVICE_PLAYBACK
-                    && isHdmiCecNeverClaimPlaybackLogicAddr) {
+            if (type == HdmiDeviceInfo.DEVICE_PLAYBACK) {
                 continue;
             }
             HdmiCecLocalDevice localDevice = mCecController.getLocalDevice(type);
@@ -1105,8 +1100,7 @@ public class HdmiControlService extends SystemService {
             }
             ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
             for (int type : mLocalDevices) {
-                if (type == HdmiDeviceInfo.DEVICE_PLAYBACK
-                        && isHdmiCecNeverClaimPlaybackLogicAddr) {
+                if (type == HdmiDeviceInfo.DEVICE_PLAYBACK) {
                     continue;
                 }
                 HdmiCecLocalDevice localDevice = mCecController.getLocalDevice(type);
