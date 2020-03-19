@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b584234c_506fcbda",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-03-19T02:08:54Z",
+      "side": 1,
+      "message": "send (here) and receive (two lines down) seems weird.",
+      "range": {
+        "startLine": 70,
+        "startChar": 62,
+        "endLine": 70,
+        "endChar": 66
+      },
+      "revId": "c6825298b3aeff40295168dcf76e8fe81fe3a55c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
