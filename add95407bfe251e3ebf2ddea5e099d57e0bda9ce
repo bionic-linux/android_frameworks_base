@@ -45,6 +45,30 @@
       "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66d9ed2_ce7184c1",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-03-19T06:31:03Z",
+      "side": 1,
+      "message": "FYI, aosp/1261099 change to take int[] but it hasn\u0027t merged yet.",
+      "parentUuid": "25c90457_180dbcd9",
+      "range": {
+        "startLine": 689,
+        "startChar": 21,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
