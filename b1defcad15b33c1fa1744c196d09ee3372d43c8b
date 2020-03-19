@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca1602e_78d7f836",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3713,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-19T10:51:29Z",
+      "side": 1,
+      "message": "Never put permissions checks in code that runs in an application process. All permission checks must be in a trusted process. In this case they should be in ConnectivityService.",
+      "range": {
+        "startLine": 3710,
+        "startChar": 0,
+        "endLine": 3713,
+        "endChar": 9
+      },
+      "revId": "b1defcad15b33c1fa1744c196d09ee3372d43c8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
