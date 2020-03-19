@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec0705cf_bfff2575",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3777,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-19T09:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f14935_fa1c73f5",
+      "range": {
+        "startLine": 3777,
+        "startChar": 7,
+        "endLine": 3777,
+        "endChar": 67
+      },
+      "revId": "9ad9be90344d7c1b7cf5ff702ac22c49c181fa32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "987225e1_38a47874",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9ad9be90344d7c1b7cf5ff702ac22c49c181fa32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc1eac2_ad13c148",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3895,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-19T09:57:02Z",
+      "side": 1,
+      "message": "How about explicitly check in ConnectivityManager API as Patchset3. Just check permission for not TYPE_NOTE can not prevent caller use requestNetwork with TYPE_NONE.\n\nI also have local patch can respin to your suggestion check.\n\ndiff --git a/core/java/android/net/ConnectivityManager.java b/core/java/android/net/ConnectivityManager.java\nindex adb23e28a8b..aaa3d96f127 100644\n--- a/core/java/android/net/ConnectivityManager.java\n+++ b/core/java/android/net/ConnectivityManager.java\n@@ -3707,10 +3707,6 @@ public class ConnectivityManager {\n     public void requestNetwork(@NonNull NetworkRequest request,\n             int timeoutMs, int legacyType, @NonNull Handler handler,\n             @NonNull NetworkCallback networkCallback) {\n-        if (mContext.checkSelfPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) !\u003d\n-                PERMISSION_GRANTED) {\n-            throw new SecurityException(\"No NETWORK_STACK permission\");\n-        }\n         CallbackHandler cbHandler \u003d new CallbackHandler(handler);\n         NetworkCapabilities nc \u003d request.networkCapabilities;\n         sendRequestForNetwork(nc, networkCallback, timeoutMs, REQUEST, legacyType, cbHandler);\ndiff --git a/services/core/java/com/android/server/ConnectivityService.java b/services/core/java/com/android/server/ConnectivityService.java\nindex c7ad3e4ed55..4c6fb9edd59 100644\n--- a/services/core/java/com/android/server/ConnectivityService.java\n+++ b/services/core/java/com/android/server/ConnectivityService.java\n@@ -5393,6 +5393,9 @@ public class ConnectivityService extends IConnectivityManager.Stub\n     public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,\n             Messenger messenger, int timeoutMs, IBinder binder, int legacyType,\n             @NonNull String callingPackageName) {\n+        if (legacyType !\u003d TYPE_NONE \u0026\u0026 !checkNetworkStackPermission()) {\n+            throw new SecurityException(\"Insufficient permissions to specify legacy type\");\n+        }\n         final int callingUid \u003d Binder.getCallingUid();\n         final NetworkRequest.Type type \u003d (networkCapabilities \u003d\u003d null)\n                 ? NetworkRequest.Type.TRACK_DEFAULT",
+      "parentUuid": "987225e1_38a47874",
+      "range": {
+        "startLine": 3895,
+        "startChar": 35,
+        "endLine": 3895,
+        "endChar": 45
+      },
+      "revId": "9ad9be90344d7c1b7cf5ff702ac22c49c181fa32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
