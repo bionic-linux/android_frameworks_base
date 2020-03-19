@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de5529e_be03c63a",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-19T01:01:45Z",
+      "side": 1,
+      "message": "This calls for @IntDef (I\u0027m surprised the council didn\u0027t say that).\n\nNot for this change I guess",
+      "range": {
+        "startLine": 70,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 71
+      },
+      "revId": "cb074b460b6d470709b36f6b2521849101b3962b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
