@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17689cac_2019a8ef",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-19T08:34:17Z",
+      "side": 1,
+      "message": "Thanks for reminding this.\nI will use TelephonyNetworkSpecifier instead.",
+      "parentUuid": "6552564a_e5fa4dfe",
+      "range": {
+        "startLine": 647,
+        "startChar": 53,
+        "endLine": 647,
+        "endChar": 75
+      },
+      "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25c90457_180dbcd9",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "FYI, aosp/1261099 change to take int[] but it hasn\u0027t merged yet.",
       "parentUuid": "25c90457_180dbcd9",
+      "range": {
+        "startLine": 689,
+        "startChar": 21,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41472ec6_539bff4b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-19T08:34:17Z",
+      "side": 1,
+      "message": "Thanks Jean, will do.\n\nThanks the information, Aaron.\nI will upload the patch to rvc-dev first, but it seems rvc-dev is broken.\nI cannot build successfully in my local codebase. 😞",
+      "parentUuid": "c66d9ed2_ce7184c1",
       "range": {
         "startLine": 689,
         "startChar": 21,
