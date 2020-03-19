@@ -22,6 +22,30 @@
       "revId": "cb074b460b6d470709b36f6b2521849101b3962b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b827ac1_4652ffc4",
+        "filename": "core/java/android/net/util/SocketUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-19T01:07:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure actually. There protocol just gets passed directly to the kernel. So there\u0027s no actual requirement that the protocol be one of the ones listed in the Android API surface, and I don\u0027t think there should be, either - this function is completely generic.",
+      "parentUuid": "2de5529e_be03c63a",
+      "range": {
+        "startLine": 70,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 71
+      },
+      "revId": "cb074b460b6d470709b36f6b2521849101b3962b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
