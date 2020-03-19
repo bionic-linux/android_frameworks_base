@@ -88,6 +88,24 @@
       "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43cc8d0e_0d71bb7a",
+        "filename": "packages/Tethering/res/values-mcc204-mnc04/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-03-19T01:32:41Z",
+      "side": 1,
+      "message": "I plan to check the gid1 value further if it\u0027s 20404 SIM card.",
+      "parentUuid": "84a3b43d_409cc70d",
+      "revId": "fba25a6fbdc7f42428a944f590ea4fa8260e5aeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
