@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6552564a_e5fa4dfe",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-19T06:17:42Z",
+      "side": 1,
+      "message": "Can you please use TelephonyNetworkSpecifier instead ? StringNetworkSpecifier is deprecated and we are trying to remove usage.",
+      "range": {
+        "startLine": 647,
+        "startChar": 53,
+        "endLine": 647,
+        "endChar": 75
+      },
+      "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c90457_180dbcd9",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-19T06:17:42Z",
+      "side": 1,
+      "message": "Please rebase, this now takes an int[]",
+      "range": {
+        "startLine": 689,
+        "startChar": 21,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "add95407bfe251e3ebf2ddea5e099d57e0bda9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
