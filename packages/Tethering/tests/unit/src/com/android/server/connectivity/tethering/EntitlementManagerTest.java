@@ -16,14 +16,14 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.TetheringManager.TETHERING_BLUETOOTH;
-import static android.net.TetheringManager.TETHERING_USB;
-import static android.net.TetheringManager.TETHERING_WIFI;
-import static android.net.TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKNOWN;
-import static android.net.TetheringManager.TETHER_ERROR_NO_ERROR;
-import static android.net.TetheringManager.TETHER_ERROR_PROVISIONING_FAILED;
 import static android.provider.DeviceConfig.NAMESPACE_CONNECTIVITY;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+import static android.net.tether.TetheringManager.TETHERING_BLUETOOTH;
+import static android.net.tether.TetheringManager.TETHERING_USB;
+import static android.net.tether.TetheringManager.TETHERING_WIFI;
+import static android.net.tether.TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKNOWN;
+import static android.net.tether.TetheringManager.TETHER_ERROR_NO_ERROR;
+import static android.net.tether.TetheringManager.TETHER_ERROR_PROVISIONING_FAILED;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSession;

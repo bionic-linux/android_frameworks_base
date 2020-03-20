@@ -18,11 +18,11 @@ package com.android.server.connectivity.tethering
 
 import android.net.LinkAddress
 import android.net.MacAddress
-import android.net.TetheredClient
-import android.net.TetheredClient.AddressInfo
-import android.net.TetheringManager.TETHERING_USB
-import android.net.TetheringManager.TETHERING_WIFI
 import android.net.ip.IpServer
+import android.net.tether.TetheredClient
+import android.net.tether.TetheredClient.AddressInfo
+import android.net.tether.TetheringManager.TETHERING_USB
+import android.net.tether.TetheringManager.TETHERING_WIFI
 import android.net.wifi.WifiClient
 import androidx.test.filters.SmallTest
 import androidx.test.runner.AndroidJUnit4

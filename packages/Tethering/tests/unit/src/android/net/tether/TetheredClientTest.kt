@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package android.net
+package android.net.tether
 
 import android.net.InetAddresses.parseNumericAddress
-import android.net.TetheredClient.AddressInfo
-import android.net.TetheringManager.TETHERING_BLUETOOTH
-import android.net.TetheringManager.TETHERING_USB
+import android.net.LinkAddress
+import android.net.MacAddress
+import android.net.tether.TetheredClient.AddressInfo
+import android.net.tether.TetheringManager.TETHERING_BLUETOOTH
+import android.net.tether.TetheringManager.TETHERING_USB
 import android.system.OsConstants.RT_SCOPE_UNIVERSE
 import androidx.test.filters.SmallTest
 import androidx.test.runner.AndroidJUnit4

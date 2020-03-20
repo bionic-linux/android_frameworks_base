@@ -15,14 +15,14 @@
  */
 package android.net.util;
 
-import static android.net.TetheringManager.TETHERING_USB;
-import static android.net.TetheringManager.TETHERING_WIFI;
+import static android.net.tether.TetheringManager.TETHERING_USB;
+import static android.net.tether.TetheringManager.TETHERING_WIFI;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import android.net.LinkAddress;
-import android.net.TetheringRequestParcel;
+import android.net.tether.TetheringRequestParcel;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
