@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce073af_b7cf03ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-03-20T13:45:52Z",
+      "side": 1,
+      "message": "this is an automerger-created cl in a branch I believe will achieve the right thing ..",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "9b0b15fda2247d2dd9f7fc4467c51f5c7f48a8d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
