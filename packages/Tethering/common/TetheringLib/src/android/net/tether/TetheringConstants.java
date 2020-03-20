@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tether;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 

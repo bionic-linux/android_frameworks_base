@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tether;
+
+import android.net.Network;
+import android.net.tether.TetheredClient;
+import android.net.tether.TetheringConfigurationParcel;
+import android.net.tether.TetherStatesParcel;
 
 /**
- * Configuration details for tethering.
+ * Initial information reported by tethering upon callback registration.
  * @hide
  */
-parcelable TetheringConfigurationParcel {
-    int subId;
-    String[] tetherableUsbRegexs;
-    String[] tetherableWifiRegexs;
-    String[] tetherableBluetoothRegexs;
-    boolean isDunRequired;
-    boolean chooseUpstreamAutomatically;
-    int[] preferredUpstreamIfaceTypes;
-    String[] legacyDhcpRanges;
-    String[] defaultIPv4DNS;
-    boolean enableLegacyDhcpServer;
-    String[] provisioningApp;
-    String provisioningAppNoUi;
-    int provisioningCheckPeriod;
+parcelable TetheringCallbackStartedParcel {
+    boolean tetheringSupported;
+    Network upstreamNetwork;
+    TetheringConfigurationParcel config;
+    TetherStatesParcel states;
+    List<TetheredClient> tetheredClients;
+    int offloadStatus;
 }
