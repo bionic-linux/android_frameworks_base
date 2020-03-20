@@ -32,6 +32,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVIT
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_WIFI_P2P;
 import static android.net.NetworkCapabilities.RESTRICTED_CAPABILITIES;
+import static android.net.NetworkCapabilities.SIGNAL_STRENGTH_UNSPECIFIED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
@@ -45,24 +46,33 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import android.os.Build;
+import android.os.Process;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.ArraySet;
 
 import androidx.core.os.BuildCompat;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRule.IgnoreUpTo;
+
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.Set;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class NetworkCapabilitiesTest {
+    @Rule
+    public final DevSdkIgnoreRule ignoreRule = new DevSdkIgnoreRule();
     private static final String TEST_SSID = "TEST_SSID";
     private static final String DIFFERENT_TEST_SSID = "DIFFERENT_TEST_SSID";
 
@@ -627,5 +637,75 @@ public class NetworkCapabilitiesTest {
         assertEquals(TRANSPORT_WIFI, transportTypes[1]);
         assertEquals(TRANSPORT_VPN, transportTypes[2]);
         assertEquals(TRANSPORT_TEST, transportTypes[3]);
+    }
+
+    @Test
+    public void testGetNetworkSpecifier() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.addTransportType(TRANSPORT_WIFI);
+        final TelephonyNetworkSpecifier specifier = new TelephonyNetworkSpecifier(1);
+        // If NetworkSpecifier is not set, the default value is null.
+        assertNull(nc.getNetworkSpecifier());
+        nc.setNetworkSpecifier(specifier);
+        assertEquals(specifier, nc.getNetworkSpecifier());
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
+    public void testGetOwnerUid() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        // If owner uid is not set, the default value is Process.INVALID_UID.
+        assertEquals(Process.INVALID_UID, nc.getOwnerUid());
+        nc.setOwnerUid(123);
+        assertEquals(123, nc.getOwnerUid());
+    }
+
+    @Test
+    public void testLinkBandwidthKbps() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        // The default value of LinkDown/UpstreamBandwidthKbps should be LINK_BANDWIDTH_UNSPECIFIED.
+        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, nc.getLinkDownstreamBandwidthKbps());
+        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, nc.getLinkUpstreamBandwidthKbps());
+        nc.setLinkDownstreamBandwidthKbps(512);
+        nc.setLinkUpstreamBandwidthKbps(128);
+        assertEquals(512, nc.getLinkDownstreamBandwidthKbps());
+        assertEquals(128, nc.getLinkUpstreamBandwidthKbps());
+    }
+
+    @Test
+    public void testSetSignalStrength() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        // The default value of signal strength should be SIGNAL_STRENGTH_UNSPECIFIED.
+        assertEquals(SIGNAL_STRENGTH_UNSPECIFIED, nc.getSignalStrength());
+        nc.setSignalStrength(-80);
+        assertEquals(-80, nc.getSignalStrength());
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
+    public void testAdministratorUids() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        final int[] administratorUids = {1001, 10001};
+        nc.setAdministratorUids(administratorUids);
+        assertTrue(Arrays.equals(administratorUids, nc.getAdministratorUids()));
+    }
+
+    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
+    public void testDeduceRestrictedCapability() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        // Default capabilities don't have restricted capability.
+        assertFalse(nc.deduceRestrictedCapability());
+        // If there is a force restricted capability, then the network capabilities is restricted.
+        nc.addCapability(NET_CAPABILITY_OEM_PAID);
+        nc.addCapability(NET_CAPABILITY_INTERNET);
+        assertTrue(nc.deduceRestrictedCapability());
+        // Except for the force restricted capability, if there is any unrestricted capability in
+        // capabilities, then the network capabilities is not restricted.
+        nc.removeCapability(NET_CAPABILITY_OEM_PAID);
+        nc.addCapability(NET_CAPABILITY_INTERNET);
+        nc.addCapability(NET_CAPABILITY_CBS);
+        assertFalse(nc.deduceRestrictedCapability());
+        // Except for the force restricted capability, the network capabilities will only be treated
+        // as restricted when there is no any unrestricted capability.
+        nc.removeCapability(NET_CAPABILITY_INTERNET);
+        assertTrue(nc.deduceRestrictedCapability());
     }
 }
