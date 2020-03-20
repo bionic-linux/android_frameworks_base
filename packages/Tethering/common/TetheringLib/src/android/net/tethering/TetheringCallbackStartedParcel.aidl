@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tethering;
 
-import android.net.LinkAddress;
+import android.net.Network;
+import android.net.tethering.TetheredClient;
+import android.net.tethering.TetheringConfigurationParcel;
+import android.net.tethering.TetherStatesParcel;
 
 /**
- * Configuration details for requesting tethering.
+ * Initial information reported by tethering upon callback registration.
  * @hide
  */
-parcelable TetheringRequestParcel {
-    int tetheringType;
-    LinkAddress localIPv4Address;
-    LinkAddress staticClientAddress;
-    boolean exemptFromEntitlementCheck;
-    boolean showProvisioningUi;
+parcelable TetheringCallbackStartedParcel {
+    boolean tetheringSupported;
+    Network upstreamNetwork;
+    TetheringConfigurationParcel config;
+    TetherStatesParcel states;
+    List<TetheredClient> tetheredClients;
+    int offloadStatus;
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tethering;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
@@ -22,6 +22,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
+import android.net.LinkAddress;
+import android.net.MacAddress;
 import android.os.Parcel;
 import android.os.Parcelable;
 

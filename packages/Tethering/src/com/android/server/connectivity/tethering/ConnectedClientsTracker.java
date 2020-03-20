@@ -16,12 +16,12 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.TetheringManager.TETHERING_WIFI;
+import static android.net.tethering.TetheringManager.TETHERING_WIFI;
 
 import android.net.MacAddress;
-import android.net.TetheredClient;
-import android.net.TetheredClient.AddressInfo;
 import android.net.ip.IpServer;
+import android.net.tethering.TetheredClient;
+import android.net.tethering.TetheredClient.AddressInfo;
 import android.net.wifi.WifiClient;
 import android.os.SystemClock;
 

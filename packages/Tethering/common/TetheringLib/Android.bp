@@ -21,13 +21,13 @@ aidl_interface {
     srcs: [
         // @JavaOnlyStableParcelable aidl declarations must not be listed here, as this would cause
         // compilation to fail (b/148001843).
-        "src/android/net/IIntResultListener.aidl",
-        "src/android/net/ITetheringConnector.aidl",
-        "src/android/net/ITetheringEventCallback.aidl",
-        "src/android/net/TetheringCallbackStartedParcel.aidl",
-        "src/android/net/TetheringConfigurationParcel.aidl",
-        "src/android/net/TetheringRequestParcel.aidl",
-        "src/android/net/TetherStatesParcel.aidl",
+        "src/android/net/tethering/IIntResultListener.aidl",
+        "src/android/net/tethering/ITetheringConnector.aidl",
+        "src/android/net/tethering/ITetheringEventCallback.aidl",
+        "src/android/net/tethering/TetheringCallbackStartedParcel.aidl",
+        "src/android/net/tethering/TetheringConfigurationParcel.aidl",
+        "src/android/net/tethering/TetheringRequestParcel.aidl",
+        "src/android/net/tethering/TetherStatesParcel.aidl",
     ],
     backend: {
         ndk: {
@@ -43,9 +43,9 @@ java_library {
     name: "framework-tethering",
     sdk_version: "module_current",
     srcs: [
-        "src/android/net/TetheredClient.java",
-        "src/android/net/TetheringManager.java",
-        "src/android/net/TetheringConstants.java",
+        "src/android/net/tethering/TetheredClient.java",
+        "src/android/net/tethering/TetheringManager.java",
+        "src/android/net/tethering/TetheringConstants.java",
     ],
     static_libs: [
         "tethering-aidl-interfaces-java",
@@ -60,14 +60,15 @@ java_library {
     hostdex: true, // for hiddenapi check
     visibility: ["//frameworks/base/packages/Tethering:__subpackages__"],
     apex_available: ["com.android.tethering"],
+    permitted_packages: ["android.net.tethering"],
 }
 
 stubs_defaults {
     name: "framework-tethering-stubs-defaults",
     srcs: [
-        "src/android/net/TetheredClient.java",
-        "src/android/net/TetheringManager.java",
-        "src/android/net/TetheringConstants.java",
+        "src/android/net/tethering/TetheredClient.java",
+        "src/android/net/tethering/TetheringManager.java",
+        "src/android/net/tethering/TetheringConstants.java",
     ],
     libs: ["tethering-aidl-interfaces-java"],
 }
@@ -75,17 +76,17 @@ stubs_defaults {
 filegroup {
     name: "framework-tethering-srcs",
     srcs: [
-        "src/android/net/TetheredClient.aidl",
-        "src/android/net/TetheredClient.java",
-        "src/android/net/TetheringManager.java",
-        "src/android/net/TetheringConstants.java",
-        "src/android/net/IIntResultListener.aidl",
-        "src/android/net/ITetheringEventCallback.aidl",
-        "src/android/net/ITetheringConnector.aidl",
-        "src/android/net/TetheringCallbackStartedParcel.aidl",
-        "src/android/net/TetheringConfigurationParcel.aidl",
-        "src/android/net/TetheringRequestParcel.aidl",
-        "src/android/net/TetherStatesParcel.aidl",
+        "src/android/net/tethering/TetheredClient.aidl",
+        "src/android/net/tethering/TetheredClient.java",
+        "src/android/net/tethering/TetheringManager.java",
+        "src/android/net/tethering/TetheringConstants.java",
+        "src/android/net/tethering/IIntResultListener.aidl",
+        "src/android/net/tethering/ITetheringEventCallback.aidl",
+        "src/android/net/tethering/ITetheringConnector.aidl",
+        "src/android/net/tethering/TetheringCallbackStartedParcel.aidl",
+        "src/android/net/tethering/TetheringConfigurationParcel.aidl",
+        "src/android/net/tethering/TetheringRequestParcel.aidl",
+        "src/android/net/tethering/TetherStatesParcel.aidl",
     ],
     path: "src"
 }

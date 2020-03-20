@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tethering;
 
 /**
- * Status details for tethering downstream interfaces.
- * {@hide}
+ * Configuration details for tethering.
+ * @hide
  */
-parcelable TetherStatesParcel {
-    String[] availableList;
-    String[] tetheredList;
-    String[] localOnlyList;
-    String[] erroredIfaceList;
-    // List of Last error code corresponding to each errored iface in erroredIfaceList. */
-    // TODO: Improve this as b/143122247.
-    int[] lastErrorList;
+parcelable TetheringConfigurationParcel {
+    int subId;
+    String[] tetherableUsbRegexs;
+    String[] tetherableWifiRegexs;
+    String[] tetherableBluetoothRegexs;
+    boolean isDunRequired;
+    boolean chooseUpstreamAutomatically;
+    int[] preferredUpstreamIfaceTypes;
+    String[] legacyDhcpRanges;
+    String[] defaultIPv4DNS;
+    boolean enableLegacyDhcpServer;
+    String[] provisioningApp;
+    String provisioningAppNoUi;
+    int provisioningCheckPeriod;
 }

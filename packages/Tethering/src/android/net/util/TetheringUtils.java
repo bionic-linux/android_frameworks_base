@@ -15,7 +15,7 @@
  */
 package android.net.util;
 
-import android.net.TetheringRequestParcel;
+import android.net.tethering.TetheringRequestParcel;
 
 import java.io.FileDescriptor;
 import java.net.SocketException;

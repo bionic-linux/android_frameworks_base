@@ -14,24 +14,12 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tethering;
 
 /**
- * Configuration details for tethering.
- * @hide
+ * Listener interface allowing objects to listen to various module event.
+ * {@hide}
  */
-parcelable TetheringConfigurationParcel {
-    int subId;
-    String[] tetherableUsbRegexs;
-    String[] tetherableWifiRegexs;
-    String[] tetherableBluetoothRegexs;
-    boolean isDunRequired;
-    boolean chooseUpstreamAutomatically;
-    int[] preferredUpstreamIfaceTypes;
-    String[] legacyDhcpRanges;
-    String[] defaultIPv4DNS;
-    boolean enableLegacyDhcpServer;
-    String[] provisioningApp;
-    String provisioningAppNoUi;
-    int provisioningCheckPeriod;
+oneway interface IIntResultListener {
+    void onResult(int resultCode);
 }

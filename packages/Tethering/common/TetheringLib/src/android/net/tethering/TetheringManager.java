@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package android.net;
+package android.net.tethering;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
@@ -25,6 +25,9 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.content.Context;
+import android.net.IpPrefix;
+import android.net.LinkAddress;
+import android.net.Network;
 import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.IBinder;

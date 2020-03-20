@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2019 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-package android.net;
-
-import android.net.Network;
-import android.net.TetheredClient;
-import android.net.TetheringConfigurationParcel;
-import android.net.TetherStatesParcel;
+package android.net.tethering;
 
 /**
- * Initial information reported by tethering upon callback registration.
- * @hide
+ * Status details for tethering downstream interfaces.
+ * {@hide}
  */
-parcelable TetheringCallbackStartedParcel {
-    boolean tetheringSupported;
-    Network upstreamNetwork;
-    TetheringConfigurationParcel config;
-    TetherStatesParcel states;
-    List<TetheredClient> tetheredClients;
-    int offloadStatus;
+parcelable TetherStatesParcel {
+    String[] availableList;
+    String[] tetheredList;
+    String[] localOnlyList;
+    String[] erroredIfaceList;
+    // List of Last error code corresponding to each errored iface in erroredIfaceList. */
+    // TODO: Improve this as b/143122247.
+    int[] lastErrorList;
 }

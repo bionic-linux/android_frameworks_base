@@ -16,16 +16,16 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.TetheringConstants.EXTRA_ADD_TETHER_TYPE;
-import static android.net.TetheringConstants.EXTRA_PROVISION_CALLBACK;
-import static android.net.TetheringConstants.EXTRA_RUN_PROVISION;
-import static android.net.TetheringManager.TETHERING_BLUETOOTH;
-import static android.net.TetheringManager.TETHERING_INVALID;
-import static android.net.TetheringManager.TETHERING_USB;
-import static android.net.TetheringManager.TETHERING_WIFI;
-import static android.net.TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKNOWN;
-import static android.net.TetheringManager.TETHER_ERROR_NO_ERROR;
-import static android.net.TetheringManager.TETHER_ERROR_PROVISIONING_FAILED;
+import static android.net.tethering.TetheringConstants.EXTRA_ADD_TETHER_TYPE;
+import static android.net.tethering.TetheringConstants.EXTRA_PROVISION_CALLBACK;
+import static android.net.tethering.TetheringConstants.EXTRA_RUN_PROVISION;
+import static android.net.tethering.TetheringManager.TETHERING_BLUETOOTH;
+import static android.net.tethering.TetheringManager.TETHERING_INVALID;
+import static android.net.tethering.TetheringManager.TETHERING_USB;
+import static android.net.tethering.TetheringManager.TETHERING_WIFI;
+import static android.net.tethering.TetheringManager.TETHER_ERROR_ENTITLEMENT_UNKNOWN;
+import static android.net.tethering.TetheringManager.TETHER_ERROR_NO_ERROR;
+import static android.net.tethering.TetheringManager.TETHER_ERROR_PROVISIONING_FAILED;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

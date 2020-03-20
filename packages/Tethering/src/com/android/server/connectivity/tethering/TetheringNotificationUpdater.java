@@ -16,9 +16,9 @@
 
 package com.android.server.connectivity.tethering;
 
-import static android.net.TetheringManager.TETHERING_BLUETOOTH;
-import static android.net.TetheringManager.TETHERING_USB;
-import static android.net.TetheringManager.TETHERING_WIFI;
+import static android.net.tethering.TetheringManager.TETHERING_BLUETOOTH;
+import static android.net.tethering.TetheringManager.TETHERING_USB;
+import static android.net.tethering.TetheringManager.TETHERING_WIFI;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

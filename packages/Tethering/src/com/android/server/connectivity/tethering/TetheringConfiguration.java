@@ -25,7 +25,7 @@ import static android.provider.DeviceConfig.NAMESPACE_CONNECTIVITY;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.net.TetheringConfigurationParcel;
+import android.net.tethering.TetheringConfigurationParcel;
 import android.net.util.SharedLog;
 import android.provider.DeviceConfig;
 import android.telephony.SubscriptionManager;

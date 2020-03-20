@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package android.net;
+package android.net.tethering;
 
 import android.net.Network;
-import android.net.TetheredClient;
-import android.net.TetheringConfigurationParcel;
-import android.net.TetheringCallbackStartedParcel;
-import android.net.TetherStatesParcel;
+import android.net.tethering.TetheredClient;
+import android.net.tethering.TetheringConfigurationParcel;
+import android.net.tethering.TetheringCallbackStartedParcel;
+import android.net.tethering.TetherStatesParcel;
 
 /**
  * Callback class for receiving tethering changed events.
