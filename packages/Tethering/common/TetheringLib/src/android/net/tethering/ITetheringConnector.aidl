@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package android.net;
+package android.net.tether;
 
-import android.net.IIntResultListener;
-import android.net.ITetheringEventCallback;
-import android.net.TetheringRequestParcel;
+import android.net.tether.IIntResultListener;
+import android.net.tether.ITetheringEventCallback;
+import android.net.tether.TetheringRequestParcel;
 import android.os.ResultReceiver;
 
 /** @hide */
