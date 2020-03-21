@@ -78,6 +78,8 @@ public class HandlerThread extends Thread {
         if (!isAlive()) {
             return null;
         }
+
+        boolean wasInterrupted = false;
         
         // If the thread has been started, wait until the looper has been created.
         synchronized (this) {
@@ -85,9 +87,19 @@ public class HandlerThread extends Thread {
                 try {
                     wait();
                 } catch (InterruptedException e) {
+                    wasInterrupted = true;
                 }
             }
         }
+
+        /*
+         * We may need to restore the thread's interrupted flag, because it may
+         * have been cleared above since we eat InterruptedExceptions
+         */
+        if (wasInterrupted) {
+            Thread.currentThread().interrupt();
+        }
+
         return mLooper;
     }
 
