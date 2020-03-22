@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6490ba0c_e3c7dde4",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "Nit: maybe name it testNetworkSpecifier to test both setter and getter. It\u0027s covered both of them anyway.",
+      "range": {
+        "startLine": 643,
+        "startChar": 16,
+        "endLine": 643,
+        "endChar": 39
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc265324_334ee5ca",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "You\u0027re still using it? Even in Q, StringNetworkSpecifier is @hide. setNetworkSpecifier is exposed in R, I think it\u0027s not true to verify it before R. This whole test should probably verify in R only.",
+      "range": {
+        "startLine": 653,
+        "startChar": 57,
+        "endLine": 653,
+        "endChar": 79
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04010dbd_a30ddd80",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "Nit: Maybe testOwnerUid because this test may also need to cover setOwnerUid. Both of them could be covered in this test.",
+      "range": {
+        "startLine": 660,
+        "startChar": 16,
+        "endLine": 660,
+        "endChar": 31
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af19732_7e82d62e",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "optional: also test a not equal case?",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 20
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91535f4a_c0165916",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "Expect @IgnoreUpTo(Build.VERSION_CODES.Q)",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a146a17e_fc493702",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "Expect @IgnoreUpTo(Build.VERSION_CODES.Q)",
+      "range": {
+        "startLine": 680,
+        "startChar": 5,
+        "endLine": 680,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed297936_15f6c728",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "Do we need to also test it combining with ownerUid because we note that the owner UID MUST always be included in administratorUids. It look no logic to actually guarantee that. Probably we should verify it in the cts.",
+      "range": {
+        "startLine": 692,
+        "startChar": 20,
+        "endLine": 692,
+        "endChar": 37
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fa97fd_6a13efb0",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-22T12:17:52Z",
+      "side": 1,
+      "message": "This is not needed anymore. see b/151266974",
+      "range": {
+        "startLine": 698,
+        "startChar": 16,
+        "endLine": 698,
+        "endChar": 46
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
