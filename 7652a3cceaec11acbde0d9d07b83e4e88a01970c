@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b2a87a0_6c26f72d",
+        "filename": "core/java/android/os/HandlerThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1137915
+      },
+      "writtenOn": "2020-03-23T17:53:22Z",
+      "side": 1,
+      "message": "nit: trim any trailing whitespace",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "7652a3cceaec11acbde0d9d07b83e4e88a01970c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
