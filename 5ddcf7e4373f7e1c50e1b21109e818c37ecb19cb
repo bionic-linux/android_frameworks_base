@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "95488ae5_715eafe0",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-03-23T10:35:50Z",
+      "side": 1,
+      "message": "getLinkDownstreamBandwidthKbps() and getLinkUpstreamBandwidthKbps() are public before R. I can understand these two existed before. But setLinkUpstreamBandwidthKbps and setLinkDownstreamBandwidthKbps are exposed in R. Could we also use cts to restrict OEM to update the functionality in Q? I thought we do not actually restrict the functionality for those @hide functions? \nE.g. OEM could update setLinkDownstreamBandwidthKbps(value) { mLinkDownBandwidthKbps \u003d value+ 1;) in Q. Even though it\u0027s unlikely to happen.\n\nOr we do not need to consider in this way? i.e. OEMs is also not able to update @hide methods?",
+      "parentUuid": "1844e1e5_497d7023",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a146a17e_fc493702",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
