@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "77d4f157_3b56dba6",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T11:40:06Z",
+      "side": 1,
+      "message": "It is not extremely well specified. CTS exist to enforce compatibility. There is no real story of compatibility for methods that are not public, and anything that is used by apps or modules must behave the same – that is why we are having all these CTS for the API we are adding for module use.\nIn practice CTS is the only way we can really enforce these, and some of these APIs are really hard to test. In the same way that we have API that are not tested though they should be, we have also API like this that are tested although they are not part of the surface. Really OEM should be able to change the behavior (or signature) of this as long as it has no visible effect on public API, but in practice, it\u0027s ① very hard for them to do this, considering all the code relying on this specific behavior ② a maintenance liability for them and a headache for us when we try to help with debugging.\n\nTherefore, I see where you are coming from in principle, I just think in this case the test provides more value in consistency and debugging help than it takes from removing freedom. I would not necessarily think the same for everything though, and I would agree with you for some less clear, setter/getter interface.",
+      "parentUuid": "95488ae5_715eafe0",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a146a17e_fc493702",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
