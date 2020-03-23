@@ -740,13 +740,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         }
     }
 
-    public int updateBleAppCount(IBinder token, boolean enable, String packageName) {
-        // Check if packageName belongs to callingUid
-        final int callingUid = Binder.getCallingUid();
-        final boolean isCallerSystem = UserHandle.getAppId(callingUid) == Process.SYSTEM_UID;
-        if (!isCallerSystem) {
-            checkPackage(callingUid, packageName);
-        }
+    private int updateBleAppCount(IBinder token, boolean enable, String packageName) {
         ClientDeathRecipient r = mBleApps.get(token);
         if (r == null && enable) {
             ClientDeathRecipient deathRec = new ClientDeathRecipient(packageName);
@@ -771,13 +765,89 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
         if (DBG) {
             Slog.d(TAG, appCount + " registered Ble Apps");
         }
-        if (appCount == 0 && mEnable) {
-            disableBleScanMode();
-        }
-        if (appCount == 0 && !mEnableExternal) {
-            sendBrEdrDownCallback();
-        }
         return appCount;
+    }
+
+    public boolean enableBle(String packageName, IBinder token) throws RemoteException {
+        if (isBluetoothDisallowed()) {
+            if (DBG) {
+                Slog.d(TAG, "enableBle(): not enabling - bluetooth disallowed");
+            }
+            return false;
+        }
+        // Check if packageName belongs to callingUid
+        final int callingUid = Binder.getCallingUid();
+        final boolean isCallerSystem = UserHandle.getAppId(callingUid) == Process.SYSTEM_UID;
+        if (!isCallerSystem) {
+            checkPackage(callingUid, packageName);
+        }
+        mContext.enforceCallingOrSelfPermission(BLUETOOTH_ADMIN_PERM,
+                "Need BLUETOOTH ADMIN permission");
+
+        if (DBG) {
+            Slog.d(TAG, "enableBle(" + packageName + "):  mBluetooth =" + mBluetooth
+                    + " mBinding = " + mBinding + " mState = "
+                    + BluetoothAdapter.nameForState(mState));
+        }
+        updateBleAppCount(token, true, packageName);
+
+        if (mState == BluetoothAdapter.STATE_ON
+                || mState == BluetoothAdapter.STATE_BLE_ON
+                || mState == BluetoothAdapter.STATE_TURNING_ON
+                || mState == BluetoothAdapter.STATE_TURNING_OFF) {
+            Log.d(TAG, "enableBLE(): Bluetooth already enabled");
+            return true;
+        }
+        synchronized (mReceiver) {
+            // waive WRITE_SECURE_SETTINGS permission check
+            sendEnableMsg(false,
+                    BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST, packageName);
+        }
+        return true;
+    }
+
+    public boolean disableBle(String packageName, IBinder token) throws RemoteException {
+        if (mState != BluetoothAdapter.STATE_ON && mState != BluetoothAdapter.STATE_BLE_ON) {
+            Slog.d(TAG, "disableBLE(): Already disabled");
+            return false;
+        }
+        if (isBluetoothDisallowed()) {
+            if (DBG) {
+                Slog.d(TAG, "disableBle(): not disabling - bluetooth disallowed");
+            }
+            return false;
+        }
+        // Check if packageName belongs to callingUid
+        final int callingUid = Binder.getCallingUid();
+        final boolean isCallerSystem = UserHandle.getAppId(callingUid) == Process.SYSTEM_UID;
+        if (!isCallerSystem) {
+            checkPackage(callingUid, packageName);
+        }
+        mContext.enforceCallingOrSelfPermission(BLUETOOTH_ADMIN_PERM,
+                "Need BLUETOOTH ADMIN permission");
+
+        if (DBG) {
+            Slog.d(TAG, "disableBle(" + packageName + "):  mBluetooth =" + mBluetooth
+                    + " mBinding = " + mBinding + " mState = "
+                    + BluetoothAdapter.nameForState(mState));
+        }
+        updateBleAppCount(token, false, packageName);
+
+        if (mState != BluetoothAdapter.STATE_ON && mState != BluetoothAdapter.STATE_BLE_ON) {
+            Slog.d(TAG, "disableBLE(): Already disabled");
+            return false;
+        }
+        if (!isBleAppPresent()) {
+            if (mEnable) {
+                disableBleScanMode();
+            }
+            if (!mEnableExternal) {
+                addActiveLog(BluetoothProtoEnums.ENABLE_DISABLE_REASON_APPLICATION_REQUEST,
+                        packageName, false);
+                sendBrEdrDownCallback();
+            }
+        }
+        return true;
     }
 
     // Clear all apps using BLE scan only mode.
