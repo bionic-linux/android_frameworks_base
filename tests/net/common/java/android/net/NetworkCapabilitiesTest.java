@@ -55,6 +55,8 @@ import android.util.ArraySet;
 import androidx.core.os.BuildCompat;
 import androidx.test.runner.AndroidJUnit4;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -66,11 +68,21 @@ public class NetworkCapabilitiesTest {
     private static final String TEST_SSID = "TEST_SSID";
     private static final String DIFFERENT_TEST_SSID = "DIFFERENT_TEST_SSID";
 
-    private boolean isAtLeastR() {
+    private static boolean isAtLeastR() {
         // BuildCompat.isAtLeastR() is used to check the Android version before releasing Android R.
         // Build.VERSION.SDK_INT > Build.VERSION_CODES.Q is used to check the Android version after
         // releasing Android R.
         return BuildCompat.isAtLeastR() || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q;
+    }
+
+    private static String getSsid(NetworkCapabilities nc) {
+        if (isAtLeastR()) return nc.getSsid();
+        try {
+            // getSSID was changed to getSsid in R
+            return (String) NetworkCapabilities.class.getDeclaredMethod("getSSID").invoke(nc);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionFailedError("Cannot call getSSID: " + e);
+        }
     }
 
     @Test
@@ -463,7 +475,7 @@ public class NetworkCapabilitiesTest {
 
         nc1.setSSID(TEST_SSID);
         nc2.combineCapabilities(nc1);
-        assertTrue(TEST_SSID.equals(nc2.getSsid()));
+        assertTrue(TEST_SSID.equals(getSsid(nc2)));
 
         // Because they now have the same SSID, the following call should not throw
         nc2.combineCapabilities(nc1);
@@ -601,12 +613,12 @@ public class NetworkCapabilitiesTest {
         // from nc2.
         assertFalse(nc2.hasCapability(NET_CAPABILITY_NOT_ROAMING));
         assertTrue(nc2.hasUnwantedCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(TEST_SSID.equals(nc2.getSsid()));
+        assertTrue(TEST_SSID.equals(getSsid(nc2)));
 
         nc1.setSSID(DIFFERENT_TEST_SSID);
         nc2.set(nc1);
         assertEquals(nc1, nc2);
-        assertTrue(DIFFERENT_TEST_SSID.equals(nc2.getSsid()));
+        assertTrue(DIFFERENT_TEST_SSID.equals(getSsid(nc2)));
 
         nc1.setUids(uidRange(10, 13));
         nc2.set(nc1);  // Overwrites, as opposed to combineCapabilities
