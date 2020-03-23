@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e103d644_34120c65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-23T14:47:37Z",
+      "side": 1,
+      "message": "Not only that, it likely breaks production code as well. Specifically, IPv6 networks where there is more than one default router might be impacted.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b6788d_3d80a89c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-23T14:47:37Z",
+      "side": 1,
+      "message": "There\u0027s lots of other coverage of this in LinkPropertiesUtilsTest (for example, does this fix b/151911339 and make aosp/1261589 unnecessary?) and ConnectivityServiceTest.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 70
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccad4b3_40eb6a1d",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-23T14:47:37Z",
+      "side": 1,
+      "message": "Nit: I wonder if LinkProperties is a better place for this? You could argue that this class has more to do with the semantics of LinkProperties than the semantics of routes. But you could argue the other way as well. No need to fix in this CL.",
+      "range": {
+        "startLine": 532,
+        "startChar": 0,
+        "endLine": 533,
+        "endChar": 75
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f02e52_ed9b8b71",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-23T14:47:37Z",
+      "side": 1,
+      "message": "static class",
+      "range": {
+        "startLine": 537,
+        "startChar": 11,
+        "endLine": 537,
+        "endChar": 16
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
