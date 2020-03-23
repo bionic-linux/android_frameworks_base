@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7b7495fd_a6068422",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "Alternatively you can use WifiAwareNetworkSpecifier, which was added in Q. I like that we do have a bit of coverage of TelephonyNetworkSpecifier though, so we could test both in R and only WifiAware in Q.",
+      "parentUuid": "bc265324_334ee5ca",
+      "range": {
+        "startLine": 653,
+        "startChar": 57,
+        "endLine": 653,
+        "endChar": 79
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04010dbd_a30ddd80",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "caa4f588_bb6e335f",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "8af19732_7e82d62e",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 20
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91535f4a_c0165916",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
@@ -114,6 +162,30 @@
       "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1844e1e5_497d7023",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "No, this existed before. There is nothing wrong with enforcing this on Q devices.",
+      "parentUuid": "91535f4a_c0165916",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "391b6c4f_53cea708",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "Likewise",
+      "parentUuid": "a146a17e_fc493702",
+      "range": {
+        "startLine": 680,
+        "startChar": 5,
+        "endLine": 680,
+        "endChar": 9
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed297936_15f6c728",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
@@ -151,6 +247,30 @@
       "writtenOn": "2020-03-22T12:17:52Z",
       "side": 1,
       "message": "Do we need to also test it combining with ownerUid because we note that the owner UID MUST always be included in administratorUids. It look no logic to actually guarantee that. Probably we should verify it in the cts.",
+      "range": {
+        "startLine": 692,
+        "startChar": 20,
+        "endLine": 692,
+        "endChar": 37
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f88bef4_9fa5d99a",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "Sure, but you do have a problem of egg and chicken there. We have no enforcement of this in the code just in NC, and it can\u0027t be written in a cogent way (all ways of enforcing it are problematic and error-prone).\n\nHowever, now that NC has a builder, the builder actually enforces this : https://source.corp.google.com/android/frameworks/base/core/java/android/net/NetworkCapabilities.java;l\u003d2287 . We can write a test to make sure the builder indeed enforces this.",
+      "parentUuid": "ed297936_15f6c728",
       "range": {
         "startLine": 692,
         "startChar": 20,
@@ -183,6 +303,30 @@
       "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62abb25f_c5341c08",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-23T10:02:48Z",
+      "side": 1,
+      "message": "Maybe but there is nothing wrong in testing it. I prefer we keep the test.\n\nAlso don\u0027t forget this is also our unit tests.",
+      "parentUuid": "24fa97fd_6a13efb0",
+      "range": {
+        "startLine": 698,
+        "startChar": 16,
+        "endLine": 698,
+        "endChar": 46
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
