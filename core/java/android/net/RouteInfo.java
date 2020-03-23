@@ -514,36 +514,30 @@ public final class RouteInfo implements Parcelable {
      * @return {@code true} if the objects are equal, {@code false} otherwise.
      */
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-
-        if (!(obj instanceof RouteInfo)) return false;
-
-        RouteInfo target = (RouteInfo) obj;
-
-        return Objects.equals(mDestination, target.getDestination()) &&
-                Objects.equals(mGateway, target.getGateway()) &&
-                Objects.equals(mInterface, target.getInterface()) &&
-                mType == target.getType() && mMtu == target.getMtu();
+        return equals(obj, true /* compareMtu */);
     }
 
     /**
-     * Compares this RouteInfo object against the specified object and indicates if the
-     * destinations of both routes are equal.
-     * @return {@code true} if the route destinations are equal, {@code false} otherwise.
+     * Compares this RouteInfo object against the specified object and indicates if they are equal.
+     * @return {@code true} if the objects are equal, {@code false} otherwise.
+     *
+     * @param obj the RouteInfo to comapre with.
+     * @param compareMtu whether the mtu is compared. @see LinkProperties#addRoute.
      *
      * @hide
      */
-    public boolean isSameDestinationAs(@Nullable Object obj) {
+    public boolean equals(@Nullable Object obj, boolean compareMtu) {
         if (this == obj) return true;
 
         if (!(obj instanceof RouteInfo)) return false;
 
         RouteInfo target = (RouteInfo) obj;
 
-        if (Objects.equals(mDestination, target.getDestination())) {
-            return true;
-        }
-        return false;
+        return Objects.equals(mDestination, target.getDestination())
+                && Objects.equals(mGateway, target.getGateway())
+                && Objects.equals(mInterface, target.getInterface())
+                && mType == target.getType()
+                && (!compareMtu || mMtu == target.getMtu());
     }
 
     /**
