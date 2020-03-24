@@ -431,9 +431,7 @@ public class Tethering {
         // Called by wifi when the number of soft AP clients changed.
         @Override
         public void onConnectedClientsChanged(final List<WifiClient> clients) {
-            if (mConnectedClientsTracker.updateConnectedClients(mForwardedDownstreams, clients)) {
-                reportTetherClientsChanged(mConnectedClientsTracker.getLastTetheredClients());
-            }
+            updateConnectedClients(clients);
         }
     }
 
@@ -1534,6 +1532,7 @@ public class Tethering {
             } else {
                 mOffload.excludeDownstreamInterface(who.interfaceName());
                 mForwardedDownstreams.remove(who);
+                updateConnectedClients(null /* wifiClients */);
             }
 
             // If this is a Wi-Fi interface, notify WifiManager of the active serving state.
@@ -1559,6 +1558,7 @@ public class Tethering {
             mIPv6TetheringCoordinator.removeActiveDownstream(who);
             mOffload.excludeDownstreamInterface(who.interfaceName());
             mForwardedDownstreams.remove(who);
+            updateConnectedClients(null /* wifiClients */);
 
             // If this is a Wi-Fi interface, tell WifiManager of any errors
             // or the inactive serving state.
@@ -2141,6 +2141,12 @@ public class Tethering {
         return false;
     }
 
+    private void updateConnectedClients(final List<WifiClient> wifiClients) {
+        if (mConnectedClientsTracker.updateConnectedClients(mForwardedDownstreams, wifiClients)) {
+            reportTetherClientsChanged(mConnectedClientsTracker.getLastTetheredClients());
+        }
+    }
+
     private IpServer.Callback makeControlCallback() {
         return new IpServer.Callback() {
             @Override
@@ -2155,10 +2161,7 @@ public class Tethering {
 
             @Override
             public void dhcpLeasesChanged() {
-                if (mConnectedClientsTracker.updateConnectedClients(
-                        mForwardedDownstreams, null /* wifiClients */)) {
-                    reportTetherClientsChanged(mConnectedClientsTracker.getLastTetheredClients());
-                }
+                updateConnectedClients(null /* wifiClients */);
             }
         };
     }
