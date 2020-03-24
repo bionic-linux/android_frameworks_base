@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3a363320_9eda11d0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-24T10:32:32Z",
+      "side": 1,
+      "message": "The reasoning here is similar to the other comment: someone in the same process could register a network with TRANSPORT_TEST and then mutate the original object.",
+      "parentUuid": "de6925e0_efdd6299",
+      "range": {
+        "startLine": 2716,
+        "startChar": 44,
+        "endLine": 2716,
+        "endChar": 77
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95ebf1e7_4b210e69",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done, though I think anyone sending a test network agent with some of the restricted caps had it coming when it\u0027s reset for them 😊\nBut sure, it would be unexpected. Done.",
       "parentUuid": "95ebf1e7_4b210e69",
+      "range": {
+        "startLine": 5816,
+        "startChar": 32,
+        "endLine": 5816,
+        "endChar": 65
+      },
+      "revId": "f46d89fbf41f2d7a2da8ad8ec16edfdfc5cfecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfa16b08_e32b6b73",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5816,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-24T10:32:32Z",
+      "side": 1,
+      "message": "The concern was actually:\n\n1. Attacker calls registerNetworkAgent with TRANSPORT_TEST.\n2. As soon as line 5788 executes, attacker mutates NetworkCapabilities (not copied) to remove TRANSPORT_TEST and set arbitrary capabilities.\n3. NetworkAgent is created with capabilities in #2 instead of with TRANSPORT_TEST.\n4. From now on, this network is a real network even though it was registered as a test network.",
+      "parentUuid": "88079bbf_b881a870",
       "range": {
         "startLine": 5816,
         "startChar": 32,
