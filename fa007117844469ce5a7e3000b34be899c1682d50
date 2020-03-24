@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c3508fe_d7d8ecac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-24T02:40:30Z",
+      "side": 1,
+      "message": "Revised, see if it works for you.",
+      "parentUuid": "e103d644_34120c65",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28b6788d_3d80a89c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30202b67_ffc88013",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-24T02:40:30Z",
+      "side": 1,
+      "message": "Revised, yes they are all passed.\narm64-v8a FrameworksNetTests: Passed: 733, Failed: 0, Ignored: 4, Assumption Failed: 3 \narm64-v8a NetworkStaticLibTests: Passed: 23, Failed: 0, Ignored: 0, Assumption Failed: 0 \narm64-v8a TetheringTests: Passed: 146, Failed: 0, Ignored: 0, Assumption Failed: 0\n\nTried to list related tests for future reference.\nSee if this works for you.\nAlternatively I could write\nTest: atest FrameworksNetTests NetworkStaticLibTests TetheringTests\nwhich will have maximum coverage but might not be very useful in future.\n\nReopen this if latest patchset does not work for you.",
+      "parentUuid": "28b6788d_3d80a89c",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 70
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc26b9ec_5b08b173",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-24T02:40:30Z",
+      "side": 1,
+      "message": "Prefer to keep it here since \n  1. when it is called by ConnectivtyService#updateRoutes,\n    it has nothing to do with LinkProperties or LinkPropertiesUtils.\n  2. a RouteKey is subject to a RouteInfo\nLet\u0027s move it to LinkProperties in follow-up patch if you still feel strongly.\n\nComments updated here.",
+      "parentUuid": "cccad4b3_40eb6a1d",
+      "range": {
+        "startLine": 532,
+        "startChar": 0,
+        "endLine": 533,
+        "endChar": 75
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f02e52_ed9b8b71",
         "filename": "core/java/android/net/RouteInfo.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999e8231_cfef8f69",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-24T02:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f02e52_ed9b8b71",
+      "range": {
+        "startLine": 537,
+        "startChar": 11,
+        "endLine": 537,
+        "endChar": 16
+      },
+      "revId": "fa007117844469ce5a7e3000b34be899c1682d50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
