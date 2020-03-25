@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "18ada70c_2bad99db",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "I prefer to use the same naming with BluetoothAdapter. Both of them use either enableBLE or enableBle.",
+      "range": {
+        "startLine": 771,
+        "startChar": 19,
+        "endLine": 771,
+        "endChar": 28
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f455efb_d5d93391",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -18,6 +41,121 @@
         "startChar": 0,
         "endLine": 785,
         "endChar": 51
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0456cb9e_b775f2ef",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "I suppose this API would be LE ON state at least, but how is it going if we are under STATE_BLE_TURNING_ON state? I think we can check OFF and BLE_TURNING_OFF.\n\nif (mState !\u003d STATE_OFF \u0026\u0026 mState !\u003d BLE_TURNING_OFF) {\n    // LE enabled already\n    return true;\n}",
+      "range": {
+        "startLine": 794,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 0
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c14db2e_ce520e9e",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "There is *disableBLE* in BluetoothAdapter.",
+      "range": {
+        "startLine": 809,
+        "startChar": 19,
+        "endLine": 809,
+        "endChar": 29
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100c9015_0d846bbe",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "Would it be OFF if we are under STATE_TURNING_OFF?",
+      "range": {
+        "startLine": 810,
+        "startChar": 0,
+        "endLine": 810,
+        "endChar": 93
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73a9cf9_2f7ad308",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "Should we have the same result with LE enabled case by enableBLE? Both of them return true if the state is no changed.",
+      "range": {
+        "startLine": 812,
+        "startChar": 0,
+        "endLine": 812,
+        "endChar": 25
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed67fde3_9b782d87",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1318371
+      },
+      "writtenOn": "2020-03-25T08:03:42Z",
+      "side": 1,
+      "message": "duplicated???",
+      "range": {
+        "startLine": 836,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 0
       },
       "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
