@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58f2f497_c50270f9",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "According to Google Java Code Guide, we should use lower-camel-case on Java methods.\nhttps://google.github.io/styleguide/javaguide.html#s5.2.3-method-names\n\nUnfortunately the one in the BluetoothAdapter is a system API so it would take more effort if we want to change it.",
+      "parentUuid": "18ada70c_2bad99db",
+      "range": {
+        "startLine": 771,
+        "startChar": 19,
+        "endLine": 771,
+        "endChar": 28
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f455efb_d5d93391",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b041c46_fe11fedf",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f455efb_d5d93391",
+      "range": {
+        "startLine": 772,
+        "startChar": 0,
+        "endLine": 785,
+        "endChar": 51
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e072262f_1dd35dfa",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0456cb9e_b775f2ef",
+      "range": {
+        "startLine": 794,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 0
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c14db2e_ce520e9e",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cc9dd63d_3caaeebf",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c14db2e_ce520e9e",
+      "range": {
+        "startLine": 809,
+        "startChar": 19,
+        "endLine": 809,
+        "endChar": 29
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "100c9015_0d846bbe",
         "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-25T08:03:42Z",
       "side": 1,
       "message": "Would it be OFF if we are under STATE_TURNING_OFF?",
+      "range": {
+        "startLine": 810,
+        "startChar": 0,
+        "endLine": 810,
+        "endChar": 93
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27468aab_86dafd74",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! The logic here is migrated from the BluetoothAdapter. It doesn\u0027t make sense on the second look\r.\nI think the logic should be changed to:\n1. Always allow to updateAppCount if we are not at STATE_OFF (return false here).\n2. Disable Bluetooth service only if we are at STATE_BLE_ON. The regular ON/OFF process should take care of the rest of the scenario if we update mBleApps correctly.\n\nThis will prevent a race condition that disableBle() is called right after disable(), there would be a  small period that mState is STATE_ON and mEnableExternal is false.",
+      "parentUuid": "100c9015_0d846bbe",
       "range": {
         "startLine": 810,
         "startChar": 0,
@@ -137,6 +257,30 @@
       "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e18d40_b48e8d1e",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-03-25T09:42:56Z",
+      "side": 1,
+      "message": "I am trying to avoid changing the behavior of BluetoothAdapter.disableBLE in case we see any surprise here.",
+      "parentUuid": "a73a9cf9_2f7ad308",
+      "range": {
+        "startLine": 812,
+        "startChar": 0,
+        "endLine": 812,
+        "endChar": 25
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
