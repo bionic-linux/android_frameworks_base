@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f455efb_d5d93391",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2020-03-25T04:22:16Z",
+      "side": 1,
+      "message": "Should we factor this out?  It looks very similar to the code below, and I expect there are many other similar checks.",
+      "range": {
+        "startLine": 772,
+        "startChar": 0,
+        "endLine": 785,
+        "endChar": 51
+      },
+      "revId": "9bc2b530f6feb42fb2c57d6f5cfaacaccdf7560e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
