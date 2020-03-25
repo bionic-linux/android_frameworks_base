@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1c66b3e5_df85b068",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-25T09:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb266f0_0610878e",
+      "range": {
+        "startLine": 419,
+        "startChar": 30,
+        "endLine": 419,
+        "endChar": 67
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a03ba46_9897d5bb",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 2
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "88d6f89d_d2662258",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-25T09:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322c11ff_d781bd16",
+      "range": {
+        "startLine": 674,
+        "startChar": 24,
+        "endLine": 674,
+        "endChar": 45
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c102fc_36c6c5bf",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -140,6 +188,30 @@
       "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd812aa_152dbc75",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-25T09:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce5bd02_6ac9c502",
+      "range": {
+        "startLine": 5810,
+        "startChar": 12,
+        "endLine": 5810,
+        "endChar": 68
+      },
+      "revId": "cc02e14597398640011e1f3d669efa1d211dac47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
