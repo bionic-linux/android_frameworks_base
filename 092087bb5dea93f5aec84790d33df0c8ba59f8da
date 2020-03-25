@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a75f21_57efbbf8",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-25T12:48:29Z",
+      "side": 1,
+      "message": "mTM.startTethering(new TetheringRequest.Builder(TETHERING_ETHERNET).build(), mHandler::post /* executor */, startTetheringCallback);",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 279,
+        "endChar": 40
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ea012a_0695fa01",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-25T12:48:29Z",
+      "side": 1,
+      "message": "mTetheredInterfaceRequest \u003d mEm.requestTetheredInterface(mHandler::post, callback); ?",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 63
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3065e3e_a47db63a",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-25T12:48:29Z",
+      "side": 1,
+      "message": "nits: function name is getXXX but no return value. And mTetheredInterfaceRequestLatch seems belong to TetheredInterfaceCallback. Giving that this just the test, it is fine to keep your original change. Or change as below:\n\n    class TestTetheredInterfaceCallback extends TetheredInterfaceCallback {\n        private volatile CountDownLatch mTetheredInterfaceRequestLatch \u003d new CountDownLatch(1);\n        String mIface \u003d null;\n        @Override\n        public void onAvailable(String iface) {\n            if (mTetheredInterfaceRequestLatch \u003d\u003d null) return;\n\n            Log.d(TAG, \"Ethernet interface available: \" + iface);\n            mIface \u003d iface;\n            mTetheredInterfaceRequestLatch.countDown();\n        }\n        @Override\n        public void onUnavailable() {\n            mIface \u003d null;\n        }\n\n        private String getTetheredInterface() throws Exception {\n            assertTrue(\"No tethered interface available after \" + TIMEOUT_MS + \"ms\",\n            mTetheredInterfaceRequestLatch.await(TIMEOUT_MS, TimeUnit.MILLISECONDS));\n            assertEquals(\"TetheredInterfaceCallback for unexpected interface\", mIface.getName(), mIface);\n            return mIface;\n        }\n    };\n\nThen, we can just new TestTetheredInterfaceCallback and can call TestTetheredInterfaceCallback#getTetheredInterface() to know whether ethernet can be tethered successful.",
+      "range": {
+        "startLine": 366,
+        "startChar": 12,
+        "endLine": 366,
+        "endChar": 16
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0017c3ea_1c9422ce",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-25T12:48:29Z",
+      "side": 1,
+      "message": "Just for curious, there is always a link-local with EUI-64 interface ID ? For random interface ID case, does this logic still work ?",
+      "range": {
+        "startLine": 403,
+        "startChar": 12,
+        "endLine": 409,
+        "endChar": 36
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
