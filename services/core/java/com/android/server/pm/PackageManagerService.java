@@ -480,6 +480,7 @@ public class PackageManagerService extends IPackageManager.Stub
     static final int SCAN_AS_PRODUCT = 1 << 21;
     static final int SCAN_AS_SYSTEM_EXT = 1 << 22;
     static final int SCAN_AS_ODM = 1 << 23;
+    static final int SCAN_AS_GMS = 1 << 24;
 
     @IntDef(flag = true, prefix = { "SCAN_" }, value = {
             SCAN_NO_DEX,
@@ -768,6 +769,8 @@ public class PackageManagerService extends IPackageManager.Stub
                     new SystemPartition(Environment.getProductDirectory(), SCAN_AS_PRODUCT,
                             true /* hasOverlays */),
                     new SystemPartition(Environment.getSystemExtDirectory(), SCAN_AS_SYSTEM_EXT,
+                            true /* hasOverlays */),
+                    new SystemPartition(Environment.getGmsDirectory(), SCAN_AS_GMS,
                             true /* hasOverlays */)));
 
     private final List<SystemPartition> mDirsToScanAsSystem;
@@ -2461,7 +2464,7 @@ public class PackageManagerService extends IPackageManager.Stub
                 return true;
             }
             if ((scanFlags
-                    & (SCAN_AS_VENDOR | SCAN_AS_ODM | SCAN_AS_PRODUCT | SCAN_AS_SYSTEM_EXT)) != 0) {
+                    & (SCAN_AS_VENDOR | SCAN_AS_ODM | SCAN_AS_PRODUCT | SCAN_AS_SYSTEM_EXT | SCAN_AS_GMS)) != 0) {
                 return true;
             }
             return false;
@@ -2740,7 +2743,7 @@ public class PackageManagerService extends IPackageManager.Stub
                 scanFlags = scanFlags | SCAN_FIRST_BOOT_OR_UPGRADE;
             }
 
-            // Collect vendor/product/system_ext overlay packages. (Do this before scanning
+            // Collect vendor/product/system_ext/gms overlay packages. (Do this before scanning
             // any apps.)
             // For security and version matching reason, only consider overlay packages if they
             // reside in the right directory.
@@ -10765,6 +10768,7 @@ public class PackageManagerService extends IPackageManager.Stub
      * <li>{@link #SCAN_AS_INSTANT_APP}</li>
      * <li>{@link #SCAN_AS_VIRTUAL_PRELOAD}</li>
      * <li>{@link #SCAN_AS_ODM}</li>
+     * <li>{@link #SCAN_AS_GMS}</li>
      * </ul>
      */
     private @ScanFlags int adjustScanFlags(@ScanFlags int scanFlags,
@@ -10804,6 +10808,10 @@ public class PackageManagerService extends IPackageManager.Stub
             if ((systemPkgSetting.pkgPrivateFlags
                     & ApplicationInfo.PRIVATE_FLAG_ODM) != 0) {
                 scanFlags |= SCAN_AS_ODM;
+            }
+            if ((systemPkgSetting.pkgPrivateFlags
+                    & ApplicationInfo.PRIVATE_FLAG_GMS) != 0) {
+                scanFlags |= SCAN_AS_GMS;
             }
         }
         if (pkgSetting != null) {
@@ -11650,6 +11658,10 @@ public class PackageManagerService extends IPackageManager.Stub
 
         if ((scanFlags & SCAN_AS_ODM) != 0) {
             pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_ODM;
+        }
+
+        if ((scanFlags & SCAN_AS_GMS) != 0) {
+            pkg.applicationInfo.privateFlags |= ApplicationInfo.PRIVATE_FLAG_GMS;
         }
 
         // Check if the package is signed with the same key as the platform package.
@@ -17672,6 +17684,10 @@ public class PackageManagerService extends IPackageManager.Stub
 
     private static boolean isOdmApp(PackageParser.Package pkg) {
         return (pkg.applicationInfo.privateFlags & ApplicationInfo.PRIVATE_FLAG_ODM) != 0;
+    }
+
+    private static boolean isGmsApp(PackageParser.Package pkg) {
+        return (pkg.applicationInfo.privateFlags & ApplicationInfo.PRIVATE_FLAG_GMS) != 0;
     }
 
     private static boolean hasDomainURLs(PackageParser.Package pkg) {

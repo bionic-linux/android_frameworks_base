@@ -695,6 +695,13 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public static final int PRIVATE_FLAG_ODM = 1 << 30;
 
+    /**
+     * Value for {@link #privateFlags}: whether this app is pre-installed on the
+     * gms partition of the system image.
+     * @hide
+     */
+    public static final int PRIVATE_FLAG_GMS = 1 << 31;
+
     /** @hide */
     @IntDef(flag = true, prefix = { "PRIVATE_FLAG_" }, value = {
             PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE,
@@ -726,6 +733,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             PRIVATE_FLAG_ALLOW_AUDIO_PLAYBACK_CAPTURE,
             PRIVATE_FLAG_REQUEST_LEGACY_EXTERNAL_STORAGE,
             PRIVATE_FLAG_ODM,
+            PRIVATE_FLAG_GMS,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ApplicationInfoPrivateFlags {}
@@ -2000,6 +2008,12 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     public boolean isOdm() {
         return (privateFlags & ApplicationInfo.PRIVATE_FLAG_ODM) != 0;
     }
+
+    /** @hide */
+    public boolean isGms() {
+        return (privateFlags & ApplicationInfo.PRIVATE_FLAG_GMS) != 0;
+    }
+
 
     /** @hide */
     public boolean isPartiallyDirectBootAware() {
