@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2791b8d_3a1fd850",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Maybe. But what should that do if a physical interface is already in server mode? Disconnect it and reassign?\n\nI at least added test coverage to devices that do have an ethernet interface. We can\u0027t check the tethered client callbacks, but at least we can check that tethering works.",
+      "parentUuid": "b50b1629_f804d470",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc4b59ce_0e5568a5",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccc32ec_37a76812",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "It needs MANAGE_TEST_NETWORKS as well. Done.",
+      "parentUuid": "cc4b59ce_0e5568a5",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 50
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "beab13d2_eea5b767",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26c6875_1397d48a",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 49
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f6fbb9a_d25cf698",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4a9dc061_eeca3c55",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Moved as much state as I could to local variables instead of class members. The only things that are class members should now be things that we need to free or release on teardown.",
+      "parentUuid": "0f6fbb9a_d25cf698",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8ee5bc_2856abb5",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-26T08:07:02Z",
       "side": 1,
       "message": "Does the \"if (clients.size() \u003e 0)\" need to apply to this too ? It would make sense to update the list when it goes back to 0 clients as well (or from null to empty)",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 35
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32980434_d77d969d",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done, although it\u0027s not very useful, since there\u0027s no race-free way to know when this has happened.",
+      "parentUuid": "ad8ee5bc_2856abb5",
       "range": {
         "startLine": 243,
         "startChar": 16,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4f3e4b05_ae209c47",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6788323_956abc08",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 14
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b430410_3798d0ea",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -160,6 +304,30 @@
       "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e030533_16044b21",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Yes, this is left over from a previous patchset. Removed.",
+      "parentUuid": "5b430410_3798d0ea",
+      "range": {
+        "startLine": 261,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 24
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "6c6cefb0_76289e4f",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71939fba_d0d0d660",
+      "range": {
+        "startLine": 263,
+        "startChar": 8,
+        "endLine": 263,
+        "endChar": 21
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43d6091_b585d423",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -206,6 +398,30 @@
       "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8e7c92_51d10a7b",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43d6091_b585d423",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 94
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "91688db4_84332009",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1baa2b74_6cfd261d",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 84
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b820e5_c752fda5",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -252,6 +492,30 @@
       "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244ae2c1_825088cd",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b820e5_c752fda5",
+      "range": {
+        "startLine": 305,
+        "startChar": 38,
+        "endLine": 305,
+        "endChar": 79
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "46766b5b_cf1a973f",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Implemented.",
+      "parentUuid": "72bebb07_7b0fa5fe",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 38
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "729eabcb_f0aff19c",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -289,6 +577,30 @@
       "writtenOn": "2020-03-26T08:07:02Z",
       "side": 1,
       "message": "Not a fan of using global state here (or for mTetheredIface); could this method return a CompletableFuture\u003cString\u003e instead ? Then the future can be passed as argument to who needs it.",
+      "range": {
+        "startLine": 348,
+        "startChar": 8,
+        "endLine": 348,
+        "endChar": 38
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c577b8_56d5accc",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "The reason there is global state is because it needs to be cleared on teardown. This should be much better now, though. PTAL.",
+      "parentUuid": "729eabcb_f0aff19c",
       "range": {
         "startLine": 348,
         "startChar": 8,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "11f08f10_ed5b80cb",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "There\u0027s only one left now. I think it makes the code more readable.",
+      "parentUuid": "dc29da89_c3422676",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 11
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1441f9bb_2d387505",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "0309a8ca_ad8cadc1",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1441f9bb_2d387505",
+      "range": {
+        "startLine": 426,
+        "startChar": 12,
+        "endLine": 426,
+        "endChar": 45
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ee7f61_132cfd59",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 13
@@ -367,6 +727,30 @@
       "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9538b7c4_08696e0c",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-26T13:32:19Z",
+      "side": 1,
+      "message": "Nothing. Done.",
+      "parentUuid": "d7ee7f61_132cfd59",
+      "range": {
+        "startLine": 427,
+        "startChar": 12,
+        "endLine": 427,
+        "endChar": 44
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
