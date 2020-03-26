@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc31e48_faf7f644",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T06:37:23Z",
+      "side": 1,
+      "message": "We should add isAtLeastR() in the front of this.\nAnd add \"Merged-In: I602ae32dae1ad29fe3293c541fa6d2cef01b81d3\" in the commit message.",
+      "range": {
+        "startLine": 466,
+        "startChar": 8,
+        "endLine": 466,
+        "endChar": 52
+      },
+      "revId": "9274cc5057b3148fe250af53d645311ce34df3b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0a9a48_bd4d7d7d",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T06:37:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 604,
+        "startChar": 8,
+        "endLine": 604,
+        "endChar": 52
+      },
+      "revId": "9274cc5057b3148fe250af53d645311ce34df3b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026aff2a_bb20c7b1",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T06:37:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 609,
+        "startChar": 8,
+        "endLine": 609,
+        "endChar": 62
+      },
+      "revId": "9274cc5057b3148fe250af53d645311ce34df3b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
