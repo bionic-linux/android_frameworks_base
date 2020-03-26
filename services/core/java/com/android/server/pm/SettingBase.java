@@ -65,6 +65,7 @@ abstract class SettingBase {
                 | ApplicationInfo.PRIVATE_FLAG_PRODUCT
                 | ApplicationInfo.PRIVATE_FLAG_SYSTEM_EXT
                 | ApplicationInfo.PRIVATE_FLAG_REQUIRED_FOR_SYSTEM_USER
-                | ApplicationInfo.PRIVATE_FLAG_ODM);
+                | ApplicationInfo.PRIVATE_FLAG_ODM
+                | ApplicationInfo.PRIVATE_FLAG_GMS);
     }
 }

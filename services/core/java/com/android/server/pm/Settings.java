@@ -775,7 +775,8 @@ public final class Settings {
                 | ApplicationInfo.PRIVATE_FLAG_VENDOR
                 | ApplicationInfo.PRIVATE_FLAG_PRODUCT
                 | ApplicationInfo.PRIVATE_FLAG_SYSTEM_EXT
-                | ApplicationInfo.PRIVATE_FLAG_ODM);
+                | ApplicationInfo.PRIVATE_FLAG_ODM
+                | ApplicationInfo.PRIVATE_FLAG_GMS);
         pkgSetting.pkgFlags |= pkgFlags & ApplicationInfo.FLAG_SYSTEM;
         pkgSetting.pkgPrivateFlags |=
                 pkgPrivateFlags & ApplicationInfo.PRIVATE_FLAG_PRIVILEGED;
@@ -789,6 +790,8 @@ public final class Settings {
                 pkgPrivateFlags & ApplicationInfo.PRIVATE_FLAG_SYSTEM_EXT;
         pkgSetting.pkgPrivateFlags |=
                 pkgPrivateFlags & ApplicationInfo.PRIVATE_FLAG_ODM;
+        pkgSetting.pkgPrivateFlags |=
+                pkgPrivateFlags & ApplicationInfo.PRIVATE_FLAG_GMS;
         pkgSetting.primaryCpuAbiString = primaryCpuAbi;
         pkgSetting.secondaryCpuAbiString = secondaryCpuAbi;
         if (childPkgNames != null) {
@@ -4421,6 +4424,7 @@ public final class Settings {
             ApplicationInfo.PRIVATE_FLAG_SYSTEM_EXT, "SYSTEM_EXT",
             ApplicationInfo.PRIVATE_FLAG_VIRTUAL_PRELOAD, "VIRTUAL_PRELOAD",
             ApplicationInfo.PRIVATE_FLAG_ODM, "ODM",
+            ApplicationInfo.PRIVATE_FLAG_GMS, "GMS",
     };
 
     void dumpVersionLPr(IndentingPrintWriter pw) {
