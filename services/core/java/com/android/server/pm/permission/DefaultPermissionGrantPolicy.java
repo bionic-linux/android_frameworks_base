@@ -1411,6 +1411,10 @@ public final class DefaultPermissionGrantPolicy {
         if (dir.isDirectory() && dir.canRead()) {
             Collections.addAll(ret, dir.listFiles());
         }
+        dir = new File(Environment.getGmsDirectory(), "etc/default-permissions");
+        if (dir.isDirectory() && dir.canRead()) {
+            Collections.addAll(ret, dir.listFiles());
+        }
         // For IoT devices, we check the oem partition for default permissions for each app.
         if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_EMBEDDED, 0)) {
             dir = new File(Environment.getOemDirectory(), "etc/default-permissions");

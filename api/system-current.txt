@@ -5883,6 +5883,7 @@ package android.os {
   }
 
   public class Environment {
+    method @NonNull public static java.io.File getGmsDirectory();
     method @NonNull public static java.io.File getOdmDirectory();
     method @NonNull public static java.io.File getOemDirectory();
     method @NonNull public static java.io.File getProductDirectory();
