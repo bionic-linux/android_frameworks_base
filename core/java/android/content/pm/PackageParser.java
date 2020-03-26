@@ -6968,6 +6968,12 @@ public class PackageParser {
         }
 
         /** @hide */
+        public boolean isGms() {
+            return applicationInfo.isGms();
+        }
+
+
+        /** @hide */
         public boolean isPrivileged() {
             return applicationInfo.isPrivilegedApp();
         }

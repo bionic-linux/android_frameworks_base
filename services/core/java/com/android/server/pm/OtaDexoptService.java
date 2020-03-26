@@ -376,12 +376,13 @@ public class OtaDexoptService extends IOtaDexopt.Stub {
                 continue;
             }
 
-            // If the path is in /system, /vendor, /product or /system_ext, ignore. It will
+            // If the path is in /system, /vendor, /product, /system_ext or /gms ignore. It will
             // have been ota-dexopted into /data/ota and moved into the dalvik-cache already.
             if (pkg.codePath.startsWith("/system")
                     || pkg.codePath.startsWith("/vendor")
                     || pkg.codePath.startsWith("/product")
                     || pkg.codePath.startsWith("/system_ext")) {
+                    || pkg.codePath.startsWith("/gms")) {
                 continue;
             }
 
