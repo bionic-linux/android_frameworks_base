@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f8718c4_161bbefd",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T09:56:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6490ba0c_e3c7dde4",
+      "range": {
+        "startLine": 643,
+        "startChar": 16,
+        "endLine": 643,
+        "endChar": 39
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc265324_334ee5ca",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "06da2c36_aac757db",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T09:56:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7495fd_a6068422",
+      "range": {
+        "startLine": 653,
+        "startChar": 57,
+        "endLine": 653,
+        "endChar": 79
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04010dbd_a30ddd80",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 4
@@ -92,6 +140,30 @@
       "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ac3577_449f662e",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T09:56:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04010dbd_a30ddd80",
+      "range": {
+        "startLine": 660,
+        "startChar": 16,
+        "endLine": 660,
+        "endChar": 31
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +211,30 @@
       "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b01046_58bd2c1d",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T09:56:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa4f588_bb6e335f",
+      "range": {
+        "startLine": 665,
+        "startChar": 8,
+        "endLine": 665,
+        "endChar": 20
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +424,30 @@
       "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b72142_f1525190",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-03-26T09:56:32Z",
+      "side": 1,
+      "message": "Yes, I combined testOwnerUid() and testAdministratorUids() to testAdministratorUidsAndOwnerUid() in ag/10853294.\ntestAdministratorUidsAndOwnerUid() also tested that if the ownerUid is included in the administratorUids.",
+      "parentUuid": "8f88bef4_9fa5d99a",
+      "range": {
+        "startLine": 692,
+        "startChar": 20,
+        "endLine": 692,
+        "endChar": 37
+      },
+      "revId": "5ddcf7e4373f7e1c50e1b21109e818c37ecb19cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
