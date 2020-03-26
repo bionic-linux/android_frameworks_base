@@ -82,6 +82,7 @@ public class Environment {
             "/system_ext");
     private static final File DIR_APEX_ROOT = getDirectory(ENV_APEX_ROOT,
             "/apex");
+    private static final File DIR_GMS_ROOT = getDirectory(ENV_GMS_ROOT, "/gms");
 
     @UnsupportedAppUsage
     private static UserEnvironment sCurrentUser;
@@ -256,6 +257,17 @@ public class Environment {
      */
     public static @NonNull File getApexDirectory() {
         return DIR_APEX_ROOT;
+    }
+
+    /**
+     * Return root directory of the "gms" partition holding GMS customizations,
+     * if any. If present, the partition is mounted read-only.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static @NonNull File getGmsDirectory() {
+        return DIR_GMS_ROOT;
     }
 
     /**

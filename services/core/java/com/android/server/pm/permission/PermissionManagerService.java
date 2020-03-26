@@ -1651,6 +1651,9 @@ public class PermissionManagerService {
             wlPermissions =
                     SystemConfig.getInstance().getSystemExtPrivAppPermissions(
                             pkg.packageName);
+        } else if (pkg.isGms()) {
+            wlPermissions =
+                    SystemConfig.getInstance().getGmsPrivAppPermissions(pkg.packageName);
         } else {
             wlPermissions = SystemConfig.getInstance().getPrivAppPermissions(pkg.packageName);
         }
@@ -1686,6 +1689,9 @@ public class PermissionManagerService {
                     } else if (pkg.isSystemExt()) {
                         deniedPermissions = SystemConfig.getInstance()
                                 .getSystemExtPrivAppDenyPermissions(pkg.packageName);
+                    } else if (pkg.isGms()) {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getGmsPrivAppDenyPermissions(pkg.packageName);
                     } else {
                         deniedPermissions = SystemConfig.getInstance()
                                 .getPrivAppDenyPermissions(pkg.packageName);
