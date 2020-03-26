@@ -26,6 +26,7 @@ import static android.net.util.NetworkConstants.asByte;
 import static android.net.util.TetheringMessageBase.BASE_IPSERVER;
 import static android.system.OsConstants.RT_SCOPE_UNIVERSE;
 
+import android.content.Context;
 import android.net.INetd;
 import android.net.INetworkStackStatusCallback;
 import android.net.IpPrefix;
@@ -214,6 +215,7 @@ public class IpServer extends StateMachine {
     private final State mTetheredState;
     private final State mUnavailableState;
 
+    private final Context mContext;
     private final SharedLog mLog;
     private final INetd mNetd;
     private final Callback mCallback;
@@ -286,9 +288,10 @@ public class IpServer extends StateMachine {
     private final IpNeighborMonitor mIpNeighborMonitor;
 
     public IpServer(
-            String ifaceName, Looper looper, int interfaceType, SharedLog log,
+            Context ctx, String ifaceName, Looper looper, int interfaceType, SharedLog log,
             INetd netd, Callback callback, boolean usingLegacyDhcp, Dependencies deps) {
         super(ifaceName, looper);
+        mContext = ctx;
         mLog = log.forSubComponent(ifaceName);
         mNetd = netd;
         mCallback = callback;
@@ -497,9 +500,14 @@ public class IpServer extends StateMachine {
             return true;
         }
         final DhcpServingParamsParcel params;
+        int duration = mContext.getResources().getInteger(
+                        com.android.internal.R.integer.config_tether_dhcp_duration);
+        if (duration == 0) {
+            duration = DHCP_LEASE_TIME_SECS;
+        }
         params = new DhcpServingParamsParcelExt()
                 .setDefaultRouters(addr)
-                .setDhcpLeaseTimeSecs(DHCP_LEASE_TIME_SECS)
+                .setDhcpLeaseTimeSecs(duration)
                 .setDnsServers(addr)
                 .setServerAddr(new LinkAddress(addr, prefixLen))
                 .setMetered(true);

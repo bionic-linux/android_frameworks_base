@@ -416,6 +416,9 @@
     <string-array translatable="false" name="config_tether_dhcp_range">
     </string-array>
 
+    <!-- Default Dhcp duration -->
+    <integer translatable="false" name="config_tether_dhcp_duration">3600</integer>
+
     <!-- Regex of wired ethernet ifaces -->
     <string translatable="false" name="config_ethernet_iface_regex">eth\\d</string>
 
