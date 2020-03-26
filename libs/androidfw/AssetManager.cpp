@@ -75,6 +75,7 @@ const char* AssetManager::IDMAP_BIN = "/system/bin/idmap";
 const char* AssetManager::VENDOR_OVERLAY_DIR = "/vendor/overlay";
 const char* AssetManager::PRODUCT_OVERLAY_DIR = "/product/overlay";
 const char* AssetManager::SYSTEM_EXT_OVERLAY_DIR = "/system_ext/overlay";
+const char* AssetManager::GMS_OVERLAY_DIR = "/gms/overlay";
 const char* AssetManager::ODM_OVERLAY_DIR = "/odm/overlay";
 const char* AssetManager::OEM_OVERLAY_DIR = "/oem/overlay";
 const char* AssetManager::OVERLAY_THEME_DIR_PROPERTY = "ro.boot.vendor.overlay.theme";

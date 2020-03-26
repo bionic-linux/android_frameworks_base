@@ -198,9 +198,9 @@ class IdmapManager {
             return fulfilledPolicies | IIdmap2.POLICY_OEM_PARTITION;
         }
 
-        // System_ext partition (/system_ext) is considered as system
+        // System_ext (/system_ext) and Gms (/gms) are considered as system
         // Check this last since every partition except for data is scanned as system in the PMS.
-        if (ai.isSystemApp() || ai.isSystemExt()) {
+        if (ai.isSystemApp() || ai.isSystemExt() || ai.isGms()) {
             return fulfilledPolicies | IIdmap2.POLICY_SYSTEM_PARTITION;
         }
 

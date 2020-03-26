@@ -203,6 +203,9 @@ public class SystemConfig {
     final ArrayMap<String, ArraySet<String>> mSystemExtPrivAppPermissions = new ArrayMap<>();
     final ArrayMap<String, ArraySet<String>> mSystemExtPrivAppDenyPermissions = new ArrayMap<>();
 
+    final ArrayMap<String, ArraySet<String>> mGmsPrivAppPermissions = new ArrayMap<>();
+    final ArrayMap<String, ArraySet<String>> mGmsPrivAppDenyPermissions = new ArrayMap<>();
+
     final ArrayMap<String, ArrayMap<String, Boolean>> mOemPermissions = new ArrayMap<>();
 
     // Allowed associations between applications.  If there are any entries
@@ -347,6 +350,23 @@ public class SystemConfig {
         return mSystemExtPrivAppDenyPermissions.get(packageName);
     }
 
+    /**
+     * Read from "permission" tags in /gms/etc/permissions/*.xml
+     * @return Set of privileged permissions that are explicitly granted.
+     */
+    public ArraySet<String> getGmsPrivAppPermissions(String packageName) {
+        return mGmsPrivAppPermissions.get(packageName);
+    }
+
+    /**
+     * Read from "deny-permission" tags in /gms/etc/permissions/*.xml
+     * @return Set of privileged permissions that are explicitly denied.
+     */
+    public ArraySet<String> getGmsPrivAppDenyPermissions(String packageName) {
+        return mGmsPrivAppDenyPermissions.get(packageName);
+    }
+
+
     public Map<String, Boolean> getOemPermissions(String packageName) {
         final Map<String, Boolean> oemPermissions = mOemPermissions.get(packageName);
         if (oemPermissions != null) {
@@ -432,6 +452,12 @@ public class SystemConfig {
                 Environment.getSystemExtDirectory(), "etc", "sysconfig"), ALLOW_ALL);
         readPermissions(Environment.buildPath(
                 Environment.getSystemExtDirectory(), "etc", "permissions"), ALLOW_ALL);
+
+        // Allow /gms to customize all system configs
+        readPermissions(Environment.buildPath(
+                Environment.getGmsDirectory(), "etc", "sysconfig"), ALLOW_ALL);
+        readPermissions(Environment.buildPath(
+                Environment.getGmsDirectory(), "etc", "permissions"), ALLOW_ALL);
 
         // Skip loading configuration from apex if it is not a system process.
         if (!isSystemProcess()) {
@@ -890,7 +916,7 @@ public class SystemConfig {
                     } break;
                     case "privapp-permissions": {
                         if (allowPrivappPermissions) {
-                            // privapp permissions from system, vendor, product and system_ext
+                            // privapp permissions from system, vendor, product system_ext and gms
                             // partitions are stored separately. This is to prevent xml files in
                             // the vendor partition from granting permissions to priv apps in the
                             // system partition and vice versa.
@@ -902,6 +928,8 @@ public class SystemConfig {
                                     Environment.getProductDirectory().toPath() + "/");
                             boolean systemExt = permFile.toPath().startsWith(
                                     Environment.getSystemExtDirectory().toPath() + "/");
+                            boolean gms = permFile.toPath().startsWith(
+                                    Environment.getGmsDirectory().toPath() + "/");
                             if (vendor) {
                                 readPrivAppPermissions(parser, mVendorPrivAppPermissions,
                                         mVendorPrivAppDenyPermissions);
@@ -911,6 +939,9 @@ public class SystemConfig {
                             } else if (systemExt) {
                                 readPrivAppPermissions(parser, mSystemExtPrivAppPermissions,
                                         mSystemExtPrivAppDenyPermissions);
+                            } else if (gms) {
+                                readPrivAppPermissions(parser, mGmsPrivAppPermissions,
+                                        mGmsPrivAppDenyPermissions);
                             } else {
                                 readPrivAppPermissions(parser, mPrivAppPermissions,
                                         mPrivAppDenyPermissions);

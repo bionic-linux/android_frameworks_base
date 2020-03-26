@@ -55,6 +55,7 @@ public class Environment {
     private static final String ENV_VENDOR_ROOT = "VENDOR_ROOT";
     private static final String ENV_PRODUCT_ROOT = "PRODUCT_ROOT";
     private static final String ENV_SYSTEM_EXT_ROOT = "SYSTEM_EXT_ROOT";
+    private static final String ENV_GMS_ROOT = "GMS_ROOT";
     private static final String ENV_APEX_ROOT = "APEX_ROOT";
 
     /** {@hide} */
@@ -80,6 +81,7 @@ public class Environment {
     private static final File DIR_PRODUCT_ROOT = getDirectory(ENV_PRODUCT_ROOT, "/product");
     private static final File DIR_SYSTEM_EXT_ROOT = getDirectory(ENV_SYSTEM_EXT_ROOT,
             "/system_ext");
+    private static final File DIR_GMS_ROOT = getDirectory(ENV_GMS_ROOT, "/gms");
     private static final File DIR_APEX_ROOT = getDirectory(ENV_APEX_ROOT,
             "/apex");
 
@@ -246,6 +248,17 @@ public class Environment {
     @SystemApi
     public static @NonNull File getSystemExtDirectory() {
         return DIR_SYSTEM_EXT_ROOT;
+    }
+
+    /**
+     * Return root directory of the "gms" partition holding GMS customizations,
+     * if any. If present, the partition is mounted read-only.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static @NonNull File getGmsDirectory() {
+        return DIR_GMS_ROOT;
     }
 
     /**
