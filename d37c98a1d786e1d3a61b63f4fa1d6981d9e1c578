@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "020088af_8aa27e90",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-03-26T19:54:08Z",
+      "side": 1,
+      "message": "Maybe instead of passing a context, it should be a lease time parameter (to avoid adding a dependency). Up to lorenzo to decide.",
+      "range": {
+        "startLine": 291,
+        "startChar": 12,
+        "endLine": 291,
+        "endChar": 19
+      },
+      "revId": "d37c98a1d786e1d3a61b63f4fa1d6981d9e1c578",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
