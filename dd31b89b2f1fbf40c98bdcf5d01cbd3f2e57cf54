@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b50b1629_f804d470",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Maybe add a comment saying that the test can\u0027t work if there is already a (default) ethernet interface (is that right ?)\nShould there be a TODO to have EthernetManager prioritize test interfaces so we can test in all situations ?",
+      "range": {
+        "startLine": 140,
+        "startChar": 8,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4b59ce_0e5568a5",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Would it work with just adoptShellPermissionIdentity(NETWORK_SETTINGS) ?",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 50
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26c6875_1397d48a",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "As you mentioned I think this is unused, maybe remove to simplify the test ? The getMacAddress code will still be in the CL history...",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 49
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6fbb9a_d25cf698",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of putting required parameters of checkVirtualEthernet in global members (like mIface or mIfaceMacAddress); could they be arguments of the checkVirtualEthernet method ?",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8ee5bc_2856abb5",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Does the \"if (clients.size() \u003e 0)\" need to apply to this too ? It would make sense to update the list when it goes back to 0 clients as well (or from null to empty)",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 35
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6788323_956abc08",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Can this be a parameter of sendPacket instead of a class attribute ?",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 14
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b430410_3798d0ea",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "I feel this should be next to the call site that fetches the NetworkInterface; actually I think there\u0027s already a check there, so maybe replace it with this one with the error message ?",
+      "range": {
+        "startLine": 261,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 24
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71939fba_d0d0d660",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "This is missing an argument (it checks that the string is not null), but I also think this should be next to the call site that gets the mac address",
+      "range": {
+        "startLine": 263,
+        "startChar": 8,
+        "endLine": 263,
+        "endChar": 21
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43d6091_b585d423",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Unused ?",
+      "range": {
+        "startLine": 266,
+        "startChar": 8,
+        "endLine": 266,
+        "endChar": 94
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baa2b74_6cfd261d",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "instanceof also means non-null, maybe just move the message to the above assert ?",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 84
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b820e5_c752fda5",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Nit: I would find clients.iterator().next() slightly simpler",
+      "range": {
+        "startLine": 305,
+        "startChar": 38,
+        "endLine": 305,
+        "endChar": 79
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bebb07_7b0fa5fe",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "This does not do anything; or should it be assertTrue ?",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 38
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729eabcb_f0aff19c",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Not a fan of using global state here (or for mTetheredIface); could this method return a CompletableFuture\u003cString\u003e instead ? Then the future can be passed as argument to who needs it.",
+      "range": {
+        "startLine": 348,
+        "startChar": 8,
+        "endLine": 348,
+        "endChar": 38
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc29da89_c3422676",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Nit: since these \"maybe...\" cleanup methods are only used in tearDown, I\u0027d actually find it clearer to have the code inlined there; but maybe that\u0027s a question of taste (works for me if you prefer them here)",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 11
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1441f9bb_2d387505",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Nit: How about mShouldCleanupIncludeTestInterfaces / mEthernetTestInterfacesIncluded / mCleanupIncludeTestInterfaces ? I find the current name not clear on what it actually means",
+      "range": {
+        "startLine": 426,
+        "startChar": 12,
+        "endLine": 426,
+        "endChar": 45
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ee7f61_132cfd59",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-26T08:07:02Z",
+      "side": 1,
+      "message": "Would it be fine to do this all the time ? What happens if false is passed here when EthernetManager was already using false ?",
+      "range": {
+        "startLine": 427,
+        "startChar": 12,
+        "endLine": 427,
+        "endChar": 44
+      },
+      "revId": "dd31b89b2f1fbf40c98bdcf5d01cbd3f2e57cf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
