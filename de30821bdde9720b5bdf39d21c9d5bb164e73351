@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4eb468b6_6bcaed07",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T08:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76908f87_0874fa2c",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 53
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e99f1a66_fe257eb9",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6618cd5e_2aced4bf",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T08:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e99f1a66_fe257eb9",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a8c1511_edf75444",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T08:19:20Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "04c3706c_e0e346e7",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 91
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e38780b2_8e78fba5",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0f7a4180_3ea07651",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T08:19:20Z",
+      "side": 1,
+      "message": "Left as is because it\u0027s used in two methods in this class.",
+      "parentUuid": "e38780b2_8e78fba5",
+      "range": {
+        "startLine": 219,
+        "startChar": 17,
+        "endLine": 219,
+        "endChar": 38
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36ebaddf_d737834f",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752a3e24_c4b9d5b2",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T08:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ebaddf_d737834f",
+      "range": {
+        "startLine": 237,
+        "startChar": 17,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
