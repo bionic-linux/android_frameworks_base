@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "556bb7a0_d7ba1b63",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T10:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df0fa24_c4809288",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 63
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3065e3e_a47db63a",
         "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
         "patchSetId": 12
@@ -187,6 +211,30 @@
       "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf2a289_9a2f99c4",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-03-27T10:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc68a1a_52d30949",
+      "range": {
+        "startLine": 403,
+        "startChar": 12,
+        "endLine": 409,
+        "endChar": 36
+      },
+      "revId": "092087bb5dea93f5aec84790d33df0c8ba59f8da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
