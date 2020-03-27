@@ -23,6 +23,7 @@ import static android.content.pm.PackageManager.INTENT_FILTER_DOMAIN_VERIFICATIO
 import static android.content.pm.PackageManager.INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED;
 
 import android.accounts.IAccountManager;
+import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.ActivityManagerInternal;
 import android.app.role.IRoleManager;
@@ -132,6 +133,8 @@ class PackageManagerShellCommand extends ShellCommand {
     /** Path where ART profiles snapshots are dumped for the shell user */
     private final static String ART_PROFILE_SNAPSHOT_DEBUG_LOCATION = "/data/misc/profman/";
     private static final int DEFAULT_WAIT_MS = 60 * 1000;
+    private static final String TAG = PackageManagerShellCommand.class.getSimpleName();
+    private static final boolean DEBUG = false;
 
     final IPackageManager mInterface;
     final private WeakHashMap<String, Resources> mResourceCache =
@@ -642,6 +645,12 @@ class PackageManagerShellCommand extends ShellCommand {
         return 0;
     }
 
+    private @UserIdInt int getDefaultUserId() {
+        return UserManager.isHeadlessSystemUserMode()
+                ? ActivityManager.getCurrentUser()
+                : UserHandle.USER_SYSTEM;
+    }
+
     private int runListPackages(boolean showSourceDir) throws RemoteException {
         final PrintWriter pw = getOutPrintWriter();
         int getFlags = 0;
@@ -652,7 +661,7 @@ class PackageManagerShellCommand extends ShellCommand {
         boolean showVersionCode = false;
         boolean listApexOnly = false;
         int uid = -1;
-        int userId = UserHandle.USER_SYSTEM;
+        int userId = getDefaultUserId();
         try {
             String opt;
             while ((opt = getNextOption()) != null) {
@@ -713,6 +722,20 @@ class PackageManagerShellCommand extends ShellCommand {
         }
 
         final String filter = getNextArg();
+
+        if (userId == UserHandle.USER_ALL) {
+            getFlags |= PackageManager.MATCH_KNOWN_PACKAGES;
+        }
+        final int translatedUserId =
+                translateUserId(userId, UserHandle.USER_SYSTEM, "runListPackages");
+
+        if (DEBUG) {
+            if (userId == UserHandle.USER_ALL) {
+                Slog.d(TAG, "Listing packages for all users");
+            } else {
+                Slog.d(TAG, "Listing packages for user " + translatedUserId);
+            }
+        }
 
         @SuppressWarnings("unchecked")
         final ParceledListSlice<PackageInfo> slice =
