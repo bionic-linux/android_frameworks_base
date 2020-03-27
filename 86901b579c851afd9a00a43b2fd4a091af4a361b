@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c152b33a_0432e57f",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T11:33:39Z",
+      "side": 1,
+      "message": "please keep this @hide for now",
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3ae9ba_0ff2f935",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T11:33:39Z",
+      "side": 1,
+      "message": "no. let\u0027s not write to the parcel when it is set. Can we just keep a reference to p here?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dee8472_2d74d5ab",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T11:33:39Z",
+      "side": 1,
+      "message": "for reading, I admit that we should read twice",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 5
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0457d74f_7da50b06",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T11:33:39Z",
+      "side": 1,
+      "message": "so we are writing the parcelable two times. Once to the parcel inside the ParcelableParcel, and once again to this p.\n\nI think it could be reduced to one if we write the parcelable directly to the parcel here. The layout would be\n\nclass_name_of_the_parcelable\nsize\npayload",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 53
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
