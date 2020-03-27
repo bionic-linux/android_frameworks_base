@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "b9d88b32_b95b1db7",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T22:52:42Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to use ParcelableParcel",
+      "parentUuid": "e37ff6c0_160dd12c",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3ae9ba_0ff2f935",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 1
@@ -100,6 +124,30 @@
       "side": 1,
       "message": "what if it changes or could be deallocated sooner?",
       "parentUuid": "2c3ae9ba_0ff2f935",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c230c773_9ec5aee6",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-27T22:52:42Z",
+      "side": 1,
+      "message": "it won\u0027t be deallocated as long as this object has a reference to it.\n\nthe exension object can change, but I think that\u0027s out of scope of this class. if the change is undesirable, the user should have made the object immutable.",
+      "parentUuid": "166cb398_30dc76d5",
       "range": {
         "startLine": 52,
         "startChar": 0,
