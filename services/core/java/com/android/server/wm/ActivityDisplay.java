@@ -165,6 +165,9 @@ class ActivityDisplay extends ConfigurationContainer<ActivityStack>
         mDisplay = display;
         mDisplayContent = createDisplayContent();
         updateBounds();
+        if (DEBUG_STACK) {
+            Slog.d(TAG_STACK, "ActivityDisplay");
+        }
     }
 
     protected DisplayContent createDisplayContent() {
