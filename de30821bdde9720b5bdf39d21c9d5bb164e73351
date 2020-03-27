@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76908f87_0874fa2c",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "Now unused",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 53
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99f1a66_fe257eb9",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "If something throws in tearDown (although fairly unlikely given the current code) this may end up not being called; how about putting it in a try/finally ?",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c3706c_e0e346e7",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "Unnecessary since it\u0027s in setUp() ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 91
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38780b2_8e78fba5",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "Nit: this could also be:\nfinal wasTethered \u003d mTetheringStartedLatch.getCount() \u003d\u003d 0;\nso you can avoid the additional member; but keeping the current code also SGTM if you find it clearer.",
+      "range": {
+        "startLine": 219,
+        "startChar": 17,
+        "endLine": 219,
+        "endChar": 38
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ebaddf_d737834f",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "Maybe add a comment that this could be racy if the interface becomes tethered right afterwards, but this is only used in teardown where interface bringup should not be in progress ?\nI could not think of a better way to do the teardown without the race, without adding a lot of complexity.",
+      "range": {
+        "startLine": 237,
+        "startChar": 17,
+        "endLine": 237,
+        "endChar": 38
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23a20da_b84cc4d3",
+        "filename": "packages/Tethering/tests/integration/src/android/net/EthernetTetheringTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-27T05:33:11Z",
+      "side": 1,
+      "message": "Nit: instead of a CountDownLatch + volatile variable, a CompletableFuture would be slightly more elegant\nThat said if you want an AssertionFailedError (like with fail()) when it times out you need to catch the TimeoutException and rethrow (no InterruptedException though), so current code LGTM If you prefer that",
+      "range": {
+        "startLine": 393,
+        "startChar": 19,
+        "endLine": 393,
+        "endChar": 25
+      },
+      "revId": "de30821bdde9720b5bdf39d21c9d5bb164e73351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
