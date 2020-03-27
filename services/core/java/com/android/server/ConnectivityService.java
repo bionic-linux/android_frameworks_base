@@ -927,8 +927,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
          * @see IpConnectivityMetrics.Logger
          */
         public IpConnectivityMetrics.Logger getMetricsLogger() {
-            return Objects.requireNonNull(LocalServices.getService(IpConnectivityMetrics.Logger.class),
-                    "no IpConnectivityMetrics service");
+            return Objects.requireNonNull(
+                LocalServices.getService(IpConnectivityMetrics.Logger.class),
+                "no IpConnectivityMetrics service");
         }
 
         /**
