@@ -22,6 +22,30 @@
       "revId": "87847be695d25e7c6199ab11023281197528c0fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff91d698_7713d2d0",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2020-03-30T16:03:39Z",
+      "side": 1,
+      "message": "And of course, feel free to address in a follow-on if you agree.",
+      "parentUuid": "b071df6c_2d867c83",
+      "range": {
+        "startLine": 1235,
+        "startChar": 22,
+        "endLine": 1235,
+        "endChar": 28
+      },
+      "revId": "87847be695d25e7c6199ab11023281197528c0fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
