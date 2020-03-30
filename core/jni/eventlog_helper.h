@@ -57,16 +57,16 @@ public:
                 { &gCollectionClass, "add", "(Ljava/lang/Object;)Z", &gCollectionAddID },
         };
 
-        for (size_t i = 0; i < NELEM(gClasses); ++i) {
+        for (size_t i = 0; i < std::size(gClasses); ++i) {
             ScopedLocalRef<jclass> clazz(env, FindClassOrDie(env, gClasses[i].name));
             *gClasses[i].clazz = MakeGlobalRefOrDie(env, clazz.get());
         }
-        for (size_t i = 0; i < NELEM(gFields); ++i) {
+        for (size_t i = 0; i < std::size(gFields); ++i) {
             *gFields[i].id = GetFieldIDOrDie(env,
                     *gFields[i].c, gFields[i].name, gFields[i].ft);
         }
 
-        for (size_t i = 0; i < NELEM(gMethods); ++i) {
+        for (size_t i = 0; i < std::size(gMethods); ++i) {
             *gMethods[i].id = GetMethodIDOrDie(env,
                     *gMethods[i].c, gMethods[i].name, gMethods[i].mt);
         }

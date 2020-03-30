@@ -116,6 +116,6 @@ int register_android_media_ResampleInputStream(JNIEnv *env)
 {
     const char* const kClassPathName = "android/media/ResampleInputStream";
 
-    return AndroidRuntime::registerNativeMethods(env,
-            kClassPathName, gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env,
+            kClassPathName, gMethods);
 }

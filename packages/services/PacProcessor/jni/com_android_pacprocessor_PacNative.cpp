@@ -127,7 +127,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_com_android_pacprocessor_PacNative(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/pacprocessor/PacNative",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 } /* namespace android */

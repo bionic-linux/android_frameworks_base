@@ -476,7 +476,7 @@ int register_android_net_LocalSocketImpl(JNIEnv *env)
     }
 
     return jniRegisterNativeMethods(env,
-        "android/net/LocalSocketImpl", gMethods, NELEM(gMethods));
+        "android/net/LocalSocketImpl", gMethods);
 
 error:
     ALOGE("Error registering android.net.LocalSocketImpl");

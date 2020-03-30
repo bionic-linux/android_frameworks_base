@@ -125,7 +125,7 @@ static const JNINativeMethod gTraceMethods[] = {
 
 int register_android_os_Trace(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "android/os/Trace",
-            gTraceMethods, NELEM(gTraceMethods));
+            gTraceMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 
     return 0;

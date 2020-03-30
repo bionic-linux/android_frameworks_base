@@ -172,7 +172,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_media_MediaHTTPConnection(JNIEnv *env) {
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/media/MediaHTTPConnection", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env,
+                "android/media/MediaHTTPConnection", gMethods);
 }
 

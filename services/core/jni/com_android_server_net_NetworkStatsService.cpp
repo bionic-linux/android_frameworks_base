@@ -230,8 +230,7 @@ int register_android_server_net_NetworkStatsService(JNIEnv* env) {
     env->SetStaticIntField(netStatsService, tcpRxPacketsId, TCP_RX_PACKETS);
     env->SetStaticIntField(netStatsService, tcpTxPacketsId, TCP_TX_PACKETS);
 
-    return jniRegisterNativeMethods(env, "com/android/server/net/NetworkStatsService", gMethods,
-                                    NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "com/android/server/net/NetworkStatsService", gMethods);
 }
 
 }

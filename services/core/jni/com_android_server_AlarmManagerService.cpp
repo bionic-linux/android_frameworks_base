@@ -465,7 +465,7 @@ static const JNINativeMethod sMethods[] = {
 int register_android_server_AlarmManagerService(JNIEnv* env)
 {
     return jniRegisterNativeMethods(env, "com/android/server/AlarmManagerService",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 } /* namespace android */

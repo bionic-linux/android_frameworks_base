@@ -948,7 +948,7 @@ int register_android_os_Debug(JNIEnv *env)
                 env->GetFieldID(clazz, stat_field_names[i].swappedOutPss_name, "I");
     }
 
-    return jniRegisterNativeMethods(env, "android/os/Debug", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "android/os/Debug", gMethods);
 }
 
 }; // namespace android

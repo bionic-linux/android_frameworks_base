@@ -65,7 +65,7 @@ static const JNINativeMethod method_table[] = {
 int register_android_server_vr_VrManagerService(JNIEnv *env)
 {
     return jniRegisterNativeMethods(env, "com/android/server/vr/VrManagerService",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 }; // namespace android

@@ -100,8 +100,7 @@ static const JNINativeMethod gMethods[] = {
 };
 
 int register_android_server_TestNetworkService(JNIEnv* env) {
-    return jniRegisterNativeMethods(env, "com/android/server/TestNetworkService", gMethods,
-                                    NELEM(gMethods));
+    return jniRegisterNativeMethods(env, "com/android/server/TestNetworkService", gMethods);
 }
 
 }; // namespace android

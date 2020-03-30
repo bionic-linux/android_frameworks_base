@@ -982,7 +982,7 @@ int register_android_server_BatteryStatsService(JNIEnv *env)
     }
 
     return jniRegisterNativeMethods(env, "com/android/server/am/BatteryStatsService",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 };

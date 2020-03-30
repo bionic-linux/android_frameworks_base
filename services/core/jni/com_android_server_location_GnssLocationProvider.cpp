@@ -3226,48 +3226,39 @@ int register_android_server_location_GnssLocationProvider(JNIEnv* env) {
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssBatchingProvider",
-            sMethodsBatching,
-            NELEM(sMethodsBatching));
+            sMethodsBatching);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssGeofenceProvider",
-            sGeofenceMethods,
-            NELEM(sGeofenceMethods));
+            sGeofenceMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssMeasurementsProvider",
-            sMeasurementMethods,
-            NELEM(sMeasurementMethods));
+            sMeasurementMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssMeasurementCorrectionsProvider",
-            sMeasurementCorrectionsMethods,
-            NELEM(sMeasurementCorrectionsMethods));
+            sMeasurementCorrectionsMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssNavigationMessageProvider",
-            sNavigationMessageMethods,
-            NELEM(sNavigationMessageMethods));
+            sNavigationMessageMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssNetworkConnectivityHandler",
-            sNetworkConnectivityMethods,
-            NELEM(sNetworkConnectivityMethods));
+            sNetworkConnectivityMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssConfiguration",
-            sConfigurationMethods,
-            NELEM(sConfigurationMethods));
+            sConfigurationMethods);
     jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssVisibilityControl",
-            sVisibilityControlMethods,
-            NELEM(sVisibilityControlMethods));
+            sVisibilityControlMethods);
     return jniRegisterNativeMethods(
             env,
             "com/android/server/location/GnssLocationProvider",
-            sMethods,
-            NELEM(sMethods));
+            sMethods);
 }
 
 } /* namespace android */

@@ -57,7 +57,7 @@ static BitSet32 mtSlots;
 
 static void initKeysMap() {
     if (keysMap.empty()) {
-        for (size_t i = 0; i < NELEM(KEYS); i++) {
+        for (size_t i = 0; i < std::size(KEYS); i++) {
             keysMap[KEYS[i].androidKeyCode] = KEYS[i].linuxKeyCode;
         }
     }
@@ -149,7 +149,7 @@ NativeConnection* NativeConnection::open(const char* name, const char* uniqueId,
 
     // set the keys mapped
     ioctl(fd, UI_SET_EVBIT, EV_KEY);
-    for (size_t i = 0; i < NELEM(KEYS); i++) {
+    for (size_t i = 0; i < std::size(KEYS); i++) {
         ioctl(fd, UI_SET_KEYBIT, KEYS[i].linuxKeyCode);
     }
 
@@ -254,7 +254,7 @@ static void nativeClear(JNIEnv* env, jclass clazz, jlong ptr) {
     NativeConnection* connection = reinterpret_cast<NativeConnection*>(ptr);
 
     // Clear keys.
-    for (size_t i = 0; i < NELEM(KEYS); i++) {
+    for (size_t i = 0; i < std::size(KEYS); i++) {
         connection->sendEvent(EV_KEY, KEYS[i].linuxKeyCode, 0);
     }
 
@@ -297,7 +297,7 @@ static JNINativeMethod gUinputBridgeMethods[] = {
 
 int register_android_server_tv_TvUinputBridge(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/tv/UinputBridge",
-              gUinputBridgeMethods, NELEM(gUinputBridgeMethods));
+              gUinputBridgeMethods);
 
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
     (void)res; // Don't complain about unused variable in the LOG_NDEBUG case

@@ -68,7 +68,7 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_view_SurfaceSession(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "android/view/SurfaceSession",
-            gMethods, NELEM(gMethods));
+            gMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 
     jclass clazz = env->FindClass("android/view/SurfaceSession");

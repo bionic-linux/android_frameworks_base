@@ -268,6 +268,6 @@ int register_android_mtp_MtpServer(JNIEnv *env)
         return -1;
     }
 
-    return AndroidRuntime::registerNativeMethods(env,
-                "android/mtp/MtpServer", gMethods, NELEM(gMethods));
+    return jniRegisterNativeMethods(env,
+                "android/mtp/MtpServer", gMethods);
 }

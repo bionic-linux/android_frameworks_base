@@ -89,7 +89,7 @@ const JNINativeMethod sMethods[] = {
 
 int register_android_server_security_VerityUtils(JNIEnv* env) {
     return jniRegisterNativeMethods(env,
-            "com/android/server/security/VerityUtils", sMethods, NELEM(sMethods));
+            "com/android/server/security/VerityUtils", sMethods);
 }
 
 }  // namespace android

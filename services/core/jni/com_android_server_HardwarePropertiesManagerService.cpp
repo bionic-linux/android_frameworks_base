@@ -249,8 +249,7 @@ static const JNINativeMethod gHardwarePropertiesManagerServiceMethods[] = {
 
 int register_android_server_HardwarePropertiesManagerService(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/HardwarePropertiesManagerService",
-                                       gHardwarePropertiesManagerServiceMethods,
-                                       NELEM(gHardwarePropertiesManagerServiceMethods));
+                                       gHardwarePropertiesManagerServiceMethods);
     jclass clazz = env->FindClass("android/os/CpuUsageInfo");
     gCpuUsageInfoClassInfo.clazz = MakeGlobalRefOrDie(env, clazz);
     gCpuUsageInfoClassInfo.initMethod = GetMethodIDOrDie(env, gCpuUsageInfoClassInfo.clazz,

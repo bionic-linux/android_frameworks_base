@@ -175,7 +175,7 @@ int register_android_server_UsbHostManager(JNIEnv *env)
                  "Unable to find constructor for android.os.ParcelFileDescriptor");
 
     return jniRegisterNativeMethods(env, "com/android/server/usb/UsbHostManager",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 };

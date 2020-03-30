@@ -150,7 +150,7 @@ static const JNINativeMethod sMethods[] = {
 
 int register_android_server_am_LowMemDetector(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/server/am/LowMemDetector",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 } // namespace android

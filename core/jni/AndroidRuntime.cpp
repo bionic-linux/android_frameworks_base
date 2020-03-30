@@ -296,8 +296,7 @@ int register_com_android_internal_os_RuntimeInit(JNIEnv* env)
             {"nativeSetExitWithoutCleanup", "(Z)V",
              (void*)com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup},
     };
-    return jniRegisterNativeMethods(env, "com/android/internal/os/RuntimeInit",
-        methods, NELEM(methods));
+    return jniRegisterNativeMethods(env, "com/android/internal/os/RuntimeInit", methods);
 }
 
 int register_com_android_internal_os_ZygoteInit_nativeZygoteInit(JNIEnv* env)
@@ -306,8 +305,7 @@ int register_com_android_internal_os_ZygoteInit_nativeZygoteInit(JNIEnv* env)
         { "nativeZygoteInit", "()V",
             (void*) com_android_internal_os_ZygoteInit_nativeZygoteInit },
     };
-    return jniRegisterNativeMethods(env, "com/android/internal/os/ZygoteInit",
-        methods, NELEM(methods));
+    return jniRegisterNativeMethods(env, "com/android/internal/os/ZygoteInit", methods);
 }
 
 // ----------------------------------------------------------------------
@@ -1669,7 +1667,7 @@ static const RegJNIRec gRegJNI[] = {
      */
     env->PushLocalFrame(200);
 
-    if (register_jni_procs(gRegJNI, NELEM(gRegJNI), env) < 0) {
+    if (register_jni_procs(gRegJNI, std::size(gRegJNI), env) < 0) {
         env->PopLocalFrame(NULL);
         return -1;
     }
@@ -1690,6 +1688,6 @@ AndroidRuntime* AndroidRuntime::getRuntime()
  * the framework.
  */
 extern "C" jint registerFrameworkNatives(JNIEnv* env) {
-    return register_jni_procs(gRegJNI, NELEM(gRegJNI), env);
+    return register_jni_procs(gRegJNI, std::size(gRegJNI), env);
 }
 }   // namespace android

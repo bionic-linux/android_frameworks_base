@@ -429,7 +429,7 @@ void register_android_server_broadcastradio_TunerCallback(JavaVM *vm, JNIEnv *en
             "onProgramListChanged", "()V");
 
     auto res = jniRegisterNativeMethods(env, "com/android/server/broadcastradio/hal1/TunerCallback",
-            gTunerCallbackMethods, NELEM(gTunerCallbackMethods));
+            gTunerCallbackMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 }
 

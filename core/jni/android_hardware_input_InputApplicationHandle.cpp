@@ -134,7 +134,7 @@ static const JNINativeMethod gInputApplicationHandleMethods[] = {
 
 int register_android_view_InputApplicationHandle(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "android/view/InputApplicationHandle",
-            gInputApplicationHandleMethods, NELEM(gInputApplicationHandleMethods));
+            gInputApplicationHandleMethods);
     (void) res;  // Faked use when LOG_NDEBUG.
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 

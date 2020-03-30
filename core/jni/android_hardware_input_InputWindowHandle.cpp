@@ -259,7 +259,7 @@ static const JNINativeMethod gInputWindowHandleMethods[] = {
 
 int register_android_view_InputWindowHandle(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "android/view/InputWindowHandle",
-            gInputWindowHandleMethods, NELEM(gInputWindowHandleMethods));
+            gInputWindowHandleMethods);
     (void) res;  // Faked use when LOG_NDEBUG.
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
 
