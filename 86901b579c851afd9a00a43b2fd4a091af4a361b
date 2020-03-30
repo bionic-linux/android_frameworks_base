@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d8601e2_389dc33a",
+        "filename": "core/java/android/os/ParcelableHolder.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d02269d_d9a50c6a",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c152b33a_0432e57f",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c463ef1a_985da25c",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c152b33a_0432e57f",
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "e3ff3c39_259069b8",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c230c773_9ec5aee6",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dee8472_2d74d5ab",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 1
@@ -206,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "77ef8627_8564d93f",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "We can omit class_name_of_the_parcelable by using read/writeTypedObject instead, but it requires Creator\u003cT\u003e as parameter.",
+      "parentUuid": "0457d74f_7da50b06",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 53
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eaddb0c_f68b25d9",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 1
@@ -217,6 +307,30 @@
       "writtenOn": "2020-03-27T22:19:00Z",
       "side": 1,
       "message": "should we check the parcelableparcel for this value?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 17
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebaf08b_a9c39feb",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "delegate the check to either Parcelable or Parcel.",
+      "parentUuid": "6eaddb0c_f68b25d9",
       "range": {
         "startLine": 82,
         "startChar": 0,

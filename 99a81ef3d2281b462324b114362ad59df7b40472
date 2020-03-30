@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d698fc9_38ee65a4",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "Right, I left it because of readability, but it doesn\u0027t look necessary.\nRemoved it.",
+      "parentUuid": "7e84bf5f_72bfe1ba",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881b9a56_be21218a",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "498ea1d2_575c04b2",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "we cannot infer this because we cannot get \u0027Class\u0027 object from type parameter.\nif we relied on read/writeParcelable, it would work because it writes type name on payload, but its cost is larger than read/writeTypedObject",
+      "parentUuid": "881b9a56_be21218a",
+      "range": {
+        "startLine": 66,
+        "startChar": 50,
+        "endLine": 66,
+        "endChar": 82
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02a32099_c6527b3e",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2020-03-30T06:44:45Z",
       "side": 1,
       "message": "when is this path exercised?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee405ca_85227943",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-03-30T08:29:32Z",
+      "side": 1,
+      "message": "It runs when an parcelable is marshalled, unmarshalled, and marshalled again and getExtension has been never called after unmarshalled.\nThis case could happen in the case of \u0027inout\u0027 field.",
+      "parentUuid": "02a32099_c6527b3e",
       "range": {
         "startLine": 109,
         "startChar": 0,
