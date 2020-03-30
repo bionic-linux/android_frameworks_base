@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d26528c6_2daaaacf",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T06:00:38Z",
+      "side": 1,
+      "message": "Let\u0027s *also* run this on R. Just remove \"else {\".",
+      "range": {
+        "startLine": 666,
+        "startChar": 9,
+        "endLine": 666,
+        "endChar": 16
+      },
+      "revId": "92f93715dd13351f62bf1afcc150252935abd70a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fba3983_3c534dfc",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T06:00:38Z",
+      "side": 1,
+      "message": "Can you please also check that it\u0027s fine to have multiple transport types ? Something like\n\n  assertNoTransport\n  add(CELLULAR)\n  assertTrue(CELLULAR)\n  assertFalse(WIFI)\n  assertTalse(ETHERNET)\n  assertFalse(BLUETOOTH)\n  add(WIFI)\n  assertTrue(CELLULAR)\n  asserTrue(WIFI)\n  assertFalse(ETHERNET)\n  assertFalse(BLUETOOTH)\n  add(ETHERNET)\n  assertTrue(CELLULAR)\n  assertTrue(WIFI)\n  assertTrue(ETHERNET)\n  assertFalse(BLUETOOTH)\n  remove(WIFI)\n  assertTrue(CELLULAR)\n  assertFalse(WIFI)\n  assertTrue(ETHERNET)\n  assertFalse(BLUETOOTH)\n  remove(CELLULAR)\n  assertFalse(CELLULAR)\n  assertFalse(WIFI)\n  assertTrue(ETHERNET)\n  assertFalse(BLUETOOTH)\n  remove(ETHERNET)\n  assertNoTransport\n\nfun NetworkCapabilities.assertNoTransport() \u003d for (i in MIN_TRANSPORT..MAX_TRANSPORT)  { \n  assertFalse(i)\n}",
+      "range": {
+        "startLine": 763,
+        "startChar": 8,
+        "endLine": 766,
+        "endChar": 57
+      },
+      "revId": "92f93715dd13351f62bf1afcc150252935abd70a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e21f43_84211204",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-30T06:00:38Z",
+      "side": 1,
+      "message": "Please also add\n\n  assertEquals(nc, new Builder(nc).build())",
+      "range": {
+        "startLine": 832,
+        "startChar": 4,
+        "endLine": 832,
+        "endChar": 5
+      },
+      "revId": "92f93715dd13351f62bf1afcc150252935abd70a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
