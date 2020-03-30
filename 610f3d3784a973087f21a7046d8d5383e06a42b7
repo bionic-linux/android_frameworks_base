@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e777ddc_c5c9b182",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: should we #include \u003citerator\u003e because std::size is used in this file?",
+      "range": {
+        "startLine": 1670,
+        "startChar": 36,
+        "endLine": 1670,
+        "endChar": 45
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f2297e_a64d3faf",
+        "filename": "core/jni/android_hardware_Camera.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: should we #include \u003citerator\u003e for std::size?",
+      "range": {
+        "startLine": 1152,
+        "startChar": 37,
+        "endLine": 1152,
+        "endChar": 46
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d66059_4cd99321",
+        "filename": "core/jni/eventlog_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: should we #include \u003citerator\u003e here because std::size is used?",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82dfdec_3f790524",
+        "filename": "core/jni/eventlog_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: is there any reason we don\u0027t just use a range-based for-loop here (and in lines 64 and 69)?\n\nfor (auto\u0026 currentClass : gClasses)",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e5128b_0da72f2e",
+        "filename": "services/core/jni/com_android_server_tv_TvUinputBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: should we #include \u003citerator\u003e because std::size is used here?",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daf9f41_f960726e",
+        "filename": "services/core/jni/com_android_server_tv_TvUinputBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125923
+      },
+      "writtenOn": "2020-03-30T19:21:45Z",
+      "side": 1,
+      "message": "nit: is there any reason a range-based for-loop isn\u0027t used here (and lines 152 and 257)?\n\nfor (const auto\u0026 key : KEYS) {",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "610f3d3784a973087f21a7046d8d5383e06a42b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
