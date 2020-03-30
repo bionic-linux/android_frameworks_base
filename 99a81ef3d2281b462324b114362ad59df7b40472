@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e84bf5f_72bfe1ba",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-30T06:44:45Z",
+      "side": 1,
+      "message": "i am not sure why this is needed. mNeedToUnpack \u003d\u003d\u003d (mParcelelable !\u003d null), right?",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881b9a56_be21218a",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-30T06:44:45Z",
+      "side": 1,
+      "message": "can\u0027t we infer this from T?",
+      "range": {
+        "startLine": 66,
+        "startChar": 50,
+        "endLine": 66,
+        "endChar": 82
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a32099_c6527b3e",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-03-30T06:44:45Z",
+      "side": 1,
+      "message": "when is this path exercised?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 9
+      },
+      "revId": "99a81ef3d2281b462324b114362ad59df7b40472",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
