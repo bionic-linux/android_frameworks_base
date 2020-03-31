@@ -46,6 +46,29 @@
       "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be60e1d_1d715947",
+        "filename": "tests/net/java/android/net/NetworkStatsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-03-31T12:05:25Z",
+      "side": 1,
+      "message": "You could end by asserting that (stats.subtract(stats).size() \u003d\u003d stats.size()) \u0026\u0026 (stats.subtract(stats).removeEmptyEntries().size() \u003d\u003d 0)",
+      "range": {
+        "startLine": 546,
+        "startChar": 4,
+        "endLine": 546,
+        "endChar": 5
+      },
+      "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
