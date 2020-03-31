@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9acb1e3f_16b732d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-31T08:57:07Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "2e0b448d_58c1fc19",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0fe91d_7b53c364",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b1474f22_9037fc5e",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-31T08:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0fe91d_7b53c364",
+      "range": {
+        "startLine": 1202,
+        "startChar": 0,
+        "endLine": 1202,
+        "endChar": 55
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377a56a1_03de09f5",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4cb1b8_907ec604",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-31T08:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377a56a1_03de09f5",
+      "range": {
+        "startLine": 1213,
+        "startChar": 17,
+        "endLine": 1213,
+        "endChar": 26
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
