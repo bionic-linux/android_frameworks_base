@@ -1198,15 +1198,38 @@ public final class NetworkStats implements Parcelable {
      * @hide
      */
     public void removeUids(int[] uids) {
+        removeEntriesThat(i ->
+                ArrayUtils.contains(uids, uid[(int) i])
+        );
+    }
+
+    /**
+     * Remove all rows that match given predicate. This mutates the original structure in place.
+     * @hide
+     */
+    private void removeEntriesThat(@NonNull Predicate predicate) {
         int nextOutputEntry = 0;
         for (int i = 0; i < size; i++) {
-            if (!ArrayUtils.contains(uids, uid[i])) {
+            if (!predicate.test(i)) {
                 maybeCopyEntry(nextOutputEntry, i);
                 nextOutputEntry++;
             }
         }
 
         size = nextOutputEntry;
+    }
+
+    /**
+     * Remove all rows that match one of specified UIDs.
+     * @return the result object.
+     * @hide
+     */
+    @NonNull
+    public NetworkStats removeEmptyEntries() {
+        final NetworkStats ret = this.clone();
+        ret.removeEntriesThat(i -> rxBytes[(int) i] == 0 && rxPackets[(int) i] == 0
+                && txBytes[(int) i] == 0 && txPackets[(int) i] == 0 && operations[(int) i] == 0);
+        return ret;
     }
 
     /**
