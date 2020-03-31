@@ -6015,6 +6015,22 @@ public class AudioManager {
 
     /**
      * @hide
+     * Checks if the camera shutter sound is forced (sound even if
+     * the device is in silent mode) or not
+     * @return true if camera shutter sound is forced, false otherwise.
+     */
+    @SystemApi
+    public boolean isCameraSoundForced() {
+        final IAudioService service = getService();
+        try {
+            return service.isCameraSoundForced();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
      * Returns all surround formats.
      * @return a map where the key is a surround format and
      * the value indicates the surround format is enabled or not
