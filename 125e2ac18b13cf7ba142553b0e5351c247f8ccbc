@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7fe8a9_8fa4f852",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T09:21:39Z",
+      "side": 1,
+      "message": "Probably add assertFalse(mEnMgr.isCellularUpstreamPermitted()) here.",
+      "range": {
+        "startLine": 489,
+        "startChar": 8,
+        "endLine": 489,
+        "endChar": 53
+      },
+      "revId": "125e2ac18b13cf7ba142553b0e5351c247f8ccbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21371bf_e1eed3b1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T09:21:39Z",
+      "side": 1,
+      "message": "Add assertTrue(mEnMgr.isCellularUpstreamPermitted()) after here",
+      "range": {
+        "startLine": 496,
+        "startChar": 8,
+        "endLine": 496,
+        "endChar": 53
+      },
+      "revId": "125e2ac18b13cf7ba142553b0e5351c247f8ccbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
