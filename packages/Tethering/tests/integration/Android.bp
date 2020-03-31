@@ -14,17 +14,13 @@
 // limitations under the License.
 //
 
-android_test {
-    name: "TetheringIntegrationTests",
+java_defaults {
+    name: "TetheringIntegrationTestsDefaults",
     certificate: "platform",
     platform_apis: true,
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
-    ],
-    test_suites: [
-        "device-tests",
-        "mts",
     ],
     static_libs: [
         "NetworkStackApiStableLib",
@@ -38,5 +34,23 @@ android_test {
         "android.test.runner",
         "android.test.base",
         "android.test.mock",
-    ],
+    ],}
+
+android_library {
+    name: "TetheringIntegrationTestsLib",
+    defaults: ["TetheringIntegrationTestsDefaults"],
+}
+
+android_test {
+    name: "TetheringIntegrationTests",
+    static_libs: ["TetheringIntegrationTestsLib"],
+    test_suites: ["device-tests"],
+}
+
+android_test {
+    name: "TetheringCoverageTests",
+    compile_multilib: "both",
+    sdk_version: "core_platform",
+    static_libs: ["TetheringTestsLib", "TetheringIntegrationTestsLib"],
+    test_suites: ["device-tests", "mts"],
 }
