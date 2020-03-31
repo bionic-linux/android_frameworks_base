@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c0229d_d4a0cce1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-31T07:35:15Z",
+      "side": 0,
+      "message": "In general I think this test could be more useful by testing that security exceptions are thrown when the caller does not have the required permissions. Right now it only tests code paths that are pretty plain.\nAlso maybe testing it together with TetheringManager would be more useful ?",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
