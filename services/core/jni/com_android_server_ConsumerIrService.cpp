@@ -91,7 +91,7 @@ static const JNINativeMethod method_table[] = {
 
 int register_android_server_ConsumerIrService(JNIEnv *env) {
     return jniRegisterNativeMethods(env, "com/android/server/ConsumerIrService",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 };

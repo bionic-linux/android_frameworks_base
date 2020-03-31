@@ -296,8 +296,7 @@ int register_com_android_internal_os_RuntimeInit(JNIEnv* env)
             {"nativeSetExitWithoutCleanup", "(Z)V",
              (void*)com_android_internal_os_RuntimeInit_nativeSetExitWithoutCleanup},
     };
-    return jniRegisterNativeMethods(env, "com/android/internal/os/RuntimeInit",
-        methods, NELEM(methods));
+    return jniRegisterNativeMethods(env, "com/android/internal/os/RuntimeInit", methods);
 }
 
 int register_com_android_internal_os_ZygoteInit_nativeZygoteInit(JNIEnv* env)
@@ -306,8 +305,7 @@ int register_com_android_internal_os_ZygoteInit_nativeZygoteInit(JNIEnv* env)
         { "nativeZygoteInit", "()V",
             (void*) com_android_internal_os_ZygoteInit_nativeZygoteInit },
     };
-    return jniRegisterNativeMethods(env, "com/android/internal/os/ZygoteInit",
-        methods, NELEM(methods));
+    return jniRegisterNativeMethods(env, "com/android/internal/os/ZygoteInit", methods);
 }
 
 // ----------------------------------------------------------------------

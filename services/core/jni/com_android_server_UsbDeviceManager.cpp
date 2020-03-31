@@ -180,7 +180,7 @@ int register_android_server_UsbDeviceManager(JNIEnv *env)
                  "Unable to find constructor for android.os.ParcelFileDescriptor");
 
     return jniRegisterNativeMethods(env, "com/android/server/usb/UsbDeviceManager",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 };

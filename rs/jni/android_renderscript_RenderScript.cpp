@@ -2970,8 +2970,8 @@ static const JNINativeMethod methods[] = {
 
 static int registerFuncs(JNIEnv *_env)
 {
-    return android::AndroidRuntime::registerNativeMethods(
-            _env, classPathName, methods, NELEM(methods));
+    return jniRegisterNativeMethods(
+            _env, classPathName, methods);
 }
 
 // ---------------------------------------------------------------------------

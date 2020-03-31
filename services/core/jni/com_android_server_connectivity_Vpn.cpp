@@ -370,7 +370,7 @@ int register_android_server_connectivity_Vpn(JNIEnv *env)
         inet6 = socket(AF_INET6, SOCK_DGRAM, 0);
     }
     return jniRegisterNativeMethods(env, "com/android/server/connectivity/Vpn",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 };

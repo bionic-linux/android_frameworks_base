@@ -673,7 +673,7 @@ static const JNINativeMethod gTvInputHalMethods[] = {
 
 int register_android_server_tv_TvInputHal(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/tv/TvInputHal",
-            gTvInputHalMethods, NELEM(gTvInputHalMethods));
+            gTvInputHalMethods);
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
     (void)res; // Don't complain about unused variable in the LOG_NDEBUG case
 

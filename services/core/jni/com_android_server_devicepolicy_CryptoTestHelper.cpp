@@ -36,7 +36,7 @@ namespace android {
 
 int register_android_server_devicepolicy_CryptoTestHelper(JNIEnv *env) {
     return jniRegisterNativeMethods(
-            env, "com/android/server/devicepolicy/CryptoTestHelper", methods, NELEM(methods));
+            env, "com/android/server/devicepolicy/CryptoTestHelper", methods);
 }
 
 } // namespace android

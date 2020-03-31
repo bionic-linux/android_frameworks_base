@@ -127,6 +127,5 @@ int register_android_hardware_location_ActivityRecognitionHardware(JNIEnv* env) 
     return jniRegisterNativeMethods(
             env,
             "android/hardware/location/ActivityRecognitionHardware",
-            sMethods,
-            NELEM(sMethods));
+            sMethods);
 }

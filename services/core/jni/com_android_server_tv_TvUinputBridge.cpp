@@ -297,7 +297,7 @@ static JNINativeMethod gUinputBridgeMethods[] = {
 
 int register_android_server_tv_TvUinputBridge(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "com/android/server/tv/UinputBridge",
-              gUinputBridgeMethods, NELEM(gUinputBridgeMethods));
+              gUinputBridgeMethods);
 
     LOG_FATAL_IF(res < 0, "Unable to register native methods.");
     (void)res; // Don't complain about unused variable in the LOG_NDEBUG case

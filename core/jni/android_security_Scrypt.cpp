@@ -66,7 +66,7 @@ static const JNINativeMethod sMethods[] = {
 
 int register_android_security_Scrypt(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "android/security/Scrypt",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 } /* namespace android */

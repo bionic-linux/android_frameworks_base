@@ -473,7 +473,7 @@ void register_android_server_broadcastradio_Tuner(JavaVM *vm, JNIEnv *env) {
     gjni.ArrayList.add = GetMethodIDOrDie(env, arrayListClass, "add", "(Ljava/lang/Object;)Z");
 
     auto res = jniRegisterNativeMethods(env, "com/android/server/broadcastradio/hal1/Tuner",
-            gTunerMethods, NELEM(gTunerMethods));
+            gTunerMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 }
 

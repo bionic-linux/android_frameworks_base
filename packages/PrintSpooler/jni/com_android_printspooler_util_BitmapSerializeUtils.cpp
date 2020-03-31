@@ -180,7 +180,7 @@ static const JNINativeMethod sMethods[] = {
 
 int register_com_android_printspooler_util_BitmapSerializeUtils(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/printspooler/util/BitmapSerializeUtils",
-        sMethods, NELEM(sMethods));
+        sMethods);
 }
 
 }

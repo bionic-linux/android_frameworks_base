@@ -91,7 +91,7 @@ static const JNINativeMethod gQTagUidMethods[] = {
 };
 
 int register_android_server_NetworkManagementSocketTagger(JNIEnv* env) {
-  return jniRegisterNativeMethods(env, "com/android/server/NetworkManagementSocketTagger", gQTagUidMethods, NELEM(gQTagUidMethods));
+  return jniRegisterNativeMethods(env, "com/android/server/NetworkManagementSocketTagger", gQTagUidMethods);
 }
 
 };

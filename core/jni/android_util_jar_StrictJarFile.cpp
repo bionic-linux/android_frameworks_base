@@ -163,7 +163,7 @@ int register_android_util_jar_StrictJarFile(JNIEnv* env) {
   zipEntryClass = MakeGlobalRefOrDie(env, FindClassOrDie(env, "java/util/zip/ZipEntry"));
   zipEntryCtor = GetMethodIDOrDie(env, zipEntryClass, "<init>",
                                   "(Ljava/lang/String;Ljava/lang/String;JJJII[BJ)V");
-  return jniRegisterNativeMethods(env, "android/util/jar/StrictJarFile", gMethods, NELEM(gMethods));
+  return jniRegisterNativeMethods(env, "android/util/jar/StrictJarFile", gMethods);
 }
 
 }; // namespace android

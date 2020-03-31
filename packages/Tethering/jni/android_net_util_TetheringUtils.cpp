@@ -130,7 +130,7 @@ static const JNINativeMethod gMethods[] = {
 int register_android_net_util_TetheringUtils(JNIEnv* env) {
     return jniRegisterNativeMethods(env,
             "android/net/util/TetheringUtils",
-            gMethods, NELEM(gMethods));
+            gMethods);
 }
 
 extern "C" jint JNI_OnLoad(JavaVM* vm, void*) {

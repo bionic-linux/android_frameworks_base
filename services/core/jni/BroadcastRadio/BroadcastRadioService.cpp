@@ -311,7 +311,7 @@ void register_android_server_broadcastradio_BroadcastRadioService(JNIEnv *env) {
 
     auto res = jniRegisterNativeMethods(env,
             "com/android/server/broadcastradio/hal1/BroadcastRadioService",
-            gRadioServiceMethods, NELEM(gRadioServiceMethods));
+            gRadioServiceMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 }
 

@@ -105,7 +105,7 @@ static const JNINativeMethod sMethods[] = {
 int register_android_server_GraphicsStatsService(JNIEnv* env)
 {
     return jniRegisterNativeMethods(env, "com/android/server/GraphicsStatsService",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 } // namespace android

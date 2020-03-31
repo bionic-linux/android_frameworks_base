@@ -82,7 +82,7 @@ static const JNINativeMethod sMethods[] = {
 int register_android_server_am_AppCompactor(JNIEnv* env)
 {
     return jniRegisterNativeMethods(env, "com/android/server/am/AppCompactor",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 }

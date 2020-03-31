@@ -447,7 +447,7 @@ int register_android_server_VibratorService(JNIEnv *env)
             FindClassOrDie(env, "com/android/server/VibratorService$Vibration"),
             "onComplete", "()V");
     return jniRegisterNativeMethods(env, "com/android/server/VibratorService",
-            method_table, NELEM(method_table));
+            method_table);
 }
 
 };

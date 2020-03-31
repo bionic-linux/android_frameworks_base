@@ -119,7 +119,7 @@ const JNINativeMethod gMethods[] = {
 
 int register_android_view_CompositionSamplingListener(JNIEnv* env) {
     int res = jniRegisterNativeMethods(env, "android/view/CompositionSamplingListener",
-            gMethods, NELEM(gMethods));
+            gMethods);
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
 
     jclass clazz = env->FindClass("android/view/CompositionSamplingListener");

@@ -313,7 +313,7 @@ int register_com_android_commands_hid_Device(JNIEnv* env) {
     }
 
     return jniRegisterNativeMethods(env, "com/android/commands/hid/Device",
-            sMethods, NELEM(sMethods));
+            sMethods);
 }
 
 } // namespace android

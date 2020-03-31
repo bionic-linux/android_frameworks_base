@@ -51,7 +51,7 @@ static const JNINativeMethod sMethods[] = {
 
 int register_android_server_SyntheticPasswordManager(JNIEnv* env) {
     return jniRegisterNativeMethods(env, "com/android/server/locksettings/SyntheticPasswordManager",
-                                    sMethods, NELEM(sMethods));
+                                    sMethods);
 }
 
 } /* namespace android */
