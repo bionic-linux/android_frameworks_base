@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc42c377_59ce4daa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/MockTetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Done, thanks suggestion.",
+      "parentUuid": "3209d7f9_fb882193",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25639134_7038071e",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2020-03-31T07:31:33Z",
       "side": 1,
       "message": "You should have a try at Kotlin for tests 😊\nToo late for this change though",
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7580bfc0_610886e8",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Haha, yes. Thanks remind.",
+      "parentUuid": "25639134_7038071e",
       "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7ddb0f56_869a43ee",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28307265_d55d3897",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 74
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9267bd7d_60433ef0",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da45733f_1de02857",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "9267bd7d_60433ef0",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "cf18b570_3815eca0",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba00761_354c3b4f",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 24
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc23bd9_e4afbecc",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3959e17_cfeb433d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "2bc23bd9_e4afbecc",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "30e93b0f_e3b55209",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Ohh, thanks for sharing.",
+      "parentUuid": "669025fe_87bb3c7f",
+      "range": {
+        "startLine": 100,
+        "startChar": 25,
+        "endLine": 100,
+        "endChar": 35
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b5d592_5ac41330",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ef4be9_63228485",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b5d592_5ac41330",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 30
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {

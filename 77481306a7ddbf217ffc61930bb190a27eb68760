@@ -16,6 +16,24 @@
       "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f699c6a_7a3d4ed6",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T13:45:47Z",
+      "side": 0,
+      "message": "Yes, this test could also extend to be integration test. The purpose in this CL is to crease the code coverage. Will have follow up CL use it in integration test to test with TetheringManager. I already have idea how to test it :)",
+      "parentUuid": "18c0229d_d4a0cce1",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
