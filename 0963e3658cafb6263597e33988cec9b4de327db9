@@ -22,6 +22,30 @@
       "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ac667c_c8d32bf6",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-31T10:18:52Z",
+      "side": 1,
+      "message": "Good point... I feel add/combine is not too bad, although it could be clearer. add/mutateAdd would be explicit but ugly...\nMaybe remove/clear could be used ? Like clearUids mutates, removeEmptyEntires does not... ?",
+      "parentUuid": "badcf7da_cbb25165",
+      "range": {
+        "startLine": 1201,
+        "startChar": 16,
+        "endLine": 1201,
+        "endChar": 26
+      },
+      "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
