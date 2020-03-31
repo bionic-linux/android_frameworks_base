@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "badcf7da_cbb25165",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-03-31T09:03:38Z",
+      "side": 1,
+      "message": "Not for this CL, but\nby looking at removeUids and removeEmptyEntries,\nuser will not know that one is mutate but another one is not.\nThis is not good.\n\nI think we should have a unified naming rule for mutate and immutate functions.\nSo we can solve the naming confusion for: \n  add/combineAllValues,\n  removeUids/removeEmptyEntries,\n  addEntry/combineValues\n\ninput are welcomed.",
+      "range": {
+        "startLine": 1201,
+        "startChar": 16,
+        "endLine": 1201,
+        "endChar": 26
+      },
+      "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
