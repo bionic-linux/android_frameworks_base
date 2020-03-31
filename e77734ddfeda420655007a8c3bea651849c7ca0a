@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "456e1f89_910bde5b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-03-31T03:57:41Z",
+      "side": 1,
+      "message": "Review note: when I add MockTetheringService and define it in AndroidManifest. Some TetheringTest tests which use FakeSettingsProivder is broken as below, follow the suggestion fix from b/38433611 and ag/2304289\n\n\n\n[134/161] com.android.server.connectivity.tethering.TetheringTest#testDataSaverChanged: FAILED (268ms)\n\nSTACKTRACE:\njava.lang.IllegalStateException: Failed to lookup info for package null\n\tat android.os.Parcel.createException(Parcel.java:2084)\n\tat android.os.Parcel.readException(Parcel.java:2044)\n\tat android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:188)\n\tat android.database.DatabaseUtils.readExceptionFromParcel(DatabaseUtils.java:140)\n\tat android.content.ContentProviderProxy.call(ContentProviderNative.java:658)\n\tat android.provider.Settings$NameValueCache.getStringForUser(Settings.java:2405)\n\tat android.provider.Settings$Global.getStringForUser(Settings.java:14033)\n\tat android.provider.Settings$Global.getString(Settings.java:14021)\n\tat android.provider.Settings$Global.getInt(Settings.java:14203)\n\tat com.android.server.connectivity.tethering.OffloadController.isOffloadDisabled(OffloadController.java:487)\n\tat com.android.server.connectivity.tethering.OffloadController.start(OffloadController.java:144)\n\tat com.android.server.connectivity.tethering.Tethering$TetherMasterSM$OffloadWrapper.start(Tethering.java:1860)\n\tat com.android.server.connectivity.tethering.Tethering$TetherMasterSM$TetherModeAliveState.enter(Tethering.java:1653)\n\tat com.android.networkstack.tethering.util.StateMachine$SmHandler.invokeEnterMethods(StateMachine.java:1037)\n\tat com.android.networkstack.tethering.util.StateMachine$SmHandler.performTransitions(StateMachine.java:879)\n\tat com.android.networkstack.tethering.util.StateMachine$SmHandler.handleMessage(StateMachine.java:819)\n\tat android.os.Handler.dispatchMessage(Handler.java:106)\n\tat android.os.test.TestLooper.dispatchNext(TestLooper.java:184)\n\tat android.os.test.TestLooper.dispatchAll(TestLooper.java:195)\n\tat com.android.server.connectivity.tethering.TetheringTest.runUsbTethering(TetheringTest.java:746)\n\tat com.android.server.connectivity.tethering.TetheringTest.testDataSaverChanged(TetheringTest.java:1563)",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 5
+      },
+      "revId": "e77734ddfeda420655007a8c3bea651849c7ca0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
