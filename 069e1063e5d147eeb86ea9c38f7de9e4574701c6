@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0b448d_58c1fc19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-31T08:16:32Z",
+      "side": 1,
+      "message": "provides a funCtion",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0fe91d_7b53c364",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-31T08:16:32Z",
+      "side": 1,
+      "message": "Nit: fits on the previous line ?",
+      "range": {
+        "startLine": 1202,
+        "startChar": 0,
+        "endLine": 1202,
+        "endChar": 55
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377a56a1_03de09f5",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-03-31T08:16:32Z",
+      "side": 1,
+      "message": "Nit: this would be slightly easier to read if \"predicate\" was renamed \"shouldRemove\" (so when reading the code one knows that \"true\" means \"remove\", not \"keep\", and \"not should remove\" is clearer)",
+      "range": {
+        "startLine": 1213,
+        "startChar": 17,
+        "endLine": 1213,
+        "endChar": 26
+      },
+      "revId": "069e1063e5d147eeb86ea9c38f7de9e4574701c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
