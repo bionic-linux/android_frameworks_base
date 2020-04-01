@@ -81,7 +81,22 @@ public class Nat464Xlat extends BaseNetworkObserver {
         RUNNING,      // start() called, and the stacked iface is known to be up.
     }
 
+    /**
+     * Whether to use the NAT64 prefix from the RA or from DNS. Always prefer the prefix from the
+     * RA if one is received from both RA and DNS, and once a prefix is seen in the RA, stop prefix
+     * discovery and never start it again. This is because the prefix in the RA has better security
+     * and updatability, but also because it can be deprecated and removed by the network. This
+     * would not be very useful if new implementations simply fell back to whatever NAT64 prefix
+     * must be placed in DNS to support legacy hosts that do not support the RA option.
+     */
+    private boolean mUsingNat64PrefixFromRa;
+
+    /** NAT64 prefix currently in use. Only valid in STARTING or RUNNING states. */
+    private IpPrefix mNat64PrefixInUse;
+    /** NAT64 prefix (if any) discovered from DNS via RFC 7050. */
     private IpPrefix mNat64PrefixFromDns;
+    /** NAT64 prefix (if any) learned from the network via RA. */
+    private IpPrefix mNat64PrefixFromRa;
     private String mBaseIface;
     private String mIface;
     private Inet6Address mIPv6Address;
@@ -178,9 +193,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
             return;
         }
 
+        mNat64PrefixInUse = getNat64Prefix();
         String addrStr = null;
         try {
-            addrStr = mNetd.clatdStart(baseIface, getNat64Prefix().toString());
+            addrStr = mNetd.clatdStart(baseIface, mNat64PrefixInUse.toString());
         } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error starting clatd on " + baseIface + ": " + e);
         }
@@ -211,6 +227,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch (RemoteException | IllegalStateException e) {
             Slog.e(TAG, "Error unregistering clatd observer on " + mBaseIface + ": " + e);
         }
+        mNat64PrefixInUse = null;
         mIface = null;
         mBaseIface = null;
         if (requiresClat(mNetwork)) {
@@ -289,6 +306,25 @@ public class Nat464Xlat extends BaseNetworkObserver {
         }
     }
 
+    private boolean isPrefixDiscoveryNeeded() {
+        // If there is no NAT64 prefix in the RA, prefix discovery is always needed. It cannot be
+        // stopped after it succeeds, because stopping it will cause netd to report that the prefix
+        // has been removed, and that will cause us to stop clatd.
+        return !mUsingNat64PrefixFromRa;
+    }
+
+    private void maybeHandleNat64PrefixChange() {
+        final IpPrefix newPrefix = getNat64Prefix();
+        if (!Objects.equals(mNat64PrefixInUse, newPrefix)) {
+            Slog.d(TAG, "NAT64 prefix changed from " + mNat64PrefixInUse + " to "
+                    + newPrefix);
+            stop();
+            if (newPrefix != null) {
+                start();
+            }
+        }
+    }
+
     /**
      * Starts/stops NAT64 prefix discovery and clatd as necessary.
      */
@@ -296,9 +332,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
         // TODO: turn this class into a proper StateMachine. http://b/126113090
         switch (mState) {
             case IDLE:
-                if (requiresClat(mNetwork)) {
-                    // Network is detected to be IPv6-only.
+                if (!requiresClat(mNetwork)) break;  // Stay in IDLE.
+                if (isPrefixDiscoveryNeeded()) {
                     startPrefixDiscovery();  // Enters DISCOVERING state.
+                } else {
+                    start();  // Enters STARTING state.
                 }
                 break;
 
@@ -322,16 +360,24 @@ public class Nat464Xlat extends BaseNetworkObserver {
                 // Stop clatd and go back into DISCOVERING or idle.
                 if (!shouldStartClat(mNetwork)) {
                     stop();
+                    break;
                 }
+                maybeHandleNat64PrefixChange();
                 break;
-                // TODO: support the NAT64 prefix changing after it's been discovered. There is
-                // no need to support this at the moment because it cannot happen without
-                // changes to the Dns64Configuration code in netd.
         }
     }
 
     private IpPrefix getNat64Prefix() {
-        return mNat64PrefixFromDns;
+        return mUsingNat64PrefixFromRa ? mNat64PrefixFromRa : mNat64PrefixFromDns;
+    }
+
+    public void setNat64PrefixFromRa(IpPrefix prefix) {
+        mNat64PrefixFromRa = prefix;
+        if (mNat64PrefixFromRa == null) return;
+        if (mNat64PrefixFromDns == null || mNat64PrefixFromDns.equals(mNat64PrefixFromRa)) {
+            mUsingNat64PrefixFromRa = true;
+            mNat64PrefixFromDns = null;
+        }
     }
 
     public void setNat64PrefixFromDns(IpPrefix prefix) {
