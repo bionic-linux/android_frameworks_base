@@ -363,7 +363,7 @@ public abstract class RecognitionService extends Service {
         public void stopListening(IRecognitionListener listener) {
             if (DBG) Log.d(TAG, "stopListening called by:" + listener.asBinder());
             final RecognitionService service = mServiceRef.get();
-            if (service != null && service.checkPermissions(listener, false /*forDataDelivery*/)) {
+            if (service != null && service.checkPermissions(listener, true /*forDataDelivery*/)) {
                 service.mHandler.sendMessage(Message.obtain(service.mHandler,
                         MSG_STOP_LISTENING, listener));
             }
@@ -373,7 +373,7 @@ public abstract class RecognitionService extends Service {
         public void cancel(IRecognitionListener listener) {
             if (DBG) Log.d(TAG, "cancel called by:" + listener.asBinder());
             final RecognitionService service = mServiceRef.get();
-            if (service != null && service.checkPermissions(listener, false /*forDataDelivery*/)) {
+            if (service != null && service.checkPermissions(listener, true /*forDataDelivery*/)) {
                 service.mHandler.sendMessage(Message.obtain(service.mHandler,
                         MSG_CANCEL, listener));
             }
