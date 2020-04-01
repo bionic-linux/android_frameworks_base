@@ -200,6 +200,10 @@ public class InetDiagSocketTest {
         checkGetConnectionOwnerUid("::1", "::1");
     }
 
+<<<<<<< HEAD   (b72a91 Merge "Fix ThumbnailUtils thumbnail pts calculation" into an)
+=======
+    @Ignore("Times out on Marlin/Sailfish")
+>>>>>>> BRANCH (2327d9 Snap for 6129081 from 7fffbe673fc3a7273075aa36bd1e1f2820729f)
     /* Verify fix for b/141603906 */
     @Test
     public void testB141603906() throws Exception {
