@@ -2712,7 +2712,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_PROPERTIES_CHANGED: {
-                    handleUpdateLinkProperties(nai, (LinkProperties) msg.obj);
+                    LinkProperties newLp = (LinkProperties) msg.obj;
+                    nai.clatd.setNat64PrefixFromRa(newLp.getNat64Prefix());
+                    handleUpdateLinkProperties(nai, newLp);
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_INFO_CHANGED: {
