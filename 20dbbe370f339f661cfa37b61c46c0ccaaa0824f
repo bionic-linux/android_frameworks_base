@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ea122b_9fa98ac3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-01T11:13:41Z",
+      "side": 1,
+      "message": "help me understand - is this only true with the soong change in this topic? At HEAD, I don\u0027t see a libprotobuf .so in my apex",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "20dbbe370f339f661cfa37b61c46c0ccaaa0824f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea430f5_f7567009",
+        "filename": "apex/sdkextensions/derive_sdk/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-04-01T11:13:41Z",
+      "side": 1,
+      "message": "is it now a built-time failure to do what I was doing before?",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "20dbbe370f339f661cfa37b61c46c0ccaaa0824f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
