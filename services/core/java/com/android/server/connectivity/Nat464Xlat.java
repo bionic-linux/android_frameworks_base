@@ -213,7 +213,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
         }
         mIface = null;
         mBaseIface = null;
-        mState = State.IDLE;
         if (requiresClat(mNetwork)) {
             mState = State.DISCOVERING;
         } else {
@@ -294,27 +293,40 @@ public class Nat464Xlat extends BaseNetworkObserver {
      * Starts/stops NAT64 prefix discovery and clatd as necessary.
      */
     public void update() {
-        // TODO: turn this class into a proper StateMachine. // http://b/126113090
-        if (requiresClat(mNetwork)) {
-            if (!isPrefixDiscoveryStarted()) {
-                startPrefixDiscovery();
-            } else if (shouldStartClat(mNetwork)) {
-                // NAT64 prefix detected. Start clatd.
-                // TODO: support the NAT64 prefix changing after it's been discovered. There is no
-                // need to support this at the moment because it cannot happen without changes to
-                // the Dns64Configuration code in netd.
-                start();
-            } else {
-                // NAT64 prefix removed. Stop clatd and go back into DISCOVERING state.
-                stop();
-            }
-        } else {
-            // Network no longer requires clat. Stop clat and prefix discovery.
-            if (isStarted()) {
-                stop();
-            } else if (isPrefixDiscoveryStarted()) {
-                leaveStartedState();
-            }
+        // TODO: turn this class into a proper StateMachine. http://b/126113090
+        switch (mState) {
+            case IDLE:
+                if (requiresClat(mNetwork)) {
+                    // Network is detected to be IPv6-only.
+                    startPrefixDiscovery();  // Enters DISCOVERING state.
+                }
+                break;
+
+            case DISCOVERING:
+                if (shouldStartClat(mNetwork)) {
+                    // NAT64 prefix detected. Start clatd.
+                    start();  // Enters STARTING state.
+                    break;
+                }
+                if (!requiresClat(mNetwork)) {
+                    // IPv4 address added. Go back to IDLE state.
+                    stopPrefixDiscovery();
+                    mState = State.IDLE;
+                    break;
+                }
+                break;
+
+            case STARTING:
+            case RUNNING:
+                // NAT64 prefix removed, or IPv4 address added.
+                // Stop clatd and go back into DISCOVERING or idle.
+                if (!shouldStartClat(mNetwork)) {
+                    stop();
+                }
+                break;
+                // TODO: support the NAT64 prefix changing after it's been discovered. There is
+                // no need to support this at the moment because it cannot happen without
+                // changes to the Dns64Configuration code in netd.
         }
     }
 
