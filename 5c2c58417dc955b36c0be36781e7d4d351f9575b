@@ -22,6 +22,30 @@
       "revId": "5c2c58417dc955b36c0be36781e7d4d351f9575b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425691a2_07558a80",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4640,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2020-04-01T08:52:36Z",
+      "side": 0,
+      "message": "Exact, the settings are applied twice, once for stream type, one for volume group. \nI did this change since stream aliases may not be aligned with our volume group defintion.\nI dont want to break the alias for phone/tablets.\nI tend to think that if we do not map our volume group to a legacy stream type, we will not have side effects of alias, and this CL will not be required. \n\nLet me investigate this secod way to solve our issue to prevent increase drastically AudioService init time.",
+      "parentUuid": "13fbab20_3fd0ac43",
+      "range": {
+        "startLine": 4640,
+        "startChar": 0,
+        "endLine": 4640,
+        "endChar": 70
+      },
+      "revId": "5c2c58417dc955b36c0be36781e7d4d351f9575b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
