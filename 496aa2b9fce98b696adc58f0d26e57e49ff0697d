@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11ff87ac_0d91bd53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-01T11:59:09Z",
+      "side": 1,
+      "message": "More importantly, to stop depending on a framework class that is not released on the same cadence as the module, and is maintained as part of the framework.\n\nI don\u0027t think anything should be designed around code coverage numbers: if some fix makes sense and takes coverage up that\u0027s good, but if you\u0027re only doing something for the numbers, consider what problem the number actually shows (if any), and what solution there should be for that.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "496aa2b9fce98b696adc58f0d26e57e49ff0697d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e42b314_c131335b",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/UpstreamNetworkMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-01T11:59:09Z",
+      "side": 0,
+      "message": "This is removing the usage but I don\u0027t see the class removed from the build rules. Is that somewhere else ?",
+      "revId": "e99aa91e87a8aa794a87e8d6ab0d049063c6de9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
