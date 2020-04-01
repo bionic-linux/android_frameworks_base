@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13fbab20_3fd0ac43",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4640,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-04-01T01:53:36Z",
+      "side": 0,
+      "message": "this means that stream volumes will be applied systematically twice when initializing AudioService because initVolumeGroupStates() is called.\nWe have notice a regression of 8 seconds in audio service start time maybe due to this CL.\nDid you see something similar?",
+      "range": {
+        "startLine": 4640,
+        "startChar": 0,
+        "endLine": 4640,
+        "endChar": 70
+      },
+      "revId": "5c2c58417dc955b36c0be36781e7d4d351f9575b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
