@@ -6154,6 +6154,51 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testNat64PrefixMultipleSources() throws Exception {
+        final String iface = "wlan0";
+        final String pref64FromRaStr = "64:ff9b::";
+        final String pref64FromDnsStr = "2001:db8:64::";
+        final IpPrefix pref64FromRa = new IpPrefix(InetAddress.getByName(pref64FromRaStr), 96);
+        final IpPrefix pref64FromDns = new IpPrefix(InetAddress.getByName(pref64FromDnsStr), 96);
+
+        final NetworkRequest request = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_INTERNET)
+                .build();
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(request, callback);
+
+        final LinkProperties baseLp = new LinkProperties();
+        baseLp.setInterfaceName(iface);
+        baseLp.addLinkAddress(new LinkAddress("2001:db8:1::1/64"));
+        baseLp.addDnsServer(InetAddress.getByName("2001:4860:4860::6464"));
+
+        reset(mMockNetd, mMockDnsResolver);
+        InOrder inOrder = inOrder(mMockNetd, mMockDnsResolver);
+
+        // If a network already has a NAT64 prefix on connect, clatd is started immediately and
+        // prefix discovery is never started.
+        LinkProperties lp = new LinkProperties(baseLp);
+        lp.setNat64Prefix(pref64FromRa);
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, lp);
+        mCellNetworkAgent.connect(false);
+        int netId = mCellNetworkAgent.getNetwork().getNetId();
+        callback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        inOrder.verify(mMockNetd).clatdStart(iface, pref64FromRa.toString());
+        inOrder.verify(mMockDnsResolver, never()).startPrefix64Discovery(netId);
+
+        // If the RA prefix is withdrawn, clatd is stopped and prefix discovery is started.
+        lp.setNat64Prefix(null);
+        mCellNetworkAgent.sendLinkProperties(lp);
+        callback.expectLinkPropertiesThat(mCellNetworkAgent, x -> x.getNat64Prefix() == null);
+        inOrder.verify(mMockNetd).clatdStop(iface);
+        inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
+
+        mService.mNetdEventCallback.onNat64PrefixEvent(netId, true /* added */,
+                pref64FromDnsStr, 96);
+        inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
+    }
+
+    @Test
     public void testDataActivityTracking() throws Exception {
         final TestNetworkCallback networkCallback = new TestNetworkCallback();
         final NetworkRequest networkRequest = new NetworkRequest.Builder()
