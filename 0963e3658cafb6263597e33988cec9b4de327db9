@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f3caad72_ff75ff8b",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-01T09:44:20Z",
+      "side": 1,
+      "message": "One split that I find useful is set/with.\nobject.setField(...) mutates.\nobject.withField(...) copies.\n\nHere that\u0027s not enough though, so here is a first draft :\nadd mutates\nplus copies\naddValue mutates\nplusValue copies\nsubtractValue mutates\nminusValue copies\nremoveEntry mutates\nwithoutEntry copies\n\nYou could go full ballistic and have \"plus\"/\"plusEquals\", \"plusValue\"/\"plusEqualsValue\". That\u0027s a mouthful but at least it\u0027s hard to get wrong :)",
+      "parentUuid": "c1ac667c_c8d32bf6",
+      "range": {
+        "startLine": 1201,
+        "startChar": 16,
+        "endLine": 1201,
+        "endChar": 26
+      },
+      "revId": "0963e3658cafb6263597e33988cec9b4de327db9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1be60e1d_1d715947",
         "filename": "tests/net/java/android/net/NetworkStatsTest.java",
         "patchSetId": 2
