@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c21de354_4cf8f8ea",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/MockTetheringService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-01T10:36:00Z",
+      "side": 1,
+      "message": "Can it be final and initialized here ? getTethering() is not guaranteed to return @NonNull otherwise",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "4c52cbf64e235e30c5eb25d2ae511c7288baab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ecb897_50c56164",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-01T10:36:00Z",
+      "side": 1,
+      "message": "\"that does not match any result code\" or \"that should never be set in a result code\" ?",
+      "range": {
+        "startLine": 62,
+        "startChar": 51,
+        "endLine": 62,
+        "endChar": 91
+      },
+      "revId": "4c52cbf64e235e30c5eb25d2ae511c7288baab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

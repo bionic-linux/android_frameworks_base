@@ -34,6 +34,24 @@
       "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad373d13_08cede87",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-01T10:36:00Z",
+      "side": 0,
+      "message": "In general I\u0027d prefer to avoid writing tests if the primary objective is to increase code coverage: because it makes the test green in the dashboard, we\u0027ll have less motivation to change the test to make it more useful in the future.\nI\u0027d prefer to delay this CL before we have the more useful tests then, so we can don\u0027t lose track of the need for the more important ones.",
+      "parentUuid": "2f699c6a_7a3d4ed6",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
