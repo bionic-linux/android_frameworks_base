@@ -81,6 +81,9 @@ public class Nat464Xlat extends BaseNetworkObserver {
         RUNNING,      // start() called, and the stacked iface is known to be up.
     }
 
+    /** NAT64 prefix currently in use. Only valid in STARTING or RUNNING states. */
+    private IpPrefix mNat64PrefixInUse;
+    /** NAT64 prefix (if any) discovered from DNS via RFC 7050. */
     private IpPrefix mNat64PrefixFromDns;
     private String mBaseIface;
     private String mIface;
@@ -178,9 +181,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
             return;
         }
 
+        mNat64PrefixInUse = getNat64Prefix();
         String addrStr = null;
         try {
-            addrStr = mNetd.clatdStart(baseIface, getNat64Prefix().toString());
+            addrStr = mNetd.clatdStart(baseIface, mNat64PrefixInUse.toString());
         } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error starting clatd on " + baseIface + ": " + e);
         }
@@ -211,6 +215,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch (RemoteException | IllegalStateException e) {
             Slog.e(TAG, "Error unregistering clatd observer on " + mBaseIface + ": " + e);
         }
+        mNat64PrefixInUse = null;
         mIface = null;
         mBaseIface = null;
         if (requiresClat(mNetwork)) {
@@ -289,6 +294,18 @@ public class Nat464Xlat extends BaseNetworkObserver {
         }
     }
 
+    private void maybeHandleNat64PrefixChange() {
+        final IpPrefix newPrefix = getNat64Prefix();
+        if (!Objects.equals(mNat64PrefixInUse, newPrefix)) {
+            Slog.d(TAG, "NAT64 prefix changed from " + mNat64PrefixInUse + " to "
+                    + newPrefix);
+            stop();
+            if (newPrefix != null) {
+                start();
+            }
+        }
+    }
+
     /**
      * Starts/stops NAT64 prefix discovery and clatd as necessary.
      */
@@ -325,11 +342,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
                 // Stop clatd and go back into DISCOVERING or idle.
                 if (!shouldStartClat(mNetwork)) {
                     stop();
+                    break;
                 }
+                // Only necessary while clat is actually started.
+                maybeHandleNat64PrefixChange();
                 break;
-                // TODO: support the NAT64 prefix changing after it's been discovered. There is
-                // no need to support this at the moment because it cannot happen without
-                // changes to the Dns64Configuration code in netd.
         }
     }
 
