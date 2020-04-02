@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0bbc57f_9f6b636a",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "This message should explain why an exception should be thrown. Otherwise the person reading the failure message won\u0027t know what the problem is. In this case I\u0027m guessing you want something like:\n\n    fail(\"Should not be able to set a specifier with no transport types\");",
+      "range": {
+        "startLine": 664,
+        "startChar": 36,
+        "endLine": 664,
+        "endChar": 52
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347c15b7_d1f206c7",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "What are you trying to achieve here? Can this just be:\n\n    } catch (IllegalStateException expected) { }\n\n?",
+      "range": {
+        "startLine": 665,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 13
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ab01c7_caa963fc",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "Suggest splitting this test out into its own test, such as: testWifiNetworkSpecifier.\n\nThen rename testNetworkSpecifier to testTelephonyNetworkSpecifier and tag it with @IgnoreUpTo(Build.VERSION_CODES.Q). That way you can remove the if (isAtLeastR()) which causes superfluous indentation.",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 58
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa8c9c_f4b801ee",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "See comments above.",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc05eb1b_9957aa06",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "This line doesn\u0027t seem useful, given that 1001 !\u003d 10001. :-)",
+      "range": {
+        "startLine": 706,
+        "startChar": 8,
+        "endLine": 706,
+        "endChar": 50
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f913f1_3ee15263",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "See comments above.",
+      "range": {
+        "startLine": 711,
+        "startChar": 0,
+        "endLine": 714,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0d891c_a496c40d",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "Consider renaming from testXyz to checkXyz, because much of our code has the convention that all methods starting with \"test\" are tests and not helper functions.",
+      "range": {
+        "startLine": 767,
+        "startChar": 17,
+        "endLine": 767,
+        "endChar": 21
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e6ef5e_957ed237",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "See comments above",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 823,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee506e0_2aef8ffe",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "See comments above",
+      "range": {
+        "startLine": 826,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7271a3b2_6c5328e3",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-02T10:52:25Z",
+      "side": 1,
+      "message": "See comments above",
+      "range": {
+        "startLine": 879,
+        "startChar": 0,
+        "endLine": 882,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
