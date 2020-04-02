@@ -113,6 +113,9 @@ public class TetheringConfigurationTest {
         doReturn(false).when(
                 () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
                 eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
+        doReturn(true).when(
+                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD), anyBoolean()));
 
         when(mResources.getStringArray(R.array.config_tether_dhcp_range)).thenReturn(
                 new String[0]);
@@ -124,6 +127,7 @@ public class TetheringConfigurationTest {
         when(mResources.getIntArray(R.array.config_tether_upstream_types)).thenReturn(new int[0]);
         when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
                 .thenReturn(new String[0]);
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(true);
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(
                 false);
         mHasTelephonyManager = true;
@@ -276,6 +280,26 @@ public class TetheringConfigurationTest {
         assertEquals(TYPE_MOBILE_HIPRI, upstreamIterator.next().intValue());
         assertFalse(upstreamIterator.hasNext());
     }
+
+    @Test
+    public void testBpfOffloadOverrideByDeviceConfig() {
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(true);
+        doReturn(false).when(
+                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD), anyBoolean()));
+        final TetheringConfiguration disableByDevCon =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertFalse(disableByDevCon.enableBpfOffload);
+
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(false);
+        doReturn(true).when(
+                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD), anyBoolean()));
+        final TetheringConfiguration enableByDevCon =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(enableByDevCon.enableBpfOffload);
+    }
+    // TODO: Verify "enable bpf offload" is controlled by resources.
 
     @Test
     public void testNewDhcpServerDisabled() {
