@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f4b5d95_4ddd6410",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-04-02T19:53:04Z",
+      "side": 1,
+      "message": "nit: get rid of this s. is7bitSinglePart",
+      "range": {
+        "startLine": 494,
+        "startChar": 22,
+        "endLine": 494,
+        "endChar": 23
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d02a2bc_e6183ef7",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-04-02T19:53:04Z",
+      "side": 1,
+      "message": "Should this be ||? This does not match your comment above \"Only single-part CDMA SMS uses 7-bit ASCII encoding\".\n\nAlso, is there a spec reference or document that specifies that \"Only single-part CDMA SMS uses 7-bit ASCII encoding\"? If yes, can you please refer that in a comment here.",
+      "range": {
+        "startLine": 501,
+        "startChar": 74,
+        "endLine": 501,
+        "endChar": 76
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97648f5_4dddbd1d",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-04-02T19:53:04Z",
+      "side": 1,
+      "message": "Is there any functional change here? It seems this is just clean-up -- moving code from cdma.SmsMessage to here?",
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
