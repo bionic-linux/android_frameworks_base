@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1962c6_cb24e392",
+        "filename": "core/java/android/speech/RecognitionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2020-04-02T17:45:49Z",
+      "side": 1,
+      "message": "We are not delivering data - this doesn\u0027t seem right. I wonder if we have a bug in the PermissionChecker.",
+      "range": {
+        "startLine": 366,
+        "startChar": 70,
+        "endLine": 366,
+        "endChar": 74
+      },
+      "revId": "2cc8784d8ba374300a11e8a9054b26f16ac677b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
