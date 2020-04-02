@@ -74,6 +74,12 @@ public class TetheringConfiguration {
     private static final String[] DEFAULT_IPV4_DNS = {"8.8.4.4", "8.8.8.8"};
 
     /**
+     * Stop using bpf offload for tethering instead of the framework implementation.
+     */
+    public static final String TETHER_DISABLE_BPF_OFFLOAD =
+            "tether_disable_bpf_offload";
+
+    /**
      * Use the old dnsmasq DHCP server for tethering instead of the framework implementation.
      */
     public static final String TETHER_ENABLE_LEGACY_DHCP_SERVER =
@@ -89,6 +95,7 @@ public class TetheringConfiguration {
     public final Collection<Integer> preferredUpstreamIfaceTypes;
     public final String[] legacyDhcpRanges;
     public final String[] defaultIPv4DNS;
+    public final boolean disableBpfOffload;
     public final boolean enableLegacyDhcpServer;
 
     public final String[] provisioningApp;
@@ -122,6 +129,7 @@ public class TetheringConfiguration {
 
         legacyDhcpRanges = getLegacyDhcpRanges(res);
         defaultIPv4DNS = copy(DEFAULT_IPV4_DNS);
+        disableBpfOffload = getDisableBpfOffload(res);
         enableLegacyDhcpServer = getEnableLegacyDhcpServer(res);
 
         provisioningApp = getResourceStringArray(res, R.array.config_mobile_hotspot_provision_app);
@@ -196,6 +204,9 @@ public class TetheringConfiguration {
 
         pw.print("enableLegacyDhcpServer: ");
         pw.println(enableLegacyDhcpServer);
+
+        pw.print("disableBpfOffload: ");
+        pw.println(disableBpfOffload);
     }
 
     /** Returns the string representation of this object.*/
@@ -336,6 +347,11 @@ public class TetheringConfiguration {
         } catch (Resources.NotFoundException e404) {
             return defaultValue;
         }
+    }
+
+    private boolean getDisableBpfOffload(final Resources res) {
+        return getResourceBoolean(res, R.bool.config_tether_disable_bpf_offload)
+                || getDeviceConfigBoolean(TETHER_DISABLE_BPF_OFFLOAD);
     }
 
     private boolean getEnableLegacyDhcpServer(final Resources res) {

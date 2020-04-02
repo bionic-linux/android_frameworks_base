@@ -55,6 +55,9 @@
         <item>"bt-pan"</item>
     </string-array>
 
+    <!-- Stop using bpf offload for tethering instead of the framework implementation. -->
+    <bool translatable="false" name="config_tether_disable_bpf_offload">false</bool>
+
     <!-- Use the old dnsmasq DHCP server for tethering instead of the framework implementation. -->
     <bool translatable="false" name="config_tether_enable_legacy_dhcp_server">false</bool>
 
