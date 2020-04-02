@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "848cee4a_a5646a6f",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-02T07:13:10Z",
+      "side": 1,
+      "message": "Maybe android_library to have resources ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "4ce7bf29dcbc676859280e53e561614427f18765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac7b062_766c4524",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-02T07:13:10Z",
+      "side": 1,
+      "message": "This includes sources already in the TetheringIntegrationTestsLib",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 75
+      },
+      "revId": "4ce7bf29dcbc676859280e53e561614427f18765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda89ab0_3eab2340",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-02T07:13:10Z",
+      "side": 1,
+      "message": "This also includes sources also in TetheringTestsLib",
+      "range": {
+        "startLine": 61,
+        "startChar": 16,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "4ce7bf29dcbc676859280e53e561614427f18765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
