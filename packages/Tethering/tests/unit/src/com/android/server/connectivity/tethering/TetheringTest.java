@@ -303,7 +303,7 @@ public class TetheringTest {
         }
 
         @Override
-        protected boolean getDeviceConfigBoolean(final String name) {
+        protected boolean getDeviceConfigBoolean(final String name, boolean defaultValue) {
             return false;
         }
 

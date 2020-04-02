@@ -150,9 +150,9 @@ public final class EntitlementManagerTest {
         doReturn(false).when(
                 () -> SystemProperties.getBoolean(
                 eq(EntitlementManager.DISABLE_PROVISIONING_SYSPROP_KEY), anyBoolean()));
-        doReturn(false).when(
-                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
-                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
+        doReturn("false").when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER)));
 
         when(mResources.getStringArray(R.array.config_tether_dhcp_range))
                 .thenReturn(new String[0]);

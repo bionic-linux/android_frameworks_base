@@ -30,7 +30,6 @@ import static com.android.dx.mockito.inline.extended.ExtendedMockito.mockitoSess
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -63,6 +62,8 @@ public class TetheringConfigurationTest {
     private final SharedLog mLog = new SharedLog("TetheringConfigurationTest");
 
     private static final String[] PROVISIONING_APP_NAME = {"some", "app"};
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
     @Mock private Context mContext;
     @Mock private TelephonyManager mTelephonyManager;
     @Mock private Resources mResources;
@@ -110,9 +111,14 @@ public class TetheringConfigurationTest {
                 .mockStatic(DeviceConfig.class)
                 .strictness(Strictness.WARN)
                 .startMocking();
-        doReturn(false).when(
-                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
-                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
+        doReturn(FALSE).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER)));
+        // Default device config value is null because device config could override resource
+        // config. We would like to use resource config as default.
+        doReturn(null).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD)));
 
         when(mResources.getStringArray(R.array.config_tether_dhcp_range)).thenReturn(
                 new String[0]);
@@ -124,6 +130,7 @@ public class TetheringConfigurationTest {
         when(mResources.getIntArray(R.array.config_tether_upstream_types)).thenReturn(new int[0]);
         when(mResources.getStringArray(R.array.config_mobile_hotspot_provision_app))
                 .thenReturn(new String[0]);
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(true);
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(
                 false);
         mHasTelephonyManager = true;
@@ -278,22 +285,61 @@ public class TetheringConfigurationTest {
     }
 
     @Test
+    public void testBpfOffloadEnable() {
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(true);
+        doReturn(null).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD)));
+        final TetheringConfiguration enableByRes =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(enableByRes.enableBpfOffload);
+
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(false);
+        doReturn(TRUE).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD)));
+        final TetheringConfiguration enableByDevCon =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertTrue(enableByDevCon.enableBpfOffload);  // Override by device config.
+    }
+
+    public void testBpfOffloadDisable() {
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(false);
+        doReturn(null).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD)));
+        final TetheringConfiguration disableByRes =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertFalse(disableByRes.enableBpfOffload);
+
+        when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(true);
+        doReturn(FALSE).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_OVERRIDE_ENABLE_BPF_OFFLOAD)));
+        final TetheringConfiguration disableByDevCon =
+                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+        assertFalse(disableByDevCon.enableBpfOffload);  // Override by device config.
+    }
+
+    @Test
     public void testNewDhcpServerDisabled() {
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(
                 true);
-        doReturn(false).when(
-                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
-                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
+        for (String booleanString : Arrays.asList(null, FALSE)) {
+            doReturn(booleanString).when(
+                    () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                    eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER)));
 
-        final TetheringConfiguration enableByRes =
-                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
-        assertTrue(enableByRes.enableLegacyDhcpServer);
+            final TetheringConfiguration enableByRes =
+                    new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+            assertTrue(enableByRes.enableLegacyDhcpServer);
+        }
 
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(
                 false);
-        doReturn(true).when(
-                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
-                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
+        doReturn(TRUE).when(
+                () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER)));
 
         final TetheringConfiguration enableByDevConfig =
                 new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
@@ -304,14 +350,15 @@ public class TetheringConfigurationTest {
     public void testNewDhcpServerEnabled() {
         when(mResources.getBoolean(R.bool.config_tether_enable_legacy_dhcp_server)).thenReturn(
                 false);
-        doReturn(false).when(
-                () -> DeviceConfig.getBoolean(eq(NAMESPACE_CONNECTIVITY),
-                eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER), anyBoolean()));
 
-        final TetheringConfiguration cfg =
-                new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
-
-        assertFalse(cfg.enableLegacyDhcpServer);
+        for (String booleanString : Arrays.asList(null, FALSE)) {
+            doReturn(booleanString).when(
+                    () -> DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),
+                    eq(TetheringConfiguration.TETHER_ENABLE_LEGACY_DHCP_SERVER)));
+            final TetheringConfiguration cfg =
+                    new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
+            assertFalse(cfg.enableLegacyDhcpServer);
+        }
     }
 
     @Test
