@@ -25,6 +25,121 @@
     },
     {
       "key": {
+        "uuid": "440137dc_b0a1d333",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-03T03:45:11Z",
+      "side": 1,
+      "message": "config_disable is a little confusing, maybe config_enable ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37523359_bd727c54",
+        "filename": "packages/Tethering/res/values/overlayable.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-03T03:45:11Z",
+      "side": 1,
+      "message": "Also add a lenghty comment that explains what this does in detail (this is unfortunately missing from most of the settings here).\nWe\u0027ll point OEMs to this file to know what they configure in the Tethering module.\nMake sure to mention that there\u0027s an override setting that will take precedence over this.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 72
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3228a3d_3e24ccf0",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-03T03:45:11Z",
+      "side": 1,
+      "message": "As discussed in the meeting this would be overriding the resource, and used for test/development scenarios (not pushing flags); in which case I think it should be called \"FORCE_BPF_OFFLOAD\" or something more explicit that shows it\u0027s an override.\n\nThis would be easier to understand for OEMs too, and easier for us to see it\u0027s not a flag designed to be pushed from the server unless something went wrong.",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0293e0_45d4e172",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-03T03:45:11Z",
+      "side": 1,
+      "message": "Also if you need CTS tests for this, consider whether checking that the setting is unset makes sense; OEMs shouldn\u0027t rely on this to enable/disable offload, they should be using the resource.",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733bf954_14fb90a8",
+        "filename": "packages/Tethering/src/com/android/server/connectivity/tethering/TetheringConfiguration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-03T03:45:11Z",
+      "side": 1,
+      "message": "Should it have 3 states (force on, force off, default ?)",
+      "range": {
+        "startLine": 354,
+        "startChar": 42,
+        "endLine": 354,
+        "endChar": 68
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "719958e6_1632864f",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
         "patchSetId": 1
