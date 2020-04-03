@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "433ed4fd_348ae263",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T01:41:57Z",
+      "side": 1,
+      "message": "is7bitsSinglePart is removed in patchset 2. Just ted.msgCount \u003d\u003d 1 is enough because if config_sms_force_7bit_encoding is enabled, ted.codeUnitSize should be ENCODING_7BIT always.",
+      "parentUuid": "07a50ffb_628710c2",
+      "range": {
+        "startLine": 494,
+        "startChar": 22,
+        "endLine": 494,
+        "endChar": 23
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d02a2bc_e6183ef7",
         "filename": "telephony/java/android/telephony/SmsMessage.java",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7bde88fb_d6268ebd",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T01:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de9847c_92f544af",
+      "range": {
+        "startLine": 501,
+        "startChar": 74,
+        "endLine": 501,
+        "endChar": 76
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a97648f5_4dddbd1d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
         "patchSetId": 1
@@ -128,6 +176,24 @@
       "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f296e634_b321c7cd",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T01:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75dd7ec6_83b25ff0",
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
