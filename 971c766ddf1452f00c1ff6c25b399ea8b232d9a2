@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07a50ffb_628710c2",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T00:41:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5f4b5d95_4ddd6410",
+      "range": {
+        "startLine": 494,
+        "startChar": 22,
+        "endLine": 494,
+        "endChar": 23
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d02a2bc_e6183ef7",
         "filename": "telephony/java/android/telephony/SmsMessage.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9de9847c_92f544af",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T00:41:06Z",
+      "side": 1,
+      "message": "For Single-part CDMA SMS, AOSP supports ENCODING_7BIT_ASCII or ENCODING_UNICODE_16 now. \nSo, only (isCdma \u0026\u0026 is7bitSinglePart) \u003d\u003d true means the text should be translated based on 7-bit ASCII table for CDMA.\n\nis7bitSinglePart \u003d\u003d false means the text should be be translated based on GSM 7-bit alphabet for ENCODING_GSM_7BIT_ALPHABET even isCmda \u003d\u003d true since ENCODING_GSM_7BIT_ALPHABE or ENCODING_UNICODE_16 is used for multi-part SMS for CDMA.",
+      "parentUuid": "7d02a2bc_e6183ef7",
+      "range": {
+        "startLine": 501,
+        "startChar": 74,
+        "endLine": 501,
+        "endChar": 76
+      },
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a97648f5_4dddbd1d",
         "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2020-04-02T19:53:04Z",
       "side": 1,
       "message": "Is there any functional change here? It seems this is just clean-up -- moving code from cdma.SmsMessage to here?",
+      "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dd7ec6_83b25ff0",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-03T00:41:06Z",
+      "side": 1,
+      "message": "Yes. Because original message(msg) is needed for else case(Line #562) instead of newMsg as I commented on commit message.",
+      "parentUuid": "a97648f5_4dddbd1d",
       "revId": "971c766ddf1452f00c1ff6c25b399ea8b232d9a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
