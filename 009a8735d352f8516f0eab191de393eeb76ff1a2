@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1b6b4c_2fc74c6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-04-03T02:55:03Z",
+      "side": 1,
+      "message": "Bug: 149997301",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719958e6_1632864f",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-04-03T02:55:03Z",
+      "side": 1,
+      "message": "Bpf",
+      "range": {
+        "startLine": 303,
+        "startChar": 16,
+        "endLine": 303,
+        "endChar": 36
+      },
+      "revId": "009a8735d352f8516f0eab191de393eeb76ff1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
