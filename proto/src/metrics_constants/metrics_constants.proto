@@ -7427,6 +7427,12 @@ message MetricsEvent {
     // OS: Q
     SETTINGS_AWARE_DISPLAY = 1750;
     // ---- End Q Constants, all Q constants go above this line ----
+
+    // OPEN: Settings > System > Gestures > Camera button long-press gesture
+    // CATEGORY: SETTINGS
+    // OS: R
+    SETTINGS_GESTURE_LONG_PRESS_CAMERA = 1751;
+
     // Add new aosp constants above this line.
     // END OF AOSP CONSTANTS
   }

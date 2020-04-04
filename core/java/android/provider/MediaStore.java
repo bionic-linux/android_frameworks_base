@@ -347,6 +347,18 @@ public final class MediaStore {
     public static final String INTENT_ACTION_STILL_IMAGE_CAMERA = "android.media.action.STILL_IMAGE_CAMERA";
 
     /**
+     * The name of the Intent action used to launch a camera in still image
+     * mode from a gesture context. A gesture context could be either
+     * motion-based, triggered by a power key double-tap or by a camera button
+     * long-press. As such, the Intent recipient should present a warning and
+     * auto-close itself after a reasonable timeout in order to preserve
+     * battery in case of an accidental launch.
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String INTENT_ACTION_STILL_IMAGE_CAMERA_GESTURE =
+            "android.media.action.STILL_IMAGE_CAMERA_GESTURE";
+
+    /**
      * Name under which an activity handling {@link #INTENT_ACTION_STILL_IMAGE_CAMERA} or
      * {@link #INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE} publishes the service name for its prewarm
      * service.
@@ -378,6 +390,28 @@ public final class MediaStore {
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String INTENT_ACTION_STILL_IMAGE_CAMERA_SECURE =
             "android.media.action.STILL_IMAGE_CAMERA_SECURE";
+
+    /**
+     * The name of the Intent action used to launch a camera in still image mode
+     * from a gesture context for use when the device is secured (e.g. with a pin,
+     * password, pattern, or face unlock).
+     * Applications responding to this intent must not expose any personal
+     * content like existing photos or videos on the device. The applications
+     * should be careful not to share any photo or video with other
+     * applications or internet. The activity should use {@link
+     * android.view.WindowManager.LayoutParams#FLAG_SHOW_WHEN_LOCKED} to
+     * display on top of the lock screen while secured. There is no activity
+     * stack when this flag is used, so launching more than one activity is
+     * strongly discouraged.
+     * A gesture context could be either motion-based, triggered by a power key
+     * double-tap or by a camera button long-press. As such, the Intent
+     * recipient should present a warning and auto-close itself after a
+     * reasonable timeout in order to preserve battery in case of an accidental
+     * launch.
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    public static final String INTENT_ACTION_STILL_IMAGE_CAMERA_GESTURE_SECURE =
+            "android.media.action.STILL_IMAGE_CAMERA_GESTURE_SECURE";
 
     /**
      * The name of the Intent action used to launch a camera in video mode.

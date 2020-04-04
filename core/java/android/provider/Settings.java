@@ -8297,6 +8297,17 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether the camera launch gesture of long-pressing the camera button should be disabled.
+         *
+         * @hide
+         */
+        public static final String CAMERA_LONG_PRESS_GESTURE_DISABLED =
+                "camera_long_press_gesture_disabled";
+
+        private static final Validator CAMERA_LONG_PRESS_GESTURE_DISABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Whether the camera double twist gesture to flip between front and back mode should be
          * enabled.
          *
@@ -9147,7 +9158,8 @@ public final class Settings {
             GLOBAL_ACTIONS_PANEL_ENABLED,
             AWARE_LOCK_ENABLED,
             AWARE_TAP_PAUSE_GESTURE_COUNT,
-            AWARE_TAP_PAUSE_TOUCH_COUNT
+            AWARE_TAP_PAUSE_TOUCH_COUNT,
+            CAMERA_LONG_PRESS_GESTURE_DISABLED,
         };
 
         /**
@@ -9255,6 +9267,8 @@ public final class Settings {
                     CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED_VALIDATOR);
             VALIDATORS.put(CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
                     CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED_VALIDATOR);
+            VALIDATORS.put(CAMERA_LONG_PRESS_GESTURE_DISABLED,
+                    CAMERA_LONG_PRESS_GESTURE_DISABLED_VALIDATOR);
             VALIDATORS.put(SYSTEM_NAVIGATION_KEYS_ENABLED,
                     SYSTEM_NAVIGATION_KEYS_ENABLED_VALIDATOR);
             VALIDATORS.put(QS_TILES, QS_TILES_VALIDATOR);
