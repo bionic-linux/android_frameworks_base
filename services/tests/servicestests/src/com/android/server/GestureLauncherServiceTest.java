@@ -29,7 +29,10 @@ import static org.mockito.Mockito.when;
 import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.IGestureLauncher;
 import android.os.Looper;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.platform.test.annotations.Presubmit;
 import android.provider.Settings;
@@ -83,6 +86,7 @@ public class GestureLauncherServiceTest {
     private @Mock MetricsLogger mMetricsLogger;
     private MockContentResolver mContentResolver;
     private GestureLauncherService mGestureLauncherService;
+    private IGestureLauncher mIGestureLauncherService;
 
     @BeforeClass
     public static void oneTimeInitialization() {
@@ -106,6 +110,8 @@ public class GestureLauncherServiceTest {
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
 
         mGestureLauncherService = new GestureLauncherService(mContext, mMetricsLogger);
+        mIGestureLauncherService = IGestureLauncher.Stub.asInterface(
+                ServiceManager.getService(Context.GESTURE_LAUNCHER_SERVICE));
     }
 
     @Test
@@ -153,6 +159,82 @@ public class GestureLauncherServiceTest {
     }
 
     @Test
+    public void testIsCameraButtonLaunchEnabled_configFalse() {
+        withCameraButtonLaunchEnableConfigValue(false);
+        assertFalse(mGestureLauncherService.isCameraButtonLaunchEnabled(mResources));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchEnabled_configTrue() {
+        withCameraButtonLaunchEnableConfigValue(true);
+        assertTrue(mGestureLauncherService.isCameraButtonLaunchEnabled(mResources));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabled_configFalseSettingDisabled() {
+        withCameraButtonLaunchEnableConfigValue(false);
+        withCameraButtonLaunchDisableSettingValue(1);
+        assertFalse(mGestureLauncherService.isCameraButtonLaunchSettingEnabled(
+                mContext, FAKE_USER_ID));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabled_configFalseSettingEnabled() {
+        withCameraButtonLaunchEnableConfigValue(false);
+        withCameraButtonLaunchDisableSettingValue(0);
+        assertFalse(mGestureLauncherService.isCameraButtonLaunchSettingEnabled(
+                mContext, FAKE_USER_ID));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabled_configTrueSettingDisabled() {
+        withCameraButtonLaunchEnableConfigValue(true);
+        withCameraButtonLaunchDisableSettingValue(1);
+        assertFalse(mGestureLauncherService.isCameraButtonLaunchSettingEnabled(
+                mContext, FAKE_USER_ID));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabled_configTrueSettingEnabled() {
+        withCameraButtonLaunchEnableConfigValue(true);
+        withCameraButtonLaunchDisableSettingValue(0);
+        assertTrue(mGestureLauncherService.isCameraButtonLaunchSettingEnabled(
+                mContext, FAKE_USER_ID));
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabledBinder_configFalseSettingDisabled()
+            throws RemoteException {
+        withCameraButtonLaunchEnableConfigValue(false);
+        withCameraButtonLaunchDisableSettingValue(1);
+        assertFalse(mIGestureLauncherService.isCameraButtonLaunchSettingEnabled());
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabledBinder_configFalseSettingEnabled()
+            throws RemoteException {
+        withCameraButtonLaunchEnableConfigValue(false);
+        withCameraButtonLaunchDisableSettingValue(0);
+        assertFalse(mIGestureLauncherService.isCameraButtonLaunchSettingEnabled());
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabledBinder_configTrueSettingDisabled()
+            throws RemoteException {
+        withCameraButtonLaunchEnableConfigValue(true);
+        withCameraButtonLaunchDisableSettingValue(1);
+        assertFalse(mIGestureLauncherService.isCameraButtonLaunchSettingEnabled());
+    }
+
+    @Test
+    public void testIsCameraButtonLaunchSettingEnabledBinder_configTrueSettingEnabled()
+        throws RemoteException {
+        withCameraButtonLaunchEnableConfigValue(true);
+        withCameraButtonLaunchDisableSettingValue(0);
+        assertTrue(mIGestureLauncherService.isCameraButtonLaunchSettingEnabled());
+    }
+
+    @Test
     public void testHandleCameraLaunchGesture_userSetupComplete() {
         withUserSetupCompleteValue(true);
 
@@ -167,6 +249,24 @@ public class GestureLauncherServiceTest {
 
         boolean useWakeLock = false;
         assertFalse(mGestureLauncherService.handleCameraGesture(useWakeLock, FAKE_SOURCE));
+    }
+
+    @Test
+    public void testHandleCameraGestureBinder_userSetupComplete() throws RemoteException {
+        withUserSetupCompleteValue(true);
+
+        boolean useWakeLock = false;
+
+        assertTrue(mIGestureLauncherService.handleCameraGesture(FAKE_SOURCE));
+        verify(mGestureLauncherService.handleCameraGesture(useWakeLock, FAKE_SOURCE));
+        verify(mStatusBarManagerInternal).onCameraLaunchGestureDetected(FAKE_SOURCE);
+    }
+
+    @Test
+    public void testHandleCameraGestureBinder_userSetupNotComplete() throws RemoteException {
+        withUserSetupCompleteValue(false);
+
+        assertFalse(mIGestureLauncherService.handleCameraGesture(FAKE_SOURCE));
     }
 
     @Test
@@ -874,10 +974,24 @@ public class GestureLauncherServiceTest {
                 .thenReturn(enableConfigValue);
     }
 
+    private void withCameraButtonLaunchEnableConfigValue(boolean enableConfigValue) {
+        when(mResources.getBoolean(
+                com.android.internal.R.bool.config_cameraButtonLaunchEnabled))
+                .thenReturn(enableConfigValue);
+    }
+
     private void withCameraDoubleTapPowerDisableSettingValue(int disableSettingValue) {
         Settings.Secure.putIntForUser(
                 mContentResolver,
                 Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
+                disableSettingValue,
+                UserHandle.USER_CURRENT);
+    }
+
+    private void withCameraButtonLaunchDisableSettingValue(int disableSettingValue) {
+        Settings.Secure.putIntForUser(
+                mContentResolver,
+                Settings.Secure.CAMERA_LONG_PRESS_GESTURE_DISABLED,
                 disableSettingValue,
                 UserHandle.USER_CURRENT);
     }
