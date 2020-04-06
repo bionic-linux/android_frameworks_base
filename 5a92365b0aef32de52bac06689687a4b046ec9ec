@@ -22,6 +22,30 @@
       "revId": "5a92365b0aef32de52bac06689687a4b046ec9ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a791272_d51a5949",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T06:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d19987_6c78b91d",
+      "range": {
+        "startLine": 627,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 45
+      },
+      "revId": "5a92365b0aef32de52bac06689687a4b046ec9ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
