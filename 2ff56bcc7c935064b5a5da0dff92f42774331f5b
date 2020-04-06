@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d24444f_3cd00df1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T06:01:23Z",
+      "side": 1,
+      "message": "Maybe just \"createDualStackUpstream\" or similar because you have both v6 and v4 here, so it\u0027s a bit surprising to call out v6",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efbe4ce_b73caf37",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T06:01:23Z",
+      "side": 1,
+      "message": "Likewise, you also assert there is only 1 address so maybe \"assertOnlyOneV6AddressAndNoV4(lp)\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4807432a_b0846acf",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T06:01:23Z",
+      "side": 1,
+      "message": "Do you want to also verifyNoMoreInteractions(firstServer) here to make sure the code is not sending a message to the wrong server ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a3e364_77e2261a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T06:01:23Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
