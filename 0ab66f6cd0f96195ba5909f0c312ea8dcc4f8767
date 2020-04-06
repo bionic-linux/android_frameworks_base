@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1079d287_ce7b0528",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-06T07:33:10Z",
+      "side": 1,
+      "message": "This latch should be removed as below discussion.",
+      "parentUuid": "d78925a6_01d990da",
+      "range": {
+        "startLine": 258,
+        "startChar": 29,
+        "endLine": 258,
+        "endChar": 43
+      },
+      "revId": "0ab66f6cd0f96195ba5909f0c312ea8dcc4f8767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5da4a5fd_d6b73703",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Oops, yes. This is redundant code that they exist when I add testRequestLastEntitlementCacheValue test function. dispatchAll is enough, we can just remove latch.",
       "parentUuid": "5da4a5fd_d6b73703",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "0ab66f6cd0f96195ba5909f0c312ea8dcc4f8767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325ed6ee_037f90ac",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-06T07:33:10Z",
+      "side": 1,
+      "message": "ACK. Will remove the latch by follow up comit.",
+      "parentUuid": "07a070da_f7e4e1d2",
       "range": {
         "startLine": 364,
         "startChar": 0,
