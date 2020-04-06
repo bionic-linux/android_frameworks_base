@@ -653,7 +653,6 @@ filegroup {
         "core/java/android/net/DhcpResults.java",
         "core/java/android/net/shared/Inet4AddressUtils.java",
         "core/java/android/net/shared/InetAddressUtils.java",
-        "core/java/android/net/util/IpUtils.java",
         "core/java/android/util/LocalLog.java",
         "core/java/com/android/internal/util/Preconditions.java",
     ],
