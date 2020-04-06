@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d19987_6c78b91d",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T03:03:06Z",
+      "side": 1,
+      "message": "Given that it can never happen that reason is non-null, can we instead pass in null here?\n\n    // Only legacy clients can ever set a non-null reason.\n    mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null,\n            mNetworkInfo.getExtraInfo());",
+      "range": {
+        "startLine": 627,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 45
+      },
+      "revId": "5a92365b0aef32de52bac06689687a4b046ec9ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
