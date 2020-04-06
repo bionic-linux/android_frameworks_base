@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9787504c_cd224edf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-04-06T18:25:17Z",
+      "side": 1,
+      "message": "no internal links in android cls.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "86c8639a17f098cbf8de484f96322adca38d448b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1f1b7d_2af57b74",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-04-06T18:25:17Z",
+      "side": 1,
+      "message": "overflow?",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "86c8639a17f098cbf8de484f96322adca38d448b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20673ccd_79a105a5",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-04-06T18:25:17Z",
+      "side": 1,
+      "message": "what if this is negative?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 60
+      },
+      "revId": "86c8639a17f098cbf8de484f96322adca38d448b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
