@@ -624,7 +624,8 @@ public abstract class NetworkAgent {
             throw new UnsupportedOperationException(
                     "Legacy agents can't call markConnected.");
         }
-        mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
+        mNetworkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, mNetworkInfo.getReason(),
+                mNetworkInfo.getExtraInfo());
         queueOrSendMessage(EVENT_NETWORK_INFO_CHANGED, mNetworkInfo);
     }
 
