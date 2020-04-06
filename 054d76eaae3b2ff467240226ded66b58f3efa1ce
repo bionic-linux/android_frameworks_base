@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8766c2ad_e7b68809",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T23:44:23Z",
+      "side": 1,
+      "message": "Nit: technically for a WifiAwareNetworkSpecifier it would be more realistic to have TRANSPORT_WIFI_AWARE here.",
+      "range": {
+        "startLine": 721,
+        "startChar": 34,
+        "endLine": 721,
+        "endChar": 48
+      },
+      "revId": "054d76eaae3b2ff467240226ded66b58f3efa1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d24fac_7a97a68b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T23:44:23Z",
+      "side": 1,
+      "message": "This is not super obvious. Add a comment? Something like?\n\n    // Checks that all transport types from MIN_TRANSPORT to maxTransportType are set to\n    // positiveSequence, and all transport types from maxTransportType + 1 to MAX_TRANSPORT\n    // are set to !positiveSequence.",
+      "range": {
+        "startLine": 812,
+        "startChar": 0,
+        "endLine": 814,
+        "endChar": 39
+      },
+      "revId": "054d76eaae3b2ff467240226ded66b58f3efa1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474ad8e4_55ef84e1",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T23:44:23Z",
+      "side": 1,
+      "message": "Why is this not its own test? It\u0027s called by testAddAndRemoveTransportType, but it doesn\u0027t need to be. Just:\n\n@Test\npublic void testMultipleTransportTypes() {\n\n...",
+      "range": {
+        "startLine": 831,
+        "startChar": 17,
+        "endLine": 831,
+        "endChar": 21
+      },
+      "revId": "054d76eaae3b2ff467240226ded66b58f3efa1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c76f96_4f8a8b94",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T23:44:23Z",
+      "side": 1,
+      "message": "... and remove this.",
+      "range": {
+        "startLine": 862,
+        "startChar": 8,
+        "endLine": 862,
+        "endChar": 37
+      },
+      "revId": "054d76eaae3b2ff467240226ded66b58f3efa1ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
