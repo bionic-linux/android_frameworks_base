@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d418cf_e7e7d976",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-04-06T23:44:14Z",
+      "side": 1,
+      "message": "What\u0027s the source of this info? Is it documented somewhere?",
+      "range": {
+        "startLine": 497,
+        "startChar": 15,
+        "endLine": 498,
+        "endChar": 46
+      },
+      "revId": "6568f8f20ab7ca7a8f0b92b799b923abdeb4cddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
