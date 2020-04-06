@@ -45,6 +45,54 @@
       "revId": "961c55c814b8d52ead32445605576e548c5898fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed5baf4_f91f9bb0",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T03:46:35Z",
+      "side": 1,
+      "message": "Indeed ; the only way to set this is to either use an @hide constructor that makes the agent legacy, or to use setNetworkInfo which will throw in the face of a non-legacy agent.",
+      "parentUuid": "e81d461d_c12f0448",
+      "range": {
+        "startLine": 627,
+        "startChar": 20,
+        "endLine": 627,
+        "endChar": 28
+      },
+      "revId": "961c55c814b8d52ead32445605576e548c5898fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9a2365a_143bcc94",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T03:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd2acf3_42fa9f6b",
+      "range": {
+        "startLine": 627,
+        "startChar": 11,
+        "endLine": 627,
+        "endChar": 19
+      },
+      "revId": "961c55c814b8d52ead32445605576e548c5898fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
