@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78925a6_01d990da",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T04:05:59Z",
+      "side": 1,
+      "message": "(not for this patch) locals should not start with m, this is reserved for members.",
+      "range": {
+        "startLine": 258,
+        "startChar": 29,
+        "endLine": 258,
+        "endChar": 43
+      },
+      "revId": "0ab66f6cd0f96195ba5909f0c312ea8dcc4f8767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da4a5fd_d6b73703",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/EntitlementManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-06T04:05:59Z",
+      "side": 1,
+      "message": "Wait this doesn\u0027t work. A latch can only be used once, and can never be reset : https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/CountDownLatch.html\n\nIn other words, even if requesting here was going to set uiProvisionCount to 1, you would not necessarily notice.\nOf course the same goes for all tests in this function after the first one.\n\nThe most obvious way to fix this it to create a different latch for every part. It\u0027s easiest to export part of it in a separate method to do it.\nOtherwise, you could use a CyclicBarrier that can be reset, or a Semaphore which is easier to use.\n\nOr, if dispatchAll is enough, just remove the latch completely.",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "0ab66f6cd0f96195ba5909f0c312ea8dcc4f8767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
