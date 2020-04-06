@@ -456,6 +456,8 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     static final String SYSTEM_DEBUGGABLE = "ro.debuggable";
 
+    static final String SYSTEM_USER_HOME_NEEDED = "ro.system_user_home_needed";
+
     public static final String ANR_TRACE_DIR = "/data/anr";
 
     // Maximum number of receivers an app can register.
@@ -8996,6 +8998,13 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    private boolean isSystemUserHomeNeeded() {
+        // Only CoreSystemImage (CSI) enables this explicitly since there's no
+        // Launcher, and not even Settings, in CSI. SystemUserHome activity in
+        // the framework is enabled as a last resort for CSI to boot properly.
+        return SystemProperties.getBoolean(SYSTEM_USER_HOME_NEEDED, false);
+    }
+
     public void systemReady(final Runnable goingCallback, TimingsTraceLog traceLog) {
         traceLog.traceBegin("PhaseActivityManagerReady");
         synchronized(this) {
@@ -9109,17 +9118,21 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Enable home activity for system user, so that the system can always boot. We don't
             // do this when the system user is not setup since the setup wizard should be the one
             // to handle home activity in this case.
-            if (UserManager.isSplitSystemUser() &&
-                    Settings.Secure.getInt(mContext.getContentResolver(),
+            if ((UserManager.isSplitSystemUser() || isSystemUserHomeNeeded())
+                    && Settings.Secure.getInt(mContext.getContentResolver(),
                          Settings.Secure.USER_SETUP_COMPLETE, 0) != 0) {
                 ComponentName cName = new ComponentName(mContext, SystemUserHomeActivity.class);
                 try {
                     AppGlobals.getPackageManager().setComponentEnabledSetting(cName,
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0,
                             UserHandle.USER_SYSTEM);
+                    Slog.i(TAG, "SystemUserHome activity is enabled.");
                 } catch (RemoteException e) {
                     throw e.rethrowAsRuntimeException();
                 }
+            }
+            else {
+                Slog.i(TAG, "SystemUserHome activity is NOT enabled.");
             }
 
             if (bootingSystemUser) {
