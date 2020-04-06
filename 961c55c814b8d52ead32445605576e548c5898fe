@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81d461d_c12f0448",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T03:14:27Z",
+      "side": 1,
+      "message": "Nit: this should say \"cannot\", right? Because there is no API to set it?",
+      "range": {
+        "startLine": 627,
+        "startChar": 20,
+        "endLine": 627,
+        "endChar": 28
+      },
+      "revId": "961c55c814b8d52ead32445605576e548c5898fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd2acf3_42fa9f6b",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-06T03:14:27Z",
+      "side": 1,
+      "message": "Nit: elsewhere we use | instead of `, so this would be |reason| instead of `reason`.",
+      "range": {
+        "startLine": 627,
+        "startChar": 11,
+        "endLine": 627,
+        "endChar": 19
+      },
+      "revId": "961c55c814b8d52ead32445605576e548c5898fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
