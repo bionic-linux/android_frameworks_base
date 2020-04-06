@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b667ac80_b7d65ba8",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0bbc57f_9f6b636a",
+      "range": {
+        "startLine": 664,
+        "startChar": 36,
+        "endLine": 664,
+        "endChar": 52
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "347c15b7_d1f206c7",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942add7f_bf9a7722",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "I want to confirm the exception is what I expect.\nI think your suggestion is also working because if the throwing exception is not IllegalStateException, the test will fail finally.",
+      "parentUuid": "347c15b7_d1f206c7",
+      "range": {
+        "startLine": 665,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 13
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e166c8fe_c2a2e606",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ab01c7_caa963fc",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 676,
+        "endChar": 58
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4caa8c9c_f4b801ee",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0354a5b9_031be605",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4caa8c9c_f4b801ee",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6a34787f_a392a91c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cc05eb1b_9957aa06",
+      "range": {
+        "startLine": 706,
+        "startChar": 8,
+        "endLine": 706,
+        "endChar": 50
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7f913f1_3ee15263",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a93aaa_16f051fc",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7f913f1_3ee15263",
+      "range": {
+        "startLine": 711,
+        "startChar": 0,
+        "endLine": 714,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3c0f9930_2d808e9c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd0d891c_a496c40d",
+      "range": {
+        "startLine": 767,
+        "startChar": 17,
+        "endLine": 767,
+        "endChar": 21
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63e6ef5e_957ed237",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db1e342_73e2275d",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e6ef5e_957ed237",
+      "range": {
+        "startLine": 820,
+        "startChar": 0,
+        "endLine": 823,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4587b7ac_d4edb9b9",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee506e0_2aef8ffe",
+      "range": {
+        "startLine": 826,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7271a3b2_6c5328e3",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931d019c_09f0125b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-04-06T07:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7271a3b2_6c5328e3",
+      "range": {
+        "startLine": 879,
+        "startChar": 0,
+        "endLine": 882,
+        "endChar": 9
+      },
+      "revId": "9796ee029804cafa4746dc835206c74cd7f97b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
