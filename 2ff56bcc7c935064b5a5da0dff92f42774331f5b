@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f85694ac_3c2a2d60",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T10:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d24444f_3cd00df1",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7efbe4ce_b73caf37",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26fe93c_1f06cfc1",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T10:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7efbe4ce_b73caf37",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b76261b_cecad763",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T10:45:27Z",
+      "side": 1,
+      "message": "No. Actually new added active downstream would force update current upstream updateIPv6TetheringInterfaces() to downstreams. Since currently we only support ipv6 for one downstream, we will only send message with linkproperties to firstServer in this case. When firstServer receive message and found linkproperties is same as previous, firstServer would ignore this the update.\nI think this is redundant but harmless and consider to refine it, so just not add the test to say firstServer should or shouldn\u0027t receive message currently.",
+      "parentUuid": "4807432a_b0846acf",
+      "range": {
+        "startLine": 119,
+        "startChar": 8,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a3e364_77e2261a",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9b766b_62442dab",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/IPv6TetheringCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T10:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a3e364_77e2261a",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "2ff56bcc7c935064b5a5da0dff92f42774331f5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
