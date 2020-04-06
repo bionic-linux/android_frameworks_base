@@ -52,6 +52,24 @@
       "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650f866a_d862422d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T04:04:52Z",
+      "side": 0,
+      "message": "No, the code coverage I mean is not for dashboard. I want to have unitests cover all of tethering class files. This CL aim for TetheringService class. Before this CL, TetheringService do not have unitest. I think we need simply unit test for TetheringService even the code path is pretty plain. In TetheringServiceTest(unit test of this CL), we focus on TetheringService so the tethering object is mock. Will also test for TetheringManager \u003c-\u003e TetheirngService interaction. In this test, \"Tethering\" would be \"new\" and override the TetheringDependencies. Then we can test client(TetheringManager) and server(Tethering service) interaction. I plan to use this to test some APIs which is hard to test by CTS. BTW, the test about caller does not have the required permissions can be tested by CTS.",
+      "parentUuid": "ad373d13_08cede87",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "318b23e2_1c48a24d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/MockTetheringService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T04:04:52Z",
+      "side": 1,
+      "message": "Indeed, thanks suggestion.",
+      "parentUuid": "c21de354_4cf8f8ea",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "4c52cbf64e235e30c5eb25d2ae511c7288baab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ecb897_50c56164",
         "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4c52cbf64e235e30c5eb25d2ae511c7288baab73",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba50e3ab_edf15524",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-06T04:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ecb897_50c56164",
+      "range": {
+        "startLine": 62,
+        "startChar": 51,
+        "endLine": 62,
+        "endChar": 91
+      },
+      "revId": "4c52cbf64e235e30c5eb25d2ae511c7288baab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
