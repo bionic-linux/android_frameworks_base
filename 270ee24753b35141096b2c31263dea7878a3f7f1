@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c74aef0_542b0e21",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-07T11:14:20Z",
+      "side": 1,
+      "message": "Why we need network stack jarjar rule here ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a435971_41d230e5",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-07T11:14:20Z",
+      "side": 1,
+      "message": "I remember these may have order dependencies, so this is not follow alphabet order. Maybe this is fine now assume you already test pass.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceaf0f5_4dac5f1a",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-07T11:14:20Z",
+      "side": 1,
+      "message": "Any reason to remove mts tag from TetheringTests ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
