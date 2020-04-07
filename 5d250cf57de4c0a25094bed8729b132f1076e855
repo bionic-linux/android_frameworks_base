@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "874296eb_9f7ea5be",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4326,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-04-07T14:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa1ce48_73c15ade",
+      "range": {
+        "startLine": 4326,
+        "startChar": 4,
+        "endLine": 4326,
+        "endChar": 50
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc986b1a_6e872272",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582a9258_468d34bc",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4327,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-04-07T14:18:58Z",
+      "side": 1,
+      "message": "Renaming it to config_enable_retry_for_pdp_reject_29_33_55",
+      "parentUuid": "fc986b1a_6e872272",
+      "range": {
+        "startLine": 4327,
+        "startChar": 16,
+        "endLine": 4327,
+        "endChar": 53
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5b563181_a00896eb",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4331,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-04-07T14:18:58Z",
+      "side": 1,
+      "message": "Retry time to pass for reconnect alarm is 45s which accepts value in ms.\nSo the value set with this config is in ms, renamed it to data_retry_delay_ms",
+      "parentUuid": "906ff40b_fccc5b79",
+      "range": {
+        "startLine": 4329,
+        "startChar": 4,
+        "endLine": 4331,
+        "endChar": 54
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52953af8_4ae44088",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 1
@@ -139,6 +211,30 @@
       "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5d3997_abee156b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4336,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-04-07T14:18:58Z",
+      "side": 1,
+      "message": "Yes, these are used internally to set message for popup display",
+      "parentUuid": "52953af8_4ae44088",
+      "range": {
+        "startLine": 4333,
+        "startChar": 4,
+        "endLine": 4336,
+        "endChar": 63
+      },
+      "revId": "5d250cf57de4c0a25094bed8729b132f1076e855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
