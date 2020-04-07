@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ece8b7a5_0e902ee9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-04-07T17:48:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure why libprotobuf.so was not in the apex, but Soong was definitely adding it as a dependency.",
+      "parentUuid": "75ea122b_9fa98ac3",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "20dbbe370f339f661cfa37b61c46c0ccaaa0824f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ea430f5_f7567009",
         "filename": "apex/sdkextensions/derive_sdk/Android.bp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-01T11:13:41Z",
       "side": 1,
       "message": "is it now a built-time failure to do what I was doing before?",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "20dbbe370f339f661cfa37b61c46c0ccaaa0824f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b266d8b_581e9cf7",
+        "filename": "apex/sdkextensions/derive_sdk/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-04-07T17:48:58Z",
+      "side": 1,
+      "message": "No, that requires the ODR prevention bug that has been pending for a long time.  We would need a way to detect both libprotobuf-cpp-lite-ndk static and shared in the dependency chain of a binary or library.",
+      "parentUuid": "5ea430f5_f7567009",
       "range": {
         "startLine": 22,
         "startChar": 21,
