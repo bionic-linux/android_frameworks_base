@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0675e0d_72b700fa",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-07T14:18:55Z",
+      "side": 1,
+      "message": "Because these tests use NetworkStackApiStableLib and jarjar rule is necessary. Otherwise, these tests will be failed on TetheringCoverageTests. You can see Remi\u0027s comment on patch4 for more details.",
+      "parentUuid": "5c74aef0_542b0e21",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a435971_41d230e5",
         "filename": "packages/Tethering/tests/unit/Android.bp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "88039fd2_19ef1bd8",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-07T14:18:55Z",
+      "side": 1,
+      "message": "Yes, it\u0027s fine. TetheringTests and TetheringTestsLib still work.",
+      "parentUuid": "3a435971_41d230e5",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ceaf0f5_4dac5f1a",
         "filename": "packages/Tethering/tests/unit/Android.bp",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2020-04-07T11:14:20Z",
       "side": 1,
       "message": "Any reason to remove mts tag from TetheringTests ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69eb2498_9b6b21f1",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-07T14:18:55Z",
+      "side": 1,
+      "message": "I add mts tag to TetheringCoverageTests and it\u0027s included this test. I can add mts tag back if you think we should keep it.",
+      "parentUuid": "0ceaf0f5_4dac5f1a",
       "range": {
         "startLine": 65,
         "startChar": 31,
