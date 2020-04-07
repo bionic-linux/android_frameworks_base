@@ -22,6 +22,30 @@
       "revId": "6568f8f20ab7ca7a8f0b92b799b923abdeb4cddf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876e01dc_25b67990",
+        "filename": "telephony/java/android/telephony/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-04-07T00:09:58Z",
+      "side": 1,
+      "message": "Currently AOSP works like that. Please see Line #510 ~ #521.",
+      "parentUuid": "d4d418cf_e7e7d976",
+      "range": {
+        "startLine": 497,
+        "startChar": 15,
+        "endLine": 498,
+        "endChar": 46
+      },
+      "revId": "6568f8f20ab7ca7a8f0b92b799b923abdeb4cddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
