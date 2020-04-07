@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0cc6dd2_8f78493b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-07T09:23:26Z",
+      "side": 1,
+      "message": "Sorry I\u0027m a bit late but can you amend this to use a WifiAwareNetworkInfo instance ? You\u0027ll have to use one of the @hide constructors.",
+      "range": {
+        "startLine": 899,
+        "startChar": 17,
+        "endLine": 899,
+        "endChar": 33
+      },
+      "revId": "cb86457ddbf58bc6222f3ca27a021bb7752cdcb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
