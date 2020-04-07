@@ -1550,23 +1550,6 @@ public class Tethering {
                 mOffload.excludeDownstreamInterface(who.interfaceName());
                 mForwardedDownstreams.remove(who);
             }
-
-            // If this is a Wi-Fi interface, notify WifiManager of the active serving state.
-            if (who.interfaceType() == TETHERING_WIFI) {
-                final WifiManager mgr = getWifiManager();
-                final String iface = who.interfaceName();
-                switch (mode) {
-                    case IpServer.STATE_TETHERED:
-                        mgr.updateInterfaceIpState(iface, IFACE_IP_MODE_TETHERED);
-                        break;
-                    case IpServer.STATE_LOCAL_ONLY:
-                        mgr.updateInterfaceIpState(iface, IFACE_IP_MODE_LOCAL_ONLY);
-                        break;
-                    default:
-                        Log.wtf(TAG, "Unknown active serving mode: " + mode);
-                        break;
-                }
-            }
         }
 
         private void handleInterfaceServingStateInactive(IpServer who) {
@@ -1575,18 +1558,6 @@ public class Tethering {
             mOffload.excludeDownstreamInterface(who.interfaceName());
             mForwardedDownstreams.remove(who);
             updateConnectedClients(null /* wifiClients */);
-
-            // If this is a Wi-Fi interface, tell WifiManager of any errors
-            // or the inactive serving state.
-            if (who.interfaceType() == TETHERING_WIFI) {
-                if (who.lastError() != TETHER_ERROR_NO_ERROR) {
-                    getWifiManager().updateInterfaceIpState(
-                            who.interfaceName(), IFACE_IP_MODE_CONFIGURATION_ERROR);
-                } else {
-                    getWifiManager().updateInterfaceIpState(
-                            who.interfaceName(), IFACE_IP_MODE_UNSPECIFIED);
-                }
-            }
         }
 
         private void handleUpstreamNetworkMonitorCallback(int arg1, Object o) {
@@ -2207,10 +2178,17 @@ public class Tethering {
         switch (state) {
             case IpServer.STATE_UNAVAILABLE:
             case IpServer.STATE_AVAILABLE:
+                final int ipState = (error != TETHER_ERROR_NO_ERROR)
+                        ? IFACE_IP_MODE_CONFIGURATION_ERROR : IFACE_IP_MODE_UNSPECIFIED;
+                updateInterfaceIpState(who.interfaceType(), iface, ipState);
                 which = TetherMasterSM.EVENT_IFACE_SERVING_STATE_INACTIVE;
                 break;
             case IpServer.STATE_TETHERED:
+                updateInterfaceIpState(who.interfaceType(), iface, IFACE_IP_MODE_TETHERED);
+                which = TetherMasterSM.EVENT_IFACE_SERVING_STATE_ACTIVE;
+                break;
             case IpServer.STATE_LOCAL_ONLY:
+                updateInterfaceIpState(who.interfaceType(), iface, IFACE_IP_MODE_LOCAL_ONLY);
                 which = TetherMasterSM.EVENT_IFACE_SERVING_STATE_ACTIVE;
                 break;
             default:
@@ -2219,6 +2197,15 @@ public class Tethering {
         }
         mTetherMasterSM.sendMessage(which, state, 0, who);
         sendTetherStateChangedBroadcast();
+    }
+
+    private void updateInterfaceIpState(final int tetheringType, final String iface,
+            final int ipState) {
+        // If this is a Wi-Fi interface, tell WifiManager of any errors or the serving state.
+        if (tetheringType != TETHERING_WIFI) return;
+
+        final WifiManager mgr = getWifiManager();
+        mgr.updateInterfaceIpState(iface, ipState);
     }
 
     private void notifyLinkPropertiesChanged(IpServer who, LinkProperties newLp) {
