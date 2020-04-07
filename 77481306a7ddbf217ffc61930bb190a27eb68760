@@ -70,6 +70,24 @@
       "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c25ddae1_cf544b1a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-07T12:00:58Z",
+      "side": 0,
+      "message": "But even if this is not meant for the dashboard, you will still lose track of the coverage on the permission checks (maybe the most important thing to test in this class), since the dashboard will be green enough not to remind us that this is missing.\n\nI guess if CTS coverage is needed anyway, and it will check for the permissions there, that works... You could have overridden checkCallingOrSelfPermission in MockTetheringService and done comprehensive checks on the permissions here though.",
+      "parentUuid": "650f866a_d862422d",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
