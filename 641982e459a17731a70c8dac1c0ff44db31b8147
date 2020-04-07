@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cdaf437_fd467226",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-07T06:50:27Z",
+      "side": 1,
+      "message": "Also add:\njarjar_rules: \":NetworkStackJarJarRules\",\n\nin any build rule where you use NetworkStackApiStableLib: the lib is intended to be used with the jarjar rules.\n\nIf you don\u0027t do that, because both NetworkStackTestsLib and TetheringIntegrationTestsLib include NetworkStackApiStableLib, but only NetworkStackTestsLib uses the jarjar rule for it, the output APK could be getting the jarjared classes from NetworkStackTestsLib even though TetheringIntegrationTestsLib is expecting a non-jarjared version\n\nAlso since all targets here have NetworkStackApiStableLib in static libs, maybe it can be moved to the defaults ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 1
+      },
+      "revId": "641982e459a17731a70c8dac1c0ff44db31b8147",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
