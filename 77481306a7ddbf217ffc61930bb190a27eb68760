@@ -88,6 +88,24 @@
       "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9764a3a_a206ee03",
+        "filename": "packages/Tethering/tests/unit/src/com/android/server/connectivity/tethering/TetheringServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-07T15:33:43Z",
+      "side": 0,
+      "message": "Ack, make sense. Will have CL for suggestion change.",
+      "parentUuid": "c25ddae1_cf544b1a",
+      "revId": "77481306a7ddbf217ffc61930bb190a27eb68760",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
