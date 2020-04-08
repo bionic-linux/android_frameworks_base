@@ -3384,6 +3384,7 @@ public abstract class Context {
             //@hide: TIME_ZONE_DETECTOR_SERVICE,
             PERMISSION_SERVICE,
             LIGHTS_SERVICE,
+            //@hide: GESTURE_LAUNCHER_SERVICE,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ServiceName {}
@@ -4893,6 +4894,15 @@ public abstract class Context {
      * @hide
      */
     public static final String DYNAMIC_SYSTEM_SERVICE = "dynamic_system";
+
+     /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.os.GestureLauncher} for managing camera launch on sensor
+     * motion or key events.
+     * @hide
+     */
+    @SystemApi
+    public static final String GESTURE_LAUNCHER_SERVICE = "gesture_launcher";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve an

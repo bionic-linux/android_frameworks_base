@@ -139,11 +139,13 @@ import android.os.BugreportManager;
 import android.os.Build;
 import android.os.DeviceIdleManager;
 import android.os.DropBoxManager;
+import android.os.GestureLauncherManager;
 import android.os.HardwarePropertiesManager;
 import android.os.IBatteryPropertiesRegistrar;
 import android.os.IBinder;
 import android.os.IDeviceIdleController;
 import android.os.IDumpstate;
+import android.os.IGestureLauncher;
 import android.os.IHardwarePropertiesManager;
 import android.os.IPowerManager;
 import android.os.IRecoverySystem;
@@ -1360,6 +1362,7 @@ final class SystemServiceRegistry {
                         return new DynamicSystemManager(
                                 IDynamicSystemService.Stub.asInterface(b));
                     }});
+
         registerService(Context.LIGHTS_SERVICE, LightsManager.class,
             new CachedServiceFetcher<LightsManager>() {
                 @Override
@@ -1367,6 +1370,17 @@ final class SystemServiceRegistry {
                     throws ServiceNotFoundException {
                     return new LightsManager(ctx);
                 }});
+
+        registerService(Context.GESTURE_LAUNCHER_SERVICE, GestureLauncherManager.class,
+                new CachedServiceFetcher<GestureLauncherManager>() {
+                    @Override
+                    public GestureLauncherManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.GESTURE_LAUNCHER_SERVICE);
+                        return new GestureLauncherManager(
+                                IGestureLauncher.Stub.asInterface(b));
+                    }});
         //CHECKSTYLE:ON IndentationCheck
     }
 
