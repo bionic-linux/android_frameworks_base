@@ -22,6 +22,30 @@
       "revId": "e616fa6279ebdbca71974db63deb968aff061e3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b708cb_f5f6a70a",
+        "filename": "core/res/res/layout/system_user_home.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1139803
+      },
+      "writtenOn": "2020-04-08T04:43:04Z",
+      "side": 1,
+      "message": "Yes. Copied from the FallbackHome in Settings.",
+      "parentUuid": "c64ee209_c4cc00f2",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "e616fa6279ebdbca71974db63deb968aff061e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
