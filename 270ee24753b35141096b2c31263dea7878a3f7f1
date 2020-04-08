@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d58a160_a2c273a8",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-08T13:06:42Z",
+      "side": 1,
+      "message": "Since it\u0027s only used by TetheringCoverageTests, maybe just merge the attributes there ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c74aef0_542b0e21",
         "filename": "packages/Tethering/tests/integration/Android.bp",
         "patchSetId": 6
@@ -46,6 +69,52 @@
       "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dafbbdbf_54937540",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-08T13:06:42Z",
+      "side": 1,
+      "message": "Should this be platform_apis: true ? Or something else ?",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adc3a07_ee149765",
+        "filename": "packages/Tethering/tests/integration/AndroidManifest_coverage.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-08T13:06:42Z",
+      "side": 1,
+      "message": "Is this actually necessary ? I expected the permissions to be merged from each manifest of the android_libs that TetheringCoverageTests contains",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 74
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
