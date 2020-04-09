@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02743c66_701a027c",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-04-09T13:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "220e60c3_244bfad6",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 88
+      },
+      "revId": "50d3abf00975e8287eb86be16bff3bf2bab3c798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ecf8af_f1ed561b",
         "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "50d3abf00975e8287eb86be16bff3bf2bab3c798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce754ad_90d325c0",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-04-09T13:25:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ecf8af_f1ed561b",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 20
+      },
+      "revId": "50d3abf00975e8287eb86be16bff3bf2bab3c798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
