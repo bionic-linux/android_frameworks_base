@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "220e60c3_244bfad6",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-09T11:50:17Z",
+      "side": 1,
+      "message": "Nit: use property syntax for Kotlin (this should give API coverage as well)",
+      "range": {
+        "startLine": 71,
+        "startChar": 72,
+        "endLine": 71,
+        "endChar": 88
+      },
+      "revId": "50d3abf00975e8287eb86be16bff3bf2bab3c798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ecf8af_f1ed561b",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-09T11:50:17Z",
+      "side": 1,
+      "message": "Nit: assertTrue / assertFalse",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 20
+      },
+      "revId": "50d3abf00975e8287eb86be16bff3bf2bab3c798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
