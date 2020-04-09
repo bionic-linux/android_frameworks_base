@@ -46,6 +46,23 @@
       "revId": "a3cb546ef4827eee8990bc50c4db2b0588b1a16d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5af6be_def3edec",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2020-04-09T18:49:12Z",
+      "side": 1,
+      "message": "nit: line too long",
+      "revId": "a3cb546ef4827eee8990bc50c4db2b0588b1a16d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
