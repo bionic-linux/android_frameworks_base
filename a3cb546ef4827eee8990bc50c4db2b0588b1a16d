@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a4df9e_703f5ee6",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 9212,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-04-09T15:26:38Z",
+      "side": 1,
+      "message": "Calvin, later this was made hide @ using ag/10254649 .. you will need that CL also",
+      "range": {
+        "startLine": 9212,
+        "startChar": 34,
+        "endLine": 9212,
+        "endChar": 76
+      },
+      "revId": "a3cb546ef4827eee8990bc50c4db2b0588b1a16d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
