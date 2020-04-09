@@ -66,6 +66,46 @@ class CaptivePortalDataTest {
         assertNotEqualsAfterChange { it.setCaptive(false) }
     }
 
+    @Test
+    fun testUserPortalUrl() {
+        assertEquals(Uri.parse("https://portal.example.com/test"), data.getUserPortalUrl())
+    }
+
+    @Test
+    fun testVenueInfoUrl() {
+        assertEquals(Uri.parse("https://venue.example.com/test"), data.getVenueInfoUrl())
+    }
+
+    @Test
+    fun testIsSessionExtendable() {
+        assertEquals(true, data.isSessionExtendable())
+    }
+
+    @Test
+    fun testByteLimit() {
+        assertEquals(456L, data.getByteLimit())
+        // Test byteLimit unset.
+        assertEquals(-1L, CaptivePortalData.Builder(null).build().getByteLimit())
+    }
+
+    @Test
+    fun testRefreshTimeMillis() {
+        assertEquals(123L, data.getRefreshTimeMillis())
+    }
+
+    @Test
+    fun testExpiryTimeMillis() {
+        assertEquals(789L, data.getExpiryTimeMillis())
+        // Test expiryTimeMillis unset.
+        assertEquals(-1L, CaptivePortalData.Builder(null).build().getExpiryTimeMillis())
+    }
+
+    @Test
+    fun testIsCaptive() {
+        assertEquals(true, data.isCaptive())
+        assertEquals(false, makeBuilder().setCaptive(false).build().isCaptive())
+    }
+
     private fun CaptivePortalData.mutate(mutator: (CaptivePortalData.Builder) -> Unit) =
             CaptivePortalData.Builder(this).apply { mutator(this) }.build()
 
