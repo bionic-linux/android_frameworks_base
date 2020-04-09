@@ -27,7 +27,7 @@ public final class LowMemDetector {
     private static final String TAG = "LowMemDetector";
     private final ActivityManagerService mAm;
     private final LowMemThread mLowMemThread;
-    private boolean mAvailable;
+    private volatile boolean mAvailable;
 
     private final Object mPressureStateLock = new Object();
 
