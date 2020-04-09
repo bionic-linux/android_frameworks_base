@@ -22,6 +22,30 @@
       "revId": "a3cb546ef4827eee8990bc50c4db2b0588b1a16d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a416638f_9639b6d2",
+        "filename": "api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 9212,
+      "author": {
+        "id": 1003338
+      },
+      "writtenOn": "2020-04-09T16:51:41Z",
+      "side": 1,
+      "message": "Please merge the CLs as we are finalizing the APIs and when this CL gets it we may accidentally pick up the API.",
+      "parentUuid": "30a4df9e_703f5ee6",
+      "range": {
+        "startLine": 9212,
+        "startChar": 34,
+        "endLine": 9212,
+        "endChar": 76
+      },
+      "revId": "a3cb546ef4827eee8990bc50c4db2b0588b1a16d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
