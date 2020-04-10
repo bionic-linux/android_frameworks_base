@@ -39,6 +39,7 @@ import android.content.Context;
 import android.net.Ikev2VpnProfile;
 import android.net.InetAddresses;
 import android.net.IpPrefix;
+import android.net.IpSecAlgorithm;
 import android.net.IpSecTransform;
 import android.net.Network;
 import android.net.RouteInfo;
@@ -83,6 +84,8 @@ import java.util.List;
  * @hide
  */
 public class VpnIkev2Utils {
+    private static final String TAG = VpnIkev2Utils.class.getSimpleName();
+
     static IkeSessionParams buildIkeSessionParams(
             @NonNull Context context, @NonNull Ikev2VpnProfile profile, @NonNull Network network) {
         final IkeIdentification localId = parseIkeIdentification(profile.getUserIdentity());
@@ -103,11 +106,11 @@ public class VpnIkev2Utils {
         return ikeOptionsBuilder.build();
     }
 
-    static ChildSessionParams buildChildSessionParams() {
+    static ChildSessionParams buildChildSessionParams(List<String> allowedAlgorithms) {
         final TunnelModeChildSessionParams.Builder childOptionsBuilder =
                 new TunnelModeChildSessionParams.Builder();
 
-        for (final ChildSaProposal childProposal : getChildSaProposals()) {
+        for (final ChildSaProposal childProposal : getChildSaProposals(allowedAlgorithms)) {
             childOptionsBuilder.addSaProposal(childProposal);
         }
 
@@ -187,38 +190,73 @@ public class VpnIkev2Utils {
         return proposals;
     }
 
-    private static List<ChildSaProposal> getChildSaProposals() {
-        // TODO: filter this based on allowedAlgorithms
+    /** Builds a child SA proposal based on the allowed IPsec algorithms */
+    private static List<ChildSaProposal> getChildSaProposals(List<String> allowedAlgorithms) {
         final List<ChildSaProposal> proposals = new ArrayList<>();
+        allowedAlgorithms = new ArrayList<>(allowedAlgorithms);
 
         // Add non-AEAD options
-        final ChildSaProposal.Builder normalModeBuilder = new ChildSaProposal.Builder();
+        if (Ikev2VpnProfile.hasNormalModeAlgorithms(allowedAlgorithms)) {
+            final ChildSaProposal.Builder normalModeBuilder = new ChildSaProposal.Builder();
 
-        // Encryption Algorithms: Currently only AES_CBC is supported.
-        normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_256);
-        normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_192);
-        normalModeBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_128);
+            // Encryption Algorithms:
+            if (allowedAlgorithms.remove(IpSecAlgorithm.CRYPT_AES_CBC)) {
+                normalModeBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_256);
+                normalModeBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_192);
+                normalModeBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_CBC, KEY_LEN_AES_128);
+            }
 
-        // Authentication/Integrity Algorithms
-        normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_512_256);
-        normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_384_192);
-        normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_256_128);
-        normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA1_96);
+            // Authentication/Integrity Algorithms:
+            // Guaranteed by Ikev2VpnProfile constructor to contain at least one of these.
+            if (allowedAlgorithms.remove(IpSecAlgorithm.AUTH_HMAC_SHA512)) {
+                normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_512_256);
+            }
+            if (allowedAlgorithms.remove(IpSecAlgorithm.AUTH_HMAC_SHA384)) {
+                normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_384_192);
+            }
+            if (allowedAlgorithms.remove(IpSecAlgorithm.AUTH_HMAC_SHA256)) {
+                normalModeBuilder.addIntegrityAlgorithm(INTEGRITY_ALGORITHM_HMAC_SHA2_256_128);
+            }
+
+            proposals.add(normalModeBuilder.build());
+        }
 
         // Add AEAD options
-        final ChildSaProposal.Builder aeadBuilder = new ChildSaProposal.Builder();
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_256);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_256);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_256);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_192);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_192);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_192);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_128);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_128);
-        aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_128);
+        if (Ikev2VpnProfile.hasAeadAlgorithms(allowedAlgorithms)) {
+            final ChildSaProposal.Builder aeadBuilder = new ChildSaProposal.Builder();
 
-        proposals.add(normalModeBuilder.build());
-        proposals.add(aeadBuilder.build());
+            if (allowedAlgorithms.remove(IpSecAlgorithm.AUTH_CRYPT_AES_GCM)) {
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_256);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_192);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_16, KEY_LEN_AES_128);
+                aeadBuilder.addEncryptionAlgorithm(
+                        ENCRYPTION_ALGORITHM_AES_GCM_12, KEY_LEN_AES_128);
+                aeadBuilder.addEncryptionAlgorithm(ENCRYPTION_ALGORITHM_AES_GCM_8, KEY_LEN_AES_128);
+            }
+
+            proposals.add(aeadBuilder.build());
+        }
+
+        // Verify that all configured algorithms were added. If so, there may be a missing condition
+        if (!allowedAlgorithms.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Allowed algorithm not added to Child SA Proposal,"
+                            + "potentially compromising security: "
+                            + allowedAlgorithms);
+        }
+
         return proposals;
     }
 
