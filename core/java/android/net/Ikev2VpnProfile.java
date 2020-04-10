@@ -70,6 +70,15 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
     private static final String EMPTY_CERT = "";
 
+    /** @hide */
+    @VisibleForTesting
+    public static final List<String> DEFAULT_ALGORITHMS = Collections.unmodifiableList(Arrays.asList(
+            IpSecAlgorithm.CRYPT_AES_CBC,
+            IpSecAlgorithm.AUTH_HMAC_SHA256,
+            IpSecAlgorithm.AUTH_HMAC_SHA384,
+            IpSecAlgorithm.AUTH_HMAC_SHA512,
+            IpSecAlgorithm.AUTH_CRYPT_AES_GCM));
+
     @NonNull private final String mServerAddr;
     @NonNull private final String mUserIdentity;
 
@@ -172,7 +181,56 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 throw new IllegalArgumentException("Invalid auth method set");
         }
 
-        VpnProfile.validateAllowedAlgorithms(mAllowedAlgorithms);
+        validateAllowedAlgorithms(mAllowedAlgorithms);
+    }
+
+    /**
+     * Validates that the allowed algorithms are a valid set for IPsec purposes
+     *
+     * <p>In order for the algorithm list to be a valid set, it must contain at least one algorithm
+     * that provides Authentication, and one that provides Encryption. Authenticated Encryption with
+     * Associated Data (AEAD) algorithms are counted as providing Authentication and Encryption.
+     *
+     * @param allowedAlgorithms The list to be validated
+     */
+    private static void validateAllowedAlgorithms(List<String> algorithmNames) {
+        VpnProfile.validateAllowedAlgorithms(algorithmNames);
+
+        // First, make sure no insecure algorithms were proposed.
+        if (algorithmNames.contains(IpSecAlgorithm.AUTH_HMAC_MD5)
+                || algorithmNames.contains(IpSecAlgorithm.AUTH_HMAC_SHA1)) {
+            throw new IllegalArgumentException("Insecure algorithm requested");
+        }
+
+        // Validate that some valid combination (AEAD or AUTH + CRYPT) is present
+        if (hasAeadAlgorithms(algorithmNames) || hasNormalModeAlgorithms(algorithmNames)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("Algorithm set missing support for Auth, Crypt or both");
+    }
+
+    /**
+     * Checks if AEAD algorithms are supported
+     *
+     * @hide
+     */
+    public static boolean hasAeadAlgorithms(List<String> algorithmNames) {
+        return algorithmNames.contains(IpSecAlgorithm.AUTH_CRYPT_AES_GCM);
+    }
+
+    /**
+     * Checks if normal mode algorithms are supported
+     *
+     * @hide
+     */
+    public static boolean hasNormalModeAlgorithms(List<String> algorithmNames) {
+        final boolean hasCrypt = algorithmNames.contains(IpSecAlgorithm.CRYPT_AES_CBC);
+        final boolean hasAuth = algorithmNames.contains(IpSecAlgorithm.AUTH_HMAC_SHA256)
+                || algorithmNames.contains(IpSecAlgorithm.AUTH_HMAC_SHA384)
+                || algorithmNames.contains(IpSecAlgorithm.AUTH_HMAC_SHA512);
+
+        return hasCrypt && hasAuth;
     }
 
     /** Retrieves the server address string. */
@@ -559,7 +617,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         @Nullable private X509Certificate mUserCert;
 
         @Nullable private ProxyInfo mProxyInfo;
-        @NonNull private List<String> mAllowedAlgorithms = new ArrayList<>();
+        @NonNull private List<String> mAllowedAlgorithms = DEFAULT_ALGORITHMS;
         private boolean mIsBypassable = false;
         private boolean mIsMetered = true;
         private int mMaxMtu = PlatformVpnProfile.MAX_MTU_DEFAULT;
@@ -756,7 +814,12 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         /**
          * Sets the allowable set of IPsec algorithms
          *
-         * <p>A list of allowed IPsec algorithms as defined in {@link IpSecAlgorithm}
+         * <p>A list of allowed IPsec algorithms as defined in {@link IpSecAlgorithm}, with the
+         * exception of methods that are considered insecure (AUTH_HMAC_MD5, AUTH_HMAC_SHA1).
+         *
+         * <p>The provided algorithm list must contain at least one algorithm that provides
+         * Authentication, and one that provides Encryption. Authenticated Encryption with
+         * Associated Data (AEAD) algorithms count as providing both Authentication and Encryption.
          *
          * @param algorithmNames the list of supported IPsec algorithms
          * @return this {@link Builder} object to facilitate chaining of method calls
@@ -765,7 +828,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         @NonNull
         public Builder setAllowedAlgorithms(@NonNull List<String> algorithmNames) {
             checkNotNull(algorithmNames, MISSING_PARAM_MSG_TMPL, "algorithmNames");
-            VpnProfile.validateAllowedAlgorithms(algorithmNames);
+            validateAllowedAlgorithms(algorithmNames);
 
             mAllowedAlgorithms = algorithmNames;
             return this;
