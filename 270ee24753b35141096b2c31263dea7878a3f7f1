@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "085c42f7_83659286",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-12T15:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b3d5c6a_2b841b92",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5adc3a07_ee149765",
         "filename": "packages/Tethering/tests/integration/AndroidManifest_coverage.xml",
         "patchSetId": 6
@@ -187,6 +211,30 @@
       "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741db9fe_cd46f6e9",
+        "filename": "packages/Tethering/tests/integration/AndroidManifest_coverage.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-12T15:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09362b9_a2b05dc9",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 74
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +329,30 @@
       "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc24e3f0_ac40290b",
+        "filename": "packages/Tethering/tests/unit/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-12T15:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69eb2498_9b6b21f1",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "270ee24753b35141096b2c31263dea7878a3f7f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

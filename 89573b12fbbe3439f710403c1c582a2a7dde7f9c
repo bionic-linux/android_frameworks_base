@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74bbd985_121ad949",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-12T15:18:36Z",
+      "side": 1,
+      "message": "IIUC, this inherit from TetheringTests. Tethering use it because TetheringServiceTest.java need TETHER_PRIVILEDGE permission. Suggest to both remove platform certificate here and TetheringTests by using adoptShellPermissionIdentity in TetheringTests. Leave it to me or follow up CL is fine.",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "89573b12fbbe3439f710403c1c582a2a7dde7f9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
