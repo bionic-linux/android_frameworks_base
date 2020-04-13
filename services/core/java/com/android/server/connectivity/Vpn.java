@@ -66,6 +66,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.PlatformVpnProfile;
 import android.net.RouteInfo;
 import android.net.UidRange;
 import android.net.VpnManager;
@@ -2160,6 +2161,9 @@ public class Vpn {
     interface IkeV2VpnRunnerCallback {
         void onDefaultNetworkChanged(@NonNull Network network);
 
+        void onLinkPropertiesChanged(
+                @NonNull Network network, @NonNull LinkProperties linkProperties);
+
         void onChildOpened(
                 @NonNull Network network, @NonNull ChildSessionConfiguration childConfig);
 
@@ -2277,6 +2281,7 @@ public class Vpn {
                 final int maxMtu = mProfile.getMaxMtu();
                 final List<LinkAddress> internalAddresses = childConfig.getInternalAddresses();
                 final List<String> dnsAddrStrings = new ArrayList<>();
+                final int newMtu = calculateVpnMtu(maxMtu);
 
                 final Collection<RouteInfo> newRoutes = VpnIkev2Utils.getRoutesFromTrafficSelectors(
                         childConfig.getOutboundTrafficSelectors());
@@ -2414,6 +2419,56 @@ public class Vpn {
                     onSessionLost(network);
                 }
             });
+        }
+
+        public void onLinkPropertiesChanged(
+                @NonNull Network network, @NonNull LinkProperties linkProperties) {
+            Log.d(TAG, "Starting IKEv2/IPsec session on new network: " + network);
+
+            // Proxy to the Ikev2VpnRunner (single-thread) executor to ensure consistency in lieu
+            // of locking.
+            mExecutor.execute(() -> {
+                if (!isActiveNetwork(network)) {
+                    Log.d(TAG, "onOpened called for obsolete network " + network);
+
+                    // Do nothing; this signals that either: (1) a new/better Network was found,
+                    // and the Ikev2VpnRunner has switched to it in onDefaultNetworkChanged, or (2)
+                    // this IKE session was already shut down (exited, or an error was encountered
+                    // somewhere else). In both cases, all resources and sessions are torn down via
+                    // resetIkeState().
+                    return;
+                }
+
+                final int newMtu = calculateVpnMtu(linkProperties.getMtu());
+                final NetworkAgent networkAgent;
+                final LinkProperties lp;
+
+                synchronized (Vpn.this) {
+                    mConfig.mtu = newMtu;
+
+                    networkAgent = mNetworkAgent;
+                    if (networkAgent == null) {
+                        // Nothing left to do. Perhaps something externally called exit?
+                        return;
+                    }
+
+                    lp = makeLinkProperties(); // Accesses VPN instance fields; must be locked
+                }
+
+                networkAgent.sendLinkProperties(lp);
+            });
+        }
+
+        private int calculateVpnMtu(int underlyingMtu) {
+            if (underlyingMtu <= 0) {
+                // No data from underlying network; use default MTU.
+                return PlatformVpnProfile.MAX_MTU_DEFAULT;
+            }
+
+            // TODO: Make this fully dynamic based on the algorithm types used. This requires
+            // querying asking IpSecService for the max overhead for a given Transform.
+            return underlyingMtu - 40 /* IPV6_HDR_LEN */ - 8 /* UDP_ENCAP_HDR */ - 8 /* ESP_HDR */
+                    - 16 /* AES_BLK_SIZE */ - 2 /* ESP_TRAILER */ - 64 /* MAX_ICV_LEN */;
         }
 
         /**
