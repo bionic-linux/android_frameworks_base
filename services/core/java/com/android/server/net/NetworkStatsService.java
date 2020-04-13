@@ -1048,13 +1048,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int uid = intent.getIntExtra(EXTRA_UID, -1);
             if (uid == -1) return;
 
-            synchronized (mStatsLock) {
-                mWakeLock.acquire();
-                try {
+            mWakeLock.acquire();
+            try {
+                synchronized (mStatsLock) {
                     removeUidsLocked(uid);
-                } finally {
-                    mWakeLock.release();
                 }
+            } finally {
+                mWakeLock.release();
             }
         }
     };
@@ -1068,13 +1068,13 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, -1);
             if (userId == -1) return;
 
-            synchronized (mStatsLock) {
-                mWakeLock.acquire();
-                try {
+            mWakeLock.acquire();
+            try {
+                synchronized (mStatsLock) {
                     removeUserLocked(userId);
-                } finally {
-                    mWakeLock.release();
                 }
+            } finally {
+                mWakeLock.release();
             }
         }
     };
@@ -1113,15 +1113,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             Network[] defaultNetworks,
             NetworkState[] networkStates,
             String activeIface) {
-        synchronized (mStatsLock) {
             mWakeLock.acquire();
             try {
-                mActiveIface = activeIface;
-                updateIfacesLocked(defaultNetworks, networkStates);
+                synchronized (mStatsLock) {
+                    mActiveIface = activeIface;
+                    updateIfacesLocked(defaultNetworks, networkStates);
+                }
             } finally {
                 mWakeLock.release();
             }
-        }
     }
 
     /**
@@ -1290,15 +1290,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     private void performPoll(int flags) {
-        synchronized (mStatsLock) {
             mWakeLock.acquire();
 
             try {
-                performPollLocked(flags);
+                synchronized (mStatsLock) {
+                    performPollLocked(flags);
+                }
             } finally {
                 mWakeLock.release();
             }
-        }
     }
 
     /**
