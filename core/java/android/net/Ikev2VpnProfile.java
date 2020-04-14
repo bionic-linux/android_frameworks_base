@@ -101,6 +101,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     private final boolean mIsBypassable; // Defaults in builder
     private final boolean mIsMetered; // Defaults in builder
     private final int mMaxMtu; // Defaults in builder
+    private final boolean mIsTestModeEnabled;
 
     private Ikev2VpnProfile(
             int type,
@@ -116,7 +117,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             @NonNull List<String> allowedAlgorithms,
             boolean isBypassable,
             boolean isMetered,
-            int maxMtu) {
+            int maxMtu,
+            boolean isTestModeEnabled) {
         super(type);
 
         checkNotNull(serverAddr, MISSING_PARAM_MSG_TMPL, "Server address");
@@ -140,6 +142,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         mIsBypassable = isBypassable;
         mIsMetered = isMetered;
         mMaxMtu = maxMtu;
+        mIsTestModeEnabled = isTestModeEnabled;
 
         validate();
     }
@@ -329,6 +332,15 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         return mMaxMtu;
     }
 
+    /**
+     * Returns whether or not this VPN profile should use test networks.
+     *
+     * @hide
+     */
+    public boolean isTestModeEnabled() {
+        return mIsTestModeEnabled;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(
@@ -345,7 +357,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 mAllowedAlgorithms,
                 mIsBypassable,
                 mIsMetered,
-                mMaxMtu);
+                mMaxMtu,
+                mIsTestModeEnabled);
     }
 
     @Override
@@ -368,7 +381,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 && Objects.equals(mAllowedAlgorithms, other.mAllowedAlgorithms)
                 && mIsBypassable == other.mIsBypassable
                 && mIsMetered == other.mIsMetered
-                && mMaxMtu == other.mMaxMtu;
+                && mMaxMtu == other.mMaxMtu
+                && mIsTestModeEnabled == other.mIsTestModeEnabled;
     }
 
     /**
@@ -392,6 +406,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         profile.maxMtu = mMaxMtu;
         profile.areAuthParamsInline = true;
         profile.saveLogin = true;
+        profile.isTestModeEnabled = mIsTestModeEnabled;
 
         switch (mType) {
             case TYPE_IKEV2_IPSEC_USER_PASS:
@@ -449,6 +464,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         builder.setBypassable(profile.isBypassable);
         builder.setMetered(profile.isMetered);
         builder.setMaxMtu(profile.maxMtu);
+        if (profile.isTestModeEnabled) {
+            builder.enableTestMode();
+        }
 
         switch (profile.type) {
             case TYPE_IKEV2_IPSEC_USER_PASS:
@@ -621,6 +639,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         private boolean mIsBypassable = false;
         private boolean mIsMetered = true;
         private int mMaxMtu = PlatformVpnProfile.MAX_MTU_DEFAULT;
+        private boolean mIsTestModeEnabled = false;
 
         /**
          * Creates a new builder with the basic parameters of an IKEv2/IPsec VPN.
@@ -842,6 +861,21 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         }
 
         /**
+         * Sets this profile to use test networks (only).
+         *
+         * <p>This method is for testing only, and must not be used by apps. Calling
+         * provisionVpnProfile() with a profile where test-network usage is enabled will require the
+         * MANAGE_TEST_NETWORKS permission.
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder enableTestMode() {
+            mIsTestModeEnabled = true;
+            return this;
+        }
+
+        /**
          * Validates, builds and provisions the VpnProfile.
          *
          * @throws IllegalArgumentException if any of the required keys or values were invalid
@@ -862,7 +896,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                     mAllowedAlgorithms,
                     mIsBypassable,
                     mIsMetered,
-                    mMaxMtu);
+                    mMaxMtu,
+                    mIsTestModeEnabled);
         }
     }
 }
