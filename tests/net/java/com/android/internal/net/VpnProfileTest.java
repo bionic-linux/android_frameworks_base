@@ -67,10 +67,11 @@ public class VpnProfileTest {
         assertFalse(p.isMetered);
         assertEquals(1360, p.maxMtu);
         assertFalse(p.areAuthParamsInline);
+        assertFalse(p.isRestrictedToTestNetworks);
     }
 
     private VpnProfile getSampleIkev2Profile(String key) {
-        final VpnProfile p = new VpnProfile(key);
+        final VpnProfile p = new VpnProfile(key, true /* isRestrictedToTestNetworks */);
 
         p.name = "foo";
         p.type = VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS;
@@ -116,7 +117,7 @@ public class VpnProfileTest {
 
     @Test
     public void testParcelUnparcel() {
-        assertParcelSane(getSampleIkev2Profile(DUMMY_PROFILE_KEY), 22);
+        assertParcelSane(getSampleIkev2Profile(DUMMY_PROFILE_KEY), 23);
     }
 
     @Test
@@ -163,10 +164,11 @@ public class VpnProfileTest {
     public void testEncodeDecodeInvalidNumberOfValues() {
         final VpnProfile profile = getSampleIkev2Profile(DUMMY_PROFILE_KEY);
         final String encoded = new String(profile.encode());
-        final byte[] tooFewValues =
-                encoded.substring(0, encoded.lastIndexOf(VpnProfile.VALUE_DELIMITER)).getBytes();
+        final String[] parts = encoded.split(VpnProfile.VALUE_DELIMITER);
+        final String tooFewValues =
+                String.join(VpnProfile.VALUE_DELIMITER, Arrays.copyOf(parts, parts.length - 2));
 
-        assertNull(VpnProfile.decode(DUMMY_PROFILE_KEY, tooFewValues));
+        assertNull(VpnProfile.decode(DUMMY_PROFILE_KEY, tooFewValues.getBytes()));
     }
 
     @Test
