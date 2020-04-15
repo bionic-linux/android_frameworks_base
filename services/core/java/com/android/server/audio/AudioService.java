@@ -1856,6 +1856,8 @@ public class AudioService extends IAudioService.Stub
                 if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
                     setSystemAudioMute(state);
                 }
+                // If associated to volume group, update group cache
+                updateVolumeGroupIndexForLegacyStreamType(streamType, state, device, flags);
                 for (int stream = 0; stream < mStreamStates.length; stream++) {
                     if (streamTypeAlias == mStreamVolumeAlias[stream]) {
                         if (!(readCameraSoundForced()
@@ -1878,6 +1880,8 @@ public class AudioService extends IAudioService.Stub
                     // Unmute the stream if it was previously muted
                     if (direction == AudioManager.ADJUST_RAISE) {
                         // unmute immediately for volume up
+                        // If associated to volume group, update group cache
+                        updateVolumeGroupIndexForLegacyStreamType(streamType, false, device, flags);
                         streamState.mute(false);
                     } else if (direction == AudioManager.ADJUST_LOWER) {
                         if (mIsSingleVolume) {
@@ -1885,6 +1889,10 @@ public class AudioService extends IAudioService.Stub
                                     streamTypeAlias, flags, null, UNMUTE_STREAM_DELAY);
                         }
                     }
+                } else {
+                    // If associated to volume group, update group cache
+                    updateVolumeGroupIndexForLegacyStreamType(
+                            streamType, streamState.mIsMuted, device, flags);
                 }
                 sendMsg(mAudioHandler,
                         MSG_SET_DEVICE_VOLUME,
@@ -1965,6 +1973,8 @@ public class AudioService extends IAudioService.Stub
             }
         }
         int index = mStreamStates[streamType].getIndex(device);
+        updateVolumeGroupIndexForLegacyStreamType(
+                streamType, mStreamStates[streamType].mIsMuted, device, flags);
         sendVolumeUpdate(streamType, oldIndex, index, flags, device);
     }
 
@@ -2105,6 +2115,11 @@ public class AudioService extends IAudioService.Stub
         // except for BT SCO stream where only explicit mute is allowed to comply to BT requirements
         if (streamType != AudioSystem.STREAM_BLUETOOTH_SCO) {
             mStreamStates[stream].mute(index == 0);
+        }
+        // Do not update for aliased stream as groups may not follow same rules.
+        if (streamType == stream) {
+            updateVolumeGroupIndexForLegacyStreamType(
+                    stream, mStreamStates[stream].mIsMuted, device, flags);
         }
     }
 
@@ -4508,6 +4523,38 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    private void updateVolumeGroupIndexForLegacyStreamType(
+            int stream, boolean muted, int device, int flags) {
+        // If associated to volume group, update group cache
+        final int volumeGroupId = getVolumeGroupForStreamType(stream);
+        if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
+            int index = mStreamStates[stream].getIndex(device);
+            final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroupId);
+            final int groupIndex = (index + 5) / 10;
+            // Only propage mute of stream when applicable
+            if (mStreamStates[stream].mIndexMin == 0 && isStreamAffectedByMute(stream)) {
+                vgs.mute(muted);
+            }
+            if (DEBUG_VOL) {
+                Log.v(TAG, "updateVolumeGroupIndexForLegacyStreamType for stream " + stream
+                        + ", muted=" + muted + ", device=" + device + ", index=" + index
+                        + ", group " + vgs.name() + " Muted=" + vgs.isMuted() + ", Index="
+                        + groupIndex);
+            }
+            vgs.updateVolumeIndex(groupIndex, device, flags);
+        }
+    }
+
+    private static int getVolumeGroupForStreamType(int stream) {
+        final AudioAttributes aa =
+                AudioProductStrategy.getAudioAttributesForStrategyWithLegacyStreamType(stream);
+        if (aa.equals(new AudioAttributes.Builder().build())) {
+            return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+        }
+        return AudioProductStrategy.getVolumeGroupIdForAudioAttributes(
+                aa, false /*fallbackOnDefault*/);
+    }
+
     // NOTE: Locking order for synchronized objects related to volume management:
     //  1     mSettingsLock
     //  2       VolumeGroupState.class
@@ -4584,7 +4631,11 @@ public class AudioService extends IAudioService.Stub
         private void setVolumeIndex(int index, int device, int flags) {
             // Set the volume index
             setVolumeIndexInt(index, device, flags);
+            // Update cache & persist
+            updateVolumeIndex(index, device, flags);
+        }
 
+        public void updateVolumeIndex(int index, int device, int flags) {
             // Update local cache
             mIndexMap.put(device, index);
 
