@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15f94768_15b80b42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-04-15T22:23:49Z",
+      "side": 1,
+      "message": "Based on earlier discussion this bug is already closed. Can you please file a new one for the remaining changes?",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "4265a420b4e6081b7ba9688eac4157c5b946ad75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
