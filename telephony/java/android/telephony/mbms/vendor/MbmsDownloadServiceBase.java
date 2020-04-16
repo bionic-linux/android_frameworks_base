@@ -216,6 +216,28 @@ public class MbmsDownloadServiceBase extends IMbmsDownloadService.Stub {
     }
 
     /**
+     * Called when the client application wishes to receive file information according to a
+     * service announcement file received from a group call server.
+     *
+     * The service announcement file is in the format of a multipart MIME fie with XML parts, though
+     * no valdidation is performed on the contents of the {@code fileContents} argument --
+     * implementing middleware applications should perform their own validation and return
+     * {@link MbmsErrors.DownloadErrors#ERROR_MALFORMED_SERVICE_ANNOUNCEMENT_FILE} if the file is
+     * malformed.
+     *
+     * TODO: are there any public specifications of what the file format is that I can link to?
+     *
+     * @param subscriptionId The subscription id the service announcement applies to.
+     * @param fileContents The contents of the service announcement file.
+     * @return {@link MbmsErrors#SUCCESS}, or
+     *         {@link MbmsErrors.DownloadErrors#ERROR_MALFORMED_SERVICE_ANNOUNCEMENT_FILE}
+     */
+    @Override
+    public int addServiceAnnouncementFile(int subscriptionId, byte[] fileContents) {
+        return 0;
+    }
+
+    /**
      * Issues a request to download a set of files.
      *
      * The middleware should expect that {@link #setTempFileRootDirectory(int, String)} has been

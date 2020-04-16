@@ -138,6 +138,13 @@ public class MbmsErrors {
 
         /** Indicates the the middleware has no record of the supplied {@link FileInfo} */
         public static final int ERROR_UNKNOWN_FILE_INFO = 403;
+
+        /**
+         * Indicates that the service announcement file passed via
+         * {@link android.telephony.MbmsDownloadSession#addServiceAnnouncementFile(byte[])}
+         * is malformed.
+         */
+        public static final int ERROR_MALFORMED_SERVICE_ANNOUNCEMENT_FILE = 404;
     }
 
     /**
