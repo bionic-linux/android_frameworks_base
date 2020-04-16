@@ -22,6 +22,30 @@
       "revId": "4265a420b4e6081b7ba9688eac4157c5b946ad75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bdd245_a8f2de6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-04-16T15:50:49Z",
+      "side": 1,
+      "message": "Sure, will replace with bug created for adding other pending vendor files: 152277258",
+      "parentUuid": "15f94768_15b80b42",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "4265a420b4e6081b7ba9688eac4157c5b946ad75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
