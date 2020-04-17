@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4941e5c5_46bb2dcc",
+        "filename": "tests/net/common/java/android/net/NetworkProviderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-04-17T09:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de4c174c_622a102d",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 90
+      },
+      "revId": "ef9c9d63fb461711786fdf6bcb9af49aaca2bc24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "369175ac_156a7256",
         "filename": "tests/net/common/java/android/net/NetworkProviderTest.kt",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ef9c9d63fb461711786fdf6bcb9af49aaca2bc24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf0f18c_fa251112",
+        "filename": "tests/net/common/java/android/net/NetworkProviderTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-04-17T09:28:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369175ac_156a7256",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "ef9c9d63fb461711786fdf6bcb9af49aaca2bc24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
