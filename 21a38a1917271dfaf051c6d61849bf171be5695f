@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19b656b_5f601f70",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-19T14:01:34Z",
+      "side": 1,
+      "message": "This comment may confuse people that the reason we do not use getDeviceConfigBoolean is not it have bug. Just because it is hard for testing. Maybe says this first: due to the limitation of static mock for testing, using #getProperty directly instead of getDeviceConfigBoolean.",
+      "range": {
+        "startLine": 361,
+        "startChar": 10,
+        "endLine": 361,
+        "endChar": 12
+      },
+      "revId": "21a38a1917271dfaf051c6d61849bf171be5695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38e4a99_9d946eb8",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-19T14:01:34Z",
+      "side": 1,
+      "message": "This two configuration is paired. So maybe have a function to wrap them. Then you can just use it in setup() and all of new tests you added.\ne.g.\ninitialBpfOffloadConfiguration(final boolean fromRes, final String fromDevConfig) {\n    when(mResources.getBoolean(R.bool.config_tether_enable_bpf_offload)).thenReturn(fromRes);\n    doReturn(fromDevConfig).when(\n            () -\u003e DeviceConfig.getProperty(eq(NAMESPACE_CONNECTIVITY),\n            eq(TetheringConfiguration.OVERRIDE_TETHER_ENABLE_BPF_OFFLOAD)));\n}",
+      "range": {
+        "startLine": 285,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 80
+      },
+      "revId": "21a38a1917271dfaf051c6d61849bf171be5695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
