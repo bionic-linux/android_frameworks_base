@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8cf40d_a968e2c6",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T09:36:38Z",
+      "side": 1,
+      "message": "Maybe V4ADDR ? It would clarify makeClatUnnecessary.",
+      "range": {
+        "startLine": 62,
+        "startChar": 29,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "0a9b1b6a4b4fb91ede1629cabf5b483871523911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd1b689_3f99f892",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T09:36:38Z",
+      "side": 1,
+      "message": "interestingly this part doesn\u0027t apply anymore – or maybe it never did",
+      "range": {
+        "startLine": 222,
+        "startChar": 60,
+        "endLine": 222,
+        "endChar": 65
+      },
+      "revId": "0a9b1b6a4b4fb91ede1629cabf5b483871523911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6ffa33_2f2ed5dc",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T09:36:38Z",
+      "side": 1,
+      "message": "Should clat become unnecessary here for any reason before calling stop() ?",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 19
+      },
+      "revId": "0a9b1b6a4b4fb91ede1629cabf5b483871523911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89eea1b9_316a8995",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T09:36:38Z",
+      "side": 1,
+      "message": "...and necessary again before calling start",
+      "range": {
+        "startLine": 296,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 17
+      },
+      "revId": "0a9b1b6a4b4fb91ede1629cabf5b483871523911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54db7a9c_3cbf3550",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T09:36:38Z",
+      "side": 1,
+      "message": "How about simply using V6ADDR here ?",
+      "range": {
+        "startLine": 427,
+        "startChar": 43,
+        "endLine": 427,
+        "endChar": 76
+      },
+      "revId": "0a9b1b6a4b4fb91ede1629cabf5b483871523911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
