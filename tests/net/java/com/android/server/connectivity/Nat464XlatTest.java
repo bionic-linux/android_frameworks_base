@@ -93,6 +93,7 @@ public class Nat464XlatTest {
         mNai.linkProperties.setInterfaceName(BASE_IFACE);
         mNai.networkInfo = new NetworkInfo(null);
         mNai.networkInfo.setType(ConnectivityManager.TYPE_WIFI);
+        mNai.networkInfo.setDetailedState(NetworkInfo.DetailedState.CONNECTED, "", "");
         when(mNai.connService()).thenReturn(mConnectivity);
         when(mNai.netAgentConfig()).thenReturn(mAgentConfig);
         when(mNai.handler()).thenReturn(mHandler);
@@ -181,6 +182,8 @@ public class Nat464XlatTest {
     public void testNormalStartAndStop() throws Exception {
         Nat464Xlat nat = makeNat464Xlat();
         ArgumentCaptor<LinkProperties> c = ArgumentCaptor.forClass(LinkProperties.class);
+
+        mNai.linkProperties.addLinkAddress(new LinkAddress("2001:db8::1/64"));
 
         nat.setNat64PrefixFromDns(new IpPrefix(NAT64_PREFIX));
 
@@ -349,6 +352,8 @@ public class Nat464XlatTest {
     public void testStopBeforeClatdStarts() throws Exception {
         Nat464Xlat nat = makeNat464Xlat();
 
+        mNai.linkProperties.addLinkAddress(new LinkAddress("2001:db8::1/64"));
+
         nat.setNat64PrefixFromDns(new IpPrefix(NAT64_PREFIX));
 
         nat.start();
@@ -380,6 +385,8 @@ public class Nat464XlatTest {
     @Test
     public void testStopAndClatdNeverStarts() throws Exception {
         Nat464Xlat nat = makeNat464Xlat();
+
+        mNai.linkProperties.addLinkAddress(new LinkAddress("2001:db8::1/64"));
 
         nat.setNat64PrefixFromDns(new IpPrefix(NAT64_PREFIX));
 
