@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58e9a8b_22a3bb90",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "Suggest explaining here that this member is used for deduplication of callbacks.",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed388a99_9c0b360b",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "If (like stopPrefixDiscovery) mDnsResolver.startPrefixDiscovery is idempotent you can just remove the if(). It also removes the slightly surprising tenet that this clause has to set mState to DISCOVERING after startPrefixDiscovery() does in unconditionally.",
+      "range": {
+        "startLine": 218,
+        "startChar": 42,
+        "endLine": 218,
+        "endChar": 62
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a77b60_38b9c1a5",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "ISTM that if a prefix from RA is obtained while in DISCOVERING state the code would just tell netd to stop discovering and go to STARTING, we can remove this member. The reason for this is, if you do that it becomes an invariant that if there is a prefix from RA, then prefix discovery is not running (if it shows up in STARTING or RUNNING, maybeHandleNat64PrefixChange will stop it immediately, and in IDLE it\u0027s never started anyway). Maybe that is a little bit simpler.\n\nNot feeling strongly – I don\u0027t think it\u0027s much different from what you have already.\n\n(Another option would be to split STARTING and RUNNING into two states each depending on whether the discovery is started, but I don\u0027t think that\u0027s a great option.)\n(If, as I note in l.218, startPrefixDiscovery is idempotent, you also can remove the boolean by the unrelated virtue that it makes it write-only)",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 40
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f3eacc_048041d2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6219,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "Do you want to check (here and below) that the callback is seeing all these updates to the prefix ?",
+      "range": {
+        "startLine": 6219,
+        "startChar": 79,
+        "endLine": 6219,
+        "endChar": 80
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04977a39_dae4a953",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6243,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "Maybe you want another variable to avoid confusion",
+      "range": {
+        "startLine": 6243,
+        "startChar": 36,
+        "endLine": 6243,
+        "endChar": 39
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab95c33_774ec9c5",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "Suggest simply not passing this as it will do the same thing, unless fixupLinkProperties touches emptyLp which you\u0027d rather it doesn\u0027t",
+      "range": {
+        "startLine": 412,
+        "startChar": 39,
+        "endLine": 412,
+        "endChar": 46
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa28745d_f360dfcb",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T02:40:31Z",
+      "side": 1,
+      "message": "Nit : this doesn\u0027t test the edge where both are set and the prefix from RA is unset, so it relies on the implementation tenet that the entire state only depends on the values of the two members at invocation time.",
+      "range": {
+        "startLine": 431,
+        "startChar": 4,
+        "endLine": 431,
+        "endChar": 5
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
