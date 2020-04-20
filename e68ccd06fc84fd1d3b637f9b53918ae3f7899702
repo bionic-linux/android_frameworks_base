@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4eed264_5124094d",
+        "filename": "packages/Tethering/res/values-mcc310-mnc004/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-04-20T07:26:17Z",
+      "side": 0,
+      "message": "How about the the defintion in res/values/strings.xml?",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 63
+      },
+      "revId": "e68ccd06fc84fd1d3b637f9b53918ae3f7899702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
