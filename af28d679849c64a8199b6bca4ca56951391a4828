@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a205a9e9_5c3768df",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6219,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-04-20T07:44:25Z",
+      "side": 1,
+      "message": "Point taken here.\n\nAs for below, in l.6227, the agent sends new LP without a prefix. I expected this would be visible on the app side with a change to LP containing a null prefix, and later when the prefix is discovered from DNS apps should see a new update with the prefix from DNS. In the next paragraph the prefix changes again to the one found in the RA, and likewise I would expect this is an app-visible change.\n\nHowever all of this understanding is contradicted by this test passing with the call to assertNoCallback in l.6267. I would expect it to work, but if it doesn\u0027t, should we not fix it ?",
+      "parentUuid": "469c27b3_986d86e4",
+      "range": {
+        "startLine": 6219,
+        "startChar": 79,
+        "endLine": 6219,
+        "endChar": 80
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04977a39_dae4a953",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 15
