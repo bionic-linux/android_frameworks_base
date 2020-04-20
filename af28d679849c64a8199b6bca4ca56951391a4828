@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4b28b7a_966fc91d",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "Not just that, but done.",
+      "parentUuid": "d58e9a8b_22a3bb90",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed388a99_9c0b360b",
         "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-20T02:40:31Z",
       "side": 1,
       "message": "If (like stopPrefixDiscovery) mDnsResolver.startPrefixDiscovery is idempotent you can just remove the if(). It also removes the slightly surprising tenet that this clause has to set mState to DISCOVERING after startPrefixDiscovery() does in unconditionally.",
+      "range": {
+        "startLine": 218,
+        "startChar": 42,
+        "endLine": 218,
+        "endChar": 62
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a235795a_55e990ea",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "At the moment this comment in Dns64Configuration.cpp suggests it\u0027s not idempotent:\n\n    // Currently, we remove current prefix, if any, before starting a prefix discovery.\n    // This causes that Netd and framework temporarily forgets DNS64 prefix even the prefix may be\n    // discovered in a short time.\n    removeDns64Config(netId);\n\nand I\u0027m not sure if we should fix that. It seems reasonable for this code to be safe not to tell the DNS resolver to start prefix discovery more than once.\n\nWhat we could do is rename startPrefixDiscovery to ensurePrefixDiscoveryStarted and make it do nothing except change state if mPrefixDiscoveryRunning is true. Not sure if you want to do this.\n\nFor now, removed the unconditional setting of mState.",
+      "parentUuid": "ed388a99_9c0b360b",
       "range": {
         "startLine": 218,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "23a6de43_5d5731b2",
+        "filename": "services/core/java/com/android/server/connectivity/Nat464Xlat.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "The case where a prefix from RA is obtained in DISCOVERING state was sort of broken in the sense that we\u0027d never stop prefix discovery. Now fixed, and added test coverage for it. Doing that required moving the assignment of mState out of the stopPrefixDiscovery, so I moved it out of startPrefixDiscovery as well for consistency. That seems better to me.\n\nBut I don\u0027t think we can remove this member, per other comments.\n\nI understand that the code would be better without it, but we do have to keep track somewhere of whether the prefix discovery is started or not. We either keep that state in the boolean, or we split the STARTING and RUNNING states (which seems worse), or we rely on the DNS resolver to keep that state for us. I think the boolean is the best option.",
+      "parentUuid": "01a77b60_38b9c1a5",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 40
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f3eacc_048041d2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2020-04-20T02:40:31Z",
       "side": 1,
       "message": "Do you want to check (here and below) that the callback is seeing all these updates to the prefix ?",
+      "range": {
+        "startLine": 6219,
+        "startChar": 79,
+        "endLine": 6219,
+        "endChar": 80
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469c27b3_986d86e4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "There\u0027s no change here, because the initial LinkProperties already have the NAT64 prefix. Added an assertNoCallback and an assertion on the return value of getLinkProperties here and at line 6257 and 6266.\n\nOther than that, not sure what you mean by \"below\". It seems to be that any time the prefix changes, the test does already call expectNat64PrefixChange(), which does expect a change, and due to the semantics of TestableNetworkCallback, any unaccounted for change will cause the test to fail.",
+      "parentUuid": "f7f3eacc_048041d2",
       "range": {
         "startLine": 6219,
         "startChar": 79,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e2a11a59_00284566",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 6243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04977a39_dae4a953",
+      "range": {
+        "startLine": 6243,
+        "startChar": 36,
+        "endLine": 6243,
+        "endChar": 39
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab95c33_774ec9c5",
         "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
         "patchSetId": 15
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6b3c8abd_ab06ce01",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab95c33_774ec9c5",
+      "range": {
+        "startLine": 412,
+        "startChar": 39,
+        "endLine": 412,
+        "endChar": 46
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa28745d_f360dfcb",
         "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
         "patchSetId": 15
@@ -160,6 +304,30 @@
       "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38c1e89_d6427ed8",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-20T07:32:59Z",
+      "side": 1,
+      "message": "The intent of this test was that it would test what is effectively a static preference function, but as you point out, it also tests the state in Nat464Xlat. So added coverage for that edge as well.",
+      "parentUuid": "aa28745d_f360dfcb",
+      "range": {
+        "startLine": 431,
+        "startChar": 4,
+        "endLine": 431,
+        "endChar": 5
+      },
+      "revId": "af28d679849c64a8199b6bca4ca56951391a4828",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
