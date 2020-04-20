@@ -406,25 +406,35 @@ public class Nat464XlatTest {
 
         Nat464Xlat nat = makeNat464Xlat();
 
-        LinkProperties emptyLp = new LinkProperties();
+        final LinkProperties emptyLp = new LinkProperties();
         LinkProperties fixedupLp;
 
-        fixedupLp = new LinkProperties(emptyLp);
+        fixedupLp = new LinkProperties();
         nat.setNat64PrefixFromDns(prefixFromDns);
         nat.fixupLinkProperties(emptyLp, fixedupLp);
         assertEquals(prefixFromDns, fixedupLp.getNat64Prefix());
 
-        fixedupLp = new LinkProperties(emptyLp);
+        fixedupLp = new LinkProperties();
         nat.setNat64PrefixFromRa(prefixFromRa);
         nat.fixupLinkProperties(emptyLp, fixedupLp);
         assertEquals(prefixFromRa, fixedupLp.getNat64Prefix());
 
-        fixedupLp = new LinkProperties(emptyLp);
+        fixedupLp = new LinkProperties();
+        nat.setNat64PrefixFromRa(null);
+        nat.fixupLinkProperties(emptyLp, fixedupLp);
+        assertEquals(prefixFromDns, fixedupLp.getNat64Prefix());
+
+        fixedupLp = new LinkProperties();
+        nat.setNat64PrefixFromRa(prefixFromRa);
+        nat.fixupLinkProperties(emptyLp, fixedupLp);
+        assertEquals(prefixFromRa, fixedupLp.getNat64Prefix());
+
+        fixedupLp = new LinkProperties();
         nat.setNat64PrefixFromDns(null);
         nat.fixupLinkProperties(emptyLp, fixedupLp);
         assertEquals(prefixFromRa, fixedupLp.getNat64Prefix());
 
-        fixedupLp = new LinkProperties(emptyLp);
+        fixedupLp = new LinkProperties();
         nat.setNat64PrefixFromRa(null);
         nat.fixupLinkProperties(emptyLp, fixedupLp);
         assertEquals(null, fixedupLp.getNat64Prefix());

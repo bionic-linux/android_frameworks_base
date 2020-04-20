@@ -81,7 +81,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
         RUNNING,      // start() called, and the stacked iface is known to be up.
     }
 
-    /** NAT64 prefix currently in use. Only valid in STARTING or RUNNING states. */
+    /**
+     * NAT64 prefix currently in use. Only valid in STARTING or RUNNING states.
+     * Used, among other things, to avoid updates when switching from a prefix learned from one
+     * source (e.g., RA) to the same prefix learned from another source (e.g., RA).
+     */
     private IpPrefix mNat64PrefixInUse;
     /** NAT64 prefix (if any) discovered from DNS via RFC 7050. */
     private IpPrefix mNat64PrefixFromDns;
@@ -191,6 +195,10 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch (ClassCastException | IllegalArgumentException | NullPointerException e) {
             Slog.e(TAG, "Invalid IPv6 address " + addrStr);
         }
+        if (!isPrefixDiscoveryNeeded()) {
+Slog.d(TAG, "stopping prefix discovery because not needed");
+            stopPrefixDiscovery();
+        }
     }
 
     /**
@@ -217,12 +225,11 @@ public class Nat464Xlat extends BaseNetworkObserver {
         if (isPrefixDiscoveryNeeded()) {
             if (!mPrefixDiscoveryRunning) {
                 startPrefixDiscovery();
-            } else {
-                // Prefix discovery is already running. Nothing to do.
-                mState = State.DISCOVERING;
             }
+            mState = State.DISCOVERING;
         } else {
-            stopPrefixDiscovery();  // Enters IDLE state.
+            stopPrefixDiscovery();
+            mState = State.IDLE;
         }
     }
 
@@ -283,7 +290,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error starting prefix discovery on netId " + getNetId() + ": " + e);
         }
-        mState = State.DISCOVERING;
         mPrefixDiscoveryRunning = true;
     }
 
@@ -293,7 +299,6 @@ public class Nat464Xlat extends BaseNetworkObserver {
         } catch (RemoteException | ServiceSpecificException e) {
             Slog.e(TAG, "Error stopping prefix discovery on netId " + getNetId() + ": " + e);
         }
-        mState = State.IDLE;
         mPrefixDiscoveryRunning = false;
     }
 
@@ -326,6 +331,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
             case IDLE:
                 if (isPrefixDiscoveryNeeded()) {
                     startPrefixDiscovery();  // Enters DISCOVERING state.
+                    mState = State.DISCOVERING;
                 } else if (requiresClat(mNetwork)) {
                     start();  // Enters STARTING state.
                 }
@@ -340,6 +346,7 @@ public class Nat464Xlat extends BaseNetworkObserver {
                 if (!requiresClat(mNetwork)) {
                     // IPv4 address added. Go back to IDLE state.
                     stopPrefixDiscovery();
+                    mState = State.IDLE;
                     return;
                 }
                 break;

@@ -6192,6 +6192,7 @@ public class ConnectivityServiceTest {
         final String pref64FromDnsStr = "2001:db8:64::";
         final IpPrefix pref64FromRa = new IpPrefix(InetAddress.getByName(pref64FromRaStr), 96);
         final IpPrefix pref64FromDns = new IpPrefix(InetAddress.getByName(pref64FromDnsStr), 96);
+        final IpPrefix newPref64FromRa = new IpPrefix("2001:db8:64:64:64:64::/96");
 
         final NetworkRequest request = new NetworkRequest.Builder()
                 .addCapability(NET_CAPABILITY_INTERNET)
@@ -6213,12 +6214,31 @@ public class ConnectivityServiceTest {
         lp.setNat64Prefix(pref64FromRa);
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, lp);
         mCellNetworkAgent.connect(false);
-        int netId = mCellNetworkAgent.getNetwork().getNetId();
+        final Network network = mCellNetworkAgent.getNetwork();
+        int netId = network.getNetId();
         callback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromRa.toString());
         inOrder.verify(mMockDnsResolver, never()).startPrefix64Discovery(netId);
+        callback.assertNoCallback();
+        assertEquals(pref64FromRa, mCm.getLinkProperties(network).getNat64Prefix());
 
         // If the RA prefix is withdrawn, clatd is stopped and prefix discovery is started.
+        lp.setNat64Prefix(null);
+        mCellNetworkAgent.sendLinkProperties(lp);
+        expectNat64PrefixChange(callback, mCellNetworkAgent, null);
+        inOrder.verify(mMockNetd).clatdStop(iface);
+        inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
+
+        // If the RA prefix appears while DNS discovery is in progress, discovery is stopped and
+        // clatd is started with the prefix from the RA.
+        lp.setNat64Prefix(pref64FromRa);
+        mCellNetworkAgent.sendLinkProperties(lp);
+        expectNat64PrefixChange(callback, mCellNetworkAgent, pref64FromRa);
+        inOrder.verify(mMockNetd).clatdStart(iface, pref64FromRa.toString());
+        inOrder.verify(mMockDnsResolver).stopPrefix64Discovery(netId);
+
+        // Withdraw the RA prefix so we can test the case where an RA prefix appears after DNS
+        // discovery has succeeded.
         lp.setNat64Prefix(null);
         mCellNetworkAgent.sendLinkProperties(lp);
         expectNat64PrefixChange(callback, mCellNetworkAgent, null);
@@ -6240,18 +6260,19 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockDnsResolver, never()).startPrefix64Discovery(netId);
 
         // If the RA prefix changes, clatd is restarted and prefix discovery is not started.
-        lp.setNat64Prefix(pref64FromDns);
+        lp.setNat64Prefix(newPref64FromRa);
         mCellNetworkAgent.sendLinkProperties(lp);
-        expectNat64PrefixChange(callback, mCellNetworkAgent, pref64FromDns);
+        expectNat64PrefixChange(callback, mCellNetworkAgent, newPref64FromRa);
         inOrder.verify(mMockNetd).clatdStop(iface);
-        inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
+        inOrder.verify(mMockNetd).clatdStart(iface, newPref64FromRa.toString());
         inOrder.verify(mMockDnsResolver, never()).stopPrefix64Discovery(netId);
         inOrder.verify(mMockDnsResolver, never()).startPrefix64Discovery(netId);
 
         // If the RA prefix changes to the same value, nothing happens.
-        lp.setNat64Prefix(pref64FromDns);
+        lp.setNat64Prefix(newPref64FromRa);
         mCellNetworkAgent.sendLinkProperties(lp);
         callback.assertNoCallback();
+        assertEquals(newPref64FromRa, mCm.getLinkProperties(network).getNat64Prefix());
         inOrder.verify(mMockNetd, never()).clatdStop(iface);
         inOrder.verify(mMockNetd, never()).clatdStart(eq(iface), anyString());
         inOrder.verify(mMockDnsResolver, never()).stopPrefix64Discovery(netId);
@@ -6259,6 +6280,7 @@ public class ConnectivityServiceTest {
 
         // The transition between no prefix and DNS prefix is tested in testStackedLinkProperties.
 
+        callback.assertNoCallback();
         mCellNetworkAgent.disconnect();
         mCm.unregisterNetworkCallback(callback);
     }
