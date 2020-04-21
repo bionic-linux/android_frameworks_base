@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df409df8_7ca21f4a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-04-21T04:29:34Z",
+      "side": 1,
+      "message": "Nit: This is used for multiple times. Maybe it could be move the setUp or move to a function to prevent duplication.",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 97
+      },
+      "revId": "d954d2cd7cc0617d44b6a644362550469b1a8989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
