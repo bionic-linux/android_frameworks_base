@@ -46,6 +46,29 @@
       "revId": "e68ccd06fc84fd1d3b637f9b53918ae3f7899702",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5db896ce_5168abd8",
+        "filename": "packages/Tethering/res/values-mcc312-mnc530/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-04-21T03:12:03Z",
+      "side": 0,
+      "message": "Question: As offlne discussed with Lucas, do you know what will happen to those translated one? Looks TH is happy so it may not break build? However, those translated one will lose their definition? someone or tool will remove it?",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "e68ccd06fc84fd1d3b637f9b53918ae3f7899702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
