@@ -69,6 +69,30 @@
       "revId": "e68ccd06fc84fd1d3b637f9b53918ae3f7899702",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2072c006_f2cb32d2",
+        "filename": "packages/Tethering/res/values-mcc312-mnc530/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-22T02:33:39Z",
+      "side": 0,
+      "message": "As discussion in the meeting, it should be fine if these resource are unused. And I should remove the translation by myself.",
+      "parentUuid": "5db896ce_5168abd8",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "e68ccd06fc84fd1d3b637f9b53918ae3f7899702",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
