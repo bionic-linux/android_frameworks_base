@@ -22,6 +22,30 @@
       "revId": "d954d2cd7cc0617d44b6a644362550469b1a8989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dab3c53_4aca43fb",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-04-22T02:39:40Z",
+      "side": 1,
+      "message": "I\u0027d like to keep current design because testGetResourcesForSubId don\u0027t need this at least.",
+      "parentUuid": "df409df8_7ca21f4a",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 97
+      },
+      "revId": "d954d2cd7cc0617d44b6a644362550469b1a8989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
