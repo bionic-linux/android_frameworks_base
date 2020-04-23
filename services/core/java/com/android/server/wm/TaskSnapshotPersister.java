@@ -28,12 +28,14 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Process;
 import android.os.SystemClock;
+import android.os.UserManagerInternal;
 import android.util.ArraySet;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.AtomicFile;
+import com.android.server.LocalServices;
 import com.android.server.wm.nano.WindowManagerProtos.TaskSnapshotProto;
 
 import java.io.File;
@@ -73,6 +75,7 @@ class TaskSnapshotPersister {
     private boolean mStarted;
     private final Object mLock = new Object();
     private final DirectoryResolver mDirectoryResolver;
+    private final UserManagerInternal mUserManagerInternal;
     private final float mReducedScale;
 
     /**
@@ -84,6 +87,7 @@ class TaskSnapshotPersister {
 
     TaskSnapshotPersister(WindowManagerService service, DirectoryResolver resolver) {
         mDirectoryResolver = resolver;
+        mUserManagerInternal = LocalServices.getService(UserManagerInternal.class);
         if (service.mLowRamTaskSnapshotsAndRecents) {
             // Use very low res snapshots if we are using Go version of recents.
             mReducedScale = LOW_RAM_RECENTS_REDUCED_SCALE;
@@ -172,7 +176,7 @@ class TaskSnapshotPersister {
                     return;
                 }
             }
-            SystemClock.sleep(100);
+            SystemClock.sleep(DELAY_MS);
         }
     }
 
@@ -218,7 +222,7 @@ class TaskSnapshotPersister {
 
     private boolean createDirectory(int userId) {
         final File dir = getDirectory(userId);
-        return dir.exists() || dir.mkdirs();
+        return dir.exists() || dir.mkdir();
     }
 
     private void deleteSnapshot(int taskId, int userId) {
@@ -247,9 +251,15 @@ class TaskSnapshotPersister {
                     if (mPaused) {
                         next = null;
                     } else {
-                        next = mWriteQueue.poll();
+                        next = mWriteQueue.peek();
                         if (next != null) {
-                            next.onDequeuedLocked();
+                            if (next.isReady()) {
+                                mWriteQueue.pop();
+                                next.onDequeuedLocked();
+                            } else {
+                                SystemClock.sleep(DELAY_MS);
+                                next = null;
+                            }
                         }
                     }
                 }
@@ -274,6 +284,13 @@ class TaskSnapshotPersister {
     };
 
     private abstract class WriteQueueItem {
+        /**
+         * @return true
+         */
+        boolean isReady() {
+            return true;
+        }
+
         abstract void write();
 
         /**
@@ -310,6 +327,11 @@ class TaskSnapshotPersister {
         @Override
         void onDequeuedLocked() {
             mStoreQueueItems.remove(this);
+        }
+
+        @Override
+        boolean isReady() {
+            return mUserManagerInternal.isUserUnlocked(mUserId);
         }
 
         @Override
