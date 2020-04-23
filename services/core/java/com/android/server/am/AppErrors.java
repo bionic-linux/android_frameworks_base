@@ -729,7 +729,9 @@ class AppErrors {
                 // Don't let services in this process be restarted and potentially
                 // annoy the user repeatedly.  Unless it is persistent, since those
                 // processes run critical code.
-                mService.mProcessList.removeProcessLocked(app, false, tryAgain, "crash");
+                synchronized (mService) {
+                   mService.mProcessList.removeProcessLocked(app, false, tryAgain, "crash");
+                }
                 mService.mAtmInternal.resumeTopActivities(false /* scheduleIdle */);
                 if (!showBackground) {
                     return false;
