@@ -22,6 +22,30 @@
       "revId": "496aa2b9fce98b696adc58f0d26e57e49ff0697d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc84d46_e3a6aca6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-23T17:02:31Z",
+      "side": 1,
+      "message": "Yes, make sense. Thanks for advice.",
+      "parentUuid": "11ff87ac_0d91bd53",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "496aa2b9fce98b696adc58f0d26e57e49ff0697d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
