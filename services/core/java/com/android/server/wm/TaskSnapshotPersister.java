@@ -28,12 +28,14 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Process;
 import android.os.SystemClock;
+import android.os.UserManagerInternal;
 import android.util.ArraySet;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.AtomicFile;
+import com.android.server.LocalServices;
 import com.android.server.wm.nano.WindowManagerProtos.TaskSnapshotProto;
 
 import java.io.File;
@@ -74,6 +76,8 @@ class TaskSnapshotPersister {
     private final Object mLock = new Object();
     private final DirectoryResolver mDirectoryResolver;
     private final float mReducedScale;
+
+    UserManagerInternal mUserManager = LocalServices.getService(UserManagerInternal.class);
 
     /**
      * The list of ids of the tasks that have been persisted since {@link #removeObsoleteFiles} was
@@ -242,6 +246,11 @@ class TaskSnapshotPersister {
         public void run() {
             android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             while (true) {
+                if (!mUserManager.isUserUnlocked(Process.myUserHandle().getIdentifier())) {
+                    SystemClock.sleep(DELAY_MS);
+                    continue;
+                }
+
                 WriteQueueItem next;
                 synchronized (mLock) {
                     if (mPaused) {
