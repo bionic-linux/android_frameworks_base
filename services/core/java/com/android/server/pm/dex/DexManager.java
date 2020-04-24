@@ -610,12 +610,6 @@ public class DexManager {
      */
     private DexSearchResult getDexPackage(
             ApplicationInfo loadingAppInfo, String dexPath, int userId) {
-        // Ignore framework code.
-        // TODO(calin): is there a better way to detect it?
-        if (dexPath.startsWith("/system/framework/")) {
-            return new DexSearchResult("framework", DEX_SEARCH_NOT_FOUND);
-        }
-
         // First, check if the package which loads the dex file actually owns it.
         // Most of the time this will be true and we can return early.
         PackageCodeLocations loadingPackageCodeLocations =
