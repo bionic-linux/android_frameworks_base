@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c984703_ce63f2a9",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-04-24T06:09:57Z",
+      "side": 1,
+      "message": "Done. \nThanks for your advice.",
+      "parentUuid": "d19b656b_5f601f70",
+      "range": {
+        "startLine": 361,
+        "startChar": 10,
+        "endLine": 361,
+        "endChar": 12
+      },
+      "revId": "21a38a1917271dfaf051c6d61849bf171be5695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f38e4a99_9d946eb8",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringConfigurationTest.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "21a38a1917271dfaf051c6d61849bf171be5695f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ee2255_747f61f2",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringConfigurationTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-04-24T06:09:57Z",
+      "side": 1,
+      "message": "Done. \nThat really makes the test more readable. Thanks!",
+      "parentUuid": "f38e4a99_9d946eb8",
+      "range": {
+        "startLine": 285,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 80
+      },
+      "revId": "21a38a1917271dfaf051c6d61849bf171be5695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
