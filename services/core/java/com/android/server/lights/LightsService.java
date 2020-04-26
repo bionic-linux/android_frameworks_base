@@ -429,7 +429,7 @@ public class LightsService extends SystemService {
     public LightsService(Context context) {
         this(context,
                 ILights.Stub.asInterface(
-                        ServiceManager.getService("android.hardware.light.ILights/default")),
+                        ServiceManager.getService(ILights.DESCRIPTOR + "/default")),
                 Looper.myLooper());
     }
 
