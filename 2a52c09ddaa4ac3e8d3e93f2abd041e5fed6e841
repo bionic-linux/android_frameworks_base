@@ -22,6 +22,30 @@
       "revId": "2a52c09ddaa4ac3e8d3e93f2abd041e5fed6e841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e89599_5d42979f",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-27T10:43:37Z",
+      "side": 1,
+      "message": "Unfortunately, TokenBucket.java(l.645) use it. This is why I still do not remove it here.",
+      "parentUuid": "7780b84d_2e6db180",
+      "range": {
+        "startLine": 639,
+        "startChar": 8,
+        "endLine": 639,
+        "endChar": 65
+      },
+      "revId": "2a52c09ddaa4ac3e8d3e93f2abd041e5fed6e841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
