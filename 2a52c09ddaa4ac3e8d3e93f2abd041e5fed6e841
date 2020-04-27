@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7780b84d_2e6db180",
+        "filename": "Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-04-27T10:32:14Z",
+      "side": 1,
+      "message": "Can this be removed too ? Why is it removed from IpClient in the associated change otherwise ?",
+      "range": {
+        "startLine": 639,
+        "startChar": 8,
+        "endLine": 639,
+        "endChar": 65
+      },
+      "revId": "2a52c09ddaa4ac3e8d3e93f2abd041e5fed6e841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
