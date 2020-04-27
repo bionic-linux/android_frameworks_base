@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9d33b5_521f88e3",
+        "filename": "telephony/java/android/telephony/MbmsDownloadSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "Explain when you\u0027d get this one.",
+      "range": {
+        "startLine": 455,
+        "startChar": 27,
+        "endLine": 455,
+        "endChar": 48
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7c545f_4ae293d7",
+        "filename": "telephony/java/android/telephony/MbmsDownloadSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "range": {
+        "startLine": 464,
+        "startChar": 42,
+        "endLine": 464,
+        "endChar": 45
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cf1fe1_23d5fede",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "nit: file",
+      "range": {
+        "startLine": 222,
+        "startChar": 74,
+        "endLine": 222,
+        "endChar": 77
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df34c4d_e805f824",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "nit: validation",
+      "range": {
+        "startLine": 223,
+        "startChar": 10,
+        "endLine": 223,
+        "endChar": 21
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208a0752_757c93ea",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "Can remove this for now or make it a todo outside the public API docs.",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 95
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495bdf39_99bdc0d8",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "@IntDef?  It probably predated an intdef, but might as well add one now.",
+      "range": {
+        "startLine": 236,
+        "startChar": 11,
+        "endLine": 236,
+        "endChar": 14
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2ea549_0033fda9",
+        "filename": "telephony/java/android/telephony/mbms/vendor/MbmsDownloadServiceBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-04-27T19:49:53Z",
+      "side": 1,
+      "message": "Is byte[] nullable or nonnull?  I presume @NonNull?",
+      "range": {
+        "startLine": 236,
+        "startChar": 62,
+        "endLine": 236,
+        "endChar": 67
+      },
+      "revId": "80557b94cfbb879deeb001e4153d7869df42ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
