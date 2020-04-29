@@ -94,6 +94,53 @@
     },
     {
       "key": {
+        "uuid": "654d4a86_00ba41c6",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-29T04:12:29Z",
+      "side": 1,
+      "message": "Right, I\u0027ll suggest to remove the code here and totally remove the wigig interface define in TetheringConfiguration.java. Then we can have a callback or intent like wifi tethering. Except for the existing tetherings(e.g. wifi, usb, bluetooth) which need to backward compatible with Settings\u0027s usage. The new added tethering should let its downstream framework(wigig) tell tethering which interface is ready for wigig tethering or when interface is down so the IpServer can be totally removed because it is no needed anymore.",
+      "parentUuid": "214c63c6_095304dd",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99eb7584_d1f1d36a",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-04-29T04:12:29Z",
+      "side": 1,
+      "message": "Could we let wifi or wigig framework tell tethering which interface is used for Wigig every time start wigig tethering instead of predeine wigig interface name in tethering ?",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 79
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbbce190_28c3ec1d",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
