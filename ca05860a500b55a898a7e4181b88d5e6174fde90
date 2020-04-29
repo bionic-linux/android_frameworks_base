@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "b3b68495_596619fa",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-04-29T04:30:06Z",
+      "side": 1,
+      "message": "Yes, wifi interface names needs to be plumbed in from the wifi stack. Please don\u0027t hardcode these elsewhere outside of the wifi stack. The current tethered ifaces for regular tethering does not harcode the interface name(i.e wlan0 or wlan1) anywhere outside of the wifi HAL.",
+      "parentUuid": "99eb7584_d1f1d36a",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 79
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbbce190_28c3ec1d",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
