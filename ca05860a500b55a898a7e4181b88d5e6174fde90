@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe16a183_bb208f0b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "I believe this is not sufficient, there needs to be a TetheringManager.TETHERING_WIGIG constant as well. That is not possible for R initial launch because of API freeze. It will have to wait for a subsequent mainline update.",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 43
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345b8ddc_c3c5278a",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "Why are both of these necessary? What is FST and how is it different from wigig? Also see comments in Tethering.java.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 71
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d0cf27_e1eccbac",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "Can you address this TODO in this CL? Should be pretty simple. Just change \"String getRandomWifiIPv4Address()\" to \"String getRandomIPv4Address(String baseAddress)\". Then you can do:\n\n            } else if (mInterfaceType \u003d\u003d TetheringManager.TETHERING_WIFI) {\n                srvAddr \u003d (Inet4Address) parseNumericAddress(getRandomIPv4Address(WIFI_HOST_IFACE_ADDR));\n                prefixLen \u003d WIFI_HOST_IFACE_PREFIX_LENGTH;\n            } else if (mInterfaceType \u003d\u003d TetheringManager.TETHERING_ETHERNET) {\n                srvAddr \u003d (Inet4Address) parseNumericAddress(getRandomIPv4Address(ETHERNET_IFACE_ADDR));\n                prefixLen \u003d ETHERNET_IFACE_PREFIX_LENGTH;\n            } else if (mInterfaceType \u003d\u003d TetheringManager.TETHERING_WIGIG) {\n                srvAddr \u003d (Inet4Address) parseNumericAddress(getRandomIPv4Address(WIGIG_IFACE_ADDR));\n                prefixLen \u003d WIGIG_IFACE_PREFIX_LENGTH;\n            }",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 618,
+        "endChar": 79
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214c63c6_095304dd",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "Mark, isn\u0027t this a legacy codepath that we would prefer not to use any more? Should wigig tethering instead do something similar to wifi tethering, where the broadcast itself provides the interface name on which to start?",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbce190_28c3ec1d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure we can do this. If we do, then it\u0027s possible to configure the system in such a way that the wifi interface regexp matches an interface that is not used for wifi tethering. Other parts of the system expect that the interfaces will be correct, and those parts of the system will break.\n\nIt seems that we should either make sure that wigig *is* wifi tethering, or *is not* wifi tethering. I don\u0027t think we can support both in the current state of the code.",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 50
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996f9a07_286fba06",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-29T03:09:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 49
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
