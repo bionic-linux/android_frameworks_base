@@ -99,6 +99,7 @@ public class AudioServiceEvents {
         static final int VOL_VOICE_ACTIVITY_HEARING_AID = 6;
         static final int VOL_MODE_CHANGE_HEARING_AID = 7;
         static final int VOL_SET_GROUP_VOL = 8;
+        static final int VOL_ADJUST_GROUP_VOL = 9;
 
         final int mOp;
         final int mStream;
@@ -119,7 +120,8 @@ public class AudioServiceEvents {
             mVal2 = val2;
             mCaller = caller;
             mGroupName = null;
-            mAudioAttributes = null;
+            mAudioAttributes = new AudioAttributes.Builder().setInternalLegacyStreamType(stream)
+                    .build();
         }
 
         /** used for VOL_SET_HEARING_AID_VOL*/
@@ -155,7 +157,8 @@ public class AudioServiceEvents {
             // unused
             mCaller = null;
             mGroupName = null;
-            mAudioAttributes = null;
+            mAudioAttributes = new AudioAttributes.Builder().setInternalLegacyStreamType(stream)
+                    .build();
         }
 
         /** used for VOL_MODE_CHANGE_HEARING_AID */
@@ -167,7 +170,8 @@ public class AudioServiceEvents {
             // unused
             mCaller = null;
             mGroupName = null;
-            mAudioAttributes = null;
+            mAudioAttributes = new AudioAttributes.Builder().setInternalLegacyStreamType(stream)
+                    .build();
         }
 
         /** used for VOL_SET_GROUP_VOL */
@@ -187,6 +191,14 @@ public class AudioServiceEvents {
                 case VOL_ADJUST_SUGG_VOL:
                     return new StringBuilder("adjustSuggestedStreamVolume(sugg:")
                             .append(AudioSystem.streamToString(mStream))
+                            .append(" group: ").append(mGroupName)
+                            .append(" dir:").append(AudioManager.adjustToString(mVal1))
+                            .append(" flags:0x").append(Integer.toHexString(mVal2))
+                            .append(") from ").append(mCaller)
+                            .toString();
+                case VOL_ADJUST_GROUP_VOL:
+                    return new StringBuilder("adjustAttributesVolume(attr:")
+                            .append(mAudioAttributes)
                             .append(" dir:").append(AudioManager.adjustToString(mVal1))
                             .append(" flags:0x").append(Integer.toHexString(mVal2))
                             .append(") from ").append(mCaller)
@@ -235,7 +247,7 @@ public class AudioServiceEvents {
                             .toString();
                 case VOL_SET_GROUP_VOL:
                     return new StringBuilder("setVolumeIndexForAttributes(attr:")
-                            .append(mAudioAttributes.toString())
+                            .append(mAudioAttributes)
                             .append(" group: ").append(mGroupName)
                             .append(" index:").append(mVal1)
                             .append(" flags:0x").append(Integer.toHexString(mVal2))
