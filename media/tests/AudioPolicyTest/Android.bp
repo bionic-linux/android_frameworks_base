@@ -5,6 +5,7 @@ android_test {
         "android.test.runner",
         "android.test.base",
     ],
+    privileged: true,
     static_libs: [
         "mockito-target-minus-junit4",
         "androidx.test.rules",
