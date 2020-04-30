@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "804bb6e4_115d64d7",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-04-30T12:02:50Z",
+      "side": 1,
+      "message": "nit: Generally speaking, this name is for getter that gets private enableBpfOffload.\nSuggest to rename to getEnableBpfOffloadFromXyz if you need to mock getter in the test.\nNo strong opinion.",
+      "revId": "5a7db24c52885f997475765aae5c4d53ae255ff9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
