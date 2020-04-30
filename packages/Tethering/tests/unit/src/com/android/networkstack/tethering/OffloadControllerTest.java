@@ -109,6 +109,7 @@ public class OffloadControllerTest {
     @Mock private ApplicationInfo mApplicationInfo;
     @Mock private Context mContext;
     @Mock private NetworkStatsManager mStatsManager;
+    @Mock private TetheringConfiguration mTetherConfig;
     // Late init since methods must be called by the thread that created this object.
     private TestableNetworkStatsProviderCbBinder mTetherStatsProviderCb;
     private OffloadController.OffloadTetheringStatsProvider mTetherStatsProvider;
@@ -119,8 +120,8 @@ public class OffloadControllerTest {
     private MockContentResolver mContentResolver;
     private OffloadController.Dependencies mDeps = new OffloadController.Dependencies() {
         @Override
-        int getPerformPollInterval() {
-            return 0;
+        public TetheringConfiguration getTetherConfig() {
+            return mTetherConfig;
         }
     };
 
@@ -132,6 +133,7 @@ public class OffloadControllerTest {
         mContentResolver.addProvider(Settings.AUTHORITY, new FakeSettingsProvider());
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
         FakeSettingsProvider.clearSettingsProvider();
+        when(mTetherConfig.getOffloadPollInterval()).thenReturn(0);
     }
 
     @After public void tearDown() throws Exception {
@@ -360,9 +362,9 @@ public class OffloadControllerTest {
         stacked.setInterfaceName("stacked");
         stacked.addLinkAddress(new LinkAddress("192.0.2.129/25"));
         stacked.addRoute(new RouteInfo(null, InetAddress.getByName("192.0.2.254"), null,
-                  RTN_UNICAST));
+                RTN_UNICAST));
         stacked.addRoute(new RouteInfo(null, InetAddress.getByName("fe80::bad:f00"), null,
-                  RTN_UNICAST));
+                RTN_UNICAST));
         assertTrue(lp.addStackedLink(stacked));
         offload.setUpstreamLinkProperties(lp);
         // No change in local addresses means no call to setLocalPrefixes().

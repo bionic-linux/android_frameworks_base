@@ -77,7 +77,6 @@ public class OffloadController {
     private static final boolean DBG = false;
     private static final String ANYIP = "0.0.0.0";
     private static final ForwardedStats EMPTY_STATS = new ForwardedStats();
-    private static final int DEFAULT_PERFORM_POLL_INTERVAL_MS = 5000;
 
     @VisibleForTesting
     enum StatsType {
@@ -134,11 +133,9 @@ public class OffloadController {
     private final Dependencies mDeps;
 
     // TODO: Put more parameters in constructor into dependency object.
-    static class Dependencies {
-        int getPerformPollInterval() {
-            // TODO: Consider make this configurable.
-            return DEFAULT_PERFORM_POLL_INTERVAL_MS;
-        }
+    interface Dependencies {
+        @NonNull
+        TetheringConfiguration getTetherConfig();
     }
 
     public OffloadController(Handler h, OffloadHardwareInterface hwi,
@@ -452,7 +449,8 @@ public class OffloadController {
         if (mHandler.hasCallbacks(mScheduledPollingTask)) {
             mHandler.removeCallbacks(mScheduledPollingTask);
         }
-        mHandler.postDelayed(mScheduledPollingTask, mDeps.getPerformPollInterval());
+        mHandler.postDelayed(mScheduledPollingTask,
+                mDeps.getTetherConfig().getOffloadPollInterval());
     }
 
     private boolean isPollingStatsNeeded() {
