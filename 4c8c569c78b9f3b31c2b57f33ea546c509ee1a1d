@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f73e3b2c_7a9b28d3",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-30T11:01:39Z",
+      "side": 1,
+      "message": "Where is the code that disables polling if the interval is set to -1?",
+      "range": {
+        "startLine": 453,
+        "startChar": 16,
+        "endLine": 453,
+        "endChar": 64
+      },
+      "revId": "4c8c569c78b9f3b31c2b57f33ea546c509ee1a1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
