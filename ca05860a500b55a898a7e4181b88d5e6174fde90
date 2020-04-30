@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7472f66f_894caba4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "the addition of TetheringManager.TETHERING_WIGIG was accidentally removed from the latest patch, we added it few patches before, I will add it back.\nBasically we don\u0027t need to use the TETHERING_WIGIG type outside the tethering module so we can make it @hide (is this possible any more?) or even make it a non-public field.",
+      "parentUuid": "fe16a183_bb208f0b",
+      "range": {
+        "startLine": 481,
+        "startChar": 28,
+        "endLine": 481,
+        "endChar": 43
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "345b8ddc_c3c5278a",
         "filename": "packages/Tethering/res/values/config.xml",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-29T03:09:33Z",
       "side": 1,
       "message": "Why are both of these necessary? What is FST and how is it different from wigig? Also see comments in Tethering.java.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 71
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aba64d3_9429a679",
+        "filename": "packages/Tethering/res/values/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "FST (fast session transfer) is a feature allowing to connect a WIFI and wigig SoftAP so users will connect to WIFI SoftAP, but switch to wigig when available to get a faster connection.\nAfter internal discussion it looks like the FST part of this patch is not critical, so I will remove it.",
+      "parentUuid": "345b8ddc_c3c5278a",
       "range": {
         "startLine": 169,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0a17c4_3ad5981c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "Sounds good. I will update the patch to resolve the TODO.",
+      "parentUuid": "e4d0cf27_e1eccbac",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 618,
+        "endChar": 79
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +178,30 @@
       "side": 1,
       "message": "Right, I\u0027ll suggest to remove the code here and totally remove the wigig interface define in TetheringConfiguration.java. Then we can have a callback or intent like wifi tethering. Except for the existing tetherings(e.g. wifi, usb, bluetooth) which need to backward compatible with Settings\u0027s usage. The new added tethering should let its downstream framework(wigig) tell tethering which interface is ready for wigig tethering or when interface is down so the IpServer can be totally removed because it is no needed anymore.",
       "parentUuid": "214c63c6_095304dd",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f09b6c_08acc0da",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "the wigig framework is based on an old version of the WIFI framework, and uses the old way of starting tethering - it monitors for ConnectivityManager.ACTION_TETHER_STATE_CHANGED then calls ConnectivityManager.tether. We had an issue with stopping the SoftAP and this fix was added here to address it. \nUsing the WIFI way means the tethering module needs to know some constants from the wigig framework API (like WigigManager.WIGIG_AP_STATE_ENABLED), I think it is better not to expose any API since the wigig framework will hopefully disappear in Android S.",
+      "parentUuid": "654d4a86_00ba41c6",
       "range": {
         "startLine": 456,
         "startChar": 0,
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "8047b213_d18ff107",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "Note, the wifi interfaces are \"partially\" hard-coded here, the config_tether_wifi_regexs contain a pattern (wlan\\\\d) to recognize WIFI interfaces.\nCan we do the same with wigig? that is instead of config_wigig_interface_name we will add config_tether_wigig_regexs with \"wigig\\\\d\" to catch wigig interfaces?\nRegarding the config_tether_fst_regexs I will remove it as we don\u0027t think the FST feature is critical for upsteaming here.",
+      "parentUuid": "b3b68495_596619fa",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 79
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbbce190_28c3ec1d",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "a7f7bcd4_4ba55eb8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "good point, I will check and see if we can identify wigig separately, maybe using separate config_tether_wigig_regexs",
+      "parentUuid": "cbbce190_28c3ec1d",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 50
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "996f9a07_286fba06",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
@@ -199,6 +343,30 @@
       "writtenOn": "2020-04-29T03:09:33Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 49
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdf83bd_1c4a1876",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-04-30T21:32:56Z",
+      "side": 1,
+      "message": "see reply above.",
+      "parentUuid": "996f9a07_286fba06",
       "range": {
         "startLine": 154,
         "startChar": 0,
