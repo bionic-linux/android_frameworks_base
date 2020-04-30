@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c527cc6_93bb0555",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-04-30T14:47:10Z",
+      "side": 1,
+      "message": "Allowing someone to set this to 0 (or anything less than, say, 1s) seems really unwise. Given that this code is updatable, can we just put some hardcoded safety limit in here (say, minimum 1s), and then if someone really wants to poll more often, modify the limit with a code push?",
+      "range": {
+        "startLine": 459,
+        "startChar": 68,
+        "endLine": 459,
+        "endChar": 72
+      },
+      "revId": "02e6c703cdadede13f125ed4c79ff8848094355e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
