@@ -156,8 +156,6 @@ public class AudioProductStrategyTest extends AudioVolumesTestBase {
             // to be able to control the volume
             assertNotEquals(streamTypeFromUsage, AudioSystem.STREAM_DEFAULT);
 
-            Log.w(TAG, "GUSTAVE aaForUsage=" + aaForUsage.toString());
-
             // Now identify the strategy hosting these Audio Attributes and ensure informations
             // matches.
             // Now identify the strategy supporting this stream type, ensure uniqueness
