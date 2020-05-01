@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09bab75f_d09f8910",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4373,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-01T22:22:44Z",
+      "side": 1,
+      "message": "This is a very weird name. Please use a better name for this.",
+      "range": {
+        "startLine": 4373,
+        "startChar": 51,
+        "endLine": 4373,
+        "endChar": 59
+      },
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605754c6_7cfee0b2",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4375,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-01T22:22:44Z",
+      "side": 1,
+      "message": "All of these configs are related to pdp reject retry? Assuming yes, I think it would make sense to prefix all names with config_pdp_reject_retry.",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a43ca0_57cf7947",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-01T22:22:44Z",
+      "side": 1,
+      "message": "As Tyler mentioned, these strings won\u0027t be translated. Looks like these are used in the UI in which case you may want to move them to strings.xml.",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
