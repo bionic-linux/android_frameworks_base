@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "14abdd70_bcd8bed9",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4373,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-04T21:45:19Z",
+      "side": 1,
+      "message": "Convert this to an int-array then instead of having the error codes in the name.",
+      "parentUuid": "b5470892_52411c19",
+      "range": {
+        "startLine": 4373,
+        "startChar": 51,
+        "endLine": 4373,
+        "endChar": 59
+      },
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "605754c6_7cfee0b2",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "cdeff2aa_768c0c37",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4375,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-04T21:45:19Z",
+      "side": 1,
+      "message": "Please rename these as I suggested.",
+      "parentUuid": "7f3e5874_6a1e12ec",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a43ca0_57cf7947",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "Yes this and the configs below are for popup display on UI. This is just a declaration here, actual values are defined in mcc-mnc config files",
       "parentUuid": "06a43ca0_57cf7947",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1047f12f_afe8bebf",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-04T21:45:19Z",
+      "side": 1,
+      "message": "Actual declarations should be in mcc-mnc string files (strings.xml), and the declaration should be in strings.xml instead of here.",
+      "parentUuid": "c69ce0d4_2e9dcdbb",
       "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
